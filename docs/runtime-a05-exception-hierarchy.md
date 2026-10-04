@@ -55,9 +55,24 @@ continues searching with the original exception. Every VM is stopped afterward.
 | Typed catch selection | Shared framework/user ancestry | Verified type tokens and managed ancestry | `a05-exception-hierarchy`, `a05-source-exception-objects` |
 | First-pass filter before caller/callee cleanup | Executable filter frames and second-pass unwind | Filter/endfilter and second-pass unwind | `a05-source-filters`, `a05-04-filter-frames`, `exception-order.mjs` |
 | Throwing filter with its own finally | Original exception resumes search after filter cleanup | Same managed search contract | Same runnable example and `a05-runtime-memory-examples` |
-| First-chance/unhandled callback replay | Implemented; current integration repairs pending | Implemented; current integration repairs pending | `a05-exception-event-policy`; current criterion audit |
+| First-chance/unhandled callback replay | Implemented; local and portable replay tested | Same callback-policy and replay contract | `a05-exception-event-policy`; revision-scoped results below |
 
-The new example is checked by `tests/a05-runtime-memory-examples.test.js`; its
-execution is pending the serial integration slot. Authored expected traces are
-not native CLR evidence. The fresh SDK 8/10 callback-policy and cleanup fixtures,
-browser execution, and the current assigned callback regressions remain separate.
+`tests/a05-runtime-memory-examples.test.js` checks the example through all three
+routes. Those cases passed at `d9453a979` in a focused cohort with 40 passes, zero
+failures and seven skipped existing .NET reference-pack-dependent compiler cases.
+The example cases themselves were not skipped.
+
+The `8cc82866` main-merge repair cohort passed 146/146 cases, including
+first-chance/unhandled callback order and local/portable replay in source,
+reloaded source and CIL. The
+[retained validation manifest](a05-evidence/integration-validation-20261004/README.md)
+records those full revisions and log digests. A later 123/123 focused run at
+`3ad9a4bd7` (`a05-main349-repairs-r1.log`) includes source/CIL callback lifetime,
+cancellation, snapshot rejection and abandoned-initializer cleanup after the
+callback lifecycle corrections.
+
+These focused results do not imply that the integration is entirely passing:
+the broader `3b482d83b` A05/preemption/security run recorded 3,162 passes, 25 failures and zero skips across
+3,187 tests. Authored example traces and local replay tests do not constitute
+fresh native CLR evidence. SDK 8/10 callback-policy/cleanup execution and browser
+qualification remain independently tracked.

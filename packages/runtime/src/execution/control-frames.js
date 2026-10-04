@@ -21,7 +21,7 @@ import {abandonObjectValue} from './object-value-state.js';
 /** Admit a synthetic control frame without assigning pooled ownership to its shared slots. */
 export function pushControlFrame(vm, frame) {
   const method = frame.method ?? vm.image.methods[frame.methodId];
-  const ticket = reserveStackFrame(vm, method, frame.args?.length ?? 0);
+  const ticket = reserveStackFrame(vm, method, vm.inspector ? frame.args?.length ?? 0 : frame.locals.length, frame.varargs);
   try {
     vm.frames.push(frame);
     registerFrame(vm, frame);

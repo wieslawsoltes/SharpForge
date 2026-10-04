@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CilVirtualMachine} from '@sharpforge/runtime';
+import {AssemblyInspector, readExecutionSignatureAst} from '@sharpforge/cil';
 import {genericCallFixture} from './support/generic-call-fixture.js';
 
 const nullable = type => 'valuetype System.Nullable`1<' +
@@ -129,12 +130,50 @@ test('guest-produced Nullable values copy and replay without sharing mutable pay
   } finally { vm.stop(); foreign.stop(); }
 });
 
-for (const type of ['object', 'System.Nullable`1<int>', 'Windows.Foundation.Point']) {
-  test(`Nullable rejects unsupported ${type} payloads before guest execution`, () => {
+for (const [type, kind] of [
+  ['object', 'primitive'], ['System.Nullable`1<int>', 'genericInstance'], ['Windows.Foundation.Point', 'class']
+]) {
+  test(`Nullable rejects ${type} metadata that violates its non-nullable value constraint`, () => {
     const bytes = fixture(writer => writer.op('ret'), {locals: [nullable(type)]});
-    assert.throws(() => new CilVirtualMachine(bytes), {name: 'NotSupportedException'});
+    const inspector = new AssemblyInspector(bytes);
+    const method = inspector.getMethod(inspector.pe.entryPoint);
+    const argument = readExecutionSignatureAst(inspector.metadata, method.localSignature).types[0].arguments[0];
+    assert.equal(argument.kind, kind);
+    if (kind === 'genericInstance') {
+      assert.equal(argument.type.kind, 'valuetype');
+      assert.equal(inspector.metadata.typeName(argument.type.token), 'System.Nullable`1');
+    } else if (kind === 'class') {
+      // This fixture encodes an opaque external CLASS, not a declared WinRT value layout.
+      assert.equal(argument.token >>> 24, 1);
+      assert.equal(inspector.metadata.typeName(argument.token), type);
+    } else assert.equal(argument.name, 'object');
+    assert.throws(() => new CilVirtualMachine(bytes), {
+      name: 'TypeLoadException', message: 'Nullable layout requires a non-nullable value type'
+    });
   });
 }
+
+test('Nullable distinguishes an unsupported auto-layout value from an admitted sequential value', () => {
+  const declared = flags => fixture(writer => writer.op('ret'), {
+    types: [{...point, flags}], locals: [nullable('Point')]
+  });
+  const bytes = declared(0x100101);
+  const inspector = new AssemblyInspector(bytes);
+  const method = inspector.getMethod(inspector.pe.entryPoint);
+  const argument = readExecutionSignatureAst(inspector.metadata, method.localSignature).types[0].arguments[0];
+  assert.equal(argument.kind, 'valuetype');
+  assert.equal(argument.token >>> 24, 2, 'The payload has an actual assembly-owned TypeDef');
+  assert.equal(inspector.metadata.typeName(argument.token), 'Point');
+  assert.throws(() => new CilVirtualMachine(bytes), {
+    name: 'NotSupportedException', message: 'Managed layout is not implemented: auto-layout Point'
+  });
+  const vm = new CilVirtualMachine(declared(point.flags));
+  try {
+    assert.equal(vm.top.locals[0].hasValue, false);
+    assert.equal(vm.top.locals[0].nullableType.nullableType.name, 'Point');
+    assert.equal(vm.run().state, 'terminated');
+  } finally { vm.stop(); }
+});
 
 test('Nullable unbox interior remains an explicit verifier boundary', () => {
   const bytes = fixture((writer, context) => writer.op('ldnull').op('unbox', context.typeSpec(nullable('int')))

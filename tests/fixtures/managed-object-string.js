@@ -30,6 +30,14 @@ export function callbackAssembly({value = 'managed', throwing = false, loop = fa
   ]});
 }
 
+/** An unreachable ordinary method is admitted only when the host explicitly requests its callback entry. */
+export function unverifiedCallbackAssembly() {
+  return managedFixture({methods: [
+    {name: 'Main', body: writer => writer.op('ret')},
+    {name: 'UnverifiedCallback', body: writer => writer.op('pop').op('ret')}
+  ]});
+}
+
 function constructor(base) {
   return {name: '.ctor', static: false, flags: 0x1886, body(writer, context) {
     const target = base ? context.methods.get(base + '..ctor') : context.member('System.Object', '.ctor', 'void', [], false);

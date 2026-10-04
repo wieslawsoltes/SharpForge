@@ -1,0 +1,788 @@
+✔ source named animation targets remain owned roots across local and portable snapshots (131.807482ms)
+✔ captured array equality rejects missing or forged return linkage before replacing the live VM (67.39461ms)
+✔ source: portable partial Copy and Clear replay their captured owners after cancellation and collection (60.13596ms)
+✔ cil: portable partial Copy and Clear replay their captured owners after cancellation and collection (53.399617ms)
+✔ source: pending int array fill rejects forged value type before replacing captured storage (21.60663ms)
+✔ source: pending string array fill rejects forged value type before replacing captured storage (8.483266ms)
+✔ cil: pending int array fill rejects forged value type before replacing captured storage (17.741792ms)
+✔ cil: pending string array fill rejects forged value type before replacing captured storage (4.421568ms)
+✔ source: scheduler, active frames and pending faults restore one alias graph (14.927574ms)
+✔ source: invalid components and versions reject before replacing live state or caches (4.381815ms)
+✔ source: captured references remain valid after live collection and handles never move backwards (4.145739ms)
+✔ source: randomized instruction boundaries replay deterministically (59.318691ms)
+✔ cil: scheduler, active frames and pending faults restore one alias graph (14.648204ms)
+✔ cil: invalid components and versions reject before replacing live state or caches (5.240997ms)
+✔ cil: captured references remain valid after live collection and handles never move backwards (2.930604ms)
+✔ cil: randomized instruction boundaries replay deterministically (103.025373ms)
+✔ source: restore before the first memory allocation preserves later monotonic identities (1.110771ms)
+✔ cil: restore before the first memory allocation preserves later monotonic identities (1.703012ms)
+✔ execution copies preserve sparse local capacity, holes, cycles and null prototypes (0.33325ms)
+✔ source: portable pending first-chance faults and nested finally calls replay their exact continuation (50.614848ms)
+✔ source: awaiting contexts replay after original cancellation and collection (16.528345ms)
+✔ source: executing filters preserve their declaring storage and exception-search cursor (7.885021ms)
+✔ source: monitor queues restore into a fresh lazy component with exact task and Boolean flag aliases (10.77784ms)
+✔ cil: portable pending first-chance faults and nested finally calls replay their exact continuation (66.857483ms)
+✔ cil: awaiting contexts replay after original cancellation and collection (25.680947ms)
+✔ cil: executing filters preserve their declaring storage and exception-search cursor (9.048199ms)
+✔ cil: monitor queues restore into a fresh lazy component with exact task and Boolean flag aliases (6.42772ms)
+✔ local and portable captures replay frame bytes, scoped pins, empty spans and reinterpretation after collection (50.917973ms)
+✔ captured memory rejects stale regions, pin handles, wrong types and bounds before retiring live capabilities (16.641752ms)
+✔ captured stack regions reject overlapping buffers and destination byte quota overruns (5.159818ms)
+✔ Object string continuation uses captured storage after old operands are collected and portable rebinding (36.478721ms)
+✔ Object continuation malformed cursors, frame ownership and result types reject atomically (9.602022ms)
+✔ source: structured clone snapshot resumes in a fresh owner (34.664081ms)
+✔ source: JSON snapshot resumes in a fresh owner (9.558934ms)
+✔ source: wire retains exact scalar values, cycles, aliases and typed payloads (7.216374ms)
+✔ source: wrong code, ABI, host revision and malformed graphs reject before replacement (6.412929ms)
+✔ source: a direct backing alias remains shared with its record across local and portable restore (7.491302ms)
+✔ cil: structured clone snapshot resumes in a fresh owner (35.964531ms)
+✔ cil: JSON snapshot resumes in a fresh owner (14.336917ms)
+✔ cil: wire retains exact scalar values, cycles, aliases and typed payloads (8.849988ms)
+✔ cil: wrong code, ABI, host revision and malformed graphs reject before replacement (8.361385ms)
+✔ cil: a direct backing alias remains shared with its record across local and portable restore (6.920745ms)
+✔ portable local addresses and issued function pointers are rebound to the receiving VM (9.428668ms)
+✔ portable snapshots reject functions, unissued refs and accessors without invoking them (1.973378ms)
+✔ portable generic calls restore closed cache keys and canonical IL bodies (11.478699ms)
+✔ COW captures reuse unchanged records and detach host writes before another capture (5.61725ms)
+✔ snapshot typed backing preserves NaN payload bits and never exposes writable captured storage (0.88546ms)
+✔ shared=false: mutable cycles and backing aliases remain independent after restore (0.325137ms)
+✔ shared=true: mutable cycles and backing aliases remain independent after restore (0.298458ms)
+✔ collection and reused slots cannot inherit another generation's shared record (1.338576ms)
+✔ shared=false: different typed views preserve buffer aliases, offsets and independent snapshots (0.931208ms)
+✔ shared=true: different typed views preserve buffer aliases, offsets and independent snapshots (0.931609ms)
+✔ frozen buffer wrappers retain mutable internal bytes and cannot enter the immutable record cache (0.307021ms)
+✔ 128 captures with 1% record mutation retain under twice a 10 MiB logical heap (908.563383ms)
+✔ snapshot JSON bounds include escaping, Unicode scalars, lone surrogates and property names (1.487686ms)
+✔ snapshot JSON rejects sparse expansion and non-enumerable hooks or accessors without invoking them (2.813765ms)
+✔ snapshot JSON depth and alias limits are checked before serialization (0.575195ms)
+✔ snapshot JSON text limits count UTF-8 without materializing another encoded buffer (0.351005ms)
+✔ source: readonly UTF-16 spans replay after collection of the original string (22.319627ms)
+✔ source: forged mutable, mistyped and oversized string spans reject before replacement (2.974661ms)
+✔ cil: readonly UTF-16 spans replay after collection of the original string (20.197679ms)
+✔ cil: forged mutable, mistyped and oversized string spans reject before replacement (3.295703ms)
+✔ source: parked capture restores coherent waits after cancellation and live collection (40.755839ms)
+✔ source: terminal current contexts never reacquire retained fatal active frames (8.501181ms)
+✔ cil: parked capture restores coherent waits after cancellation and live collection (42.974833ms)
+✔ cil: terminal current contexts never reacquire retained fatal active frames (14.885768ms)
+✔ T12 independent bootstrap rejects a clear slowdown and preserves noise-level changes (26.284894ms)
+✔ T12 point slowdown within broad independent noise remains explicitly inconclusive (9.934709ms)
+✔ T12 full gate detects slower execution and accepts one-percent noise (132.116076ms)
+✔ T12 zero allocations use an absolute boundary; exact budget and equal samples pass (5.525429ms)
+✔ T12 allocation bootstrap accepts zero-denominator draws without imputing epsilon values (2.771553ms)
+✔ T12 production gate rejects synthetic observations and the checked-in unmeasured baseline (3.903336ms)
+✔ T12 rejects missing case (3.501315ms)
+✔ T12 rejects duplicate case (3.58006ms)
+✔ T12 rejects missing metric (3.124361ms)
+✔ T12 rejects NaN sample (2.947912ms)
+✔ T12 rejects negative sample (6.324517ms)
+✔ T12 rejects fractional allocation (4.413024ms)
+✔ T12 rejects missing samples (3.858916ms)
+✔ T12 rejects duplicate sample index (4.130069ms)
+✔ T12 rejects reordered warmup (4.187092ms)
+✔ T12 rejects fabricated throughput (3.989156ms)
+✔ T12 rejects fabricated summary (7.225964ms)
+✔ T12 rejects failed correctness (3.528725ms)
+✔ T12 rejects cancelled run (3.02871ms)
+✔ T12 rejects dirty commit (3.349953ms)
+✔ T12 rejects changed revision (3.172291ms)
+✔ T12 rejects different runtime (5.22013ms)
+✔ T12 rejects unmeasured case (5.089148ms)
+✔ T12 rejects reversed metric (3.882345ms)
+✔ T12 baseline requires distinct serial repeats on the same revision with stable medians (7.646175ms)
+✔ T12 repeat qualification rejects a new allocation from an originally zero-allocation case (3.37529ms)
+✔ T12 baseline qualification is checked from raw evidence (5.116869ms)
+✔ T12 optional phases remain unavailable rather than pretending to be zero-duration measurements (13.33142ms)
+✔ T12 malformed gate configuration is rejected even when observations are identical (31.455616ms)
+✔ T12 source preparation is idempotent and has no guest effects (124.898158ms)
+✔ T12 cil preparation is idempotent and has no guest effects (24.961914ms)
+✔ T12 actual CIL virtual calls execute the original class override (16.4623ms)
+✔ T12 preparation rejects foreign/stopped VMs and reports disabled source planning honestly (8.697846ms)
+✔ T12 deliberately slowed arithmetic handler fails the same statistical gate used by reports (340.203972ms)
+✔ T12 restored source execution explicitly resumes without ignoring ordinary debugger pauses (20.26198ms)
+✔ T12 cancellation and failed correctness always dispose the VM (5.403116ms)
+✔ T12 malformed and boundary harness options are explicit (0.29244ms)
+✔ T12 provenance records actual V8 heap capacity and every inherited resource control (1.317235ms)
+✔ T12 inherited heap caps remain visible when Node execArgv is identical (156.281624ms)
+✔ T12 rejects repeat qualification after changing NODE_OPTIONS (10.931862ms)
+✔ T12 rejects repeat qualification after changing effective V8 limit (11.020062ms)
+✔ T12 rejects repeat qualification after changing SHARPFORGE_TEST_CONCURRENCY (3.382158ms)
+✔ T12 rejects repeat qualification after changing SHARPFORGE_MAX_PARALLEL_RUNS (5.638532ms)
+✔ T12 rejects repeat qualification after changing SHARPFORGE_MAX_OLD_SPACE_MB (3.123638ms)
+✔ T12 rejects missing inherited options (0.83069ms)
+✔ T12 rejects missing effective heap limit (0.902446ms)
+✔ T12 rejects invalid effective heap limit (0.597458ms)
+✔ T12 rejects omitted resource control (1.07519ms)
+✔ T12 populated source snapshot replay preserves output after a guest heap write (132.560067ms)
+✔ T12 populated reloaded snapshot replay preserves output after a guest heap write (71.995152ms)
+✔ T12 populated cil snapshot replay preserves output after a guest heap write (90.472012ms)
+✔ T12 absent portable APIs have explicit unavailable phases and no fake zero-duration metrics (0.552131ms)
+✔ T12 cancelled snapshot capture rejects before running the guest (6.350528ms)
+✔ T12 a missing snapshot boundary is a failed case (6.899094ms)
+✔ T12 fresh child cold startup verifies invoice/source and each phase (1093.630409ms)
+✔ T12 fresh child cold startup verifies invoice/reloaded and each phase (925.103668ms)
+✔ T12 fresh child cold startup verifies invoice/cil and each phase (940.277655ms)
+✔ T12 fresh child cold startup verifies grid/source and each phase (899.261746ms)
+✔ T12 fresh child cold startup verifies grid/reloaded and each phase (928.533915ms)
+✔ T12 fresh child cold startup verifies grid/cil and each phase (936.026546ms)
+✔ T12 fresh child cold startup verifies text-report/source and each phase (918.805905ms)
+✔ T12 fresh child cold startup verifies text-report/reloaded and each phase (1014.604464ms)
+✔ T12 fresh child cold startup verifies text-report/cil and each phase (1171.517105ms)
+✔ T12 pre-aborted cold sampling starts no worker and unknown engines fail (14.932105ms)
+✔ T12 in-flight cold cancellation waits for child exit and cleanup (15.056396ms)
+✔ T12 cold output mismatches fail instead of creating a successful timing report (26.199576ms)
+✔ T12 cold worker preserves engine flags without recursively enabling Node test mode (0.946951ms)
+✔ T12 source virtual route executes its declared dispatch (268.161108ms)
+✔ T12 reloaded virtual route executes its declared dispatch (163.530165ms)
+✔ T12 cil virtual route executes its declared dispatch (300.041097ms)
+✔ T12 source virtual fixture catches substituting the interface default for the implementation (128.532928ms)
+✔ T12 report validation rejects labeling interface dispatch as the CIL class-override workload (4.386603ms)
+✔ ManagedHeap: a committed string survives collection in its allocation observer (8.445765ms)
+✖ ManagedHeap: a committed array survives collection in its allocation observer (5.124407ms)
+✔ ManagedHeap: a committed object survives collection in its allocation observer (2.164199ms)
+✔ ManagedHeap: nested allocation notifications retain every unfinished allocation (1.311406ms)
+✔ ManagedHeap: a throwing nested observer releases temporary roots and preserves caller roots (0.690485ms)
+✔ ManagedHeap: one-shot roots survive reservation and returning string notification (2.899023ms)
+✔ ManagedHeap: one-shot roots survive reservation and throwing string notification (1.625447ms)
+✔ ManagedHeap: one-shot roots survive reservation and returning object notification (0.743712ms)
+✔ ManagedHeap: one-shot roots survive reservation and throwing object notification (0.693609ms)
+✔ ManagedHeap: returning growth observers retain the committed owner and children (1.199271ms)
+✔ ManagedHeap: throwing growth observers retain the committed owner and children (5.948597ms)
+✔ source VM: a committed string survives collection in its allocation observer (86.853332ms)
+✖ source VM: a committed array survives collection in its allocation observer (4.450697ms)
+✔ source VM: a committed object survives collection in its allocation observer (5.100302ms)
+✔ source VM: nested allocation notifications retain every unfinished allocation (2.030803ms)
+✔ source VM: a throwing nested observer releases temporary roots and preserves caller roots (1.996542ms)
+✔ source VM: one-shot roots survive reservation and returning string notification (3.573008ms)
+✔ source VM: one-shot roots survive reservation and throwing string notification (7.982925ms)
+✔ source VM: one-shot roots survive reservation and returning object notification (1.539181ms)
+✔ source VM: one-shot roots survive reservation and throwing object notification (2.129207ms)
+✔ source VM: returning growth observers retain the committed owner and children (2.703691ms)
+✔ source VM: throwing growth observers retain the committed owner and children (1.966849ms)
+✔ CIL VM: a committed string survives collection in its allocation observer (22.800724ms)
+✖ CIL VM: a committed array survives collection in its allocation observer (3.346415ms)
+✔ CIL VM: a committed object survives collection in its allocation observer (2.059565ms)
+✔ CIL VM: nested allocation notifications retain every unfinished allocation (1.915564ms)
+✔ CIL VM: a throwing nested observer releases temporary roots and preserves caller roots (2.154259ms)
+✔ CIL VM: one-shot roots survive reservation and returning string notification (1.862045ms)
+✔ CIL VM: one-shot roots survive reservation and throwing string notification (1.806113ms)
+✔ CIL VM: one-shot roots survive reservation and returning object notification (1.629113ms)
+✔ CIL VM: one-shot roots survive reservation and throwing object notification (1.87921ms)
+✔ CIL VM: returning growth observers retain the committed owner and children (1.734648ms)
+✔ CIL VM: throwing growth observers retain the committed owner and children (1.270075ms)
+✔ source VM: allocation observers remain synchronous while event subscribers remain deferred (2.890125ms)
+✔ CIL VM: allocation observers remain synchronous while event subscribers remain deferred (2.073745ms)
+✔ callback frame index source, precise=false: nested callbacks keep parent addresses and GC roots (134.037959ms)
+✔ callback frame index source, precise=true: nested callbacks keep parent addresses and GC roots (13.122433ms)
+✔ callback frame index cil, precise=false: nested callbacks keep parent addresses and GC roots (27.481283ms)
+✔ callback frame index cil, precise=true: nested callbacks keep parent addresses and GC roots (14.319262ms)
+✔ callback frame index retains disabled-scheduler storage and drops released scope membership (0.294803ms)
+✖ managed callback source: subscriber failures escape the enclosing managed catch unchanged (143.837982ms)
+✖ managed callback source: stopping from output never resumes a disposed Object.ToString caller (18.331714ms)
+✔ managed callback source: direct cancellation does not restore pending faults or caller roots (20.504437ms)
+✔ managed callback source: snapshot and restore rejection leave the active continuation usable (19.68315ms)
+✔ managed callback source: a pending task wait cannot suspend the retained caller (14.411927ms)
+✖ managed callback cil: subscriber failures escape the enclosing managed catch unchanged (31.652399ms)
+✖ managed callback cil: stopping from output never resumes a disposed Object.ToString caller (25.898989ms)
+✔ managed callback cil: direct cancellation does not restore pending faults or caller roots (11.496997ms)
+✔ managed callback cil: snapshot and restore rejection leave the active continuation usable (13.691189ms)
+✔ managed callback cil: a pending task wait cannot suspend the retained caller (11.36338ms)
+✔ abandoned cctor wrapper OOM preserves the initiating fault and releases every callback frame (10.115567ms)
+✔ abandoned cctor wakes every initializer waiter after a host completion observer throws (3.578817ms)
+✔ callback verification extends authentic proofs without losing the original entry roots (13.522772ms)
+✔ T10.2 canceling a real parked delegate closes nested frames once, innermost first (37.594798ms)
+✔ T10.2 a parked delegate that wakes naturally emits returns rather than canceled leaves (8.012809ms)
+✔ source: first-chance-policy follows pinned CoreCLR callback failure and notification order (18.843361ms)
+✔ source: first-chance-policy First callback preserves policy through local and portable restore (62.433721ms)
+✔ source: first-chance-policy Second callback preserves policy through local and portable restore (25.924518ms)
+✔ source: unhandled-policy follows pinned CoreCLR callback failure and notification order (3.475954ms)
+✔ source: unhandled-policy First callback preserves policy through local and portable restore (10.019343ms)
+✔ source: unhandled-policy Second callback preserves policy through local and portable restore (9.764859ms)
+✔ reload: first-chance-policy follows pinned CoreCLR callback failure and notification order (26.942805ms)
+✔ reload: first-chance-policy First callback preserves policy through local and portable restore (50.355744ms)
+✔ reload: first-chance-policy Second callback preserves policy through local and portable restore (41.137608ms)
+✔ reload: unhandled-policy follows pinned CoreCLR callback failure and notification order (14.882474ms)
+✔ reload: unhandled-policy First callback preserves policy through local and portable restore (54.427894ms)
+✔ reload: unhandled-policy Second callback preserves policy through local and portable restore (28.630923ms)
+✔ cil: first-chance-policy follows pinned CoreCLR callback failure and notification order (45.278539ms)
+✔ cil: first-chance-policy First callback preserves policy through local and portable restore (42.223874ms)
+✔ cil: first-chance-policy Second callback preserves policy through local and portable restore (28.368808ms)
+✔ cil: unhandled-policy follows pinned CoreCLR callback failure and notification order (10.105179ms)
+✔ cil: unhandled-policy First callback preserves policy through local and portable restore (31.341804ms)
+✔ cil: unhandled-policy Second callback preserves policy through local and portable restore (22.971302ms)
+✔ allocation provenance distinguishes equal-looking heaps and copied handles without changing heap.get (2.765171ms)
+✔ ownership never replaces generation checks or roots an otherwise dead object (0.945448ms)
+✔ ordinary heap rollback preserves issued aliases without adopting copied or abandoned handles (1.120155ms)
+✔ guest object aliases in frames, statics, arrays and stacks retain their allocation identity on restore (31.091717ms)
+✔ int: replacement retains declared storage width, ownership and precise byte growth (6.98084ms)
+✔ byte: replacement retains declared storage width, ownership and precise byte growth (1.065314ms)
+✔ long: replacement retains declared storage width, ownership and precise byte growth (0.896627ms)
+✔ float: replacement retains declared storage width, ownership and precise byte growth (0.822127ms)
+✔ double: replacement retains declared storage width, ownership and precise byte growth (0.821126ms)
+✔ failed conversion and reservation commit no record, allocation accounting or mutation revision (1.979907ms)
+✔ reference records retain slot widths and new child roots survive admission collection (1.366947ms)
+✔ readonly snapshot replacement preserves primitive NaN payload bits (0.912269ms)
+✔ source: profiling preserves execution, counts calls and attributes allocations without retaining frames (134.52263ms)
+✔ source: limits preserve totals and report discarded method, stack and allocation-site detail (10.884242ms)
+✔ source: snapshot replay keeps host counters cumulative and does not invent restored calls (18.269488ms)
+✔ source: rejected options do not silently enable a different profiler capability (95.984614ms)
+✔ reload: profiling preserves execution, counts calls and attributes allocations without retaining frames (33.415138ms)
+✔ reload: limits preserve totals and report discarded method, stack and allocation-site detail (15.327658ms)
+✔ reload: snapshot replay keeps host counters cumulative and does not invent restored calls (19.060129ms)
+✔ reload: rejected options do not silently enable a different profiler capability (77.784833ms)
+✔ cil: profiling preserves execution, counts calls and attributes allocations without retaining frames (52.260531ms)
+✔ cil: limits preserve totals and report discarded method, stack and allocation-site detail (17.99158ms)
+✔ cil: snapshot replay keeps host counters cumulative and does not invent restored calls (31.867906ms)
+✔ cil: rejected options do not silently enable a different profiler capability (52.440666ms)
+✔ CIL: manual stepping observes entered handlers and a faulting opcode exactly once (1.597326ms)
+✔ CIL: stack capacity overflow preserves weights in the reserved stack row (8.452001ms)
+✔ CIL: generic method rows survive snapshot cache invalidation without merging different closed contexts (7.575193ms)
+✔ CIL: allocations before the first opcode are attributed to the method entry boundary (1.402119ms)
+✔ CIL: profiler and method event observers remain independent through parked child cancellation (7.667089ms)
+✔ allocation growth adds managed bytes without inventing allocations; failed reserve adds neither (3.988166ms)
+✔ source vector writes preserve typed float backing (137.626417ms)
+✔ reload vector writes preserve typed float backing (54.161884ms)
+✔ cil vector writes preserve typed float backing (44.958786ms)
+✔ source parallel result writes preserve typed float backing (110.551264ms)
+✔ reload parallel result writes preserve typed float backing (99.000738ms)
+✔ cil parallel result writes preserve typed float backing (88.394914ms)
+✔ source: real suspension counts once with runtime events disabled and waking does not add a count (94.080767ms)
+✔ source: ordinary slices, debugger pauses and self-selected quanta are not suspensions (10.630884ms)
+✔ source: a new child activation counts only its later suspension (11.220501ms)
+✔ source: real context switches contribute without changing program output or instructions (3.64927ms)
+✔ source: restore preserves cumulative counts and does not replay a parked snapshot suspension (9.954201ms)
+✔ source: freezing parks once while cancellation and repeated stop do not invent counts (1.319208ms)
+✔ source: profiling off leaves the observer absent through waiting and snapshot replay (1.83147ms)
+✔ reload: real suspension counts once with runtime events disabled and waking does not add a count (12.824826ms)
+✔ reload: ordinary slices, debugger pauses and self-selected quanta are not suspensions (4.554871ms)
+✔ reload: a new child activation counts only its later suspension (7.085297ms)
+✔ reload: real context switches contribute without changing program output or instructions (10.370222ms)
+✔ reload: restore preserves cumulative counts and does not replay a parked snapshot suspension (11.596272ms)
+✔ reload: freezing parks once while cancellation and repeated stop do not invent counts (8.131794ms)
+✔ reload: profiling off leaves the observer absent through waiting and snapshot replay (6.929218ms)
+✔ cil: real suspension counts once with runtime events disabled and waking does not add a count (21.890503ms)
+✔ cil: ordinary slices, debugger pauses and self-selected quanta are not suspensions (6.320944ms)
+✔ cil: a new child activation counts only its later suspension (6.008766ms)
+✔ cil: real context switches contribute without changing program output or instructions (8.821908ms)
+✔ cil: restore preserves cumulative counts and does not replay a parked snapshot suspension (5.799088ms)
+✔ cil: freezing parks once while cancellation and repeated stop do not invent counts (3.554661ms)
+✔ cil: profiling off leaves the observer absent through waiting and snapshot replay (3.599947ms)
+✔ CIL: independent event and profiler observers agree on actual switches before ring eviction (5.246947ms)
+✔ CIL: cumulative suspension counts survive event loss and host subscriber errors (6.701624ms)
+✔ CIL: event transitions still work when profiling is disabled (3.059634ms)
+✔ T01 scalar example preserves width, IEEE bits, decimal scale and arithmetic faults on all routes (243.955945ms)
+✖ T07 preparation, explicit invalidation and restore preserve guest execution on all routes (46.603015ms)
+✔ synchronous host callback source: receiver, nested scopes and result inspection retain the boundary (83.489005ms)
+✔ synchronous host callback source: callback and inspection failures release the scope unchanged (2.279608ms)
+✔ synchronous host callback source: explicit stop keeps the boundary until callback completion (1.473484ms)
+✔ synchronous host callback cil: receiver, nested scopes and result inspection retain the boundary (18.771469ms)
+✔ synchronous host callback cil: callback and inspection failures release the scope unchanged (3.093644ms)
+✔ synchronous host callback cil: explicit stop keeps the boundary until callback completion (2.5464ms)
+✔ framework Object.ToString: pinned source hash and exact override opt-ins (3.134594ms)
+✔ framework Object.ToString bound: emitted calls and profile round trip keep Convert distinct (172.841541ms)
+✔ framework Object.ToString bound: null faults after the emitted profile round trip (13.465636ms)
+✔ framework Object.ToString legacy: emitted calls and profile round trip keep Convert distinct (24.160663ms)
+✔ framework Object.ToString legacy: null faults after the emitted profile round trip (14.023405ms)
+✔ framework Object.ToString source: object references invoke only opted-in framework overrides (12.629418ms)
+✔ framework Object.ToString source: primitive, Convert and Console profiles remain unchanged (10.601881ms)
+✔ framework Object.ToString source: null receiver faults (4.774362ms)
+✔ framework Object.ToString source: GC, snapshot and allocation faults preserve builder state (6.907384ms)
+✔ framework Object.ToString source: unmarked framework methods stay on the fallback profile (4.041095ms)
+✔ framework Object.ToString cil: object references invoke only opted-in framework overrides (11.777157ms)
+✔ framework Object.ToString cil: primitive, Convert and Console profiles remain unchanged (12.572825ms)
+✔ framework Object.ToString cil: null receiver faults (6.949676ms)
+✔ framework Object.ToString cil: GC, snapshot and allocation faults preserve builder state (5.772648ms)
+✔ framework Object.ToString cil: unmarked framework methods stay on the fallback profile (3.370049ms)
+✔ framework Object.ToString CIL: call empty-builder matches native (2.598316ms)
+✔ framework Object.ToString CIL: callvirt empty-builder matches native (2.188755ms)
+✔ framework Object.ToString CIL: call builder matches native (1.991645ms)
+✔ framework Object.ToString CIL: callvirt builder matches native (1.747277ms)
+✔ framework Object.ToString CIL: call mutated-builder matches native (1.945057ms)
+✔ framework Object.ToString CIL: callvirt mutated-builder matches native (2.455356ms)
+✔ framework Object.ToString CIL: call uri matches native (1.394398ms)
+✔ framework Object.ToString CIL: callvirt uri matches native (1.161797ms)
+✔ framework Object.ToString CIL: call null matches native (1.376371ms)
+✔ framework Object.ToString CIL: callvirt null matches native (1.513784ms)
+✔ framework Object.ToString CIL: hidden user method is not an override (2.189445ms)
+✔ framework Object.ToString CIL: call retains released primitive formatting (1.226932ms)
+✔ framework Object.ToString CIL: callvirt retains released primitive formatting (1.085274ms)
+✔ framework Object.ToString metadata rejects invalid override opt-ins (0.873182ms)
+✔ Stopwatch async clock source: rejected Promise remains a managed diagnostic without an orphan host rejection (130.023688ms)
+✔ Stopwatch async clock source: an invalid foreign thenable never invokes its accessors or continuation (4.992012ms)
+✔ Stopwatch async clock source: native Promise constructor and species hooks stay inside the boundary (3.007137ms)
+✔ Stopwatch async clock source: discarding a fulfilled Promise never forwards its payload to a new Promise (1.425794ms)
+✔ Stopwatch async clock source: rejection observation precedes explicit stop and sticky reentry exits (21.271315ms)
+✔ Stopwatch async clock cil: rejected Promise remains a managed diagnostic without an orphan host rejection (14.821658ms)
+✔ Stopwatch async clock cil: an invalid foreign thenable never invokes its accessors or continuation (10.021969ms)
+✔ Stopwatch async clock cil: native Promise constructor and species hooks stay inside the boundary (9.991064ms)
+✔ Stopwatch async clock cil: discarding a fulfilled Promise never forwards its payload to a new Promise (6.882878ms)
+✔ Stopwatch async clock cil: rejection observation precedes explicit stop and sticky reentry exits (12.965201ms)
+✔ Stopwatch source: clock host-stop cancels every pending operation before writes or result allocation (108.779853ms)
+✔ Stopwatch cil: clock host-stop cancels every pending operation before writes or result allocation (29.987381ms)
+✔ Stopwatch cancellation bound/source: a real host stop publishes no elapsed or virtual string result (42.316878ms)
+✔ Stopwatch cancellation bound/reload: a real host stop publishes no elapsed or virtual string result (43.943998ms)
+✔ Stopwatch cancellation bound/cil: a real host stop publishes no elapsed or virtual string result (35.365659ms)
+✔ Stopwatch cancellation legacy/source: a real host stop publishes no elapsed or virtual string result (16.536777ms)
+✔ Stopwatch cancellation legacy/reload: a real host stop publishes no elapsed or virtual string result (34.571633ms)
+✔ Stopwatch cancellation legacy/cil: a real host stop publishes no elapsed or virtual string result (21.453718ms)
+✔ Stopwatch cancellation independent CIL: a clock host-stop aborts Object virtual dispatch and its caller (3.612195ms)
+✔ Stopwatch clock boundary source/Stop: a caught snapshot rejection preserves the live continuation (119.58356ms)
+✔ Stopwatch clock boundary source/GetTimestamp: a caught snapshot rejection preserves the live continuation (2.500713ms)
+✔ Stopwatch clock boundary source/Stop: a caught restore rejection preserves the live continuation (2.029651ms)
+✔ Stopwatch clock boundary source/GetTimestamp: a caught restore rejection preserves the live continuation (1.829918ms)
+✔ Stopwatch clock boundary source: callback failure, reentry and explicit stop release the boundary (8.338716ms)
+✔ Stopwatch clock boundary cil/Stop: a caught snapshot rejection preserves the live continuation (17.931835ms)
+✔ Stopwatch clock boundary cil/GetTimestamp: a caught snapshot rejection preserves the live continuation (3.640817ms)
+✔ Stopwatch clock boundary cil/Stop: a caught restore rejection preserves the live continuation (2.860401ms)
+✔ Stopwatch clock boundary cil/GetTimestamp: a caught restore rejection preserves the live continuation (2.549364ms)
+✔ Stopwatch clock boundary cil: callback failure, reentry and explicit stop release the boundary (10.1725ms)
+✔ Stopwatch source: malformed, failed and decreasing clock reads preserve all managed state (85.870593ms)
+✔ Stopwatch source: exact endpoint ticks and explicit option/async/reentrant clock diagnostics (3.504618ms)
+✔ Stopwatch source: swallowed recursive reads and same-watch resets retain the sticky diagnostic and captured state (4.325914ms)
+✔ Stopwatch source: a clock callback may reset a different watch without sampling another clock (0.570178ms)
+✔ Stopwatch source: invalid receivers and Int64 arguments fail before clock reads or managed allocation (0.936385ms)
+✔ Stopwatch source: managed allocation failures retain elapsed state and release temporary roots (2.569794ms)
+✔ Stopwatch source: default performance source yields monotonic nanoseconds and rejects nonfinite readings (2.092513ms)
+✔ Stopwatch cil: malformed, failed and decreasing clock reads preserve all managed state (10.155597ms)
+✔ Stopwatch cil: exact endpoint ticks and explicit option/async/reentrant clock diagnostics (9.8113ms)
+✔ Stopwatch cil: swallowed recursive reads and same-watch resets retain the sticky diagnostic and captured state (13.038341ms)
+✔ Stopwatch cil: a clock callback may reset a different watch without sampling another clock (2.586709ms)
+✔ Stopwatch cil: invalid receivers and Int64 arguments fail before clock reads or managed allocation (2.854723ms)
+✔ Stopwatch cil: managed allocation failures retain elapsed state and release temporary roots (3.133282ms)
+✔ Stopwatch cil: default performance source yields monotonic nanoseconds and rejects nonfinite readings (10.645325ms)
+✔ Stopwatch bound/source: complete public methods bind and dispatch with an exact injected clock (157.258884ms)
+✔ Stopwatch bound/source: Frequency and IsHighResolution remain readonly field expressions (8.574133ms)
+✔ Stopwatch bound/source: host clock failures become catchable managed diagnostics (8.977636ms)
+✔ Stopwatch bound/cil: complete public methods bind and dispatch with an exact injected clock (58.647248ms)
+✔ Stopwatch bound/cil: Frequency and IsHighResolution remain readonly field expressions (13.080463ms)
+✔ Stopwatch bound/cil: host clock failures become catchable managed diagnostics (16.139104ms)
+✔ Stopwatch legacy/source: complete public methods bind and dispatch with an exact injected clock (33.560813ms)
+✔ Stopwatch legacy/source: Frequency and IsHighResolution remain readonly field expressions (6.295196ms)
+✔ Stopwatch legacy/source: host clock failures become catchable managed diagnostics (17.177369ms)
+✔ Stopwatch legacy/cil: complete public methods bind and dispatch with an exact injected clock (31.994042ms)
+✔ Stopwatch legacy/cil: Frequency and IsHighResolution remain readonly field expressions (6.520487ms)
+✔ Stopwatch legacy/cil: host clock failures become catchable managed diagnostics (6.493998ms)
+✔ Stopwatch lifecycle source: natural Main completion retains clock reads, transitions and construction (83.870806ms)
+✔ Stopwatch lifecycle source: completed Main still permits stopped and ordinary framework Object.ToString (8.476359ms)
+✔ Stopwatch lifecycle source: a clock callback can explicitly stop a VM whose Main already completed (3.846509ms)
+✔ Stopwatch lifecycle source: restoring live execution after an explicit stop permits pure BCL continuation (6.241748ms)
+✔ Stopwatch lifecycle cil: natural Main completion retains clock reads, transitions and construction (14.700682ms)
+✔ Stopwatch lifecycle cil: completed Main still permits stopped and ordinary framework Object.ToString (3.368517ms)
+✔ Stopwatch lifecycle cil: a clock callback can explicitly stop a VM whose Main already completed (7.884941ms)
+✔ Stopwatch lifecycle cil: restoring live execution after an explicit stop permits pure BCL continuation (5.093091ms)
+✔ Stopwatch Object.ToString bound/source: running and stopped overrides preserve Convert and Console formatting (108.992684ms)
+✔ Stopwatch Object.ToString bound/reload: running and stopped overrides preserve Convert and Console formatting (40.331587ms)
+✔ Stopwatch Object.ToString bound/cil: running and stopped overrides preserve Convert and Console formatting (31.672339ms)
+✔ Stopwatch Object.ToString legacy/source: running and stopped overrides preserve Convert and Console formatting (12.516874ms)
+✔ Stopwatch Object.ToString legacy/reload: running and stopped overrides preserve Convert and Console formatting (18.961901ms)
+✔ Stopwatch Object.ToString legacy/cil: running and stopped overrides preserve Convert and Console formatting (15.502579ms)
+✔ Stopwatch Object.ToString independent CIL: only virtual Object calls dispatch while Convert and Console retain type names (6.406599ms)
+✔ Stopwatch source: every native signed, precise, rounded and wrapping delta matches exact ticks and totals (79.866905ms)
+✔ Stopwatch source: ToString formats stopped counters against every reachable native duration row (12.246967ms)
+✔ Stopwatch cil: every native signed, precise, rounded and wrapping delta matches exact ticks and totals (15.666781ms)
+✔ Stopwatch cil: ToString formats stopped counters against every reachable native duration row (23.535448ms)
+✔ Stopwatch independent CIL: ordinary Int64 calls match all 54 native duration rows (81.627266ms)
+✔ Stopwatch independent CIL: constructor, state methods, properties and static factories dispatch without a source profile (5.044059ms)
+✔ Stopwatch public inventory exactly preserves native methods, properties and genuine readonly fields (2.097951ms)
+✔ Stopwatch source: repeated transitions, resume and restart preserve exact counters and 1500 ms (92.845432ms)
+✔ Stopwatch source: running snapshots retain exact state while the host clock continues (6.750435ms)
+✔ Stopwatch source: clocks and objects are independent and StartNew survives clock and write observer collection (2.359035ms)
+✔ Stopwatch source: transitions use constant managed storage and throwing observers see complete state (2.503667ms)
+✔ Stopwatch cil: repeated transitions, resume and restart preserve exact counters and 1500 ms (15.164273ms)
+✔ Stopwatch cil: running snapshots retain exact state while the host clock continues (5.51479ms)
+✔ Stopwatch cil: clocks and objects are independent and StartNew survives clock and write observer collection (4.868309ms)
+✔ Stopwatch cil: transitions use constant managed storage and throwing observers see complete state (2.128306ms)
+✖ SF-A08-T13 source: allocation reentry cannot publish stale values, counts, holes or capacity (81.603926ms)
+✖ SF-A08-T13 source: unrelated same-heap mutations and nested allocation are allowed (1.955923ms)
+✖ SF-A08-T13 source: allocation observer collection preserves every pending backing array (1.468196ms)
+✔ SF-A08-T13 source: an owner-growth observer cannot silently replace the expected published state (2.34943ms)
+✔ SF-A08-T13 source: compaction invalidates old positions before an owner-growth notification (1.630956ms)
+✖ SF-A08-T13 source: natural completion permits host calls and a later explicit stop still cancels growth (2.843617ms)
+✔ SF-A08-T13 source: constructor duplicate shrink keeps mutations from its early version observer (1.795016ms)
+✖ SF-A08-T13 source: stop during allocation cancels reserve callers before subsequent writes (1.435308ms)
+✔ SF-A08-T13 source: version observer errors survive unless that observer explicitly stops execution (4.665061ms)
+✖ SF-A08-T13 source: stop on version or backing notification prevents later resize and caller writes (2.068358ms)
+✖ SF-A08-T13 cil: allocation reentry cannot publish stale values, counts, holes or capacity (10.59352ms)
+✖ SF-A08-T13 cil: unrelated same-heap mutations and nested allocation are allowed (2.33511ms)
+✖ SF-A08-T13 cil: allocation observer collection preserves every pending backing array (2.091111ms)
+✔ SF-A08-T13 cil: an owner-growth observer cannot silently replace the expected published state (1.972107ms)
+✔ SF-A08-T13 cil: compaction invalidates old positions before an owner-growth notification (1.980469ms)
+✖ SF-A08-T13 cil: natural completion permits host calls and a later explicit stop still cancels growth (4.762185ms)
+✔ SF-A08-T13 cil: constructor duplicate shrink keeps mutations from its early version observer (5.984709ms)
+✖ SF-A08-T13 cil: stop during allocation cancels reserve callers before subsequent writes (1.716061ms)
+✔ SF-A08-T13 cil: version observer errors survive unless that observer explicitly stops execution (5.4198ms)
+✖ SF-A08-T13 cil: stop on version or backing notification prevents later resize and caller writes (2.990032ms)
+✔ SF-A08-T13 source: a stopped framework constructor never resumes the guest or a retired caller stack (24.844511ms)
+✔ SF-A08-T13 cil: a stopped framework constructor never resumes the guest or a retired caller stack (12.77233ms)
+ℹ tests 415
+ℹ suites 0
+ℹ pass 395
+ℹ fail 20
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58211.912676
+
+✖ failing tests:
+
+test at tests/a05-allocation-observer-roots.test.js:94:5
+✖ ManagedHeap: a committed array survives collection in its allocation observer (5.124407ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + Int32Array(2) [
+  - [
+      0,
+      0
+    ]
+  
+      at file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:106:16
+      at withHeap (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:24:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:95:7)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Int32Array(2) [ 0, 0 ],
+    expected: [ 0, 0 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-allocation-observer-roots.test.js:94:5
+✖ source VM: a committed array survives collection in its allocation observer (4.450697ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + Int32Array(2) [
+  - [
+      0,
+      0
+    ]
+  
+      at file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:106:16
+      at withHeap (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:24:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:95:7)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Int32Array(2) [ 0, 0 ],
+    expected: [ 0, 0 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-allocation-observer-roots.test.js:94:5
+✖ CIL VM: a committed array survives collection in its allocation observer (3.346415ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + Int32Array(2) [
+  - [
+      0,
+      0
+    ]
+  
+      at file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:106:16
+      at withHeap (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:24:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-allocation-observer-roots.test.js:95:7)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Int32Array(2) [ 0, 0 ],
+    expected: [ 0, 0 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-callback-lifecycle.test.js:33:3
+✖ managed callback source: subscriber failures escape the enclosing managed catch unchanged (143.837982ms)
+  TypeError: Cannot read properties of undefined (reading 'length')
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-callback-lifecycle.test.js:46:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/a05-callback-lifecycle.test.js:50:3
+✖ managed callback source: stopping from output never resumes a disposed Object.ToString caller (18.331714ms)
+  TypeError: Cannot read properties of undefined (reading 'length')
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-callback-lifecycle.test.js:69:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/a05-callback-lifecycle.test.js:33:3
+✖ managed callback cil: subscriber failures escape the enclosing managed catch unchanged (31.652399ms)
+  TypeError: Cannot read properties of undefined (reading 'length')
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-callback-lifecycle.test.js:46:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/a05-callback-lifecycle.test.js:50:3
+✖ managed callback cil: stopping from output never resumes a disposed Object.ToString caller (25.898989ms)
+  TypeError: Cannot read properties of undefined (reading 'length')
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-callback-lifecycle.test.js:69:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/a05-runtime-capability-examples.test.js:13:1
+✖ T07 preparation, explicit invalidation and restore preserve guest execution on all routes (46.603015ms)
+  InvalidProgramException: Source frame has no verified method body
+      at sourceStackSlots (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-size.js:22:21)
+      at validateContext (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-admission.js:66:22)
+      at validateSourceStackSnapshot (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-admission.js:78:3)
+      at validateSnapshotState (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot-validation.js:58:8)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:85:5
+      at resolveSnapshotTypes (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/snapshot-type-resolution.js:7:12)
+      at restoreVM (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/snapshot.js:84:47)
+      at VirtualMachine.restore (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:55:20)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/examples/runtime/execution-caches.mjs:50:10
+      at Array.map (<anonymous>) {
+    reference: null
+  }
+
+test at tests/a08-hashset-capacity-reentry.test.js:37:3
+✖ SF-A08-T13 source: allocation reentry cannot publish stale values, counts, holes or capacity (81.603926ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'TypeError'
+  - 'InvalidOperationException'
+  
+      at Object.conflict (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a08-hashset-capacity-reentry.test.js:31:10)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.throws (node:assert:759:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a08-hashset-capacity-reentry.test.js:49:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'TypeError',
+    expected: 'InvalidOperationException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a08-hashset-capacity-reentry.test.js:59:3
+✖ SF-A08-T13 source: unrelated same-heap mutations and nested allocation are allowed (1.955923ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+      at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+      at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19
+
+test at tests/a08-hashset-capacity-reentry.test.js:78:3
+✖ SF-A08-T13 source: allocation observer collection preserves every pending backing array (1.468196ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+      at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+      at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19
+
+test at tests/a08-hashset-capacity-reentry.test.js:139:3
+✖ SF-A08-T13 source: natural completion permits host calls and a later explicit stop still cancels growth (2.843617ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+      at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+      at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19
+
+test at tests/a08-hashset-capacity-reentry.test.js:186:3
+✖ SF-A08-T13 source: stop during allocation cancels reserve callers before subsequent writes (1.435308ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "markers.concat is not a function"
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a08-hashset-capacity-reentry.test.js:201:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: markers.concat is not a function
+        at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+        at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+        at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+        at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+        at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+        at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+        at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+        at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+        at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19,
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
+
+test at tests/a08-hashset-capacity-reentry.test.js:247:3
+✖ SF-A08-T13 source: stop on version or backing notification prevents later resize and caller writes (2.068358ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at reserveHashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:101:10)
+      at reserveIndexed (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/indexed-storage.js:9:27)
+      at insertIndexed (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/indexed-storage.js:34:19)
+      at add (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:11:10)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:95:19)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+
+test at tests/a08-hashset-capacity-reentry.test.js:37:3
+✖ SF-A08-T13 cil: allocation reentry cannot publish stale values, counts, holes or capacity (10.59352ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'TypeError'
+  - 'InvalidOperationException'
+  
+      at Object.conflict (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a08-hashset-capacity-reentry.test.js:31:10)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.throws (node:assert:759:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a08-hashset-capacity-reentry.test.js:49:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'TypeError',
+    expected: 'InvalidOperationException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a08-hashset-capacity-reentry.test.js:59:3
+✖ SF-A08-T13 cil: unrelated same-heap mutations and nested allocation are allowed (2.33511ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+      at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+      at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19
+
+test at tests/a08-hashset-capacity-reentry.test.js:78:3
+✖ SF-A08-T13 cil: allocation observer collection preserves every pending backing array (2.091111ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+      at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+      at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19
+
+test at tests/a08-hashset-capacity-reentry.test.js:139:3
+✖ SF-A08-T13 cil: natural completion permits host calls and a later explicit stop still cancels growth (4.762185ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+      at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+      at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+      at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19
+
+test at tests/a08-hashset-capacity-reentry.test.js:186:3
+✖ SF-A08-T13 cil: stop during allocation cancels reserve callers before subsequent writes (1.716061ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "markers.concat is not a function"
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a08-hashset-capacity-reentry.test.js:201:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: markers.concat is not a function
+        at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+        at ensureCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:122:10)
+        at hashSetCapacity (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:155:52)
+        at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:82:12)
+        at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+        at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+        at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+        at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)
+        at invokeBclPlatform (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:57:32)
+        at file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/platform.js:118:19,
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
+
+test at tests/a08-hashset-capacity-reentry.test.js:247:3
+✖ SF-A08-T13 cil: stop on version or backing notification prevents later resize and caller writes (2.990032ms)
+  TypeError: markers.concat is not a function
+      at growStorage (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:84:25)
+      at reserveHashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set-capacity.js:101:10)
+      at reserveIndexed (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/indexed-storage.js:9:27)
+      at insertIndexed (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/indexed-storage.js:34:19)
+      at add (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:11:10)
+      at hashSet (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/hash-set.js:95:19)
+      at invokeMember (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:78:36)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-collections/src/legacy-closed.js:126:33)
+      at Object.invoke (file:///workspace/scratch/42f7738360b9/a05-integration/packages/bcl-core/src/registry.js:45:29)
+      at Object.invokeCore [as bcl] (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/bcl-adapter.js:36:26)

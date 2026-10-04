@@ -1,6 +1,10 @@
 import {resolve} from 'node:path';
 
 export function requireQualificationOptions(options) {
+  if (options.profilerMode !== undefined && (!['both', 'off', 'on'].includes(options.profilerMode) ||
+      options.profilerMode !== 'both' && !['all', 'profiler'].includes(options.suite))) {
+    throw new TypeError('Profiler mode requires all or profiler suite and must be off, on, or both');
+  }
   if (options.target !== undefined && options.target !== null &&
       (typeof options.target !== 'string' || !/^[a-z][a-z0-9-]{0,79}$/.test(options.target) || options.suite !== 'targets')) {
     throw new TypeError('A named target requires the targets suite');
@@ -17,11 +21,12 @@ export function requireQualificationOptions(options) {
 export function parseQualificationOptions(args) {
   const options = {runner: '', out: 'artifacts/a05-qualification.json', suite: 'all', target: null, width: 'all',
     samples: 20, warmup: 3, nativeBits: 32, seed: 12012, resamples: 10000, timeoutSeconds: 900,
-    int32Cases: 1000000, int64Cases: 10000000, rootScans: 20, arrayElements: 1000000, profilerReference: null};
+    int32Cases: 1000000, int64Cases: 10000000, rootScans: 20, arrayElements: 1000000, profilerReference: null, profilerMode: 'both'};
   const names = {'--runner': 'runner', '--out': 'out', '--suite': 'suite', '--target': 'target', '--width': 'width', '--samples': 'samples',
     '--warmup': 'warmup', '--native-bits': 'nativeBits', '--seed': 'seed', '--resamples': 'resamples',
     '--timeout-seconds': 'timeoutSeconds', '--int32-cases': 'int32Cases', '--int64-cases': 'int64Cases',
-    '--root-scans': 'rootScans', '--array-elements': 'arrayElements', '--profiler-reference': 'profilerReference'};
+    '--root-scans': 'rootScans', '--array-elements': 'arrayElements', '--profiler-reference': 'profilerReference',
+    '--profiler-mode': 'profilerMode'};
   const numeric = new Set(['samples', 'warmup', 'nativeBits', 'seed', 'resamples', 'timeoutSeconds',
     'int32Cases', 'int64Cases', 'rootScans', 'arrayElements']);
   const seen = new Set();

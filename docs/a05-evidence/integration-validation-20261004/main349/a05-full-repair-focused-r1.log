@@ -1,0 +1,1087 @@
+✖ T02.9 source: optional slots and typed references preserve types, aliases and copies (230.522844ms)
+✖ T02.9 reloaded: optional slots and typed references preserve types, aliases and copies (67.368195ms)
+✖ T02.9 cil: optional slots and typed references preserve types, aliases and copies (51.1091ms)
+✔ T02.9 invalid argument handles and nonvariable typed-reference operands are source diagnostics (15.826165ms)
+✔ T02.9 bytecode cannot acquire a varargs handle from an ordinary frame (2.070453ms)
+✖ T02.9 source: optional ref arguments retain their caller location (12.753494ms)
+✖ T02.9 source: variable constructors and ordinary params/default calls retain separate signatures (26.880548ms)
+✖ T02.9 reloaded: optional ref arguments retain their caller location (17.003094ms)
+✖ T02.9 reloaded: variable constructors and ordinary params/default calls retain separate signatures (27.332202ms)
+✖ T02.9 cil: optional ref arguments retain their caller location (13.037978ms)
+✖ T02.9 cil: variable constructors and ordinary params/default calls retain separate signatures (25.096507ms)
+✔ T02.9 source varargs preserve C# declaration and operand diagnostics (26.850274ms)
+✖ T02.9 managed arglist iterates optional values through typed references (27.062963ms)
+✔ T02.9 malformed fixed/optional sentinel is rejected before execution (2.188747ms)
+✖ T02.9 typed references reject mismatched types and expired frames (4.276595ms)
+✖ T02.9 snapshot preflight rejects packet corruption without using live frames (4.845881ms)
+✔ T02.9 metadata writer preserves typed-reference element and argument value types (1.251198ms)
+✔ CIL execution budgets do not become structural EH instruction limits (20.967634ms)
+✔ standalone structural instruction limits remain bounded and enforced (2.413257ms)
+✔ CIL opcode unknown.op retains its explicit fault with decodePlans=false (15.274087ms)
+✔ CIL opcode no. retains its explicit fault with decodePlans=false (1.903978ms)
+✔ CIL opcode unknown.op retains its explicit fault with decodePlans=true (2.095119ms)
+✔ CIL opcode no. retains its explicit fault with decodePlans=true (1.30644ms)
+✔ unknown inspected opcodes cannot acquire an execution verification proof (1.656294ms)
+✔ direct CIL heap quota does not limit the PE bytes and remains enforced from construction (20.784084ms)
+✔ explicit assembly byte limits are exact and independent of the smaller heap quota (2.358286ms)
+✔ nested structural decode limits remain independent from executed instruction limits (2.51765ms)
+✔ a pre-admitted inspector retains its own decoding limits (0.929826ms)
+✔ guest CIL Nullable defaults, both constructor forms, properties, boxing and unbox.any agree (46.102402ms)
+✔ guest Nullable user structs copy underlying fields; Decimal constructors retain exact values (8.339746ms)
+✔ guest Nullable empty Value rejects with its managed exception (3.451973ms)
+✔ guest Nullable wrong box rejects with its managed exception (2.526933ms)
+✔ Nullable array defaults and present values remain distinct across collection (6.680427ms)
+✔ guest-produced Nullable values copy and replay without sharing mutable payloads or foreign types (16.440601ms)
+✔ Nullable rejects object metadata that violates its non-nullable value constraint (3.184159ms)
+✔ Nullable rejects System.Nullable`1<int> metadata that violates its non-nullable value constraint (5.546251ms)
+✔ Nullable rejects Windows.Foundation.Point metadata that violates its non-nullable value constraint (1.318528ms)
+✔ Nullable distinguishes an unsupported auto-layout value from an admitted sequential value (3.056863ms)
+✔ Nullable unbox interior remains an explicit verifier boundary (0.962073ms)
+✔ Nullable member admission validates the closed return type (0.912602ms)
+✔ Nullable byte quotas include aligned HasValue and payload widths before allocation and restore (5.717002ms)
+failed: profiler-on-cil-allocation / failed
+✔ profiler selection retains all original definitions and default alternating off/on row order (4.014709ms)
+✔ CLI selection keeps all sample and fixture bounds, with explicit default and valid suites (0.589606ms)
+✔ required-off qualification rejects missing, failed, optional, and wrong-engine rows (0.400539ms)
+✔ on-only never qualifies required off overhead, even alongside successful non-profiler suites (0.350304ms)
+✔ off-only success records omitted enabled rows, while both groups establish complete coverage (0.243798ms)
+✔ failed enabled observations keep optional classification and retained execution errors (2.281803ms)
+✔ reference dependencies stay ignored while explicit hook-free runtime imports retain their own identity (268.182951ms)
+✔ reference dependency verification rejects changed copied entries and added paths (1.685046ms)
+✔ private construction handles and shared host allocation observers remain byte-identical (2.883047ms)
+✔ profiler-free construction retains the exact callback with a null handle before guest entry (0.716623ms)
+✔ prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference (1.031315ms)
+✔ reference removes only profiler eligibility from the integrated batching guards (0.453016ms)
+✔ current instruction, continuation and method consumers produce syntactically valid reference modules (427.41977ms)
+✔ option-only gates and direct profiler calls require explicit transformation review (0.476781ms)
+✔ reference transformation deletes only reviewed consumers and preserves runtime cleanup (14.28451ms)
+✔ reference creation refuses unknown hook sites and newly introduced profiler behavior (1.435429ms)
+✔ numeric block reference retains all non-profiler observation guards (0.164282ms)
+✔ object-value reference preserves reviewed CIL work and source fault/cleanup boundaries (0.274514ms)
+✔ reviewed array continuation hooks preserve their exact resume/result and fault-cleanup semantics (0.320891ms)
+✔ profiler reference rejects oversized input before parsing or importing another runtime (1.63336ms)
+✔ qualification defaults retain the actual full acceptance counts and explicit runner (1.094097ms)
+✔ qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite (0.357355ms)
+✔ qualification never promotes unavailable, reduced-count or uncertain targets to completion (0.251189ms)
+✔ A05 CIL registry covers exactly the executable decoded opcodes (3.207743ms)
+✔ A05 CIL registry executes compact/wide locals, indirect storage, branches and arrays (29.559214ms)
+✔ A05 CIL registry rejects unknown opcodes and out of bounds instruction pointers (3.33506ms)
+✔ A05 CIL registry preserves first-chance stack and instruction position (5.700877ms)
+✔ logical identities reject collisions with unprojected physical CLI definitions (15.095372ms)
+✔ a separate closed logical name leaves its physical CLI owner unchanged (1.690695ms)
+✖ T02.9 source: optional argument locations survive GC and fresh-VM portable replay (142.343336ms)
+✖ T02.9 source: packet and iterator corruption are rejected before restore mutation (20.143996ms)
+✖ T02.9 reloaded-source: optional argument locations survive GC and fresh-VM portable replay (40.070327ms)
+✖ T02.9 reloaded-source: packet and iterator corruption are rejected before restore mutation (27.292172ms)
+✖ T02.9 cil: optional argument locations survive GC and fresh-VM portable replay (38.433332ms)
+✖ T02.9 cil: packet and iterator corruption are rejected before restore mutation (19.618954ms)
+✖ T02.9 source runtime argument values preserve exact type and VM ownership (16.353685ms)
+✔ synchronous callback source: caller control, dynamic roots and reentrant frames survive collection (144.376999ms)
+✔ synchronous callback source: fault restores preexisting pending state and releases callback frames (13.320598ms)
+✔ synchronous callback cil: caller control, dynamic roots and reentrant frames survive collection (19.410969ms)
+✔ synchronous callback cil: fault restores preexisting pending state and releases callback frames (4.74248ms)
+✔ synchronous CIL callback preserves mutable caller byrefs, GC roots and verified aggregate stack accounting (8.916825ms)
+✔ synchronous callbacks cannot leave paused execution or retain an abandoned pooled frame (17.395728ms)
+✔ synchronous call limits reject invalid budgets and include retained caller depth (10.134434ms)
+✔ synchronous callback instruction exhaustion restores the paused caller and frees abandoned frame storage (3.287021ms)
+✔ CIL constructor admission verifies the reachable Object.ToString override (1.91146ms)
+✔ synchronous CIL callback verification rejection preserves prior report and stack proof (1.961083ms)
+✔ direct host callback execution buffers subscriber delivery until an explicit host flush (8.092734ms)
+✔ nested synchronous calls share the managed frame-depth limit (14.578517ms)
+✔ callbacks preserve an already-suppressed scheduler and obey the enclosing instruction limit (4.371996ms)
+✔ A05 a generic interface first lookup retains identity through recursive primitive materialization (3.682231ms)
+✔ A05 method tables retain canonical primitive, token and generic identities (3.84408ms)
+✔ A05 method tables describe inherited storage and interface implementation slots (1.259571ms)
+✔ A05 source image tables retain type and field identities across namespaces (1.66689ms)
+✔ A05 heap headers survive collection, snapshots and metadata registry replacement (5.508076ms)
+✔ A05 recursive generic reference fields materialize without losing their closed identity (0.623537ms)
+✔ A05 invalid method table definitions fail without retaining broken identities (1.534966ms)
+✔ A05 CIL headers distinguish namespaced virtual method declarations (33.943457ms)
+✔ A05 CIL metadata tables preserve enum backing widths and rebuilt heap headers (1.940933ms)
+✔ A05 CIL GenericParam variance and TypeSpec identities feed the same cast lattice (1.613392ms)
+✖ source ABI32: optional Decimal retains its complete stack charge (11.571073ms)
+✖ source ABI32: optional large struct retains its complete stack charge (2.515637ms)
+✖ source ABI32: optional large struct byref retains its complete stack charge (1.984626ms)
+✖ source ABI64: optional Decimal retains its complete stack charge (1.261503ms)
+✖ source ABI64: optional large struct retains its complete stack charge (1.50385ms)
+✖ source ABI64: optional large struct byref retains its complete stack charge (1.204991ms)
+✖ cil ABI32: optional Decimal retains its complete stack charge (20.727248ms)
+✖ cil ABI32: optional large struct retains its complete stack charge (4.183467ms)
+✖ cil ABI32: optional large struct byref retains its complete stack charge (4.533072ms)
+✖ cil ABI32: optional closed generic struct retains its complete stack charge (4.126434ms)
+✖ cil ABI64: optional Decimal retains its complete stack charge (3.340238ms)
+✖ cil ABI64: optional large struct retains its complete stack charge (2.946499ms)
+✖ cil ABI64: optional large struct byref retains its complete stack charge (2.246121ms)
+✖ cil ABI64: optional closed generic struct retains its complete stack charge (2.651346ms)
+✖ source ABI32: System.ArgIterator reserves its exact logical stack width (11.964632ms)
+✖ source ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width (1.482479ms)
+✖ source ABI32: System.TypedReference reserves its exact logical stack width (1.149559ms)
+✖ source ABI32: typedref reserves its exact logical stack width (0.97991ms)
+✖ source ABI64: System.ArgIterator reserves its exact logical stack width (1.130331ms)
+✖ source ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width (0.930207ms)
+✖ source ABI64: System.TypedReference reserves its exact logical stack width (0.935294ms)
+✖ source ABI64: typedref reserves its exact logical stack width (0.879402ms)
+✔ cil ABI32: System.ArgIterator reserves its exact logical stack width (16.946883ms)
+✔ cil ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width (3.711434ms)
+✔ cil ABI32: System.TypedReference reserves its exact logical stack width (3.332477ms)
+✔ cil ABI32: typedref reserves its exact logical stack width (2.916756ms)
+✔ cil ABI64: System.ArgIterator reserves its exact logical stack width (2.693969ms)
+✔ cil ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width (2.101268ms)
+✔ cil ABI64: System.TypedReference reserves its exact logical stack width (1.865952ms)
+✔ cil ABI64: typedref reserves its exact logical stack width (1.959089ms)
+ℹ tests 130
+ℹ suites 0
+ℹ pass 89
+ℹ fail 41
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14793.747079
+
+✖ failing tests:
+
+test at tests/a05-02-source-varargs.test.js:27:3
+✖ T02.9 source: optional slots and typed references preserve types, aliases and copies (230.522844ms)
+  AssertionError [ERR_ASSERTION]: type.search is not a function
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:33:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:27:3
+✖ T02.9 reloaded: optional slots and typed references preserve types, aliases and copies (67.368195ms)
+  AssertionError [ERR_ASSERTION]: type.search is not a function
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:33:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:27:3
+✖ T02.9 cil: optional slots and typed references preserve types, aliases and copies (51.1091ms)
+  AssertionError [ERR_ASSERTION]: type.search is not a function
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:33:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:65:3
+✖ T02.9 source: optional ref arguments retain their caller location (12.753494ms)
+  AssertionError [ERR_ASSERTION]: RuntimeException: type.search is not a function
+      at makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-eh.js:31:50)
+      at VirtualMachine.makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:40:27)
+      at handleSourceInstructionFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-admission.js:49:20)
+      at executeSourceFusionBatch (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-fusion-batch.js:22:14)
+      at executeInstructions (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:47:14)
+      at runSourceSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:86:5)
+      at VirtualMachine.runSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:47:28)
+      at VirtualMachine.run (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:49:111)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:76:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:81:3
+✖ T02.9 source: variable constructors and ordinary params/default calls retain separate signatures (26.880548ms)
+  AssertionError [ERR_ASSERTION]: RuntimeException: type.search is not a function
+      at makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-eh.js:31:50)
+      at VirtualMachine.makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:40:27)
+      at handleSourceInstructionFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-admission.js:49:20)
+      at executeSourceFusionBatch (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-fusion-batch.js:22:14)
+      at executeInstructions (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:47:14)
+      at runSourceSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:86:5)
+      at VirtualMachine.runSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:47:28)
+      at VirtualMachine.run (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:49:111)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:100:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:101:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:65:3
+✖ T02.9 reloaded: optional ref arguments retain their caller location (17.003094ms)
+  AssertionError [ERR_ASSERTION]: RuntimeException: type.search is not a function
+      at makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-eh.js:31:50)
+      at VirtualMachine.makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:40:27)
+      at handleSourceInstructionFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-admission.js:49:20)
+      at executeSourceFusionBatch (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-fusion-batch.js:22:14)
+      at executeInstructions (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:47:14)
+      at runSourceSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:86:5)
+      at VirtualMachine.runSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:47:28)
+      at VirtualMachine.run (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:49:111)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:76:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:81:3
+✖ T02.9 reloaded: variable constructors and ordinary params/default calls retain separate signatures (27.332202ms)
+  AssertionError [ERR_ASSERTION]: RuntimeException: type.search is not a function
+      at makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-eh.js:31:50)
+      at VirtualMachine.makeFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:40:27)
+      at handleSourceInstructionFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-stack-admission.js:49:20)
+      at executeSourceFusionBatch (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-fusion-batch.js:22:14)
+      at executeInstructions (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:47:14)
+      at runSourceSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/source-slice.js:86:5)
+      at VirtualMachine.runSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:47:28)
+      at VirtualMachine.run (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/vm.js:49:111)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:100:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:101:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:65:3
+✖ T02.9 cil: optional ref arguments retain their caller location (13.037978ms)
+  AssertionError [ERR_ASSERTION]: InvalidProgramException: type.search is not a function
+      at raiseInstructionFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/cil-slice.js:18:57)
+      at runCilSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/cil-slice.js:77:9)
+      at CilVirtualMachine.runSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/cil-vm.js:96:28)
+      at CilVirtualMachine.run (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/cil-vm.js:98:65)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:76:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-source-varargs.test.js:81:3
+✖ T02.9 cil: variable constructors and ordinary params/default calls retain separate signatures (25.096507ms)
+  AssertionError [ERR_ASSERTION]: InvalidProgramException: type.search is not a function
+      at raiseInstructionFault (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/cil-slice.js:18:57)
+      at runCilSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/cil-slice.js:77:9)
+      at CilVirtualMachine.runSlice (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/cil-vm.js:96:28)
+      at CilVirtualMachine.run (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/cil-vm.js:98:65)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:100:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-source-varargs.test.js:101:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-varargs.test.js:61:1
+✖ T02.9 managed arglist iterates optional values through typed references (27.062963ms)
+  AssertionError [ERR_ASSERTION]: type.search is not a function
+  + actual - expected
+  
+  + 'faulted'
+  - 'terminated'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-varargs.test.js:63:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'terminated',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-02-varargs.test.js:75:1
+✖ T02.9 typed references reject mismatched types and expired frames (4.276595ms)
+  TypeError: Cannot read properties of undefined (reading 'length')
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-varargs.test.js:83:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/a05-02-varargs.test.js:111:1
+✖ T02.9 snapshot preflight rejects packet corruption without using live frames (4.845881ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-02-varargs.test.js:120:33)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/a05-source-varargs-snapshot.test.js:58:3
+✖ T02.9 source: optional argument locations survive GC and fresh-VM portable replay (142.343336ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:61:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-varargs-snapshot.test.js:75:3
+✖ T02.9 source: packet and iterator corruption are rejected before restore mutation (20.143996ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:77:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-varargs-snapshot.test.js:58:3
+✖ T02.9 reloaded-source: optional argument locations survive GC and fresh-VM portable replay (40.070327ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:61:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-varargs-snapshot.test.js:75:3
+✖ T02.9 reloaded-source: packet and iterator corruption are rejected before restore mutation (27.292172ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:77:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-varargs-snapshot.test.js:58:3
+✖ T02.9 cil: optional argument locations survive GC and fresh-VM portable replay (38.433332ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:61:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-varargs-snapshot.test.js:75:3
+✖ T02.9 cil: packet and iterator corruption are rejected before restore mutation (19.618954ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:77:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-varargs-snapshot.test.js:94:1
+✖ T02.9 source runtime argument values preserve exact type and VM ownership (16.353685ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'checkpoint\n'
+  
+      at checkpoint (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:50:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-varargs-snapshot.test.js:98:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'checkpoint\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ source ABI32: optional Decimal retains its complete stack charge (11.571073ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'RuntimeException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'RuntimeException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ source ABI32: optional large struct retains its complete stack charge (2.515637ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'RuntimeException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'RuntimeException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ source ABI32: optional large struct byref retains its complete stack charge (1.984626ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'RuntimeException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'RuntimeException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ source ABI64: optional Decimal retains its complete stack charge (1.261503ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'RuntimeException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'RuntimeException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ source ABI64: optional large struct retains its complete stack charge (1.50385ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'RuntimeException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'RuntimeException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ source ABI64: optional large struct byref retains its complete stack charge (1.204991ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'RuntimeException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'RuntimeException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI32: optional Decimal retains its complete stack charge (20.727248ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI32: optional large struct retains its complete stack charge (4.183467ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI32: optional large struct byref retains its complete stack charge (4.533072ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI32: optional closed generic struct retains its complete stack charge (4.126434ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI64: optional Decimal retains its complete stack charge (3.340238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI64: optional large struct retains its complete stack charge (2.946499ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI64: optional large struct byref retains its complete stack charge (2.246121ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-optional-stack-budget.test.js:59:35
+✖ cil ABI64: optional closed generic struct retains its complete stack charge (2.651346ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'InvalidProgramException'
+  - 'StackOverflowException'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-optional-stack-budget.test.js:68:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'InvalidProgramException',
+    expected: 'StackOverflowException',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI32: System.ArgIterator reserves its exact logical stack width (11.964632ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width (1.482479ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI32: System.TypedReference reserves its exact logical stack width (1.149559ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI32: typedref reserves its exact logical stack width (0.97991ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI64: System.ArgIterator reserves its exact logical stack width (1.130331ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width (0.930207ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI64: System.TypedReference reserves its exact logical stack width (0.935294ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-varargs-stack-budget.test.js:20:3
+✖ source ABI64: typedref reserves its exact logical stack width (0.879402ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 42
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-varargs-stack-budget.test.js:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

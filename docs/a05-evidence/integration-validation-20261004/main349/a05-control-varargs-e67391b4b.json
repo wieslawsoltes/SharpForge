@@ -1,0 +1,16 @@
+{
+  "format": "SharpForge.A05FocusedValidation/1",
+  "revision": "e67391b4b70ac7cb90459554a7ce637ff10f9622",
+  "tree": "31d06531675067e580685546feba811de5b7c968",
+  "node": "v24.19.0",
+  "trackedTreeClean": true,
+  "command": "SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 NODE_OPTIONS=--max-old-space-size=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-varargs-stack-budget.test.js tests/a05-varargs-optional-stack-budget.test.js tests/a05-02-varargs.test.js tests/a05-02-source-varargs.test.js tests/a05-source-varargs-snapshot.test.js tests/a05-varargs-unsupported-admission.test.js tests/a05-cil-admission-diagnostics.test.js tests/a05-seams-cil-handlers.test.js",
+  "log": "/workspace/scratch/42f7738360b9/a05-control-varargs-e67391b4b.log",
+  "tests": 73,
+  "passed": 73,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "durationMs": 6755.316813,
+  "native": false
+}

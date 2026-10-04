@@ -41,18 +41,32 @@ ceiling is the minimum of `floor(max(0, maxBytes - 32) / elementBytes)`, the opt
 `maxArrayLength` setting and the host addressing cap of `0xffffffff` elements.
 Admission also checks the combined bytes of all reachable heap records after
 collection; a length that fits an otherwise empty heap can still exhaust a
-populated heap. Oversized lengths or exhausted heap bytes produce managed
+populated heap. The compiled program entry wrapper retains an empty `string[]`
+argument vector, which consumes 32 bytes even when no arguments are supplied.
+With that vector alive, a default guest can allocate at most 8,388,592 Int32
+elements in one array. Materialized managed fault objects and their message
+strings also consume heap bytes when space permits; allocation failure retains
+its original fault if those diagnostic allocations cannot fit.
+Oversized lengths or exhausted heap bytes produce managed
 `OutOfMemoryException`; negative or non-integral lengths produce
 `OverflowException`. There is no separate default one-million-element ceiling.
 
 The [security limit tests](../tests/conformance/security/limits.test.js) cover the
-exact default Int32-array byte boundary and one element over, a ninth
+exact default guest Int32-array byte boundary and one element over, a ninth
 million-element Int32 array exhausting the heap while the first eight remain
 reachable, and smaller
 explicit byte/length limits in source and direct CIL execution. They also check
 typed storage, admission before allocation and rooted survival after rejected
-requests. These are executable policy checks; their presence does not claim a
+requests. Reports separate bootstrap bytes, guest array payload records and
+managed fault records from the total peak. These are executable policy checks; their presence does not claim a
 passing run on an unmeasured revision or platform.
+
+The runtime's `maxBytes` option limits the managed heap. PE admission uses the
+independent `assemblyLimits.maxBytes` option (64 MiB by default); a small heap
+budget does not reject a larger assembly file. Structural decoding limits such
+as `assemblyLimits.maxInstructions` are also separate from the runtime's
+executed-instruction budget. An explicitly supplied `AssemblyInspector` retains
+the decoding limits with which its host constructed it.
 
 Instruction and stack-budget exhaustion are deliberately uncatchable runtime faults.
 The [managed stack policy](default-managed-stack-budget.md) accounts active, parked

@@ -5,7 +5,7 @@ import {measureRootQualification} from './root-qualification.js';
 import {measureArrayFairness} from './array-fairness.js';
 import {measureTieredFairness} from './tiered-fairness.js';
 import {loadProfilerReference} from './profiler-reference.js';
-import {microbenchmarks} from './fixtures.js';
+import {selectProfilerDefinitions, requiredProfilerRows, profilerCoverage} from './qualification-profiler.js';
 import {abortIfNeeded} from './operations.js';
 import {parseQualificationOptions, requireQualificationOptions} from './qualification-options.js';
 import {createReport, completeReport, writeReport, recordError, isMain} from './evidence.js';
@@ -13,15 +13,17 @@ import {createReport, completeReport, writeReport, recordError, isMain} from './
 const includes = (options, suite) => options.suite === 'all' || options.suite === suite;
 
 /** Target completion is separate from successful execution and from the T12 regression gate. */
-export function qualificationAcceptance(rows) {
+export function qualificationAcceptance(rows, requiredRowIds = []) {
   const decisions = rows.filter(row => row.required !== false).map(row => row.target?.acceptance ?? 'unavailable');
   if (decisions.some(value => ['failed', 'missed'].includes(value))) return 'missed';
+  const measured = new Set(rows.filter(row => row.status === 'measured' && row.required !== false).map(row => row.id));
+  if (requiredRowIds.some(id => !measured.has(id))) return 'incomplete';
   if (!decisions.length || decisions.some(value => ['partial', 'unavailable'].includes(value))) return 'incomplete';
   if (decisions.includes('inconclusive')) return 'inconclusive';
   return decisions.every(value => value === 'met') ? 'met' : 'incomplete';
 }
 
-async function recordMeasurement(context, id, measure) {
+export async function recordMeasurement(context, id, measure, required) {
   abortIfNeeded(context.signal);
   let row;
   try {
@@ -33,6 +35,7 @@ async function recordMeasurement(context, id, measure) {
     row.target ??= {acceptance: 'failed'};
     context.report.errors.push({id, ...row.error});
   }
+  if (required !== undefined) row.required = required;
   context.report.rows.push(row);
   writeReport(context.report, context.options.out);
   process.stdout.write(`${row.status}: ${id}${row.target ? ' / ' + row.target.acceptance : ''}\n`);
@@ -52,28 +55,17 @@ async function runDifferentials(context) {
 }
 
 async function runProfiler(context) {
-  if (!context.options.profilerReference) {
+  const mode = context.options.profilerMode ?? 'both';
+  if (mode !== 'on' && !context.options.profilerReference) {
     context.report.rows.push({id: 'profiler-off', issue: 1402, status: 'unavailable', target: {acceptance: 'unavailable'},
       reason: 'A validated profiler-hook-free reference manifest is required. profile:false and an omitted option share the same hooks.'});
     return;
   }
-  const reference = await loadProfilerReference(context.options.profilerReference);
-  context.report.profilerReference = reference.manifest;
-  for (const engine of ['source', 'cil']) {
-    for (const fixture of microbenchmarks.filter(fixture => ['arith', 'calls', 'allocation'].includes(fixture.id))) {
-      for (const enabled of [false, true]) {
-        const definition = {id: `profiler-${enabled ? 'on' : 'off'}-${engine}-${fixture.id}`, issue: 1402, engine, fixture,
-          baselineOptions: {profile: false}, candidateOptions: {profile: enabled ? {sampleBudget: 256} : false},
-          ...(enabled ? {} : {baselineRuntime: reference.api, target: {kind: 'maximum-overhead', value: 0.01}}),
-          note: enabled ? 'Enabled profiler compared to product profiling-off mode; observed overhead only.'
-            : 'Product profiling-off mode compared to its exact-parent reviewed hook-free reference.'};
-        await recordMeasurement(context, definition.id, async () => {
-          const row = await measureExecutionPair(definition, context.options, context.signal);
-          row.required = !enabled;
-          return row;
-        });
-      }
-    }
+  const reference = mode === 'on' ? null : await loadProfilerReference(context.options.profilerReference);
+  if (reference) context.report.profilerReference = reference.manifest;
+  for (const definition of selectProfilerDefinitions(mode, reference?.api)) {
+    await recordMeasurement(context, definition.id,
+      () => measureExecutionPair(definition, context.options, context.signal), definition.required);
   }
 }
 
@@ -102,6 +94,7 @@ async function runSuites(context) {
 export async function runQualification(options, externalSignal) {
   requireQualificationOptions(options);
   const protocol = {version: 1, suite: options.suite, target: options.target ?? null, width: options.width, samples: options.samples, warmup: options.warmup,
+    profilerMode: options.profilerMode ?? 'both',
     int32Cases: options.int32Cases, int64Cases: options.int64Cases, seed: options.seed, resamples: options.resamples,
     timeoutSeconds: options.timeoutSeconds, rootScans: options.rootScans, arrayElements: options.arrayElements,
     vmOptions: qualificationVmOptions(options),
@@ -136,7 +129,9 @@ export async function runQualification(options, externalSignal) {
   } finally {
     clearTimeout(timer);
     externalSignal?.removeEventListener('abort', forward);
-    report.acceptance = qualificationAcceptance(report.rows);
+    const profilerIncluded = includes(options, 'profiler');
+    if (profilerIncluded) report.profilerCoverage = profilerCoverage(report.rows, options.profilerMode ?? 'both');
+    report.acceptance = qualificationAcceptance(report.rows, profilerIncluded ? requiredProfilerRows : []);
     completeReport(report);
     writeReport(report, options.out);
   }

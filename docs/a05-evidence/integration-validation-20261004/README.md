@@ -28,3 +28,7 @@ The separate [source frame-pool evidence](../source-fibonacci-2026-10-04/README.
 retains its 122-test lifecycle/fusion run at `48c62243`. Earlier failing full-suite
 and integration checkpoints remain in the acceptance audit. No new full-suite,
 native SDK, actual browser, or Speedscope UI pass is implied by this checkpoint.
+
+The [main 349 reconciliation continuation](main349/README.md) preserves subsequent
+integration and broad-selection runs, including failed attempts, with their own
+commands and hashes. Its overlapping counts must not be added to this checkpoint.

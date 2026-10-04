@@ -1,0 +1,22 @@
+✔ limits source: documented heap policy and fault (1154.873111ms)
+ℹ {"case":"heap","engine":"source","state":"faulted","fault":"OutOfMemoryException","instructions":45,"heapPeak":32000442,"bootstrapBytes":32,"guestArrayBytes":32000256,"runtimeRecordBytes":154,"peakRss":159199232}
+✔ limits source: documented array policy and fault (1170.61505ms)
+ℹ {"case":"array","engine":"source","state":"faulted","fault":"OutOfMemoryException","instructions":5,"heapPeak":186,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":154,"peakRss":155877376}
+✔ limits cil: documented heap policy and fault (1313.872617ms)
+ℹ {"case":"heap","engine":"cil","state":"faulted","fault":"OutOfMemoryException","instructions":57,"heapPeak":32000442,"bootstrapBytes":32,"guestArrayBytes":32000256,"runtimeRecordBytes":154,"peakRss":158011392}
+✔ limits cil: documented array policy and fault (1257.34323ms)
+ℹ {"case":"array","engine":"cil","state":"faulted","fault":"OutOfMemoryException","instructions":9,"heapPeak":186,"bootstrapBytes":32,"guestArrayBytes":0,"runtimeRecordBytes":154,"peakRss":157179904}
+✔ limits heap: exact allocation boundary, one over, invalid length and rooted survival (6.978655ms)
+✔ limits source: retained guest arrays meet the exact byte budget and fail one element over (104.154272ms)
+✔ limits source: explicit array length ceiling remains independent of available heap bytes (13.056576ms)
+✔ limits cil: retained guest arrays meet the exact byte budget and fail one element over (32.976118ms)
+✔ limits cil: explicit array length ceiling remains independent of available heap bytes (41.910461ms)
+✔ limits debugger: history count/bytes and watch node budget are bounded (49.394964ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6556.838799

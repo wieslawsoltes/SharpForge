@@ -4,15 +4,16 @@ import {AssemblyInspector, verifyCilAssembly} from '@sharpforge/cil';
 import {CilVirtualMachine} from '@sharpforge/runtime';
 import {managedFixture} from './managed-fixtures.js';
 
-for (const decodePlans of [false, true]) {
-  test(`unknown CIL opcode retains its explicit unsupported fault with decodePlans=${decodePlans}`, () => {
+for (const decodePlans of [false, true]) for (const [opcode, name, message] of [
+  ['unknown.op', 'InvalidProgramException', "Unknown CIL opcode 'unknown.op'"],
+  ['no.', 'NotSupportedException', "Opcode 'no.' is not executable"]
+]) {
+  test(`CIL opcode ${opcode} retains its explicit fault with decodePlans=${decodePlans}`, () => {
     const vm = new CilVirtualMachine(managedFixture(), {decodePlans});
     try {
       const original = vm.top.method;
-      vm.top.method = {...original, instructions: [{...original.instructions[0], name: 'unknown.op'}]};
-      assert.throws(() => vm.step(), {
-        name: 'NotSupportedException', message: "Opcode 'unknown.op' is not executable"
-      });
+      vm.top.method = {...original, instructions: [{...original.instructions[0], name: opcode}]};
+      assert.throws(() => vm.step(), {name, message});
       vm.top.method = original;
       vm.top.pc = original.instructions.length;
       assert.throws(() => vm.step(), {

@@ -5,6 +5,7 @@ import {executionCodeState} from './code-version.js';
 import {sourceStackSlots} from './source-stack-size.js';
 import {valueLayout} from './value-layout.js';
 import {isAggregateType} from './value-types.js';
+import {isVarargsStorage} from './varargs-storage.js';
 
 const budgets = new WeakMap();
 const slotBytes = 8;
@@ -29,12 +30,17 @@ function overflow() {
 
 function storageBytes(vm, type) {
   // Custom modifiers affect access/call contracts, not physical storage width.
-  const name = normalizeCallType(type).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
+  // Optional packets already carry closed MethodTables; authenticate ownership
+  // before reading the name rather than passing an object to the text parser.
+  const declared = typeof type === 'string' ? type : vm.heap.methodTables.get(type).name;
+  const name = normalizeCallType(declared).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
   // Function-pointer signatures describe code, not a MethodTable name. Their
   // pointee arguments (including arrays/generics) do not affect physical width.
   if (parseFunctionPointerType(name)) return Math.max(slotBytes, vm.heap.methodTables.nativeIntBits / 8);
   const table = vm.inspector ? vm.typeSystem.table(name) : vm.heap.methodTables.get(name);
-  const layout = table.flags.nullable || vm.inspector && isAggregateType(table);
+  // These owned capability records have explicit logical slot widths, not a
+  // raw CLI value layout. Keep sizeof and aggregate storage admission separate.
+  const layout = !isVarargsStorage(table) && (table.flags.nullable || vm.inspector && isAggregateType(table));
   const bytes = layout ? valueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
   if (!Number.isSafeInteger(bytes) || bytes < 0) throw new TypeError('Invalid managed stack storage size');
   return Math.max(slotBytes, Math.ceil(bytes / slotBytes) * slotBytes);
@@ -73,19 +79,27 @@ function methodSize(vm, budget, method) {
   return entry;
 }
 
-function frameBytes(vm, budget, method, arguments_, locals = method.locals.length) {
+function frameBytes(vm, budget, method, arguments_, locals = method.locals.length, optionalArguments) {
   const entry = methodSize(vm, budget, method);
   const extra = vm.inspector
     ? Math.max(0, arguments_ - entry.arguments) + Math.max(0, locals - method.locals.length)
     : Math.max(0, Math.max(arguments_, locals) - method.locals.length);
-  const bytes = entry.bytes + extra * slotBytes;
+  let bytes = entry.bytes + extra * slotBytes;
+  if (optionalArguments) {
+    if (!Array.isArray(optionalArguments) || optionalArguments.length > extra) {
+      throw new TypeError('Invalid optional managed stack metadata');
+    }
+    // Extra slots already reserve eight bytes each. Widen only the optional
+    // slots using their closed call-site types; a byref remains one slot.
+    for (const item of optionalArguments) bytes += storageBytes(vm, item.type) - slotBytes;
+  }
   if (!Number.isSafeInteger(bytes)) throw new TypeError('Invalid managed frame size');
   return bytes;
 }
 
 function existingFrameBytes(vm, budget, frame) {
   const method = frame.method ?? vm.image.methods[frame.methodId];
-  return frameBytes(vm, budget, method, frame.args?.length ?? 0, frame.locals.length);
+  return frameBytes(vm, budget, method, frame.args?.length ?? 0, frame.locals.length, frame.varargs);
 }
 
 function visitFrames(execution, visit) {
@@ -127,14 +141,14 @@ function budgetFor(vm) {
 }
 
 /** Reserve before pool allocation. The ticket supports rollback if construction fails. */
-export function reserveStackFrame(vm, method, argumentCount) {
+export function reserveStackFrame(vm, method, argumentCount, optionalArguments) {
   const limit = stackByteLimit(vm.options);
   if (limit === undefined) {
     budgets.delete(vm);
     return null;
   }
   const budget = budgetFor(vm);
-  const bytes = frameBytes(vm, budget, method, argumentCount);
+  const bytes = frameBytes(vm, budget, method, argumentCount, method.locals.length, optionalArguments);
   if (bytes > limit - budget.total) throw overflow();
   budget.total += bytes;
   return {budget, bytes, active: true};

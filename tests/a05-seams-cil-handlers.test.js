@@ -24,7 +24,7 @@ test('A05 CIL registry rejects unknown opcodes and out of bounds instruction poi
   const vm=new CilVirtualMachine(managedFixture());
   const original=vm.top.method.instructions;
   vm.top.method={...vm.top.method,instructions:[{name:'unknown.op',offset:0}]};
-  assert.throws(()=>vm.step(),error=>error.name==='NotSupportedException');
+  assert.throws(()=>vm.step(),{name:'InvalidProgramException',message:"Unknown CIL opcode 'unknown.op'"});
   vm.top.method={...vm.top.method,instructions:original};vm.top.pc=original.length;
   assert.throws(()=>vm.step(),error=>error.name==='InvalidProgramException');
 });

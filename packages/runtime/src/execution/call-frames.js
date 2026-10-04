@@ -1,5 +1,5 @@
 import {sourceTypedValue,initializeSourceValueLocals} from './source-value-storage.js';
-import {appendSourceVarargs} from './source-varargs.js';
+import {appendSourceVarargs,prepareSourceVarargs} from './source-varargs.js';
 import {sourceInputTypes} from './source-input-types.js';
 import {attachVarargs} from './varargs.js';
 import {admitCilStack} from './frame-stack.js';
@@ -30,7 +30,7 @@ export function admitCallFrame(vm, frame) {
 export function cilCallFrame(vm, method, args, extra) {
   const capacity = admitCilStack(vm, method);
   const argumentCount = args.length + (extra?.optionalArguments?.length ?? 0);
-  const ticket = reserveStackFrame(vm, method, argumentCount);
+  const ticket = reserveStackFrame(vm, method, argumentCount, extra?.optionalArguments);
   let pool, frame;
   try {
     pool = framePool(vm);
@@ -75,7 +75,8 @@ export function callSourceFrame(vm, methodId, args, extra = {}) {
     throw new ManagedFault('InvalidProgramException', 'Source method argument count mismatch');
   }
   const capacity = Math.max(args.length, method.locals.length + optional);
-  const ticket = reserveStackFrame(vm, method, capacity);
+  const packet = prepareSourceVarargs(vm, method, args.length, extra.argumentTypes ?? [], fixed);
+  const ticket = reserveStackFrame(vm, method, capacity, packet);
   const pinCount = vm.heap.pins.length;
   vm.heap.pins.push(...args);
   let pool, frame;
@@ -90,7 +91,7 @@ export function callSourceFrame(vm, methodId, args, extra = {}) {
       frame.locals[index] = sourceTypedValue(vm, args[index], method.locals[index]?.type ?? method.parameters[index]?.type);
     }
     Object.assign(frame, extra);
-    const packet = appendSourceVarargs(vm, method, frame.locals, args, extra.argumentTypes ?? [], fixed);
+    appendSourceVarargs(vm, frame.locals, args, packet, fixed);
     if (packet) frame.varargs = packet;
     delete frame.argumentTypes;
     admitCallFrame(vm, frame);

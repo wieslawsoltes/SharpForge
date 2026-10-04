@@ -18,6 +18,19 @@ uses its admitted verified capacity (including reserved space in the CLI header)
 fallback capacity. Aggregate values use their closed layouts. These are logical
 runtime bytes, not a claim about JavaScript heap, RSS, or a native CLR stack.
 
+Runtime-only argument carriers use their existing canonical logical widths:
+`ArgIterator` reserves 24 bytes, `RuntimeArgumentHandle` 8 and `TypedReference`
+16. Both engines charge those records without granting a physical CLI layout,
+raw `sizeof`, boxing or unrelated struct-storage capability. Exact-fit and
+one-byte-short tests cover both ABIs and snapshot preflight.
+
+Optional vararg storage is charged from the closed call-site type of each packet
+entry before allocating its callee. Decimal and multi-slot aggregates retain
+their complete existing declared storage charge; an optional byref charges the
+pointer slot rather than its referent. Live quota changes, filter frames and
+snapshot preflight use the same packet metadata. Optional arguments do not
+silently fall back to one eight-byte slot when their value needs more storage.
+
 One VM-wide budget includes active, parked and temporarily retained callback
 frames. Admission reserves before allocation, rolls back failed construction,
 and releases on return, unwind and stop. Pool retention has its own independent

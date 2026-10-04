@@ -28,7 +28,8 @@ underlying runtime storage operations.
 enabled and disabled, CIL reload back into the source VM, and direct CIL execution.
 The tests include aliasing, rectangular bounds, lower-bound reflection, overlapping
 copy/resize, Span slices, and compiler rejection of escaping or readonly references.
-These tests require the corresponding runtime source address/memory opcode integration.
+The corresponding source address/memory opcode handlers are integrated with the
+shared runtime storage operations; execution evidence remains revision-specific.
 
 The unsafe source path emits owned pointers for raw stack allocation and local
 address conversion. Pointer arithmetic scales offsets by the pointee size. A fixed
@@ -68,8 +69,22 @@ readonly views, a primitive-array fixed scope, and managed bounds faults.
 | Fixed strings/object fields; pointer-to-integer exposure | Explicitly outside this profile | No broader capability claim | Profile exclusions above |
 
 The examples and `tests/a05-byref-call-scenarios.test.js` /
-`tests/a05-runtime-memory-examples.test.js` are newly authored and await the serial
-integration runner. The negative indexer cases reject returning a local byref and
-passing a readonly ref result as `out`; existing memory tests cover runtime expiry
-after frame retirement and pin revocation. These examples use authored expected
-traces. Fresh native SDK and browser results remain separate qualification.
+`tests/a05-runtime-memory-examples.test.js` passed through source, reloaded source
+and direct CIL at `d9453a979`. That focused cohort had 40 passes, zero failures and
+seven skipped existing compiler reference-binding cases requiring an unavailable
+.NET reference pack. The source ref-indexer case ran and passed. The
+[retained manifest and log](a05-evidence/integration-validation-20261004/README.md)
+preserve the full revision, scope and digests.
+
+The negative indexer cases reject returning a local byref and passing a readonly
+ref result as `out`; existing memory tests cover runtime expiry after frame
+retirement and pin revocation. The later
+[default stack-byte policy](default-managed-stack-budget.md) passed its focused
+112-case cohort at `c47260dfe`, including 10,000-call execution on all three routes.
+These results describe distinct, overlapping cohorts and must not be added into
+a full-suite count.
+
+The broader `3b482d83b` A05/preemption/security run subsequently recorded 3,162 passes,
+25 failures and zero skips across 3,187 tests. It does not establish a completed
+project. The examples use authored expected traces; fresh native SDK and browser
+results remain separate qualification.
