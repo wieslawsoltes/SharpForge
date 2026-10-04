@@ -31,6 +31,9 @@ export function analyzeDesignSources(sources, options = {}) {
   for (const node of detached) reader.warnings.push({code: 'SFSYNC_DETACHED', node: node.id,
     message: 'Control is constructed but not attached to the chosen root'});
   const nodes = reader.nodes.filter(node => reachable.has(node.id));
+  const detachedAdaptive = responsiveSource?.resets.find(reset => !reachable.has(reset.id));
+  if (detachedAdaptive) failSource('Adaptive helper targets a control outside the selected visual root',
+    detachedAdaptive.statement, 'SFSYNC_OWNERSHIP');
   for (const node of nodes) {
     if (node.children.length && ['Content', 'Child'].includes(childSlot(node.type)?.property)) delete node.properties[childSlot(node.type).property];
     if (node.style && !reader.explicitResourceTypes.has(node.style)) reader.styles[node.style].targetType = node.type;

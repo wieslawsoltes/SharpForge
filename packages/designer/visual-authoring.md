@@ -82,7 +82,7 @@ and `parameters: [{type, name, argument}]` options support this source profile a
 callbacks. These are explicit source-generation inputs; the planner supplies them from validated types and bound symbols.
 
 An unmarked helper stays handwritten. An edited marker, unknown helper statement, mismatched baseline, conditional directive,
-protected value source or inline anonymous target reports `SFSYNC_OWNERSHIP`; it cannot silently drop states or overwrite user
+protected value source, detached target or inline anonymous target reports `SFSYNC_OWNERSHIP`; it cannot silently drop states or overwrite user
 logic. External helper references prevent signature changes/removal with `SFSYNC_REFERENCE`. Reopening a malformed helper retains
 Studio's last valid preview and reports the source error. These capabilities concern managed source round trips and initial-width
 execution; automatic native viewport dispatch remains outside the current framework contract.

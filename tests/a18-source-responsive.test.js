@@ -443,3 +443,22 @@ test('A18 cancelled responsive plans and malformed editor syntax retain source s
   assert.throws(() => analyzeDesignSources(broken, options), {code: 'SFSYNC_PARSE'});
   assert.deepEqual(analysis.sources, sources);
 });
+
+test('A18 an adaptive target outside the selected visual root cannot leak into a projected source document', context => {
+  const sources = generatedSources();
+  const detached = sources.map(file => ({...file, text: file.text.replace('v_root.Children.Add(v_action);', '')}));
+  const compiled = compileToIL([...detached, {uri: 'DetachedRunner.cs',
+    text: 'class DetachedRunner { static void Main() { DesignedView.Create(); } }'}]);
+  assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+  const session = new CSharpDesignSession(sources[0].text, {...options, sources});
+  context.after(() => session.dispose());
+  const baseline = session.analysis;
+  assert.throws(() => session.readSources(detached), error => {
+    assert.equal(error.code, 'SFSYNC_OWNERSHIP');
+    assert.match(error.message, /outside the selected visual root/);
+    return true;
+  });
+  assert.equal(session.analysis, baseline);
+  assert.equal(session.version, 0);
+  assert.deepEqual(session.analysis.sources, sources);
+});
