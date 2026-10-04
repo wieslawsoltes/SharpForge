@@ -16,3 +16,4 @@ export {encodeWasmIR} from './execution/wasm/encoder.js';
 export {instantiateWasmIR} from './execution/wasm/compile.js';
 export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
 export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';
+export {ManagedInvocationSession} from './invocation-session.js';
