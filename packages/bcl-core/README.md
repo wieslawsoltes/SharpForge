@@ -29,7 +29,7 @@ report those differences; issues #829/#2619/#2621 remain open for an exact backe
 See [the reference](reference/culture-ordering-boundaries/README.md).
 
 `String.CompareOrdinal(string, int, string, int, int)` is appended at A07 slot
-`524311`, after OrdinalIgnoreCase `524297`; the released two-string overload and
+`524298`, after OrdinalIgnoreCase `524297`; the released two-string overload and
 its return behavior remain unchanged. The range overload compares UTF-16 units
 directly without substring allocation or normalization. Null ordering precedes
 all index/length validation. Non-null strings validate length, negative indices
@@ -49,7 +49,7 @@ samples per real VM platform, median/p95 and managed allocation counters. Setup
 is excluded; the absent range overload is explicitly skipped on the baseline.
 
 `String.Equals(string, string, StringComparison)` and instance
-`String.Equals(string, StringComparison)` occupy A07 slots `524312` and `524300`.
+`String.Equals(string, StringComparison)` occupy A07 slots `524299` and `524300`.
 They support only `Ordinal` and `OrdinalIgnoreCase`, reusing the existing streaming
 ordinal fold. The registered `System.StringComparison` enum exposes all six native
 constants so other values bind correctly, but culture modes 0–3 explicitly raise
@@ -339,7 +339,7 @@ from behavioral qualification; this extraction does not claim complete BCL parit
 
 The released `GetEnvironmentVariable` contract retains ABI ID `524289`. New
 `GetEnvironmentVariables` and `CurrentDirectory` contracts append at `524311` and
-`524312`, after the released comparer, string-comparison and StringBuilder character contracts. The separate environment
+`524312`, after the released comparer, string comparison and StringBuilder contracts. The separate environment
 dictionary registration keeps every earlier contract identity unchanged.
 
 The A07 extension group adds `System.Environment.GetEnvironmentVariable(string)`,
