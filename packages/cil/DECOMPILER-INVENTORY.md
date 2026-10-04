@@ -202,11 +202,24 @@ samples and every timing/heap/ArrayBuffer statistic are retained unchanged in th
 [performance evidence](../../tests/fixtures/decompiler-inventory/README.md).
 Arithmetic byte-input and cached-inspector medians regressed by 113.597357% and
 330.682867%, respectively. Native byte-input median rose 0.775068%, while its
-p95 batch mean rose 9.103720%. These costs require explicit review; no performance
-acceptance is implied. Source review identified repeated table-layout and row-width
+p95 batch mean rose 9.103720%. Source review identified repeated table-layout and row-width
 work. The separate correction at `20873aeb2df8f10604ce7bc4a28bc268a20ac73a`
 reuses each call's owned table layout and derives row width once from its final
 column extent. Only the benchmark's product pin and matching review hash changed;
 its workloads, guards, sample counts and statistics remain identical. The corrected
-source has not been tested or measured yet and requires a separate scheduled gate
-and one new output file. The first cohort and measured driver remain byte exact.
+source passed the same 25-test gate and completed one new cohort at `5c14c79d`.
+Arithmetic byte-input median was 167.953600 us versus 67.657175 us (+148.242112%);
+cached-input median was 89.672000 us versus 21.744475 us (+312.389814%). Native
+byte-input median changed by -1.071542%, while cached-input median rose 4.158574%
+and its p99 batch mean rose 7.600103%. Full tails and signed memory observations
+are retained in the [optimized review](../../tests/fixtures/decompiler-inventory/qualification/optimized-20873aeb/README.md).
+
+The primary agent's automated review accepts these measured costs, and the earlier
+cohort's costs, for the additional complete owned census, raw row values, schema
+records, per-call bounds/cancellation and method-result links. The arithmetic
+fixture has three methods and 15 rows; all 53 table schemas still require owned
+output. Reusing an exposed snapshot would violate mutation and budget contracts.
+The two cohorts do not isolate causal savings, and unfavorable tails remain part
+of the exception. This is an explicit performance exception for the PR, not human
+approval or a measured threshold pass. The first cohort and measured driver remain
+byte exact; browser and other-OS qualification remain pending.

@@ -1,5 +1,20 @@
 # SF-A13-T10.5 metadata inventory qualification
 
+## Current qualified revision
+
+Optimized product `20873aeb2df8f10604ce7bc4a28bc268a20ac73a` was qualified at
+execution/tool head `5c14c79d33a8afde7cbdce7e2f2f1389184639c8`: the same four-file
+gate passed **25/25**, with zero failures, cancellations or skips. Its one unchanged
+follow-up benchmark retained all 200 warmup and 1,000 measured samples, and every
+output guard passed. The [optimized report and review](qualification/optimized-20873aeb/README.md)
+preserve complete commands, hashes, statistics and the automated performance
+exception. Browser and other-OS qualification remain pending.
+
+The small-fixture costs still exceed the 5% budget. Automated reviewer `/root`
+accepts the documented additional owned inventory work and the measured costs in
+both cohorts for this feature. This is not human approval or a threshold pass.
+Both first and follow-up results remain visible below and in the linked report.
+
 ## Recorded first source and scope
 
 The first focused gate passed **25/25 tests**, with no failures, cancellations,
@@ -161,16 +176,17 @@ only `inventory.js`; row/column checks, budgets, cancellation, output fields and
 cross-call mutation visibility remain in place. The first cohort remains valid
 evidence for its original source; it does not qualify the optimized source or
 establish how much time these changes will save. Only the live benchmark product
-pin and matching allowlist hash changed. The corrected source is **untested and
-unmeasured** until the existing focused gate and unchanged predetermined cohort
-run once in a later coordinated slot. Preserve a new report instead of replacing
-the first cohort.
+pin and matching allowlist hash changed. The corrected source subsequently passed
+the same 25-test gate and completed one unchanged cohort; its separate raw files
+and independent statistics are in `qualification/optimized-20873aeb/`. The two
+cohorts show mixed timing changes, so this review makes no causal savings claim.
 
 The arithmetic medians and the native byte-input p95/p99 exceed the repository's
 5% comparison budget. The absolute costs above remain part of review. A passing
 correctness gate or a completed benchmark is not performance acceptance.
-Root will separately decide and explicitly justify any PR exception after the
-correction is measured; no such exception or optimized result is recorded here.
+The separate optimized review records the root agent's explicit exception for
+both cohorts, including the earlier native byte-input tails and the later native
+cached-input p99. No slower observation was discarded or replaced.
 
 ## Retained artifacts
 
