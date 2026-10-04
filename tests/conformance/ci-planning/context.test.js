@@ -132,11 +132,22 @@ test('PR edits to policy cannot authorize its own cross-area hot-file growth', a
 test('missing Project access remains a recorded failure with the exact context retained', async t => {
   const value = fixture(t);
   const result = await runGates({ ...value, context: value.snapshot(value.base),
-    client: { items: async () => { throw new Error('Project access denied'); } } });
+    client: { items: async () => { throw new Error('Project access denied'); } },
+    execute: () => assert.fail('Denied ownership must stop candidate commands') });
   assert.equal(result.passed, false);
   assert.match(result.errors.join('\n'), /Project access denied/);
   assert.equal(result.context.head, value.base);
-  assert.equal(result.results.length, 5);
+  assert.equal(result.results.length, 1);
+});
+
+test('missing manual planning credentials fail with context before candidate commands', async t => {
+  const value = fixture(t);
+  const result = await runGates({ ...value, context: value.snapshot(value.base), client: undefined,
+    environment: {}, execute: () => assert.fail('Missing credentials must stop candidate commands') });
+  assert.equal(result.passed, false);
+  assert.equal(result.context.head, value.base);
+  assert.equal(result.results.length, 1);
+  assert.match(result.errors.join('\n'), /requires GH_TOKEN and read-only PROJECT_READ_TOKEN/);
 });
 
 test('qualification subprocesses do not receive repository or Project API tokens', () => {
@@ -171,5 +182,8 @@ test('manual and reusable workflow inputs retain separate harness/PR checkouts a
   assert.match(workflow, /gates.js --root qualified-pr --context "\$RUNNER_TEMP\/planning-pr.json"/);
   assert.ok(workflow.indexOf('context.js --output') < workflow.indexOf('ref: ${{ steps.context.outputs.head_sha }}'));
   assert.equal((workflow.match(/persist-credentials: false/g) ?? []).length, 2);
-  assert.doesNotMatch(workflow, /pull_request_target|secrets\.|: write/);
+  assert.doesNotMatch(workflow, /pull_request_target|: write/);
+  assert.equal((workflow.match(/PROJECT_READ_TOKEN:/g) ?? []).length, 1);
+  assert.match(workflow, /Ownership, DAG, manifests, contracts and combined-tree regression\n        env:\n          GH_TOKEN: \$\{\{ github.token \}\}\n          PROJECT_READ_TOKEN: \$\{\{ secrets.PLANNING_PROJECT_READ_TOKEN \}\}/);
+  assert.doesNotMatch(workflow.slice(workflow.indexOf('      - name: Explicit flake measurement')), /PROJECT_READ_TOKEN|secrets\./);
 });

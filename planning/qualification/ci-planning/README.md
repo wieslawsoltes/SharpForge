@@ -24,6 +24,13 @@ staged until explicit full qualification; a passing ordinary core does not claim
 Older T13/T16 requirements predate the user's core-only PR policy. Additional planning/Rust lanes now require manual dispatch or an explicit reusable caller; existing browser/native/release qualifications remain separate. Manual area jobs prepare the built IDE and pinned Playwright dependencies whenever their manifests contain Python/browser scripts, then execute `--browser`; browser-only areas cannot become empty passing cells. Required workflow status configuration is an administrator action;
 this batch does not claim to have changed branch protection or enabled a merge queue.
 
+Manual PR qualification and merge-group qualification share the read-only planning
+client. The trusted planning step requires repository `GH_TOKEN` and the separate
+`PLANNING_PROJECT_READ_TOKEN` secret, passed as `PROJECT_READ_TOKEN` for Project
+GraphQL reads. Neither credential reaches candidate commands. Missing credentials,
+Project access or ownership stop the manual lane before those commands and retain
+the exact PR context with the failure. This wiring does not configure the secret.
+
 The [serial validation schedule](../serial-validation.md) takes precedence over historical
 trigger descriptions: main keeps core only, central full-ci/merge-group qualification is serial,
 and specialized workflows no longer fan out from that same event.
