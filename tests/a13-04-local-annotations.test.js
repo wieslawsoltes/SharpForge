@@ -165,6 +165,26 @@ test('type-dependent constant annotations support authored TypeSpec null without
   assert.equal(symbols.constants[0].displayTypeName, 'System.Collections.Generic.List`1<(int a, string b)>');
 });
 
+test('unresolved enum TypeSpec annotations keep the scalar value and an explicit reason', () => {
+  const { symbols } = fixture(
+    (builder) => {
+      builder.typeSpec({ kind: 'valuetype', token: builder.typeRef('Example.Code', 'Custom') });
+      return [];
+    },
+    [dynamic(1, [true], 52)],
+    [
+      {
+        name: 'ExternalEnum',
+        signature: new Writer().u8(8).i32(7).compressed(codedIndex('TypeDefOrRef', 0x1b000001)).finish(),
+      },
+    ],
+  );
+  assert.equal(symbols.constants[0].value, 7);
+  assert.equal(symbols.constants[0].enumTypeVerified, false);
+  assert.equal(symbols.constants[0].displayTypeName, null);
+  assert.equal(symbols.constants[0].annotationReason, 'unsupported-enum-type-specification');
+});
+
 test('lookalike tuples and mismatched flags/counts stay explicit without changing declared types', () => {
   const { symbols } = fixture(
     (builder) => [
