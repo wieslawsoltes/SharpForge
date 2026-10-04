@@ -345,6 +345,25 @@ qualifies binary64 default, general and round-trip output; it does not qualify
 Single or Decimal formatting. Runtime display adapters reuse this helper while
 retaining their engine-specific object, enum and typed integer handling.
 
+`formatSingleDefault(value)` formats invariant default Single text. Its input is
+a raw JavaScript number already rounded to IEEE binary32 (for example,
+`Math.fround(value)`); runtime callers unwrap their existing CLI carriers before
+calling it. It preserves signed zero and accepts NaNs and infinities. It does
+not coerce carriers or arbitrary binary64 values to Single. The helper retains
+the existing search over at most nine significant digits for the shortest
+binary32 round trip, then uses Single's nine-digit notation boundary instead
+of Double's seventeen-digit boundary. Thus exact Single `1e9` renders `1E+09`,
+while the explicitly widened Double remains `1000000000`.
+
+Single and Double share only pure default notation. Common fixed output avoids
+scientific digit records, and default formatting does not enter explicit-
+precision BigInt rounding. The forty exact-bit values plus four null-receiver
+controls in `reference/string-builder-append-single-net10.json` retain pinned
+.NET 10.0.5 output and source provenance. These cover existing default Single
+display paths and the separately registered `Append(float)` overload below.
+Explicit Single format strings and configurable culture are not qualified here.
+The pure helper creates bounded host text and no managed objects.
+
 `StringBuilder.Append(char)` and `Append(char, int)` preserve individual UTF-16
 units, return the same builder, and append one managed chunk per nonzero call.
 Zero repeats perform no writes or managed allocations. Invalid repeat counts
@@ -399,6 +418,39 @@ locals run through both compiler pipelines and VMs. Formatting follows the
 existing invariant host profile; configurable culture and the remaining builder
 overloads remain separate work under #2637. Each value needs at most 20 decimal
 units, with the existing amortized chunk-storage growth and host text budget.
+
+`StringBuilder.Append(sbyte)`, `Append(byte)`, `Append(short)`, `Append(ushort)`
+and `Append(uint)` append in that order at IDs 524324–524328. They register the
+remaining 8/16/32-bit integer signatures and reuse the existing typed scalar
+formatter without changing execution. UInt32 preserves unsigned I4 stack bits;
+the smaller integer types arrive sign- or zero-extended by the existing numeric
+pipeline. Formatting follows the invariant host profile and produces at most
+10 decimal units per value, with the existing bounded chunk append and backing
+growth policy.
+
+The pinned .NET 10.0.5 reference contains 53 cases plus a mixed fluent Int32/Char
+control. It covers each type's limits, zero, representative values, null
+receivers and same-builder identity. Independent CIL uses explicit narrow
+conversions and signed stack patterns for UInt32's upper half. Compiled typed
+locals assert selection of the exact new builtin IDs on both compiler pipelines
+and execute on both VMs. GC, snapshots and allocation-limit controls exercise
+the reused append path; no per-value formatter or new culture API is added.
+
+`StringBuilder.Append(float)` appends at ID 524330 after comparer equality.
+It reuses the typed default Single formatter and the existing bounded chunk
+append without a new runtime path. Exact binary32 carriers preserve signed zero,
+subnormal values, finite endpoints, NaNs and infinities; a Single `1e9` produces
+`1E+09`, while the existing Double overload retains `1000000000`.
+
+The pinned 44-case reference above also covers null receivers and fluent
+identity. Independent CIL constructs every input from its exact bits; compiled
+typed locals assert the chosen contract and stored binary32 bits through both
+compiler pipelines and VMs. Managed GC, snapshots, observer faults and host
+limits follow the existing append protocol, including partial progress on a
+throwing write observer. Each default value produces bounded host text and one
+managed string chunk, plus existing amortized storage growth. Configurable
+culture, explicit Single formats and remaining builder APIs stay outside this
+increment under #2637.
 
 `StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
 .NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
@@ -664,6 +716,63 @@ interface calls, exact identity, collection consumers, managed GC and snapshots.
 before/after getter, comparison and enum-validation controls against parent
 `16a13a16`, plus separate warmed factory measurements with one warmup and five samples. Validation and timing
 are queued serially; native/Wasm execution is outside this batch and #2621 remains open.
+
+`StringComparer.Equals(string, string)` appends A07 contract `524329` after
+integer StringBuilder Appends `524324`–`524328`. It operates on the existing
+Ordinal and OrdinalIgnoreCase instances from either getter or FromComparison.
+Comparer resolution happens before identity/null/length shortcuts: a null
+receiver still faults for null/null or equal arguments, and unsupported comparer
+records remain guarded. Non-null equal-length strings reuse the existing
+ordinal comparator and captured simple-uppercase fold. No normalization,
+expansion or transformed string is introduced; malformed UTF-16 is preserved.
+
+The [pinned .NET 10.0.5 / SDK 10.0.201 reference](reference/string-comparer-equals/README.md)
+records 172 getter/factory cases, including nullable arguments, distinct copies,
+true reference identity, difficult Unicode, surrogate boundaries and length
+differences. Every successful native Equals result also agrees with native
+Compare returning zero. Focused source/CIL tests cover both compiler pipelines,
+independent CIL, exact ABI, managed collection and allocation-free successful
+calls in the managed heap. Host dispatch result objects still allocate normally.
+
+The algorithm uses O(units compared) time and constant auxiliary space, with
+immediate identity/null/length exits. The static runner
+`scripts/benchmarks/a07-string-comparer-equals.mjs`, copied unchanged to baseline
+`0a39e7c9`, separates released
+getter/factory/Compare controls from the new equality route, including long
+equal-case, final-unit mismatch and differing-length cases. It reports one warmup,
+five samples and managed allocations; validation and timing are queued serially.
+Comparer equality interfaces, object overloads, hashing, culture comparers and
+native/Wasm execution remain outside this batch; #2621 stays open.
+
+`StringBuilder.Equals(StringBuilder)` appends A07 contract `524331` after
+Single Append `524330`. It compares exact UTF-16 content independently of chunk
+arrangement and capacity. The shared builder dispatcher still validates the
+receiver before a null argument returns false; self and empty/length shortcuts
+avoid reading chunks. Distinct equal-length builders stream their live chunk
+prefixes from the end, loading each visited chunk once. No case folding,
+normalization, ToString call, substring, joined text, copied array or cursor
+record is used. Work is O(text units + chunks visited), with constant auxiliary
+space, no writes and no new managed allocations.
+
+The [pinned native reference](reference/string-builder-equals/README.md) records
+35 .NET 10.0.5 / SDK 10.0.201 cases, including null receiver/source, identity,
+different append segmentation, raw surrogate boundaries, cleared/truncated/grown
+histories and unequal capacities. It confirms equal content ignores Capacity and
+MaxCapacity. Thirty-one supported constructor profiles run through both compiler
+pipelines/VMs and independent CIL. Four rows requiring the unsupported
+`StringBuilder(int, int)` constructor remain native evidence only; this batch
+does not implement that constructor or change existing capacity-growth behavior.
+
+Native inherited Object.Equals distinguishes identity from typed content
+equality. SharpForge's pre-existing Object.Equals execution guard remains in
+place; it is not redirected to this overload. Existing Object.ReferenceEquals
+controls retain identity semantics. No equality interface, hash or span overload
+is added. Tests check no writes/allocations at an exhausted managed heap budget,
+once-per-chunk reads with forced collection, snapshots and subsequent mutation.
+The static `scripts/benchmarks/a07-string-builder-equals.mjs` runner separates
+released Length/Capacity controls from new equality costs, including 256 live
+chunks versus one chunk. Validation/timing are pending in the serial queue;
+native/Wasm execution and the remaining #2637 APIs stay outside this batch.
 
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null

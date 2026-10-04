@@ -165,10 +165,16 @@ export class MemberTokens {
       plan = this.writer.plans.get(definition.containingType);
     return plan?.events.find(entry => entry.symbol === definition) ?? null;
   }
-  /** The token of the add or remove accessor of a source event, or null for an event the compilation does not define. */
+  /**
+   * The token of the add or remove accessor of an event: the planned accessor of a source event, the accessor method
+   * of an event read from metadata, or null for an event without accessor symbols (the framework registry's).
+   */
   eventAccessor(event, isAdd) {
     const planned = this.plannedEvent(event);
-    if (!planned) return null;
+    if (!planned) {
+      const imported = isAdd ? event.addMethod : event.removeMethod;
+      return imported?.containingType && imported.parameters ? this.method(imported) : null;
+    }
     const accessor = isAdd ? planned.adder : planned.remover,
       owner = event.containingType;
     if (!isInstantiation(owner)) return accessor.token;

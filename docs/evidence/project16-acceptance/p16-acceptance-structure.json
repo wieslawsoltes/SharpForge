@@ -1,0 +1,167 @@
+{
+  "sourceCommit": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+  "baseCommit": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+  "sourceFiles": [
+    {
+      "path": "apps/studio/workbench/options/general-pages.js",
+      "lines": 63,
+      "bytes": 3798,
+      "maxLine": 131,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "apps/studio/workbench/perf.js",
+      "lines": 103,
+      "bytes": 4621,
+      "maxLine": 125,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "apps/studio/workbench/settings-store.js",
+      "lines": 246,
+      "bytes": 12128,
+      "maxLine": 147,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "apps/studio/workbench/shell.js",
+      "lines": 342,
+      "bytes": 17384,
+      "maxLine": 154,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "apps/studio/workbench/studio-composition.js",
+      "lines": 314,
+      "bytes": 12268,
+      "maxLine": 131,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "apps/studio/workbench/studio-shell.js",
+      "lines": 44,
+      "bytes": 2546,
+      "maxLine": 122,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "packages/editor/src/core/code-editor.js",
+      "lines": 396,
+      "bytes": 20278,
+      "maxLine": 150,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "packages/editor/src/features/context.js",
+      "lines": 78,
+      "bytes": 4295,
+      "maxLine": 152,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "packages/editor/src/widgets/rename.js",
+      "lines": 126,
+      "bytes": 6283,
+      "maxLine": 144,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/bench-workbench-overhead.js",
+      "lines": 79,
+      "bytes": 5081,
+      "maxLine": 144,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/build-module-paths.js",
+      "lines": 21,
+      "bytes": 1026,
+      "maxLine": 115,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/build.js",
+      "lines": 33,
+      "bytes": 2116,
+      "maxLine": 170,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/conformance/build-identity.js",
+      "lines": 76,
+      "bytes": 3759,
+      "maxLine": 129,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/project16-qualification.js",
+      "lines": 122,
+      "bytes": 7513,
+      "maxLine": 143,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/workbench-overhead/assessment.js",
+      "lines": 100,
+      "bytes": 6718,
+      "maxLine": 140,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/workbench-overhead/capture.js",
+      "lines": 65,
+      "bytes": 3218,
+      "maxLine": 128,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/workbench-overhead/identity.js",
+      "lines": 74,
+      "bytes": 4251,
+      "maxLine": 145,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/workbench-overhead/page.js",
+      "lines": 123,
+      "bytes": 6662,
+      "maxLine": 140,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/workbench-overhead/protocol.js",
+      "lines": 34,
+      "bytes": 1706,
+      "maxLine": 113,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    },
+    {
+      "path": "scripts/workbench-overhead/server.js",
+      "lines": 59,
+      "bytes": 2935,
+      "maxLine": 125,
+      "introducedLongLines": [],
+      "overFileLimits": false
+    }
+  ],
+  "introducedProblems": []
+}

@@ -1,4 +1,5 @@
 import { encodedWorkspaceSourceChunks, isSourceSnapshot } from '@sharpforge/project-system';
+import { documentSource } from './document-source.js';
 
 /** Studio opts into large source buffers; callers outside Studio retain the project-system defaults. */
 export const studioDiskLimits = Object.freeze({
@@ -26,7 +27,7 @@ export function validateStudioSources(sources) {
 /** Prepared sources expose metadata without materializing their complete text. DocumentService checks ownership on adoption. */
 export function studioSourceLength(record) {
   if (record?.model || isSourceSnapshot(record?.source)) {
-    const source = record.source ?? record.model.snapshot();
+    const source = documentSource(record);
     if (!Number.isSafeInteger(source?.length) || source.length < 0) throw new TypeError('Invalid prepared source length');
     return source.length;
   }
@@ -59,7 +60,7 @@ export async function validateStudioWorkspaceRecords(records, { signal, limits =
 
 async function studioRecordByteLength(record, signal, maxBytes) {
   if (record.bytes instanceof Uint8Array) return record.bytes.byteLength;
-  const source = record.source ?? record.model?.snapshot() ?? record.text;
+  const source = documentSource(record) ?? record.text;
   // Raw ingress metadata belongs only to its original source root; edits require a fresh bounded encoding count.
   if (isSourceSnapshot(source) && source === record.originalSource
       && Number.isSafeInteger(record.byteLength) && record.byteLength >= 0) return record.byteLength;

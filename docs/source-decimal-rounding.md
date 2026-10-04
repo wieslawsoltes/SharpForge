@@ -182,8 +182,10 @@ Console.WriteLine(same);
 `tests/a05-source-decimal-comparison.test.js` authors source/reloaded/direct-CIL
 cases for scale, signed zero, close large values, typed result arrays and boxes,
 branching, named-argument effects and rejected operand/result signatures.
-Execution and platform/performance qualification remain deferred; no new native
-evidence or completion of #1350/#1351 is claimed.
+All 39 focused comparison, arithmetic, rounding, and Decimal-operation checks
+passed at `ace585df2a8a693ea7a45b43fd0535b364972801`, using Node 24, one worker,
+and a 512 MB old-space limit. Platform/performance qualification remains deferred;
+no new native evidence or completion of #1350/#1351 is claimed.
 
 ## Static sign methods
 
@@ -211,8 +213,10 @@ Console.WriteLine(decimal.Abs(value: decimal.MinValue)); // 79228162514264337593
 for scale, full coefficient range, signed-zero carrier bits and Double conversion,
 named-argument evaluation, arrays, boxing, integral widening and rejected
 signatures. Math overloads, additional Decimal library APIs and generic numeric
-interfaces are not admitted by this registration. Tests and platform/performance
-qualification remain pending in the serial queue; #1350/#1351 remain open.
+interfaces are not admitted by this registration. All 25 focused sign, comparison,
+rounding, and Decimal-operation checks passed at `60fc6d7d`, using Node 24, one
+worker, and a 512 MB old-space limit. Platform/performance qualification remains
+deferred; #1350/#1351 remain open.
 
 ## Static integral conversions
 
@@ -257,8 +261,10 @@ Decimal members remain separate work.
 `tests/a05-source-decimal-integral-conversions.test.js` authors three-engine
 coverage for every signed/unsigned width, fractional boundary truncation,
 negative zero, both overflow boundaries and checked contexts, named evaluation,
-arrays, exact boxed types, unsigned formatting and Decimal widening. Validation
-and native/platform/performance evidence remain staged; #1350/#1351 stay open.
+arrays, exact boxed types, unsigned formatting and Decimal widening. All 30 focused
+integral-conversion, sign, and Decimal-operation checks passed at `ebc2fea8`,
+using Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+evidence remains staged; #1350/#1351 stay open.
 
 ## Static floating conversions
 
@@ -286,8 +292,10 @@ Console.WriteLine(decimal.ToDouble(d: 16777217m)); // 16777217
 source and direct-CIL cases for actual stored carrier tags and IEEE bits,
 binary rounding boundaries, the full Decimal range, signed zero, named-argument
 evaluation, typed boxes, widening after Single rounding and rejected signatures.
-It records no new native execution or platform/performance evidence. Qualification
-remains in the serial queue, and #1350/#1351 remain open.
+All 30 focused floating-conversion, integral-conversion, and Decimal-operation
+checks passed at `7a06ec21`, using Node 24, one worker, and a 512 MB old-space
+limit. Native/platform/performance evidence remains deferred; #1350/#1351 stay
+open.
 
 ## GetBits array result
 
@@ -314,9 +322,10 @@ Console.WriteLine(words[3]); // -2147221504: negative, scale 4
 `tests/a05-source-decimal-getbits.test.js` authors three-engine cases for limb
 boundaries, full coefficient range, signed zero, scale 28, array identity,
 mutation isolation, named evaluation, GC retention and exact signature rejection.
-Span/destination overloads and TryGetBits are not admitted. Test execution and
-native/platform/performance qualification remain staged; #1350/#1351 remain open.
-
+Span/destination overloads and TryGetBits are not admitted. All 15 focused GetBits,
+floating-conversion, and Decimal-operation checks passed at `36be18bb`, using
+Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+qualification remains staged; #1350/#1351 remain open.
 ## Math.Sign with Decimal
 
 `int Math.Sign(decimal value)` appends after GetBits with wire name

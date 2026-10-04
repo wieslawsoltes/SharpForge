@@ -137,7 +137,7 @@ function navigate(direction){const target=navigation[direction]();navigationButt
 editorIntegration=createStudioEditorFactory({services:workbenchServices,state:()=>state,
  providers:createStudioLanguageProviders({projects:projectServices,documents:workbenchServices.documents,state:()=>state,
   getTestCodeLens:()=>testCodeLens,requestHost:editorHostCommand}),
- applyResourceTransaction:plan=>applyExplorerResourceTransaction(plan,{documents:workbenchServices.documents,explorer:explorerActions}),
+ applyResourceTransaction:(plan,{signal}={})=>applyExplorerResourceTransaction(plan,{documents:workbenchServices.documents,explorer:explorerActions,signal}),
  supportsResourceRename:()=>!state.nativeMode,
  getConfigurationRecords:()=>explorerContext().records,getLanguageOptions:()=>studioEditorOptions(workbenchShell?.settings.snapshot()),
  requestCompiler:(method,params,options)=>projectServices.request(method,params,options),requestHost:editorHostCommand,
@@ -148,9 +148,7 @@ editorIntegration=createStudioEditorFactory({services:workbenchServices,state:()
  openDocument:location=>openLocation(location),onError:error=>toast(error.message,'error')
 });
 function createSourceDocument(uri,options){return workbenchServices.documents.createDocument(uri,options);}
-function resetEditors(){navigation?.clear();navigationButtons();for(const id of [...docking.host.popouts.keys()])
- if(docking.tabs?.metadata(id))docking.host.returnPopout(id);workbenchServices.documents.resetEditors();editor=null;
- for(const id of [...docking.content.keys()])if(docking.tabs?.metadata(id)){docking.host.contents.delete(id);docking.content.delete(id);}}
+function resetEditors(){navigation?.clear();navigationButtons();docking.resetDocumentViews();editor=null;}
 const docking=new StudioDocking({createDocument:createSourceDocument,
  onActivate:id=>{workbenchServices.reveal.userIntent();const view=docking.tabs?.metadata(id);if(view)openFile(view.uri,null,null,view);else {state.panel=id;renderPanel(id);}},
  onError:error=>toast(error.message,'error'),onWindowKeyDown:event=>globalKeyDown(event),

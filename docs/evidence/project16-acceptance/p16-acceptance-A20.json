@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "c2c69a1ae200c239060e087cfa3f5167ac6eb21b",
+  "sourceTree": "44fe8d2f5a58097c81d170706f4b20c389979077",
+  "command": [
+    "node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "A20"
+  ],
+  "area": "A20",
+  "startedAt": "2026-10-04T03:27:08.360075+00:00",
+  "exitCode": 1,
+  "finishedAt": "2026-10-04T03:27:34.173311+00:00",
+  "elapsedMs": 25813.248719998228,
+  "summaryLines": [
+    "\u2139 tests 573",
+    "\u2139 suites 0",
+    "\u2139 pass 551",
+    "\u2139 fail 13",
+    "\u2139 cancelled 0",
+    "\u2139 skipped 9",
+    "\u2139 todo 0",
+    "\u2139 duration_ms 25574.679018"
+  ]
+}

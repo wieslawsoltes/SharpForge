@@ -15,6 +15,7 @@
     "tests/a13-04-enum-constants.test.js",
     "tests/a13-04-effective-imports.test.js",
     "tests/a13-04-scope-tree.test.js",
+    "tests/a13-04-local-annotations.test.js",
     "tests/a13-02-encoding.test.js",
     "tests/a13-02-fetch.test.js",
     "tests/a13-02-source-link.test.js",
