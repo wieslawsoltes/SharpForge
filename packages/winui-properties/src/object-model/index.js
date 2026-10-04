@@ -8,3 +8,6 @@ export {UIConstructionRoots, withUIConstruction} from './construction-roots.js';
 export {ResourceModelCollection, dictionaryModel, nameScopeModel, resourceScopeModel, styleModel, setterModel} from './resource-adapter-models.js';
 export {selectorModel} from './selector-model.js';
 export {registerObjectModelAdapters, getDispatcherQueue, routedEventRegistry} from './object-model-adapters.js';
+export {initializeContentPresentation} from './content-presentation.js';
+export {itemGeneratorModel} from './view-resource-adapters.js';
+export {createItemContainerAdapter, initializeItemsContext} from '../items/context-adapter.js';
