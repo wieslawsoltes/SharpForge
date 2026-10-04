@@ -16,8 +16,13 @@ function requireKnown(result) {
  * Identities belong to this adapter. Unresolved references never become accepted relations.
  */
 export function createMetadataVerificationTypeSystem(inspector, options = {}) {
+  return metadataTypeSystemState(inspector, options).types;
+}
+
+/** Internal composition seam: share any validated lexical forest without exposing it in public identities. */
+export function metadataTypeSystemState(inspector, options = {}) {
   const budget = typeSystemBudget(options);
-  const snapshot = snapshotTypes(inspector, budget);
+  const { snapshot, lexical } = snapshotTypes(inspector, budget);
   const hierarchy = metadataHierarchy(snapshot, budget);
   function reference(value) {
     requireVerificationType(value);
@@ -39,7 +44,7 @@ export function createMetadataVerificationTypeSystem(inspector, options = {}) {
       return verificationType(VerificationKind.Object, requireKnown(hierarchy.commonBaseType(reference(left), reference(right))));
     },
   });
-  return Object.freeze({
+  const types = Object.freeze({
     resolveType: snapshot.resolve,
     baseType: hierarchy.baseType,
     interfaces: hierarchy.interfaces,
@@ -47,4 +52,5 @@ export function createMetadataVerificationTypeSystem(inspector, options = {}) {
     commonBaseType: hierarchy.commonBaseType,
     relations,
   });
+  return { types, lexical };
 }

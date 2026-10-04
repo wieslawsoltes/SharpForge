@@ -1,0 +1,674 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "inspected": 3592,
+  "modules": 3592,
+  "dynamicUses": [
+    {
+      "path": "apps/cli/main.js",
+      "operation": "dynamic-import",
+      "sha256": "9a2e5912b0302ef41b3a0e0b7b06419b22fa0ecc862e84337f4a3ee894be2d68",
+      "count": 2,
+      "lines": [
+        14,
+        16
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/comment-tasks.js",
+      "operation": "dynamic-import",
+      "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+      "count": 1,
+      "lines": [
+        5
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/lazy-tools.js",
+      "operation": "dynamic-import",
+      "sha256": "307530012cf9d14d1bac88718704279bbeb46eb4faa522cb66de052fc961ebd3",
+      "count": 5,
+      "lines": [
+        31,
+        32,
+        33,
+        34,
+        35
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/metadata/framework-model.js",
+      "operation": "dynamic-import",
+      "sha256": "b6cfc1a3d9b4a4c56a898ce1e7ddb19624fe00d27a05583484c23f9811cce8fd",
+      "count": 1,
+      "lines": [
+        5
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/metadata/intrinsic-model.js",
+      "operation": "dynamic-import",
+      "sha256": "8877a98405a923ec7ca6840c97d95f3fb933545fe0155eed2c730419e87e15e9",
+      "count": 1,
+      "lines": [
+        27
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/shell-models.js",
+      "operation": "dynamic-import",
+      "sha256": "74722e894e5e1dd1c79675a85c860c7cb7437da286f1c98294dede42ab9653e3",
+      "count": 2,
+      "lines": [
+        86,
+        95
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/shell-tools.js",
+      "operation": "dynamic-import",
+      "sha256": "817a847519f65cef47f98cefdef4b8a1d676f5daf3871c3c198127edf2d26f78",
+      "count": 20,
+      "lines": [
+        30,
+        30,
+        31,
+        31,
+        32,
+        32,
+        33,
+        33,
+        34,
+        34,
+        35,
+        35,
+        36,
+        36,
+        37,
+        37,
+        38,
+        38,
+        39,
+        39
+      ]
+    },
+    {
+      "path": "packages/bcl-core/scripts/benchmark.js",
+      "operation": "dynamic-import",
+      "sha256": "44bc60683500c8107ae8712d23203e0a412dd75d664a53ac3a6de97db7a39c90",
+      "count": 2,
+      "lines": [
+        19,
+        20
+      ]
+    },
+    {
+      "path": "packages/bcl-core/scripts/inventory.js",
+      "operation": "dynamic-import",
+      "sha256": "2f7089351c60d65f61f6e44a227987b5356fb14094703eab07421cb315cc4b73",
+      "count": 2,
+      "lines": [
+        8,
+        9
+      ]
+    },
+    {
+      "path": "packages/cil/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "ad25daba7166f7a904a1f0a960ebb446298d2ea7f14a7574a6e935ca5cddce28",
+      "count": 2,
+      "lines": [
+        10,
+        11
+      ]
+    },
+    {
+      "path": "packages/cil/tools/benchmark-attribute-reader.mjs",
+      "operation": "dynamic-import",
+      "sha256": "a4ea00e726fe88275fba5115364239113b4db55b3060c6479feb15c3017b4551",
+      "count": 2,
+      "lines": [
+        7,
+        7
+      ]
+    },
+    {
+      "path": "packages/cil/tools/benchmark-constants.mjs",
+      "operation": "dynamic-import",
+      "sha256": "db480aa3f56691e00d3d43667f29b7f9aa1d55788e9132adb9eac6b119ba262c",
+      "count": 2,
+      "lines": [
+        9,
+        9
+      ]
+    },
+    {
+      "path": "packages/compiler/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "4f5a19db3d1a4bc04a98286be2bd61675e13d3b1a0abe410973bb16759e358a8",
+      "count": 3,
+      "lines": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "path": "packages/compiler/test/differential/fixture-discovery.js",
+      "operation": "dynamic-import",
+      "sha256": "bf074cc53ec6cd467b4f6000cf3d8a2dc7811e78852a4e1726495cc74b74e94d",
+      "count": 1,
+      "lines": [
+        34
+      ]
+    },
+    {
+      "path": "packages/compute/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "8b60b01fdc31535eddabb9709f44b2ecbfedf8d806fc6cf5afc8fce3809081f7",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "packages/compute/src/pool.js",
+      "operation": "dynamic-import",
+      "sha256": "271682986d6eab158c473519b24300cc365b9b1d72a6275ac300b163b929b456",
+      "count": 2,
+      "lines": [
+        5,
+        18
+      ]
+    },
+    {
+      "path": "packages/controls/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "9834234f9d63791423bc7aa679b6f70ed67e910bfd4981f07ea439334bcdf938",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "packages/debugger/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "340b1202734179b6ec8c0036ebad38e22e86a073b4f97320ffbffbe636cd7673",
+      "count": 3,
+      "lines": [
+        10,
+        37,
+        42
+      ]
+    },
+    {
+      "path": "packages/debugger/src/evaluation.js",
+      "operation": "eval",
+      "sha256": "2f1e1254c9c7c801343770513f1851255037c9b60c8e411cf6de18358e4be944",
+      "count": 1,
+      "lines": [
+        126
+      ]
+    },
+    {
+      "path": "packages/designer/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "91c38d0263a1e3dbc44d91db1c8a040432c3265ce1fe935a71413141adab37fb",
+      "count": 3,
+      "lines": [
+        10,
+        11,
+        21
+      ]
+    },
+    {
+      "path": "packages/docking/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "d5e11a8f73a94d54cdc12d57d54a416de6ab2380d52cfbb475e6ba44b9a2f903",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "packages/editor/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+      "count": 3,
+      "lines": [
+        9,
+        21,
+        32
+      ]
+    },
+    {
+      "path": "packages/extensions/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "020b27025210dc88df1c11322490c6df413de7220889f7777ea654ca698f319c",
+      "count": 1,
+      "lines": [
+        18
+      ]
+    },
+    {
+      "path": "packages/framework/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "26be315229408a0d6cb20630f44f6fd9074be2d87ef15732ae362ae89583f253",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "packages/msbuild/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "05c9f3edd76e3130aa05214b339fde907f4bf38f3ed34800754bcfb33ea68769",
+      "count": 3,
+      "lines": [
+        10,
+        11,
+        19
+      ]
+    },
+    {
+      "path": "packages/network/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "4602f97649e4c810fd84ddc944466235c43fc715245f43b103404c071ea5816e",
+      "count": 2,
+      "lines": [
+        10,
+        14
+      ]
+    },
+    {
+      "path": "packages/project-system/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "79688bb68caf474f4256a09ae41741d79aea0c6147949d5ecd90004d0afedb2b",
+      "count": 2,
+      "lines": [
+        10,
+        22
+      ]
+    },
+    {
+      "path": "packages/protocol/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "a01fc48d8ddacb4479e5b5d0616c8ed8f1d32455971013f7388a0c9ca379d108",
+      "count": 5,
+      "lines": [
+        10,
+        16,
+        29,
+        30,
+        31
+      ]
+    },
+    {
+      "path": "packages/symbols/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "6467afa30ed52b8dc90a6daa76da5052579357e4c14d1c3b3c48bb84a2bda6f7",
+      "count": 1,
+      "lines": [
+        10
+      ]
+    },
+    {
+      "path": "packages/syntax/bench/corpus.bench.js",
+      "operation": "dynamic-import",
+      "sha256": "2c207cdf518e86df8c5f469180521d3176ab2eb08ca45d0d092e065f6993a8d1",
+      "count": 2,
+      "lines": [
+        52,
+        64
+      ]
+    },
+    {
+      "path": "packages/templates/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "b1532ffc5d5a9f2f9a3716b22d0edb08312b0080f163f870ab104ab103a7f0ef",
+      "count": 3,
+      "lines": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "path": "packages/text/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "026c37a534290b3668a4a64e12b9b8eab530a474348b998cbfcde35ac2b53b8e",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "packages/winui/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "a123134ac15953abe058dba20c169b931b06972067b9605f34564c2ba5b51092",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "packages/workspace/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "c50632eb8230d8ea269a439834ed28d49ebf9df08218956b89eaf6eb1a27656a",
+      "count": 3,
+      "lines": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "path": "planning/contracts/tests/claim-race.test.js",
+      "operation": "dynamic-import",
+      "sha256": "a3caa5c8039b2089d67bbf9cffe05a65b8c0a3701a526ae83fc6b5ce47533349",
+      "count": 7,
+      "lines": [
+        131,
+        158,
+        159,
+        176,
+        177,
+        198,
+        199
+      ]
+    },
+    {
+      "path": "planning/contracts/tests/golden-output.test.js",
+      "operation": "dynamic-import",
+      "sha256": "61bed5d579fbc322b8d5460a529f138e9843d3ef6c4e7ad8303b6ef946b9f3eb",
+      "count": 1,
+      "lines": [
+        32
+      ]
+    },
+    {
+      "path": "planning/contracts/tests/governance.test.js",
+      "operation": "dynamic-import",
+      "sha256": "a74692d8f66368aa5e07f60d374b93d60b65987b8cc9bfcf6b361637bbbc9c41",
+      "count": 8,
+      "lines": [
+        134,
+        148,
+        157,
+        157,
+        157,
+        157,
+        158,
+        169
+      ]
+    },
+    {
+      "path": "planning/qualification/integration-performance/compiler-adapters/compiler.mjs",
+      "operation": "dynamic-import",
+      "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7",
+      "count": 1,
+      "lines": [
+        18
+      ]
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "operation": "dynamic-import",
+      "sha256": "26851a5b20595deb28624b0f6888ed0f4bd271caf9ac6d389ab770d19dfb6681",
+      "count": 2,
+      "lines": [
+        6,
+        7
+      ]
+    },
+    {
+      "path": "scripts/bench-pdb.js",
+      "operation": "dynamic-import",
+      "sha256": "b2bbde05d24b6b3348409d97635fce6bc19989844e2ae0bf84918f7bae8c6b80",
+      "count": 1,
+      "lines": [
+        21
+      ]
+    },
+    {
+      "path": "scripts/bench/a03-metadata.js",
+      "operation": "dynamic-import",
+      "sha256": "f5c0d240c6de36f1690000ff878f442e2a1f553d31ca6db9f734a0db570e105e",
+      "count": 1,
+      "lines": [
+        3
+      ]
+    },
+    {
+      "path": "scripts/benchmarks/a05-call-offsets.mjs",
+      "operation": "dynamic-import",
+      "sha256": "cedea79fa062454c4cc41d7b60c34aa6640897d98b03e39b7faa271082cddb06",
+      "count": 1,
+      "lines": [
+        11
+      ]
+    },
+    {
+      "path": "scripts/benchmarks/a19-correction-paths.mjs",
+      "operation": "dynamic-import",
+      "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
+      "count": 1,
+      "lines": [
+        61
+      ]
+    },
+    {
+      "path": "scripts/build-managed-examples.js",
+      "operation": "dynamic-import",
+      "sha256": "85bc00e5b80943203b8fb5d6a77867927f7610b4bb5736cf507dbf96d92a3a9c",
+      "count": 3,
+      "lines": [
+        8,
+        14,
+        17
+      ]
+    },
+    {
+      "path": "scripts/conformance/perf/measure.js",
+      "operation": "dynamic-import",
+      "sha256": "69ccad2e710bcdf478b36edf4605822937cf12851353c6ff471d1f58852dce7c",
+      "count": 1,
+      "lines": [
+        16
+      ]
+    },
+    {
+      "path": "scripts/conformance/perf/workloads.js",
+      "operation": "dynamic-import",
+      "sha256": "299d73898635ba80e64b84252f29d22477c424de01c2e4b59778a56352546749",
+      "count": 1,
+      "lines": [
+        15
+      ]
+    },
+    {
+      "path": "scripts/planning/compiler-dispatch-corpus.js",
+      "operation": "dynamic-import",
+      "sha256": "d36ed8f7e5c694dc38777d5db733587aa179a2d7a2fb945b9788a6cbb447be1f",
+      "count": 2,
+      "lines": [
+        23,
+        24
+      ]
+    },
+    {
+      "path": "scripts/planning/golden-output.js",
+      "operation": "dynamic-import",
+      "sha256": "68530c1b74ca5cd2a5e89781a9563a3a7e34574808f976bebe5925d2ba0205f1",
+      "count": 1,
+      "lines": [
+        38
+      ]
+    },
+    {
+      "path": "scripts/planning/impacted-tests.js",
+      "operation": "dynamic-import",
+      "sha256": "1a37c1837e752a940ba57e3891e9ae2641da2ae076c96d35d9f98b4339f7c550",
+      "count": 1,
+      "lines": [
+        28
+      ]
+    },
+    {
+      "path": "scripts/serve.js",
+      "operation": "dynamic-import",
+      "sha256": "239e943b8a4bc6a3baaedd4d5a798e047fa4355d2991d70533d66f7b071ad942",
+      "count": 1,
+      "lines": [
+        9
+      ]
+    },
+    {
+      "path": "scripts/validate-a05-type-system.js",
+      "operation": "dynamic-import",
+      "sha256": "29989ce590f21800671044d9f10ea4e44cedfbfbec693b86cb7c5663bed16f95",
+      "count": 2,
+      "lines": [
+        135,
+        136
+      ]
+    },
+    {
+      "path": "scripts/validate-clr-wasm.js",
+      "operation": "dynamic-import",
+      "sha256": "ea570c69c09623ed14792eaceb8cb2b2d29ec3c1b7bc2c2bb2714b72f145c159",
+      "count": 1,
+      "lines": [
+        25
+      ]
+    },
+    {
+      "path": "tests/a00-03-studio-registries.test.js",
+      "operation": "dynamic-import",
+      "sha256": "283ec426fd4bf434a1da40ad0675cf21166837c4db36e27582f8caa283f0af5d",
+      "count": 2,
+      "lines": [
+        20,
+        62
+      ]
+    },
+    {
+      "path": "tests/a00-integration-contracts.test.js",
+      "operation": "dynamic-import",
+      "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
+      "count": 3,
+      "lines": [
+        26,
+        27,
+        28
+      ]
+    },
+    {
+      "path": "tests/benchmarks/cil-pe.mjs",
+      "operation": "dynamic-import",
+      "sha256": "e21b892d6adfad303b497ca6b85cf6f1012aaedec61289b4b1d9a592f01cd896",
+      "count": 1,
+      "lines": [
+        4
+      ]
+    },
+    {
+      "path": "tests/benchmarks/cil-signatures.mjs",
+      "operation": "dynamic-import",
+      "sha256": "2db9238d68c510f869a17be100323c03774ef2828326c1ab7546d40225ec8790",
+      "count": 2,
+      "lines": [
+        6,
+        6
+      ]
+    },
+    {
+      "path": "tests/conformance/flaky/detect.test.js",
+      "operation": "dynamic-import",
+      "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
+      "count": 3,
+      "lines": [
+        46,
+        47,
+        48
+      ]
+    },
+    {
+      "path": "tests/conformance/qualification.test.js",
+      "operation": "dynamic-import",
+      "sha256": "781c4708c6fa6185705256a2ca7e3077edc094fa190f512b92db15363605b441",
+      "count": 1,
+      "lines": [
+        86
+      ]
+    },
+    {
+      "path": "tests/fixtures/a03-pe/oracle/legacy.js",
+      "operation": "dynamic-import",
+      "sha256": "27b6522d243758a974d62eec74445356853d68751eafdaf0f13e9f0814c30dcb",
+      "count": 1,
+      "lines": [
+        4
+      ]
+    },
+    {
+      "path": "tests/fixtures/compiler-constant-conversion/capture.mjs",
+      "operation": "dynamic-import",
+      "sha256": "bc515d6b2e276b2c40dbb76a23c67ca92c023fcf1cb8f51670e3fb052aea7e9f",
+      "count": 1,
+      "lines": [
+        7
+      ]
+    },
+    {
+      "path": "tests/msbuild-examples.test.js",
+      "operation": "dynamic-import",
+      "sha256": "dd16f281206623069647047ed09edc3be93710e094bf0e03f43adbbf65282cb0",
+      "count": 1,
+      "lines": [
+        4
+      ]
+    },
+    {
+      "path": "tests/network14.test.js",
+      "operation": "dynamic-import",
+      "sha256": "36d871fb95a12e80cd1219b3b04d0a8887ddd1cb5a374382bace5cc2fda0c6b6",
+      "count": 1,
+      "lines": [
+        14
+      ]
+    },
+    {
+      "path": "tests/protocol.test.js",
+      "operation": "dynamic-import",
+      "sha256": "79d08e4426e364a0aa6b52a05e65238f3d2b4a87d272debef7a8d31bc52c0d47",
+      "count": 1,
+      "lines": [
+        29
+      ]
+    },
+    {
+      "path": "tests/support/engine-parity-fixtures.js",
+      "operation": "dynamic-import",
+      "sha256": "2a4d51e38ebd471b91d4532de016c4fbc57e7fbffe5de6e91356b3fcf5977750",
+      "count": 3,
+      "lines": [
+        34,
+        43,
+        60
+      ]
+    },
+    {
+      "path": "tests/workspace-io.test.js",
+      "operation": "dynamic-import",
+      "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
+      "count": 3,
+      "lines": [
+        50,
+        50,
+        57
+      ]
+    }
+  ],
+  "errors": []
+}

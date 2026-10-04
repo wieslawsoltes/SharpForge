@@ -1,0 +1,132 @@
+[
+  {
+    "label": "focused-tests-boundary-corrected",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-07-nested-type-references.test.js",
+      "tests/a03-07-local-type-references.test.js",
+      "tests/a03-07-local-type-references-native.test.js",
+      "tests/a03-07-type-system.test.js",
+      "tests/a03-07-type-system-native.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-07-members.test.js",
+      "tests/a03-07-members-inherited.test.js",
+      "tests/a03-07-type-access.test.js",
+      "tests/a03-07-nested-access.test.js",
+      "tests/a03-07-member-access.test.js",
+      "tests/a03-coded-index-bounds.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:16.379Z",
+    "completed": "2026-10-04T08:49:18.148Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-local-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-nested-type-references.mjs",
+      "/tmp/a03-nested-type-references-validation/candidate-local-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:18.148Z",
+    "completed": "2026-10-04T08:49:18.530Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-existing-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-verifier-types.mjs",
+      "/tmp/a03-nested-type-references-validation/candidate-existing-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:18.531Z",
+    "completed": "2026-10-04T08:49:18.775Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-local-alias-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-local-type-references.mjs",
+      "/tmp/a03-nested-type-references-validation/candidate-local-alias-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:18.776Z",
+    "completed": "2026-10-04T08:49:19.107Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "manifests",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/planning/check-test-manifests.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:19.107Z",
+    "completed": "2026-10-04T08:49:19.304Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "syntax",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/check.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:19.304Z",
+    "completed": "2026-10-04T08:49:20.166Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "static-imports",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/conformance/static/check-imports.js",
+      "--output",
+      "/tmp/a03-nested-type-references-validation/static-imports.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:20.166Z",
+    "completed": "2026-10-04T08:49:21.764Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "structure",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "scripts/quality/check-structure.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:21.765Z",
+    "completed": "2026-10-04T08:49:21.962Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "diff-check",
+    "command": "git",
+    "args": [
+      "diff",
+      "--check"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:49:21.963Z",
+    "completed": "2026-10-04T08:49:22.049Z",
+    "exitCode": 0,
+    "signal": null
+  }
+]
