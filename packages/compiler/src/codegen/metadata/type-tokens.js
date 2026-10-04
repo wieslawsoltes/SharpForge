@@ -76,8 +76,9 @@ export class TypeTokens {
     view.substitution = substitution;
     return view;
   }
-  /** TypeDef or TypeRef token of a type definition. */
+  /** TypeDef/TypeRef of a type definition, or a framework signature modifier by its full metadata name. */
   definitionToken(type) {
+    if (typeof type === 'string') return this.builder.typeRef(type);
     // An anonymous type is declared by its generic class (symbols/synthesized/anonymous-types.js).
     if (type.isAnonymousType) return this.definitionToken(type.metadataForm());
     const definition = type.originalDefinition ?? type,
@@ -107,7 +108,7 @@ export class TypeTokens {
     try {
       return encodeTypeSignature(this.substitution ? substituteType(type, this.substitution) : type, this.tokenOf);
     } catch (error) {
-      // The encoder names the type it has no signature for (a function pointer, `dynamic`); anything else is a defect.
+      // The encoder names a type it has no signature for; anything else is a defect.
       if (/^Cannot encode /.test(error?.message ?? '')) throw new MetadataEmitError(error.message);
       throw error;
     }

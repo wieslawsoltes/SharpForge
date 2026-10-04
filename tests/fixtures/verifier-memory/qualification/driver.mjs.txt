@@ -1,0 +1,63 @@
+import { spawnSync } from 'node:child_process';
+import { closeSync, existsSync, mkdirSync, openSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
+
+// Prepare the exact candidate/parent configuration only after parent qualification and slot grant.
+const config = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+const { candidate, parent, head, baseline, output } = config;
+if (!process.version.startsWith('v24.')) throw new Error('Pinned Node24 required');
+for (const [key, value] of Object.entries({ SHARPFORGE_TEST_CONCURRENCY: '1',
+  SHARPFORGE_MAX_PARALLEL_RUNS: '1', SHARPFORGE_MAX_OLD_SPACE_MB: '1024' })) {
+  if (process.env[key] !== value) throw new Error('Missing serial resource control: ' + key);
+}
+if (existsSync(output) || existsSync(baseline)) throw new Error('Inspect existing artifacts before any resume');
+mkdirSync(output, { recursive: true });
+const trace = [];
+function command(binary, args, cwd, name) {
+  const row = { binary, args, cwd, name, started: new Date().toISOString() };
+  trace.push(row);
+  console.log(JSON.stringify({ start: name, ...row }));
+  const fd = openSync(join(output, name + '.log'), 'wx');
+  const result = spawnSync(binary, args, { cwd, env: process.env, stdio: ['ignore', fd, fd] });
+  closeSync(fd);
+  Object.assign(row, { completed: new Date().toISOString(), status: result.status, signal: result.signal,
+    error: result.error?.message });
+  writeFileSync(join(output, 'driver.json'), JSON.stringify(trace, null, 2) + '\n');
+  console.log(JSON.stringify({ terminal: name, ...row }));
+  if (result.error || result.status !== 0 || result.signal) process.exit(result.status || 1);
+}
+function git(args, cwd = candidate) {
+  const result = spawnSync('git', args, { cwd, encoding: 'utf8' });
+  if (result.status) throw new Error(result.stderr);
+  return result.stdout.trim();
+}
+if (git(['rev-parse', 'HEAD']) !== head || git(['status', '--porcelain=v1'])) throw new Error('Candidate not frozen/clean');
+git(['merge-base', '--is-ancestor', parent, head]);
+command('git', ['-c', 'gc.auto=0', 'worktree', 'add', '--detach', baseline, parent], candidate, '00-baseline');
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const controls = {};
+for (const file of ['packages/cil/tools/benchmark-numeric-verifier.mjs', 'tests/fixtures/verifier-numeric/input.js']) {
+  const digest = sha(readFileSync(join(candidate, file)));
+  if (sha(readFileSync(join(baseline, file))) !== digest) throw new Error('Control differs: ' + file);
+  controls[file] = digest;
+}
+writeFileSync(join(output, 'source-proof.json'), JSON.stringify({ ...config, controls }, null, 2) + '\n');
+for (const [index, directory] of [candidate, baseline].entries()) {
+  command('npm', ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], directory, '01-install-' + index);
+  if (realpathSync(join(directory, 'node_modules/@sharpforge/cil')) !== realpathSync(join(directory, 'packages/cil')))
+    throw new Error('Foreign CIL workspace: ' + directory);
+}
+const node = process.execPath;
+command(node, ['tests/fixtures/verifier-memory/capture.mjs', 'tests/fixtures/verifier-memory/native.json'], candidate, '02-native56');
+command(node, ['--test', '--test-concurrency=1', 'tests/a03-indirect-transfers.test.js',
+  'tests/a03-numeric-transfers.test.js', 'tests/a03-local-initialization.test.js', 'tests/a03-field-transfers.test.js',
+  'tests/a03-field-ancestry.test.js', 'tests/a03-field-native.test.js', 'tests/a03-verification-types.test.js',
+  'tests/a03-verifier-dataflow.test.js'], candidate, '03-focused');
+command(node, ['--expose-gc', 'packages/cil/tools/benchmark-numeric-verifier.mjs', join(output, 'before.json')], baseline, '04-controls-before');
+command(node, ['--expose-gc', 'packages/cil/tools/benchmark-numeric-verifier.mjs', join(output, 'after.json')], candidate, '05-controls-after');
+command(node, ['packages/cil/tools/benchmark-memory-verifier.mjs', join(output, 'memory.json')], candidate, '06-new-memory');
+command('/tmp/sharpforge-bcl-browser-venv/bin/python', ['/tmp/a03-memory-browser.py', candidate, join(output, 'browser')], candidate, '07-browser');
+command('npm', ['run', 'check'], candidate, '08-check');
+command('npm', ['run', 'check:structure'], candidate, '09-structure');
+console.log('All indirect-memory qualification stages are terminal.');

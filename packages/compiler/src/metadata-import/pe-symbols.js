@@ -6,6 +6,7 @@ import {AssemblyIdentity} from './assembly-identity.js';
 import {MetadataView,Table,tokenOf,tableOf,ridOf,parseMethodSignature,parseFieldSignature,parseTypeSignature} from './pe-metadata.js';
 import {attachSignatureModifiers} from './signature-modifiers.js';
 import {decodeWellKnownAttributes,decodeAttributeBlob,applyTypeTransforms,unsupportedCompilerFeature,grantsInternalsAccess,RequiredMembersObsoleteMarker} from './attributes.js';
+import { importedParameterDefault } from './parameter-defaults.js';
 /**
  * Symbols imported from a referenced assembly (ECMA-335 metadata read through @sharpforge/cil).
  *
@@ -209,7 +210,7 @@ export class PEAssemblySymbol extends SymbolBase {
     else if(access<=1&&name.includes('.'))methodKind=MethodKind.ExplicitInterfaceImplementation;
     const isExtensionMethod=methodKind===MethodKind.Ordinary&&isStatic&&data.isExtension&&signature.parameters.length>0&&type.mightContainExtensionMethods;
     const parameters=signature.parameters.map((node,i)=>{
-      const row=rows.get(i+1),paramToken=row?tokenOf(Table.Param,row.rid):0,slot=this._slot(node,context,paramToken,nullableContext,{flags:row?.flags??0}),constant=row&&row.flags&0x1000?md.constant(paramToken):undefined;
+      const row=rows.get(i+1),paramToken=row?tokenOf(Table.Param,row.rid):0,slot=this._slot(node,context,paramToken,nullableContext,{flags:row?.flags??0}),constant=row?importedParameterDefault(md,paramToken,row.flags):undefined;
       const parameter=new ParameterSymbol({name:row?.name??'',type:slot.type,refKind:slot.refKind,isParams:slot.data.isParamArray||slot.data.isParamCollection,isOptional:!!((row?.flags??0)&0x10),isThis:isExtensionMethod&&i===0,...(constant?{explicitDefaultValue:constant}:{})});
       parameter.metadataToken=paramToken;if(paramToken)lazy(parameter,'attributes',()=>this._attributes(paramToken));return parameter;
     });
