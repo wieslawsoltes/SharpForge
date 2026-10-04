@@ -16,6 +16,12 @@ import { ArrayEmission } from './emit-arrays.js';
 import { StringEmission } from './emit-strings.js';
 import { ExceptionEmission } from './emit-exceptions.js';
 import { AccessorEmission } from './emit-accessors.js';
+import { SwitchEmission } from './emit-switch.js';
+import { PatternEmission } from './emit-patterns.js';
+import { JumpEmission } from './emit-jumps.js';
+import { NullableEmission } from './emit-nullable.js';
+import { InitializerEmission } from './emit-initializers.js';
+import { TypeOperatorEmission } from './emit-type-operators.js';
 
 const families = [
   ConstantEmission,
@@ -31,6 +37,12 @@ const families = [
   StringEmission,
   ExceptionEmission,
   AccessorEmission,
+  SwitchEmission,
+  PatternEmission,
+  JumpEmission,
+  NullableEmission,
+  InitializerEmission,
+  TypeOperatorEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}
