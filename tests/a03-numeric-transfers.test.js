@@ -60,6 +60,16 @@ test('unsupported metadata, bodies and opcodes cannot produce a typed proof', ()
   assert.equal(malformed.status, 'rejected');
 });
 
+test('a local signature token cannot name a method StandAloneSig', () => {
+  const bytes = managedFixture({ entry: null, methods: [{ name: 'MalformedLocalSignature', locals: ['int'],
+    body: writer => writer.op('ret') }], decorate({ md }) {
+    md.rows[17][0][0] = md.blob(Uint8Array.of(0, 0, 1));
+  } });
+  const report = verifyCilMethodTypes(bytes, token);
+  assert.equal(report.status, 'rejected');
+  assert.equal(report.diagnostics[0].diagnostic, 'InvalidLocalSignature');
+});
+
 test('bounded typed propagation checks cancellation, state-copy work and all dataflow limits', () => {
   const fixture = { name: 'Empty', maxStack: 0, body: writer => writer.op('ret') };
   assert.equal(verify(fixture, { maxTypedStackSlots: 0, maxDataflowSteps: 2, maxDataflowEdges: 0 }).status, 'verified');
@@ -83,12 +93,22 @@ test('bytecode after a reachable terminator remains unsupported when its policy 
   assert.equal(verifyCilMethodTypes(bytes, token).status, 'unknown');
 });
 
+test('unreachable branches still require an instruction-boundary target', () => {
+  const report = verify({ name: 'InvalidUnreachableBranch', body: writer => writer.op('ret').op('br', 100) });
+  assert.equal(report.status, 'rejected');
+  assert.equal(report.diagnostics[0].diagnostic, 'BadJumpTarget');
+});
+
 test('primitive storage addresses retain declared element identity and reject double addresses', () => {
   assert.equal(verify({ name: 'Pointer', parameters: ['int&'], body: writer => writer.op('ldarg.0').op('pop').op('ret') }).status,
     'verified');
   const report = verify({ name: 'DoublePointer', parameters: ['int&'], body: writer => writer.op('ldarga.s', 0).op('pop').op('ret') });
   assert.equal(report.status, 'rejected');
   assert.equal(report.diagnostics[0].diagnostic, 'ByrefOfByref');
+  const different = verify({ name: 'DifferentElements', parameters: ['int&', 'byte&'],
+    body: writer => writer.op('ldarg.0').op('ldarg.1').op('ceq').op('pop').op('ret') });
+  assert.equal(different.status, 'unknown');
+  assert.equal(different.diagnostics[0].diagnostic, 'PointerComparisonUnavailable');
 });
 
 test('all native observations retain exact bytes and explicit predeclared ILVerify differences', () => {

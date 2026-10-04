@@ -42,7 +42,9 @@ export function numericMethodSignature(inspector, method, options, fail) {
   const signature = read(method.token);
   if (signature.hasThis || signature.explicitThis || signature.genericArity || signature.callingConvention || signature.sentinel !== -1)
     fail('UnsupportedSignature', 'Instance, generic and vararg method typing requires later verifier policies', true);
-  const locals = method.localSignature ? read(method.localSignature).types : [];
+  const localSignature = method.localSignature ? read(method.localSignature) : null;
+  if (localSignature && localSignature.kind !== 'locals') fail('InvalidLocalSignature', 'Method body requires a locals signature');
+  const locals = localSignature?.types ?? [];
   const returnType = signature.returnType;
   if (returnType.kind === 'byref') fail('UnsupportedSignature', 'Byref returns require lifetime verification', true);
   return {

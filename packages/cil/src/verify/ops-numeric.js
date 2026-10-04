@@ -70,7 +70,9 @@ const handlers = Object.freeze({
   compare(descriptor, instruction, state) {
     const right = state.pop();
     const left = state.pop();
-    if (!numericComparable(instruction.name, left, right)) state.fail('StackUnexpected');
+    const comparable = numericComparable(instruction.name, left, right);
+    if (comparable === null) state.fail('PointerComparisonUnavailable', 'Different pointer elements require a metadata relation', true);
+    if (!comparable) state.fail('StackUnexpected');
     if (descriptor.result) state.push(descriptor.result);
   },
   duplicate(descriptor, instruction, state) {

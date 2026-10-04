@@ -55,6 +55,21 @@ function preflight(method, state, options) {
   }
 }
 
+function validateBranchTargets(method, offsets, state, options) {
+  for (const instruction of method.instructions) {
+    dataflowCancellation(options.signal);
+    state.instruction = instruction;
+    if (instruction.operandKind === 'br8' || instruction.operandKind === 'br32') {
+      if (!offsets.has(instruction.operand)) state.fail('BadJumpTarget');
+    } else if (instruction.operandKind === 'switch') {
+      for (const target of instruction.operand) {
+        dataflowCancellation(options.signal);
+        if (!offsets.has(target)) state.fail('BadJumpTarget');
+      }
+    }
+  }
+}
+
 /** Verify one decoded method using registered typed numeric transfers and bounded block propagation.
  * Returns verified/rejected/unknown; unknown never qualifies execution. Broader opcode/EH policies remain pending.
  * The cumulative maxTypedStackSlots budget (default/hard ceiling 1M slots) covers scratch and block-state copies.
@@ -76,6 +91,7 @@ export function verifyCilMethodTypes(input, methodToken, options = {}) {
     });
     if (!offsets) state.fail('InvalidControlFlow');
     const graph = dataflowBlocks(method, offsets, options);
+    validateBranchTargets(method, offsets, state, options);
     const worklist = new DataflowWorklist(graph, {
       emptyState: empty,
       stopped: () => false,

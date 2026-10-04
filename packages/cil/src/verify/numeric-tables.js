@@ -75,6 +75,6 @@ export function numericComparable(name, left, right) {
   if (numericResult(arithmetic, left, right)) return true;
   if (referenceKinds.has(left.kind) && referenceKinds.has(right.kind)) return referenceComparisons.has(name);
   if (left.kind === Kind.ManagedPointer && right.kind === Kind.ManagedPointer)
-    return left.type === right.type;
+    return left.type === right.type ? true : null;
   return false;
 }
