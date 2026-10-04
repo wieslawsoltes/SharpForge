@@ -1,37 +1,17 @@
-import { Writer, codedIndex, token, utf8 } from '@sharpforge/cil';
-import { PdbGuids, PortablePdbBuilder, SymbolError, deflateStored, readPortablePdb, sha256, writeSequencePoints } from '@sharpforge/symbols';
+import { PortablePdbBuilder, SymbolError, readPortablePdb } from '@sharpforge/symbols';
 import { binaryAdmission, binaryFailure, binaryLimits } from './binary-guards.js';
+import { createPinnedPortablePdbSeed } from './portable-pdb-pinned-seed.js';
+import { createAuthoredPortablePdbSeed } from './portable-pdb-seeds.js';
 
-function sourceSeed(compressed) {
-  const builder = new PortablePdbBuilder();
-  const source = utf8('int value = 7;\n');
-  const name = new Writer().u8(0).compressed(builder.blob(utf8('Fuzz.cs'))).finish();
-  const document = builder.add(48, [
-    builder.blob(name), builder.guid(PdbGuids.sha256), builder.blob(sha256(source)), builder.guid(PdbGuids.csharp),
-  ]);
-  const points = writeSequencePoints([
-    { document, offset: 0, startLine: 1, startColumn: 1, endLine: 1, endColumn: 15 },
-  ], document);
-  builder.add(49, [document, builder.blob(points)]);
-  builder.add(51, [0, 0, builder.string('value')]);
-  builder.add(50, [1, 0, 1, 1, 0, 2]);
-  const content = compressed ? deflateStored(source) : source;
-  const embedded = new Writer().u32(compressed ? source.length : 0).bytes(content).finish();
-  builder.add(55, [
-    codedIndex('HasCustomDebugInformation', token(48, document)),
-    builder.guid(PdbGuids.embeddedSource), builder.blob(embedded),
-  ]);
-  return { name: compressed ? 'compressed-source' : 'stored-source', input: builder.finish({ 6: 1 }, 0).bytes };
-}
-
-/** Parse self-authored symbol data only; source fetching, external fixtures and symbol servers are not used. */
+/** Parse authored symbols and one pinned repository fixture; source fetching and symbol servers are not used. */
 export const target = Object.freeze({
   id: 'portable-pdb',
   createSeeds() {
     return [
       { name: 'empty-debug', input: new PortablePdbBuilder().finish({}, 0).bytes },
-      sourceSeed(false),
-      sourceSeed(true),
+      createAuthoredPortablePdbSeed(false),
+      createAuthoredPortablePdbSeed(true),
+      createPinnedPortablePdbSeed(),
     ];
   },
   run(input, context) {
