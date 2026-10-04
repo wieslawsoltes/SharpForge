@@ -1,0 +1,43 @@
+{
+  "workIds": [
+    "SF-A23-T28"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "test": "tests/a23-project-runtime.test.js",
+  "caseCount": 7,
+  "qualification": {
+    "initialNode22": {
+      "source": "4a49a23b773b62088057d83e3e6ac6e573390578",
+      "scopeTests": 794,
+      "passed": 788,
+      "failed": 6,
+      "selectedCases": "7 passed"
+    },
+    "correctedNode22": {
+      "source": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+      "scopeTests": 77,
+      "passed": 77,
+      "failed": 0
+    },
+    "earlierNode26": {
+      "source": "b7271de1",
+      "scopeTests": 415,
+      "passed": 415
+    }
+  },
+  "captures": [
+    "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap",
+    "planning/evidence/project18/integration/upstream-qualification/node22-runtime-corrections.tap"
+  ],
+  "performance": {
+    "runtimeTypePrerequisite": "#3872 retains fresh baseline b34 versus c1 measurements and bounded CPU profiles",
+    "outstanding": "Source dictionary, CIL dictionary and CIL queue exceed the 5% benchmark budget; profiling did not establish a causal fix. Performance review remains open.",
+    "inspectorCost": "Composite metadata construction occurs at admission before instruction dispatch; no per-instruction metadata remapping is added."
+  },
+  "remaining": [
+    "Arbitrary external CLR assemblies and external generic/virtual/derived execution are outside the closed profile",
+    "Rust native/Wasm graph execution",
+    "Dependent stack/worker/Studio integration publication",
+    "Native framework package oracle qualification"
+  ]
+}
