@@ -1,18 +1,21 @@
-import {validateWorkspacePath} from '../transaction-state.js';
+import {validateWorkspacePath, workspaceStateSize} from '../transaction-state.js';
 import {restoreRecoveryRecords} from './records.js';
+import {sanitizeRecoveryInput} from './prepared-records.js';
 
 export const WORKSPACE_RECOVERY_VERSION = 1;
 export {sanitizeRecoveryValue} from './sanitize.js';
-import {sanitizeRecoveryValue} from './sanitize.js';
 
 function recoverySettings(source) {
   const settings = {...source.settings};
   for (const name of ['name', 'mode', 'configuration', 'platform', 'langVersion', 'active', 'tabs', 'breakpoints',
-    'functionBreakpoints', 'extensions', 'theme', 'watches']) {
+    'functionBreakpoints', 'extensions', 'theme', 'watches', 'startupConfiguration', 'launchProfiles']) {
     if (settings[name] === undefined && source[name] !== undefined) settings[name] = source[name];
   }
   settings.entry ??= source.entry ?? source.solutionPath;
   settings.startup ??= source.startup ?? source.startupProject;
+  for (const name of ['active', 'entry', 'startup', 'tabs', 'breakpoints']) {
+    if (source[name] !== undefined) settings[name] = source[name];
+  }
   return settings;
 }
 
@@ -33,7 +36,7 @@ export function migrateWorkspaceRecovery(input, {identity, maxFiles = 20000, max
   for (const name of ['records', 'diskRecords', 'files', 'documents', 'extraFiles']) {
     if (Array.isArray(input[name]) && input[name].length > maxFiles) throw new Error('SFW1304: Recovery file limit exceeded');
   }
-  const source = sanitizeRecoveryValue(input);
+  const source = sanitizeRecoveryInput(input);
   const {records, paths} = restoreRecoveryRecords(source, {maxFiles, maxBytes, signal});
   const settings = recoverySettings(source);
   const tabs = source.openDocuments ?? settings.tabs ?? [];
@@ -46,6 +49,12 @@ export function migrateWorkspaceRecovery(input, {identity, maxFiles = 20000, max
   }
   const dirty = source.dirty ?? records.filter(record => record.dirty).map(record => record.path);
   if (!Array.isArray(dirty) || dirty.length > maxFiles) throw new Error('SFW1304: Recovery dirty-file limit exceeded');
+  const documentStates = source.documentStates;
+  if (documentStates && (documentStates.size > maxFiles || [...documentStates.keys()].some(path =>
+    typeof path !== 'string' || !paths.has(path.normalize('NFC').toLowerCase())))) {
+    throw new Error('SFW1304: Recovery document-state membership is invalid');
+  }
+  if (workspaceStateSize({records, documentStates}) > maxBytes) throw new Error('SFW1304: Recovery source-state byte limit exceeded');
   return {
     format: 'sharpforge-workspace-recovery', schemaVersion: WORKSPACE_RECOVERY_VERSION,
     identity: String(identity ?? source.identity ?? source.name ?? 'Workspace'), name: String(source.name ?? 'Workspace'),
@@ -56,7 +65,8 @@ export function migrateWorkspaceRecovery(input, {identity, maxFiles = 20000, max
     active: paths.get(String(settings.active ?? '').normalize('NFC').toLowerCase()) ?? openDocuments[0]?.path ?? null,
     entry: settings.entry ?? null, startup: settings.startup ?? null,
     breakpoints: settings.breakpoints ?? {}, revision: Number.isSafeInteger(source.revision) ? source.revision : 0,
-    omittedBinaryFiles: source.omittedBinaryFiles ?? [], savedAt: Number.isFinite(source.savedAt) ? source.savedAt : 0
+    omittedBinaryFiles: source.omittedBinaryFiles ?? [], savedAt: Number.isFinite(source.savedAt) ? source.savedAt : 0,
+    ...(documentStates ? {documentStates} : {})
   };
 }
 

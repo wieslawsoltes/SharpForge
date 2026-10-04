@@ -1,5 +1,7 @@
 import {hashWorkspaceBytes} from '../content-hash.js';
 import {migrateWorkspaceRecovery, sanitizeRecoveryValue} from './schema.js';
+import {workspaceRecordSource} from '../transaction-records.js';
+import {encodeRecoverySnapshots, decodeRecoverySnapshots} from './snapshot-codec.js';
 
 function serializable(value) {
   if (value instanceof Uint8Array) return [...value];
@@ -10,10 +12,13 @@ function serializable(value) {
 
 /** Envelope checksum covers all sanitized payload fields and exact binary values. */
 export async function encodeRecoveryRecord(value, options = {}) {
-  const payload = serializable(sanitizeRecoveryValue(migrateWorkspaceRecovery(value, options)));
+  const migrated = migrateWorkspaceRecovery(value, options);
+  const version = migrated.documentStates || migrated.records.some(record => workspaceRecordSource(record)) ? 2 : 1;
+  const prepared = version === 2 ? await encodeRecoverySnapshots(migrated, options) : migrated;
+  const payload = serializable(sanitizeRecoveryValue(prepared));
   const contents = JSON.stringify(payload);
   const checksum = await hashWorkspaceBytes(new TextEncoder().encode(contents), options);
-  return JSON.stringify({format: 'sharpforge-recovery-envelope', version: 1, checksum, payload});
+  return JSON.stringify({format: 'sharpforge-recovery-envelope', version, checksum, payload});
 }
 
 export async function decodeRecoveryRecord(text, options = {}) {
@@ -21,14 +26,15 @@ export async function decodeRecoveryRecord(text, options = {}) {
     throw new Error('SFW1304: Recovery envelope size limit exceeded');
   }
   const envelope = JSON.parse(text);
-  if (envelope.format !== 'sharpforge-recovery-envelope' || envelope.version !== 1 || typeof envelope.checksum !== 'string') {
+  if (envelope.format !== 'sharpforge-recovery-envelope' || ![1, 2].includes(envelope.version) || typeof envelope.checksum !== 'string') {
     throw new Error('SFW1303: Unsupported recovery envelope');
   }
   const contents = JSON.stringify(serializable(envelope.payload));
   if (await hashWorkspaceBytes(new TextEncoder().encode(contents), options) !== envelope.checksum) {
     throw new Error('SFW1305: Recovery checksum mismatch');
   }
-  return migrateWorkspaceRecovery(envelope.payload, options);
+  const payload = envelope.version === 2 ? await decodeRecoverySnapshots(envelope.payload, options) : envelope.payload;
+  return migrateWorkspaceRecovery(payload, options);
 }
 
 /** Isolate corrupt records and return a report so startup can continue with the last valid checkpoint. */

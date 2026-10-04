@@ -39,7 +39,7 @@ test('corrupt checkpoints are quarantined while newer schemas are preserved inta
   assert.equal(result.record, null);
   assert.equal(result.quarantined, true);
   assert.equal(quarantined[0].text, corrupted);
-  const newer = JSON.stringify({format: 'sharpforge-recovery-envelope', version: 2, checksum: 'future', payload: {}});
+  const newer = JSON.stringify({format: 'sharpforge-recovery-envelope', version: 3, checksum: 'future', payload: {}});
   const preserved = await inspectRecoveryRecord(newer, {quarantine: value => quarantined.push(value)});
   assert.equal(preserved.preserved, true);
   assert.equal(quarantined.length, 1);
