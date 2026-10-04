@@ -50,8 +50,13 @@ export function unboxValue(vm, reference, type, byReference = false) {
   const table = vm.typeSystem.table(type);
   if (table.flags.nullable) {
     if (byReference) throw new ManagedFault('NotSupportedException', 'A Nullable box interior is not supported');
-    return reference === null ? nullableValue(vm, table)
-      : nullableValue(vm, table, unboxValue(vm, reference, table.nullableType), true);
+    if (reference === null) return nullableValue(vm, table);
+    const record = vm.heap.get(reference);
+    // Nullable<T> requires exact T; ordinary enum unboxing compatibility does not apply.
+    if (record.kind !== 'box' || record.methodTable !== table.nullableType) {
+      throw new ManagedFault('InvalidCastException', 'Nullable boxed type mismatch');
+    }
+    return nullableValue(vm, table, record.data[0], true);
   }
   if (!byReference && !table.flags.valueType) return castReference(vm.heap, reference, table);
   const record = vm.heap.get(reference);

@@ -15,8 +15,8 @@ and casts use the canonical user type. Ordinary same-VM snapshots share immutabl
 payloads and independently copy the containing box slot. A heap interior remains
 valid until its owner is collected; frame cancellation drops its managed roots.
 
-Nullable remains pending in this leaf; [enum unboxing compatibility](runtime-enum-unboxing.md)
-is added separately. This
+[Nullable storage and boxing](runtime-nullable-values.md) and
+[enum unboxing compatibility](runtime-enum-unboxing.md) are added separately. This
 leaf adds no user value-type instance/interface calls, source custom-struct
 lowering, reference-containing or explicit-layout storage, raw memory, portable
 snapshot format or aggregate GC scheme. Registered framework values keep their

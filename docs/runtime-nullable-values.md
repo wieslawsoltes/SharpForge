@@ -17,15 +17,16 @@ so wide payloads are charged fully during admission and snapshot preflight.
 Boxing an empty Nullable returns null; boxing a present value copies and boxes
 the underlying T with T's header. `unbox.any Nullable<T>` reconstructs an empty
 value from null or a present value from an exact T box. A different box type
-throws `InvalidCastException`. The constructor dispatch leaf also retains the
+throws `InvalidCastException`, including an enum box compatible with T only
+through [ordinary enum unboxing](runtime-enum-unboxing.md). The constructor dispatch leaf also retains the
 existing Decimal path; neither Nullable nor Decimal allocates a class stand-in.
 
 Underlying values are limited to admitted primitive/native/enum/Decimal and
 reference-free sequential user values. Nested Nullable, reference, ref-like,
 opaque/dynamic framework values and unsupported user layouts reject explicitly.
 Struct fields that themselves contain Nullable remain outside sequential struct
-storage. Direct `unbox Nullable<T>` interior addresses, enum-to-underlying
-compatibility, generic user-value instance calls, source frontend lowering,
+storage. Direct `unbox Nullable<T>` interior addresses,
+generic user-value instance calls, source frontend lowering,
 lifted operators, generic Nullable utility methods, portable snapshots and
 reference-containing aggregate GC remain pending. This does not close #1366.
 

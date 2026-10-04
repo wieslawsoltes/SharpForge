@@ -134,3 +134,26 @@ test('a compatible enum interior stays rooted across GC and ordinary snapshot re
     assert.throws(() => vm.dereference(address), {name: 'InvalidReferenceException'});
   } finally { vm.stop(); }
 });
+
+test('Nullable enum unboxing accepts its exact enum box and null', () => {
+  run(fixture((writer, context) => {
+    const type = context.typeSpec('valuetype System.Nullable`1<valuetype Choice>');
+    writer.op('ldc.i4.7').op('box', context.resolve('Choice')).op('unbox.any', type);
+    writer.op('box', type).op('unbox.any', context.resolve('Choice'));
+    writer.op('ldnull').op('unbox.any', type).op('box', type).op('ldnull').op('ceq').op('add').op('ret');
+  }), result => {
+    assert.equal(result.state, 'terminated', result.fault?.message);
+    assert.equal(result.returnValue, 8);
+  });
+});
+
+for (const [boxed, element] of [['System.Int32', 'valuetype Choice'], ['Other', 'valuetype Choice'], ['Choice', 'int']]) {
+  test(`Nullable<${element}> rejects compatible but inexact ${boxed} boxes`, () => {
+    run(fixture((writer, context) => writer.op('ldc.i4.7').op('box', context.resolve(boxed))
+      .op('unbox.any', context.typeSpec(`valuetype System.Nullable\`1<${element}>`)).op('pop').op('ret'),
+    {result: 'void'}), result => {
+      assert.equal(result.state, 'faulted');
+      assert.equal(result.fault.name, 'InvalidCastException');
+    });
+  });
+}
