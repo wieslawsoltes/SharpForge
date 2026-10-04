@@ -75,7 +75,7 @@ export const CreationBinding = Base =>
       if (type.typeKind === TypeKind.Enum || (keywordOf(type) && type.isValueType) || isNullableType(type)) {
         if (!args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
-        if (!isSource(type)) return this.lenient(syntax);
+        if (!isSource(type) && !isNullableType(type)) return this.lenient(syntax);
       }
       if (type.specialType === 'System_String' && !args.length) {
         this.report(typeNode, DiagnosticId.CS1729, [this.display(type), 0]);
@@ -85,7 +85,7 @@ export const CreationBinding = Base =>
       if (!all.length) {
         if (type.isValueType === true && !args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
-        if (!isSource(type)) {
+        if (!isSource(type) && !isNullableType(type)) {
           if (initializer) this.initializerSilently(initializer, type);
           return this.lenient(syntax);
         }
@@ -108,7 +108,7 @@ export const CreationBinding = Base =>
           if (initializer) this.initializerSilently(initializer, type);
           return this.bad(syntax);
         }
-        if (!isSource(type)) {
+        if (!isSource(type) && !isNullableType(type)) {
           if (initializer) this.initializerSilently(initializer, type);
           return this.lenient(syntax);
         }
