@@ -2,6 +2,9 @@ import { PdbGuids, fail } from './contracts.js';
 import { metadataMemberOwners, metadataName } from './metadata-facts.js';
 
 const key = (owner, ordinal) => `${owner}:${ordinal}`;
+const displayClassName = /^<>c__DisplayClass([0-9]+)_([0-9]+)$/u;
+const lambdaName = /^<([^<>]+)>b__([0-9]+)$/u;
+const delegateCacheName = /^<>9__[0-9]+$/u;
 export const unavailableClosure = (methodToken, reason) => ({
   available: false,
   reason,
@@ -69,7 +72,7 @@ function capturedFields(metadata, type) {
   for (const fieldToken of metadata.list(type, 'FieldList')) {
     const row = metadata.row(fieldToken);
     const name = metadataName(metadata, row[1], 'Closure metadata');
-    if (/^<>9__[0-9]+$/u.test(name)) continue;
+    if (delegateCacheName.test(name)) continue;
     if (!name || name.startsWith('<') || name.startsWith('CS$<') || row[0] & 0x10) {
       supported = false;
       continue;
@@ -83,7 +86,7 @@ function capturedFields(metadata, type) {
 
 function lambdaFact(methodToken, name, context) {
   const { map, closureType, closureOrdinal, fields } = context;
-  const match = /^<([^<>]+)>b__([0-9]+)$/u.exec(name);
+  const match = lambdaName.exec(name);
   if (!match) return unavailableClosure(methodToken, 'unsupported-lambda-convention');
   if (!map) return unavailableClosure(methodToken, 'missing-lambda-map');
   const lambdaOrdinal = Number(match[2]);
@@ -121,7 +124,7 @@ export function snapshotClosureFacts(metadata, custom, limit) {
   for (const [type, parent] of nestedTypes(metadata)) {
     const name = metadataName(metadata, metadata.row(type)[1], 'Closure metadata');
     if (!name.startsWith('<>c__DisplayClass')) continue;
-    const match = /^<>c__DisplayClass([0-9]+)_([0-9]+)$/u.exec(name);
+    const match = displayClassName.exec(name);
     const methodOrdinal = Number(match?.[1]);
     const closureOrdinal = Number(match?.[2]);
     const supported = Number.isSafeInteger(methodOrdinal) && Number.isSafeInteger(closureOrdinal);
