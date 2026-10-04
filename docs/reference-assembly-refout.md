@@ -135,7 +135,8 @@ and exact source spans for all three fixed buffers. Friend access succeeds in th
 [`qualification.json`](../tests/fixtures/a03-reference-assemblies/qualification.json) records the tested source revision,
 tool versions, input and output hashes, test count and native consumer observations. Full image/metadata comparisons,
 raw compiler commands, stdout and SARIF are retained under `artifacts/a03-reference-assemblies-qualified-b40/` by that
-capture. Subsequent documentation commits do not change the tested source identity. Performance remains unmeasured.
+capture. Subsequent documentation and benchmark-driver commits do not change the tested product source identity.
+The completed performance comparison is recorded below.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
@@ -160,6 +161,44 @@ node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-
 node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode metadata --output artifacts/refout-metadata.json
 node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode refout --output artifacts/refout-current.json
 ```
+
+The once-only comparison on 2026-10-04 used baseline `c1693a9e322295a43d90c3335885b5b5b3cf8daa` and candidate
+`7c73c877c841fa5d4d124edfab980f5896a7e485`, with Node 24.19.0 on Linux x64, AMD EPYC 9V74, nine visible logical CPUs
+and 10,451,464,192 bytes of visible memory. The three commands ran sequentially in the team's exclusive heavy slot on
+a shared hosted machine; unrelated external workloads were not measured. All three runs passed the mode, compilation
+and byte-determinism guards. Each retained all 120 repeated samples; no run was repeated for favorable results.
+
+| Measurement | Baseline metadata | Candidate metadata | Candidate refout |
+| --- | ---: | ---: | ---: |
+| Median, final 100 samples (ms) | 15.540257 | 15.544988 | 15.166682 |
+| p95, final 100 samples (ms) | 23.672052 | 20.191166 | 19.360906 |
+| p99, final 100 samples (ms) | 31.668122 | 22.964189 | 23.763267 |
+| First compilation, one observation (ms) | 102.270753 | 113.958974 | 127.934818 |
+| Compiler import, one observation (ms) | 643.469601 | 530.611755 | 566.799936 |
+| Median heap-used delta (bytes) | 3,983,120 | 3,982,488 | 3,913,608 |
+| PE image bytes | 4,096 | 4,096 | 4,096 |
+
+Baseline-to-candidate metadata compares whole checkout revisions, including unrelated compiler and package changes;
+it cannot attribute a change to reference assembly support alone. Its median changed by **+0.0304%** and p95 by
+**-14.7046%**. Within the candidate, refout versus metadata changed median by **-2.4336%**, p95 by **-4.1120%** and
+p99 by **+3.4797%**. These modes emit different metadata contracts. Equal PE file lengths include alignment padding
+and do not establish equal metadata payload size; no payload-size or browser bundle-size measurement was taken.
+
+First-compilation observations increased by **11.4287%** across revisions and **12.2639%** between candidate modes.
+Candidate refout's import observation increased by **6.8201%** over candidate metadata. These exceed the 5% latency
+review threshold and are disclosed for coordinator review; they are single observations, not an established startup
+regression estimate or a performance-budget pass. The calculated sum of candidate import and first compilation
+increased by **7.7825%**; that sum excludes other driver startup work. The driver imports its candidate CIL inspector before timing the
+selected compiler import, so the baseline loads a separate CIL copy while the candidate can reuse its preloaded copy.
+Consequently import timing is a harness observation, not an equivalent clean-startup comparison. No measured PE size
+increase exceeds 10%. GC ran before each repeated sample and the wrapper capped V8 old space at 2,048 MiB; heap-used
+deltas include temporary allocations and do not establish total allocation or retained-heap changes.
+
+The [evidence archive](evidence/a03-reference-assemblies/README.md) retains the complete benchmark reports, logs,
+exact command/environment/status records and frozen preparation manifest. It also retains the actual successful
+native `reference.json`, both image pairs, all SRM observations and consumer diagnostics, and the 45-test TAP at b40.
+The benchmark's refout image hash matches that qualified public image. Historical failed captures and the independent
+both-image consumer probe have separate directories and remain labelled as failures or probes.
 
 ## Changes outside A03
 
