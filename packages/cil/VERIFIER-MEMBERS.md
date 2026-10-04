@@ -24,7 +24,9 @@ Unresolved owners/signature types, unmatched/ambiguous declarations, MethodSpec,
 generic signatures, function pointers, varargs and non-default method conventions
 produce explicit unknown results. Same-named externals never bind locally. This
 increment does not perform inherited-member search, TypeRef alias unification,
-custom-modifier equivalence, access checks or whole-method verification. Those
+custom-modifier equivalence or whole-method verification. The separate
+[local member-access query](VERIFIER-MEMBER-ACCESS.md) handles flat same-assembly
+access rules with explicit unknowns for unsupported ancestry/nesting. Those
 remaining #2400/#2407 services stay open; a missing or unsupported result must
 never be treated as an accepted call or field access.
 
@@ -40,7 +42,8 @@ checked for duplicate/orphan definitions. The supplied `signal` applies to
 construction and later queries. Type-system budgets still apply independently.
 
 Malformed metadata throws `CILVM0001` (including invalid/over-complex signature
-encoding), aggregate limits throw `CILVM0002`, and cancellation throws `CILVM0003`.
+encoding), aggregate limits throw `CILVM0002`, and cancellation throws `CILVM0003`. Foreign access-query member identities
+throw `CILVM0004`.
 Type-token/hierarchy errors retain their existing `CILVT` diagnostics. This is an
 opt-in JavaScript metadata service; execution engines and broad platform
 qualification are not activated or claimed by it.
