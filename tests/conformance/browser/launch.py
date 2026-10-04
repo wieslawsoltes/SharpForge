@@ -40,7 +40,7 @@ def selected_engine(environ=None, engine=None):
     return engine
 
 
-def launch_options(environ=None, engine=None):
+def launch_options(environ=None, engine=None, rtc_loopback=False):
     environ = os.environ if environ is None else environ
     options = {'headless': True}
     engine = selected_engine(environ, engine)
@@ -51,13 +51,20 @@ def launch_options(environ=None, engine=None):
         if not path.is_file():
             raise ValueError(variable + ' is not a file: ' + str(path))
         options['executable_path'] = str(path)
+    if rtc_loopback:
+        if engine != 'chromium':
+            raise ValueError('Explicit peer-connection loopback enumeration is supported only for Chromium')
+        # Include the actual loopback interface in native ICE; no fake media, transport or security bypass.
+        # https://chromium.googlesource.com/chromium/src/+/main/content/public/common/content_switches.cc
+        options['args'] = ['--allow-loopback-in-peer-connection']
     # The supported bundled browser needs no security-disabling launch flags.
     return options
 
 
 class BrowserSession:
-    def __init__(self, browser, suite, engine=None):
+    def __init__(self, browser, suite, engine=None, configuration=None):
         self.engine = selected_engine(engine=engine)
+        self.launch_configuration = dict(configuration if configuration is not None else launch_options(engine=self.engine))
         from importlib.util import spec_from_file_location, module_from_spec
         spec = spec_from_file_location('sharpforge_csp_monitor', Path(__file__).with_name('csp_monitor.py'))
         module = module_from_spec(spec)
@@ -141,7 +148,8 @@ class BrowserSession:
         (self.directory / 'session.json').write_text(json.dumps({
             'suite': self.directory.name, 'passed': failure is None,
             'engine': self.engine, 'cspViolations': self.csp.events,
-            'browser': self.browser.version, 'executable': launch_options(engine=self.engine).get('executable_path', 'playwright-managed'),
+            'browser': self.browser.version, 'executable': self.launch_configuration.get('executable_path', 'playwright-managed'),
+            'launchArguments': self.launch_configuration.get('args', []),
             'mode': 'standalone HTML injection' if self.directory.name == 'standalone_test' else ('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'http'),
             'seconds': time.monotonic() - self.started, 'diagnosticErrors': diagnostics,
         }, indent=2) + '\n', encoding='utf8')
@@ -170,13 +178,14 @@ class _CheckedPage:
 
 
 @contextmanager
-def launch_browser(playwright, suite, engine=None):
+def launch_browser(playwright, suite, engine=None, rtc_loopback=False):
     global _session
     if _session is not None:
         raise RuntimeError('Nested browser sessions are unsupported')
     engine = selected_engine(engine=engine)
-    browser = getattr(playwright, engine).launch(**launch_options(engine=engine))
-    session = BrowserSession(browser, suite, engine)
+    configuration = launch_options(engine=engine, rtc_loopback=rtc_loopback)
+    browser = getattr(playwright, engine).launch(**configuration)
+    session = BrowserSession(browser, suite, engine, configuration)
     _session = session
     handlers = {}
     def cancel(signum, frame):

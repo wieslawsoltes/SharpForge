@@ -1,5 +1,6 @@
 from pathlib import Path
 import importlib.util
+import json
 import os
 import tempfile
 import unittest
@@ -30,6 +31,20 @@ class LauncherContracts(unittest.TestCase):
     def test_managed_browser_default_and_empty_override(self):
         self.assertEqual(launch.launch_options({}), {'headless': True})
         self.assertEqual(launch.launch_options({'CHROMIUM_EXECUTABLE': '  '}), {'headless': True})
+
+    def test_native_rtc_loopback_is_explicit_and_recorded(self):
+        options = launch.launch_options({}, engine='chromium', rtc_loopback=True)
+        self.assertEqual(options, {'headless': True, 'args': ['--allow-loopback-in-peer-connection']})
+        self.assertNotIn('args', launch.launch_options({}, engine='chromium'))
+        with self.assertRaisesRegex(ValueError, 'only for Chromium'):
+            launch.launch_options({}, engine='firefox', rtc_loopback=True)
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'SHARPFORGE_RESULTS_DIR': directory}):
+            browser = MagicMock()
+            browser.version = 'unit-test-browser'
+            session = launch.BrowserSession(browser, 'rtc-loopback', engine='chromium', configuration=options)
+            session.close()
+            report = json.loads((Path(directory) / 'rtc-loopback/session.json').read_text(encoding='utf-8'))
+            self.assertEqual(report['launchArguments'], options['args'])
 
     def test_override_validates_file_and_preserves_spaces(self):
         with tempfile.TemporaryDirectory() as directory:
