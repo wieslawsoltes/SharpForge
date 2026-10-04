@@ -22,6 +22,10 @@ Application-owned retained drawing services for SharpForge. The package register
 
 Scanbeam tessellation preserves holes and self-intersections. Strokes preserve dash seams, cap dots, joins and explicit work/vertex budgets. Painted bounds include transforms, stroke extent, glyph overhang and conservative shadow/effect expansion.
 
+## Frames and retained caches
+
+`FrameScheduler` coalesces work in explicit input/layout/animation/build/submit/present phases. Debug pause freezes animation time while layout and painting remain available. `DirtyRegions` requires preserved contents before partial redraw; `LayerCache` excludes placement from reusable local content. `FrameMetrics` separates CPU submission, GPU completion and presentation.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
