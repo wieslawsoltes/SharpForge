@@ -32,9 +32,11 @@ remain pending; this change makes no timing claim or portable snapshot claim.
 
 Prepared guest-CIL tests cover both decode modes, boxing counts, override writes,
 copy isolation, fallback GC rooting, initializer retry, snapshot/stop/fault
-lifecycle, rejected addresses and unsupported declarations. They have **not been
-executed** in this implementation task. Root owns the serial validation queue:
+lifecycle, rejected addresses and unsupported declarations. All 123 focused
+struct Object, constrained interface/generic-reference/generic-value, direct
+struct-call, and boxed-interface checks passed at `0895ee5c`, using Node 24,
+one worker, and a 512 MB old-space limit. Validation command:
 
 ```sh
-node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-object-tostring.test.js tests/a05-constrained-interface-calls.test.js tests/a05-constrained-generic-reference.test.js tests/a05-value-instance-calls.test.js tests/a05-boxed-interface-calls.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-object-tostring.test.js tests/a05-constrained-interface-calls.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-generic-value.test.js tests/a05-value-instance-calls.test.js tests/a05-boxed-interface-calls.test.js
 ```
