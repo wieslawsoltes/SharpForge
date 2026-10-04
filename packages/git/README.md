@@ -2,6 +2,12 @@
 
 Published Git modules for SharpForge. Each stacked layer exposes only its implemented dependencies.
 
+## Available contracts
+
+- [auth](docs/auth.md)
+- [blame](docs/blame.md)
+- [conformance](docs/conformance.md)
+
 ## Revision graph and history
 
 `CommitGraph` traverses bounded commit ancestry and shallow boundaries, computes merge bases and ancestor relationships, and accepts an explicit object database. `GitHistory` owns bounded immutable history caches; `revParse` resolves revision expressions through the supplied repository. Repository composition and its native integration fixtures enter a later layer.
