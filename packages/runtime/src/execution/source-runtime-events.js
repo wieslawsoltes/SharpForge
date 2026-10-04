@@ -27,9 +27,9 @@ export function enterSourceMethod(vm, frame, reason = 'call') {
     observer.log.emit(RuntimeEventName.MethodLoad, {method: frame.methodId, name: name.slice(0, 4096)}, vm.instructions);
     observer.loaded.add(method);
   }
-  const active = {method: frame.methodId, frame: frame.id};
+  const active = {method: frame.methodId, frame: frame.id, live: true};
   observer.active.set(frame.id, active);
-  observer.log.emit(RuntimeEventName.MethodEnter, {...active, reason}, vm.instructions);
+  observer.log.emit(RuntimeEventName.MethodEnter, {method: active.method, frame: active.frame, reason}, vm.instructions);
 }
 
 /** The actual exit boundary follows all finally bodies and precedes pooled storage release. */
@@ -37,7 +37,7 @@ export function leaveSourceMethod(vm, frame, reason = 'return') {
   const observer = observers.get(vm), active = observer?.active.get(frame.id);
   if (!active) return;
   observer.active.delete(frame.id);
-  observer.log.emit(RuntimeEventName.MethodLeave, {...active, reason}, vm.instructions);
+  observer.log.emit(RuntimeEventName.MethodLeave, {method: active.method, frame: active.frame, reason}, vm.instructions);
 }
 
 function* liveFrames(vm) {
@@ -49,10 +49,10 @@ function* liveFrames(vm) {
   }
 }
 
-function closeMethods(vm, observer, reason, live = null) {
+function closeMethods(vm, observer, reason, onlyMissing = false) {
   let closing = null;
   for (const active of observer.active.values()) {
-    if (live?.has(active.frame)) continue;
+    if (onlyMissing && active.live) continue;
     (closing ??= []).push(active.frame);
   }
   // Reverse admission order closes each discarded stack's callees before callers.
@@ -66,9 +66,13 @@ export function flushSourceRuntimeEvents(vm) {
   const observer = observers.get(vm);
   if (!observer) return;
   if (observer.active.size) {
-    const live = new Set();
-    for (const frame of liveFrames(vm)) live.add(frame.id);
-    closeMethods(vm, observer, 'canceled', live);
+    // Reuse host span rows instead of collecting frame IDs at every boundary.
+    for (const active of observer.active.values()) active.live = false;
+    for (const frame of liveFrames(vm)) {
+      const active = observer.active.get(frame.id);
+      if (active) active.live = true;
+    }
+    closeMethods(vm, observer, 'canceled', true);
   }
   observer.log.flush();
 }
