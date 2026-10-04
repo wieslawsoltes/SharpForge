@@ -16,6 +16,7 @@
  * conversions/pointer.js, declaration-level rules in ./unsafe-declarations.js. Nothing here is executable: the image
  * has typed slots and fields only, so code generation reports pointers as a runtime gap.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, SymbolKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { lookupMembers } from './inheritance.js';
 import { LocalDeclarationKind } from '../symbols/members.js';
@@ -68,7 +69,7 @@ export const UnsafeBinding = Base =>
       return false;
     }
     requireUnsafe(node) {
-      if (!this.inUnsafeContext) this.report(node, 'CS0214');
+      if (!this.inUnsafeContext) this.report(node, DiagnosticId.CS0214);
     }
     bindType(syntax, options) {
       const bound = super.bindType(syntax, options),
@@ -83,7 +84,7 @@ export const UnsafeBinding = Base =>
     warnManagedPointee(type, node) {
       for (let t = type; t; t = t.elementType ?? t.pointedAtType) {
         if (isPointerType(t) && isManagedType(t.pointedAtType)) {
-          this.report(node, 'CS8500', [this.display(t.pointedAtType)]);
+          this.report(node, DiagnosticId.CS8500, [this.display(t.pointedAtType)]);
           return;
         }
         if (!(t instanceof ArrayTypeSymbol) && !isPointerType(t)) return;
@@ -92,7 +93,7 @@ export const UnsafeBinding = Base =>
     statement(syntax) {
       if (syntax.kind === 'FixedStatement') return this.fixedStatement(syntax);
       if (syntax.kind !== 'UnsafeStatement') return super.statement(syntax);
-      if (!this.d.options?.allowUnsafe) this.report(syntax.unsafeKeyword, 'CS0227');
+      if (!this.d.options?.allowUnsafe) this.report(syntax.unsafeKeyword, DiagnosticId.CS0227);
       this.unsafeBlocks = (this.unsafeBlocks ?? 0) + 1;
       try {
         return super.statement(syntax);
@@ -103,7 +104,7 @@ export const UnsafeBinding = Base =>
     expression(syntax, options = {}) {
       if (syntax.kind === 'SizeOfExpression') {
         const size = super.expression(syntax, options);
-        if (!size.constantValue && !size.hasErrors && !this.inUnsafeContext) this.report(syntax, 'CS0233', [syntax.type.toString().trim()]);
+        if (!size.constantValue && !size.hasErrors && !this.inUnsafeContext) this.report(syntax, DiagnosticId.CS0233, [syntax.type.toString().trim()]);
         if (isUnmanagedConstructedType(super.bindType(syntax.type).type)) this.d.gate(this.c.uri, syntax, 'UnmanagedConstructedTypes');
         return size;
       }
@@ -120,11 +121,11 @@ export const UnsafeBinding = Base =>
     dereference(operand, syntax) {
       this.requireUnsafe(syntax.kind === 'PointerIndirectionExpression' ? syntax.operand : syntax);
       if (!isPointerType(operand.type)) {
-        this.report(syntax, 'CS0193');
+        this.report(syntax, DiagnosticId.CS0193);
         return this.bad(syntax);
       }
       if (isVoidPointer(operand.type)) {
-        this.report(syntax, 'CS0242');
+        this.report(syntax, DiagnosticId.CS0242);
         return this.bad(syntax);
       }
       return this.node('PointerIndirection', syntax, operand.type.pointedAtType, { operand });
@@ -137,7 +138,7 @@ export const UnsafeBinding = Base =>
       if (!isVariable(operand) || !operand.type) {
         let written = syntax.operand;
         while (written.kind === 'ParenthesizedExpression') written = written.expression;
-        this.report(written, 'CS0211');
+        this.report(written, DiagnosticId.CS0211);
         return this.bad(syntax);
       }
       // Taking the address is a use and a possible write of the variable, whatever is wrong with where it is taken.
@@ -145,19 +146,19 @@ export const UnsafeBinding = Base =>
       this.markWrite(operand, null);
       if (operand.kind === 'Local') operand.local.nonConstantWrite = true;
       const isFixed = isFixedVariable(operand);
-      if (inFixedInitializer && isFixed) this.report(syntax, 'CS0213');
+      if (inFixedInitializer && isFixed) this.report(syntax, DiagnosticId.CS0213);
       else if (!inFixedInitializer && !isFixed) {
-        this.report(syntax, 'CS0212');
+        this.report(syntax, DiagnosticId.CS0212);
         return this.bad(syntax);
       }
-      if (isManagedType(operand.type)) this.report(syntax, 'CS8500', [this.display(operand.type)]);
+      if (isManagedType(operand.type)) this.report(syntax, DiagnosticId.CS8500, [this.display(operand.type)]);
       else if (isUnmanagedConstructedType(operand.type)) this.d.gate(this.c.uri, syntax, 'UnmanagedConstructedTypes');
       return this.node('AddressOf', syntax, new PointerTypeSymbol(operand.type), { operand });
     }
     /** A pointer has no members: `p.M` is CS1061 (`p->M` is the member of what it points at). */
     instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options) {
       if (!isPointerType(type)) return super.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);
-      this.report(nameSyntax, 'CS1061', [this.display(type), name]);
+      this.report(nameSyntax, DiagnosticId.CS1061, [this.display(type), name]);
       return this.bad(syntax);
     }
     elementAccessOn(target, args, syntax) {
@@ -165,16 +166,19 @@ export const UnsafeBinding = Base =>
       if (args.some(argument => argument.hasErrors)) return this.bad(syntax);
       this.requireUnsafe(syntax);
       if (args.length !== 1) {
-        this.report(syntax, 'CS0196');
+        this.report(syntax, DiagnosticId.CS0196);
         return this.bad(syntax);
       }
       if (isVoidPointer(target.type)) {
-        this.report(syntax, 'CS0242');
+        this.report(syntax, DiagnosticId.CS0242);
         return this.bad(syntax);
       }
       // C# 7.3: a fixed-size buffer of a moveable variable is indexed without pinning it first.
       if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver && !isFixedVariable(target.receiver))
         this.d.gate(this.c.uri, target.syntax, 'IndexingMovableFixedBuffers');
+      // The elements of a fixed-size buffer are reached through a pointer into the variable that holds the struct:
+      // Roslyn counts that as a write of the variable (no CS0649 for a field that is only indexed).
+      if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver) this.markWrite(target.receiver, null);
       let index = null;
       for (const type of [this.core.int, this.core.uint, this.core.long, this.core.ulong]) {
         const conversion = this.conversions.classifyFromExpression(args[0], type);
@@ -213,9 +217,9 @@ export const UnsafeBinding = Base =>
             init = declarator.initializer?.value ?? null,
             local = this.newLocal(name, declared, declarator.identifier, LocalDeclarationKind.Fixed);
           let value = null;
-          if (!isPointer && !declared.isErrorType()) this.report(declarator, 'CS0209');
+          if (!isPointer && !declared.isErrorType()) this.report(declarator, DiagnosticId.CS0209);
           if (!init) {
-            this.report(declarator.identifier, 'CS0210');
+            this.report(declarator.identifier, DiagnosticId.CS0210);
             // The missing initializer is the error; the local is not reported as unused on top of it.
             local.reads++;
           } else {
@@ -256,7 +260,7 @@ export const UnsafeBinding = Base =>
         else if (isPointerType(type) && value.kind === 'FieldAccess' && value.field.isFixedSizeBuffer) element = type.pointedAtType;
         if (!element && (element = this.pinnableElementType(type))) this.d.gate(this.c.uri, init, 'ExtensibleFixedStatement');
         if (!element) {
-          this.report(init, 'CS8385');
+          this.report(init, DiagnosticId.CS8385);
           return this.bad(init);
         }
         pointer = this.node('FixedInitializer', init, new PointerTypeSymbol(element), { operand: value });
