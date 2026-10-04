@@ -71,8 +71,8 @@ side-panel roots. `DesignerToolRouter` moves the active roots into the shared do
 own session. A non-designer document gives the shared tools a neutral empty state.
 
 Call `wrap(uri, sourceRoot, editor)` when creating a source document, `activate(uri)` when focus changes, `sourceChanged(uri)` after a
-source edit, and `syncFiles()` when workspace membership changes. Include `snapshot()` under `designerViews` in the workspace recovery
-record, and call `restore(record.designerViews)` before opening recovered documents. Call `reset()` before disposing the source
+source edit, and `syncFiles()` when workspace membership changes. Include `snapshot()` under `designer` in the workspace recovery
+record, and call `restore(record.designer)` before opening recovered documents. Call `reset()` before disposing the source
 editors on workspace replacement. Source tab closure alone should retain its session. A standalone `.sfdesign.json` root can use
 `wrap(uri, root, null, {uri, text})`; the record provider keeps that URI in membership reconciliation.
 
