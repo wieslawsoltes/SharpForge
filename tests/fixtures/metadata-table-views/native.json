@@ -1,0 +1,2120 @@
+{
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "linux-x64",
+    "osRelease": "6.18.44",
+    "node": "v24.19.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "templateSHA256": "dc3441f324dd18d01e518083c0dadc66182cd47e60e3e72a8795cb7378b9ce36",
+  "sourceSHA256": "a621ea6f5b342bd41a4df36ff7814a982d67f873687780f50a08e0e01e9beef2",
+  "fixtureSHA256": "ae4430f0779b4cea310fb61f453af0f8bae07c65239b5d5969a646f9929fcd50",
+  "compilation": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "ef3a43037bb9014cc35dd6aaff240f088669c4e32c60756eaa5a2b6562ce38b6"
+  },
+  "images": [
+    {
+      "label": "srm-cli-tables-pe",
+      "probes": {
+        "#Strings": [
+          0,
+          193,
+          199
+        ],
+        "#Blob": [
+          0,
+          56
+        ],
+        "#GUID": [
+          0,
+          1,
+          2
+        ],
+        "#US": [
+          1,
+          3
+        ]
+      },
+      "image": "TVoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQRQAATAEBAAAAAAAAAAAAAAAAAOAAIiALAQEAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAABAAAAAAgAAAAAAAAMAQIUAABAAABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAEgAAAAAAAAAAAAAAC50ZXh0AAAA5QMAAAAgAAAABAAAAAIAAAAAAAAAAAAAAAAAACAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAgAFAEggAACdAwAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCU0pCAQABAAAAAAAMAAAAdjQuMC4zMDMxOQAAAAAFAGwAAAD2AQAAIy0AAGQCAADMAAAAI1N0cmluZ3MAAAAAMAMAAA0AAAAjVVMAQAMAACAAAAAjR1VJRAAAAGADAAA9AAAAI0Jsb2IAAAAAAAAAAgAAAf/////JHwAAAPoBMwAWAAABAAAAAQAAAAQAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAQABAAAAAAAGAC4ANQAAAAAAPAAAAAAAAQABABEAAABFAEsABQABAAEAAgAAAFMAAAAFAAIAAgChAAAAWgBLAAAAAgACAAEAFgBkAAoAAQAAAAAAgAAWIGsADQABAAEAAQABAHIAAgAQAAkAeAASAAgABAAWAEMACwAbAAMAIAACAAYAIgAEAAQAAAACAAAAAAABACUAAgABAAEAAAB+AAUAAgABAAEAAACGACkAAgABAAMAAgACAAIAjAAtAAEBAwCTAAEAADAAAAEAAgAAAgAAAAACAAACBIAAAAAAAgAAAAAAAAAAAAAAEgAAAAgAAAAAAAAAAAAAAAEAHwAAAAAAAQAAAKEAMAABACAAAAAAAKwASwAFAAAAAAABAAAAtgAEAAMAAgAAAAAABAC/AAIANAABAAUAAAAATWV0YWRhdGFSb3dzLmRsbABNZXRhZGF0YVJvd3MAU3lzdGVtLlJ1bnRpbWUAT2JqZWN0AFN5c3RlbQA8TW9kdWxlPgBPd25lcgBGaXh0dXJlAE5lc3RlZABJQ29udHJhY3QATnVtYmVyAEltcG9ydAB2YWx1ZQAuY3RvcgBDaGFuZ2VkAFZhbHVlAG5hdGl2ZQBuYXRpdmVfbWV0aG9kAGxpbmtlZC5iaW4ARm9yd2FyZGVkAFJlc291cmNlAFQAU3VmZml4TmFtZQAAAQAJQQAAADTYHt0BAAAA47DEQpj8HESa+/TImW+5JAECAwQFBgcICQoLDA0ODxAACLA/X38R1Qo6AgYIBAABAQgDIAABBCoAAAAEAQAAAAEHAi4AAwcBCAMIAAgCHQgDAQIDAwoBCAQAf4D/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "sha256": "0d84d137ace5e63931e1f69a2163f9287f2bd565b2fa2621793dd033946f6453"
+    },
+    {
+      "label": "srm-cli-tables-root",
+      "probes": {
+        "#Strings": [
+          0,
+          193,
+          199
+        ],
+        "#Blob": [
+          0,
+          56
+        ],
+        "#GUID": [
+          0,
+          1,
+          2
+        ],
+        "#US": [
+          1,
+          3
+        ]
+      },
+      "image": "QlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAA9gEAACMtAABkAgAAzAAAACNTdHJpbmdzAAAAADADAAANAAAAI1VTAEADAAAgAAAAI0dVSUQAAABgAwAAPQAAACNCbG9iAAAAAAAAAAIAAAH/////yR8AAAD6ATMAFgAAAQAAAAEAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAEAAQAAAAAABgAuADUAAAAAADwAAAAAAAEAAQARAAAARQBLAAUAAQABAAIAAABTAAAABQACAAIAoQAAAFoASwAAAAIAAgABABYAZAAKAAEAAAAAAIAAFiBrAA0AAQABAAEAAQByAAIAEAAJAHgAEgAIAAQAFgBDAAsAGwADACAAAgAGACIABAAEAAAAAgAAAAAAAQAlAAIAAQABAAAAfgAFAAIAAQABAAAAhgApAAIAAQADAAIAAgACAIwALQABAQMAkwABAAAwAAABAAIAAAIAAAAAAgAAAgSAAAAAAAIAAAAAAAAAAAAAABIAAAAIAAAAAAAAAAAAAAABAB8AAAAAAAEAAAChADAAAQAgAAAAAACsAEsABQAAAAAAAQAAALYABAADAAIAAAAAAAQAvwACADQAAQAFAAAAAE1ldGFkYXRhUm93cy5kbGwATWV0YWRhdGFSb3dzAFN5c3RlbS5SdW50aW1lAE9iamVjdABTeXN0ZW0APE1vZHVsZT4AT3duZXIARml4dHVyZQBOZXN0ZWQASUNvbnRyYWN0AE51bWJlcgBJbXBvcnQAdmFsdWUALmN0b3IAQ2hhbmdlZABWYWx1ZQBuYXRpdmUAbmF0aXZlX21ldGhvZABsaW5rZWQuYmluAEZvcndhcmRlZABSZXNvdXJjZQBUAFN1ZmZpeE5hbWUAAAEACUEAAAA02B7dAQAAAOOwxEKY/BxEmvv0yJlvuSQBAgMEBQYHCAkKCwwNDg8QAAiwP19/EdUKOgIGCAQAAQEIAyAAAQQqAAAABAEAAAABBwIuAAMHAQgDCAAIAh0IAwECAwMKAQgEAH+A/w==",
+      "sha256": "4b9a9fe245401051d240b8f57bd918e137de7938ac2a352088d1f96e28153e96"
+    },
+    {
+      "label": "portable-pdb",
+      "probes": {
+        "#Strings": [
+          0
+        ],
+        "#Blob": [
+          0,
+          4
+        ],
+        "#GUID": [
+          0,
+          1
+        ]
+      },
+      "image": "QlNKQgEAAQAAAAAADAAAAFBEQiB2MS4wAAAAAAAABQBwAAAAJAAAACNQZGIAAAAAlAAAAHAAAAAjfgAABAEAABAAAAAjU3RyaW5ncwAAAAAUAQAAEAAAACNHVUlEAAAAJAEAAAoAAAAjQmxvYgAAANBB+xZLeJ1Jithau4/x2XY9TfmjAAAAAEAAAAAAAAAAAgAAAAAAAAACAAABAAAAAAAA/wAAAAAAAADEAAEAAAACAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQABAAAAAQABAAAAAQAAAAIAAQABAAEAAAAAAAEAAAAAAAAAAQAHAAQAAAAAAAIAAQBAAAEABAAAbG9jYWwAY29uc3RhbnQAAQIDBAUGBwgJCgsMDQ4PEAACLwAFCAEAAAA=",
+      "sha256": "8274b613acbf7e589ae8b6e26bcd3ac7a2c046b9eb0269eb79143b5baa868288"
+    }
+  ],
+  "unsupportedImages": [
+    {
+      "label": "unsupported-legacy-table-33",
+      "table": 33,
+      "image": "QlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAA/gEAACMtAABsAgAAzAAAACNTdHJpbmdzAAAAADgDAAANAAAAI1VTAEgDAAAgAAAAI0dVSUQAAABoAwAAPQAAACNCbG9iAAAAAAAAAAIAAAH/////yx8AAAD6ATMAFgAAAQAAAAEAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAABAAEAAAAAAAYALgA1AAAAAAA8AAAAAAABAAEAEQAAAEUASwAFAAEAAQACAAAAUwAAAAUAAgACAKEAAABaAEsAAAACAAIAAQAWAGQACgABAAAAAACAABYgawANAAEAAQABAAEAcgACABAACQB4ABIACAAEABYAQwALABsAAwAgAAIABgAiAAQABAAAAAIAAAAAAAEAJQACAAEAAQAAAH4ABQACAAEAAQAAAIYAKQACAAEAAwACAAIAAgCMAC0AAQEDAJMAAQAAMAAAAQACAAACAAAAAAIAAAIEgAAAAAACAAAAAAAAAAAAAAASAAAAZIYAAAgAAAAAAAAAAAAAAAEAHwAAAAAAAQAAAKEAMAABACAAAAAAAKwASwAFAAAAAAABAAAAtgAEAAMAAgAAAAAABAC/AAIANAABAAUAAAAATWV0YWRhdGFSb3dzLmRsbABNZXRhZGF0YVJvd3MAU3lzdGVtLlJ1bnRpbWUAT2JqZWN0AFN5c3RlbQA8TW9kdWxlPgBPd25lcgBGaXh0dXJlAE5lc3RlZABJQ29udHJhY3QATnVtYmVyAEltcG9ydAB2YWx1ZQAuY3RvcgBDaGFuZ2VkAFZhbHVlAG5hdGl2ZQBuYXRpdmVfbWV0aG9kAGxpbmtlZC5iaW4ARm9yd2FyZGVkAFJlc291cmNlAFQAU3VmZml4TmFtZQAAAQAJQQAAADTYHt0BAAAA47DEQpj8HESa+/TImW+5JAECAwQFBgcICQoLDA0ODxAACLA/X38R1Qo6AgYIBAABAQgDIAABBCoAAAAEAQAAAAEHAi4AAwcBCAMIAAgCHQgDAQIDAwoBCAQAf4D/",
+      "sha256": "ebad8fa8a2a9d022dc856c8278470ce591bae26a9b0a70950b3ff66378071e17"
+    },
+    {
+      "label": "unsupported-legacy-table-34",
+      "table": 34,
+      "image": "QlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAABgIAACMtAAB0AgAAzAAAACNTdHJpbmdzAAAAAEADAAANAAAAI1VTAFADAAAgAAAAI0dVSUQAAABwAwAAPQAAACNCbG9iAAAAAAAAAAIAAAH/////zR8AAAD6ATMAFgAAAQAAAAEAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAABAAEAAAAAAAYALgA1AAAAAAA8AAAAAAABAAEAEQAAAEUASwAFAAEAAQACAAAAUwAAAAUAAgACAKEAAABaAEsAAAACAAIAAQAWAGQACgABAAAAAACAABYgawANAAEAAQABAAEAcgACABAACQB4ABIACAAEABYAQwALABsAAwAgAAIABgAiAAQABAAAAAIAAAAAAAEAJQACAAEAAQAAAH4ABQACAAEAAQAAAIYAKQACAAEAAwACAAIAAgCMAC0AAQEDAJMAAQAAMAAAAQACAAACAAAAAAIAAAIEgAAAAAACAAAAAAAAAAAAAAASAAAABAAAAAYAAAAAAAAACAAAAAAAAAAAAAAAAQAfAAAAAAABAAAAoQAwAAEAIAAAAAAArABLAAUAAAAAAAEAAAC2AAQAAwACAAAAAAAEAL8AAgA0AAEABQAAAABNZXRhZGF0YVJvd3MuZGxsAE1ldGFkYXRhUm93cwBTeXN0ZW0uUnVudGltZQBPYmplY3QAU3lzdGVtADxNb2R1bGU+AE93bmVyAEZpeHR1cmUATmVzdGVkAElDb250cmFjdABOdW1iZXIASW1wb3J0AHZhbHVlAC5jdG9yAENoYW5nZWQAVmFsdWUAbmF0aXZlAG5hdGl2ZV9tZXRob2QAbGlua2VkLmJpbgBGb3J3YXJkZWQAUmVzb3VyY2UAVABTdWZmaXhOYW1lAAABAAlBAAAANNge3QEAAADjsMRCmPwcRJr79MiZb7kkAQIDBAUGBwgJCgsMDQ4PEAAIsD9ffxHVCjoCBggEAAEBCAMgAAEEKgAAAAQBAAAAAQcCLgADBwEIAwgACAIdCAMBAgMDCgEIBAB/gP8=",
+      "sha256": "bc5c48b228cb89bf0d1c8e4440e8379145ceae86c74cc7daac63db6efe2b29cf"
+    },
+    {
+      "label": "unsupported-legacy-table-36",
+      "table": 36,
+      "image": "QlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAAAAIAACMtAABsAgAAzAAAACNTdHJpbmdzAAAAADgDAAANAAAAI1VTAEgDAAAgAAAAI0dVSUQAAABoAwAAPQAAACNCbG9iAAAAAAAAAAIAAAH/////2R8AAAD6ATMAFgAAAQAAAAEAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAABAAEAAAAAAAYALgA1AAAAAAA8AAAAAAABAAEAEQAAAEUASwAFAAEAAQACAAAAUwAAAAUAAgACAKEAAABaAEsAAAACAAIAAQAWAGQACgABAAAAAACAABYgawANAAEAAQABAAEAcgACABAACQB4ABIACAAEABYAQwALABsAAwAgAAIABgAiAAQABAAAAAIAAAAAAAEAJQACAAEAAQAAAH4ABQACAAEAAQAAAIYAKQACAAEAAwACAAIAAgCMAC0AAQEDAJMAAQAAMAAAAQACAAACAAAAAAIAAAIEgAAAAAACAAAAAAAAAAAAAAASAAAACAAAAAAAAAAAAAAAAQAfAAAAAABkhgAAAQABAAAAoQAwAAEAIAAAAAAArABLAAUAAAAAAAEAAAC2AAQAAwACAAAAAAAEAL8AAgA0AAEABQAATWV0YWRhdGFSb3dzLmRsbABNZXRhZGF0YVJvd3MAU3lzdGVtLlJ1bnRpbWUAT2JqZWN0AFN5c3RlbQA8TW9kdWxlPgBPd25lcgBGaXh0dXJlAE5lc3RlZABJQ29udHJhY3QATnVtYmVyAEltcG9ydAB2YWx1ZQAuY3RvcgBDaGFuZ2VkAFZhbHVlAG5hdGl2ZQBuYXRpdmVfbWV0aG9kAGxpbmtlZC5iaW4ARm9yd2FyZGVkAFJlc291cmNlAFQAU3VmZml4TmFtZQAAAQAJQQAAADTYHt0BAAAA47DEQpj8HESa+/TImW+5JAECAwQFBgcICQoLDA0ODxAACLA/X38R1Qo6AgYIBAABAQgDIAABBCoAAAAEAQAAAAEHAi4AAwcBCAMIAAgCHQgDAQIDAwoBCAQAf4D/",
+      "sha256": "0bf70ec68cf52d3a6a7eda2314193ffab834cae3926389638a723e00e3e5b2fa"
+    },
+    {
+      "label": "unsupported-legacy-table-37",
+      "table": 37,
+      "image": "QlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAACAIAACMtAAB0AgAAzAAAACNTdHJpbmdzAAAAAEADAAANAAAAI1VTAFADAAAgAAAAI0dVSUQAAABwAwAAPQAAACNCbG9iAAAAAAAAAAIAAAH/////6R8AAAD6ATMAFgAAAQAAAAEAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAABAAEAAAAAAAYALgA1AAAAAAA8AAAAAAABAAEAEQAAAEUASwAFAAEAAQACAAAAUwAAAAUAAgACAKEAAABaAEsAAAACAAIAAQAWAGQACgABAAAAAACAABYgawANAAEAAQABAAEAcgACABAACQB4ABIACAAEABYAQwALABsAAwAgAAIABgAiAAQABAAAAAIAAAAAAAEAJQACAAEAAQAAAH4ABQACAAEAAQAAAIYAKQACAAEAAwACAAIAAgCMAC0AAQEDAJMAAQAAMAAAAQACAAACAAAAAAIAAAIEgAAAAAACAAAAAAAAAAAAAAASAAAACAAAAAAAAAAAAAAAAQAfAAAAAAAEAAAABgAAAAAAAAABAAEAAAChADAAAQAgAAAAAACsAEsABQAAAAAAAQAAALYABAADAAIAAAAAAAQAvwACADQAAQAFAABNZXRhZGF0YVJvd3MuZGxsAE1ldGFkYXRhUm93cwBTeXN0ZW0uUnVudGltZQBPYmplY3QAU3lzdGVtADxNb2R1bGU+AE93bmVyAEZpeHR1cmUATmVzdGVkAElDb250cmFjdABOdW1iZXIASW1wb3J0AHZhbHVlAC5jdG9yAENoYW5nZWQAVmFsdWUAbmF0aXZlAG5hdGl2ZV9tZXRob2QAbGlua2VkLmJpbgBGb3J3YXJkZWQAUmVzb3VyY2UAVABTdWZmaXhOYW1lAAABAAlBAAAANNge3QEAAADjsMRCmPwcRJr79MiZb7kkAQIDBAUGBwgJCgsMDQ4PEAAIsD9ffxHVCjoCBggEAAEBCAMgAAEEKgAAAAQBAAAAAQcCLgADBwEIAwgACAIdCAMBAgMDCgEIBAB/gP8=",
+      "sha256": "8c46d64215ac7a24e0fa7873b0cae76bdb18c439d017bdec326a1c91940c4f88"
+    }
+  ],
+  "execution": {
+    "stdout": "{\"images\":[{\"label\":\"srm-cli-tables-pe\",\"metadataOffset\":584,\"tables\":[{\"table\":0,\"rowCount\":1,\"rowSize\":10,\"fileOffset\":880,\"rows\":[{\"token\":1,\"fileOffset\":880,\"bytes\":\"00000100010000000000\"}]},{\"table\":1,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":890,\"rows\":[{\"token\":16777217,\"fileOffset\":890,\"bytes\":\"06002E003500\"}]},{\"table\":2,\"rowCount\":4,\"rowSize\":14,\"fileOffset\":896,\"rows\":[{\"token\":33554433,\"fileOffset\":896,\"bytes\":\"000000003C000000000001000100\"},{\"token\":33554434,\"fileOffset\":910,\"bytes\":\"1100000045004B00050001000100\"},{\"token\":33554435,\"fileOffset\":924,\"bytes\":\"0200000053000000050002000200\"},{\"token\":33554436,\"fileOffset\":938,\"bytes\":\"A10000005A004B00000002000200\"}]},{\"table\":3,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":952,\"rows\":[{\"token\":50331649,\"fileOffset\":952,\"bytes\":\"0100\"}]},{\"table\":4,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":954,\"rows\":[{\"token\":67108865,\"fileOffset\":954,\"bytes\":\"160064000A00\"}]},{\"table\":5,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":960,\"rows\":[{\"token\":83886081,\"fileOffset\":960,\"bytes\":\"0100\"}]},{\"table\":6,\"rowCount\":1,\"rowSize\":14,\"fileOffset\":962,\"rows\":[{\"token\":100663297,\"fileOffset\":962,\"bytes\":\"00000000800016206B000D000100\"}]},{\"table\":7,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":976,\"rows\":[{\"token\":117440513,\"fileOffset\":976,\"bytes\":\"0100\"}]},{\"table\":8,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":978,\"rows\":[{\"token\":134217729,\"fileOffset\":978,\"bytes\":\"010001007200\"}]},{\"table\":9,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":984,\"rows\":[{\"token\":150994945,\"fileOffset\":984,\"bytes\":\"02001000\"}]},{\"table\":10,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":988,\"rows\":[{\"token\":167772161,\"fileOffset\":988,\"bytes\":\"090078001200\"}]},{\"table\":11,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":994,\"rows\":[{\"token\":184549377,\"fileOffset\":994,\"bytes\":\"080004001600\"}]},{\"table\":12,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1000,\"rows\":[{\"token\":201326593,\"fileOffset\":1000,\"bytes\":\"43000B001B00\"}]},{\"table\":13,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1006,\"rows\":[{\"token\":218103809,\"fileOffset\":1006,\"bytes\":\"03002000\"}]},{\"table\":14,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1010,\"rows\":[{\"token\":234881025,\"fileOffset\":1010,\"bytes\":\"020006002200\"}]},{\"table\":15,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":1016,\"rows\":[{\"token\":251658241,\"fileOffset\":1016,\"bytes\":\"0400040000000200\"}]},{\"table\":16,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1024,\"rows\":[{\"token\":268435457,\"fileOffset\":1024,\"bytes\":\"000000000100\"}]},{\"table\":17,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":1030,\"rows\":[{\"token\":285212673,\"fileOffset\":1030,\"bytes\":\"2500\"}]},{\"table\":18,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1032,\"rows\":[{\"token\":301989889,\"fileOffset\":1032,\"bytes\":\"02000100\"}]},{\"table\":19,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":1036,\"rows\":[{\"token\":318767105,\"fileOffset\":1036,\"bytes\":\"0100\"}]},{\"table\":20,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1038,\"rows\":[{\"token\":335544321,\"fileOffset\":1038,\"bytes\":\"00007E000500\"}]},{\"table\":21,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1044,\"rows\":[{\"token\":352321537,\"fileOffset\":1044,\"bytes\":\"02000100\"}]},{\"table\":22,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":1048,\"rows\":[{\"token\":369098753,\"fileOffset\":1048,\"bytes\":\"0100\"}]},{\"table\":23,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1050,\"rows\":[{\"token\":385875969,\"fileOffset\":1050,\"bytes\":\"000086002900\"}]},{\"table\":24,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1056,\"rows\":[{\"token\":402653185,\"fileOffset\":1056,\"bytes\":\"020001000300\"}]},{\"table\":25,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1062,\"rows\":[{\"token\":419430401,\"fileOffset\":1062,\"bytes\":\"020002000200\"}]},{\"table\":26,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":1068,\"rows\":[{\"token\":436207617,\"fileOffset\":1068,\"bytes\":\"8C00\"}]},{\"table\":27,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":1070,\"rows\":[{\"token\":452984833,\"fileOffset\":1070,\"bytes\":\"2D00\"}]},{\"table\":28,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":1072,\"rows\":[{\"token\":469762049,\"fileOffset\":1072,\"bytes\":\"0101030093000100\"}]},{\"table\":29,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":1080,\"rows\":[{\"token\":486539265,\"fileOffset\":1080,\"bytes\":\"003000000100\"}]},{\"table\":30,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":1086,\"rows\":[{\"token\":503316481,\"fileOffset\":1086,\"bytes\":\"0200000200000000\"}]},{\"table\":31,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1094,\"rows\":[{\"token\":520093697,\"fileOffset\":1094,\"bytes\":\"02000002\"}]},{\"table\":32,\"rowCount\":1,\"rowSize\":22,\"fileOffset\":1098,\"rows\":[{\"token\":536870913,\"fileOffset\":1098,\"bytes\":\"04800000000002000000000000000000000012000000\"}]},{\"table\":35,\"rowCount\":1,\"rowSize\":20,\"fileOffset\":1120,\"rows\":[{\"token\":587202561,\"fileOffset\":1120,\"bytes\":\"08000000000000000000000001001F0000000000\"}]},{\"table\":38,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":1140,\"rows\":[{\"token\":637534209,\"fileOffset\":1140,\"bytes\":\"01000000A1003000\"}]},{\"table\":39,\"rowCount\":1,\"rowSize\":14,\"fileOffset\":1148,\"rows\":[{\"token\":654311425,\"fileOffset\":1148,\"bytes\":\"0100200000000000AC004B000500\"}]},{\"table\":40,\"rowCount\":1,\"rowSize\":12,\"fileOffset\":1162,\"rows\":[{\"token\":671088641,\"fileOffset\":1162,\"bytes\":\"0000000001000000B6000400\"}]},{\"table\":41,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1174,\"rows\":[{\"token\":687865857,\"fileOffset\":1174,\"bytes\":\"03000200\"}]},{\"table\":42,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":1178,\"rows\":[{\"token\":704643073,\"fileOffset\":1178,\"bytes\":\"000000000400BF00\"}]},{\"table\":43,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1186,\"rows\":[{\"token\":721420289,\"fileOffset\":1186,\"bytes\":\"02003400\"}]},{\"table\":44,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":1190,\"rows\":[{\"token\":738197505,\"fileOffset\":1190,\"bytes\":\"01000500\"}]}],\"heaps\":[{\"name\":\"#Strings\",\"byteLength\":204,\"fileOffset\":1196,\"entries\":[{\"index\":0,\"value\":\"\"},{\"index\":193,\"value\":\"SuffixName\"},{\"index\":199,\"value\":\"Name\"}]},{\"name\":\"#Blob\",\"byteLength\":61,\"fileOffset\":1448,\"entries\":[{\"index\":0,\"value\":\"\"},{\"index\":56,\"value\":\"007F80FF\"}]},{\"name\":\"#GUID\",\"byteLength\":32,\"fileOffset\":1416,\"entries\":[{\"index\":0,\"value\":\"00000000-0000-0000-0000-000000000000\"},{\"index\":1,\"value\":\"42c4b0e3-fc98-441c-9afb-f4c8996fb924\"},{\"index\":2,\"value\":\"04030201-0605-0807-090a-0b0c0d0e0f10\"}]},{\"name\":\"#US\",\"byteLength\":13,\"fileOffset\":1400,\"entries\":[{\"index\":1,\"value\":\"\"},{\"index\":3,\"value\":\"A\\u0000\\uD834\\uDD1E\"}]}],\"namedRows\":[{\"token\":1,\"columns\":{\"Generation\":0,\"Name\":\"MetadataRows.dll\",\"Mvid\":\"42c4b0e3-fc98-441c-9afb-f4c8996fb924\",\"EncId\":\"00000000-0000-0000-0000-000000000000\",\"EncBaseId\":\"00000000-0000-0000-0000-000000000000\"}},{\"token\":16777217,\"columns\":{\"ResolutionScope\":587202561,\"Name\":\"Object\",\"Namespace\":\"System\"}},{\"token\":33554433,\"columns\":{\"Flags\":0,\"Name\":\"\\u003CModule\\u003E\",\"Namespace\":\"\",\"Extends\":0}},{\"token\":33554434,\"columns\":{\"Flags\":17,\"Name\":\"Owner\",\"Namespace\":\"Fixture\",\"Extends\":16777217}},{\"token\":33554435,\"columns\":{\"Flags\":2,\"Name\":\"Nested\",\"Namespace\":\"\",\"Extends\":16777217}},{\"token\":33554436,\"columns\":{\"Flags\":161,\"Name\":\"IContract\",\"Namespace\":\"Fixture\",\"Extends\":0}},{\"token\":67108865,\"columns\":{\"Flags\":22,\"Name\":\"Number\",\"Signature\":\"0608\"}},{\"token\":100663297,\"columns\":{\"RVA\":0,\"ImplFlags\":128,\"Flags\":8214,\"Name\":\"Import\",\"Signature\":\"00010108\"}},{\"token\":134217729,\"columns\":{\"Flags\":1,\"Sequence\":1,\"Name\":\"value\"}},{\"token\":150994945,\"columns\":{\"Interface\":33554436}},{\"token\":167772161,\"columns\":{\"Class\":16777217,\"Name\":\".ctor\",\"Signature\":\"200001\"}},{\"token\":184549377,\"columns\":{\"Type\":8,\"Parent\":67108865,\"Value\":\"2A000000\"}},{\"token\":201326593,\"columns\":{\"Parent\":33554434,\"Type\":167772161,\"Value\":\"01000000\"}},{\"token\":234881025,\"columns\":{\"Action\":2,\"Parent\":536870913,\"PermissionSet\":\"2E00\"}},{\"token\":285212673,\"columns\":{\"Signature\":\"070108\"}},{\"token\":335544321,\"columns\":{\"EventFlags\":0,\"Name\":\"Changed\",\"EventType\":16777217}},{\"token\":385875969,\"columns\":{\"Flags\":0,\"Name\":\"Value\",\"Type\":\"080008\"}},{\"token\":419430401,\"columns\":{\"Class\":33554434,\"MethodBody\":100663297,\"MethodDeclaration\":100663297}},{\"token\":436207617,\"columns\":{\"Name\":\"native\"}},{\"token\":452984833,\"columns\":{\"Signature\":\"1D08\"}},{\"token\":536870913,\"columns\":{\"HashAlgId\":32772,\"MajorVersion\":0,\"MinorVersion\":2,\"BuildNumber\":0,\"RevisionNumber\":0,\"Flags\":0,\"PublicKey\":\"\",\"Name\":\"MetadataRows\",\"Culture\":\"\"}},{\"token\":587202561,\"columns\":{\"MajorVersion\":8,\"MinorVersion\":0,\"BuildNumber\":0,\"RevisionNumber\":0,\"Flags\":0,\"PublicKeyOrToken\":\"B03F5F7F11D50A3A\",\"Name\":\"System.Runtime\",\"Culture\":\"\",\"HashValue\":\"\"}},{\"token\":637534209,\"columns\":{\"Flags\":1,\"Name\":\"linked.bin\",\"HashValue\":\"010203\"}},{\"token\":654311425,\"columns\":{\"Flags\":2097153,\"TypeName\":\"Forwarded\",\"TypeNamespace\":\"Fixture\",\"Implementation\":587202561}},{\"token\":671088641,\"columns\":{\"Offset\":0,\"Flags\":1,\"Name\":\"Resource\",\"Implementation\":637534209}},{\"token\":704643073,\"columns\":{\"Number\":0,\"Flags\":0,\"Owner\":33554434,\"Name\":\"T\"}},{\"token\":721420289,\"columns\":{\"Method\":100663297,\"Instantiation\":\"0A0108\"}},{\"token\":738197505,\"columns\":{\"Owner\":704643073,\"Constraint\":16777217}}]},{\"label\":\"srm-cli-tables-root\",\"metadataOffset\":0,\"tables\":[{\"table\":0,\"rowCount\":1,\"rowSize\":10,\"fileOffset\":296,\"rows\":[{\"token\":1,\"fileOffset\":296,\"bytes\":\"00000100010000000000\"}]},{\"table\":1,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":306,\"rows\":[{\"token\":16777217,\"fileOffset\":306,\"bytes\":\"06002E003500\"}]},{\"table\":2,\"rowCount\":4,\"rowSize\":14,\"fileOffset\":312,\"rows\":[{\"token\":33554433,\"fileOffset\":312,\"bytes\":\"000000003C000000000001000100\"},{\"token\":33554434,\"fileOffset\":326,\"bytes\":\"1100000045004B00050001000100\"},{\"token\":33554435,\"fileOffset\":340,\"bytes\":\"0200000053000000050002000200\"},{\"token\":33554436,\"fileOffset\":354,\"bytes\":\"A10000005A004B00000002000200\"}]},{\"table\":3,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":368,\"rows\":[{\"token\":50331649,\"fileOffset\":368,\"bytes\":\"0100\"}]},{\"table\":4,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":370,\"rows\":[{\"token\":67108865,\"fileOffset\":370,\"bytes\":\"160064000A00\"}]},{\"table\":5,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":376,\"rows\":[{\"token\":83886081,\"fileOffset\":376,\"bytes\":\"0100\"}]},{\"table\":6,\"rowCount\":1,\"rowSize\":14,\"fileOffset\":378,\"rows\":[{\"token\":100663297,\"fileOffset\":378,\"bytes\":\"00000000800016206B000D000100\"}]},{\"table\":7,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":392,\"rows\":[{\"token\":117440513,\"fileOffset\":392,\"bytes\":\"0100\"}]},{\"table\":8,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":394,\"rows\":[{\"token\":134217729,\"fileOffset\":394,\"bytes\":\"010001007200\"}]},{\"table\":9,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":400,\"rows\":[{\"token\":150994945,\"fileOffset\":400,\"bytes\":\"02001000\"}]},{\"table\":10,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":404,\"rows\":[{\"token\":167772161,\"fileOffset\":404,\"bytes\":\"090078001200\"}]},{\"table\":11,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":410,\"rows\":[{\"token\":184549377,\"fileOffset\":410,\"bytes\":\"080004001600\"}]},{\"table\":12,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":416,\"rows\":[{\"token\":201326593,\"fileOffset\":416,\"bytes\":\"43000B001B00\"}]},{\"table\":13,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":422,\"rows\":[{\"token\":218103809,\"fileOffset\":422,\"bytes\":\"03002000\"}]},{\"table\":14,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":426,\"rows\":[{\"token\":234881025,\"fileOffset\":426,\"bytes\":\"020006002200\"}]},{\"table\":15,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":432,\"rows\":[{\"token\":251658241,\"fileOffset\":432,\"bytes\":\"0400040000000200\"}]},{\"table\":16,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":440,\"rows\":[{\"token\":268435457,\"fileOffset\":440,\"bytes\":\"000000000100\"}]},{\"table\":17,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":446,\"rows\":[{\"token\":285212673,\"fileOffset\":446,\"bytes\":\"2500\"}]},{\"table\":18,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":448,\"rows\":[{\"token\":301989889,\"fileOffset\":448,\"bytes\":\"02000100\"}]},{\"table\":19,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":452,\"rows\":[{\"token\":318767105,\"fileOffset\":452,\"bytes\":\"0100\"}]},{\"table\":20,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":454,\"rows\":[{\"token\":335544321,\"fileOffset\":454,\"bytes\":\"00007E000500\"}]},{\"table\":21,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":460,\"rows\":[{\"token\":352321537,\"fileOffset\":460,\"bytes\":\"02000100\"}]},{\"table\":22,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":464,\"rows\":[{\"token\":369098753,\"fileOffset\":464,\"bytes\":\"0100\"}]},{\"table\":23,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":466,\"rows\":[{\"token\":385875969,\"fileOffset\":466,\"bytes\":\"000086002900\"}]},{\"table\":24,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":472,\"rows\":[{\"token\":402653185,\"fileOffset\":472,\"bytes\":\"020001000300\"}]},{\"table\":25,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":478,\"rows\":[{\"token\":419430401,\"fileOffset\":478,\"bytes\":\"020002000200\"}]},{\"table\":26,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":484,\"rows\":[{\"token\":436207617,\"fileOffset\":484,\"bytes\":\"8C00\"}]},{\"table\":27,\"rowCount\":1,\"rowSize\":2,\"fileOffset\":486,\"rows\":[{\"token\":452984833,\"fileOffset\":486,\"bytes\":\"2D00\"}]},{\"table\":28,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":488,\"rows\":[{\"token\":469762049,\"fileOffset\":488,\"bytes\":\"0101030093000100\"}]},{\"table\":29,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":496,\"rows\":[{\"token\":486539265,\"fileOffset\":496,\"bytes\":\"003000000100\"}]},{\"table\":30,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":502,\"rows\":[{\"token\":503316481,\"fileOffset\":502,\"bytes\":\"0200000200000000\"}]},{\"table\":31,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":510,\"rows\":[{\"token\":520093697,\"fileOffset\":510,\"bytes\":\"02000002\"}]},{\"table\":32,\"rowCount\":1,\"rowSize\":22,\"fileOffset\":514,\"rows\":[{\"token\":536870913,\"fileOffset\":514,\"bytes\":\"04800000000002000000000000000000000012000000\"}]},{\"table\":35,\"rowCount\":1,\"rowSize\":20,\"fileOffset\":536,\"rows\":[{\"token\":587202561,\"fileOffset\":536,\"bytes\":\"08000000000000000000000001001F0000000000\"}]},{\"table\":38,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":556,\"rows\":[{\"token\":637534209,\"fileOffset\":556,\"bytes\":\"01000000A1003000\"}]},{\"table\":39,\"rowCount\":1,\"rowSize\":14,\"fileOffset\":564,\"rows\":[{\"token\":654311425,\"fileOffset\":564,\"bytes\":\"0100200000000000AC004B000500\"}]},{\"table\":40,\"rowCount\":1,\"rowSize\":12,\"fileOffset\":578,\"rows\":[{\"token\":671088641,\"fileOffset\":578,\"bytes\":\"0000000001000000B6000400\"}]},{\"table\":41,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":590,\"rows\":[{\"token\":687865857,\"fileOffset\":590,\"bytes\":\"03000200\"}]},{\"table\":42,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":594,\"rows\":[{\"token\":704643073,\"fileOffset\":594,\"bytes\":\"000000000400BF00\"}]},{\"table\":43,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":602,\"rows\":[{\"token\":721420289,\"fileOffset\":602,\"bytes\":\"02003400\"}]},{\"table\":44,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":606,\"rows\":[{\"token\":738197505,\"fileOffset\":606,\"bytes\":\"01000500\"}]}],\"heaps\":[{\"name\":\"#Strings\",\"byteLength\":204,\"fileOffset\":612,\"entries\":[{\"index\":0,\"value\":\"\"},{\"index\":193,\"value\":\"SuffixName\"},{\"index\":199,\"value\":\"Name\"}]},{\"name\":\"#Blob\",\"byteLength\":61,\"fileOffset\":864,\"entries\":[{\"index\":0,\"value\":\"\"},{\"index\":56,\"value\":\"007F80FF\"}]},{\"name\":\"#GUID\",\"byteLength\":32,\"fileOffset\":832,\"entries\":[{\"index\":0,\"value\":\"00000000-0000-0000-0000-000000000000\"},{\"index\":1,\"value\":\"42c4b0e3-fc98-441c-9afb-f4c8996fb924\"},{\"index\":2,\"value\":\"04030201-0605-0807-090a-0b0c0d0e0f10\"}]},{\"name\":\"#US\",\"byteLength\":13,\"fileOffset\":816,\"entries\":[{\"index\":1,\"value\":\"\"},{\"index\":3,\"value\":\"A\\u0000\\uD834\\uDD1E\"}]}],\"namedRows\":[{\"token\":1,\"columns\":{\"Generation\":0,\"Name\":\"MetadataRows.dll\",\"Mvid\":\"42c4b0e3-fc98-441c-9afb-f4c8996fb924\",\"EncId\":\"00000000-0000-0000-0000-000000000000\",\"EncBaseId\":\"00000000-0000-0000-0000-000000000000\"}},{\"token\":16777217,\"columns\":{\"ResolutionScope\":587202561,\"Name\":\"Object\",\"Namespace\":\"System\"}},{\"token\":33554433,\"columns\":{\"Flags\":0,\"Name\":\"\\u003CModule\\u003E\",\"Namespace\":\"\",\"Extends\":0}},{\"token\":33554434,\"columns\":{\"Flags\":17,\"Name\":\"Owner\",\"Namespace\":\"Fixture\",\"Extends\":16777217}},{\"token\":33554435,\"columns\":{\"Flags\":2,\"Name\":\"Nested\",\"Namespace\":\"\",\"Extends\":16777217}},{\"token\":33554436,\"columns\":{\"Flags\":161,\"Name\":\"IContract\",\"Namespace\":\"Fixture\",\"Extends\":0}},{\"token\":67108865,\"columns\":{\"Flags\":22,\"Name\":\"Number\",\"Signature\":\"0608\"}},{\"token\":100663297,\"columns\":{\"RVA\":0,\"ImplFlags\":128,\"Flags\":8214,\"Name\":\"Import\",\"Signature\":\"00010108\"}},{\"token\":134217729,\"columns\":{\"Flags\":1,\"Sequence\":1,\"Name\":\"value\"}},{\"token\":150994945,\"columns\":{\"Interface\":33554436}},{\"token\":167772161,\"columns\":{\"Class\":16777217,\"Name\":\".ctor\",\"Signature\":\"200001\"}},{\"token\":184549377,\"columns\":{\"Type\":8,\"Parent\":67108865,\"Value\":\"2A000000\"}},{\"token\":201326593,\"columns\":{\"Parent\":33554434,\"Type\":167772161,\"Value\":\"01000000\"}},{\"token\":234881025,\"columns\":{\"Action\":2,\"Parent\":536870913,\"PermissionSet\":\"2E00\"}},{\"token\":285212673,\"columns\":{\"Signature\":\"070108\"}},{\"token\":335544321,\"columns\":{\"EventFlags\":0,\"Name\":\"Changed\",\"EventType\":16777217}},{\"token\":385875969,\"columns\":{\"Flags\":0,\"Name\":\"Value\",\"Type\":\"080008\"}},{\"token\":419430401,\"columns\":{\"Class\":33554434,\"MethodBody\":100663297,\"MethodDeclaration\":100663297}},{\"token\":436207617,\"columns\":{\"Name\":\"native\"}},{\"token\":452984833,\"columns\":{\"Signature\":\"1D08\"}},{\"token\":536870913,\"columns\":{\"HashAlgId\":32772,\"MajorVersion\":0,\"MinorVersion\":2,\"BuildNumber\":0,\"RevisionNumber\":0,\"Flags\":0,\"PublicKey\":\"\",\"Name\":\"MetadataRows\",\"Culture\":\"\"}},{\"token\":587202561,\"columns\":{\"MajorVersion\":8,\"MinorVersion\":0,\"BuildNumber\":0,\"RevisionNumber\":0,\"Flags\":0,\"PublicKeyOrToken\":\"B03F5F7F11D50A3A\",\"Name\":\"System.Runtime\",\"Culture\":\"\",\"HashValue\":\"\"}},{\"token\":637534209,\"columns\":{\"Flags\":1,\"Name\":\"linked.bin\",\"HashValue\":\"010203\"}},{\"token\":654311425,\"columns\":{\"Flags\":2097153,\"TypeName\":\"Forwarded\",\"TypeNamespace\":\"Fixture\",\"Implementation\":587202561}},{\"token\":671088641,\"columns\":{\"Offset\":0,\"Flags\":1,\"Name\":\"Resource\",\"Implementation\":637534209}},{\"token\":704643073,\"columns\":{\"Number\":0,\"Flags\":0,\"Owner\":33554434,\"Name\":\"T\"}},{\"token\":721420289,\"columns\":{\"Method\":100663297,\"Instantiation\":\"0A0108\"}},{\"token\":738197505,\"columns\":{\"Owner\":704643073,\"Constraint\":16777217}}]},{\"label\":\"portable-pdb\",\"metadataOffset\":0,\"tables\":[{\"table\":48,\"rowCount\":1,\"rowSize\":8,\"fileOffset\":204,\"rows\":[{\"token\":805306369,\"fileOffset\":204,\"bytes\":\"0100010000000100\"}]},{\"table\":49,\"rowCount\":2,\"rowSize\":4,\"fileOffset\":212,\"rows\":[{\"token\":822083585,\"fileOffset\":212,\"bytes\":\"01000000\"},{\"token\":822083586,\"fileOffset\":216,\"bytes\":\"01000000\"}]},{\"table\":50,\"rowCount\":1,\"rowSize\":16,\"fileOffset\":220,\"rows\":[{\"token\":838860801,\"fileOffset\":220,\"bytes\":\"02000100010001000000000001000000\"}]},{\"table\":51,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":236,\"rows\":[{\"token\":855638017,\"fileOffset\":236,\"bytes\":\"000000000100\"}]},{\"table\":52,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":242,\"rows\":[{\"token\":872415233,\"fileOffset\":242,\"bytes\":\"07000400\"}]},{\"table\":53,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":246,\"rows\":[{\"token\":889192449,\"fileOffset\":246,\"bytes\":\"00000000\"}]},{\"table\":54,\"rowCount\":1,\"rowSize\":4,\"fileOffset\":250,\"rows\":[{\"token\":905969665,\"fileOffset\":250,\"bytes\":\"02000100\"}]},{\"table\":55,\"rowCount\":1,\"rowSize\":6,\"fileOffset\":254,\"rows\":[{\"token\":922746881,\"fileOffset\":254,\"bytes\":\"400001000400\"}]}],\"heaps\":[{\"name\":\"#Strings\",\"byteLength\":16,\"fileOffset\":260,\"entries\":[{\"index\":0,\"value\":\"\"}]},{\"name\":\"#Blob\",\"byteLength\":10,\"fileOffset\":292,\"entries\":[{\"index\":0,\"value\":\"\"},{\"index\":4,\"value\":\"0801000000\"}]},{\"name\":\"#GUID\",\"byteLength\":16,\"fileOffset\":276,\"entries\":[{\"index\":0,\"value\":\"00000000-0000-0000-0000-000000000000\"},{\"index\":1,\"value\":\"04030201-0605-0807-090a-0b0c0d0e0f10\"}]}],\"namedRows\":[{\"token\":805306369,\"columns\":{\"Name\":\"2F00\",\"HashAlgorithm\":\"04030201-0605-0807-090a-0b0c0d0e0f10\",\"Hash\":\"\",\"Language\":\"04030201-0605-0807-090a-0b0c0d0e0f10\"}},{\"token\":822083585,\"columns\":{\"Document\":805306369,\"SequencePoints\":\"\"}},{\"token\":822083586,\"columns\":{\"Document\":805306369,\"SequencePoints\":\"\"}},{\"token\":838860801,\"columns\":{\"Method\":100663298,\"ImportScope\":889192449,\"StartOffset\":0,\"Length\":1}},{\"token\":855638017,\"columns\":{\"Attributes\":0,\"Index\":0,\"Name\":\"local\"}},{\"token\":872415233,\"columns\":{\"Name\":\"constant\",\"Signature\":\"0801000000\"}},{\"token\":889192449,\"columns\":{\"Parent\":0,\"Imports\":\"\"}},{\"token\":922746881,\"columns\":{\"Parent\":100663298,\"Kind\":\"04030201-0605-0807-090a-0b0c0d0e0f10\",\"Value\":\"0801000000\"}}]}],\"unsupportedImages\":[{\"label\":\"unsupported-legacy-table-33\",\"accepted\":false,\"exception\":\"System.BadImageFormatException\",\"message\":\"Unknown tables: 0x00001fcbffffffff.\",\"hResult\":-2147024885},{\"label\":\"unsupported-legacy-table-34\",\"accepted\":false,\"exception\":\"System.BadImageFormatException\",\"message\":\"Unknown tables: 0x00001fcdffffffff.\",\"hResult\":-2147024885},{\"label\":\"unsupported-legacy-table-36\",\"accepted\":false,\"exception\":\"System.BadImageFormatException\",\"message\":\"Unknown tables: 0x00001fd9ffffffff.\",\"hResult\":-2147024885},{\"label\":\"unsupported-legacy-table-37\",\"accepted\":false,\"exception\":\"System.BadImageFormatException\",\"message\":\"Unknown tables: 0x00001fe9ffffffff.\",\"hResult\":-2147024885}]}\n",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  },
+  "native": {
+    "images": [
+      {
+        "label": "srm-cli-tables-pe",
+        "metadataOffset": 584,
+        "tables": [
+          {
+            "table": 0,
+            "rowCount": 1,
+            "rowSize": 10,
+            "fileOffset": 880,
+            "rows": [
+              {
+                "token": 1,
+                "fileOffset": 880,
+                "bytes": "00000100010000000000"
+              }
+            ]
+          },
+          {
+            "table": 1,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 890,
+            "rows": [
+              {
+                "token": 16777217,
+                "fileOffset": 890,
+                "bytes": "06002E003500"
+              }
+            ]
+          },
+          {
+            "table": 2,
+            "rowCount": 4,
+            "rowSize": 14,
+            "fileOffset": 896,
+            "rows": [
+              {
+                "token": 33554433,
+                "fileOffset": 896,
+                "bytes": "000000003C000000000001000100"
+              },
+              {
+                "token": 33554434,
+                "fileOffset": 910,
+                "bytes": "1100000045004B00050001000100"
+              },
+              {
+                "token": 33554435,
+                "fileOffset": 924,
+                "bytes": "0200000053000000050002000200"
+              },
+              {
+                "token": 33554436,
+                "fileOffset": 938,
+                "bytes": "A10000005A004B00000002000200"
+              }
+            ]
+          },
+          {
+            "table": 3,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 952,
+            "rows": [
+              {
+                "token": 50331649,
+                "fileOffset": 952,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 4,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 954,
+            "rows": [
+              {
+                "token": 67108865,
+                "fileOffset": 954,
+                "bytes": "160064000A00"
+              }
+            ]
+          },
+          {
+            "table": 5,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 960,
+            "rows": [
+              {
+                "token": 83886081,
+                "fileOffset": 960,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 6,
+            "rowCount": 1,
+            "rowSize": 14,
+            "fileOffset": 962,
+            "rows": [
+              {
+                "token": 100663297,
+                "fileOffset": 962,
+                "bytes": "00000000800016206B000D000100"
+              }
+            ]
+          },
+          {
+            "table": 7,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 976,
+            "rows": [
+              {
+                "token": 117440513,
+                "fileOffset": 976,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 8,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 978,
+            "rows": [
+              {
+                "token": 134217729,
+                "fileOffset": 978,
+                "bytes": "010001007200"
+              }
+            ]
+          },
+          {
+            "table": 9,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 984,
+            "rows": [
+              {
+                "token": 150994945,
+                "fileOffset": 984,
+                "bytes": "02001000"
+              }
+            ]
+          },
+          {
+            "table": 10,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 988,
+            "rows": [
+              {
+                "token": 167772161,
+                "fileOffset": 988,
+                "bytes": "090078001200"
+              }
+            ]
+          },
+          {
+            "table": 11,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 994,
+            "rows": [
+              {
+                "token": 184549377,
+                "fileOffset": 994,
+                "bytes": "080004001600"
+              }
+            ]
+          },
+          {
+            "table": 12,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1000,
+            "rows": [
+              {
+                "token": 201326593,
+                "fileOffset": 1000,
+                "bytes": "43000B001B00"
+              }
+            ]
+          },
+          {
+            "table": 13,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1006,
+            "rows": [
+              {
+                "token": 218103809,
+                "fileOffset": 1006,
+                "bytes": "03002000"
+              }
+            ]
+          },
+          {
+            "table": 14,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1010,
+            "rows": [
+              {
+                "token": 234881025,
+                "fileOffset": 1010,
+                "bytes": "020006002200"
+              }
+            ]
+          },
+          {
+            "table": 15,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 1016,
+            "rows": [
+              {
+                "token": 251658241,
+                "fileOffset": 1016,
+                "bytes": "0400040000000200"
+              }
+            ]
+          },
+          {
+            "table": 16,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1024,
+            "rows": [
+              {
+                "token": 268435457,
+                "fileOffset": 1024,
+                "bytes": "000000000100"
+              }
+            ]
+          },
+          {
+            "table": 17,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 1030,
+            "rows": [
+              {
+                "token": 285212673,
+                "fileOffset": 1030,
+                "bytes": "2500"
+              }
+            ]
+          },
+          {
+            "table": 18,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1032,
+            "rows": [
+              {
+                "token": 301989889,
+                "fileOffset": 1032,
+                "bytes": "02000100"
+              }
+            ]
+          },
+          {
+            "table": 19,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 1036,
+            "rows": [
+              {
+                "token": 318767105,
+                "fileOffset": 1036,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 20,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1038,
+            "rows": [
+              {
+                "token": 335544321,
+                "fileOffset": 1038,
+                "bytes": "00007E000500"
+              }
+            ]
+          },
+          {
+            "table": 21,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1044,
+            "rows": [
+              {
+                "token": 352321537,
+                "fileOffset": 1044,
+                "bytes": "02000100"
+              }
+            ]
+          },
+          {
+            "table": 22,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 1048,
+            "rows": [
+              {
+                "token": 369098753,
+                "fileOffset": 1048,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 23,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1050,
+            "rows": [
+              {
+                "token": 385875969,
+                "fileOffset": 1050,
+                "bytes": "000086002900"
+              }
+            ]
+          },
+          {
+            "table": 24,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1056,
+            "rows": [
+              {
+                "token": 402653185,
+                "fileOffset": 1056,
+                "bytes": "020001000300"
+              }
+            ]
+          },
+          {
+            "table": 25,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1062,
+            "rows": [
+              {
+                "token": 419430401,
+                "fileOffset": 1062,
+                "bytes": "020002000200"
+              }
+            ]
+          },
+          {
+            "table": 26,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 1068,
+            "rows": [
+              {
+                "token": 436207617,
+                "fileOffset": 1068,
+                "bytes": "8C00"
+              }
+            ]
+          },
+          {
+            "table": 27,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 1070,
+            "rows": [
+              {
+                "token": 452984833,
+                "fileOffset": 1070,
+                "bytes": "2D00"
+              }
+            ]
+          },
+          {
+            "table": 28,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 1072,
+            "rows": [
+              {
+                "token": 469762049,
+                "fileOffset": 1072,
+                "bytes": "0101030093000100"
+              }
+            ]
+          },
+          {
+            "table": 29,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 1080,
+            "rows": [
+              {
+                "token": 486539265,
+                "fileOffset": 1080,
+                "bytes": "003000000100"
+              }
+            ]
+          },
+          {
+            "table": 30,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 1086,
+            "rows": [
+              {
+                "token": 503316481,
+                "fileOffset": 1086,
+                "bytes": "0200000200000000"
+              }
+            ]
+          },
+          {
+            "table": 31,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1094,
+            "rows": [
+              {
+                "token": 520093697,
+                "fileOffset": 1094,
+                "bytes": "02000002"
+              }
+            ]
+          },
+          {
+            "table": 32,
+            "rowCount": 1,
+            "rowSize": 22,
+            "fileOffset": 1098,
+            "rows": [
+              {
+                "token": 536870913,
+                "fileOffset": 1098,
+                "bytes": "04800000000002000000000000000000000012000000"
+              }
+            ]
+          },
+          {
+            "table": 35,
+            "rowCount": 1,
+            "rowSize": 20,
+            "fileOffset": 1120,
+            "rows": [
+              {
+                "token": 587202561,
+                "fileOffset": 1120,
+                "bytes": "08000000000000000000000001001F0000000000"
+              }
+            ]
+          },
+          {
+            "table": 38,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 1140,
+            "rows": [
+              {
+                "token": 637534209,
+                "fileOffset": 1140,
+                "bytes": "01000000A1003000"
+              }
+            ]
+          },
+          {
+            "table": 39,
+            "rowCount": 1,
+            "rowSize": 14,
+            "fileOffset": 1148,
+            "rows": [
+              {
+                "token": 654311425,
+                "fileOffset": 1148,
+                "bytes": "0100200000000000AC004B000500"
+              }
+            ]
+          },
+          {
+            "table": 40,
+            "rowCount": 1,
+            "rowSize": 12,
+            "fileOffset": 1162,
+            "rows": [
+              {
+                "token": 671088641,
+                "fileOffset": 1162,
+                "bytes": "0000000001000000B6000400"
+              }
+            ]
+          },
+          {
+            "table": 41,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1174,
+            "rows": [
+              {
+                "token": 687865857,
+                "fileOffset": 1174,
+                "bytes": "03000200"
+              }
+            ]
+          },
+          {
+            "table": 42,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 1178,
+            "rows": [
+              {
+                "token": 704643073,
+                "fileOffset": 1178,
+                "bytes": "000000000400BF00"
+              }
+            ]
+          },
+          {
+            "table": 43,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1186,
+            "rows": [
+              {
+                "token": 721420289,
+                "fileOffset": 1186,
+                "bytes": "02003400"
+              }
+            ]
+          },
+          {
+            "table": 44,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 1190,
+            "rows": [
+              {
+                "token": 738197505,
+                "fileOffset": 1190,
+                "bytes": "01000500"
+              }
+            ]
+          }
+        ],
+        "heaps": [
+          {
+            "name": "#Strings",
+            "byteLength": 204,
+            "fileOffset": 1196,
+            "entries": [
+              {
+                "index": 0,
+                "value": ""
+              },
+              {
+                "index": 193,
+                "value": "SuffixName"
+              },
+              {
+                "index": 199,
+                "value": "Name"
+              }
+            ]
+          },
+          {
+            "name": "#Blob",
+            "byteLength": 61,
+            "fileOffset": 1448,
+            "entries": [
+              {
+                "index": 0,
+                "value": ""
+              },
+              {
+                "index": 56,
+                "value": "007F80FF"
+              }
+            ]
+          },
+          {
+            "name": "#GUID",
+            "byteLength": 32,
+            "fileOffset": 1416,
+            "entries": [
+              {
+                "index": 0,
+                "value": "00000000-0000-0000-0000-000000000000"
+              },
+              {
+                "index": 1,
+                "value": "42c4b0e3-fc98-441c-9afb-f4c8996fb924"
+              },
+              {
+                "index": 2,
+                "value": "04030201-0605-0807-090a-0b0c0d0e0f10"
+              }
+            ]
+          },
+          {
+            "name": "#US",
+            "byteLength": 13,
+            "fileOffset": 1400,
+            "entries": [
+              {
+                "index": 1,
+                "value": ""
+              },
+              {
+                "index": 3,
+                "value": "A\u0000𝄞"
+              }
+            ]
+          }
+        ],
+        "namedRows": [
+          {
+            "token": 1,
+            "columns": {
+              "Generation": 0,
+              "Name": "MetadataRows.dll",
+              "Mvid": "42c4b0e3-fc98-441c-9afb-f4c8996fb924",
+              "EncId": "00000000-0000-0000-0000-000000000000",
+              "EncBaseId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "token": 16777217,
+            "columns": {
+              "ResolutionScope": 587202561,
+              "Name": "Object",
+              "Namespace": "System"
+            }
+          },
+          {
+            "token": 33554433,
+            "columns": {
+              "Flags": 0,
+              "Name": "<Module>",
+              "Namespace": "",
+              "Extends": 0
+            }
+          },
+          {
+            "token": 33554434,
+            "columns": {
+              "Flags": 17,
+              "Name": "Owner",
+              "Namespace": "Fixture",
+              "Extends": 16777217
+            }
+          },
+          {
+            "token": 33554435,
+            "columns": {
+              "Flags": 2,
+              "Name": "Nested",
+              "Namespace": "",
+              "Extends": 16777217
+            }
+          },
+          {
+            "token": 33554436,
+            "columns": {
+              "Flags": 161,
+              "Name": "IContract",
+              "Namespace": "Fixture",
+              "Extends": 0
+            }
+          },
+          {
+            "token": 67108865,
+            "columns": {
+              "Flags": 22,
+              "Name": "Number",
+              "Signature": "0608"
+            }
+          },
+          {
+            "token": 100663297,
+            "columns": {
+              "RVA": 0,
+              "ImplFlags": 128,
+              "Flags": 8214,
+              "Name": "Import",
+              "Signature": "00010108"
+            }
+          },
+          {
+            "token": 134217729,
+            "columns": {
+              "Flags": 1,
+              "Sequence": 1,
+              "Name": "value"
+            }
+          },
+          {
+            "token": 150994945,
+            "columns": {
+              "Interface": 33554436
+            }
+          },
+          {
+            "token": 167772161,
+            "columns": {
+              "Class": 16777217,
+              "Name": ".ctor",
+              "Signature": "200001"
+            }
+          },
+          {
+            "token": 184549377,
+            "columns": {
+              "Type": 8,
+              "Parent": 67108865,
+              "Value": "2A000000"
+            }
+          },
+          {
+            "token": 201326593,
+            "columns": {
+              "Parent": 33554434,
+              "Type": 167772161,
+              "Value": "01000000"
+            }
+          },
+          {
+            "token": 234881025,
+            "columns": {
+              "Action": 2,
+              "Parent": 536870913,
+              "PermissionSet": "2E00"
+            }
+          },
+          {
+            "token": 285212673,
+            "columns": {
+              "Signature": "070108"
+            }
+          },
+          {
+            "token": 335544321,
+            "columns": {
+              "EventFlags": 0,
+              "Name": "Changed",
+              "EventType": 16777217
+            }
+          },
+          {
+            "token": 385875969,
+            "columns": {
+              "Flags": 0,
+              "Name": "Value",
+              "Type": "080008"
+            }
+          },
+          {
+            "token": 419430401,
+            "columns": {
+              "Class": 33554434,
+              "MethodBody": 100663297,
+              "MethodDeclaration": 100663297
+            }
+          },
+          {
+            "token": 436207617,
+            "columns": {
+              "Name": "native"
+            }
+          },
+          {
+            "token": 452984833,
+            "columns": {
+              "Signature": "1D08"
+            }
+          },
+          {
+            "token": 536870913,
+            "columns": {
+              "HashAlgId": 32772,
+              "MajorVersion": 0,
+              "MinorVersion": 2,
+              "BuildNumber": 0,
+              "RevisionNumber": 0,
+              "Flags": 0,
+              "PublicKey": "",
+              "Name": "MetadataRows",
+              "Culture": ""
+            }
+          },
+          {
+            "token": 587202561,
+            "columns": {
+              "MajorVersion": 8,
+              "MinorVersion": 0,
+              "BuildNumber": 0,
+              "RevisionNumber": 0,
+              "Flags": 0,
+              "PublicKeyOrToken": "B03F5F7F11D50A3A",
+              "Name": "System.Runtime",
+              "Culture": "",
+              "HashValue": ""
+            }
+          },
+          {
+            "token": 637534209,
+            "columns": {
+              "Flags": 1,
+              "Name": "linked.bin",
+              "HashValue": "010203"
+            }
+          },
+          {
+            "token": 654311425,
+            "columns": {
+              "Flags": 2097153,
+              "TypeName": "Forwarded",
+              "TypeNamespace": "Fixture",
+              "Implementation": 587202561
+            }
+          },
+          {
+            "token": 671088641,
+            "columns": {
+              "Offset": 0,
+              "Flags": 1,
+              "Name": "Resource",
+              "Implementation": 637534209
+            }
+          },
+          {
+            "token": 704643073,
+            "columns": {
+              "Number": 0,
+              "Flags": 0,
+              "Owner": 33554434,
+              "Name": "T"
+            }
+          },
+          {
+            "token": 721420289,
+            "columns": {
+              "Method": 100663297,
+              "Instantiation": "0A0108"
+            }
+          },
+          {
+            "token": 738197505,
+            "columns": {
+              "Owner": 704643073,
+              "Constraint": 16777217
+            }
+          }
+        ]
+      },
+      {
+        "label": "srm-cli-tables-root",
+        "metadataOffset": 0,
+        "tables": [
+          {
+            "table": 0,
+            "rowCount": 1,
+            "rowSize": 10,
+            "fileOffset": 296,
+            "rows": [
+              {
+                "token": 1,
+                "fileOffset": 296,
+                "bytes": "00000100010000000000"
+              }
+            ]
+          },
+          {
+            "table": 1,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 306,
+            "rows": [
+              {
+                "token": 16777217,
+                "fileOffset": 306,
+                "bytes": "06002E003500"
+              }
+            ]
+          },
+          {
+            "table": 2,
+            "rowCount": 4,
+            "rowSize": 14,
+            "fileOffset": 312,
+            "rows": [
+              {
+                "token": 33554433,
+                "fileOffset": 312,
+                "bytes": "000000003C000000000001000100"
+              },
+              {
+                "token": 33554434,
+                "fileOffset": 326,
+                "bytes": "1100000045004B00050001000100"
+              },
+              {
+                "token": 33554435,
+                "fileOffset": 340,
+                "bytes": "0200000053000000050002000200"
+              },
+              {
+                "token": 33554436,
+                "fileOffset": 354,
+                "bytes": "A10000005A004B00000002000200"
+              }
+            ]
+          },
+          {
+            "table": 3,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 368,
+            "rows": [
+              {
+                "token": 50331649,
+                "fileOffset": 368,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 4,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 370,
+            "rows": [
+              {
+                "token": 67108865,
+                "fileOffset": 370,
+                "bytes": "160064000A00"
+              }
+            ]
+          },
+          {
+            "table": 5,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 376,
+            "rows": [
+              {
+                "token": 83886081,
+                "fileOffset": 376,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 6,
+            "rowCount": 1,
+            "rowSize": 14,
+            "fileOffset": 378,
+            "rows": [
+              {
+                "token": 100663297,
+                "fileOffset": 378,
+                "bytes": "00000000800016206B000D000100"
+              }
+            ]
+          },
+          {
+            "table": 7,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 392,
+            "rows": [
+              {
+                "token": 117440513,
+                "fileOffset": 392,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 8,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 394,
+            "rows": [
+              {
+                "token": 134217729,
+                "fileOffset": 394,
+                "bytes": "010001007200"
+              }
+            ]
+          },
+          {
+            "table": 9,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 400,
+            "rows": [
+              {
+                "token": 150994945,
+                "fileOffset": 400,
+                "bytes": "02001000"
+              }
+            ]
+          },
+          {
+            "table": 10,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 404,
+            "rows": [
+              {
+                "token": 167772161,
+                "fileOffset": 404,
+                "bytes": "090078001200"
+              }
+            ]
+          },
+          {
+            "table": 11,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 410,
+            "rows": [
+              {
+                "token": 184549377,
+                "fileOffset": 410,
+                "bytes": "080004001600"
+              }
+            ]
+          },
+          {
+            "table": 12,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 416,
+            "rows": [
+              {
+                "token": 201326593,
+                "fileOffset": 416,
+                "bytes": "43000B001B00"
+              }
+            ]
+          },
+          {
+            "table": 13,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 422,
+            "rows": [
+              {
+                "token": 218103809,
+                "fileOffset": 422,
+                "bytes": "03002000"
+              }
+            ]
+          },
+          {
+            "table": 14,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 426,
+            "rows": [
+              {
+                "token": 234881025,
+                "fileOffset": 426,
+                "bytes": "020006002200"
+              }
+            ]
+          },
+          {
+            "table": 15,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 432,
+            "rows": [
+              {
+                "token": 251658241,
+                "fileOffset": 432,
+                "bytes": "0400040000000200"
+              }
+            ]
+          },
+          {
+            "table": 16,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 440,
+            "rows": [
+              {
+                "token": 268435457,
+                "fileOffset": 440,
+                "bytes": "000000000100"
+              }
+            ]
+          },
+          {
+            "table": 17,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 446,
+            "rows": [
+              {
+                "token": 285212673,
+                "fileOffset": 446,
+                "bytes": "2500"
+              }
+            ]
+          },
+          {
+            "table": 18,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 448,
+            "rows": [
+              {
+                "token": 301989889,
+                "fileOffset": 448,
+                "bytes": "02000100"
+              }
+            ]
+          },
+          {
+            "table": 19,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 452,
+            "rows": [
+              {
+                "token": 318767105,
+                "fileOffset": 452,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 20,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 454,
+            "rows": [
+              {
+                "token": 335544321,
+                "fileOffset": 454,
+                "bytes": "00007E000500"
+              }
+            ]
+          },
+          {
+            "table": 21,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 460,
+            "rows": [
+              {
+                "token": 352321537,
+                "fileOffset": 460,
+                "bytes": "02000100"
+              }
+            ]
+          },
+          {
+            "table": 22,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 464,
+            "rows": [
+              {
+                "token": 369098753,
+                "fileOffset": 464,
+                "bytes": "0100"
+              }
+            ]
+          },
+          {
+            "table": 23,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 466,
+            "rows": [
+              {
+                "token": 385875969,
+                "fileOffset": 466,
+                "bytes": "000086002900"
+              }
+            ]
+          },
+          {
+            "table": 24,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 472,
+            "rows": [
+              {
+                "token": 402653185,
+                "fileOffset": 472,
+                "bytes": "020001000300"
+              }
+            ]
+          },
+          {
+            "table": 25,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 478,
+            "rows": [
+              {
+                "token": 419430401,
+                "fileOffset": 478,
+                "bytes": "020002000200"
+              }
+            ]
+          },
+          {
+            "table": 26,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 484,
+            "rows": [
+              {
+                "token": 436207617,
+                "fileOffset": 484,
+                "bytes": "8C00"
+              }
+            ]
+          },
+          {
+            "table": 27,
+            "rowCount": 1,
+            "rowSize": 2,
+            "fileOffset": 486,
+            "rows": [
+              {
+                "token": 452984833,
+                "fileOffset": 486,
+                "bytes": "2D00"
+              }
+            ]
+          },
+          {
+            "table": 28,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 488,
+            "rows": [
+              {
+                "token": 469762049,
+                "fileOffset": 488,
+                "bytes": "0101030093000100"
+              }
+            ]
+          },
+          {
+            "table": 29,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 496,
+            "rows": [
+              {
+                "token": 486539265,
+                "fileOffset": 496,
+                "bytes": "003000000100"
+              }
+            ]
+          },
+          {
+            "table": 30,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 502,
+            "rows": [
+              {
+                "token": 503316481,
+                "fileOffset": 502,
+                "bytes": "0200000200000000"
+              }
+            ]
+          },
+          {
+            "table": 31,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 510,
+            "rows": [
+              {
+                "token": 520093697,
+                "fileOffset": 510,
+                "bytes": "02000002"
+              }
+            ]
+          },
+          {
+            "table": 32,
+            "rowCount": 1,
+            "rowSize": 22,
+            "fileOffset": 514,
+            "rows": [
+              {
+                "token": 536870913,
+                "fileOffset": 514,
+                "bytes": "04800000000002000000000000000000000012000000"
+              }
+            ]
+          },
+          {
+            "table": 35,
+            "rowCount": 1,
+            "rowSize": 20,
+            "fileOffset": 536,
+            "rows": [
+              {
+                "token": 587202561,
+                "fileOffset": 536,
+                "bytes": "08000000000000000000000001001F0000000000"
+              }
+            ]
+          },
+          {
+            "table": 38,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 556,
+            "rows": [
+              {
+                "token": 637534209,
+                "fileOffset": 556,
+                "bytes": "01000000A1003000"
+              }
+            ]
+          },
+          {
+            "table": 39,
+            "rowCount": 1,
+            "rowSize": 14,
+            "fileOffset": 564,
+            "rows": [
+              {
+                "token": 654311425,
+                "fileOffset": 564,
+                "bytes": "0100200000000000AC004B000500"
+              }
+            ]
+          },
+          {
+            "table": 40,
+            "rowCount": 1,
+            "rowSize": 12,
+            "fileOffset": 578,
+            "rows": [
+              {
+                "token": 671088641,
+                "fileOffset": 578,
+                "bytes": "0000000001000000B6000400"
+              }
+            ]
+          },
+          {
+            "table": 41,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 590,
+            "rows": [
+              {
+                "token": 687865857,
+                "fileOffset": 590,
+                "bytes": "03000200"
+              }
+            ]
+          },
+          {
+            "table": 42,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 594,
+            "rows": [
+              {
+                "token": 704643073,
+                "fileOffset": 594,
+                "bytes": "000000000400BF00"
+              }
+            ]
+          },
+          {
+            "table": 43,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 602,
+            "rows": [
+              {
+                "token": 721420289,
+                "fileOffset": 602,
+                "bytes": "02003400"
+              }
+            ]
+          },
+          {
+            "table": 44,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 606,
+            "rows": [
+              {
+                "token": 738197505,
+                "fileOffset": 606,
+                "bytes": "01000500"
+              }
+            ]
+          }
+        ],
+        "heaps": [
+          {
+            "name": "#Strings",
+            "byteLength": 204,
+            "fileOffset": 612,
+            "entries": [
+              {
+                "index": 0,
+                "value": ""
+              },
+              {
+                "index": 193,
+                "value": "SuffixName"
+              },
+              {
+                "index": 199,
+                "value": "Name"
+              }
+            ]
+          },
+          {
+            "name": "#Blob",
+            "byteLength": 61,
+            "fileOffset": 864,
+            "entries": [
+              {
+                "index": 0,
+                "value": ""
+              },
+              {
+                "index": 56,
+                "value": "007F80FF"
+              }
+            ]
+          },
+          {
+            "name": "#GUID",
+            "byteLength": 32,
+            "fileOffset": 832,
+            "entries": [
+              {
+                "index": 0,
+                "value": "00000000-0000-0000-0000-000000000000"
+              },
+              {
+                "index": 1,
+                "value": "42c4b0e3-fc98-441c-9afb-f4c8996fb924"
+              },
+              {
+                "index": 2,
+                "value": "04030201-0605-0807-090a-0b0c0d0e0f10"
+              }
+            ]
+          },
+          {
+            "name": "#US",
+            "byteLength": 13,
+            "fileOffset": 816,
+            "entries": [
+              {
+                "index": 1,
+                "value": ""
+              },
+              {
+                "index": 3,
+                "value": "A\u0000𝄞"
+              }
+            ]
+          }
+        ],
+        "namedRows": [
+          {
+            "token": 1,
+            "columns": {
+              "Generation": 0,
+              "Name": "MetadataRows.dll",
+              "Mvid": "42c4b0e3-fc98-441c-9afb-f4c8996fb924",
+              "EncId": "00000000-0000-0000-0000-000000000000",
+              "EncBaseId": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          {
+            "token": 16777217,
+            "columns": {
+              "ResolutionScope": 587202561,
+              "Name": "Object",
+              "Namespace": "System"
+            }
+          },
+          {
+            "token": 33554433,
+            "columns": {
+              "Flags": 0,
+              "Name": "<Module>",
+              "Namespace": "",
+              "Extends": 0
+            }
+          },
+          {
+            "token": 33554434,
+            "columns": {
+              "Flags": 17,
+              "Name": "Owner",
+              "Namespace": "Fixture",
+              "Extends": 16777217
+            }
+          },
+          {
+            "token": 33554435,
+            "columns": {
+              "Flags": 2,
+              "Name": "Nested",
+              "Namespace": "",
+              "Extends": 16777217
+            }
+          },
+          {
+            "token": 33554436,
+            "columns": {
+              "Flags": 161,
+              "Name": "IContract",
+              "Namespace": "Fixture",
+              "Extends": 0
+            }
+          },
+          {
+            "token": 67108865,
+            "columns": {
+              "Flags": 22,
+              "Name": "Number",
+              "Signature": "0608"
+            }
+          },
+          {
+            "token": 100663297,
+            "columns": {
+              "RVA": 0,
+              "ImplFlags": 128,
+              "Flags": 8214,
+              "Name": "Import",
+              "Signature": "00010108"
+            }
+          },
+          {
+            "token": 134217729,
+            "columns": {
+              "Flags": 1,
+              "Sequence": 1,
+              "Name": "value"
+            }
+          },
+          {
+            "token": 150994945,
+            "columns": {
+              "Interface": 33554436
+            }
+          },
+          {
+            "token": 167772161,
+            "columns": {
+              "Class": 16777217,
+              "Name": ".ctor",
+              "Signature": "200001"
+            }
+          },
+          {
+            "token": 184549377,
+            "columns": {
+              "Type": 8,
+              "Parent": 67108865,
+              "Value": "2A000000"
+            }
+          },
+          {
+            "token": 201326593,
+            "columns": {
+              "Parent": 33554434,
+              "Type": 167772161,
+              "Value": "01000000"
+            }
+          },
+          {
+            "token": 234881025,
+            "columns": {
+              "Action": 2,
+              "Parent": 536870913,
+              "PermissionSet": "2E00"
+            }
+          },
+          {
+            "token": 285212673,
+            "columns": {
+              "Signature": "070108"
+            }
+          },
+          {
+            "token": 335544321,
+            "columns": {
+              "EventFlags": 0,
+              "Name": "Changed",
+              "EventType": 16777217
+            }
+          },
+          {
+            "token": 385875969,
+            "columns": {
+              "Flags": 0,
+              "Name": "Value",
+              "Type": "080008"
+            }
+          },
+          {
+            "token": 419430401,
+            "columns": {
+              "Class": 33554434,
+              "MethodBody": 100663297,
+              "MethodDeclaration": 100663297
+            }
+          },
+          {
+            "token": 436207617,
+            "columns": {
+              "Name": "native"
+            }
+          },
+          {
+            "token": 452984833,
+            "columns": {
+              "Signature": "1D08"
+            }
+          },
+          {
+            "token": 536870913,
+            "columns": {
+              "HashAlgId": 32772,
+              "MajorVersion": 0,
+              "MinorVersion": 2,
+              "BuildNumber": 0,
+              "RevisionNumber": 0,
+              "Flags": 0,
+              "PublicKey": "",
+              "Name": "MetadataRows",
+              "Culture": ""
+            }
+          },
+          {
+            "token": 587202561,
+            "columns": {
+              "MajorVersion": 8,
+              "MinorVersion": 0,
+              "BuildNumber": 0,
+              "RevisionNumber": 0,
+              "Flags": 0,
+              "PublicKeyOrToken": "B03F5F7F11D50A3A",
+              "Name": "System.Runtime",
+              "Culture": "",
+              "HashValue": ""
+            }
+          },
+          {
+            "token": 637534209,
+            "columns": {
+              "Flags": 1,
+              "Name": "linked.bin",
+              "HashValue": "010203"
+            }
+          },
+          {
+            "token": 654311425,
+            "columns": {
+              "Flags": 2097153,
+              "TypeName": "Forwarded",
+              "TypeNamespace": "Fixture",
+              "Implementation": 587202561
+            }
+          },
+          {
+            "token": 671088641,
+            "columns": {
+              "Offset": 0,
+              "Flags": 1,
+              "Name": "Resource",
+              "Implementation": 637534209
+            }
+          },
+          {
+            "token": 704643073,
+            "columns": {
+              "Number": 0,
+              "Flags": 0,
+              "Owner": 33554434,
+              "Name": "T"
+            }
+          },
+          {
+            "token": 721420289,
+            "columns": {
+              "Method": 100663297,
+              "Instantiation": "0A0108"
+            }
+          },
+          {
+            "token": 738197505,
+            "columns": {
+              "Owner": 704643073,
+              "Constraint": 16777217
+            }
+          }
+        ]
+      },
+      {
+        "label": "portable-pdb",
+        "metadataOffset": 0,
+        "tables": [
+          {
+            "table": 48,
+            "rowCount": 1,
+            "rowSize": 8,
+            "fileOffset": 204,
+            "rows": [
+              {
+                "token": 805306369,
+                "fileOffset": 204,
+                "bytes": "0100010000000100"
+              }
+            ]
+          },
+          {
+            "table": 49,
+            "rowCount": 2,
+            "rowSize": 4,
+            "fileOffset": 212,
+            "rows": [
+              {
+                "token": 822083585,
+                "fileOffset": 212,
+                "bytes": "01000000"
+              },
+              {
+                "token": 822083586,
+                "fileOffset": 216,
+                "bytes": "01000000"
+              }
+            ]
+          },
+          {
+            "table": 50,
+            "rowCount": 1,
+            "rowSize": 16,
+            "fileOffset": 220,
+            "rows": [
+              {
+                "token": 838860801,
+                "fileOffset": 220,
+                "bytes": "02000100010001000000000001000000"
+              }
+            ]
+          },
+          {
+            "table": 51,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 236,
+            "rows": [
+              {
+                "token": 855638017,
+                "fileOffset": 236,
+                "bytes": "000000000100"
+              }
+            ]
+          },
+          {
+            "table": 52,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 242,
+            "rows": [
+              {
+                "token": 872415233,
+                "fileOffset": 242,
+                "bytes": "07000400"
+              }
+            ]
+          },
+          {
+            "table": 53,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 246,
+            "rows": [
+              {
+                "token": 889192449,
+                "fileOffset": 246,
+                "bytes": "00000000"
+              }
+            ]
+          },
+          {
+            "table": 54,
+            "rowCount": 1,
+            "rowSize": 4,
+            "fileOffset": 250,
+            "rows": [
+              {
+                "token": 905969665,
+                "fileOffset": 250,
+                "bytes": "02000100"
+              }
+            ]
+          },
+          {
+            "table": 55,
+            "rowCount": 1,
+            "rowSize": 6,
+            "fileOffset": 254,
+            "rows": [
+              {
+                "token": 922746881,
+                "fileOffset": 254,
+                "bytes": "400001000400"
+              }
+            ]
+          }
+        ],
+        "heaps": [
+          {
+            "name": "#Strings",
+            "byteLength": 16,
+            "fileOffset": 260,
+            "entries": [
+              {
+                "index": 0,
+                "value": ""
+              }
+            ]
+          },
+          {
+            "name": "#Blob",
+            "byteLength": 10,
+            "fileOffset": 292,
+            "entries": [
+              {
+                "index": 0,
+                "value": ""
+              },
+              {
+                "index": 4,
+                "value": "0801000000"
+              }
+            ]
+          },
+          {
+            "name": "#GUID",
+            "byteLength": 16,
+            "fileOffset": 276,
+            "entries": [
+              {
+                "index": 0,
+                "value": "00000000-0000-0000-0000-000000000000"
+              },
+              {
+                "index": 1,
+                "value": "04030201-0605-0807-090a-0b0c0d0e0f10"
+              }
+            ]
+          }
+        ],
+        "namedRows": [
+          {
+            "token": 805306369,
+            "columns": {
+              "Name": "2F00",
+              "HashAlgorithm": "04030201-0605-0807-090a-0b0c0d0e0f10",
+              "Hash": "",
+              "Language": "04030201-0605-0807-090a-0b0c0d0e0f10"
+            }
+          },
+          {
+            "token": 822083585,
+            "columns": {
+              "Document": 805306369,
+              "SequencePoints": ""
+            }
+          },
+          {
+            "token": 822083586,
+            "columns": {
+              "Document": 805306369,
+              "SequencePoints": ""
+            }
+          },
+          {
+            "token": 838860801,
+            "columns": {
+              "Method": 100663298,
+              "ImportScope": 889192449,
+              "StartOffset": 0,
+              "Length": 1
+            }
+          },
+          {
+            "token": 855638017,
+            "columns": {
+              "Attributes": 0,
+              "Index": 0,
+              "Name": "local"
+            }
+          },
+          {
+            "token": 872415233,
+            "columns": {
+              "Name": "constant",
+              "Signature": "0801000000"
+            }
+          },
+          {
+            "token": 889192449,
+            "columns": {
+              "Parent": 0,
+              "Imports": ""
+            }
+          },
+          {
+            "token": 922746881,
+            "columns": {
+              "Parent": 100663298,
+              "Kind": "04030201-0605-0807-090a-0b0c0d0e0f10",
+              "Value": "0801000000"
+            }
+          }
+        ]
+      }
+    ],
+    "unsupportedImages": [
+      {
+        "label": "unsupported-legacy-table-33",
+        "accepted": false,
+        "exception": "System.BadImageFormatException",
+        "message": "Unknown tables: 0x00001fcbffffffff.",
+        "hResult": -2147024885
+      },
+      {
+        "label": "unsupported-legacy-table-34",
+        "accepted": false,
+        "exception": "System.BadImageFormatException",
+        "message": "Unknown tables: 0x00001fcdffffffff.",
+        "hResult": -2147024885
+      },
+      {
+        "label": "unsupported-legacy-table-36",
+        "accepted": false,
+        "exception": "System.BadImageFormatException",
+        "message": "Unknown tables: 0x00001fd9ffffffff.",
+        "hResult": -2147024885
+      },
+      {
+        "label": "unsupported-legacy-table-37",
+        "accepted": false,
+        "exception": "System.BadImageFormatException",
+        "message": "Unknown tables: 0x00001fe9ffffffff.",
+        "hResult": -2147024885
+      }
+    ]
+  }
+}

@@ -174,6 +174,9 @@ with one reusable 256-byte schedule and 32-byte state, so scratch storage is ind
 
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
 
+Paged named metadata rows, token references, physical file offsets and standard
+heap records are available through [MetadataTableInspector](./METADATA-TABLES.md).
+
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
 Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
