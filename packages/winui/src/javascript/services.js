@@ -35,6 +35,8 @@ export function initializeJavaScriptServices(context) {
   context.services.scheduler ??= scheduler;
   context.services.clockFactory ??= values => new AnimationClock(values);
   context.services.text ??= host.services.text;
+  context.services.renderToBitmap ??= (value, captureOptions) => host.renderToBitmap(context.id(value), captureOptions);
+  context.services.acquireSwapChainPanel ??= value => host.services.acquireSwapChainPanel?.(context.id(value));
   context.services.layout ??= {getLayout: value => host.getLayout(typeof value === 'string' ? value : context.id(value)),
     invoke: (value, name, args) => {
       const result = host.invoke(value ? context.id(value) : null, name, args);
