@@ -26,7 +26,14 @@ records and mandatory source/image-provenance validation of native observations.
 Six ILVerify cases are prepared: three ordinary positive bodies and three
 handler-only negative bodies. The pinned SDK/runtime/tool helpers and parser are
 reused; captures preserve raw output before assertions and never execute invalid
-assemblies. Native expectations must be confirmed at the scheduled slot.
+assemblies. The initial capture found ILVerify10.0.5 crashing for `endfinally`
+without a handler: its [pinned implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/tools/ILVerification/ILImporter.Verify.cs#L2186)
+checks HandlerIndex non-fatally, then dereferences the absent value. The exact
+Nullable/ImportEndFinally failure is retained as unavailable reference evidence,
+never counted as a native rejection. Other invocation failures still stop the
+capture. The product rejection remains required by the independent placement
+rule and focused tests, following ECMA-335 III.3.35. Remaining native outcomes
+are pending; the original failure is retained in native-initial-failure.json.
 
 The scheduled batch will retain the first named regression's expected failure
 against tests-first commit `8589a1918`, capture native results, run focused and

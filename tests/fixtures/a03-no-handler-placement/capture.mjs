@@ -32,10 +32,19 @@ try {
     const observation = { name: fixture.name, assemblySHA256: sha256(bytes), expected: fixture.accepted, verify };
     capture.observations.push(observation);
     await writeFile(output, JSON.stringify(capture, null, 2) + '\n');
-    observation.oracle = parseILVerify(verify);
+    // The pinned verifier reports this non-fatal check, then dereferences the absent HandlerIndex.
+    // This exact tool failure is unavailable evidence, never a successful native rejection.
+    const missingHandlerIndex = fixture.name === 'endfinally' && verify.exitCode === 1 && !verify.signal &&
+      verify.stderr.includes('System.InvalidOperationException: Nullable object must have a value.') &&
+      verify.stderr.includes('at Internal.IL.ILImporter.ImportEndFinally()');
+    observation.oracle = missingHandlerIndex
+      ? { status: 'unavailable', reason: 'ILVerify 10.0.5 ImportEndFinally missing HandlerIndex', accepted: null, errors: [] }
+      : parseILVerify(verify);
     await writeFile(output, JSON.stringify(capture, null, 2) + '\n');
-    assert.equal(observation.oracle.accepted, fixture.accepted, `${fixture.name}: ${verify.stdout}\n${verify.stderr}`);
-    if (!fixture.accepted) assert.ok(observation.oracle.errors.includes(fixture.nativeError), fixture.name);
+    if (!missingHandlerIndex) {
+      assert.equal(observation.oracle.accepted, fixture.accepted, `${fixture.name}: ${verify.stdout}\n${verify.stderr}`);
+      if (!fixture.accepted) assert.ok(observation.oracle.errors.includes(fixture.nativeError), fixture.name);
+    }
     const admission = verifyCilAssembly(bytes);
     observation.admission = { success: admission.success, issues: admission.issues };
     await writeFile(output, JSON.stringify(capture, null, 2) + '\n');

@@ -59,8 +59,19 @@ test('pinned ILVerify no-handler placement observations match source and image b
     const observed = capture.observations.find(value => value.name === fixture.name);
     const { bytes } = placementFixture(fixture.options);
     assert.equal(observed.assemblySHA256, hash(bytes));
-    assert.equal(observed.oracle.accepted, fixture.accepted);
-    if (!fixture.accepted) assert(observed.oracle.errors.includes(fixture.nativeError));
+    if (fixture.name === 'endfinally') {
+      assert.equal(capture.runtime, '10.0.5');
+      assert.match(capture.toolSHA256, /^[a-f0-9]{64}$/);
+      assert.equal(observed.oracle.status, 'unavailable');
+      assert.equal(observed.oracle.accepted, null);
+      assert.equal(observed.verify.exitCode, 1);
+      assert.equal(observed.verify.signal, null);
+      assert.match(observed.verify.stderr, /System.InvalidOperationException: Nullable object must have a value\./);
+      assert.match(observed.verify.stderr, /at Internal\.IL\.ILImporter\.ImportEndFinally\(\)/);
+    } else {
+      assert.equal(observed.oracle.accepted, fixture.accepted);
+      if (!fixture.accepted) assert(observed.oracle.errors.includes(fixture.nativeError));
+    }
     assert.equal(verifyCilAssembly(bytes).success, fixture.accepted);
   }
 });
