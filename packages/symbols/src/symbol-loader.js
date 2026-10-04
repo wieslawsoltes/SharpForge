@@ -39,7 +39,7 @@ export function loadSymbols(assembly, pdbBytes = null, options = {}) {
     bindConstantTypes(symbols.constants, pe.metadata);
     bindConstantAnnotations(symbols.constants, pe.metadata);
     symbols.effectiveImports = bindImportNames(symbols.effectiveImports, symbols.imports, pe.metadata);
-    symbols.scopeTree = bindLocalTypes(symbols.scopeTree, pe, symbols);
+    Object.assign(symbols, bindLocalTypes(symbols.scopeTree, pe, symbols, options));
   }
   symbols.hoistedLocals = createHoistedLocalLookup(pe, symbols, options);
   symbols.closureInfo = createClosureLookup(pe, symbols, options);

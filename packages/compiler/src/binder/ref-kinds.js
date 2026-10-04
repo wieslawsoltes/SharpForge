@@ -44,7 +44,12 @@ export function classifyVariable(expression, context = {}) {
     case 'Local': {
       const l = expression.local;
       if (l.isConst) return no('constant', { symbol: l });
-      if (l.readOnlyReason) return { isVariable: true, isWritable: false, reason: 'readonlyLocal', symbol: l, detail: l.readOnlyReason };
+      // `foreach (ref var x in ...)`: the variable cannot be made to denote another element, but the element it
+      // denotes is written through it.
+      const isRefIteration = l.isForEach && l.refKind === RefKind.Ref;
+      if (l.readOnlyReason && !isRefIteration) {
+        return { isVariable: true, isWritable: false, reason: 'readonlyLocal', symbol: l, detail: l.readOnlyReason };
+      }
       if (l.refKind === RefKind.RefReadOnly)
         return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: l, detail: 'variable' };
       return yes;

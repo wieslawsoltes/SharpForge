@@ -1,0 +1,863 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "version": "10.0.5",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "ilasmSHA256": "b7b5215b41d27bfad0fd9bd7d6bb2e64486f98cfd53cbe639127d6ad15817042",
+  "verifierSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "observations": [
+    {
+      "kind": "field",
+      "owner": "Outer",
+      "access": "private",
+      "accessor": "Inner",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested0",
+      "sourceSHA256": "fe4f60657b5f6c46a346cc6f9df4bfc540b9cb87ad5bcd73b985be072dc458a6",
+      "assemblySHA256": "79bb06037e8bd639d9e7ed77bd42f17ede788c7167cbc79c50cfe7a155e83f59",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested0.il'  to DLL --> '<temporary>/Nested0.dll'\nSource file is UTF-8\n\nAssembled method Outer�Inner::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 23.662083999999993
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested0.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.32687500000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "Outer",
+      "access": "private",
+      "accessor": "Deep",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested1",
+      "sourceSHA256": "1e21f8dca9fb04cc63ef8cc2339feb95f41e22bd4f82b613e86cfb756ab785a7",
+      "assemblySHA256": "799c6e902d3e18df528c977d2351dd16893846a83e2662a11b97286ca3ae3a71",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested1.il'  to DLL --> '<temporary>/Nested1.dll'\nSource file is UTF-8\n\nAssembled method Outer�Inner�Deep::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\tMethods: 1;\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.961957999999981
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested1.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.96862499999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "Inner",
+      "access": "private",
+      "accessor": "Outer",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested2",
+      "sourceSHA256": "3f728f924e8c22d7d51a9f1f6a127c91b115e3ae6c7dc0b71105c2cd4e360540",
+      "assemblySHA256": "7fb507dadbc8c681f685bc1cb9516515832d133e7212d289af254114e9564fde",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested2.il'  to DLL --> '<temporary>/Nested2.dll'\nSource file is UTF-8\n\nAssembled method Outer::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tFields: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.894624999999905
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Nested2.dll : Outer::Test()][offset 0x00000000] Field is not visible.\n1 Error(s) Verifying <temporary>/Nested2.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.89058299999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "Inner",
+      "access": "private",
+      "accessor": "Sibling",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested3",
+      "sourceSHA256": "9671a6a200f199d521c8d211a754fe1071c14f026d45d919612966913fdb5b78",
+      "assemblySHA256": "ef4ae344920cc4421a116b488faac752fe7bda15bbd7ca0cb15e7767579f409e",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested3.il'  to DLL --> '<temporary>/Nested3.dll'\nSource file is UTF-8\n\nAssembled method Outer�Sibling::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\tFields: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\tMethods: 1;\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.299750000000017
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Nested3.dll : Outer+Sibling::Test()][offset 0x00000000] Field is not visible.\n1 Error(s) Verifying <temporary>/Nested3.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 79.84633300000007
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "PrivateChild",
+      "access": "public",
+      "accessor": "Outer",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested4",
+      "sourceSHA256": "fe2a5173a5b1475738ece51493bdfa07c9f64e0f2cb1823b15ba358b9f5ca46d",
+      "assemblySHA256": "7b22a42bfac2ab3fcea7ec20b8accab181fae65eec79ca125f6c40b9d8a2ad70",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested4.il'  to DLL --> '<temporary>/Nested4.dll'\nSource file is UTF-8\n\nAssembled method Outer::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�PrivateChild\nClass 3:\tOuter�Inner\nClass 4:\tOuter�Inner�Deep\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tFields: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.994957999999997
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested4.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.17862500000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "PrivateChild",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested5",
+      "sourceSHA256": "de1722211c6ed6872f628972123f92c8406b3cf9145da31b0e536ef3ba279a5b",
+      "assemblySHA256": "580938f1941621c7223aa9fd06e9a36b14ade631335825848b6df0421c7e80ea",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested5.il'  to DLL --> '<temporary>/Nested5.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\tFields: 1;\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.972833000000037
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Nested5.dll : Other::Test()][offset 0x00000000] Field is not visible.\n1 Error(s) Verifying <temporary>/Nested5.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 81.44749999999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "PrivateChild",
+      "access": "public",
+      "accessor": "Sibling",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested6",
+      "sourceSHA256": "e2902a9d779d56955b1c9421facad7d2efa5d543e1a75a85a88890faae308fb0",
+      "assemblySHA256": "67ea1006771a56be58aef57094606d923732307fd74a016d2977a11fc7e29fd0",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested6.il'  to DLL --> '<temporary>/Nested6.dll'\nSource file is UTF-8\n\nAssembled method Outer�Sibling::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\tFields: 1;\t\nClass 5\t\nClass 6\tMethods: 1;\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.101167000000032
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested6.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.30399999999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "PublicChild",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested7",
+      "sourceSHA256": "a2375a3a5044dcc6126d16f28f86891f2742440066b8366a9904188951bbe92d",
+      "assemblySHA256": "f836e834b2eac55df4f4d898e7b6e32270815943822097787f3c5d920dac35f4",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested7.il'  to DLL --> '<temporary>/Nested7.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\tFields: 1;\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.990791999999942
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested7.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.94770800000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "PublicInPrivate",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested8",
+      "sourceSHA256": "d5966703c6d39e63de3ccda365fb35194af61c57d48787dc50c85eec24064600",
+      "assemblySHA256": "09b92de7a5db697b834c4e0af95248921abf230ed912b7b7e03adf4e310c2a5d",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested8.il'  to DLL --> '<temporary>/Nested8.dll'\nSource file is UTF-8\n\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\tFields: 1;\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.942624999999907
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Nested8.dll : Other::Test()][offset 0x00000000] Field is not visible.\n1 Error(s) Verifying <temporary>/Nested8.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 77.54745900000012
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "Outer",
+      "access": "family",
+      "accessor": "NestedDerived",
+      "receiver": "Derived",
+      "accepted": true,
+      "query": true,
+      "name": "Nested9",
+      "sourceSHA256": "7fdbdddcadce6b543da8d6495fc9edd085af83aadd1bd340b020dff8f7e91457",
+      "assemblySHA256": "60d198e78e25786c8308fadb8b5492cd188729a1b6e271826e6c3ac169de4f23",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested9.il'  to DLL --> '<temporary>/Nested9.dll'\nSource file is UTF-8\n\nAssembled method Derived�NestedDerived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\tMethods: 1;\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.9848329999999805
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested9.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.82683300000008
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "Outer",
+      "access": "family",
+      "accessor": "NestedDerived",
+      "receiver": "Outer",
+      "accepted": false,
+      "query": "unknown",
+      "name": "Nested10",
+      "sourceSHA256": "afeeb9bc97e7ccbca838f3bc11c751243f254bc302feb1535bbfe70cf014506b",
+      "assemblySHA256": "a6d7f285616dca01c8333f6531af7494c59d21aa6d63a69a70a79c855fd90cfa",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested10.il'  to DLL --> '<temporary>/Nested10.dll'\nSource file is UTF-8\n\nAssembled method Derived�NestedDerived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tFields: 1;\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\tMethods: 1;\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.6475829999999405
+      },
+      "verify": {
+        "stdout": "[IL]: Error [FieldAccess]: [<temporary>/Nested10.dll : Derived+NestedDerived::Test([Nested10]Outer)][offset 0x00000001] Field is not visible.\n1 Error(s) Verifying <temporary>/Nested10.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.42033400000014
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FieldAccess"
+        ]
+      },
+      "result": {
+        "status": "unknown",
+        "reason": "unresolved-type-reference",
+        "token": 16777217
+      }
+    },
+    {
+      "kind": "field",
+      "owner": "FamilyChild",
+      "access": "public",
+      "accessor": "Derived",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested11",
+      "sourceSHA256": "02557c8c5f8c6fb19fd1cf2c165d09d5c7139d2702ece7bcd2525812616da992",
+      "assemblySHA256": "cb9a50ae44765296bf4fe2e5238a9c8e554ce83d48c806583327f881a914fe95",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested11.il'  to DLL --> '<temporary>/Nested11.dll'\nSource file is UTF-8\n\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\tFields: 1;\t\nClass 9\tMethods: 1;\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.664375000000064
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested11.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.74849999999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "Outer",
+      "access": "private",
+      "accessor": "Inner",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested12",
+      "sourceSHA256": "608b75f2a30e4c44dc68825fa9d7ebe1954db39d01b5e5ac7c41bf1e428d86b1",
+      "assemblySHA256": "ff8e909ac03af2e7a5509ad88d6bb5978b9ae80d051d11cdcb4e80855953d9ee",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested12.il'  to DLL --> '<temporary>/Nested12.dll'\nSource file is UTF-8\n\nAssembled method Outer::Target\nAssembled method Outer�Inner::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.0909999999998945
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested12.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.70712500000013
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "Outer",
+      "access": "private",
+      "accessor": "Deep",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested13",
+      "sourceSHA256": "9e1b9b6d1f6a43d5457d264ace37de4b256929da785889a9db14bfb33fa15514",
+      "assemblySHA256": "78952d63e3bd8bdccd00373b1d1758d3c7679e1fd84f4fbcdde82b4bc074a998",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested13.il'  to DLL --> '<temporary>/Nested13.dll'\nSource file is UTF-8\n\nAssembled method Outer::Target\nAssembled method Outer�Inner�Deep::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\tMethods: 1;\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.402084000000059
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested13.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.51345800000013
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "Inner",
+      "access": "private",
+      "accessor": "Outer",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested14",
+      "sourceSHA256": "db1809deb68be7bbe3f332fb9f04cffee78864835791afeea58e6f4365eaa227",
+      "assemblySHA256": "e1ff9eb0ce5b23863538aaf336805538bfa8eba0986aab523a7e918f031714ca",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested14.il'  to DLL --> '<temporary>/Nested14.dll'\nSource file is UTF-8\n\nAssembled method Outer::Test\nAssembled method Outer�Inner::Target\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.148208999999952
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Nested14.dll : Outer::Test()][offset 0x00000000] Method is not visible.\n1 Error(s) Verifying <temporary>/Nested14.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 80.34583299999986
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "Inner",
+      "access": "private",
+      "accessor": "Sibling",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested15",
+      "sourceSHA256": "68c972542d5dd044c2dacd3621a57c35dc16e5c90a40dba9654c6de196f76c72",
+      "assemblySHA256": "d10336158371c243cf1f57f9dd9cd8604ac2dcfb943ce8a713902748eed76185",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested15.il'  to DLL --> '<temporary>/Nested15.dll'\nSource file is UTF-8\n\nAssembled method Outer�Inner::Target\nAssembled method Outer�Sibling::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\tMethods: 1;\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.075833000000102
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Nested15.dll : Outer+Sibling::Test()][offset 0x00000000] Method is not visible.\n1 Error(s) Verifying <temporary>/Nested15.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.846542
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "PrivateChild",
+      "access": "public",
+      "accessor": "Outer",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested16",
+      "sourceSHA256": "da0d95e651f7d0e7959b43dd92916c28aa02574260a4d3493cc7f1daad6cae2d",
+      "assemblySHA256": "5512a5059d04096ce1208bd99257d1266fb723d1ecd5af6dfb575e2381a1d9be",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested16.il'  to DLL --> '<temporary>/Nested16.dll'\nSource file is UTF-8\n\nAssembled method Outer::Test\nAssembled method Outer�PrivateChild::Target\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�PrivateChild\nClass 3:\tOuter�Inner\nClass 4:\tOuter�Inner�Deep\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\tMethods: 1;\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.815207999999984
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested16.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.48399999999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "PrivateChild",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested17",
+      "sourceSHA256": "fa136b47f5dd4e63887eae4d5a96ab62311050fcd1683b174388b53855c47cd6",
+      "assemblySHA256": "b5876855e0818d23a717c579403b020b8797c4be3413093146730527bdd94284",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested17.il'  to DLL --> '<temporary>/Nested17.dll'\nSource file is UTF-8\n\nAssembled method Outer�PrivateChild::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.620208999999932
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Nested17.dll : Other::Test()][offset 0x00000000] Method is not visible.\n1 Error(s) Verifying <temporary>/Nested17.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.23016699999994
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "PrivateChild",
+      "access": "public",
+      "accessor": "Sibling",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested18",
+      "sourceSHA256": "3a9a963fe6fa2399335f7295793b6b6c8df2df99c881e343b81cbdda73a50e8f",
+      "assemblySHA256": "9f3d0952ef0c4d0ce18bf96d87d6438987997610f944f323761f641b82f002a2",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested18.il'  to DLL --> '<temporary>/Nested18.dll'\nSource file is UTF-8\n\nAssembled method Outer�PrivateChild::Target\nAssembled method Outer�Sibling::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\tMethods: 1;\t\nClass 5\t\nClass 6\tMethods: 1;\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.769667000000027
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested18.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 76.99749999999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "PublicChild",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested19",
+      "sourceSHA256": "4cfc7a334ba17e3a3fbc5d509afe042ecd95753dfced0f36d5ef3e93d4decdff",
+      "assemblySHA256": "64d8d2e20170d6f33b7a5d4cd15037359bb97591e6edc1c356ca903c10cbe710",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested19.il'  to DLL --> '<temporary>/Nested19.dll'\nSource file is UTF-8\n\nAssembled method Outer�PublicChild::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\tMethods: 1;\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.924833000000035
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested19.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.53183299999978
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "PublicInPrivate",
+      "access": "public",
+      "accessor": "Other",
+      "receiver": null,
+      "accepted": false,
+      "query": false,
+      "name": "Nested20",
+      "sourceSHA256": "711e26cdd7c816af047d394ea688d28995b8eba0d2c7c68b0933e0dcb353281b",
+      "assemblySHA256": "e9665589ae8ced34625a590323bd47e486dee78899f75358b0e4433d8fae20b0",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested20.il'  to DLL --> '<temporary>/Nested20.dll'\nSource file is UTF-8\n\nAssembled method Outer�PrivateChild�PublicInPrivate::Target\nAssembled method Other::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\tMethods: 1;\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\tMethods: 1;\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.069916999999805
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Nested20.dll : Other::Test()][offset 0x00000000] Method is not visible.\n1 Error(s) Verifying <temporary>/Nested20.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 82.91816699999981
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "known",
+        "value": false
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "Outer",
+      "access": "family",
+      "accessor": "NestedDerived",
+      "receiver": "Derived",
+      "accepted": true,
+      "query": true,
+      "name": "Nested21",
+      "sourceSHA256": "95da43f1c3a130eab386571635e19faadc36e40e334796325f0981a6bf7c11bf",
+      "assemblySHA256": "74e0a4943b38182a68a79d0e351c1bfa6ec38fcad20223f9060a190bcd9e95d2",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested21.il'  to DLL --> '<temporary>/Nested21.dll'\nSource file is UTF-8\n\nAssembled method Outer::Target\nAssembled method Derived�NestedDerived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\tMethods: 1;\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 5.0768750000002
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested21.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.92595800000026
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "Outer",
+      "access": "family",
+      "accessor": "NestedDerived",
+      "receiver": "Outer",
+      "accepted": false,
+      "query": "unknown",
+      "name": "Nested22",
+      "sourceSHA256": "eb5f82c2d0a550d075f1fcfddfb3b3bdd727e56f82f0d2617950067ebb2d09c2",
+      "assemblySHA256": "83dcf343f02eec1db02620b289c4d50b5579dc97d4b0aa06680969ad361d63e8",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested22.il'  to DLL --> '<temporary>/Nested22.dll'\nSource file is UTF-8\n\nAssembled method Outer::Target\nAssembled method Derived�NestedDerived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 1;\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\tMethods: 1;\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.9071249999997235
+      },
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/Nested22.dll : Derived+NestedDerived::Test([Nested22]Outer)][offset 0x00000001] Method is not visible.\n1 Error(s) Verifying <temporary>/Nested22.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 82.33562499999971
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      },
+      "result": {
+        "status": "unknown",
+        "reason": "unresolved-type-reference",
+        "token": 16777217
+      }
+    },
+    {
+      "kind": "method",
+      "owner": "FamilyChild",
+      "access": "public",
+      "accessor": "Derived",
+      "receiver": null,
+      "accepted": true,
+      "query": true,
+      "name": "Nested23",
+      "sourceSHA256": "4c4e08be7ea63d34c22756f8dee2b2d85963483d8d793ec6148cb93a2216248a",
+      "assemblySHA256": "7c27cbb6436cd734b39ee8527c60983611060d9749da833211c59ccc3baf536f",
+      "assembled": {
+        "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '<temporary>/Nested23.il'  to DLL --> '<temporary>/Nested23.dll'\nSource file is UTF-8\n\nAssembled method Outer�FamilyChild::Target\nAssembled method Derived::Test\nCreating PE file\n\nEmitting classes:\nClass 1:\tOuter\nClass 2:\tOuter�Inner\nClass 3:\tOuter�Inner�Deep\nClass 4:\tOuter�PrivateChild\nClass 5:\tOuter�PrivateChild�PublicInPrivate\nClass 6:\tOuter�Sibling\nClass 7:\tOuter�PublicChild\nClass 8:\tOuter�FamilyChild\nClass 9:\tDerived\nClass 10:\tDerived�NestedDerived\nClass 11:\tOther\n\nEmitting fields and methods:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\tMethods: 1;\t\nClass 9\tMethods: 1;\t\nClass 10\t\nClass 11\t\nResolving local member refs: 1 -> 1 defs, 0 refs, 0 unresolved\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nClass 2\t\nClass 3\t\nClass 4\t\nClass 5\t\nClass 6\t\nClass 7\t\nClass 8\t\nClass 9\t\nClass 10\t\nClass 11\t\nResolving local member refs: 0 -> 0 defs, 0 refs, 0 unresolved\nWriting PE file\nOperation completed successfully\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 4.864416000000347
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Nested23.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 2\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 89.37287500000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "result": {
+        "status": "known",
+        "value": true
+      }
+    }
+  ]
+}

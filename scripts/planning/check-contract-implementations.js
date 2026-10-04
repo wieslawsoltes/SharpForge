@@ -26,6 +26,8 @@ export function probeContract(vm,d){
   function value(type){
     if(type==='string'||type==='System.String')return vm.heap.string('0');
     if(type==='bool')return p.managed(false,'bool');
+    // Int64 stack/storage values use BigInt in both engines; host Number is not a valid UInt64 fixture.
+    if (type === 'long' || type === 'ulong') return 0n;
     if(type.endsWith('[]'))return vm.heap.allocate('array',type,[]);
     const t=frameworkType(type);if(!t)return type==='object'?null:p.managed(0,type);
     if(t.kind==='enum')return Object.values(t.values)[0]??0;

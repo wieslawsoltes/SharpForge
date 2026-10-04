@@ -298,7 +298,7 @@ export class BinderCore {
       }
       case 'SizeOfExpression': {
         const type = this.bindType(syntax.type).type;
-        const n = this.node('SizeOf', syntax, this.core.int);
+        const n = this.node('SizeOf', syntax, this.core.int, { operandType: type });
         const size = {
           sbyte: 1,
           byte: 1,
