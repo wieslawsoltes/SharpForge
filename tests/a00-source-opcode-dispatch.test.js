@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Op} from '@sharpforge/bytecode';
 import {VirtualMachine} from '@sharpforge/runtime';
-import {sourceOpcodeHandlers} from '../packages/runtime/src/execution/source-ops/index.js';
+import {dispatchSourceOpcode,sourceOpcodeHandlers} from '../packages/runtime/src/execution/source-ops/index.js';
 import {image} from './helpers.js';
 
 const run = source => {
@@ -18,6 +18,13 @@ test('A00 source dispatch maps every released opcode to an immutable handler', (
   for (const [name, opcode] of Object.entries(Op)) assert.equal(typeof sourceOpcodeHandlers[opcode], 'function', name);
   assert.equal(sourceOpcodeHandlers[-1], undefined);
   assert.equal(sourceOpcodeHandlers[sourceOpcodeHandlers.length], undefined);
+});
+
+test('A00 grouped dispatcher distinguishes no-op handlers from unknown instructions', () => {
+  for (const op of [Op.SEQ, Op.NOP]) assert.equal(dispatchSourceOpcode(null, null, op, 0, 0), true);
+  for (const op of [-1, sourceOpcodeHandlers.length, '0', 'constructor']) {
+    assert.equal(dispatchSourceOpcode(null, null, op, 0, 0), false);
+  }
 });
 
 test('A00 grouped source dispatch retains array loops, calls, arithmetic and finally order', () => {
@@ -40,14 +47,14 @@ test('A00 source stores preserve the assigned stack value and notify after mutat
     assert.equal(write.kind === 'local' ? frame.locals[write.index] : this.statics[write.index], write.value);
     writes.push(write);
   }};
-  sourceOpcodeHandlers[Op.STLOC](vm, frame, 0, 0);
-  sourceOpcodeHandlers[Op.STSTATIC](vm, frame, 0, 0);
+  assert.equal(dispatchSourceOpcode(vm, frame, Op.STLOC, 0, 0), true);
+  assert.equal(dispatchSourceOpcode(vm, frame, Op.STSTATIC, 0, 0), true);
   assert.deepEqual(vm.stack, [9]);
   assert.deepEqual(writes, [
     {kind: 'local', frameId: 7, index: 0, value: 9, oldValue: 1},
     {kind: 'static', index: 0, value: 9, oldValue: 2}
   ]);
-  assert.throws(() => sourceOpcodeHandlers[Op.LDLOC]({stack: []}, {locals: [undefined]}, 0, 0),
+  assert.throws(() => dispatchSourceOpcode({stack: []}, {locals: [undefined]}, Op.LDLOC, 0, 0),
     {name: 'InvalidProgramException', message: 'Read of uninitialized local'});
 });
 

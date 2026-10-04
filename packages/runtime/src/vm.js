@@ -7,7 +7,7 @@ import {sourceConstant} from './execution/source-numbers.js';
 import {formatSourceValue} from './value-formatting.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
 import {Op} from '@sharpforge/bytecode';
-import {sourceOpcodeHandlers} from './execution/source-ops/index.js';
+import {dispatchSourceOpcode} from './execution/source-ops/index.js';
 import { ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {sourceValue} from './execution/source-values.js';
@@ -52,9 +52,7 @@ export class VirtualMachine {
       try{
         if(this.instructions>this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
         profiler?.instruction(frame);
-        const handler=sourceOpcodeHandlers[op];
-        if(!handler)throw new ManagedFault('InvalidProgramException','Unknown instruction');
-        handler(this,frame,a,b);
+        if(!dispatchSourceOpcode(this,frame,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
       }catch(error){const fault=this.makeFault(error);if(fault.name==='InstructionLimitException'){this.fault=fault;this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}finally{flushFramePool(this);}
       this.scheduler.afterInstruction();
     }
