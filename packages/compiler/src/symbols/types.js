@@ -150,7 +150,10 @@ export class NamedTypeSymbol extends TypeSymbol {
   substitute(map){
     if(map.isEmpty||!this.isGenericType)return this;const container=this.containingType,newContainer=container?container.substitute(map):null,args=this.typeArguments.map(a=>a.substitute(map));
     if(newContainer===container&&args.every((a,i)=>a===this.typeArguments[i]||a.equals(this.typeArguments[i])&&a.nullableAnnotation===this.typeArguments[i].nullableAnnotation))return this;
-    return new ConstructedNamedTypeSymbol(this.originalDefinition,args,newContainer);
+    const result = new ConstructedNamedTypeSymbol(this.originalDefinition, args, newContainer);
+    // Element names belong to the tuple type as written: `(T Value, int Depth)` over `string` is `(string Value, int Depth)`.
+    if (this.tupleElementNames) result.tupleElementNames = this.tupleElementNames;
+    return result;
   }
   equals(other,compare=TypeCompareKind.ConsiderEverything){
     if(this===other)return true;if(!(other instanceof TypeSymbol))return false;

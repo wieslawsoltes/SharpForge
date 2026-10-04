@@ -52,6 +52,18 @@ export const ConversionBinding = Base =>
       this.reportConversionFailure(e, type, node, c);
       return this.bad(node, { operand: e });
     }
+    /**
+     * The operand of a user-defined conversion whose parameter is a tuple (`implicit operator Vec2((double X, double
+     * Y) t)` for `Vec2 v = (1.5, -2)`): the tuple conversion that precedes the operator is part of the bound tree,
+     * because it works element by element and cannot be done on the finished value like a numeric conversion.
+     */
+    tupleOperandOfUserConversion(e, c, node) {
+      const parameterType = c.method?.parameters?.[0]?.type;
+      if (!parameterType?.isTupleType || (e.type && e.type.equals(parameterType))) return e;
+      if (e.form !== 'tupleLiteral' && !e.type?.isTupleType) return e;
+      const standard = this.conversions.classifyFromExpression(e, parameterType);
+      return standard.exists && !standard.isUserDefined ? this.applyConversion(e, parameterType, standard, node) : e;
+    }
     applyConversion(e, type, c, node = e.syntax, isExplicit = false) {
       if (c.kind === ConversionKind.Identity && e.type && !e.constantValue?.isEnum && e.type.equals(type)) return e;
       if (
@@ -67,6 +79,7 @@ export const ConversionBinding = Base =>
         e.boundAs = type;
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
       }
+      e = this.tupleOperandOfUserConversion(e, c, node);
       const result = this.node('Conversion', node, type, {
         operand: e,
         conversion: c,

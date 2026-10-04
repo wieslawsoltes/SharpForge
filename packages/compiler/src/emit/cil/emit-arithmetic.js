@@ -112,9 +112,9 @@ export const ArithmeticEmission = Base =>
       il.emit('ldc.i4', isAnd ? 0 : 1);
       il.mark(end);
     }
-    /** A user-defined operator or conversion is a static call. */
+    /** A user-defined operator or conversion is a static call; an operand of an `in` parameter is passed by reference. */
     operatorCall(method, operands, node) {
-      for (const operand of operands) this.expression(operand);
+      operands.forEach((operand, index) => this.argument({ expression: operand }, method.parameters?.[index]));
       this.callMethod(method, { isStatic: true, syntax: node.syntax });
     }
     liftedUnary(node) {
