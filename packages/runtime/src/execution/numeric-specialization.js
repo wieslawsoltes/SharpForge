@@ -2,6 +2,7 @@ import {verifiedStackBound} from '@sharpforge/cil';
 import {executionCodeState} from './code-version.js';
 import {numericStackTypes} from './numeric-stack-types.js';
 import {specializedInt32Handler} from './handlers/arith-specialized.js';
+import {specializedInt64Handler} from './handlers/int64-specialized.js';
 
 const analyses = new WeakMap();
 
@@ -33,13 +34,15 @@ export function numericPlanTypes(vm, method, offsets) {
 }
 
 /** Mutate the existing decode-plan handler array before it is frozen; no analysis when disabled. */
-export function specializeInt32Plan(vm, method, offsets, handlers) {
+export function specializeNumericPlan(vm, method, offsets, handlers) {
   if (vm.options.specializeNumericHandlers !== true) return null;
   const states = numericPlanTypes(vm, method, offsets);
   if (!states) return null;
   const ids = Array(handlers.length).fill(null);
   for (let index = 0; index < handlers.length; index++) {
-    const selected = specializedInt32Handler(method.instructions[index].name, states[index], handlers[index]);
+    const name = method.instructions[index].name;
+    const selected = specializedInt32Handler(name, states[index], handlers[index]) ??
+      specializedInt64Handler(name, states[index], handlers[index]);
     if (!selected) continue;
     handlers[index] = selected.handler;
     ids[index] = selected.id;

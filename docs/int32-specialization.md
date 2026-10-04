@@ -11,7 +11,7 @@ Int32 values retain the existing signed JavaScript Number stack representation.
 | Fault boundaries | Division/remainder by zero and signed MinValue/-1 retain their existing managed faults and messages. |
 | Host-edited values | A canonical Int32 guard preserves fallback for floats, native carriers, BigInt, references and noncanonical Numbers. |
 | Missing verification proof or unknown type | Keeps the original handler. |
-| Other widths and source engines | Unchanged; this slice does not specialize Int64, native integers, Decimal or source/reloaded-source operations. |
+| Other widths and source engines | [Int64 specialization](int64-specialization.md) extends the same option. Native integers, Decimal and source/reloaded-source operations retain ordinary handlers. |
 
 Handlers skip the generic numeric family selection and per-operation string
 parsing. They retain the existing `vm.pop`/`vm.push` adapters, including stack
