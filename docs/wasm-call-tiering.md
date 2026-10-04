@@ -119,8 +119,9 @@ toOffset, epoch}` and the current instruction count. Subscriber delivery uses
 the existing deferred host flush boundary. Entry-only selections do not gain
 new events in this increment.
 
-The authored OSR regressions are `tests/a05-11-wasm-osr.test.js`. Qualification
-and performance measurement remain pending. [Debugger-requested forced
-deoptimization](wasm-debugger-deopt.md) suppresses manual and automatic selection
-for marked live invocations. It needs no value conversion because all live
-values already reside in canonical frame storage.
+All 63 focused OSR, back-edge, call-tiering, bridge, method-event and profiler
+tests passed serially at `6a798e2e` on Node 24. Required PR checks follow this
+local validation. Broad qualification and performance measurement remain pending.
+[Debugger-requested forced deoptimization](wasm-debugger-deopt.md) suppresses
+manual and automatic selection for marked live invocations. It needs no value
+conversion because all live values already reside in canonical frame storage.
