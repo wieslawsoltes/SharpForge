@@ -11,11 +11,13 @@ output, runtime grants or application windows.
 ```js
 import { createWorkbenchServices } from './workbench/sessions.js';
 import { ApplicationWindows } from './workbench/application-window.js';
+import { EditorModel } from '@sharpforge/editor';
 
 const services = createWorkbenchServices({
   records: sourceFiles,
   projects: projectDescriptors,
   getProjectSnapshot: projectId => projectSnapshot(projectId),
+  createModel: record => new EditorModel(record.text, { uri: record.uri, version: record.version }),
   createEditor: (record, options) => createSourceView(record, options),
   saveDocument: record => saveCapturedSource(record),
   onError: error => reportError(error),
@@ -50,11 +52,24 @@ Without a custom snapshot provider, project build snapshots read current documen
 text and versions instead of the original descriptor text. Concurrent launch
 operations share the project's build queue while retaining separate app workers.
 
-Document factories receive `{viewId,onChange,onFocus}` and return
-`{editor,element}`. `DocumentService` synchronizes all views of one document while
-retaining independent selection and scroll snapshots. It rejects dirty closes;
-the document-tab host owns Save/Discard/Cancel dialogs. Save captures a source
-revision and never marks an edit made during the write as saved.
+Document factories receive `{viewId,model,onChange,onFocus}` and return
+`{editor,element}`. With `createModel` (also accepted as `modelFactory`),
+`documents.models` is a stable map of authoritative models for all documents.
+Every view receives the same model through `setModel(uri, model)`, sharing its
+buffer and undo history while retaining independent selection and scroll snapshots.
+The factory should pass `model` directly to `CodeEditor` and omit full-text change
+callbacks. The service subscribes once to each model and emits `changed` events
+containing the original `change` with immutable `before`/`after` snapshots and
+incremental `changes`. Compatibility `previous` and `text` fields remain lazy
+through event delivery. Record `text` reads are lazy; assigning text applies an
+undoable model edit. `version` is a read-only getter of the model version.
+
+Without a model factory, the original string record and `onChange` factory
+contract remains available. Dirty closes are rejected; the document-tab host owns
+Save/Discard/Cancel dialogs. Save runs the active view's `prepareSave` before
+capturing text/version, and never marks an edit made during the write as saved.
+Project locks also set `model.readOnly` for unopened documents, so transactional
+workspace edits use the same lock policy as visible source views.
 
 ## Identity and the legacy Studio adapter
 
@@ -131,7 +146,10 @@ a fallback rendered through WebGPU.
 
 The focused Node files are `a19-worker-client.test.js`,
 `a19-documents-state.test.js`, `a19-build-output.test.js`,
-`a19-app-sessions.test.js` and `a19-startup-orchestration.test.js`. Their fake Worker
+`a19-app-sessions.test.js`, `a19-startup-orchestration.test.js` and
+`a19-document-models.test.js`. The model integration suite uses the actual
+`EditorModel` and checks lazy snapshots across one-megabyte document edits,
+shared undo, save races and locks on unopened documents. Their fake Worker
 is explicitly a protocol/lifetime test, not compiler or native parity evidence.
 
 `tests/browser_multi_session_test.py` builds two actual C# WinUI applications with
