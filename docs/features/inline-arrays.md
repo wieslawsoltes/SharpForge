@@ -107,9 +107,26 @@ generic managed elements, and the pre-existing Roslyn-pinned
 `stress-language/collection-expressions` program. The latter integration case
 also needs the collection-inference work in Project #5.
 
-Validation is pending the shared serial slot. No new Roslyn pin is claimed by
-the regression expectations. The optional execution cases report the actual
-.NET SDK and reference-pack versions and skip when those tools are unavailable.
+The focused suite passed all 23 cases with no skips using .NET SDK 10.0.201 and
+reference pack 10.0.5. This includes real .NET execution of the aliasing, slicing,
+generic managed-element, and bounds regression, plus the existing Roslyn-pinned
+collection-expression stress program.
+
+A separate live Roslyn 5.3.0.0 comparison checked 25 positive and negative
+programs against both the registry and reference-assembly binding paths. All 50
+comparisons matched the relevant diagnostic codes, source spans, and severities.
+This confirmed the borrowed-variable diagnostic for assigning an inner local's
+view to an outer span, and the attribute-name diagnostic on an inline record
+struct. Native execution also matched Roslyn's output for custom-enumerator
+precedence and generic auto-property backing storage.
+
+The 20 existing Index/Range, source ref-safety, and C# 12 rule regression cases
+also passed with no skips.
+
+These checks did not create or refresh a Roslyn corpus pin. The optional
+execution cases report the actual SDK and reference-pack versions and skip when
+those tools are unavailable. Source-image profiles remain unsupported and are
+checked for failure with no image and their explicit profile diagnostics.
 
 ```sh
 node scripts/limited.js node --test tests/compiler-inline-arrays.test.js tests/compiler-cil-emission-inline-arrays.test.js

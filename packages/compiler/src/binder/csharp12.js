@@ -36,8 +36,11 @@ export function checkInlineArray(type) {
     fields = inlineArrayFields(type);
   const badLength = length !== undefined && Number(length) <= 0;
   if (badLength) rows.push({ at: attribute.arguments[0].syntax, code: DiagnosticId.CS9167, args: [] });
+  if (type.isRecord) {
+    rows.push({ at: attribute.syntax.name ?? attribute.syntax, code: DiagnosticId.CS9259, args: [] });
+    return rows;
+  }
   if (fields.length !== 1) rows.push({ at: null, code: DiagnosticId.CS9169, args: [] });
-  if (type.isRecord) rows.push({ at: attribute.syntax, code: DiagnosticId.CS9259, args: [] });
   const layout = attributesNamed(type, 'System.Runtime.InteropServices.StructLayoutAttribute')[0];
   if (Number(constantOf(layout?.arguments[0])) === 2) rows.push({ at: null, code: DiagnosticId.CS9168, args: [] });
   if (fields.length === 1) {

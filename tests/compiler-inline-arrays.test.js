@@ -62,6 +62,10 @@ test('A02-T80 declarations reject explicit layout, readonly/volatile/required st
   const record = `using System.Runtime.CompilerServices;
     [InlineArray(4)] public record struct Invalid { public int first; } ${entry}`;
   assert.ok(codes(record).includes('CS9259'));
+  const positional = `using System.Runtime.CompilerServices;
+    [InlineArray(2)] public record struct Invalid(int X, int Y); ${entry}`;
+  const errors = bind(positional).diagnostics.filter(row => row.severity === 'error');
+  assert.deepEqual(errors.map(row => `${row.code}:${positional.slice(row.start, row.start + row.length)}`), ['CS9259:InlineArray']);
 });
 
 test('A02-T80 ref-struct inline arrays produce the unsupported-language warning instead of a span shape', () => {
@@ -167,7 +171,9 @@ test('A02-T80 escapes blame the borrowed variable at the same location as a ref/
 });
 
 test('A02-T80 views over inner locals cannot be stored into an outer span', () => {
-  assert.deepEqual(codes(program('Span<int> view = default; { Quad value = default; view = value; }')), ['CS8352']);
+  const source = program('Span<int> view = default; { Quad value = default; view = value; }');
+  const errors = bind(source).diagnostics.filter(row => row.severity === 'error');
+  assert.deepEqual(errors.map(row => `${row.code}:${source.slice(row.start, row.start + row.length)}`), ['CS8168:value']);
 });
 
 test('A02-T80 inline-array operations are gated below C# 12 and rejected in expression trees', () => {
@@ -178,7 +184,15 @@ test('A02-T80 inline-array operations are gated below C# 12 and rejected in expr
 });
 
 test('A02-T80 image execution profiles still report unsupported struct storage explicitly', () => {
-  const result = compile(program('Quad value = default; value[0] = 7; Console.WriteLine(value[0]);'));
-  assert.equal(result.image ?? null, null);
-  assert.deepEqual(result.diagnostics.filter(row => row.severity === 'error').map(row => row.code), ['SF2200']);
+  const source = `using System; using System.Runtime.CompilerServices;
+    [InlineArray(4)] struct Quad { private int first; }
+    class Program { static void Main() { Quad value = default; value[0] = 7; Console.WriteLine(value[0]); } }`;
+  assert.deepEqual(codes(source), []);
+  for (const pipeline of ['bound', 'legacy']) {
+    const result = compile(source, { pipeline });
+    assert.equal(result.success, false);
+    assert.equal(result.image ?? null, null);
+    assert.deepEqual(result.diagnostics.filter(row => row.severity === 'error').map(row => row.code),
+      ['SF1010', 'SF2098', 'SF2005', 'SF2200'], pipeline);
+  }
 });
