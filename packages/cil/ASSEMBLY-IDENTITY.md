@@ -1,5 +1,28 @@
 # Assembly definition identity
 
+## Shared identity values
+
+`@sharpforge/cil` exports `AssemblyIdentity`, `AssemblyIdentityParts`, `IdentityComparison`,
+`compareAssemblyIdentity`, `referenceMatchesDefinition`, `compareVersions`, `publicKeyToken`
+and `sha1`. The compiler's existing identity module re-exports this same implementation, so
+metadata binding and a closed project assembly loader use the same immutable identity type.
+
+`new AssemblyIdentity({ name, version, cultureName, publicKey, publicKeyToken, isRetargetable,
+contentType })` accepts dotted versions or component arrays and hexadecimal keys or bytes.
+Unsigned assemblies keep `publicKeyToken: ''`; invariant culture is `cultureName: ''`.
+`getDisplayName()` renders those as `PublicKeyToken=null` and `Culture=neutral`, escapes the
+simple name, and includes retargetable and Windows Runtime flags when present. Full identity
+`equals` compares simple names and cultures without case, and all remaining components exactly.
+`tryParse` returns `{ identity, parts }` or `null`; `parse` throws `RangeError` for invalid input.
+
+Binding comparison is intentionally distinct from full identity equality: weak definitions can
+bind across versions, while strong definitions require matching tokens and versions unless an
+explicit unification policy is passed. Project artifact hash admission uses full identity equality.
+`publicKeyToken` computes the ECMA token from a full key; `sha1` is supplied for compatibility
+with existing metadata consumers, not for artifact integrity checks (which use SHA-256).
+
+## Emitted definition identities
+
 `compileToIL(source, { assemblyVersion: '1.2.3.4', assemblyCulture: 'en-US' })` writes
 those values into the Assembly definition row. `MetadataBuilder(name, options)` accepts
 the same options. Version values are either four decimal components or an array of four
@@ -42,3 +65,13 @@ Native `Assembly.GetReferencedAssemblies` on .NET 10.0.5 confirms versions 9.0.0
 focused tests cover both JavaScript engines, malformed inputs and legacy defaults.
 
 The full-key flag follows the [AssemblyFlags.PublicKey contract](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assemblyflags).
+
+## Friend assembly access
+
+`grantsInternalsAccess(declarations, identity)` is the shared compiler and CIL graph rule for
+`InternalsVisibleTo` string declarations. It returns a boolean. Names compare without case, while a
+declaration containing `PublicKey=` requires the target identity's matching full public key. Quoted and
+escaped names use the same tokenizer as `AssemblyIdentity.tryParse`. A public
+key token cannot satisfy that declaration. Version, culture, token, duplicate-key, malformed-key and
+control-character forms do not grant access. Invalid input fails closed. The list is limited to 4096
+declarations and each declaration to 16384 UTF-16 code units.
