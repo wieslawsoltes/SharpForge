@@ -38,11 +38,33 @@ async function readEntryHeader(reader, options) {
   return entry;
 }
 
+async function closePackResources(resolver, reader, failure) {
+  const cleanupErrors = [];
+  try { await resolver.cleanup(); }
+  catch (error) { cleanupErrors.push(error); }
+  try { await reader.close(); }
+  catch (error) { cleanupErrors.push(error); }
+  if (!cleanupErrors.length) return;
+  const primary = failure.caught ? failure.value : cleanupErrors[0];
+  const diagnostic = GitError.from(primary);
+  const error = new GitError(diagnostic.code, diagnostic.message, {
+    ...diagnostic.details,
+    cleanupErrors: cleanupErrors.map(value => {
+      const detail = GitError.from(value);
+      return { code: detail.code, message: detail.message };
+    })
+  });
+  error.cause = primary;
+  error.errors = failure.caught ? [failure.value, ...cleanupErrors] : cleanupErrors;
+  throw error;
+}
+
 /** Verify a PACK v2/v3 stream and install canonical objects. Refs must be published only after success. */
 export async function readPack(source, options = {}) {
   const { algorithm = 'sha1', signal, maxObjects = 1_000_000, onProgress } = options;
   const reader = new PackByteReader(source, options);
   const resolver = new PackResolver(options);
+  const failure = { caught: false, value: undefined };
   try {
     const header = await reader.read(12);
     if (String.fromCharCode(...header.subarray(0, 4)) !== 'PACK') throw new GitError('Corrupt', 'Invalid pack signature');
@@ -64,8 +86,11 @@ export async function readPack(source, options = {}) {
     await reader.finish();
     const resolved = await resolver.finish();
     return { version, count, checksum, bytes: reader.offset, ...resolved };
+  } catch (error) {
+    failure.caught = true;
+    failure.value = error;
+    throw error;
   } finally {
-    await resolver.cleanup();
-    await reader.close();
+    await closePackResources(resolver, reader, failure);
   }
 }
