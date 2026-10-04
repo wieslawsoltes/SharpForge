@@ -87,7 +87,7 @@ class ReleaseDesignerControls:
         assert handles.count() == 2
         self.drag(handles.first, 24 * self.snapshot()['zoom'], 0)
         after = self.node('canvas')['columns']
-        assert after[0] == {'Value': 224, 'GridUnitType': 1}, after
+        assert after[0] == {'valueType': 'Microsoft.UI.Xaml.GridLength', 'Value': 224, 'GridUnitType': 1}, after
         self.action('undo')
         assert self.snapshot()['document'] == before
 
