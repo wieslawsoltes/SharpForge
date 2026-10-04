@@ -46,8 +46,12 @@ function verifyGeometry(document, entries) {
       }
       native.remove(); canonical.remove();
     }
-    return {paths: entries.length, pointInPathSamples: samples, reference: 'Native browser SVG and Path2D parsers',
+    const complete = normalizedFigures === entries.length;
+    return {passed: complete, status: complete ? 'passed' : 'incomplete-native-figures',
+      reason: complete ? null : 'SVGPathElement.getPathData({normalize:true}) is unavailable; figure parity is not established',
+      paths: entries.length, pointInPathSamples: samples, reference: 'Native browser SVG and Path2D parsers',
       normalizedFigures: normalizedFigures === entries.length ? 'compared' : 'unavailable-native-getPathData',
+      normalizedFigureCount: normalizedFigures,
       boundsTolerance: 0.0001, lengthTolerance: 0.001, flattenTolerance: 0.000001};
   } finally { svg.remove(); }
 }
