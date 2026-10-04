@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "definitions": 6,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold all fixture generic parameters",
+      "unit": "microseconds/operation",
+      "median": 33.583000000007246,
+      "p95": 88.12500000000512,
+      "p99": 3008.707999999984
+    },
+    {
+      "name": "cached generic parameter token lookup",
+      "unit": "microseconds/operation",
+      "median": 0.03325420000000179,
+      "p95": 0.05301249999999982,
+      "p99": 0.07980000000000018
+    }
+  ]
+}
