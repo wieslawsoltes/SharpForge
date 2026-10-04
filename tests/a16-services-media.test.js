@@ -3,8 +3,10 @@ import assert from 'node:assert/strict';
 import { HostPermissionPolicy } from '../packages/winui-controls/src/policy/capabilities.js';
 import { MediaPlayerSession } from '../packages/winui-controls/src/media/media-player.js';
 import { WebViewSession } from '../packages/winui-controls/src/media/webview.js';
+import { BitmapImage, WriteableBitmap, drawNineGrid } from '../packages/winui-controls/src/media/image-source.js';
 import { PlatformControlSession, InkStrokeModel } from '../packages/winui-controls/src/media/platform.js';
 import { symbolGlyph } from '../packages/winui-controls/src/icons/index.js';
+import { WriteableBitmap as RenderingWriteableBitmap } from '@sharpforge/rendering';
 
 test('media autoplay denial is nonthrowing, user play works, seek clamps and restore does not start a device', async () => {
   let plays = 0;
@@ -71,6 +73,36 @@ test('web navigation rejects outside origins with failure events and preserves c
   model.restore(snapshot);
   assert.equal(model.source, 'https://allowed.test/one');
   assert.throws(() => model.executeScriptAsync(), error => error.code === 'SFUI16B5');
+});
+
+test('bitmap pixel writes validate length, invalidate once and snapshot independent storage', () => {
+  assert.equal(WriteableBitmap, RenderingWriteableBitmap, 'pixel ownership and diagnostics come from the authoritative rendering model');
+  const bitmap = new WriteableBitmap(2, 1);
+  let count = 0;
+  bitmap.on('Invalidated', () => count++);
+  bitmap.setPixels(new Uint8Array([255, 0, 0, 255, 0, 255, 0, 128]));
+  const snapshot = bitmap.snapshot();
+  bitmap.PixelBuffer[0] = 0;
+  bitmap.restore(snapshot);
+  assert.equal(bitmap.PixelBuffer[0], 255);
+  assert.equal(count, 1);
+  assert.throws(() => bitmap.setPixels(new Uint8Array(2)), error => error.code === 'SFRENDER063');
+  assert.throws(() => new WriteableBitmap(100_000, 100_000), error => error.code === 'SFRENDER001');
+  assert.throws(() => new WriteableBitmap(16_384, 16_384), error => error.code === 'SFRENDER063');
+  const source = new BitmapImage('https://image.test/a.png', { decodePixelWidth: 12 });
+  source.restore(source.snapshot());
+  assert.equal(source.DecodePixelWidth, 12);
+});
+
+test('nine-grid keeps source and destination slices within bounds even when destination is smaller than borders', () => {
+  const draws = [];
+  drawNineGrid({ drawImage: (...args) => draws.push(args) }, { naturalWidth: 30, naturalHeight: 20 }, 8, 6,
+    { Left: 10, Right: 10, Top: 8, Bottom: 8 });
+  assert.ok(draws.length > 0 && draws.length <= 9);
+  for (const [, x, y, width, height, dx, dy, dw, dh] of draws) {
+    assert.ok(x >= 0 && x + width <= 30 && y >= 0 && y + height <= 20);
+    assert.ok(dx >= 0 && dx + dw <= 8 && dy >= 0 && dy + dh <= 6);
+  }
 });
 
 test('platform adapters require capability, dispose late attachment and reject unsupported methods', async () => {
