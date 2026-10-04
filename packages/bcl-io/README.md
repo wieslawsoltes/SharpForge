@@ -42,10 +42,9 @@ not supplied by this batch; Windows-default CRLF parity is not claimed.
 
 Pinned .NET 10.0.5 fixtures and focused tests cover both JavaScript VMs, including
 ordinary CIL base dispatch and IDisposable assignability. The writer's captured native
-source is preserved; its comparison test replaces one inherited-Dispose `using` with
-explicit calls. Semantic method-body lowering currently searches only declared Dispose
-methods and reports SF2200 for that form. Supported top-level `using` has separate
-coverage through the existing direct Dispose lowering. Write(char) uses independent
+source runs unchanged, including semantic method-body `using` with inherited TextWriter
+Dispose. Top-level `using` has separate coverage through the existing direct Dispose
+lowering. Write(char) uses independent
 CIL and platform coverage because source Char remains outside the compiler execution
 profile. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
