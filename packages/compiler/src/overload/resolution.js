@@ -171,6 +171,12 @@ export class OverloadResolver {
       analysed.push(expanded.applicable ? expanded : preferFailure(normal, expanded));
     }
     let applicable = analysed.filter(c => c.applicable);
+    // C# 7.3: a candidate whose type arguments violate its constraints is not a candidate - as long as another one
+    // is left; a lone violator stays and the binder reports its constraint.
+    if (applicable.length > 1 && this.violatesConstraints) {
+      const satisfying = applicable.filter(c => !c.method.typeArguments?.length || !this.violatesConstraints(c.method));
+      if (satisfying.length) applicable = satisfying;
+    }
     // Candidates declared in a base type of an applicable candidate's type are removed (spec 12.6.4.1).
     if (applicable.length > 1 && !options.keepBaseCandidates) {
       const hidden = c =>

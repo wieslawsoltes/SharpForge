@@ -267,6 +267,9 @@ export const PropertySymbolBuilder = Base =>
         ctor.isImplicitConstructor = true;
         members.push(ctor);
       }
+      // A constructor a record class declares over its own type is its copy constructor (it need not chain to `this`).
+      const takesOwnType = c => c.parameters.length === 1 && (c.parameters[0].type.originalDefinition ?? c.parameters[0].type) === type;
+      if (type.isRecord && type.typeKind === TypeKind.Class) for (const c of declared) if (takesOwnType(c)) c.isCopyConstructor = true;
       // Records get a copy constructor so `with` and derived records can clone.
       if (
         type.isRecord &&

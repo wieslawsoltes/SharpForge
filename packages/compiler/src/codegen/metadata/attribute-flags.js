@@ -118,6 +118,9 @@ export function parameterFlags(parameter) {
   return flags;
 }
 
+/** GenericParamAttributes.AllowByRefLike (.NET 9 metadata): the type parameter takes ref struct arguments. */
+const ALLOW_BY_REF_LIKE = 0x0020;
+
 /** GenericParam.Flags: variance and the special constraints. */
 export function genericParameterFlags(parameter) {
   let flags = 0;
@@ -128,5 +131,7 @@ export function genericParameterFlags(parameter) {
     flags |= GenericParamAttributes.NotNullableValueTypeConstraint | GenericParamAttributes.DefaultConstructorConstraint;
   }
   if (parameter.hasConstructorConstraint) flags |= GenericParamAttributes.DefaultConstructorConstraint;
+  // C# 13 `allows ref struct` (ECMA-335 augments: AllowByRefLike); without it the runtime rejects a ref struct argument.
+  if (parameter.allowsRefLikeType) flags |= ALLOW_BY_REF_LIKE;
   return flags;
 }
