@@ -89,6 +89,9 @@ test('invalid tokens, local cycles and class/interface edge kinds are rejected',
   const badBase = typeSystemFixture();
   badBase.builder.rows[2][1][3] = codedIndex('TypeDefOrRef', badBase.tokens.IContract);
   assert.throws(() => create(badBase.inspect()), fails('CILVT0001'));
+  const badTag = typeSystemFixture().inspect();
+  badTag.metadata.rows[2][1][3] = 7;
+  assert.throws(() => create(badTag), fails('CILVT0001'));
   assert.equal(Object.keys(verificationTypeSystemDiagnosticCatalog).length, 4);
 });
 

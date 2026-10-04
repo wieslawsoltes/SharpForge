@@ -1,5 +1,13 @@
+import { CilError } from '../../binary.js';
 import { decodeCoded } from '../../metadata/indices.js';
 import { known, unknown, rejectTypeSystem } from './results.js';
+
+function hierarchyIndex(kind, value) {
+  try { return decodeCoded(kind, value); } catch (error) {
+    if (!(error instanceof CilError)) throw error;
+    rejectTypeSystem('CILVT0001', error.message);
+  }
+}
 
 function checkedToken(token, counts, tables = [1, 2, 27]) {
   const table = token >>> 24;
@@ -46,24 +54,24 @@ export function snapshotTypes(inspector, budget) {
     budget.check();
     const row = rows[2][index];
     const token = 0x02000001 + index;
-    const baseToken = decodeCoded('TypeDefOrRef', row[3]);
+    const baseToken = hierarchyIndex('TypeDefOrRef', row[3]);
     if (baseToken) checkedToken(baseToken, counts);
     const type = Object.freeze({ kind: 'definition', token, isInterface: !!(row[0] & 0x20) });
-    const record = { type, baseToken, interfaces: [], edges: baseToken ? [baseToken] : [], generic: false };
+    const record = { type, result: known(type), baseToken, interfaces: [], edges: baseToken ? [baseToken] : [], generic: false };
     records.set(token, record);
     identities.set(type, record);
   }
   for (const row of interfaces) {
     budget.check();
     const owner = records.get(checkedToken(0x02000000 + row[0], counts, [2]));
-    const token = checkedToken(decodeCoded('TypeDefOrRef', row[1]), counts);
+    const token = checkedToken(hierarchyIndex('TypeDefOrRef', row[1]), counts);
     if (records.has(token) && !records.get(token).type.isInterface) rejectTypeSystem('CILVT0001', 'InterfaceImpl target');
     owner.interfaces.push(token);
     owner.edges.push(token);
   }
   for (const row of parameters) {
     budget.check();
-    const owner = decodeCoded('TypeOrMethodDef', row[2]);
+    const owner = hierarchyIndex('TypeOrMethodDef', row[2]);
     if (owner >>> 24 === 2) records.get(checkedToken(owner, counts, [2])).generic = true;
   }
   for (const record of records.values()) {
@@ -79,7 +87,7 @@ export function snapshotTypes(inspector, budget) {
     checkedToken(token, counts);
     const record = records.get(token);
     if (record?.generic) return unknown('generic-definition', token);
-    if (record) return known(record.type);
+    if (record) return record.result;
     return unknown(token >>> 24 === 1 ? 'unresolved-type-reference' : 'type-specification', token);
   } };
 }
