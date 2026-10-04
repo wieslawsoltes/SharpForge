@@ -8,8 +8,10 @@
  */
 import { Accessibility, RefKind } from './types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
+import { declareSpanConstructors } from './span-constructors.js';
 
 const publicMember = { declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true };
+const alreadyDeclaredSpan = definition => definition.isSource || definition.metadataToken || definition.getMembers().length;
 
 function addGetter(owner, name, type, options = {}) {
   const getMethod = new MethodSymbol({
@@ -63,10 +65,11 @@ function addImplicitConversion(owner, source, target) {
 function declareSpan(core, id, elementRefKind) {
   const definition = core.bridge.coreType(id);
   // A definition that already has members comes from a referenced core library (or was declared before): leave it alone.
-  if (definition.isErrorType() || definition.getMembers().length) return definition;
+  if (definition.isErrorType() || alreadyDeclaredSpan(definition)) return definition;
   definition.isRefLikeType = true;
   definition.isReadOnly = true;
   const element = definition.typeParameters[0];
+  declareSpanConstructors(definition, core, element);
   addGetter(definition, 'Length', core.int);
   addGetter(definition, 'IsEmpty', core.bool);
   addGetter(definition, 'this[]', element, { refKind: elementRefKind, parameters: [['index', core.int]] });
@@ -82,7 +85,7 @@ function declareSpan(core, id, elementRefKind) {
 
 /** Declares both span definitions once per bridge and returns `{ span, readOnlySpan }`. */
 export function declareSpanTypes(core) {
-  const alreadyDeclared = core.bridge.coreType('System_Span_T').getMembers().length > 0;
+  const alreadyDeclared = !!alreadyDeclaredSpan(core.bridge.coreType('System_Span_T'));
   const span = declareSpan(core, 'System_Span_T', RefKind.Ref);
   const readOnlySpan = declareSpan(core, 'System_ReadOnlySpan_T', RefKind.RefReadOnly);
   if (!alreadyDeclared && !span.isErrorType() && !readOnlySpan.isErrorType()) {
