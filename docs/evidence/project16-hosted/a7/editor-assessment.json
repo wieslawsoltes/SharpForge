@@ -1,0 +1,222 @@
+{
+  "mode": "compare",
+  "absolutePassed": true,
+  "largeFile": {
+    "sizeBytes": 209715200,
+    "measuredP95Ms": 32.300000000046566,
+    "budgetMs": 50,
+    "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+  },
+  "regressionVerdict": true,
+  "comparison": {
+    "schemaVersion": 1,
+    "kind": "sharpforge-editor-regression",
+    "passed": true,
+    "threshold": 0.2,
+    "environmentChanges": [],
+    "baselineCommit": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+    "currentCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "rows": [
+      {
+        "id": "browser-chromium/1024/browser.keystrokeToPaint",
+        "baselineP95Ms": 32.29999999998836,
+        "currentP95Ms": 32.5,
+        "relativeChange": 0.006191950464758955,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1024/browser.pasteToPaint",
+        "baselineP95Ms": 49.5,
+        "currentP95Ms": 52.80000000001746,
+        "relativeChange": 0.06666666666701948,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1024/browser.undoToPaint",
+        "baselineP95Ms": 34.5,
+        "currentP95Ms": 34.39999999999418,
+        "relativeChange": -0.0028985507248063813,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1024/browser.findToPaint",
+        "baselineP95Ms": 28.900000000023283,
+        "currentP95Ms": 29.39999999999418,
+        "relativeChange": 0.01730103806126282,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1024/browser.scrollToPaint",
+        "baselineP95Ms": 32.29999999998836,
+        "currentP95Ms": 32.40000000002328,
+        "relativeChange": 0.0030959752332804236,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1048576/browser.keystrokeToPaint",
+        "baselineP95Ms": 38.20000000001164,
+        "currentP95Ms": 34.80000000001746,
+        "relativeChange": -0.08900523560191476,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1048576/browser.pasteToPaint",
+        "baselineP95Ms": 56.29999999998836,
+        "currentP95Ms": 52.70000000001164,
+        "relativeChange": -0.06394316163370273,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1048576/browser.undoToPaint",
+        "baselineP95Ms": 36.5,
+        "currentP95Ms": 34.60000000000582,
+        "relativeChange": -0.052054794520388525,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1048576/browser.findToPaint",
+        "baselineP95Ms": 116.19999999995343,
+        "currentP95Ms": 91.19999999998254,
+        "relativeChange": -0.21514629948348463,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/1048576/browser.scrollToPaint",
+        "baselineP95Ms": 46.20000000001164,
+        "currentP95Ms": 44.29999999998836,
+        "relativeChange": -0.041125541126034726,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/10485760/browser.keystrokeToPaint",
+        "baselineP95Ms": 32.300000000046566,
+        "currentP95Ms": 34.39999999999418,
+        "relativeChange": 0.06501547987444534,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/10485760/browser.pasteToPaint",
+        "baselineP95Ms": 35.70000000001164,
+        "currentP95Ms": 35.70000000001164,
+        "relativeChange": 0,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/10485760/browser.undoToPaint",
+        "baselineP95Ms": 29.29999999998836,
+        "currentP95Ms": 33.80000000001746,
+        "relativeChange": 0.1535836177484946,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/10485760/browser.findToPaint",
+        "baselineP95Ms": 342.10000000009313,
+        "currentP95Ms": 326.80000000001746,
+        "relativeChange": -0.04472376498120878,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/10485760/browser.scrollToPaint",
+        "baselineP95Ms": 38.5,
+        "currentP95Ms": 33.89999999999418,
+        "relativeChange": -0.11948051948067062,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/104857600/browser.keystrokeToPaint",
+        "baselineP95Ms": 32.300000000046566,
+        "currentP95Ms": 32.5,
+        "relativeChange": 0.006191950462945739,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/104857600/browser.pasteToPaint",
+        "baselineP95Ms": 35.70000000006985,
+        "currentP95Ms": 33.39999999999418,
+        "relativeChange": -0.06442577031011676,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/104857600/browser.undoToPaint",
+        "baselineP95Ms": 41.79999999993015,
+        "currentP95Ms": 33.79999999998836,
+        "relativeChange": -0.19138755980753974,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/104857600/browser.findToPaint",
+        "baselineP95Ms": 2723.0999999999767,
+        "currentP95Ms": 2691.4000000000233,
+        "relativeChange": -0.011641144284071037,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/104857600/browser.scrollToPaint",
+        "baselineP95Ms": 40,
+        "currentP95Ms": 36.09999999997672,
+        "relativeChange": -0.09750000000058212,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/209715200/browser.keystrokeToPaint",
+        "baselineP95Ms": 32.40000000002328,
+        "currentP95Ms": 32.300000000046566,
+        "relativeChange": -0.0030864197523655656,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/209715200/browser.pasteToPaint",
+        "baselineP95Ms": 36.199999999953434,
+        "currentP95Ms": 32.800000000046566,
+        "relativeChange": -0.09392265193124971,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/209715200/browser.undoToPaint",
+        "baselineP95Ms": 60.59999999997672,
+        "currentP95Ms": 33.899999999965075,
+        "relativeChange": -0.44059405940630203,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/209715200/browser.findToPaint",
+        "baselineP95Ms": 5302.099999999977,
+        "currentP95Ms": 5258.799999999988,
+        "relativeChange": -0.008166575507815521,
+        "threshold": 0.2,
+        "passed": true
+      },
+      {
+        "id": "browser-chromium/209715200/browser.scrollToPaint",
+        "baselineP95Ms": 40.5,
+        "currentP95Ms": 35.399999999965075,
+        "relativeChange": -0.1259259259267883,
+        "threshold": 0.2,
+        "passed": true
+      }
+    ]
+  }
+}
