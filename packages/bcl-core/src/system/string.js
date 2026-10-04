@@ -2,6 +2,7 @@ import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} 
 import {compositeFormat} from '../formatting/composite-format.js';
 import {isNullOrWhiteSpace, trimWhiteSpace} from './whitespace.js';
 import {invariantCase} from './casing.js';
+import {compareOrdinalRange} from './string-compare.js';
 
 const owner = 'System.String';
 
@@ -51,6 +52,11 @@ export function registerString({define, member, prop}) {
   member(owner, 'Format', ['string', 'object[]'], 'string', {isStatic: true});
 }
 
+/** Append this range overload only from the ordered A07 tail, preserving released String IDs. */
+export function registerStringComparisonExtensions({member}) {
+  member(owner, 'CompareOrdinal', ['string', 'int', 'string', 'int', 'int'], 'int', {isStatic: true});
+}
+
 function splitString(platform, receiver, values, scalars) {
   const separator = string(platform, values[0], true);
   const limit = scalars.length === 2 ? integer(platform, scalars[1]) : MAX;
@@ -89,6 +95,7 @@ function staticString(platform, descriptor, values, scalars) {
     }
     case 'Equals': return scalars[0] === scalars[1];
     case 'CompareOrdinal':
+      if (scalars.length === 5) return compareOrdinalRange(platform, scalars);
       if (scalars[0] === scalars[1]) return 0;
       if (scalars[0] === null) return -1;
       if (scalars[1] === null) return 1;

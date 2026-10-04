@@ -3,6 +3,9 @@
 `CilOpcodes[name]` remains the single immutable opcode registry used by the binary writer
 and reader. Existing `name`, `value` and `operand` fields retain their meanings; decoded
 instructions also keep their existing `operandKind` encoding strings.
+`CilWriter.op` accepts only own opcode names from this registry. Unknown, inherited
+object-property and non-string names produce CilError before any bytes or fixups
+are written; caller objects are not coerced into names.
 
 Additional fields expose standard metadata without implying executable-profile support:
 

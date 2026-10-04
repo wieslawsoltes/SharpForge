@@ -33,7 +33,17 @@ history. The resolver runs before dependency installation or candidate commands.
 Both checkouts disable persisted Git credentials.
 
 The trusted runner checks each constituent's authoritative task, Project branch,
-claim lease and lock generation. The pinned base supplies ownership/hot-file
+claim lease and lock generation. The claim's issue number selects live Project
+memberships through GitHub GraphQL; there is no default Project4 assumption or
+hard-coded area-to-project map. Only unarchived claim projections owned by the
+repository owner qualify. Issue repository/title and any Work ID must agree with
+the claim, and exactly one managed Project item must remain. A populated Agent or
+Branch marks a managed projection: both must match the authoritative claim, with a
+nonempty Branch. Tracking-only boards with neither Agent nor Branch are ignored,
+even when they carry a Work ID (as observed for issue483 on Project3 alongside its
+managed Project4 item). Ambiguity, stale agents/branches, unavailable
+membership data and incomplete pagination fail. The report retains the selected
+Project and issue identity. This read-only lookup does not change claims or fields. The pinned base supplies ownership/hot-file
 policy. Both the constituent's own diff and its actual contribution from the
 previous queue tree must obey that PR's claim; merge-resolution edits cannot
 escape ownership review. Contract changes and seam locks are likewise reviewed
@@ -58,3 +68,9 @@ The central `ci.yml` merge-group trigger and ordinary minimal core are unchanged
 This explicit lane is not automatically required by branch protection, and its
 success is not implied by an ordinary core result. Hosted queue execution, live
 Project access and platform/browser qualification remain unclaimed until run.
+
+The membership query uses GitHub's documented [issue Project items](https://docs.github.com/en/graphql/reference/issues)
+and [Project item field lookup](https://docs.github.com/en/graphql/reference/projects),
+with at most ten pages of fifty memberships. The read credential must be able to
+read the relevant repository issue and its owning Project; hidden or unavailable
+Project metadata does not constitute a successful cross-project qualification.
