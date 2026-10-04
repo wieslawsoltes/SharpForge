@@ -22,6 +22,16 @@ public interface ICom
     [PreserveSig] int Fetch([In, Out] ref int value);
 }
 
+public sealed class PassthroughMarshaler : ICustomMarshaler
+{
+    public static ICustomMarshaler GetInstance(string cookie) { return new PassthroughMarshaler(); }
+    public void CleanUpManagedData(object value) { }
+    public void CleanUpNativeData(IntPtr value) { }
+    public int GetNativeDataSize() { return -1; }
+    public IntPtr MarshalManagedToNative(object value) { return IntPtr.Zero; }
+    public object MarshalNativeToManaged(IntPtr value) { return null; }
+}
+
 public static class Native
 {
     [DllImport("libc.so.6", EntryPoint = "abs", CallingConvention = CallingConvention.Cdecl,
@@ -43,7 +53,7 @@ public static class Native
         int count,
         [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_RECORD,
             SafeArrayUserDefinedSubType = typeof(Layout))] object records,
-        [MarshalAs(UnmanagedType.CustomMarshaler, MarshalType = "Example.Marshal, Example", MarshalCookie = "ą-cookie")] object custom);
+        [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(PassthroughMarshaler), MarshalCookie = "ą-cookie")] object custom);
 
     [SpecialName, MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
     public static int Managed() { return 5; }
@@ -60,7 +70,7 @@ public static class Program
     {
         Console.WriteLine((int)attribute.Value + ":" + (int)attribute.ArraySubType + ":" + attribute.SizeConst + ":" + attribute.SizeParamIndex);
         Console.WriteLine((int)attribute.SafeArraySubType + ":" + attribute.SafeArrayUserDefinedSubType);
-        Console.WriteLine(attribute.MarshalType + ":" + attribute.MarshalCookie);
+        Console.WriteLine(attribute.MarshalTypeRef + ":" + attribute.MarshalCookie);
     }
 
     public static void Main()
@@ -89,8 +99,10 @@ public static class Program
         DumpMarshal(MarshalOf(mapped.ReturnParameter));
         DumpMarshal(MarshalOf(mapped.GetParameters()[0]));
         Console.WriteLine(mapped.GetParameters()[0].IsIn + ":" + mapped.GetParameters()[0].IsOut + ":" + mapped.GetParameters()[1].IsOptional);
+        // The Linux .NET 10.0.5 reflection reader overruns the custom-marshaler cookie even for a Roslyn DLL.
+        // Exact custom-marshaler and SafeArray data are compared as raw metadata in the companion tests.
         foreach (ParameterInfo parameter in typeof(Native).GetMethod("Shapes").GetParameters())
-            if (parameter.Name != "count") DumpMarshal(MarshalOf(parameter));
+            if (parameter.Name != "count" && parameter.Name != "custom") DumpMarshal(MarshalOf(parameter));
         MethodInfo managed = typeof(Native).GetMethod("Managed");
         Console.WriteLine(managed.IsSpecialName + ":" + (int)managed.GetMethodImplementationFlags());
         // The fixture's execution target is Linux; all preceding reflection assertions are platform independent.

@@ -72,7 +72,7 @@ export class CustomAttributeWriter {
     this.types = writer.tokens;
     this.assembly = analysis.assembly;
     this.core = analysis.core;
-    this.pseudo = new PseudoAttributeWriter(this);
+    this.pseudo = null;
   }
   write() {
     this.applied(ASSEMBLY_TOKEN, this.assembly, 'assembly');
@@ -161,7 +161,8 @@ export class CustomAttributeWriter {
   applied(parent, symbol, location = DEFAULT_LOCATIONS[symbol.kind]) {
     for (const attribute of symbol.boundAttributes ?? []) {
       if (attribute.location !== location) continue;
-      if (this.pseudo.apply(parent, attribute)) continue;
+      this.pseudo ??= new PseudoAttributeWriter(this);
+      if (this.pseudo.apply(parent, attribute, symbol)) continue;
       this.one(parent, attribute);
     }
   }

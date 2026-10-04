@@ -19,9 +19,10 @@ export class PseudoAttributeWriter {
     this.writer = writer;
     this.builder = writer.builder;
     this.types = writer.types;
-    this.modules = new Map();
+    this.modules = new Map((this.builder.rows[TABLE.ModuleRef] ?? []).map((row, index) => [row[0], token(TABLE.ModuleRef, index + 1)]));
+    this.layouts = new Map((this.builder.rows[15] ?? []).map(row => [row[2], row]));
   }
-  apply(parent, attribute) {
+  apply(parent, attribute, symbol) {
     const fullName = fullNameOf(attribute.attributeClass);
     if (!attributes.has(fullName)) return false;
     const row = this.builder.rows[parent >>> 24]?.[(parent & 0xffffff) - 1];
@@ -40,7 +41,7 @@ export class PseudoAttributeWriter {
       case INTEROP + 'FieldOffsetAttribute':
         this.builder.addRow('FieldLayout', { Offset: Number(fixed[0]), Field: parent });
         break;
-      case INTEROP + 'DllImportAttribute': this.import(parent, row, fixed[0], named); break;
+      case INTEROP + 'DllImportAttribute': this.import(parent, row, fixed[0], named, symbol.metadataName ?? symbol.name); break;
       case INTEROP + 'MarshalAsAttribute':
         row[0] |= parent >>> 24 === TABLE.Field ? 0x1000 : 0x2000;
         this.builder.addRow('FieldMarshal', { Parent: parent, NativeType: marshalDescriptor(fixed[0], named) });
@@ -57,21 +58,22 @@ export class PseudoAttributeWriter {
     const layout = kind === 2 ? 0x10 : kind === 0 ? 8 : 0;
     const charSet = Number(named.CharSet ?? 2), stringFormat = charSet === 3 ? 0x10000 : charSet === 4 ? 0x20000 : 0;
     row[0] = (row[0] & ~0x30018) | layout | stringFormat;
-    const existing = this.builder.rows[15]?.find(entry => entry[2] === (parent & 0xffffff));
+    const parentRow = parent & 0xffffff, existing = this.layouts.get(parentRow);
     const packing = Number(named.Pack ?? 0), size = Number(named.Size ?? existing?.[1] ?? 0);
     if (existing) {
       existing[0] = packing;
       existing[1] = size || existing[1];
-    } else if (packing || size) this.builder.addRow('ClassLayout', { PackingSize: packing, ClassSize: size, Parent: parent });
+    } else if (packing || size) {
+      this.builder.addRow('ClassLayout', { PackingSize: packing, ClassSize: size, Parent: parent });
+      this.layouts.set(parentRow, this.builder.rows[15].at(-1));
+    }
   }
   module(name) {
-    if (!this.modules.has(name)) {
-      const handle = this.builder.string(name), index = this.builder.rows[TABLE.ModuleRef]?.findIndex(row => row[0] === handle) ?? -1;
-      this.modules.set(name, index >= 0 ? token(TABLE.ModuleRef, index + 1) : this.builder.addRow('ModuleRef', { Name: name }));
-    }
-    return this.modules.get(name);
+    const handle = this.builder.string(name);
+    if (!this.modules.has(handle)) this.modules.set(handle, this.builder.addRow('ModuleRef', { Name: handle }));
+    return this.modules.get(handle);
   }
-  import(parent, row, library, named) {
+  import(parent, row, library, named, defaultName) {
     row[2] |= 0x2000; // MethodAttributes.PinvokeImpl
     if (named.PreserveSig === false) row[1] &= ~0x80;
     else row[1] |= 0x80;
@@ -84,15 +86,8 @@ export class PseudoAttributeWriter {
     if (Object.hasOwn(named, 'ThrowOnUnmappableChar')) flags |= named.ThrowOnUnmappableChar ? 0x1000 : 0x2000;
     this.builder.addRow('ImplMap', {
       MappingFlags: flags, MemberForwarded: parent,
-      ImportName: named.EntryPoint ?? this.methodName(parent), ImportScope: this.module(library),
+      ImportName: named.EntryPoint ?? defaultName, ImportScope: this.module(library),
     });
-  }
-  methodName(parent) {
-    for (const type of this.writer.writer.types) {
-      const method = this.writer.writer.plans.get(type).methods.find(method => method.token === parent);
-      if (method) return method.name;
-    }
-    return '';
   }
   specialName(parent, row) {
     switch (parent >>> 24) {

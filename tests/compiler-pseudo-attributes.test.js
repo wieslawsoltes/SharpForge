@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { AssemblyInspector, decodeCoded, decodeMarshalDescriptor } from '@sharpforge/cil';
 import { compileToAssembly, compileToReferenceAssembly } from '@sharpforge/compiler';
 import { loadReferencePack } from '@sharpforge/compiler/node';
@@ -8,6 +9,7 @@ import { loadReferencePack } from '@sharpforge/compiler/node';
 const source = readFileSync(new URL('../packages/compiler/test/cil-emission/reference-fixtures/pseudo-attributes.cs', import.meta.url), 'utf8');
 const pack = loadReferencePack();
 const options = { skip: pack ? false : 'no .NET reference pack installed' };
+const oracle = new URL('./fixtures/attribute-metadata/', import.meta.url);
 
 function inspect(emit) {
   const result = emit(source, { name: 'PseudoAttributes', references: pack.references });
@@ -16,6 +18,30 @@ function inspect(emit) {
   const pe = new AssemblyInspector(result.assembly), metadata = pe.metadata;
   return { pe, metadata, type: name => pe.types.find(type => type.name === name) };
 }
+
+function marshalRows(pe) {
+  const metadata = pe.metadata, names = new Map();
+  for (const type of pe.types) {
+    for (const field of type.fields) names.set(field.token, `${type.name}.${field.name}`);
+    for (const method of type.methods) {
+      for (const parameter of metadata.list(method.token, 'ParamList')) {
+        const [, sequence, name] = metadata.row(parameter);
+        names.set(parameter, `${type.name}.${method.name}/${sequence}:${metadata.string(name)}`);
+      }
+    }
+  }
+  return metadata.rows[13].map(([parent, native]) => ({
+    target: names.get(decodeCoded('HasFieldMarshal', parent)), bytes: [...metadata.blob(native)],
+  })).sort((left, right) => left.target.localeCompare(right.target));
+}
+
+test('A02-T41 marshal oracle is a hash-pinned genuine Roslyn assembly', () => {
+  const provenance = JSON.parse(readFileSync(new URL('provenance.json', oracle), 'utf8'));
+  const assembly = readFileSync(new URL('PseudoAttributes.dll', oracle));
+  const sha256 = value => createHash('sha256').update(value).digest('hex');
+  assert.equal(sha256(source), provenance.sourceSha256);
+  assert.equal(sha256(assembly), provenance.assemblySha256);
+});
 
 for (const [kind, emit] of [['executable', compileToAssembly], ['reference', compileToReferenceAssembly]]) {
   test(`A02-T41 ${kind} pseudo-attributes write layout, flags and field offsets`, options, () => {
@@ -69,10 +95,15 @@ for (const [kind, emit] of [['executable', compileToAssembly], ['reference', com
     assert.ok(arrays.some(array => !Object.hasOwn(array, 'sizeParameterIndex') && array.elementType.name === 'Default'));
     const custom = descriptors.find(entry => entry.value.name === 'CustomMarshaler').value;
     assert.deepEqual(custom, { type: 44, name: 'CustomMarshaler', guid: '', nativeTypeName: '',
-      managedTypeName: 'Example.Marshal, Example', cookie: 'ą-cookie' });
+      managedTypeName: 'PassthroughMarshaler', cookie: 'ą-cookie' });
     const safeArray = descriptors.find(entry => entry.value.name === 'SafeArray').value;
     assert.equal(safeArray.variantType, 36);
     assert.equal(safeArray.userDefinedType, 'Layout');
+  });
+
+  test(`A02-T41 ${kind} marshal blobs and their targets match genuine Roslyn byte for byte`, options, () => {
+    const expected = new AssemblyInspector(readFileSync(new URL('PseudoAttributes.dll', oracle)));
+    assert.deepEqual(marshalRows(inspect(emit).pe), marshalRows(expected));
   });
 }
 
