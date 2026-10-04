@@ -13,19 +13,20 @@
  *   UnmanagedCallersOnly   the method is static and ordinary (CS8896) and not generic (CS8895) with unmanaged parameter
  *                 and return types (CS8894) passed by value (CS8977), and is never called directly (CS8901)
  *
- * Conversions between pointer types are in conversions/pointer.js. Nothing here is executable: the image calls
- * methods by number and has no indirect call, so code generation reports the pointer type (SF2200).
+ * Conversions between pointer types are in conversions/pointer.js. The direct CIL emitter writes ldftn/calli;
+ * the image back end reports the pointer type (SF2200) because it has no indirect-call instruction.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, RefKind, FunctionPointerTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isFunctionPointerType } from '../conversions/pointer.js';
-import { attributesNamed } from './bound-attributes.js';
+import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { isManagedType } from './unsafe-declarations.js';
-
-const unmanagedCallersOnly = 'System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute';
-/** The calling conventions with a `CallConv` type in System.Runtime.CompilerServices. */
-const knownConventions = new Set(['Cdecl', 'Stdcall', 'Thiscall', 'Fastcall', 'SuppressGCTransition', 'MemberFunction', 'Swift']);
+import { checkConstructedMethod } from './constraints.js';
+import { functionPointerSignatureMethod, selectFunctionPointerTarget } from './function-pointer-targets.js';
+import {
+  functionPointerConventionName, knownFunctionPointerConventions, unmanagedCallersOnlyAttribute, unmanagedConventionMarkers,
+} from './function-pointer-conventions.js';
 const comparisons = new Set(['==', '!=']);
 
 const refKindOf = parameter => {
@@ -43,19 +44,24 @@ const refKindOf = parameter => {
 export function bindFunctionPointerType(syntax, bindType, report) {
   const convention = syntax.callingConvention,
     names = [...(convention?.unmanagedCallingConventionList?.callingConventions ?? [])];
-  for (const name of names) if (!knownConventions.has(name.name.valueText)) report(name.name, DiagnosticId.CS8890, ['CallConv' + name.name.valueText]);
+  for (const name of names) {
+    if (!knownFunctionPointerConventions.includes(name.name.valueText)) report(name.name, DiagnosticId.CS8890, ['CallConv' + name.name.valueText]);
+  }
   const parameters = [...syntax.parameterList.parameters],
-    last = parameters.pop();
+    last = parameters.pop(),
+    returnedRef = last.type.kind === 'RefType'
+      ? last.type.readonlyKeyword ? RefKind.RefReadOnly : RefKind.Ref
+      : refKindOf(last);
   return new FunctionPointerTypeSymbol({
     callingConvention: convention?.managedOrUnmanagedKeyword.text === 'unmanaged' ? 'unmanaged' : 'managed',
     unmanagedConventions: names.map(name => name.name.valueText),
     returnType: bindType(last.type.kind === 'RefType' ? last.type.type : last.type),
-    returnRefKind: last.type.kind === 'RefType' ? RefKind.Ref : RefKind.None,
+    returnRefKind: returnedRef === RefKind.RefReadOnlyParameter ? RefKind.RefReadOnly : returnedRef,
     parameters: parameters.map(parameter => ({ type: bindType(parameter.type), refKind: refKindOf(parameter) })),
   });
 }
 
-const isUnmanagedCallersOnly = method => attributesNamed(method.originalDefinition ?? method, unmanagedCallersOnly).length > 0;
+const isUnmanagedCallersOnly = method => !!unmanagedCallersOnlyAttribute(method);
 
 /** Class mixin of the body binder. */
 export const FunctionPointerBinding = Base =>
@@ -74,52 +80,52 @@ export const FunctionPointerBinding = Base =>
       }
       if (group.kind !== 'MethodGroup') return super.addressOf(syntax, inFixedInitializer);
       this.requireUnsafe(syntax);
-      return this.node('AddressOfMethodGroup', syntax, null, { group, form: 'methodAddress' });
+      const address = this.node('AddressOfMethodGroup', syntax, null, { group, form: 'methodAddress' });
+      address.convert = type => {
+        if (!isFunctionPointerType(type)) return null;
+        const selected = selectFunctionPointerTarget(group, type, this.d.overloads);
+        return selected.method ? new Conversion(ConversionKind.MethodGroup, { method: selected.method }) : null;
+      };
+      address.materialize = type => this.convert(address, type);
+      return address;
     }
     convert(e, type, node = e.syntax, options = {}) {
+      if (e.kind === 'MethodGroup' && isFunctionPointerType(type)) {
+        this.report(e.syntax, DiagnosticId.CS8787);
+        return this.bad(node);
+      }
       if (e.kind !== 'AddressOfMethodGroup' || !type || type.isErrorType?.()) return super.convert(e, type, node, options);
       if (!isFunctionPointerType(type)) {
-        this.report(e.syntax, DiagnosticId.CS8812, [e.group.name ?? '']);
+        this.report(e.syntax, DiagnosticId.CS8812, [e.group.name ?? '', this.display(type)]);
         return this.bad(node);
       }
       const method = this.functionPointerTarget(e, type);
-      return method ? this.node('FunctionPointerLoad', e.syntax, type, { method }) : this.bad(node);
+      return method ? this.functionPointerLoad(e, type, method) : this.bad(node);
+    }
+    applyConversion(expression, type, conversion, node = expression.syntax, isExplicit = false) {
+      if (expression.kind !== 'AddressOfMethodGroup') return super.applyConversion(expression, type, conversion, node, isExplicit);
+      return this.convert(expression, type, node);
+    }
+    functionPointerLoad(address, type, method) {
+      for (const violation of checkConstructedMethod(method, this.core)) {
+        this.report(address.group.syntax, violation.code, violation.args, violation.severity);
+      }
+      const definition = method.originalDefinition ?? method;
+      definition.uses = (definition.uses ?? 0) + 1;
+      return this.node('FunctionPointerLoad', address.syntax, type, {
+        method,
+        constrainedTo: address.group.viaType ? address.group.receiverType : null,
+      });
     }
     /** The method of `&group` a function pointer type selects, or null after reporting why there is none. */
     functionPointerTarget(address, type) {
-      const signature = type.signature,
-        nameSyntax = address.group.syntax?.name ?? address.group.syntax,
-        fits = method =>
-          method.parameters.length === signature.parameters.length &&
-          method.parameters.every((parameter, index) => {
-            const wanted = signature.parameters[index];
-            return (parameter.refKind ?? RefKind.None) === wanted.refKind && parameter.type.equals(wanted.type.type);
-          });
-      const method = address.group.methods.find(candidate => !candidate.arity && fits(candidate));
-      if (!method) {
-        this.report(address.syntax, DiagnosticId.CS8757, [address.group.name ?? address.group.methods[0]?.name ?? '', this.display(type)]);
-        return null;
+      const selected = selectFunctionPointerTarget(address.group, type, this.d.overloads);
+      if (selected.error) {
+        const error = selected.error;
+        const name = address.group.syntax?.name ?? address.group.syntax;
+        this.report(error.atName ? name : address.syntax, error.code, error.args);
       }
-      if (!method.isStatic) {
-        this.report(nameSyntax, DiagnosticId.CS8759, [method.toDisplayString()]);
-        return null;
-      }
-      const returns = method.returnsVoid ? this.core.void : method.returnType,
-        returnFits = returns.equals(signature.returnType.type) || this.conversions.classifyImplicit(returns, signature.returnType.type).isReference;
-      if (!returnFits) {
-        this.report(nameSyntax, DiagnosticId.CS0407, [this.display(returns), method.toDisplayString()]);
-        return null;
-      }
-      // An [UnmanagedCallersOnly] method has the platform's default unmanaged convention; any other method is managed.
-      const isManagedPointer = signature.callingConvention === 'managed',
-        named = signature.unmanagedConventions,
-        conventionFits = isUnmanagedCallersOnly(method) ? !isManagedPointer && !named.length : isManagedPointer;
-      if (!conventionFits) {
-        const wanted = isManagedPointer ? 'Default' : named.length ? named.join(', ') : 'Unmanaged';
-        this.report(nameSyntax, DiagnosticId.CS8786, [method.toDisplayString(), wanted]);
-        return null;
-      }
-      return method;
+      return selected.method;
     }
     /** `var f = &M;` has no type to infer: CS0815 on the declarator, as for a lambda. */
     implicitLocalType(value, init, declarator) {
@@ -130,25 +136,30 @@ export const FunctionPointerBinding = Base =>
     invokeBound(target, args, syntax) {
       const type = target.hasErrors || target.kind === 'MethodGroup' ? null : target.type;
       if (!isFunctionPointerType(type)) return super.invokeBound(target, args, syntax);
-      const pointer = this.asValue(target),
-        parameters = type.signature.parameters;
+      const pointer = this.asValue(target);
+      const parameters = type.signature.parameters;
       this.requireUnsafe(syntax);
       if (args.some(argument => argument.hasErrors)) return this.bad(syntax);
       if (args.length !== parameters.length) {
         this.report(syntax, DiagnosticId.CS8756, [this.display(type), args.length]);
         return this.bad(syntax);
       }
-      const converted = args.map((argument, index) => {
-        const parameter = parameters[index];
-        if ((argument.refKind ?? RefKind.None) !== RefKind.None || parameter.refKind !== RefKind.None) return argument;
-        const conversion = this.conversions.classifyFromExpression(argument, parameter.type.type);
-        if (conversion.exists && conversion.isImplicit) return this.applyConversion(argument, parameter.type.type, conversion);
-        const from = argument.type ? this.display(argument.type) : '<null>';
-        this.report(argument.syntax, DiagnosticId.CS1503, [index + 1, from, this.display(parameter.type.type)]);
-        return this.bad(argument.syntax);
-      });
-      if (converted.some(argument => argument.hasErrors)) return this.bad(syntax);
-      return this.node('FunctionPointerInvocation', syntax, type.signature.returnType.type, { pointer, args: converted });
+      const named = args.filter(argument => argument.name);
+      if (named.length) {
+        for (const argument of named) this.report(argument.argumentSyntax.nameColon, DiagnosticId.CS8905);
+        return this.bad(syntax);
+      }
+      const signatures = this.functionPointerSignatures ??= new Map();
+      let method = signatures.get(type);
+      if (!method) signatures.set(type, method = functionPointerSignatureMethod(type));
+      const result = this.d.overloads.resolve([method], args, { name: this.display(type) });
+      if (!result.succeeded) {
+        const error = result.error;
+        this.report(this.errorNode(error, args, syntax), error.code, error.args);
+        return this.bad(syntax);
+      }
+      // Ordinary Call nodes preserve ref/out definite assignment, nullable analysis and ref-return safety.
+      return this.finishCall(result, pointer, args, syntax, { isDelegateInvoke: true });
     }
     /** A function pointer has no members. */
     instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options) {
@@ -177,11 +188,20 @@ export const FunctionPointerBinding = Base =>
  * @returns {{at: object|null, code: string, args: any[]}[]} `at` null means the attribute name
  */
 export function checkUnmanagedCallersOnly(method) {
-  const attribute = attributesNamed(method, unmanagedCallersOnly)[0];
+  const attribute = unmanagedCallersOnlyAttribute(method);
   if (!attribute) return [];
-  if (method.methodKind !== MethodKind.Ordinary || !method.isStatic) return [{ at: null, code: DiagnosticId.CS8896, args: [] }];
-  if (method.typeParameters?.length || method.containingType?.typeParameters?.length) return [{ at: null, code: DiagnosticId.CS8895, args: [] }];
   const rows = [];
+  for (const marker of unmanagedConventionMarkers(attribute)) {
+    if (!functionPointerConventionName(marker.type)) {
+      rows.push({ at: attribute.syntax, code: DiagnosticId.CS8893, args: [marker.type?.toDisplayString() ?? '<null>'] });
+    }
+  }
+  if (![MethodKind.Ordinary, MethodKind.LocalFunction].includes(method.methodKind) || !method.isStatic || method.isAbstract || method.isVirtual) {
+    return [...rows, { at: null, code: DiagnosticId.CS8896, args: [] }];
+  }
+  if (method.typeParameters?.length || method.containingType?.isGenericType) {
+    return [...rows, { at: null, code: DiagnosticId.CS8895, args: [] }];
+  }
   for (const parameter of method.parameters) {
     if ((parameter.refKind ?? RefKind.None) !== RefKind.None) rows.push({ at: parameter.syntax, code: DiagnosticId.CS8977, args: [] });
     else if (isManagedType(parameter.type)) rows.push({ at: parameter.syntax, code: DiagnosticId.CS8894, args: [parameter.type.toDisplayString(), 'parameter'] });
@@ -199,7 +219,7 @@ export const FunctionPointerRules = Base =>
       for (const type of this.assembly.types)
         for (const method of type.getMembers()) {
           if (method.kind !== SymbolKind.Method) continue;
-          const attribute = attributesNamed(method, unmanagedCallersOnly)[0];
+          const attribute = unmanagedCallersOnlyAttribute(method);
           for (const row of checkUnmanagedCallersOnly(method))
             this.report(method.uri ?? this.at(method).uri, row.at ?? attribute.syntax.name, row.code, row.args);
         }

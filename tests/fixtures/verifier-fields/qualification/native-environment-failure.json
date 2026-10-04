@@ -1,0 +1,7 @@
+{
+  "stage": "native tool preflight",
+  "reason": "SHARPFORGE_ILASM and SHARPFORGE_ILVERIFY were unset; no oracle process ran.",
+  "retainedCaptureSHA256": "8abc846a5a4a2e6fdebb875b257577806a3642b66216848f93fb957b1982549b",
+  "baselineRawSamples": 48,
+  "productChanged": false
+}

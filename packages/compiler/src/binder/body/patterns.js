@@ -15,7 +15,7 @@ import { stripNullable } from '../../conversions/nullable.js';
  * The type the input is known to have where a pattern has matched, for the pattern after `and`: in
  * `o is int and > 0 and var n` the relational pattern compares an `int`, and `n` is an `int`.
  */
-function narrowedTypeOf(pattern, inputType) {
+export function narrowedTypeOf(pattern, inputType) {
   switch (pattern.kind) {
     case 'TypePattern':
     case 'DeclarationPattern':

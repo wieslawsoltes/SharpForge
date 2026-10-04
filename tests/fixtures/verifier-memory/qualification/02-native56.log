@@ -1,0 +1,1 @@
+{"observations":56,"differences":["StoreNativeFromInteger","StoreIntegerFromNative","LoadWideInteger","LoadWideFloat","StoreWideInteger","StoreWideFloat","StoreReferenceOpcodeInteger"]}

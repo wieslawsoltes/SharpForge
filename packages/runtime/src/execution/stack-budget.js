@@ -1,3 +1,4 @@
+import {callbackFrames} from './callback-frames.js';
 import {normalizeCallType, parseFunctionPointerType, verifiedStackBound} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
@@ -88,6 +89,7 @@ function existingFrameBytes(vm, budget, frame) {
 function visitFrames(execution, visit) {
   for (const frame of execution.frames) visit(frame);
   const scheduler = execution.scheduler;
+  for (const frame of callbackFrames(scheduler)) visit(frame);
   // Runtime schedulers have enabled; a non-null saved scheduler is enabled by definition.
   if (!scheduler || scheduler.enabled === false) return;
   for (const [id, context] of scheduler.contexts) {

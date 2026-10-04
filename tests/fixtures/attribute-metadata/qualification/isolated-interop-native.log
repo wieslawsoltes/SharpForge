@@ -1,0 +1,2 @@
+pseudo-attributes: .NET equal (compiled against the 10.0.5 references)
+1/1 fixtures print on .NET 10.0 what the Roslyn build prints

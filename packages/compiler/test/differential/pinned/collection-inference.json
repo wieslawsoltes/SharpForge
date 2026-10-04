@@ -1,0 +1,11 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "collection-inference/elements-spreads-and-nested-targets":{"hash":"4213f7b18a4f0bd1","kind":"output","langVersion":"14.0","diagnostics":[],"output":"String:carol~alice~z\nString:carol/alice\nInt64:1+2\nInt32:3\nInt32:3:2\n"},
+  "collection-inference/deferred-lambda-and-method-group-output":{"hash":"24cf668b4a8506fd","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Int32:String\n7\nvalue:9\nInt32\nString\n"},
+  "collection-inference/span-interface-collection-preference":{"hash":"96e0da00f1e5b981","kind":"output","langVersion":"14.0","diagnostics":[],"output":"span:3\nspan:0\nsequence\n"},
+  "collection-inference/csharp13-element-preference":{"hash":"42ae691a5381573f","kind":"output","langVersion":"13.0","diagnostics":[],"output":"ints:2\nbytes:2\nreadonly:3\n"},
+  "collection-inference/csharp12-element-preference-is-ambiguous":{"hash":"b1fdd8ca6410f0e8","kind":"diagnostics","langVersion":"12.0","diagnostics":[["CS0121",411,4,"error"],["CS0121",452,4,"error"]]},
+  "collection-inference/csharp14-covariant-array-span-preference":{"hash":"7b35b8eeffbaf502","kind":"output","langVersion":"14.0","diagnostics":[],"output":"span:2\n"},
+  "collection-inference/csharp13-covariant-array-span-is-ambiguous":{"hash":"b54834f52ccc1f08","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0121",311,8,"error"]]},
+  "collection-inference/empty-typeless-incompatible-and-unconstrained-targets":{"hash":"9c5f10e0a38f39d3","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0411",225,5,"error"],["CS0411",244,5,"error"],["CS0411",267,5,"error"],["CS0411",295,5,"error"],["CS0411",318,6,"error"]]},
+  "collection-inference/conflicting-and-empty-element-betterness":{"hash":"0c06201d022d6e23","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0121",288,4,"error"],["CS0121",316,4,"error"],["CS0121",334,4,"error"]]}
+}}

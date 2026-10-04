@@ -17,6 +17,7 @@ import { MemberConflicts } from './member-conflicts.js';
 import { CompoundOperatorSymbols } from './compound-operators.js';
 import { FieldKeywordSymbols } from './field-keyword.js';
 import { ExtensionBlockBuilder } from './extension-blocks.js';
+import { UnionSymbolBuilder } from '../synthesized/unions.js';
 
 const builders = [
   MemberSymbolBuilder,
@@ -25,6 +26,7 @@ const builders = [
   MemberConflicts,
   ExtensionBlockBuilder,
   CompoundOperatorSymbols,
+  UnionSymbolBuilder,
 ];
 
 /**

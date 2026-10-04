@@ -25,8 +25,13 @@ been stored on every incoming path before its value or address is loaded. Unset
 loads fail with `UninitializedLocal`; a store must pass the usual type check first.
 Branches intersect assignment facts, and loops reuse the existing bounded solver.
 No value-sensitive constant propagation is used to discard a possible path.
-Generic/instance/vararg method signatures, nonprimitive storage, byref returns,
+Generic/vararg method signatures, unsupported storage, byref returns,
 exception handlers and opcodes without a registered policy return `unknown`.
+Normal instance methods and local nominal storage require explicit metadata
+category authority and use the additive [field profile](VERIFIER-FIELDS.md).
+`ldstr` uses the additive [literal profile](VERIFIER-LITERALS.md), validating each
+addressed #US record once before propagation and pushing the canonical String
+reference. Field and literal preparation compose through the same registration seam.
 Byref element compatibility beyond identical primitive identities stays unknown.
 The existing decoder checks every branch/switch target, including unreachable
 code, before typed propagation. Floating input to `conv.r.un` follows the general conversion table III.8;
