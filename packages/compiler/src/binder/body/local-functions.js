@@ -2,6 +2,7 @@
  * Local functions: declared up front in their block (callable before the declaration), generic, with
  * their own body binder chained to the enclosing one.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { MethodSymbol, MethodKind, ParameterSymbol, modifiersFromSyntax } from '../../symbols/members.js';
 import { declareTypeParameters, bindConstraintClauses } from '../../symbols/source/type-parameters.js';
@@ -18,7 +19,7 @@ export const LocalFunctionBinding = Base =>
     declareLocalFunction(syntax) {
       const name = syntax.identifier.valueText,
         modifiers = syntax.modifiers.map(m => m.text);
-      if (syntax.body && syntax.expressionBody) this.report(syntax, 'CS8057');
+      if (syntax.body && syntax.expressionBody) this.report(syntax, DiagnosticId.CS8057);
       const method = new MethodSymbol({
         name,
         methodKind: MethodKind.LocalFunction,
@@ -43,7 +44,7 @@ export const LocalFunctionBinding = Base =>
         parameters = syntax.parameterList.parameters.map((p, ordinal) => {
           const mods = p.modifiers.map(m => m.text),
             pname = p.identifier.valueText;
-          if (seen.has(pname)) this.report(p.identifier, 'CS0100', [pname]);
+          if (seen.has(pname)) this.report(p.identifier, DiagnosticId.CS0100, [pname]);
           seen.add(pname);
           const parameter = new ParameterSymbol({
             name: pname,
@@ -93,7 +94,7 @@ export const LocalFunctionBinding = Base =>
           const written = attribute.name.toString().trim().split('.').pop();
           if (written !== 'ModuleInitializer' && written !== 'ModuleInitializerAttribute') continue;
           const attributeClass = this.d.attributeClassOf(attribute.name, scope, this.c.uri);
-          if (attributeClass && fullNameOf(attributeClass) === moduleInitializerAttribute) this.report(attribute.name, 'CS8813');
+          if (attributeClass && fullNameOf(attributeClass) === moduleInitializerAttribute) this.report(attribute.name, DiagnosticId.CS8813);
         }
     }
     localFunction(syntax) {

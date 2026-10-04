@@ -2,12 +2,24 @@
   "schemaVersion": 1,
   "styles": [
     {
-      "source": "packages/editor/src/vendor/classic.css",
-      "order": 1000
+      "source": "packages/editor/src/view/virtual.css",
+      "order": 2000
     },
     {
-      "source": "packages/editor/src/editor.css",
-      "order": 2000
+      "source": "packages/editor/src/view/tokens.css",
+      "order": 2001
+    },
+    {
+      "source": "packages/editor/src/widgets/insights.css",
+      "order": 2002
+    },
+    {
+      "source": "packages/editor/src/keymaps/keymaps.css",
+      "order": 2003
+    },
+    {
+      "source": "packages/editor/src/a11y/accessibility.css",
+      "order": 2004
     }
   ],
   "workers": [],

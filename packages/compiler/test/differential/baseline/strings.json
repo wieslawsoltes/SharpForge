@@ -10,5 +10,6 @@
   "strings/null-concat": ["diagnostics", "warnings", "bytecode", "cil"],
   "strings/search-and-slice": ["diagnostics", "warnings", "bytecode", "cil"],
   "strings/split-and-join": ["warnings"],
+  "strings/string-builder": ["diagnostics", "warnings"],
   "strings/transform": ["warnings"]
 }

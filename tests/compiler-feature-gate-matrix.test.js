@@ -38,6 +38,9 @@ const notGated = {
       .split(' ')
       .map(id => [id, noRoslynGate]),
   ),
+  // ---- directives Roslyn does not gate by language version (pinned in packages/syntax/test/gates) ----
+  LineSpanDirective: 'Roslyn accepts the span form of #line at every language version: it reports nothing at C# 9',
+  IgnoredDirectives: "Roslyn reports CS9298 for '#:' outside a file-based program at every version, not a language-version diagnostic",
   // ---- features that need binding the compiler does not do for the gate ----
   Dynamic: 'below C# 4 Roslyn reports CS0246 for the type name `dynamic`, not a language-version diagnostic (pinned)',
   ScopedRef: "Roslyn has no feature of this name: it reports `scoped` as 'ref fields' (CS8936 at the keyword); the walker does the same (pinned)",
@@ -91,7 +94,7 @@ test('A02-B01 every catalog row has exactly one snippet and is either gated or l
     assert(notGated[id].length > 10, `${id} needs a reason`);
   }
   const gated = languageFeatures.filter(row => row.version > 1 && !(row.id in notGated));
-  assert(gated.length >= 174, `only ${gated.length} rows are gated`);
+  assert(gated.length >= 172, `only ${gated.length} rows are gated`);
 });
 
 for (const row of languageFeatures) {
@@ -146,6 +149,31 @@ test('A02-B01 gate codes agree with Roslyn for the pinned rows', () => {
   }
 });
 
+// The catalog rows that the syntax walker (binder/syntax-features.js) decides, without the parser and without binding.
+const walkerRows = (
+  'AutoImplementedProperties ReadonlyAutoImplementedProperties Discards RefExtensionMethods RefConditional RefFor RefForEach ' +
+  'EnumGenericTypeConstraint DelegateGenericTypeConstraint UnmanagedGenericTypeConstraint NotNullGenericTypeConstraint NestedStackalloc ' +
+  'SealedToStringInRecord PositionalFieldsInRecords ConstantInterpolatedStrings RelaxedShiftOperator RefFields ImplicitIndexerInitializer ' +
+  'RefUnsafeInIteratorAsync'
+).split(' ');
+
+test('A02-B01 gate spans agree with Roslyn for every pinned gated row, which include all rows the syntax walker decides', () => {
+  const pinned = loadPinned().results,
+    gatedFixtures = roslynFixtures.filter(fixture => fixture.roslynGates);
+  const pinnedRows = new Set(gatedFixtures.map(fixture => fixture.featureId));
+  assert.deepEqual(walkerRows.filter(id => !pinnedRows.has(id)), [], 'walker rows without a Roslyn pin');
+  for (const fixture of gatedFixtures) {
+    const row = languageFeatures.find(r => r.id === fixture.featureId),
+      show = (start, length) => `${row.code}@${start}+${length} ${JSON.stringify(fixture.source.slice(start, start + length))}`;
+    // Roslyn's and SharpForge's diagnostics with the row's code, each as code, start and length over the fixture text.
+    const theirs = pinned.get(fixture.id).diagnostics.filter(d => d[0] === row.code).map(d => show(d[1], d[2]));
+    const result = compile(fixture.source, { langVersion: fixture.langVersion, allowUnsafe: !!fixture.allowUnsafe });
+    const mine = result.diagnostics.filter(d => d.code === row.code).map(d => show(d.start, d.length));
+    assert(theirs.length > 0, fixture.id);
+    assert.deepEqual(mine, theirs, fixture.id);
+  }
+});
+
 test('A02-B01 the syntax walker finds features the parser does not record', () => {
   const source =
     'class P { int A { get; } static async void M(int[] a) { static int L() { return 1; } L(); ' +
@@ -155,7 +183,7 @@ test('A02-B01 the syntax walker finds features the parser does not record', () =
   assert.deepEqual(found, [
     'AutoImplementedProperties:A',
     'ReadonlyAutoImplementedProperties:A',
-    'Async:async',
+    'Async:M',
     'StaticLocalFunctions:L',
     'RefFor:ref int',
   ]);
