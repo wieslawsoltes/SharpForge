@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "1c3b7cc3fd74d01171ad53f0020de398c8c901906814ef829c9a7c2c633a1f51",
-    "packages/runtime/src/cil-vm.js": "d97d566d72ecf279d3e8f8047ee7f976c4c2a1f57ba7330b812041b588509f94",
+    "packages/runtime/src/heap.js": "acef5222e8e75d143ba73890bd9d895b2588f47ebc63a30afbd72c0871e6c441",
+    "packages/runtime/src/vm.js": "d37ca789f8e606b02bffdd27dd99926b1e2f4a42536a7a2414b552e190f34d68",
+    "packages/runtime/src/cil-vm.js": "c5923cca25a1bbd468a513bebeac43c864291d080a5afbee310c026019aaaf00",
     "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
     "packages/runtime/src/execution/storage.js": "d07039d0335c64ae69eccc3313e87b954d4b1c601667c61b392b7274699414ac",
