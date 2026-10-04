@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "scope": "Generated generic metadata owner parsing and authoritative local arity; focused qualification only.",
+  "base": "4ad2d1096244a95b411baa8def4d4a8e9b7fbd0b",
+  "productionCommits": [
+    "e0f3de232",
+    "1db5d0255bd34db0c9349d829e2f6d213e96a878"
+  ],
+  "baseline": {
+    "run": {
+      "sourceHead": "15260a49b152bbf3e61d9899254d9fcf1eebdd94",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a05-cil-generic-metadata-names.test.js"
+      ],
+      "environment": {
+        "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+        "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+      },
+      "startedAt": "2026-10-04T21:08:48.112412+00:00",
+      "exitCode": 1,
+      "wallSeconds": 1.0159215989988297,
+      "finishedAt": "2026-10-04T21:08:49.128352+00:00",
+      "logSha256": "6d4edc5744d392be2379cd29fb8752faa8c48cd3754fe7755b84402ba17064c3"
+    },
+    "sourceInventory": {
+      "modules": 735,
+      "sha256": "b1f0f9645c0865dc9f3e56db8cb68584b578b15cd1dccf33b57c8b8b6a754470",
+      "beforeAfterByteIdentical": true,
+      "allModulesTrackedAndMatchHead": true,
+      "unresolvedImports": 0,
+      "trackedDiffEmpty": true,
+      "unknownUntrackedOutsideImportGraphPreserved": true
+    },
+    "tests": 22,
+    "passed": 2,
+    "failed": 20,
+    "skipped": 0,
+    "nodeDurationMs": 840.968142
+  },
+  "candidate": {
+    "run": {
+      "sourceHead": "1db5d0255bd34db0c9349d829e2f6d213e96a878",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a05-cil-generic-metadata-names.test.js",
+        "tests/a05-cil-async-generics.test.js",
+        "tests/a05-02-generic-calls.test.js",
+        "tests/a05-02-generic-dispatch.test.js",
+        "tests/a05-type-tables.test.js"
+      ],
+      "environment": {
+        "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+        "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+      },
+      "startedAt": "2026-10-04T21:09:59.637577+00:00",
+      "exitCode": 1,
+      "wallSeconds": 2.676635924006405,
+      "finishedAt": "2026-10-04T21:10:02.314232+00:00",
+      "logSha256": "de2236fbed7fecf19850f09dc8dfbd79157fe7c85b0a673710fdc3a73f7643d4"
+    },
+    "sourceInventory": {
+      "modules": 736,
+      "sha256": "36c5eb5bc63fa2723af4277a70fa99457bc5f2539c9985d089706e8a6adfe469",
+      "beforeAfterByteIdentical": true,
+      "allModulesTrackedAndMatchHead": true,
+      "unresolvedImports": 0,
+      "trackedDiffEmpty": true,
+      "unknownUntrackedOutsideImportGraphPreserved": true
+    },
+    "tests": 56,
+    "passed": 55,
+    "failed": 1,
+    "skipped": 0,
+    "nodeDurationMs": 2554.680122,
+    "newControls": {
+      "tests": 22,
+      "passed": 22,
+      "failed": 0
+    },
+    "existingControls": {
+      "tests": 34,
+      "passed": 33,
+      "failed": 1,
+      "includesOriginalAsyncMetadata": 9
+    }
+  },
+  "remainingFailure": {
+    "test": "aggregate generic values and external generic methods keep explicit unsupported diagnostics",
+    "file": "tests/a05-02-generic-dispatch.test.js",
+    "line": 117,
+    "assertion": "/T03 value storage/",
+    "status": "Unresolved existing diagnostic wording assertion; not a candidate pass.",
+    "priorExecutedBaseline": "eadd85149b0740f337f7b8f3e92d259353892fdb",
+    "priorEvidence": "dispatch-baseline.json",
+    "assertionUnchanged": true
+  },
+  "limits": [
+    "No retained-native-image replay was run in this block.",
+    "The original six genuine native outputs and all VM rejections remain retained in generic-baseline.json and its raw archive.",
+    "No native/VM generic Task, GC or snapshot success is claimed by these focused metadata controls.",
+    "Runtime maxInstructions remains 2000000; qualified EH admission delta is pending for replay.",
+    "Arbitrary aggregate payload restrictions remain unchanged.",
+    "ValueTask, custom awaiters/builders, async void and async iterators remain outside this batch.",
+    "No performance measurement was performed for this parser/arity correction."
+  ],
+  "raw": {
+    "file": "generic-name-correction-raw.tar.gz",
+    "bytes": 185250,
+    "sha256": "cde9aaf9744333ae871eaf2921543232048294ae180d12e2b188439517725bec",
+    "files": [
+      {
+        "name": "cil-generic-names-baseline.log",
+        "bytes": 27448,
+        "sha256": "6d4edc5744d392be2379cd29fb8752faa8c48cd3754fe7755b84402ba17064c3"
+      },
+      {
+        "name": "cil-generic-names-baseline-run.json",
+        "bytes": 696,
+        "sha256": "2760c849e4e7f59b6be1c673e2de7e40d6a0882d2ea192ec8f33d0da302a6424"
+      },
+      {
+        "name": "cil-generic-names-baseline-before.json",
+        "bytes": 286042,
+        "sha256": "b1f0f9645c0865dc9f3e56db8cb68584b578b15cd1dccf33b57c8b8b6a754470"
+      },
+      {
+        "name": "cil-generic-names-baseline-after.json",
+        "bytes": 286042,
+        "sha256": "b1f0f9645c0865dc9f3e56db8cb68584b578b15cd1dccf33b57c8b8b6a754470"
+      },
+      {
+        "name": "cil-generic-names-candidate.log",
+        "bytes": 6992,
+        "sha256": "de2236fbed7fecf19850f09dc8dfbd79157fe7c85b0a673710fdc3a73f7643d4"
+      },
+      {
+        "name": "cil-generic-names-candidate-run.json",
+        "bytes": 863,
+        "sha256": "98439903762ce22c46fb12831e76c2393cacb7bd5e4568b3ad440643f8a959a0"
+      },
+      {
+        "name": "cil-generic-names-candidate-before.json",
+        "bytes": 286455,
+        "sha256": "36c5eb5bc63fa2723af4277a70fa99457bc5f2539c9985d089706e8a6adfe469"
+      },
+      {
+        "name": "cil-generic-names-candidate-after.json",
+        "bytes": 286455,
+        "sha256": "36c5eb5bc63fa2723af4277a70fa99457bc5f2539c9985d089706e8a6adfe469"
+      },
+      {
+        "name": "cil-async-generic-correction-source-identity.mjs",
+        "bytes": 2926,
+        "sha256": "7f2bee3ce0084ccb215bd6201f55f964b1134d3daed6e6072f38aeabce697fdd"
+      }
+    ]
+  }
+}
