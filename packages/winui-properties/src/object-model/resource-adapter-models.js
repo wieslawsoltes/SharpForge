@@ -71,7 +71,9 @@ export function resourceScopeModel(context, reference) {
 }
 
 export function nativeResourceKey(context, value) {
-  if (context.typeOf(value) === 'System.Type' || context.typeOf(value) === 'System.RuntimeType') return context.typeName(value);
+  const type = context.typeOf(value);
+  if (type === 'System.Type' || type === 'System.RuntimeType'
+    || typeof value === 'function' && typeof value.$type === 'string') return context.typeName(value);
   const native = context.native(value);
   return native !== undefined && (native === null || typeof native !== 'object') ? native : context.id(value);
 }

@@ -33,7 +33,7 @@ export function clearProperty(platform, reference, nameOrProperty) {
     if (property.readOnly) throw new ManagedFault('InvalidOperationException', 'A read-only property cannot be cleared');
     platform.set(reference, '$local:' + property.name, false);
     platform.ui.properties.clearSource(reference, property, ValueSource.Local);
-    if (property.name === 'Style') refreshStyle(platform, reference);
+    if (property.name === 'Style' || property.name === 'DefaultStyleKey') refreshStyle(platform, reference);
     if (property.name === 'Template') templateChanged(platform, reference);
   });
 }

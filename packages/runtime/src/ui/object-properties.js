@@ -41,14 +41,14 @@ export function setObjectProperty(platform, reference, descriptor, value) {
   const property = validateObjectProperty(platform, reference, descriptor.property, value, descriptor.dependencyProperty);
   const type = platform.record(reference).type;
   const kind = frameworkType(type)?.kind;
-  const styleChange = ['Style', 'Template'].includes(property.name) || ['style', 'setter', 'template'].includes(kind);
+  const styleChange = ['Style', 'Template', 'DefaultStyleKey'].includes(property.name) || ['style', 'setter', 'template'].includes(kind);
   if (!platform.styleDepth && styleChange) {
     return platform.styleMutation(() => setObjectProperty(platform, reference, descriptor, value));
   }
   updateContentParent(platform, reference, property.name, value);
   platform.set(reference, '$local:' + property.name, true);
   platform.ui.properties.setSource(reference, property, ValueSource.Local, value);
-  if (property.name === 'Style') refreshStyle(platform, reference);
+  if (property.name === 'Style' || property.name === 'DefaultStyleKey') refreshStyle(platform, reference);
   if (property.name === 'Template') templateChanged(platform, reference);
   updateBindings(platform, reference, property);
   if (kind === 'style' || kind === 'setter') refreshStyles(platform, reference);
