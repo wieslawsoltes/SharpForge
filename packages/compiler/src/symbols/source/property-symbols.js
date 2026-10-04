@@ -85,7 +85,9 @@ export const PropertySymbolBuilder = Base =>
       for (const a of accessors) {
         const k = a.keyword.text;
         if (k === 'get') {
-          if (getMethod) this.report(uri, a.keyword, 'CS1007');
+          // An accessor list next to an expression body is reported once for the member (CS8057, binder/member-bodies.js).
+          if (getMethod && !syntax.expressionBody) this.report(uri, a.keyword, 'CS1007');
+          else if (getMethod) continue;
           else getMethod = accessor('get', a);
         } else if (k === 'set' || k === 'init') {
           if (setMethod) this.report(uri, a.keyword, 'CS1007');
@@ -185,10 +187,9 @@ export const PropertySymbolBuilder = Base =>
       type.primaryConstructor = ctor;
       members.push(ctor);
       const base = syntax.baseList?.types.find(t => t.kind === 'PrimaryConstructorBaseType');
-      if (base) {
-        ctor.baseArgumentsSyntax = base.argumentList;
-        this.bodies.push(ctor);
-      }
+      if (base) ctor.baseArgumentsSyntax = base.argumentList;
+      // Bound later for its base arguments and for the default values of its optional parameters.
+      if (base || parameters.some(p => p.defaultSyntax)) this.bodies.push(ctor);
       // Positional record parameters become public init-only (record class) or settable (record struct) properties.
       if (type.isRecord)
         for (const p of parameters) {

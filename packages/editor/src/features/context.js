@@ -28,6 +28,10 @@ export function createInsightContext(editor, options) {
     },
     async request(method, parameters = {}, requestOptions = {}) {
       if (!services.supports(method)) return undefined;
+      const maximum = options.maxSemanticCharacters ?? 2_000_000;
+      if (method !== 'readDocument' && !options.languageServicesInLargeFiles && (editor.model?.length ?? editor.value.length) > maximum) {
+        return undefined;
+      }
       const versions = workspaceVersions(workspace);
       const result = await guard.run(requestOptions.key ?? method, value => services.invoke(method, value), parameters, requestOptions);
       return result ? {...result, versions} : undefined;

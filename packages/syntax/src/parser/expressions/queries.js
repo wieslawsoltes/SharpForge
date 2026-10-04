@@ -6,15 +6,31 @@ export const queryMethods = {
     const end = this.scanType(i + 1);
     return end > i + 1 && this.isId(this.tokens[end]) && this.kindAt(end + 1) === 'in';
   },
+  /**
+   * The collection of the first `from` clause and the collection of a `join` are evaluated where the query stands, so
+   * an expression variable declared there is an ordinary one. Every other clause expression becomes a lambda body,
+   * where declaring one needs C# 7.3 (see csharp73.js).
+   */
   queryExpression() {
     this.feature('QueryExpression', this.current);
     this.queryDepth = (this.queryDepth ?? 0) + 1;
-    const query = this.inInitializer(this.queryClauses);
+    const from = this.fromClause(),
+      enclosing = this.queryEnclosing;
+    this.queryEnclosing = this.restrictedVariables;
+    this.restrictedVariables = 'clause';
+    const query = this.n('QueryExpression', from, this.queryBody());
+    this.restrictedVariables = this.queryEnclosing;
+    this.queryEnclosing = enclosing;
     this.queryDepth--;
     return query;
   },
-  queryClauses() {
-    return this.n('QueryExpression', this.fromClause(), this.queryBody());
+  /** The collection of a join clause, parsed in the state of the code around the query. */
+  joinSource() {
+    const clause = this.restrictedVariables;
+    this.restrictedVariables = this.queryEnclosing;
+    const source = this.expression();
+    this.restrictedVariables = clause;
+    return source;
   },
   rangeVariable() {
     const typed = !(this.isId() && this.peek().kind === 'in');
@@ -36,7 +52,7 @@ export const queryMethods = {
         const keyword = this.takeWord('join'),
           [type, identifier] = this.rangeVariable(),
           inKeyword = this.expect('in'),
-          source = this.expression();
+          source = this.joinSource();
         const on = this.contextual('on'),
           left = this.expression(),
           equals = this.contextual('equals'),

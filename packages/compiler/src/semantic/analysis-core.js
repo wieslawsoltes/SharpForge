@@ -233,6 +233,7 @@ export class AnalysisCore {
     for (const type of types) this.checkType(type);
     this.checkConstructions();
     for (const type of types) this.bindConstants(type);
+    this.checkUnsafeDeclarations();
     this.bindAttributes();
     this.checkSpecialMembers();
     this.checkConditionalMethods();

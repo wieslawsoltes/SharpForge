@@ -59,15 +59,34 @@ export class FindReplaceWidget {
     this.search(false);
   }
 
-  search(select = false) {
+  async search(select = false) {
+    this.searchController?.abort();
+    const controller = new AbortController();
+    this.searchController = controller;
+    this.session.matches = [];
+    this.index = -1;
     this.previewDiff?.dispose();
     this.previewDiff = null;
     this.previewHost.hidden = true;
     const editor = this.context.editor;
     try {
-      const result = this.session.search(this.find.input.value, {uri: editor.uri, regex: this.regex.input.checked,
+      const settings = {uri: editor.uri, regex: this.regex.input.checked,
         matchCase: this.case.input.checked, wholeWord: this.word.input.checked, preserveCase: this.preserve.input.checked,
-        scope: this.scope.value, selection: this.selection});
+        scope: this.scope.value, selection: this.selection, signal: controller.signal,
+        workerFactory: this.context.options.searchWorkerFactory,
+        onProgress: progress => {
+          if (controller.signal.aborted) return;
+          const percentage = Math.floor(progress.processed / Math.max(1, progress.total) * 100);
+          const message = `Searching… ${percentage}%`;
+          if (this.status.textContent !== message) this.status.textContent = message;
+        }};
+      const large = this.scope.value === 'open' || (editor.model?.length ?? editor.value.length) > 131_072;
+      this.popup.element.dataset.searchState = 'searching';
+      const result = large ? await this.session.searchAsync(this.find.input.value, settings) :
+        this.session.search(this.find.input.value, settings);
+      if (controller.signal.aborted || this.searchController !== controller) return;
+      this.popup.element.dataset.searchState = 'complete';
+      this.popup.element.dataset.searchBackend = result.backend ?? 'bounded-synchronous';
       this.index = -1;
       const decorations = result.matches.filter(match => match.uri === editor.uri).map(match => ({...match, className: 'sf-search-match'}));
       if (this.scope.value === 'selection') decorations.push({...this.selection, className: 'sf-search-scope'});
@@ -75,7 +94,9 @@ export class FindReplaceWidget {
       this.status.textContent = `${result.matches.length}${result.truncated ? '+' : ''} matches`;
       if (select && result.matches.length) this.next(true);
     } catch (error) {
+      if (controller.signal.aborted || error.name === 'AbortError') return;
       this.session.matches = [];
+      this.popup.element.dataset.searchState = 'error';
       editor.setDecorations?.('find', []);
       this.status.textContent = `${error.code ?? 'Search'}: ${error.message}`;
     }
@@ -101,6 +122,7 @@ export class FindReplaceWidget {
 
   async replace(all = false) {
     if (this.context.editor.input.readOnly) return;
+    if (this.popup.element.dataset.searchState !== 'complete') return this.context.status('Wait for the current search to finish.');
     if (!all && this.index < 0) this.next(true);
     const matches = all ? this.session.matches : this.session.matches[this.index] ? [this.session.matches[this.index]] : [];
     const plan = this.session.prepareReplacement(this.replacement.input.value, matches);
@@ -109,6 +131,7 @@ export class FindReplaceWidget {
   }
 
   preview() {
+    if (this.popup.element.dataset.searchState !== 'complete') throw new Error('Wait for the current search to finish.');
     const plan = this.session.prepareReplacement(this.replacement.input.value);
     this.previewHost.hidden = false;
     this.previewHost.replaceChildren();
@@ -131,6 +154,7 @@ export class FindReplaceWidget {
   changed() { if (this.popup.visible) this.search(false); }
 
   close() {
+    this.searchController?.abort();
     this.popup.close();
     this.previewDiff?.dispose();
     this.previewDiff = null;
@@ -138,5 +162,10 @@ export class FindReplaceWidget {
     this.context.editor.focus();
   }
 
-  dispose() { this.previewDiff?.dispose(); this.context.editor.setDecorations?.('find', []); this.popup.dispose(); }
+  dispose() {
+    this.searchController?.abort();
+    this.previewDiff?.dispose();
+    this.context.editor.setDecorations?.('find', []);
+    this.popup.dispose();
+  }
 }

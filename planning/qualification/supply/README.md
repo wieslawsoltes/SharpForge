@@ -28,7 +28,7 @@ node scripts/conformance/supply/secret-scan.js . dist artifacts
 
 Activate the isolated environment, or use its absolute Python path for every Python command. Windows uses `Scripts/python.exe`. The security workflow runs the same commands on Ubuntu 24.04, Windows 2025 and macOS 26. Those configured jobs are not evidence of successful executions; actual local and hosted results belong in the evidence record. The Python lock includes official wheels for all available platforms, not a claim that every wheel has been executed.
 
-Ordinary pull requests retain the existing single `core` execution. Security matrix and CodeQL jobs run on main, schedules, manual dispatch, and pull requests explicitly labeled `full-ci`. There are no branch-push duplicates or `pull_request_target` jobs. Tag release qualification uses the existing reusable CI workflow.
+Ordinary pull requests retain the existing single `core` execution. Security matrix and CodeQL jobs run serially on explicit manual dispatch. There are no branch-push duplicates or `pull_request_target` jobs. Tag release qualification uses the existing reusable CI workflow.
 
 ## Action and Python lock review
 

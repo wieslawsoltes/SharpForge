@@ -137,6 +137,7 @@ export const TypeTestBinding = Base =>
       let result;
       if (!t || t.specialType === 'System_Void') result = this.core.void;
       else if (t.isValueType === true && !isNullableType(t)) result = this.core.nullableOf(t);
+      else if (syntax.parent?.kind === 'ExpressionStatement') result = t;
       else if (t.typeKind === TypeKind.TypeParameter && t.isReferenceType !== true && t.isValueType !== true) {
         this.report(syntax.whenNotNull, 'CS8978', [t.name]);
         return this.bad(syntax);

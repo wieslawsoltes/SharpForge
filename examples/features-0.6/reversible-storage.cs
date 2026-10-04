@@ -1,4 +1,3 @@
-class Cell { public int Value; }
 var cell = new Cell();
 int[] values = new int[2];
 try
@@ -10,3 +9,4 @@ try
     Console.WriteLine(values[1]);
 }
 finally { Console.WriteLine("cleanup"); }
+class Cell { public int Value; }

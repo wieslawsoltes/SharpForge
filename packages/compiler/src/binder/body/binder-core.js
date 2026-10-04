@@ -327,15 +327,8 @@ export class BinderCore {
           [this.checked, this.uncheckedContext] = saved;
         }
       }
-      case 'InterpolatedStringExpression': {
-        const parts = [];
-        for (const content of syntax.contents)
-          if (content.kind === 'Interpolation') {
-            parts.push(this.value(content.expression));
-            if (content.alignmentClause) this.convert(this.value(content.alignmentClause.value), this.core.int);
-          }
-        return this.node('InterpolatedString', syntax, this.core.string, { parts, form: 'interpolatedString' });
-      }
+      case 'InterpolatedStringExpression':
+        return this.interpolatedString(syntax);
       case 'AwaitExpression':
         return this.await(syntax);
       case 'ThrowExpression': {
