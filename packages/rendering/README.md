@@ -18,6 +18,10 @@ Application-owned retained drawing services for SharpForge. The package register
 
 The renamed licensed fixture families preserve real weight/width axes and distinct italic outlines. Horizontal metrics use the complete48-byte native structure instead of the pinned wrapper's undersized12-byte allocation. Font and engine hashes remain explicit.
 
+## Multilingual fixture collection
+
+`bundledTextFixtures` returns the pinned Latin variable, Arabic, Hebrew, Devanagari and color emoji face descriptors. The explicit emoji corpus retains GSUB closure and CBDT/CBLC data, including ZWJ sequences and skin tones. A local reproduction script records the transformations and modified family names.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
