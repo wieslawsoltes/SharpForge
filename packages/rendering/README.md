@@ -54,6 +54,10 @@ The framework continues to export `AnimationClock` through its existing entry po
 
 `ConnectedAnimationService` owns at most 32 prepared captures and releases each on completion, cancellation or expiry. Navigation transitions use destination layout and reduced-motion policy; capture and overlay services are explicit requirements, and unavailable retained captures fail clearly.
 
+## Composition contract and adapter registration
+
+`registerCompositionContracts` adds the typed surface through the caller’s reserved registry; `ensureNumericsContracts` preserves existing value definitions. `registerCompositionAdapters` accepts the shared native/managed context. TryGet methods use actual out references, and dash CopyTo/GetMany use managed array hooks so conversion and rewind notifications remain observable. No global framework registry is changed at package import.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.

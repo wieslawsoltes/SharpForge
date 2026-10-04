@@ -19,4 +19,5 @@ export {evaluateCompositionExpression} from './expression-evaluator.js';
 export {ImplicitAnimationCollection, CompositionAnimationGroup, CompositionScopedBatch} from './implicit-animations.js';
 export {trimGeometry} from './trim-geometry.js';
 export {encodeCompositionContent, encodeCompositionLayers} from './content.js';
+export {registerCompositionAdapters} from './adapters.js';
 export {DropShadow} from './shadows.js';
