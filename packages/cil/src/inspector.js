@@ -1,4 +1,6 @@
-import { readPE, readManagedResources } from './pe.js';
+import { readPE } from './pe.js';
+import { assemblySummary } from './browser/summary.js';
+import { metadataTokenUri, resolveMetadataUri } from './browser/navigation.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
 import { decodeInstructions } from './opcodes.js';
 import { CilError, Reader, text } from './binary.js';
@@ -68,20 +70,11 @@ export class AssemblyInspector {
     }
     this.cache.set(t,method);return method;
   }
-  summary({includeMethods=true}={}){
-    const md=this.metadata,row=md.rows[32]?.[0],name=row?md.string(row[7]):md.string(md.rows[0]?.[0]?.[1]??0),methods=[];
-    for(const m of this.methods.values()){
-      if(!includeMethods){methods.push({...m});continue;}
-      try{methods.push(this.getMethod(m.token));}catch(error){methods.push({...m,error:error.message,instructions:[],locals:[],handlers:[],codeSize:0});}
-    }
-    return {name,version:row?row.slice(1,5).join('.'):null,entryPoint:this.pe.entryPoint,bytes:this.pe.bytes.length,format:'ECMA-335 PE/CLI',profile:this.debug?.format??null,
-      machine:this.pe.machine,cliFlags:this.pe.flags,streams:[...md.streams].map(([name,bytes])=>({name,bytes:bytes.length})),tables:{...md.counts},
-      references:(md.rows[35]??[]).map(r=>({name:md.string(r[6]),version:r.slice(0,4).join('.')})),
-      resources:readManagedResources(this.pe),
-      customAttributes:(md.rows[12]??[]).map(r=>({parent:decodeCoded('HasCustomAttribute',r[0]),constructor:decodeCoded('CustomAttributeType',r[1]),blobBytes:md.blob(r[2]).length})),
-      genericParameters:(md.rows[42]??[]).map(r=>({index:r[0],flags:r[1],owner:decodeCoded('TypeOrMethodDef',r[2]),name:md.string(r[3])})),
-      types:this.types.map(t=>({...t,methods:t.methods.map(m=>m.token),fields:t.fields.map(f=>{try{return {...f,type:this.signature(f.token).type};}catch(error){return {...f,error:error.message};}})})),methods,diagnostics:[...this.diagnostics]};
-  }
+  /** Stable module/token URI without decoding the referenced member. */
+  tokenUri(token){return metadataTokenUri(this.metadata,token);}
+  /** Resolve a URI against this module, returning owned scalar identity facts. */
+  resolveUri(uri){return resolveMetadataUri(this.metadata,uri);}
+  summary(options={}){return assemblySummary(this,options);}
   callGraph(){const edges=[];for(const m of this.methods.values()){try{for(const i of this.getMethod(m.token).instructions)if(['call','callvirt','newobj','ldftn','ldvirtftn','jmp'].includes(i.name))edges.push({caller:m.token,callee:i.operand,offset:i.offset,kind:i.name});}catch(error){edges.push({caller:m.token,error:error.message});}}return edges;}
 }
 export function inspectAssembly(bytes,options={}){return new AssemblyInspector(bytes,options).summary(options);}
