@@ -84,31 +84,40 @@ Heap deltas are not allocation counts or peak memory. This is a new opt-in API;
 there is no previous implementation or speedup comparison. The existing lighter
 hierarchy factory and query paths are unchanged.
 
-## Inherited-reference increment (qualification pending)
+## Inherited method reference evidence
 
-The isolated `codex/a03-inherited-member-references` increment adds nearest exact
-class method declaration lookup; an ambiguous or compiler-controlled nearest match
-never falls back to a base member. Resolution does not grant accessibility or
-perform receiver typing/dispatch. Unknown direct misses now retain the actual
-unresolved base result when traversal reaches one. Class metadata validity and
-value-type normalization remain separate from this bounded lookup service.
+Qualified product `512c6acd8` adds nearest exact class method declaration lookup;
+an ambiguous or compiler-controlled nearest match never falls back to a base
+member. Fields and initializers remain declaration-only. Resolution does not
+grant accessibility or perform receiver typing/dispatch. Unknown method misses
+retain the actual unresolved base result when traversal reaches one. Class
+metadata validity and value-type normalization remain separate.
 
-Seven authored tests cover direct-only fields and inherited method overloads, nearest hiding, private
-access separation, direct-only constructors, ambiguous/compiler-controlled
-barriers, unknown ancestry, budgets, cancellation and owned source snapshots.
-A ten-case native plan uses pinned SDK 10.0.201/CoreCLR 10.0.5 `Module.ResolveMember`:
-five expected declaration agreements plus five explicit adapter unknowns where
-native resolution is expected to throw. The existing reference harness seams
-retain tool/source/image hashes and raw output before assertions. No methods
-from the generated fixture are executed. Primary implementation evidence is
-[CoreCLR member lookup](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/memberload.cpp#L993),
-which searches class bases and excludes inherited instance initializers.
+The named method-inheritance regression fails against baseline `97a4e87ff`.
+All 62 focused/affected tests pass, including seven new contracts for overloads,
+nearest hiding, private access separation, direct-only fields/constructors,
+ambiguity, unknown ancestry, budgets, cancellation and owned snapshots. Pinned
+SDK 10.0.201/CoreCLR 10.0.5 `Module.ResolveMember` provides five known declaration
+agreements and five explicit adapter unknowns with native rejection categories.
+No method from the generated fixture is executed. Mandatory tests check input,
+image, template and substituted harness hashes against retained output.
 
-Local install/native/tests/paired existing-context controls/static checks have
-not run. They await the serial limiter slot, with concurrency 1 and a 1 GiB heap.
-The exact existing `benchmark-verifier-members.mjs` controls will run once on
-the parent and candidate; all chronological samples and any failures will be
-retained. The wider engine/platform matrix remains staged.
+[Native observations](../../tests/fixtures/a03-verifier-members/inherited-native.json)
+and [qualification](../../tests/fixtures/a03-verifier-members/inherited-qualification.json)
+retain all failures, source proofs, command traces and terminal results. Static
+checks inspect 3496 syntax/3492 import modules with zero errors; structure has
+271 existing findings, none added. One outer limiter ran sequentially with
+concurrency 1 and a 1 GiB Node heap; the wider engine/platform matrix is staged.
+
+[Raw paired controls](../../tests/fixtures/a03-verifier-members/inherited-performance.json)
+use the identical existing `benchmark-verifier-members.mjs` and fixture, once on
+each exact baseline/candidate. Per 1000 operations, construction median/p95:
+9.069208/11.208041 → 9.247083/11.705250 ms (+1.96%/+4.44%); cached reference:
+0.023250/0.060333 → 0.023542/0.062791 ms (+1.26%/+4.07%). No measured existing
+median/p95 regression exceeds 5%. All twelve chronological samples per mode are
+retained, excluding three warmups for statistics. Shared-host samples imply no
+significance, causal attribution, noise explanation, general speedup or peak
+memory claim; heap deltas are not allocation counts.
 
 ### Native correction before qualification
 
