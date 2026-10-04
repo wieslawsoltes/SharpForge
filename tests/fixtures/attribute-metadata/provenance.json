@@ -1,0 +1,13 @@
+{
+  "generator": "node scripts/limited.js node packages/compiler/test/cil-emission/verify-dotnet.mjs --references --only pseudo-attributes --update",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "referencePack": "10.0.5",
+  "roslynAssemblyVersion": "5.3.0.0",
+  "compilerSha256": "2e29a995bcee2351d2cc1bb1d3187b1a5d9170e300ef1c15a47a5e4d64c1bb1d",
+  "sourceSha256": "96e08148ceecf9594b4a49336fecf8c04ba8f860d5a47f7dd039eb17e3b88fe9",
+  "assemblySha256": "b2736cff89d713da979b44f98767b69a7691607bca3083cdefe863e4131d202b",
+  "runtimeReferenceSha256": "05f3d5bd170a583b2a61e21d30e200c567e9c2d46452a8684a686a510cb359e3",
+  "platform": "Linux x64",
+  "customMarshalReflectionBoundary": "The genuine Roslyn fixture returned additional adjacent heap bytes in MarshalCookie on this host. Raw FieldMarshal blobs and their exact targets are compared independently for both assembly APIs; the portable reflection fixture excludes this unstable custom-marshaler query."
+}
