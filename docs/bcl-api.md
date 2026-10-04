@@ -677,8 +677,10 @@ Registered families: <code>builder</code>.
 | 524312 | <code>char System.Text.StringBuilder::get_Chars(int)</code> | implemented |
 | 524313 | <code>void System.Text.StringBuilder::set_Chars(int, char)</code> | implemented |
 | 524315 | <code>void System.Text.StringBuilder::CopyTo(int, char[], int, int)</code> | implemented |
+| 524316 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(long)</code> | implemented |
+| 524317 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(ulong)</code> | implemented |
 
-Pinned reference: 36 implemented and 72 missing exact metadata rows.
+Pinned reference: 38 implemented and 70 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -708,7 +710,7 @@ Pinned reference: 36 implemented and 72 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.IFormatProvider,System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Int16):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Int32):System.Text.StringBuilder instance</code> | implemented | 804 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Int64):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Int64):System.Text.StringBuilder instance</code> | implemented | 524316 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Object):System.Text.StringBuilder instance</code> | implemented | 808 |
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlyMemory`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
@@ -721,7 +723,7 @@ Pinned reference: 36 implemented and 72 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.UInt16):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.UInt32):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Append``0(System.UInt64):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.UInt64):System.Text.StringBuilder instance</code> | implemented | 524317 |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.IFormatProvider,System.String,System.Object):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.IFormatProvider,System.String,System.Object,System.Object):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.IFormatProvider,System.String,System.Object,System.Object,System.Object):System.Text.StringBuilder instance</code> | missing | — |
