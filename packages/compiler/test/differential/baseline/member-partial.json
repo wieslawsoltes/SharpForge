@@ -2,7 +2,7 @@
   "member-partial/defaults-come-from-the-defining-part": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-partial/extended-partial-language-version": ["diagnostics", "warnings"],
   "member-partial/finalizer-is-not-run-at-exit": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
-  "member-partial/methods-merge-and-unimplemented-calls-vanish": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-partial/methods-merge-and-unimplemented-calls-vanish": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-partial/mismatched-parts": ["diagnostics", "warnings"],
   "member-partial/missing-parts": ["diagnostics", "warnings"],
   "member-partial/partial-method-rules": ["diagnostics", "warnings"],

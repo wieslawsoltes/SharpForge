@@ -130,6 +130,103 @@ for (const engine of ['source', 'cil']) {
     } finally { vm.onWrite = null; builder.stop(); }
   });
 
+  test(`StringBuilder indexer ${engine}: array write advances revision once after replacement allocation`, () => {
+    const builder = segmentedBuilder(engine);
+    const {platform, vm, reference, call} = builder;
+    const {heap} = platform;
+    const allocationObserver = heap.allocationObserver;
+    const storage = platform.get(reference, '$data');
+    const version = platform.get(reference, '$version');
+    let allocatedRevision, allocations = 0, writes = 0;
+    try {
+      heap.allocationObserver = {allocation() {
+        allocatedRevision = heap.mutationRevision;
+        allocations++;
+      }};
+      vm.onWrite = event => {
+        if (event.kind !== 'array') return;
+        writes++;
+        assert.equal(event.handle, storage.h);
+        assert.equal(event.index, 3);
+        // Allocation has already stamped the heap; the later version field is outside this boundary.
+        assert.equal(heap.mutationRevision - allocatedRevision, 1);
+      };
+      assert.equal(call('set_Chars', ['int', 'char'], [5, 90]), null);
+      assert.equal(allocations, 1);
+      assert.equal(writes, 1);
+      assert.equal(call('get_Chars', ['int'], [5]), 90);
+      assert.equal(platform.get(reference, '$version'), version + 1);
+      assert.equal(heap.pins.length, 0);
+    } finally { heap.allocationObserver = allocationObserver; vm.onWrite = null; builder.stop(); }
+  });
+
+  test(`StringBuilder indexer ${engine}: throwing array observer retains one revision and releases roots`, () => {
+    const builder = segmentedBuilder(engine);
+    const {platform, vm, reference, call} = builder;
+    const {heap} = platform;
+    const allocationObserver = heap.allocationObserver;
+    const version = platform.get(reference, '$version');
+    const failure = new Error('Indexer revision observer failed');
+    let allocatedRevision, writeRevision, allocations = 0;
+    try {
+      heap.allocationObserver = {allocation() {
+        allocatedRevision = heap.mutationRevision;
+        allocations++;
+      }};
+      vm.onWrite = event => {
+        if (event.kind !== 'array') return;
+        writeRevision = heap.mutationRevision - allocatedRevision;
+        heap.collect();
+        assert.equal(platform.native(event.oldValue), 'cd\udc00');
+        assert.equal(platform.native(event.value), 'cZ\udc00');
+        throw failure;
+      };
+      assert.throws(() => call('set_Chars', ['int', 'char'], [5, 90]), error => error === failure);
+      assert.equal(allocations, 1);
+      assert.equal(writeRevision, 1);
+      assert.equal(call('get_Chars', ['int'], [5]), 90);
+      assert.equal(platform.get(reference, '$version'), version);
+      assert.equal(heap.pins.length, 0);
+    } finally { heap.allocationObserver = allocationObserver; vm.onWrite = null; builder.stop(); }
+  });
+
+  test(`StringBuilder indexer ${engine}: missing write hook still stamps the array replacement once`, () => {
+    const builder = segmentedBuilder(engine);
+    const {platform, vm, reference, call} = builder;
+    const {heap} = platform;
+    const allocationObserver = heap.allocationObserver;
+    const notifyWrite = vm.notifyWrite;
+    const set = platform.set;
+    const version = platform.get(reference, '$version');
+    let allocatedRevision, writeRevision, allocations = 0, versionWrites = 0;
+    try {
+      heap.allocationObserver = {allocation() {
+        allocatedRevision = heap.mutationRevision;
+        allocations++;
+      }};
+      vm.notifyWrite = undefined;
+      platform.set = function (target, key, value) {
+        if (key === '$version') {
+          versionWrites++;
+          writeRevision = heap.mutationRevision - allocatedRevision;
+        }
+        return set.call(this, target, key, value);
+      };
+      assert.equal(call('set_Chars', ['int', 'char'], [5, 90]), null);
+      assert.equal(allocations, 1);
+      assert.equal(versionWrites, 1);
+      assert.equal(writeRevision, 1);
+      assert.equal(call('get_Chars', ['int'], [5]), 90);
+      assert.equal(platform.get(reference, '$version'), version + 1);
+      assert.equal(heap.pins.length, 0);
+    } finally {
+      heap.allocationObserver = allocationObserver;
+      vm.notifyWrite = notifyWrite;
+      platform.set = set;
+      builder.stop();
+    }
+  });
+
   test(`StringBuilder indexer ${engine}: OOM leaves the original chunk and successful appends remain usable`, () => {
     const builder = segmentedBuilder(engine);
     const {platform, reference, call} = builder;

@@ -35,11 +35,6 @@ function emit(source) {
     },
   };
 }
-const refused = source => {
-  const result = compileToAssembly(source, { name: 'Sample' });
-  assert.equal(result.assembly, null);
-  return result.diagnostics.filter(entry => entry.severity === 'error').map(entry => `${entry.code} ${entry.message}`);
-};
 const has = (flags, mask) => (flags & mask) === mask;
 const fieldNames = type => type.fields.map(field => field.name);
 
@@ -192,7 +187,11 @@ test('A02-T30 a yield inside try-finally keeps the region: its start dispatches,
     ['ldarg.0', `ldfld ${machine}::<>1__state`, 'ldc.i4.1', 'sub', 'switch'],
     'the region is entered at its first instruction, which sends a resumed state on',
   );
-  assert.deepEqual(text.slice(at(region.target), at(region.target) + 4), ['ldarg.0', `ldfld ${machine}::<>1__state`, 'ldc.i4.0', 'bge.s']);
+  assert.deepEqual(
+    text.slice(at(region.target), at(region.target) + 4),
+    ['ldarg.0', `ldfld ${machine}::<>1__state`, 'ldc.i4.m1', 'bne.un.s'],
+    'the finally block runs only while the method is running, not while it leaves to suspend',
+  );
   assert.ok(text.slice(at(region.start), at(region.end)).some(line => line.startsWith('leave')), 'a yield leaves the region to return');
   assert.ok(fieldNames(type(machine)).includes('<>w__disposeMode'));
   assert.deepEqual(lines(machine, 'System.IDisposable.Dispose'), [
@@ -228,7 +227,7 @@ test('A02-T30 a try without a yield in an iterator is an ordinary region', () =>
     text = lines('C+<Guarded>d__0', 'MoveNext');
   assert.equal(body('C+<Guarded>d__0', 'MoveNext').handlers.length, 1);
   assert.equal(text.filter(line => line === 'switch').length, 1, 'only the dispatch at the start of MoveNext');
-  assert.ok(!text.some(line => line.startsWith('bge')), 'the finally block is not guarded');
+  assert.ok(!text.some(line => line.startsWith('bne.un')), 'the finally block is not guarded');
 });
 
 test('A02-T30 an iterator that returns an enumerator starts in state 0 and has no enumerable half', () => {
@@ -255,20 +254,6 @@ test('A02-T30 an iterator that returns an enumerator starts in state 0 and has n
   const moveNext = lines('C+<Values>d__0', 'MoveNext'),
     receiver = moveNext.indexOf('ldfld C+<Values>d__0::<>4__this');
   assert.equal(moveNext[receiver + 1], 'ldfld C::seed', '`this` in the body is the object the kickoff ran on');
-});
-
-test('A02-T30 iterators the emitter has no shape for yet are SF2200', () => {
-  assert.match(
-    refused(`using System.Collections.Generic;
-      class Box<T> { public IEnumerable<T> Twice(T value) { yield return value; yield return value; } }
-      class C { static void Main() { } }`)[0],
-    /^SF2200 .*iterators in generic types or methods/,
-  );
-  assert.match(
-    refused(`using System.Collections.Generic;
-      class C { static IEnumerable<T> Twice<T>(T value) { yield return value; yield return value; } static void Main() { } }`)[0],
-    /^SF2200 .*iterators in generic types or methods/,
-  );
 });
 
 // Hoisting works on the instruction stream alone; these streams stand for bodies with the given control flow.

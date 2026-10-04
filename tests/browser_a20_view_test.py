@@ -21,7 +21,7 @@ try:
         response = page.goto(address)
         assert response and response.status == 200
         policy(response.headers)
-        wait(page, "window.editor !== undefined")
+        wait(page, "typeof window.setupView === 'function' && window.editor?.model !== undefined")
         undo_shortcut = "Meta+z" if page.evaluate("/Mac|iPhone|iPad/.test(navigator.platform)") else "Control+z"
 
         def setup(text, options=None):

@@ -44,11 +44,10 @@ export const JumpEmission = Base =>
     }
     /** `using var r = e;`: the rest of the block is the body of a using statement over `r`. */
     usingDeclaration(node, statements, next) {
-      if (node.isAwait) return this.unsupported('await using', node.syntax);
       const resources = node.declarations.map(declarator => {
         this.declare(declarator.local, declarator.value);
         return { slot: this.slotOf(declarator.local), type: declarator.local.type };
       });
-      return this.disposeAround(resources, 0, () => this.statementsFrom(statements, next), node.syntax);
+      return this.disposeAround(resources, () => this.statementsFrom(statements, next), node);
     }
   };

@@ -134,7 +134,7 @@ validation. Broad event/platform qualification remains open.
 
 All 63 focused OSR, back-edge, call-tiering, bridge, method-event and profiler
 tests passed serially at `6a798e2e` on Node 24. Required PR checks follow this
-local validation. Broad qualification and performance measurement remain pending. Debugger-requested forced
-deoptimization ([#1408](https://github.com/wieslawsoltes/SharpForge/issues/1408))
-is a separate surface; ordinary debugger boundary safety does not require
+local validation. Broad qualification and performance measurement remain pending.
+[Debugger-requested forced deoptimization](wasm-debugger-deopt.md) suppresses
+manual and automatic selection for marked live invocations. It needs no value
 conversion because all live values already reside in canonical frame storage.
