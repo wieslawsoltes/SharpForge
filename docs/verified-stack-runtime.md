@@ -12,8 +12,11 @@ all reachable verified methods against their actual peak. An oversized header do
 not cause rejection if its reachable peak fits. The pool reserves at most
 `min(maxstack, maxStackValues)` evaluation slots. A zero limit admits a void method
 whose actual peak is zero. A quota violation throws ExecutionLimitException at
-admission rather than after executing a prefix of the program. Host options remain
-owned by the VM; change resource limits before starting or admitting execution.
+admission rather than after executing a prefix of the program. Each admitted frame
+records the current host limit. Changing it re-admits the whole method before its
+next instruction, including when that instruction would only pop a value. Direct
+pushes between instructions immediately use the checked fallback when the limit
+changes. Invalid live limits are rejected as well.
 
 The CIL package exposes `verifiedStackBound(inspector, report, method)`, returning
 a frozen `{capacity, peak}` or null. Proof is private to a successful verification;
@@ -25,8 +28,9 @@ per method/code epoch. Instruction entry checks frame/body identities in O(1).
 Existing inspector/body editing behavior remains supported. Replacement or an
 explicitly invalidated in-place edit uses the original checked push fallback when
 its previous proof is stale. Re-running `verifyCilAssembly` and assigning the new
-report enables the optimized path again. Code edits must retain the existing
-explicit invalidation contract. Active and parked snapshot stacks are preflighted
+report enables the optimized path again. Arbitrary in-place semantic body edits
+must explicitly invalidate the execution code epoch; instruction admission does
+not rescan every operand on every step. Active and parked snapshot stacks are preflighted
 before restore mutation; derived admissions are not serialized. Cancellation and
 frame pooling retain their existing ownership rules.
 

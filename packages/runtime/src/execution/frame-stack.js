@@ -6,7 +6,10 @@ const admissions = new WeakMap();
 const frameAdmissions = new WeakMap();
 
 export function stackValueLimit(options) {
-  const limit = options.maxStackValues ?? 65536;
+  return validStackValueLimit(options.maxStackValues ?? 65536);
+}
+
+function validStackValueLimit(limit) {
   if (!Number.isSafeInteger(limit) || limit < 0) {
     throw new RangeError('maxStackValues must be a nonnegative safe integer');
   }
@@ -32,15 +35,17 @@ function boundsFor(vm, method) {
 /** Re-admit restored or replaced bodies before dispatch; stale bodies retain checked pushes. */
 export function beginFrameInstruction(vm, frame) {
   const epoch = executionCodeState(vm), previous = frameAdmissions.get(frame), method = frame.method;
+  const limit = stackValueLimit(vm.options);
   if (previous?.epoch === epoch && previous.report === vm.report && previous.method === method &&
-      previous.instructions === method.instructions && previous.handlers === method.handlers && previous.capacity === method.maxStack) return;
+      previous.instructions === method.instructions && previous.handlers === method.handlers &&
+      previous.capacity === method.maxStack && previous.limit === limit) return;
   admitCilStack(vm, method);
   const bound = boundsFor(vm, method);
   if (bound && frame.stack.length > bound.peak) {
     throw new ManagedFault('InvalidProgramException', 'Frame exceeds its verified evaluation-stack bound');
   }
   frameAdmissions.set(frame, {epoch, report: vm.report, method, verified: bound !== null, instructions: method.instructions,
-    handlers: method.handlers, capacity: method.maxStack});
+    handlers: method.handlers, capacity: method.maxStack, limit});
 }
 
 /** Host quotas apply to the reachable peak, not an overestimated CLI header. */
@@ -62,9 +67,12 @@ export function admitCilAssemblyStacks(vm) {
 export function pushStackValue(vm, value) {
   const frame = vm.top;
   const admitted = frameAdmissions.get(frame);
-  const verified = admitted?.verified && admitted.report === vm.report && admitted.instructions === frame.method.instructions &&
-    admitted.epoch === admissions.get(vm)?.epoch;
-  if (!verified && frame.stack.length >= vm.options.maxStackValues) {
+  const limit = vm.options.maxStackValues ?? 65536;
+  const method = frame.method;
+  const verified = admitted?.verified && admitted.report === vm.report && admitted.method === method &&
+    admitted.instructions === method.instructions && admitted.handlers === method.handlers &&
+    admitted.capacity === method.maxStack && admitted.limit === limit && admitted.epoch === executionCodeState(vm);
+  if (!verified && frame.stack.length >= validStackValueLimit(limit)) {
     throw new ManagedFault('ExecutionLimitException', 'Evaluation stack budget exceeded');
   }
   frame.stack.push(value);

@@ -73,16 +73,37 @@ test('proofs belong to the canonical body and inspector, while concrete signatur
   assert.equal(verifiedStackBound(inspector, report, method), null, 'in-place edits are not old proof');
 });
 
-test('verified instruction pushes do not repeatedly consult the host global limit', () => {
-  const bytes = managedFixture({methods: [{name: 'Main', result: 'int', maxStack: 1, body(writer) {
-    for (let index = 0; index < 1000; index++) writer.op('ldc.i4.0').op('pop');
-    writer.op('ldc.i4', 42).op('ret');
+test('lowering a live host limit re-admits the method before another instruction executes', () => {
+  const bytes = managedFixture({methods: [{name: 'Main', result: 'int', maxStack: 2, body(writer) {
+    writer.op('ldc.i4', 40).op('ldc.i4.2').op('add').op('ret');
   }}]});
-  const vm = new CilVirtualMachine(bytes, {maxStackValues: 1});
-  let reads = 0;
-  Object.defineProperty(vm.options, 'maxStackValues', {get() { reads++; return 1; }});
+  const vm = new CilVirtualMachine(bytes, {maxStackValues: 2});
+  vm.step();
+  vm.options.maxStackValues = 1;
+  assert.throws(() => vm.step(), {name: 'ExecutionLimitException'});
+  assert.equal(vm.top.pc, 1, 'quota rejection occurs before dispatch');
+  assert.deepEqual(vm.top.stack, [40]);
+  vm.options.maxStackValues = 2;
   assert.equal(vm.run().returnValue, 42);
-  assert(reads <= 2, `expected admission-only quota reads, observed ${reads}`);
+});
+
+test('a direct push observes a lowered limit even between admitted instructions', () => {
+  const vm = new CilVirtualMachine(literal(), {maxStackValues: 2});
+  vm.step();
+  vm.options.maxStackValues = 1;
+  assert.throws(() => vm.push(7), {name: 'ExecutionLimitException'});
+  assert.deepEqual(vm.top.stack, [42]);
+  assert.equal(vm.run().returnValue, 42, 'the method still fits the lowered quota');
+});
+
+test('invalid live limits are rejected at instruction admission and direct push', () => {
+  const vm = new CilVirtualMachine(literal(), {maxStackValues: 1});
+  vm.step();
+  vm.options.maxStackValues = NaN;
+  assert.throws(() => vm.step(), /nonnegative safe integer/);
+  assert.throws(() => vm.push(7), /nonnegative safe integer/);
+  assert.equal(vm.top.pc, 1);
+  assert.deepEqual(vm.top.stack, [42]);
 });
 
 test('a replaced body keeps the checked fallback until it is explicitly reverified', () => {
