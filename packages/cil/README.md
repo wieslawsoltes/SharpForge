@@ -444,9 +444,8 @@ Supported relations are `uses` (MethodDef's non-string token operands), `used-by
 (reverse occurrences), `instantiated-by` (`newobj`'s declared type), and
 `assigned-by` (direct `stfld`/`stsfld` writes). `newarr` uses its element type but
 does not construct an element instance. Indirect writes, virtual dispatch targets,
-reflection and dynamic execution are not inferred. `overridden-by` and
-`implemented-by` remain unsupported pending a genuine host-provided canonical
-method-slot contract; issue #2573 remains open for those capabilities.
+reflection and dynamic execution are not inferred. A host can supply the canonical
+declaration snapshot described below to enable `overridden-by` and `implemented-by`.
 
 Construction options independently lower hard maxima: `maxMethods:16384`,
 `maxCodeBytes:4194304` (all body occurrences, including shared RVAs),
@@ -463,3 +462,40 @@ covers CIL body scanning, not resolution of every external reference.
 [Focused fixtures and pending qualification](../../tests/fixtures/usage-relations/README.md)
 cover the initial four relations; broad execution/cross-platform coverage is not
 implied by metadata inspection.
+
+### Canonical declaration relations
+
+The optional `methodRelations` construction option accepts an owned, versioned host
+snapshot. The CIL package consumes established method relationships; CLR loading and
+method-slot resolution stay in the higher layer. `createAssemblyMethodRelations`
+from `@sharpforge/clr` is the canonical provider. Without a snapshot the two declaration
+queries remain unsupported; instruction analysis still needs no CLR dependency.
+
+The snapshot has `format:'sharpforge.method-relations'`, `version:1`, `moduleVersionId`,
+`methodCount`, `typeCount`, `entries` and `diagnostics`. Each entry has `relation`
+(`overridden-by` or `implemented-by`), local MethodDef `sourceToken` and `targetToken`,
+local TypeDef `implementingTypeToken`, and `implementationKind` (`override`, `explicit`,
+`implicit` or `inherited`). The source is the overriding/implementing method; the target
+is the declaration being queried. Each interface implementation occurrence includes
+the type in whose map it appears, including inherited implementations. No IL offset
+or instruction is invented for these entries. Returned records add the same stable
+source/target URIs and known status as instruction records.
+
+`maxDeclarationRelations:100000` and `maxDeclarationDiagnostics:16384` are lowerable
+hard caps, checked before copying provider records. Module MVID, metadata extents,
+record kinds, local tokens and duplicate relationship identities are validated.
+The provider remains responsible for canonical semantics; a supplied snapshot is
+data from the host, not evidence obtained by inferring a runtime dispatch target.
+Only scalar copied records survive construction. `storage.declarationRelations` and
+`storage.declarationDiagnostics` are logical counts added when a provider is present.
+
+Declaration diagnostics contain `relation`, a local type/method `token`, stable `code`
+and bounded `reason`. `complete` is evaluated independently for each declaration
+relation. Their diagnostics do not change the instruction scan's completeness, and
+unsupported native method bodies do not invalidate established metadata relationships.
+
+The [declaration fixture and evidence](../../tests/fixtures/declaration-relations/README.md)
+retain 33 passing focused Node tests and exact comparison with 19 CoreCLR 10.0.5
+relationships, including corrected interface reimplementation precedence. The browser
+harness is prepared but was not launched successfully; browser and wider execution
+coverage remain pending. No benchmark or speedup is claimed for this batch.
