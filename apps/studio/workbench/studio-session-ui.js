@@ -4,6 +4,7 @@ import { mountProcesses } from './processes.js';
 import { DebugLocation, mountDebugLocation } from './debug-location.js';
 import { mountSessionStatus } from './session-status.js';
 import { createSessionDialogs } from './session-dialogs.js';
+import { registerStartupCommands } from './startup-commands.js';
 
 function mountTarget({ document, services, dialogs, onError }) {
   const root = document.createElement('div');
@@ -50,13 +51,18 @@ function mountStatus({ document, services }) {
 
 /** Connect application services to document windows and the Studio toolbar through explicit host actions. */
 export function mountStudioSessions(options) {
-  const { services, docking, commands, document, onError, stopAll, startNewInstance } = options;
+  const { services, docking, commands, document, onError } = options;
   const disposers = [];
   const applications = new ApplicationWindows({
     sessions: services.sessions, document,
-    registerPanel: panel => docking.registerPanel({
-      ...panel, activate: services.sessions.activeId === panel.element.dataset.appSession
-    }),
+    registerPanel: panel => {
+      const unregister = docking.registerPanel({ ...panel, activate: false });
+      const sessionId = panel.element.dataset.appSession;
+      const activate = () => docking.activate(panel.id);
+      if (options.revealApplication) options.revealApplication(sessionId, activate);
+      else if (services.sessions.activeId === sessionId) activate();
+      return unregister;
+    },
     unregisterPanel: id => docking.unregisterPanel(id), onError
   });
   disposers.push(() => applications.dispose());
@@ -66,19 +72,10 @@ export function mountStudioSessions(options) {
   const processes = mountProcessTool(options);
   const status = mountStatus(options);
   for (const view of [dialogs, target, location, processes, status]) disposers.push(() => view.dispose());
-  const registrations = [
-    ['startup-projects', 'Configure Startup Projects', dialogs.configure],
-    ['launch-profiles', 'Launch Profiles', dialogs.configureProfiles],
-    ['processes', 'Processes', () => docking.activate('processes')],
-    ['stop-all', 'Stop All Applications', stopAll ?? (() => services.sessions.stopAll())],
-    ['start-new-instance', 'Start New Instance',
-      startNewInstance ?? (() => services.launches.startNewInstance(services.builds.activeId))]
-  ];
-  for (const [id, title, action] of registrations) {
-    if (commands.list().some(value => value[0] === id)) continue;
-    const off = commands.registerCommand(id, title, '', action, { category: 'Debug' });
-    if (typeof off === 'function') disposers.push(off);
-  }
+  disposers.push(registerStartupCommands(commands, {
+    ...options, configure: dialogs.configure, configureProfiles: dialogs.configureProfiles,
+    showProcesses: () => docking.activate('processes')
+  }));
   return {
     applications, location: location.location, configure: dialogs.configure,
     refresh() { target.render(); location.render(); processes.render(); },

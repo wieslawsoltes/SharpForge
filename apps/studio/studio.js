@@ -27,6 +27,8 @@ import {StudioProjects} from './workbench/studio-projects.js';
 import {createStudioEditorFactory,remapBreakpointChanges} from './workbench/studio-editor.js';
 import {EditorModel,rebaseEditorSource} from '@sharpforge/editor';
 import {StudioExecution} from './workbench/studio-execution.js';
+import {createStudioRuntimeReveals} from './workbench/studio-runtime-reveals.js';
+import {selectStudioStartupProject} from './workbench/studio-startup-project.js';
 import {StudioSave} from './workbench/studio-save.js';
 import {storage,storageKeys} from './settings/storage.js';
 import {contributeRuntimeAutomation} from './tools/runtime-automation.js';
@@ -64,7 +66,7 @@ import { disassemble, serializeImage } from '../../packages/bytecode/src/index.j
 import { disassembleAssembly, formatAssembly, createRuntimeConfig } from '../../packages/cil/src/index.js';
 import { samples } from './samples.js';
 const studioServices=createServiceRegistry();
-studioServices.registerAll([{name:'commands',factory:createCommandRegistry,dispose:r=>r.dispose()},{name:'menus',factory:createMenuRegistry,dispose:r=>r.dispose()},{name:'tools',factory:createToolRegistry,dispose:r=>r.dispose()},{name:'automation',factory:createAutomationApi,dispose:r=>r.dispose()}]);
+studioServices.registerAll([{name:'commands',factory:()=>createCommandRegistry({onExecute:id=>execution.reveals.command(id)}),dispose:r=>r.dispose()},{name:'menus',factory:createMenuRegistry,dispose:r=>r.dispose()},{name:'tools',factory:createToolRegistry,dispose:r=>r.dispose()},{name:'automation',factory:createAutomationApi,dispose:r=>r.dispose()}]);
 const commandRegistry=studioServices.get('commands'),menuRegistry=studioServices.get('menus'),toolRegistry=studioServices.get('tools'),automation=studioServices.get('automation');
 const toolMounts=new Map();
 const studioRenderers=createStudioRenderers({get $(){return $;},get $$(){return $$;},get E(){return E;},get advancedTools(){return advancedTools;},get breakOnWrite(){return breakOnWrite;},get debugTools(){return debugTools;},get designerTools(){return designerTools;},get disassemble(){return disassemble;},get disassembleAssembly(){return disassembleAssembly;},get docking(){return docking;},get editLocal(){return editLocal;},get empty(){return empty;},get formatBytes(){return formatBytes;},get hydrate(){return hydrate;},get ilDebugger(){return ilDebugger;},get inspectObject(){return inspectObject;},get nativeBuild(){return nativeBuild;},get openFile(){return openFile;},get openMenuAt(){return openMenuAt;},get refreshWatches(){return refreshWatches;},get runtimeTools(){return runtimeTools;},get saveLocal(){return saveLocal;},get selectDebugFrame(){return selectDebugFrame;},get setPanel(){return setPanel;},get state(){return state;},get toast(){return toast;},get workbench(){return workbench;},get applyRefactoring(){return applyRefactoring;},get build(){return build;},get closeModal(){return closeModal;},get download(){return download;},get loadSample(){return loadSample;},get reloadDiskProject(){return reloadDiskProject;},get requestCompiler(){return requestCompiler;},get samples(){return samples;},get setStartupProject(){return setStartupProject;},get showModal(){return showModal;},get toolDefinitions(){return toolDefinitions;},get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get setEditorKeymap(){return setEditorKeymap;}});
@@ -91,7 +93,7 @@ const workbenchServices=createWorkbenchServices({
   if(event.type==='control'||event.type==='selected')updateDebugButtons();},
  launchOptions:()=>({...state.debugSettings,functionBreakpoints:state.functionBreakpoints}),
  onReveal:id=>setPanel(id),
- onApplication:session=>{session.watches=[...(workbenchServices.stateSlices?.sessions.watches??[])];},
+ onApplication:session=>{execution.followLaunch(session);session.watches=[...(workbenchServices.stateSlices?.sessions.watches??[])];},
  launchCapabilities:()=>({arguments:true,environment:true})
 });
 const state=workbenchServices.createStateFacade({langVersion:'14',debugSettings:{...debuggerDefaults},functionBreakpoints:[],debugSources:new Map(),immediateHistory:[],launchEpoch:0,launchBusy:false,extraFiles:[],folders:[],membershipDirty:false,keymap:'visual-studio',itemSelection:[],nativeMode:false,nativeWorkspace:null,nativeJob:null,projectSystem:null,projectSnapshot:null,startupProject:null,disk:null,diskRevision:0,configuration:'Debug',projectDiagnostics:[],toolReferences:[],extensionConfig:null,files:[],name:'ParticleLab',active:'Program.cs',tabs:[],revision:1,result:null,image:null,assembly:null,ilDump:null,disassemblyFormat:'cil',importedAssembly:false,buildDirty:false,dirtyFiles:new Set(),logs:[],programOutput:'',panel:'output',debug:null,breakpoints:{},watches:['total','tick','particles.Length'],watchResults:new Map(),frameId:null,readOnly:false,analyzeTimer:null,saveTimer:null,compileBusy:false,selectedMethod:null,outputKind:'all',modalClose:null});
@@ -151,9 +153,9 @@ function resetEditors(){navigation?.clear();navigationButtons();for(const id of 
  if(docking.tabs?.metadata(id))docking.host.returnPopout(id);workbenchServices.documents.resetEditors();editor=null;
  for(const id of [...docking.content.keys()])if(docking.tabs?.metadata(id)){docking.host.contents.delete(id);docking.content.delete(id);}}
 const docking=new StudioDocking({createDocument:createSourceDocument,
- onActivate:id=>{const view=docking.tabs?.metadata(id);if(view)openFile(view.uri,null,null,view);else {state.panel=id;renderPanel(id);}},
+ onActivate:id=>{workbenchServices.reveal.userIntent();const view=docking.tabs?.metadata(id);if(view)openFile(view.uri,null,null,view);else {state.panel=id;renderPanel(id);}},
  onError:error=>toast(error.message,'error'),onWindowKeyDown:event=>globalKeyDown(event),
- onPopoutDocument:child=>{installContextDocument(child);studioKeyboard?.install(child);},
+ onPopoutDocument:child=>{installContextDocument(child);execution.reveals.install(child);studioKeyboard?.install(child);},
  onClose:id=>{if(docking.tabs?.metadata(id)||id.startsWith('source:')){const uri=docking.tabs?.metadata(id)?.uri??id.slice(7);
   if(state.active===uri&&state.tabs.length)openFile(state.tabs.at(-1));}saveLocal();}});
 docking.attachDocuments(workbenchServices.documents,{copyPath:uri=>copyText(uri),revealFile:uri=>openFile(uri)});
@@ -285,7 +287,7 @@ function renderTabs(){
  if(state.active)editor=editors.get(state.active)??editor;
 }
 function openFile(uri,offset=null,end=offset,view={}){
- const file=workbenchServices.documents.get(uri);if(!file)return;
+ const file=workbenchServices.documents.get(uri);if(!file)return;workbenchServices.reveal.userIntent();
  const token=navigation.beforeOpen({uri,offset,view});let opened=false;
  try{
   if(!state.tabs.includes(uri))state.tabs.push(uri);state.active=uri;
@@ -335,8 +337,10 @@ function stopQuietly(){return execution.stop({all:true});}
 function stopActiveSession(){return execution.stop();}
 async function step(mode){const reverse=['stepBack','reverseContinue'].includes(mode);if(state.debug?.state!=='paused'&&!(reverse&&['terminated','faulted'].includes(state.debug?.state))){if(['next','stepIn'].includes(mode)&&state.debug?.state!=='running')return launch(true,{stopOnEntry:true});return;}await runtime.request(reverse?mode:'resume',reverse?{}:{mode});}
 async function runToCursor(){const position=editor.sourceSnapshot().positionAt(editor.offset),target={uri:state.active,line:position.line+1,column:position.character+1};if(state.debug?.state==='paused'){if(!matchesDebugSource(target.uri))throw new Error('The active document does not match the source embedded in this debug assembly');return runtime.request('runToCursor',target);}return launch(true,{runToCursor:target,stopOnEntry:false});}
-
 const renderedSessionStates=new Map();
+const runtimeReveals=createStudioRuntimeReveals({reveals:execution.reveals,state,matchesSource:matchesDebugSource,
+ openSource:point=>{openFile(point.uri);editor.gotoLine(point.line,point.column);},
+ showSymbolSource:point=>advancedTools?.run(()=>advancedTools.showSymbolSource(point)),setPanel,renderPanel});
 let lastDebugKey='',panelFrame=0;
 function renderPanelSoon(){if(panelFrame)return;panelFrame=requestAnimationFrame(()=>{panelFrame=0;for(const id of ['output','debug','stack','breakpoints'])renderPanel(id);});}
 function runtimeEvent(event){
@@ -349,12 +353,12 @@ function runtimeEvent(event){
  if(event.event!=='state')return;
  const previous=renderedSessionStates.get(event.appId);renderedSessionStates.set(event.appId,event);if(event.profile==='managed-il'&&state.lastManagedLaunch)state.lastManagedLaunch.instructionBreakpoints=(event.breakpoints??[]).filter(b=>!b.source).map(({instructionReference,condition,conditionMode,hitCondition,logMessage,enabled,oneShot})=>({instructionReference,condition,conditionMode,hitCondition,logMessage,enabled,oneShot}));advancedTools?.onState(event);workbenchServices.locks.refresh();updateDebugButtons();refreshEngineIndicators();updateRuntimeMetrics(event);
  const key=(event.sessionId??0)+':'+event.state+':'+event.stats.instructions+':'+JSON.stringify(event.locals?.map(v=>v.value));
- if(event.state==='paused'&&key!==lastDebugKey){state.inspectedLocals=null;state.inspectedThreadFrames=null;state.inspectedThreadId=null;state.frameId=event.frames[0]?.id??null;if(event.point&&matchesDebugSource(event.point.uri)){openFile(event.point.uri);editor.gotoLine(event.point.line,event.point.column);}setEditorDecorations();refreshWatches();if(!['debug','stack','breakpoints','bytecode','disassembly','immediate','debug-session','watch','threads','parallel-stacks','hot-reload','symbols','symbol-source','winui'].includes(state.panel))setPanel('debug');else renderPanel();if(event.profile==='managed-il')renderPanel('disassembly');}
- if((event.state==='faulted'||event.state==='terminated'&&!event.uiActive)&&previous?.state!==event.state){editors.forEach(e=>{e.setExecutionLocation(null);e.setSelectedFrameLine(null);});if(event.state==='faulted'){log(`${event.fault?.type}: ${event.fault?.message}`,'error');setPanel('output');}else{log(`Program exited · ${event.stats.instructions.toLocaleString()} instructions · ${event.stats.elapsedMs.toFixed(2)} ms VM time`,'debug');setPanel('output');}state.watchResults.clear();}
+ if(event.state==='paused'&&key!==lastDebugKey){state.inspectedLocals=null;state.inspectedThreadFrames=null;state.inspectedThreadId=null;state.frameId=event.frames[0]?.id??null;runtimeReveals.paused(event);setEditorDecorations();refreshWatches();if(event.profile==='managed-il')renderPanel('disassembly');}
+ if((event.state==='faulted'||event.state==='terminated'&&!event.uiActive)&&previous?.state!==event.state){editors.forEach(e=>{e.setExecutionLocation(null);e.setSelectedFrameLine(null);});if(event.state==='faulted'){log(`${event.fault?.type}: ${event.fault?.message}`,'error');}else{log(`Program exited · ${event.stats.instructions.toLocaleString()} instructions · ${event.stats.elapsedMs.toFixed(2)} ms VM time`,'debug');}runtimeReveals.completed(event);state.watchResults.clear();}
  if(event.state==='running'){setEditorDecorations();if(['debug','stack'].includes(state.panel))renderPanelSoon();}
  if(event.state==='paused'||event.state==='running')$('#status-message').textContent=(event.state==='paused'?(event.reason?.description??'Paused'):'Debugging · source snapshot is read-only');else $('#status-message').textContent=state.nativeMode?'Native builds run in a trusted local process; IL debugging runs in browser workers':(state.runtimeSettings?.enabled?'Local managed execution · explicit session networking enabled':'Local managed execution · networking denied');
  if(event.profile==='managed-il'&&event.state!=='running')renderPanel('disassembly');
- if(event.state!=='running'){setEditorDecorations();renderPanel('breakpoints');if(state.panel==='debug-session'||state.panel==='immediate')renderPanel(state.panel);}debugTools.updateBanner();runtimeTools?.update();if(event.state==='paused'&&event.point&&!matchesDebugSource(event.point.uri)&&state.debugSources.has(event.point.uri))advancedTools?.run(()=>advancedTools.showSymbolSource(event.point));lastDebugKey=key;
+ if(event.state!=='running'){setEditorDecorations();renderPanel('breakpoints');if(state.panel==='debug-session'||state.panel==='immediate')renderPanel(state.panel);}debugTools.updateBanner();runtimeTools?.update();if(event.state==='paused')runtimeReveals.symbols(event);lastDebugKey=key;
 }
 function updateDebugButtons(){const current=state.debug?.state??'idle',paused=current==='paused',running=['running','waiting'].includes(current),active=paused||running||current==='ready'||state.debug?.uiActive,busy=!!execution.launchController||state.launchBusy||state.controlBusy||state.hotEdit;
  $('#start-label').textContent=state.hotEdit?'Apply changes':busy?'Working…':paused?'Continue':state.debug?.uiActive?'Application running':'Start';$('#start').disabled=busy||running||state.debug?.uiActive&&!paused||(state.nativeMode&&!paused);$('#pause').disabled=!running;$('#stop').disabled=!active&&!busy;$('#restart').disabled=busy||!state.debug;
@@ -364,7 +368,7 @@ function updateDebugButtons(){const current=state.debug?.state??'idle',paused=cu
 
 function updateRuntimeMetrics(d){const h=d.stats.heap;const [size,unit]=formatBytes(h.liveBytes).split(' ');$('#heap-size').innerHTML=E(size)+' <small>'+E(unit)+'</small>';const percent=h.liveBytes/h.maxBytes*100;$('#heap-percent').textContent=percent<.1&&percent>0?'<0.1%':percent.toFixed(1)+'%';$('#heap-fill').style.width=(h.liveBytes?Math.max(1,percent):0)+'%';$('#heap-objects').textContent=h.liveObjects.toLocaleString();$('#heap-collections').textContent=h.collections;$('#heap-reclaimed').textContent=formatBytes(h.freedBytes);$('#heap-pause').textContent=h.collections?h.lastPauseMs.toFixed(2)+' ms':'—';$('#vm-time').textContent=d.stats.elapsedMs.toFixed(2)+' ms';$('#vm-instructions').textContent=d.stats.instructions.toLocaleString();$('#vm-depth').textContent=d.stats.frames;$('#vm-history').textContent=d.history.count;$('#il-load-ms').textContent=d.assemblyLoad?d.assemblyLoad.milliseconds.toFixed(2)+' ms'+(d.assemblyLoad.cacheHit?' (cached)':''):'—';$('#il-artifact-size').textContent=d.assemblyLoad?formatBytes(d.assemblyLoad.bytes):'—';
  $('#session-title').textContent=d.uiActive&&d.state==='terminated'?'Application running':{paused:'Execution paused',running:'Program running',terminated:'Execution completed',faulted:'Runtime exception',ready:'Runtime ready'}[d.state]??d.state;$('#session-subtitle').textContent=d.state==='paused'&&d.point?`${d.point.uri}:${d.point.line} · ${d.reason?.reason??'paused'}`:d.state==='faulted'?d.fault?.type:'ECMA-335 IL · tracing GC';$('#session-tag').textContent={paused:'PAUSED',running:'LIVE',terminated:'DONE',faulted:'FAULT'}[d.state]??'READY';$('#session-dot').className='session-dot '+(d.state==='faulted'?'error':d.state==='paused'?'paused':d.state==='running'?'running':'');}
-function setPanel(panel){state.panel=panel;docking.activate(panel);renderPanel(panel);}
+function setPanel(panel){workbenchServices.reveal.userIntent();state.panel=panel;docking.activate(panel);renderPanel(panel);}
 function empty(title,body,glyph='info'){return `<div class="empty-state"><span data-icon="${glyph}"></span><div><b>${E(title)}</b><p>${body}</p></div></div>`;}
 function renderItemProperties(el){return studioRenderers.renderItemProperties(el);}
 function renderPanel(panel=state.panel){const target=panel==='watch'?'debug':panel;const el=docking.content.get(target);if(!el)return;if(workbenchShell?.hasTool(target))return workbenchShell.renderTool(target,el);if(!toolRegistry.definitions().some(tool=>tool.id===target))return;let mount=toolMounts.get(target);if(!mount){mount=toolRegistry.mount(target,el);toolMounts.set(target,mount);}else mount.render();}
@@ -538,11 +542,7 @@ function loadDiskRecords(records, options = {}) {
  return loadStudioWorkspace(records, options, studioWorkspaceContext());
 }
 
-async function setStartupProject(path){
- if(!state.projectSystem?.projects.has(path))throw new Error('Unknown startup project');
- state.startupProject=path;state.name=state.projectSystem.projects.get(path).name;projectServices.sync();workbenchServices.startup.select(path);state.ilDump=null;
- renderWorkspace();renderPanel('project');saveLocal();return build();
-}
+function setStartupProject(path){return selectStudioStartupProject(path,{services:workbenchServices,projects:projectServices,state,renderWorkspace,renderPanel,save:saveLocal,build});}
 function saveToDisk(){return studioSave.disk();}
 async function openDecompilerFile(bytes,fileName='Assembly.dll'){
  const data=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes);if(data.length>64*1024*1024)throw new Error('Assembly exceeds 64 MB');
@@ -625,6 +625,7 @@ async function openExplorerNode(node,{preview=false}={}){
  if(text===null||text===before)return;if(revision!==state.revision)throw new Error('Workspace changed while the file was open; no edit was applied');await explorerActions.perform([{kind:'write',path:node.path,text}]);
 }
 async function explorerProjectCommand(action,node){const path=node?.project??node?.path;
+ if(action==='solutionSetStartupProjects'||action==='projectDebugStartNewInstance')return commandRegistry.invoke(action,{projectId:node?.project??node?.path});
  if(action==='edit-project')return openExplorerNode({...node,kind:'project-file',path});
  if(action==='startup'){if(state.nativeMode){state.nativeStartup=path;nativeBuild.settings.project=path;nativeBuild.renderBuild(true);renderTree();toast('Startup/build project selected: '+path);return;}if(path)return setStartupProject(path);toast('The browser workspace is already the startup project.');return;}
  if(state.nativeMode){if(path)nativeBuild.settings.project=path;setPanel('msbuild');return nativeBuild.run(action);}
@@ -633,6 +634,7 @@ async function explorerProjectCommand(action,node){const path=node?.project??nod
  if(node?.kind==='project'&&path&&path!==state.startupProject)await setStartupProject(path);else return build();
 }
 const explorerActions=new ExplorerCommands({wizardProject:node=>openProjectWizard({add:true,node}),wizardItem:node=>openItemWizard(node),workspaceAction:(id,node)=>workspaceExplorerAction(id,node),context:explorerContext,windowMenu:()=>dockMenuItems("solution"),menu:options=>sharedMenu.show(options),error:error=>toast(error.message,'error'),notice:toast,copy:copyText,pathDialog,pickFiles:pickExistingItems,choose:chooseExplorer,confirm:(title,paths,note)=>ask(title,`<p>${E(note)}</p><pre>${E(paths.join('\n'))}</pre>`,'Delete',()=>true),properties:showItemProperties,open:openExplorerNode,render:renderTree,commit:commitExplorerRecords,readSource:readStudioSource,
+ projectCommandState:(id,node)=>commandRegistry.describe(id,{projectId:node?.project??node?.path}),
  captureDocumentState:uri=>workbenchServices.documents.get(uri)?workbenchServices.documents.captureState(uri):null,
  ownsModel:model=>workbenchServices.documents.ownsModel(model),saveNative:()=>nativeBuild.save(),refreshNative:refreshNativeExplorer,refresh:async()=>{if(state.nativeMode){if(nativeSourceChanges().length||nativeBuild.sourceChanges().length){await nativeBuild.refresh();toast('Tree refreshed. Dirty buffers were preserved. Save or reopen changed files explicitly.');}else await refreshNativeExplorer();}else renderTree();},project:explorerProjectCommand,document:(action,uri)=>{if(action==='popout')return docking.host.popout('source:'+uri);const group=docking.layout.groups().find(g=>g.panels.includes('source:'+uri));if(group)docking.layout.dock('source:'+uri,group.id,'right');}});
 const solutionExplorer=new SolutionExplorer($('#solution'),{getData:explorerContext,onOpen:(node,options)=>openExplorerNode(node,options),onCommand:(...args)=>explorerActions.run(...args),onMenu:options=>sharedMenu.show(options),onProperties:nodeProperties,onError:error=>toast(error.message,'error')});explorerActions.host.explorer=solutionExplorer;
@@ -664,7 +666,7 @@ function installContextDocument(doc){if(contextDocuments.has(doc))return;context
  };
  doc.addEventListener('contextmenu',event=>show(event),true);doc.addEventListener('keydown',event=>{if(event.key==='ContextMenu'||event.shiftKey&&event.key==='F10')show(event,true);},true);
 }
-installContextDocument(document);
+installContextDocument(document);execution.reveals.install(document);
 
 
 // Project/solution creation and portable workspace IO. ZIP is data only, never code execution.
