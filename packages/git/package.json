@@ -10,6 +10,7 @@
   },
   "files": [
     "src",
+    "proxy",
     "README.md",
     "LICENSE"
   ],
