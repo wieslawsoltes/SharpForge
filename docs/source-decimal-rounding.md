@@ -260,5 +260,7 @@ remain separate work.
 `tests/a05-source-decimal-integral-conversions.test.js` authors three-engine
 coverage for every signed/unsigned width, fractional boundary truncation,
 negative zero, both overflow boundaries and checked contexts, named evaluation,
-arrays, exact boxed types, unsigned formatting and Decimal widening. Validation
-and native/platform/performance evidence remain staged; #1350/#1351 stay open.
+arrays, exact boxed types, unsigned formatting and Decimal widening. All 30 focused
+integral-conversion, sign, and Decimal-operation checks passed at `ebc2fea8`,
+using Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+evidence remains staged; #1350/#1351 stay open.
