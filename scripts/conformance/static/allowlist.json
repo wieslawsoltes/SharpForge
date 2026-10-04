@@ -504,6 +504,13 @@
       "count": 1,
       "sha256": "9d5ce736872b1bd1a0f1525f386be5079b904b7cf3e13dbb49c7c3a4e373c884",
       "reason": "Trusted operator-selected checkout supplies the fixed @sharpforge/compiler public package entry for the paired nullable benchmark; the resolved entry must stay inside that checkout, and managed source or metadata never selects a JavaScript module."
+    },
+    {
+      "path": "packages/compiler/bench/expression-trees.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "8ed551f7f2714711b0a7a5155edf2d9cbb0d5877dbfd838b917f9318dc5a0da1",
+      "reason": "Developer-run paired benchmark loads the fixed compiler public entry from two explicitly selected trusted local checkouts. Exact clean commit identities and checkout-local workspace aliases are verified before importing; managed source never selects JavaScript modules. The benchmark is not shipped in the product."
     }
   ]
 }
