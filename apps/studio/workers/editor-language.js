@@ -153,8 +153,8 @@ export function registerEditorLanguageHandlers(handlers, {workspace, language, r
       if (parameters.activeParameter !== undefined && (!Number.isInteger(parameters.activeParameter) || parameters.activeParameter < 0)) {
         failure('SFED1203', 'Invalid signature parameter index');
       }
-      const help = language.signatureHelp(parameters.uri, offset, {callStart: parameters.callStart,
-        activeParameter: parameters.activeParameter});
+      // The editor's lexical count is a hint; bound syntax knows commas in nested generic type arguments.
+      const help = language.signatureHelp(parameters.uri, offset, {callStart: parameters.callStart});
       return help ? {...help, version: source.version} : null;
     },
     diagnostics(parameters) {
