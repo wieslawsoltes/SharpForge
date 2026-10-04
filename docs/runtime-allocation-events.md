@@ -40,4 +40,6 @@ a host boundary.
 This is a partial #1403 increment stacked on the GC-event integration. Exception
 and suspension events, source-VM events, and native/browser/performance
 qualification remain separate. Tests in `tests/a05-allocation-events.test.js`
-are authored and await serial validation; no throughput result is claimed.
+passed with 46 focused allocation, GC, method-event, event-log, and profiler checks
+at `573617a5bbfa000eba4bfc0a38023f57be9f28db`, using Node 24 and one
+512 MB validation process. No throughput result is claimed.
