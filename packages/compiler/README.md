@@ -110,5 +110,5 @@ maps. A local whose lexical scope is only a lowered query clause or switch
 expression arm is omitted when no dedicated emission scope is available; its
 source statement remains mapped. These limits are independent of Portable PDB
 binary validity. Focused producer regressions are in
-`tests/compiler-cil-portable-pdb.test.js`; independent SRM/runtime qualification
-and performance measurements are reported with the feature change.
+`tests/compiler-cil-portable-pdb.test.js`; [native qualification and measured cost](test/cil-emission/portable-pdb/README.md)
+record the independent SRM/runtime comparisons, exact source heads, and performance samples.

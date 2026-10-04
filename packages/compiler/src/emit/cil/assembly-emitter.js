@@ -30,7 +30,7 @@ export class AssemblyEmitter {
   /**
    * @param analysis a SemanticAnalysis that has run without errors
    * @param {{name?: string, framework?: string, deterministic?: boolean, outputKind?: string, portablePdb?: boolean,
-   *   embeddedPdb?: boolean, embedSources?: boolean, sourceLink?: object|string}} [options]
+   *   embeddedPdb?: boolean, embedSources?: boolean, sourceLink?: {documents: Object<string, string>}}} [options]
    */
   constructor(analysis, options = {}) {
     this.analysis = analysis;
