@@ -40,7 +40,8 @@ root liveness are unchanged. `tests/a05-09-verified-stack.test.js` supplies runn
 independent CLI fixtures for headers, host limits, stale proofs, fallback, snapshots
 and parked cancellation. Existing decode/PIC expectations are retained.
 
-No test, build, native, browser or benchmark execution was performed while
-preparing this batch. Root's serial qualification queue must record exact tool
-versions and cold/warm/p95/p99/allocation measurements before any performance
-claim or closure of the parent task. No measured speedup is claimed here.
+Serial focused validation passed 70 tests with Node 24.21.0 at `89f791bd`, covering
+this file's contract plus decode invalidation, virtual and generic calls, and frame
+pooling/lifecycle integration. Browser, native and benchmark qualification remains
+staged. Cold/warm/p95/p99/allocation measurements are still required before a
+performance claim or closure of the parent task. No measured speedup is claimed.
