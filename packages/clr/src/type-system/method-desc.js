@@ -20,6 +20,22 @@ export class MethodDesc {
   get assembly() { return this.module.assembly; }
   get loadContext() { return this.assembly.loadContext; }
   get isStatic() { return Boolean(this.flags & 0x10); }
+  get isAbstract() { return Boolean(this.flags & 0x400); }
+  get isFinal() { return Boolean(this.flags & 0x20); }
+  get isVirtual() { return Boolean(this.flags & 0x40); }
+  get isHideBySig() { return Boolean(this.flags & 0x80); }
+  get isSpecialName() { return Boolean(this.flags & 0x800); }
+  get isPrivate() { return (this.flags & 7) === 1; }
+  get isFamilyAndAssembly() { return (this.flags & 7) === 2; }
+  get isAssembly() { return (this.flags & 7) === 3; }
+  get isFamily() { return (this.flags & 7) === 4; }
+  get isFamilyOrAssembly() { return (this.flags & 7) === 5; }
+  get isPublic() { return (this.flags & 7) === 6; }
+  /** Reflection CallingConventions bits, projected lazily from the cached signature header. */
+  get callingConvention() {
+    const signature = this.signature;
+    return (signature.callingConvention === 5 ? 2 : 1) | (signature.hasThis ? 0x20 : 0) | (signature.explicitThis ? 0x40 : 0);
+  }
   get #parameterMetadata() { return this.#state.parameterMetadata ??= this.module.methodParameters(this.metadataToken); }
   get parameters() { return this.#parameterMetadata.parameters; }
   get returnParameter() { return this.#parameterMetadata.returnParameter; }
