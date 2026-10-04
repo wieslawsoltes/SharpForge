@@ -1,9 +1,58 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {compileToIL} from '@sharpforge/compiler';
+import {loadAssembly} from '@sharpforge/cil';
+import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {AnimationClock} from '@sharpforge/framework';
 import {Compositor, CompositionServices, CompositionTransportHost, ImplicitTransition} from '@sharpforge/rendering';
 
 const clockFactory = adapter => new AnimationClock(adapter);
+const composition = 'Microsoft.UI.Composition.';
+const hosting = 'Microsoft.UI.Xaml.Hosting.ElementCompositionPreview';
+const engines = {
+  source: built => new VirtualMachine(built.image),
+  canonical: built => new VirtualMachine(loadAssembly(built.assembly)),
+  CIL: built => new CilVirtualMachine(built.assembly)
+};
+
+for (const [name, create] of Object.entries(engines)) {
+  test(name + ': full heap GC releases preview owners and independently created compositors', () => {
+    const built = compileToIL('Console.WriteLine("ready");');
+    assert.equal(built.success, true, JSON.stringify(built.diagnostics));
+    const vm = create(built);
+    assert.equal(vm.run().state, 'terminated');
+    const context = vm.platform.ui;
+    const initialPins = vm.heap.pins.length;
+    const owner = context.make('Microsoft.UI.Xaml.Controls.Button', []);
+    assert.equal(vm.heap.pins.length, initialPins, 'Native constructor scratch roots end at the factory boundary');
+    const ownerHandle = vm.heap.createHandle(owner);
+    const result = context.invoke({owner: hosting, kind: 'method', name: 'GetElementVisual', isStatic: true,
+      parameters: ['Microsoft.UI.Xaml.UIElement'], result: composition + 'Visual'}, [owner]);
+    assert.equal(result.handled, true);
+    const visual = context.unwrapModel(result.value);
+    const other = context.make(composition + 'Compositor', []);
+    assert.equal(vm.heap.pins.length, initialPins, 'Registered constructors preserve the caller scratch-root depth');
+    const native = context.unwrapModel(other);
+    const child = native.CreateSpriteVisual();
+    const childReference = context.wrapModel(child, composition + 'SpriteVisual');
+    const childHandle = vm.heap.createHandle(childReference);
+    vm.heap.collect();
+    assert.equal(context.isAlive(owner), true);
+    assert.equal(context.isAlive(result.value), true);
+    assert.equal(context.isAlive(other), true, 'A live child retains its compositor');
+    vm.heap.releaseHandle(ownerHandle);
+    vm.heap.releaseHandle(childHandle);
+    vm.heap.collect();
+    context.prune();
+    assert.equal(context.isAlive(owner), false);
+    assert.equal(context.isAlive(result.value), false);
+    assert.equal(context.isAlive(other), false);
+    assert.equal(visual.closed, true);
+    assert.equal(native.closed, true);
+    assert.equal(context.composition.elementCompositionPreview.entries.size, 0);
+    vm.stop();
+  });
+}
 
 test('brush transition transport updates host paint without sending frame values and clears its binding on completion', async () => {
   const packets = [];
