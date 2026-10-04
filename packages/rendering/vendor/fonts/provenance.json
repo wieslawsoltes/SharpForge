@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "license": "SIL Open Font License 1.1",
+  "purpose": "Pinned multilingual and variable/color font fixtures; applications may provide their own complete font chain.",
+  "fontToolsVersion": "4.61.1",
+  "reproduction": "python packages/rendering/tools/subset-font-fixtures.py SOURCE_DIRECTORY packages/rendering/vendor/fonts",
+  "fonts": [
+    {
+      "file": "NotoSans-Regular.ttf",
+      "family": "Noto Sans",
+      "weight": 400,
+      "style": "normal",
+      "license": "OFL.txt",
+      "sha256": "4c8d67001d3c2977e5d6bf0a4f8add80cd564bd1df60b7569fd23751e7dda02a",
+      "bytes": 556216,
+      "source": "https://raw.githubusercontent.com/harfbuzz/harfbuzzjs/b2ec00c97159ee8aa563691792aa3081adbc8a50/test/fonts/noto/NotoSans-Regular.ttf",
+      "sourceSha256": "4c8d67001d3c2977e5d6bf0a4f8add80cd564bd1df60b7569fd23751e7dda02a",
+      "transformation": null
+    }
+  ]
+}
