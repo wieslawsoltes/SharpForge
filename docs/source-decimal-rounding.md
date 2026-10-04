@@ -213,5 +213,7 @@ Console.WriteLine(decimal.Abs(value: decimal.MinValue)); // 79228162514264337593
 for scale, full coefficient range, signed-zero carrier bits and Double conversion,
 named-argument evaluation, arrays, boxing, integral widening and rejected
 signatures. Math overloads, additional Decimal library APIs and generic numeric
-interfaces are not admitted by this registration. Tests and platform/performance
-qualification remain pending in the serial queue; #1350/#1351 remain open.
+interfaces are not admitted by this registration. All 25 focused sign, comparison,
+rounding, and Decimal-operation checks passed at `60fc6d7d`, using Node 24, one
+worker, and a 512 MB old-space limit. Platform/performance qualification remains
+deferred; #1350/#1351 remain open.
