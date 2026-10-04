@@ -99,7 +99,11 @@ test('attribute constructor metadata is checked before any host classification c
       const row = input.builder.rows[10][(token & 0xffffff) - 1];
       if (malformed === 'name') row[1] = input.builder.string('NotAConstructor');
       if (malformed === 'signature') row[2] = input.builder.blob(Uint8Array.of(0, 0, 1));
-      if (malformed === 'extent') input.builder.rows[12][0][1] = (0xffff << 3) | 3;
+      if (malformed === 'extent') {
+        // Stay within the two-byte coded-index width while addressing a missing MemberRef.
+        assert.ok(input.builder.rows[10].length < 0x1fff);
+        input.builder.rows[12][0][1] = (0x1fff << 3) | 3;
+      }
     } };
     const report = verifyObject(fixture, { objectTypeAnnotations: { classifyConstructor() {
       calls++;
@@ -108,6 +112,7 @@ test('attribute constructor metadata is checked before any host classification c
     assert.equal(report.status, 'rejected', JSON.stringify({ malformed, report }));
     assert.equal(calls, 0);
     if (malformed !== 'extent') assert.equal(report.diagnostics[0].diagnostic, 'ObjectAnnotationMetadata');
+    else assert.equal(report.diagnostics[0].code, 'CILVM0001');
   }
   const staticConstructor = { ...objectCase('CounterfeitKnownHarmless'), decorate(input) {
     input.builder.rows[6][(input.constructors.IsByRefLikeAttribute & 0xffffff) - 1][2] |= 0x10;
