@@ -3,7 +3,7 @@ import {ManagedFault} from '../heap.js';
 import {cilHandlers} from './handlers/index.js';
 import {executionCodeState} from './code-version.js';
 import {methodOffsets, methodOffsetAllocations} from './method-offsets.js';
-import {specializeInt32Plan, numericPlanCurrent, numericPlanIdentity} from './numeric-specialization.js';
+import {specializeNumericPlan, numericPlanCurrent, numericPlanIdentity} from './numeric-specialization.js';
 import {specializeFloatPlan, floatPlanCurrent, floatPlanIdentity} from './typed-float-plan.js';
 
 function invalid(message) {
@@ -58,7 +58,7 @@ function createPlan(vm, method, state) {
       branchIndex(offsets, instruction.operand);
     }
   }
-  const numericHandlerIds = specializeInt32Plan(vm, method, offsets, handlers);
+  const numericHandlerIds = specializeNumericPlan(vm, method, offsets, handlers);
   specializeFloatPlan(vm, method, offsets, handlers);
   // Dispatch only needs handlers and original instructions. Allocate optional
   // numeric diagnostics on their first read; these buffers never enter snapshots.
