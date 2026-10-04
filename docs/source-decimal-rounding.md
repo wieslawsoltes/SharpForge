@@ -303,3 +303,36 @@ boundaries, full coefficient range, signed zero, scale 28, array identity,
 mutation isolation, named evaluation, GC retention and exact signature rejection.
 Span/destination overloads and TryGetBits are not admitted. Test execution and
 native/platform/performance qualification remain staged; #1350/#1351 remain open.
+
+## Math.Sign with Decimal
+
+`int Math.Sign(decimal value)` appends after GetBits with wire name
+`Math.Sign#1:Decimal`. The private registration selects its exact System.Math
+descriptor. Reload checks the declaring owner in addition to staticness,
+parameter types and result type. Existing Decimal registrations still require
+their own System.Decimal owner.
+
+The existing intrinsic returns -1, 0 or 1 from Decimal's numeric sign. Scale and
+the sign of zero do not change that result, and the full Decimal range is
+supported. The parameter name follows the pinned .NET 10.0.5
+[Math.Sign implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Math.cs#L1306-L1310).
+There is no new comparison algorithm, source carrier or runtime adapter.
+
+```csharp
+using System;
+int direction = Math.Sign(value: -0.0001m);
+Console.WriteLine(direction); // -1
+```
+
+Before this registration the source registry exposed no Math.Sign overload.
+Integral arguments can use their existing implicit conversion to Decimal;
+floating arguments cannot. This does not register Math.Sign(double/float/int/long)
+or Decimal.Sign, nor change the existing Min/Max registrations or overload
+resolution. A complete typed Math overload family is separate work.
+
+`tests/a05-source-decimal-math-sign.test.js` authors three-engine result/storage/
+boxing/precision cases and exact signature rejection. Separate compile/reload
+cases preserve Min/Max admission and wire IDs for Int32, Double and wider
+integral arguments; they make no new claim about those methods' runtime
+qualification. Validation and native/platform/performance evidence remain staged.
+#1350/#1351 remain open.
