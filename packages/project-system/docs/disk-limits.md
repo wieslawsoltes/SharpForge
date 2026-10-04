@@ -83,6 +83,34 @@ started, its completion determines that file's committed result. Later files
 are not started after cancellation; an error retains exact `written` paths for
 those already committed. Rebased workspaces share the same serialized queue.
 
+## Accepting an observed external version
+
+`disk.acceptBaseline(path, observed, {expectedVersion, expectedHandle, signal,
+check, commit})` joins that same save queue. `observed` contains immutable
+`source` or `text`, `encoding`, Boolean `bom`, and exact `byteLength`. The
+existing path, handle identity, and disk revision must still match. Encoded
+size and total workspace budgets are validated, then the actual granted file
+is reread and compared with the observation. Source contributions receive an
+optional `maxCharacters` bound while verifying an observation; Studio honors it
+in its cooperative decoder. Ordinary readers retain their existing defaults.
+
+After asynchronous validation, optional `commit(accept)` must invoke `accept`
+exactly once, synchronously. This lets a host stage document text/clean metadata,
+accept the disk baseline before notifications, and roll back if precommit
+validation fails. Without a callback, the validated baseline is accepted
+directly. `check()` may throw or return false to reject changed host ownership
+before acceptance. Callbacks must not perform asynchronous work.
+
+Acceptance replaces the stored descriptor record, updates its source,
+encoding/BOM and byte size, increments the disk revision once, and returns
+`{path, version, byteLength}`. The cache retains immutable content without a
+borrowed editor model; it neither writes the physical file nor adopts or disposes
+a model. Precommit rejection leaves disk state unchanged; an error after `accept`
+has `committed:true`, so notification failures cannot be mistaken for a rollback.
+`SFPROJECT_DISK_OBSERVATION_STALE` identifies changed target/revision/content.
+The workbench observer uses this API for external reload so its next actual
+save passes the existing conflict checks without overwriting a newer disk edit.
+
 ## URI rebasing and ownership
 
 `prefixWorkspace(records, folders, prefix, {rebaseSource})` and

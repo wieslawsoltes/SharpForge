@@ -4,6 +4,7 @@ import {diskLimits} from './limits.js';
 import {isTextRecord, recordSource, isSourceSnapshot, cloneWorkspaceRecord} from '../workspace-records.js';
 import {readWorkspaceFile, sourceReaderOptions, decodeKnownSource, checkReadCancellation} from './source-reader.js';
 import {contentLength, initialRecordSize, sourceByteLength, equalSourceContent, writeSourceContent, updateSavedRecord} from './source-content.js';
+import {captureBaselineObservation, acceptBaselineObservation} from './baseline-observation.js';
 
 async function currentText(handle, path, limits, {encoding, signal}) {
   const file = await handle.getFile();
@@ -34,6 +35,16 @@ export class DiskWorkspace {
   }
 
   getVersion(path) { return this.versions.get(normalizePath(path)) ?? 0; }
+
+  /** Accept confirmed external text in save order; commit(accept) joins synchronous host state before notifications. */
+  acceptBaseline(path, observed, options = {}) {
+    let captured;
+    try { captured = captureBaselineObservation(path, observed, options); }
+    catch (error) { return Promise.reject(error); }
+    const task = this.saveState.queue.then(() => acceptBaselineObservation(this, captured));
+    this.saveState.queue = task.catch(() => {});
+    return task;
+  }
 
   /** Stage URI rebasing with the same granted handles and conflict baselines; the original workspace stays unchanged. */
   rebasePaths(pathMap, records, folders = this.folders) {

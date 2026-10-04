@@ -2,6 +2,7 @@ import { WorkbenchEvents, requireIdentifier, workbenchError } from './state-even
 import { DocumentIngress, validateDocumentModel } from './documents-ingress.js';
 import { captureDocumentSave, savedModelBaseline } from './documents-save.js';
 import { captureDocumentState } from './documents-state.js';
+import { reloadDocument } from './documents-reload.js';
 
 /** Workspace documents own text and editors; prompt/tab placement policies belong to the host. */
 export class DocumentService {
@@ -21,6 +22,7 @@ export class DocumentService {
     this.models = new Map();
     this.modelSubscriptions = new Map();
     this.staleSaves = new Set();
+    this.reloadChanges = new WeakSet();
     this.events = new WorkbenchEvents();
     this.revision = 0;
     this.disposed = false;
@@ -187,6 +189,9 @@ export class DocumentService {
   captureSave(uri) { return captureDocumentSave(this.require(uri), this.models.get(uri)); }
 
   captureState(uri) { return captureDocumentState(this, uri); }
+
+  /** Accept a bounded external source with exact ownership and a synchronous metadata commit before notifications. */
+  reload(uri, text, options) { return reloadDocument(this, uri, text, options); }
 
   async save(uri) {
     const record = this.require(uri);
@@ -419,6 +424,7 @@ export class DocumentService {
 
   modelChanged(uri, record, model, change) {
     if (this.disposed || this.models.get(uri) !== model || this.records.get(uri) !== record) return;
+    if (this.reloadChanges.has(change.bufferEdit)) return;
     const wasDirty = this.dirtyFiles.has(uri);
     const dirty = model.isDirty || this.staleSaves.has(uri) || this.baselines.get(uri) === null;
     record.dirty = dirty;
