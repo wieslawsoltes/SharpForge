@@ -20,7 +20,18 @@ when absent. Generated union structs contain one object field and receive ordina
 on direct CIL. The source bytecode VM still reports `SF2200` for source structs; native/Wasm qualification is
 recorded by the parent validation batch and is not implied by these tests.
 
-The following genuinely open rules remain explicit `SF2202` boundaries: malformed custom basic patterns,
+The following open rules remain explicit `SF2202` boundaries: malformed custom basic patterns,
 case-compatibility/exhaustiveness decisions that depend on special treatment of direct `Value` property patterns,
-and inherited/hidden/read-write non-boxing member lookup. Direct public getter-only `HasValue` and directly
+inherited/hidden/read-write non-boxing member lookup, and nullable-flow effects of a queried `TryGetValue`
+whose out type is not a case type. Direct public getter-only `HasValue` and directly
 declared applicable `TryGetValue(out T)` members use the specified non-boxing access path.
+
+`capture-native.mjs` compares the SharpForge-emitted union program in `native-source.cs` with the explicit ordinary
+C# struct implementation in `native-reference.cs` on the pinned CoreCLR. It verifies the full toolchain hashes
+using the existing oracle helper, records both compiler/runtime commands and the observed results, and fails
+on a mismatch. This qualifies the specified lowering; it does not turn the ordinary C# reference into a union
+syntax oracle. At the scheduled validation slot, provide `SHARPFORGE_ORACLE_DOTNET` and an output path:
+
+```sh
+node scripts/limited.js node tests/fixtures/compiler-unions/capture-native.mjs /absolute/path/union-native.json
+```
