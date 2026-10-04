@@ -3,33 +3,16 @@ import { CilError } from '../binary.js';
 import { DataflowWorklist, dataflowCancellation, dataflowLimit, dataflowFailure } from './dataflow.js';
 import { dataflowBlocks } from './dataflow-blocks.js';
 import { executionHandlerOffsets } from './execution-handlers.js';
-import { mergeVerificationStacks } from './type-relations.js';
-import { sameVerificationType } from './types.js';
-import { numericMethodSignature, primitiveRelations } from './typed-signatures.js';
+import { numericMethodSignature } from './typed-signatures.js';
 import { numericTransfers } from './numeric-tables.js';
 import { transferNumericInstruction } from './ops-numeric.js';
 import { TypedTransferStack } from './typed-stack.js';
+import { createTypedFlowState } from './typed-state.js';
 
-const empty = Object.freeze([]);
 const profile = 'SharpForge.TypedCIL.Numeric/1';
 
-function mergeStates(incoming, stored, state, options) {
-  if (incoming.length !== stored.length) state.fail('PathStackDepth');
-  state.charge(stored.length);
-  let merged;
-  try {
-    merged = mergeVerificationStacks(incoming, stored, {
-      maxStack: state.method.maxStack, signal: options.signal, relations: primitiveRelations,
-    });
-  } catch (error) {
-    if (error instanceof CilError && error.code === 'CILV0002') state.fail('PathStackUnexpected');
-    throw error;
-  }
-  return merged.every((value, index) => sameVerificationType(value, stored[index])) ? stored : merged;
-}
-
-function transferBlock(block, incoming, state, options) {
-  state.restore(incoming);
+function transferBlock(block, incoming, state, options, flow) {
+  flow.restore(incoming);
   for (let index = block.start; index < block.end; index++) {
     dataflowCancellation(options.signal);
     const instruction = state.method.instructions[index];
@@ -37,7 +20,7 @@ function transferBlock(block, incoming, state, options) {
     transferNumericInstruction(numericTransfers[instruction.name], instruction, state);
     if (state.ended) return null;
   }
-  return state.snapshot();
+  return flow.snapshot();
 }
 
 function preflight(method, state, options) {
@@ -76,17 +59,18 @@ export function verifyCilMethodTypes(input, methodToken, options = {}) {
     });
     if (!offsets) state.fail('InvalidControlFlow');
     const graph = dataflowBlocks(method, offsets, options);
+    const flow = createTypedFlowState(state, options);
     const worklist = new DataflowWorklist(graph, {
-      emptyState: empty,
+      emptyState: flow.entry,
       stopped: () => false,
       invalidEdge: () => state.fail('BadJumpTarget'),
       merge(incoming, stored, block) {
         state.instruction = method.instructions[block.start];
-        return mergeStates(incoming, stored, state, options);
+        return flow.merge(incoming, stored);
       },
-      transfer: (block, incoming) => transferBlock(block, incoming, state, options),
+      transfer: (block, incoming) => transferBlock(block, incoming, state, options, flow),
     }, options);
-    worklist.enqueue(graph.blocks.length ? 0 : -1, empty);
+    worklist.enqueue(graph.blocks.length ? 0 : -1, flow.entry);
     worklist.run();
     return { status: 'verified', profile, methodToken, peakStack: state.peak, diagnostics: [] };
   } catch (error) {

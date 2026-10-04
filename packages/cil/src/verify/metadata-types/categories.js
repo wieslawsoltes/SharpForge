@@ -39,7 +39,6 @@ export function snapshotTypeCategories(records, input, budget) {
     budget.check();
     if (record.type.isInterface) record.category = reference;
   }
-  if (input === undefined) return;
   const authority = coreTypeAuthority(input, budget);
   const roots = fundamentalDefinitions(records, authority, budget);
   const roles = new Map([...roots].map(([role, record]) => [record.type, role]));

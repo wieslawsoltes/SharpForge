@@ -28,8 +28,7 @@ static class Program
         using var stream = File.OpenRead(input.Assembly.Location);
         using var pe = new PEReader(stream);
         var metadata = pe.GetMetadataReader();
-        var tokens = metadata.TypeDefinitions.Select(handle => MetadataTokens.GetToken(handle))
-            .Concat(metadata.TypeReferences.Select(handle => MetadataTokens.GetToken(handle)));
+        var tokens = metadata.TypeReferences.Select(handle => MetadataTokens.GetToken(handle));
         var bindings = tokens.Select(token => {
             var type = input.ResolveType(token);
             return new { token, definition = type.Module == core && !type.IsGenericType ? (int?)type.MetadataToken : null };

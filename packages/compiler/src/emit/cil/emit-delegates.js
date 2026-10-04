@@ -43,7 +43,11 @@ export const DelegateEmission = Base =>
       }
       if (method.isExtensionMethod && group.receiver && method.isStatic) return this.extensionDelegate(node, method);
       if (method.isStatic) {
-        il.emit('ldnull').emit('ldftn', this.tokens.method(method));
+        il.emit('ldnull');
+        // `T.Create` as a delegate: a static abstract or virtual interface member is found on the type argument.
+        const typeParameter = group.viaType && group.receiverType?.typeKind === TypeKind.TypeParameter ? group.receiverType : null;
+        if (typeParameter && method.containingType?.typeKind === TypeKind.Interface) il.emit('constrained.', this.tokens.type(typeParameter));
+        il.emit('ldftn', this.tokens.method(method));
         return this.newDelegate(node.type);
       }
       const receiver = group.receiver;

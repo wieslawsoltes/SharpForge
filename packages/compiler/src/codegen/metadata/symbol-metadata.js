@@ -35,6 +35,10 @@ const constantElementTypes = Object.freeze({
 const NULL_REFERENCE_CONSTANT = 28;
 const LITERAL_FLAGS = FieldAttributes.Literal | FieldAttributes.HasDefault;
 
+/** The value the Constant table takes: a `char` constant is a code unit in the compiler and one character there. */
+function constantRowValue(constant) {
+  return constant.type === 'char' && typeof constant.value !== 'string' ? String.fromCharCode(Number(constant.value)) : constant.value;
+}
 /** The Constant.Type of a compiler constant, or undefined when the table has no encoding for it. */
 function constantTypeOf(constant) {
   if (constant.value === null || constant.isNull) return NULL_REFERENCE_CONSTANT;
@@ -166,7 +170,7 @@ export class SymbolMetadataWriter {
           flags = unencodable ? (field.flags & ~LITERAL_FLAGS) | FieldAttributes.InitOnly : field.flags & ~FieldAttributes.HasDefault;
         this.builder.addRow('Field', { Flags: flags, Name: field.name, Signature: fieldSignature(this.tokensOf(type), field.type, field.refKind) });
         if (constantType === undefined) continue;
-        const value = constantType === NULL_REFERENCE_CONSTANT ? null : field.constant.value;
+        const value = constantType === NULL_REFERENCE_CONSTANT ? null : constantRowValue(field.constant);
         // The writer marks the field HasDefault.
         this.builder.definitions.constantValue({ Parent: field.token, Type: constantType, Value: value });
       }

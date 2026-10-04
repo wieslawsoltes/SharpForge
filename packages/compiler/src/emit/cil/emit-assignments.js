@@ -66,12 +66,16 @@ export const AssignmentEmission = Base =>
       location.beginStore();
       location.load();
       if (keepsOld) il.emit('dup').emit('stloc', result);
-      if (node.method) this.callMethod(node.method, { syntax: node.syntax });
+      if (node.method) this.userIncrement(node, type);
       else this.addOne(node, type);
       if (isUsed && !node.isPostfix) il.emit('dup').emit('stloc', result);
       location.endStore();
       if (isUsed) il.emit('ldloc', result);
       return isUsed ? undefined : false;
+    }
+    /** A user-defined `++` or `--` over the operand on the stack. */
+    userIncrement(node) {
+      return this.callMethod(node.method, { syntax: node.syntax });
     }
     /** Adds or subtracts one in the operand's own type. */
     addOne(node, type) {

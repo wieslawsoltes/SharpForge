@@ -24,9 +24,7 @@ export const blockStatementMethods = {
   },
   switchStatement(attrs) {
     const keyword = this.take(),
-      open = this.expect('('),
-      expression = this.expression(),
-      close = this.expect(')'),
+      [open, expression, close] = this.switchGoverningExpression(),
       brace = this.expect('{'),
       sections = [];
     while (!this.at('}') && !this.at('eof')) {
@@ -47,6 +45,28 @@ export const blockStatementMethods = {
       this.guardProgress(before);
     }
     return this.n('SwitchStatement', attrs, keyword, open, expression, close, brace, sections, this.expect('}'));
+  },
+  /**
+   * `( expression )` of a switch statement as `[open, expression, close]`. C# 8: `switch (a, b)` governs on a tuple
+   * literal whose parentheses are the statement's; as in Roslyn the statement then has no
+   * parenthesis tokens of its own.
+   */
+  switchGoverningExpression() {
+    const start = this.current,
+      open = this.expect('('),
+      first = this.argument(),
+      isPlain = !first.children[0] && !first.children[1];
+    if (isPlain && !this.at(',')) return [open, first.children[2], this.expect(')')];
+    const elements = [first];
+    while (this.at(',')) {
+      const before = this.i;
+      elements.push(this.take());
+      elements.push(this.argument());
+      if (before === this.i) break;
+    }
+    const close = this.expect(')');
+    this.feature('Tuples', start, close);
+    return [null, this.n('TupleExpression', open, elements, close), null];
   },
   switchLabel() {
     const keyword = this.take();

@@ -45,8 +45,11 @@ export function snapshotTypes(inspector, budget, coreTypes) {
     const flags = row[0];
     if (!Number.isInteger(flags) || flags < 0 || flags > 0xffffffff) rejectTypeSystem('CILVT0001', 'type flags');
     const type = Object.freeze({ kind: 'definition', token, isInterface: !!(flags & 0x20), flags });
-    const record = { type, result: known(type), baseToken, interfaces: [], edges: baseToken ? [baseToken] : [],
-      generic: false, category: null, categoryDepth: 0 };
+    const record = { type, result: known(type), baseToken, interfaces: [], edges: baseToken ? [baseToken] : [], generic: false };
+    if (coreTypes !== undefined) {
+      record.category = null;
+      record.categoryDepth = 0;
+    }
     records.set(token, record);
     identities.set(type, record);
   }
@@ -80,10 +83,13 @@ export function snapshotTypes(inspector, budget, coreTypes) {
     if (base?.type.isInterface) rejectTypeSystem('CILVT0001', 'class base is an interface');
     Object.freeze(record.interfaces);
     Object.freeze(record.edges);
+    if (coreTypes === undefined) Object.freeze(record);
   }
   checkCycles(records, budget);
-  snapshotTypeCategories(records, coreTypes, budget);
-  for (const record of records.values()) { budget.check(); Object.freeze(record); }
+  if (coreTypes !== undefined) {
+    snapshotTypeCategories(records, coreTypes, budget);
+    for (const record of records.values()) { budget.check(); Object.freeze(record); }
+  }
   return { lexical, snapshot: { records, identities, resolve(token) {
     budget.check();
     checkedToken(token, counts);

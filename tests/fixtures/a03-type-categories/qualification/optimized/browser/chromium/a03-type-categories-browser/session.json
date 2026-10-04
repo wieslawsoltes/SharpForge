@@ -1,0 +1,11 @@
+{
+  "suite": "a03-type-categories-browser",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "A03 type categories source modules",
+  "seconds": 0.47529999999824213,
+  "diagnosticErrors": []
+}

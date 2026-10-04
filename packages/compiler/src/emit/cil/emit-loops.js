@@ -3,7 +3,7 @@
  * pattern - `GetEnumerator`, `MoveNext`, `Current`, and `Dispose` in a finally block when the enumerator is disposable.
  */
 import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
-import { implementsInterface } from '../../symbols/substitution.js';
+import { implementsInterface, membersInHierarchy } from '../../symbols/substitution.js';
 import { isReference, primitiveOf, needsBox } from './type-facts.js';
 import { enumerationPattern } from './foreach-pattern.js';
 
@@ -20,8 +20,14 @@ export const LoopEmission = Base =>
     }
     /** Converts the element on the stack to the iteration variable's type and stores it. */
     iterationValue(node, elementType) {
-      const local = node.local;
-      this.elementConversion(elementType, local.type, node.syntax);
+      const local = node.local,
+        operator = node.elementConversion?.method;
+      if (operator) {
+        // `foreach (Money m in decimals)`: the element goes through the user-defined conversion operator.
+        this.implicitStandardConversion(elementType, operator.parameters[0].type, node.syntax);
+        this.callMethod(operator, { syntax: node.syntax });
+        this.implicitStandardConversion(operator.returnType, local.type, node.syntax);
+      } else this.elementConversion(elementType, local.type, node.syntax);
       this.initializeLocal(local);
     }
     /** The explicit conversion `foreach (T x in ...)` applies to each element. */
@@ -110,6 +116,19 @@ export const LoopEmission = Base =>
       };
       if (implementsInterface(enumeratorType, this.core.idisposable, this.core)) {
         return this.tryRegions(loop, [], () => this.disposeCall({ slot: enumerator, type: enumeratorType }, node.syntax));
+      }
+      // C# 8: a ref struct enumerator cannot implement IDisposable; its accessible `Dispose()` is called by pattern.
+      const patternDispose = enumeratorType.isRefLikeType
+        ? membersInHierarchy(enumeratorType, 'Dispose', this.core).find(
+            member => member.kind === SymbolKind.Method && !member.isStatic && !member.parameters.length && !member.typeParameters?.length,
+          )
+        : null;
+      if (patternDispose) {
+        return this.tryRegions(loop, [], () => {
+          pushEnumerator();
+          this.callMethod(patternDispose, { receiver });
+          if (patternDispose.returnType?.specialType !== 'System_Void') il.emit('pop');
+        });
       }
       // An enumerator known only as an interface (`IEnumerator`) may be disposable at run time.
       if (enumeratorType.typeKind !== TypeKind.Interface) return loop();

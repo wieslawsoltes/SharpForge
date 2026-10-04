@@ -48,6 +48,9 @@ export const TupleBinding = Base =>
         if (element.form === 'lambda' && !element.hasErrors) {
           element.boundAs = type;
           this.finishLambda(element, type);
+        } else if (element.materialize && !element.type && !element.hasErrors) {
+          // `c ? 1 : null`, a switch expression, `new()` or `[...]` without a type of its own becomes the element type.
+          if (!this.quiet) literal.elements[index] = element.materialize(type);
         } else this.finishTupleLiteralElements(element, type, parts[index]);
       });
     }

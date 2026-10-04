@@ -126,6 +126,9 @@ export const NullableEmission = Base =>
           value(rightSlot, right.type);
           this.underlyingOperator(node);
         };
+      if (node.method && (relational.has(operator) || operator === '==' || operator === '!=')) {
+        return this.liftedUserComparison(node, operands, () => has(leftSlot, left.type), () => has(rightSlot, right.type));
+      }
       if (operator === '==' || operator === '!=') {
         // Equal when both have the same value and the same presence (two absent values hold the same default).
         this.withOperator(node, '==', operands);

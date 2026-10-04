@@ -32,7 +32,9 @@ export const switchExpressionMethods = {
       this.error(this.errorAnchor(), 'CS8504', 'Pattern missing');
       pattern = this.n('ConstantPattern', this.missingName());
     } else pattern = this.pattern(true, Precedence.Coalescing);
-    const when = this.atWord('when') ? this.n('WhenClause', this.takeWord('when'), this.expression()) : null,
+    // Roslyn parses the guard above the lambda precedence: `when map.ContainsKey(key) => 1` is an invocation and the
+    // arrow of the arm, never a lambda with a return type.
+    const when = this.atWord('when') ? this.n('WhenClause', this.takeWord('when'), this.expression(Precedence.Coalescing)) : null,
       arrow = this.expect('=>');
     return this.n('SwitchExpressionArm', pattern, when, arrow, this.coalesceOperand(Precedence.Expression));
   },

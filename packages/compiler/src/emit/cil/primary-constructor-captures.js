@@ -23,9 +23,8 @@ export function planPrimaryCaptures(analysis) {
       if (node.kind !== 'Parameter' || !node.isPrimaryCapture || byParameter.has(node.parameter)) return true;
       const parameter = node.parameter,
         owner = parameter.containingSymbol?.containingType;
-      if (!owner || owner.isGenericType) {
-        throw new UnsupportedInCil('captured primary constructor parameters of a generic type', node.syntax);
-      }
+      // (In a generic type the field is named through the instantiation: instantiated-members.js.)
+      if (!owner) throw new UnsupportedInCil('a captured primary constructor parameter without a type', node.syntax);
       const name = `<${parameter.name}>P`,
         field = { symbol: null, name, flags: FieldAttributes.Private, type: parameter.type, constant: null, isCompilerGenerated: true };
       byParameter.set(parameter, { field, owner });

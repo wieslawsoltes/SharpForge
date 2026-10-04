@@ -26,7 +26,7 @@ const sameIgnoringTupleNames = (left, right) => left.equals(right, TypeCompareKi
 
 /** Identity or implicit reference conversion (the test variance and array covariance use). */
 export function hasIdentityOrImplicitReference(from, to, core) {
-  return from.equals(to) || hasImplicitReferenceConversion(from, to, core);
+  return sameIgnoringTupleNames(from, to) || hasImplicitReferenceConversion(from, to, core);
 }
 /** Implicit reference conversions (identity excluded). */
 export function hasImplicitReferenceConversion(from, to, core) {
