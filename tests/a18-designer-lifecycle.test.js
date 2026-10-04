@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createDesign, DesignDocument, createDesignerResourceDocument, designScene} from '@sharpforge/designer';
+import {createDesign, DesignDocument, DesignPreviewEnvironment, createDesignerResourceDocument, designScene} from '@sharpforge/designer';
 import {DesignerTools} from '../apps/studio/designer-tools.js';
+import {DesignerDocumentUpdates} from '../apps/studio/designer-document-updates.js';
 import {DesignerResourceController} from '../apps/studio/designer-resource-view.js';
 import {createDesignerActions} from '../apps/studio/designer-actions.js';
 
@@ -20,10 +21,12 @@ function lifecycleView(model) {
     trace.push(kind);
   };
   view.surface = {
+    preview: new DesignPreviewEnvironment(),
     cancelPointer() { record('pointer'); },
     finishKeyboard(cancel) { assert.equal(cancel, true); record('keyboard'); transaction?.cancel(); transaction = null; },
     text: {cancel() { record('text'); }}
   };
+  view.updates = new DesignerDocumentUpdates(view);
   const arm = document => {
     expected = document;
     transaction = document.beginTransaction('Pending keyboard edit');
@@ -43,7 +46,9 @@ test('A18 Tools replacement cancels pending surface edits against the old model 
   assert.equal(view.document.value.name, 'New');
   assert.equal(view.document.undoStack.length, 0);
   assert.equal(view.document.value.width, createDesign('New').width);
+  assert.equal(view.updates.document, null, 'Replacing an unmounted view must not publish mounted projections.');
   view.modelSubscription();
+  view.updates.dispose();
   view.document.dispose();
 });
 
@@ -74,6 +79,7 @@ test('A18 template enter and apply cancel drafts before capture/commit and dispo
   assert.equal(owner.value.templates.Frame.root.properties.Padding.Left, 4);
   view.modelSubscription();
   view.resources.dispose();
+  view.updates.dispose();
   owner.dispose();
 });
 
@@ -94,6 +100,7 @@ test('A18 canceling a template restores its dictionary and leaves owner values a
   assert.equal(view.document, owner);
   view.modelSubscription();
   view.resources.dispose();
+  view.updates.dispose();
   owner.dispose();
 });
 
@@ -126,11 +133,18 @@ test('A18 Tools previews retain normal visual load, flush and resize while dicti
   view.resizeArtboard = () => trace.push('resize');
   view.updatePreview();
   assert.deepEqual(trace, ['gallery', 'load', 'flush', 'resize']);
+  assert.equal(view.updates.preview.document, document);
+  assert.equal(view.updates.preview.revision, document.revision);
+  assert.deepEqual(view.updates.preview.environment, view.surface.preview.value);
   const resources = createDesignerResourceDocument();
   view.session.document = resources;
   trace.length = 0;
   view.updatePreview();
   assert.deepEqual(trace, ['gallery']);
+  assert.equal(view.updates.preview.document, null);
+  assert.equal(view.updates.preview.environment, null);
+  assert.equal(view.updates.preview.decorations.size, 0);
+  view.updates.dispose();
   document.dispose();
   resources.dispose();
 });
