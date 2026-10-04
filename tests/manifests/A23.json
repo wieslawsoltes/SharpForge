@@ -9,8 +9,23 @@
     "tests/msbuild-native.test.js",
     "tests/msbuild-solution.test.js",
     "tests/msbuild-tools.test.js",
+    "tests/project-configuration-contract.test.js",
+    "tests/project-context-contract.test.js",
+    "tests/project-input-contract.test.js",
+    "tests/project-expression-contract.test.js",
     "tests/a23-09-project-edits.test.js",
-    "tests/project-edits-roundtrip.test.js"
+    "tests/project-edits-roundtrip.test.js",
+    "tests/project-resource-contract.test.js",
+    "tests/project-solution-reader.test.js",
+    "tests/project-evaluation-sdk.test.js",
+    "tests/project-evaluation-items.test.js",
+    "tests/project-evaluation-central-packages.test.js",
+    "tests/project-evaluation-expressions.test.js",
+    "tests/project-core-contract.test.js",
+    "tests/project-evaluation-targets.test.js",
+    "tests/project-evaluation-build-stages.test.js",
+    "tests/project-evaluation-build.test.js",
+    "tests/project-evaluation-contexts.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
