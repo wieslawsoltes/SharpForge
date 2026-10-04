@@ -6,10 +6,12 @@
  * generic, an array, a type parameter - is a TypeSpec over its signature blob.
  */
 import { token } from '@sharpforge/cil';
-import { SymbolKind, substituteType } from '../../symbols/types.js';
+import { SymbolKind, TypeKind, substituteType } from '../../symbols/types.js';
 import { encodeTypeSignature, needsTypeSpec, typeDefOrRefEncoded, ElementType } from '../generics.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 import { referencedAssemblyOf } from './reference-identities.js';
+
+const OBJECT = 'System.Object';
 
 /** The reason a symbol cannot be written to metadata; the emitter reports it instead of writing a wrong row. */
 export class MetadataEmitError extends Error {
@@ -84,7 +86,10 @@ export class TypeTokens {
     let reference = this.references.get(definition);
     if (reference) return reference;
     const outer = definition.containingType;
-    if (outer) {
+    if (definition.typeKind === TypeKind.Dynamic) {
+      // `dynamic` is `System.Object` wherever a type is named by a token (`newarr`, `castclass`, a generic argument).
+      reference = this.builder.typeRef(OBJECT, this.assemblyOf(definition, OBJECT) ?? contractAssemblyOf('System', 'Object'));
+    } else if (outer) {
       reference = this.builder.addRow('TypeRef', { ResolutionScope: this.definitionToken(outer), Name: definition.metadataName, Namespace: '' });
     } else {
       const namespace = namespaceOf(definition),

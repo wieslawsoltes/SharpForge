@@ -2,6 +2,7 @@ import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {admitStackBytes, hasStackBudget, stackByteLimit, validateStackByteSnapshot} from './stack-budget.js';
 import {sourceStackSlots} from './source-stack-size.js';
+import {emitSourceException} from './source-exception-events.js';
 
 const admissions = new WeakMap();
 const terminal = new Set(['completed', 'faulted', 'canceled']);
@@ -34,14 +35,17 @@ export function beginSourceStackInstruction(vm, frame) {
   } catch (error) {
     vm.fault = vm.makeFault(error);
     vm.state = 'faulted';
+    emitSourceException(vm, vm.fault, {frame, opcode: null, index: frame.pc, method: frame.methodId, frameId: frame.id}, true);
     return false;
   }
 }
 
 /** Preserve the source interpreter's debugger/managed-exception adapter at the extracted seam. */
-export function handleSourceInstructionFault(vm, error) {
+export function handleSourceInstructionFault(vm, error, instruction) {
   const fault = vm.makeFault(error);
-  if (fault.name === 'InstructionLimitException' || fault.fatal === true) {
+  const fatal = fault.name === 'InstructionLimitException' || fault.fatal === true;
+  emitSourceException(vm, fault, instruction, fatal);
+  if (fatal) {
     vm.fault = fault;
     vm.state = 'faulted';
     return false;

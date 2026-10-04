@@ -6,6 +6,7 @@ import {copyBuilderCharacters} from './string-builder-copy.js';
 import {appendBuilderRange} from './string-builder-append-range.js';
 import {appendBuilderArray} from './string-builder-append-array.js';
 import {appendBuilderValue} from './string-builder-append-builder.js';
+import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
 import {builderEquals} from './string-builder-equality.js';
 
 const owner = 'System.Text.StringBuilder';
@@ -197,7 +198,9 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       return null;
     case 'Append':
       if (descriptor.parameters[0] === 'char[]') return appendBuilderArray(platform, reference, values, scalars, appendText);
-      if (descriptor.parameters[0] === owner) return appendBuilderValue(platform, reference, values[0], bufferText, appendText);
+      if (descriptor.parameters[0] === owner) return descriptor.parameters.length === 3
+        ? appendBuilderValueRange(platform, reference, values, scalars, appendText)
+        : appendBuilderValue(platform, reference, values[0], bufferText, appendText);
       if (descriptor.parameters.length === 3) return appendBuilderRange(platform, reference, scalars, appendText);
       return descriptor.parameters[0] === 'char'
         ? appendBuilderCharacter(platform, reference, scalars, appendText)

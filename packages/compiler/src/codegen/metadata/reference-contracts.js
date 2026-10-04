@@ -16,6 +16,7 @@ const byType = new Map(
     ].map(name => 'System.Collections.Generic.' + name),
     'System.Console': ['System.Console', 'System.ConsoleColor', 'System.ConsoleKey', 'System.ConsoleKeyInfo'],
     'System.Threading': ['System.Threading.Monitor', 'System.Threading.Interlocked'],
+    'System.Linq.Expressions': ['System.Runtime.CompilerServices.DynamicAttribute'],
   }).flatMap(([assembly, names]) => names.map(name => [name, assembly])),
 );
 

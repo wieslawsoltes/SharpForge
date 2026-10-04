@@ -452,6 +452,24 @@ managed string chunk, plus existing amortized storage growth. Configurable
 culture, explicit Single formats and remaining builder APIs stay outside this
 increment under #2637.
 
+`StringBuilder.Append(decimal)` appends at ID 524332 after typed builder equality.
+It reuses the existing exact Decimal carrier, invariant default formatter and
+bounded chunk append. The coefficient never passes through JavaScript Number;
+scale and trailing zeros are retained. A negative zero keeps its stored sign
+but omits that sign in the formatted text, matching the native reference.
+Default Decimal text uses at most 31 UTF-16 units, with existing amortized
+storage growth and host formatting temporaries outside managed heap counters.
+
+The pinned .NET 10.0.5 reference contains 33 cases and a mixed fluent Int32/Char
+control, including signed limits, scale boundaries, signed zeros, values beyond
+Number's exact integer range and null receivers. Source-platform tests check
+carrier words before and after appending; independent CIL constructs the exact
+96-bit values through the native Decimal constructor signature. Compiled typed
+literals assert native output and the chosen contract through both pipelines
+and VMs. GC, snapshots and allocation-limit controls exercise the reused append
+path. No formatter, compiler or runtime implementation changes are introduced;
+configurable culture and remaining builder APIs stay separate under #2637.
+
 `StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
 .NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
 null validation. A null string is accepted only for `(0, 0)`. For non-null strings,
@@ -486,6 +504,25 @@ are retained. The array source is fully converted before write callbacks run.
 The unchanged native oracle runs through source-platform and independent CIL
 calls; compiled typed arrays cover both pipelines and both VMs. Other builder
 overloads remain separate work under #2637.
+
+`StringBuilder.Append(StringBuilder, int, int)` appends at ID 524333. Its 68-case
+pinned .NET 10.0.5 reference validates negative `startIndex`, then negative
+`count`, then null input. Null succeeds only for `(0, 0)`; nonnull zero counts
+skip upper bounds, including `Int32.MaxValue`, with no source scan, writes or
+managed allocations. Nonempty invalid ranges name `startIndex`.
+
+The remaining host output budget is checked before traversing source chunks.
+One forward traversal skips the prefix, collects only selected UTF-16 segments
+and stops at the range end. The selected host text is complete before one
+existing chunk append begins, preserving self append and source edits during
+destination callbacks. Neither the whole source nor the destination is
+flattened. Cost is O(visited chunks + count) time and O(selected segments +
+count) host temporaries, plus one managed text chunk and existing amortized
+storage growth. Platform invocation roots both builders; the existing append
+helper roots the new chunk. Observer faults retain the released partial-progress
+policy without a rollback or native concurrency guarantee. Source-platform,
+independent CIL and both compiled pipelines cover the exact overload; the
+remaining Span/Memory and chunk-enumeration APIs stay open under #2637.
 
 `StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
 return the same destination without writes or managed allocations. Nonempty
