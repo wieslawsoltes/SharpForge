@@ -47,6 +47,9 @@ export function createCommandRegistry({context = () => ({})} = {}) {
     describe(id, overrides = {}) {
       return registry.describe(id, {...contextProvider(), ...overrides});
     },
+    canExecute(id, ...args) {
+      return !disposed && api.describe(id, {args})?.enabled === true;
+    },
     configure(id, changes) {
       assertOpen();
       const current = registry.commands.get(id);
