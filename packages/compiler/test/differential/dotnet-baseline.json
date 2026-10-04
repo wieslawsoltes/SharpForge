@@ -444,6 +444,7 @@
   "reduced-conversions/typeless-operands-of-user-operators",
   "reduced-conversions/user-conversions-from-null-and-tuple-literals",
   "reduced-conversions/user-conversions-without-casts",
+  "reduced-functional/generic-extension-methods-as-delegates",
   "reduced-functional/lambdas-as-values",
   "reduced-generics/constraints-in-overload-resolution",
   "reduced-generics/generic-virtual-base-calls",
