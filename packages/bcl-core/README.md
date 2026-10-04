@@ -505,6 +505,25 @@ The unchanged native oracle runs through source-platform and independent CIL
 calls; compiled typed arrays cover both pipelines and both VMs. Other builder
 overloads remain separate work under #2637.
 
+`StringBuilder.Append(StringBuilder, int, int)` appends at ID 524333. Its 68-case
+pinned .NET 10.0.5 reference validates negative `startIndex`, then negative
+`count`, then null input. Null succeeds only for `(0, 0)`; nonnull zero counts
+skip upper bounds, including `Int32.MaxValue`, with no source scan, writes or
+managed allocations. Nonempty invalid ranges name `startIndex`.
+
+The remaining host output budget is checked before traversing source chunks.
+One forward traversal skips the prefix, collects only selected UTF-16 segments
+and stops at the range end. The selected host text is complete before one
+existing chunk append begins, preserving self append and source edits during
+destination callbacks. Neither the whole source nor the destination is
+flattened. Cost is O(visited chunks + count) time and O(selected segments +
+count) host temporaries, plus one managed text chunk and existing amortized
+storage growth. Platform invocation roots both builders; the existing append
+helper roots the new chunk. Observer faults retain the released partial-progress
+policy without a rollback or native concurrency guarantee. Source-platform,
+independent CIL and both compiled pipelines cover the exact overload; the
+remaining Span/Memory and chunk-enumeration APIs stay open under #2637.
+
 `StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
 return the same destination without writes or managed allocations. Nonempty
 sources are validated as builders, then the combined length is checked against
