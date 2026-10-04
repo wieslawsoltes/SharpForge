@@ -154,11 +154,7 @@ handling and continues the selected managed browser process; it is not OS proces
 detachment. Renderer metrics identify the actual backend rather than claiming that
 a fallback rendered through WebGPU.
 
-### Dependent active application inspection
-
-The final Studio composition layer supplies the inspector adapter and its test
-described in this section. They are outside the standalone session/runtime
-review branch.
+### Active application inspection
 
 `DebuggerExtensions` accepts `sessions` and
 `getApplicationWindows: () => applicationWindows` from the Studio composition.
@@ -193,7 +189,7 @@ The focused Node files are `a19-worker-client.test.js`,
 shared undo, save races and locks on unopened documents. Their fake Worker
 is explicitly a protocol/lifetime test, not compiler or native parity evidence.
 
-The dependent composition fixture `tests/browser_multi_session_test.py` loads `TwoApps.slnx` and two C# projects
+`tests/browser_multi_session_test.py` loads `TwoApps.slnx` and two C# projects
 through the running Studio's `loadDiskRecords` API. It uses Studio's existing
 workbench services and application windows. The fixture selects distinct profiles
 through the startup toolbar, starts both projects with the actual Start button,
@@ -207,8 +203,6 @@ the in-memory Blob loader is explicitly rejected. Its result JSON records the
 selected engine and failure or completion, including checks completed before a
 failure. Browser execution remains pending until run on an installed supported
 engine; authoring or syntax-checking this fixture is not browser qualification.
-The fixture requires the final Studio root and is not included in the standalone
-sessions/runtime review branch.
 
 `tests/a19-multi-session-fixture.test.js` uses the same C# window source with real
 compiler output and two real runtime worker modules in each JavaScript engine. It
@@ -224,8 +218,3 @@ transport; tests cover two simultaneous workers, equal local serials, stop isola
 and malformed replacement launches. Runtime option boundaries and existing builtin
 ID locks are checked separately. Native and Wasm execution are not represented by
 these tests.
-
-The review stack boundary and historical qualification results are recorded in
-`docs/project16-sessions-review.md` and `docs/a19-session-evidence.md`. The service
-layer is intended to be composed by a host; this review does not replace the
-existing Studio root with the final docking, shell and session composition.

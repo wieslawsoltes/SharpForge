@@ -1,0 +1,2698 @@
+{
+  "schemaVersion": 1,
+  "format": "sharpforge-project16-qualification-history",
+  "capturedAt": "2026-10-04T00:52:32.486108+00:00",
+  "scope": "Completed Project16 local qualification history through final product source48472269, with immutable raw evidence, public tree equivalents, explicit integrator performance acceptance and pending hosted/platform qualification.",
+  "archiveSourceSnapshot": {
+    "commit": "48472269ec106049debc0d448985882463365215",
+    "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+    "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+    "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+  },
+  "evidencePolicy": [
+    "Each result applies to its recorded source commit/tree and exact raw log; it does not qualify the current branch or later source changes.",
+    "Initial failures are retained. Affected retries overlap earlier runs and must not be added into a fabricated unique pass total.",
+    "A discovered Python/browser suite is not an executed browser result. Explicit skipped targets are not passed acceptance.",
+    "This archival operation copied evidence and read source objects; it executed no test, build, benchmark, static gate or browser."
+  ],
+  "runs": [
+    {
+      "id": "a19-complete",
+      "kind": "node_tests",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db",
+        "publishedEquivalentCommit": "5c30a5d868aaded2b0ca725c35716c71bc4327d5",
+        "publishedEquivalentTree": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-node.log",
+        "sha256": "ca067669c9fb8cd3af565af02086f3dafc95074fe24a672f6317814ed974b5b6",
+        "bytes": 82122,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 592,
+        "passed": 579,
+        "failed": 13,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 28089.671693,
+        "status": "failed"
+      },
+      "failures": [
+        {
+          "file": "tests/a19-builtin-extensions.test.js",
+          "line": 27,
+          "name": "environment registration uses the existing A07 reserved block without changing released slots"
+        },
+        {
+          "file": "tests/a19-shell-inventory.test.js",
+          "line": 13,
+          "name": "workbench inventory matches every registered shell window and command"
+        },
+        {
+          "file": "tests/a19-studio-composition.test.js",
+          "line": 112,
+          "name": "partial disk saves acknowledge only written snapshots and keep edits made during I/O dirty"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 58,
+          "name": "an Explorer host commit retains unchanged models and their saved baselines, including unsaved siblings"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 90,
+          "name": "dirty Explorer rename and undo preserve source roots, baseline history, active tabs and breakpoints"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 129,
+          "name": "document reset subscribers observe the same project XML, membership and active source as the Explorer commit"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 157,
+          "name": "Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 197,
+          "name": "Explorer host rejects a superseding workspace revision before adopting its staged source models"
+        },
+        {
+          "file": "tests/a19-studio-import-composition.test.js",
+          "line": 109,
+          "name": "sample reset observers see the matching source, workspace metadata and cleared old artifacts"
+        },
+        {
+          "file": "tests/a19-studio-save-ownership.test.js",
+          "line": 40,
+          "name": "Studio bulk save follows the successful Save As handle and leaves the original file untouched"
+        },
+        {
+          "file": "tests/a19-studio-save-ownership.test.js",
+          "line": 70,
+          "name": "bulk I/O cannot reconcile a replacement document with the same URI and version"
+        },
+        {
+          "file": "tests/a19-studio-workspace-inputs.test.js",
+          "line": 94,
+          "name": "an uncancellable late reader keeps the original ticket and cannot replace a newer workspace"
+        },
+        {
+          "file": "tests/release08-commands.test.js",
+          "line": 22,
+          "name": "08 editor declares Visual Studio default and five distinct profiles without a DOM"
+        }
+      ],
+      "discovery": {
+        "nodeTestFiles": 71,
+        "pythonSuites": 7,
+        "pythonSuitesExecutedInThisRun": 0
+      },
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "a20-complete",
+      "kind": "node_tests",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db",
+        "publishedEquivalentCommit": "5c30a5d868aaded2b0ca725c35716c71bc4327d5",
+        "publishedEquivalentTree": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-a20.log",
+        "sha256": "4ba74d84b9d06eedffd8a44c0c3fdecc70550ae8e7e3580885931b0da5a0224c",
+        "bytes": 52014,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 610,
+        "passed": 601,
+        "failed": 0,
+        "skipped": 9,
+        "cancelled": 0,
+        "durationMs": 31390.416312,
+        "status": "passed_with_explicit_skips"
+      },
+      "skipDetails": [
+        {
+          "name": "Unsupported target: shell commands and external filters",
+          "reason": "The browser editor has no shell or process-execution authority.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: Vimscript and plugin loading",
+          "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: terminal buffers",
+          "reason": "Terminal emulation is outside the editor document and keymap scope.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: native Vim regex extensions",
+          "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: operating-system primary selection",
+          "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: unlimited recursive macros",
+          "reason": "Native macros have explicit recursion, key-count and register-memory budgets.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: desktop Vim executable parity",
+          "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: browser key interception and assistive technology",
+          "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+          "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime",
+          "classification": "pinned_native_oracle_unavailable"
+        }
+      ],
+      "discovery": {
+        "nodeTestFiles": 47,
+        "pythonSuites": 3,
+        "pythonSuitesExecutedInThisRun": 0
+      },
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "a19-affected-corrections",
+      "kind": "node_tests",
+      "source": {
+        "commit": "dacdd6971a06199243e8688fdb6d4a9a8573a05a",
+        "treeSha": "19b1d5190deaaf362356421c15e267d925012073",
+        "publishedEquivalentCommit": "6377a0a3f84e5366d51bc648995ac0a2415b8344",
+        "publishedEquivalentTree": "19b1d5190deaaf362356421c15e267d925012073"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-affected-corrections.log",
+        "sha256": "812fe81c6cc6fa2be0b6c97aeeade16033a8f9cb30483664c9424d98bcfe83c0",
+        "bytes": 12616,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 83,
+        "passed": 81,
+        "failed": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 3416.566259,
+        "status": "failed"
+      },
+      "failures": [
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 157,
+          "name": "Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 197,
+          "name": "Explorer host rejects a superseding workspace revision before adopting its staged source models"
+        }
+      ],
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "a19-explorer-correction",
+      "kind": "node_tests",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e",
+        "publishedEquivalentCommit": "ab9ea10ee0cb85b96ad4f4c0b6b009c97f65439e",
+        "publishedEquivalentTree": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-explorer-correction.log",
+        "sha256": "e6cdd2739a808cf95e87b9ecd173cbcfb6bb7431c6b382673d42c2a6f217a3b5",
+        "bytes": 694,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 408.472194,
+        "status": "passed"
+      },
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "initial-static-check",
+      "kind": "static_check",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db",
+        "publishedEquivalentCommit": "5c30a5d868aaded2b0ca725c35716c71bc4327d5",
+        "publishedEquivalentTree": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-check.log",
+        "sha256": "7e323f57b3b47fb2e20993e94b8751082b867c8c4fef5072aee3e0e15425ff7e",
+        "bytes": 1320,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "failed",
+        "manifest": {
+          "areas": 30,
+          "nodeFiles": 617,
+          "browserScripts": 32,
+          "unassigned": 0,
+          "duplicate": 0
+        },
+        "syntaxModules": 2504,
+        "syntaxErrors": 0,
+        "staticImports": {
+          "passed": false,
+          "inspected": 2500,
+          "modules": 2500,
+          "errors": [
+            {
+              "path": "apps/studio/workbench/comment-tasks.js",
+              "operation": "dynamic-import",
+              "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+              "count": 1,
+              "lines": [
+                5
+              ],
+              "message": "Unreviewed dynamic-code use or changed file"
+            },
+            {
+              "path": "packages/editor/smoke.mjs",
+              "operation": "dynamic-import",
+              "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+              "count": 3,
+              "lines": [
+                9,
+                21,
+                32
+              ],
+              "message": "Unreviewed dynamic-code use or changed file"
+            },
+            {
+              "path": "apps/studio/workbench/comment-tasks.js",
+              "operation": "dynamic-import",
+              "message": "Stale or mismatched allow-list entry"
+            },
+            {
+              "path": "packages/editor/smoke.mjs",
+              "operation": "dynamic-import",
+              "message": "Stale or mismatched allow-list entry"
+            }
+          ]
+        }
+      },
+      "commandEvidence": "npm run check is recorded in the log; any outer resource wrapper is not recorded."
+    },
+    {
+      "id": "static-import-retry",
+      "kind": "static_imports",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e",
+        "publishedEquivalentCommit": "ab9ea10ee0cb85b96ad4f4c0b6b009c97f65439e",
+        "publishedEquivalentTree": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-static-imports.log",
+        "sha256": "1e7c02ced399dcd485ee1a274dd64e9b47141417bc6939e19af65d2b62e3c98a",
+        "bytes": 77,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "report": {
+          "passed": true,
+          "inspected": 2500,
+          "modules": 2500,
+          "errors": []
+        }
+      },
+      "commandEvidence": "The raw report does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "contracts",
+      "kind": "contracts",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e",
+        "publishedEquivalentCommit": "ab9ea10ee0cb85b96ad4f4c0b6b009c97f65439e",
+        "publishedEquivalentTree": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-contracts.log",
+        "sha256": "67f7f1cc0dce928fd6fe50a139deba6114bff4d896c7bcf341fcbd0761412e8d",
+        "bytes": 36,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "report": {
+          "changes": [],
+          "errors": []
+        }
+      },
+      "commandEvidence": "The raw report does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "quarantine",
+      "kind": "quarantine",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e",
+        "publishedEquivalentCommit": "ab9ea10ee0cb85b96ad4f4c0b6b009c97f65439e",
+        "publishedEquivalentTree": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-quarantine.log",
+        "sha256": "e9db67ddde45a2aafa58cd5388e9d6d9a091670a5eaf91731ab5dc9d2825cb16",
+        "bytes": 27,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "report": {
+          "passed": true,
+          "active": 0
+        }
+      },
+      "commandEvidence": "The raw report does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "initial-normal-build",
+      "kind": "normal_build",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db",
+        "publishedEquivalentCommit": "5c30a5d868aaded2b0ca725c35716c71bc4327d5",
+        "publishedEquivalentTree": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-build.log",
+        "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+        "bytes": 206,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "artifactKind": "normal browser distribution",
+        "standaloneQualified": false,
+        "browserExecuted": false
+      },
+      "commandEvidence": "npm run build is recorded in the log; any outer resource wrapper is not recorded."
+    },
+    {
+      "id": "post-audit-corrective-cohort",
+      "kind": "node_tests",
+      "source": {
+        "commit": "4b1c02914fcb512e963eb1f824598548e5bcf884",
+        "treeSha": "0b4cb6fb81b2f4f05a683234868c7c716567abe0",
+        "publishedEquivalentCommit": "a3e431a3bdfffdb2f9a80977802fe2e8b03b9bb4",
+        "publishedEquivalentTree": "0b4cb6fb81b2f4f05a683234868c7c716567abe0"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-correction-cohort.log",
+        "sha256": "ed4b077fa366c29f41ce9bc0bfa08f4c49ec7f0b345d5c774301d946727f232f",
+        "bytes": 33544,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-correction-cohort.json",
+        "sha256": "29ce775fc464407d5bafe1d87331a752e5b42a31469a7ec77adaabf0186bfa8d",
+        "bytes": 3379,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "The preserved integration-owner run metadata supplies the exact invocation, timestamps, files and source commit/tree; repository object IDs match that metadata.",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a20-search-navigation.test.js",
+        "tests/a20-incremental-search-navigation.test.js",
+        "tests/text-search-regex.test.js",
+        "tests/editor-model-selections.test.js",
+        "tests/a20-editor-search-diff.test.js",
+        "tests/a20-surround-indentation.test.js",
+        "tests/a20-tab-conversion-endings.test.js",
+        "tests/a20-editor-snippets-intelligence.test.js",
+        "tests/a20-surround-with-shortcut.test.js",
+        "tests/a20-view-editing-options.test.js",
+        "tests/a19-call-hierarchy-ownership.test.js",
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-studio-language-providers.test.js",
+        "tests/a20-method-completion.test.js",
+        "tests/a20-bound-signature-help.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a19-startup-menus.test.js",
+        "tests/a19-studio-reveal-policy.test.js",
+        "tests/a19-startup-project-profile.test.js",
+        "tests/a19-startup-orchestration.test.js",
+        "tests/a19-profile-selection.test.js",
+        "tests/a19-build-output.test.js",
+        "tests/a19-studio-composition.test.js",
+        "tests/a19-shell-commands.test.js",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a19-shell-inventory.test.js",
+        "tests/a19-studio-diagnostic-producers.test.js",
+        "tests/a19-studio-build-cancellation.test.js",
+        "tests/a19-studio-explorer-decorations.test.js",
+        "tests/a19-background-analysis-tasks.test.js",
+        "tests/designer-sync13.test.js",
+        "tests/a19-qualification-preflight.test.js",
+        "tests/a19-qualification-trigger.test.js"
+      ],
+      "files": [
+        "tests/a20-search-navigation.test.js",
+        "tests/a20-incremental-search-navigation.test.js",
+        "tests/text-search-regex.test.js",
+        "tests/editor-model-selections.test.js",
+        "tests/a20-editor-search-diff.test.js",
+        "tests/a20-surround-indentation.test.js",
+        "tests/a20-tab-conversion-endings.test.js",
+        "tests/a20-editor-snippets-intelligence.test.js",
+        "tests/a20-surround-with-shortcut.test.js",
+        "tests/a20-view-editing-options.test.js",
+        "tests/a19-call-hierarchy-ownership.test.js",
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-studio-language-providers.test.js",
+        "tests/a20-method-completion.test.js",
+        "tests/a20-bound-signature-help.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a19-startup-menus.test.js",
+        "tests/a19-studio-reveal-policy.test.js",
+        "tests/a19-startup-project-profile.test.js",
+        "tests/a19-startup-orchestration.test.js",
+        "tests/a19-profile-selection.test.js",
+        "tests/a19-build-output.test.js",
+        "tests/a19-studio-composition.test.js",
+        "tests/a19-shell-commands.test.js",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a19-shell-inventory.test.js",
+        "tests/a19-studio-diagnostic-producers.test.js",
+        "tests/a19-studio-build-cancellation.test.js",
+        "tests/a19-studio-explorer-decorations.test.js",
+        "tests/a19-background-analysis-tasks.test.js",
+        "tests/designer-sync13.test.js",
+        "tests/a19-qualification-preflight.test.js",
+        "tests/a19-qualification-trigger.test.js"
+      ],
+      "fileCount": 33,
+      "startedAt": "2026-10-04T01:15:58.813666+00:00",
+      "finishedAt": "2026-10-04T01:16:11.256817+00:00",
+      "result": {
+        "tests": 305,
+        "passed": 302,
+        "failed": 3,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 12237.260897,
+        "status": "failed",
+        "exitCode": 1
+      },
+      "failures": [
+        {
+          "file": "tests/a00-03-studio-registries.test.js",
+          "line": 23,
+          "name": "every worker message has a handler seam and unknown messages fail structurally",
+          "classification": "stale_fixture_expectation",
+          "reviewFinding": "Worker protocol fixture still expects 28 handlers although the completed source exposes 41.",
+          "resolution": {
+            "run": "post-audit-corrective-retry",
+            "source": {
+              "commit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+              "treeSha": "367b277c5016e1172da3b19ec858c9d7c0045030",
+              "publishedEquivalentCommit": "01c0c052fb30bbe447dc43bdaab85df45f06160f",
+              "publishedEquivalentTree": "367b277c5016e1172da3b19ec858c9d7c0045030"
+            },
+            "status": "affected file passed"
+          }
+        },
+        {
+          "file": "tests/a19-studio-composition.test.js",
+          "line": 28,
+          "name": "Studio routes language requests by document membership without selecting background projects",
+          "classification": "stale_fixture_expectation",
+          "reviewFinding": "Fixture expects projectId to be absent despite intentional exact project ownership forwarding.",
+          "resolution": {
+            "run": "post-audit-corrective-retry",
+            "source": {
+              "commit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+              "treeSha": "367b277c5016e1172da3b19ec858c9d7c0045030",
+              "publishedEquivalentCommit": "01c0c052fb30bbe447dc43bdaab85df45f06160f",
+              "publishedEquivalentTree": "367b277c5016e1172da3b19ec858c9d7c0045030"
+            },
+            "status": "affected file passed"
+          }
+        },
+        {
+          "file": "tests/a19-studio-reveal-policy.test.js",
+          "line": 160,
+          "name": "main and detached document navigation invalidate pending reveals and listeners are disposed",
+          "classification": "implementation_bug",
+          "reviewFinding": "Capture-phase pointerdown/keydown navigation listeners survived cleanup during document unload because removal used a mismatched capture option. The unload listener itself invoked cleanup; the original expected intent + 2 assertion was correct and retained.",
+          "resolution": {
+            "run": "post-audit-corrective-retry",
+            "source": {
+              "commit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+              "treeSha": "367b277c5016e1172da3b19ec858c9d7c0045030",
+              "publishedEquivalentCommit": "01c0c052fb30bbe447dc43bdaab85df45f06160f",
+              "publishedEquivalentTree": "367b277c5016e1172da3b19ec858c9d7c0045030"
+            },
+            "status": "affected file passed"
+          }
+        }
+      ],
+      "note": "Completed 33-file acceptance/host correction scope. 302 tests passed and three failed; this is not a passing 305-case cohort. It overlaps earlier A19/A20 and owner cohorts and must not be added to them."
+    },
+    {
+      "id": "post-audit-corrective-retry",
+      "kind": "node_tests",
+      "source": {
+        "commit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+        "treeSha": "367b277c5016e1172da3b19ec858c9d7c0045030",
+        "publishedEquivalentCommit": "01c0c052fb30bbe447dc43bdaab85df45f06160f",
+        "publishedEquivalentTree": "367b277c5016e1172da3b19ec858c9d7c0045030"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-correction-retry.log",
+        "sha256": "334d38f143e065e4eca7cb1007b4a5a56c09cf0e584134625a3429da280b90ce",
+        "bytes": 3825,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-correction-retry.json",
+        "sha256": "2a73fbd48ef9ea77802ae059ef6acb8d7cb3c1648d3b97cbd56ddd461e7c76cd",
+        "bytes": 617,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Exact integration-owner invocation/source metadata and raw output; commit/tree checked against repository objects.",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a19-studio-composition.test.js",
+        "tests/a19-studio-reveal-policy.test.js"
+      ],
+      "startedAt": "2026-10-04T01:21:31.380498+00:00",
+      "finishedAt": "2026-10-04T01:21:33.204302+00:00",
+      "result": {
+        "status": "passed",
+        "tests": 36,
+        "passed": 36,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 1673.837158,
+        "exitCode": 0
+      },
+      "files": [
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a19-studio-composition.test.js",
+        "tests/a19-studio-reveal-policy.test.js"
+      ],
+      "fileCount": 3,
+      "note": "Exactly the three previously failing files. These 36 cases overlap the initial 305-case cohort; they are not 36 additional unique cases."
+    },
+    {
+      "id": "post-audit-complete-static-check",
+      "kind": "static_check",
+      "source": {
+        "commit": "89ba34436db4f8aa56fc529a49a797dba93540a7",
+        "treeSha": "3a0ed24019c04354d5085e3686d5208890d4624b",
+        "publishedEquivalentCommit": "b1126c8c921eb9be682b515fcc444bfedd1e8d03",
+        "publishedEquivalentTree": "3a0ed24019c04354d5085e3686d5208890d4624b"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-corrected-check.log",
+        "sha256": "d8594ec2c76dd0d3730b2d4b86f3726ee052e5658703e2d1bd8f6dd5319e2cd6",
+        "bytes": 381,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-corrected-check.json",
+        "sha256": "f479d5bb2db08d65ac553c4b938ab574d37ff834d8db0cde23f752e91b3ed20d",
+        "bytes": 337,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Exact integration-owner invocation/source metadata and raw output; commit/tree checked against repository objects.",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-10-04T01:25:37.993016+00:00",
+      "finishedAt": "2026-10-04T01:25:41.767098+00:00",
+      "result": {
+        "status": "passed",
+        "areas": 30,
+        "nodeFiles": 632,
+        "browserScripts": 32,
+        "unassigned": 0,
+        "duplicate": 0,
+        "syntaxModules": 2542,
+        "syntaxErrors": 0,
+        "linkedModules": 2538,
+        "linkErrors": 0,
+        "exitCode": 0
+      }
+    },
+    {
+      "id": "provider-binding-initial-comparison",
+      "kind": "node_performance_comparison",
+      "source": {
+        "commit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+        "treeSha": "367b277c5016e1172da3b19ec858c9d7c0045030",
+        "publishedEquivalentCommit": "01c0c052fb30bbe447dc43bdaab85df45f06160f",
+        "publishedEquivalentTree": "367b277c5016e1172da3b19ec858c9d7c0045030"
+      },
+      "baselineSource": {
+        "commit": "3f7e51a69cff658e55103626fd3ba1a2128692e3",
+        "treeSha": "5a6f15bc85abd2faeb7a30fb3e882dd0310cba49",
+        "publishedEquivalentCommit": "ed2e5793a228b1b8387a8f6b931354be21bb451a",
+        "publishedEquivalentTree": "5a6f15bc85abd2faeb7a30fb3e882dd0310cba49"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/run.json",
+        "sha256": "3fa7fbc7fcf435b966ebe76a11a71f265525a425afd8bbcaeae2d3ad1e2834a0",
+        "bytes": 1330,
+        "preservation": "exact input bytes"
+      },
+      "artifacts": [
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/baseline.json",
+          "sha256": "b2b73a6bd5cee25d1ec1ae6f35e6febd095c16e5fc0b26c2d200bc4a7dfd7dd4",
+          "bytes": 56565,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/candidate.json",
+          "sha256": "5a289419e1d457cea6fe58a1f7f1a952fc099cbb25fc1cc1d669c4784d8fa715",
+          "bytes": 56534,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/comparison.json",
+          "sha256": "db4afa8df7b3280d0ef5854cd1cb9f2f9505b708c74c5ac4f7997b35e185eca0",
+          "bytes": 11161,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/baseline.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/candidate.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/baseline/a20-provider-binding-export.json",
+          "sha256": "5cf72392f84a7edc614c1d15c3df08ca47f817dca89135bc7f6ed488480a2f8e",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-40bbdea7/candidate/a20-provider-binding-export.json",
+          "sha256": "832a2c7e6f5661051123635fd432df2c1c78d5208997790f56f95e400cae9365",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        }
+      ],
+      "commands": [
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-40bbdea7/baseline/a20-provider-binding.mjs",
+          "--calls",
+          "96",
+          "--samples",
+          "15",
+          "--warmups",
+          "5",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-40bbdea7/baseline.json"
+        ],
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-40bbdea7/candidate/a20-provider-binding.mjs",
+          "--calls",
+          "96",
+          "--samples",
+          "15",
+          "--warmups",
+          "5",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-40bbdea7/candidate.json"
+        ],
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-compare.mjs",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-40bbdea7/baseline.json",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-40bbdea7/candidate.json"
+        ]
+      ],
+      "startedAt": "2026-10-04T01:22:39.506771+00:00",
+      "finishedAt": "2026-10-04T01:22:55.999409+00:00",
+      "settings": {
+        "calls": 96,
+        "samples": 15,
+        "warmups": 5,
+        "compilerOptions": {
+          "outputKind": "library",
+          "pipeline": "bound"
+        }
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "architecture": "x64",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "logicalCpus": 9,
+        "totalMemoryBytes": 10451464192,
+        "execArgv": [
+          "--expose-gc"
+        ],
+        "nodeOptions": "--max-old-space-size=2048",
+        "heapSizeLimitBytes": 2348810240,
+        "initialLoadAverage": [
+          1.95,
+          1.92,
+          1.95
+        ],
+        "finalLoadAverage": [
+          2.34,
+          2,
+          1.98
+        ]
+      },
+      "sharedHost": true,
+      "harnessSha256": "4e50768bee59ea2c779a871c5cca4ccf95daba121a4072558432fe528d451d49",
+      "result": {
+        "status": "measured_budget_followup_required",
+        "comparisonExitCode": 0,
+        "matchedCompilerAndModelObservations": true,
+        "sameHarnessSha256": true,
+        "observedMedianSlowdownsAboveFivePercent": [
+          {
+            "case": "instance-overloads",
+            "phase": "source-model-bind",
+            "medianChangePercent": 5.657792391459293,
+            "p95ChangePercent": 16.30929636938916,
+            "retainedHeapMedianDifferenceBytes": 74176
+          },
+          {
+            "case": "local-functions",
+            "phase": "source-model-bind",
+            "medianChangePercent": 12.027436580691898,
+            "p95ChangePercent": 5.714936377470936,
+            "retainedHeapMedianDifferenceBytes": 52368
+          }
+        ]
+      },
+      "interpretation": "Exit zero establishes comparable exact compiler/model observations, not a performance-budget pass. Retained live-result heap and uncollected-heap deltas are not total allocations. Raw compile/bind medians, p95s and heap values for every case are preserved. Shared-host noise, statistical significance and speedups are not inferred. At that initial checkpoint, a concrete source follow-up was required; subsequent captures are retained as separate runs."
+    },
+    {
+      "id": "synchronized-provider-tests",
+      "kind": "node_tests",
+      "source": {
+        "commit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+        "treeSha": "5f95b2569f1d37e14108ca865cb39de33872320e",
+        "publishedEquivalentCommit": "58fa5c185049bd98d71bcfba22c7e4915f9363e4",
+        "publishedEquivalentTree": "5f95b2569f1d37e14108ca865cb39de33872320e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-synchronized-provider-tests.log",
+        "sha256": "e51e004205d830c6ed83a5fdd9db3a60a417f8413e185cc7bda66eb8d4f0e81c",
+        "bytes": 5407,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-synchronized-provider-tests.json",
+        "sha256": "190b311503a987399d62287167dc13aece79e6fa8080ff712c071bbee98b583a",
+        "bytes": 1176,
+        "preservation": "exact input bytes"
+      },
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a20-signature-query-index.test.js",
+        "tests/a20-bound-signature-help.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a19-call-hierarchy-ownership.test.js",
+        "tests/a19-studio-language-providers.test.js",
+        "tests/compiler-reference-assembly.test.js",
+        "tests/compiler-attribute-emission.test.js",
+        "tests/compiler-hidden-entry-parameters.test.js"
+      ],
+      "files": [
+        "tests/a20-signature-query-index.test.js",
+        "tests/a20-bound-signature-help.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a19-call-hierarchy-ownership.test.js",
+        "tests/a19-studio-language-providers.test.js",
+        "tests/compiler-reference-assembly.test.js",
+        "tests/compiler-attribute-emission.test.js",
+        "tests/compiler-hidden-entry-parameters.test.js"
+      ],
+      "fileCount": 8,
+      "startedAt": "2026-10-04T01:43:23.120661+00:00",
+      "finishedAt": "2026-10-04T01:43:29.115793+00:00",
+      "result": {
+        "status": "passed",
+        "exitCode": 0,
+        "tests": 50,
+        "passed": 50,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 5857.19926
+      },
+      "note": "Eight focused files qualify the completed signature-index correction and captured-main compiler metadata seam. Counts overlap earlier owner/integration runs and are not added to them."
+    },
+    {
+      "id": "provider-binding-matched-main-comparison",
+      "kind": "node_performance_comparison",
+      "source": {
+        "commit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+        "treeSha": "5f95b2569f1d37e14108ca865cb39de33872320e",
+        "publishedEquivalentCommit": "58fa5c185049bd98d71bcfba22c7e4915f9363e4",
+        "publishedEquivalentTree": "5f95b2569f1d37e14108ca865cb39de33872320e"
+      },
+      "baselineSource": {
+        "commit": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+        "treeSha": "5a805282c2662f09047b75d7a43c191b06956ea9",
+        "publishedEquivalentCommit": "45319b4df1f8364b387a66db90acf33b434d03f7",
+        "publishedEquivalentTree": "5a805282c2662f09047b75d7a43c191b06956ea9"
+      },
+      "capturedMain": {
+        "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+        "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/run.json",
+        "sha256": "7cb5dbfc3da4a48f8eddc871e875a03bb4269d1c48c5bf18a23ec4658c32403f",
+        "bytes": 1392,
+        "preservation": "exact input bytes"
+      },
+      "artifacts": [
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/baseline.json",
+          "sha256": "0e7eeb900093822ded2b64da23e206bf44dbc2754ef4fb4340ca0805aafe0132",
+          "bytes": 59126,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/candidate.json",
+          "sha256": "73916a433df4bb88d4f1bc9b006c5b708f153909697846b55fb3bd52606b449d",
+          "bytes": 125270,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/comparison.json",
+          "sha256": "e0275881e024db92ac579319b80823efdb00b5336a36d1a756560e3959467aba",
+          "bytes": 29692,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/baseline.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/candidate.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/baseline/a20-provider-binding-export.json",
+          "sha256": "14aba89dd6af479b8bb5292f499cd553eacc5a2a6f5574136c57b710b14fe3d7",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-1699e53a/candidate/a20-provider-binding-export.json",
+          "sha256": "2a85ac29bc41694b47735375f2e7866ce9e96b5735fa03cc8aa023ce356ec145",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        }
+      ],
+      "commands": [
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/baseline/a20-provider-binding.mjs",
+          "--calls",
+          "96",
+          "--samples",
+          "15",
+          "--warmups",
+          "5",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/baseline.json"
+        ],
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/candidate/a20-provider-binding.mjs",
+          "--calls",
+          "96",
+          "--samples",
+          "15",
+          "--warmups",
+          "5",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/candidate.json"
+        ],
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-compare.mjs",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/baseline.json",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/candidate.json"
+        ]
+      ],
+      "startedAt": "2026-10-04T01:45:28.058837+00:00",
+      "finishedAt": "2026-10-04T01:45:52.486202+00:00",
+      "settings": {
+        "calls": 96,
+        "samples": 15,
+        "warmups": 5,
+        "compilerOptions": {
+          "outputKind": "library",
+          "pipeline": "bound"
+        },
+        "queryPhases": {
+          "signature-first-query": 1,
+          "signature-repeated-query": 64
+        }
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "architecture": "x64",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "logicalCpus": 9,
+        "totalMemoryBytes": 10451464192,
+        "execArgv": [
+          "--expose-gc"
+        ],
+        "nodeOptions": "--max-old-space-size=2048",
+        "heapSizeLimitBytes": 2348810240,
+        "initialLoadAverage": [
+          1.63,
+          1.48,
+          1.48
+        ],
+        "finalLoadAverage": [
+          2.04,
+          1.57,
+          1.51
+        ]
+      },
+      "sharedHost": true,
+      "harnessSha256": "f654fedb21cf64751ef8ba4bbb1b5fa91c42afab43d406f5af3fc911fd1f55e8",
+      "result": {
+        "status": "measured_with_explicit_p95_cost",
+        "comparisonExitCode": 0,
+        "matchedCompilerAndModelObservations": true,
+        "sameHarnessSha256": true,
+        "sharedPhaseRows": 8,
+        "candidateOnlyQueryRows": 8,
+        "observedMedianSlowdownsAboveFivePercent": [],
+        "observedP95SlowdownsAboveFivePercent": [
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "source-model-bind",
+            "baselineMs": 27.54587999999967,
+            "candidateMs": 36.099619000000075,
+            "p95ChangePercent": 31.052698261956092,
+            "retainedHeapMedianDifferenceBytes": 110136
+          }
+        ],
+        "candidateOnlyQueries": [
+          {
+            "case": "instance-overloads",
+            "phase": "signature-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 0.2608330000002752,
+            "p95TotalMs": 0.3915999999990163,
+            "medianPerQueryMs": 0.2608330000002752,
+            "p95PerQueryMs": 0.3915999999990163
+          },
+          {
+            "case": "instance-overloads",
+            "phase": "signature-repeated-query",
+            "baselineAvailable": false,
+            "queryCount": 64,
+            "medianTotalMs": 0.49168100000133563,
+            "p95TotalMs": 0.6181420000011713,
+            "medianPerQueryMs": 0.007682515625020869,
+            "p95PerQueryMs": 0.0096584687500183
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "signature-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 0.27091900000050373,
+            "p95TotalMs": 0.3705389999995532,
+            "medianPerQueryMs": 0.27091900000050373,
+            "p95PerQueryMs": 0.3705389999995532
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "signature-repeated-query",
+            "baselineAvailable": false,
+            "queryCount": 64,
+            "medianTotalMs": 0.31260199999996985,
+            "p95TotalMs": 0.37485500000002503,
+            "medianPerQueryMs": 0.004884406249999529,
+            "p95PerQueryMs": 0.005857109375000391
+          },
+          {
+            "case": "local-functions",
+            "phase": "signature-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 0.1722300000001269,
+            "p95TotalMs": 0.25250099999902886,
+            "medianPerQueryMs": 0.1722300000001269,
+            "p95PerQueryMs": 0.25250099999902886
+          },
+          {
+            "case": "local-functions",
+            "phase": "signature-repeated-query",
+            "baselineAvailable": false,
+            "queryCount": 64,
+            "medianTotalMs": 0.39841100000012375,
+            "p95TotalMs": 1.7771300000003976,
+            "medianPerQueryMs": 0.006225171875001934,
+            "p95PerQueryMs": 0.027767656250006212
+          },
+          {
+            "case": "incomplete-instance-call",
+            "phase": "signature-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 0.25530499999877065,
+            "p95TotalMs": 0.2967879999996512,
+            "medianPerQueryMs": 0.25530499999877065,
+            "p95PerQueryMs": 0.2967879999996512
+          },
+          {
+            "case": "incomplete-instance-call",
+            "phase": "signature-repeated-query",
+            "baselineAvailable": false,
+            "queryCount": 64,
+            "medianTotalMs": 0.5194830000000366,
+            "p95TotalMs": 0.8192850000014005,
+            "medianPerQueryMs": 0.008116921875000571,
+            "p95PerQueryMs": 0.012801328125021882
+          }
+        ]
+      },
+      "interpretation": "Both sides include the same captured main and use the identical revised harness. No shared median exceeds +5%; constructed-generic binding p95 increased 31.052698%, retained heap median +110136 bytes, so this is not an unconditional performance-budget pass. Query phases are candidate-only because the baseline has no signatureHelp API. First-query cost includes the deferred index; repeated-query cost measures 64 queries after priming. Fresh phase medians are not summed into an unmeasured end-to-end total. The original benchmark is retained separately. Shared-host noise, statistical significance, causal speedups and browser/native latency are not inferred."
+    },
+    {
+      "id": "synchronized-a19-complete",
+      "kind": "node_tests",
+      "source": {
+        "commit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+        "treeSha": "5f95b2569f1d37e14108ca865cb39de33872320e",
+        "publishedEquivalentCommit": "58fa5c185049bd98d71bcfba22c7e4915f9363e4",
+        "publishedEquivalentTree": "5f95b2569f1d37e14108ca865cb39de33872320e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-synchronized-A19.log",
+        "sha256": "5eb5277362103c37de5f0a41789b1304df63c1ae5004fbefe93907b5884af034",
+        "bytes": 69054,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-synchronized-A19.json",
+        "sha256": "3a7d6a99c5861c14369fb2b1daecb435d2fff6e4925549e67f677772fef46be6",
+        "bytes": 355,
+        "preservation": "exact input bytes"
+      },
+      "command": [
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A19"
+      ],
+      "area": "A19",
+      "startedAt": "2026-10-04T01:50:00.045235+00:00",
+      "finishedAt": "2026-10-04T01:50:36.139303+00:00",
+      "result": {
+        "status": "passed",
+        "exitCode": 0,
+        "tests": 662,
+        "passed": 662,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "durationMs": 35784.946892
+      },
+      "sourceAttribution": "Integration-owner metadata pins the complete area invocation and exact source/tree; raw final summary retained. The manifest selects files at that source; the metadata does not enumerate a separate file list.",
+      "note": "A new completed full-area execution at the synchronized product source. This result is distinct from every earlier failed/affected cohort; overlapping run counts are not added."
+    },
+    {
+      "id": "synchronized-a20-complete",
+      "kind": "node_tests",
+      "source": {
+        "commit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+        "treeSha": "5f95b2569f1d37e14108ca865cb39de33872320e",
+        "publishedEquivalentCommit": "58fa5c185049bd98d71bcfba22c7e4915f9363e4",
+        "publishedEquivalentTree": "5f95b2569f1d37e14108ca865cb39de33872320e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-synchronized-A20.log",
+        "sha256": "0024e150e6f616eb1baac1b1f7f2ad0f146058a6344126d5440c2c934db75722",
+        "bytes": 58735,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-synchronized-A20.json",
+        "sha256": "6e5cd48a315b3feb2679e8d67c034d1d39d95113c28bdc890421da840f9b8eaa",
+        "bytes": 355,
+        "preservation": "exact input bytes"
+      },
+      "command": [
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A20"
+      ],
+      "area": "A20",
+      "startedAt": "2026-10-04T01:50:36.139963+00:00",
+      "finishedAt": "2026-10-04T01:51:12.171261+00:00",
+      "result": {
+        "status": "passed_with_explicit_skips",
+        "exitCode": 0,
+        "tests": 674,
+        "passed": 665,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 9,
+        "durationMs": 33763.262713
+      },
+      "sourceAttribution": "Integration-owner metadata pins the complete area invocation and exact source/tree; raw final summary retained. The manifest selects files at that source; the metadata does not enumerate a separate file list.",
+      "note": "A new completed full-area execution at the synchronized product source. This result is distinct from every earlier failed/affected cohort; overlapping run counts are not added.",
+      "skipDetails": [
+        {
+          "name": "Unsupported target: shell commands and external filters",
+          "reason": "The browser editor has no shell or process-execution authority.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: Vimscript and plugin loading",
+          "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: terminal buffers",
+          "reason": "Terminal emulation is outside the editor document and keymap scope.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: native Vim regex extensions",
+          "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: operating-system primary selection",
+          "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: unlimited recursive macros",
+          "reason": "Native macros have explicit recursion, key-count and register-memory budgets.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: desktop Vim executable parity",
+          "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: browser key interception and assistive technology",
+          "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+          "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime",
+          "classification": "pinned_native_oracle_unavailable"
+        }
+      ]
+    },
+    {
+      "id": "provider-binding-targeted-tail-comparison",
+      "kind": "node_performance_comparison",
+      "source": {
+        "commit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+        "treeSha": "5f95b2569f1d37e14108ca865cb39de33872320e",
+        "publishedEquivalentCommit": "58fa5c185049bd98d71bcfba22c7e4915f9363e4",
+        "publishedEquivalentTree": "5f95b2569f1d37e14108ca865cb39de33872320e"
+      },
+      "baselineSource": {
+        "commit": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+        "treeSha": "5a805282c2662f09047b75d7a43c191b06956ea9",
+        "publishedEquivalentCommit": "45319b4df1f8364b387a66db90acf33b434d03f7",
+        "publishedEquivalentTree": "5a805282c2662f09047b75d7a43c191b06956ea9"
+      },
+      "capturedMain": {
+        "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+        "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+      },
+      "harnessSource": {
+        "commit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+        "treeSha": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449",
+        "publishedEquivalentCommit": "51e8d1b0aceb855c3569ccf8f93e3f83be4df5d8",
+        "publishedEquivalentTree": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/run.json",
+        "sha256": "be6f9154a42b853abddecf19860fa72931813df893651fee5778eb40550a7eec",
+        "bytes": 2133,
+        "preservation": "exact input bytes"
+      },
+      "artifacts": [
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/baseline.json",
+          "sha256": "044f55168e33738e2a9f80b6dee0e28a929c562c257751bd2859963e26daea92",
+          "bytes": 71222,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/candidate.json",
+          "sha256": "6b7ecf94655493170c78a8971e268e3f30134b6e204531feaafa7dca54d172f0",
+          "bytes": 151332,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/comparison.json",
+          "sha256": "14d34e74c3a5285c20dfca2bd530abef072d8a63a1d8cf5ad5d18e1b48ea765d",
+          "bytes": 7679,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/baseline.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/candidate.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/baseline/a20-provider-binding-export.json",
+          "sha256": "e0886f221b3c0eef91c5a1f66a1fdd4a37560363f8aa1ebfbabe5745c16c1105",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-tail-1699e53a/candidate/a20-provider-binding-export.json",
+          "sha256": "116877abbf2bef2fdc8136808f208ac70bc3772a7e7b59be41b9c8cd55765148",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        }
+      ],
+      "commands": [
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-export.mjs",
+          "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline"
+        ],
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline/a20-provider-binding.mjs",
+          "--case",
+          "constructed-generic-receiver",
+          "--calls",
+          "96",
+          "--samples",
+          "101",
+          "--warmups",
+          "10",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline.json"
+        ],
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-export.mjs",
+          "1699e53a664bb54752a216a98f59a9f947da5eeb",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate"
+        ],
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate/a20-provider-binding.mjs",
+          "--case",
+          "constructed-generic-receiver",
+          "--calls",
+          "96",
+          "--samples",
+          "101",
+          "--warmups",
+          "10",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate.json"
+        ],
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-compare.mjs",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline.json",
+          "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate.json"
+        ]
+      ],
+      "startedAt": "2026-10-04T01:57:14.764446+00:00",
+      "finishedAt": "2026-10-04T01:57:56.952464+00:00",
+      "settings": {
+        "calls": 96,
+        "samples": 101,
+        "warmups": 10,
+        "case": "constructed-generic-receiver",
+        "compilerOptions": {
+          "outputKind": "library",
+          "pipeline": "bound"
+        },
+        "queryPhases": {
+          "signature-first-query": 1,
+          "signature-repeated-query": 64
+        }
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "architecture": "x64",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "logicalCpus": 9,
+        "totalMemoryBytes": 10451464192,
+        "execArgv": [
+          "--expose-gc"
+        ],
+        "nodeOptions": "--max-old-space-size=2048",
+        "heapSizeLimitBytes": 2348810240,
+        "initialLoadAverage": [
+          1.92,
+          1.56,
+          1.5
+        ],
+        "finalLoadAverage": [
+          2.12,
+          1.64,
+          1.53
+        ]
+      },
+      "sharedHost": true,
+      "harnessSha256": "624ea0093ae30e99f492bfe5646f06cfa7a4500a5587aefc70782459cf280f12",
+      "purpose": "Resolve the generic binding p95 increase in the synchronized 15-sample completed-scope capture. Retain all earlier observations.",
+      "result": {
+        "status": "measured_compile_budget_exceedance",
+        "comparisonExitCode": 0,
+        "matchedCompilerAndModelObservations": true,
+        "sameHarnessSha256": true,
+        "sharedPhaseRows": [
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "compile",
+            "baselineMedianMs": 38.704003000000284,
+            "candidateMedianMs": 41.49772600000051,
+            "medianChangePercent": 7.218175856384179,
+            "baselineP95Ms": 46.73551700000007,
+            "candidateP95Ms": 59.548975000000155,
+            "p95ChangePercent": 27.416959996398592,
+            "retainedHeapMedianDifferenceBytes": -4688,
+            "observedMedianSlowdownAboveFivePercent": true
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "source-model-bind",
+            "baselineMedianMs": 22.992083999999522,
+            "candidateMedianMs": 21.98367899999903,
+            "medianChangePercent": -4.3858790703814154,
+            "baselineP95Ms": 33.708936000000904,
+            "candidateP95Ms": 27.12828499999887,
+            "p95ChangePercent": -19.52197779248167,
+            "retainedHeapMedianDifferenceBytes": 109104,
+            "observedMedianSlowdownAboveFivePercent": false
+          }
+        ],
+        "candidateOnlyQueryRows": [
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "signature-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 0.28979700000127195,
+            "p95TotalMs": 0.41563699999824166,
+            "medianPerQueryMs": 0.28979700000127195,
+            "p95PerQueryMs": 0.41563699999824166
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "signature-repeated-query",
+            "baselineAvailable": false,
+            "queryCount": 64,
+            "medianTotalMs": 0.34831599999961327,
+            "p95TotalMs": 0.4586830000007467,
+            "medianPerQueryMs": 0.005442437499993957,
+            "p95PerQueryMs": 0.007166921875011667
+          }
+        ]
+      },
+      "interpretation": "One planned targeted larger-sample capture, not a replacement for earlier measurements. Same baseline/candidate product snapshots with a new identical case-filter harness, 101 samples and10warmups. Generic compile median+7.2182% andp95+27.4170% are above the contribution budget and remain flagged. Generic bind median-4.3859% andp95-19.5220% do not cancel the compile result. Retained bind heap is+109104bytes. No aggregate performance pass, causal speedup, statistical-significance or noise explanation is claimed; root/provider owner reviews compile-path attribution. Candidate-only signature rows do not have a comparable baseline API."
+    },
+    {
+      "id": "synchronized-core-attempt",
+      "kind": "core_and_packaging",
+      "source": {
+        "commit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+        "treeSha": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449",
+        "publishedEquivalentCommit": "51e8d1b0aceb855c3569ccf8f93e3f83be4df5d8",
+        "publishedEquivalentTree": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449"
+      },
+      "capturedMain": {
+        "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+        "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-core.json",
+        "sha256": "87611993fa560034cdc037c071b44cff92ea15bb883253624c608d428b4710dd",
+        "bytes": 2735,
+        "preservation": "exact input bytes"
+      },
+      "startedAt": "2026-10-04T01:59:16.595905+00:00",
+      "finishedAt": "2026-10-04T01:59:30.401244+00:00",
+      "steps": [
+        {
+          "name": "check",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "check"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 4.903005550000671,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-check.log",
+            "sha256": "6844078f19cddbfdb91714222febc887d7db5b2d4975ce5832364be435b6930b",
+            "bytes": 381,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "review",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "--input-type=module",
+            "-e",
+            "import {reviewGates} from './scripts/planning/review-gates.js'; const result=reviewGates({event:{pull_request:{base:{sha:'9ac2d74d2b3992e80eb697474178e58269b17ce5'},head:{sha:'756ff0cbeb6c8560ee104c53627f5464de8572a1'},labels:[]}},eventName:'pull_request',expectedSha:'756ff0cbeb6c8560ee104c53627f5464de8572a1'});console.log(JSON.stringify({...result,evidenceKind:'local immutable snapshot review; not a hosted PR event'},null,2));if(!result.passed)process.exitCode=1;"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 0.3806553940012236,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-review.log",
+            "sha256": "6d9f5ccf8d017017df8a93d686fb77c00922d5f7168b0bf1366b6ed3d4d6c4b1",
+            "bytes": 452,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "quarantine",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/flaky/detect.js",
+            "--check-quarantine"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 0.13190729699999793,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-quarantine.log",
+            "sha256": "e9db67ddde45a2aafa58cd5388e9d6d9a091670a5eaf91731ab5dc9d2825cb16",
+            "bytes": 27,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "build",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 6.465732480999577,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-build.log",
+            "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+            "bytes": 206,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "standalone",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/standalone.js"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 1.7552534210008162,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-standalone.log",
+            "sha256": "eca41460da2142637026b8d4fa0160e6dec4303344e6714bc32c8c3932367d78",
+            "bytes": 138,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "checkout",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/clean-checkout.js"
+          ],
+          "exitCode": 1,
+          "status": "failed",
+          "elapsedSeconds": 0.16650342000139062,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-final-core-756ff0cb/p16-final-checkout.log",
+            "sha256": "89bb82c492a301833bf25d4baa043566ddc80f9f6300d51b7b814f2de3ad6b97",
+            "bytes": 100,
+            "preservation": "exact input bytes"
+          }
+        }
+      ],
+      "result": {
+        "status": "failed_checkout_integrity",
+        "passedSteps": [
+          "check",
+          "review",
+          "quarantine",
+          "build",
+          "standalone"
+        ],
+        "failedSteps": [
+          "checkout"
+        ],
+        "check": {
+          "areas": 30,
+          "nodeFiles": 728,
+          "browserScripts": 32,
+          "unassigned": 0,
+          "duplicate": 0,
+          "syntaxModules": 2880,
+          "syntaxErrors": 0,
+          "linkedModules": 2876,
+          "linkErrors": 0
+        },
+        "review": {
+          "passed": true,
+          "kind": "local immutable source snapshot contract/seam review",
+          "hostedPullRequestEvent": false
+        },
+        "quarantine": {
+          "passed": true,
+          "active": 0
+        },
+        "build": {
+          "passed": true,
+          "kind": "normal browser distribution",
+          "browserExecuted": false
+        },
+        "standalone": {
+          "passed": true,
+          "bytes": 14599540,
+          "embeddedWorkerGraphs": 5,
+          "browserExecuted": false
+        },
+        "checkout": {
+          "passed": false,
+          "untrackedPath": "packages/clr/src/type-system/metadata-method-definitions.js",
+          "classification": "unexpected_restored_deleted_upstream_file",
+          "investigation": "Integration owner preserved a preexisting untracked copy before fast-forward; the path reappeared and clean checkout failed. No source generator was found at report time; local restoration cause is under investigation."
+        }
+      },
+      "untrackedPreservedOutsideCheckout": [
+        "packages/clr/src/type-system/metadata-method-definitions.js"
+      ],
+      "note": "The overall attempt failed checkout integrity. Five successful individual steps are retained as source-specific observations, not an all-pass core or hosted-check claim. Nested artifact paths preserve the earlier6d5b033f p16-final-quarantine.log unchanged."
+    },
+    {
+      "id": "synchronized-checkout-diagnostic",
+      "kind": "affected_static_and_checkout",
+      "source": {
+        "commit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+        "treeSha": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449",
+        "publishedEquivalentCommit": "51e8d1b0aceb855c3569ccf8f93e3f83be4df5d8",
+        "publishedEquivalentTree": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-checkout-diagnostic.json",
+        "sha256": "f395fb26730663157f73dcbc761ea1033023206a61da8c9627affbdfba123c8a",
+        "bytes": 839,
+        "preservation": "exact input bytes"
+      },
+      "startedAt": "2026-10-04T02:03:07.615946+00:00",
+      "finishedAt": "2026-10-04T02:03:12.428768+00:00",
+      "steps": [
+        {
+          "name": "check",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "check"
+          ],
+          "exitCode": 0,
+          "deletedUpstreamFileExists": false,
+          "status": "",
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-checkout-diagnostic-check.log",
+            "sha256": "6844078f19cddbfdb91714222febc887d7db5b2d4975ce5832364be435b6930b",
+            "bytes": 381,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "checkout",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/clean-checkout.js"
+          ],
+          "exitCode": 0,
+          "deletedUpstreamFileExists": false,
+          "status": "",
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-checkout-diagnostic-checkout.log",
+            "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+            "bytes": 63,
+            "preservation": "exact input bytes"
+          }
+        }
+      ],
+      "result": {
+        "status": "passed",
+        "preservedFileSha256": "ab4a8f43b35beebe5623e553ce19b51dde5385b939b1149f45a58b95fd6bf666",
+        "existsImmediatelyAfterPreserving": false,
+        "initialStatus": "",
+        "deletedFileRegenerated": false,
+        "checkoutClean": true
+      },
+      "note": "After preserving the exact unexpected upstream-deleted file outside checkout, a narrow check/checkout retry passed at unchanged756ff0cb. The file did not regenerate. This does not rewrite the earlier failed checkout or claim a new full six-step core run."
+    },
+    {
+      "id": "synchronized-changed-source-structure",
+      "kind": "scoped_structure_comparison",
+      "source": {
+        "commit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+        "treeSha": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449",
+        "publishedEquivalentCommit": "51e8d1b0aceb855c3569ccf8f93e3f83be4df5d8",
+        "publishedEquivalentTree": "cb63907e70a2a14cef2bb1efabe2c3b2c532c449"
+      },
+      "comparisonBase": {
+        "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+        "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-structure.json",
+        "sha256": "aec81bb73d1537147809411f553763b1ac6b194b226f5bf1b863336f002c8ddd",
+        "bytes": 802,
+        "preservation": "exact input bytes"
+      },
+      "result": {
+        "status": "no_introduced_metric_violations",
+        "checkedSourceFiles": 256,
+        "introducedProblems": [],
+        "preexistingCapturedMainViolations": [
+          {
+            "path": "apps/studio/tools/core.js",
+            "metric": "lineLength",
+            "actual": 1952,
+            "allowed": 160,
+            "capturedMainValue": 1952
+          },
+          {
+            "path": "packages/compiler/src/compilation.js",
+            "metric": "lineLength",
+            "actual": 684,
+            "allowed": 160,
+            "capturedMainValue": 684
+          }
+        ],
+        "fullStrictStructureGatePassed": false
+      },
+      "note": "This is a scoped comparison, not a full strict structure-gate pass. Two existing long-line violations have unchanged maximum lengths on captured main."
+    },
+    {
+      "id": "capture-policy-affected-tests",
+      "kind": "node_tests",
+      "source": {
+        "commit": "48472269ec106049debc0d448985882463365215",
+        "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+        "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+        "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-capture-policy-tests.log",
+        "sha256": "151c11fd252e4f8bffb9532ca0c0af36d50c67bfc4087b01b2a79781f9eab606",
+        "bytes": 7054,
+        "preservation": "exact input bytes"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-capture-policy-tests.json",
+        "sha256": "bf0addf6d7578090f6d25d10c59770c86c24cf78193382b9f35bbaa069edfb64",
+        "bytes": 1461,
+        "preservation": "exact input bytes"
+      },
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a20-invocation-capture-ownership.test.js",
+        "tests/a20-signature-query-index.test.js",
+        "tests/a20-bound-signature-help.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a19-call-hierarchy-ownership.test.js",
+        "tests/a19-studio-language-providers.test.js",
+        "tests/compiler-reference-assembly.test.js",
+        "tests/compiler-attribute-emission.test.js",
+        "tests/compiler-hidden-entry-parameters.test.js",
+        "tests/compiler-semantic-model-analysis.test.js"
+      ],
+      "files": [
+        "tests/a20-invocation-capture-ownership.test.js",
+        "tests/a20-signature-query-index.test.js",
+        "tests/a20-bound-signature-help.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a19-call-hierarchy-ownership.test.js",
+        "tests/a19-studio-language-providers.test.js",
+        "tests/compiler-reference-assembly.test.js",
+        "tests/compiler-attribute-emission.test.js",
+        "tests/compiler-hidden-entry-parameters.test.js",
+        "tests/compiler-semantic-model-analysis.test.js"
+      ],
+      "fileCount": 10,
+      "startedAt": "2026-10-04T02:11:00.734385+00:00",
+      "finishedAt": "2026-10-04T02:11:07.874804+00:00",
+      "result": {
+        "status": "passed",
+        "exitCode": 0,
+        "tests": 65,
+        "passed": 65,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 7027.78754
+      },
+      "note": "Complete10-file affected scope for capture policy, source-model ownership and signature/provider/upstream metadata dependencies. Four new capture ownership cases are included. This overlaps earlier cohorts and is not an added unique pass total."
+    },
+    {
+      "id": "provider-capture-policy-final-comparison",
+      "kind": "node_performance_comparison",
+      "source": {
+        "commit": "48472269ec106049debc0d448985882463365215",
+        "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+        "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+        "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+      },
+      "baselineSource": {
+        "commit": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+        "treeSha": "5a805282c2662f09047b75d7a43c191b06956ea9",
+        "publishedEquivalentCommit": "45319b4df1f8364b387a66db90acf33b434d03f7",
+        "publishedEquivalentTree": "5a805282c2662f09047b75d7a43c191b06956ea9"
+      },
+      "capturedMain": {
+        "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+        "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+      },
+      "harnessSource": {
+        "commit": "48472269ec106049debc0d448985882463365215",
+        "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+        "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+        "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/run.json",
+        "sha256": "32a73f0b35624a919174716b6ca4a890a2885b8aec0cd9c7cf8f3bad7248cbc3",
+        "bytes": 2146,
+        "preservation": "exact input bytes"
+      },
+      "artifacts": [
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/baseline.json",
+          "sha256": "7121295213c648e753ce994db91a32908e8964c7f346f9ed743dfef9ae6e8d78",
+          "bytes": 71632,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/candidate.json",
+          "sha256": "d819f3d1c0901a8eb92fc860d9aeabf9234d1479b0df3ab16a6870a121cffae2",
+          "bytes": 191598,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/comparison.json",
+          "sha256": "b4322428a4cb0905bd1904f3d9f0427d708ad39368c19d7df15f72f087680ea4",
+          "bytes": 9954,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/baseline.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/candidate.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/baseline/a20-provider-binding-export.json",
+          "sha256": "2fb173dd41165687e487fdadd6e6602f0f1534f2dfaec239072f5169a4b83605",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        },
+        {
+          "path": "docs/evidence/project16-integration/p16-provider-bench-48472269/candidate/a20-provider-binding-export.json",
+          "sha256": "82b227728b7c4e5dd594e4c4860966ec280dce51f3d4d9a40da377c7309f6447",
+          "bytes": 408,
+          "preservation": "exact input bytes"
+        }
+      ],
+      "commands": [
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-export.mjs",
+          "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/baseline"
+        ],
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/baseline/a20-provider-binding.mjs",
+          "--case",
+          "constructed-generic-receiver",
+          "--calls",
+          "96",
+          "--samples",
+          "101",
+          "--warmups",
+          "10",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/baseline.json"
+        ],
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-export.mjs",
+          "48472269ec106049debc0d448985882463365215",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/candidate"
+        ],
+        [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/candidate/a20-provider-binding.mjs",
+          "--case",
+          "constructed-generic-receiver",
+          "--calls",
+          "96",
+          "--samples",
+          "101",
+          "--warmups",
+          "10",
+          "--output",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/candidate.json"
+        ],
+        [
+          "node",
+          "scripts/benchmarks/a20-provider-binding-compare.mjs",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/baseline.json",
+          "/workspace/scratch/6b99131ca908/p16-provider-bench-48472269/candidate.json"
+        ]
+      ],
+      "startedAt": "2026-10-04T02:12:10.160961+00:00",
+      "finishedAt": "2026-10-04T02:13:03.157425+00:00",
+      "settings": {
+        "calls": 96,
+        "samples": 101,
+        "warmups": 10,
+        "case": "constructed-generic-receiver",
+        "compilerOptions": {
+          "outputKind": "library",
+          "pipeline": "bound"
+        },
+        "queryPhases": {
+          "signature-first-query": 1,
+          "signature-repeated-query": 64,
+          "compiled-model-first-query": 1
+        }
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "architecture": "x64",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "logicalCpus": 9,
+        "totalMemoryBytes": 10451464192,
+        "execArgv": [
+          "--expose-gc"
+        ],
+        "nodeOptions": "--max-old-space-size=2048",
+        "heapSizeLimitBytes": 2348810240,
+        "initialLoadAverage": [
+          2.47,
+          1.97,
+          1.71
+        ],
+        "finalLoadAverage": [
+          3.35,
+          2.24,
+          1.81
+        ]
+      },
+      "sharedHost": true,
+      "harnessSha256": "40b22884b7ddc8df546140890ad861b4692bea894dfe179596d0918a514ed90b",
+      "purpose": "Measure completed invocation-capture ownership correction and explicit deferred post-build signature cost. Earlier captures retained.",
+      "result": {
+        "status": "measured_source_model_budget_exceedance",
+        "comparisonExitCode": 0,
+        "matchedCompilerAndModelObservations": true,
+        "sameHarnessSha256": true,
+        "sharedPhaseRows": [
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "compile",
+            "baselineMedianMs": 43.71973899999966,
+            "candidateMedianMs": 40.89509100000032,
+            "medianChangePercent": -6.460807096765519,
+            "baselineP95Ms": 67.30240600000025,
+            "candidateP95Ms": 48.1851200000001,
+            "p95ChangePercent": -28.405055831139347,
+            "retainedHeapMedianDifferenceBytes": -1712,
+            "observedMedianSlowdownAboveFivePercent": false
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "source-model-bind",
+            "baselineMedianMs": 22.19763899999998,
+            "candidateMedianMs": 24.41065499999968,
+            "medianChangePercent": 9.969600821058933,
+            "baselineP95Ms": 31.0182739999982,
+            "candidateP95Ms": 32.23500899999999,
+            "p95ChangePercent": 3.92263928032186,
+            "retainedHeapMedianDifferenceBytes": 117112,
+            "observedMedianSlowdownAboveFivePercent": true
+          }
+        ],
+        "candidateOnlyQueryRows": [
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "signature-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 0.34435900000244146,
+            "p95TotalMs": 0.4251810000023397,
+            "medianPerQueryMs": 0.34435900000244146,
+            "p95PerQueryMs": 0.4251810000023397,
+            "retainedHeapDeltaMedianBytes": -16056
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "signature-repeated-query",
+            "baselineAvailable": false,
+            "queryCount": 64,
+            "medianTotalMs": 0.3061420000012731,
+            "p95TotalMs": 0.46897700000045006,
+            "medianPerQueryMs": 0.0047834687500198925,
+            "p95PerQueryMs": 0.007327765625007032,
+            "retainedHeapDeltaMedianBytes": -28952
+          },
+          {
+            "case": "constructed-generic-receiver",
+            "phase": "compiled-model-first-query",
+            "baselineAvailable": false,
+            "queryCount": 1,
+            "medianTotalMs": 9.594653000000108,
+            "p95TotalMs": 14.425250000000233,
+            "medianPerQueryMs": 9.594653000000108,
+            "p95PerQueryMs": 14.425250000000233,
+            "retainedHeapDeltaMedianBytes": 399704
+          }
+        ]
+      },
+      "interpretation": "Final completed focused capture for the concrete capture-policy source correction. Source-model construction median+9.9696% exceeds5%;p95+3.9226%,retained heap+117112B. Lower compile timings do not cancel that cost. Direct signature-query and compiled-model-first-query are different paths; the latter has9.594653msmedian/14.425250msp95 and399704Bretainedmedian. Baseline lacks signatureHelp, so query rows are candidate-only. No aggregate performance-budget pass, causal speedup, noise or statistical-significance claim is made. Earlier captures remain untouched; no more optional benchmark loops are planned."
+    },
+    {
+      "id": "capture-policy-final-core-attempt",
+      "kind": "core_and_packaging",
+      "source": {
+        "commit": "48472269ec106049debc0d448985882463365215",
+        "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+        "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+        "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+      },
+      "capturedMain": {
+        "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+        "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+        "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+      },
+      "runMetadata": {
+        "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-core.json",
+        "sha256": "d094692f99d2445ccf3b367dd4a9aef10c436eace85469611b6920dea2bd115b",
+        "bytes": 2789,
+        "preservation": "exact input bytes"
+      },
+      "startedAt": "2026-10-04T02:16:06.884707+00:00",
+      "finishedAt": "2026-10-04T02:16:17.687635+00:00",
+      "steps": [
+        {
+          "name": "check",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "check"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 4.248347558997921,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-check.log",
+            "sha256": "84bfc53448ac4de8517e064bb06059551f9e9524c6c2bb95fa5f6a27b660f942",
+            "bytes": 381,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "review",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "--input-type=module",
+            "-e",
+            "import {reviewGates} from './scripts/planning/review-gates.js'; const result=reviewGates({event:{pull_request:{base:{sha:'9ac2d74d2b3992e80eb697474178e58269b17ce5'},head:{sha:'48472269ec106049debc0d448985882463365215'},labels:[]}},eventName:'pull_request',expectedSha:'48472269ec106049debc0d448985882463365215'});console.log(JSON.stringify({...result,evidenceKind:'local immutable snapshot review; not a hosted PR event'},null,2));if(!result.passed)process.exitCode=1;"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 0.35309389299800387,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-review.log",
+            "sha256": "ebb4bdda60f3832e660a6310c239caed1bc5c15b930e4276d7b550757e8e4cbf",
+            "bytes": 452,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "quarantine",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/flaky/detect.js",
+            "--check-quarantine"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 0.12799621699741692,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-quarantine.log",
+            "sha256": "e9db67ddde45a2aafa58cd5388e9d6d9a091670a5eaf91731ab5dc9d2825cb16",
+            "bytes": 27,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "build",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 4.434398491001048,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-build.log",
+            "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+            "bytes": 206,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "standalone",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/standalone.js"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "elapsedSeconds": 1.4625007289978385,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-standalone.log",
+            "sha256": "d4c2d862b9e053de36d80d7da72e76ee0830dc0b5eb4fdecc96a05d445e1c1d2",
+            "bytes": 138,
+            "preservation": "exact input bytes"
+          }
+        },
+        {
+          "name": "checkout",
+          "command": [
+            "node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/clean-checkout.js"
+          ],
+          "exitCode": 1,
+          "status": "failed",
+          "elapsedSeconds": 0.1744571189992712,
+          "artifact": {
+            "path": "docs/evidence/project16-integration/p16-capture-policy-core-48472269/p16-capture-policy-checkout.log",
+            "sha256": "89bb82c492a301833bf25d4baa043566ddc80f9f6300d51b7b814f2de3ad6b97",
+            "bytes": 100,
+            "preservation": "exact input bytes"
+          }
+        }
+      ],
+      "result": {
+        "status": "failed_checkout_integrity",
+        "passedSteps": [
+          "check",
+          "review",
+          "quarantine",
+          "build",
+          "standalone"
+        ],
+        "failedSteps": [
+          "checkout"
+        ],
+        "check": {
+          "areas": 30,
+          "nodeFiles": 729,
+          "browserScripts": 32,
+          "unassigned": 0,
+          "duplicate": 0,
+          "syntaxModules": 2881,
+          "syntaxErrors": 0,
+          "linkedModules": 2877,
+          "linkErrors": 0
+        },
+        "review": {
+          "passed": true,
+          "kind": "local immutable source snapshot contract/seam review",
+          "hostedPullRequestEvent": false
+        },
+        "quarantine": {
+          "passed": true,
+          "active": 0
+        },
+        "build": {
+          "passed": true,
+          "kind": "normal browser distribution",
+          "browserExecuted": false
+        },
+        "standalone": {
+          "passed": true,
+          "bytes": 14600248,
+          "embeddedWorkerGraphs": 5,
+          "browserExecuted": false
+        },
+        "checkout": {
+          "passed": false,
+          "untrackedPath": "packages/clr/src/type-system/metadata-method-definitions.js",
+          "untrackedBytes": 3324,
+          "sameAsPreviouslyPreservedFile": true,
+          "preservedFileSha256": "ab4a8f43b35beebe5623e553ce19b51dde5385b939b1149f45a58b95fd6bf666",
+          "presentInCommittedTree": false,
+          "classification": "recurring_local_deleted_upstream_file",
+          "nextGate": "Required hosted PR core on a fresh Git checkout remains pending; no later local retry or hosted pass is claimed."
+        }
+      },
+      "untrackedPreservedOutsideCheckout": [
+        "packages/clr/src/type-system/metadata-method-definitions.js"
+      ],
+      "note": "Final product-source attempt retained exactly. Five steps passed, but local checkout integrity failed again. The earlier unchanged-source diagnostic did not reproduce file regeneration and remains separate. Cause is not invented; final fresh-checkout hosted core must supply its actual outcome."
+    }
+  ],
+  "resolution": {
+    "a19": {
+      "initial": "a19-complete",
+      "initialFailures": 13,
+      "initialFailingFiles": 8,
+      "affectedRuns": [
+        "a19-affected-corrections",
+        "a19-explorer-correction"
+      ],
+      "allInitialFailuresHaveObservedAffectedPasses": true,
+      "full592CaseRerunPerformed": false,
+      "sequence": [
+        {
+          "run": "a19-complete",
+          "tests": 592,
+          "passed": 579,
+          "failed": 13
+        },
+        {
+          "run": "a19-affected-corrections",
+          "tests": 83,
+          "passed": 81,
+          "failed": 2
+        },
+        {
+          "run": "a19-explorer-correction",
+          "tests": 5,
+          "passed": 5,
+          "failed": 0
+        }
+      ],
+      "note": "The nine-file affected run includes the eight initial failing files and final sparse metadata enumeration. The final five-case Explorer run covers both remaining message expectations; stale source/workspace guards remain enforced. The initial and 83-case runs remain recorded failures.",
+      "laterSynchronizedCompleteRun": "synchronized-a19-complete",
+      "laterSynchronizedResult": {
+        "status": "passed",
+        "exitCode": 0,
+        "tests": 662,
+        "passed": 662,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "durationMs": 35784.946892
+      },
+      "laterRunNote": "This later complete area run has its own source revision and expanded case count. Historical failures and their affected corrections remain unchanged."
+    },
+    "a20": {
+      "run": "a20-complete",
+      "passed": 601,
+      "failed": 0,
+      "skipped": 9,
+      "skipClassificationCounts": {
+        "explicit_unsupported_target": 8,
+        "pinned_native_oracle_unavailable": 1
+      },
+      "note": "The eight unsupported Vim/host targets and the unavailable Unicode 16 native Intl oracle are listed verbatim in skipDetails. None is treated as a passing or uniformly environment-only target.",
+      "laterSynchronizedCompleteRun": "synchronized-a20-complete",
+      "laterSynchronizedResult": {
+        "status": "passed_with_explicit_skips",
+        "exitCode": 0,
+        "tests": 674,
+        "passed": 665,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 9,
+        "durationMs": 33763.262713
+      },
+      "laterRunNote": "This later complete area run has its own source revision and expanded case count. Historical failures and their affected corrections remain unchanged."
+    },
+    "static": {
+      "initial": "initial-static-check",
+      "correctedBy": "static-import-retry",
+      "sourceInventoryCorrections": [
+        "5deb1074",
+        "fc9d28c8"
+      ],
+      "note": "The initial complete check passed manifest/syntax/link stages and failed four policy messages across two reviewed-byte inventory files. Exact source corrections were reviewed; the final static-import-only retry inspected and linked 2500 modules with zero errors. This is not a rerun of the complete check command. A separate later complete check at 89ba3443 passed for its recorded source after acceptance/host corrections; it does not retroactively change the earlier check.",
+      "laterCompleteCheck": "post-audit-complete-static-check",
+      "laterSynchronizedCheck": {
+        "run": "synchronized-core-attempt",
+        "step": "check"
+      },
+      "finalProductSourceCheck": {
+        "run": "capture-policy-final-core-attempt",
+        "step": "check"
+      }
+    },
+    "build": {
+      "run": "initial-normal-build",
+      "note": "The normal build passed only for its 96c7bc79 source. Later final normal/standalone builds are not represented as passed by this historical artifact.",
+      "laterSynchronizedPackaging": {
+        "run": "synchronized-core-attempt",
+        "steps": [
+          "build",
+          "standalone"
+        ],
+        "note": "Normal and direct standalone packaging passed756ff0cb, without browser execution. Checkout failed; later product corrections require their own affected evidence."
+      },
+      "finalProductSourcePackaging": {
+        "run": "capture-policy-final-core-attempt",
+        "steps": [
+          "build",
+          "standalone"
+        ],
+        "note": "Both packaging commands passed at48472269; no browser runtime result or all-pass core is implied."
+      }
+    },
+    "postAudit": {
+      "initial": "post-audit-corrective-cohort",
+      "initialFailures": 3,
+      "failureClassifications": {
+        "stale_fixture_expectation": 2,
+        "implementation_bug": 1
+      },
+      "allInitialFailuresHaveObservedAffectedPasses": true,
+      "affectedRuns": [
+        "post-audit-corrective-retry"
+      ],
+      "full305CaseRerunPerformed": false,
+      "note": "Initial 305/302/3 remains a failed run. The exact three affected files subsequently passed 36/36, resolving all three observed failures. This is 305 distinct eventual passing observations, not a 341-case total or a rerun of all 305 at the corrected source. Later synchronized complete-area runs are recorded separately at1699e53a: A19 662/662; A20 665pass/9explicit skips out of674.",
+      "distinctCasesWithEventualPassingObservations": 305,
+      "laterCompleteAreaRuns": [
+        "synchronized-a19-complete",
+        "synchronized-a20-complete"
+      ]
+    },
+    "providerBinding": {
+      "initial": "provider-binding-initial-comparison",
+      "status": "integrator_accepted_measured_source_model_budget_exceedance",
+      "note": "Final source-model construction intentionally retains bound candidates for correct parameter information: observed median+9.9696%,p95+3.9226%,retainedheap+117112B. Compilation capture is off and direct/deferred first-query costs are measured. The root integration agent explicitly accepts this correctness tradeoff forSF-A20-T14; this is not an overall5%performance pass or human approval. All prior regressions remain preserved.",
+      "followup": "provider-binding-matched-main-comparison",
+      "affectedTests": "synchronized-provider-tests",
+      "targetedFollowup": "provider-binding-targeted-tail-comparison",
+      "compilePathReview": {
+        "source": {
+          "commit": "bee4b124e516bf147a8964d2eb2ac7805cb8dc17",
+          "treeSha": "5e71fe30493eee1870fcbdbc270dc350a9a52fa5",
+          "publishedEquivalentCommit": "50e4651d971aeced16e3cc2ae1538729d8281547",
+          "publishedEquivalentTree": "5e71fe30493eee1870fcbdbc270dc350a9a52fa5"
+        },
+        "attribution": "Provider-owner source inspection, integration-owner65case affected qualification and completed final focused capture at48472269. Final local core observations are recorded separately.",
+        "finding": "The public compile/Compilation/pipeline/fallback files were byte-identical across matched snapshots, but generic execution-profile fallback called changed BodyBinder.invocation and allocated editor records. Identical entry files do not establish an identical dependency path.",
+        "correction": "Capture defaults off in SemanticAnalysis and explicitly off in compilation fallback; source-model-owned binding opts in. Reused fallback analysis retains original query indexes, while first signature privately captures once.",
+        "measurementRequired": "The added candidate-only compiled-model-first-query phase must expose the extra full binding and retained analysis, alongside direct model first/repeated-query rows.",
+        "genericCompileResult": "Execution-profile rejection: four SF1012 diagnostics and SF2200, no emitted image. This benchmark is not successful generic emission.",
+        "causalityLimit": "The source path explains real additional work, but does not establish that all2.7937ms of observed median compile difference came from records, or excuse the existing measurements as noise."
+      },
+      "capturePolicyAffectedTests": "capture-policy-affected-tests",
+      "capturePolicyComparison": "provider-capture-policy-final-comparison",
+      "integrationReviewAcceptance": {
+        "reviewer": "root integration agent",
+        "role": "integration owner",
+        "workId": "SF-A20-T14",
+        "source": {
+          "commit": "48472269ec106049debc0d448985882463365215",
+          "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+          "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+          "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+        },
+        "measurementRun": "provider-capture-policy-final-comparison",
+        "decision": "accepted_with_explicit_measured_budget_exceedance",
+        "sourceModelMedianIncreasePercent": 9.969600821058933,
+        "sourceModelRetainedHeapIncreaseBytes": 117112,
+        "rationale": "Bound-candidate capture is needed for correct signature/parameter information. Unused compilation capture is disabled; the direct and deferred post-build first-query costs are measured explicitly.",
+        "peerReview": "Provider owner recommended acceptance of the measured correctness tradeoff.",
+        "overallFivePercentBudgetPassed": false,
+        "humanApprovalClaimed": false,
+        "platformAcceptanceImplied": false,
+        "attribution": "Explicit integration-owner instruction in this task, to be retained in the final PR description."
+      }
+    },
+    "core": {
+      "run": "synchronized-core-attempt",
+      "status": "final_local_checkout_failed_hosted_core_pending",
+      "pending": "Required hosted PR core with a fresh Git checkout; no further local retry is planned.",
+      "affectedRetry": "synchronized-checkout-diagnostic",
+      "note": "The756ff initial checkout failure, narrow successful retry and48472269 recurring local checkout failure all remain recorded. Both source attempts passed the five other steps individually; no hosted or overall final-core pass is claimed.",
+      "finalAttempt": "capture-policy-final-core-attempt"
+    }
+  },
+  "pendingBatches": [
+    {
+      "id": "post-qualification-acceptance-and-host-followups",
+      "status": "source_and_local_evidence_complete_hosted_core_and_platform_qualification_pending",
+      "reportedAcceptanceFollowups": 13,
+      "scopeAuthority": "Root integration owner final acceptance audit",
+      "sourceSnapshotAtArchive": {
+        "commit": "48472269ec106049debc0d448985882463365215",
+        "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+        "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+        "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+      },
+      "knownSourceAfterCompletedRuns": [
+        {
+          "commit": "5d5769d09410422003046b044283c9590ad70f17",
+          "scope": "Bounded ordered Studio workbench composition extraction"
+        },
+        {
+          "commit": "e1586ceae4289cd54a5def94dd2673382bd58feb",
+          "scope": "Lossless contextual Surround With indentation and source endings"
+        },
+        {
+          "commit": "a1c307dd66f66589ec194e68da9f06c82441a9db",
+          "scope": "Tab conversion resets at every supported logical line ending"
+        }
+      ],
+      "additionalOwnerScope": [
+        "Production diagnostic producers and queue cancellation",
+        "Explorer project decorations and accessibility",
+        "Startup/instance/stop-all menus, reveal policy and selected profile routing",
+        "Editor search, whitespace and qualification workflow acceptance corrections"
+      ],
+      "completedRunIds": [
+        "post-audit-corrective-cohort",
+        "post-audit-corrective-retry",
+        "post-audit-complete-static-check",
+        "provider-binding-initial-comparison",
+        "synchronized-provider-tests",
+        "provider-binding-matched-main-comparison",
+        "synchronized-a19-complete",
+        "synchronized-a20-complete",
+        "provider-binding-targeted-tail-comparison",
+        "synchronized-core-attempt",
+        "synchronized-checkout-diagnostic",
+        "synchronized-changed-source-structure",
+        "capture-policy-affected-tests",
+        "provider-capture-policy-final-comparison",
+        "capture-policy-final-core-attempt"
+      ],
+      "requiredNextStep": "Publish the docs/source closure and observe its own required hosted core on a fresh checkout before merge. Schedule explicit browser/native/OS/oracle qualification separately; none is inferred from local source or packaging.",
+      "note": "Full synchronized A19/A20 runs and final capture-policy affected scope have recorded passing observations, with9explicit A20skips. Final static/review/quarantine/normal/standalone steps passed; final local checkout failed on a recurring untracked upstream-deleted file. Integrator accepted the measured source-model budget exceedance explicitly, without claiming an overall performance pass or human approval.",
+      "completedQualification": false,
+      "sourceComplete": true,
+      "completedNodeQualification": true,
+      "performanceReview": "integrator_accepted_measured_budget_exceedance",
+      "hostedCore": "pending"
+    }
+  ],
+  "platformQualification": {
+    "browser": "not established by these logs",
+    "nativeDesktop": "not established by these logs",
+    "visualStudioOracle": "not established by these logs",
+    "standaloneBrowser": "not established by these logs"
+  },
+  "aggregateStatusPolicy": "The inventory owner maintains docs/project16-implementation.json and .md. This history update does not alter issue statuses or infer platform qualification.",
+  "updatedAt": "2026-10-04T02:21:38.195038+00:00",
+  "publication": {
+    "map": {
+      "path": "docs/project16-publication-map.json",
+      "sha256": "8f949da9ffe8c106c001636b4d586d16fb3c77946dca65d14069949e6020c748",
+      "bytes": 90249,
+      "preservation": "exact integration-owner checkpoint bytes"
+    },
+    "entryCount": 441,
+    "repository": "wieslawsoltes/SharpForge",
+    "method": "GitHub Git-data API with exact-tree equality and ordered mapped parents checked for each new publication",
+    "identityNote": "Measured source records retain their original local commit and tree. Published equivalents have identical tree contents; GitHub may assign different author/committer metadata and commit SHAs. Publication does not squash, rebase, or force-update branches.",
+    "verificationAttribution": "Integration owner checked the remote Git-data publication. This archive copied its durable map, matched local measured source trees and recorded the published equivalents; it did not invoke remote publication.",
+    "sourceMappingMissing": [],
+    "scope": "The map includes completed source publication at capture time. The final evidence commit itself need not appear in its own contents; later source captures require refreshed map entries."
+  },
+  "sourceSynchronization": {
+    "source": {
+      "commit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+      "treeSha": "5f95b2569f1d37e14108ca865cb39de33872320e",
+      "publishedEquivalentCommit": "58fa5c185049bd98d71bcfba22c7e4915f9363e4",
+      "publishedEquivalentTree": "5f95b2569f1d37e14108ca865cb39de33872320e"
+    },
+    "capturedMain": {
+      "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+      "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+      "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+      "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+    },
+    "before": {
+      "commit": "6842c270c99da3ae361430ee11a648bd0fd9550f",
+      "treeSha": "a6c3e12d022ecb961f8cc195f4346d08181b198f",
+      "publishedEquivalentCommit": "bf711b671e4aa7a2c0a5e2228cb060709c50691a",
+      "publishedEquivalentTree": "a6c3e12d022ecb961f8cc195f4346d08181b198f"
+    },
+    "reviewBase": {
+      "commit": "eec216696f4c1f73a5be541bfa2fac3a1f8ea42f",
+      "treeSha": "eeaa72ecede337708b0a4944b22fe65a6a284f62",
+      "publishedEquivalentCommit": "54fd9beff5436941a2973c37df97f284139fca7d",
+      "publishedEquivalentTree": "eeaa72ecede337708b0a4944b22fe65a6a284f62"
+    },
+    "artifact": {
+      "path": "docs/evidence/project16-integration/p16-main-conflict-decisions.json",
+      "sha256": "55b20f77405cb80cbd8fb4951ffc0c161ec377c435accf2a14695bb8c71856ad",
+      "bytes": 9100,
+      "preservation": "exact integration-owner bytes"
+    },
+    "reportedConflictCount": 59,
+    "decisionCounts": {
+      "main unchanged since review04; retain integrated owner changes": 52,
+      "integration unchanged since review04; accept landed main changes": 6,
+      "combine both changes using reviewed source base": 1
+    },
+    "unresolved": [],
+    "netDiffAgainstCapturedMain": {
+      "files": 443,
+      "insertions": 41696,
+      "deletions": 1824,
+      "note": "Exact 9ac2d74d..1699e53a source tree difference, excludes later evidence/source changes. Already-landed upstream files are not counted as new Project 16 work."
+    },
+    "qualification": "This merge is a source identity, not a test or build pass. Subsequent runs carry their own exact revisions."
+  },
+  "matchedProviderBaseline": {
+    "source": {
+      "commit": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+      "treeSha": "5a805282c2662f09047b75d7a43c191b06956ea9",
+      "publishedEquivalentCommit": "45319b4df1f8364b387a66db90acf33b434d03f7",
+      "publishedEquivalentTree": "5a805282c2662f09047b75d7a43c191b06956ea9"
+    },
+    "preSignatureSource": {
+      "commit": "3f7e51a69cff658e55103626fd3ba1a2128692e3",
+      "treeSha": "5a6f15bc85abd2faeb7a30fb3e882dd0310cba49",
+      "publishedEquivalentCommit": "ed2e5793a228b1b8387a8f6b931354be21bb451a",
+      "publishedEquivalentTree": "5a6f15bc85abd2faeb7a30fb3e882dd0310cba49"
+    },
+    "capturedMain": {
+      "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+      "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+      "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+      "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+    },
+    "artifact": {
+      "path": "docs/evidence/project16-integration/p16-matched-baseline.json",
+      "sha256": "82b02a5e132479f051632863ca2d4196e60211624f062b826bf25016433a8b98",
+      "bytes": 6201,
+      "preservation": "exact integration-owner bytes"
+    },
+    "purpose": "Match the same landed compiler/runtime changes on both sides of the signature-retention comparison",
+    "note": "Revised comparisons must use the same landed main changes on both sides, identical revised harness and matched settings. Do not attribute unrelated upstream differences to the provider source change or pair original-harness reports with revised-harness captures.",
+    "publishedBranch": "codex/project16/benchmark-baseline-9ac2d74d"
+  },
+  "finalSourceBoundary": {
+    "source": {
+      "commit": "48472269ec106049debc0d448985882463365215",
+      "treeSha": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+      "publishedEquivalentCommit": "2a19543ba43ef16cf73dc2c81834265f74d4ac0c",
+      "publishedEquivalentTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717"
+    },
+    "publicationBase": {
+      "commit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+      "treeSha": "8014abe5aef2c8e364fb5ef37943d67b3717a837",
+      "publishedEquivalentCommit": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+      "publishedEquivalentTree": "8014abe5aef2c8e364fb5ef37943d67b3717a837"
+    },
+    "netDiffAgainstCapturedMain": {
+      "files": 444,
+      "insertions": 41901,
+      "deletions": 1825,
+      "excludes": "This evidence-only documentation closure and any later hosted results."
+    }
+  }
+}

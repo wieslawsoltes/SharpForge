@@ -17,7 +17,7 @@ await writeFile(resolve(dist,'studio.css'),await concatenateStyles(contributions
 
 for (const worker of contributions.workers) {
  const path=resolve(dist,worker.entry);
- await writeFile(path,await bundleWorker(path));
+ await writeFile(path,await bundleWorker(path,{root:dist}));
 }
 // Single-file classic workers avoid extra module fetches at startup. Source workers remain ESM.
 const studioPath = resolve(dist, 'studio.js');

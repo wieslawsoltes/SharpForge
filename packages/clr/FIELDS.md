@@ -10,6 +10,8 @@ Descriptors expose `name`, `metadataToken`, `declaringType`, `module`, `assembly
 lookup reads no signature blob or executable body. Lazy `signature` exposes a
 deeply frozen CIL field-signature AST, preserving generic variables, arrays and
 custom modifiers. It does not resolve TypeRefs or substitute generic arguments.
+Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) expose required and
+optional outer modifiers in CoreCLR reflection order.
 
 Lazy `constant` shares the module's raw Constant index with Param metadata.
 `module.constant(token)` accepts Field, Param or Property tokens and returns the
