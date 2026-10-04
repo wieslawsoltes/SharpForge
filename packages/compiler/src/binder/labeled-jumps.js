@@ -19,6 +19,31 @@
  * after the labeled statement, `continue L` to a label placed at the end of the loop body (where the condition or
  * the for-iterator runs next). The existing goto lowering runs the finally blocks such a jump leaves.
  */
+/**
+ * The string-typed profile (binder/statements.js and modern.js) binds the same feature over its own tree, where a
+ * labeled statement is `{kind: 'Labeled', label, body}`. It supports jumps to a loop or switch that is labeled
+ * directly, and nothing else of labeled statements: any other labeled statement is SF2142, which hands the program
+ * to the semantic pipeline above. This is the one place that rule lives. The profile lets every label of `a: b: while`
+ * name the loop; the proposal's "immediately nested" rule (only `b` does) is enforced for such programs by the
+ * semantic binder, whose CS0139 and CS0157 are taken for programs the profile compiles (semantic/profile-rechecks.js).
+ * @param node a `Labeled` statement  @param {{labels?: string[]}[]} loops the enclosing loops and switches
+ * @param {(node: object, code: string, args?: any[]) => void} report
+ * @returns {object} the statement under the labels, carrying them as `labels`
+ */
+export function directlyLabeledStatement(node, loops, report) {
+  const labels = [];
+  let body = node;
+  while (body.kind === 'Labeled') {
+    // CS0140: the label is declared twice, here or on an enclosing loop.
+    if (labels.includes(body.label) || loops.some(loop => loop.labels?.includes(body.label))) report(body, 'CS0140', [body.label]);
+    labels.push(body.label);
+    body = body.body;
+  }
+  if (!profileTargetKinds.has(body.kind)) report(node, 'SF2142');
+  return { ...body, labels };
+}
+const profileTargetKinds = new Set(['While', 'Do', 'For', 'Foreach', 'Switch']);
+
 const targetKinds = new Set(['WhileStatement', 'DoStatement', 'ForStatement', 'ForEachStatement', 'ForEachVariableStatement', 'SwitchStatement']);
 
 const empty = syntax => ({ kind: 'Empty', syntax, completes: true });

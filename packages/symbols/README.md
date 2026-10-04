@@ -143,6 +143,36 @@ outside credential-free HTTPS raise `SymbolError`. Paths/URLs are limited to
 32,768 UTF-16 code units; `maxMappings` bounds a linear scan of the mapping table.
 This mapping capability does not fetch or grant access to an origin.
 
+`portablePdbKey(path, pdbId)` and `peSymbolKey(path, { timestamp, sizeOfImage })`
+produce [SSQP keys](https://github.com/dotnet/symstore/blob/main/docs/specs/SSQP_Key_Conventions.md).
+Paths accept both separator styles; keys use lowercase basenames, the PDB GUID
+with `FFFFFFFF`, or an eight-digit uppercase PE timestamp followed by a minimal
+lowercase image size. The PDB input is its complete 20-byte identity; its timestamp
+does not participate in the key. Filename casing uses simple per-codepoint
+lowercasing without contextual or multi-character expansions.
+
+`createSymbolServer({ serverUrl, fetch, requestPermission, allowedOrigins })`
+reuses the source client's explicit origin grants, bounded streaming, redirects,
+timeout, cancellation and disposal. It never performs implicit lookup. Methods
+`lookupPortablePdb(name, id, { signal, assembly })`, `lookupForAssembly(assembly,
+{ signal })`, and `lookupPE(name, identity, { signal })` return `SourceStatus`
+results with artifact bytes only after identity checks. URLs preserve the server
+prefix and escape filenames. The default artifact limit is 64 MiB. Both public
+assembly inputs are copied before permission or transport callbacks run. Assembly-derived
+lookup reuses that owned snapshot internally, avoiding a second full assembly copy.
+The [Node allocation benchmark](benchmarks/symbol-copy-node24.json) records paired measurements
+at the permission boundary; it does not measure downloads or PDB verification.
+
+`identityVerified` describes the requested identity match; it is not a digital
+signature. `checksumVerified` is true only when an assembly-bound PDB lookup also
+validates its debug-directory checksum. Without the optional assembly, PDB
+lookup still compares all 20 identity bytes; PE lookup compares timestamp and
+image size. The current PE payload verifier accepts managed CLI images through
+the existing CIL inspector. Pure PE key generation accepts headers from any PE;
+native PE, MSF PDB, ELF, Mach-O, compressed-store files and pointer-file payloads
+are not supported by this lookup client and cannot be returned as verified.
+Ordinary tests use captured dotnet-symbol keys and injected transports offline.
+
 `await resolveSources(symbols, { sources, fetcher, signal })` tries workspace
 sources (a Map or name-keyed object), embedded bytes, then an explicitly supplied
 source client in that order. Missing, mismatched or undecodable candidates fall
@@ -159,3 +189,6 @@ allocation is separately bounded by the source client's own limit before the
 resolution verification budget is applied. `fallbackEncoding` controls decoding;
 `mapping` passes options to `sourceLinkUrl`. Cancellation and timeout leave pending
 documents unverified. The caller owns the supplied fetch client's lifetime.
+Local projection builds one method-token index per binding call. Scope processing
+is linear in methods, scopes and variables, preserves scope/variable order, and
+does not retain stale results between bindings.
