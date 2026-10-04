@@ -82,14 +82,5 @@ export function refreshDesignerTemplateBindings(scene, exclusions = new Set()) {
   return scene;
 }
 
-/** Rendering adapters can apply these typed decorations after retained-control layout. */
-export function designerPreviewDecorations(scene) {
-  const result = [];
-  for (const node of scene.nodes) {
-    for (const [name, cssProperty] of [['Background', 'background'], ['Fill', 'background']]) {
-      const brush = node.properties[name];
-      if (brush?.valueType === MEDIA + 'LinearGradientBrush') result.push({id: node.id, property: cssProperty, value: designerBrushCss(brush)});
-    }
-  }
-  return result;
-}
+/** Compatibility hook: the renderer now paints typed brushes using actual layout bounds, without CSS overrides. */
+export function designerPreviewDecorations() { return []; }

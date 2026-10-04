@@ -240,13 +240,23 @@ test('A18 resource-class documents rename keys and export declarative WinUI dict
   assert.doesNotMatch(code, /x:Key=\\"Blue\\"/);
 });
 
-test('A18 unsupported browser profile features report diagnostics; WinUI export retains them', () => {
+test('A18 registered gradients generate on both source targets and compile as a complete managed project', () => {
   const document = fixture();
   document.setProperty('Background', normalizeDesignerBrush({valueType: MEDIA + 'LinearGradientBrush',
     GradientStops: [{Offset: 0, Color: '#ff0000'}, {Offset: 1, Color: '#0000ff'}]}), ['action']);
-  assert(designCodegenDiagnostics(document.value).some(diagnostic => diagnostic.code === 'SFD1872'));
-  assert.throws(() => generateDesignCode(document.value), /LinearGradientBrush/);
+  assert.deepEqual(designCodegenDiagnostics(document.value), []);
+  assert.match(generateDesignCode(document.value), /new Microsoft\.UI\.Xaml\.Media\.LinearGradientBrush/);
   assert.match(generateDesignCode(document.value, {target: 'winui'}), /new Microsoft\.UI\.Xaml\.Media\.LinearGradientBrush/);
+  const files = generateDesignProject(document.value).filter(file => file.path.endsWith('.cs'));
+  const compiled = compileToIL(files.map(file => ({uri: file.path, text: file.text})));
+  assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+  for (const machine of [new VirtualMachine(compiled.image), new CilVirtualMachine(compiled.assembly)]) {
+    const result = machine.run();
+    assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
+    const button = machine.platform.scene().nodes.find(node => node.properties.Name === 'ActionButton');
+    assert.equal(button.properties.Background.valueType, MEDIA + 'LinearGradientBrush');
+    assert.deepEqual(button.properties.Background.GradientStops.map(stop => stop.Offset), [0, 1]);
+  }
   assert.equal(csharpValue({valueType: XAML + 'Thickness', Left: 8, Top: 8, Right: 8, Bottom: 8}, XAML + 'Thickness'),
     'new Microsoft.UI.Xaml.Thickness(8)');
 });

@@ -38,7 +38,6 @@ const edits = {
     document.nodes.push({id: 'custom', type: CONTROLS + 'UserControl', projectType: 'Demo.Custom', properties: {}, children: []});
     node(document, 'canvas').children.push('custom');
   },
-  'value.gradient': document => { node(document, 'action').properties.Background = brush(); },
   'collection.RowDefinitions': document => {
     node(document, 'LayoutGrid').collections = {RowDefinitions: [{type: 'RowDefinition', properties: {Height: track('*')}}]};
   },
@@ -127,12 +126,17 @@ test('metadata-declared scalar/object Items produce a real collection command an
     items: [true, {type: CONTROLS + 'ComboBoxItem', properties: {Content: 'Second'}}]}]);
 });
 
-test('new collection item gradients are diagnosed before constructing any runtime item', () => {
+test('registered gradient values remain typed in ordinary and collection live commands', () => {
   const before = baseline();
   const after = structuredClone(before);
+  node(after, 'action').properties.Background = brush();
   node(after, 'Choices').collections = {Items: [{type: CONTROLS + 'ComboBoxItem', properties: {Background: brush()}}]};
-  assert.throws(() => designPatch(before, after), error => error.code === 'SFDL0010' &&
-    error.diagnostics.some(diagnostic => diagnostic.itemIndex === 0 && diagnostic.capability === 'value.gradient'));
+  const patch = designPatch(before, after);
+  assert.deepEqual(patch.commands.find(command => command.id === 'action' && command.property === 'Background'),
+    {op: 'set', id: 'action', property: 'Background', value: brush()});
+  const collection = patch.commands.find(command => command.op === 'collection');
+  assert.equal(collection.property, 'Items');
+  assert.deepEqual(collection.items, [{type: CONTROLS + 'ComboBoxItem', properties: {Background: brush()}}]);
 });
 
 test('an app ownership rejection occurs before the source callback as well as before compilation and worker dispatch', async () => {

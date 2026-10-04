@@ -47,7 +47,7 @@ export function readSourceValue(node, state, depth = 0) {
   const enumeration = enumValue(sourcePath(node));
   if (enumeration) return enumeration.value;
   if (node.kind === 'Member') return memberValue(node, state);
-  if (node.kind === 'New') return constructedValue(node, read);
+  if (node.kind === 'New') return constructedValue(node, read, state, depth);
   if (node.kind === 'Call' && ['Color.FromArgb', 'Windows.UI.Color.FromArgb'].includes(sourcePath(node.target))) {
     const values = node.args.map(read);
     return {valueType: 'Windows.UI.Color', ...Object.fromEntries(['A', 'R', 'G', 'B'].map((key, index) => [key, values[index]]))};
@@ -69,8 +69,39 @@ function memberValue(node, state) {
   failSource('Dynamic expression is preserved in C# and is not evaluated by the designer', node, 'SFSYNC_DYNAMIC');
 }
 
-function constructedValue(node, read) {
-  const extended = readExtendedDesignerSourceValue(node, read);
+function closedGradientState(state, depth) {
+  const closed = {...state,
+    lookup: () => undefined,
+    constantValue(node) {
+      const constant = state.context.model.getConstantValue(node);
+      if (constant.hasValue) return constant;
+      if (node.kind === 'Call' || node.kind === 'Member') {
+        const symbol = state.context.model.getSymbolInfo(node).symbol;
+        const owner = symbol?.containingType?.metadataFullName;
+        if (node.kind === 'Member' && owner === 'Microsoft.UI.Colors' && colorValues[symbol.name]) {
+          return {hasValue: true, value: decodeColor(colorValues[symbol.name])};
+        }
+        if (node.kind === 'Call' && owner === 'Windows.UI.Color' && symbol.name === 'FromArgb' && node.args.length === 4) {
+          const channels = node.args.map(child => readSourceValue(child, closed, depth + 1));
+          return {hasValue: true, value: {valueType: owner,
+            ...Object.fromEntries(['A', 'R', 'G', 'B'].map((key, index) => [key, channels[index]]))}};
+        }
+        failSource('Gradient members require a registered closed color value', node, 'SFSYNC_DYNAMIC');
+      }
+      if (!constant.hasValue && ['Unary', 'Binary', 'Cast', 'Checked', 'Unchecked'].includes(node.kind)) {
+        failSource('Gradient arithmetic requires a compiler-proven constant', node, 'SFSYNC_DYNAMIC');
+      }
+      return constant;
+    }
+  };
+  return closed;
+}
+
+function constructedValue(node, read, state, depth) {
+  const symbol = state.context.model.getTypeInfo(node).type;
+  const sourceType = symbol?.metadataFullName ?? symbol?.legacy?.fullName ?? canonicalType(node.type);
+  const gradientState = closedGradientState(state, depth);
+  const extended = readExtendedDesignerSourceValue({...node, type: sourceType}, child => readSourceValue(child, gradientState, depth + 1));
   if (extended.handled) return extended.value;
   const type = canonicalType(node.type);
   const args = node.args.map(read);

@@ -1,5 +1,6 @@
 import {MEDIA, XAML} from '@sharpforge/framework';
 import {normalizeProperty, propertySchema} from '@sharpforge/designer';
+import {designManagedBrush} from './design-brushes.js';
 
 /** Object collection scalars retain their managed primitive type, including Boolean on the CIL engine. */
 export function designManagedObjectScalar(platform, value) {
@@ -33,17 +34,8 @@ export function designManagedValue(platform, value, type) {
       ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'];
     return platform.construct(type, keys.map(key => platform.managed(value[key], 'double')));
   }
-  if (type === MEDIA + 'Brush' || type === MEDIA + 'SolidColorBrush') {
-    if (value.valueType !== MEDIA + 'SolidColorBrush') throw new TypeError('Live properties require a supported solid brush');
-    const color = platform.make('Windows.UI.Color', Object.fromEntries(['A', 'R', 'G', 'B'].map(key => [key, value.Color[key]])));
-    platform.heap.pins.push(color);
-    const brush = platform.construct(MEDIA + 'SolidColorBrush', [color]);
-    if (value.Opacity !== undefined) {
-      platform.heap.withRoots([brush], () => platform.setProperty(brush, {
-        owner: MEDIA + 'SolidColorBrush', property: 'Opacity'
-      }, platform.managed(value.Opacity, 'double')));
-    }
-    return brush;
+  if (['Brush', 'SolidColorBrush', 'GradientBrush', 'LinearGradientBrush'].some(name => type === MEDIA + name)) {
+    return designManagedBrush(platform, value);
   }
   if (type === XAML + 'GridLength') return platform.construct(type, [platform.managed(value.Value, 'double'), value.GridUnitType]);
   return platform.managed(value, type);
