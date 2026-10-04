@@ -29,6 +29,10 @@ function captureSource(snapshot, maxBytes) {
   const bom = snapshot.bom ?? false;
   if (typeof uri !== 'string' || !uri || typeof bom !== 'boolean') throw new TypeError('Invalid source save metadata');
   if (version !== undefined && (!Number.isSafeInteger(version) || version < 0)) throw new TypeError('Invalid captured source version');
+  if (typeof source !== 'string' && (source.uri !== undefined && source.uri !== uri
+    || source.version !== undefined && source.version !== version)) {
+    throw new TypeError('Captured source metadata does not match its immutable snapshot');
+  }
   if (!Number.isSafeInteger(maxBytes) || maxBytes < 1 || source.length > maxBytes) {
     throw new RangeError('Source output byte limit exceeded');
   }
@@ -140,28 +144,45 @@ async function exportCapturedSource(captured, name, options) {
   return resultFor(captured, {ok: false, exported: accepted !== false, name, byteLength: bytesWritten});
 }
 
+async function prepareCapturedSource(captured, options) {
+  if (!options.prepare) return captured;
+  checkCancellation(options.signal);
+  const replacement = await options.prepare({signal: options.signal});
+  checkCancellation(options.signal);
+  const prepared = captureSource(replacement, options.maxBytes);
+  if (prepared.uri !== captured.uri || captured.version !== undefined
+    && (prepared.version === undefined || prepared.version < captured.version)) {
+    throw saveError('SFSTUDIO_SAVE_STALE', 'The prepared save belongs to another document or an older source revision');
+  }
+  return prepared;
+}
+
 /**
  * Save one captured source, preserving encoding/BOM and never reading its lazy whole-text getter.
- * The picker runs before the first await. Native success requires close(); downloads return
+ * The picker runs before the first await or optional prepare({signal}) callback. Preparation
+ * returns an exact replacement capture for the same URI, before a writable stream is opened.
+ * Native success requires close(); downloads return
  * {ok:false, exported:true}, since initiating a download cannot confirm that the user saved it.
  * Cancellation is honored before close/download begins. Other failures reject; an acquired
  * stream is aborted on failure. maxBytes bounds encoded output (default 256 MiB).
  */
 export async function saveStudioSourceAs(snapshot, {window = globalThis.window, download, signal,
-  maxBytes = DEFAULT_MAX_BYTES, onProgress} = {}) {
+  maxBytes = DEFAULT_MAX_BYTES, onProgress, prepare} = {}) {
   if (download !== undefined && typeof download !== 'function') throw new TypeError('The download provider must be a function');
   if (onProgress !== undefined && typeof onProgress !== 'function') throw new TypeError('The progress callback must be a function');
+  if (prepare !== undefined && typeof prepare !== 'function') throw new TypeError('The source preparation callback must be a function');
   if (signal != null && (typeof signal.aborted !== 'boolean' || typeof signal.addEventListener !== 'function'
     || typeof signal.removeEventListener !== 'function')) throw new TypeError('The cancellation signal must be an AbortSignal');
-  const captured = captureSource(snapshot, maxBytes);
+  let captured = captureSource(snapshot, maxBytes);
   const name = sourceName(captured.uri);
-  const options = {window, download, signal, maxBytes, onProgress};
+  const options = {window, download, signal, maxBytes, onProgress, prepare};
   try {
     checkCancellation(signal);
     if (typeof window?.showSaveFilePicker === 'function') {
       const handle = await window.showSaveFilePicker({suggestedName: name});
       checkCancellation(signal);
       if (!handle) throw saveError('SFSTUDIO_SAVE_HANDLE', 'The file picker did not return a file handle');
+      captured = await prepareCapturedSource(captured, options);
       if (typeof handle.createWritable === 'function') {
         let stream;
         try { stream = await handle.createWritable(); }
@@ -173,6 +194,7 @@ export async function saveStudioSourceAs(snapshot, {window = globalThis.window, 
         return resultFor(captured, {ok: true, handle, name: handle.name ?? name, byteLength});
       }
     }
+    if (typeof window?.showSaveFilePicker !== 'function') captured = await prepareCapturedSource(captured, options);
     return await exportCapturedSource(captured, name, options);
   } catch (error) {
     if (error?.name === 'AbortError') return resultFor(captured, {ok: false, cancelled: true, name});

@@ -1,4 +1,4 @@
-import { TextBuffer, VisualColumnIndex } from '@sharpforge/text';
+import { TextBuffer, TextVersionError, VisualColumnIndex } from '@sharpforge/text';
 import { normalizeSelections, transformSelections } from './selections.js';
 import { UndoStack } from './undo.js';
 
@@ -82,13 +82,30 @@ export class EditorModel {
   onDidChangeSelection(listener) { this.#selectionListeners.add(listener); return () => this.#selectionListeners.delete(listener); }
   prepareEdits(edits, options = {}) {
     this.#assertWritable();
-    const prepared = this.buffer.prepareEdits(edits, options);
+    return this.bindPreparedEdits(this.buffer.prepareEdits(edits, options), options);
+  }
+  /** Construct one private edit transaction with bounded work; the caller still owns the explicit commit. */
+  async prepareEditsAsync(edits, options = {}) {
+    this.#assertWritable();
+    const prepared = await this.buffer.prepareEditsAsync(edits, options);
+    this.#assertWritable();
+    return this.bindPreparedEdits(prepared, options);
+  }
+  /** Bind a current prepared buffer transaction to explicit view selections without changing model or undo state. */
+  bindPreparedEdits(prepared, options = {}) {
+    this.#assertWritable();
+    if (prepared.owner !== this.buffer) throw new TypeError('Prepared edit belongs to another buffer');
+    if (prepared.before !== this.snapshot()) throw new TextVersionError(prepared.oldVersion, this.version);
+    const beforeState = options.beforeSelections
+      ? normalizeSelections(options.beforeSelections, prepared.before.length, options.beforePrimaryIndex ?? this.primaryIndex)
+      : this.#selectionState;
     const nextSelections = options.selections
-      ? normalizeSelections(options.selections, prepared.after.length, options.primaryIndex ?? Math.min(this.primaryIndex, options.selections.length - 1))
-      : transformSelections(this.selections, prepared.changes, prepared.after.length, this.primaryIndex);
+      ? normalizeSelections(options.selections, prepared.after.length,
+        options.primaryIndex ?? Math.min(beforeState.primaryIndex, options.selections.length - 1))
+      : transformSelections(beforeState.selections, prepared.changes, prepared.after.length, beforeState.primaryIndex);
     return Object.freeze({
       ...prepared, bufferEdit: prepared, owner: this,
-      beforeSelections: this.selections, beforePrimaryIndex: this.primaryIndex, nextSelections, options: Object.freeze({ ...options })
+      beforeSelections: beforeState.selections, beforePrimaryIndex: beforeState.primaryIndex, nextSelections, options: Object.freeze({ ...options })
     });
   }
   commitPrepared(prepared, { notify = true } = {}) {

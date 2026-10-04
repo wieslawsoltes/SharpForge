@@ -10,6 +10,10 @@ const result = await saveStudioSourceAs(captured, {
   window,
   download, // optional: (name, binaryBlob, mimeType) => void | boolean | Promise
   signal,
+  prepare: async ({signal}) => {
+    await editor.prepareSave({signal});
+    return documents.captureSave(uri); // the host first checks original document/model ownership
+  },
   maxBytes: 256 * 1024 * 1024,
   onProgress: ({phase, bytesWritten, maxBytes}) => updateProgress(bytesWritten)
 });
@@ -27,7 +31,9 @@ from it defaults to UTF-8 without a BOM.
 
 The helper captures the source reference and metadata before the first await.
 Changes to the original wrapper or live buffer while the picker is open cannot
-change the saved content or version. Suggested file names use the URI basename,
+change that capture. An optional `prepare({signal})` callback explicitly replaces
+it with a new exact capture for the same URI and a nondecreasing version. Snapshot
+metadata must agree with the wrapper. Suggested file names use the URI basename,
 with invalid cross-platform filename characters replaced. The original URI is
 retained in the result even if the user chooses a different output name.
 
@@ -35,15 +41,25 @@ When `window.showSaveFilePicker` exists, it is invoked synchronously during the
 caller’s user gesture, before reading any source characters. The caller should
 invoke this helper directly from its activated save command; this helper cannot
 restore activation that was already lost earlier in that command. After the
-picker resolves, it creates a writable stream and uses the public
+picker resolves, the helper awaits `prepare` if supplied, then creates a writable stream and uses the public
 `@sharpforge/project-system` `writeWorkspaceSource` API. A fresh picker handle
 does not need a separate permission prompt from this helper.
+
+The preparation callback runs once, before acquiring a stream or creating an
+export. A dismissed picker never runs normalization. Cancellation, rejection,
+stale URI/version or inconsistent source metadata prevents stream acquisition.
+The host callback must also guard the original document/model identity; this
+helper does not own the editor workspace. Without a picker, the same callback
+runs before collecting the explicit download output.
 
 The shared encoder uses 64 Ki UTF-16 windows, retaining a complete surrogate pair
 when it crosses a window boundary. It yields between chunks, preserves CRLF and
 UTF-8/UTF-16LE/UTF-16BE BOM behavior, and checks encoded byte limits including the
-BOM. UTF-16 retains lone surrogate code units; UTF-8 applies the standard text
-encoder's replacement of invalid scalar input. Neither native saving nor the
+BOM. Unpaired surrogates are rejected with `SFPROJECT_SOURCE_ENCODING_LOSS`
+before close/download, rather than accepting data that a later strict source
+read cannot restore. The same diagnostic rejects NUL and a leading U+FEFF
+without a separate BOM. Valid surrogate pairs and literal U+FEFF following an
+explicit BOM remain lossless. Neither native saving nor the
 download fallback joins source chunks into a whole text string.
 
 Native writing retains bounded encoding chunks and awaits sink backpressure.
@@ -113,3 +129,36 @@ and the
 [File System writable stream specification](https://fs.spec.whatwg.org/#api-filesystemwritablefilestream).
 The shared encoder is qualified separately by
 `tests/a20-prepared-source-workspace.test.js`.
+
+The subsequent complete save-preparation/round-trip follow-up adds
+`a20-save-preparation-flow.test.js`, `a20-save-encoding-roundtrip.test.js`,
+`a20-disk-save-cancellation.test.js`, `a20-save-normalization.test.js`, and
+`text-cooperative-edits.test.js`. It replaces the historical lone-surrogate
+success assertion with explicit abort/no-close rejection and retains the valid
+pair/BOM byte assertions. Its exact source/results are recorded separately in
+`packages/editor/VIEW-COVERAGE.md`; the older measurements below remain tied to
+their original source revision.
+
+Observed at source revision `fe2c20f7` on Node.js v24.19.0, Linux x64:
+
+```sh
+node scripts/limited.js node --test --test-reporter=spec tests/a20-source-save-as.test.js
+```
+
+All **24 tests passed**, with zero failures or skips, in **6.496 seconds**. The
+200 MiB fixture took **6.296 seconds**, including construction of its persistent
+source, cooperative encoding, byte-by-byte sink verification and stream close.
+It emitted exactly **209,715,200 bytes in 3,200 writes**, retained no output
+chunks in the sink, and kept the persistent snapshot's lazy text cache
+unmaterialized. This fixture duration is not browser save throughput, a memory
+peak measurement, or editor typing/rendering latency.
+
+At the completed save follow-up source `fc4ee84a`, the unchanged 24-case Save As
+suite passed within a broader 162-case command. Its 200 MiB output fixture took
+7.293 seconds. A separate normalization selection defect was corrected at
+`54892a70` and only the affected normalization/view/configuration tests were
+retried (30/30 passing). The full scope's eventual 163 distinct passing cases
+and exact commands are retained in `packages/editor/VIEW-COVERAGE.md`. The
+historical/current fixture durations are single observations from different
+scope runs on a shared host; they are not a controlled throughput regression
+benchmark or actual browser latency qualification.

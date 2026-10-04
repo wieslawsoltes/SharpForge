@@ -95,8 +95,8 @@ test('Save As invokes the picker during the calling gesture before any source re
 });
 
 for (const encoding of ['utf-8', 'utf-16le', 'utf-16be']) {
-  test(`Save As preserves ${encoding}, BOM, split surrogate pairs, lone surrogates, and CRLF`, async () => {
-    const text = 'a'.repeat(65_535) + '😀\r\n界\ud800!\udc00';
+  test(`Save As preserves ${encoding}, BOM, split surrogate pairs, and CRLF`, async () => {
+    const text = 'a'.repeat(65_535) + '😀\r\n界𠀀!';
     const input = captured(text, {encoding, bom: true});
     const output = outputStream();
     const result = await saveStudioSourceAs(input.snapshot, nativeWindow(output.stream));

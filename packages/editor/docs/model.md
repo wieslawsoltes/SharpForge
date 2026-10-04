@@ -41,6 +41,38 @@ Typing/deletion coalesces only when command identity, selection continuity, time
 
 The direct `.buffer` API bypasses editor history. User editing commands should use `model.applyEdits` or the editor facade's transaction method. Several views can share one `EditorModel`; each view can additionally keep a `SelectionSet` for independent local caret/scroll state. Disposing an injected model buffer remains the owner's responsibility.
 
+### Cooperative prepared transactions
+
+`buffer.prepareEditsAsync(edits, options)` and `model.prepareEditsAsync` accept
+an ordered iterable of non-overlapping edits in original UTF-16 coordinates.
+Unlike the synchronous array API, this streaming preparation does not sort its
+input. It validates the existing buffer `maxEdits` limit (100,000 by default),
+builds a private persistent tree and constructs inverse payloads in bounded
+windows. It returns the same explicit prepared/commit protocol. Neither the
+document revision, notifications nor undo history changes during preparation.
+
+Controls include `signal`, `chunkSize` (1–65,536 code units; default 65,536),
+`batchSize` (1–256 edits; default 128), `onProgress` and an optional `check`
+callback for an owner's additional identity guards. Normalized CRLF insertions
+may inspect one additional code unit at a chunk boundary. Cancellation rejects
+with `AbortError`; any source-root/version change rejects with
+`TEXT_VERSION_MISMATCH`. Disposal, invalid ranges, unordered/overlapping input
+and edit-limit violations reject before commit. Large deletion history still
+retains the deleted payload, as required for operation-based undo; preparation
+does not construct a full unchanged-document string.
+
+`model.bindPreparedEdits(bufferEdit, options)` binds an owned, current buffer
+preparation to model selection state. `beforeSelections` and
+`beforePrimaryIndex` select the originating view without changing the model.
+`editor.commitPrepared(modelEdit)` uses this seam to bind the latest view
+selections and run the same `beforeEdit`/`afterEdit` contribution boundary as
+ordinary edits. The commit creates one model version and one undo operation;
+adjacent deletions retain one unambiguous inverse insertion range.
+
+The preparation windows are implementation bounds. Actual browser scheduling,
+large undo latency and the cost of downstream event subscribers need separate
+qualification; no frame-time guarantee follows from the Node fixtures.
+
 ## Exact visual status columns
 
 `model.visualColumnAtOffset(offset,{tabSize:4,ambiguousWidth:1,signal})` returns a promise for the zero-based visual column on the offset's logical line. `cachedVisualColumnAtOffset` returns an exact number or `null`; it reads at most one bounded chunk when a sparse checkpoint is close enough. `positionAt(offset).character` remains the line-relative UTF-16 position for a status bar's **Ch** field. Add one to the visual result for a one-based **Col** field.

@@ -36,7 +36,7 @@ export {BookmarkModel} from './bookmarks.js';
 export {ChangeTracking} from './change-tracking.js';
 export {ClipboardRing, dragTextEdits} from './clipboard-ring.js';
 export {defaultEditorOptions, editorOptions, EditorOptionScope} from './options.js';
-export {parseEditorConfig, resolveEditorConfig, editorConfigGlob, saveTextEdits} from './editorconfig.js';
+export {parseEditorConfig, resolveEditorConfig, editorConfigGlob, saveTextEdits, saveTextEditsAsync} from './editorconfig.js';
 export {createEditorOptionsPage} from './options-page.js';
 export {LargeFilePolicy} from './large-file.js';
 export {readEditorSource, rebaseEditorSource} from './source-loader.js';
