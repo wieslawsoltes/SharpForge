@@ -28,7 +28,17 @@ export const workerMethods=Object.freeze({
     "definition",
     "references",
     "rename",
-    "symbols"
+    "symbols",
+    "signatureHelp",
+    "diagnostics",
+    "semanticTokens",
+    "foldingRanges",
+    "inlayHints",
+    "prepareRename",
+    "documentHighlights",
+    "formatRange",
+    "formatOnType",
+    "readDocument"
   ],
   "runtime": [
     "launch",

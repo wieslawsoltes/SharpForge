@@ -12,4 +12,4 @@ export { AssemblyLoadContext, AssemblyLoadSession } from './load-context.js';
 export { AssemblyDependencyGraph } from './dependency-graph.js';
 export { ContextRoots } from './unload.js';
 export { RuntimeAppContext, RuntimeAppDomain } from './app-domain.js';
-export { TypeDesc } from './type-system/type-desc.js';
+export { TypeDesc, TypeKind } from './type-system/type-desc.js';

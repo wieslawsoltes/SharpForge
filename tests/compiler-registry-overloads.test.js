@@ -85,7 +85,8 @@ function profileChoice(candidates, argumentTypes, exactlyOne) {
 }
 function resolverChoice(symbols, argumentTypes, isConstructor) {
   const result = members.resolve(symbols, argumentTypes.map(argumentOf), { isConstructor });
-  if (result.succeeded) return result.method.contract.id;
+  // The string-typed rule has no parameter arrays: a call only the expanded form accepts found nothing there.
+  if (result.succeeded) return result.expanded ? 'none' : result.method.contract.id;
   return result.error.code === 'CS0121' ? 'ambiguous' : 'none';
 }
 

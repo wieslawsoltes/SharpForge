@@ -8,8 +8,11 @@
  *   explicit interface implementation.
  *
  * Below C# 13 the attribute itself is the gated construct (CS9202 and its siblings, on the attribute).
+ *
+ *   Ref locals in iterators and async methods (SF-A02-T82): `refLocalsAcrossSuspensions`, CS9217.
  */
-import { SymbolKind } from '../symbols/types.js';
+import { SymbolKind, RefKind } from '../symbols/types.js';
+import { forEachChild } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
 import { attributesNamed } from './bound-attributes.js';
 import { overloadPriorityAttribute } from '../overload/params-collections.js';
@@ -21,6 +24,63 @@ function priorityPlacementProblem(member) {
   if (member.kind === SymbolKind.Property) return member.isIndexer ? null : 'CS9262';
   if (member.kind !== SymbolKind.Method) return null;
   return [MethodKind.StaticConstructor, MethodKind.Destructor, MethodKind.Conversion].includes(member.methodKind) ? 'CS9262' : null;
+}
+
+const loopKinds = new Set(['WhileStatement', 'DoStatement', 'ForStatement', 'ForEachStatement', 'ForEachVariableStatement']);
+const spanOf = node => node.span ?? node;
+const contains = (outer, inner) => outer.start <= inner.start && inner.end <= outer.end;
+
+/** The span of the block (or embedded statement) a local declared at `syntax` is in scope of. */
+function scopeOf(syntax) {
+  for (let node = syntax?.parent; node; node = node.parent) if (node.kind === 'Block' || node.kind === 'SwitchSection') return spanOf(node);
+  return null;
+}
+
+/**
+ * C# 13 lets an iterator or async method declare ref locals, but a ref local does not survive a `yield` or an
+ * `await`: using it afterwards is CS9217, reported on the use (SF-A02-T82).
+ *
+ * A use is after a suspension when a `yield return` / `await` inside the local's scope comes before it in the text
+ * (with no ref re-assignment of the local in between), or when both are inside one loop that the local was declared
+ * outside of. Lambdas and local functions inside the body are not looked into.
+ * @returns {{node: object, code: string, args: any[]}[]}
+ */
+export function refLocalsAcrossSuspensions(body) {
+  const suspensions = [],
+    uses = [],
+    reassignments = [];
+  const visit = node => {
+    if (node.kind === 'Lambda' || node.kind === 'LocalFunction') return;
+    if (node.kind === 'Await' || node.kind === 'YieldReturn') suspensions.push(spanOf(node.syntax));
+    if (node.kind === 'RefAssignment' && node.left?.kind === 'Local') {
+      // `r = ref y` binds the local again: its left side is not a use of the old reference.
+      reassignments.push({ local: node.left.local, span: spanOf(node.syntax) });
+      visit(node.right);
+      return;
+    }
+    if (node.kind === 'Local' && node.local?.refKind && node.local.refKind !== RefKind.None) uses.push(node);
+    forEachChild(node, visit);
+  };
+  visit(body);
+  if (!suspensions.length || !uses.length) return [];
+  const rows = [];
+  for (const use of uses) {
+    const declaration = use.local.syntax ?? use.local.locations?.[0],
+      scope = scopeOf(use.local.syntax),
+      at = spanOf(use.syntax);
+    if (!scope || !declaration) continue;
+    const declared = spanOf(declaration).start,
+      // The local is (re)bound by its declaration and by every `r = ref ...` before the use.
+      bound = Math.max(declared, ...reassignments.filter(r => r.local === use.local && r.span.end <= at.start).map(r => r.span.end));
+    let crossed = suspensions.some(s => contains(scope, s) && s.start >= bound && s.end <= at.start);
+    for (let node = use.syntax.parent; node && !crossed; node = node.parent) {
+      const loop = loopKinds.has(node.kind) ? spanOf(node) : null;
+      // A loop inside the local's scope that the local was declared outside of: its back edge carries the suspension.
+      if (loop && contains(scope, loop) && !(loop.start <= declared && declared < loop.end)) crossed = suspensions.some(s => contains(loop, s));
+    }
+    if (crossed) rows.push({ node: use.syntax, code: 'CS9217', args: [] });
+  }
+  return rows;
 }
 
 /** Class mixin (analysis phase): the attribute-driven rules of C# 13. */
@@ -37,5 +97,17 @@ export const CSharp13Rules = Base =>
           const code = priorityPlacementProblem(member);
           if (code) this.report(uri, attribute.syntax, code);
         }
+    }
+  };
+
+/** Class mixin (analysis phase, composed after body binding): the rules of C# 13 that need bound bodies. */
+export const CSharp13BodyRules = Base =>
+  class extends Base {
+    bindMethodBody(method, context) {
+      const body = super.bindMethodBody(method, context);
+      // Below C# 13 the declaration of the ref local is the error (the feature gate); the rule is not applied.
+      if (body && !context.parent && this.versionOf(context.uri).number >= 13 && (method.isAsync || body.binder?.c?.isIterator))
+        for (const row of refLocalsAcrossSuspensions(body)) this.report(context.uri, row.node, row.code, row.args);
+      return body;
     }
   };

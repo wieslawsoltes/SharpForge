@@ -298,11 +298,18 @@ export const typeMethods = {
     this.feature('Tuples', this.current);
     const open = this.take(),
       elements = [];
-    for (;;) {
+    while (!this.at(')') || elements.length) {
       const type = this.type();
       elements.push(this.n('TupleElement', type, this.isId() ? this.take() : null));
       if (this.at(',')) elements.push(this.take());
       else break;
+    }
+    // Roslyn completes a tuple type of fewer than two elements with missing ones and reports the last (CS8124).
+    if (elements.length < 2) {
+      if (!elements.length) elements.push(this.n('TupleElement', this.missingName(), null));
+      elements.push(this.cache.missing('CommaToken'));
+      this.error(this.current, 'CS8124', 'Tuple must contain at least two elements.');
+      elements.push(this.n('TupleElement', this.missingName(), null));
     }
     return this.n('TupleType', open, elements, this.expect(')'));
   },

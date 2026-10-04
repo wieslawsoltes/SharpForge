@@ -72,6 +72,11 @@ export function covariantReturnType(method, receiverType) {
   return declared;
 }
 
+const memberNotNullAttributes = [
+  'System.Diagnostics.CodeAnalysis.MemberNotNullAttribute',
+  'System.Diagnostics.CodeAnalysis.MemberNotNullWhenAttribute',
+];
+
 /** Class mixin (analysis phase): the attribute-driven rules of C# 9, run once the attributes are bound. */
 export const CSharp9Rules = Base =>
   class extends Base {
@@ -84,12 +89,26 @@ export const CSharp9Rules = Base =>
         for (const member of type.getMembers()) {
           targets.push(member);
           if (member.kind === SymbolKind.Method) this.decodeModuleInitializer(member);
+          this.gateAttributeFeatures(member);
         }
       }
       if (this.options.allowUnsafe) return;
       for (const symbol of targets)
         for (const attribute of attributesNamed(symbol, skipLocalsInitAttribute))
           this.report(this.uriOfAttribute(symbol), attribute.syntax.name, 'CS0227');
+    }
+    /**
+     * Attributes whose use is a language feature: `[Obsolete]` on a property accessor (C# 8, reported at the
+     * attribute name) and `[MemberNotNull]` / `[MemberNotNullWhen]` (C# 9, reported at the attribute).
+     */
+    gateAttributeFeatures(member) {
+      const accessors = member.kind === SymbolKind.Property ? [member.getMethod, member.setMethod].filter(Boolean) : [];
+      for (const accessor of accessors)
+        for (const attribute of attributesNamed(accessor, 'System.ObsoleteAttribute'))
+          this.gate(this.uriOfAttribute(accessor), attribute.syntax.name, 'ObsoleteOnPropertyAccessor');
+      for (const symbol of [member, ...accessors])
+        for (const name of memberNotNullAttributes)
+          for (const attribute of attributesNamed(symbol, name)) this.gate(this.uriOfAttribute(symbol), attribute.syntax, 'MemberNotNull');
     }
     uriOfAttribute(symbol) {
       return symbol.uri ?? symbol.locations?.[0]?.uri ?? this.files[0]?.source.uri;
