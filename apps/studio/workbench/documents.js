@@ -10,21 +10,27 @@ function documentRecord(record) {
 
 /** Workspace documents own text and editors; prompt/tab placement policies belong to the host. */
 export class DocumentService {
-  constructor({ records = [], createEditor, saveDocument, maxDocuments = 20_000 } = {}) {
+  constructor({ records = [], createEditor, createModel, modelFactory, saveDocument, maxDocuments = 20_000 } = {}) {
     this.records = new Map();
     this.recordList = [];
     this.baselines = new Map();
     this.projectMembership = new Map();
+    this.documentProjects = new Map();
     this.tabs = [];
     this.active = '';
     this.dirtyFiles = new Set();
     this.editors = new Map();
     this.views = new Map();
     this.viewStates = new Map();
+    this.activeViews = new Map();
+    this.models = new Map();
+    this.modelSubscriptions = new Map();
+    this.staleSaves = new Set();
     this.events = new WorkbenchEvents();
     this.revision = 0;
     this.disposed = false;
     this.createEditor = createEditor;
+    this.modelFactory = createModel ?? modelFactory;
     this.saveDocument = saveDocument;
     this.maxDocuments = maxDocuments;
     this.replace(records, { discard: true });
@@ -39,6 +45,7 @@ export class DocumentService {
     if (appended) {
       this.records.set(uri, appended);
       if (!this.baselines.has(uri)) this.baselines.set(uri, appended.text);
+      if (this.modelFactory) this.bindModel(appended, this.newModel(documentRecord(appended)));
     }
     return appended ?? null;
   }
@@ -61,12 +68,33 @@ export class DocumentService {
       next.set(record.uri, record);
     }
     if (tabs.some(uri => !next.has(uri)) || active && !next.has(active)) throw new TypeError('Invalid restored document tabs');
+    const models = new Map();
+    try {
+      if (this.modelFactory) for (const [uri, record] of next) {
+        const previous = preserveEditors ? this.models.get(uri) : null;
+        models.set(uri, previous && previous.version === record.version && previous.text === record.text ? previous : this.newModel(record));
+      }
+    } catch (error) {
+      for (const [uri, model] of models) if (this.models.get(uri) !== model) model.dispose?.();
+      throw error;
+    }
     if (!preserveEditors) this.resetEditors();
     else for (const uri of this.records.keys()) if (!next.has(uri)) this.releaseViews(uri);
+    for (const dispose of this.modelSubscriptions.values()) dispose();
+    this.modelSubscriptions.clear();
+    for (const [uri, model] of this.models) if (models.get(uri) !== model) model.dispose?.();
+    this.models.clear();
     this.records = next;
     this.recordList = [...next.values()];
-    this.baselines = new Map(records.map(record => [record.uri, record.text]));
+    for (const record of this.recordList) record.dirty = false;
+    this.baselines = new Map([...next].map(([uri, record]) => [uri, record.text]));
     this.dirtyFiles.clear();
+    this.staleSaves.clear();
+    for (const [uri, model] of models) {
+      model.markSaved();
+      this.bindModel(next.get(uri), model);
+      for (const view of this.views.get(uri)?.values() ?? []) this.setEditorModel(uri, view.editor);
+    }
     this.tabs = [...new Set(tabs)];
     this.active = active || this.tabs[0] || '';
     if (this.active && !this.tabs.includes(this.active)) this.tabs.push(this.active);
@@ -78,11 +106,13 @@ export class DocumentService {
     const record = documentRecord(value);
     if (this.records.has(record.uri)) throw new TypeError(`Duplicate document '${record.uri}'`);
     if (this.records.size >= this.maxDocuments) throw new RangeError('Document limit exceeded');
+    const model = this.modelFactory ? this.newModel(record) : null;
     this.records.set(record.uri, record);
     this.recordList.push(record);
     this.baselines.set(record.uri, dirty ? null : record.text);
     if (dirty) this.dirtyFiles.add(record.uri);
     record.dirty = dirty;
+    if (model) this.bindModel(record, model);
     this.events.emit({ type: 'added', uri: record.uri, record, revision: ++this.revision });
     return record;
   }
@@ -108,6 +138,7 @@ export class DocumentService {
     const record = this.require(uri);
     if (!this.tabs.includes(uri)) this.open(uri, { activate: false, viewId });
     this.active = uri;
+    this.activeViews.set(uri, viewId);
     this.events.emit({ type: 'activated', uri, record, viewId });
     return record;
   }
@@ -116,6 +147,11 @@ export class DocumentService {
     const record = this.require(uri);
     if (typeof text !== 'string') throw new TypeError('Document text must be a string');
     if (version !== undefined && record.version !== version) throw workbenchError('DOCUMENT_STALE', 'Document version changed');
+    const model = this.models.get(uri);
+    if (model) {
+      model.setValue(text, { source: 'document', expectedVersion: version ?? model.version, undoStop: true, origin });
+      return record;
+    }
     if (record.text === text) return record;
     const previous = record.text;
     record.text = text;
@@ -135,6 +171,8 @@ export class DocumentService {
 
   markSaved(uri, { version, text } = {}) {
     const record = this.require(uri);
+    const model = this.models.get(uri);
+    if (model) return this.markModelSaved(uri, model, record, { version, text });
     const baseline = text ?? record.text;
     if (version !== undefined && version !== record.version && text === undefined) return false;
     this.baselines.set(uri, baseline);
@@ -148,6 +186,10 @@ export class DocumentService {
   async save(uri) {
     const record = this.require(uri);
     if (!this.saveDocument) throw workbenchError('DOCUMENT_SAVE_UNAVAILABLE', 'No document save provider is registered');
+    const editor = this.views.get(uri)?.get(this.activeViews.get(uri))?.editor ?? this.editors.get(uri);
+    const prepared = editor?.prepareSave?.();
+    if (prepared && typeof prepared.then === 'function') await prepared;
+    if (this.records.get(uri) !== record) return false;
     const snapshot = { ...record };
     const result = await this.saveDocument(snapshot);
     if (result === false || result?.ok === false) return false;
@@ -160,8 +202,8 @@ export class DocumentService {
     if (this.dirtyFiles.has(uri) && !discard) throw workbenchError('DOCUMENT_DIRTY', `Document '${uri}' has unsaved changes`);
     if (discard && this.dirtyFiles.has(uri)) {
       const baseline = this.baselines.get(uri);
-      if (typeof baseline === 'string') this.update(uri, baseline);
-      else { this.dirtyFiles.delete(uri); record.dirty = false; }
+      if (baseline !== null && baseline !== undefined) this.update(uri, typeof baseline === 'string' ? baseline : baseline.text);
+      this.markSaved(uri);
     }
     this.tabs = this.tabs.filter(tab => tab !== uri);
     this.releaseViews(uri);
@@ -172,13 +214,26 @@ export class DocumentService {
 
   setProjectMembership(projectId, uris) {
     requireIdentifier(projectId, 'Project id');
-    this.projectMembership.set(projectId, new Set(uris));
+    const next = new Set(uris);
+    for (const uri of next) requireIdentifier(uri, 'Document URI');
+    const previous = this.projectMembership.get(projectId) ?? new Set();
+    const affected = new Set([...previous, ...next]);
+    for (const uri of previous) {
+      const projects = this.documentProjects.get(uri);
+      projects?.delete(projectId);
+      if (!projects?.size) this.documentProjects.delete(uri);
+    }
+    for (const uri of next) {
+      const projects = this.documentProjects.get(uri) ?? new Set();
+      projects.add(projectId);
+      this.documentProjects.set(uri, projects);
+    }
+    this.projectMembership.set(projectId, next);
+    this.events.emit({ type: 'membership', projectId, uris: [...affected] });
   }
 
   projectsFor(uri) {
-    const result = [];
-    for (const [projectId, uris] of this.projectMembership) if (uris.has(uri)) result.push(projectId);
-    return result;
+    return [...this.documentProjects.get(uri) ?? []];
   }
 
   attachEditor(uri, editor, { viewId = 'primary', element = editor.element } = {}) {
@@ -189,6 +244,8 @@ export class DocumentService {
     views.set(viewId, { editor, element });
     this.views.set(uri, views);
     if (viewId === 'primary' || !this.editors.has(uri)) this.editors.set(uri, editor);
+    this.setEditorModel(uri, editor);
+    this.events.emit({ type: 'view', uri, viewId, editor });
     return element;
   }
 
@@ -198,15 +255,16 @@ export class DocumentService {
     if (existing) return existing.element;
     if (!this.createEditor) throw workbenchError('EDITOR_PROVIDER_MISSING', 'No editor factory is registered');
     let instance;
+    const model = this.models.get(uri) ?? null;
     const created = this.createEditor(record, {
-      viewId,
-      onChange: (text, changes) => this.update(uri, text, { origin: instance, changes }),
+      viewId, model,
+      onChange: model ? undefined : (text, changes) => this.update(uri, text, { origin: instance, changes }),
       onFocus: () => this.activate(uri, { viewId })
     });
     instance = created.editor ?? created;
     const element = created.element ?? instance.element;
     this.attachEditor(uri, instance, { viewId, element });
-    instance.setModel?.(uri, record.text);
+    if (!model) instance.setModel?.(uri, record.text);
     const saved = this.viewStates.get(uri)?.get(viewId);
     if (saved) this.restoreViewState(uri, saved, viewId);
     return element;
@@ -254,6 +312,7 @@ export class DocumentService {
     }
     this.views.delete(uri);
     this.editors.delete(uri);
+    this.activeViews.delete(uri);
   }
 
   resetEditors() { for (const uri of [...this.views.keys()]) this.releaseViews(uri); }
@@ -265,7 +324,79 @@ export class DocumentService {
   dispose() {
     if (this.disposed) return;
     this.resetEditors();
+    for (const dispose of this.modelSubscriptions.values()) dispose();
+    this.modelSubscriptions.clear();
+    for (const model of this.models.values()) model.dispose?.();
+    this.models.clear();
     this.disposed = true;
     this.events.dispose();
+  }
+
+  newModel(record) {
+    const model = this.modelFactory(record);
+    if (!model || !['onDidChange', 'setValue', 'markSaved', 'snapshot'].every(name => typeof model[name] === 'function')) {
+      model?.dispose?.();
+      throw new TypeError('Document model factory must return an EditorModel-compatible object');
+    }
+    if (model.uri !== record.uri || model.version !== record.version) {
+      model.dispose?.();
+      throw new TypeError('Document model URI and version must match its record');
+    }
+    return model;
+  }
+
+  bindModel(record, model) {
+    const uri = record.uri;
+    this.models.set(uri, model);
+    if (this.baselines.get(uri) !== null) this.baselines.set(uri, model.snapshot());
+    record.dirty = model.isDirty || this.baselines.get(uri) === null;
+    Object.defineProperties(record, {
+      text: { enumerable: true, configurable: true, get: () => model.text, set: text => this.update(uri, text) },
+      version: { enumerable: true, configurable: true, get: () => model.version }
+    });
+    this.modelSubscriptions.set(uri, model.onDidChange(change => this.modelChanged(uri, record, model, change)));
+  }
+
+  modelChanged(uri, record, model, change) {
+    if (this.disposed || this.models.get(uri) !== model || this.records.get(uri) !== record) return;
+    const wasDirty = this.dirtyFiles.has(uri);
+    const dirty = model.isDirty || this.staleSaves.has(uri) || this.baselines.get(uri) === null;
+    record.dirty = dirty;
+    if (dirty) this.dirtyFiles.add(uri); else this.dirtyFiles.delete(uri);
+    for (const view of this.views.get(uri)?.values() ?? []) {
+      if (view.editor.model !== model && !view.editor.setModel) view.editor.setValue?.(change.after.text);
+    }
+    this.events.emit({
+      type: 'changed', uri, record, model, change, changes: change.changes,
+      origin: change.options?.origin ?? null, version: change.version, oldVersion: change.oldVersion,
+      get previous() { return change.before.text; },
+      get text() { return change.after.text; },
+      revision: ++this.revision
+    });
+    if (dirty !== wasDirty) this.events.emit({ type: 'dirty', uri, record, dirty });
+  }
+
+  markModelSaved(uri, model, record, { version, text }) {
+    if (version !== undefined && version !== model.version || text !== undefined && text !== model.text) {
+      if (text === undefined) return false;
+      this.baselines.set(uri, text);
+      this.staleSaves.add(uri);
+    } else {
+      model.markSaved();
+      this.staleSaves.delete(uri);
+      this.baselines.set(uri, model.snapshot());
+    }
+    record.dirty = model.isDirty || this.staleSaves.has(uri);
+    if (record.dirty) this.dirtyFiles.add(uri); else this.dirtyFiles.delete(uri);
+    this.events.emit({ type: 'saved', uri, record, dirty: record.dirty });
+    this.events.emit({ type: 'dirty', uri, record, dirty: record.dirty });
+    return !record.dirty;
+  }
+
+  setEditorModel(uri, editor) {
+    const model = this.models.get(uri);
+    if (!model || editor.model === model) return;
+    if (editor.setModel) editor.setModel(uri, model);
+    else editor.setValue?.(model.text);
   }
 }

@@ -11,8 +11,12 @@ export class DocumentLocks {
       if (['created', 'starting', 'state', 'ended', 'removed', 'editability'].includes(event.type)) this.refresh();
     });
     this.unsubscribeDocuments = documents.subscribe(event => {
-      if (['reset', 'opened', 'added'].includes(event.type)) this.apply();
+      if (['opened', 'added', 'view'].includes(event.type)) this.apply([event.uri]);
+      else if (event.type === 'membership') this.apply(event.uris);
+      else if (event.type === 'reset') this.apply();
     });
+    this.refresh();
+    this.apply();
   }
 
   subscribe(listener, options) { return this.events.subscribe(listener, options); }
@@ -27,15 +31,24 @@ export class DocumentLocks {
       set.add(session.id);
       next.set(session.projectId, set);
     }
+    const changed = next.size !== this.projectLocks.size || [...next].some(([projectId, ids]) => {
+      const previous = this.projectLocks.get(projectId);
+      return previous?.size !== ids.size || [...ids].some(id => !previous.has(id));
+    });
+    if (!changed) return;
     this.projectLocks = next;
     this.apply();
     this.events.emit({ type: 'locks', projects: [...next.keys()] });
   }
 
-  apply() {
-    for (const [uri, views] of this.documents.views) {
+  apply(uris = null) {
+    const models = this.documents.models?.keys() ?? [];
+    const affected = uris ?? new Set([...models, ...this.documents.views.keys()]);
+    for (const uri of affected) {
       const readOnly = this.isDocumentLocked(uri);
-      for (const view of views.values()) view.editor.setReadOnly?.(readOnly);
+      const model = this.documents.models?.get(uri);
+      if (model) model.readOnly = readOnly;
+      for (const view of this.documents.views.get(uri)?.values() ?? []) view.editor.setReadOnly?.(readOnly);
     }
   }
 
