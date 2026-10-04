@@ -19,8 +19,8 @@ types participate in matching. A closer nonvirtual match or final virtual match
 is rejected. Static methods cannot match instance signatures. Type graphs and
 signatures remain lazy; no executable body is read.
 
-This is an explicit partial GetBaseDefinition contract. Types with MethodImpl
-rows (including explicit interface or covariant overrides), strict access checks,
+This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
+slot mappings, strict access checks,
 generic base instantiation, constrained generic methods, type generic variables,
 generic-instance/modifier/function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
@@ -28,6 +28,25 @@ Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Interface-only MethodImpl rows are now isolated from class virtual slots. The
+service validates owner/token extents, local MethodDef body ownership and duplicate
+declaration tokens. MethodDef declarations use canonical declaring types;
+MemberRef declarations resolve TypeDef/TypeRef parents through the existing type
+loader and reject field signatures. This permits ordinary class overrides through
+a base type that also explicitly implements local or external interfaces, and
+explicit interface bodies retain their own class slot root. CoreCLR stores these
+interface mappings separately in its dispatch map ([WriteMethodImplData](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp)).
+
+This classification does not resolve the interface declaration method by name,
+certify body/declaration signature compatibility or build interface dispatch maps.
+MemberRef bodies and TypeSpec/ModuleRef/MethodDef declaration parents remain
+explicitly unsupported. Class declarations still fail even when mixed with valid
+interface rows. Each uncached mapped type scans its own rows once; completed
+classification is cached per context. Before constructing body MethodDescs, the
+combined TypeDef/MethodPtr/MethodDef count must fit the context row budget.
+MemberRef signatures have a pre-copy 4 KiB limit, 128 KiB combined per type,
+32 levels and 4,096 AST nodes. Aborted classifications publish no success cache.
 
 Per-context weak caches hold completed roots, name indexes and signature keys;
 immutable modules make invalidation unnecessary. Context type limits bound
@@ -68,3 +87,18 @@ node scripts/limited.js node packages/clr/tools/benchmark-method-base-definition
 
 Invocation, vtable execution, full reflected-member views and source VM/direct
 CIL/Rust native/Wasm execution qualification remain separate. #2475 stays open.
+
+
+Interface-only MethodImpl qualification is pending the serial validation slot.
+Authored cases cover local/external interface declarations, mixed class mappings,
+malformed ownership/tokens/signatures, limits, cancellation/retry and unloading.
+The independent C# fixture includes explicit local interface and IDisposable
+implementations on an intermediate class. No native or performance result is
+claimed until capture and focused validation complete.
+
+```sh
+node scripts/limited.js node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-interface-impl tests/fixtures/clr-method-interface-impl/Program.cs
+node scripts/limited.js node --test --test-concurrency=1 tests/clr-methods-interface-impl*.test.js tests/clr-methods-base*.test.js
+node scripts/limited.js node packages/clr/tools/benchmark-method-base-definition.mjs
+node scripts/limited.js node packages/clr/tools/benchmark-method-interface-impl.mjs
+```
