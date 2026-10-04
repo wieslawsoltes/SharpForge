@@ -20,6 +20,8 @@ import {ToolboxProviders} from './tools/toolbox.js';
 import {ConfigurationManager} from './configuration-manager.js';
 import {Toolbars} from './toolbars.js';
 import {FileWatch, showDiskCompare} from './file-watch.js';
+import {MetadataCatalog} from './metadata/catalog.js';
+import {createStudioMetadataSources} from './metadata/source-provider.js';
 
 /** Services are explicit dependencies; each shell has independent tool state and result windows. */
 export function createShellModels(shell) {
@@ -37,6 +39,9 @@ export function createShellModels(shell) {
   shell.search = new SearchService({documents, context, applyEdits: options.applyEdits, createWorker: options.createSearchWorker,
     sessionProject: id => shell.services.sessions?.get(id)?.projectId});
   shell.symbols = new WorkspaceSymbolIndex({request, documents});
+  shell.metadata = new MetadataCatalog({sources: options.metadataSources ?? createStudioMetadataSources({
+    state: options.state, additional: options.assemblies, readReference: options.readAssemblyReference}),
+    createWorker: options.createMetadataWorker});
   shell.optionsDialog = new OptionsDialog({dialogs, settings: shell.settings});
   registerGeneralOptions(shell.optionsDialog);
   shell.optionsDialog.register(keyboardOptionsPage({registry: commands, keybindings: options.keybindings}));
