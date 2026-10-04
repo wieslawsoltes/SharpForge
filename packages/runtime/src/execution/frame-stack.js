@@ -1,6 +1,7 @@
 import {verifiedStackBound} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
+import {stackByteLimit, admitStackBytes, validateStackByteSnapshot} from './stack-budget.js';
 
 const admissions = new WeakMap();
 const frameAdmissions = new WeakMap();
@@ -35,17 +36,18 @@ function boundsFor(vm, method) {
 /** Re-admit restored or replaced bodies before dispatch; stale bodies retain checked pushes. */
 export function beginFrameInstruction(vm, frame) {
   const epoch = executionCodeState(vm), previous = frameAdmissions.get(frame), method = frame.method;
-  const limit = stackValueLimit(vm.options);
+  const limit = stackValueLimit(vm.options), byteLimit = stackByteLimit(vm.options);
   if (previous?.epoch === epoch && previous.report === vm.report && previous.method === method &&
       previous.instructions === method.instructions && previous.handlers === method.handlers &&
-      previous.capacity === method.maxStack && previous.limit === limit) return;
+      previous.capacity === method.maxStack && previous.limit === limit && previous.byteLimit === byteLimit) return;
   admitCilStack(vm, method);
   const bound = boundsFor(vm, method);
   if (bound && frame.stack.length > bound.peak) {
     throw new ManagedFault('InvalidProgramException', 'Frame exceeds its verified evaluation-stack bound');
   }
+  admitStackBytes(vm, frame);
   frameAdmissions.set(frame, {epoch, report: vm.report, method, verified: bound !== null, instructions: method.instructions,
-    handlers: method.handlers, capacity: method.maxStack, limit});
+    handlers: method.handlers, capacity: method.maxStack, limit, byteLimit});
 }
 
 /** Host quotas apply to the reachable peak, not an overestimated CLI header. */
@@ -60,6 +62,7 @@ export function admitCilStack(vm, method) {
 /** Check all reachable bodies before allocating a VM's managed execution state. */
 export function admitCilAssemblyStacks(vm) {
   stackValueLimit(vm.options);
+  stackByteLimit(vm.options);
   for (const token of vm.report.methods) admitCilStack(vm, vm.inspector.getMethod(token));
 }
 
@@ -75,6 +78,7 @@ export function pushStackValue(vm, value) {
   if (!verified && frame.stack.length >= validStackValueLimit(limit)) {
     throw new ManagedFault('ExecutionLimitException', 'Evaluation stack budget exceeded');
   }
+  if (!verified || admitted.byteLimit !== vm.options.maxStackBytes) admitStackBytes(vm, frame);
   frame.stack.push(value);
 }
 
@@ -102,4 +106,5 @@ export function validateCilStackSnapshot(vm, snapshot) {
       frames(row[1]?.frames);
     }
   }
+  validateStackByteSnapshot(vm, snapshot);
 }
