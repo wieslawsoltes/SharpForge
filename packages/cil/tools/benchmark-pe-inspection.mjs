@@ -9,8 +9,8 @@ import { clean, distribution, environment, git, sha, writeJson } from '../../../
 
 const candidateRoot = realpathSync(fileURLToPath(new URL('../../../', import.meta.url)));
 const baselineCommit = 'd64188af91f03d02041316bdde2ee64fd0634be0';
-const productCommit = 'd72a9fe1684ba28064f83f4307721a1d00b13137';
-const nativeSha256 = 'bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4';
+const productCommit = '135c4c0b151acc92b28b724b410e9db54066b29e';
+const nativeSha256 = '8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1';
 const driverPath = 'packages/cil/tools/benchmark-pe-inspection.mjs';
 const fixturePath = 'tests/fixtures/pe-inspection/';
 const batchCounts = Object.freeze({ warmup: 20, measured: 100 });

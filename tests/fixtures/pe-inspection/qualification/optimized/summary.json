@@ -1,0 +1,52 @@
+{
+  "format": "sharpforge.pe-inspection.optimized-qualification",
+  "schemaVersion": 1,
+  "productRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "nativeCaptureHead": "b29dd68de7d0d20eea64ef9b3ce29c80ebefabac",
+  "focusedNodeHead": "135c4c0b151acc92b28b724b410e9db54066b29e",
+  "native": {
+    "status": "passed",
+    "runs": 1,
+    "capture": "../../native.json",
+    "sha256": "8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1",
+    "command": "native-command.json",
+    "log": "native-capture.log",
+    "comparisonWithOriginal": "native-comparison.json"
+  },
+  "focusedNode": {
+    "status": "passed",
+    "runs": 1,
+    "command": "focused-command.json",
+    "output": "focused-node.tap",
+    "review": "focused-review.json",
+    "summary": {
+      "tests": 130,
+      "suites": 0,
+      "pass": 130,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 11749.540637
+    }
+  },
+  "receiptParserFailures": 1,
+  "productTestFailures": 0,
+  "reruns": 0,
+  "benchmark": {
+    "status": "pending",
+    "cohortsRunOnOptimizedSource": 0
+  },
+  "originalEvidence": "../performance-first/independent-review.md",
+  "remaining": [
+    "one unchanged performance cohort",
+    "browser qualification",
+    "build",
+    "broader platform qualification"
+  ],
+  "notes": [
+    "Original native capture and first benchmark remain byte-exact in performance-first.",
+    "Strict live-source hash assertions are unchanged; fresh capture used identical observer/tools/images/comparison code.",
+    "One post-run receipt parser failed on reporter formatting; the test command itself passed once and was not rerun."
+  ]
+}

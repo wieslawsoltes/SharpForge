@@ -24,7 +24,7 @@ whose runtime source is the tested integration
 main revision `d64188af91f03d02041316bdde2ee64fd0634be0`. Evidence retention
 does not change product source or qualify an optimized candidate.
 
-## Pending construction candidate
+## Construction candidate
 
 Product revision `d72a9fe1684ba28064f83f4307721a1d00b13137` contains only the
 three reviewed construction changes: build each directory record once, append
@@ -41,12 +41,20 @@ only in the three approved source hashes and two observer timing observations.
 The original `native.json` and qualification receipts remain byte-exact in the
 first cohort's archive.
 
-The focused Node gate and second benchmark cohort are pending. The offline test
-and benchmark retain strict current source-hash checks. Run the same ten-file
-Node gate against the new capture. Before one new benchmark cohort, pin the new
-native fixture and source revision and update only the exact allowlist source
-hash. Keep all workload definitions, counts, order, guards, baseline, and inputs
-unchanged. Use a new output path for every command.
+The unchanged ten-file Node gate passed once: 130/130 tests, zero failures,
+cancellations, and skips, at `135c4c0b151acc92b28b724b410e9db54066b29e`.
+The [full output and review](../../tests/fixtures/pe-inspection/qualification/optimized/focused-review.json)
+also retain a post-run receipt parser error: it expected TAP summary lines while
+the unchanged command used Node's default reporter. The original receipt/output
+were preserved; reading the existing summary confirmed the pass without a rerun.
+
+The second benchmark cohort remains pending. Its source/fixture pin is
+`135c4c0b151acc92b28b724b410e9db54066b29e`, whose product source is exactly
+`d72a9fe1684ba28064f83f4307721a1d00b13137`. Its native fixture hash is
+`8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1`.
+The offline test and benchmark retain strict current source-hash checks. Only
+the driver source/native pins and exact allowlist source hash changed. All
+workload definitions, counts, order, guards, baseline, and inputs are unchanged.
 
 ## Source review before measurement
 
@@ -140,6 +148,17 @@ node scripts/limited.js node packages/cil/tools/benchmark-pe-inspection.mjs \
   --r2r /workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll \
   --mixed /workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe \
   --output /workspace/scratch/7e3d2a445c44/project6-pe-performance-first.json
+```
+
+The one scheduled construction-candidate cohort uses the same command with a
+new output file, after the frozen driver and native fixture pins above:
+
+```sh
+node scripts/limited.js node packages/cil/tools/benchmark-pe-inspection.mjs \
+  --baseline /workspace/scratch/7e3d2a445c44/sf6-pe-baseline-d64188af \
+  --r2r /workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll \
+  --mixed /workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe \
+  --output /workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.json
 ```
 
 The benchmark runs in one Node process with both package graphs loaded. Imports,

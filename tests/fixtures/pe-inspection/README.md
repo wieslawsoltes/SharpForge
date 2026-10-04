@@ -124,7 +124,19 @@ The [new command](qualification/optimized/native-command.json),
 retain exact source and execution provenance. All eight comparison groups passed
 for both images; all independent native facts and parity results equal the
 original exactly. Only the three source hashes and two observer elapsed-time
-observations differ in the complete captures. The focused gate remains pending.
+observations differ in the complete captures.
+
+The unchanged ten-file focused gate then passed once at
+`135c4c0b151acc92b28b724b410e9db54066b29e`: **130/130 tests**, zero failures,
+cancellations, and skips, in 11.749540637 seconds. The
+[command receipt](qualification/optimized/focused-command.json),
+[complete output](qualification/optimized/focused-node.tap), and
+[output review](qualification/optimized/focused-review.json) remain separate.
+The post-run receipt parser expected TAP summary markers and failed on Node's
+default reporter; read-only extraction of the existing output confirmed the
+counts. The test command exited 0 and was not rerun. The
+[optimized qualification summary](qualification/optimized/summary.json) records
+that bookkeeping error and the pending benchmark/browser/build qualification.
 
 The original qualification below remains historical evidence. The strict
 live-source identity assertions are unchanged. All original native and Node
