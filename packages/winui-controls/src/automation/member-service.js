@@ -111,9 +111,21 @@ export class AutomationMemberService {
     this.context.modelReferences?.set(model, reference);
     return reference;
   }
+  isElementPeer(receiver) {
+    const seen = new Set();
+    let type = this.context.typeOf(receiver);
+    while (type && !seen.has(type) && seen.size < 256) {
+      if (type === peerNamespace + 'FrameworkElementAutomationPeer') return true;
+      seen.add(type);
+      type = this.context.baseType?.(type) ?? this.context.frameworkRegistry?.frameworkType(type)?.base;
+    }
+    return false;
+  }
   initializePeer(receiver, ownerType, args = []) {
     if (!ownerType.startsWith(peerNamespace) || !ownerType.endsWith('AutomationPeer')) return false;
     const standalone = ownerType === peerNamespace + 'AutomationPeer' && args.length === 0;
+    // Direct CIL visits the parameterless base before the derived owner-taking constructor.
+    if (standalone && this.isElementPeer(receiver)) return true;
     if (!standalone && (args.length !== 1 || args[0] == null)) {
       throw new TypeError('SFAX016: Framework automation peers require one element owner');
     }
