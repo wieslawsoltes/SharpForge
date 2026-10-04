@@ -9,7 +9,10 @@
   ],
   "browserScripts": [
     "tests/browser_release12_test.py",
-    "tests/browser_release13_test.py"
+    "tests/browser_release13_test.py",
+    "tests/browser_designer_documents_test.py",
+    "tests/browser_designer_geometry_test.py",
+    "tests/browser_designer_app_host_test.py"
   ],
   "requiredServices": [
     "studio-http",
