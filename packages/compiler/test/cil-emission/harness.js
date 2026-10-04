@@ -60,7 +60,8 @@ export function loadFixtures(directory = fixtureDirectory) {
 
 /** Compiles a fixture; returns `{assembly, errors}` where `errors` are `code message` lines. */
 export function emitFixture(fixture, options = {}) {
-  const result = compileToAssembly(fixture.source, { name: 'Fixture', ...options });
+  // The reference build of verify-dotnet.mjs allows unsafe blocks for every fixture; so does this one.
+  const result = compileToAssembly(fixture.source, { name: 'Fixture', allowUnsafe: true, ...options });
   return {
     assembly: result.assembly,
     errors: result.diagnostics.filter(entry => entry.severity === 'error').map(entry => `${entry.code} ${entry.message}`),

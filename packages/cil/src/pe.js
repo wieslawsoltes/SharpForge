@@ -9,3 +9,4 @@ export { deterministicContentId, finalizeDeterministicPE } from './pe/determinis
 export { readManagedResources, writeManagedResources, ManifestResourceVisibility } from './pe/managed-resources.js';
 export { writeWin32Resources } from './pe/win32-resources.js';
 export { readWin32Resources } from './pe/win32-reader.js';
+export { readMethodHeader } from './pe/method-header.js';

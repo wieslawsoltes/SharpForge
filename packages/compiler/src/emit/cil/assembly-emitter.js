@@ -55,6 +55,7 @@ export class AssemblyEmitter {
     this.stateMachines = synthesized.stateMachines;
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
     this.records = synthesized.records;
+    this.fixedBuffers = synthesized.fixedBuffers.byField;
     /** True when `<Module>::.cctor` calls the module initializers; otherwise the entry point does (module-initializers.js). */
     this.moduleRunsInitializers = synthesized.moduleMethods.length > 0;
     // A state machine class gets fields while its `MoveNext` is emitted, which moves the field tokens of the classes

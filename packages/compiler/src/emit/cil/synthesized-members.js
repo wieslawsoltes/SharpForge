@@ -22,6 +22,7 @@ import { RecordPlan } from '../../codegen/metadata/record-plan.js';
 import { asyncEntryPoint } from './async-members.js';
 import { moduleTypeInitializer } from './module-initializers.js';
 import { planAnonymousTemplate } from './anonymous-type-members.js';
+import { planFixedBuffers, extendWithFixedBuffers } from './fixed-buffers.js';
 
 const ENTRY_FLAGS = MethodAttributes.Private | MethodAttributes.Static | MethodAttributes.HideBySig;
 const TYPE_INITIALIZER_FLAGS = ENTRY_FLAGS | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -58,7 +59,15 @@ export class SynthesizedMembers {
       // The generic classes that declare the anonymous types (symbols/synthesized/anonymous-types.js).
       anonymousTemplates = (analysis.anonymousTemplates ?? []).map(entry => entry.symbol);
     /** Types to append after the source types. State machine classes come last: their field lists grow while bodies are emitted. */
-    this.types = [...ownProgram, ...synthesizedDelegates, ...anonymousTemplates, ...this.closures.types, ...this.stateMachines.types];
+    this.fixedBuffers = planFixedBuffers(declared, analysis.core);
+    this.types = [
+      ...ownProgram,
+      ...this.fixedBuffers.types,
+      ...synthesizedDelegates,
+      ...anonymousTemplates,
+      ...this.closures.types,
+      ...this.stateMachines.types,
+    ];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
     this.entryPoint = null;
     /** Async `Main` method symbol -> the planned `<Main>` that runs it, once `extend` has seen its type. */
@@ -81,6 +90,7 @@ export class SynthesizedMembers {
   /** Adds the synthesized members of one type to its plan. */
   extend(type, plan) {
     if (type.isAnonymousTemplate) planAnonymousTemplate(type, plan, this.core);
+    extendWithFixedBuffers(this.fixedBuffers, type, plan);
     if (this.topLevel?.type === type) {
       const statements = this.topLevelEntry(type);
       plan.methods.push(statements);

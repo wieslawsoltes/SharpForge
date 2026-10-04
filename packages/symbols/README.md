@@ -102,6 +102,38 @@ Types are snapshotted once per load, and a query clones each used slot's AST
 once even when the slot is declared in multiple scopes. Native nesting and
 local types are compared with SRM by `scripts/validate-pdb-scope-tree.mjs`.
 
+`symbols.localSlots(methodToken)` enumerates declared CLI storage slots, including
+slots with no LocalVariable row. Bound results are `{available: true, reason:
+null, slots}`; each slot has `index`, owned signature AST `type`, `typeName`,
+`unnamed`, `name` and `declarations`. A name is present only for one exact PDB
+declaration; no-row and reused-slot names are null. `unnamed` means no row,
+not an inference about source code or optimization. Declarations retain exact
+`id`, `scopeId`, IL `start`/exclusive `end`, name, attributes and hidden flag.
+No `V_0`-style identifier, lexical scope, runtime value or eliminated variable
+is invented. Existing scope/offset APIs still return only recorded declarations.
+
+Without a bound PE the result is `{available: false, reason:
+'type-metadata-required', slots: []}`. Missing bodies yield `no-method-body`;
+non-CIL bodies without a PDB local signature yield `unsupported-method-body`.
+An actual tiny body without a signature has an available empty slot list.
+The CLI header is authoritative: nonzero PDB local-signature handles must agree
+with it and cannot assign storage to a method without a CIL body.
+Invalid MethodDef/query/signature tokens, malformed signatures and out-of-range
+recorded slots reject. Distinct names for reused storage remain separate in
+`declarations`. Returned ASTs/declarations and public PDB rows cannot alter later
+queries. Source annotations remain on the existing scope-tree declaration API.
+
+Bound loads snapshot all declared local signatures using the shared CIL
+header-only reader, without allocating IL/EH views for slot discovery. Unique
+signature bytes are limited to 4 KiB each / 128 KiB total before AST decoding,
+with depth 32, 4,096 nodes per signature and 65,536 nodes total. Before slot
+projection, `maxLocalSlotMethods` caps method count at 65,536 and `maxLocalSlots`
+caps aggregate method-slot occurrences at 100,000; options may lower these
+limits. Existing per-type name/output limits apply. `signal` cancellation is
+checked during bound snapshots and slot queries. Construction is linear in
+method/header/signature/declaration data; queries copy only one method's slots.
+No PE, borrowed signature bytes or mutable metadata escape the load phase.
+
 LocalVariable/LocalConstant dynamic and tuple CDI is joined by its exact parent
 row. Annotated scope locals retain `dynamicFlags` and `tupleElementNames`, with
 `displayTypeName` such as `dynamic[]` or `(int a, string b)`; `type`/`typeName`

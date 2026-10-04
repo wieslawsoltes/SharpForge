@@ -16,3 +16,13 @@ edges and interface cycles are rejected. `frameworkAssignable` follows declared
 base/interface edges with cycle protection. The compiler bridge and runtime
 method tables retain these shapes, and interface methods are abstract. This
 metadata seam does not itself implement managed comparer callback execution.
+
+`contractForMember` matches registered parameters and results with the shared
+`memberSignatureType(type)` spelling normalizer. This public helper maps only
+the scalar CLR name `System.Decimal` to the registry keyword `decimal`; it is
+used after registry canonicalization. It leaves other names, owners, byrefs,
+pointers and arrays unchanged. The resolver retains the declared return type,
+staticness, parameter count and nearest-member preference. Type identity and
+assignability still use the unchanged `canonicalType`/`frameworkAssignable`
+APIs. CIL applies this normalization only to its registered-framework lookup;
+the independent Decimal/Console intrinsic keys retain `System.Decimal`.
