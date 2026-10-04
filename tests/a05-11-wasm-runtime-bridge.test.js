@@ -145,13 +145,20 @@ test('instruction and heap faults retain canonical frame offsets and debugger be
     .op('ldc.i4.1').op('newarr', context.resolve('System.Int32')).op('ldc.i4.1').op('ldelem.i4').op('ret')} ]});
   const allocation = managedFixture({methods: [{name: 'Main', body: (writer, context) => writer
     .op('ldc.i4', 1000).op('newarr', context.resolve('System.Int32')).op('pop').op('ret')} ]});
-  for (const [bytes, options] of [[loopFixture(), {maxInstructions: 19}], [bounds, {}], [allocation, {maxBytes: 128}]]) {
+  for (const [bytes, options, expectedFault, heapBytes] of [
+    [loopFixture(), {maxInstructions: 19}, 'InstructionLimitException'],
+    [bounds, {}, 'IndexOutOfRangeException'],
+    [allocation, {}, 'OutOfMemoryException', 128]
+  ]) {
     const baseline = new CilVirtualMachine(bytes, options);
     const vm = new CilVirtualMachine(bytes, options);
+    // maxBytes also bounds PE loading; lower the heap alone after loading the fixture.
+    if (heapBytes !== undefined) baseline.heap.maxBytes = vm.heap.maxBytes = heapBytes;
     const handle = await prepareWasmMethod(vm);
     try {
       const expected = run(baseline), actual = run(vm, handle);
       assert.equal(actual.state, 'faulted');
+      assert.equal(actual.fault.name, expectedFault);
       assert.equal(actual.fault.name, expected.fault.name);
       assert.equal(actual.fault.message, expected.fault.message);
       assert.deepEqual(actual.fault.frames, expected.fault.frames);
