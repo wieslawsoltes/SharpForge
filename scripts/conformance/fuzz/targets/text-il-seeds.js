@@ -3,7 +3,7 @@ import {
   methodSignature, writeMethodBody, writePE,
 } from '@sharpforge/cil';
 
-/** Build a tiny local library as data; its branch and string-returning body are never executed. */
+/** Build a tiny local library for IL parsing and the DAP target's fixed, bounded execution. */
 export function createILDocumentSeed() {
   const metadata = new MetadataBuilder('TextFuzzSeed');
   const objectType = metadata.typeRef('System.Object');
