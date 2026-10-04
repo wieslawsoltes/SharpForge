@@ -57,3 +57,14 @@ test('every worker message has a handler seam and unknown messages fail structur
     assert.throws(() => protocol.dispatch(workerMethods[kind][0]), /Unknown/);
   }
 });
+test('Studio has no command branches, direct persistence or inline automation literal',async()=>{const source=await readFile(new URL('../apps/studio/studio.js',import.meta.url),'utf8');assert(!source.includes('switch(command)'));assert(!source.includes('window.sharpforge={'));for(const file of await readdir(new URL('../apps/studio/',import.meta.url)))if(file.endsWith('.js'))assert(!(await readFile(new URL('../apps/studio/'+file,import.meta.url),'utf8')).includes('localStorage.'),file);});
+
+test('real compiler and runtime workers dispatch known requests and return structured unknown errors',async()=>{
+  const {Worker}=await import('node:worker_threads');
+  for(const [kind,method]of [['compiler','analyze'],['runtime','state']]){
+    const url=new URL('../apps/studio/'+kind+'.worker.js',import.meta.url).href;
+    const worker=new Worker(`const {parentPort}=require('node:worker_threads');globalThis.self={postMessage:message=>parentPort.postMessage(message)};import(${JSON.stringify(url)}).then(()=>{parentPort.on('message',data=>self.onmessage({data}));parentPort.postMessage({ready:true});}).catch(error=>{throw error;});`,{eval:true});
+    const receive=()=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error('Worker response timeout'));},10000);const cleanup=()=>{clearTimeout(timer);worker.off('message',success);worker.off('error',failure);};const success=value=>{cleanup();resolve(value);},failure=error=>{cleanup();reject(error);};worker.once('message',success);worker.once('error',failure);});
+    try{assert.deepEqual(await receive(),{ready:true});let result=receive();worker.postMessage({id:1,method,params:{files:[]}});assert.equal((await result).id,1);result=receive();worker.postMessage({id:2,method:'unregistered',params:{}});assert.deepEqual(await result,{id:2,error:{name:'ProtocolError',message:`Unknown ${kind} request 'unregistered'`,code:'UNKNOWN_METHOD'}});result=receive();worker.postMessage({id:3,method:42});assert.equal((await result).error.code,'BAD_REQUEST');}finally{await worker.terminate();}
+  }
+});

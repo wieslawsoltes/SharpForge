@@ -362,4 +362,92 @@
       "path": "tests/a00-03-studio-registries.test.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "108955af82f46648fb3c79443b36ad484d945f1a1b4bbd442ef7406769bb4445",
+      "sha256": "36ab28eaf79c8fa7a3e6989a021ce7d4b40b5f6f6ed131f4d7b610cf3be93047",
+      "reason": "Registry test enumerates trusted checked-in Studio automation modules and imports the fixed Node worker module."
+    },
+    {
+      "path": "tests/a00-integration-contracts.test.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/benchmarks/cil-pe.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "e21b892d6adfad303b497ca6b85cf6f1012aaedec61289b4b1d9a592f01cd896",
+      "reason": "PE benchmark imports an operator-selected trusted CIL implementation, defaulting to the workspace package."
+    },
+    {
+      "path": "tests/benchmarks/cil-signatures.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "2db9238d68c510f869a17be100323c03774ef2828326c1ab7546d40225ec8790",
+      "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
+    },
+    {
+      "path": "tests/conformance/flaky/detect.test.js",
+      "operation": "dynamic-import",
+      "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
+      "count": 3,
+      "reason": "Regression imports fixed Node filesystem, OS and path modules to create an isolated fail-then-pass fixture."
+    },
+    {
+      "path": "tests/conformance/qualification.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "781c4708c6fa6185705256a2ca7e3077edc094fa190f512b92db15363605b441",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/fixtures/a03-pe/oracle/legacy.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "27b6522d243758a974d62eec74445356853d68751eafdaf0f13e9f0814c30dcb",
+      "reason": "Historical PE oracle generator loads the explicitly selected trusted implementation used to capture provenance."
+    },
+    {
+      "path": "tests/fixtures/compiler-constant-conversion/capture.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "bc515d6b2e276b2c40dbb76a23c67ca92c023fcf1cb8f51670e3fb052aea7e9f",
+      "reason": "Oracle capture imports fixed oracle modules from the operator-selected trusted checkout."
+    },
+    {
+      "path": "tests/msbuild-examples.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dd16f281206623069647047ed09edc3be93710e094bf0e03f43adbbf65282cb0",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/network14.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "36d871fb95a12e80cd1219b3b04d0a8887ddd1cb5a374382bace5cc2fda0c6b6",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/protocol.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "79d08e4426e364a0aa6b52a05e65238f3d2b4a87d272debef7a8d31bc52c0d47",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/support/engine-parity-fixtures.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "2a4d51e38ebd471b91d4532de016c4fbc57e7fbffe5de6e91356b3fcf5977750",
+      "reason": "Parity fixture registry loads explicitly selected trusted fixture modules; fixture paths are host code, not managed input."
+    },
+    {
+      "path": "tests/workspace-io.test.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    }
+  ]
+}
