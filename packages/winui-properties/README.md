@@ -81,3 +81,7 @@ The reviewed item-model branch is joined before the final container adapters, ke
 ## Resource contract providers
 
 `registerResourceContracts` and `registerObjectModelContracts` are exported beside their implementation services. These providers add only reserved-area metadata when called by the framework composition layer. This batch preserves their exact definition/member order and does not activate the A15/A16/A17 registry itself.
+
+## Complete resource adapter registration
+
+`registerResourceAdapters` now connects every present dictionary, style, template, visual-state, item and XAML adapter through UIExtensionRegistry. The item-context secondary parent is an actual prerequisite and its remaining adapter/test files are carried explicitly. The package public object-model barrel is complete; managed and JavaScript application construction, value/GC integration, native layout/rendering and callbacks are activated by the following host batches.

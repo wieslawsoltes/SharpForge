@@ -2,6 +2,7 @@ import {DisposableScope} from '../object-model/disposable-scope.js';
 import {ResourceFault} from '../resources/errors.js';
 import {boundedItems, cleanupItems} from './bounded-items.js';
 import {ItemIdentities} from './item-identities.js';
+import {withUIConstruction} from '../object-model/construction-roots.js';
 
 /** Recycling phase callbacks are generation-bound and cannot mutate a container assigned to a later item. */
 export class ContainerContentChangingEventArgs {
@@ -72,6 +73,10 @@ export class ItemContainerGenerator {
   }
 
   realize(index) {
+    return withUIConstruction(this.adapter, () => this.realizeItem(index), [this.owner]);
+  }
+
+  realizeItem(index) {
     this.checkIndex(index);
     const found = this.byIndex.get(index);
     if (found) return found.container;
