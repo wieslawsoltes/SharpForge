@@ -95,6 +95,12 @@ regressions above 20%; editor typing and workbench absolute budgets also remain
 in force. This profile does not change the separate contribution-guideline 5%
 review policy or the previously recorded performance exceptions.
 
+The retained fixture and timing protocols define external UI comparisons. The
+current project eligibility policy can refuse unsupported compilation before
+workspace text capture; the comparative UI result includes that product behavior.
+It does not isolate compiler execution cost or establish the cause of a timing
+difference.
+
 ## Completed local validation
 
 The complete targeted four-file cohort passed **35/35 tests**, with zero failed,
@@ -127,7 +133,7 @@ the performance stage.
 
 A read-only dimension inspection covered the four changed JavaScript source/test
 files. No introduced line exceeds 160 characters, and every file is below the
-500-line/40 KiB limits:
+500-line/40,000-byte limits:
 
 | File | Lines | Bytes | Longest line |
 |---|---:|---:|---:|
