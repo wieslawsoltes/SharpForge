@@ -1,3 +1,4 @@
+import {beginFrameInstruction} from './frame-stack.js';
 import {flushFramePool} from './frame-pool.js';
 import {ManagedFault} from '../heap.js';
 import {prepareCall} from './calls.js';
@@ -7,6 +8,7 @@ import {cilHandlers} from './handlers/index.js';
 /** Execute exactly one existing debugger-visible CIL instruction. */
 export function executeCilStep(vm) {
   const frame = vm.top;
+  beginFrameInstruction(vm, frame);
   if (frame.needsInitialization && !prepareCall(vm, frame)) return;
   const plan = vm.options.decodePlans === false ? null : getDecodePlan(vm, frame.method);
   const index = frame.pc++;

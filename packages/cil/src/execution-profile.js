@@ -1,3 +1,4 @@
+import {recordVerifiedStacks, verifiedStackEntry} from './verified-stack.js';
 import {resolveExecutionField} from './field-profile.js';
 import {supportedDelegateCall} from './delegate-profile.js';
 import {resolveExecutionMethod} from './call-profile.js';
@@ -44,7 +45,7 @@ export function stackEffect(inspector,m,i){
  * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
-  const dispatch=new CilDispatchTable(inspector);
+  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map();
   const issue=(m,i,code,message)=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message});};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
@@ -52,6 +53,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
   while(pending.length){
     const t=pending.pop();if(visited.has(t))continue;visited.add(t);if(visited.size>maxMethods){issue(null,null,'IL_LIMIT','Reachable method limit exceeded');break;}
     let m;try{m=inspector.getMethod(t);}catch(error){issue({token:t},null,'IL_METADATA',error.message);continue;}
+    if(!Number.isInteger(m.maxStack)||m.maxStack<0||m.maxStack>65535){issue(m,null,'IL_STACK','Invalid maxstack header');continue;}
     enqueueType(m.ownerToken);
     if(!m.hasBody||m.implFlags&3||m.flags&0x2000){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
     let context;
@@ -99,12 +101,15 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?resolveExecutionMethod(inspector,i.operand,context):resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments)).ownerToken);}catch{/* Reported by token validation. */}}
       if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments);if(d.decimalConstant&&i.name==='stsfld')issue(m,i,'IL_FIELD','Decimal constants are readonly');if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken&&!d.decimalConstant)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
     }
+    let peak=0;
     const queue=[[0,0]],heights=new Map();for(const h of m.handlers)if(h.flags!==1)queue.push([map.get(h.target),h.flags===0?1:0]);
     while(queue.length&&issues.length<200){
       const [index,height]=queue.pop(),i=m.instructions[index];if(!i){issue(m,null,'IL_FLOW','Control flow leaves the method');continue;}
+      peak=Math.max(peak,height);
+      if(height>m.maxStack){issue(m,i,'IL_STACK','Incoming evaluation stack exceeds maxstack');continue;}
       if(heights.has(index)){if(heights.get(index)!==height)issue(m,i,'IL_STACK','Inconsistent evaluation stack height at join');continue;}heights.set(index,height);
       let pop,push;try{[pop,push]=stackEffect(inspector,m,i);}catch(error){issue(m,i,'IL_STACK',error.message);continue;}
-      if(height<pop){issue(m,i,'IL_STACK','Evaluation stack underflow');continue;}const after=height-pop+push;if(after>m.maxStack)issue(m,i,'IL_STACK','Evaluation stack exceeds maxstack');
+      if(height<pop){issue(m,i,'IL_STACK','Evaluation stack underflow');continue;}const after=height-pop+push;peak=Math.max(peak,after);if(after>m.maxStack)issue(m,i,'IL_STACK','Evaluation stack exceeds maxstack');
       if(i.name==='ret'){if(height!==pop)issue(m,i,'IL_STACK','Invalid return stack');continue;}
       if(['throw','rethrow','endfinally'].includes(i.name)){if(i.name==='endfinally'&&height!==0)issue(m,i,'IL_STACK','endfinally requires an empty stack');continue;}
       if(i.operandKind.startsWith('br'))queue.push([map.get(i.operand),i.name.startsWith('leave')?0:after]);
@@ -112,6 +117,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(!/^(br|leave)(\.s)?$/.test(i.name))queue.push([index+1,after]);
     }
     stackHeights[t]=Object.fromEntries(heights);
+    verifiedStacks.set(t,verifiedStackEntry(m,peak));
   }
-  return {stackHeights,success:issues.length===0,entryPoint:entry,methods:[...visited],issues,profile:'SharpForge.ManagedIL/1'};
+  return recordVerifiedStacks(inspector,{stackHeights,success:issues.length===0,entryPoint:entry,methods:[...visited],issues,profile:'SharpForge.ManagedIL/1'},verifiedStacks);
 }

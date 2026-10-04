@@ -184,8 +184,8 @@ export class MethodTableRegistry {
 }
 
 /** Source and CIL heaps use the same headers; source fields retain their IR slots. */
-export function createSourceMethodTables(image) {
-  const registry=new MethodTableRegistry();
+export function createSourceMethodTables(image,options={}) {
+  const registry=new MethodTableRegistry(options);
   for(const [index,type] of (image.types??[]).entries())registry.define({name:type.name,token:type.token??0x02000001+(type.id??index),base:type.base??'System.Object',interfaces:type.interfaces??[],fields:type.fields??[],flags:{enum:!!type.enum,valueType:!!type.enum},enumUnderlyingType:type.enum?type.underlyingType??'int':null,
     vtable:(image.methods??[]).filter(method=>method.owner===type.name&&!method.isStatic).map(method=>[method.id,method.id])});
   for(const type of image.types??[])registry.get(type.name);
