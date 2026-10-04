@@ -11,6 +11,7 @@ import {DesignerSurfaceCommands} from './designer-surface-commands.js';
 import {DesignerSurfaceGestures} from './designer-surface-gestures.js';
 import {DesignerMarginDrag} from './designer-surface-margin.js';
 import {activateDesignerEvent, defaultDesignerEvent} from './designer-event-actions.js';
+import {trackDesignerPointer} from './designer-surface-pointer.js';
 
 /** Explicit integration seam for visual surface authoring; legacy DesignerTools delegates here. */
 export class DesignerSurfaceController {
@@ -257,62 +258,7 @@ export class DesignerSurfaceController {
 
   /** Captures one pointer, coalesces move events to animation frames, and removes every listener on termination. */
   trackPointer(start, move, done, cancel = () => {}) {
-    this.cancelPointer?.();
-    const document = this.view.stage.ownerDocument;
-    const window = document.defaultView;
-    let active = true;
-    let latest = null;
-    let frame = null;
-    let moved = false;
-    const flush = () => {
-      if (frame !== null) window.cancelAnimationFrame(frame);
-      frame = null;
-      if (!active || !latest) return;
-      const event = latest;
-      latest = null;
-      try { move(event); } catch (error) { abort(); this.view.error(error); }
-    };
-    const cleanup = () => {
-      active = false;
-      if (frame !== null) window.cancelAnimationFrame(frame);
-      document.removeEventListener('pointermove', onMove);
-      document.removeEventListener('pointerup', onUp);
-      document.removeEventListener('pointercancel', onCancel);
-      document.removeEventListener('keydown', onKey, true);
-      this.cancelPointer = null;
-    };
-    const abort = () => {
-      if (!active) return;
-      cleanup();
-      this.view.safe(cancel);
-    };
-    const onMove = event => {
-      if (!active || event.pointerId !== start.pointerId) return;
-      moved = true;
-      latest = event;
-      if (frame === null) frame = window.requestAnimationFrame(flush);
-    };
-    const onUp = event => {
-      if (!active || event.pointerId !== start.pointerId) return;
-      if (moved) latest = event;
-      if (latest) flush();
-      if (!active) return;
-      cleanup();
-      this.view.safe(() => done(event));
-    };
-    const onCancel = event => { if (event.pointerId === start.pointerId) abort(); };
-    const onKey = event => {
-      if (event.key !== 'Escape') return;
-      event.preventDefault();
-      event.stopPropagation();
-      abort();
-    };
-    document.addEventListener('pointermove', onMove);
-    document.addEventListener('pointerup', onUp);
-    document.addEventListener('pointercancel', onCancel);
-    document.addEventListener('keydown', onKey, true);
-    this.cancelPointer = abort;
-    return abort;
+    return trackDesignerPointer(this, start, move, done, cancel);
   }
 
   dispose() {
