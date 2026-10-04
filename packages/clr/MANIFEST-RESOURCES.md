@@ -162,13 +162,23 @@ normative module-offset description; the normative text takes precedence.
 Regenerate during a scheduled native validation slot:
 
 ```sh
-node scripts/limited.js node packages/clr/tools/capture-manifest-resources.mjs tests/fixtures/clr-manifest-resources
+SHARPFORGE_ORACLE_DOTNET=/path/to/dotnet-10.0.201/dotnet node scripts/limited.js node \
+  packages/clr/tools/capture-manifest-resources.mjs tests/fixtures/clr-manifest-resources \
+  /fresh/path/to/manifest-capture-evidence
 node scripts/limited.js node --test tests/clr-resources-manifest*.test.js
 node scripts/limited.js node packages/clr/tools/benchmark-manifest-resources.mjs
 ```
 
-`SHARPFORGE_ORACLE_DOTNET` may name the installed .NET 10 executable. Capture
-disables package sources and uses that SDK's MetadataLoadContext assembly.
+`SHARPFORGE_ORACLE_DOTNET` names the installed .NET executable. Capture pins SDK
+10.0.201, CoreCLR/reference pack 10.0.5 and the SDK MetadataLoadContext DLL hash.
+It disables package sources and records compiler, runtime and reference-pack
+file identities. The optional second positional argument is a fresh external
+evidence directory; its default is `artifacts/clr-manifest-resources-capture`.
+The capture refuses an existing native JSON file or evidence directory. It
+retains the build workspace, complete generated images, copied source inputs,
+and each subprocess's raw stdout/stderr, arguments and status on success or
+failure. Regeneration requires a new evidence directory and explicit archival
+of the previous JSON; failed attempts are not overwritten.
 The focused tests are offline and read the retained JSON corpus. The benchmark
 reports absolute cold/warm costs, its sampling protocol and machine; there was
 no previous equivalent manifest-reader API. Exact allocation counts are not
