@@ -5,7 +5,7 @@ import {initializeExecutionProfiler,executionProfiler} from './execution/profile
 import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {clearRuntimeTypes} from './execution/tokens.js';
-import {dereferenceManagedAddress} from './execution/managed-address.js';
+import {createManagedAddress,dereferenceManagedAddress} from './execution/managed-address.js';
 import {storageDefault,storageValue} from './execution/storage.js';
 import {literalString} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
@@ -70,7 +70,7 @@ export class CilVirtualMachine {
   matches(ref,typeName){return this.typeSystem.matches(ref,typeName);}
   field(token,ref){return this.typeSystem.field(token,ref);}
   notifyWrite(write){this.writeRevision++;if(write.handle!==undefined)this.heap.mutationRevision++;this.onWrite?.({...write,frameId:write.frameId??this.top?.id});}
-  address(kind,index,owner){return Object.freeze({byref:true,kind,index,owner,frameId:this.top.id});}
+  address(kind,index,owner){return createManagedAddress(this,kind,index,owner);}
   dereference(address,write=false,value){return dereferenceManagedAddress(this,address,write,value);}
   snapshot(){return snapshotVM(this,'cil');}
   restore(snapshot){const result=restoreVM(this,snapshot,'cil');restoreCilMethodEvents(this);return result;}
