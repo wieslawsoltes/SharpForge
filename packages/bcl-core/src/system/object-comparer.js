@@ -1,5 +1,5 @@
 import {compareObjects} from './object-comparison.js';
-import {resolveStringComparer, registerStringComparerExtensions} from './string-comparer.js';
+import {resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions} from './string-comparer.js';
 import {registerStringComparisonExtensions} from './string.js';
 import {registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions} from '../text/string-builder-append.js';
 import {
@@ -9,6 +9,7 @@ import {registerStringBuilderIndexerExtensions} from '../text/string-builder-ind
 import {registerStringBuilderCopyExtensions} from '../text/string-builder-copy.js';
 import {registerStringBuilderRangeExtensions} from '../text/string-builder-append-range.js';
 import {registerStringBuilderArrayExtensions} from '../text/string-builder-append-array.js';
+import {registerStringBuilderValueExtensions} from '../text/string-builder-append-builder.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -29,6 +30,8 @@ function contracts(registry) {
   registerStringLastSearchWindowExtensions(registry);
   registerStringBuilderRangeExtensions(registry);
   registerStringBuilderArrayExtensions(registry);
+  registerStringComparerFactoryExtensions(registry);
+  registerStringBuilderValueExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {

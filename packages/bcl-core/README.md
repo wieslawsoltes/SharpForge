@@ -435,6 +435,20 @@ The unchanged native oracle runs through source-platform and independent CIL
 calls; compiled typed arrays cover both pipelines and both VMs. Other builder
 overloads remain separate work under #2637.
 
+`StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
+return the same destination without writes or managed allocations. Nonempty
+sources are validated as builders, then the combined length is checked against
+the host budget before materializing source text. The existing text reader walks
+only live source chunks; the destination's prior contents are never flattened.
+The captured source is appended once through the existing chunk helper, so self
+append duplicates exactly the original text. This costs O(source chunks + source
+text length) time and host temporaries, plus one managed text chunk and existing
+amortized destination chunk-storage growth. The pinned .NET 10.0.5 reference
+covers 21 cases, including source preservation, self append, UTF-16 units, nulls
+and fluent identity. Host observer tests additionally pin the captured source
+policy when callbacks edit a distinct source and force GC; existing destination
+partial-write behavior is unchanged and no native concurrency guarantee is made.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation
@@ -618,6 +632,38 @@ baseline is Int64 parent `2ca53c88`, with the identical runner copied into it,
 so builder prerequisite costs are excluded. Culture
 implementations, other search APIs and native/Wasm execution remain open under
 #2621 and are not qualified by this batch.
+
+`StringComparer.FromComparison(StringComparison)` appends A07 contract `524322`
+after the character-array StringBuilder Append overloads. Ordinal (4) and
+OrdinalIgnoreCase (5) return the exact existing getter singleton handles, using
+the same comparison, registered interface, List.Sort and Array.BinarySearch
+paths. Invalid enum values retain `ArgumentException` with parameter
+`comparisonType`; valid culture modes 0–3 explicitly raise `NotSupportedException`.
+No culture getter or collation backend is introduced by this factory.
+
+The [pinned native reference](reference/string-comparer-from-comparison/README.md)
+captures .NET 10.0.5 / SDK 10.0.201 factory/getter identities, invalid enum values,
+nullable/Unicode signs and ordering consumers under invariant and tr-TR cultures.
+All native culture results remain unchanged evidence; those modes are unsupported
+by this factory. In particular, the existing host-normalized default ordering
+profile is not exposed as a native InvariantCulture/CurrentCulture comparer.
+Thread culture, exact collation, comparer equality/hash and other factories
+remain tracked by #2616/#2619/#2621/#2655.
+
+The existing enum validator moves into a dependency leaf and is re-exported from
+its original module, avoiding an import cycle without changing validation order
+or messages for released String APIs. Both getters and the factory share a
+private singleton helper and the same platform snapshot/root storage. Successful
+factory calls allocate no new managed objects after their getter singleton is
+initialized. Existing dispatch result objects and the singleton factory callback
+remain host allocations; this is not a claim of zero host allocation.
+
+Focused tests cover both compiler pipelines/VMs, independent CIL, true comparer
+interface calls, exact identity, collection consumers, managed GC and snapshots.
+`scripts/benchmarks/a07-string-comparer-from-comparison.mjs` provides identical
+before/after getter, comparison and enum-validation controls against parent
+`16a13a16`, plus separate warmed factory measurements with one warmup and five samples. Validation and timing
+are queued serially; native/Wasm execution is outside this batch and #2621 remains open.
 
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
