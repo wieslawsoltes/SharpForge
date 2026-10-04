@@ -1,3 +1,4 @@
+import {registerRuntimeLayout} from './runtime-worker-layout.js';
 import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
 import {applyDesignPatch} from '../../packages/runtime/src/index.js';
 import { loadAssembly, equalBytes } from '../../packages/cil/src/index.js';
@@ -78,7 +79,7 @@ for(const method of ["runtimeInfo"])handlers.registerHandler(method,(params,meth
 for(const method of ["uiScene"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.platform.scene();return result;});
 for(const method of ["designSnapshot"])handlers.registerHandler(method,(params,method)=>{let result;result={scene:session.vm.platform.scene(),revision:session.designRevision??0};return result;});
 for(const method of ["applyDesign"])handlers.registerHandler(method,(params,method)=>{let result;result=applyDesignPatch(session,params.patch,{expectedRevision:params.expectedRevision});state();return result;});
-for(const method of ["uiLayout"])handlers.registerHandler(method,(params,method)=>{let result;if(session.vm.state==='paused')result=0;else result=session.vm.platform.updateLayout(params.changes);return result;});
+registerRuntimeLayout(handlers,{session:()=>session,state,schedule});
 for(const method of ["evaluate"])handlers.registerHandler(method,(params,method)=>{let result;result=session.evaluate(params.expression,params.frameId);return result;});
 for(const method of ["setVariable"])handlers.registerHandler(method,(params,method)=>{let result;result=session.setVariable(params.frameId,params.name,params.expression);state();return result;});
 for(const method of ["locals"])handlers.registerHandler(method,(params,method)=>{let result;result=session.locals(params.frameId);return result;});
