@@ -28,6 +28,8 @@ members, reference-containing/auto/explicit layouts, readonly/ref-like structs,
 and source frontend lowering remain outside this leaf. Existing generic struct
 interface-forwarding support remains bounded to its interface declarations.
 Concrete reference receivers use the [separate reference ToString leaf](runtime-constrained-reference-tostring.md).
+A separate [concrete Int32 increment](runtime-constrained-int32-tostring.md)
+adds the primitive TypeRef case without changing struct selection.
 Full issue acceptance, native/platform qualification and performance evidence
 remain pending; this change makes no timing claim or portable snapshot claim.
 

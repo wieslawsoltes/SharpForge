@@ -31,6 +31,7 @@ export class ConstrainedObjectProfile {
     }
     this.plans = new Map();
     this.declarations = new Set();
+    this.int32Tokens = new Map();
   }
 
   ordinaryInstanceSignature(token) {
@@ -46,6 +47,15 @@ export class ConstrainedObjectProfile {
       this.declarations.add(descriptor.token);
     }
     return true;
+  }
+
+  /** Admit only the concrete external Int32 TypeRef and the exact ordinary Object slot. */
+  int32(typeToken, descriptor) {
+    if (typeToken >>> 24 !== 1) return false;
+    if (!this.int32Tokens.has(typeToken)) {
+      this.int32Tokens.set(typeToken, this.inspector.metadata.typeName(typeToken) === 'System.Int32');
+    }
+    return this.int32Tokens.get(typeToken) && !!this.declaration(descriptor);
   }
 
   rejectExplicit(typeToken) {

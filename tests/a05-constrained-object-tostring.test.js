@@ -249,7 +249,7 @@ for (const receiver of ['enum', 'primitive', 'generic-struct', 'method-parameter
     const body = (writer, context) => {
       writer.op(generic ? 'ldarg.0' : 'ldnull');
       const type = generic ? context.typeSpec('!!0') : receiver === 'primitive'
-        ? context.resolve('System.Int32') : context.resolve('Receiver');
+        ? context.resolve('System.Int64') : context.resolve('Receiver');
       callToString(writer, context, type);
       writer.op('ret');
     };
