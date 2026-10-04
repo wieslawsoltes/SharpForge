@@ -64,6 +64,7 @@ export class WorkbenchShell {
   context() {
     const state = this.options.state();
     const editor = this.options.getEditor?.();
+    const caretOffset = editor?.caretOffset ?? editor?.offset ?? 0;
     const uri = state.active ?? this.documents.active;
     const file = this.documents.get(uri);
     const session = this.services.sessions?.active;
@@ -73,6 +74,7 @@ export class WorkbenchShell {
     return {uri, offset: editor?.offset ?? 0, selectionLength: editor?.selectionLength ??
       Math.abs((editor?.input?.selectionEnd ?? 0) - (editor?.input?.selectionStart ?? 0)),
     position: editor?.sourceSnapshot?.().positionAt(editor.offset ?? 0),
+    caretOffset, caretPosition: editor?.sourceSnapshot?.().positionAt(caretOffset), tabSize: editor?.options?.tabSize,
     projectId: file?.projectId ?? this.documents.projectsFor?.(uri)?.[0] ?? this.services.builds?.activeId ?? state.startupProject,
     sessionId: session?.id, sessionCount: this.services.sessions?.list().length ?? 0,
     openUris: state.tabs ?? this.documents.tabs ?? [], activeDocumentKind: designer ? 'designer' : file ? 'code' : '',

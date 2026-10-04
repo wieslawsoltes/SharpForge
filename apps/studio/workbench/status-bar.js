@@ -1,5 +1,6 @@
 import {button, element, runAction} from './ui.js';
 import {SourceText, analyzeEol} from '@sharpforge/text';
+import {StatusPosition} from './status-position.js';
 
 /** Regions update their text in place and contribute independent actions and subscriptions. */
 export class WorkbenchStatusBar {
@@ -33,6 +34,8 @@ export class WorkbenchStatusBar {
 
 export function registerStatusRegions(bar, {context, documents, tasks, notifications, settings, execute}) {
   const legacySources = new WeakMap();
+  let updateCursor;
+  const positionStatus = new StatusPosition({onChange: () => updateCursor?.(), onError: error => bar.onError?.(error)});
   const documentState = () => {
     const current = context();
     const record = documents.get(current.uri);
@@ -56,16 +59,26 @@ export function registerStatusRegions(bar, {context, documents, tasks, notificat
   const cursor = () => {
     const {current, record, source} = documentState();
     if (!record) return null;
-    return current.position ?? source?.positionAt(current.offset ?? 0);
+    const offset = current.caretOffset ?? current.offset ?? 0;
+    const position = current.caretPosition ?? current.position ?? source?.positionAt(offset);
+    if (!position) return null;
+    const column = positionStatus.column(source, position, {offset, visualColumn: current.visualColumn,
+      tabSize: current.tabSize ?? settings.get('editor', 'tabSize') ?? 4});
+    return {position, column, columnStatus: positionStatus.pending ? 'pending' : 'unavailable'};
   };
   const regions = [
     {id: 'message', label: 'Workbench status', value: () => context().status ?? 'Ready', priority: -100},
     {id: 'tasks', label: 'Background tasks', value: () => tasks.running.length ? `${tasks.running.length} tasks` : 'No tasks',
       action: () => execute('tool:background-tasks'), subscribe: listener => tasks.subscribe(listener)},
-    {id: 'cursor', label: 'Line, column and character', value: () => {
-      const position = cursor();
-      return position ? `Ln ${position.line + 1}, Col ${position.character + 1}, Ch ${(context().offset ?? 0) + 1}` : null;
-    }, action: () => execute('workbench.goToLine')},
+    {id: 'cursor', label: 'Line, visual column and line character', value: () => {
+      const current = cursor();
+      if (!current) return null;
+      const {position, column, columnStatus} = current;
+      return `Ln ${position.line + 1}, Col ${column === null ? columnStatus : column + 1}, Ch ${position.character + 1}`;
+    }, action: () => execute('workbench.goToLine'), subscribe: listener => {
+      updateCursor = listener;
+      return () => { updateCursor = null; positionStatus.dispose(); };
+    }},
     {id: 'selection', label: 'Selected characters', value: () => `${context().selectionLength ?? 0} selected`},
     {id: 'insert', label: 'Insert mode', value: () => context().overwrite ? 'OVR' : 'INS'},
     {id: 'indentation', label: 'Indentation', value: () =>

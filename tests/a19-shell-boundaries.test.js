@@ -14,6 +14,8 @@ import {filterFindResults} from '../apps/studio/workbench/tools/find-results.js'
 import {registerStatusRegions} from '../apps/studio/workbench/status-bar.js';
 import {SettingsStore} from '../apps/studio/workbench/settings-store.js';
 import {SolutionExplorerViews} from '../apps/studio/workbench/tools/solution-explorer-views.js';
+import {StatusPosition} from '../apps/studio/workbench/status-position.js';
+import {SourceText} from '@sharpforge/text';
 
 test('status updates read model positions and EOL metadata without flattening a 100 MB document', () => {
   const file = {uri: 'huge.cs', version: 1, get text() { throw new Error('Status flattened the document'); }};
@@ -22,15 +24,52 @@ test('status updates read model positions and EOL metadata without flattening a 
   const documents = {get: () => file, models: new Map([[file.uri, model]])};
   const regions = new Map();
   registerStatusRegions({register: region => regions.set(region.id, region)}, {
-    context: () => ({uri: file.uri, offset: 9002}), documents,
+    context: () => ({uri: file.uri, offset: 9002, visualColumn: 2}), documents,
     tasks: {running: [], subscribe() {}}, notifications: {unread: 0, subscribe() {}},
     settings: {get() {}}, execute() {}
   });
-  assert.equal(regions.get('cursor').value(), 'Ln 1000, Col 3, Ch 9003');
+  assert.equal(regions.get('cursor').value(), 'Ln 1000, Col 3, Ch 3');
   assert.equal(regions.get('encoding').value(), 'utf-16le');
   assert.equal(regions.get('line-ending').value(), 'CRLF (mixed)');
   model.metadata = {...model.metadata, dominantEol: '\r', mixedEol: false};
   assert.equal(regions.get('line-ending').value(), 'CR');
+});
+
+test('status visual columns distinguish tabs, CJK, zero-width clusters and UTF-16 characters', () => {
+  const source = new SourceText('first\n\t中e\u0301\u200b😀');
+  const offset = source.length;
+  const position = source.positionAt(offset);
+  const status = new StatusPosition();
+  assert.equal(position.line, 1);
+  assert.equal(position.character, 7);
+  assert.equal(status.column(source, position, {offset, tabSize: 4}), 9);
+  assert.equal(status.column(source, position, {offset, tabSize: 8}), 13);
+  assert.equal(status.column(source, source.positionAt(offset - 1), {offset: offset - 1, tabSize: 4}), 7);
+  status.dispose();
+});
+
+test('status uses cancellable exact model columns and ignores stale carets without flattening source', async () => {
+  const requests = [];
+  let updates = 0;
+  const model = {version: 1, length: 100_000_000,
+    get text() { throw new Error('Status flattened source'); }, getText() { throw new Error('Status bypassed column index'); },
+    cachedVisualColumnAtOffset: () => null,
+    visualColumnAtOffset: (offset, {signal}) => new Promise(resolve => requests.push({offset, signal, resolve}))};
+  const status = new StatusPosition({onChange: () => updates++});
+  assert.equal(status.column(model, {line: 0, character: 90_000_000}, {offset: 90_000_000}), null);
+  await Promise.resolve();
+  assert.equal(status.pending, true);
+  assert.equal(status.column(model, {line: 0, character: 80_000_000}, {offset: 80_000_000}), null);
+  await Promise.resolve();
+  assert.equal(requests[0].signal.aborted, true);
+  requests[0].resolve(90000000);
+  requests[1].resolve(42);
+  await new Promise(resolve => setTimeout(resolve, 0));
+  assert.equal(updates, 1);
+  assert.equal(status.column(model, {line: 0, character: 80_000_000}, {offset: 80_000_000}), 42);
+  assert.equal(status.pending, false);
+  status.dispose();
+  assert.equal(requests[1].signal.aborted, true);
 });
 
 test('reading one setting preserves workspace null overrides without cloning unrelated layouts', () => {
