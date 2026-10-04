@@ -6,6 +6,7 @@ import {compareOrdinalRange} from './string-compare.js';
 import {equalsWithComparison, registerStringEqualityExtensions} from './string-equality.js';
 import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
 import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
+import {containsWithComparison, registerStringSearchExtensions} from './string-search.js';
 
 const owner = 'System.String';
 
@@ -63,6 +64,7 @@ export function registerStringComparisonExtensions(registry) {
   member(owner, 'Compare', ['string', 'string', 'System.StringComparison'], 'int', {isStatic: true});
   registerStringAffixExtensions(registry);
   member(owner, 'Compare', ['string', 'int', 'string', 'int', 'int', 'System.StringComparison'], 'int', {isStatic: true});
+  registerStringSearchExtensions(registry);
 }
 
 function splitString(platform, receiver, values, scalars) {
@@ -129,7 +131,8 @@ function instanceString(platform, name, receiver, values, scalars) {
       const length = values.length === 1 ? receiver.length - start : integer(platform, scalars[1], 0, receiver.length - start);
       return receiver.slice(start, start + length);
     }
-    case 'Contains': return receiver.includes(string(platform, values[0]));
+    case 'Contains': return scalars.length === 1 ? receiver.includes(string(platform, values[0]))
+      : containsWithComparison(platform, receiver, scalars[0], scalars[1]);
     case 'StartsWith': return scalars.length === 1 ? receiver.startsWith(string(platform, values[0]))
       : affixWithComparison(platform, receiver, scalars[0], scalars[1], false);
     case 'EndsWith': return scalars.length === 1 ? receiver.endsWith(string(platform, values[0]))
