@@ -64,6 +64,8 @@ Offscreen wrap invalidation queues affected logical ranges. Each measurement tur
 Folding providers debounce every edit, since removing one character can change syntax, indentation or
 region ownership. The provider cancels superseded requests and its pending timer on disposal.
 
+### Editing and view API
+
 | API | Contract |
 | --- | --- |
 | `setModel(uri, textOrEditorModel)` | Switch documents, preserve view selection/scroll/folds and shared model history. |
