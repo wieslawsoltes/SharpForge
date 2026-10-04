@@ -10,6 +10,7 @@ function fundamentalDefinitions(records, authority, budget) {
     if (record.generic) continue;
     const bound = authority.resolve(record.type.token);
     if (bound.status !== 'known') continue;
+    if (authority.sameModule === false) rejectTypeSystem('CILVT0001', 'outside-core definition binding');
     const role = authority.role(bound.value);
     if (!role) continue;
     if (definitions.has(role) || record.type.token === 0x02000001 || record.type.flags !== bound.value.flags)
@@ -60,8 +61,10 @@ export function snapshotTypeCategories(records, input, budget) {
         break;
       }
       const bound = authority.resolve(current.baseToken);
-      current.category = bound.status === 'unknown' ? unknown(bound.reason, current.baseToken)
-        : inheritedCategory(bound.value, authority.classify(bound.value), current.type.flags, authority.role(bound.value));
+      const category = bound.status === 'unknown' ? unknown(bound.reason, current.baseToken) : authority.classify(bound.value);
+      current.category = bound.status === 'unknown' ? category
+        : inheritedCategory(bound.value, category, current.type.flags, authority.role(bound.value));
+      current.closedExternalBase = authority.sameModule === false && category.status === 'known';
       current.categoryDepth = bound.status === 'known' ? authority.depth(bound.value) + 1 : 1;
       if (current.categoryDepth > budget.maxDepth) rejectTypeSystem('CILVT0002', 'local category depth');
     }
