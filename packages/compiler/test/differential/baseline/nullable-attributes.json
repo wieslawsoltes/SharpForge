@@ -1,0 +1,7 @@
+{
+  "nullable-attributes/argument-postconditions": ["diagnostics", "warnings"],
+  "nullable-attributes/member-postconditions": ["diagnostics", "warnings"],
+  "nullable-attributes/preconditions": ["diagnostics", "warnings"],
+  "nullable-attributes/reachability": ["diagnostics", "warnings"],
+  "nullable-attributes/result-postconditions": ["diagnostics", "warnings"]
+}

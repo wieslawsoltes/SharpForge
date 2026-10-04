@@ -1,0 +1,8 @@
+{
+  "static-abstract-operators/generic-math": ["diagnostics", "warnings", "bytecode", "cil"],
+  "static-abstract-operators/operator-errors": ["diagnostics", "warnings"],
+  "static-abstract-operators/operator-implementations": ["diagnostics", "warnings"],
+  "static-abstract-operators/operators-increment-comparison-and-shadowing": ["diagnostics", "warnings", "bytecode", "cil"],
+  "static-abstract-operators/operators-of-base-interfaces": ["diagnostics", "warnings"],
+  "static-abstract-operators/static-abstract-operators-in-10": ["diagnostics", "warnings"]
+}

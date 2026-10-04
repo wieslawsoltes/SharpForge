@@ -2,6 +2,7 @@
  * Casts, unary and binary operators (with constant folding), assignment in all its forms, increment,
  * the conditional operator and null-coalescing.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { RefKind, TypeKind, ErrorTypeSymbol, TypeParameterSymbol } from '../../symbols/types.js';
 import { ConstantValue, isFoldError } from '../../constants/constant-value.js';
 import { foldUnary, foldBinary } from '../../constants/fold.js';
@@ -25,19 +26,19 @@ export const OperatorBinding = Base =>
         return c;
       }
       if (type.isStatic && type.typeKind === TypeKind.Class) {
-        this.report(syntax, 'CS0716', [this.display(type)]);
+        this.report(syntax, DiagnosticId.CS0716, [this.display(type)]);
         return this.bad(syntax);
       }
       const c = this.conversions.classifyCastFromExpression(e, type);
       if (!c.exists) {
-        if (e.literal === 'null') this.report(syntax, 'CS0037', [this.display(type)]);
+        if (e.literal === 'null') this.report(syntax, DiagnosticId.CS0037, [this.display(type)]);
         else if (e.constantValue && !e.constantValue.isNull && e.type && this.conversions.kindOf(e.type) && this.conversions.kindOf(type))
-          this.report(syntax, 'CS0030', [this.display(e.type), this.display(type)]);
-        else this.report(syntax, 'CS0030', [e.type ? this.display(e.type) : (e.literal ?? '?'), this.display(type)]);
+          this.report(syntax, DiagnosticId.CS0030, [this.display(e.type), this.display(type)]);
+        else this.report(syntax, DiagnosticId.CS0030, [e.type ? this.display(e.type) : (e.literal ?? '?'), this.display(type)]);
         return this.bad(syntax);
       }
       if (c.isAmbiguous) {
-        this.report(syntax, 'CS0457', [
+        this.report(syntax, DiagnosticId.CS0457, [
           c.candidates[0].toDisplayString(),
           c.candidates[1]?.toDisplayString() ?? '',
           this.display(e.type),
@@ -121,7 +122,7 @@ export const OperatorBinding = Base =>
       if (tuple) return tuple;
       for (const e of [left, right])
         if (e.kind === 'MethodGroup' || e.form === 'lambda' || e.type?.specialType === 'System_Void') {
-          this.report(syntax, 'CS0019', [operator, this.operandDisplay(left), this.operandDisplay(right)]);
+          this.report(syntax, DiagnosticId.CS0019, [operator, this.operandDisplay(left), this.operandDisplay(right)]);
           return this.bad(syntax);
         }
       const r = this.resolveBinaryOperator(operator, left, right);
@@ -185,7 +186,7 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       if (left.kind === 'MethodGroup') {
-        this.report(syntax.left, 'CS1656', [left.name, 'method group']);
+        this.report(syntax.left, DiagnosticId.CS1656, [left.name, 'method group']);
         this.value(syntax.right);
         return this.bad(syntax);
       }
@@ -202,7 +203,7 @@ export const OperatorBinding = Base =>
         });
       }
       if (left.kind === 'EventAccess' && !this.inDeclaringType(left.event)) {
-        this.report(syntax.left.kind === 'SimpleMemberAccessExpression' ? syntax.left.name : syntax.left, 'CS0070', [
+        this.report(syntax.left.kind === 'SimpleMemberAccessExpression' ? syntax.left.name : syntax.left, DiagnosticId.CS0070, [
           left.event.toDisplayString(),
           this.display(left.event.containingType),
         ]);
@@ -217,7 +218,7 @@ export const OperatorBinding = Base =>
       const writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', this.variableContext);
       if (writable && !(isRefAssign && left.kind === 'Local' && left.local.refKind !== RefKind.None)) {
         // CS1612 points at the struct-valued expression whose member cannot be modified.
-        const target = writable.code === 'CS1612' && left.receiver?.syntax ? left.receiver.syntax : syntax.left;
+        const target = writable.code === DiagnosticId.CS1612 && left.receiver?.syntax ? left.receiver.syntax : syntax.left;
         this.report(target, writable.code, writable.args);
         this.markRead(left);
         this.value(syntax.right);
@@ -234,7 +235,7 @@ export const OperatorBinding = Base =>
         const converted = left.type ? this.convert(right, left.type, syntax.right) : right;
         if (right.form === 'lambda' && !converted.hasErrors && left.type) this.finishLambda(right, left.type);
         this.markWrite(left, right);
-        if (this.sameVariable(left, right)) this.report(syntax, 'CS1717');
+        if (this.sameVariable(left, right)) this.report(syntax, DiagnosticId.CS1717);
         return this.node('Assignment', syntax, left.type, { left, right: converted, hasErrors: converted.hasErrors });
       }
       if (operator === '??=') {
@@ -243,7 +244,7 @@ export const OperatorBinding = Base =>
         this.markWrite(left, right);
         if (right.hasErrors) return this.bad(syntax);
         if (left.type && !acceptsNullLiteral(left.type) && !(left.type instanceof TypeParameterSymbol && left.type.isValueType !== true)) {
-          this.report(syntax, 'CS0019', ['??=', this.display(left.type), this.operandDisplay(right)]);
+          this.report(syntax, DiagnosticId.CS0019, ['??=', this.display(left.type), this.operandDisplay(right)]);
           return this.bad(syntax);
         }
         const underlying = isNullableType(left.type) ? stripNullable(left.type) : null,
@@ -256,7 +257,7 @@ export const OperatorBinding = Base =>
         const toLeft = this.conversions.classifyFromExpression(right, left.type);
         if (left.type && !left.type.isErrorType() && !(toLeft.exists && toLeft.isImplicit)) {
           // Like `??`, the operator as a whole does not apply: the right operand is not reported on its own.
-          this.report(syntax, 'CS0019', ['??=', this.display(left.type), this.operandDisplay(right)]);
+          this.report(syntax, DiagnosticId.CS0019, ['??=', this.display(left.type), this.operandDisplay(right)]);
           return this.bad(syntax);
         }
         return this.node('CoalesceAssignment', syntax, left.type, { left, right: this.convert(right, left.type, syntax.right) });
@@ -281,7 +282,7 @@ export const OperatorBinding = Base =>
             explicit.exists &&
             ((rightOk.exists && rightOk.isImplicit) || ['<<', '>>', '>>>'].includes(op))
           )) {
-            this.report(syntax, explicit.exists ? 'CS0266' : 'CS0029', [this.display(result.type), this.display(left.type)]);
+            this.report(syntax, explicit.exists ? DiagnosticId.CS0266 : DiagnosticId.CS0029, [this.display(result.type), this.display(left.type)]);
             return this.bad(syntax);
           }
         }
@@ -323,7 +324,7 @@ export const OperatorBinding = Base =>
         operand = this.expression(syntax.operand);
       if (operand.hasErrors) return this.bad(syntax);
       if (this.hasInaccessibleSetter(operand)) {
-        this.report(syntax.operand, 'CS0272', [operand.property.toDisplayString()]);
+        this.report(syntax.operand, DiagnosticId.CS0272, [operand.property.toDisplayString()]);
         return this.bad(syntax);
       }
       if (operand.kind === 'TypeExpression' || operand.kind === 'NamespaceExpression') {
@@ -332,7 +333,7 @@ export const OperatorBinding = Base =>
       }
       const w = checkWritable(operand, 'increment', this.variableContext);
       if (w) {
-        this.report(syntax.operand, w.code === 'CS0131' ? 'CS1059' : w.code, w.args);
+        this.report(syntax.operand, w.code === DiagnosticId.CS0131 ? DiagnosticId.CS1059 : w.code, w.args);
         return this.bad(syntax);
       }
       this.markRead(operand);
@@ -381,7 +382,7 @@ export const OperatorBinding = Base =>
         right = this.value(syntax.right);
       if (left.hasErrors || right.hasErrors) return this.bad(syntax);
       const fail = () => {
-        this.report(syntax, 'CS0019', ['??', this.operandDisplay(left), this.operandDisplay(right)]);
+        this.report(syntax, DiagnosticId.CS0019, ['??', this.operandDisplay(left), this.operandDisplay(right)]);
         return this.bad(syntax);
       };
       if (left.literal === 'null') return right.type ? this.node('Coalesce', syntax, right.type, { left, right }) : fail();

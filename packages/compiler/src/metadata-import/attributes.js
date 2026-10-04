@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {decodeCustomAttribute} from '@sharpforge/cil';
 import {TypeWithAnnotations,NullableAnnotation,NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,TypeParameterSymbol,ErrorTypeSymbol,DynamicTypeSymbol,RefKind,SymbolDisplayFormat} from '../symbols/types.js';
 /**
@@ -23,7 +24,7 @@ export const WellKnownAttribute=Object.freeze({
 export const ByRefLikeObsoleteMarker='Types with embedded references are not supported in this version of your compiler.';
 export const RequiredMembersObsoleteMarker='Constructors of types with required members are not supported in this version of your compiler.';
 /** Compiler features this compiler understands; any other CompilerFeatureRequired name makes a symbol unusable. */
-export const supportedCompilerFeatures=Object.freeze(['RefStructs','RequiredMembers']);
+export const supportedCompilerFeatures=Object.freeze(['RefStructs','RequiredMembers','ClosedClasses']);
 /** Adapt the shared CIL codec to the compiler's existing typed-constant result shape. */
 export function decodeAttributeBlob(blob, parameterTypes = [], env = {}) {
   // Legacy callers have always treated unresolved enum storage as Int32.
@@ -85,7 +86,7 @@ export function unsupportedCompilerFeature(data,supported=supportedCompilerFeatu
  */
 export function obsoleteDiagnostic(symbol){
   const o=symbol?.obsolete;if(!o)return null;const display=symbol.toDisplayString(SymbolDisplayFormat.ErrorMessage);
-  const base=o.message==null?{code:'CS0612',args:[display]}:{code:o.isError?'CS0619':'CS0618',args:[display,o.message]};
+  const base=o.message==null?{code:DiagnosticId.CS0612,args:[display]}:{code:o.isError?DiagnosticId.CS0619:DiagnosticId.CS0618,args:[display,o.message]};
   return o.diagnosticId?{...base,customId:o.diagnosticId,helpLink:o.urlFormat?o.urlFormat.replace('{0}',o.diagnosticId):null}:base;
 }
 /**
@@ -195,9 +196,9 @@ export function applyTupleElementNames(type,names){
     if(s instanceof FunctionPointerTypeSymbol)return t.withType(functionPointerWith(s,a=>visit(a)));
     if(s instanceof NamedTypeSymbol&&!(s instanceof ErrorTypeSymbol)){
       let own=null;const tuple=s.isTupleType&&!s.isDefinition;
-      if(tuple&&!isRest){const count=tupleCardinality(s);if(position+count>names.length)throw Mismatch;own=names.slice(position,position+count);position+=count;}
+      if(tuple){const count=tupleCardinality(s);if(position+count>names.length)throw Mismatch;own=names.slice(position,position+count);position+=count;}
       const args=flatArguments(s),rebuilt=rebuild(s,args.map((a,i)=>visit(a,tuple&&s.originalDefinition.arity===8&&i===args.length-1)));
-      return own&&own.some(n=>n!=null)?t.withType(rebuilt.withTupleElementNames(own)):t.withType(rebuilt);
+      return own&&!isRest&&own.some(n=>n!=null)?t.withType(rebuilt.withTupleElementNames(own)):t.withType(rebuilt);
     }
     return t;
   };

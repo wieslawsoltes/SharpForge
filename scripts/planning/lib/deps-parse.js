@@ -1,9 +1,31 @@
 export const WORK_ID = /^SF-(?:A\d{2}|R\d{3})-[ETB]\d{2}(?:\.\d+)?$/;
+function withoutLinkDestinations(text) {
+  let result = '', start = 0;
+  for (const match of text.matchAll(/\[[^\]\r\n]*\]\(/g)) {
+    if (match.index < start) continue;
+    const destination = match.index + match[0].length - 1;
+    let end = destination + 1, depth = 1;
+    for (; end < text.length && depth; end++) {
+      if (text[end] === '\\') end++;
+      else if (text[end] === '(') depth++;
+      else if (text[end] === ')') depth--;
+    }
+    if (depth) continue;
+    result += text.slice(start, destination);
+    start = end;
+  }
+  return result + text.slice(start);
+}
 export function parseDependencies(body) {
   const dependencies = new Set(), contracts = new Map();
   function ids(text) {
-    const tokens = text.match(/SF-[A-Za-z0-9.-]+/g) ?? [];
-    for (const token of tokens) { if (!WORK_ID.test(token)) throw new Error(`Malformed dependency ID: ${token}`); dependencies.add(token); }
+    // Capture the entire candidate so an invalid suffix cannot become another task.
+    const tokens = withoutLinkDestinations(text).match(/SF-[^\s,;:()[\]`*<>"'!?]*/g) ?? [];
+    for (const candidate of tokens) {
+      const token = candidate.endsWith('.') && WORK_ID.test(candidate.slice(0, -1)) ? candidate.slice(0, -1) : candidate;
+      if (!WORK_ID.test(token)) throw new Error(`Malformed dependency ID: ${candidate}`);
+      dependencies.add(token);
+    }
     return tokens;
   }
   const section = body.match(/^## Dependencies\s*\n([\s\S]*?)(?=^## |$(?![\s\S]))/m)?.[1] ?? '';

@@ -20,6 +20,7 @@
  * so overload resolution, accessibility and conversions of the underlying members are the ordinary ones, and
  * lowering (lowering/index-range.js) only supplies the offsets.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, RefKind, ArrayTypeSymbol } from '../symbols/types.js';
 import { lookupMembers } from './inheritance.js';
 
@@ -47,7 +48,7 @@ export const IndexRangeBinding = Base =>
       const conversion = this.conversions.classifyFromExpression(value, this.core.int);
       if (!conversion.exists || !conversion.isImplicit) {
         // Roslyn reports the whole `^e`, and an explicit conversion does not change the code.
-        this.report(syntax, 'CS0029', [this.operandDisplay(value), 'int']);
+        this.report(syntax, DiagnosticId.CS0029, [this.operandDisplay(value), 'int']);
         return this.bad(syntax);
       }
       return this.node('FromEndIndex', syntax, this.core.index, { operand: this.applyConversion(value, this.core.int, conversion) });

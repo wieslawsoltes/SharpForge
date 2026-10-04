@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op } from '@sharpforge/bytecode';
 import { isReference } from '../type-utils.js';
 
@@ -24,16 +25,16 @@ export function compileUsing(node) {
 }
 
 export function compileUsingDeclaration(node) {
-  this.c.report(node, 'CS1023');
+  this.c.report(node, DiagnosticId.CS1023);
   return;
 }
 
 export function compileLocal(node) {
   this.seq(node);
   if (node.declarations.some(d => d.isConst && d.type === 'var'))
-    this.c.report(node, 'CS0822');
+    this.c.report(node, DiagnosticId.CS0822);
   if (node.declarations.length > 1 && node.declarations.some(d => d.type === 'var'))
-    this.c.report(node, 'CS0819');
+    this.c.report(node, DiagnosticId.CS0819);
   for (const d of node.declarations) {
     let declared = this.c.resolveType(d.type, d, true, this.m);
     let initType;
@@ -41,11 +42,11 @@ export function compileLocal(node) {
       initType = this.typedExpr(d.initializer, declared === 'var' ? null : declared);
     if (declared === 'var') {
       if (!d.initializer || initType === 'null' || initType === 'void')
-        this.c.report(d, 'CS0818');
+        this.c.report(d, DiagnosticId.CS0818);
       declared = initType ?? 'error';
     }
     if (declared === 'void')
-      this.c.report(d, 'CS1547');
+      this.c.report(d, DiagnosticId.CS1547);
     const l = this.local(d.name, declared, d, false, !!d.hidden);
     if (d.initializer) {
       this.checkAssign(declared, initType, d);
@@ -54,11 +55,11 @@ export function compileLocal(node) {
       this.assigned.add(l.slot);
     }
     if (d.isConst && !d.initializer)
-      this.c.report(d, 'CS0145');
+      this.c.report(d, DiagnosticId.CS0145);
     else if (d.isConst) {
       const value = this.constant(d.initializer);
       if (!value)
-        this.c.report(d, 'CS0133', [d.name]);
+        this.c.report(d, DiagnosticId.CS0133, [d.name]);
       else
         l.constantValue = { ...value, type: declared };
     }
@@ -72,7 +73,7 @@ export function compileExpressionStatement(node) {
   this.emit(Op.POP);
   if (!['Call', 'Await', 'Assignment', 'New'].includes(node.expression.kind) &&
       !(node.expression.kind === 'Unary' && ['++', '--'].includes(node.expression.operator)))
-    this.c.report(node, 'CS0201');
+    this.c.report(node, DiagnosticId.CS0201);
   return;
 }
 

@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "framework": ".NET 10.0.5",
+  "os": "macOS 26.6.0",
+  "architecture": "Arm64",
+  "culture": "",
+  "compareInfo": "",
+  "options": "None",
+  "sortVersion": {
+    "fullVersion": 34969,
+    "sortId": "00008899-0000-0000-0000-00000000007f"
+  },
+  "globalizationInvariant": null,
+  "useNls": null,
+  "appLocalIcu": null,
+  "sourceSha256": "60beaea1024b7c4f150c72d279724366a83c776bf9078324f4d935b5d223c666",
+  "pairs": [
+    {
+      "id": "decomposed-accent",
+      "left": [
+        233
+      ],
+      "right": [
+        101,
+        769
+      ],
+      "sign": 0,
+      "reverseSign": 0
+    },
+    {
+      "id": "reordered-acute-cedilla",
+      "left": [
+        97,
+        769,
+        807
+      ],
+      "right": [
+        97,
+        807,
+        769
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    },
+    {
+      "id": "reordered-comma-grave",
+      "left": [
+        97,
+        789,
+        768
+      ],
+      "right": [
+        97,
+        768,
+        789
+      ],
+      "sign": 1,
+      "reverseSign": -1
+    },
+    {
+      "id": "composed-acute-cedilla",
+      "left": [
+        225,
+        807
+      ],
+      "right": [
+        97,
+        807,
+        769
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    },
+    {
+      "id": "composed-dot-below",
+      "left": [
+        7691,
+        803
+      ],
+      "right": [
+        7693,
+        775
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    },
+    {
+      "id": "reordered-hebrew",
+      "left": [
+        1513,
+        1473,
+        1464
+      ],
+      "right": [
+        1513,
+        1464,
+        1473
+      ],
+      "sign": 1,
+      "reverseSign": -1
+    },
+    {
+      "id": "same-class-marks",
+      "left": [
+        97,
+        769,
+        768
+      ],
+      "right": [
+        97,
+        768,
+        769
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    },
+    {
+      "id": "embedded-null",
+      "left": [
+        97,
+        98
+      ],
+      "right": [
+        97,
+        0,
+        98
+      ],
+      "sign": 0,
+      "reverseSign": 0
+    },
+    {
+      "id": "ignorable-only",
+      "left": [],
+      "right": [
+        173,
+        8203,
+        65279
+      ],
+      "sign": 0,
+      "reverseSign": 0
+    },
+    {
+      "id": "isolated-surrogates",
+      "left": [
+        55296
+      ],
+      "right": [
+        56320
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    },
+    {
+      "id": "width-distinction",
+      "left": [
+        97
+      ],
+      "right": [
+        65345
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    },
+    {
+      "id": "kana-distinction",
+      "left": [
+        12363
+      ],
+      "right": [
+        12459
+      ],
+      "sign": -1,
+      "reverseSign": 1
+    }
+  ]
+}
