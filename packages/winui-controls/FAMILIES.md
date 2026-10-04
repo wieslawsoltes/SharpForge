@@ -66,6 +66,34 @@ Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritati
 
 Clearing SelectedDate/SelectedTime changes the nullable selection and event payload; non-nullable DateValue/TimeValue keep their last/default typed value. Explicit null in a host event wins over stale companion data. Range input preserves NaN policy, clamping and indeterminate state.
 
+## Navigation models and geometry
+
+`NavigationFrame` commits cached/history state only after navigation succeeds. `PaneState` and `registerNavigationLayouts` share adaptive NavigationView and four SplitView modes with the renderer. Superseded pane decisions cannot close a newer state. Menus retain source identity and expansion state.
+
+## Navigation control contributions
+
+`registerNavigationRenderers` mounts TabView/Pivot, NavigationView/SplitView and Frame/Page behavior. Tab reorder mutates the authoritative collection; pane transitions preserve the acknowledged cancellation decision and named template ownership. History commits only after successful page navigation.
+
+## Command geometry and text operations
+
+`registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
+
+## Menus and interaction routing
+
+`registerCommandsRenderers` registers nested menus, command bars, text flyouts and gesture controls. `RefreshController` deduplicates outstanding requests and propagates rejected handlers. Context and access key bindings share owner-scoped teardown and wait for Handled before the native default action.
+
+## Button behavior
+
+`RepeatController` accepts a manual clock and disposes outstanding timers. Button/toggle/check/radio, repeat, split/dropdown and hyperlink renderers share enabled/command policy, selected/indeterminate states and root-scoped radio ownership. Native behavior receives the existing managed template/content parts.
+
+## Managed command and checked-state ABI
+
+Synchronous command adapters invoke managed overrides through the supplied virtual-call seam. Checked state distinguishes true/false/null, preserves the released bool IsChecked property via the explicit indeterminate flag and boxes the object-valued GetChecked result.
+
+## Managed application adapters
+
+`managedDataPackage` and `createDataPackageView` expose the same authoritative data-transfer state used by drag/drop and clipboard operations. Application/window and resource adapters register through the caller-owned UI extension registry. Windows finalize only after their managed Closed decision commits; the host supplies windowClosed/applicationExited and task/permission services.
+
 ## Qualification
 
 The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
