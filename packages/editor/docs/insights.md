@@ -37,18 +37,21 @@ const editor = new CodeEditor(host, {
 ```
 
 `compilerRequest`, `documentHost`, and `commandHost` in this example are host
-callbacks. The dependent Studio integration provides the complete adapter in
+callbacks. The complete Studio adapter lives in
 `apps/studio/workbench/studio-editor.js`. The worker registration module is
 `apps/studio/workers/editor-language.js`; it uses the existing `LanguageService`,
 `RefactoringEngine`, and compiler workspace instances. It never commits source.
-Those application modules are outside the editor-only review branch; the editor
-package accepts the same explicit provider contract in any embedding host.
 
 `new EditorLanguageServices({method: provider})` supplies local providers instead
 of RPC. `register(method, provider)` returns an unregister callback. Duplicate or
 unknown methods fail with stable `SFED100x` errors. A registry belongs to its
 embedding host and can be shared by multiple editor views. Disposing a view
 cancels its requests without disposing a registry supplied by the host.
+
+`subscribe(listener)` returns an unsubscribe callback. A host can call
+`invalidate('codeLens', {uri})` or `invalidate('inlayHints', {uri})` after provider
+state changes without fabricating a source edit. Unchanged CodeLens member lines
+retain their existing view zones, so a test-status label update preserves layout.
 
 For compatibility, an editor receiving only the historical `request` callback
 advertises `completion` and `hover`. Mutating host commands such as rename and
@@ -72,9 +75,9 @@ interface are absolute spans rather than LSP delta-encoded integer arrays.
 | `signatureHelp` | `offset`, `callStart`, `activeParameter`, trigger character | Signatures, parameter labels/docs, active overload |
 | `diagnostics` | — | URI/version, span or range, severity, code, message, tags, optional quick-fix availability |
 | `semanticTokens` | — | Nonoverlapping `{start, end, kind, modifiers?}` spans |
-| `codeActions` | `offset`, `end`, optional fix-all `scope` | Actions with title, kind, children, edit(s), optional command and supported fix-all scopes |
+| `codeActions` | `offset`, `end`, optional fix-all `scope`, selected `equivalenceKey` and `action` | Actions with title, kind, children, edit(s), optional command and supported fix-all scopes |
 | `resolveCodeAction` | `action` | Resolved action |
-| `prepareRename` | `offset` | Rename span/range and placeholder, or null |
+| `prepareRename` | `offset` | Rename span/range, placeholder, declaration, version and comment/string/file capabilities, or null |
 | `rename` | `offset`, new name, explicit comment/string/file flags | Versioned WorkspaceEdit or flat edits |
 | `definition` | `offset`, optional `peek` | Location, array of locations, or `{locations}` |
 | `readDocument` | `targetUri` | Target `{uri, text, version, readOnly}`; origin URI/version remain request metadata |
@@ -88,6 +91,7 @@ interface are absolute spans rather than LSP delta-encoded integer arrays.
 | `format`, `formatRange`, `formatOnType` | Selection range, character, indentation options | Versioned text edits |
 | `executeCommand` | Command ID and arguments | Host-defined command result |
 | `documentationComment` | Provider-defined documentation context | Optional host extension |
+| `outlineReorder` | `sourceStart`, `targetStart`, `position: 'before'` or `'after'` | Versioned safe member-move plan; the provider never mutates source |
 
 The active invocation is computed from lexical delimiters, ignoring commas in
 comments, strings, nested calls, and collection delimiters. Studio resolves the
@@ -141,10 +145,18 @@ A subscriber failure after commit is reported as an `AggregateError`; the source
 is already committed and the error message states that fact.
 
 Each affected model receives one undo transaction. An editor without a shared
-workspace can use the built-in single-document adapter. File creation, deletion,
-or rename operations in an LSP WorkspaceEdit fail with `SFED1103` unless a
-separate workspace resource-operation provider is supplied by the host; this
-text adapter never silently executes part of such an edit.
+workspace can use the built-in single-document adapter. An `EditorModelWorkspace`
+can accept `{applyResourceTransaction, supportsResourceRename}`. The latter may
+be a boolean or a function; it is evaluated before both display and commit.
+Versioned LSP rename operations then delegate the entire immutable text/resource
+plan to that host, which stages all work before adoption and owns resource undo.
+`commitWorkspaceEdit(workspace, plan, {signal})` forwards cancellation through
+`applyTransaction(plan, {signal})` to `applyResourceTransaction(plan, {signal})`.
+An asynchronous resource host must check this signal before adoption; Studio's
+Explorer adapter uses its existing captured-state cancellation checks.
+Studio's Explorer adapter does this for browser workspace resources and project
+XML; native mode does not advertise atomic resource rename. Creation/deletion
+remain unsupported here. The text adapter never applies half of a resource plan.
 
 Default preflight bounds are 100,000 edits and 32,000,000 UTF-16 units per edited
 document. Hosts can pass `maxEdits` and `maxDocumentLength` explicitly to
@@ -152,10 +164,21 @@ preflight; Studio's general workspace-edit entry uses its larger document limit.
 The built-in insight edit paths retain the bounded default. Searching a larger
 document remains available independently of that edit-preview limit.
 
-Inline rename temporarily changes the current model using a retained checkpoint
-without publishing source-change events. Each new preview first restores that
-checkpoint. Cancel restores exact bytes, version, selection, and history.
-Commit restores the checkpoint before applying the final atomic workspace plan.
+Inline rename acquires an explicit model preview lease. Temporary visual changes
+never enter undo history or publish source events. Each update restores original
+source before requesting the next rename plan. Published model snapshots remain
+committed throughout, so pending Studio analysis and another document's whole
+project request cannot advance the compiler workspace to a temporary version.
+Cancel restores bytes, version, selection and scroll without erasing a legitimate
+save acknowledgement. Commit restores and releases before the real atomic plan.
+
+The owning insight context cancels pending requests; only its rename request may
+read restored original source. Other views of the same leased model, commands,
+CodeLens actions and legacy semantic host requests remain suspended. Other models
+can still query the published project. Model/URI replacement or removal closes
+the old rename. Async Apply owns one cancellation signal; Cancel and disposal
+abort resource staging, duplicate Apply is ignored, and an old completion cannot
+close a newer rename dialog. Failed final commits close their released capability.
 `editor.refreshPreview()` synchronizes the visible text, highlighter and bounded
 input context without publishing an extra edit.
 
@@ -182,6 +205,23 @@ Selection search examines only the captured selection before applying the match
 limit. Returned locations and capture indices are translated back to original
 document coordinates, and whole-word checks retain the surrounding source
 boundaries.
+
+Incremental search uses `findLiteralMatchAsync` from the current UTF-16 origin,
+independently of Find's result-page limit. Typing or shortening a query restarts
+at the opening caret; repeated forward or reverse commands start at the current
+selection boundary. It reports wrapping only after crossing the corresponding
+document boundary. Escape restores the opening range; accepting keeps the
+selected match, and neither operation creates an undo entry.
+
+The optional editor `searchNavigation` object configures `maxSteps`,
+`timeLimitMs`, `chunkSize`, `matchCase`, `wholeWord`, `wrap`, `clock` and
+`yieldControl` for this widget. Defaults are bounded 16,384-unit chunks,
+1,000,000,000 steps and a 30,000 ms deadline. Each request owns an abort
+controller; a newer query, close or disposal cancels it. A result may navigate
+only while its model identity, URI, version and opening search session remain
+current. The host navigation callback receives the same cancellation signal.
+Budget and navigation failures appear in the widget status without applying a
+partial result. These controls bound work, not browser rendering latency.
 
 Small searches run with explicit instruction/time limits. Larger literal
 searches use `cooperativeLiteralSearch`: the shared KMP matcher processes bounded
@@ -218,6 +258,21 @@ items. Hints and lenses are capped at 5,000. Semantic provider requests are
 suspended above `maxSemanticCharacters` (default 2,000,000), unless the embedding
 host explicitly enables `languageServicesInLargeFiles`; Find remains available.
 
+An embedding host can additionally pass the synchronous, instance-owned CodeEditor
+option `languageAvailability({method, uri, ...parameters})`. It runs after provider
+registration/preview-lifetime checks and before workspace-version capture or provider
+invocation, including custom rename/code-action providers. `uri` is always the current
+editor URI. Return `{available: false, code?, reason}` to refuse a request with an
+accessible insight status; no provider is invoked and `onError` is not called. Return
+`{available: true}` or `undefined` to retain the normal provider, size, cancellation
+and stale-response checks. The callback does not authorize bypassing preview ownership
+or the per-editor semantic bound. It must be synchronous and must not materialize
+source merely to decide eligibility. Hosts should exempt local `readDocument` and
+`projects` providers; those methods also bypass the per-editor semantic-size gate.
+Local Find/edit/undo/save and host commands do not use this semantic eligibility gate.
+Direct `EditorLanguageServices.invoke` is a lower-level API and still requires the
+host's own source-publication boundary checks.
+
 ## Controller and display seams
 
 The controller exposes `complete`, `acceptCompletion`, `closeCompletion`,
@@ -247,15 +302,11 @@ manual edits do not silently mark conflicts resolved.
 
 ## Qualification and capability boundaries
 
-The completed source-worktree batch at `57d69326` passed 43 Node tests across
+The original widget-focused Node batch contains 43 passing tests across
 `tests/a20-editor-{services,snippets-intelligence,search-diff,cooperative-search,language-worker,formatting}.test.js`.
-The editor-only review retains five of those files, containing 36 previously
-passing tests for real model transactions/undo, fake-provider cancellation,
-scope/capture/Unicode boundaries, bounded workers and large-file search.
-The seven `language-worker` cases and their application/compiler bridge remain
-in the dependent integration scope. They cover actual language/refactoring
-endpoints, LSP hint parity and generated read-only sources. No suite or build was
-rerun while materializing the editor review branch.
+It covers real model transactions/undo, fake-provider cancellation, actual
+language/refactoring endpoints, LSP hint parity, generated read-only sources,
+scope/capture/Unicode boundaries, bounded workers, and measured large-file search.
 
 `tests/browser_a20_insights_test.py` exercises the standalone DOM widgets with
 real models and fake providers. `tests/browser_a20_view_test.py` exercises the
@@ -267,19 +318,33 @@ workspace has no usable supported browser installation, so these browser
 fixtures are authored and syntax-checked, not reported as passing. Native IME,
 screen-reader and browser/platform parity remain unverified.
 
-The default bound rename provider rejects type rename and does not support
-comment/string/file rename options. The UI exposes those options only when the
-host advertises `renameCapabilities`. The current refactoring engine supplies
-individual actions and no Fix All scopes; a provider offering `fixAllScopes`
-enables those controls. Default hints show inferred `var` types; parameter-name
-hints and test-status lenses require providers supplying those values.
+The bound provider now supports source type/member/local/parameter rename,
+lexically confined comment/string options and versioned file-rename intent.
+Controls use the preparation result's capabilities and the host's resource
+capability. Local explicit/implicit type action families supply document,
+project and solution Fix All; the Studio coordinator preserves each project's
+compiler context and validates the merged plan. Parameter hints use the selected
+overload. Actual test-status lenses come from Studio's TestProviders adapter.
+These behaviors are qualified by the provider correction scope in
+`docs/editor-language-provider-evidence.json`: the initial 141-case run had
+three failures, an affected correction run passed 26/26, and the final corrective
+run passed 63/63. Every initial failure is covered by a passing affected case.
+
+`tests/browser_a20_language_providers_test.py` adds real CodeEditor, Workspace,
+LanguageService and RefactoringEngine UI scenarios for Fix All, exact rename
+cancellation, parameter hints and provider invalidation. Its syntax was checked;
+it was not executed. The shared production browser setup and engine selection
+match the other editor fixtures. No browser, native or Visual Studio oracle pass
+is inferred from the Node results.
+
+Fix All is advertised only by action families which implement it. Generated
+source stays read-only, unresolved bindings receive no invented hint/reference,
+and resource rename requires the host's actual atomic capability.
 Documentation-comment generation supplies a generic summary template; symbol-
-specific parameter/return documentation is a language-provider extension.
+specific parameter/return documentation remains a language-provider extension.
 
 The issue-by-issue implementation and qualification mapping is recorded in
-the repository's `docs/a20-insight-coverage.json`; the review slice and historical
-source evidence are explained in `docs/project16-editor-review.md`.
-These capability and browser qualifications must
+`docs/a20-insight-coverage.json`. These capability and browser qualifications must
 remain visible in PR descriptions rather than being converted into unconditional
 Visual Studio parity or issue-closure claims.
 

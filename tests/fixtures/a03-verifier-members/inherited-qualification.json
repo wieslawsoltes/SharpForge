@@ -1,0 +1,253 @@
+{
+  "baselineCommit": "97a4e87ff65b12bd2f390402b28b00020373c49a",
+  "candidateProductCommit": "512c6acd878cdba9867e7604262d397a0bddb651",
+  "sourceProof": {
+    "parent": "97a4e87ff65b12bd2f390402b28b00020373c49a",
+    "candidate": "512c6acd878cdba9867e7604262d397a0bddb651",
+    "copied": {
+      "tests/a03-07-members-inherited.test.js": "eb04386f1a709a7652c1e85e4b87f69ae904585b0b37ffb06f4864158a0e5125",
+      "tests/fixtures/a03-verifier-members/inherited-input.js": "837b23aa5c605b37fa6cf81024a9cf59be3c7c87f07a868201cb56e56474c119"
+    },
+    "controls": {
+      "packages/cil/tools/benchmark-verifier-members.mjs": "0a648e5d6097b0559799c5586c399630264956f4411e150ebb4101ce939b2e50",
+      "tests/fixtures/a03-verifier-members/input.js": "774dd26e2e4fc0e8b68258cb15413870e15ee8715ff781f62a6a626545e9bbf6"
+    },
+    "originalProof": "source-proof.json",
+    "correction": "Direct-only field references, based on independent native and pinned FindField source."
+  },
+  "initialProof": {
+    "parent": "97a4e87ff65b12bd2f390402b28b00020373c49a",
+    "candidate": "e3d72b51b860472758cd1c05cadbe8a3521d27f4",
+    "copied": {
+      "tests/a03-07-members-inherited.test.js": "37527832b7db13e7c15e173cd276ba8fb8e9d9788d93814629497e5ca474e75c",
+      "tests/fixtures/a03-verifier-members/inherited-input.js": "7234db8aec7a9333c37e885b1736344426510dac3bed40b91624b6d469000b79"
+    },
+    "controls": {
+      "packages/cil/tools/benchmark-verifier-members.mjs": "0a648e5d6097b0559799c5586c399630264956f4411e150ebb4101ce939b2e50",
+      "tests/fixtures/a03-verifier-members/input.js": "774dd26e2e4fc0e8b68258cb15413870e15ee8715ff781f62a6a626545e9bbf6"
+    }
+  },
+  "native": {
+    "knownAgreements": 5,
+    "explicitUnknowns": 5,
+    "unexpectedFailures": 0,
+    "correction": "Initial inherited-field hypothesis rejected by pinned CoreCLR and independent two-class diagnostic; final product leaves fields declaration-only."
+  },
+  "focused": {
+    "passed": 62,
+    "failed": 0,
+    "skipped": 0
+  },
+  "static": {
+    "syntaxModules": 3496,
+    "importModules": 3492,
+    "errors": 0
+  },
+  "structure": {
+    "existingFindings": 271,
+    "newFindings": 0
+  },
+  "resources": {
+    "testConcurrency": 1,
+    "maxParallelRuns": 1,
+    "nodeHeapMiB": 1024,
+    "limiter": "One outer machine limiter; all children sequential, stop on unexpected failure."
+  },
+  "logs": {
+    "03-failing-before.log": "\u2716 inherited MemberRefs bind nearest exact field or method declarations to canonical identities (6.103916ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 0\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 136.6625\n\n\u2716 failing tests:\n\ntest at tests/a03-07-members-inherited.test.js:15:1\n\u2716 inherited MemberRefs bind nearest exact field or method declarations to canonical identities (6.103916ms)\n  AssertionError [ERR_ASSERTION]: inheritedField\n  \n  'unknown' !== 'known'\n  \n      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-inherited-member-baseline/tests/a03-07-members-inherited.test.js:19:12)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.start (node:internal/test_runner/test:1262:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: 'unknown',\n    expected: 'known',\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+    "04-native.log": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nnull !== 0\n\n    at file:///private/tmp/sharpforge-a03-inherited-member-references/tests/fixtures/a03-verifier-members/inherited-capture.mjs:27:8 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: null,\n  expected: 0,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n",
+    "field-diagnostic.log": "node:internal/modules/esm/resolve:272\n    throw new ERR_MODULE_NOT_FOUND(\n          ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find module '/tmp/sharpforge-a03-inherited-member-references/tests/scripts/conformance/oracle/toolchain.js' imported from /private/tmp/a03-inherited-field-diagnostic.mjs\n    at finalizeResolution (node:internal/modules/esm/resolve:272:11)\n    at moduleResolve (node:internal/modules/esm/resolve:879:10)\n    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)\n    at #resolve (node:internal/modules/esm/loader:687:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33)\n    at ModuleJob.link (node:internal/modules/esm/module_job:381:17) {\n  code: 'ERR_MODULE_NOT_FOUND',\n  url: 'file:///tmp/sharpforge-a03-inherited-member-references/tests/scripts/conformance/oracle/toolchain.js'\n}\n\nNode.js v24.21.0\n",
+    "field-diagnostic-corrected.log": "{\"stdout\":\"{\\\"results\\\":[{\\\"token\\\":167772161,\\\"owner\\\":33554434,\\\"definition\\\":67108865,\\\"error\\\":\\\"\\\"},{\\\"token\\\":167772162,\\\"owner\\\":0,\\\"definition\\\":0,\\\"error\\\":\\\"ArgumentOutOfRangeException\\\"}],\\\"types\\\":[{\\\"token\\\":33554434,\\\"name\\\":\\\"Fixture.Program\\\",\\\"baseType\\\":\\\"System.Object\\\",\\\"fields\\\":[{\\\"token\\\":67108865,\\\"name\\\":\\\"Number\\\",\\\"owner\\\":33554434}]},{\\\"token\\\":33554435,\\\"name\\\":\\\"Fixture.Child\\\",\\\"baseType\\\":\\\"Fixture.Program\\\",\\\"fields\\\":[]}]}\",\"stderr\":\"\",\"exitCode\":0,\"signal\":null,\"unhandledException\":null}\n",
+    "03-failing-before-corrected.log": "\u2716 inherited method MemberRefs bind nearest exact declarations to canonical identities (6.458291ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 0\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 153.564292\n\n\u2716 failing tests:\n\ntest at tests/a03-07-members-inherited.test.js:15:1\n\u2716 inherited method MemberRefs bind nearest exact declarations to canonical identities (6.458291ms)\n  AssertionError [ERR_ASSERTION]: hiddenMethod\n  \n  'unknown' !== 'known'\n  \n      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-inherited-member-baseline/tests/a03-07-members-inherited.test.js:19:12)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.start (node:internal/test_runner/test:1262:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: 'unknown',\n    expected: 'known',\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+    "04-native-corrected.log": "{\"known\":5,\"unknown\":5}\n",
+    "05-focused.log": "\u2714 all seven access flags distinguish same owner, assembly privilege and family for fields/methods (6.967541ms)\n\u2714 protected instance receivers use accessor identity, not only the member owner (1.13725ms)\n\u2714 nested identities are accepted while interface family rules remain explicit unknown (0.88575ms)\n\u2714 unresolved family or receiver ancestry propagates unknown instead of granting access (0.717375ms)\n\u2714 only this context canonical member/type identities are accepted, even with matching tokens (1.200917ms)\n\u2714 visibility/member snapshots own bytes and survive metadata and caller result mutation attempts (0.834875ms)\n\u2714 existing type/member budgets and cancellation apply to snapshot and cached access queries (1.65325ms)\n\u2714 pinned ILVerify access decisions match known queries and retain unresolved-root negatives (1.419ms)\n\u2714 inherited method MemberRefs bind nearest exact declarations to canonical identities (5.755292ms)\n\u2714 private declaration resolution remains separate from accessibility and constructors do not inherit (0.912375ms)\n\u2714 nearest compiler-controlled or ambiguous declarations never fall back to a base declaration (1.095875ms)\n\u2714 unresolved generic and external ancestry never grants an inherited declaration (1.229417ms)\n\u2714 base-chain budgets are checked before traversal while direct declarations keep the zero-budget path (1.625375ms)\n\u2714 inherited lookup uses owned hierarchy and member snapshots after source metadata changes (0.355416ms)\n\u2714 pinned native inherited ResolveMember observations retain fixture and source provenance (0.9655ms)\n\u2714 local declaration references resolve overloads, instance methods and fields to canonical identities (5.139792ms)\n\u2714 missing declarations and unresolved signature/owner metadata never bind by spelling (2.846625ms)\n\u2714 compiler-controlled references, ambiguous declarations and unsupported conventions are explicit unknowns (0.622666ms)\n\u2714 definition signatures and raw token ranges are checked without coercion (1.205542ms)\n\u2714 oversized coded rows cannot turn external owners or signature types into local definitions (0.78475ms)\n\u2714 snapshot and query budgets precede expansion and cancellation applies after construction (0.51575ms)\n\u2714 owned snapshots survive changes to source metadata and do not leak mutable signature arrays (0.40525ms)\n\u2714 pointer-table ownership is reused and duplicate physical ownership rejects (0.538542ms)\n\u2714 twelve native ResolveMember results agree with local declaration resolution (1.458ms)\n\u2714 nested callers inherit enclosing privileges without granting reverse or sibling private access (9.1475ms)\n\u2714 every target nesting boundary restricts public members using its own access flags (2.668791ms)\n\u2714 protected instance access uses the enclosing accessor that actually grants family privilege (2.116334ms)\n\u2714 nested snapshots own parent facts and still reject foreign identities and cancellation (4.281041ms)\n\u2714 malformed raw RIDs, duplicate owners, missing flags and lexical cycles reject before queries (14.60525ms)\n\u2714 nesting depth stays bounded independently of inheritance (7.334625ms)\n\u2714 a deep uncertain target/caller product stops at the aggregate access budget (11.051ms)\n\u2714 generic enclosing definitions remain unknown without forging a nongeneric access proof (1.204125ms)\n\u2714 pinned ILVerify nested access agrees where local metadata produces known decisions (1.710083ms)\n\u2714 same-assembly top-level public and internal types are accessible from flat and nested callers (8.742042ms)\n\u2714 type accessibility checks all six nested flags and every enclosing type (2.577292ms)\n\u2714 nested callers inherit enclosing type privileges without requiring an instance receiver (2.146042ms)\n\u2714 type-access results use owned visibility and parent facts after source metadata is released (1.946959ms)\n\u2714 type-access identity and cancellation checks apply to flat and nested queries (4.366834ms)\n\u2714 generic enclosing types and interface family relations stay explicitly unknown (1.480375ms)\n\u2714 type-only queries reuse the aggregate lexical and hierarchy work limits (13.6635ms)\n\u2714 pinned ILVerify type access agrees where local metadata produces known decisions (1.817542ms)\n\u2714 resolved metadata relations agree with retained CoreCLR reflection; external dependencies remain unknown (3.011042ms)\n\u2714 local definitions have immutable adapter-scoped canonical identities (6.449541ms)\n\u2714 class and interface assignments include inherited and transitive interfaces (1.001792ms)\n\u2714 the existing stack merge seam uses the adapter and refuses unavailable relations (0.584584ms)\n\u2714 unresolved externals cannot bind to a same-named local type or become false certainty (0.445375ms)\n\u2714 snapshots own hierarchy facts and do not expose mutable metadata arrays (0.365417ms)\n\u2714 invalid tokens, local cycles and class/interface edge kinds are rejected (1.344625ms)\n\u2714 metadata and traversal budgets are enforced before unbounded expansion (0.334042ms)\n\u2714 construction and subsequent queries observe cancellation (0.466375ms)\n\u2714 diamond interfaces are de-duplicated and query frontier allocation respects the node budget (0.434541ms)\n\u2714 coded indices preserve nil, valid tags and the maximum 24-bit row across every layout (0.756ms)\n\u2714 physical coded indices reject malformed values and overflow before token composition (0.209708ms)\n\u2714 an oversized MemberRef TypeRef parent cannot alias a local TypeDef (0.053459ms)\n\u2714 signature TypeDefOrRef overflow cannot turn an unresolved reference into a local type (0.333542ms)\n\u2714 all 144 verification category pairs follow the stack merge table in both directions (1.004667ms)\n\u2714 reference relation seam preserves class, interface, boxed and array covariance joins (0.155917ms)\n\u2714 controlled mutability is preserved and pointer relations never use reference covariance (0.097709ms)\n\u2714 nominal identity, constructor state and metadata-dependent unknowns are explicit (0.099792ms)\n\u2714 factories and metadata adapters reject malformed values without coercing nominal identities (0.189333ms)\n\u2714 stack merges enforce equal heights, own their results and bound work before allocation (4.598709ms)\n\u2714 pre-cancelled and interrupted merges produce the cancellation diagnostic (0.130125ms)\n\u2139 tests 62\n\u2139 suites 0\n\u2139 pass 62\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1221.180917\n",
+    "08-check.log": "\n> sharpforge@0.14.0 check\n> node scripts/run.js check\n\n{\n  \"areas\": 30,\n  \"nodeFiles\": 928,\n  \"browserScripts\": 37,\n  \"unassigned\": 0,\n  \"duplicate\": 0\n}\nChecked 3496 JavaScript modules; 0 syntax errors.\n{\n  \"passed\": true,\n  \"inspected\": 3492,\n  \"modules\": 3492,\n  \"errors\": []\n}\n",
+    "09-structure.log": "\n> sharpforge@0.14.0 check:structure\n> node scripts/quality/check-structure.js\n\nStructure gate: 271 problem(s)\npackages/bytecode/src/builtins.js: new file exceeds lineLength 292 > 160\npackages/bytecode/src/runtime-builtins.js: new file exceeds lineLength 510 > 160\npackages/cil/src/execution-profile.js: lineLength grew 335 -> 466 (legacy file may only shrink)\npackages/cil/src/field-profile.js: new file exceeds lineLength 220 > 160\npackages/cil/src/intrinsic-profile.js: new file exceeds lineLength 299 > 160\npackages/compiler/scripts/generate-bound-nodes.js: new file exceeds lineLength 345 > 160\npackages/compiler/scripts/generate-diagnostic-codes.js: new file exceeds lineLength 379 > 160\npackages/compiler/smoke.mjs: new file exceeds lineLength 230 > 160\npackages/compiler/src/binder/accessibility.js: new file exceeds lineLength 235 > 160\npackages/compiler/src/binder/anonymous-methods.js: new file exceeds lineLength 163 > 160\npackages/compiler/src/binder/binder.js: new file exceeds lineLength 305 > 160\npackages/compiler/src/binder/body/lambdas.js: new file exceeds lineLength 183 > 160\npackages/compiler/src/binder/csharp11.js: new file exceeds lineLength 168 > 160\npackages/compiler/src/binder/entry-point.js: new file exceeds lineLength 293 > 160\npackages/compiler/src/binder/expressions.js: new file exceeds lineLength 796 > 160\npackages/compiler/src/binder/extension-indexers.js: new file exceeds lineLength 162 > 160\npackages/compiler/src/binder/field-keyword.js: new file exceeds lineLength 164 > 160\npackages/compiler/src/binder/function-pointers.js: new file exceeds lineLength 171 > 160\npackages/compiler/src/binder/lookup.js: new file exceeds lineLength 361 > 160\npackages/compiler/src/binder/members/initializers.js: new file exceeds lineLength 161 > 160\npackages/compiler/src/binder/method-context.js: new file exceeds lineLength 481 > 160\npackages/compiler/src/binder/operators.js: new file exceeds lineLength 345 > 160\npackages/compiler/src/binder/preview-features.js: new file exceeds lineLength 170 > 160\npackages/compiler/src/binder/ref-kinds.js: new file exceeds lineLength 175 > 160\npackages/compiler/src/binder/ref-locals.js: new file exceeds lineLength 180 > 160\npackages/compiler/src/binder/special-members.js: new file exceeds lineLength 167 > 160\npackages/compiler/src/binder/statements.js: new file exceeds lineLength 546 > 160\npackages/compiler/src/binder/type-binder.js: new file exceeds lineLength 162 > 160\npackages/compiler/src/binder/type-modifiers.js: new file exceeds lineLength 162 > 160\npackages/compiler/src/binder/using-check.js: new file exceeds lineLength 264 > 160\npackages/compiler/src/binder/usings.js: new file exceeds lineLength 246 > 160\npackages/compiler/src/bound/dump.js: new file exceeds lineLength 200 > 160\npackages/compiler/src/bound/nodes.js: new file exceeds bytes 57860 > 40000, lineLength 5294 > 160\npackages/compiler/src/bound/rewriter.js: new file exceeds lineLength 253 > 160\npackages/compiler/src/codegen/ir-emitter.js: new file exceeds lineLength 380 > 160\npackages/compiler/src/compilation.js: new file exceeds lineLength 684 > 160\npackages/compiler/src/compile.js: new file exceeds lineLength 446 > 160\npackages/compiler/src/constants/constant-value.js: new file exceeds lineLength 247 > 160\npackages/compiler/src/constants/fold.js: new file exceeds lineLength 233 > 160\npackages/compiler/src/conversions.js: new file exceeds lineLength 236 > 160\npackages/compiler/src/declarations.js: new file exceeds lineLength 460 > 160\npackages/compiler/src/diagnostics/codes.js: new file exceeds lineLength 238 > 160\npackages/compiler/src/diagnostics/roslyn-codes.js: new file exceeds lines 895 > 500, bytes 120908 > 40000, lineLength 312 > 160\npackages/compiler/src/diagnostics/suppression.js: new file exceeds lineLength 319 > 160\npackages/compiler/src/flow/cfg.js: new file exceeds lineLength 380 > 160\npackages/compiler/src/flow/definite-assignment.js: new file exceeds lineLength 284 > 160\npackages/compiler/src/flow/escape/checks.js: new file exceeds lineLength 178 > 160\npackages/compiler/src/flow/method-flow.js: new file exceeds lineLength 236 > 160\npackages/compiler/src/flow/reachability.js: new file exceeds lineLength 263 > 160\npackages/compiler/src/flow/region-analysis.js: new file exceeds lineLength 343 > 160\npackages/compiler/src/lowering/generated-names.js: new file exceeds lineLength 652 > 160\npackages/compiler/src/lowering/local-rewriter.js: new file exceeds lineLength 280 > 160\npackages/compiler/src/metadata-import/assembly-identity.js: new file exceeds lineLength 319 > 160\npackages/compiler/src/metadata-import/attributes.js: new file exceeds lineLength 415 > 160\npackages/compiler/src/metadata-import/compilation-references.js: new file exceeds lineLength 169 > 160\npackages/compiler/src/metadata-import/pe-metadata.js: new file exceeds lineLength 417 > 160\npackages/compiler/src/metadata-import/pe-symbols.js: new file exceeds lineLength 1036 > 160\npackages/compiler/src/metadata-import/reference-manager.js: new file exceeds lineLength 471 > 160\npackages/compiler/src/method-compiler.js: new file exceeds lineLength 969 > 160\npackages/compiler/src/method-pipeline.js: new file exceeds lineLength 261 > 160\npackages/compiler/src/options.js: new file exceeds lineLength 419 > 160\npackages/compiler/src/overload/operators.js: new file exceeds lineLength 163 > 160\npackages/compiler/src/semantic/constants.js: new file exceeds lineLength 166 > 160\npackages/compiler/src/semantic/execution-model.js: new file exceeds lineLength 334 > 160\npackages/compiler/src/symbols/awaiter-types.js: new file exceeds lineLength 161 > 160\npackages/compiler/src/symbols/compilation-symbols.js: new file exceeds lineLength 391 > 160\npackages/compiler/src/symbols/legacy-types.js: new file exceeds lineLength 212 > 160\npackages/compiler/src/symbols/members.js: new file exceeds lineLength 692 > 160\npackages/compiler/src/symbols/namespaces.js: new file exceeds lineLength 297 > 160\npackages/compiler/src/symbols/registry-bridge.js: new file exceeds lineLength 520 > 160\npackages/compiler/src/symbols/source/declaration-table.js: new file exceeds lineLength 348 > 160\npackages/compiler/src/symbols/source/extension-block-checks.js: new file exceeds lineLength 164 > 160\npackages/compiler/src/symbols/source/partial-constructors-events.js: new file exceeds lineLength 169 > 160\npackages/compiler/src/symbols/special-types.js: new file exceeds lineLength 548 > 160\npackages/compiler/src/symbols/types.js: new file exceeds lineLength 623 > 160\npackages/compiler/src/symbols/well-known-members.js: new file exceeds lineLength 360 > 160\npackages/compiler/src/type-utils.js: new file exceeds lineLength 507 > 160\npackages/compiler/test/accessibility/generate-roslyn-accessibility.js: new file exceeds lineLength 373 > 160\npackages/compiler/test/bound/fixtures.js: new file exceeds lineLength 277 > 160\npackages/compiler/test/bound/update-snapshots.js: new file exceeds lineLength 229 > 160\npackages/compiler/test/constants/expressions.js: new file exceeds lineLength 1756 > 160\npackages/compiler/test/constants/generate.js: new file exceeds lineLength 209 > 160\npackages/compiler/test/differential/harness.js: new file exceeds lineLength 211 > 160\npackages/compiler/test/differential/run.test.js: new file exceeds lineLength 235 > 160\npackages/compiler/test/differential/tools/pin.mjs: new file exceeds lineLength 307 > 160\npackages/compiler/test/suppression/fixtures.js: new file exceeds lineLength 570 > 160\npackages/compute/smoke.mjs: new file exceeds lineLength 277 > 160\npackages/debugger/smoke.mjs: new file exceeds lineLength 537 > 160\npackages/designer/smoke.mjs: new file exceeds lineLength 509 > 160\npackages/extensions/smoke.mjs: new file exceeds lineLength 282 > 160\npackages/framework/src/contributions/core-controls-12.js: new file exceeds lineLength 295 > 160\npackages/framework/src/contributions/core-controls.js: new file exceeds lineLength 407 > 160\npackages/framework/src/contributions/core-system.js: new file exceeds lineLength 413 > 160\npackages/framework/src/contributions/core-xaml.js: new file exceeds lineLength 436 > 160\npackages/framework/src/registry-validation.js: new file exceeds lineLength 246 > 160\npackages/framework/src/registry.js: new file exceeds lineLength 319 > 160\npackages/network/smoke.mjs: new file exceeds lineLength 695 > 160\npackages/protocol/smoke.mjs: new file exceeds lineLength 258 > 160\npackages/runtime/smoke.mjs: new file exceeds lineLength 216 > 160\npackages/runtime/src/execution/calls.js: new file exceeds lineLength 181 > 160\npackages/runtime/src/execution/casting.js: new file exceeds lineLength 259 > 160\npackages/runtime/src/execution/eh.js: new file exceeds lineLength 227 > 160\npackages/runtime/src/execution/enums.js: new file exceeds lineLength 208 > 160\npackages/runtime/src/execution/handlers/array.js: new file exceeds lineLength 384 > 160\npackages/runtime/src/execution/handlers/branch.js: new file exceeds lineLength 195 > 160\npackages/runtime/src/execution/handlers/indirect.js: new file exceeds lineLength 212 > 160\npackages/runtime/src/execution/intrinsics.js: new file exceeds lineLength 193 > 160\npackages/runtime/src/execution/method-table.js: new file exceeds lineLength 404 > 160\npackages/runtime/src/execution/numeric-ops.js: new file exceeds lineLength 438 > 160\npackages/runtime/src/execution/source-eh.js: new file exceeds lineLength 164 > 160\npackages/runtime/src/execution/static-init.js: new file exceeds lineLength 231 > 160\npackages/runtime/src/execution/tokens.js: new file exceeds lineLength 222 > 160\npackages/runtime/src/execution/type-system.js: new file exceeds lineLength 220 > 160\npackages/winui/smoke.mjs: new file exceeds lineLength 445 > 160\napps/studio/automation-api.js: new file exceeds lineLength 341 > 160\napps/studio/commands/core.js: new file exceeds lineLength 2081 > 160\napps/studio/dialogs/about.js: new file exceeds lineLength 4588 > 160\napps/studio/icons.js: new file exceeds lineLength 1917 > 160\napps/studio/menus/context.js: new file exceeds lineLength 2461 > 160\napps/studio/menus/registry.js: new file exceeds lineLength 426 > 160\napps/studio/samples-designer.js: lineLength grew 5116 -> 5182 (legacy file may only shrink)\napps/studio/services/registry.js: new file exceeds lineLength 596 > 160\napps/studio/settings/storage.js: new file exceeds lineLength 302 > 160\napps/studio/styles/debugger-advanced.css: new file exceeds lineLength 888 > 160\napps/studio/styles/debugger-parallel.css: new file exceeds lineLength 883 > 160\napps/studio/styles/debugger-responsive.css: new file exceeds lineLength 184 > 160\napps/studio/styles/docking.css: new file exceeds lineLength 481 > 160\napps/studio/styles/editor-overlays.css: new file exceeds lineLength 273 > 160\napps/studio/styles/explorer-dialogs.css: new file exceeds lineLength 236 > 160\napps/studio/styles/workbench-responsive.css: new file exceeds lineLength 173 > 160\napps/studio/tools/core.js: new file exceeds lineLength 1952 > 160\napps/studio/tools/debugger-automation.js: new file exceeds lineLength 187 > 160\napps/studio/tools/definitions.js: new file exceeds lineLength 1161 > 160\napps/studio/tools/docking-automation.js: new file exceeds lineLength 593 > 160\napps/studio/tools/msbuild-automation.js: new file exceeds lineLength 425 > 160\napps/studio/tools/registry.js: new file exceeds lineLength 682 > 160\napps/studio/tools/workspace-automation.js: new file exceeds lineLength 324 > 160\nscripts/benchmark-compute14.js: lineLength grew 364 -> 570 (legacy file may only shrink)\nscripts/benchmark-release14.js: lineLength grew 295 -> 460 (legacy file may only shrink)\nscripts/benchmark.js: lineLength grew 453 -> 479 (legacy file may only shrink)\nscripts/benchmarks/a05-call-offsets.mjs: new file exceeds lineLength 237 > 160\nscripts/conformance/browser-report.js: new file exceeds lineLength 272 > 160\nscripts/conformance/ci-planning/impact.js: new file exceeds lineLength 171 > 160\nscripts/conformance/ci-stats.js: new file exceeds lineLength 223 > 160\nscripts/conformance/coverage.js: new file exceeds lineLength 213 > 160\nscripts/conformance/diff/benchmark.js: new file exceeds lineLength 772 > 160\nscripts/conformance/diff/classify.js: new file exceeds lineLength 350 > 160\nscripts/conformance/diff/engines/clr.js: new file exceeds lineLength 613 > 160\nscripts/conformance/diff/engines/rust.js: new file exceeds lineLength 736 > 160\nscripts/conformance/diff/engines/vm.js: new file exceeds lineLength 607 > 160\nscripts/conformance/diff/fixtures.js: new file exceeds lineLength 275 > 160\nscripts/conformance/diff/gc/compare.js: new file exceeds lineLength 186 > 160\nscripts/conformance/diff/gc/js-collector.js: new file exceeds lineLength 207 > 160\nscripts/conformance/diff/gc-trace.js: new file exceeds lineLength 213 > 160\nscripts/conformance/diff/host/console.js: new file exceeds lineLength 280 > 160\nscripts/conformance/diff/process.js: new file exceeds lineLength 507 > 160\nscripts/conformance/diff/reduce.js: new file exceeds lineLength 765 > 160\nscripts/conformance/diff/result.js: new file exceeds lineLength 201 > 160\nscripts/conformance/diff/run.js: new file exceeds lineLength 1135 > 160\nscripts/conformance/env-report.js: new file exceeds lineLength 307 > 160\nscripts/conformance/gc/stress.js: new file exceeds lineLength 169 > 160\nscripts/conformance/inventory/baseline.js: new file exceeds lineLength 284 > 160\nscripts/conformance/inventory/bcl-api-diff.js: new file exceeds lineLength 207 > 160\nscripts/conformance/inventory/benchmark.js: new file exceeds lineLength 248 > 160\nscripts/conformance/inventory/common.js: new file exceeds lineLength 450 > 160\nscripts/conformance/inventory/csharp.js: new file exceeds lineLength 384 > 160\nscripts/conformance/inventory/denominator.js: new file exceeds lineLength 328 > 160\nscripts/conformance/inventory/diagnostics.js: new file exceeds lineLength 181 > 160\nscripts/conformance/inventory/ecma335.js: new file exceeds lineLength 318 > 160\nscripts/conformance/inventory/gap-ids.js: new file exceeds lineLength 342 > 160\nscripts/conformance/inventory/generate.js: new file exceeds lineLength 782 > 160\nscripts/conformance/inventory/ide.js: new file exceeds lineLength 582 > 160\nscripts/conformance/inventory/native-metadata.js: new file exceeds lineLength 229 > 160\nscripts/conformance/inventory/reference-language.js: new file exceeds lineLength 191 > 160\nscripts/conformance/inventory/runtime-gc.js: new file exceeds lineLength 206 > 160\nscripts/conformance/inventory/runtime-runner.js: new file exceeds lineLength 202 > 160\nscripts/conformance/oracle/bcl-run.js: new file exceeds lineLength 179 > 160\nscripts/conformance/oracle/clr-run.js: new file exceeds lineLength 229 > 160\nscripts/conformance/oracle/fixtures.js: new file exceeds lineLength 268 > 160\nscripts/conformance/oracle/license-policy.js: new file exceeds lineLength 201 > 160\nscripts/conformance/oracle/process.js: new file exceeds lineLength 245 > 160\nscripts/conformance/oracle/qualify.js: new file exceeds lineLength 274 > 160\nscripts/conformance/oracle/roslyn-compile.js: new file exceeds lineLength 631 > 160\nscripts/conformance/oracle/store.js: new file exceeds lineLength 240 > 160\nscripts/conformance/oracle/toolchain.js: new file exceeds lineLength 335 > 160\nscripts/conformance/oracle/winui-expected-fixtures.js: new file exceeds lineLength 194 > 160\nscripts/conformance/oracle/winui-expected.js: new file exceeds lineLength 206 > 160\nscripts/conformance/oracle/winui-measure/run.js: new file exceeds lineLength 184 > 160\nscripts/conformance/oracle/winui-run.js: new file exceeds lineLength 281 > 160\nscripts/conformance/perf/ab.js: new file exceeds lineLength 858 > 160\nscripts/conformance/perf/alloc.js: new file exceeds lineLength 441 > 160\nscripts/conformance/perf/compare.js: new file exceeds lineLength 465 > 160\nscripts/conformance/perf/controls.js: new file exceeds lineLength 400 > 160\nscripts/conformance/perf/core.js: new file exceeds lineLength 375 > 160\nscripts/conformance/perf/legacy.js: new file exceeds lineLength 198 > 160\nscripts/conformance/perf/measure.js: new file exceeds lineLength 297 > 160\nscripts/conformance/perf/normalize-browser.js: new file exceeds lineLength 281 > 160\nscripts/conformance/perf/normalize.js: new file exceeds lineLength 298 > 160\nscripts/conformance/perf/process.js: new file exceeds lineLength 284 > 160\nscripts/conformance/perf/registry.js: new file exceeds lineLength 325 > 160\nscripts/conformance/perf/size-budget.js: new file exceeds lineLength 366 > 160\nscripts/conformance/perf/summary.js: new file exceeds lineLength 187 > 160\nscripts/conformance/perf/update-baseline.js: new file exceeds lineLength 257 > 160\nscripts/conformance/perf/workloads.js: new file exceeds lineLength 372 > 160\nscripts/conformance/protocol/messages.js: new file exceeds lineLength 207 > 160\nscripts/conformance/protocol/probe.js: new file exceeds lineLength 170 > 160\nscripts/conformance/protocol/record.js: new file exceeds lineLength 210 > 160\nscripts/conformance/protocol/replay.js: new file exceeds lineLength 184 > 160\nscripts/conformance/protocol/schema.js: new file exceeds lineLength 281 > 160\nscripts/conformance/protocol/session.js: new file exceeds lineLength 189 > 160\nscripts/conformance/record-skips.js: new file exceeds lineLength 176 > 160\nscripts/conformance/serve-modes.js: new file exceeds lineLength 242 > 160\nscripts/planning/abi/benchmark.js: new file exceeds lineLength 1095 > 160\nscripts/planning/abi/check-versions.js: new file exceeds lineLength 375 > 160\nscripts/planning/abi/example.js: new file exceeds lineLength 209 > 160\nscripts/planning/abi/gen-value-fixtures.js: new file exceeds lineLength 650 > 160\nscripts/planning/abi/value-codec.js: new file exceeds lineLength 407 > 160\nscripts/planning/audit.js: new file exceeds lineLength 285 > 160\nscripts/planning/benchmark-registries.js: new file exceeds lineLength 600 > 160\nscripts/planning/bootstrap-project.js: new file exceeds lineLength 292 > 160\nscripts/planning/capture-evidence.js: new file exceeds lineLength 206 > 160\nscripts/planning/check-contract-change.js: new file exceeds lineLength 272 > 160\nscripts/planning/check-contract-implementations.js: new file exceeds lineLength 521 > 160\nscripts/planning/check-ownership.js: new file exceeds lineLength 397 > 160\nscripts/planning/check-path-collisions.js: new file exceeds lineLength 253 > 160\nscripts/planning/check-root-providers.js: new file exceeds lineLength 642 > 160\nscripts/planning/check-test-manifests.js: new file exceeds lineLength 206 > 160\nscripts/planning/css-rules.js: new file exceeds lineLength 185 > 160\nscripts/planning/dag.js: new file exceeds lineLength 200 > 160\nscripts/planning/gen-codeowners.js: new file exceeds lineLength 383 > 160\nscripts/planning/gen-ownership.js: new file exceeds lineLength 216 > 160\nscripts/planning/gen-schema-fixtures.js: new file exceeds lineLength 1232 > 160\nscripts/planning/golden-output.js: new file exceeds lineLength 192 > 160\nscripts/planning/handoff.js: new file exceeds lineLength 325 > 160\nscripts/planning/impacted-tests.js: new file exceeds lineLength 175 > 160\nscripts/planning/inventory-values.js: new file exceeds lineLength 4641 > 160\nscripts/planning/lib/claim-cli.js: new file exceeds lineLength 368 > 160\nscripts/planning/lib/claims.js: new file exceeds lineLength 291 > 160\nscripts/planning/lib/deps-parse.js: new file exceeds lineLength 172 > 160\nscripts/planning/lib/evidence.js: new file exceeds lineLength 229 > 160\nscripts/planning/lib/gh-retry.js: new file exceeds lineLength 212 > 160\nscripts/planning/lib/github-project.js: new file exceeds lineLength 643 > 160\nscripts/planning/lib/io.js: new file exceeds lineLength 211 > 160\nscripts/planning/lib/paths.js: new file exceeds lineLength 223 > 160\nscripts/planning/lint-backlog.js: new file exceeds lineLength 207 > 160\nscripts/planning/readiness.js: new file exceeds lineLength 193 > 160\nscripts/planning/ready.js: new file exceeds lineLength 299 > 160\nscripts/planning/resume.js: new file exceeds lineLength 259 > 160\nscripts/planning/rollup-invalidation.js: new file exceeds lineLength 171 > 160\nscripts/planning/rollup-publish.js: new file exceeds lineLength 464 > 160\nscripts/planning/rollup.js: new file exceeds lineLength 417 > 160\nscripts/planning/run-safepoint-fixtures.js: new file exceeds lineLength 337 > 160\nscripts/planning/run-tests.js: new file exceeds lineLength 226 > 160\nscripts/planning/schema/adapters.js: new file exceeds lineLength 855 > 160\nscripts/planning/schema/benchmark-lowering.js: new file exceeds lineLength 389 > 160\nscripts/planning/schema/example-coverage.js: new file exceeds lineLength 1101 > 160\nscripts/planning/schema/lower-method-body.js: new file exceeds lineLength 855 > 160\nscripts/planning/schema/qualify-rust.js: new file exceeds lineLength 1965 > 160\nscripts/planning/schema/rust/src/main.rs: new file exceeds lineLength 764 > 160\nscripts/planning/schema/validate.js: new file exceeds lineLength 506 > 160\nscripts/planning/snapshot-backlog.js: new file exceeds lineLength 787 > 160\nscripts/planning/snapshot-contract-ids.js: new file exceeds lineLength 510 > 160\nscripts/planning/sync-ready.js: new file exceeds lineLength 286 > 160\nscripts/planning/testing/fake-github.js: new file exceeds lineLength 388 > 160\nscripts/planning/validate-dag.js: new file exceeds lineLength 204 > 160\nscripts/run.js: new file exceeds lineLength 232 > 160\nscripts/validate-a05-dispatch.js: new file exceeds lineLength 344 > 160\nscripts/validate-a05-faults.mjs: new file exceeds lineLength 211 > 160\nscripts/validate-a05-numeric-dotnet.js: new file exceeds lineLength 192 > 160\nscripts/validate-a05-static-init.js: new file exceeds lineLength 349 > 160\nscripts/validate-a05-type-system.js: new file exceeds lineLength 449 > 160\n"
+  },
+  "traces": {
+    "driver-0.json": [
+      {
+        "command": "git",
+        "args": [
+          "-c",
+          "gc.auto=0",
+          "worktree",
+          "add",
+          "--detach",
+          "/tmp/sharpforge-a03-inherited-member-baseline",
+          "97a4e87ff65b12bd2f390402b28b00020373c49a"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:20:22.405Z",
+        "completed": "2026-10-04T07:20:24.274Z",
+        "status": 0,
+        "signal": null,
+        "log": "00-baseline"
+      },
+      {
+        "command": "npm",
+        "args": [
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:20:24.276Z",
+        "completed": "2026-10-04T07:20:24.635Z",
+        "status": 0,
+        "signal": null,
+        "log": "01-install-candidate"
+      },
+      {
+        "command": "npm",
+        "args": [
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-baseline",
+        "started": "2026-10-04T07:20:24.636Z",
+        "completed": "2026-10-04T07:20:24.822Z",
+        "status": 0,
+        "signal": null,
+        "log": "02-install-baseline"
+      },
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "--test",
+          "--test-concurrency=1",
+          "--test-name-pattern=^inherited MemberRefs bind nearest exact field or method declarations to canonical identities$",
+          "tests/a03-07-members-inherited.test.js"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-baseline",
+        "started": "2026-10-04T07:20:24.822Z",
+        "completed": "2026-10-04T07:20:24.987Z",
+        "status": 1,
+        "signal": null,
+        "log": "03-failing-before"
+      },
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "tests/fixtures/a03-verifier-members/inherited-capture.mjs",
+          "tests/fixtures/a03-verifier-members/inherited-native.json"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:20:24.988Z",
+        "completed": "2026-10-04T07:20:25.773Z",
+        "status": 1,
+        "signal": null,
+        "log": "04-native"
+      }
+    ],
+    "driver-3.json": [
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "--test",
+          "--test-concurrency=1",
+          "--test-name-pattern=^inherited method MemberRefs bind nearest exact declarations to canonical identities$",
+          "tests/a03-07-members-inherited.test.js"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-baseline",
+        "started": "2026-10-04T07:26:34.334Z",
+        "completed": "2026-10-04T07:26:34.522Z",
+        "status": 1,
+        "signal": null,
+        "log": "03-failing-before-corrected"
+      },
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "tests/fixtures/a03-verifier-members/inherited-capture.mjs",
+          "tests/fixtures/a03-verifier-members/inherited-native.json"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:26:34.522Z",
+        "completed": "2026-10-04T07:26:35.228Z",
+        "status": 0,
+        "signal": null,
+        "log": "04-native-corrected"
+      },
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "--test",
+          "--test-concurrency=1",
+          "tests/a03-07-members-inherited.test.js",
+          "tests/a03-07-members.test.js",
+          "tests/a03-07-member-access.test.js",
+          "tests/a03-07-nested-access.test.js",
+          "tests/a03-07-type-access.test.js",
+          "tests/a03-07-type-system.test.js",
+          "tests/a03-07-type-system-native.test.js",
+          "tests/a03-verification-types.test.js",
+          "tests/a03-coded-index-bounds.test.js"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:26:35.228Z",
+        "completed": "2026-10-04T07:26:36.477Z",
+        "status": 0,
+        "signal": null,
+        "log": "05-focused"
+      },
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "--expose-gc",
+          "packages/cil/tools/benchmark-verifier-members.mjs",
+          "/tmp/a03-inherited-member-validation/baseline.json"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-baseline",
+        "started": "2026-10-04T07:26:36.477Z",
+        "completed": "2026-10-04T07:26:36.769Z",
+        "status": 0,
+        "signal": null,
+        "log": "06-benchmark-baseline"
+      },
+      {
+        "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "args": [
+          "--expose-gc",
+          "packages/cil/tools/benchmark-verifier-members.mjs",
+          "/tmp/a03-inherited-member-validation/candidate.json"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:26:36.769Z",
+        "completed": "2026-10-04T07:26:37.075Z",
+        "status": 0,
+        "signal": null,
+        "log": "07-benchmark-candidate"
+      },
+      {
+        "command": "npm",
+        "args": [
+          "run",
+          "check"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:26:37.075Z",
+        "completed": "2026-10-04T07:26:39.705Z",
+        "status": 0,
+        "signal": null,
+        "log": "08-check"
+      },
+      {
+        "command": "npm",
+        "args": [
+          "run",
+          "check:structure"
+        ],
+        "cwd": "/tmp/sharpforge-a03-inherited-member-references",
+        "started": "2026-10-04T07:26:39.705Z",
+        "completed": "2026-10-04T07:26:39.976Z",
+        "status": 0,
+        "signal": null,
+        "log": "09-structure"
+      }
+    ]
+  }
+}

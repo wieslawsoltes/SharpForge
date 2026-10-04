@@ -1,0 +1,1409 @@
+{
+  "revision": "b94ce128689c21a0cdcab4912705cf522650a944",
+  "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "playwright": "1.63.0",
+  "moduleSha256": "307da687bf34ce59cf409114c5baeed62b7f0f743afca58a867f17091fb2a606",
+  "mode": "HTTP source modules/import map, CSP enabled",
+  "engines": [
+    {
+      "engine": "chromium",
+      "passed": true,
+      "version": "153.0.8010.12",
+      "checks": [
+        "50k authored types: late/miss queries in all three modes, cold/warm fixed samples and page caps",
+        "Independent cache cap, cancellation, bounded result totals, zero pages and owned state",
+        "Unicode/literal/initial semantics and empty query",
+        "Retained native PE SHA-256, method identities and reload results"
+      ],
+      "chronologicalSamples": [
+        {
+          "name": "prefix-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 17.799999997019768,
+          "startOffsetMs": 23.900000005960464,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1.6999999955296516,
+          "startOffsetMs": 41.80000000447035,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 16.30000000447035,
+          "startOffsetMs": 65.10000000149012,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 0.5,
+          "startOffsetMs": 81.40000000596046,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 14.699999995529652,
+          "startOffsetMs": 103.80000000447035,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1.1000000014901161,
+          "startOffsetMs": 118.5,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 14.899999998509884,
+          "startOffsetMs": 141.10000000149012,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 0.7000000029802322,
+          "startOffsetMs": 156,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 16.5,
+          "startOffsetMs": 175.5,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1.4000000059604645,
+          "startOffsetMs": 192,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 22.5,
+          "startOffsetMs": 213.5,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 0.5,
+          "startOffsetMs": 236,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 13.799999997019768,
+          "startOffsetMs": 254.40000000596046,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 0.3999999985098839,
+          "startOffsetMs": 268.20000000298023,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 14.199999995529652,
+          "startOffsetMs": 286.30000000447035,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 300.5,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 13.600000001490116,
+          "startOffsetMs": 319.70000000298023,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 0.6000000014901161,
+          "startOffsetMs": 333.30000000447035,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 13.899999998509884,
+          "startOffsetMs": 352.70000000298023,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 0.8000000044703484,
+          "startOffsetMs": 366.6000000014901,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 13.699999995529652,
+          "startOffsetMs": 385.80000000447035,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 0.20000000298023224,
+          "startOffsetMs": 399.5,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15.700000002980232,
+          "startOffsetMs": 416,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 431.70000000298023,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 14.699999995529652,
+          "startOffsetMs": 450.40000000596046,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0.8999999985098839,
+          "startOffsetMs": 465.1000000014901,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 13.700000002980232,
+          "startOffsetMs": 484.1000000014901,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0.19999999552965164,
+          "startOffsetMs": 497.80000000447035,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 14.399999998509884,
+          "startOffsetMs": 516.1000000014901,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0.9000000059604645,
+          "startOffsetMs": 530.5,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 14.100000001490116,
+          "startOffsetMs": 550.2000000029802,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0.5,
+          "startOffsetMs": 564.3000000044703,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 583.5,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0.9000000059604645,
+          "startOffsetMs": 598.5,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15.200000002980232,
+          "startOffsetMs": 617.2000000029802,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0.3999999985098839,
+          "startOffsetMs": 632.4000000059605,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        }
+      ],
+      "protocol": {
+        "rounds": 3,
+        "warmups": 0,
+        "iterationsPerCell": 1,
+        "thresholdMs": 50,
+        "order": "six cases forward/reverse on alternating rounds; fresh index per cold/warm pair",
+        "scope": "Index already constructed; cold query includes all lazy cache work, warm immediately follows."
+      },
+      "authoredFixtureSha256": "ed65da170c7a7c1d711b67adb5237d84a557bce8d5ee71eb6d1535f1d5792f7c",
+      "reference": {
+        "sdk": "10.0.201",
+        "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "runtime": "10.0.5",
+        "mode": "Release",
+        "optimized": true,
+        "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+        "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+        "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+      },
+      "thresholdFailures": []
+    },
+    {
+      "engine": "firefox",
+      "passed": true,
+      "version": "155.0",
+      "checks": [
+        "50k authored types: late/miss queries in all three modes, cold/warm fixed samples and page caps",
+        "Independent cache cap, cancellation, bounded result totals, zero pages and owned state",
+        "Unicode/literal/initial semantics and empty query",
+        "Retained native PE SHA-256, method identities and reload results"
+      ],
+      "chronologicalSamples": [
+        {
+          "name": "prefix-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 19,
+          "startOffsetMs": 31,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 50,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 21,
+          "startOffsetMs": 76,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 97,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 121,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 136,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 161,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 0,
+          "startOffsetMs": 177,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 201,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 3,
+          "startOffsetMs": 217,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 246,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 0,
+          "startOffsetMs": 261,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 284,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 0,
+          "startOffsetMs": 299,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 323,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 2,
+          "startOffsetMs": 338,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 369,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 384,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 407,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 422,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 14,
+          "startOffsetMs": 446,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 460,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 14,
+          "startOffsetMs": 492,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 506,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 546,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 561,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 14,
+          "startOffsetMs": 586,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 2,
+          "startOffsetMs": 600,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 28,
+          "startOffsetMs": 623,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 2,
+          "startOffsetMs": 651,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 675,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 690,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 713,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 2,
+          "startOffsetMs": 728,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 751,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 0,
+          "startOffsetMs": 766,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        }
+      ],
+      "protocol": {
+        "rounds": 3,
+        "warmups": 0,
+        "iterationsPerCell": 1,
+        "thresholdMs": 50,
+        "order": "six cases forward/reverse on alternating rounds; fresh index per cold/warm pair",
+        "scope": "Index already constructed; cold query includes all lazy cache work, warm immediately follows."
+      },
+      "authoredFixtureSha256": "ed65da170c7a7c1d711b67adb5237d84a557bce8d5ee71eb6d1535f1d5792f7c",
+      "reference": {
+        "sdk": "10.0.201",
+        "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "runtime": "10.0.5",
+        "mode": "Release",
+        "optimized": true,
+        "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+        "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+        "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+      },
+      "thresholdFailures": []
+    },
+    {
+      "engine": "webkit",
+      "passed": true,
+      "version": "26.6",
+      "checks": [
+        "50k authored types: late/miss queries in all three modes, cold/warm fixed samples and page caps",
+        "Independent cache cap, cancellation, bounded result totals, zero pages and owned state",
+        "Unicode/literal/initial semantics and empty query",
+        "Retained native PE SHA-256, method identities and reload results"
+      ],
+      "chronologicalSamples": [
+        {
+          "name": "prefix-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 20,
+          "startOffsetMs": 43,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 63,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 104,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 119,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 160,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 176,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 14,
+          "startOffsetMs": 216,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 230,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 17,
+          "startOffsetMs": 273,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 290,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 0,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 334,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 0,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 350,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 393,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 0,
+          "startOffsetMs": 409,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 452,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 468,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 16,
+          "startOffsetMs": 512,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 528,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 569,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 584,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 624,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 639,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 1,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 679,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 1,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 694,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 736,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 751,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 791,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "prefix-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 806,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 846,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 861,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 902,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "substring-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 917,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 14,
+          "startOffsetMs": 959,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-late",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 2,
+          "startOffsetMs": 973,
+          "resultCount": 10,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 2,
+          "state": "cold",
+          "elapsedMs": 15,
+          "startOffsetMs": 1016,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        },
+        {
+          "name": "camel-miss",
+          "round": 2,
+          "state": "warm",
+          "elapsedMs": 1,
+          "startOffsetMs": 1031,
+          "resultCount": 0,
+          "logicalCache": {
+            "entries": 50001,
+            "bytes": 2900020
+          }
+        }
+      ],
+      "protocol": {
+        "rounds": 3,
+        "warmups": 0,
+        "iterationsPerCell": 1,
+        "thresholdMs": 50,
+        "order": "six cases forward/reverse on alternating rounds; fresh index per cold/warm pair",
+        "scope": "Index already constructed; cold query includes all lazy cache work, warm immediately follows."
+      },
+      "authoredFixtureSha256": "ed65da170c7a7c1d711b67adb5237d84a557bce8d5ee71eb6d1535f1d5792f7c",
+      "reference": {
+        "sdk": "10.0.201",
+        "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "runtime": "10.0.5",
+        "mode": "Release",
+        "optimized": true,
+        "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+        "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+        "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+      },
+      "thresholdFailures": []
+    }
+  ],
+  "passed": true
+}

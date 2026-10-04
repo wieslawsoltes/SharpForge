@@ -12,6 +12,7 @@ export const requirements = Object.freeze([
 ]);
 const actions = new Set([
   'documents',
+  'sessions',
   'canvas2d',
   'dom',
   'webgpu',

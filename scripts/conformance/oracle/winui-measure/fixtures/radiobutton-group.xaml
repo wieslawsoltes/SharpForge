@@ -1,0 +1,8 @@
+<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            x:Name="Subject" AutomationProperties.Name="Delivery choices" Spacing="4">
+  <RadioButton x:Name="StandardChoice" GroupName="Delivery"
+               AutomationProperties.Name="Standard delivery" Content="Standard" IsChecked="True" />
+  <RadioButton x:Name="ExpressChoice" GroupName="Delivery"
+               AutomationProperties.Name="Express delivery" Content="Express" IsChecked="False" />
+</StackPanel>

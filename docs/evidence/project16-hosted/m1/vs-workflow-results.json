@@ -1,0 +1,74 @@
+{
+  "suite": "browser_vs_workflows_test",
+  "mode": "http",
+  "engine": "webkit",
+  "passed": true,
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "checks": [
+    {
+      "scenario": "create-console-project",
+      "passed": true,
+      "emptyNameRejected": true
+    },
+    {
+      "scenario": "edit-and-build-shared-document",
+      "passed": true
+    },
+    {
+      "scenario": "breakpoint-step-continue",
+      "passed": true,
+      "backend": "ECMA-335",
+      "runtimeStatistics": {
+        "artifactFormat": "ECMA-335",
+        "assembly": {
+          "bytes": 4096,
+          "loadMs": 19,
+          "decodeMs": 4,
+          "verificationMs": 15
+        },
+        "instructions": 14,
+        "elapsedMs": 3,
+        "frames": 0,
+        "heap": {
+          "allocatedBytes": 0,
+          "hostStrongHandles": 0,
+          "hostWeakHandles": 0,
+          "rootsScanned": 0,
+          "edgesScanned": 0,
+          "markedObjects": 0,
+          "maxPauseMs": 0,
+          "markMs": 0,
+          "sweepMs": 0,
+          "liveBytes": 0,
+          "liveObjects": 0,
+          "allocations": 0,
+          "collections": 0,
+          "freedObjects": 0,
+          "freedBytes": 0,
+          "lastPauseMs": 0,
+          "totalPauseMs": 0,
+          "peakBytes": 0,
+          "maxBytes": 33554432,
+          "threshold": 65536
+        }
+      }
+    },
+    {
+      "scenario": "designer-edit-undo-redo-save",
+      "passed": true
+    },
+    {
+      "scenario": "export-project-and-design",
+      "passed": true
+    }
+  ],
+  "navigation": {
+    "mode": "http",
+    "url": "http://127.0.0.1:49206/",
+    "offline": false
+  },
+  "httpAttempts": [],
+  "pageErrors": [],
+  "browser": "26.6"
+}

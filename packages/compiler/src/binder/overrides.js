@@ -13,7 +13,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain } from '../symbols/substitution.js';
-import { sameParameters } from './inheritance.js';
+import { sameParameters, signatureTypeText } from './inheritance.js';
 
 const accessWord = {
   [Accessibility.Public]: 'public',
@@ -38,6 +38,13 @@ export function findOverridden(member, type, core) {
     for (const c of b.getMembers(member.name)) if (sameKindAndSignature(member, c)) return c;
   return null;
 }
+/** True for `protected override bool PrintMembers(StringBuilder)` and `protected override Type EqualityContract` of a derived record. */
+function overridesSynthesizedRecordMember(member, type) {
+  const base = type.isRecord && type.typeKind === TypeKind.Class ? type.baseType : null;
+  if (!base || !(base.originalDefinition ?? base).isRecord) return false;
+  if (member.kind === SymbolKind.Method) return member.name === 'PrintMembers' && member.parameters.length === 1;
+  return member.kind === SymbolKind.Property && member.name === 'EqualityContract';
+}
 /** Binds the overrides of a source type. @returns [{code,args,member}] */
 export function bindOverrides(type, core, conversions) {
   const results = [];
@@ -45,6 +52,9 @@ export function bindOverrides(type, core, conversions) {
   for (const member of type.getMembers()) {
     if (!overridable(member) || !member.isOverride) continue;
     const base = findOverridden(member, type, core);
+    // `PrintMembers` and `EqualityContract` of a base record are synthesized where code is generated; overriding them
+    // in a derived record is what the language asks for.
+    if (!base && overridesSynthesizedRecordMember(member, type)) continue;
     if (!base) {
       // Roslyn distinguishes a same-named member of another kind or signature only by the message of CS0115.
       results.push({ code: DiagnosticId.CS0115, args: [member.toDisplayString()], member });
@@ -111,7 +121,9 @@ const sameReturn = (a, b, x, y) => {
   if (x.equals(y, TypeCompareKind.IgnoreDynamic)) return true;
   const ia = (a.typeParameters ?? []).indexOf(x),
     ib = (b.typeParameters ?? []).indexOf(y);
-  return ia >= 0 && ia === ib;
+  if (ia >= 0 || ib >= 0) return ia === ib;
+  // A type built over the method's type parameters (`T?` of a struct T, `List<T>`): the same by position.
+  return !!a.typeParameters?.length && a.typeParameters.length === b.typeParameters?.length && signatureTypeText(a, x) === signatureTypeText(b, y);
 };
 /**
  * Abstract members a non-abstract class leaves unimplemented.

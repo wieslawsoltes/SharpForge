@@ -1,0 +1,96 @@
+import { spawnSync } from 'node:child_process';
+import { openSync, closeSync, writeFileSync, readFileSync, mkdirSync, existsSync, copyFileSync, realpathSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { createHash } from 'node:crypto';
+
+const candidate = '/tmp/sharpforge-project6-a03-local-initialization';
+const baseline = '/tmp/sharpforge-project6-a03-local-initialization-baseline';
+const parent = 'b79fbbb9e9b54cb77d2376765e290e9b0922b2d6';
+const headPrefix = 'c99aa097d';
+const evidence = '/tmp/a03-initialization-validation';
+const node = process.execPath;
+if (!process.version.startsWith('v24.')) throw new Error('Qualification requires pinned Node 24');
+const tests = [
+  'tests/a03-local-initialization.test.js',
+  'tests/a03-numeric-transfers.test.js',
+  'tests/a03-verifier-dataflow.test.js',
+  'tests/a03-verification-types.test.js',
+];
+const start = Number(process.argv[2] ?? 0);
+if (!Number.isInteger(start) || start < 0 || start > 11) throw new Error('Expected resume step 0..11');
+if (process.env.SHARPFORGE_TEST_CONCURRENCY !== '1' || process.env.SHARPFORGE_MAX_PARALLEL_RUNS !== '1' ||
+    process.env.SHARPFORGE_MAX_OLD_SPACE_MB !== '1024') throw new Error('Serial 1/1 GiB controls required');
+mkdirSync(evidence, { recursive: true });
+const trace = [];
+function command(command, args, cwd, log, expected = 0) {
+  const entry = { command, args, cwd, started: new Date().toISOString() };
+  trace.push(entry);
+  console.log(JSON.stringify({ start: log, ...entry }));
+  const fd = openSync(join(evidence, log + '.log'), 'wx');
+  const result = spawnSync(command, args, { cwd, env: process.env, stdio: ['ignore', fd, fd] });
+  closeSync(fd);
+  Object.assign(entry, { completed: new Date().toISOString(), status: result.status, signal: result.signal,
+    error: result.error?.message, log });
+  writeFileSync(join(evidence, 'driver-' + start + '.json'), JSON.stringify(trace, null, 2) + '\n');
+  console.log(JSON.stringify({ terminal: log, status: result.status, signal: result.signal, error: result.error?.message }));
+  if (result.error || result.status !== expected || result.signal) process.exit(result.status || 1);
+}
+function git(args) {
+  const result = spawnSync('git', args, { cwd: candidate, encoding: 'utf8' });
+  if (result.status) throw new Error(result.stderr);
+  return result.stdout.trim();
+}
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const steps = [
+  () => {
+    if (existsSync(baseline)) throw new Error('Inspect existing baseline before resuming');
+    const head = git(['rev-parse', 'HEAD']);
+    if (!head.startsWith(headPrefix)) throw new Error('Candidate changed before qualification');
+    if (git(['status', '--porcelain=v1'])) throw new Error('Dirty candidate');
+    command('git', ['-c', 'gc.auto=0', 'worktree', 'add', '--detach', baseline, parent], candidate, '00-baseline');
+    const copied = {};
+    for (const file of ['tests/fixtures/verifier-initialization/input.js', 'tests/fixtures/verifier-initialization/baseline.mjs']) {
+      mkdirSync(dirname(join(baseline, file)), { recursive: true });
+      copyFileSync(join(candidate, file), join(baseline, file));
+      copied[file] = sha(readFileSync(join(candidate, file)));
+    }
+    const controls = {};
+    for (const file of ['packages/cil/tools/benchmark-numeric-verifier.mjs', 'tests/fixtures/verifier-numeric/input.js']) {
+      const digest = sha(readFileSync(join(candidate, file)));
+      if (sha(readFileSync(join(baseline, file))) !== digest) throw new Error('Control differs: ' + file);
+      controls[file] = digest;
+    }
+    writeFileSync(join(evidence, 'source-proof.json'), JSON.stringify({ parent, candidate: head, copied, controls }, null, 2) + '\n');
+  },
+  () => command('npm', ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], candidate, '01-install-candidate-node24'),
+  () => {
+    command('npm', ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], baseline, '02-install-baseline-node24');
+    const workspaces = {};
+    for (const directory of [candidate, baseline]) {
+      const actual = realpathSync(join(directory, 'node_modules/@sharpforge/cil'));
+      const expected = realpathSync(join(directory, 'packages/cil'));
+      if (actual !== expected) throw new Error('Foreign CIL workspace: ' + directory);
+      workspaces[directory] = { actual, indexSHA256: sha(readFileSync(join(actual, 'src/index.js'))) };
+    }
+    writeFileSync(join(evidence, 'workspace-proof.json'), JSON.stringify(workspaces, null, 2) + '\n');
+  },
+  () => {
+    command(node, ['tests/fixtures/verifier-initialization/baseline.mjs'], baseline, '03-failing-before-node24', 1);
+    const output = readFileSync(join(evidence, '03-failing-before-node24.log'), 'utf8');
+    if (!output.includes('Definite-assignment policy must accept a proven store-before-read without InitLocals') || !output.includes("'rejected'"))
+      throw new Error('Unexpected red proof');
+  },
+  () => command(node, ['tests/fixtures/verifier-initialization/capture.mjs',
+    'tests/fixtures/verifier-initialization/native.json'], candidate, '04-native-pinned'),
+  () => command(node, ['--test', '--test-concurrency=1', ...tests], candidate, '05-focused'),
+  () => command(node, ['--expose-gc', 'packages/cil/tools/benchmark-numeric-verifier.mjs',
+    join(evidence, 'baseline.json')], baseline, '06-benchmark-baseline'),
+  () => command(node, ['--expose-gc', 'packages/cil/tools/benchmark-numeric-verifier.mjs',
+    join(evidence, 'candidate.json')], candidate, '07-benchmark-candidate'),
+  () => command(node, ['packages/cil/tools/benchmark-local-initialization.mjs', join(evidence, 'initialization.json')], candidate, '08-benchmark-initialization'),
+  () => command('/tmp/sharpforge-bcl-browser-venv/bin/python', ['/tmp/a03-initialization-browser.py', candidate, join(evidence, 'browser')], candidate, '09-browser'),
+  () => command('npm', ['run', 'check'], candidate, '10-check'),
+  () => command('npm', ['run', 'check:structure'], candidate, '11-structure'),
+];
+for (let index = start; index < steps.length; index++) steps[index]();
+console.log('All local initialization qualification steps are terminal.');

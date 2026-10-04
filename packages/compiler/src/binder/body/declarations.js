@@ -226,7 +226,7 @@ export const DeclarationBinding = Base =>
     /** A `using` resource must convert to IDisposable (IAsyncDisposable for await using); ../csharp8.js adds pattern-based disposal. */
     checkDisposable(type, node, isAwait, value) {
       if (!type || type.isErrorType?.() || value?.hasErrors || value?.literal === 'null') return;
-      if (isAwait ? isAsyncDisposable(type, this.core) : implementsInterface(type, this.core.idisposable, this.core)) return;
+      if (isAwait ? isAsyncDisposable(type, this.core, this.c.containingType) : implementsInterface(type, this.core.idisposable, this.core)) return;
       if (type.typeKind === TypeKind.TypeParameter && type.constraintTypes.length) return;
       // A dynamic resource is converted to IDisposable at run time.
       if (type.typeKind === TypeKind.Dynamic) return;
@@ -241,7 +241,7 @@ export const DeclarationBinding = Base =>
         this.incomplete = this.d.incomplete = true;
         return;
       }
-      const syncCode = isAsyncDisposable(type, this.core) ? DiagnosticId.CS8418 : DiagnosticId.CS1674;
+      const syncCode = isAsyncDisposable(type, this.core, this.c.containingType) ? DiagnosticId.CS8418 : DiagnosticId.CS1674;
       this.report(node, isAwait ? DiagnosticId.CS8410 : syncCode, [this.display(type)]);
     }
   };

@@ -1,0 +1,12 @@
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<int>::Equals' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<int>::get_Default' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<long>::Equals' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<long>::GetHashCode' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<long>::get_Default' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<string>::Equals' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<string>::GetHashCode' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.EqualityComparer`1<string>::get_Default' is not implemented
+IL_STACK: Evaluation stack exceeds maxstack
+IL_STACK: Incoming evaluation stack exceeds maxstack
+IL_TOKEN: MethodImpl signatures do not match
+IL_TOKEN: Native-pointer and modified signatures are inspection-only

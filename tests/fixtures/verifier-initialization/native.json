@@ -1,0 +1,498 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "inputSHA256": "72f44099e0252451b43b61a95644fd1b9eb5913daa574ba7bcf03497df6f16ee",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "NoLocals",
+      "assemblySHA256": "430a9b214c873d23b58101cbb930fc54dbae955780b025482c5627ab0abb2246",
+      "policyAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NoLocals.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 71.92083300000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnusedLocals",
+      "assemblySHA256": "946171ea2132b0543f7ef57ed33834d0efd611bcd96490e47a0d2b88647d6fef",
+      "policyAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/UnusedLocals.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 71.264792
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ReadUnset",
+      "assemblySHA256": "f499295832fedeb7262a92c1a85b9786f3c7e339b0952ca4ce8d67f9d8200639",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/ReadUnset.dll : Fixture.Program::ReadUnset()][offset 0x00000000] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/ReadUnset.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.04249999999996
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "AddressUnset",
+      "assemblySHA256": "7053bc9da250a06dffe3e6face3a70eb974fc4d91b6352da6bd824472c660c47",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/AddressUnset.dll : Fixture.Program::AddressUnset()][offset 0x00000000] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/AddressUnset.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.48783299999991
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "StoredLoad",
+      "assemblySHA256": "090039b50d2ea5a351126942a0a6236a909339903aac865c0c1b1c4e0bc251d4",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/StoredLoad.dll : Fixture.Program::StoredLoad()][offset 0x00000002] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/StoredLoad.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.42637500000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "StoredAddress",
+      "assemblySHA256": "a28e90eeeedd70db160ab88864c736c4f6e77eb51d8840844f91f31cc996807d",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/StoredAddress.dll : Fixture.Program::StoredAddress()][offset 0x00000002] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/StoredAddress.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 71.922458
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "InitLocalsRead",
+      "assemblySHA256": "aedc7cba0249a75c092450963ef1e81dc1295911f6dcd89b3da153a60ed6d3c3",
+      "policyAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/InitLocalsRead.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 70.51133300000004
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "InitLocalsAddress",
+      "assemblySHA256": "64d9b5eb0dcc225aba90bcf28da36ab05845326efd964fddb99457b2913f7032",
+      "policyAccepted": true,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/InitLocalsAddress.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 70.78712500000006
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StoreWrongType",
+      "assemblySHA256": "efaeadfb812a63c9a9d6e887557f553f979f5b54bde1fbff595ee4019775240e",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/StoreWrongType.dll : Fixture.Program::StoreWrongType()][offset 0x00000009][found Double][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/StoreWrongType.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.83420799999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "StoreUnderflow",
+      "assemblySHA256": "03ca09aac9fd42618401edcae2c0e2963e14a5a96d5948d57f149a7554cfc45c",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnderflow]: [<temporary>/StoreUnderflow.dll : Fixture.Program::StoreUnderflow()][offset 0x00000000] Stack underflow.\n1 Error(s) Verifying <temporary>/StoreUnderflow.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 71.96512500000006
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnderflow"
+        ]
+      }
+    },
+    {
+      "name": "DiamondBoth",
+      "assemblySHA256": "e265f8caf3b2a9aa6e694795344c4ed4eb16cfc8cc6089d9e61558988b50ce7b",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/DiamondBoth.dll : Fixture.Program::DiamondBoth(int32)][offset 0x00000009] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/DiamondBoth.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.4831670000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "DiamondLeftOnly",
+      "assemblySHA256": "19e45ed4f210aaba798a267d054612da032d1a8e25656c40d98f4065c2c596d5",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/DiamondLeftOnly.dll : Fixture.Program::DiamondLeftOnly(int32)][offset 0x00000007] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/DiamondLeftOnly.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.720959
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "DiamondRightOnly",
+      "assemblySHA256": "83c276d91abf4871c616f7f4afa7bbd2728e63fd5bf8fcc8640ddc44b721cf11",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/DiamondRightOnly.dll : Fixture.Program::DiamondRightOnly(int32)][offset 0x00000007] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/DiamondRightOnly.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.79837500000008
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "InitializedBeforeLoop",
+      "assemblySHA256": "f2465df80fce8510f8adae77acafbb2982d7841b5e32d7d00e227450b6845f48",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/InitializedBeforeLoop.dll : Fixture.Program::InitializedBeforeLoop(int32)][offset 0x00000002] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/InitializedBeforeLoop.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.16641600000003
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "LoopMayNotExecute",
+      "assemblySHA256": "2c10c8db4539f49845d8f14755cb07403aa3e17c40cbac4cfd0b93f755b3c2ce",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/LoopMayNotExecute.dll : Fixture.Program::LoopMayNotExecute(int32)][offset 0x00000008] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/LoopMayNotExecute.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.951458
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "UnreachableStore",
+      "assemblySHA256": "609c71d5f2163ac190ed5e821dfaee1993a92e25b53bc866344c616575702a70",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/UnreachableStore.dll : Fixture.Program::UnreachableStore()][offset 0x00000004] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/UnreachableStore.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.57833400000004
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "SwitchAll",
+      "assemblySHA256": "ca7307271619d1aac41f63a8ec6c06209bf15795402f705733da5d70d795d955",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/SwitchAll.dll : Fixture.Program::SwitchAll(int32)][offset 0x00000018] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/SwitchAll.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 75.86041699999987
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "SwitchMissing",
+      "assemblySHA256": "b155ce7628c8322ed1770dfb2aacd641597d59992e6b3cf395cd30342f1d9c34",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/SwitchMissing.dll : Fixture.Program::SwitchMissing(int32)][offset 0x00000016] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/SwitchMissing.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 77.95683400000007
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "WordBoundaries",
+      "assemblySHA256": "c34400d7b7da89da6d461f28fe3c5040aa2eb557caca90d963ee10c2b525b7f0",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/WordBoundaries.dll : Fixture.Program::WordBoundaries()][offset 0x00000016] initlocals must be set for verifiable methods with one or more local variables.\n[IL]: Error [InitLocals]: [<temporary>/WordBoundaries.dll : Fixture.Program::WordBoundaries()][offset 0x0000001B] initlocals must be set for verifiable methods with one or more local variables.\n[IL]: Error [InitLocals]: [<temporary>/WordBoundaries.dll : Fixture.Program::WordBoundaries()][offset 0x00000020] initlocals must be set for verifiable methods with one or more local variables.\n[IL]: Error [InitLocals]: [<temporary>/WordBoundaries.dll : Fixture.Program::WordBoundaries()][offset 0x00000025] initlocals must be set for verifiable methods with one or more local variables.\n4 Error(s) Verifying <temporary>/WordBoundaries.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.378334
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "SeparateWords",
+      "assemblySHA256": "5a373f5c28e3178e9dbcee5453efa0f33d5982125bd565463c68a5cfa1a7bd24",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/SeparateWords.dll : Fixture.Program::SeparateWords()][offset 0x00000005] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/SeparateWords.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.22466699999995
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "ReferenceStore",
+      "assemblySHA256": "088681d560835cdb59ceec0a8cf4d22daa1e28c79231d9ba905b7f320516fdfc",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/ReferenceStore.dll : Fixture.Program::ReferenceStore()][offset 0x00000002] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/ReferenceStore.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.98679199999992
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "ByrefStore",
+      "assemblySHA256": "40f587db98ff887a74807307ef22006d674c93105a811110c970f20f68fd32ae",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/ByrefStore.dll : Fixture.Program::ByrefStore(int32&)][offset 0x00000002] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/ByrefStore.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.87429199999997
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "ArgumentStoreDoesNotAssignLocal",
+      "assemblySHA256": "ade86bf79ee93636d9a3874c99b2b369af0484f219401ec8989d167eee49239f",
+      "policyAccepted": false,
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/ArgumentStoreDoesNotAssignLocal.dll : Fixture.Program::ArgumentStoreDoesNotAssignLocal(int32)][offset 0x00000003] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/ArgumentStoreDoesNotAssignLocal.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.1650410000002
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    },
+    {
+      "name": "RepeatedStore",
+      "assemblySHA256": "31b2681703d737e8e049df1fc0933cc182ec1dc3b26057619696b23d5a97991f",
+      "policyAccepted": true,
+      "expectedNative": false,
+      "difference": "Optional ECMA definite-assignment policy; ILVerify 10.0.5 requires InitLocals for local loads/addresses.",
+      "verify": {
+        "stdout": "[IL]: Error [InitLocals]: [<temporary>/RepeatedStore.dll : Fixture.Program::RepeatedStore()][offset 0x00000004] initlocals must be set for verifiable methods with one or more local variables.\n1 Error(s) Verifying <temporary>/RepeatedStore.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.39154200000007
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "InitLocals"
+        ]
+      }
+    }
+  ]
+}

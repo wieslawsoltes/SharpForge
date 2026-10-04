@@ -46,7 +46,7 @@
       "input": "examples/designer/GridWorkspace/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Create' takes 0 arguments"
+        "CS0103: The name 'DesignedView' does not exist in the current context"
       ]
     },
     {
@@ -99,7 +99,7 @@
       "input": "examples/features-0.10/portable-symbols/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Twice' takes 1 arguments"
+        "CS0103: The name 'Calculator' does not exist in the current context"
       ]
     },
     {
@@ -176,9 +176,7 @@
       "input": "examples/features-0.6/immutable-schema.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'Reading' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'error' does not contain a definition for 'Name' and no accessible extension method 'Name' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'error' does not contain a definition for 'Value' and no accessible extension method 'Value' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)"
+        "CS0246: The type or namespace name 'Reading' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -236,9 +234,7 @@
       "input": "examples/features-0.8/explorer-members/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'Counter' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'error' does not contain a definition for 'Value' and no accessible extension method 'Value' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1501: No overload for method 'Add' takes 1 arguments"
+        "CS0246: The type or namespace name 'Counter' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -252,7 +248,7 @@
       "input": "examples/features-0.9/debug-callsite/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Get' takes 0 arguments"
+        "CS0103: The name 'Answers' does not exist in the current context"
       ]
     },
     {
@@ -281,7 +277,7 @@
       "input": "examples/features-0.9/debug-function/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'AddOne' takes 1 arguments"
+        "CS0103: The name 'MathBox' does not exist in the current context"
       ]
     },
     {
@@ -407,17 +403,15 @@
       "input": "examples/projects/DebuggerWorkshop/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Get' takes 0 arguments"
+        "CS0103: The name 'Answers' does not exist in the current context"
       ]
     },
     {
       "input": "examples/projects/ExplorerWorkshop/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'Counter' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'error' does not contain a definition for 'Value' and no accessible extension method 'Value' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1501: No overload for method 'Add' takes 1 arguments",
-        "CS1501: No overload for method 'Value' takes 0 arguments"
+        "CS0103: The name 'Answer' does not exist in the current context",
+        "CS0246: The type or namespace name 'Counter' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -462,9 +456,7 @@
       "input": "examples/projects/Generated/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
-        "CS0246: The type or namespace name 'Customer' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'error' does not contain a definition for 'Id' and no accessible extension method 'Id' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)"
+        "CS0246: The type or namespace name 'Customer' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -502,7 +494,7 @@
       "input": "examples/projects/Linked/Source/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Answer' takes 0 arguments"
+        "CS0103: The name 'Value' does not exist in the current context"
       ]
     },
     {
@@ -521,7 +513,7 @@
       "input": "examples/projects/SymbolWorkshop/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Twice' takes 1 arguments"
+        "CS0103: The name 'Calculator' does not exist in the current context"
       ]
     },
     {
@@ -538,7 +530,7 @@
       "input": "examples/projects/Workshop/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Add' takes 2 arguments"
+        "CS0103: The name 'Calculator' does not exist in the current context"
       ]
     },
     {

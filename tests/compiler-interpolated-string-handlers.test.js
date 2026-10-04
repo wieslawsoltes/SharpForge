@@ -141,19 +141,7 @@ class Gate {
   assert.deepEqual(lines, ['a1b0 1', '[] 1']);
 });
 
-test('SF-A02-T75 unsupported: handler arguments are not bound (no diagnostic is invented), a struct handler is SF2200', () => {
-  const analysis = analysisOf(`${header}
-[InterpolatedStringHandler]
-class P {
-  public P(int literalLength, int formattedCount, string prefix) { }
-  public void AppendLiteral(string s) { }
-}
-class Program {
-  static void Log(string prefix, [InterpolatedStringHandlerArgument("prefix")] P handler) { }
-  static void Main() { Log("info", $"text"); }
-}`);
-  assert.deepEqual(errorsOf(analysis), []);
-  assert.equal(analysis.incomplete, true, 'the analysis says it did not bind the program completely');
+test('SF-A02-T75 handler arguments are bound (tests/compiler-handler-arguments.test.js); a struct handler is SF2200', () => {
   const structHandler = `
 [InterpolatedStringHandler]
 struct S {

@@ -1,0 +1,16 @@
+{
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "trigger": "create",
+  "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6",
+  "triggerNonce": "compare-a5-20261004-a6",
+  "captureOnly": false,
+  "baselineProfile": "a5",
+  "workflowRunId": "37183721322",
+  "stage": "all",
+  "engine": "chromium",
+  "runner": "Linux",
+  "runnerLabel": "ubuntu-latest",
+  "editorBaseline": "docs/evidence/project16-hosted/a5/editor-browser.json",
+  "workbenchBaseline": "docs/evidence/project16-hosted/a5/workbench-large-trace.json"
+}

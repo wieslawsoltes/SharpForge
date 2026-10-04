@@ -253,6 +253,8 @@ export function sameParameters(a, b, conversions = null) {
     return typeText(a, p.type) === typeText(b, q.type);
   });
 }
+/** The text of a type in the signature of `m`, its method type parameters written by position (`!!0`). */
+export const signatureTypeText = (m, t) => typeText(m, t);
 const typeText = (m, t) => {
   // `dynamic` is `object` in a signature, and nullable annotations of reference types are not part of one.
   let text = t.toDisplayString(SymbolDisplayFormat.Signature).replace(/\bdynamic\b/g, 'object');

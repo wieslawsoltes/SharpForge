@@ -1,0 +1,2 @@
+console.info: Autofocus processing was blocked because a document already has a focused element.
+console.warning: No available adapters.

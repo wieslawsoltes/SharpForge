@@ -64,6 +64,13 @@ function matches(candidate, member) {
     return candidate.isIndexer === member.isIndexer && (!member.isIndexer || parametersMatch(candidate, member));
   return true;
 }
+/** The interface member an explicit implementation (`T I.M()`, a property, an event) implements, or null. */
+export function explicitlyImplementedMember(member) {
+  const iface = member.explicitInterfaceType;
+  if (!iface || iface.typeKind !== TypeKind.Interface) return null;
+  if (member.kind === SymbolKind.Method && member.isAccessor) return null;
+  return implementableMembers(iface).find(candidate => candidate.name === simpleName(member) && matches(member, candidate)) ?? null;
+}
 /**
  * Finds the implementation of one interface member for a type.
  * @returns {{member}|{error:{code,args},close?:object}|{defaultImplementation:member}}

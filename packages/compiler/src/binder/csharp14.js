@@ -59,7 +59,9 @@ export const CSharp14Binding = Base =>
     instanceCompoundCall(name, target, args, syntax) {
       const type = target.type;
       if (!type || target.hasErrors) return null;
-      const methods = this.instanceCompoundOperators(type, name);
+      // In a checked context the `operator checked` forms are the candidates when the type declares them.
+      const checkedForms = this.checked ? this.instanceCompoundOperators(type, name.replace(/^op_/, 'op_Checked')) : [],
+        methods = checkedForms.length ? checkedForms : this.instanceCompoundOperators(type, name);
       if (!methods.length) return null;
       const values = args.map(argument => Object.assign(this.value(argument), { refKind: null, name: null })),
         result = this.d.overloads.resolve(methods, values, { name });

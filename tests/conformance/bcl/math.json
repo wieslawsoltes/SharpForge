@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "family": "math",
+  "source": "Math.cs",
+  "cases": [
+    {
+      "id": "math-abs-int32",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-abs-int32-min",
+      "category": "negative",
+      "exception": "System.OverflowException"
+    },
+    {
+      "id": "math-abs-int64-min",
+      "category": "boundary",
+      "exception": "System.OverflowException"
+    },
+    {
+      "id": "math-abs-decimal",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-abs-negative-zero-bits",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-ceiling-positive",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-ceiling-negative",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-floor-positive",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-floor-negative",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-truncate-positive",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-truncate-negative",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-round-even-lower",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-round-even-upper",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-round-away-positive",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-round-away-negative",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-round-decimal-even",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-round-decimal-away",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-round-double-digits-limit",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "math-round-decimal-digits-limit",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "math-sign-negative",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-sign-zero",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-sign-positive",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-sign-nan",
+      "category": "negative",
+      "exception": "System.ArithmeticException"
+    },
+    {
+      "id": "math-min-integer",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-max-int64",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-min-nan",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-min-zero-bits",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-power-integer",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-power-negative-exponent",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-sqrt-square",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-sqrt-negative",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-clamp-inside",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-clamp-below",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-clamp-above",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-clamp-reversed-range",
+      "category": "negative",
+      "exception": "System.ArgumentException"
+    },
+    {
+      "id": "math-divrem-negative",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "math-ieee-remainder-tie",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-bigmul-max",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-log-one",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "math-log-negative",
+      "category": "boundary",
+      "exception": null
+    }
+  ]
+}

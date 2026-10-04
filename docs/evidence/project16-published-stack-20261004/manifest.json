@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "hashAlgorithm": "SHA-256",
+  "files": [
+    {
+      "repositoryPath": "docs/project16-publication-map.json",
+      "bytes": 113913,
+      "sha256": "a0d8bd3d2f24e1a172b71b2f6654c97b06bb51fda13a41a2b357c9fe3faece4e"
+    },
+    {
+      "repositoryPath": "docs/evidence/project16-published-stack-20261004/mapping-facts.json",
+      "bytes": 148162,
+      "sha256": "537f562e5a70286cacc37c73f88c4f0df804ea16c46fe23017df8b6d9f749aca"
+    },
+    {
+      "repositoryPath": "docs/evidence/project16-published-stack-20261004/publication-facts.json",
+      "bytes": 65319,
+      "sha256": "142a01e7176240ea58da93dc363ff0cb1bcaf2327678e08fd39d76710f9b1a39"
+    }
+  ]
+}

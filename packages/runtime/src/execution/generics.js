@@ -1,7 +1,8 @@
-import {genericTypeParts, instantiateSignature, substituteCallType} from '@sharpforge/cil';
+import {genericTypeParts, instantiateSignature, substituteCallType, isSizeOfOnlyMethod} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {validateGenericArguments} from './generic-constraints.js';
+import {valueLayout} from './value-layout.js';
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -26,9 +27,6 @@ function instantiation(vm, token, genericIdentity, methodArguments) {
   if (owner && (owner.definitionToken !== original.ownerToken || owner.containsGenericParameters)) {
     invalid('Generic owner does not match the method declaration');
   }
-  if (owner?.flags.valueType && !owner.flags.primitive && !owner.flags.enum) {
-    throw new ManagedFault('NotSupportedException', 'Generic aggregate owners require T03 value storage');
-  }
   const ownerName = owner?.name ?? null;
   const typeArguments = genericTypeParts(ownerName ?? '').arguments;
   const methodHandles = methodArguments.map(type => vm.typeSystem.table(type));
@@ -37,10 +35,15 @@ function instantiation(vm, token, genericIdentity, methodArguments) {
 }
 
 function makeMethod(vm, entry) {
-  const {original, token, ownerName, typeArguments, methodArguments} = entry;
+  const {original, token, owner, ownerName, typeArguments, methodArguments} = entry;
   const arity = original.signature.genericArity ?? 0;
   if (arity !== methodArguments.length) invalid('Generic method requires a complete instantiation');
-  const context = {typeArguments, methodArguments};
+  const layoutOnly = isSizeOfOnlyMethod(vm.inspector, token);
+  if (owner?.flags.valueType && !owner.flags.primitive && !owner.flags.enum) {
+    if (!layoutOnly) throw new ManagedFault('NotSupportedException', 'Generic aggregate owners require T03 value storage');
+    valueLayout(vm, owner);
+  }
+  const context = {typeArguments, methodArguments, layoutOnly};
   validateGenericArguments(vm, original.ownerToken, typeArguments, context);
   validateGenericArguments(vm, token, methodArguments, {...context, arity});
   const signature = instantiateSignature(original.signature, typeArguments, methodArguments);
@@ -99,4 +102,3 @@ export function instantiatedMethod(vm, token, genericIdentity = null, methodArgu
   const cache = cacheFor(vm);
   return cache.get(vm, instantiation(vm, token, genericIdentity, methodArguments));
 }
-

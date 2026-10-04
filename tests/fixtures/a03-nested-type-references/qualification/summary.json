@@ -1,0 +1,88 @@
+{
+  "baseline": "b0dff7f7738c78b34c113514cf38790e2f5ed71d",
+  "qualifiedInitialHead": "6ae9e3c9ae57fbb41de9b851bfcb4c09f994da70",
+  "productSource": "ed8e37937c552f180b711d1128e0a912c92b9597",
+  "productSourceUnchanged": true,
+  "focused": {
+    "passed": 85,
+    "total": 85,
+    "retainedFirstPasses": 84
+  },
+  "native": {
+    "types": 25,
+    "supportedTypes": 12,
+    "members": 8,
+    "supportedMembers": 5,
+    "nativeMemberErrorsAndAdapterUnknowns": 3
+  },
+  "checks": {
+    "syntaxModules": 3596,
+    "importModules": 3592,
+    "errors": 0,
+    "manifestsUnassigned": 0,
+    "structureExisting": 271,
+    "structureChangedFiles": 0
+  },
+  "allLocalHandlesTerminal": true,
+  "rawSamples": 96,
+  "performance": {
+    "construction": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 3.9186249999999916,
+        "after": 3.834042000000011,
+        "delta": -0.08458299999998076,
+        "percent": -2.1584867140892805
+      },
+      "p95Ms": {
+        "before": 4.822125,
+        "after": 4.591207999999995,
+        "delta": -0.23091700000000515,
+        "percent": -4.788697928817798
+      }
+    },
+    "inheritedInterface": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 0.3682499999999891,
+        "after": 0.3467499999999859,
+        "delta": -0.021500000000003183,
+        "percent": -5.838424983028867
+      },
+      "p95Ms": {
+        "before": 0.3770409999999913,
+        "after": 0.377207999999996,
+        "delta": 0.00016700000000469117,
+        "percent": 0.044292265298651046
+      }
+    },
+    "local-alias": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 10.813749999999999,
+        "after": 12.52295799999996,
+        "delta": 1.7092079999999612,
+        "percent": 15.805876777250827
+      },
+      "p95Ms": {
+        "before": 12.569749999999999,
+        "after": 15.501582999999982,
+        "delta": 2.9318329999999833,
+        "percent": 23.324513216253173
+      }
+    },
+    "local": {
+      "iterations": 1000,
+      "medianMs": {
+        "before": 7.258207999999996,
+        "after": 15.865000000000009
+      },
+      "p95Ms": {
+        "before": 7.391500000000008,
+        "after": 22.997292000000016
+      },
+      "interpretation": "New capability: baseline unknown, candidate known. Full cost only; not an existing supported-operation speed comparison."
+    }
+  },
+  "limitations": "Shared macOS arm64 host; no causal attribution, noise explanation, speedup or allocation-volume/peak-memory claims. Wider execution-engine/platform matrix not exercised by this metadata-only batch."
+}

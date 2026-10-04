@@ -1,4 +1,5 @@
 import { KeybindingService, getProfileBindings } from '@sharpforge/editor';
+import { workbenchProfileBindings } from './keyboard-profile.js';
 
 function sameAssignment(left, right) {
   return left.command === right.command && left.scope === right.scope && left.keys.join(' ') === right.keys.join(' ');
@@ -45,7 +46,14 @@ export class StudioKeyboard {
       suppressed.setBindings(removed);
       const removals = suppressed.list();
       service.setBindings([...base.values(), ...profile, ...custom.list()]);
-      service.setBindings(service.list().filter(binding => !removals.some(removal => sameAssignment(binding, removal))));
+      const normalized = service.list();
+      const projected = normalized.filter(binding => binding.id.startsWith('workspace-profile:'));
+      service.setBindings(normalized.filter(binding => {
+        if (removals.some(removal => sameAssignment(binding, removal))) return false;
+        // Keep the profile's priority without listing the same app shortcut twice in Options.
+        return !base.has(binding.id) || !projected.some(candidate => sameAssignment(binding, candidate)
+          && binding.when === candidate.when && JSON.stringify(binding.args) === JSON.stringify(candidate.args));
+      }));
       return { service, custom, suppressed, base, profile, assigned: custom.list(), removed: removals };
     } catch (error) {
       service.dispose(); custom.dispose(); suppressed.dispose();
@@ -92,6 +100,7 @@ export class StudioKeyboard {
     const profile = getProfileBindings(id).map((binding, index) => ({
       ...binding, id: `editor-profile:${index}`, scope: 'Text Editor'
     }));
+    profile.push(...workbenchProfileBindings(id, this.commands));
     this.commit(this.prepare({ profile }));
   }
 

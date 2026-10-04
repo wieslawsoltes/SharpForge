@@ -1,0 +1,58 @@
+{
+  "qualifiedHead": "c99aa097d7ac79651220725e8753f36b0f0d34f7",
+  "productHead": "707f95d3e84615fa307a1f51b8618dca3c3c0c54",
+  "parent": "b79fbbb9e9b54cb77d2376765e290e9b0922b2d6",
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "cpu": "Apple M3 Pro",
+    "node": "v24.21.0"
+  },
+  "schedule": {
+    "outerLimiter": true,
+    "concurrency": 1,
+    "maxRuns": 1,
+    "heapMiB": 1024,
+    "fixedSamples": 144,
+    "warmupsPerCell": 3,
+    "samplesPerCell": 12
+  },
+  "focused": {
+    "tests": 34,
+    "passed": 34,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native": {
+    "observations": 24,
+    "agreements": 15,
+    "predeclaredOptionalPolicyDifferences": 9,
+    "ilverify": "10.0.5",
+    "runtime": "10.0.5",
+    "sdk": "10.0.201"
+  },
+  "browserChecksPerEngine": 106,
+  "static": {
+    "syntaxModules": 3625,
+    "staticModules": 3621,
+    "errors": 0,
+    "manifestNodeFiles": 982,
+    "manifestBrowserScripts": 37,
+    "unassigned": 0,
+    "duplicates": 0
+  },
+  "structure": {
+    "existingFindings": 272,
+    "changedFileFindings": 0
+  },
+  "performanceSignoff": {
+    "reviewer": "root/codex-p6-metadata",
+    "accepted": true,
+    "control": "Diamond",
+    "p95BeforeMsPer1000": 2.164625,
+    "p95AfterMsPer1000": 2.370334,
+    "increaseUsPerVerification": 0.205709,
+    "increasePercent": 9.503216492464661,
+    "justification": "Accept bounded typed state composition and explicit local initialization policy at +0.205709us per verification p95. Portable mode has no local bitsets. All144 fixed samples retained; no unchanged repeats, causal explanation, speedup or peak-heap claim."
+  },
+  "independentReview": "loader_a04 read-only review found no blocker in intersection, loop requeue, immutable snapshot ownership, store-before-bit publication and allocation budgets; no extra tests run."
+}

@@ -1,0 +1,9 @@
+<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            x:Name="Subject" AutomationProperties.Name="Vertical spacing sample"
+            Orientation="Vertical" Spacing="8" Margin="12">
+  <TextBlock x:Name="Heading" Text="Stacked controls" />
+  <Button x:Name="Action" Content="Second child" HorizontalAlignment="Left" />
+  <Border x:Name="Swatch" Width="96" Height="24" Background="SteelBlue"
+          HorizontalAlignment="Left" />
+</StackPanel>

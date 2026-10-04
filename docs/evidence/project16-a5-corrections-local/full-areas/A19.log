@@ -1,0 +1,1217 @@
+Discovered 97 Node test files and 9 Python suites in 1 area manifests. Node reports executed test counts below.
+✔ five concurrent preview navigations leave one preview; edit promotes and retains it (5.046922ms)
+✔ document edits redraw tab chrome only when dirty or preview metadata changes across shared views (0.914359ms)
+✔ pinned tabs survive close others and pin state roundtrips (1.490648ms)
+✔ Cancel in a batch aborts the complete close without saving or closing any earlier tab (2.004373ms)
+✔ save failure, edited-during-prompt and explicit discard obey atomic close contracts (3.239746ms)
+✔ closing a shared secondary view does not discard or prompt for the remaining buffer (1.094971ms)
+✔ reopen restores the original caret and scroll; thirty tabs remain in the overflow model (6.203826ms)
+✔ context command enablement follows pinning, groups, side and host capabilities (1.028021ms)
+✔ disposing during dirty confirmation cancels without discarding buffers (0.4645ms)
+✔ v1 migrates without changing panel identities and v2 roundtrips metadata (4.611124ms)
+✔ unknown and duplicate persisted panels are dropped and reported without substitution (0.637942ms)
+✔ corrupt layouts recover valid closed identities and reject future versions in strict restore (0.819105ms)
+✔ all four auto-hide edges pin back to the exact previous tab group and index (1.083755ms)
+✔ Auto Hide All restores a removed tool group against its original document anchor (0.847639ms)
+✔ a floating tab group docks as one undoable operation retaining both tabs (0.869111ms)
+✔ nested floating splits retain topology on edge re-dock and flatten only on center (0.519233ms)
+✔ nested transaction failures and cancelled pointer transactions leave no partial history (0.693736ms)
+✔ monitor shrink clamps geometry and corrupt floating coordinates never escape viewport (0.594717ms)
+✔ nine explicit guide targets hit their own centers and execute the specified topology (1.191467ms)
+✔ pin and preview partition is deterministic and pin metadata survives tab moves (0.409898ms)
+✔ background app registration preserves every visible group and global activation in one transaction (0.675599ms)
+✔ background reopening auto-hidden tools and existing floating tabs cannot steal activation (0.489939ms)
+✔ complete format fixture recomputes raw percentiles without claiming a relative or physical-frame pass (8.625432ms)
+✔ first-visit and warmup budget violations remain failures even when all measured percentiles pass (6.314768ms)
+✔ definition boundary latency remains subject to the unchanged 300 ms budget (2.377506ms)
+✔ rejects empty partial capture instead of qualifying incomplete or incorrect evidence (1.33296ms)
+✔ rejects missing first observation instead of qualifying incomplete or incorrect evidence (1.763319ms)
+✔ rejects duplicate sample instead of qualifying incomplete or incorrect evidence (0.614056ms)
+✔ rejects tampered percentile instead of qualifying incomplete or incorrect evidence (1.239719ms)
+✔ rejects focus stolen and restored instead of qualifying incomplete or incorrect evidence (0.487024ms)
+✔ rejects stale source target instead of qualifying incomplete or incorrect evidence (0.434295ms)
+✔ rejects model-only clock instead of qualifying incomplete or incorrect evidence (0.763792ms)
+✔ rejects hidden tab instead of qualifying incomplete or incorrect evidence (0.41103ms)
+✔ rejects missing compiler artifact instead of qualifying incomplete or incorrect evidence (0.474796ms)
+✔ rejects CSP violation instead of qualifying incomplete or incorrect evidence (0.418612ms)
+✔ rejects changed annotation line instead of qualifying incomplete or incorrect evidence (0.599524ms)
+✔ rejects empty map pixels instead of qualifying incomplete or incorrect evidence (0.661278ms)
+✔ rejects wrong annotation color instead of qualifying incomplete or incorrect evidence (1.180831ms)
+✔ rejects wrong pointer destination instead of qualifying incomplete or incorrect evidence (1.63835ms)
+✔ two runtime workers may use serial 1 without sharing output, debug state or legacy identity (6.407293ms)
+✔ legacy runtime facade translates matching identities and rejects app-switch races (3.489833ms)
+✔ restart replaces only its worker and stale callbacks cannot replace the new generation (1.440893ms)
+✔ ending the active application selects the most recently active remaining app with ordered events (1.332259ms)
+✔ resource limit refuses a new app without touching live workers (0.88881ms)
+✔ background events update their app while shared debugger callbacks remain on the selected app (1.660625ms)
+✔ state compatibility accessors follow the selected session without aliasing their mutable maps (1.004275ms)
+✔ breakpoint edits bind only to sessions belonging to the owning project (1.127931ms)
+✔ session grant edits never leak to another app and revocation stops only its owner (1.253931ms)
+✔ combined debug status reflects multiple applications and exact paused count (1.371684ms)
+✔ a ended active session can be retired at a one-session limit and releases retained output (3.843977ms)
+✔ worker failure clears stale live UI flags and unlocks only the failed app (2.556956ms)
+✔ legacy renderer, metrics and settling automation borrows only the active application host (7.76439ms)
+✔ scene responses cannot cross selected sessions with equal runtime serials or matching node IDs (11.40437ms)
+✔ active worker restart invalidates pending visual inspection even when its runtime serial repeats (5.981495ms)
+✔ background UI never changes the selected host and active inspection never reapplies scene commands (1.447603ms)
+✔ stopping or removing the selected app clears visual state and reports a missing window explicitly (3.649323ms)
+✔ disposing inspection aborts pending queries and releases subscriptions without disposing application windows (2.687073ms)
+✔ standalone construction without a SessionManager retains one owned WinUI host (6.7172ms)
+✔ actual analysis events create separate tasks; cancelling one preserves same-project build and other project analysis (4.831015ms)
+✔ superseded analysis settles once, drops late worker replies and preserves the legacy successful analysis event (0.750521ms)
+✔ source invalidation cancels only that request and stale results cannot change diagnostics or task state (0.436328ms)
+✔ worker errors and malformed compiler results close failed analysis entries without losing future analyses (0.760166ms)
+✔ pre-aborted and malformed signals refuse before creating tasks; external cancellation is observable (0.773005ms)
+✔ a bridge attached after a request starts observes its real epoch and project removal disposes its task (0.372602ms)
+✔ TaskCenter quota refuses an untracked analysis while retaining the other running operation (0.59026ms)
+✔ synchronous cancellation from task notification and bridge disposal leave no orphan analysis (0.711092ms)
+✔ project builds run independently and only the edited project rejects its stale result (3.669905ms)
+✔ live analysis cannot replace the cached executable returned by a clean build (1.019047ms)
+✔ cancelling one project terminates only its worker and preserves other project diagnostics (0.84825ms)
+✔ dependency order is deterministic and rejects cycles before executing work (0.411681ms)
+✔ build queue cancellation skips remaining projects and reports exact counts (6.157657ms)
+✔ output panes isolate applications and use bounded viewport reads after ring eviction (0.840488ms)
+✔ diagnostics remain project/producer/version scoped and combine query filters (7.86404ms)
+✔ only current user intent may reveal panels; background work cannot steal focus (0.559514ms)
+✔ released runtime builtin identity and sparse registry copies remain stable (7.445759ms)
+✔ copying sparse extension registries preserves holes instead of allocating placeholder entries (2.473891ms)
+✔ environment registration uses the existing A07 reserved block without changing released slots (0.401396ms)
+✔ public builtin metadata retains actual owners, source receivers and operand categories (23.498519ms)
+✔ shared builtin metadata preserves binding and both emitted runtime artifacts (68.963774ms)
+✔ non-startup URI routes every lazy expansion and navigation through its actual compiler owner (122.089719ms)
+✔ preparation captures the version before waiting and never installs an outdated root (10.519454ms)
+✔ expansion and navigation reject a source edited after preparation (9.715422ms)
+✔ disposal cancels an outstanding compiler operation and prevents late tree publication (7.812612ms)
+✔ worker rejects a call item from a different project or document even at the same revision (22.867006ms)
+✔ project configuration changes invalidate prepared call items without requiring a source edit (7.344787ms)
+✔ public shell entry prepares the real model before opening and invalidating its shared tool (7.605359ms)
+✔ the actual fixture requires three source documents plus its separately loaded project record (2.04943ms)
+✔ a legacy count, including a5 count three, cannot replace actual workspace proof (0.438851ms)
+✔ rejects missing project XML even when both boundary summary flags are true (0.184849ms)
+✔ rejects wrong project XML even when both boundary summary flags are true (0.250948ms)
+✔ rejects unrelated workspace record even when both boundary summary flags are true (0.264518ms)
+✔ rejects project counted as a source even when both boundary summary flags are true (0.184448ms)
+✔ rejects missing source even when both boundary summary flags are true (0.134082ms)
+✔ rejects duplicate source even when both boundary summary flags are true (0.688659ms)
+✔ rejects wrong source contents even when both boundary summary flags are true (0.352632ms)
+✔ rejects unregistered project even when both boundary summary flags are true (0.380695ms)
+✔ rejects wrong selected project even when both boundary summary flags are true (0.134393ms)
+✔ rejects wrong source owner even when both boundary summary flags are true (3.574791ms)
+✔ rejects stale caller snapshot even when both boundary summary flags are true (1.429055ms)
+✔ rejects changed sample revision even when both boundary summary flags are true (0.24577ms)
+✔ rejects editable setup even when both boundary summary flags are true (0.146721ms)
+✔ rejects flags without raw boundaries even when both boundary summary flags are true (0.214193ms)
+✔ rejects uncleared neutral source even when both boundary summary flags are true (0.206391ms)
+✔ rejects uncleared neutral selection even when both boundary summary flags are true (0.227063ms)
+✔ rejects wrong latest target even when both boundary summary flags are true (0.124859ms)
+✔ rejects wrong latest caret even when both boundary summary flags are true (0.162445ms)
+✔ rejects boundary focus transfer even when both boundary summary flags are true (0.157407ms)
+✔ rejects stale boundary revision even when both boundary summary flags are true (0.187232ms)
+✔ rejects duplicated boundary index even when both boundary summary flags are true (0.170878ms)
+✔ rejects failed boundary observation even when both boundary summary flags are true (0.134653ms)
+✔ rejects impossible boundary timing even when both boundary summary flags are true (0.114513ms)
+✔ A19 accepting an external baseline updates byte budget and disk version so a later save succeeds (41.847185ms)
+✔ A19 an old observation cannot bypass changed bytes, changed handles, or saved versions (7.144745ms)
+✔ A19 baseline acceptance joins the save queue and refuses a revision committed ahead of it (9.087785ms)
+✔ A19 cancellation and failed host preparation publish no baseline, while postcommit errors retain the accepted version (10.046811ms)
+✔ A19 observed encoded sizes and whole-workspace budgets are validated before host commit (4.669017ms)
+✔ A19 a rebased DiskWorkspace accepts only its mapped path and keeps the original queue and baseline independent (14.524204ms)
+✔ captured DocumentService→DiskWorkspace utf-8 saves stream the written source while newer model edits remain dirty (48.391625ms)
+✔ captured DocumentService→DiskWorkspace utf-16le saves stream the written source while newer model edits remain dirty (35.274608ms)
+✔ captured DocumentService→DiskWorkspace utf-16be saves stream the written source while newer model edits remain dirty (32.229566ms)
+✔ a failed streamed disk write preserves DocumentService and DiskWorkspace baselines and owned model state (9.116799ms)
+✔ document model edits and event delivery retain lazy snapshots for a one-megabyte source (30.356892ms)
+✔ split views share the real model and undo without text-copy callbacks or shared view positions (2.359027ms)
+✔ legacy document text setters apply undoable edits while the version remains model-owned (1.65814ms)
+✔ save preparation runs before capture and a later edit never inherits that saved marker (2.680403ms)
+✔ model factories validate replacement before disposing the current workspace and retain the shared map identity (1.559682ms)
+✔ project locks cover unopened models and update linked-source membership without locking unrelated projects (7.198116ms)
+✔ model events invalidate only owning builds without materializing text until compilation requests a snapshot (2.899773ms)
+✔ ordered workbench events preserve lazy getters even during reentrant dispatch (0.599224ms)
+✔ document operation state captures immutable current and saved roots without live model ownership (4.546938ms)
+✔ validated moved-model state retains a rebased dirty baseline through subsequent edits and undo (1.964543ms)
+✔ operation state mismatches reject before ownership transfers or saved markers change (1.22056ms)
+✔ new plain-text operation state transfers to a factory model while an explicit clean restore updates its saved marker (0.992708ms)
+✔ reload commits the shared model, saved baseline and encoding before document, buffer or view notifications (11.63023ms)
+✔ reload is one undo step, retains an unaffected caret and restores clean state on redo (2.527332ms)
+✔ a metadata rejection restores source, undo, selections, baseline, metadata and stale-save state without notification (3.371865ms)
+✔ document notification failure reports a committed reload and still publishes saved state (5.53658ms)
+✔ model notification failure reports a committed reload and still publishes saved state (1.676629ms)
+✔ an explicitly committed metadata error retains the accepted disk and document roots (1.395144ms)
+✔ a newer edit from a document notification remains dirty and cannot receive a stale saved marker (1.499071ms)
+✔ a newer edit from a model notification remains dirty and cannot receive a stale saved marker (1.123344ms)
+✔ reload guards reject stale ownership, versions, read-only state and invalid encoding before metadata acceptance (1.315123ms)
+✔ asynchronous metadata contributions are rejected and rolled back before any event (1.280942ms)
+✔ same-text reload accepts changed encoding and clears an obsolete saved baseline without adding an undo edit (0.990604ms)
+✔ legacy reload updates all views after metadata and classifies a failed view refresh as committed (1.169894ms)
+✔ reload permits the exact shared character limit and rejects larger incoming or existing sources (68.189037ms)
+✔ a disposed owner cannot reload or accept disk metadata (0.551071ms)
+✔ an unchanged captured source save marks the exact model revision clean without materializing text (21.698755ms)
+✔ edits during pending source I/O retain the written snapshot baseline and never mark the new revision clean (15.030616ms)
+✔ captureSave supports bulk snapshot consumers and reads captured text only on a legacy provider request (20.594509ms)
+✔ failed or rejected writes retain the previous baseline and dirty state (12.930235ms)
+✔ a captured save cannot overwrite a replacement document baseline after asynchronous I/O (12.193472ms)
+✔ saved snapshot validation rejects foreign or mismatched sources before considering lazy text (15.11255ms)
+✔ documents open, change, save and close without requiring a docking host (4.603632ms)
+✔ saving a captured revision never marks a newer edit as clean (0.653587ms)
+✔ multiple document views share edits and retain independent selection/scroll state (1.017957ms)
+✔ workspace replacement validates completely before changing existing records (1.201464ms)
+✔ every legacy initial state key resolves through an explicit slice property descriptor (12.555509ms)
+✔ running project locks its shared source views while other project remains editable (7.895167ms)
+✔ equal worker serials stay partitioned by app and launch identity (2.632315ms)
+✔ strict capture validation rejects missing sequences, wrong identities and invalid measurements atomically (1.030006ms)
+✔ bounded history gaps are explicit and malformed replies block only their current launch (0.824975ms)
+✔ late replies after replacement cannot attach measurements to the replacement capture (0.415428ms)
+✔ pausing and disposal cancel outstanding waits without clearing retained launch history (0.780999ms)
+✔ disposed and removed sessions cannot create new capture work (0.234334ms)
+✔ timeline retains bounded descriptors and partitions heap snapshots by launch (1.983886ms)
+✔ heap snapshots reject late replacement and malformed census data (0.533856ms)
+✔ CPU graph uses actual time, bounded percent and weighted intervals with accessible event detail (14.878457ms)
+✔ execution occupancy measures actual intervals and separate synchronous categories (2.138549ms)
+✔ nested work counts once and a close inside the operation includes its complete final interval (0.299843ms)
+✔ measurement preserves synchronous exceptions and rejects asynchronous waiting (0.599365ms)
+✔ bounded sequence windows report lost history and replacement clears the previous launch (0.4302ms)
+✔ occupancy validates bounds, clock monotonicity and replacement outside measured work (0.48355ms)
+✔ runtime pumping closes the actual final interval and cancels idle sampling after termination (0.77517ms)
+✔ paused runtimes sample genuine idle intervals and freeze automatic animations (0.977366ms)
+✔ retired launch timer callbacks cannot clear or execute replacement timers (0.539114ms)
+✔ request measurements exclude inspection and count UI/debug actions without changing their results (0.614468ms)
+✔ runtime pump failures keep a paused capture and report the original error (0.643181ms)
+✔ real source worker exposes actual execution intervals and preserves program output (694.673403ms)
+✔ real source workers isolate captures, pause, stop and replacement despite equal raw serials (940.505069ms)
+✔ real direct CIL worker exposes actual execution intervals and preserves program output (656.888489ms)
+✔ real direct CIL workers isolate captures, pause, stop and replacement despite equal raw serials (3435.559129ms)
+✔ resource rename publishes source edits, file paths and literal project references in one undoable host commit (15.819277ms)
+✔ multiple independent resource renames share one operation and preserve unedited clean sources (2.922397ms)
+✔ invalid versions, before text, result text, overlapping edits and destination collisions leave all owners unchanged (5.149606ms)
+✔ a model change during render fails the immediate precommit guard without overwriting the newer edit (2.396564ms)
+✔ async host preflight rechecks identities, affected locks, unrelated edits, saves, membership and workspace lifetime (13.438366ms)
+✔ failed host preflight releases every staged model and preserves live source buffers (2.346463ms)
+✔ postcommit callback failure retains all adopted resource models and a complete file-operation undo (2.899683ms)
+✔ large resource source comparisons stay lazy and yield to cancellation before ownership changes (56.824686ms)
+✔ the adapter copies supported plan fields before awaits and rejects native, locked and oversized resource requests (3.32879ms)
+✔ Explorer rename and undo preserve dirty snapshot baselines and leave unrelated models unchanged (18.795065ms)
+✔ Explorer copies are independent unsaved models and sequential file undo retains earlier snapshot identity (10.501146ms)
+✔ Explorer source writes prepare a replacement without mutating current text and undo restores a lazy root (5.108624ms)
+✔ Explorer snapshot history refuses newer edits without reading either complete source (4.584554ms)
+✔ Explorer failed preflight and host commit keep existing owners intact and dispose staged replacement models (5.374405ms)
+✔ Explorer Add Existing Item accepts sources beyond 16 MiB using chunked File reads and records undo without flattening (204.292933ms)
+✔ Explorer Add Existing Item updates project membership while retaining the prepared source descriptor (2.59925ms)
+✔ Explorer rejected or cancelled multi-file import cleans up only its prepared models (12.517908ms)
+✔ Explorer disposed imports cancel between chunks and postcommit callback errors retain adopted ownership and history (5.678905ms)
+✔ Explorer native source payload limits remain explicit before native I/O (12.361122ms)
+✔ Explorer snapshot records preserve metadata and exact history roots while fresh URI models remain independent (3.373187ms)
+✔ Explorer path index preserves descendant and case-collision rules across large indexed batches and removals (6.84907ms)
+✔ native prepared creates encode the captured edited source and BOM instead of stale original bytes (1.448595ms)
+✔ A19 FileWatch forwards the captured record and observation and prompts once until the document or disk changes (26.25636ms)
+✔ A19 old Reload, Ignore, and Compare actions cannot act on a same-URI same-version replacement (11.715229ms)
+✔ A19 a later edit refreshes the notification instead of retaining an unusable version guard forever (8.346409ms)
+✔ A19 changing the Save As target invalidates every action even when the same document version remains open (4.022606ms)
+✔ A19 a BOM-only external change is observable and its accepted metadata survives a later save (8.926474ms)
+✔ A19 a legacy asynchronous reader cannot publish a notification for a replaced document (2.371616ms)
+✔ A19 cancellation after a legacy reader resolves cannot publish an external-change notification (2.283544ms)
+✔ first-run visual-studio applies theme, global navigation and actual editor shortcuts (35.946916ms)
+✔ first-run vscode applies theme, global navigation and actual editor shortcuts (11.843302ms)
+✔ first-run resharper applies theme, global navigation and actual editor shortcuts (7.929869ms)
+✔ global ReSharper navigation retains file/member/symbol/recent arguments without an active editor (9.080746ms)
+✔ projected query prefixes use the real workbench search filters and source navigation (1.147541ms)
+✔ cancelled first-run selection has no effect, completed setup is skipped, and reselect preserves documents (10.955914ms)
+✔ profile changes keep custom bindings and one effective copy of each common global shortcut (17.577771ms)
+✔ choosing a user scheme clears only supplied current-workspace overrides and persists across reload (6.624732ms)
+✔ invalid scheme and persistence failure reject the complete first-run transaction before changing shortcuts (3.637987ms)
+✔ Options selects ReSharper after setup and commits only edited keys over a workspace override (9.736936ms)
+✔ Import and Export Settings applies a previewed scheme to both scopes without changing editor data (9.143626ms)
+✔ settings profile rejects invalid imports, exports selected categories and can reopen first-run choices (7.248833ms)
+✔ resetting selected categories restores the default scheme while retaining unrelated settings and undo (11.447586ms)
+✔ reset validates categories and remains atomic on storage failure, including the empty boundary (0.85508ms)
+✔ changing schemes cancels an in-progress native and global chord before the next keystroke (7.25672ms)
+✔ completed build identity deterministically binds actual bytes and source revision/tree (221.112073ms)
+✔ changed or added local output cannot reuse a completed build identity (158.200672ms)
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+✔ archive builds without Git metadata keep identical distribution bytes and explicit unknown provenance (127.082766ms)
+✔ exact-source claim rejects unknown, dirty, stale-commit and stale-tree identities (0.736271ms)
+✔ actual HTTP assets match the completed artifact with the explicit production HTML transformation (128.95516ms)
+✔ a server returning stale application bytes fails closed against the local completed build (111.025382ms)
+✔ changed local HTML is rejected before its production transformation can authorize different served bytes (71.995376ms)
+✔ extracted production path rewrite preserves root, nested, quote and non-JavaScript behavior (78.783383ms)
+✔ the final verification detects an application replaced after the initial verification (82.888686ms)
+✔ whole workload gates strictly below one percent, retaining positive and negative observations (29.643499ms)
+✔ individual operation regressions remain diagnostic while the identical aggregate determines acceptance (4.664586ms)
+✔ assessment rejects missing pairs, wrong order, altered counts, nonfinite data and incomplete effects (46.696188ms)
+✔ driver rejects non-HTTP or remote application origins without starting a server (0.69635ms)
+✔ assessment recomputes product p50/p95/p99 and rejects absent or active disabled instrumentation (10.380196ms)
+✔ clock-quantized zero operation spans are preserved but a zero aggregate denominator is rejected (7.239409ms)
+✔ pre-navigation storage states differ only by explicit tracing mode; workload and order are deterministic (0.457029ms)
+✔ tracing defaults on, persists per workspace, and rejects non-boolean preferences (2.953966ms)
+✔ real shells resolve saved settings before their first mark and keep live changes instance-local (8.168861ms)
+✔ explicit embedding booleans override saved and subsequent settings in both directions (17.230828ms)
+✔ Environment General exposes a working tracing checkbox with the stored preference (1.382415ms)
+✔ disabled instruments read no clock and retain no marks, including input observation (0.947509ms)
+✔ disabling rejects in-flight marks without clock reads, including after re-enabling (0.229697ms)
+✔ unchanged enabled values preserve current marks; marks are single-use and instance-owned (0.214504ms)
+✔ a real shell settings change invalidates an outstanding asynchronous operation mark (1.23336ms)
+✔ counterfactual has identical scaffolding and five explicit static imports before the shipped entry (1.691381ms)
+✔ complete paired assessment retains every signed observation and reports a point observation (3.072173ms)
+✔ missing marker, title, duplicate marker and incomplete fixed sample count are rejected (1.400302ms)
+✔ nonfinite, missing, duplicate, negative and inconsistent metric values fail closed (0.592573ms)
+✔ source, served assets, overlays, engine, module graph and product failures invalidate assessment (1.766444ms)
+✔ unsupported threadTicks rejects without a timing fallback (0.795089ms)
+✔ actual production CSP permits inline styles while rejecting any relaxed script directive (0.608438ms)
+✔ capture owns a fresh process for each sample and closes it on unsupported clocks or missing markers (21.928223ms)
+✔ real local HTTP overlay preserves product bytes/CSP and tracks downstream cancellation separately (44.627258ms)
+✔ PE metadata exposes actual generic List members, names, parameter signatures, properties and namespaces (14.145034ms)
+✔ metadata source carries the exact PE identity, source version and matching overload selection (18.350136ms)
+✔ metadata versions never collapse same-name assemblies or infer an ambiguous owner (2.621254ms)
+✔ framework member caret resolves Console.WriteLine rather than treating it as a type name (25.57909ms)
+✔ core intrinsic metadata uses accepted arities, canonical owners, instance parameters and property shape (7.586292ms)
+✔ bound assembly simple identity selects actual PE metadata and rejects multiple matching versions (9.703956ms)
+✔ reference sources use authorized HintPath bytes, transitive project visibility and no source text getters (14.134949ms)
+✔ unavailable, ambiguous and invalid PE references return explicit Object Browser diagnostic rows (23.202965ms)
+✔ metadata inspection rejects byte and declaration limits before returning a partial model (1.225338ms)
+✔ catalog cancellation terminates its dedicated metadata worker and does not cache late replies (12.732594ms)
+✔ Code Definition reads only a bounded caret fragment and prioritizes structured bound owners (4.580739ms)
+✔ Code Definition source definitions bypass metadata and retain exact selection (0.183597ms)
+✔ Studio multi-session C# fixture preserves WinUI, argv, environment and stop isolation in source VM (868.355997ms)
+✔ Studio multi-session C# fixture preserves WinUI, argv, environment and stop isolation in direct CIL (737.622515ms)
+✔ actual MSBuildTools onJob notifications retain exact cancellation ownership when another job is selected (4.641981ms)
+✔ owners with the same remote job id remain independent and known terminal callbacks cannot resurrect a task (0.778544ms)
+✔ phase text stays indeterminate, only host-reported fractions become progress, and stale cursors/phases are ignored (0.465171ms)
+✔ a native success that wins a cancellation race remains an observed success (0.43105ms)
+✔ native cancellation failures and replies for another job are explicit and cannot alter that other task (0.924204ms)
+✔ transport failure settles only its matching observed job and malformed snapshots do not mutate task state (0.531912ms)
+✔ synchronous cancellation from first notification reaches the captured client exactly once (0.447766ms)
+✔ disposal aborts owned requests once, ignores late callbacks and bounds retained terminal identity history (0.611252ms)
+✔ A19 actual native utf-8 reload updates SHA-256 and native baseline before a physical save (23.241484ms)
+✔ A19 actual native utf-16le reload updates SHA-256 and native baseline before a physical save (6.573745ms)
+✔ A19 actual native utf-16be reload updates SHA-256 and native baseline before a physical save (5.022045ms)
+✔ A19 reconnecting the native host invalidates a prior observation without changing the document (4.155568ms)
+✔ A19 native bytes changed after the observation are not marked as the reloaded baseline (3.960072ms)
+✔ A19 rejecting immutable native metadata restores the document and retains both previous native baseline fields (3.476383ms)
+✔ A19 native read cancellation and disposal reach the actual client request signal (2.276624ms)
+✔ A19 MSBuild text and binary read APIs forward the supplied cancellation signal without changing endpoints (1.120921ms)
+✔ actual client, MSBuildTools and lazy native callbacks publish live tasks and preserve completed inspection (207.921934ms)
+✔ poll transport failure retains the captured client and fails only that job after another job becomes selected (203.771685ms)
+✔ the TaskCenter cancellation callback targets its captured client/job and does not replace another native selection (1.676278ms)
+✔ validation/start failures and ordinary native UI errors cannot settle a previously observed unrelated task (1.574895ms)
+✔ a poll response for a different ID closes only the requested task and never publishes the foreign job (203.407015ms)
+✔ native Cancel transport errors report only the captured current owner, regardless of a later client value (1.22655ms)
+✔ a confirmed native success wins a cancellation race and a stale pending poll cannot regress it (201.764668ms)
+✔ disposal coalesces TaskCenter cancellation before disconnect and abandons a pending poll without late UI writes (202.625096ms)
+✔ disposal during job start waits for the actual returned ID, cancels it, and never publishes a post-disposal task (0.956122ms)
+✔ Outline host passes exact URI/project/version and applies one provider edit before navigation (1.820216ms)
+✔ Outline rejects stale version after provider completion (0.619564ms)
+✔ Outline rejects stale project after provider completion (0.185781ms)
+✔ Outline rejects stale workspace after provider completion (0.350629ms)
+✔ Outline rejects stale document after provider completion (0.299271ms)
+✔ Outline cancellation and disposal stop a waiting provider without applying its late result (0.557101ms)
+✔ Outline rejects read-only and mismatched provider edits (0.286963ms)
+✔ Outline leaf drops retain before/after position and refuse cross-tree payloads (0.623941ms)
+✔ Outline moves a complete CRLF member with XML docs and trailing comments, without changing the workspace (9.575492ms)
+✔ Outline moves a callable across fields without changing field initialization order or either runtime result (100.699814ms)
+✔ Outline accepts storage-free declaration: int Value => 1; (1.69084ms)
+✔ Outline accepts storage-free declaration: int Value { get { return 1; } set { } } (1.194552ms)
+✔ Outline accepts storage-free declaration: C() { } (0.999568ms)
+✔ Outline accepts storage-free declaration: int this[int i] { get { return i; } } (1.474294ms)
+✔ Outline rejects order-sensitive or hidden-storage declaration: int value = 1; (1.305449ms)
+✔ Outline rejects order-sensitive or hidden-storage declaration: int Value { get; set; } (0.665533ms)
+✔ Outline rejects order-sensitive or hidden-storage declaration: int Value { get; } = 1; (0.685414ms)
+✔ Outline rejects order-sensitive or hidden-storage declaration: [ModuleInitializer] static void Init() {} (1.183305ms)
+✔ Outline rejects order-sensitive or hidden-storage declaration: [Alias] static void Init() {} (0.575839ms)
+✔ Outline rejects different containers, stale/read-only versions and invalid offsets without partial mutation (0.878815ms)
+✔ Outline rejects crossing region/directive trivia and malformed source members (2.116052ms)
+✔ Outline returns a stable no-op for the same member and preserves same-line separators for real moves (0.994529ms)
+✔ prepared document ingress adopts the exact model and source without reading text or rebuilding it (14.167896ms)
+✔ model and immutable roots are hidden even when an incoming caller made them enumerable (1.185989ms)
+✔ retaining prepared records preserves model/map/view identity and replaces old subscriptions without materializing text (7.545489ms)
+✔ duplicate, mismatched and stale prepared records reject atomically and remain caller-owned (4.902373ms)
+✔ a failed factory disposes only models it created while prepared callers and the current workspace remain intact (1.356717ms)
+✔ subscription failure and cancellation release staged subscriptions without disposing prepared input models (1.291538ms)
+✔ saved-state preparation rolls back dirty caller models if another model cannot commit its saved marker (1.156524ms)
+✔ add and legacy appended-record lookup adopt prepared models without a factory, and dispose releases owned roots (3.161528ms)
+✔ view errors after the atomic ownership commit are explicit and do not hand live models back to callers (1.074811ms)
+✔ real chunked File ingress adopts the reader model and decoder metadata without invoking whole-source getters (16.903993ms)
+✔ append imports retain dirty model baselines and read-only state without implicitly saving existing documents (1.837091ms)
+✔ append imports retain a late-save snapshot baseline and its stale-save dirty marker (1.024094ms)
+✔ preserveDirty never permits replacing or removing a dirty model without explicit discard (2.057162ms)
+✔ disposed prepared models reject and failing view cleanup still releases all owned models and roots (1.064285ms)
+✔ pending Studio analysis and another editor whole-project request publish committed rename source only (11.664311ms)
+✔ real rename completion publishes its new version after lease release and remains one undo operation (3.521491ms)
+✔ DocumentService late save acknowledgement survives preview cancellation and subsequent undo (2.233168ms)
+✔ save, operation state, export, diagnostics and bounded ranges share one published source revision (2.179326ms)
+✔ reload and prepared model adoption reject active previews without changing source, baseline or metadata (1.903581ms)
+✔ an atomic change still notifies the second document if the first notification opens its preview (1.682507ms)
+✔ workspace replacement disposes the original preview model and delayed cleanup cannot restore over its replacement (1.161522ms)
+✔ EditorConfig reads committed source even if its model is displaying a temporary preview (0.551952ms)
+✔ workspace commit forwards cancellation into the real asynchronous Studio resource transaction (16.613084ms)
+✔ closing all views releases the owned preview before any same-model view state is cached (4.871316ms)
+✔ startup target switching preserves each project selected profile and starts that target (9.813931ms)
+✔ current-selection startup and new-instance commands honor the current project selected profile (2.624458ms)
+✔ changing a startup profile preserves its start-without-debugging action (1.414673ms)
+✔ independent areas, browsers and performance all finish after earlier failures without downgrading them (5.032879ms)
+✔ stage selection runs only the selected scopes and preserves browser deadlines and capture-only results (4.119954ms)
+✔ a scope settles and is checkpointed before the next independent scope starts (0.362967ms)
+✔ setup errors remain fatal before any scope starts (0.697532ms)
+✔ a thrown error carrying exit zero remains a failed outcome and a nonzero aggregate (0.308314ms)
+✔ an unsupported lazy-evaluation engine remains an independent failure after all earlier scopes finish (0.47729ms)
+✔ malformed editor JSON fails before any capture starts (11.802359ms)
+✔ both baseline schemas are checked before any capture starts (5.28512ms)
+✔ known editor browser, OS, architecture, Node and CPU mismatches fail before capture (7.046527ms)
+✔ model-only or another browser backend cannot be used as the editor baseline (2.65927ms)
+✔ known workbench runner mismatches fail before editor captures (5.122545ms)
+✔ Python OS and architecture aliases match corresponding known Node runner facts (3.453609ms)
+✔ missing and outside-checkout baseline files fail before capture (1.395675ms)
+✔ empty inputs retain capture mode and the 22-minute outer browser deadline (1.543327ms)
+✔ compatible baselines are read once before capture and reused for comparison (3.612578ms)
+✔ each explicit platform, engine and stage resolves without running a capture (1.998063ms)
+✔ create events always discard baseline and dispatch-style overrides (0.170047ms)
+✔ manual dispatch preserves defaults and exact supplied baseline paths (0.312891ms)
+✔ unrelated creates, tag creates and unsupported event types cannot qualify (0.473694ms)
+✔ the complete branch grammar rejects malformed selection and unsafe or oversized nonces (0.369337ms)
+✔ event and full ref identity must agree for created and manually selected refs (0.332131ms)
+✔ a mutable name, missing SHA or different checked-out commit cannot pass immutable source validation (0.275936ms)
+✔ allocated runner and manual choice values are validated before output (0.348345ms)
+✔ baseline data cannot inject Actions environment records (0.515077ms)
+✔ oversized or malformed event files fail before writing any Actions environment output (9.487578ms)
+✔ deleting a project in the same workspace clears only its profiles and persists a consistent startup snapshot (9.832389ms)
+✔ removing a virtual-default profile selection clears it without requiring a materialized profile map (0.305621ms)
+✔ source Main(string[]) receives flat program argv and defaults to an empty array (75.867596ms)
+✔ source a parameterless entry accepts process argv without injecting method parameters (4.603363ms)
+✔ source top-level args are forwarded through the generated startup wrapper (4.695742ms)
+✔ source module initializers run once before argv forwarding into Main (34.591087ms)
+✔ source async Main retains argv and its integer exit code across an await (14.075287ms)
+✔ source argument arrays survive collection and caller mutation after construction (11.303797ms)
+✔ cil Main(string[]) receives flat program argv and defaults to an empty array (23.097183ms)
+✔ cil a parameterless entry accepts process argv without injecting method parameters (4.056999ms)
+✔ cil top-level args are forwarded through the generated startup wrapper (4.619186ms)
+✔ cil module initializers run once before argv forwarding into Main (12.714005ms)
+✔ cil async Main retains argv and its integer exit code across an await (12.294041ms)
+✔ cil argument arrays survive collection and caller mutation after construction (27.048552ms)
+✔ raw CIL methodToken invocations retain their numeric parameter contract (19.014016ms)
+✔ independently authored CIL string-array entry receives argv without a compiler-specific payload (2.945852ms)
+✔ source reads only its explicit environment, preserving empty values and case-sensitive names (90.863452ms)
+✔ source separate runtimes copy environment values and never observe another application (8.46767ms)
+✔ source a null environment variable name raises a managed ArgumentNullException (4.684855ms)
+✔ cil reads only its explicit environment, preserving empty values and case-sensitive names (20.134705ms)
+✔ cil separate runtimes copy environment values and never observe another application (11.161663ms)
+✔ cil a null environment variable name raises a managed ArgumentNullException (5.220003ms)
+✔ environment mutation and OS target overloads report unsupported source members (14.24941ms)
+✔ independent managed CIL resolves the registered process environment signature and refuses mutation (3.329632ms)
+✔ default runtime timers schedule and cancel pump, animation and occupancy work on their global owner (2.803528ms)
+✔ default capture timers tolerate the first runtime UI event and preserve pause, resume and disposal (0.995972ms)
+✔ injected runtime scheduler callbacks retain their existing owner receiver (0.371831ms)
+✔ program argument normalization copies and freezes strings including empty and Unicode values (1.706213ms)
+✔ argument count, individual size, total size, primitive type and null bytes have explicit limits (0.564301ms)
+✔ environment normalization has private storage and never inherits host or prototype entries (0.327794ms)
+✔ environment names, types, prototypes, per-entry and total sizes reject before launch (6.221132ms)
+✔ process argv cannot replace raw parameters of an explicitly selected method (0.417379ms)
+✔ launch profiles use the same bounds and advertise only the implemented environment capability (2.391306ms)
+✔ injected RuntimeTools keeps existing profile grants and target launches do not inherit the active app settings (13.016881ms)
+✔ profile settings apply to the next project launch only without rebuilding or mutating existing apps (9.069228ms)
+✔ session settings remain scoped through active-app switches and only take effect on that app restart (8.216251ms)
+✔ profile and session revocation stop only the explicitly associated applications (3.887523ms)
+✔ settings requests capture the chosen app and do not fall back to a foreign active session (7.973405ms)
+✔ late metrics cannot repaint a newly selected settings target (13.04244ms)
+✔ target selector values are stable and invalid settings do not change any target (1.339831ms)
+✔ only an actual loose-source language change schedules its project compilation (0.923773ms)
+✔ legacy hosts retain the RuntimeTools API with explicitly isolated default settings (0.415496ms)
+✔ real source worker consumes a complete launch profile (536.837101ms)
+✔ real source workers isolate argv, environment and stop commands despite equal local serials (460.959574ms)
+✔ real source worker rejects malformed replacement settings without retiring its paused session (390.445832ms)
+✔ real direct CIL worker consumes a complete launch profile (406.732659ms)
+✔ real direct CIL workers isolate argv, environment and stop commands despite equal local serials (438.699569ms)
+✔ real direct CIL worker rejects malformed replacement settings without retiring its paused session (435.37992ms)
+✔ session recovery exports only deterministic startup and non-executable profile metadata (13.835907ms)
+✔ ZIP and extracted-folder manifests retain metadata while dropping hostile executable fields (5.712281ms)
+✔ invalid recovery projects, libraries, selections and profile references fail before either live owner changes (2.395461ms)
+✔ recovery staging is immutable, single-use and notifies observers only after both owners commit (1.55224ms)
+✔ prospective recovery validates before workspace replacement and commits only to that loaded project set (1.823389ms)
+✔ legacy records without session metadata are no-ops, while malformed versions, paths and bounds are rejected (0.923062ms)
+✔ session state lint detects direct, computed, compound, destructuring and prefix writes (2.600751ms)
+✔ session state lint excludes reads, equality, strings, comments and unrelated state properties (0.727146ms)
+✔ session state lint accepts only explicitly inventoried owners and includes stable diagnostics (0.407014ms)
+✔ Processes row controls affect only that row across active-application changes (11.379665ms)
+✔ Debug Location process/thread/frame selection owns its locals and does not navigate a background app (3.244851ms)
+✔ status and title announce a meaning change once and ignore repeated output/state events (1.971071ms)
+✔ status updates read model positions and EOL metadata without flattening a 100 MB document (1.544799ms)
+✔ status visual columns distinguish tabs, CJK, zero-width clusters and UTF-16 characters (1.656877ms)
+✔ status uses cancellable exact model columns and ignores stale carets without flattening source (3.995974ms)
+✔ reading one setting preserves workspace null overrides without cloning unrelated layouts (1.637458ms)
+✔ Solution Explorer filtering never reads document content synchronously (1.348102ms)
+✔ definition range reads stay bounded at a caret near the end of a large indexed document (1.110845ms)
+✔ Explorer content searches retain actual worker URI matches and reject stale or cancelled results (0.814938ms)
+✔ automatic recovery and bookmark construction never materialize a 100 MB model-backed file (0.709319ms)
+✔ existing recovery is retained until the user restores or discards it (0.361656ms)
+✔ bookmark edit transformation handles several pre-edit coordinates and wraps across files (6.525667ms)
+✔ Output filters project and session identity from shared channel entries (0.608408ms)
+✔ Find Results changes retained project or session scope without requesting another search (0.307403ms)
+✔ locked result windows remain bounded without silently discarding retained results (1.370606ms)
+✔ regex replacement retains lookbehind, named captures and original string substitutions (1.749107ms)
+✔ keyboard removal applies to default ids before conflict calculation (0.905175ms)
+✔ provider failures terminate queued test state instead of leaving a run in progress (0.597461ms)
+✔ menu palette and command window share contextual enablement and the same handler (8.303447ms)
+✔ when parser handles precedence and rejects malformed executable input and nesting (5.64505ms)
+✔ command contributions rollback conflicts and restore replaced handlers (6.015388ms)
+✔ command parser preserves quoted arguments without evaluating expressions (0.642509ms)
+✔ 10000 hidden output invalidations produce no render or scheduled frame (6.105534ms)
+✔ performance records exact per-session percentiles and enforces relative budgets (0.891214ms)
+✔ lazy activation cancellation never resolves a mount and successful module loads cache once (0.546424ms)
+✔ two concurrent tasks cancel independently and keep truthful cancelling state (5.87775ms)
+✔ workbench inventory matches every registered shell window and command (20.597775ms)
+✔ performance budget comparison fails absolute and twenty-percent p95 regressions (1.422505ms)
+✔ performance comparison rejects absent, duplicate and unreported metric obligations (0.652163ms)
+✔ performance comparison rejects invalid or fabricated statistics and mismatched captures (1.026237ms)
+✔ capture-only performance assessment never invents a relative regression verdict (0.416999ms)
+✔ recent workspace remembering retains metadata and never enumerates source or disk records (1.723107ms)
+✔ opening the current workspace activates it without reading recovery or requiring permission (0.348886ms)
+✔ recovery preparation preserves file bytes, encoding, BOM and unsaved source metadata (1.881036ms)
+✔ recent opening uses the matching previous recovery and confirms actual workspace identity (0.533584ms)
+✔ samples require a provider-confirmed open instead of treating an unchanged workspace as success (0.599334ms)
+✔ missing recent files request permission explicitly and cancellation preserves the pinned MRU (0.463919ms)
+✔ recovery bounds, corrupt data and cancelled providers fail before recent success is published (0.727316ms)
+✔ search supports captures literal metacharacters exact versions whole words and bounded empty regex matches (3.553766ms)
+✔ replacement preview skips changed documents and preserves unchecked matches as one batch per document (1.235894ms)
+✔ worker cancellation terminates a pathological query without affecting a second results instance (0.722229ms)
+✔ workspace symbol results reject superseded requests and changed document versions (0.373653ms)
+✔ Error List combines source scope severity search and sort over 5000 real diagnostic records (2.70681ms)
+✔ Output model bounds 100000 line inputs and compiler message links preserve location (59.653825ms)
+✔ bookmarks move with source insertions and locked reference results remain unchanged (1.24756ms)
+✔ old settings migrate once and corrupt settings notify then recover defaults (2.185906ms)
+✔ settings transaction rejects invalid data and persistence failure before publishing (1.544738ms)
+✔ line-ending normalization stays opt-in across theme changes and rejects invalid settings (0.655458ms)
+✔ workspace preferences override user scope and exported profiles omit secrets recursively (0.937844ms)
+✔ keyboard conflicts include default bindings and distinguish scopes (1.176674ms)
+✔ keyboard Options shares native chord-prefix conflicts and shifted punctuation notation (0.388535ms)
+✔ configuration manager applies release selection only to enabled project mappings (1.247841ms)
+✔ recent files retain pinning and prune missing sources (0.653475ms)
+✔ notifications survive toast expiry and unread/dismissal are independent (0.557731ms)
+✔ external change prompts once per disk version and recovery contains only document data (0.958555ms)
+✔ dropped file import bounds count and total bytes (0.440194ms)
+✔ theme gate detects hex and numeric functional colors inside declarations, fallbacks, gradients and nested rules (2.877778ms)
+✔ theme gate ignores selectors, comments, strings, URL fragments and identifiers that are not color tokens (0.289416ms)
+✔ only explicit token files may define literal palette values; token files cannot hide painted rules (0.290618ms)
+✔ theme gate fails closed on malformed CSS and validates empty and non-string input boundaries (0.43092ms)
+✔ all Studio styles pass the color gate and extracted paint and token styles have explicit cascade order (69.207667ms)
+✔ the migration preserves every legacy dark/light paint value, geometry declaration and ordered override (20.881067ms)
+✔ Light keeps its authored palette, Blue keeps syntax distinctions, and contrast modes resolve every legacy token (15.223609ms)
+✔ system theme follows OS changes immediately and disposal removes its media listener (0.45085ms)
+✔ Task List scans real C# comment trivia and ignores literal task words (6.480609ms)
+✔ class hierarchy attaches members to their actual project and namespace (0.409778ms)
+✔ Object Browser uses actual registered List metadata and method signatures (52.637267ms)
+✔ test provider subset runs emit incremental states and produce hierarchical results (1.832142ms)
+✔ test cancellation signals only its current provider operation and preserves terminal results (0.369987ms)
+✔ call hierarchy expands lazily and rejects changed source versions (0.913537ms)
+✔ diagnostic session timelines remain separate and heap diffs use actual census data (0.794418ms)
+✔ toolbox providers select the actual active document kind (0.480014ms)
+✔ packager binds classic format to lazily allocated closed worker URLs, including nested workers (22.907541ms)
+✔ both main menu surfaces expose startup configuration, a new instance, and Stop All (3.678015ms)
+✔ configuration aliases and auxiliary session commands reuse their registered host actions (1.237265ms)
+✔ explicit project invocation overrides ambient selection without changing startup or launch profiles (0.932225ms)
+✔ a host without an execution override still launches the explicit project using its selected profile (0.514105ms)
+✔ library, missing and empty targets cannot silently fall back to the startup project (1.41952ms)
+✔ new-instance availability refreshes native, Hot Reload and pending-launch explanations (0.651412ms)
+✔ Stop All is enabled for live sessions or pending launches and uses the host cancellation path (0.739765ms)
+✔ startup configuration is disabled when no projects remain (0.45792ms)
+✔ Explorer solution and project menus route the exact selected node through the public aliases (2.1298ms)
+✔ Explorer uses current registry reasons and preserves native build, restore and evaluate availability (0.775779ms)
+✔ aborted invocations do not start and disposal restores a previously registered command (0.654046ms)
+✔ startup modes validate libraries/unknown projects and serialize in deterministic order (3.674262ms)
+✔ profiles isolate project settings, return copies and exclude grants/environment from exported preferences (2.195271ms)
+✔ startup builds dependencies once, preserves configured order and starts independent roots after one failure (6.991644ms)
+✔ two successful startup roots keep independent session resources and restart commands use explicit context (6.0935ms)
+✔ workbench disposal terminates every owned worker without closing another workbench (3.007375ms)
+✔ default build snapshots use current shared document revisions without changing source descriptors (1.131566ms)
+✔ source and managed IL profiles forward program argv separately from method parameters (3.991339ms)
+✔ an explicitly restricted external launch target refuses unsupported profile capabilities (1.908849ms)
+✔ concurrent starts queue one shared project build and keep independent application instances (1.347171ms)
+✔ failed startup preference storage leaves the previous configuration intact (0.341805ms)
+✔ Set as Startup Project preserves both selected profiles and the toolbar agrees with the next F5 launch (20.19812ms)
+✔ Set as Startup Project uses the real default profile when no per-project choice exists (4.735482ms)
+✔ invalid or library startup targets leave the selected project and profile unchanged (2.611108ms)
+✔ session state lint detects direct, computed, compound, destructuring and prefix writes (2.045675ms)
+✔ session state lint excludes reads, equality, strings, comments and unrelated state properties (0.719265ms)
+✔ session state lint accepts only explicitly inventoried owners and includes stable diagnostics (0.361184ms)
+✔ all Studio modules keep direct debug-state writes inside session owners (219.497444ms)
+✔ static named/re-export graph initializes dependencies first and lazy graph stays cold until one microtask (18.849487ms)
+✔ lexical transforms leave literal/comment/regex text unchanged and handle nested template expressions (4.130579ms)
+✔ dynamic cycles are deferred and repeated evaluation failures keep their original error identity (4.695631ms)
+✔ the known Node worker adapter cannot trigger dynamic code loading from a browser bundle (2.838401ms)
+✔ computed/unresolved imports, mutable exports, static cycles and missing or ambiguous names fail at build time (12.603698ms)
+✔ graph containment checks real paths, including symlinks (3.777487ms)
+✔ standalone hashes exact code and lazily embeds actual worker dependencies, including nested workers (17.377537ms)
+✔ recursive worker graphs and worker URLs outside the asset root are rejected before packaging (3.643224ms)
+✔ actual TaskCenter Cancel aborts its whole two-project queue and leaves an independent queue running (8.597255ms)
+✔ a queued second operation for the same project survives cancellation of the first captured queue (6.720174ms)
+✔ a completed task callback cannot cancel the next project or a later build with the same project id (2.704478ms)
+✔ TaskCenter cancellation during its started notification sends no request and skips the rest of the queue (1.166999ms)
+✔ standalone build cancellation preserves the other worker and disposal settles only tracked operations (2.141429ms)
+✔ build task quota cancels only the untrackable queue and reports the refusal (1.083905ms)
+✔ Studio preflight and worker preserve default compiler bounds without reading lazy oversized text (1.73044ms)
+✔ eligibility reads published preview roots and observes ordinary silent transactions immediately (19.360658ms)
+✔ an unrelated oversized project does not disable bounded project analysis or rename (147.026861ms)
+✔ shared/dependent rename and solution Fix All explicitly refuse a required oversized project (22.713404ms)
+✔ a small linked view respects its explicit oversized project without disabling its other bounded owner (24.817467ms)
+✔ automatic work refuses the actual selected project and explicit requests retain the precise error (31.742231ms)
+✔ startup toolbar selection changes the explicit compiler project while background work retains it (12.557568ms)
+✔ Studio routes language requests by document membership without selecting background projects (2.152216ms)
+✔ workspace replacement clears former project memberships, sessions and launch profiles (4.665666ms)
+✔ Studio language providers preserve originating versions and resolve the requested target document (2.518358ms)
+✔ workspace record metadata does not read source text and explicit reads retain the captured snapshot (2.416514ms)
+✔ partial disk saves acknowledge only written snapshots and keep edits made during I/O dirty (3.646929ms)
+✔ start new instance keeps existing applications and launches the selected profile (3.853862ms)
+✖ silent Studio builds leave large documents available without sending them to the compiler (42.712575ms)
+✔ Studio source policy admits 501 files and a 200 MiB buffer and rejects bounded overflow (0.676911ms)
+✔ launch fields preserve literal arguments and equals signs and reject invalid or duplicate environment entries (0.519183ms)
+✔ breakpoint remapping applies several ordered source changes against their captured versions (2.217284ms)
+✔ actual project loading publishes warnings into Error List without failing a build or leaking to project B (10.064158ms)
+✔ loader errors block only their project and appear once under their producer; reevaluation removes only obsolete entries (8.985411ms)
+✔ real designer source synchronization publishes protected-expression warnings and errors under the captured source owner (22.442986ms)
+✔ source edits, project removal and disposal invalidate designer reports without erasing other producers (3.092794ms)
+✔ an asynchronous designer failure cannot replace a new link or attribute the old failure to its new project (9.377001ms)
+✔ A19 utf-8 observation uses the granted handle and preserves encoding through reload and the next save (40.729769ms)
+✔ A19 utf-16le observation uses the granted handle and preserves encoding through reload and the next save (30.802568ms)
+✔ A19 utf-16be observation uses the granted handle and preserves encoding through reload and the next save (30.009101ms)
+✔ A19 a Save As target overrides the original workspace handle and receives the accepted baseline (16.229346ms)
+✔ A19 an empty no-BOM UTF-16 observation remains an editable zero-byte source after reload (5.519784ms)
+✔ A19 same-URI workspace replacement and later editor edits both invalidate an old observation (5.602879ms)
+✔ A19 confirmation cannot overwrite a replacement document, a later edit, or a changed target (10.379538ms)
+✔ A19 declined confirmation and read-only models leave both document and disk baselines intact (7.800174ms)
+✔ A19 disk changes occurring after a prompt are rechecked before changing the editor (10.803713ms)
+✔ A19 postcommit listener errors report committed state and preserve the matching save baseline (15.210243ms)
+✔ A19 disposed and cancelled observers do not publish a pending handle read or reload prompt (3.938179ms)
+✔ A19 a replaced target or record during decoding returns no stale observation (2.06243ms)
+✔ A19 cancellation during a decoded chunk prevents observation publication and leaves the document unchanged (2.876138ms)
+✔ A19 watch reads admit exactly 8,000,000 decoded characters and reject larger or invalid encodings (198.569954ms)
+✔ A19 automatic reads reject an oversized byte descriptor without slicing or reading lazy editor text (45.85946ms)
+✔ initial document sync activates the selected primary view and opens other tabs in the background (2.386974ms)
+✔ dirty document sync preserves its active secondary view and a different URI explicitly changes it (1.671757ms)
+✔ background document sync preserves selected application or tool without changing group selection (0.52479ms)
+✔ removing the active document returns to a surviving source and unregisters its secondary views (0.756839ms)
+✔ initial restore keeps the persisted secondary document selection (1.577405ms)
+✔ horizontal host split creates one bottom group beside the original, with no intermediate vertical or empty group (7.765641ms)
+✔ vertical host split and default New Window retain one right-hand shared view (2.015485ms)
+✔ new views anchor to the requested source group instead of the first document group (1.171974ms)
+✔ Vim split filename opens that workspace source and moves its exact panel beside the original once (1.190612ms)
+✔ a split path naming the current source clones its view and does not perform an unnecessary open (0.829779ms)
+✔ invalid or non-workspace split paths fail before any open, group change or new view (0.914086ms)
+✔ a cancelled or failing workspace opener creates no split (1.576253ms)
+✔ invalid split axes and missing original groups cannot allocate secondary views (0.8233ms)
+✔ removing the original group during an asynchronous source open reports the stale target without an extra view (0.901588ms)
+✔ actual Explorer rows expose multiple startup, running, paused and building states with descriptive accessible names (17.884496ms)
+✔ background session changes preserve tree selection and unchanged statistics do not redraw rows or read source records (3.874984ms)
+✔ a normal Explorer tree rebuild retains current badges and disposing the adapter releases every subscription (2.572894ms)
+✔ current-selection startup decorations follow the actual active document membership without selecting another project (2.005869ms)
+✔ recycled ordinary tree rows remove a former project accessible label (1.671886ms)
+✔ an Explorer host commit retains unchanged models and their saved baselines, including unsaved siblings (30.048202ms)
+✔ dirty Explorer rename and undo preserve source roots, baseline history, active tabs and breakpoints (12.310073ms)
+✔ document reset subscribers observe the same project XML, membership and active source as the Explorer commit (6.849439ms)
+✔ Explorer opening guard preserves edits made during asynchronous workspace preflight (6.782718ms)
+✔ Explorer host rejects a superseding workspace revision before adopting its staged source models (6.214662ms)
+✔ a cancelled late JSON file read cannot acquire a newer ticket or replace the succeeding workspace (15.709379ms)
+✔ bundle import retains source overrides, encoding/BOM, folders and zero-length binary entries (8.124302ms)
+✔ sample reset observers see the matching source, workspace metadata and cleared old artifacts (3.025453ms)
+✔ stale assembly completion cannot replace a workspace opened during compiler import (2.558778ms)
+✔ successful assembly reset never pairs imported documents with previous build artifacts (2.052475ms)
+✔ metadata reads use the captured browser handle or native client and return actual bounded bytes (1.252298ms)
+✔ a browser metadata read rejects after its owning disk changes while getFile is pending (0.889311ms)
+✔ pending native metadata rejects a change to native client (0.931735ms)
+✔ pending native metadata rejects a change to backend mode (0.826727ms)
+✔ pending native metadata rejects a change to workspace epoch (0.774338ms)
+✔ metadata cancellation and advertised byte limits stop before consuming an oversized file (0.836431ms)
+✔ public shortcut utilities share native event normalization with the Options recorder (1.686152ms)
+✔ invalid keyboard assignments, removal syntax and profile IDs never replace active state (19.166873ms)
+✔ custom commands override defaults exactly once and remain visible to command menus (7.290785ms)
+✔ removing one native chord leaves other chords sharing its prefix available (4.569009ms)
+✔ a removed global exact key does not intercept an editor chord using its prefix (3.963366ms)
+✔ a removal follows command and scope across profile changes without suppressing a different command on the key (7.576325ms)
+✔ dynamic binding disposers remain valid after atomic table swaps and reject duplicate IDs (4.737805ms)
+✔ keyboard conflict data excludes removed defaults and includes cross-scope prefix overlap (4.407307ms)
+✔ popup installation handles global shortcuts once, releases listeners and leaves dialogs alone (2.056631ms)
+✔ attached command availability is explicit without an editor and closing a view detaches its filter (2.40703ms)
+✔ Studio direct ownership excludes dependency-only membership and retains genuine linked-file owners (16.222312ms)
+✔ composed project Fix All changes owned sources through real compiler validation without editing a dependency (121.719505ms)
+✔ composed solution Fix All deduplicates linked sources and preserves preview-only ownership (41.132706ms)
+✔ reference and test lenses compose while test resolve/run use the actual owning provider and TaskCenter (8.821002ms)
+✔ explicit linked-file context runs only its selected test owner, while ambiguous inferred ownership remains hidden (7.003591ms)
+✔ non-test lens commands forward the real host command and its argument without running a test (1.564669ms)
+✔ cancelling pending semantic lenses prevents the test provider from publishing combined results (5.015994ms)
+✔ removed test providers and changed direct ownership cannot execute retained CodeLens commands (7.410475ms)
+✔ actual 200 MiB File import preserves siblings and refuses all compiler snapshots before text materialization (2416.988208ms)
+✔ cancelled real source import retains the previous document and never enters compilation (7.176121ms)
+✔ compiler eligibility never lifts Studio ingress budgets or explicit smaller reader bounds (0.859226ms)
+✔ cold Studio registers every facade without importing tools or activating native integration (4.133293ms)
+✔ first commands and panels instantiate each actual controller once and share native settings (2.28173ms)
+✔ visible restored panels activate only their feature and repeated layout events do not rerender (1.304267ms)
+✔ loading coalesces latest mount and disposal prevents late construction or DOM changes (1.226629ms)
+✔ module failure presents an actionable retry and a successful retry mounts the real controller (0.825455ms)
+✔ capability presence permits only native first activation; canonical client still validates the token (0.433253ms)
+✔ designer automation waits for first activation and preserves synchronous loaded document calls (0.423258ms)
+✔ actual view disposal and shell listeners preserve replacement model ownership at New.cs (26.71139ms)
+✔ actual view disposal and shell listeners preserve replacement model ownership at Old.cs (6.879554ms)
+✔ a genuine membership listener failure remains observable after the view ownership correction (2.627972ms)
+✔ actual focused view wins while dock activation is ahead of Studio editor installation (4.726527ms)
+✔ nested open callbacks add one departure and one actual jump, retaining view identity (1.392119ms)
+✔ ordinary caret movement does not create a jump and a failed open does not add a destination (1.221713ms)
+✔ direct window navigation and toolbar navigation replay the same history without recording activation (1.35939ms)
+✔ dropdown entries replay the shared history and clear invalidates in-progress tokens (1.151516ms)
+✔ five actual Studio preview opens reuse one tab and retain ordered jump history (9.134615ms)
+✔ failed preview destinations do not enter history or block the next valid navigation (2.279297ms)
+✔ background build failure never reveals a tool or changes user intent (7.489995ms)
+✔ an explicit build reveals its errors only while the initiating navigation remains current (4.857585ms)
+✔ an explicit build cannot reveal results for a project that is no longer selected (1.536476ms)
+✔ late launch completion and stop-on-entry navigation respect a newer tool selection (4.630583ms)
+✔ a pending new-instance launch cannot replace an explicitly selected existing application (2.196483ms)
+✔ a current launch may reveal its source and application without invalidating its own ticket (1.586022ms)
+✔ faults, exits and verified-symbol source cannot override later user navigation (1.562476ms)
+✔ current active-session faults may reveal output while foreign owners and worker serials are rejected (2.04268ms)
+✔ continuing after navigation captures a new action without reviving earlier paused events (1.626212ms)
+✔ restart follows the new epoch while the previous worker identity remains unable to reveal (1.794656ms)
+✔ registered debug commands refresh follow intent; cancelled or unavailable commands do not authorize reveals (1.865243ms)
+✔ main and detached document navigation invalidate pending reveals and listeners are disposed (0.774087ms)
+✔ an explicit target starts even when the selected build project is a library (6.949099ms)
+✔ stopping a pending launch revokes its later reveal without leaving an activation callback in worker options (3.177662ms)
+✔ Studio source VM launch delivers UI reset, breakpoint, step and capture with browser timer receivers (646.437348ms)
+✖ Studio source VM timers preserve two live applications across targeted stop and restart (616.793433ms)
+✔ Studio direct CIL launch delivers UI reset, breakpoint, step and capture with browser timer receivers (744.985801ms)
+✖ Studio direct CIL timers preserve two live applications across targeted stop and restart (619.706243ms)
+✔ Studio bulk save follows the successful Save As handle and leaves the original file untouched (32.208954ms)
+✔ bulk I/O cannot reconcile a replacement document with the same URI and version (14.170033ms)
+✔ disposing StudioSave cancels an outstanding picker without retaining targets or refreshing documents (2.764688ms)
+✔ native workspaces reject browser Save As before asking for a destination (2.256401ms)
+✔ document save acquires its picker synchronously and commits the exact asynchronously normalized capture (4.546194ms)
+✔ file picker opens synchronously exactly once and passes its original ticket into real workspace adoption (19.762424ms)
+✔ a superseded picker late change cannot invoke import or acquire a newer ticket (8.057037ms)
+✔ an uncancellable late reader keeps the original ticket and cannot replace a newer workspace (7.333737ms)
+✔ cancel removes the abort listener, releases an owned ticket, and permits a new picker (4.369417ms)
+✔ cancelling a borrowed ticket leaves ownership with the caller and creates no duplicate picker ticket (2.123051ms)
+✔ disposal rejects an open picker and removes all input and ticket listeners before late events (3.095136ms)
+✔ a direct nonempty input change begins once without opening a second native picker (9.196454ms)
+✔ an empty unsolicited change cannot supersede an independent pending workspace operation (1.787525ms)
+✔ read-only ownership rejects before opening the browser picker (3.297342ms)
+✔ consumer failure reports the actual error and releases its ticket without changing documents (1.662296ms)
+✔ workspace replacement publishes one valid layout before real retained content is resolved (48.355939ms)
+✔ same-URI replacement refreshes primary and split view content even when the layout is unchanged (13.427284ms)
+✔ incremental replacement removes split, floating, popout and closed source views without replacing surviving owners (20.013381ms)
+✔ an empty source workspace retains its selected tool and does not resolve a removed document (7.996396ms)
+✔ metadata-only sync refreshes a retained tab dirty affordance without a document-service event (2.764242ms)
+✔ a real replacement content failure stays visible and the committed layout can render after its cause is corrected (8.172702ms)
+✔ normal popout return keeps its default reopen, render, DOM identity and owner-focus behavior (3.715181ms)
+✔ explicit popout render deferral leaves a closed panel closed until the caller completes its update (2.064082ms)
+✔ production Watch storage initializes before a real File import without an error toast (36.467449ms)
+✔ the registered v1 key restores Watch expressions through the actual installation boundary (3.062757ms)
+✔ registering Watch storage preserves the exact allowlist and exposes corrupt persisted payloads (0.901459ms)
+✔ real storage quota failures retain previous Watch state and remain explicit (0.521486ms)
+✔ Watch 2 is an executable user command with independent expressions/results and explicit application scope (17.08229ms)
+✔ Watch controls add, scope and remove expressions while asynchronous values retain the input node (12.445607ms)
+✔ pending application/frame results are aborted and never replace a newer window scope (4.644563ms)
+✔ hidden Watch windows do no evaluation or DOM writes for background output (92.726413ms)
+✔ factory registration before restore recreates exact Watch identity, layout and saved expressions (4.317781ms)
+✔ closing retains the controller and explicit unregister/dispose releases it before reopening (2.378106ms)
+✔ corrupt, oversized, duplicate and failed persisted writes are explicit and atomic (0.451901ms)
+✔ saved tool layout applies across document sets without closing or reopening documents (4.663062ms)
+✔ saved layouts support legacy payloads, stable slots, rename, delete and rejected persistence (1.63167ms)
+✔ reset requires an explicit positive choice (0.392591ms)
+✔ navigation retains group, view and popout identities and rejects malformed locations (0.567316ms)
+✔ navigation returns moved tab to its original existing document group (2.475894ms)
+✔ tool factories create independent instances and restore exact identities (1.084826ms)
+✔ Window command descriptors include layout slots and keyboard-only management (0.6037ms)
+✔ closed embedded assets declare classic format; borrowed strings and normal URLs remain ESM (2.185275ms)
+✔ compiler and runtime clients pass declared format and URL identity through injected factories and restart (1.716548ms)
+✔ worker errors retain native cause, source coordinates, generation, and original opaque details (1.163815ms)
+✔ synchronous Worker construction errors retain their cause and borrowed module attribution (0.496479ms)
+✔ worker metadata excludes URL capability queries, fragments, and credentials (0.445842ms)
+✔ worker requests preserve the protocol and reject errors without leaking pending requests (2.705801ms)
+✔ worker errors reject all requests and only explicit restart admits new work (0.841068ms)
+✔ restart generations suppress late replies and events from the terminated worker (0.344029ms)
+✔ timeout, abort, quota and disposal all clean up their pending requests (10.503579ms)
+✔ constructor request middleware is explicit and preserves input objects (0.432582ms)
+✔ event delivery is ordered under reentrancy and unsubscribe during dispatch (0.266342ms)
+✔ a slow earlier read cannot replace a later workspace, even after the later ticket finishes (5.353864ms)
+✔ an old finally cannot release or cancel the current request (0.631262ms)
+✔ nested readers share the original ticket instead of beginning after their await (0.913097ms)
+✔ external cancellation rejects adoption and retains the original cancellation cause (2.223763ms)
+✔ an already-cancelled request cannot begin reading or leave ownership behind (1.467012ms)
+✔ ownership check cancels after document edit without undoing the current workspace (0.842801ms)
+✔ ownership check cancels after document replacement without undoing the current workspace (0.704172ms)
+✔ ownership check cancels after workspace epoch without undoing the current workspace (0.363738ms)
+✔ ownership check cancels after native backend without undoing the current workspace (0.558372ms)
+✔ ownership check cancels after read-only transition without undoing the current workspace (0.465872ms)
+✔ ownership check cancels after document disposal without undoing the current workspace (0.427705ms)
+✔ begin rejects a locked workspace and a disposed document service (0.357399ms)
+✔ disposal cancels pending I/O, prevents adoption, and is idempotent (0.444651ms)
+✔ finish detaches external cancellation and a finished ticket cannot be reused (0.35846ms)
+✔ independent Studio instances do not cancel each other (0.373082ms)
+✔ a reentrant abort listener cannot restore an older owner over a newer request (0.605653ms)
+✔ invalid arguments do not supersede a valid pending request (0.334154ms)
+✔ initial model places all panels closed with persistent empty document group (2.756236ms)
+✔ open activate close reopen retains unique placement (1.826424ms)
+✔ edge dock left (0.942251ms)
+✔ edge dock right (0.39121ms)
+✔ edge dock top (0.374194ms)
+✔ edge dock bottom (0.329406ms)
+✔ tab reorder is deterministic (0.413854ms)
+✔ float redock cleans empty floating nodes (0.575347ms)
+✔ auto hide pin close and reopen move one panel (0.930142ms)
+✔ documents cannot auto hide (0.68964ms)
+✔ nonclosable panels cannot close (0.423849ms)
+✔ layout JSON restore roundtrips split auto hide and floats (0.728588ms)
+✔ invalid restore is atomic s=>s.root.active='missing' (0.230427ms)
+✔ invalid restore is atomic s=>s.closed.push('output') (0.24504ms)
+✔ invalid restore is atomic s=>s.root.id='' (0.206211ms)
+✔ invalid restore is atomic s=>s.version=999 (0.260012ms)
+✔ invalid restore is atomic s=>s.closed.pop() (0.188234ms)
+✔ invalid restore is atomic s=>s.autoHide.left.push('unknown') (0.180592ms)
+✔ invalid restore is atomic s=>s.floating.push({id:'f',x:0,y:0,width:-1,height:100,root:createGroup('g',[])}) (0.225841ms)
+✔ invalid operation rolls back model (0.342076ms)
+✔ undo redo restore correct placements (0.353553ms)
+✔ split resize validates finite ratio and clamps keyboard movement (0.367314ms)
+✔ closing final document keeps a docking target (0.194413ms)
+✔ history bound and subscriptions can unsubscribe (2.434621ms)
+✔ register and unregister document panels preserve invariants (0.333593ms)
+✔ duplicate tree identifiers are rejected (0.192951ms)
+✔ randomized moves maintain uniqueness and valid round trips (111.447429ms)
+✔ 08 preview mutation batches preflight before replacing workspace buffers (3.962375ms)
+✔ 08 preview rename/copy/delete undo restores data and editor metadata (1.437718ms)
+✔ 08 preview undo refuses subsequent user edits (0.659164ms)
+✔ 08 pending file command cannot cross a workspace switch (0.296196ms)
+✔ 08 planning a project change detects concurrent project source changes (0.428757ms)
+✔ 08 native planning reads unsaved project buffers, not an old disk snapshot (0.256156ms)
+✔ 08 cross-project source copy explicitly includes files with defaults disabled (4.977276ms)
+✔ 08 readonly explorer rejects file mutations before prompting (1.189965ms)
+✔ 08 overlapping explorer dialogs cannot start a second mutation (0.494786ms)
+✔ 08 solution project removal preserves comment and neighboring configuration (0.733966ms)
+✔ 08 solution removal also removes literal dependency on the removed member (0.327574ms)
+✔ 08 package reference authoring escapes metadata and does not invent relative package IDs (0.701819ms)
+✔ 08 path rewrites leave commented-out references and CDATA byte-identical (0.520956ms)
+✔ 08 adding compile membership removes default match before explicit include (0.675659ms)
+✔ 08 Visual Studio modifier-only keys do not eat an active keyboard chord (13.495441ms)
+✔ 08 editor declares Visual Studio default and six distinct profiles without a DOM (0.687256ms)
+✔ 08 native XML write undo restores original encoding and byte hash (29.192792ms)
+✔ 08 native XML syntax validation precedes every batch mutation (1.255654ms)
+✔ 08 native overlapping parent/child operations fail preflight instead of breaking undo (1.139047ms)
+✔ 08 native XML write followed by undo rejects later disk edits (8.585176ms)
+✔ 08 actual loopback explorer APIs enforce auth/origin and preserve binary bytes (47.067416ms)
+ℹ tests 790
+ℹ suites 0
+ℹ pass 787
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52500.854497
+
+✖ failing tests:
+
+test at tests/a19-studio-composition.test.js:177:1
+✖ silent Studio builds leave large documents available without sending them to the compiler (42.712575ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /automatic build disabled/. Input:
+  
+  "STUDIO_COMPILER_SOURCE_LIMIT: Source 'Alpha/Program.cs' has 8388609 UTF-16 units; the compiler supports at most 2000000 per source. Editing, saving and text search remain available; project language services and compilation are unavailable."
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-integration/tests/a19-studio-composition.test.js:185:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "STUDIO_COMPILER_SOURCE_LIMIT: Source 'Alpha/Program.cs' has 8388609 UTF-16 units; the compiler supports at most 2000000 per source. Editing, saving and text search remain available; project language services and compilation are unavailable.",
+    expected: /automatic build disabled/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/a19-studio-runtime-timers.test.js:60:3
+✖ Studio source VM timers preserve two live applications across targeted stop and restart (616.793433ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be reference-equal to "expected":
+  + actual - expected
+  ... Skipped lines
+  
+    AppSession {
+      activeRuntimeSettings: {
+        compute: {
+          backend: 'auto',
+          maxElements: 1000000,
+  ...
+      boundBreakpoints: Map(0) {},
+  +   channelId: 'program:app-1',
+  -   channelId: 'program:app-2',
+      controlBusy: false,
+      debug: {
+  +     appId: 'app-1',
+  -     appId: 'app-2',
+        assemblyLoad: {
+          bytes: 6144,
+          cacheHit: false,
+          format: 'ECMA-335',
+  +       milliseconds: 30.63851599999998
+  -       milliseconds: 20.64559600000007
+        },
+        breakpoints: [],
+        breakpointsEnabled: true,
+        codeVersion: 0,
+        dataBreakpoints: [],
+  ...
+        },
+  +     identity: 'app-1:1:1',
+  -     identity: 'app-2:1:1',
+        locals: [],
+        logicalConcurrency: true,
+  +     output: 'APP_OUTPUT\nalpha\nalpha environment\n',
+  -     output: 'APP_OUTPUT\nbeta\nbeta environment\n',
+        point: null,
+  +     reason: {
+  +       reason: 'terminated'
+  +     },
+  -     reason: null,
+        runtime: {
+          compute: null,
+          externalRevision: 0,
+          network: {
+            enabled: false,
+  ...
+            bytes: 6144,
+  +         decodeMs: 9.49985700000002,
+  +         loadMs: 29.284514000000172,
+  +         verificationMs: 19.78010100000006
+  -         decodeMs: 6.242242000000033,
+  -         loadMs: 19.711148000000094,
+  -         verificationMs: 13.46545100000003
+          },
+  +       elapsedMs: 8.527265999999827,
+  -       elapsedMs: 4.914299000000028,
+          frames: 0,
+          heap: {
+  +         allocatedBytes: 984,
+  -         allocatedBytes: 980,
+            allocations: 13,
+            collections: 0,
+            edgesScanned: 0,
+            freedBytes: 0,
+            freedObjects: 0,
+  ...
+            lastPauseMs: 0,
+  +         liveBytes: 984,
+  -         liveBytes: 980,
+            liveObjects: 13,
+            markMs: 0,
+            markedObjects: 0,
+            maxBytes: 33554432,
+            maxPauseMs: 0,
+  +         peakBytes: 984,
+  -         peakBytes: 980,
+            rootsScanned: 0,
+            sweepMs: 0,
+            threshold: 65536,
+            totalPauseMs: 0
+          },
+  ...
+        ],
+  +     uiActive: false
+  -     uiActive: true
+      },
+      debugSources: Map(1) {
+        'Program.cs' => 'using System;\n' +
+          'using Microsoft.UI.Xaml;\n' +
+          'using Microsoft.UI.Xaml.Controls;\n' +
+  ...
+      disposed: false,
+  +   ended: true,
+  -   ended: false,
+      events: WorkbenchEvents {
+        disposed: false,
+        draining: false,
+        listeners: Set(1) {
+          {
+  ...
+        queue: [],
+  +     sequence: 12
+  -     sequence: 8
+      },
+      expectedRuntimeSession: 1,
+      fallbackOutput: '',
+      frameId: null,
+      hotEdit: false,
+  +   id: 'app-1',
+  -   id: 'app-2',
+      immediateHistory: [],
+      inspectedLocals: null,
+      inspectedThreadFrames: null,
+      inspectedThreadId: null,
+      lastLaunch: {
+  ...
+        environment: {
+  +       APP_ENV: 'alpha environment'
+  -       APP_ENV: 'beta environment'
+        },
+        managedIL: false,
+        network: {
+          allowedOrigins: [],
+          maxConcurrent: 4,
+  ...
+        programArguments: [
+  +       'alpha'
+  -       'beta'
+        ]
+      },
+      lastManagedLaunch: null,
+      launchBusy: false,
+  +   launchEpoch: 2,
+  +   name: 'Alpha',
+  -   launchEpoch: 1,
+  -   name: 'Beta',
+      output: OutputChannels {
+        channels: Map(8) {
+          'Build Order' => {
+            buffer: OutputBuffer {
+              cached: '',
+  ...
+      },
+  +   outputLength: 35,
+  -   outputLength: 33,
+      pendingControl: null,
+      profileId: 'default',
+  +   projectId: 'Alpha',
+  -   projectId: 'Beta',
+      renderer: 'auto',
+      runtimeSession: 1,
+      runtimeSettings: {
+        allowedOrigins: [],
+        compute: {
+  ...
+      },
+  +   state: 'stopped',
+  -   state: 'terminated',
+      threadId: 1,
+      watchEpoch: 0,
+      watchResults: Map(0) {},
+      watches: [],
+      worker: WorkerClient {
+  ...
+          queue: [],
+  +       sequence: 9
+  -       sequence: 7
+        },
+        factory: [Function: workerFactory],
+        failed: false,
+        generation: 1,
+        lastError: null,
+  ...
+        },
+  +     next: 4,
+  -     next: 1,
+        options: {
+          kind: 'runtime',
+  +       name: 'runtime:app-1',
+  -       name: 'runtime:app-2',
+          onError: [Function: onError],
+          onEvent: [Function: onEvent],
+          workerFactory: [Function: workerFactory]
+        },
+        pending: Map(0) {},
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-integration/tests/a19-studio-runtime-timers.test.js:87:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [AppSession],
+    expected: [AppSession],
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a19-studio-runtime-timers.test.js:60:3
+✖ Studio direct CIL timers preserve two live applications across targeted stop and restart (619.706243ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be reference-equal to "expected":
+  + actual - expected
+  ... Skipped lines
+  
+    AppSession {
+      activeRuntimeSettings: {
+        compute: {
+          backend: 'auto',
+          maxElements: 1000000,
+  ...
+      boundBreakpoints: Map(0) {},
+  +   channelId: 'program:app-1',
+  -   channelId: 'program:app-2',
+      controlBusy: false,
+      debug: {
+  +     appId: 'app-1',
+  -     appId: 'app-2',
+        assemblyLoad: {
+          bytes: 6144,
+          cacheHit: false,
+          format: 'ECMA-335',
+  +       milliseconds: 11.407779000000119
+  -       milliseconds: 12.450350000000071
+        },
+        breakpoints: [],
+        breakpointsEnabled: true,
+        codeVersion: 0,
+        dataBreakpoints: [],
+  ...
+        },
+  +     identity: 'app-1:1:1',
+  -     identity: 'app-2:1:1',
+        locals: [],
+        logicalConcurrency: true,
+  +     output: 'APP_OUTPUT\nalpha\nalpha environment\n',
+  -     output: 'APP_OUTPUT\nbeta\nbeta environment\n',
+        point: null,
+        profile: 'managed-il',
+  +     reason: {
+  +       reason: 'terminated'
+  +     },
+  -     reason: null,
+        returnValue: '',
+        runtime: {
+          compute: null,
+          externalRevision: 0,
+          network: {
+  ...
+            bytes: 6144,
+  +         loadMs: 11.407779000000119
+  -         loadMs: 12.450350000000071
+          },
+  +       elapsedMs: 11.864301999999952,
+  -       elapsedMs: 9.898203000000194,
+          frames: 0,
+          heap: {
+  +         allocatedBytes: 984,
+  -         allocatedBytes: 980,
+            allocations: 13,
+            collections: 0,
+            edgesScanned: 0,
+            freedBytes: 0,
+            freedObjects: 0,
+  ...
+            lastPauseMs: 0,
+  +         liveBytes: 984,
+  -         liveBytes: 980,
+            liveObjects: 13,
+            markMs: 0,
+            markedObjects: 0,
+            maxBytes: 33554432,
+            maxPauseMs: 0,
+  +         peakBytes: 984,
+  -         peakBytes: 980,
+            rootsScanned: 0,
+            sweepMs: 0,
+            threshold: 65536,
+            totalPauseMs: 0
+          },
+  ...
+        ],
+  +     uiActive: false
+  -     uiActive: true
+      },
+      debugSources: Map(1) {
+        'Program.cs' => 'using System;\n' +
+          'using Microsoft.UI.Xaml;\n' +
+          'using Microsoft.UI.Xaml.Controls;\n' +
+  ...
+      disposed: false,
+  +   ended: true,
+  -   ended: false,
+      events: WorkbenchEvents {
+        disposed: false,
+        draining: false,
+        listeners: Set(1) {
+          {
+  ...
+        queue: [],
+  +     sequence: 12
+  -     sequence: 8
+      },
+      expectedRuntimeSession: 1,
+      fallbackOutput: '',
+      frameId: null,
+      hotEdit: false,
+  +   id: 'app-1',
+  -   id: 'app-2',
+      immediateHistory: [],
+      inspectedLocals: null,
+      inspectedThreadFrames: null,
+      inspectedThreadId: null,
+      lastLaunch: {
+  ...
+        environment: {
+  +       APP_ENV: 'alpha environment'
+  -       APP_ENV: 'beta environment'
+        },
+        managedIL: true,
+        network: {
+          allowedOrigins: [],
+          maxConcurrent: 4,
+  ...
+        programArguments: [
+  +       'alpha'
+  -       'beta'
+        ]
+      },
+      lastManagedLaunch: null,
+      launchBusy: false,
+  +   launchEpoch: 2,
+  +   name: 'Alpha',
+  -   launchEpoch: 1,
+  -   name: 'Beta',
+      output: OutputChannels {
+        channels: Map(8) {
+          'Build Order' => {
+            buffer: OutputBuffer {
+              cached: '',
+  ...
+      },
+  +   outputLength: 35,
+  -   outputLength: 33,
+      pendingControl: null,
+      profileId: 'default',
+  +   projectId: 'Alpha',
+  -   projectId: 'Beta',
+      renderer: 'auto',
+      runtimeSession: 1,
+      runtimeSettings: {
+        allowedOrigins: [],
+        compute: {
+  ...
+      },
+  +   state: 'stopped',
+  -   state: 'terminated',
+      threadId: 1,
+      watchEpoch: 0,
+      watchResults: Map(0) {},
+      watches: [],
+      worker: WorkerClient {
+  ...
+          queue: [],
+  +       sequence: 9
+  -       sequence: 7
+        },
+        factory: [Function: workerFactory],
+        failed: false,
+        generation: 1,
+        lastError: null,
+  ...
+        },
+  +     next: 4,
+  -     next: 1,
+        options: {
+          kind: 'runtime',
+  +       name: 'runtime:app-1',
+  -       name: 'runtime:app-2',
+          onError: [Function: onError],
+          onEvent: [Function: onEvent],
+          workerFactory: [Function: workerFactory]
+        },
+        pending: Map(0) {},
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-integration/tests/a19-studio-runtime-timers.test.js:87:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [AppSession],
+    expected: [AppSession],
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

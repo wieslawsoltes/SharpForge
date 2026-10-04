@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-a5-baseline-profile-targeted-qualification",
+  "sourceRevision": "876baeb099c9697f20fd09e7ffa39ebda284770e",
+  "sourceTree": "bb8661834ea08234b6cbf499dbdd7b8c53322cb9",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/a19-qualification-profiles.test.js",
+    "tests/a19-qualification-trigger.test.js",
+    "tests/a19-qualification-preflight.test.js",
+    "tests/a19-qualification-outcomes.test.js"
+  ],
+  "nodeVersion": "v24.19.0",
+  "startedAt": "2026-10-04T06:28:50.308925+00:00",
+  "finishedAt": "2026-10-04T06:28:50.964269+00:00",
+  "exitCode": 0,
+  "counts": {
+    "tests": 35,
+    "suites": 0,
+    "pass": 35,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 510.205138
+  },
+  "trackedCleanBefore": true,
+  "untrackedPaths": [],
+  "sourceUnchanged": true,
+  "independentReview": {
+    "reviewer": "/root/text_engine",
+    "mode": "read-only source review",
+    "sourceRevision": "876baeb099c9697f20fd09e7ffa39ebda284770e",
+    "result": "No concrete blocker found in profile, trigger/workflow wiring, ten authored fixtures or documentation.",
+    "executionPerformed": false
+  },
+  "archiveIntegrity": {
+    "rawFileCount": 2,
+    "rawBytes": 9219,
+    "verification": "Copies read back and compared byte for byte; test-log digest also agrees with the retained summary."
+  },
+  "hostedComparativeExecution": "pending",
+  "additionalExecutionForArchive": false,
+  "files": [
+    {
+      "sourcePath": "artifacts/results/p16-a5-baseline-profile/tests.log",
+      "path": "tests.log",
+      "bytes": 8125,
+      "sha256": "fc285ea68ecf380504b050be8cb7310e539a098a2e5db9a3c0c0c7579e5effec"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-baseline-profile/summary.json",
+      "path": "summary.json",
+      "bytes": 1094,
+      "sha256": "f3d0ec4949622f1f63789a730dfcf5e7ba02819e79df36ad9cf64e2a58161b85"
+    }
+  ]
+}

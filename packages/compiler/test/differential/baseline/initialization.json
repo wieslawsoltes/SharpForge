@@ -1,5 +1,5 @@
 {
-  "initialization/optional-named-and-params-arguments": ["diagnostics", "warnings", "bytecode", "cil"],
-  "initialization/order-of-initializers-and-constructors": ["diagnostics", "warnings", "bytecode", "cil"],
-  "initialization/properties-indexers-and-statics": ["diagnostics", "warnings", "bytecode", "cil"]
+  "initialization/optional-named-and-params-arguments": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "initialization/order-of-initializers-and-constructors": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "initialization/properties-indexers-and-statics": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

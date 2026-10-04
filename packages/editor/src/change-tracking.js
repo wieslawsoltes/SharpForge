@@ -3,14 +3,21 @@ export class ChangeTracking {
   constructor(model) { this.model = model; this.opened = model.snapshot(); this.saved = this.opened; this.touched = new Set(); }
 
   applyChange(event) {
-    for (const change of [...event.changes].sort((left, right) => right.start - left.start)) {
-      const start = change.range?.start.line ?? event.before.positionAt(change.start).line;
-      const oldEnd = change.range?.end.line ?? event.before.positionAt(change.end).line;
-      const inserted = (change.text.match(/\r\n|\n|\r/g) ?? []).length;
-      const delta = inserted - (oldEnd - start);
-      this.touched = new Set([...this.touched].map(line => line > oldEnd ? line + delta : line));
-      for (let line = start; line <= start + inserted; line++) this.touched.add(line);
+    const spans = changedLineSpans(event);
+    const next = new Set();
+    for (const line of this.touched) {
+      let delta = 0;
+      let removed = false;
+      for (const span of spans) {
+        if (line < span.oldStart) break;
+        if (line <= span.oldEnd) { removed = true; break; }
+        delta = span.delta;
+      }
+      if (!removed) next.add(line + delta);
     }
+    // New spans already use final coordinates; shifting them again would double-count earlier edits.
+    for (const span of spans) for (let line = span.start; line <= span.end; line++) next.add(line);
+    this.touched = next;
   }
 
   stateAt(line) {
@@ -38,6 +45,26 @@ export class ChangeTracking {
     const text = target.getText ? target.getText(targetStart, targetEnd) : target.text.slice(targetStart, targetEnd);
     return {start, end, text};
   }
+}
+
+/** Snapshot geometry includes CR/LF joins and splits that counting inserted newline characters misses. */
+function changedLineSpans(event) {
+  const spans = [];
+  let offsetDelta = 0;
+  let lineDelta = 0;
+  for (const change of [...event.changes].sort((left, right) => left.start - right.start)) {
+    const oldStart = change.range?.start.line ?? event.before.positionAt(change.start).line;
+    const oldEnd = change.range?.end.line ?? event.before.positionAt(change.end).line;
+    const newStart = change.newStart ?? change.start + offsetDelta;
+    const newEnd = change.newEnd ?? newStart + change.text.length;
+    const start = change.newRange?.start.line ?? event.after.positionAt(newStart).line;
+    const end = change.newRange?.end.line ?? event.after.positionAt(newEnd).line;
+    // Editing within CRLF can advance newStart past a surviving prefix line. Retain that boundary too.
+    spans.push({ oldStart, oldEnd, start: Math.min(start, oldStart + lineDelta), end, delta: end - oldEnd });
+    offsetDelta += change.text.length - (change.end - change.start);
+    lineDelta = end - oldEnd;
+  }
+  return spans;
 }
 
 function snapshotLine(snapshot, line) {

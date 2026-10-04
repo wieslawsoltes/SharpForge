@@ -32,7 +32,7 @@ The A29 manifest's existing recursive test glob discovers the focused unit tests
 | Obligation | Runnable component / remaining blocker |
 | --- | --- |
 | Remote solution and two documents | CLI three-project debug scenario; local Dashboard/Monitor/Shared fixture edits both C# documents, checks undo/redo, caret, keymap, breakpoints and explicit global designer Design/Split/Code views. Remote Git and independent designer sessions remain blocked by A25 and A18. |
-| Two apps and two instances | Planned steps include app/session/generation, hot reload, designer attachment, restart and stale routing; A19/A18 APIs are absent. Separate browser tabs or raw VM instances are not substituted. |
+| Two apps and two instances | The `sessions` action launches Dashboard, Monitor and a second Dashboard together in actual Studio with three production runtime Workers and separate compiler Workers. It exercises process selection, a breakpoint/step/continue, live designer attachment and wrong-target rejection, targeted stop/restart, explicit per-session grant/revoke UI, and real pending worker request cancellation. Hot Reload is attempted through the actual editor: another live instance currently keeps that project document read-only, so `MULTI-APP` stays blocked while safe independent phases continue. No editor unlock, model injection, duplicate stop or replacement host manufactures a pass. |
 | Numeric and network work | Real ComputePool workers run alongside real loopback HTTP/WebSocket traffic; cancellation/disposal and continued component usability are checked. Cross-app fairness, budget admission and independent grant revocation remain blocked by R015-T02/A12-T10. Timings are raw observations, not a latency qualification. |
 | Rendering and device loss | Actual Studio graphics run separately through Canvas2D, DOM and requested WebGPU, retaining observed backend and adapter metadata. A real RenderSurface device is deliberately destroyed to capture its actual device.lost fallback and retained pixels. Fallback is blocked for the GPU obligation; neither software adapters nor deliberate destruction qualify physical hardware faults. |
 | Two downloaded app HTML files | A26 APIs are absent. Planned checks cover concurrent filenames, SHA-256, dependency closure, actual bytes offline/file and served, and absent Studio/compiler/recovery/credentials. The IDE standalone file is never substituted. |
@@ -57,6 +57,21 @@ against that commit. Its two builds compare extraction ordering/mtime and golden
 example outputs; release15 additionally compares the supplied release reference.
 A mismatch is a failure, never a blocker waiver. Nothing uploads the rebuilt
 artifacts. Source provenance recovery remains owned by SF-R015-T01.
+
+The multi-app action retains `sessions-report.json` and a screenshot per completed
+phase. Its required topology is two project applications, including two instances
+of Dashboard: three simultaneous application sessions. An observed Hot Reload
+blocker leaves the complete sequence blocked even when independent debugger,
+designer and lifecycle checks pass. A failure records the active and unexecuted
+phases. Source breakpoints are project-owned; the duplicate instance's selected
+debugger mutes breakpoints before the first instance is paused.
+
+Grant checks cover memory-only settings and their binding to a restarted
+application, plus targeted revocation; they issue no outbound request and do not
+claim HTTP/CORS enforcement. Callback checks post real worker RPC requests and
+restart before their reply callbacks run, then require rejection and fresh-worker
+usability. They do not fabricate delivery of a stale worker event or qualify late
+provider/network callbacks. Those network obligations remain separately blocked.
 
 `report.json` binds commit, Node/platform, scenario and blocker hashes. Every
 result artifact is SHA-256 bound; browser steps retain screenshots and backend

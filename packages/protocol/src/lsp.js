@@ -1,8 +1,9 @@
+import {renameWorkspaceEdit,prepareRename,workspaceSymbols} from './lsp-source.js';
 import { RefactoringEngine, formatDocument, foldingRanges, selectionRanges } from '@sharpforge/refactoring';
 import { Workspace } from '@sharpforge/workspace';
 import { LanguageService } from '@sharpforge/language';
 const tokenTypes=['namespace','class','method','field','variable','keyword','string','number','operator','property'];
-const symbolKinds={property:7,class:5,method:6,field:8,local:13};
+const symbolKinds={property:7,class:5,struct:23,interface:11,enum:10,delegate:12,method:6,field:8,event:24,local:13};
 /** Transport-independent LSP 3.17 subset. Feed JSON-RPC messages; send emitted notifications on your transport. */
 export class LanguageServer {
   constructor({workspace=new Workspace(),send=()=>{}}={}){this.workspace=workspace;this.language=new LanguageService(workspace);this.refactoring=new RefactoringEngine(workspace,this.language);this.send=send;this.shutdown=false;}
@@ -26,15 +27,15 @@ export class LanguageServer {
         case 'textDocument/hover':{const h=this.language.hover(p.textDocument.uri,this.offset(p));result=h?{contents:{kind:'markdown',value:'```csharp\n'+h.contents+'\n```'}}:null;break;}
         case 'textDocument/definition':{const d=this.language.definition(p.textDocument.uri,this.offset(p));result=d?this.location(d):null;break;}
         case 'textDocument/references':result=this.language.references(p.textDocument.uri,this.offset(p),p.context?.includeDeclaration!==false).map(r=>this.location(r));break;
-        case 'textDocument/rename':{const changes={};for(const e of this.language.rename(p.textDocument.uri,this.offset(p),p.newName))(changes[e.uri]??=[]).push({range:this.location(e).range,newText:e.newText});result=this.documentChanges?{documentChanges:Object.entries(changes).map(([uri,edits])=>({textDocument:{uri,version:this.source(uri).version},edits}))}:{changes};break;}
-        case 'textDocument/prepareRename':{const uri=p.textDocument.uri,symbol=this.language.symbolAt(uri,this.offset(p)),reference=this.language.reference(uri,this.offset(p));result=symbol&&symbol.kind!=='class'&&reference&&this.workspace.documents.has(uri)?{range:this.location(reference).range,placeholder:symbol.name}:null;break;}
-        case 'textDocument/documentHighlight':result=this.language.references(p.textDocument.uri,this.offset(p)).filter(r=>r.uri===p.textDocument.uri).map(r=>({range:this.location(r).range,kind:1}));break;
-        case 'workspace/symbol':result=this.workspace.compile().symbols.filter(s=>s.kind!=='local'&&!s.name.startsWith('<')&&s.name.toLowerCase().includes((p.query??'').toLowerCase())).slice(0,1000).map(s=>({name:s.name,kind:symbolKinds[s.kind]??13,location:this.location(s),containerName:s.owner??''}));break;
+        case 'textDocument/rename':result=renameWorkspaceEdit(this,p);break;
+        case 'textDocument/prepareRename':result=prepareRename(this,p);break;
+        case 'textDocument/documentHighlight':result=this.language.references(p.textDocument.uri,this.offset(p)).filter(r=>r.uri===p.textDocument.uri).map(r=>({range:this.location(r).range,kind:r.write?3:r.read?2:1}));break;
+        case 'workspace/symbol':result=workspaceSymbols(this,p.query).map(s=>({name:s.name,kind:symbolKinds[s.kind]??13,location:this.location(s),containerName:s.ownerFullName??s.namespace??''}));break;
         case 'textDocument/foldingRange':result=foldingRanges(this.workspace,p.textDocument.uri);break;
         case 'textDocument/selectionRange':result=selectionRanges(this.workspace,p.textDocument.uri,p.positions.map(position=>this.source(p.textDocument.uri).offsetAt(position)));break;
         case 'textDocument/formatting':result=formatDocument(this.workspace,p.textDocument.uri,p.options).map(e=>({range:this.location(e).range,newText:e.newText}));break;
         case 'textDocument/codeAction':{const uri=p.textDocument.uri,source=this.source(uri);result=this.refactoring.actions(uri,source.offsetAt(p.range.start),source.offsetAt(p.range.end)).filter(a=>!p.context?.only||p.context.only.some(k=>a.kind===k||a.kind.startsWith(k+'.'))).map(action=>({title:action.title,kind:action.kind,edit:{documentChanges:[{textDocument:{uri,version:source.version},edits:action.edits.map(e=>({range:this.location(e).range,newText:e.newText}))}]}}));break;}
-        case 'textDocument/inlayHint':{const uri=p.textDocument.uri,source=this.source(uri),start=source.offsetAt(p.range.start),end=source.offsetAt(p.range.end),syntax=this.workspace.syntax(uri),implicitStarts=new Set(syntax.tokens.flatMap((t,i)=>t.kind==='var'&&syntax.tokens[i+1]?[syntax.tokens[i+1].start]:[]));result=this.workspace.compile().symbols.filter(s=>s.uri===uri&&s.kind==='local'&&s.type!=='error'&&s.start>=start&&s.end<=end).filter(s=>implicitStarts.has(s.start)).map(s=>({position:source.positionAt(s.end),label:': '+s.type,kind:1,paddingLeft:false,paddingRight:true}));break;}
+        case 'textDocument/inlayHint':{const uri=p.textDocument.uri,source=this.source(uri);result=this.language.inlayHints(uri,{start:source.offsetAt(p.range.start),end:source.offsetAt(p.range.end)});break;}
         case 'textDocument/prepareCallHierarchy':result=this.language.callHierarchy(p.textDocument.uri,this.offset(p)).map(item=>this.callItem(item));break;
         case 'callHierarchy/incomingCalls':result=this.language.calls(p.item.data,'incoming').map(c=>({from:this.callItem(c.item),fromRanges:c.ranges.map(r=>this.location(r).range)}));break;
         case 'callHierarchy/outgoingCalls':result=this.language.calls(p.item.data,'outgoing').map(c=>({to:this.callItem(c.item),fromRanges:c.ranges.map(r=>this.location(r).range)}));break;

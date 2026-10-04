@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { propertySignature, codedIndex } from '@sharpforge/cil';
 import { AssemblyLoadSession, PropertyDesc, LoadErrorCode } from '../packages/clr/src/index.js';
 import { MetadataMemberDefinitions } from '../packages/clr/src/type-system/metadata-member-definitions.js';
-import { MetadataPropertyAccessors } from '../packages/clr/src/type-system/metadata-property-accessors.js';
+import { MetadataAccessors as MetadataPropertyAccessors } from '../packages/clr/src/type-system/metadata-accessors.js';
 import { managedFixture } from './managed-fixtures.js';
 
 const fixture = decorate => managedFixture({ methods: [

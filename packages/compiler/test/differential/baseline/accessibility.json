@@ -3,5 +3,6 @@
   "accessibility/cs0122-default-private-method": ["warnings"],
   "accessibility/cs0122-private-constructor": ["warnings"],
   "accessibility/cs0122-private-nested-type": ["diagnostics", "warnings"],
-  "accessibility/cs0122-protected-from-outside": ["warnings"]
+  "accessibility/cs0122-protected-from-outside": ["warnings"],
+  "accessibility/protected-and-private-within": ["directCil"]
 }

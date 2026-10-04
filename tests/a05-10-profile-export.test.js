@@ -1,37 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
 import {compileToIL} from '@sharpforge/compiler';
 import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine, exportSpeedscope} from '@sharpforge/runtime';
-
-const schema = JSON.parse(readFileSync(new URL('./fixtures/speedscope/file-format-schema.json', import.meta.url), 'utf8'));
-const schemaKeys = new Set(['$ref', '$schema', 'definitions', 'title', 'type', 'properties', 'required', 'items', 'anyOf', 'const', 'enum']);
-
-// The official pinned schema uses only these assertions. Fail closed if it grows.
-function matchesSchema(value, rule = schema) {
-  for (const key of Object.keys(rule)) assert(schemaKeys.has(key), `Unsupported schema keyword ${key}`);
-  if (rule.$ref) {
-    assert(rule.$ref.startsWith('#/definitions/'));
-    matchesSchema(value, schema.definitions[rule.$ref.slice('#/definitions/'.length)]);
-  }
-  if (rule.anyOf) {
-    assert(rule.anyOf.some(candidate => {
-      try { matchesSchema(value, candidate); return true; } catch { return false; }
-    }), 'No schema alternative matched');
-  }
-  if (Object.hasOwn(rule, 'const')) assert.equal(value, rule.const);
-  if (rule.enum) assert(rule.enum.includes(value));
-  if (rule.type) {
-    assert.equal(Array.isArray(value) ? 'array' : value === null ? 'null' : typeof value, rule.type);
-    if (rule.type === 'number') assert(Number.isFinite(value));
-  }
-  for (const key of rule.required ?? []) assert(Object.hasOwn(value, key), `Missing ${key}`);
-  for (const [key, child] of Object.entries(rule.properties ?? {})) {
-    if (Object.hasOwn(value, key)) matchesSchema(value[key], child);
-  }
-  if (rule.items) for (const item of value) matchesSchema(item, rule.items);
-}
+import {matchesSpeedscopeSchema} from './support/speedscope-schema.js';
 
 function profile() {
   return {format: 'SharpForge.InstructionProfile/1', clock: 'instructions', instructions: 7,
@@ -41,7 +13,7 @@ function profile() {
 
 test('official Speedscope shape preserves names, recursion, overflow and instruction totals', () => {
   const result = exportSpeedscope(profile(), {name: 'Recursion'});
-  matchesSchema(result);
+  matchesSpeedscopeSchema(result);
   assert.equal(result.$schema, 'https://www.speedscope.app/file-format-schema.json');
   assert.equal(result.name, 'Recursion');
   assert.deepEqual(result.shared.frames.map(frame => frame.name), ['[runtime]', '[profile capacity]', 'Program::Recurse']);
@@ -74,7 +46,7 @@ test('zero instructions and the largest exactly representable count remain valid
     input.samples = instructions ? [{stack: [0], weight: instructions}] : [];
     if (!instructions) input.methods = [];
     const result = exportSpeedscope(input);
-    matchesSchema(result);
+    matchesSpeedscopeSchema(result);
     assert.equal(result.profiles[0].endValue, instructions);
     assert.equal(JSON.parse(JSON.stringify(result)).profiles[0].endValue, instructions);
   }
@@ -130,7 +102,7 @@ for (const engine of ['source', 'reload', 'cil']) {
       assert.equal(vm.returnValue, 42);
       const data = vm.profiler.read();
       const resultProfile = exportSpeedscope(vm.profiler);
-      matchesSchema(resultProfile);
+      matchesSpeedscopeSchema(resultProfile);
       assert.equal(resultProfile.profiles[0].endValue, data.instructions);
       assert.equal(data.instructions, result.stats.instructions);
       assert.equal(resultProfile.profiles[0].weights.reduce((sum, weight) => sum + weight, 0), data.instructions);

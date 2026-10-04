@@ -1,5 +1,5 @@
 {
-  "generic-lowering/classes-members-and-statics-per-construction": ["diagnostics", "warnings", "bytecode", "cil"],
+  "generic-lowering/classes-members-and-statics-per-construction": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "generic-lowering/constraints-bind-calls-to-the-closed-type": ["diagnostics", "warnings", "bytecode", "cil"],
   "generic-lowering/cs0029-cs1503-constructions-are-distinct-types": ["diagnostics", "warnings"],
   "generic-lowering/cs0304-cs0417-creating-a-type-parameter": ["diagnostics", "warnings"],
@@ -10,7 +10,7 @@
   "generic-lowering/generic-delegates-lambdas-and-method-groups": ["diagnostics", "warnings", "bytecode", "cil"],
   "generic-lowering/generic-interface-implemented-by-a-generic-class": ["diagnostics", "warnings", "bytecode", "cil"],
   "generic-lowering/iterators-async-and-local-functions": ["diagnostics", "warnings", "bytecode", "cil"],
-  "generic-lowering/methods-inferred-explicit-and-default": ["diagnostics", "warnings", "bytecode", "cil"],
+  "generic-lowering/methods-inferred-explicit-and-default": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "generic-lowering/nested-generics-and-generic-methods-of-generic-classes": ["diagnostics", "warnings", "bytecode", "cil"],
   "generic-lowering/self-referencing-classes-and-null": ["diagnostics", "warnings", "bytecode", "cil"]
 }
