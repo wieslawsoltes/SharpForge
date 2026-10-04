@@ -1,5 +1,6 @@
 import {normalizeProperty, propertySchema} from './model.js';
 import {geometryInvariant} from './geometry-coordinates.js';
+import {responsiveViewportEmission} from './layout-authoring-viewport.js';
 
 export const responsiveSourceMarker = '// SharpForge adaptive states v1: ';
 
@@ -125,7 +126,7 @@ export function generateResponsiveMethods(document, options) {
   }
   methods.push('    }');
   const width = Number.isInteger(document.width) ? `${document.width}.0` : document.width;
-  return {methods, initialize: [`        ${methodName}(${width}${argumentsText});`],
-    diagnostics: [{code: 'SFD_RESPONSIVE_HOST_RESIZE', severity: 'info', span: {start: 0, length: 0},
-      message: `Call ${methodName}(width) from the application viewport resize callback. Automatic native SizeChanged triggers are unavailable.`}]};
+  const viewport = responsiveViewportEmission(options, methodName);
+  return {methods: [...methods, ...viewport.methods],
+    initialize: [`        ${methodName}(${width}${argumentsText});`, ...viewport.initialize], diagnostics: viewport.diagnostics};
 }

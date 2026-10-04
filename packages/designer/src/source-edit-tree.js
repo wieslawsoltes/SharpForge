@@ -53,7 +53,8 @@ function deleteNode(base, binding, edits, external) {
   }
   const unique = [...new Map(statements.map(statement => [statement.uri + ':' + statement.start, statement])).values()];
   const adaptive = base.responsiveSource;
-  const allowed = adaptive ? [...unique, adaptive.method, adaptive.initializer] : unique;
+  const allowed = adaptive ? [...unique, adaptive.method, adaptive.initializer,
+    ...(adaptive.viewport ? [adaptive.viewport.method, adaptive.viewport.statement] : [])] : unique;
   const references = referencedOutside(base, binding, allowed);
   if (references.length) failSource('Control is referenced by handwritten C# and cannot be deleted', binding.creation,
     'SFSYNC_REFERENCE', {references});

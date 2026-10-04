@@ -1,3 +1,4 @@
+import {readResponsiveViewport, ownResponsiveViewport} from './source-responsive-viewport.js';
 import {canonicalType} from '@sharpforge/framework';
 import {validateResponsiveDesign} from './layout-authoring-responsive.js';
 import {ownerName} from './source-symbols.js';
@@ -100,7 +101,7 @@ function readStates(reader, candidate, trivia, resolve, widthName) {
   return {value, resets, states};
 }
 
-function helperInitializer(reader, candidate) {
+function helperInitializer(reader, candidate, viewport) {
   const {method, owner} = candidate;
   const names = new Set([method.name, owner.name + '.' + method.name, ownerName(owner) + '.' + method.name]);
   const statements = reader.context.chosen.method.body.statements;
@@ -113,7 +114,8 @@ function helperInitializer(reader, candidate) {
   ownedCheck(expected && (actual === expected || actual?.legacy && actual.legacy === expected.legacy), initializer,
     'Adaptive initializer must bind to the declared owned helper');
   const index = statements.indexOf(initializer);
-  ownedCheck(statements.slice(index + 1).every(statement => statement.kind === 'Return' || statement.kind === 'Empty'
+  ownedCheck(statements.slice(index + 1).every(statement => statement === viewport?.statement
+    || statement.kind === 'Return' || statement.kind === 'Empty'
     || statement.expression?.kind === 'Call' && statement.expression.target?.name === 'Activate'), initializer,
   'The adaptive initializer must follow all construction and property statements');
   return initializer;
@@ -136,7 +138,8 @@ export function readSourceResponsive(reader) {
   ownedCheck(candidate.owner, method, 'Adaptive helpers require a containing class');
   ownedCheck(reader.context.methods.filter(item => ownerName(item.owner) === owner && item.method.name === method.name).length === 1,
     method, 'Adaptive helper overloads are not designer-owned');
-  const initializer = helperInitializer(reader, candidate);
+  const viewport = readResponsiveViewport(reader, candidate);
+  const initializer = helperInitializer(reader, candidate, viewport);
   const initializerArguments = responsiveInvocationArguments(reader.context.chosen.parsed, initializer.expression);
   const {resolve, targets, widthName} = parameterBindings(reader, method, initializer);
   const width = readResponsiveValue(responsiveValueReader(reader), initializer.expression.args[0]);
@@ -146,6 +149,10 @@ export function readSourceResponsive(reader) {
   const ids = new Set(result.resets.map(reset => reset.id));
   ownedCheck(new Set(targets.map(target => target.id)).size === targets.length
     && targets.every(target => ids.has(target.id)), method, 'Adaptive parameters cannot contain unused or repeated controls');
+  ownResponsiveViewport(reader, viewport);
+  if (!viewport) reader.warnings.push({code: 'SFD_RESPONSIVE_HOST_RESIZE', severity: 'info',
+    message: 'Adaptive layout uses an explicit caller. Automatic Window.SizeChanged requires a generated named adapter and static-field targets.',
+    uri: parsed.source.uri, start: method.start, end: method.end});
   reader.unmanaged = reader.unmanaged.filter(item => item.statement !== initializer);
   const region = reader.regions.find(item => item.span.start === initializer.start);
   if (region) {
@@ -153,6 +160,6 @@ export function readSourceResponsive(reader) {
     region.capabilities = ['navigate', 'adaptive'];
     region.owners = [...ids];
   }
-  return {...result, ...trivia, owned: true, uri: parsed.source.uri, method, initializer,
+  return {...result, ...trivia, owned: true, uri: parsed.source.uri, method, initializer, viewport,
     width, widthExpression: initializer.expression.args[0], initializerArguments, targets, widthName};
 }

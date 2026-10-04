@@ -1,3 +1,4 @@
+import {insertResponsiveViewport, removeResponsiveViewport} from './source-edit-responsive-viewport.js';
 import {validateResponsiveDesign, responsiveSourceMarker} from './layout-authoring-responsive.js';
 import {sourceLiteralEdit} from './source-literals.js';
 import {responsiveSourceProperty, responsiveAssignmentMap} from './source-responsive-values.js';
@@ -122,6 +123,7 @@ function signatureChanged(before, signature) {
 
 function removeAdaptive(base, result) {
   assertResponsiveReferencesOwned(base);
+  removeResponsiveViewport(base, result);
   const before = base.responsiveSource;
   const source = responsiveSourceFile(base, before.method);
   const header = sourceComments(source.text.slice(before.method.start, before.method.body.start));
@@ -150,7 +152,8 @@ export function sourceResponsiveEdits(base, document, names, options = {}) {
   const signature = responsiveSourceSignature(base, document, names, desired.targets);
   if (!before) {
     const generated = emitResponsiveSource({...document, responsive: desired.responsive}, signature, options.signal);
-    result.edits.push(responsiveMethodInsertion(base, generated), {uri: base.uri, ...sourceInsertion(base, [generated.initializer])});
+    result.edits.push(responsiveMethodInsertion(base, generated), {uri: base.uri, ...sourceInsertion(base, generated.initializers)});
+    insertResponsiveViewport(base, generated, result);
     result.structural = true;
     return result;
   }
@@ -158,6 +161,7 @@ export function sourceResponsiveEdits(base, document, names, options = {}) {
   if (changedSignature) {
     assertResponsiveReferencesOwned(base);
     parameterEdits(base, signature, result);
+    if (before.viewport && !signature.viewport) removeResponsiveViewport(base, result);
   }
   if (sameShape(before, desired) && !changedSignature) matchingShapeEdits(base, desired, result.edits);
   else {
