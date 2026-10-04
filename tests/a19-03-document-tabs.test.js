@@ -24,6 +24,33 @@ test('five concurrent preview navigations leave one preview; edit promotes and r
   tabs.dispose();
 });
 
+test('document edits redraw tab chrome only when dirty or preview metadata changes across shared views', async () => {
+  const { tabs, documents, layout } = fixture();
+  const primary = await tabs.open('file0.cs', { preview: true });
+  const second = await tabs.open('file0.cs', { viewId: 'another', preview: false });
+  const events = [];
+  const off = layout.subscribe(event => events.push(event.type));
+  documents.edit('file0.cs', 'first edit');
+  assert.deepEqual(events, ['documentState']);
+  assert.equal(layout.require(primary).dirty, true);
+  assert.equal(layout.require(second).dirty, true);
+  assert.equal(layout.state.tabState[primary].preview, false);
+  events.length = 0;
+  for (let index = 0; index < 100; index++) documents.edit('file0.cs', `edit ${index}`);
+  documents.notify('dirty', 'file0.cs');
+  documents.edit('file1.cs', 'closed document');
+  assert.deepEqual(events, [], 'buffer edits must not rerender the entire docking host');
+  documents.save('file0.cs');
+  assert.deepEqual(events, ['documentState']);
+  assert.equal(layout.require(primary).dirty, false);
+  assert.equal(layout.require(second).dirty, false);
+  events.length = 0;
+  documents.notify('saved', 'file0.cs');
+  assert.deepEqual(events, []);
+  off();
+  tabs.dispose();
+});
+
 test('pinned tabs survive close others and pin state roundtrips', async () => {
   const { tabs, uris, layout } = fixture();
   for (const uri of uris) await tabs.open(uri);
