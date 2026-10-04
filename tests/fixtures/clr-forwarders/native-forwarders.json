@@ -1,5 +1,15 @@
 {
   "sdk": "10.0.201",
+  "sources": [
+    {
+      "path": "tests/fixtures/clr-forwarders/Program.cs",
+      "sha256": "80ba71c161fc5c842aec874145ab0aa20dc96fad473092480401668a673fde98"
+    },
+    {
+      "path": "tests/clr-forwarders-fixtures.js",
+      "sha256": "98a7fe1cec2363030dc6a3e1cd63ea08bff63d5bdba71ad45af64c70a43b1964"
+    }
+  ],
   "images": [
     {
       "name": "ForwardTarget",
@@ -12,6 +22,10 @@
     {
       "name": "ForwardFacade",
       "sha256": "b6889cdfdb2d5054dccc9118d6d3d53be7be7b77d9dbc38cf6608d9136863cfe"
+    },
+    {
+      "name": "OuterOnly",
+      "sha256": "51f5272520486a02d3a65eab231ec65a9270355dd2d3f6190b6aa11f71b97fab"
     },
     {
       "name": "ForwardConsumer",
@@ -70,6 +84,17 @@
       "name": "Fixture.Widget",
       "assembly": "ForwardTarget",
       "token": 33554435,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "OuterOnly",
+        "name": "Fixture.Outer+Inner",
+        "token": null
+      },
+      "name": "Fixture.Outer+Inner",
+      "assembly": "ForwardTarget",
+      "token": 33554437,
       "canonical": true
     },
     {
