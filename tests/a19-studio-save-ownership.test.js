@@ -32,7 +32,8 @@ function saveFixture(t, picker) {
 
 function attachOriginalDisk(state, documents, handle) {
   const snapshot = documents.captureSave('Old.cs');
-  state.disk = new DiskWorkspace([{ path: snapshot.uri, source: snapshot.source, version: snapshot.version }],
+  state.disk = new DiskWorkspace([{ path: snapshot.uri, source: snapshot.source, version: snapshot.version,
+    byteLength: handle.bytes.byteLength }],
     new Map([['Old.cs', handle]]), 'Original folder', [], [], { readSource: readStudioSource });
   return state.disk;
 }
