@@ -114,6 +114,57 @@ Defaults and hard guards:
 
 Matches retain the existing URI/span/version/line/character/preview fields and add matched `.text`, `.captures`, named `.groups`, and capture `.indices`. `expandReplacement(replacement,match,sourceText?)` supports `$$`, `$&`, `$1`–`$99`, `$<name>`, and prefix/suffix tokens when the source is supplied. Literal replacements remain literal. `replaceTextMatches` preflights match count and output limits and returns `{text,count,matches,edits}`.
 
+### Navigation from a caret
+
+```js
+import { findLiteralMatch, findLiteralMatchAsync } from '@sharpforge/text';
+
+const next = findLiteralMatch(buffer.snapshot(), 'selected text', {
+  origin: selection.end, direction: 1, matchCase: true,
+  excludeRanges: selections.map(({start, end}) => ({start, end}))
+});
+const previous = await findLiteralMatchAsync(buffer, 'needle', {
+  origin: caret, direction: -1, signal
+});
+```
+
+Both functions return `{match,wrapped}`. A match contains `{uri,version,start,end,text}`;
+an exhausted scope returns `{match:null,wrapped:false}`. Forward navigation selects
+the nearest match starting at or after `origin`; reverse navigation selects the
+nearest match ending at or before it. The default origin is the start or end of
+the document for the requested direction. Offsets are UTF-16, scalar boundaries
+remain intact, and overlapping matches are eligible. A successful second pass
+reports `wrapped:true`; `wrap:false` disables that pass. A match crossing the
+origin remains eligible on the wrapped pass.
+
+Navigation reads indexed snapshots in bounded chunks and retains one match.
+It does not scan a document prefix to calculate line numbers or collect a capped
+result page. `findTextMatches` retains its separate 10,000-result ceiling and
+nonoverlap semantics. Sources may be strings, `SourceText`, immutable indexed
+snapshots, or mutable buffers/models exposing `snapshot()`, captured once before
+searching. A custom indexed source must provide stable `length` and
+`getText(start,end)` values for the lifetime of the call. Snapshot `.text` and
+`.lineStarts` are never requested when indexed reads are available.
+
+The same simple case folding, whole-word checks and 1,024-unit query limit apply.
+`excludeRanges` accepts at most 10,000 UTF-16 ranges, sorted and merged for binary
+lookup; a match overlapping a range or strictly containing an empty caret is
+excluded. Work is linear in visited scalars, plus logarithmic exclusion lookup
+per candidate. Retained state is bounded by chunk size, query length and the
+exclusion count, independently of the number of matches before the origin.
+
+Synchronous defaults remain 2,000,000 steps and 25 ms. The asynchronous API
+defaults to at most 1,000,000,000 steps and 30,000 ms for the complete search,
+yields between chunks, and closes its owned message channel on completion or
+failure. Both accept explicit `maxSteps`, `timeLimitMs`, `clock` and `signal`;
+limit exhaustion throws `SearchLimitError`, while cancellation throws
+`AbortError`, rather than returning a partial match or an incorrect wrap.
+`chunkSize` defaults to 16,384 UTF-16 units and accepts 256–262,144; a surrogate
+boundary may require one additional unit. An optional asynchronous
+`yieldControl()` supplies an explicit host scheduler, which must resolve its
+scheduling turn; cancellation and deadlines are checked before work resumes.
+These are work and memory bounds, not a browser frame-time guarantee.
+
 ## Diff and merge
 
 `diffLines`, `diffWords`, and `diffCharacters` return `{changes,hunks,minimal,timedOut,truncated,reason?}`. Changes are `{oldStart,oldEnd,newStart,newEnd}` UTF-16 intervals. Line hunks additionally expose zero-based exclusive `oldStartLine`/`oldEndLine`, `newStartLine`/`newEndLine`, and optional `innerChanges`.

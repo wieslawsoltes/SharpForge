@@ -1,6 +1,5 @@
 import {EditorPopup, node} from './dom.js';
-import {findTextMatches} from '@sharpforge/text';
-import {cooperativeLiteralSearch} from '../features/cooperative-search.js';
+import {findLiteralMatchAsync} from '@sharpforge/text';
 
 export class IncrementalSearchWidget {
   constructor(context) {
@@ -22,7 +21,12 @@ export class IncrementalSearchWidget {
   }
 
   open(direction = 1) {
-    if (this.popup.visible) { this.direction = direction; this.search(true); return; }
+    if (this.disposed) return;
+    if (this.popup.visible) {
+      this.direction = direction;
+      this.search(true);
+      return;
+    }
     const editor = this.context.editor;
     this.origin = {uri: editor.uri, start: editor.offset, end: editor.input.selectionEnd};
     this.direction = direction;
@@ -34,36 +38,51 @@ export class IncrementalSearchWidget {
 
   async search(repeat = false) {
     this.searchController?.abort();
+    if (this.disposed || !this.origin || this.context.editor.disposed) return;
     const controller = new AbortController();
     this.searchController = controller;
     const editor = this.context.editor;
+    const model = editor.model;
     const source = editor.sourceSnapshot();
     const query = this.input.value;
-    let result;
+    const capturedOrigin = this.origin;
+    if (!capturedOrigin || capturedOrigin.uri !== editor.uri) return;
+    const direction = this.direction;
+    const origin = repeat ? direction > 0 ? editor.input.selectionEnd : editor.offset : capturedOrigin.start;
+    const current = () => !controller.signal.aborted && this.searchController === controller
+      && this.origin === capturedOrigin && !this.disposed && !editor.disposed
+      && editor.model === model && editor.uri === source.uri && model.version === source.version;
     try {
-      result = source.length > 131_072 ? await cooperativeLiteralSearch([source], query, {signal: controller.signal}) :
-        findTextMatches([source], query, {maxMatches: 10_000, signal: controller.signal});
+      const result = await findLiteralMatchAsync(source, query, {
+        ...this.context.options?.searchNavigation, origin, direction, signal: controller.signal
+      });
+      if (!current()) return;
+      if (!result.match) {
+        this.status.textContent = query ? 'No match' : 'Type to search';
+        return;
+      }
+      await this.context.navigate(result.match, {preserveFocus: true, signal: controller.signal});
+      if (current()) this.status.textContent = `${direction > 0 ? 'Forward' : 'Backward'}: ${query}${result.wrapped ? ' · wrapped' : ''}`;
     } catch (error) {
-      if (!controller.signal.aborted) this.status.textContent = error.message;
-      return;
+      if (current()) this.status.textContent = error.message;
     }
-    if (controller.signal.aborted || !this.origin || editor.sourceSnapshot().version !== source.version) return;
-    const origin = repeat ? this.direction > 0 ? editor.input.selectionEnd : editor.offset : this.origin.start;
-    const candidates = result.matches.filter(match => this.direction > 0 ? match.start >= origin : match.end <= origin);
-    const match = (this.direction > 0 ? candidates[0] : candidates.at(-1)) ??
-      (this.direction > 0 ? result.matches[0] : result.matches.at(-1));
-    if (!match) { this.status.textContent = this.input.value ? 'No match' : 'Type to search'; return; }
-    this.context.navigate(match, {preserveFocus: true});
-    this.status.textContent = `${this.direction > 0 ? 'Forward' : 'Backward'}: ${this.input.value}${candidates.length ? '' : ' · wrapped'}`;
   }
 
   close(cancel) {
     this.searchController?.abort();
-    if (cancel && this.origin) this.context.navigate(this.origin, {preserveFocus: true});
+    if (cancel && this.origin) {
+      const origin = this.origin;
+      this.context.safe(() => this.context.navigate(origin, {preserveFocus: true}));
+    }
     this.origin = null;
     this.popup.close();
     this.context.editor.focus();
   }
 
-  dispose() { this.searchController?.abort(); this.popup.dispose(); }
+  dispose() {
+    this.disposed = true;
+    this.origin = null;
+    this.searchController?.abort();
+    this.popup.dispose();
+  }
 }

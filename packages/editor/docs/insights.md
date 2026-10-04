@@ -191,6 +191,23 @@ limit. Returned locations and capture indices are translated back to original
 document coordinates, and whole-word checks retain the surrounding source
 boundaries.
 
+Incremental search uses `findLiteralMatchAsync` from the current UTF-16 origin,
+independently of Find's result-page limit. Typing or shortening a query restarts
+at the opening caret; repeated forward or reverse commands start at the current
+selection boundary. It reports wrapping only after crossing the corresponding
+document boundary. Escape restores the opening range; accepting keeps the
+selected match, and neither operation creates an undo entry.
+
+The optional editor `searchNavigation` object configures `maxSteps`,
+`timeLimitMs`, `chunkSize`, `matchCase`, `wholeWord`, `wrap`, `clock` and
+`yieldControl` for this widget. Defaults are bounded 16,384-unit chunks,
+1,000,000,000 steps and a 30,000 ms deadline. Each request owns an abort
+controller; a newer query, close or disposal cancels it. A result may navigate
+only while its model identity, URI, version and opening search session remain
+current. The host navigation callback receives the same cancellation signal.
+Budget and navigation failures appear in the widget status without applying a
+partial result. These controls bound work, not browser rendering latency.
+
 Small searches run with explicit instruction/time limits. Larger literal
 searches use `cooperativeLiteralSearch`: the shared KMP matcher processes bounded
 16 KiB slices, preserves nonoverlap and UTF-16 boundary semantics, yields via a
