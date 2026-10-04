@@ -40,6 +40,7 @@ export async function claimProjectItems(client, claim) {
       const workId = item.workId?.text, branch = item.branch?.text;
       if (!workId && !branch) continue;
       if (workId && workId !== claim.task) throw new Error('Project Work ID disagrees with the authoritative claim issue');
+      if (typeof branch !== 'string' || !branch.trim()) throw new Error('Managed Project item requires a nonempty Branch');
       if (!item.project.id || !Number.isSafeInteger(item.project.number) || item.project.number <= 0) {
         throw new Error('Missing authoritative Project identity');
       }

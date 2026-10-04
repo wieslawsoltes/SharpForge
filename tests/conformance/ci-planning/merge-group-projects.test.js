@@ -103,3 +103,12 @@ test('invalid claim issue, inaccessible memberships, absent claims and expired l
   await assert.rejects(groupClaimedIdentity({ ...value.client, ref: async () => null }, value.pr), /no authoritative claim/);
   await assert.rejects(groupClaimedIdentity(value.client, value.pr, Date.parse('2100-01-01')), /expired/);
 });
+
+
+test('a managed Project projection cannot bypass branch binding by omitting its Branch field', async () => {
+  for (const branch of [undefined, null, { text: '' }, { text: '   ' }]) {
+    const value = fixture();
+    value.item.branch = branch;
+    await assert.rejects(groupClaimedIdentity(value.client, value.pr), /requires a nonempty Branch/);
+  }
+});
