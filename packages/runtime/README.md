@@ -24,6 +24,21 @@ This package participates in Portable PDB symbols, cooperative async/logical-thr
 
 Both engines dispatch the closed BCL collection/text contracts through managed heap state. Interpolated formatting is invariant and bounded. ManagedPlatform owns a shared data-only animation clock; headless applications advance it explicitly, while Studio supplies a timer that freezes at debugger stops. Automatic clocks are not an implicit timer inside a synchronous `run()`. Compatible snapshots retain collection and timeline state; native CLR behavior is not implied.
 
+## Execution and CIL admission limits
+
+The `maxInstructions` option on either JavaScript VM counts executed instructions,
+including repeated loop iterations. Its default is 20,000,000. A smaller budget
+can stop a method after admission; it does not limit how many static instructions
+the method may contain.
+
+`CilVirtualMachine` keeps that execution budget separate from PE inspection and
+verification, including verification of methods reached by synchronous callbacks.
+Those phases retain their default limit of 1,000,000 decoded instructions per
+method. The direct `AssemblyInspector` and `verifyCilAssembly` APIs in
+`@sharpforge/cil` keep their existing static `maxInstructions` option. Other
+admission settings, including selected method roots, region limits and cancellation,
+continue to apply when supplied to the VM.
+
 ## Program arguments and application environment
 
 Both JavaScript interpreters accept `programArguments`, a flat array of strings for
