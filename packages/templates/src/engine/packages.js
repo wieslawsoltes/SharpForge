@@ -54,11 +54,13 @@ export function installTemplatePackage(bytes, { catalog = new TemplateCatalog(),
       package: metadata, config, files, generate: generateInstalled
     });
   }
-  // All records and configs are already checked; catalog insertion cannot leave a partially validated package.
-  for (const template of additions) catalog.add(template);
-  return { catalog, package: metadata, templates: additions, postActions: additions.flatMap(template =>
+  // Reuse the catalog's complete identity/kind rules before mutating the caller's catalog.
+  const validated = new TemplateCatalog(additions);
+  const postActions = additions.flatMap(template =>
     (template.config.postActions ?? []).map(action => ({ template: template.id, actionId: action.actionId, manual: true,
-      description: action.description ?? 'Run this post-action manually after inspecting the generated files.' }))) };
+      description: action.description ?? 'Run this post-action manually after inspecting the generated files.' })));
+  for (const template of validated.list({ kind: 'all' })) catalog.add(template);
+  return { catalog, package: metadata, templates: additions, postActions };
 }
 
 export function uninstallTemplatePackage(catalog, id, version) {
