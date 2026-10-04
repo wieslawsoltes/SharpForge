@@ -58,6 +58,16 @@ export class AssemblyTypeHierarchy {
   constructor(index, assemblies, options = {}) {
     if (!(index instanceof AssemblySymbolIndex)) invalidHierarchy('AssemblySymbolIndex required');
     const budget = hierarchyBudget(options);
+    if (!Array.isArray(assemblies)) invalidHierarchy('assemblies');
+    const count = assemblies.length;
+    if (!Number.isSafeInteger(count) || count < 0 || count > budget.maxAssemblies) hierarchyLimit('assemblies');
+    // Snapshot numeric entries once: caller iterators/map overrides must not change the preflight input set.
+    const inputs = new Array(count);
+    for (let position = 0; position < count; position++) {
+      budget.check();
+      inputs[position] = assemblies[position];
+    }
+    assemblies = inputs;
     this.#storage = preflightHierarchy(assemblies, budget);
     this.#nodes = bindHierarchy(index, assemblies, budget);
     checkCycles(this.#nodes, budget);

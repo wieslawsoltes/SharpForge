@@ -124,6 +124,18 @@ test('malformed heap extents, oversized keys and cyclic reference scopes reject 
   assert.throws(() => loaded([deep]), /TypeRef scope depth/);
 });
 
+test('numeric assembly snapshot ignores custom iterator and map before preflight and binding', () => {
+  const fixture = hierarchyFixture(), state = loaded([fixture.a, fixture.b]);
+  const inputs = [...state.inspectors];
+  inputs[Symbol.iterator] = function* () { yield this[0]; };
+  inputs.map = () => { throw Error('caller map invoked'); };
+  const first = new AssemblyTypeHierarchy(new AssemblySymbolIndex([inputs[0]]), [inputs[0]]).storage;
+  assert.throws(() => new AssemblyTypeHierarchy(state.index, inputs, { maxRows: first.rows }), /metadata rows\/edges/);
+  const graph = new AssemblyTypeHierarchy(state.index, inputs);
+  assert.deepEqual(graph.storage, state.graph.storage);
+  assert.deepEqual(graph.tree(id(state, 1, fixture.tokens.derived)), state.graph.tree(id(state, 1, fixture.tokens.derived)));
+});
+
 test('queries bound nodes/depth, mark repeated DAG nodes, cancel, and return independently owned records', () => {
   const fixture = hierarchyFixture(); implementsType(fixture.b, fixture.tokens.further, fixture.tokens.interfaceReference);
   const state = loaded([fixture.a, fixture.b]), root = id(state, 0, fixture.tokens.root);
@@ -156,4 +168,36 @@ test('retained CoreCLR hierarchy sets and missing framework reference nodes matc
   assert.deepEqual([...new Set(actual.filter(name => name !== root.name))].sort(), expected);
   assert.equal(state.graph.tree(id(state, 0, base.token)).children[0].diagnostic.reason, 'missing-assembly');
   assert.equal(state.graph.tree(id(state, 0, byName('Fixture.Child').token)).children[0].symbol.id, id(state, 0, base.token));
+});
+
+
+test('two Roslyn assemblies match CLR cross-image base, nested target and interface identities', () => {
+  const reference = JSON.parse(readFileSync(new URL('./fixtures/type-hierarchy/native.json', import.meta.url), 'utf8'));
+  const inspectors = reference.images.map(image => {
+    const bytes = Buffer.from(image.bytes, 'base64');
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), image.sha256);
+    return new AssemblyInspector(bytes);
+  });
+  const state = loaded(inspectors), positions = new Map(reference.images.map((image, position) => [image.name, position]));
+  const identity = value => positions.has(value.assembly) ? id(state, positions.get(value.assembly), value.token) : null;
+  for (const definition of reference.native.definitions) {
+    const tree = state.graph.tree(identity(definition.identity));
+    assert.equal(tree.symbol.name, definition.identity.name);
+    assert.ok(tree.symbol.id.includes(definition.identity.mvid));
+    if (definition.baseType) {
+      const expected = identity(definition.baseType);
+      assert.equal(tree.children[0].symbol?.id ?? null, expected);
+      if (!expected) assert.equal(tree.children[0].diagnostic.reason, 'missing-assembly');
+    }
+    if (!definition.isInterface) continue;
+    const actual = walk(state.graph.tree(identity(definition.identity), { direction: 'implementers' }))
+      .slice(1).map(node => node.symbol?.id).filter(Boolean);
+    const expected = reference.native.definitions.filter(type => type.interfaces.some(item => identity(item) === identity(definition.identity)))
+      .map(type => identity(type.identity));
+    assert.deepEqual([...new Set(actual)].sort(), expected.sort());
+  }
+  const missing = loaded([inspectors[1]]);
+  const derived = reference.native.definitions.find(type => type.identity.name === 'NativeHierarchy.Derived');
+  assert.equal(missing.graph.tree(id(missing, 0, derived.identity.token)).children[0].diagnostic.reason, 'missing-assembly');
+  assert.ok(inspectors.every(value => value.cache.size === 0));
 });
