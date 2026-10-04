@@ -109,7 +109,12 @@ test('same-name nested types, different namespaces and TypeSpec handles are not 
     [0x1b000001, []],
   ]) {
     const constant = { decoded: false, reason: 'type-metadata-required', typeToken: token };
-    const metadata = { row: () => row, streams: new Map([['#Strings', heap]]), string: (index) => names.get(index) };
+    const metadata = {
+      row: () => row,
+      blob: () => new Uint8Array([0x13, 0]),
+      streams: new Map([['#Strings', heap]]),
+      string: (index) => names.get(index),
+    };
     bindConstantTypes([constant], metadata);
     assert.equal(constant.decoded, false);
     assert.equal(constant.reason, 'type-metadata-required');

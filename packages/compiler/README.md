@@ -34,3 +34,21 @@ Real StringBuilder `Chars` execution is qualified by its dependent BCL feature.
 Item/string sources on parent `1ddab235` and candidate, with one warmup and five
 samples for each compiler pipeline. It performs no VM execution; host heap deltas
 are reported separately from elapsed time and are not allocation counts.
+
+## Source query model
+
+`Compilation.getSourceModel()` lazily returns a revision-local `SourceSemanticModel`
+over the lossless-source binder. Its `symbolAt(uri, offset)`, `referenceAt(uri,
+offset)`, `documentSymbols(uri)` and `metadataAt(uri, offset)` queries use UTF-16
+offsets. `symbols`, `references` and `hints` retain source declaration identity,
+qualified namespaces/base types, read/write/declaration flags, and selected
+argument-to-parameter bindings. `nameof` references are retained without creating
+execution edges; delegate conversions refer to the selected method overload.
+
+`sources` and `result` retain the analyzed snapshots and diagnostics.
+`records`, `symbolsById` and `localInitializerTypes` expose bound symbols/types
+for detached refactoring validation. All returned data belongs to the compilation
+revision and must be treated as read-only. The model never emits or changes
+program code. `Workspace.sourceModel()` in `@sharpforge/workspace` handles source
+and option invalidation for callers. See `docs/editor-language-providers.md` in
+the source distribution for the provider/transaction contracts and evidence.

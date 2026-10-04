@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "61c990abc92c6fe091be160cd949447a0678256bc1b2dac30ef595304c7d7f1d",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "cc64f0b27595785be9a497e2433d19bff550cae8945f84cd762cf804b6e226f5",
+    "assemblySha256": "270dd64e3a33e09c779d874f566fb9fc7fdc4e35f570030acdf871dd1431b9f4",
+    "pdbSha256": "44626ff5dfcf5fbc6da071f0b191a9de63f9fb3f5756fcbaf828494a4698be13"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "constants": [
+      {
+        "name": "Earliest",
+        "code": 17,
+        "typeToken": 16777235,
+        "typeName": "System.DateTime",
+        "ticks": "0",
+        "kind": "Unspecified",
+        "text": "0001-01-01T00:00:00.0000000",
+        "signature": "114D0000000000000000"
+      },
+      {
+        "name": "LeapDay",
+        "code": 17,
+        "typeToken": 16777235,
+        "typeName": "System.DateTime",
+        "ticks": "630874244960000000",
+        "kind": "Unspecified",
+        "text": "2000-02-29T12:34:56.0000000",
+        "signature": "114D0098C884C850C108"
+      },
+      {
+        "name": "Modern",
+        "code": 17,
+        "typeToken": 16777235,
+        "typeName": "System.DateTime",
+        "ticks": "639266725230000000",
+        "kind": "Unspecified",
+        "text": "2026-10-04T01:02:03.0000000",
+        "signature": "114D80B70F1AB321DF08"
+      },
+      {
+        "name": "LastSecond",
+        "code": 17,
+        "typeToken": 16777235,
+        "typeName": "System.DateTime",
+        "ticks": "3155378975990000000",
+        "kind": "Unspecified",
+        "text": "9999-12-31T23:59:59.0000000",
+        "signature": "114D80A99EF37528CA2B"
+      }
+    ],
+    "limits": {
+      "minimum": "0",
+      "maximum": "3155378975999999999",
+      "singleTick": "0001-01-01T00:00:00.0000001",
+      "kind": "Unspecified"
+    },
+    "rejected": [
+      {
+        "ticks": "-1",
+        "error": "ArgumentOutOfRangeException"
+      },
+      {
+        "ticks": "3155378976000000000",
+        "error": "ArgumentOutOfRangeException"
+      }
+    ]
+  }
+}

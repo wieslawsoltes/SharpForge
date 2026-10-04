@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "family": "collections",
+  "source": "Collections.cs",
+  "cases": [
+    {
+      "id": "collections-list-empty-count",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "collections-list-add",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-insert",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-remove-first",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-remove-missing",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "collections-list-remove-all",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-clear",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-first-index",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-last-index",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-sort",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-reverse",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-list-index-outside",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "collections-list-insert-negative",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "collections-list-copy-offset",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-dictionary-lookup",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-dictionary-missing",
+      "category": "negative",
+      "exception": "System.Collections.Generic.KeyNotFoundException"
+    },
+    {
+      "id": "collections-dictionary-duplicate-add",
+      "category": "negative",
+      "exception": "System.ArgumentException"
+    },
+    {
+      "id": "collections-dictionary-null-key",
+      "category": "negative",
+      "exception": "System.ArgumentNullException"
+    },
+    {
+      "id": "collections-dictionary-try-get-missing",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "collections-dictionary-remove",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-dictionary-ignore-case",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-dictionary-ordered-observation",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-deduplicates",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-duplicate-add",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "collections-set-union",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-intersection",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-except",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-symmetric-except",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-equality",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-set-empty-subset",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "collections-queue-peek",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-queue-dequeue-order",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-queue-empty-dequeue",
+      "category": "negative",
+      "exception": "System.InvalidOperationException"
+    },
+    {
+      "id": "collections-queue-copy-offset",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-stack-peek",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-stack-pop-order",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-stack-empty-pop",
+      "category": "negative",
+      "exception": "System.InvalidOperationException"
+    },
+    {
+      "id": "collections-array-binary-search",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "collections-array-search-insertion",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "collections-array-copy-overlap",
+      "category": "boundary",
+      "exception": null
+    }
+  ]
+}

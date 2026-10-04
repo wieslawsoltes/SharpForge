@@ -31,6 +31,8 @@ claiming full opcode-specific prefix legality, tail-call safety, constrained typ
 resolution, verifier acceptance or execution support. The no. encoding remains
 ECMA-only where the runtime does not implement it. Those checks remain verifier
 work under #2390/#52, and no existing VM is switched to grouped instruction records.
+[Memory-prefix validation](PREFIX-MEMORY.md) is an explicit additional API for
+volatile/unaligned/no. targets and strict duplicate checking.
 
 Validation: all five prefix tests and 205 branch-layout/compact/opcode/CIL tests
 pass. SDK 10.0.201 / .NET 10.0.5 on macOS ARM64 captures and executes a legal

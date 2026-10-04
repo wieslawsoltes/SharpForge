@@ -4,10 +4,11 @@ import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
+import {initializeFloatFrame} from './typed-float-frame.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
-  admitCilStack(vm, method);
+  const capacity = admitCilStack(vm, method);
   const ticket = reserveStackFrame(vm, method, args.length);
   let pool, frame;
   try {
@@ -27,6 +28,7 @@ export function cilCallFrame(vm, method, args, extra) {
       frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
     }
     Object.assign(frame, extra);
+    initializeFloatFrame(vm, frame, capacity);
     commitStackFrame(ticket, frame);
     return frame;
   } catch (error) {
@@ -41,12 +43,22 @@ export function callSourceFrame(vm, methodId, args) {
   if (vm.frames.length >= vm.options.maxFrames) throw new ManagedFault('StackOverflowException', 'Maximum managed call depth exceeded');
   const method = vm.image.methods[methodId];
   if (!method.isStatic && args[0] === null) throw new ManagedFault('NullReferenceException', 'Cannot call an instance method on null');
-  const frame = framePool(vm).acquire(method, args.length);
-  frame.id = ++vm.frameId;
-  frame.methodId = methodId;
-  frame.base = vm.stack.length;
-  for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
-  vm.frames.push(frame);
+  const ticket = reserveStackFrame(vm, method, args.length);
+  let pool, frame;
+  try {
+    pool = framePool(vm);
+    frame = pool.acquire(method, args.length);
+    frame.id = ++vm.frameId;
+    frame.methodId = methodId;
+    frame.base = vm.stack.length;
+    for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
+    vm.frames.push(frame);
+    commitStackFrame(ticket, frame);
+  } catch (error) {
+    cancelStackFrame(ticket);
+    if (frame) pool.retire(frame);
+    throw error;
+  }
   vm.profiler?.enter(frame);
 }
 

@@ -1,5 +1,5 @@
 {
-  "named-arguments/named-arguments-in-position-may-be-followed-by-positional-ones": ["diagnostics", "warnings", "bytecode", "cil"],
+  "named-arguments/named-arguments-in-position-may-be-followed-by-positional-ones": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "named-arguments/non-trailing-named-arguments-in-7-1": ["diagnostics", "warnings"],
   "named-arguments/out-of-position-named-arguments": ["diagnostics", "warnings"]
 }

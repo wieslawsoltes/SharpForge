@@ -1,12 +1,12 @@
 {
   "member-operators/ambiguous-and-missing-conversions": ["diagnostics", "warnings"],
-  "member-operators/arithmetic-comparison-and-unary": ["diagnostics", "warnings", "bytecode", "cil"],
-  "member-operators/compound-assignment-and-increment": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-operators/arithmetic-comparison-and-unary": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "member-operators/compound-assignment-and-increment": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-operators/declaration-errors": ["diagnostics", "warnings"],
-  "member-operators/equality-with-null-and-reference-comparison": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-operators/equality-with-null-and-reference-comparison": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-operators/equality-without-equals-and-hash-code": ["diagnostics", "warnings"],
   "member-operators/short-circuit-requirements": ["diagnostics", "warnings"],
   "member-operators/true-false-and-short-circuit": ["diagnostics", "warnings", "bytecode", "cil"],
   "member-operators/use-site-errors": ["diagnostics", "warnings"],
-  "member-operators/user-defined-conversions": ["diagnostics", "warnings", "bytecode", "cil"]
+  "member-operators/user-defined-conversions": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

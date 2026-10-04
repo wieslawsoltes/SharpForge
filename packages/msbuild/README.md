@@ -28,3 +28,17 @@ A default job times out after 30 minutes; default captured output is 32 MiB and 
 ## 0.8 disk explorer API
 
 `MSBuildClient.inspectItem`, `mutate` and `undoMutation` use the authenticated host's file-operation routes. The Node `NativeWorkspace` exposes the same bounded create/mkdir/move/copy/delete/write machinery with SHA-256 snapshots and quarantined undo. Binary reads support managed assembly inspection without source replacement. Read docs/explorer-keymaps.md before embedding: batches are not atomic, conflicts/partial completions are reported, undo receipts are in-memory and quarantined content is not automatically purged. File editing is distinct from native build trust.
+
+## Cancellable reads
+
+`client.read(path, {signal})` returns the existing file response containing
+`path`, `text`, `encoding`, `bom`, SHA-256 `hash`, and byte `size`.
+`client.binary(path, {signal})` returns a `Uint8Array` through the existing
+managed-assembly endpoint. Both forward an optional AbortSignal to the
+authenticated request; calls without an options object retain their behavior.
+Owners must still reject results from replaced document/workspace/client
+instances. Read cancellation does not start or cancel a native build job.
+
+`tests/a19-native-disk-observer.test.js` covers signal forwarding and actual
+temporary-file native reload/hash/save round trips. Its filesystem cases do
+not invoke or qualify an installed MSBuild SDK.

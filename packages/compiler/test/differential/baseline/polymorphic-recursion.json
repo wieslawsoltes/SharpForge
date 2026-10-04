@@ -1,5 +1,5 @@
 {
-  "polymorphic-recursion/a-growing-call-behind-a-constant-that-is-false": ["diagnostics", "warnings", "bytecode", "cil"],
-  "polymorphic-recursion/cycles-with-a-finite-set-of-constructions": ["diagnostics", "warnings", "bytecode", "cil"],
-  "polymorphic-recursion/deep-constructions-without-a-cycle": ["diagnostics", "warnings", "bytecode", "cil"]
+  "polymorphic-recursion/a-growing-call-behind-a-constant-that-is-false": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "polymorphic-recursion/cycles-with-a-finite-set-of-constructions": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "polymorphic-recursion/deep-constructions-without-a-cycle": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

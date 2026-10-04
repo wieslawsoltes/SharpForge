@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "scope": [
+    {
+      "issue": 1453,
+      "workId": "SF-A19-T17"
+    },
+    {
+      "issue": 1456,
+      "workId": "SF-A19-T20"
+    },
+    {
+      "issue": 1459,
+      "workId": "SF-A19-T23"
+    },
+    {
+      "issue": 1462,
+      "workId": "SF-A19-T26"
+    }
+  ],
+  "branch": "codex/p16-shell",
+  "sourceRevision": "d46e8993",
+  "sourceCommits": [
+    "56302204",
+    "3e5b3e83",
+    "bc5919e5",
+    "a1153ceb",
+    "1a4d8b8a",
+    "23f5c45d",
+    "4fd13a82",
+    "555b600e",
+    "3b3f6546",
+    "2bcbbe72",
+    "379321a3",
+    "d46e8993"
+  ],
+  "dependencyMerge": "364023a3 (includes language provider4ffe976e and root4a57dc45)",
+  "runtime": "Node.js v24.19.0",
+  "batches": [
+    {
+      "id": "provider-complete-scope",
+      "revision": "364023a3",
+      "cases": 136,
+      "passed": 134,
+      "failed": 2,
+      "skipped": 0,
+      "command": "node scripts/limited.js node --test tests/a19-outline-reorder.test.js tests/a19-outline-host.test.js tests/a19-metadata-providers.test.js tests/a19-execution-occupancy.test.js tests/a19-execution-capture.test.js tests/a19-execution-worker.test.js tests/a19-shell-tools.test.js tests/a19-runtime-worker-launch.test.js tests/animation13.test.js",
+      "evidence": "docs/evidence/project16-shell-providers/complete-scope.log",
+      "failures": [
+        "Console.WriteLine core intrinsic metadata missing",
+        "Structured bound Console owner metadata missing"
+      ]
+    },
+    {
+      "id": "metadata-correction",
+      "revision": "555b600e",
+      "cases": 14,
+      "passed": 13,
+      "failed": 1,
+      "skipped": 0,
+      "command": "node scripts/limited.js node --test tests/a19-metadata-providers.test.js tests/a19-builtin-metadata.test.js",
+      "evidence": "docs/evidence/project16-shell-providers/metadata-correction.log",
+      "failures": [
+        "Overlapping framework/core string signature rendering; fixed in 3b3f6546"
+      ]
+    },
+    {
+      "id": "metadata-final",
+      "revision": "3b3f6546",
+      "cases": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "command": "node scripts/limited.js node --test tests/a19-metadata-providers.test.js",
+      "evidence": "docs/evidence/project16-shell-providers/metadata-final.log"
+    }
+  ],
+  "distinctObservedCases": 140,
+  "allObservedFailuresCorrected": true,
+  "pending": [
+    {
+      "revision": "379321a3",
+      "test": "tests/a19-execution-capture.test.js",
+      "case": "CPU graph uses actual time, bounded percent and weighted intervals with accessible event detail",
+      "reason": "Post-batch source review found a single final interval had no visible segment. Updated existing assertion now covers full interval rendering. Root is running the integrated gate; no new optional broad batch was started."
+    },
+    {
+      "revision": "d46e8993",
+      "test": "tests/a19-metadata-providers.test.js",
+      "reason": "Final source review changed sparse dispatch-array enumeration to the public name index; actual descriptor projection is unchanged. Root integrated qualification includes this source."
+    }
+  ],
+  "structure": "docs/evidence/project16-shell-providers/structure.json",
+  "benchmark": "docs/evidence/project16-shell-providers/execution-benchmark.json",
+  "browser": "Not executed by shell lane.300 ms follow-caret, focus, layout/interaction, forced colors and cross-platform visuals require actual integrated qualification.",
+  "native": "CPU measurement is the actual JavaScript worker source/direct-CIL backend. No OS/process CPU counter, native CLR attachment or hardware profiler is claimed.",
+  "ownedPaths": [
+    "apps/studio/runtime.worker.js",
+    "apps/studio/workbench/metadata/assembly-model.js",
+    "apps/studio/workbench/metadata/catalog.js",
+    "apps/studio/workbench/metadata/definition.js",
+    "apps/studio/workbench/metadata/framework-model.js",
+    "apps/studio/workbench/metadata/intrinsic-model.js",
+    "apps/studio/workbench/metadata/legacy-summary.js",
+    "apps/studio/workbench/metadata/limits.js",
+    "apps/studio/workbench/metadata/metadata.worker.js",
+    "apps/studio/workbench/metadata/source-provider.js",
+    "apps/studio/workbench/metadata/tree.js",
+    "apps/studio/workbench/shell-events.js",
+    "apps/studio/workbench/shell-models.js",
+    "apps/studio/workbench/shell-tools.js",
+    "apps/studio/workbench/shell.js",
+    "apps/studio/workbench/tools/code-definition-provider.js",
+    "apps/studio/workbench/tools/code-definition.js",
+    "apps/studio/workbench/tools/diagnostic-graphs.js",
+    "apps/studio/workbench/tools/diagnostic-timeline-model.js",
+    "apps/studio/workbench/tools/diagnostic-timeline.js",
+    "apps/studio/workbench/tools/execution-capture.js",
+    "apps/studio/workbench/tools/object-browser.js",
+    "apps/studio/workbench/tools/outline-reorder.js",
+    "apps/studio/workbench/tools/outline.js",
+    "apps/studio/workbench/worker-request.js",
+    "apps/studio/workers/execution-occupancy.js",
+    "apps/studio/workers/protocol.js",
+    "apps/studio/workers/runtime-activity.js",
+    "docs/project16-execution-timeline.md",
+    "docs/project16-metadata-providers.md",
+    "packages/bytecode/README.md",
+    "packages/bytecode/src/builtin-metadata.js",
+    "packages/bytecode/src/index.js",
+    "packages/compiler/src/symbols/registry-builtins.js",
+    "packages/refactoring/outline-reorder.md",
+    "packages/refactoring/src/outline-reorder.js",
+    "tests/a19-builtin-metadata.test.js",
+    "tests/a19-execution-capture.test.js",
+    "tests/a19-execution-occupancy.test.js",
+    "tests/a19-execution-worker.test.js",
+    "tests/a19-metadata-providers.test.js",
+    "tests/a19-outline-host.test.js",
+    "tests/a19-outline-reorder.test.js",
+    "tests/bench/a19-execution-occupancy.mjs"
+  ]
+}

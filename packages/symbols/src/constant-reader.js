@@ -42,7 +42,7 @@ function primitive(reader, kind, counts) {
     enumTypeToken = handle.token;
   }
   if (reader.position !== reader.end) fail('Unexpected local constant payload');
-  return { type, value, decoded: true, enumType, ...(enumTypeToken ? { enumTypeToken } : {}) };
+  return { type, value, decoded: true, enumType, ...(enumTypeToken ? { enumTypeToken, enumTypeVerified: false } : {}) };
 }
 
 function general(reader, kind, bytes, counts) {

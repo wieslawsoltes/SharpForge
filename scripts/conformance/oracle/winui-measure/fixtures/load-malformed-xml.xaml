@@ -1,0 +1,5 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      x:Name="Subject" AutomationProperties.Name="Malformed XML fixture">
+  <TextBlock Text="The child closing tag is intentionally absent">
+</Grid>
