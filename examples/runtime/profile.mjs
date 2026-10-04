@@ -1,4 +1,4 @@
-// After profiler/export integration: node examples/runtime/profile.mjs [cil|source|reload]
+// node examples/runtime/profile.mjs [cil|source|reload]
 import {compileToIL} from '@sharpforge/compiler';
 import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine, exportSpeedscope} from '@sharpforge/runtime';
@@ -17,7 +17,9 @@ if (!artifact.success) throw new Error(JSON.stringify(artifact.diagnostics));
 const options = {profile: {sampleBudget: 256}};
 const vm = engine === 'cil' ? new CilVirtualMachine(artifact.assembly, options)
   : new VirtualMachine(engine === 'source' ? artifact.image : loadAssembly(artifact.assembly), options);
-const result = vm.run();
-if (result.state !== 'terminated') throw result.fault ?? new Error('Execution did not terminate');
-console.error(result.output.trim());
-console.log(JSON.stringify(exportSpeedscope(vm.profiler, {name: `Sum (${engine})`}), null, 2));
+try {
+  const result = vm.run();
+  if (result.state !== 'terminated') throw result.fault ?? new Error('Execution did not terminate');
+  console.error(result.output.trim());
+  console.log(JSON.stringify(exportSpeedscope(vm.profiler, {name: `Sum (${engine})`}), null, 2));
+} finally { vm.stop(); }

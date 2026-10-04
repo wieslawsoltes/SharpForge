@@ -1,6 +1,6 @@
 # Instruction profile export (SF-A05-T10.3, #1404)
 
-`exportSpeedscope(profile, {name})` converts a
+`exportSpeedscope(profile, {name})`, exported by `@sharpforge/runtime`, converts a
 `SharpForge.InstructionProfile/1` object, or a profiler exposing `read()`, into
 owned JSON data for Speedscope. The input clock must be `instructions`.
 The exporter maps each method ID to a shared frame, preserving method names,
@@ -18,7 +18,7 @@ frame records do not alias the input. Empty profiles are supported. The exporter
 reads a supplied profiler once and installs no observers or VM hooks. Export work
 and output size are linear in methods plus recorded stack entries.
 
-After the instruction-profiler dependency and package entry adapter are integrated:
+The instruction-profiler dependency is included in this branch. Run:
 
 ```sh
 node examples/runtime/profile.mjs cil > profile.speedscope.json
@@ -35,7 +35,7 @@ and browser qualification.
 
 | Capability | Source / reload | Direct CIL | Qualification |
 | --- | --- | --- | --- |
-| Instruction-weighted Speedscope JSON | Profiler dependency | Profiler dependency | Authored; serial execution pending |
+| Instruction-weighted Speedscope JSON | Implemented | Implemented | Authored; serial execution pending |
 | Empty, recursive and capacity-overflow profiles | Supported input shapes | Supported input shapes | Focused tests authored |
 | Duration or `.nettrace` output | Not provided | Not provided | Separate work required |
 

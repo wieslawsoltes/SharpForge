@@ -3,8 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {compileToIL} from '@sharpforge/compiler';
 import {loadAssembly} from '@sharpforge/cil';
-import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
-import {exportSpeedscope} from '../packages/runtime/src/execution/profile-export.js';
+import {VirtualMachine, CilVirtualMachine, exportSpeedscope} from '@sharpforge/runtime';
 
 const schema = JSON.parse(readFileSync(new URL('./fixtures/speedscope/file-format-schema.json', import.meta.url), 'utf8'));
 const schemaKeys = new Set(['$ref', '$schema', 'definitions', 'title', 'type', 'properties', 'required', 'items', 'anyOf', 'const', 'enum']);
@@ -125,15 +124,19 @@ for (const engine of ['source', 'reload', 'cil']) {
     const options = {profile: {sampleBudget: 2}};
     const vm = engine === 'cil' ? new CilVirtualMachine(artifact.assembly, options)
       : new VirtualMachine(engine === 'source' ? artifact.image : loadAssembly(artifact.assembly), options);
-    const result = vm.run();
-    assert.equal(result.state, 'terminated', result.fault?.message);
-    assert.equal(vm.returnValue, 42);
-    const data = vm.profiler.read();
-    const resultProfile = exportSpeedscope(vm.profiler);
-    matchesSchema(resultProfile);
-    assert.equal(resultProfile.profiles[0].endValue, data.instructions);
-    assert.equal(data.instructions, result.stats.instructions);
-    assert.equal(resultProfile.profiles[0].weights.reduce((sum, weight) => sum + weight, 0), data.instructions);
-    assert(resultProfile.shared.frames.some(frame => frame.name.includes('Twice')));
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', result.fault?.message);
+      assert.equal(vm.returnValue, 42);
+      const data = vm.profiler.read();
+      const resultProfile = exportSpeedscope(vm.profiler);
+      matchesSchema(resultProfile);
+      assert.equal(resultProfile.profiles[0].endValue, data.instructions);
+      assert.equal(data.instructions, result.stats.instructions);
+      assert.equal(resultProfile.profiles[0].weights.reduce((sum, weight) => sum + weight, 0), data.instructions);
+      assert(resultProfile.shared.frames.some(frame => frame.name.includes('Twice')));
+      vm.stop();
+      assert.deepEqual(exportSpeedscope(vm.profiler), resultProfile, 'stopped profiles remain readable');
+    } finally { vm.stop(); }
   });
 }
