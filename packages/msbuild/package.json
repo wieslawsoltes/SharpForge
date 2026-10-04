@@ -13,8 +13,8 @@
   "files": [
     "src",
     "bin",
-    "README.md",
     "docs",
+    "README.md",
     "LICENSE"
   ],
   "dependencies": {
