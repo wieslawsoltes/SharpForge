@@ -19,6 +19,10 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
+The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
+graphs and the conservative source reconstruction pipeline, including explicit
+IL fallbacks and exception-boundary metadata.
+
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
 
 ## Registered external readonly fields
