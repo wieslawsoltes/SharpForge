@@ -2,7 +2,9 @@ import {compareObjects} from './object-comparison.js';
 import {resolveStringComparer, registerStringComparerExtensions} from './string-comparer.js';
 import {registerStringComparisonExtensions} from './string.js';
 import {registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions} from '../text/string-builder-append.js';
-import {registerStringSearchWindowExtensions, registerStringLastSearchStartExtensions} from './string-search.js';
+import {
+  registerStringSearchWindowExtensions, registerStringLastSearchStartExtensions, registerStringLastSearchWindowExtensions
+} from './string-search.js';
 import {registerStringBuilderIndexerExtensions} from '../text/string-builder-indexer.js';
 import {registerStringBuilderCopyExtensions} from '../text/string-builder-copy.js';
 
@@ -22,6 +24,7 @@ function contracts(registry) {
   registerStringLastSearchStartExtensions(registry);
   registerStringBuilderCopyExtensions(registry);
   registerStringBuilderInt64Extensions(registry);
+  registerStringLastSearchWindowExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
