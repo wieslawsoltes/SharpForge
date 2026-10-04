@@ -29,11 +29,18 @@ aggregate `cpobj` admission is limited to a concrete TypeDef operand.
 Source custom-struct lowering, raw memory, portable snapshots and aggregate GC
 qualification remain pending; this increment does not close #1365 or #1366.
 
-Prepared regressions use independently authored CIL, copied and interior
+Focused regressions use independently authored CIL, copied and interior
 mutations, normalized narrow stores, arrays/object/statics, managed by-value
 calls, ordinary replay and negative boundaries. Native fixture source is in
 `tests/fixtures/a05/value-storage`; `expected.txt` is an unmeasured qualification
-target. No tests, builds, checks or native tools were run for this leaf.
+target. Initial serial validation at `723bfb4e` passed 99 of 102 tests and
+exposed three existing direct-field-handler regressions. Explicit operation
+adapters fixed those without changing assertions; registered framework values
+also retain their existing storage path. At `6017ca32`, all 34 affected struct,
+address and scalar-field cases passed, plus four existing framework boxing/GC
+cases across source, canonical, CIL and reassembled execution. Tests used Node
+24.21.0, 512 MB and concurrency 1. Core static/build evidence is on the PR;
+native tools and performance qualification remain deferred.
 
 Root owns the serial queue:
 
