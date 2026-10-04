@@ -130,13 +130,25 @@ retains its launch policy. Revocation stops that worker session immediately.
 Exports contain neither network grants nor environment values. Browser CSP and
 server CORS still determine whether an otherwise granted request can complete.
 
-The current runtime worker does not implement live policy replacement, native
-process attachment, or operating-system environment injection. Managed IL supports
-profile arguments. Source VM arguments and per-app environments require an explicit
-`launchCapabilities(projectId, profile, built, launch)` host callback returning the
-supported `arguments` and `environment` flags. Unsupported nonempty options fail
-with `LAUNCH_CAPABILITY` before application launch. `launchOptions` supplies the
-actual target settings; capability flags must match that implementation.
+Both source and direct CIL launches support profile arguments and isolated,
+read-only application environments. `LaunchProfiles.launchOptions()` emits
+`programArguments` for Main's flat argv; `arguments` remains reserved for raw
+explicit CIL method parameters. The compiler's startup wrapper forwards argv after
+module initializers, including across async Main. Applications read supplied values
+using `System.Environment.GetEnvironmentVariable(string)`; missing names return
+null, empty strings are preserved, and names are case-sensitive. Values are copied
+when the runtime is created and are never inherited from the host OS.
+
+The built-in capability record enables `arguments` and `environment` and disables
+`environmentMutation`. A different target can override
+`launchCapabilities(projectId, profile, built, launch)` with its actual capability
+record. Unsupported nonempty options fail with `LAUNCH_CAPABILITY` before launch.
+Both the profile editor and runtime use the exported runtime validators and bounds;
+malformed replacements preserve an already paused session. `launchOptions` supplies
+the actual target settings; capability flags must match that implementation.
+
+The worker does not implement live policy replacement, native process attachment,
+environment mutation or OS/user/machine environment injection.
 Detach disables source/data/exception break
 handling and continues the selected managed browser process; it is not OS process
 detachment. Renderer metrics identify the actual backend rather than claiming that
@@ -157,3 +169,12 @@ separate real compiler and runtime workers, checks their rendered panels and out
 closes only one, and verifies diagnostic isolation while the other remains alive.
 It requires the HTTP harness. The in-memory Blob loader must instead receive
 rewritten worker URLs from the host; this script does not claim to qualify it.
+
+`a19-runtime-arguments.test.js`, `a19-runtime-environment.test.js` and
+`a19-runtime-worker-launch.test.js` execute real compiler output in both JavaScript
+runtimes. Independent CIL fixtures cover the argv and environment ABI without a
+SharpForge debug payload. The production worker is adapted only at the Node message
+transport; tests cover two simultaneous workers, equal local serials, stop isolation
+and malformed replacement launches. Runtime option boundaries and existing builtin
+ID locks are checked separately. Native and Wasm execution are not represented by
+these tests.

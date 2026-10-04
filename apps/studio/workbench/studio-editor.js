@@ -9,7 +9,11 @@ export function remapBreakpointChanges(breakpoints, change) {
     let offset = old;
     for (const edit of change.changes) {
       if (old < edit.start) break;
-      if (old <= edit.end) { offset = edit.newStart; delta = 0; break; }
+      if (old < edit.end || old === edit.start) {
+        offset = old === edit.start ? edit.newEnd : edit.newStart;
+        delta = 0;
+        break;
+      }
       delta += edit.text.length - (edit.end - edit.start);
     }
     const position = change.after.positionAt(offset + delta);
@@ -27,11 +31,17 @@ export function createStudioEditorFactory({ services, state, requestCompiler, re
     return requestCompiler(method, params, { signal });
   }, [
     'completion', 'hover', 'signatureHelp', 'diagnostics', 'codeActions', 'rename', 'semanticTokens',
-    'documentSymbols', 'definition', 'references', 'format',
+    'definition', 'references', 'format', 'formatRange', 'formatOnType', 'prepareRename', 'documentHighlights', 'inlayHints',
+    'selectionRanges',
+    { method: 'documentSymbols', remote: 'symbols' },
     { method: 'folding', remote: 'foldingRanges' }, { method: 'codeLens', remote: 'referenceLenses' }
   ]);
-  language.register('readDocument', ({ uri }) => workspace.getDocument(uri));
-  language.register('projects', () => services.documents.projectsFor(state().active).map(id => ({ id, name: services.builds.get(id)?.project.name })));
+  language.register('readDocument', ({ signal, ...params }) => {
+    const targetUri = params.targetUri ?? params.uri;
+    return workspace.getDocument(targetUri) ?? requestCompiler('readDocument', { ...params, targetUri }, { signal });
+  });
+  language.register('projects', ({ uri }) => services.documents.projectsFor(uri ?? state().active)
+    .map(id => ({ id, name: services.builds.get(id)?.project.name })));
   const create = (record, { model, viewId, onFocus: activate }) => {
     const root = document.createElement('div');
     root.className = 'source-document';
@@ -56,7 +66,7 @@ export function createStudioEditorFactory({ services, state, requestCompiler, re
     create, workspace, language, session,
     apply(edits, label = 'Workspace edit') {
       const versions = new Map(services.documents.list().map(record => [record.uri, record.version]));
-      const plan = prepareWorkspaceEdit(workspace, edits, { label, versions, maxDocumentLength: 128 * 1024 * 1024 });
+      const plan = prepareWorkspaceEdit(workspace, edits, { label, versions, maxDocumentLength: 256 * 1024 * 1024 });
       return commitWorkspaceEdit(workspace, plan);
     },
     dispose() { language.dispose(); }

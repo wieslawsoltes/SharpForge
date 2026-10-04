@@ -20,34 +20,35 @@ export function editorConfigFilesForDocument(uri, records, {models = null} = {})
   let characters = 0;
   for (const record of source) {
     if (++count > editorConfigurationLimits.records) throw new RangeError('EditorConfig workspace record limit exceeded');
-    if (typeof record?.uri !== 'string' || !/(?:^|[\\/])\.editorconfig$/i.test(record.uri)) continue;
-    const configPath = normalizedPath(record.uri);
+    const uri = record?.uri ?? record?.path;
+    if (typeof uri !== 'string' || !/(?:^|[\\/])\.editorconfig$/i.test(uri)) continue;
+    const configPath = normalizedPath(uri);
     const separator = configPath.lastIndexOf('/');
     const directory = separator < 0 ? '' : configPath.slice(0, separator);
     if (directory && !path.startsWith(`${directory}/`)) continue;
-    if (seen.has(configPath)) throw new TypeError(`Duplicate EditorConfig path '${record.uri}'`);
+    if (seen.has(configPath)) throw new TypeError(`Duplicate EditorConfig path '${uri}'`);
     seen.add(configPath);
     if (files.length >= editorConfigurationLimits.files) throw new RangeError('EditorConfig ancestor file limit exceeded');
-    const text = configurationText(record, models?.get(record.uri));
+    const text = configurationText(record, uri, models?.get(uri));
     characters += text.length;
     if (characters > editorConfigurationLimits.totalCharacters) throw new RangeError('EditorConfig total character limit exceeded');
-    files.push({uri: record.uri, directory, text});
+    files.push({uri, directory, text});
   }
   files.sort((left, right) => left.directory.split('/').length - right.directory.split('/').length
     || left.directory.length - right.directory.length);
   return files;
 }
 
-function configurationText(record, sharedModel) {
+function configurationText(record, uri, sharedModel) {
   const model = sharedModel ?? record.model;
   const maximum = editorConfigurationLimits.charactersPerFile;
   if (model && Number.isSafeInteger(model.length) && typeof model.getText === 'function') {
-    if (model.length > maximum) throw new RangeError(`EditorConfig '${record.uri}' exceeds the character limit`);
+    if (model.length > maximum) throw new RangeError(`EditorConfig '${uri}' exceeds the character limit`);
     return model.getText(0, model.length);
   }
   const text = record.text;
-  if (typeof text !== 'string') throw new TypeError(`EditorConfig '${record.uri}' must be a text document`);
-  if (text.length > maximum) throw new RangeError(`EditorConfig '${record.uri}' exceeds the character limit`);
+  if (typeof text !== 'string') throw new TypeError(`EditorConfig '${uri}' must be a text document`);
+  if (text.length > maximum) throw new RangeError(`EditorConfig '${uri}' exceeds the character limit`);
   return text;
 }
 

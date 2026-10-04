@@ -1,6 +1,9 @@
 import {normalizePath} from '../paths.js';
 import {decodeWorkspaceFile, encodeWorkspaceFile} from '@sharpforge/archive';
-import {diskLimits, encodedLength} from './limits.js';
+import {diskLimits} from './limits.js';
+import {isTextRecord, recordSource, isSourceSnapshot, cloneWorkspaceRecord} from '../workspace-records.js';
+import {readWorkspaceFile, sourceReaderOptions} from './source-reader.js';
+import {contentLength, initialRecordSize, sourceByteLength, equalSourceContent, writeSourceContent, updateSavedRecord} from './source-content.js';
 
 async function currentText(handle, path, limits) {
   const file = await handle.getFile();
@@ -21,20 +24,49 @@ export class DiskWorkspace {
     this.folders = folders;
     this.skipped = skipped;
     this.limits = diskLimits(options);
-    this.baseline = new Map(records.filter(record => typeof record.text === 'string').map(record => [record.path, record.text]));
-    this.sizes = new Map(records.map(record => [record.path, encodedLength(record)]));
+    this.readSource = sourceReaderOptions({readSource: options.readSource ?? records.readSource}).readSource;
+    this.byPath = new Map(records.map(record => [record.path, record]));
+    this.baseline = new Map(records.filter(isTextRecord).map(record => [record.path, recordSource(record) ?? record.text]));
+    this.sizes = new Map(records.map(record => [record.path, initialRecordSize(record)]));
     this.versions = new Map(records.map(record => [record.path, record.version ?? 0]));
-    this.saveQueue = Promise.resolve();
+    this.saveState = {queue: Promise.resolve()};
   }
 
   getVersion(path) { return this.versions.get(normalizePath(path)) ?? 0; }
 
+  /** Stage URI rebasing with the same granted handles and conflict baselines; the original workspace stays unchanged. */
+  rebasePaths(pathMap, records, folders = this.folders) {
+    if (!(pathMap instanceof Map) || !Array.isArray(records)) throw new TypeError('Disk rebasing requires a path map and records');
+    const replacements = new Map(records.map(record => [record.path, record]));
+    const paths = new Map();
+    const used = new Set();
+    const mapped = this.records.map(record => {
+      const path = normalizePath(pathMap.get(record.path) ?? record.path);
+      if (used.has(path)) throw new Error('Duplicate rebased disk path: ' + path);
+      used.add(path);
+      paths.set(record.path, path);
+      const replacement = replacements.get(path);
+      if (!replacement && path !== record.path && recordSource(record)) {
+        throw new TypeError('Rebased prepared source record is missing: ' + path);
+      }
+      return replacement ?? cloneWorkspaceRecord(record, path);
+    });
+    const handles = new Map([...this.handles].map(([path, handle]) => [paths.get(path) ?? path, handle]));
+    const next = new DiskWorkspace(mapped, handles, this.name, folders, this.skipped, {...this.limits, readSource: this.readSource});
+    next.baseline = new Map([...this.baseline].map(([path, source]) => [paths.get(path) ?? path, source]));
+    next.sizes = new Map([...this.sizes].map(([path, bytes]) => [paths.get(path) ?? path, bytes]));
+    next.versions = new Map([...this.versions].map(([path, version]) => [paths.get(path) ?? path, version]));
+    next.saveState = this.saveState;
+    return next;
+  }
+
   /** Serialize explicit saves; stale requested versions and external changes fail before any write stream. */
   save(changes) {
     if (!Array.isArray(changes)) return Promise.reject(new TypeError('Save changes must be an array'));
-    const copied = changes.map(change => ({...change}));
-    const task = this.saveQueue.then(() => this.saveChanges(copied));
-    this.saveQueue = task.catch(() => {});
+    const copied = changes.map(change => ({path: change.path ?? change.uri,
+      content: change.source ?? change.text, expectedVersion: change.expectedVersion}));
+    const task = this.saveState.queue.then(() => this.saveChanges(copied));
+    this.saveState.queue = task.catch(() => {});
     return task;
   }
 
@@ -43,19 +75,19 @@ export class DiskWorkspace {
     const pending = [];
     let total = [...this.sizes.values()].reduce((sum, size) => sum + size, 0);
     for (const change of changes) {
-      const path = normalizePath(change.path ?? change.uri);
+      const path = normalizePath(change.path);
       if (seen.has(path)) throw new Error('Duplicate save path');
       seen.add(path);
-      if (typeof change.text !== 'string' || change.text.length > this.limits.maxFileBytes) throw new Error('Invalid save text');
-      const record = this.records.find(item => item.path === path) ?? {path};
-      const bytes = encodedLength(record, change.text);
+      if (contentLength(change.content) > this.limits.maxFileBytes) throw new Error('Invalid save text');
+      const record = this.byPath.get(path) ?? {path};
+      const bytes = await sourceByteLength(change.content, record, this.limits.maxFileBytes);
       if (bytes > this.limits.maxFileBytes || bytes > this.limits.maxAssemblyBytes) throw new Error('Source file limit exceeded by ' + path);
       total += bytes - (this.sizes.get(path) ?? 0);
       const handle = this.handles.get(path);
       if (!handle) throw new Error(`No write handle for '${path}'; export or reopen its folder.`);
       this.checkVersion(path, change.expectedVersion);
       await this.checkBaseline(path, handle);
-      pending.push({path, text: change.text, handle, bytes, expectedVersion: change.expectedVersion});
+      pending.push({path, content: change.content, record, handle, bytes, expectedVersion: change.expectedVersion});
     }
     if (total > this.limits.maxTotalBytes) throw new Error('Disk workspace total byte limit exceeded; no files were written.');
     for (const file of pending) await this.permission(file);
@@ -74,7 +106,18 @@ export class DiskWorkspace {
   }
 
   async checkBaseline(path, handle) {
-    if (await currentText(handle, path, this.limits) !== this.baseline.get(path)) {
+    let matches;
+    if (this.readSource && /\.cs$/i.test(path)) {
+      const file = await handle.getFile();
+      const prepared = await readWorkspaceFile(file, path, this.limits, {readSource: this.readSource});
+      try { matches = await equalSourceContent(prepared.source, this.baseline.get(path)); }
+      finally { prepared.model.dispose(); }
+    } else {
+      const current = await currentText(handle, path, this.limits);
+      const baseline = this.baseline.get(path);
+      matches = isSourceSnapshot(baseline) ? await equalSourceContent(current, baseline) : current === baseline;
+    }
+    if (!matches) {
       throw new Error(`Disk conflict in '${path}'; no files were written. Reopen the folder before saving.`);
     }
   }
@@ -94,15 +137,21 @@ export class DiskWorkspace {
       let stream;
       try {
         stream = await file.handle.createWritable();
-        const record = this.records.find(item => item.path === file.path);
-        const content = record?.bytes ? encodeWorkspaceFile({...record, text: file.text}) : file.text;
-        await stream.write(content);
+        if (isSourceSnapshot(file.content)) await writeSourceContent(stream, file.content, {
+          path: file.path, encoding: file.record.encoding, bom: file.record.bom, maxBytes: this.limits.maxFileBytes
+        });
+        else {
+          const record = file.record;
+          const content = record.bytes || record.encoding || record.bom
+            ? encodeWorkspaceFile({path: file.path, text: file.content, encoding: record.encoding, bom: record.bom}) : file.content;
+          await stream.write(content);
+        }
         await stream.close();
         written.push(file.path);
-        this.baseline.set(file.path, file.text);
+        this.baseline.set(file.path, file.content);
         this.sizes.set(file.path, file.bytes);
         this.versions.set(file.path, this.getVersion(file.path) + 1);
-        if (record) record.text = file.text;
+        if (this.byPath.has(file.path)) updateSavedRecord(file.record, file.content, file.bytes);
       } catch (error) {
         try { await stream?.abort(); } catch { /* The original write error remains authoritative. */ }
         const failure = new Error(`Save failed for '${file.path}'. Written before failure: ${written.join(', ') || 'none'}. ${error.message}`);

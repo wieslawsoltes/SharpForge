@@ -94,6 +94,9 @@ export class StudioDocking {
   }
 
   sync(files, tabs, active) {
+    let selected = this.layout.state.activePanel;
+    let selectedView = this.tabs?.metadata(selected);
+    const restoring = Boolean(this.pendingRestore);
     const ids = new Set(files.map(file => `source:${file.uri}`));
     for (const id of [...this.layout.panels.keys()]) {
       const view = this.tabs?.metadata(id);
@@ -105,14 +108,21 @@ export class StudioDocking {
       else if (!this.layout.panels.has(id)) this.layout.register({ id, title: file.uri.split('/').at(-1), description: file.uri, kind: 'document' });
       this.layout.require(id).dirty = Boolean(this.documents?.get(file.uri)?.dirty ?? file.dirty);
     }
-    if (this.pendingRestore) this.restorePending(files);
+    if (this.pendingRestore) {
+      this.restorePending(files);
+      selected = this.layout.state.activePanel;
+      selectedView = this.tabs?.metadata(selected);
+    }
     for (const uri of tabs) {
       const id = `source:${uri}`;
       if (!ids.has(id) || this.layout.locate(id).kind !== 'closed') continue;
       const group = this.layout.groups().find(item => item.kind === 'document');
-      this.layout.open(id, group?.id);
+      this.layout.open(id, group?.id, { activate: false });
     }
-    if (active && this.layout.panels.has(`source:${active}`)) this.layout.open(`source:${active}`);
+    const preserveActive = (this.documentSyncStarted || restoring) && this.layout.panels.has(selected)
+      && this.layout.locate(selected).kind !== 'closed' && (!selectedView || selectedView.uri === active);
+    if (!preserveActive && active && this.layout.panels.has(`source:${active}`)) this.layout.open(`source:${active}`);
+    this.documentSyncStarted = true;
     if (files.some(file => !this.host.contents.has(`source:${file.uri}`) && tabs.includes(file.uri))) this.host.render();
     this.adapt();
   }

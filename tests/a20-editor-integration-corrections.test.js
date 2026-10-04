@@ -252,3 +252,17 @@ test('A20 overlapping whole-line expansions transform every selected line once',
   model.undo();
   assert.equal(model.getText(), 'z\ncba\na');
 });
+
+test('A20 project/disk path-only records apply configuration without flattening source snapshots', () => {
+  const {editor} = editorFixture('source');
+  const config = new EditorModel('[*.cs]\nindent_size=5', {uri: 'src/.editorconfig'});
+  editor.session = {models: new Map([['src/.editorconfig', config]])};
+  const records = [
+    {path: '.editorconfig', text: 'root=true\n[*]\nindent_style=tab'},
+    {path: 'src/.editorconfig', get text() { throw new Error('Read the existing config model'); }},
+    {path: 'src/Large.cs', get text() { throw new Error('Do not flatten unrelated source text'); }}
+  ];
+  configureDocumentEditor(editor, {records});
+  assert.equal(editor.options.indentSize, 5);
+  assert.equal(editor.options.insertSpaces, false);
+});

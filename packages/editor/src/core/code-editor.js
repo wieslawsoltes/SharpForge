@@ -305,7 +305,7 @@ export class CodeEditor {
   goToMatchingBrace(extend = false) { this.selectionCommands.matchingBrace(extend); }
   selectCurrentLine() { this.selectionCommands.currentLine(); }
   openGoTo() { this.goToWidget.open(); }
-  findSelected(direction = 1) { this.openFind(); this.findNext(true, direction); }
+  findSelected(direction = 1) { return this.insights.findSelected(direction); }
   lexicalContext(offset) {
     const kind = this.highlightIndex.kindAt(Math.max(0, offset - 1));
     return kind === 'comment' ? 'comment' : kind === 'string' ? 'literal' : this.highlightIndex.lexed ? 'code' : 'unknown';

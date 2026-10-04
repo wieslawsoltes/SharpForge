@@ -39,6 +39,7 @@ export {defaultEditorOptions, editorOptions, EditorOptionScope} from './options.
 export {parseEditorConfig, resolveEditorConfig, editorConfigGlob, saveTextEdits} from './editorconfig.js';
 export {createEditorOptionsPage} from './options-page.js';
 export {LargeFilePolicy} from './large-file.js';
+export {readEditorSource, rebaseEditorSource} from './source-loader.js';
 export {EditorAccessibility} from './a11y/aria.js';
 export {describeDiagnostic, navigateDiagnostic, announceLineState} from './a11y/diagnostics.js';
 export {accessibleWidget} from './a11y/widgets.js';

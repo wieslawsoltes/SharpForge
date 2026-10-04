@@ -1,7 +1,7 @@
 import { element, actionButton, selectField, replaceOptions } from './session-dom.js';
 
 /** Render into the application's accessible dialog host; edits commit only on Apply. */
-export function createStartupDialog(document, startup, { onApply, onCancel = () => {} } = {}) {
+export function createStartupDialog(document, startup, { profiles, onApply, onCancel = () => {} } = {}) {
   const root = element(document, 'form', null, { class: 'tool-page startup-dialog', 'aria-label': 'Set Startup Projects' });
   root.append(element(document, 'h2', 'Set Startup Projects'));
   const mode = selectField(document, 'Startup mode');
@@ -40,6 +40,12 @@ export function createStartupDialog(document, startup, { onApply, onCancel = () 
       up.disabled = index === 0;
       down.disabled = index === draft.length - 1;
       row.append(action.wrapper, up, down);
+      if (profiles) {
+        const profile = selectField(document, `Profile for ${project.name ?? entry.projectId}`);
+        replaceOptions(profile.select, profiles.list(entry.projectId).map(value => ({ value: value.id, label: value.name })), entry.profile);
+        profile.select.addEventListener('change', () => { entry.profile = profile.select.value; });
+        row.append(profile.wrapper);
+      }
       return row;
     }));
   };

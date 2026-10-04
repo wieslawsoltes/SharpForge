@@ -41,18 +41,23 @@ export class OptionsDialog {
             draft[category] ??= {};
             draft[category][key] = value;
           }});
-          for (const node of tree.querySelectorAll('[data-page]')) node.setAttribute('aria-selected', String(node.dataset.page === id));
+          for (const node of tree.querySelectorAll('[data-page]')) {
+            node.setAttribute('aria-selected', String(node.dataset.page === id));
+            node.tabIndex = node.dataset.page === id ? 0 : -1;
+          }
         };
         const renderTree = query => {
           tree.replaceChildren();
           let category;
-          for (const page of this.list(query)) {
+          const pages = this.list(query);
+          const tabbable = pages.some(page => page.id === selected) ? selected : pages[0]?.id;
+          for (const page of pages) {
             if (category !== page.category) {
               category = page.category;
               tree.append(element(document, 'div', {className: 'wb-options-category', text: category, role: 'presentation'}));
             }
             tree.append(button(document, page.title, () => show(page.id), {
-              role: 'treeitem', 'data-page': page.id, 'aria-selected': page.id === selected, tabIndex: page.id === selected ? 0 : -1
+              role: 'treeitem', 'data-page': page.id, 'aria-selected': page.id === selected, tabIndex: page.id === tabbable ? 0 : -1
             }));
           }
         };
@@ -66,6 +71,14 @@ export class OptionsDialog {
           else return;
           event.preventDefault();
           items[Math.max(0, Math.min(items.length - 1, index))]?.focus();
+        });
+        search.addEventListener('keydown', event => {
+          if (!['ArrowDown', 'Enter'].includes(event.key)) return;
+          const first = tree.querySelector('[data-page]');
+          if (!first) return;
+          event.preventDefault();
+          if (event.key === 'Enter') show(first.dataset.page);
+          first.focus();
         });
         layout.append(tree, pageHost);
         host.append(search, layout);

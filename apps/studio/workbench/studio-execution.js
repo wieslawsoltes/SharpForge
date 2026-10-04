@@ -21,6 +21,10 @@ export class StudioExecution {
 
   async build(silent = false) {
     const state = this.state();
+    if (silent && [...this.services.documents.models.values()].some(model => model.buffer.length > 8 * 1024 * 1024)) {
+      this.ui.status('Large file mode — automatic build disabled');
+      return null;
+    }
     if (state.nativeMode) {
       if (silent) return null;
       this.ui.setPanel('msbuild');
@@ -80,8 +84,7 @@ export class StudioExecution {
     this.projects.primeBreakpoints();
     try {
       const result = await this.services.launches.start({
-        ...options, debug, signal: controller.signal, currentProjectId: this.projects.selectedId,
-        stopOnEntry: options.stopOnEntry ?? state.debugSettings.stopOnEntry
+        ...options, debug, signal: controller.signal, currentProjectId: this.projects.currentProjectId ?? this.projects.selectedId
       });
       for (const failure of result.failed) this.ui.error(failure.error);
       const service = this.services.builds.active;
@@ -92,6 +95,15 @@ export class StudioExecution {
       if (this.launchController === controller) this.launchController = null;
       this.ui.setBusy(false);
     }
+  }
+
+  startNewInstance(projectId = this.projects.selectedId, options = {}) {
+    this.projects.sync();
+    this.services.startup.validateProject(projectId);
+    const profile = options.profile ?? this.services.profiles.selected.get(projectId) ?? 'default';
+    return this.launch(options.debug !== false, {
+      ...options, newInstance: true, entries: [{ projectId, action: 'start', profile }]
+    });
   }
 
   async stop({ all = false } = {}) {
