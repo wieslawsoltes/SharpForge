@@ -23,7 +23,9 @@ The private `numericPlanTypes` helper shares one bounded category analysis per
 method/code epoch among numeric decode contributions. It requires an exact
 `verifiedStackBound` proof and uses the existing `numericStackTypes` traversal
 with a 250,000-unit work allowance. Analysis failure/exhaustion preserves ordinary
-execution. Replacement bodies, signatures, locals, reports and option edits
+execution. The [typed-float option](typed-float-slots.md) consumes the same cached
+states when both options are enabled; their dispatch switches remain independent.
+Replacement bodies, signatures, locals, reports and option edits
 invalidate relevant derived plans; in-place edits require `invalidateExecutionCode`.
 The existing frozen decode plan exposes frozen diagnostic `numericHandlerIds`,
 such as `add_i4` and `blt_s_i4`, or null when this contribution is disabled/unproven.

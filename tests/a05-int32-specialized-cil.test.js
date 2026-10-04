@@ -4,6 +4,7 @@ import {CilVirtualMachine, invalidateExecutionCode} from '@sharpforge/runtime';
 import {float} from '@sharpforge/bytecode';
 import {getDecodePlan} from '../packages/runtime/src/execution/decode-plan.js';
 import {numericPlanTypes} from '../packages/runtime/src/execution/numeric-specialization.js';
+import {floatSlots} from '../packages/runtime/src/execution/typed-stack.js';
 import {managedFixture} from './managed-fixtures.js';
 
 function loop() {
@@ -93,4 +94,33 @@ test('unproven in-place edits require invalidation and wider integer bodies keep
   const wide = new CilVirtualMachine(bytes, {specializeNumericHandlers: true});
   assert(getDecodePlan(wide, wide.top.method).numericHandlerIds.every(id => id === null));
   assert.equal(wide.run().returnValue, 9007199254740995n);
+});
+
+test('Int32 and typed-float contributions coexist and retain independent option invalidation', () => {
+  const bytes = managedFixture({methods: [{name: 'Main', result: 'double', maxStack: 2, locals: ['double', 'int'], body(writer) {
+    writer.op('ldc.r8', 0).op('stloc.0').integer(0).op('stloc.1').mark('loop');
+    writer.op('ldloc.0').op('ldc.r8', 0.25).op('add').op('stloc.0');
+    writer.op('ldloc.1').integer(1).op('add').op('stloc.1');
+    writer.op('ldloc.1').integer(100).op('blt.s', 'loop').op('ldloc.0').op('ret');
+  }}]});
+  for (const disabled of [null, 'specializeNumericHandlers', 'typedNumericStack']) {
+    const vm = new CilVirtualMachine(bytes, {specializeNumericHandlers: true, typedNumericStack: true});
+    const first = getDecodePlan(vm, vm.top.method);
+    const states = numericPlanTypes(vm, vm.top.method, first.offsets);
+    vm.step();
+    if (disabled) vm.options[disabled] = false;
+    const second = getDecodePlan(vm, vm.top.method);
+    assert.equal(numericPlanTypes(vm, vm.top.method, second.offsets), states);
+    if (disabled) assert.notEqual(second, first);
+    if (disabled === 'specializeNumericHandlers') assert.equal(second.numericHandlerIds, null);
+    else assert(second.numericHandlerIds.includes('add_i4'));
+    const stack = vm.top.stack;
+    let remaining = 10_000;
+    while (vm.top.method.instructions[vm.top.pc].name !== 'ret') {
+      assert(--remaining > 0);
+      vm.step();
+    }
+    if (disabled !== 'typedNumericStack') assert.equal(floatSlots(stack).materializations, 0);
+    assert.equal(vm.run().returnValue, 25);
+  }
 });
