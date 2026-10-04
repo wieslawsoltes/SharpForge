@@ -292,6 +292,38 @@ five samples cover ordinary inputs plus 1024-unit repeated-prefix misses, late
 hits and all overlapping matches with 64-unit needles, reporting median/p95 and
 managed allocation counts outside setup and result checks.
 
+`StringBuilder.Insert(int, char)` occupies A07 slot `524336`, after the two
+character Replace contracts. It validates index in `0..Length` (inclusive), then
+converts the Char carrier into exactly one UTF-16 unit and calls the released
+string insertion implementation. A null receiver faults first; invalid indices
+raise ArgumentOutOfRangeException naming `index`. Aliased indexer arguments are
+evaluated before the method executes, so an invalid getter can fault before an
+invalid insertion index. NUL and unpaired surrogates are inserted unchanged.
+
+This overload deliberately inherits the current bounded storage profile. Insertion
+joins existing chunks, copies prefix/new-unit/suffix into one replacement string,
+and commits through the same storage/capacity helper as Insert(int, string).
+Cost is O(text length + backing/chunk storage), with host flattening/copy temporaries,
+one managed replacement string, and possible backing allocation for a fresh
+builder. Repeated insertion into a growing builder can be quadratic; #2636 owns
+the separate rope/capacity redesign. The configured million-unit text ceiling
+still raises OutOfMemoryException. Existing string insertion, including null-string
+behavior and fault handling, retains its implementation.
+
+The frozen .NET 10.0.5 / SDK 10.0.201 reference has 101 cases, covering text,
+identity, null/index faults, Int32 extremes, surrogate cuts, alias evaluation and
+native capacity/chunk observations. Thirty-two appended source segments in the
+native fixture occupy one chunk before insertion and two afterward; SharpForge
+may store those segments as 32 managed chunks. Capacity and storage are compared
+with released string insertion on the same platform, not claimed as a native rope
+match. Prepared tests cover both compiler pipelines and VMs, independent CIL,
+GC, snapshots, allocation/text limits and a deterministic 500-edit insertion trace.
+The static `scripts/benchmarks/a07-string-builder-insert-char.mjs` runner compares
+released Length/string insertion controls and reports new character costs using
+prepared fresh builders, one warmup/five samples, median/p95 and managed allocations.
+Validation is pending in the root serial queue; native/Wasm execution is outside
+this batch. #2638 remains open for other Insert families and remaining edits.
+
 `StringBuilder.Replace(char, char)` and `Replace(char, char, int, int)` occupy
 A07 slots `524334` and `524335`, after builder-range Append `524333`. They replace
 raw UTF-16 units, including isolated surrogates, within the selected half-open

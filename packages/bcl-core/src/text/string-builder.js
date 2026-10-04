@@ -8,7 +8,7 @@ import {appendBuilderArray} from './string-builder-append-array.js';
 import {appendBuilderValue} from './string-builder-append-builder.js';
 import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
 import {builderEquals} from './string-builder-equality.js';
-import {replaceBuilderCharacters} from './string-builder-edit.js';
+import {replaceBuilderCharacters, insertBuilderCharacter} from './string-builder-edit.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -125,6 +125,14 @@ function construct(platform, descriptor, scalars) {
   return reference;
 }
 
+function insertText(platform, reference, index, value) {
+  const previous = bufferText(platform, reference);
+  const start = integer(platform, index, 0, previous.length);
+  capacity(platform, previous.length + (value?.length ?? 0));
+  setBuffer(platform, reference, previous.slice(0, start) + (value ?? '') + previous.slice(start));
+  return reference;
+}
+
 function mutateBuffer(platform, reference, name, values, scalars) {
   switch (name) {
     case 'Clear':
@@ -137,13 +145,6 @@ function mutateBuffer(platform, reference, name, values, scalars) {
         ? previous + '\0'.repeat(length - previous.length)
         : previous.slice(0, length));
       return null;
-    }
-    case 'Insert': {
-      const previous = bufferText(platform, reference);
-      const start = integer(platform, scalars[0], 0, previous.length);
-      capacity(platform, previous.length + (scalars[1]?.length ?? 0));
-      setBuffer(platform, reference, previous.slice(0, start) + (scalars[1] ?? '') + previous.slice(start));
-      return reference;
     }
     case 'Remove': {
       const previous = bufferText(platform, reference);
@@ -219,6 +220,9 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       return platform.heap.string(value.slice(start, start + length));
     }
     case 'Equals': return builderEquals(platform, reference, values[0]);
+    case 'Insert': return descriptor.parameters[1] === 'char'
+      ? insertBuilderCharacter(platform, reference, scalars, insertText)
+      : insertText(platform, reference, scalars[0], scalars[1]);
     case 'Replace':
       if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
       return mutateBuffer(platform, reference, descriptor.name, values, scalars);
