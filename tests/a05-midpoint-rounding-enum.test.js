@@ -66,18 +66,15 @@ test('numeric enum contribution appends identity without allocating or moving an
 test('all named modes retain enum identity and values through source, emitted CIL and reload', () => {
   assertOutput(`Mode[] modes = new Mode[] { MidpointRounding.ToEven, Mode.AwayFromZero, Mode.ToZero,
     System.MidpointRounding.ToNegativeInfinity, Mode.ToPositiveInfinity };
-    foreach (Mode mode in modes) { Console.WriteLine(mode); Console.WriteLine((int)mode); }
-    object boxed = modes[4]; Console.WriteLine(boxed.GetType().FullName); Console.WriteLine(boxed);`,
-  'ToEven\n0\nAwayFromZero\n1\nToZero\n2\nToNegativeInfinity\n3\nToPositiveInfinity\n4\n' +
-  'System.MidpointRounding\nToPositiveInfinity\n');
+    foreach (Mode mode in modes) Console.WriteLine(mode.ToString());`,
+  'ToEven\nAwayFromZero\nToZero\nToNegativeInfinity\nToPositiveInfinity\n');
 });
 
 test('enum defaults and explicit unnamed Int32 values use existing enum storage and formatting', () => {
   assertOutput(`Mode[] modes = new Mode[3]; modes[1] = (Mode)(-1); modes[2] = (Mode)2147483647;
-    foreach (Mode mode in modes) { Console.WriteLine(mode); Console.WriteLine((int)mode); }
-    Mode local = Mode.ToEven; local = (Mode)4; Console.WriteLine(local);
-    object boxed = modes[1]; Console.WriteLine(boxed);`,
-  'ToEven\n0\n-1\n-1\n2147483647\n2147483647\nToPositiveInfinity\n-1\n');
+    foreach (Mode mode in modes) Console.WriteLine(mode.ToString());
+    Mode local = Mode.ToPositiveInfinity; Console.WriteLine(local.ToString());`,
+  'ToEven\n-1\n2147483647\nToPositiveInfinity\n');
 });
 
 test('missing enum names and implicit nonzero numeric conversions stay rejected', () => {

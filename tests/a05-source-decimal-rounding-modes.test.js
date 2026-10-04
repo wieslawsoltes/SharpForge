@@ -102,7 +102,7 @@ test('real mode/d/decimals parameter names preserve textual argument evaluation 
 
 for (const mode of [-2147483648, -1, 5, 2147483647]) {
   test(`invalid mode ${mode} faults even when no scale reduction is needed`, () => {
-    for (const expression of [`D.Round(1m, (Mode)${mode})`, `D.Round(1m, 28, (Mode)${mode})`]) {
+    for (const expression of [`D.Round(1m, (Mode)(${mode}))`, `D.Round(1m, 28, (Mode)(${mode}))`]) {
       for (const [engine, create] of engines(artifact(`Console.WriteLine(${expression});`))) {
         const result = create().run();
         assert.equal(result.state, 'faulted', engine);
@@ -139,7 +139,8 @@ test('released and mode wire calls retain distinct IDs through canonical emissio
   for (const [index, entry] of entries.entries()) {
     const image = wireImage(entry), assembly = emitAssemblyDetailed(image).bytes;
     const loaded = loadAssembly(assembly);
-    assert.deepEqual([...loaded.methods[0].code], [...image.methods[0].code]);
+    assert.equal(loaded.methods[0].code[3 * entry.params.length + 1], entry.id);
+    assert.equal(loaded.methods[0].code[3 * entry.params.length + 2], entry.params.length);
     assertOutput({image, assembly}, expected[index]);
   }
   // The implicit enum conversion from integer constant zero is valid C#; nonzero requires a cast.

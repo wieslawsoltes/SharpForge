@@ -32,3 +32,7 @@ The focused prerequisite separately covers selected quiet-NaN payload bits.
 Tests and platform/performance qualification remain staged; no new native
 capture, executed validation or performance result is claimed. Small-width and
 native-sized exact Math overloads remain separate work.
+
+Integration qualification checks mixed Double numeric results. The released
+source Double wire uses a raw Number, so boxing an integral-valued result can
+report Int32; correcting that existing compiler/runtime boundary is deferred.

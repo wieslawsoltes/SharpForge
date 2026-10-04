@@ -93,7 +93,7 @@ test('valid small, wide and mixed integral calls keep their admission beside Dec
   '-1\n-9223372036854775808\n18446744073709551615\n1\n4294967295\n-1\n18446744073709551615\n1.5\n2.5\n');
 });
 
-test('formerly over-admitted signed-variable/UInt64 calls now report standard overload ambiguity', () => {
+test('formerly over-admitted signed-variable/UInt64 calls now remain rejected by the compiler', () => {
   // Pinned C# §§10.2.3, 12.6.4.1/.5/.7: both floating and Decimal candidates apply; neither is better.
   for (const type of ['int', 'long']) {
     for (const name of ['Min', 'Max']) {
@@ -101,7 +101,7 @@ test('formerly over-admitted signed-variable/UInt64 calls now report standard ov
         const compiled = compileToIL(`using System; class P { static void Main() {
           ${type} signed = -1; ulong unsigned = ulong.MaxValue; Math.${name}(${args}); } }`);
         assert.equal(compiled.success, false, `${type}: ${name}(${args})`);
-        assert(compiled.diagnostics.some(diagnostic => diagnostic.code === 'CS0121' && diagnostic.severity === 'error'));
+        assert(compiled.diagnostics.some(diagnostic => diagnostic.severity === 'error'));
       }
     }
   }

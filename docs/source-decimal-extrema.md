@@ -27,7 +27,7 @@ inspection, not a newly executed native compiler oracle:
 - [§12.6.4.1](https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md#12641-general)
   requires a unique better member. Without one, invocation is ambiguous.
 
-New compilations therefore report `CS0121`. An explicit cast expresses the
+New compilations reject these calls. Exact `CS0121` reporting remains limited by the compiler diagnostic reconciliation path. An explicit cast expresses the
 intended domain, for example `Math.Min((double)signed, unsigned)` or
 `Math.Max((decimal)signed, unsigned)`. The predecessor's two mixed-variable
 positive assertions now include that cast; new diagnostic tests retain the

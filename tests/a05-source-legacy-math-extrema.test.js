@@ -7,7 +7,11 @@ import {CilVirtualMachine, ManagedHeap, VirtualMachine} from '@sharpforge/runtim
 import {builtin} from '../packages/runtime/src/execution/source-builtins.js';
 
 const services = () => ({heap: new ManagedHeap(), value: VirtualMachine.prototype.value});
-const invoke = (vm, name, first, second) => builtin(vm, BuiltinMap.get('Math.' + name).id, [first, second]);
+const invoke = (vm, name, first, second) => {
+  // Keep V8 from choosing a double-elements array and canonicalizing input NaNs before the call.
+  const args = [null, null]; args[0] = first; args[1] = second;
+  return builtin(vm, BuiltinMap.get('Math.' + name).id, args);
+};
 
 test('legacy source extrema return a selected quiet-NaN Number without changing its bits', () => {
   const vm = services();
@@ -21,7 +25,7 @@ test('legacy source extrema return a selected quiet-NaN Number without changing 
       for (const wrapped of [true, false]) {
         const result = invoke(vm, name, wrapped ? first : first.value, wrapped ? second : second.value);
         assert.equal(typeof result, 'number');
-        assert.equal(doubleToInt64Bits(result), doubleToInt64Bits(selected));
+        assert.equal(doubleToInt64Bits(result), doubleToInt64Bits(selected), `${name} wrapped=${wrapped} first=${doubleToInt64Bits(first)} second=${doubleToInt64Bits(second)}`);
       }
     }
   }

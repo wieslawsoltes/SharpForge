@@ -28,3 +28,7 @@ boundaries/equality, typed field/array/boxing behavior, mixed overload/result
 selection, independent old/new wire images and false-signature/diagnostic cases.
 Validation and native/platform/performance qualification remain queued. This
 leaf completes this four-type API family; broader T01 acceptance remains open.
+
+Integration qualification checks mixed Double numeric results. The released
+source Double wire uses a raw Number, so boxing an integral-valued result can
+report Int32; correcting that existing compiler/runtime boundary is deferred.

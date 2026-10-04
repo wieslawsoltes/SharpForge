@@ -22,7 +22,7 @@ has no UInt64 Sign overload. Under pinned C#
 an UInt64 argument can convert to Single, Double or Decimal. Single is better
 than Double, but Single and Decimal have no better conversion between them.
 [Better-conversion and member-selection rules](https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md#12645-better-conversion-from-expression)
-therefore make `Math.Sign(ulongVariable)` ambiguous (`CS0121`). The same applies
+therefore make `Math.Sign(ulongVariable)` ambiguous in C# (the current compiler rejects these calls, but does not consistently report `CS0121`). The same applies
 to a mixed conditional expression whose result is UInt64. An explicit cast to
 Decimal, Single or Double specifies the intended domain.
 

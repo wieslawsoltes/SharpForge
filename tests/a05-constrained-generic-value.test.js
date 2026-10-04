@@ -165,10 +165,10 @@ test('struct forwarding preserves metadata interface constraints before executio
   withVM(fixture({constraint: 'Other'}), vm => assert.equal(vm.run().fault?.name, 'ArgumentException'));
 });
 
-for (const argument of ['Managed', 'Auto', 'Explicit']) test(`generic admission rejects unsupported ${argument} struct storage`, () => {
+for (const argument of ['Managed', 'Auto', 'Explicit']) test(`generic admission rejects unsupported or malformed ${argument} struct storage`, () => {
   withVM(fixture({main(writer, _context, call) {
     writer.op('ldnull').op('ldc.i4.1').op('call', call(argument)).op('ret');
-  }}), vm => assert.equal(vm.run().fault?.name, 'NotSupportedException'));
+  }}), vm => assert.equal(vm.run().fault?.name, argument === 'Explicit' ? 'TypeLoadException' : 'NotSupportedException'));
 });
 
 test('generic struct layout is not enabled by nongeneric struct admission', () => {

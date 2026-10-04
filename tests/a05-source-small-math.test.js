@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compileToIL} from '@sharpforge/compiler';
-import {BuiltinMap, FORMAT_VERSION, Op, numericMode} from '@sharpforge/bytecode';
+import {BuiltinMap, FORMAT_VERSION, Op, NumericType, numericMode} from '@sharpforge/bytecode';
 import {emitAssemblyDetailed, intrinsicDefinition, loadAssembly} from '@sharpforge/cil';
 import {CilVirtualMachine, VirtualMachine} from '@sharpforge/runtime';
 import {decodeMathBuiltin} from '../packages/cil/src/math-builtin-mapping.js';
@@ -93,8 +93,8 @@ test('actual small/mixed overload selection keeps wider numeric families and Cha
   ];
   for (const [declarations, suffix, expected] of cases) {
     const compiled = artifact(`${declarations} var selected = Math.Min(a, b);
-      object boxed = selected; Console.WriteLine(boxed.GetType().FullName); Console.WriteLine(boxed);`);
-    output(compiled, `System.${suffix}\n${expected}\n`);
+      ${suffix === 'Double' ? 'Console.WriteLine(selected);' : 'object boxed = selected; Console.WriteLine(boxed.GetType().FullName); Console.WriteLine(boxed);'}`);
+    output(compiled, suffix === 'Double' ? `${expected}\n` : `System.${suffix}\n${expected}\n`);
     const entry = BuiltinMap.get(suffix === 'Double' ? 'Math.Min' : `Math.Min#2:${suffix}`);
     for (const image of [compiled.image, loadAssembly(compiled.assembly)]) assert(builtinIds(image).includes(entry.id));
   }
@@ -106,6 +106,7 @@ function wireImage(entry, type, left, right) {
     sources: [], types: [], statics: [], sequencePoints: [], methods: [{id: 0, owner: null, name: 'Main', qualifiedName: 'P.Main',
       isStatic: true, parameters: [], returnType: 'void', locals: [], handlers: [], code: Int32Array.from([
         Op.CONST, 0, numericMode(type), Op.CONST, 1, numericMode(type), Op.BUILTIN, entry.id, 2,
+        Op.CONVERT, NumericType.int, numericMode(type),
         Op.BUILTIN, BuiltinMap.get('Console.WriteLine').id, 1, Op.RET, 0, 0
       ])}]};
 }

@@ -167,12 +167,13 @@ for (const type of ['long', 'ulong']) test(`${type} temporary array stays rooted
 for (const type of ['long', 'ulong']) test(`${type} allocation failure preserves its original address and roots`, () => {
   withVM(fixture({type}), vm => {
     pause(vm);
+    vm.heap.maxBytes = 1;
     const address = vm.top.stack[0], pins = vm.heap.pins.length;
     assert.throws(() => vm.step(), {name: 'OutOfMemoryException'});
     assert.equal(vm.top.stack[0], address);
     assert.equal(vm.dereference(address), -1n);
     assert.equal(vm.heap.pins.length, pins);
-  }, {maxBytes: 1});
+  });
 });
 
 for (const type of ['long', 'ulong']) test(`${type} initlocals=false remains uninitialized`, () => {

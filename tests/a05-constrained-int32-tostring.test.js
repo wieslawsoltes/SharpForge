@@ -200,13 +200,14 @@ for (const phase of ['prefix', 'call', 'result']) test(`snapshot at ${phase} rep
 test('failed string allocation preserves the address and temporary-root balance', () => {
   withVM(fixture(), vm => {
     pause(vm);
+    vm.heap.maxBytes = 1;
     const address = vm.top.stack[0], pins = vm.heap.pins.length;
     assert.throws(() => vm.step(), {name: 'OutOfMemoryException'});
     assert.equal(vm.top.stack[0], address);
     assert.equal(vm.dereference(address), 17);
     assert.equal(vm.heap.pins.length, pins);
     assert.equal(vm.heap.stats.allocations, 0);
-  }, {maxBytes: 1});
+  });
 });
 
 test('a throwing host formatter does not consume or rewrite the receiver', () => {
