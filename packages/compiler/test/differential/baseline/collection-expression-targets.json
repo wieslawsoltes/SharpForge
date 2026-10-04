@@ -1,4 +1,4 @@
 {
   "collection-expression-targets/cs9215-dictionary-elements": ["diagnostics", "warnings"],
-  "collection-expression-targets/empty-dictionary": ["diagnostics", "warnings", "bytecode", "cil"]
+  "collection-expression-targets/empty-dictionary": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

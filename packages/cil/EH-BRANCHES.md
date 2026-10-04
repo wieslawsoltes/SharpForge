@@ -14,6 +14,7 @@ Branch, switch and leave targets cannot split prefix groups.
 
 This is an explicit validation seam, not a complete verifier. **Leave EH target
 rules are not checked**; only their instruction-group boundary is checked here.
+Use [`validateExceptionControlFlow`](EH-CONTROL-FLOW.md) to include leave rules.
 Evaluation stacks, empty stacks on try entry, prefix/opcode compatibility, metadata
 resolution and runtime integration remain separate scopes. Existing placement-only
 and tree-only APIs preserve their behavior. There is no automatic activation in

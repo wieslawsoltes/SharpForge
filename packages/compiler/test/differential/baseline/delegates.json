@@ -1,6 +1,6 @@
 {
-  "delegates/declared-delegate-and-method-groups": ["diagnostics", "warnings", "bytecode", "cil"],
-  "delegates/func-and-action-arities": ["diagnostics", "warnings", "bytecode", "cil"],
+  "delegates/declared-delegate-and-method-groups": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "delegates/func-and-action-arities": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "delegates/multicast-order-and-result": ["diagnostics", "warnings", "bytecode", "cil"],
   "delegates/removal-identity": ["diagnostics", "warnings", "bytecode", "cil"]
 }

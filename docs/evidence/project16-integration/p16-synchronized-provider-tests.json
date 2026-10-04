@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+  "sourceTree": "5f95b2569f1d37e14108ca865cb39de33872320e",
+  "startedAt": "2026-10-04T01:43:23.120661+00:00",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a20-signature-query-index.test.js",
+    "tests/a20-bound-signature-help.test.js",
+    "tests/a20-editor-language-worker.test.js",
+    "tests/a19-call-hierarchy-ownership.test.js",
+    "tests/a19-studio-language-providers.test.js",
+    "tests/compiler-reference-assembly.test.js",
+    "tests/compiler-attribute-emission.test.js",
+    "tests/compiler-hidden-entry-parameters.test.js"
+  ],
+  "files": [
+    "tests/a20-signature-query-index.test.js",
+    "tests/a20-bound-signature-help.test.js",
+    "tests/a20-editor-language-worker.test.js",
+    "tests/a19-call-hierarchy-ownership.test.js",
+    "tests/a19-studio-language-providers.test.js",
+    "tests/compiler-reference-assembly.test.js",
+    "tests/compiler-attribute-emission.test.js",
+    "tests/compiler-hidden-entry-parameters.test.js"
+  ],
+  "untrackedPreservedOutsideCheckout": [],
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T01:43:29.115793+00:00"
+}

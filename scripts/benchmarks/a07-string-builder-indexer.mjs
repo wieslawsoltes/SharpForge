@@ -1,4 +1,4 @@
-// Copy this identical runner to 2e445b63; execute baseline and candidate serially.
+// Copy this identical runner to 938d86fe; execute baseline and candidate serially.
 import assert from 'node:assert/strict';
 import {cpus} from 'node:os';
 import {performance} from 'node:perf_hooks';

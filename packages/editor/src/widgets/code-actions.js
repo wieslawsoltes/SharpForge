@@ -15,12 +15,19 @@ export class CodeActionsWidget {
     this.items = [];
   }
 
-  async refresh(open = false, scope) {
+  async refresh(open = false, scope, action) {
     if (!this.context.services.supports('codeActions') || this.context.editor.input.readOnly) return;
     const editor = this.context.editor;
     const offset = editor.offset;
-    const result = await this.context.request('codeActions', {offset, end: editor.input.selectionEnd, scope});
+    const result = await this.context.request('codeActions', {offset, end: editor.input.selectionEnd, scope,
+      equivalenceKey: action?.equivalenceKey, action});
     if (!result || offset !== editor.offset) return;
+    if (scope) {
+      this.versions = result.versions;
+      const resolved = serviceItems(result.value)[0];
+      if (resolved) return this.select(resolved);
+      return;
+    }
     this.items = serviceItems(result.value);
     this.versions = result.versions;
     this.bulb.hidden = !this.items.length;
@@ -55,6 +62,7 @@ export class CodeActionsWidget {
       const result = await this.context.request('resolveCodeAction', {action});
       if (!result) return;
       action = result.value;
+      this.versions = result.versions;
     }
     if (action.command && !action.edit && !action.edits) {
       await this.context.command(action.command);
@@ -84,7 +92,8 @@ export class CodeActionsWidget {
     })), button(document, 'Back', () => this.showMenu(this.items)));
     for (const scope of action.fixAllScopes ?? []) {
       if (!['document', 'project', 'solution'].includes(scope)) continue;
-      this.popup.element.append(button(document, `Fix all in ${scope}`, () => this.context.safe(() => this.refresh(true, scope))));
+      this.popup.element.append(button(document, `Fix all in ${scope}`,
+        () => this.context.safe(() => this.refresh(true, scope, action))));
     }
     show();
     this.popup.show();
