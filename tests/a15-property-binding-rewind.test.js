@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Binding, BindingOperations, DependencyPropertyRegistry, PropertyStore, ObservableObject, CompiledBindings, CompiledBindingGroup, BindingPhaseScheduler} from '@sharpforge/winui-properties';
+import {
+  Binding, BindingOperations, DependencyPropertyRegistry, PropertyStore, ObservableObject,
+  CompiledBindings, CompiledBindingGroup, BindingPhaseScheduler, DeferredXamlElement, NameScope
+} from '@sharpforge/winui-properties';
 
 test('A15 malformed BindingExpression rewind preserves diagnostics without replaying callbacks', () => {
   const registry = new DependencyPropertyRegistry();
@@ -71,3 +74,30 @@ test('A15 phase restore reinstalls queued frames without invoking work and rejec
   assert.equal(invalid.pending, 0);
 });
 
+test('A15 x:Load preserves true deferred construction, fresh activation and per-activation cleanup', () => {
+  const namescope = new NameScope(), scene = [], context = {namescope, afterBuild: []};
+  let created = 0, initialized = 0, disposed = 0;
+  const deferred = new DeferredXamlElement({name: 'part', load: false, node: {}, context,
+    instantiate(activation) {
+      const root = {id: ++created};
+      namescope.registerName('part', root);
+      activation.lifetime.add(() => { namescope.unregisterName('part'); disposed++; });
+      activation.afterBuild.push(() => initialized++);
+      return root;
+    },
+    attach: root => scene.push(root), detach: root => scene.splice(scene.indexOf(root), 1)
+  });
+  assert.equal(created, 0);
+  assert.equal(namescope.peekName('part'), null);
+  assert.equal(scene.length, 0);
+  assert.equal(namescope.findName('part').id, 1);
+  assert.equal(initialized, 1);
+  deferred.scope.setLoad('part', false);
+  assert.equal(namescope.peekName('part'), null);
+  assert.equal(scene.length, 0);
+  assert.equal(disposed, 1);
+  assert.equal(namescope.findName('part').id, 2);
+  deferred.dispose();
+  assert.equal(disposed, 2);
+  assert.equal(namescope.findName('part'), null);
+});

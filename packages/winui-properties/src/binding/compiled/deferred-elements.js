@@ -3,11 +3,13 @@ import {PropertyFault} from '../../property/values.js';
 /** Named x:Load factories remain unrealized until load=true or an explicit FindName request. */
 export class DeferredElementScope {
   constructor({attach = () => {}, detach = () => {}, dispose = value => value.dispose?.(), identity = value => value,
-    maxNames = 10000, maxDepth = 64} = {}) {
+    withConstruction = action => action(), maxNames = 10000, maxDepth = 64} = {}) {
     this.attach = attach;
     this.detach = detach;
     this.disposeValue = dispose;
     this.identity = identity;
+    if (typeof withConstruction !== 'function') throw new TypeError('A synchronous construction hook is required');
+    this.withConstruction = withConstruction;
     this.maxNames = maxNames;
     this.maxDepth = maxDepth;
     if (![maxNames, maxDepth].every(value => Number.isSafeInteger(value) && value > 0) || maxNames > 1000000 || maxDepth > 128) {
@@ -42,8 +44,16 @@ export class DeferredElementScope {
     if (entry.loading || this.depth >= this.maxDepth) throw new PropertyFault('InvalidOperationException', 'Deferred realization cycle or depth limit');
     entry.loading = true;
     this.depth++;
-    let value = null;
-    let fresh = false;
+    try {
+      return this.withConstruction(() => this.realize(name, entry));
+    } finally {
+      entry.loading = false;
+      this.depth--;
+    }
+  }
+
+  realize(name, entry) {
+    let value = null, fresh = false;
     try {
       value = entry.factory();
       const identity = value && typeof value === 'object' ? this.identity(value) : null;
@@ -58,9 +68,6 @@ export class DeferredElementScope {
     } catch (error) {
       if (fresh) this.disposeValue(value);
       throw error;
-    } finally {
-      entry.loading = false;
-      this.depth--;
     }
   }
 

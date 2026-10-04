@@ -4,3 +4,5 @@ export * from './resources/index.js';
 export * from './observable/index.js';
 export * from './xaml/index.js';
 export * from './binding/index.js';
+export * from './object-model/index.js';
+export * from './templates/index.js';
