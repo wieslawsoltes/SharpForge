@@ -5,6 +5,8 @@ import {NamespaceSymbol,NamespaceExtent} from '../symbols/namespaces.js';
 import {AssemblyIdentity} from './assembly-identity.js';
 import {MetadataView,Table,tokenOf,tableOf,ridOf,parseMethodSignature,parseFieldSignature,parseTypeSignature} from './pe-metadata.js';
 import {decodeWellKnownAttributes,decodeAttributeBlob,applyTypeTransforms,unsupportedCompilerFeature,grantsInternalsAccess,RequiredMembersObsoleteMarker} from './attributes.js';
+import { resolveMetadataTypeReference } from './pe-type-reference.js';
+import { formatMetadataTypeName as displayName, unqualifiedMetadataTypeName as missingTypeName } from './metadata-type-names.js';
 /**
  * Symbols imported from a referenced assembly (ECMA-335 metadata read through @sharpforge/cil).
  *
@@ -66,6 +68,7 @@ export class PEAssemblySymbol extends SymbolBase {
     super(SymbolKind.Assembly,'');const md=this.metadata=new MetadataView(bytes);
     this.identity=md.assemblyIdentity??new AssemblyIdentity({name:options.name??(md.count(Table.Module)?md.string(md.row(Table.Module,1)[1]).replace(/\.(dll|exe|netmodule)$/i,''):'module')});
     this.name=this.identity.name;this.filePath=options.filePath??null;this.importOptions=options.importOptions??'public';
+    this.runtimeProfileResolver = options.runtimeProfileResolver ?? null;
     /** Identities of the AssemblyRef rows, in metadata order. */
     this.referencedAssemblyIdentities=md.assemblyReferences;this._bound=this.referencedAssemblyIdentities.map(()=>null);this._corLibrary=null;this._special=new Map();this._typeRefs=new Map();
     const assemblyData=md.count(Table.Assembly)?decodeWellKnownAttributes(md.customAttributes(tokenOf(Table.Assembly,1))):noData;
@@ -113,7 +116,8 @@ export class PEAssemblySymbol extends SymbolBase {
   _missing(metadataName,reason,nestedName){const dot=metadataName.lastIndexOf('.'),{name,arity}=unmangle(nestedName??metadataName.slice(dot+1)),error=new ErrorTypeSymbol(name,arity,{reason});error.metadataFullName=nestedName?metadataName+'+'+nestedName:metadataName;return error;}
   /** The special type with this id (for example System_Int32) from the core library, or an ErrorTypeSymbol with CS0518. */
   getSpecialType(id){
-    const cached=this._special.get(id);if(cached)return cached;const metadataName=specialNames.get(id),type=metadataName?this.corLibrary?._topLevel.get(metadataName)??null:null;
+    const cached=this._special.get(id);if(cached)return cached;const metadataName=specialNames.get(id),core=this.corLibrary;
+    const type = metadataName ? core ? core._topLevel.get(metadataName) : this.runtimeProfileResolver?.coreType(id) : null;
     if(type){this._special.set(id,type);return type;}return this._missing(metadataName??id,{code:DiagnosticId.CS0518,args:[metadataName??id]});
   }
   /** The symbol a TypeDef, TypeRef or TypeSpec token of this module denotes. */
@@ -261,13 +265,9 @@ export class PEAssemblySymbol extends SymbolBase {
     }
   }
   _typeRef(rid){
-    const cached=this._typeRefs.get(rid);if(cached)return cached;const md=this.metadata,row=md.row(Table.TypeRef,rid),metadataName=md.string(row[1]),full=qualified(md.string(row[2]),metadataName),scope=row[0]?decodeScope(row[0]):0;let result;
-    if(tableOf(scope)===Table.TypeRef&&scope){const outer=this._typeRef(ridOf(scope));result=outer instanceof ErrorTypeSymbol?this._missing(outer.metadataFullName??outer.name,outer.reason,metadataName):outer.containingAssembly._nested.get(outer)?.get(metadataName)??this._missing(outer.metadataFullName,{code:DiagnosticId.CS7069,args:[displayName(outer.metadataFullName+'+'+metadataName),outer.containingAssembly.name]},metadataName);}
-    else if(tableOf(scope)===Table.AssemblyRef&&scope){const index=ridOf(scope)-1,target=this._bound[index];
-      if(!target)result=this._missing(full,{code:DiagnosticId.CS0012,args:[missingTypeName(full),this.referencedAssemblyIdentities[index].getDisplayName()]});
-      else{const found=target._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:DiagnosticId.CS7069,args:[displayName(full),target.name]});}}
-    else if(tableOf(scope)===Table.ModuleRef&&scope)result=this._missing(full,{code:DiagnosticId.CS7069,args:[displayName(full),this.name]});
-    else{const found=this._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:DiagnosticId.CS7069,args:[displayName(full),this.name]});}
+    const cached = this._typeRefs.get(rid);
+    if (cached) return cached;
+    const result = resolveMetadataTypeReference(this, rid);
     this._typeRefs.set(rid,result);return result;
   }
   /** Signature node -> TypeWithAnnotations (custom modifiers kept, nullability oblivious until the Nullable transform). */
@@ -298,11 +298,6 @@ export class PEAssemblySymbol extends SymbolBase {
   }
 }
 const decodeBase=coded=>{const tables=[Table.TypeDef,Table.TypeRef,Table.TypeSpec];return tokenOf(tables[coded&3],coded>>>2);};
-const decodeScope=coded=>{const tables=[Table.Module,Table.ModuleRef,Table.AssemblyRef,Table.TypeRef];return tokenOf(tables[coded&3],coded>>>2);};
-/** `Ns.List`1` -> `Ns.List<>` for diagnostics about types that have no symbol. */
-/** How Roslyn names a type of an unreferenced assembly in CS0012: without its namespace (pinned in test/references). */
-const missingTypeName=metadataName=>{const outer=metadataName.split('+')[0],dot=outer.lastIndexOf('.');return displayName(metadataName.slice(dot+1));};
-const displayName=metadataName=>metadataName.replace(/\+/g,'.').replace(/`(\d+)/g,(_,n)=>'<'+','.repeat(Number(n)-1)+'>');
 /** Applies the flattened type arguments of a GENERICINST to a definition and its containing types. */
 function constructGeneric(definition,args){
   if(definition instanceof ErrorTypeSymbol){const error=new ErrorTypeSymbol(definition.name,definition.arity,{reason:definition.reason,candidates:definition.candidates,containingSymbol:definition.containingSymbol,typeArguments:args});error.metadataFullName=definition.metadataFullName;return error;}

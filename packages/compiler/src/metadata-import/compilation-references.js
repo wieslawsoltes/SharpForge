@@ -11,6 +11,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { bindReferences, unificationCodes } from './reference-manager.js';
 import { coreTypeDescriptor } from '../symbols/special-types.js';
 import { readCompilationReferences } from './reference-input.js';
+import { createRuntimeProfileResolver } from './runtime-profile.js';
 
 /** The registry as the core library: every predefined type comes from the bridge. */
 class RegistryCoreLibrary {
@@ -74,7 +75,7 @@ export function bindCompilationReferences(references, bridge) {
       isUnification: () => false,
     };
   }
-  const imported = readCompilationReferences(references);
+  const imported = readCompilationReferences(references, { runtimeProfileResolver: createRuntimeProfileResolver(bridge) });
   const manager = bindReferences(imported.references);
   const referenced = manager.globalNamespace;
   const coreAssembly = manager.corLibrary;
