@@ -40,14 +40,16 @@ available. A closed struct TypeSpec may be a `sizeof` operand without storing
 or passing a struct value. Source/reloaded engines retain existing primitive
 `sizeof` support; no custom-struct source frontend parity is claimed.
 
-Prepared regressions exercise actual CIL instructions and calls, both ABI
+Focused regressions exercise actual CIL instructions and calls, both ABI
 widths, nested/packed/overlapping layouts, cache invalidation, snapshot replay,
 malformed operands and unsupported boundaries. A Roslyn fixture is provided at
 `tests/fixtures/a05/value-layout-sizeof`; its expected output is an unmeasured
 qualification target, not a captured native result.
 
-No tests, checks, builds or native tools were run for this leaf. Root owns the
-serial validation queue. The focused command is:
+All 54 focused sizeof, native-width and generic-call/dispatch tests passed
+serially with Node 24.21.0 at `d3dfff23`, using 512 MB and concurrency 1. Core
+static/build evidence is recorded on the PR. Native tools were not run. Root
+owns the serial validation queue. The focused command was:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-value-layout-sizeof.test.js tests/a05-native-width-cil.test.js tests/a05-02-generic-calls.test.js tests/a05-02-generic-dispatch.test.js
