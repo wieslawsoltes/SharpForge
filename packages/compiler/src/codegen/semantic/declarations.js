@@ -10,6 +10,9 @@ import { MethodKind } from '../../symbols/members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
 import { isByReference } from '../../lowering/by-reference.js';
 import { spanOf } from './node-factory.js';
+import {declareUIEventAccessors} from './ui-event-accessors.js';
+import {declareSourcePropertyMetadata} from './property-metadata.js';
+import {accessorBaseName} from '../../binder/members/indexer-names.js';
 
 const definitionOf = symbol => symbol.originalDefinition ?? symbol;
 
@@ -42,7 +45,7 @@ export const Declarations = Base =>
     checkClassShape(type) {
       const at = type.locations?.[0];
       const base = type.baseType;
-      if (base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
+      if (base && base.specialType !== 'System_Object' && !this.ui.accepts(type)) this.unsupported('class inheritance', at);
       // Three interfaces need no dispatch: `using` and `await using` call the method of the static type, and a
       // collection initializer only requires IEnumerable to be listed (its Add calls are bound statically).
       // Nor does an interface declared in source: the framework cannot call it, a value of the interface type is
@@ -54,7 +57,8 @@ export const Declarations = Base =>
         // ... nor the awaiter interfaces: `await` calls the members of the awaiter's static type.
         awaiterInterfaces = [core.inotifyCompletion, core.icriticalNotifyCompletion],
         dispatchFree = [core.iasyncDisposable, core.ienumerable, core.icomparable, core.icomparableT, core.iequatableT, ...awaiterInterfaces],
-        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i.originalDefinition ?? i) && !this.isSource(i);
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i.originalDefinition ?? i) &&
+          !this.isSource(i) && !this.ui.supportedInterface(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol; for a generic class, of the construction `type` names. */
@@ -65,6 +69,11 @@ export const Declarations = Base =>
     }
     declareMembers(type) {
       const owner = this.classOf(type);
+      if (owner.membersDeclared) return;
+      if (owner.declaringMembers) this.unsupported('cyclic source inheritance', type.locations?.[0]);
+      owner.declaringMembers = true;
+      if (this.ui.accepts(type) && type.baseType && this.isSource(type.baseType)) this.declareMembers(type.baseType);
+      this.ui.configure(type, owner);
       for (const member of type.getMembers()) {
         switch (member.kind) {
           case SymbolKind.Field:
@@ -83,6 +92,8 @@ export const Declarations = Base =>
             break;
         }
       }
+      owner.membersDeclared = true;
+      owner.declaringMembers = false;
     }
     declareField(owner, symbol) {
       if (symbol.isConst || this.fields.has(symbol)) return;
@@ -95,6 +106,7 @@ export const Declarations = Base =>
     declareProperty(owner, symbol) {
       if (symbol.parameters?.length && symbol.refKind && symbol.refKind !== 'none') this.unsupported('ref returns', symbol.locations?.[0]);
       for (const accessor of [symbol.getMethod, symbol.setMethod]) if (accessor) this.declareMethod(owner, accessor);
+      declareSourcePropertyMetadata(this, owner, symbol);
       if (!symbol.isAutoProperty) return;
       // An auto-property: the backing field exists even when the symbol table did not materialise one.
       const backing = symbol.backingField;
@@ -117,6 +129,7 @@ export const Declarations = Base =>
       const type = this.types.imageType(symbol.type, symbol.locations?.[0]);
       const record = symbol.isStatic ? this.program.addStatic(owner, symbol.name, type) : this.program.addField(owner, symbol.name, type);
       this.eventFields.set(symbol, record);
+      declareUIEventAccessors(this, owner, symbol, record);
     }
     declareMethod(owner, symbol) {
       // Synthesized record members are declared when code first refers to them (lowering/records/record-members.js).
@@ -135,7 +148,9 @@ export const Declarations = Base =>
           break;
       }
       const isVirtual = symbol.isAbstract || symbol.isVirtual || symbol.isOverride;
-      if (isVirtual && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
+      if (isVirtual && !this.records.dispatchesStatically(symbol) && !this.ui.supportsMethod(symbol)) {
+        this.unsupported('virtual dispatch outside the UI subclass profile', at);
+      }
       // An extern method has no body to lower. Declaring one is harmless; calling it is reported (see methodOf).
       if (symbol.isExtern) return undefined;
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
@@ -150,6 +165,8 @@ export const Declarations = Base =>
         node: this.nodeOf(symbol),
         hasSource: !symbol.isImplicitlyDeclared,
         accessor: this.accessorOf(symbol),
+        ...this.ui.methodMetadata(symbol),
+        access: symbol.declaredAccessibility,
       });
       this.methods.set(symbol, record);
       return record;
@@ -165,8 +182,9 @@ export const Declarations = Base =>
     accessorOf(symbol) {
       const property = symbol.associatedSymbol;
       if (symbol.methodKind !== MethodKind.PropertyGet && symbol.methodKind !== MethodKind.PropertySet) return null;
-      if (!property || property.parameters?.length) return null;
-      return { property: property.name, kind: symbol.methodKind === MethodKind.PropertyGet ? 'get' : 'set', access: 'public' };
+      if (!property) return null;
+      return {property: accessorBaseName(property),
+        kind: symbol.methodKind === MethodKind.PropertyGet ? 'get' : 'set', access: symbol.declaredAccessibility};
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {

@@ -4,6 +4,7 @@
  */
 import { SymbolKind } from '../../symbols/types.js';
 import { walk } from '../../bound/semantic-walker.js';
+import {registeredCatchType} from './exception-profile.js';
 import { implementsInterface } from '../../symbols/substitution.js';
 import { yieldBreak } from '../../lowering/iterators.js';
 import { yieldReturn, openRegion, closeRegion } from '../../lowering/iterators/try-regions.js';
@@ -357,19 +358,17 @@ export const StatementTranslation = Base =>
     stmtTry(node) {
       const catches = node.catches.map(clause => {
         if (clause.filter) return this.unsupported('exception filters', node.syntax);
-        // The runtime keeps no type on a thrown object and enters the innermost handler for every exception.
-        if (!clause.type.equals(this.g.analysis.core.exception))
-          return this.unsupported(`a catch clause for '${clause.type.toDisplayString()}' (the runtime catches System.Exception only)`, clause.syntax);
+        const exceptionType = registeredCatchType(this.g, clause.type, clause.syntax);
         let variable = null;
         const body = this.scoped(() => {
           if (!clause.local) return this.statement(clause.block);
           if (this.frame.captures.isCaptured(clause.local)) return this.unsupported('a captured catch variable', node.syntax);
-          variable = n.newLocal(clause.local.name, 'Exception', n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
+          variable = n.newLocal(clause.local.name, exceptionType, n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
           this.frame.vars.set(clause.local, () => n.local(variable));
           return this.statement(clause.block);
         });
         body.syntax = this.span(clause.block.syntax);
-        return { kind: 'CatchBlock', exceptionType: null, local: variable, body };
+        return { kind: 'CatchBlock', exceptionType, local: variable, body };
       });
       const span = this.span(node.syntax);
       if (!catches.length && node.finallyBlock) {

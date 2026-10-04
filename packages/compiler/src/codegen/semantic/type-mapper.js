@@ -8,6 +8,7 @@ import {numericTypeId} from '@sharpforge/bytecode';
  */
 import { TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { unsupported } from './unsupported.js';
+import {uiNullableType} from './ui-nullable-values.js';
 
 const specialNames = Object.freeze({
   System_SByte: 'sbyte', System_Byte: 'byte', System_Int16: 'short', System_UInt16: 'ushort',
@@ -20,7 +21,6 @@ const specialNames = Object.freeze({
   System_Object: 'object',
   System_Void: 'void',
 });
-
 
 export class TypeMapper {
   /**
@@ -90,7 +90,10 @@ export class TypeMapper {
       default:
         break;
     }
-    if (type.originalDefinition?.specialType === 'System_Nullable_T') unsupported('nullable value types', syntax);
+    if (type.originalDefinition?.specialType === 'System_Nullable_T') {
+      if (uiNullableType(this.host, type)) return 'object';
+      unsupported('nullable value types outside the approved UI profile', syntax);
+    }
     // A framework generic over a type the registry does not list shares the construction over `object` (lowering/generics).
     const registry = this.host.bridge.registryName(type) ?? this.host.frameworkConstructions.imageTypeOf(type);
     if (registry) return registry;

@@ -5,6 +5,7 @@
  */
 import { FORMAT_VERSION } from '@sharpforge/bytecode';
 import { defaultValue } from '../../type-utils.js';
+import {sourcePropertyDescriptors} from './property-metadata.js';
 
 const noSpan = Object.freeze({ start: 0, end: 0 });
 
@@ -20,8 +21,8 @@ export class ProgramModel {
     this.constants = [];
     this.constantMap = new Map();
     this.sequencePoints = [];
-    // The IR emitter asks the compilation for the image name of a catch type; every handler is a catch of Exception.
-    this.semantic = { nameOf: () => 'Exception' };
+    // Catch types are resolved during semantic lowering and retained by the source and CIL exception tables.
+    this.semantic = { nameOf: type => typeof type === 'string' ? type : 'Exception' };
   }
   /** Interns a constant and returns its pool index (same keying as the execution pipeline). */
   constant(value) {
@@ -57,7 +58,7 @@ export class ProgramModel {
   }
   /** Adds an instance field to an image class. */
   addField(owner, name, type, extra = {}) {
-    const field = { name, type, index: owner.fields.length, owner, isStatic: false, ...extra };
+    const field = { name, type, index: (owner.fieldOffset ?? 0) + owner.fields.length, owner, isStatic: false, ...extra };
     owner.fields.push(field);
     return field;
   }
@@ -80,6 +81,11 @@ export class ProgramModel {
       qualifiedName: (owner ? owner.name + '.' : '') + name,
       owner,
       isStatic: signature.isStatic,
+      isVirtual: !!signature.isVirtual,
+      isOverride: !!signature.isOverride,
+      isFinal: !!signature.isFinal,
+      virtualSlot: signature.virtualSlot ?? null,
+      access: signature.access ?? null,
       returnType: signature.returnType,
       parameters: signature.parameters.map(p => ({ start: node.start, end: node.end, ...p })),
       node,
@@ -107,7 +113,14 @@ export class ProgramModel {
       types: this.types.map(t => ({
         id: t.id,
         name: t.name,
+        ...(t.base ? {base: t.base} : {}),
+        ...(t.interfaces.length ? {interfaces: t.interfaces} : {}),
+        ...(t.uiFrameworkBase ? {uiFrameworkBase: t.uiFrameworkBase} : {}),
+        ...(t.delegateInvoke !== undefined ? {delegateInvoke: t.delegateInvoke, delegateContract: t.delegateContract} : {}),
+        ...(t.frameworkInvoke !== undefined ? {frameworkInvoke: t.frameworkInvoke} : {}),
+        ...(t.referenceCell ? {referenceCell: t.referenceCell} : {}),
         fields: t.fields.map(f => ({ name: f.name, type: f.type, index: f.index, ...(f.backing ? { backing: true } : {}) })),
+        ...(t.properties.length ? {properties: sourcePropertyDescriptors(t.properties)} : {}),
         initializer: t.initializer,
       })),
       statics: this.statics.map(f => ({ name: `${f.owner.name}.${f.name}`, type: f.type, value: defaultValue(f.type) })),
@@ -119,6 +132,8 @@ export class ProgramModel {
         qualifiedName: m.qualifiedName,
         owner: m.owner?.name ?? null,
         isStatic: m.isStatic,
+        ...(m.isVirtual ? {isVirtual: true, isOverride: m.isOverride, isFinal: m.isFinal, virtualSlot: m.virtualSlot} : {}),
+        ...(m.access ? {access: m.access} : {}),
         returnType: m.returnType,
         ...(m.accessor ? { accessor: m.accessor } : {}),
         parameters: m.parameters.map(p => ({ name: p.name, type: p.type })),

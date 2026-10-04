@@ -67,23 +67,34 @@ export const Initialization = Base =>
     /** The `<init>` of one class (and its constructor when it declares none), or null when it has no initializers. */
     declareInstanceInitializer(type, owner) {
       const initializers = this.initializersOf(type, false);
-      if (!initializers.length) return null;
+      if (!initializers.length && !this.ui.accepts(type)) return null;
       // The initializers of a type with a primary constructor run with its parameters in scope.
       const parameters = type.primaryConstructor ? this.parametersOf(type.primaryConstructor) : [];
-      const method = this.program.addMethod(owner, '<init>', { isStatic: false, returnType: 'void', parameters, node: owner.node });
-      this.instanceInits.set(type, method);
+      const method = initializers.length
+        ? this.program.addMethod(owner, '<init>', { isStatic: false, returnType: 'void', parameters, node: owner.node }) : null;
+      if (method) this.instanceInits.set(type, method);
       const constructors = type.getMembers('.ctor').filter(c => c.methodKind === MethodKind.Constructor && !c.isImplicitlyDeclared);
+      let implicit = null;
       if (!constructors.length) {
-        const implicit = this.program.addMethod(owner, '.ctor', { isStatic: false, returnType: 'void', parameters: [], node: owner.node });
+        implicit = this.program.addMethod(owner, '.ctor', { isStatic: false, returnType: 'void', parameters: [], node: owner.node });
         this.implicitConstructors.set(type, implicit);
-        this.bodies.push({ method: implicit, body: n.block([n.expressionStatement(n.call(method, n.thisReference(owner.name), []))]) });
       }
-      return { type, method, initializers };
+      return { type, method, initializers, implicit };
     }
     buildInstanceInitializers(work) {
-      for (const { type, method, initializers } of work) {
-        const frame = this.memberFrame(method, { name: '.ctor' }, this.uriOf(type), null);
-        this.bodies.push({ method, body: this.initializerBlock(initializers, frame, type.primaryConstructor?.parameters ?? []) });
+      for (const { type, method, initializers, implicit } of work) {
+        if (method) {
+          const frame = this.memberFrame(method, { name: '.ctor' }, this.uriOf(type), null);
+          this.bodies.push({ method, body: this.initializerBlock(initializers, frame, type.primaryConstructor?.parameters ?? []) });
+        }
+        if (implicit) {
+          const frame = this.memberFrame(implicit, {name: '.ctor'}, this.uriOf(type), null);
+          const translator = new BodyTranslator(this, frame);
+          const steps = method ? [n.expressionStatement(n.call(method, frame.thisExpr(), []))] : [];
+          const base = this.ui.baseConstructor(type, frame.thisExpr(), translator);
+          if (base) steps.push(n.expressionStatement(base));
+          this.bodies.push({method: implicit, body: n.block(steps)});
+        }
         this.drain();
       }
     }
@@ -147,9 +158,13 @@ export const Initialization = Base =>
           const target = this.methodOf(call.method, call.syntax);
           steps.push(translator => n.expressionStatement(n.call(target, frame.thisExpr(), translator.arguments(call, call.method))));
         } else {
-          if (call) this.unsupported('base constructor calls', symbol.locations?.[0], frame.uri);
+          if (call && !this.ui.accepts(type)) this.unsupported('base constructor calls', symbol.locations?.[0], frame.uri);
           const init = this.instanceInits.get(type);
           if (init) steps.push(() => n.expressionStatement(n.call(init, frame.thisExpr(), [])));
+          if (this.ui.accepts(type)) steps.push(translator => {
+            const base = this.ui.baseConstructor(type, frame.thisExpr(), translator, call);
+            return base ? n.expressionStatement(base) : n.noOp();
+          });
         }
       }
       return steps.length ? translator => steps.map(step => step(translator)) : null;

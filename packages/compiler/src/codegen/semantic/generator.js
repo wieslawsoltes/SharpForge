@@ -40,6 +40,7 @@ import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
 import { memberGenerators } from '../../lowering/members/index.js';
 import { MultiDimensionalArrays } from '../../lowering/arrays.js';
+import { UIClassProfile } from './ui-class-profile.js';
 
 class GeneratorCore {
   /**
@@ -51,6 +52,7 @@ class GeneratorCore {
     this.files = files;
     this.program = new ProgramModel(new Map(files.map(f => [f.source.uri, f.source])), options.name ?? 'Application');
     this.bridge = frameworkBridge();
+    this.ui = new UIClassProfile(this);
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
@@ -98,6 +100,7 @@ class GeneratorCore {
     if (!cell) {
       const record = this.program.addClass(`<>Cell(${imageTypeNameText(type)})`);
       cell = { record, value: this.program.addField(record, 'Value', type) };
+      record.referenceCell = {valueType: type, field: cell.value.index};
       this.cells.set(type, cell);
     }
     return cell;
