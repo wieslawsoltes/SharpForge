@@ -1,11 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { AssemblyLoadSession } from '../packages/clr/src/index.js';
 
 const fixture = new URL('./fixtures/clr-method-display/native.json', import.meta.url);
-test('CLR MethodInfo and ConstructorInfo strings match independent native reflection',
-  { skip: !existsSync(fixture) && 'Native capture pending serial validation' }, async () => {
+test('CLR MethodInfo and ConstructorInfo strings match independent native reflection', async () => {
     const native = JSON.parse(readFileSync(fixture));
     assert.equal(native.execution.exitCode, 0);
     const context = new AssemblyLoadSession().createContext();
@@ -20,4 +19,4 @@ test('CLR MethodInfo and ConstructorInfo strings match independent native reflec
     }
     assert.equal(module.methodBodyReadCount, 0);
     assert.equal(context.assemblies.length, 1);
-  });
+});

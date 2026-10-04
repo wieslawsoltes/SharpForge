@@ -47,11 +47,27 @@ only the first display query adds the completed string to its private state.
 The result remains usable while outstanding descriptors retain an unloaded context.
 
 This implementation uses the public CIL `formatType` callback merged in #4211.
-Authored tests and the independent
-C# MethodInfo/ConstructorInfo fixture are prepared; native capture, focused tests,
-new-API measurements and checks await the serial validation slot. There is no
-native, performance or execution-engine qualification claim yet. #2475 remains
+The independent C# MethodInfo/ConstructorInfo fixture captured 18 method/constructor
+strings on SDK 10.0.201, Roslyn 5.3.0-2.26153.122 and CoreCLR 10.0.5. The committed
+capture records source/image hashes, toolchain and environment. All 8 focused
+tests passed with zero skips on Node 24.21.0; the final mandatory-oracle test also
+passed after removing its draft-only skip. Static/manifests checked 3,263 modules
+with no syntax errors and 3,259 modules with no static errors. Structure reported
+269 existing findings, none in changed files. Source VM, direct CIL and Rust
+native/Wasm execution are not qualified by this host metadata API. #2475 remains
 open for its broader reflection requirements.
+
+New-API measurements at source `16dda1e4c5e68ebebfcd069eee3eb868bdd41057` ran
+serially on the shared Apple M3 Pro, darwin-arm64 host with Node 24.21.0 and a
+1 GiB heap cap. A cold operation creates the 18 MethodDesc identities and their
+displays after loading the module: median 118.875 µs, p95 251.875 µs, p99
+3,177.792 µs. A cached `Constructed.toString()` query measured median 0.003350 µs,
+p95 0.015142 µs and p99 0.019850 µs. Each distribution contains 100 samples;
+the cached query uses 10,000 iterations per sample after 10 warmup samples.
+[All 200 raw samples and exact source hashes](benchmarks/method-display-node24.json)
+are retained. There is no prior equivalent implementation, before/after speed
+claim or statistical significance claim. Allocations and retained display-string
+footprint were not measured; existing descriptor reads add no display lookup.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-method-display.mjs tests/fixtures/clr-method-display/native.json
