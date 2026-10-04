@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "owner": "root",
+  "publicationDelegate": "filesystem_providers",
+  "recordedAt": "2026-10-04T05:26:48.787Z",
+  "repository_full_name": "wieslawsoltes/SharpForge",
+  "base": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+  "baseTree": "58490a9e90c023fa563347075c278b527302e988",
+  "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+  "local": "5155857c644c5df99eeba207ad486422e17630dd",
+  "tree": "58a5f8330d9b3ae98e5c8d9c91dbfa9a1bb3ef02",
+  "branch": "codex/p18-compiler-worker-entry",
+  "pr": 3888,
+  "message": "SF-A00-T03: compare the complete automation registry in canonical key order\n\nPreserve every key assertion and the existing two trusted imports. Refresh only\nthe reviewed fingerprint for the corrected test; runtime code is unchanged.\n\nSource-Commit: 7b087e0f0e3105c71ec86e39554358766b45d3bf\nLocal-Projection: 5155857c644c5df99eeba207ad486422e17630dd",
+  "stats": "2 files changed, 2 insertions(+), 2 deletions(-)",
+  "files": [
+    "scripts/conformance/static/allowlist.json",
+    "tests/a00-03-studio-registries.test.js"
+  ],
+  "sourceProofs": [
+    {
+      "path": "tests/a00-03-studio-registries.test.js",
+      "blob": "09223b2e704763571a9aa6fdc1f27c8f4e77cca3",
+      "sha256": "e1b9c004151d332439c367ae3de460bd1f6095d2edaba1a8347504dec8dc468a",
+      "exactCanonical": true
+    }
+  ],
+  "policy": {
+    "path": "tests/a00-03-studio-registries.test.js",
+    "operation": "dynamic-import",
+    "count": 2,
+    "previousSha256": "569e621fa1ffddcfbbceb1a1d4c35edc654a6856ffa584239042abc1b944066c",
+    "sha256": "e1b9c004151d332439c367ae3de460bd1f6095d2edaba1a8347504dec8dc468a",
+    "reasonUnchanged": true
+  },
+  "remote": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+  "commitReadback": {
+    "sha": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+    "tree": "58a5f8330d9b3ae98e5c8d9c91dbfa9a1bb3ef02",
+    "parents": [
+      "2e4e552a5bb567dddfe9240386b8514d802bf6c7"
+    ],
+    "url": "https://github.com/wieslawsoltes/SharpForge/commit/371a88fc0b62f2bed86b1cd748900e6e489e2aa6"
+  },
+  "refReadback": {
+    "ref": "refs/heads/codex/p18-compiler-worker-entry",
+    "sha": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6"
+  },
+  "pullRequestReadback": {
+    "number": 3888,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3888",
+    "head": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+    "base": "codex/p18-compiler-worker-dependencies",
+    "baseSha": "eac6c49e49edbf5a2be77814277419b61120af47",
+    "draft": true,
+    "state": "open",
+    "mergeable": true,
+    "mergeableState": "clean"
+  },
+  "requiredChecks": {
+    "head": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+    "runId": 37179684261,
+    "jobId": 111369533178,
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179684261/job/111369533178",
+    "jobs": [
+      {
+        "id": 111369533178,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111369607513,
+        "name": "core-platforms",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369607961,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369607983,
+        "name": "packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369608523,
+        "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369608536,
+        "name": "native-il",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369608577,
+        "name": "native-msbuild",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369608930,
+        "name": "clr-wasm",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111369609205,
+        "name": "ci-ok",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "interpretation": "Core success is static/build/checkout qualification; unit and platform jobs were skipped."
+  },
+  "previousPublication": "planning/evidence/project18/compiler-worker-sync-publication.json",
+  "previousFailures": {
+    "originalCoreRun": 37172088857,
+    "retainedBy": "planning/evidence/project18/compiler-worker-sync-publication.json",
+    "synchronizedSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "reason": "Full-key automation assertion compared a sorted public list with an unsorted expected lock array. The corrected assertion preserves every expected key.",
+    "registryCases": [
+      {
+        "name": "automation contributions preserve the complete pre-extraction key surface",
+        "tapNumber": 22,
+        "status": "failed"
+      }
+    ]
+  },
+  "restrictions": {
+    "localTests": false,
+    "localBuild": false,
+    "mainRefresh": false,
+    "descendantRefresh": false,
+    "forceUpdate": false,
+    "productCodeChanged": false,
+    "existingImportCount": 2,
+    "otherPolicyRecordsUnchanged": true
+  },
+  "qualification": {
+    "sourceCommit": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+    "toolchain": {
+      "node": "v26.10.0",
+      "npm": "11.19.1"
+    },
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "tests/a00-03-studio-registries.test.js",
+      "tests/a19-document-disk-save.test.js",
+      "tests/a19-document-operation-state.test.js",
+      "tests/a19-document-snapshot-save.test.js",
+      "tests/a19-documents-state.test.js",
+      "tests/a19-explorer-resource-transaction.test.js",
+      "tests/a19-explorer-snapshots.test.js",
+      "tests/a19-prepared-documents.test.js",
+      "tests/a19-studio-diagnostic-producers.test.js",
+      "tests/a19-studio-save-ownership.test.js",
+      "tests/a19-studio-workspace-inputs.test.js",
+      "tests/a20-prepared-source-paths.test.js",
+      "tests/a20-prepared-source-workspace.test.js",
+      "tests/a20-studio-source-import.test.js",
+      "tests/a24-editor-lifecycle.test.js",
+      "tests/a24-explorer-history.test.js",
+      "tests/a24-explorer-operations.test.js",
+      "tests/a24-explorer-prepared-journal.test.js",
+      "tests/a24-peer-buffer-resolution.test.js",
+      "tests/a24-prepared-journal.test.js",
+      "tests/a24-prepared-persistence.test.js",
+      "tests/a24-prepared-recovery.test.js",
+      "tests/a24-provider-transactions.test.js",
+      "tests/a24-recovery-bootstrap.test.js",
+      "tests/a24-recovery-lazy.test.js",
+      "tests/a24-studio-save-composition.test.js",
+      "tests/a24-studio-session-composition.test.js",
+      "tests/a24-type-rename.test.js",
+      "tests/a24-workbench-feature-callbacks.test.js",
+      "tests/a24-workbench-project-composition.test.js",
+      "tests/a24-workbench-workspace-ports.test.js",
+      "tests/a24-workspace-import-regression.test.js",
+      "tests/a24-workspace-recovery.test.js",
+      "tests/a24-workspace-session.test.js",
+      "tests/project-core-contract.test.js",
+      "tests/project-evaluation-build-stages.test.js",
+      "tests/project-evaluation-contexts.test.js",
+      "tests/project-resource-contract.test.js"
+    ],
+    "testFile": "tests/a00-03-studio-registries.test.js",
+    "scopedSummary": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "cases": [
+      {
+        "name": "two independent tools start and a failed third batch restores the container",
+        "tapNumber": 1,
+        "status": "passed"
+      },
+      {
+        "name": "container preflights duplicates, reports disposal errors and rolls back cancellation",
+        "tapNumber": 2,
+        "status": "passed"
+      },
+      {
+        "name": "commands preserve handler behavior and reject duplicate registrations",
+        "tapNumber": 3,
+        "status": "passed"
+      },
+      {
+        "name": "tools append menu items without global state or editing Studio",
+        "tapNumber": 4,
+        "status": "passed"
+      },
+      {
+        "name": "each mount has independent state and DOM, and failed render cleans up",
+        "tapNumber": 5,
+        "status": "passed"
+      },
+      {
+        "name": "automation contributions preserve the complete pre-extraction key surface",
+        "tapNumber": 6,
+        "status": "passed"
+      },
+      {
+        "name": "automation duplicate batches roll back and namespaces dispose cleanly",
+        "tapNumber": 7,
+        "status": "passed"
+      },
+      {
+        "name": "storage preserves v1 payloads, versions and quota failures",
+        "tapNumber": 8,
+        "status": "passed"
+      },
+      {
+        "name": "every worker message has a handler seam and unknown messages fail structurally",
+        "tapNumber": 9,
+        "status": "passed"
+      },
+      {
+        "name": "Studio has no command branches, direct persistence or inline automation literal",
+        "tapNumber": 10,
+        "status": "passed"
+      },
+      {
+        "name": "real compiler and runtime workers dispatch known requests and return structured unknown errors",
+        "tapNumber": 11,
+        "status": "passed"
+      }
+    ],
+    "aggregate": {
+      "summary": {
+        "tests": 260,
+        "suites": 0,
+        "pass": 259,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "qualificationIncomplete": true
+    },
+    "artifacts": [
+      {
+        "path": "planning/evidence/project18/compiler-registry/node26-correction-1.json",
+        "sha256": "186fb18537ae8199702838a5e45130073b8b82c86304a6ef27ef73af52cfa7c8"
+      },
+      {
+        "path": "planning/evidence/project18/compiler-registry/node26-registry-correction-scoped.tap",
+        "sha256": "dc1ad30a69f436ffcb537b9f35442013fc867e00a85df6e452d813d764787d40"
+      },
+      {
+        "path": "planning/evidence/project18/compiler-registry/node26-registry-initial-failure.tap",
+        "sha256": "5f45416282990beefdf651e30acc84720f7462f09dc2baa41145396b8c49f963"
+      },
+      {
+        "originalPath": "/tmp/p18-final-qualification-logs/correction-7b087e0f/node26-correction-1.tap",
+        "sha256": "7c374995c2c6cea3dd359c65d5525a2753eb1ed2ab106359ad7f4bce1b00ef65",
+        "retention": "Unmodified full log; root owns aggregate tracked archive."
+      },
+      {
+        "originalPath": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+        "sha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da",
+        "retention": "Unmodified initial failed scope; root owns aggregate tracked archive."
+      }
+    ],
+    "interpretation": "These are eleven passing cases from the existing root correction run. No additional test command was executed by the publisher; the aggregate retained its one unrelated failure."
+  },
+  "completedWorktreeCleanup": {
+    "worktree": "/dev/shm/p18-compiler-registry-policy",
+    "branch": "codex/p18-local-compiler-registry-correction",
+    "head": "5155857c644c5df99eeba207ad486422e17630dd",
+    "tree": "58a5f8330d9b3ae98e5c8d9c91dbfa9a1bb3ef02",
+    "cleanBeforeRemoval": true,
+    "branchRetained": true,
+    "force": false,
+    "removedAt": "2026-10-04T05:27:43.824072+00:00"
+  },
+  "finalNode22Qualification": {
+    "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "node": "v22.23.3",
+    "scopedSummary": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "cases": [
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "two independent tools start and a failed third batch restores the container",
+        "tapNumber": 17,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "container preflights duplicates, reports disposal errors and rolls back cancellation",
+        "tapNumber": 18,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "commands preserve handler behavior and reject duplicate registrations",
+        "tapNumber": 19,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "tools append menu items without global state or editing Studio",
+        "tapNumber": 20,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "each mount has independent state and DOM, and failed render cleans up",
+        "tapNumber": 21,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "automation contributions preserve the complete pre-extraction key surface",
+        "tapNumber": 22,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "automation duplicate batches roll back and namespaces dispose cleanly",
+        "tapNumber": 23,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "storage preserves v1 payloads, versions and quota failures",
+        "tapNumber": 24,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "every worker message has a handler seam and unknown messages fail structurally",
+        "tapNumber": 25,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "Studio has no command branches, direct persistence or inline automation literal",
+        "tapNumber": 26,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a00-03-studio-registries.test.js",
+        "name": "real compiler and runtime workers dispatch known requests and return structured unknown errors",
+        "tapNumber": 27,
+        "status": "passed"
+      }
+    ],
+    "sourceProofs": [
+      {
+        "path": "tests/a00-03-studio-registries.test.js",
+        "blob": "09223b2e704763571a9aa6fdc1f27c8f4e77cca3",
+        "matchesQualifiedPriorSource": true
+      }
+    ],
+    "aggregate": {
+      "tests": 1877,
+      "suites": 0,
+      "pass": 1877,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "evidence": "planning/evidence/project18/canonical-port-qualification.json",
+    "scopedTap": "planning/evidence/project18/canonical-port-qualification/node22-registry-scoped.tap",
+    "scopedTapSha256": "7cfd31d0c98d5e4783b37f8b5ecc066813b3aa7a07b51f5d516b9b9e3a496b15",
+    "interpretation": "Existing root completed scope only; no publisher rerun. Prior failed scopes remain retained."
+  }
+}

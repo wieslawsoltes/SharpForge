@@ -1,0 +1,35 @@
+✔ closing a clean source releases editor, host records, disk bytes and compiler syntax, then reads current physical bytes (17.258289ms)
+✔ closing project source preserves evaluated membership and keeps only lazy source metadata in the project system (9.134887ms)
+✔ 5000 metadata files keep at most one opened buffer and no closed editor or disk contents across repeated opens (524.371176ms)
+✔ dirty, generated, read-only recovery, unresolved-conflict, unbacked and open documents retain their contents (6.649609ms)
+✔ unmarked edits fail exact-byte baseline comparison and remain recoverable (1.217796ms)
+✔ read-only and generated source flags survive workspace load, context snapshots and transactional commits (2.430316ms)
+✔ reopening or editing during the close digest prevents stale eviction (2.370815ms)
+✔ close cancels a delayed lazy read before disk or host publication; a later open wins (2.02231ms)
+✔ workspace replacement, membership change and abort reject a delayed load without advancing physical baselines (2.270885ms)
+✔ disk admission callbacks are synchronous and a rejected callback cannot publish bytes, hashes or handles (1.652733ms)
+✔ exhausted versions and pre-aborted closes retain the last usable bytes (2.100177ms)
+✔ versioned worker eviction rejects malformed batches atomically and never removes a newer reopened document (1.010524ms)
+✔ worker synchronization preserves no-op requests, removes absent documents, and accepts only newer source versions (0.177808ms)
+✔ closed editor views release both docking content maps, while visible splits and popouts stay intact (0.170197ms)
+✔ Explorer drops closed source bodies and merge baselines, retaining a numeric revision watermark and rejecting stale queue contents (1.519852ms)
+✔ historical versions retain explicit lazy membership and overlay newer editor text without fabricating bytes (14.89018ms)
+✔ lazy metadata is bounded and malformed, aliased or cancelled records never become empty source (86.940555ms)
+✔ OPFS quota fallback preserves lazy membership and enumerates only omitted loaded binary contents (6.620086ms)
+✔ the explorer checkpoints unopened membership and unsaved paths along with loaded bytes (3.411235ms)
+✔ legacy bootstrap restores loaded editors read-only while preserving unloaded project and manifest records (4.953752ms)
+✔ corrupt and future legacy snapshots block default replacement and are retained verbatim (0.608588ms)
+✔ a granted recent handle restores open-document selection and replaces read-only metadata with real bytes (5.115876ms)
+✔ every historical recovery version migrates bytes, document versions and Unicode spelling without authority (14.810829ms)
+✔ corrupt checkpoints are quarantined while newer schemas are preserved intact (1.618051ms)
+✔ OPFS checkpoint commit failure retains the last committed generation (2.902909ms)
+✔ OPFS load falls back to the prior checksum-verified generation after corruption (1.96229ms)
+✔ quota exhaustion explicitly lists omitted binaries and preserves text recovery (3.658559ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2163.274454

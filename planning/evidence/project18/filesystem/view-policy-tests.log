@@ -1,0 +1,19 @@
+✔ A24 large default solution views choose visible paging without traversing file records (0.85487ms)
+✔ A24 folder paging preserves the eager boundary and the requested view for smaller workspaces (0.641317ms)
+✔ A24 linked project appearances, generated files and imports also trigger bounded views (0.237098ms)
+✔ A24 5000 closed files hold metadata only and loaded documents obey the byte budget (12.451959ms)
+✔ A24 Workspace materializes SourceText and syntax only for opened or selected compilation inputs (34.981568ms)
+✔ A24 file admission failure retains the previous dirty buffer and invalidation rejects stale async data (1.196234ms)
+✔ A24 10000-file folder materializes pages and bounds visible row count (30.884368ms)
+✔ A24 deferred explorer construction materializes no files before cancellable expansion (22.014791ms)
+✔ A24 search indexes 20000 paths, streams first results, observes changes and cancels (265.307891ms)
+✔ A24 content search skips binaries and reports inaccessible files (2.961737ms)
+✔ A24 indexed Find in Files preserves LanguageService offsets, result limits, Unicode boundaries and versions (5.430189ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 909.920099

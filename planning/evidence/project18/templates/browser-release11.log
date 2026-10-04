@@ -1,0 +1,23 @@
+PASS 0.11 starts with Visual Studio profile, 11 project and 19 item templates and real workers
+PASS Ctrl+Shift+N opens searchable/type-filtered wizard and Cancel preserves workspace
+PASS template double-click is stable and invalid names disable creation without changing files
+PASS console+library wizard creates real SLNX/projects/reference/startup and runs to 42
+PASS multi-file item template updates project membership and compiles in a nested namespace
+PASS existing item collisions are shown in preview and never overwrite existing files
+PASS Add Project appends to existing solution without replacing startup or source buffers
+PASS multi-project solution exposes real logical folders rather than filesystem duplicates
+PASS Save as ZIP produces a standard Python-readable archive with complete files and settings
+PASS ZIP reopen restores full solution, generated items, startup and disabled/one-shot breakpoints
+PASS Add Existing Project imports a ZIP with sibling project references, binary assets and empty folders
+PASS unsafe ZIP paths are rejected before the current workspace is replaced
+PASS DEFLATE ZIP with assets-only folder loads byte-exactly without synthesizing a fake C# project
+PASS binary Solution Explorer items open a safe hex preview and explicit save action
+PASS invalid-text .cs assets survive folder-mode export byte-for-byte rather than disappearing
+PASS blank SLNX shows zero projects and can receive its first runnable project
+PASS WinUI navigation template creates real managed Home/Settings page switching
+PASS WinUI UserControl and Grid Page item templates integrate with the real compiler
+PASS multiple-project ZIP asks for the entry and retains files outside the selected project
+PASS wizard cannot mutate a paused debugger workspace
+PASS Solution Explorer context menu exposes complete workspace ZIP export
+PASS new WinUI counter executes events and screenshots capture the actual wizard and app
+PASS no page JavaScript errors

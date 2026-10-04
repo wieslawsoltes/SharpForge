@@ -1,0 +1,1613 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "Native MSBuild and coordinated compiler metadata publication",
+  "recordedAt": "2026-10-04T03:40:18.688058+00:00",
+  "implementationSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+  "featurePullRequests": 23,
+  "mergeOnlyDependencyJoins": 12,
+  "interpretation": "Each exact source/tree/remote mapping is historical publication evidence. Required core success does not imply execution of skipped native, browser, or cross-platform qualification. Standalone feature receipt notes marked pending describe their publication-time state; later completed-scope evidence lives in native.json and root integration records.",
+  "records": [
+    {
+      "name": "native-process",
+      "source": "6816712d61c11e5ef72c662860b6774563ddc76f",
+      "sourceBase": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "sha": "212237c6ba56b7433b109755bc4e2c9631f9114e",
+      "tree": "2fbf4d8d5bea2d5718b6928ecc26011cc40a52ad",
+      "pr": 3571,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3571",
+      "branch": "codex/p18-native-process",
+      "baseBranch": "main",
+      "stats": "9 files changed, 325 insertions(+), 1 deletion(-)",
+      "coreChecks": [
+        {
+          "name": "core",
+          "id": 111321860723,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163577401/job/111321860723"
+        },
+        {
+          "name": "core",
+          "id": 111321839601,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163574040/job/111321839601"
+        }
+      ]
+    },
+    {
+      "name": "native-command-lines",
+      "source": "6963f3505dff763604b38d2e302b1642aab5cd60",
+      "sourceBase": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "sha": "d44526bb5b795d13665e108589f1d8ded55c24fb",
+      "tree": "3855c68cab8f53b3fb8133ba9ceb0f9d6c1c8b9a",
+      "pr": 3584,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3584",
+      "branch": "codex/p18-native-command-lines",
+      "baseBranch": "main",
+      "stats": "10 files changed, 353 insertions(+), 11 deletions(-)",
+      "coreChecks": [
+        {
+          "name": "core",
+          "id": 111322547356,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163815803/job/111322547356"
+        },
+        {
+          "name": "core",
+          "id": 111322529934,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163812489/job/111322529934"
+        }
+      ]
+    },
+    {
+      "name": "native-foundation",
+      "source": "ab8f5b5af3f23a65da6152eb16045b3f20f26d2b",
+      "sourceBase": "6963f3505dff763604b38d2e302b1642aab5cd60",
+      "sha": "97da33b4d0164b28441f4194a89454481b451697",
+      "tree": "0e16052cf568b1ab2f99bc2b3bb05971373566cf",
+      "branch": "codex/p18-native-foundation",
+      "baseBranch": "codex/p18-native-command-lines",
+      "pr": null,
+      "additionalParents": [
+        "212237c6ba56b7433b109755bc4e2c9631f9114e"
+      ]
+    },
+    {
+      "name": "native-engine",
+      "branch": "codex/p18-native-engine",
+      "base": "codex/p18-native-foundation",
+      "sourceBase": "ab8f5b5af3f23a65da6152eb16045b3f20f26d2b",
+      "sourceHead": "31c8dcba865ab8aec0e2c7d9e9c0bb32bcde650e",
+      "sourceTree": "1791920947477cfda03c4b34aec69a6687f6d1cc",
+      "remoteCommit": "089b1eba6926a22df7cad392b89be41cb01638e5",
+      "remoteParent": "97da33b4d0164b28441f4194a89454481b451697",
+      "pr": 3602,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3602",
+      "draft": true,
+      "mergeable": true,
+      "stats": "14 files changed, 574 insertions(+), 106 deletions(-)",
+      "checks": {
+        "static": "passed",
+        "structure": "264 inherited findings; every reported file byte-identical to base2e700ad8",
+        "functional": "reused completed scope evidence932ef260; no repeated native batch"
+      },
+      "coreChecks": [
+        {
+          "name": "core",
+          "id": 111324660356,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164537461/job/111324660356"
+        },
+        {
+          "name": "core",
+          "id": 111324643633,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164534537/job/111324643633"
+        }
+      ]
+    },
+    {
+      "name": "native-sdk-dependencies",
+      "branch": "codex/p18-native-sdk-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "31c8dcba865ab8aec0e2c7d9e9c0bb32bcde650e",
+      "sourceHead": "b1afa7306f2c874fb52d5bda17cd42816233d739",
+      "sourceTree": "b59587fc55f8a0e29f8953c3621985e66c8952e2",
+      "sourceAdditionalParents": [
+        "49b1a1fff45c5f0b370065db19791e1730503d7c"
+      ],
+      "remoteCommit": "4d3c1553dea9107c9ffadacc79f8a67196c17830",
+      "remoteParents": [
+        "089b1eba6926a22df7cad392b89be41cb01638e5",
+        "d0a4f2c890984b1d8e7e9f5d941d5414784b5429"
+      ],
+      "dependencyPRs": [
+        3602,
+        3611
+      ]
+    },
+    {
+      "name": "native-sdk",
+      "branch": "codex/p18-native-sdk",
+      "base": "codex/p18-native-sdk-dependencies",
+      "sourceBase": "b1afa7306f2c874fb52d5bda17cd42816233d739",
+      "sourceHead": "dd452e4932bbdb482ee74a02711463365559f8a2",
+      "sourceTree": "00e061dde1ddd3a7fad349f6ce0a9186158d5b30",
+      "remoteCommit": "5ec909c40834b08484270dba88248f2e8dbcc968",
+      "remoteParent": "4d3c1553dea9107c9ffadacc79f8a67196c17830",
+      "pr": 3618,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3618",
+      "draft": true,
+      "mergeable": null,
+      "stats": "11 files changed, 325 insertions(+), 39 deletions(-)",
+      "core": {
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37165598719/job/111327740600",
+        "head": "5ec909c40834b08484270dba88248f2e8dbcc968"
+      }
+    },
+    {
+      "name": "metadata-inspection",
+      "branch": "codex/p18-metadata-inspection",
+      "base": "main",
+      "sourceBase": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "sourceHead": "0dc61bcc5366715bb6f9ea5e833916e6eedaaa10",
+      "sourceTree": "67d88fd18fde52130a207705cf66c890b1b71bed",
+      "remoteCommit": "a8d73af071603edace0e81ca74c9ab3911212b06",
+      "remoteParent": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "pr": 3627,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3627",
+      "draft": true,
+      "mergeable": null,
+      "stats": "5 files changed, 63 insertions(+), 1 deletion(-)",
+      "core": {
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166028593/job/111328979858",
+        "head": "a8d73af071603edace0e81ca74c9ab3911212b06"
+      }
+    },
+    {
+      "name": "native-transport",
+      "branch": "codex/p18-native-transport",
+      "base": "codex/p18-native-sdk",
+      "sourceBase": "dd452e4932bbdb482ee74a02711463365559f8a2",
+      "sourceHead": "cbc2fc1ea5866330b42e9f0a809aa069491f8f47",
+      "sourceTree": "dba1fc4cb6becf0c9bb47879a2a6870bbb04e211",
+      "remoteCommit": "79dc1c551c4b8013be028c0e42d0ac220d7b7886",
+      "remoteParent": "5ec909c40834b08484270dba88248f2e8dbcc968",
+      "pr": 3638,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3638",
+      "draft": true,
+      "mergeable": null,
+      "stats": "11 files changed, 332 insertions(+), 60 deletions(-)",
+      "core": {
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166515506/job/111330428933",
+        "head": "79dc1c551c4b8013be028c0e42d0ac220d7b7886"
+      }
+    },
+    {
+      "name": "native-vfs-dependencies",
+      "branch": "codex/p18-native-vfs-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "cbc2fc1ea5866330b42e9f0a809aa069491f8f47",
+      "sourceHead": "7b5d3e81f5d51a8d0d2449e38c213393119d00e4",
+      "sourceTree": "58cadb7c3c8c2bee53357eb40dcf5e79861dd53d",
+      "remoteCommit": "df43cb41c9f64101e1ad2e0fe7f85b8c77cffdcd",
+      "remoteParents": [
+        "79dc1c551c4b8013be028c0e42d0ac220d7b7886",
+        "40f0c2b7fe82040422f3aa8b3c1b53c4469ef871"
+      ],
+      "dependencyPRs": [
+        3638,
+        3514
+      ]
+    },
+    {
+      "name": "native-vfs",
+      "branch": "codex/p18-native-vfs",
+      "base": "codex/p18-native-vfs-dependencies",
+      "sourceBase": "7b5d3e81f5d51a8d0d2449e38c213393119d00e4",
+      "sourceHead": "2c370bb864005893c2bded0038525b63168692e8",
+      "sourceTree": "99f6df3a857e972721a363919390ad007517d42d",
+      "remoteCommit": "e73da53546997cbdda062547d7c2d46c524a00f7",
+      "remoteParent": "df43cb41c9f64101e1ad2e0fe7f85b8c77cffdcd",
+      "pr": 3658,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3658",
+      "draft": true,
+      "mergeable": null,
+      "stats": "12 files changed, 410 insertions(+), 10 deletions(-)",
+      "core": {
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167052270/job/111332046851",
+        "head": "e73da53546997cbdda062547d7c2d46c524a00f7"
+      }
+    },
+    {
+      "name": "native-context-model",
+      "branch": "codex/p18-native-context-model",
+      "base": "codex/p18-native-sdk",
+      "sourceBase": "dd452e4932bbdb482ee74a02711463365559f8a2",
+      "sourceHead": "9cdf633a1f1738b3d25cca54c388de1cbaf9d376",
+      "sourceTree": "2bea8d9088f4dece59c7e6fd9850a945de487fee",
+      "remoteCommit": "2d8e62491dcd5bea6fe4e36bfed48693fdfdcb2b",
+      "remoteParent": "5ec909c40834b08484270dba88248f2e8dbcc968",
+      "pr": 3664,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3664",
+      "draft": true,
+      "mergeable": null,
+      "stats": "9 files changed, 214 insertions(+), 1 deletion(-)",
+      "updates": [
+        {
+          "sourceHead": "71d9457ca35cd721bfc3b218ef9d251463dcaa5d",
+          "sourceTree": "5287d6b087c826bc5c886880c5fc391e5646c7cf",
+          "remoteCommit": "516c151ce4ac463a91fbe9aefbbdf73eb49d0ff2",
+          "remoteParent": "2d8e62491dcd5bea6fe4e36bfed48693fdfdcb2b",
+          "reason": "Complete evaluated-project fixture; assertions unchanged"
+        }
+      ],
+      "currentSourceHead": "71d9457ca35cd721bfc3b218ef9d251463dcaa5d",
+      "currentSourceTree": "5287d6b087c826bc5c886880c5fc391e5646c7cf",
+      "currentRemoteCommit": "516c151ce4ac463a91fbe9aefbbdf73eb49d0ff2",
+      "core": {
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167558104/job/111333593837",
+        "head": "516c151ce4ac463a91fbe9aefbbdf73eb49d0ff2"
+      }
+    },
+    {
+      "name": "native-context-dependencies",
+      "branch": "codex/p18-native-context-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "2c370bb864005893c2bded0038525b63168692e8",
+      "sourceHead": "41f1d4e92f8c53bf25fba0a0eeabcf009e7e32e1",
+      "sourceTree": "a001cfb9f068f06a5694989df5913ec01dc3427c",
+      "remoteCommit": "a8f3ee506302984f0977cd8553f4c664cdda81fb",
+      "remoteParents": [
+        "e73da53546997cbdda062547d7c2d46c524a00f7",
+        "516c151ce4ac463a91fbe9aefbbdf73eb49d0ff2",
+        "a8d73af071603edace0e81ca74c9ab3911212b06"
+      ],
+      "dependencyPRs": [
+        3658,
+        3664,
+        3627
+      ]
+    },
+    {
+      "name": "native-context-service",
+      "branch": "codex/p18-native-context-service",
+      "base": "codex/p18-native-context-dependencies",
+      "sourceBase": "41f1d4e92f8c53bf25fba0a0eeabcf009e7e32e1",
+      "sourceHead": "b94165de5d9052dbc53d0dacd8f004d86e97a25c",
+      "sourceTree": "2a1c88ac482fc84be448f6e08fdf5bd9d8b1223c",
+      "remoteCommit": "50567b43b1358697beb4b02c12a9e59e361978fd",
+      "remoteParent": "a8f3ee506302984f0977cd8553f4c664cdda81fb",
+      "pr": 3683,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3683",
+      "draft": true,
+      "stats": "15 files changed, 450 insertions(+), 2 deletions(-)",
+      "checks": {
+        "static": "Node24.19.0: 2005 modules, 506 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Completed native scope and extraction evidence reused; no SDK rerun",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168183762/job/111335473589"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168180579/job/111335458383"
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-profiles",
+      "branch": "codex/p18-native-profiles",
+      "base": "codex/p18-native-context-service",
+      "sourceBase": "b94165de5d9052dbc53d0dacd8f004d86e97a25c",
+      "sourceHead": "ed5e8d4558d08b2b5a8fcf8f2957bcb99fee79ee",
+      "sourceTree": "6098a2ce09ab0daeb5d557534cbea160caf7f706",
+      "remoteCommit": "e6fbb6658d7617ab9c9da6429dd0c41b876475ba",
+      "remoteParent": "50567b43b1358697beb4b02c12a9e59e361978fd",
+      "pr": 3696,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3696",
+      "draft": true,
+      "stats": "13 files changed, 415 insertions(+), 1 deletion(-)",
+      "checks": {
+        "static": "Node24.19.0: 2012 modules, 509 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Completed native launch/publish evidence reused; new UTF-16 profile discovery regression pending root host cohort",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168465347/job/111336316584"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168461200/job/111336293160"
+          }
+        ]
+      }
+    },
+    {
+      "name": "nuget-models",
+      "branch": "codex/p18-nuget-models",
+      "base": "main",
+      "sourceBase": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "sourceHead": "d08cc70c4d74d50833b2e13827069d0ef63cedc8",
+      "sourceTree": "7d9f8c720b002cb79c05897a869ad64312dfe1f6",
+      "remoteCommit": "1ce51c3e2c292e3bc041d5d3b0d1963e2c15dc6f",
+      "remoteParent": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "observedPrBase": "1fcffbd01dae9c8187f95e76438794181c2fd67d",
+      "pr": 3706,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3706",
+      "draft": true,
+      "stats": "13 files changed, 549 insertions(+), 2 deletions(-)",
+      "checks": {
+        "static": "Node24.19.0: 2545 modules, 623 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Completed pure NuGet and offline SDK oracle evidence reused; new literal-central boundary rejection test pending root host cohort",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168896020/job/111337605830"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168892725/job/111337589615"
+          }
+        ]
+      }
+    },
+    {
+      "name": "nuget-v3",
+      "branch": "codex/p18-nuget-v3",
+      "base": "codex/p18-nuget-models",
+      "sourceBase": "d08cc70c4d74d50833b2e13827069d0ef63cedc8",
+      "sourceHead": "9237284f164252607af1edee48447a5b2016f5a5",
+      "sourceTree": "d703ec1f1c2db3779ce3acf777346793de0ffc85",
+      "remoteCommit": "5a8aff2218f2ae4add864c524ec823498f24b346",
+      "remoteParent": "1ce51c3e2c292e3bc041d5d3b0d1963e2c15dc6f",
+      "pr": 3720,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3720",
+      "draft": true,
+      "stats": "5 files changed, 181 insertions(+), 1 deletion(-)",
+      "checks": {
+        "static": "Node24.19.0: 2547 modules, 624 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Completed recorded V3 protocol cases reused; no external feed qualification claim",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169103323/job/111338228243"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169101238/job/111338212802"
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-build-dependencies",
+      "branch": "codex/p18-native-build-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "b94165de5d9052dbc53d0dacd8f004d86e97a25c",
+      "sourceHead": "cacb413da98cc014d061880fb5be9de93b417713",
+      "sourceTree": "029d751bb08e87e6e9d49204284dc16aae637645",
+      "remoteCommit": "962de61c0bcdd4a9f841b4458c51aee31d8b4cf9",
+      "remoteParents": [
+        "50567b43b1358697beb4b02c12a9e59e361978fd",
+        "81e9ae2e0c6d424d5a45c29c5779f80eee6878c2"
+      ],
+      "dependencyPRs": [
+        3683,
+        3703
+      ],
+      "updates": [
+        {
+          "sourceHead": "026757171e112fd810d066a3364dfb07d10bba7d",
+          "sourceTree": "eb46c2e520567e0eb112bfde81162e94fc3d644a",
+          "remoteCommit": "bf41e104497211fd5dd4cb82bf80b6a94ad7f7b6",
+          "remoteParent": "962de61c0bcdd4a9f841b4458c51aee31d8b4cf9",
+          "reason": "Retain wildcard ownership and remove covered explicit entries; every test preserved"
+        }
+      ],
+      "currentSourceHead": "026757171e112fd810d066a3364dfb07d10bba7d",
+      "currentSourceTree": "eb46c2e520567e0eb112bfde81162e94fc3d644a",
+      "currentRemoteCommit": "bf41e104497211fd5dd4cb82bf80b6a94ad7f7b6"
+    },
+    {
+      "name": "native-build",
+      "branch": "codex/p18-native-build",
+      "base": "codex/p18-native-build-dependencies",
+      "sourceBase": "026757171e112fd810d066a3364dfb07d10bba7d",
+      "sourceHead": "373876da11298c438435021b99ce82297d7e79a2",
+      "sourceTree": "9dddc398ab9bd02e4cbdad945d22f7a38b4f8b91",
+      "remoteCommit": "f0272cb2427fa95448d385d6076e81bc85781671",
+      "remoteParent": "bf41e104497211fd5dd4cb82bf80b6a94ad7f7b6",
+      "pr": 3751,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3751",
+      "draft": true,
+      "stats": "9 files changed, 321 insertions(+), 1 deletion(-)",
+      "checks": {
+        "static": "Node24.19.0: 2019 modules, 509 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Completed mapped build/affected graph/up-to-date evidence reused; no repeated native run or worker speedup claim",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169611199/job/111339707572"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169608419/job/111339691905"
+          }
+        ]
+      }
+    },
+    {
+      "name": "package-archive-dependencies",
+      "branch": "codex/p18-package-archive-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "c9c17b91a9964c74fec3043e4b5a65248d69e886",
+      "sourceHead": "912ecf4521486cef543775e831a414a351925b4f",
+      "sourceTree": "b37499ebfbf3ce56b1357a4f43a2122a408fa646",
+      "remoteCommit": "55d70cb2ab23548d2470633c181a8b1a735ab700",
+      "remoteParents": [
+        "7528e99af27073f44cbb2f1528de29732f1caede",
+        "7110c0ed2eecbf15aef423dbbfce1c4f60fc9055"
+      ],
+      "dependencyPRs": [
+        3604,
+        3564
+      ]
+    },
+    {
+      "name": "package-archives",
+      "branch": "codex/p18-package-archives",
+      "base": "codex/p18-package-archive-dependencies",
+      "sourceBase": "912ecf4521486cef543775e831a414a351925b4f",
+      "sourceHead": "23c5de2f1db67cc10740bcdd4aee643b121b1738",
+      "sourceTree": "79b945f4767889d7cb399993c301fc3d7e9d6b69",
+      "remoteCommit": "de6c01f990899f6e98cbbc36c4d93659d87e3cc9",
+      "remoteParent": "55d70cb2ab23548d2470633c181a8b1a735ab700",
+      "pr": 3785,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3785",
+      "draft": true,
+      "stats": "7 files changed, 122 insertions(+), 3 deletions(-)",
+      "checks": {
+        "static": "Node24.19.0: 1962 modules, 495 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Existing offline package archive and TFM/RID asset-selection evidence reused; no repeated SDK restore",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170186060/job/111341412631"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170183827/job/111341398082"
+          }
+        ]
+      }
+    },
+    {
+      "name": "compiler-producer-dependencies",
+      "branch": "codex/p18-compiler-producer-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "a8d33e389333180ea21499988b75ce7c6feb6302",
+      "sourceHead": "4ed8779eb32f4828dbed2bed3b86d6cc99747a51",
+      "sourceTree": "42263a76829aaa58bc580883d7507b5f1fc1af21",
+      "remoteCommit": "2d3a92bbfbb07d7ae18fc97dea5d4338e22aae4a",
+      "remoteParents": [
+        "5b51289ef2066bd76a3d37806c29d08f36ff415a",
+        "a8d73af071603edace0e81ca74c9ab3911212b06"
+      ],
+      "dependencyPRs": [
+        3766,
+        3627
+      ],
+      "updates": [
+        {
+          "sourceHead": "8e13a70d35628a9777132b3b01a80a60bff3048c",
+          "sourceTree": "4986d929866ccfbe780be8ca292091786c170765",
+          "remoteCommit": "44c74e7c1e8962651296092ee6dc8f9fba772d6f",
+          "remoteParents": [
+            "2d3a92bbfbb07d7ae18fc97dea5d4338e22aae4a",
+            "f1609cffd1161e86e941ca06f897ab9b5b5dc868"
+          ],
+          "reason": "Forward merge of the import-only CIL worker bundler correction"
+        }
+      ],
+      "currentSourceHead": "8e13a70d35628a9777132b3b01a80a60bff3048c",
+      "currentSourceTree": "4986d929866ccfbe780be8ca292091786c170765",
+      "currentRemoteCommit": "44c74e7c1e8962651296092ee6dc8f9fba772d6f"
+    },
+    {
+      "name": "source-metadata",
+      "branch": "codex/p18-source-metadata",
+      "base": "codex/p18-compiler-producer-dependencies",
+      "sourceBase": "8e13a70d35628a9777132b3b01a80a60bff3048c",
+      "sourceHead": "313f580b8881a6c35306e6fc2e1723b9dc59eb2f",
+      "sourceTree": "d0e20ca2bff3b3ec779c2e5c0e732f8ed1dea966",
+      "remoteCommit": "5fc97e4c1ebeb9a4fc0cdf502ca5f7bb50200a0c",
+      "remoteParent": "44c74e7c1e8962651296092ee6dc8f9fba772d6f",
+      "pr": 3812,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3812",
+      "draft": true,
+      "stats": "11 files changed, 388 insertions(+), 6 deletions(-)",
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "checks": {
+        "static": "Node24.19.0: 2573 modules, 629 assigned Node files, zero syntax/ownership/boundary failures before property serialization carry-through and import-only base correction",
+        "functional": "Five cases extracted unchanged from executed source-member and namespace tests; joint 68 Node22 / 415 Node26 evidence reused, current-main compiler producer cases passed root cohort; no rerun of renamed extraction file",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170654136/job/111342767346"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170652296/job/111342758844"
+          }
+        ]
+      }
+    },
+    {
+      "name": "project-reference-lowering",
+      "branch": "codex/p18-project-reference-lowering",
+      "base": "codex/p18-source-metadata",
+      "sourceBase": "313f580b8881a6c35306e6fc2e1723b9dc59eb2f",
+      "sourceHead": "12efd56093de65efa391475c4ef26f18ced1129f",
+      "sourceTree": "ff2743f02242fd37c616c5b71319d49cac928ce7",
+      "remoteCommit": "960eeb25d9f7a87c521ef270d74435c37cf89795",
+      "remoteParent": "5fc97e4c1ebeb9a4fc0cdf502ca5f7bb50200a0c",
+      "pr": 3824,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3824",
+      "draft": true,
+      "stats": "18 files changed, 752 insertions(+), 22 deletions(-)",
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "checks": {
+        "static": "Node24.19.0: 2581 modules, 631 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Six complete emission cases and eight assertion-preserving access cases reuse completed compiler/joint source evidence; no repeated SDK or runtime suite",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170766109/job/111343097595"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170763264/job/111343080178"
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-nuget-dependencies",
+      "branch": "codex/p18-native-nuget-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "9237284f164252607af1edee48447a5b2016f5a5",
+      "sourceHead": "ea646d87105bda6cac3fbf6747fcb30beed5155e",
+      "sourceTree": "3ea5aeeefcc754f65f25134140e380fd84d51400",
+      "remoteCommit": "b0a3cec702508c32528ad7a95ec820d152d4b3e9",
+      "remoteParents": [
+        "5a8aff2218f2ae4add864c524ec823498f24b346",
+        "e6fbb6658d7617ab9c9da6429dd0c41b876475ba",
+        "a925a35802f44b7d158f6e57d35938075913d27a"
+      ],
+      "dependencyPRs": [
+        3720,
+        3696,
+        3553
+      ]
+    },
+    {
+      "name": "native-nuget",
+      "branch": "codex/p18-native-nuget",
+      "base": "codex/p18-native-nuget-dependencies",
+      "sourceBase": "ea646d87105bda6cac3fbf6747fcb30beed5155e",
+      "sourceHead": "bab1503f784c8baac1c813e441405652501a9953",
+      "sourceTree": "b11672d9beed763dc15ded97e4ecc815deac9ba3",
+      "remoteCommit": "f67050b7b81caa782384849082e342bb3a78cbb6",
+      "remoteParent": "b0a3cec702508c32528ad7a95ec820d152d4b3e9",
+      "pr": 3847,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3847",
+      "draft": true,
+      "stats": "9 files changed, 215 insertions(+), 1 deletion(-)",
+      "checks": {
+        "static": "Node24.19.0: 2649 modules, 649 assigned Node files, zero syntax/ownership/boundary failures",
+        "functional": "Recorded HTTP registration passed Node26.10.0 at 8e294166; original actual SDK local-feed edit/restore/assets/lock/central evidence reused",
+        "core": [
+          {
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171131428/job/111344145237"
+          },
+          {
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171128666/job/111344129745"
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-binlog",
+      "branch": "codex/p18-native-binlog",
+      "base": "codex/p18-native-transport",
+      "sourceBase": "cbc2fc1ea5866330b42e9f0a809aa069491f8f47",
+      "sourceHead": "b3cd1850f951867c813904f6278b67ecf8899a1d",
+      "sourceTree": "921117d1fed85cb00aea5417e05e5f1e9de3082a",
+      "remoteCommit": "3b6f0a9a58e31b26b8c3b39632955e061908a96e",
+      "remoteParent": "79dc1c551c4b8013be028c0e42d0ac220d7b7886",
+      "pr": 3860,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3860",
+      "draft": true,
+      "stats": "18 files changed, 614 insertions(+), 3 deletions(-)",
+      "checks": [
+        {
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345208901",
+          "id": 111345208901
+        },
+        {
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345208765",
+          "id": 111345208765
+        },
+        {
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345208537",
+          "id": 111345208537
+        },
+        {
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345208381",
+          "id": 111345208381
+        },
+        {
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345208014",
+          "id": 111345208014
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345208012",
+          "id": 111345208012
+        },
+        {
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345207596",
+          "id": 111345207596
+        },
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345207496",
+          "id": 111345207496
+        },
+        {
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345134811",
+          "id": 111345134811
+        },
+        {
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345134257",
+          "id": 111345134257
+        },
+        {
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345134189",
+          "id": 111345134189
+        },
+        {
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345133606",
+          "id": 111345133606
+        },
+        {
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345133508",
+          "id": 111345133508
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345133026",
+          "id": 111345133026
+        },
+        {
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345132565",
+          "id": 111345132565
+        },
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345132253",
+          "id": 111345132253
+        },
+        {
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345131853",
+          "id": 111345131853
+        },
+        {
+          "name": "core",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171475497/job/111345114191",
+          "id": 111345114191
+        }
+      ]
+    },
+    {
+      "name": "native-text-dependencies",
+      "branch": "codex/p18-native-text-dependencies",
+      "integrationOnly": true,
+      "sourceBase": "2c370bb864005893c2bded0038525b63168692e8",
+      "sourceHead": "c8e8b468d15277327c03286f5afe69e19fea6a11",
+      "sourceTree": "f8dd185d86c11f358155512d0cbf610646f2198f",
+      "remoteCommit": "b27fa6d4174f2c75ee3b6ffe4eaf048affc9e240",
+      "remoteParents": [
+        "e73da53546997cbdda062547d7c2d46c524a00f7",
+        "6ff88b293117bf7e0b636a7a7b8877deb08fe604"
+      ],
+      "dependencyPRs": [
+        3658,
+        3781
+      ]
+    },
+    {
+      "name": "native-workspace-text",
+      "branch": "codex/p18-native-workspace-text",
+      "base": "codex/p18-native-text-dependencies",
+      "sourceBase": "c8e8b468d15277327c03286f5afe69e19fea6a11",
+      "sourceHead": "1123e68a63e38fd488616b859d521dc1e4041058",
+      "sourceTree": "cbabd568f17a802d55ebc6950a87f792e3d83be3",
+      "remoteCommit": "de4dbdb3ae5a5fee8e63a02e5ec3f901fab2fca7",
+      "remoteParent": "b27fa6d4174f2c75ee3b6ffe4eaf048affc9e240",
+      "pr": 3875,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3875",
+      "draft": true,
+      "stats": "4 files changed, 72 insertions(+), 4 deletions(-)",
+      "checks": [
+        {
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345901930",
+          "id": 111345901930
+        },
+        {
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345901658",
+          "id": 111345901658
+        },
+        {
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345901420",
+          "id": 111345901420
+        },
+        {
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345901193",
+          "id": 111345901193
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345900804",
+          "id": 111345900804
+        },
+        {
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345900654",
+          "id": 111345900654
+        },
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345900507",
+          "id": 111345900507
+        },
+        {
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345899939",
+          "id": 111345899939
+        },
+        {
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345830115",
+          "id": 111345830115
+        },
+        {
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345829238",
+          "id": 111345829238
+        },
+        {
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345829009",
+          "id": 111345829009
+        },
+        {
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345828514",
+          "id": 111345828514
+        },
+        {
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345828216",
+          "id": 111345828216
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345827566",
+          "id": 111345827566
+        },
+        {
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345827536",
+          "id": 111345827536
+        },
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345827270",
+          "id": 111345827270
+        },
+        {
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345826393",
+          "id": 111345826393
+        },
+        {
+          "name": "core",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171712571/job/111345811968",
+          "id": 111345811968
+        }
+      ]
+    },
+    {
+      "name": "metadata-language-dependencies",
+      "branch": "codex/p18-metadata-language-dependencies",
+      "baseBranch": "codex/p18-project-reference-lowering",
+      "sourceBase": "12efd56093de65efa391475c4ef26f18ced1129f",
+      "sourceHead": "212682f9879ff6c628143db08da22bd2f21144fa",
+      "sourceTree": "5be9a586995aac5f796eac6db398a08381842310",
+      "remoteCommit": "5a6d2f83c3ed97636c90806ae1cdcac2a146f2a0",
+      "parents": [
+        "960eeb25d9f7a87c521ef270d74435c37cf89795",
+        "185bfbab5fa66ca7274b6b1fe61f4ae823b07cf9",
+        "e6fbb6658d7617ab9c9da6429dd0c41b876475ba"
+      ],
+      "integrationOnly": true,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "126 files changed, 6054 insertions(+), 284 deletions(-)",
+      "files": [
+        "apps/studio/workers/protocol.js",
+        "apps/studio/workers/type-rename.js",
+        "package-lock.json",
+        "packages/archive/README.md",
+        "packages/archive/src/index.js",
+        "packages/archive/src/path-policy.js",
+        "packages/archive/src/text-encoding.js",
+        "packages/compiler/TYPE-RENAME.md",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/type-rename-index.js",
+        "packages/compiler/src/type-rename.js",
+        "packages/language/src/index.js",
+        "packages/language/src/rename.js",
+        "packages/msbuild/README.md",
+        "packages/msbuild/docs/command-lines.md",
+        "packages/msbuild/docs/design-time.md",
+        "packages/msbuild/docs/native-filesystem.md",
+        "packages/msbuild/docs/native-process.md",
+        "packages/msbuild/docs/native-profiles.md",
+        "packages/msbuild/docs/native-transport.md",
+        "packages/msbuild/docs/project-context.md",
+        "packages/msbuild/docs/queued-engine.md",
+        "packages/msbuild/docs/sdk-selection.md",
+        "packages/msbuild/package.json",
+        "packages/msbuild/src/api-routes.js",
+        "packages/msbuild/src/argument-policy.js",
+        "packages/msbuild/src/artifacts.js",
+        "packages/msbuild/src/build-server.js",
+        "packages/msbuild/src/cli-help.js",
+        "packages/msbuild/src/cli.js",
+        "packages/msbuild/src/client.js",
+        "packages/msbuild/src/context-input.js",
+        "packages/msbuild/src/contract.js",
+        "packages/msbuild/src/csc-args.js",
+        "packages/msbuild/src/design-time-cache.js",
+        "packages/msbuild/src/design-time-generated.js",
+        "packages/msbuild/src/design-time-inputs.js",
+        "packages/msbuild/src/design-time.js",
+        "packages/msbuild/src/diagnostics.js",
+        "packages/msbuild/src/engine.js",
+        "packages/msbuild/src/environment.js",
+        "packages/msbuild/src/global-json.js",
+        "packages/msbuild/src/http-error.js",
+        "packages/msbuild/src/http-json.js",
+        "packages/msbuild/src/index.js",
+        "packages/msbuild/src/invocation.js",
+        "packages/msbuild/src/launch-options.js",
+        "packages/msbuild/src/launch.js",
+        "packages/msbuild/src/msbuild-client.js",
+        "packages/msbuild/src/native-metadata.js",
+        "packages/msbuild/src/native-tool.js",
+        "packages/msbuild/src/native-vfs.js",
+        "packages/msbuild/src/node.js",
+        "packages/msbuild/src/process.js",
+        "packages/msbuild/src/project-context.js",
+        "packages/msbuild/src/publish-profiles.js",
+        "packages/msbuild/src/rid.js",
+        "packages/msbuild/src/sarif.js",
+        "packages/msbuild/src/scheduler.js",
+        "packages/msbuild/src/sdk-discovery.js",
+        "packages/msbuild/src/server.js",
+        "packages/msbuild/src/service-registry.js",
+        "packages/msbuild/src/services-project.js",
+        "packages/msbuild/src/services-publish.js",
+        "packages/msbuild/src/services-sdk.js",
+        "packages/msbuild/src/services-vfs.js",
+        "packages/msbuild/src/services.js",
+        "packages/msbuild/src/trust.js",
+        "packages/msbuild/src/workload-preflight.js",
+        "packages/msbuild/src/workloads.js",
+        "packages/msbuild/src/workspace-context.js",
+        "packages/msbuild/src/workspace-io.js",
+        "packages/msbuild/src/workspace.js",
+        "packages/project-system/docs/configuration-contract.md",
+        "packages/project-system/docs/framework-context-contract.md",
+        "packages/project-system/docs/project-input-contract.md",
+        "packages/project-system/src/configuration-exports.js",
+        "packages/project-system/src/configuration-json.js",
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/evaluation/compiler-options.js",
+        "packages/project-system/src/evaluation/errors.js",
+        "packages/project-system/src/index.js",
+        "packages/project-system/src/launch-settings.js",
+        "packages/project-system/src/paths-normalize.js",
+        "packages/project-system/src/paths.js",
+        "packages/project-system/src/portable-rid-graph.js",
+        "packages/project-system/src/rid.js",
+        "packages/project-system/src/tfm.js",
+        "packages/workspace/README.md",
+        "packages/workspace/package.json",
+        "packages/workspace/src/content-hash.js",
+        "packages/workspace/src/index.js",
+        "packages/workspace/src/vfs/index.js",
+        "packages/workspace/src/vfs/memory.js",
+        "packages/workspace/src/vfs/native-host.js",
+        "packages/workspace/src/vfs/provider.js",
+        "packages/workspace/src/watch-coalesce.js",
+        "packages/workspace/src/watch.js",
+        "packages/workspace/src/workspace.js",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a23-native-command-lines.test.js",
+        "tests/a23-native-context-aliases.test.js",
+        "tests/a23-native-context-model.test.js",
+        "tests/a23-native-design-time.test.js",
+        "tests/a23-native-engine.test.js",
+        "tests/a23-native-http-contributions.test.js",
+        "tests/a23-native-launch.test.js",
+        "tests/a23-native-metadata-service.test.js",
+        "tests/a23-native-process.test.js",
+        "tests/a23-native-publish-encoding.test.js",
+        "tests/a23-native-publish-model.test.js",
+        "tests/a23-native-sdk-model.test.js",
+        "tests/a23-native-sdk-reference.test.js",
+        "tests/a24-path-encoding.test.js",
+        "tests/a24-type-rename-preview.test.js",
+        "tests/a24-vfs-memory.test.js",
+        "tests/a24-vfs-native.test.js",
+        "tests/a24-vfs-watch.test.js",
+        "tests/a24-watch-fairness.test.js",
+        "tests/manifests/A23.json",
+        "tests/manifests/A24.json",
+        "tests/msbuild-native.test.js",
+        "tests/project-configuration-contract.test.js",
+        "tests/project-context-contract.test.js",
+        "tests/project-input-contract.test.js",
+        "tests/support/a24-provider-conformance.js"
+      ]
+    },
+    {
+      "name": "metadata-language",
+      "branch": "codex/p18-metadata-language",
+      "baseBranch": "codex/p18-metadata-language-dependencies",
+      "sourceBase": "212682f9879ff6c628143db08da22bd2f21144fa",
+      "sourceHead": "254c81377edec64b42a9acdf74c84d76271cc09f",
+      "sourceTree": "de301c4975697a57407f0d20f802d1436f03d9ef",
+      "remoteCommit": "13e09038c3ff4cb535b46153df3f309cf7b3d499",
+      "parents": [
+        "5a6d2f83c3ed97636c90806ae1cdcac2a146f2a0"
+      ],
+      "pr": 3900,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3900",
+      "draft": true,
+      "mergeable": true,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "13 files changed, 530 insertions(+), 30 deletions(-)",
+      "files": [
+        "packages/compiler/README.md",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/metadata-language-index.js",
+        "packages/compiler/src/metadata-language.js",
+        "packages/language/README.md",
+        "packages/language/package.json",
+        "packages/language/src/completions.js",
+        "packages/language/src/index.js",
+        "packages/language/src/metadata-session.js",
+        "packages/language/src/symbol-details.js",
+        "scripts/conformance/static/allowlist.json",
+        "tests/a23-native-metadata.test.js",
+        "tests/manifests/A23.json"
+      ],
+      "validation": {
+        "static": "2675 modules / 654 Node files; check passed",
+        "native": "Existing completed native scope; no rerun for projection"
+      },
+      "checks": [
+        {
+          "name": "core",
+          "id": 111348270674,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172533639/job/111348270674"
+        },
+        {
+          "name": "core",
+          "id": 111348254242,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172530222/job/111348254242"
+        }
+      ]
+    },
+    {
+      "name": "native-qualification-dependencies",
+      "branch": "codex/p18-native-qualification-dependencies",
+      "baseBranch": "codex/p18-package-archives",
+      "sourceBase": "23c5de2f1db67cc10740bcdd4aee643b121b1738",
+      "sourceHead": "a8ec8e1e70ced52f76cedfafde905c4837fa75a9",
+      "sourceTree": "f72e070566cdef7300d33f99f796a237e4305175",
+      "remoteCommit": "67fbec257bbb2583242378c4586f7f1fe8cc42fc",
+      "parents": [
+        "de6c01f990899f6e98cbbc36c4d93659d87e3cc9",
+        "5ec909c40834b08484270dba88248f2e8dbcc968"
+      ],
+      "integrationOnly": true,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "42 files changed, 1829 insertions(+), 156 deletions(-)",
+      "files": [
+        "packages/msbuild/README.md",
+        "packages/msbuild/docs/command-lines.md",
+        "packages/msbuild/docs/native-process.md",
+        "packages/msbuild/docs/queued-engine.md",
+        "packages/msbuild/docs/sdk-selection.md",
+        "packages/msbuild/package.json",
+        "packages/msbuild/src/argument-policy.js",
+        "packages/msbuild/src/artifacts.js",
+        "packages/msbuild/src/build-server.js",
+        "packages/msbuild/src/cli-help.js",
+        "packages/msbuild/src/cli.js",
+        "packages/msbuild/src/contract.js",
+        "packages/msbuild/src/csc-args.js",
+        "packages/msbuild/src/diagnostics.js",
+        "packages/msbuild/src/engine.js",
+        "packages/msbuild/src/environment.js",
+        "packages/msbuild/src/global-json.js",
+        "packages/msbuild/src/index.js",
+        "packages/msbuild/src/invocation.js",
+        "packages/msbuild/src/native-tool.js",
+        "packages/msbuild/src/node.js",
+        "packages/msbuild/src/process.js",
+        "packages/msbuild/src/sarif.js",
+        "packages/msbuild/src/scheduler.js",
+        "packages/msbuild/src/sdk-discovery.js",
+        "packages/msbuild/src/service-registry.js",
+        "packages/msbuild/src/services-sdk.js",
+        "packages/msbuild/src/trust.js",
+        "packages/msbuild/src/workload-preflight.js",
+        "packages/msbuild/src/workloads.js",
+        "packages/project-system/docs/project-input-contract.md",
+        "packages/project-system/src/configuration-exports.js",
+        "packages/project-system/src/evaluation/compiler-options.js",
+        "packages/project-system/src/launch-settings.js",
+        "tests/a23-native-command-lines.test.js",
+        "tests/a23-native-engine.test.js",
+        "tests/a23-native-process.test.js",
+        "tests/a23-native-sdk-model.test.js",
+        "tests/a23-native-sdk-reference.test.js",
+        "tests/manifests/A23.json",
+        "tests/msbuild-native.test.js",
+        "tests/project-input-contract.test.js"
+      ]
+    },
+    {
+      "name": "native-qualification",
+      "branch": "codex/p18-native-qualification",
+      "baseBranch": "codex/p18-native-qualification-dependencies",
+      "sourceBase": "a8ec8e1e70ced52f76cedfafde905c4837fa75a9",
+      "sourceHead": "c61a49e5c45b5f5fa7474d0f9e9173cead4325b2",
+      "sourceTree": "6a90b9f5ee2ab885eef7b897e69343b0c12f5819",
+      "remoteCommit": "f4b672c15b2527f98de5a53ddc01288c7d215236",
+      "parents": [
+        "67fbec257bbb2583242378c4586f7f1fe8cc42fc"
+      ],
+      "pr": 3912,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3912",
+      "draft": true,
+      "mergeable": null,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "11 files changed, 372 insertions(+), 1 deletion(-)",
+      "files": [
+        "packages/msbuild/README.md",
+        "packages/msbuild/docs/native-qualification.md",
+        "packages/msbuild/package.json",
+        "packages/msbuild/qualification/fixtures.js",
+        "packages/msbuild/qualification/long-paths.js",
+        "packages/msbuild/qualification/matrix.json",
+        "packages/msbuild/qualification/process-tree.js",
+        "packages/msbuild/qualification/run.js",
+        "packages/msbuild/qualification/solutions.js",
+        "packages/msbuild/qualification/verify-outputs.js",
+        "packages/msbuild/qualification/windows.js"
+      ],
+      "validation": {
+        "fixtureBytes": "9 generated files identical to original source; no SDK execution",
+        "static": "Unavailable local full scan: background workspace synchronization; remote core pending",
+        "native": "Original Node22/26 matrix retained including failures/skips; not repeated"
+      },
+      "checks": [
+        {
+          "name": "core",
+          "id": 111349587405,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172980712/job/111349587405"
+        },
+        {
+          "name": "core",
+          "id": 111349567280,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172976529/job/111349567280"
+        }
+      ]
+    },
+    {
+      "name": "native-corpus-dependencies",
+      "branch": "codex/p18-native-corpus-dependencies",
+      "baseBranch": "codex/p18-native-nuget",
+      "sourceBase": "bab1503f784c8baac1c813e441405652501a9953",
+      "sourceHead": "efc6a15f6ca63e93c88d96243880d8ed3516b30e",
+      "sourceTree": "7a2968c1594c1b069f886b9828a4df5afbc57637",
+      "remoteCommit": "072cd8a13c0769f9942bf90414d46643875f8ac2",
+      "parents": [
+        "f67050b7b81caa782384849082e342bb3a78cbb6",
+        "f0272cb2427fa95448d385d6076e81bc85781671",
+        "3b6f0a9a58e31b26b8c3b39632955e061908a96e",
+        "de4dbdb3ae5a5fee8e63a02e5ec3f901fab2fca7",
+        "13e09038c3ff4cb535b46153df3f309cf7b3d499",
+        "f4b672c15b2527f98de5a53ddc01288c7d215236",
+        "ace447bdf5d12e3629d3399f3ae08f5428cc25ad"
+      ],
+      "integrationOnly": true,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "225 files changed, 13636 insertions(+), 563 deletions(-)",
+      "files": [
+        "apps/studio/workers/protocol.js",
+        "apps/studio/workers/type-rename.js",
+        "packages/archive/README.md",
+        "packages/archive/examples/streaming.mjs",
+        "packages/archive/src/deflate-compress.js",
+        "packages/archive/src/deflate-dynamic.js",
+        "packages/archive/src/deflate-platform.js",
+        "packages/archive/src/deflate-stream.js",
+        "packages/archive/src/index.js",
+        "packages/archive/src/text-encoding.js",
+        "packages/archive/src/zip-budgets.js",
+        "packages/archive/src/zip-content-policy.js",
+        "packages/archive/src/zip-crc.js",
+        "packages/archive/src/zip-directory.js",
+        "packages/archive/src/zip-headers.js",
+        "packages/archive/src/zip-metadata.js",
+        "packages/archive/src/zip-reader.js",
+        "packages/archive/src/zip-stream-reader.js",
+        "packages/archive/src/zip-stream-writer.js",
+        "packages/archive/src/zip-writer.js",
+        "packages/archive/src/zip64.js",
+        "packages/bytecode/PROJECT-REFERENCES.md",
+        "packages/bytecode/README.md",
+        "packages/bytecode/src/disassembly.js",
+        "packages/bytecode/src/index.js",
+        "packages/bytecode/src/numeric-exports.js",
+        "packages/bytecode/src/opcodes.js",
+        "packages/bytecode/src/project-reference-identity.js",
+        "packages/bytecode/src/project-reference-instructions.js",
+        "packages/bytecode/src/project-references.js",
+        "packages/bytecode/src/serialization.js",
+        "packages/cil/ASSEMBLY-IDENTITY.md",
+        "packages/cil/PROJECT-METADATA.md",
+        "packages/cil/README.md",
+        "packages/cil/src/analysis-project-references.js",
+        "packages/cil/src/analysis.js",
+        "packages/cil/src/assembly-access.js",
+        "packages/cil/src/assembly-display-name.js",
+        "packages/cil/src/assembly-identity.js",
+        "packages/cil/src/emit/debug-profile.js",
+        "packages/cil/src/emit/emission-context.js",
+        "packages/cil/src/emit/helpers.js",
+        "packages/cil/src/emit/instruction-profile.js",
+        "packages/cil/src/emit/member-definitions.js",
+        "packages/cil/src/emit/method-debug-info.js",
+        "packages/cil/src/emit/pe-options.js",
+        "packages/cil/src/emit/project-metadata.js",
+        "packages/cil/src/emit/project-references.js",
+        "packages/cil/src/emitter.js",
+        "packages/cil/src/index.js",
+        "packages/cil/src/load/canonical-profile.js",
+        "packages/cil/src/load/project-profile.js",
+        "packages/cil/src/load/project-reference-errors.js",
+        "packages/cil/src/load/project-reference-profile.js",
+        "packages/cil/src/load/properties.js",
+        "packages/cil/src/loader.js",
+        "packages/cil/src/metadata/member-definitions.js",
+        "packages/cil/src/pe/canonical-options.js",
+        "packages/compiler/README.md",
+        "packages/compiler/TYPE-RENAME.md",
+        "packages/compiler/docs/project-references.md",
+        "packages/compiler/docs/source-emission.md",
+        "packages/compiler/src/codegen/semantic/body-translator.js",
+        "packages/compiler/src/codegen/semantic/declarations.js",
+        "packages/compiler/src/codegen/semantic/generator.js",
+        "packages/compiler/src/codegen/semantic/jump-emitter.js",
+        "packages/compiler/src/codegen/semantic/program-model.js",
+        "packages/compiler/src/codegen/semantic/project-reference-emitter.js",
+        "packages/compiler/src/codegen/semantic/project-reference-translation.js",
+        "packages/compiler/src/codegen/semantic/project-references.js",
+        "packages/compiler/src/codegen/semantic/type-mapper.js",
+        "packages/compiler/src/compile-cil.js",
+        "packages/compiler/src/compile.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/metadata-import/assembly-identity.js",
+        "packages/compiler/src/metadata-import/attributes.js",
+        "packages/compiler/src/metadata-import/compilation-references.js",
+        "packages/compiler/src/metadata-import/metadata-type-names.js",
+        "packages/compiler/src/metadata-import/pe-symbols.js",
+        "packages/compiler/src/metadata-import/pe-type-reference.js",
+        "packages/compiler/src/metadata-import/reference-input.js",
+        "packages/compiler/src/metadata-import/runtime-profile.js",
+        "packages/compiler/src/metadata-language-index.js",
+        "packages/compiler/src/metadata-language.js",
+        "packages/compiler/src/source-member-definitions.js",
+        "packages/compiler/src/source-type-definitions.js",
+        "packages/compiler/src/type-rename-index.js",
+        "packages/compiler/src/type-rename.js",
+        "packages/language/README.md",
+        "packages/language/package.json",
+        "packages/language/src/completions.js",
+        "packages/language/src/index.js",
+        "packages/language/src/metadata-session.js",
+        "packages/language/src/rename.js",
+        "packages/language/src/symbol-details.js",
+        "packages/msbuild/README.md",
+        "packages/msbuild/binlog-reader/BinlogReader.csproj",
+        "packages/msbuild/binlog-reader/NuGet.Config",
+        "packages/msbuild/binlog-reader/Program.cs",
+        "packages/msbuild/docs/native-binlog.md",
+        "packages/msbuild/docs/native-build-graph.md",
+        "packages/msbuild/docs/native-qualification.md",
+        "packages/msbuild/docs/package-archives.md",
+        "packages/msbuild/docs/workspace-text.md",
+        "packages/msbuild/package.json",
+        "packages/msbuild/qualification/fixtures.js",
+        "packages/msbuild/qualification/long-paths.js",
+        "packages/msbuild/qualification/matrix.json",
+        "packages/msbuild/qualification/process-tree.js",
+        "packages/msbuild/qualification/run.js",
+        "packages/msbuild/qualification/solutions.js",
+        "packages/msbuild/qualification/verify-outputs.js",
+        "packages/msbuild/qualification/windows.js",
+        "packages/msbuild/src/binlog/model.js",
+        "packages/msbuild/src/binlog/query.js",
+        "packages/msbuild/src/binlog/reader.js",
+        "packages/msbuild/src/build-service.js",
+        "packages/msbuild/src/index.js",
+        "packages/msbuild/src/msbuild-client.js",
+        "packages/msbuild/src/native-project-graph.js",
+        "packages/msbuild/src/node.js",
+        "packages/msbuild/src/nuget/package-reader.js",
+        "packages/msbuild/src/project-graph.js",
+        "packages/msbuild/src/services-binlog.js",
+        "packages/msbuild/src/services-project.js",
+        "packages/msbuild/src/services.js",
+        "packages/msbuild/src/sln-configurations.js",
+        "packages/msbuild/src/sln-writer.js",
+        "packages/msbuild/src/solution-configurations.js",
+        "packages/msbuild/src/solution-defaults.js",
+        "packages/msbuild/src/solution-inspection.js",
+        "packages/msbuild/src/solution-selection.js",
+        "packages/msbuild/src/solution.js",
+        "packages/msbuild/src/up-to-date.js",
+        "packages/msbuild/src/workspace.js",
+        "packages/project-system/docs/evaluation-contract.md",
+        "packages/project-system/docs/expression-contract.md",
+        "packages/project-system/docs/project-build-contract.md",
+        "packages/project-system/docs/resource-contract.md",
+        "packages/project-system/docs/solution-reader-contract.md",
+        "packages/project-system/src/build-contexts.js",
+        "packages/project-system/src/build-plan.js",
+        "packages/project-system/src/build-unit.js",
+        "packages/project-system/src/condition-parser.js",
+        "packages/project-system/src/conditions.js",
+        "packages/project-system/src/configuration-exports.js",
+        "packages/project-system/src/evaluation/central-packages.js",
+        "packages/project-system/src/evaluation/context.js",
+        "packages/project-system/src/evaluation/expander.js",
+        "packages/project-system/src/evaluation/expression-scanner.js",
+        "packages/project-system/src/evaluation/functions-msbuild.js",
+        "packages/project-system/src/evaluation/functions-static.js",
+        "packages/project-system/src/evaluation/functions-string.js",
+        "packages/project-system/src/evaluation/imports.js",
+        "packages/project-system/src/evaluation/index.js",
+        "packages/project-system/src/evaluation/item-expressions.js",
+        "packages/project-system/src/evaluation/item-metadata.js",
+        "packages/project-system/src/evaluation/items.js",
+        "packages/project-system/src/evaluation/path-index.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/reserved-properties.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/project-system/src/evaluation/sdk/build-targets.js",
+        "packages/project-system/src/evaluation/sdk/generated-sources.js",
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js",
+        "packages/project-system/src/evaluation/sdk/resolver.js",
+        "packages/project-system/src/evaluation/target-batching.js",
+        "packages/project-system/src/evaluation/target-files.js",
+        "packages/project-system/src/evaluation/target-runner.js",
+        "packages/project-system/src/evaluation/targets.js",
+        "packages/project-system/src/evaluation/virtual-tasks.js",
+        "packages/project-system/src/index.js",
+        "packages/project-system/src/legacy-solution.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/project-system/src/output-layout.js",
+        "packages/project-system/src/project-loader.js",
+        "packages/project-system/src/project-system.js",
+        "packages/project-system/src/resource-binary.js",
+        "packages/project-system/src/resources.js",
+        "packages/project-system/src/solution-legacy.js",
+        "planning/evidence/project18/solution-configurations-publication.json",
+        "scripts/conformance/static/allowlist.json",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-assembly-identity-sharing.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-native-binlog-large.test.js",
+        "tests/a23-native-binlog.test.js",
+        "tests/a23-native-build-model.test.js",
+        "tests/a23-native-designer-files.test.js",
+        "tests/a23-native-metadata.test.js",
+        "tests/a23-nuget-package-archives.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-project-reference-binding.test.js",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-solution-configuration-contract.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a24-06-archive-large-metadata.test.js",
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-compression-backends.test.js",
+        "tests/a24-06-recursive-archives.test.js",
+        "tests/a24-type-rename-preview.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/fixtures/a23-binlog/SizeOracle.cs",
+        "tests/fixtures/archive/QUINE-LICENSE",
+        "tests/fixtures/archive/README.md",
+        "tests/fixtures/archive/quine.json",
+        "tests/helpers/project-evaluation.js",
+        "tests/manifests/A23.json",
+        "tests/project-core-contract.test.js",
+        "tests/project-evaluation-build-stages.test.js",
+        "tests/project-evaluation-build.test.js",
+        "tests/project-evaluation-central-packages.test.js",
+        "tests/project-evaluation-contexts.test.js",
+        "tests/project-evaluation-expressions.test.js",
+        "tests/project-evaluation-items.test.js",
+        "tests/project-evaluation-sdk.test.js",
+        "tests/project-evaluation-targets.test.js",
+        "tests/project-expression-contract.test.js",
+        "tests/project-resource-contract.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/support/project-assembly-fixtures.js"
+      ],
+      "reusedBlobs": 216,
+      "composedBlobs": 9
+    },
+    {
+      "name": "native-context-corpus",
+      "branch": "codex/p18-native-context-corpus",
+      "baseBranch": "codex/p18-native-corpus-dependencies",
+      "sourceBase": "efc6a15f6ca63e93c88d96243880d8ed3516b30e",
+      "sourceHead": "3f9b5490b98062156a852ac5d8e3ecbecea0dc45",
+      "sourceTree": "87c896b168576714a17030edb39a8fa4ef68b763",
+      "remoteCommit": "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+      "parents": [
+        "072cd8a13c0769f9942bf90414d46643875f8ac2"
+      ],
+      "pr": 3949,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3949",
+      "draft": true,
+      "mergeable": true,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "12 files changed, 496 insertions(+), 4 deletions(-)",
+      "files": [
+        "examples/projects/ExplorerWorkshop/App/App.csproj",
+        "examples/projects/ExplorerWorkshop/Library/Models/Counter.Operations.cs",
+        "examples/projects/ExplorerWorkshop/Library/Models/Counter.cs",
+        "examples/projects/ExplorerWorkshop/README.md",
+        "packages/msbuild/docs/native-context-corpus.md",
+        "packages/msbuild/src/node.js",
+        "tests/a23-native-context-parity.test.js",
+        "tests/a23-native-contexts.test.js",
+        "tests/a23-native-csc-corpus.test.js",
+        "tests/a23-native-explorer-boundary.test.js",
+        "tests/a23-native-integration.test.js",
+        "tests/a23-native-reuse.test.js"
+      ],
+      "validation": {
+        "native": "Completed original native scope; existing assertions with public imports; no rerun",
+        "static": "Required clean remote core pending"
+      },
+      "checks": [
+        {
+          "name": "core",
+          "id": 111351130056,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173480204/job/111351130056"
+        },
+        {
+          "name": "core",
+          "id": 111351118426,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173477863/job/111351118426"
+        }
+      ]
+    },
+    {
+      "name": "native-package-corpus",
+      "branch": "codex/p18-native-package-corpus",
+      "baseBranch": "codex/p18-native-corpus-dependencies",
+      "sourceBase": "efc6a15f6ca63e93c88d96243880d8ed3516b30e",
+      "sourceHead": "81e5659925a1e6c9a31a936f620a7528413ec9f8",
+      "sourceTree": "484b9d02cfdcac897c8a5925608b29ce0d67fbd7",
+      "remoteCommit": "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+      "parents": [
+        "072cd8a13c0769f9942bf90414d46643875f8ac2"
+      ],
+      "pr": 3969,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3969",
+      "draft": true,
+      "mergeable": true,
+      "productSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "stats": "6 files changed, 549 insertions(+)",
+      "files": [
+        "packages/msbuild/docs/native-package-corpus.md",
+        "tests/a23-native-nuget.test.js",
+        "tests/a23-native-package-workflow.test.js",
+        "tests/a23-native-policy.test.js",
+        "tests/a23-native-projects.test.js",
+        "tests/a23-native-rid.test.js"
+      ],
+      "validation": {
+        "native": "Completed native scope; unchanged expectations, public imports and line-wrapped literals; no rerun",
+        "syntax": "All six involved test files pass node --check",
+        "core": "Passed required core; broader jobs skipped by staged CI policy"
+      },
+      "coreChecks": [
+        {
+          "id": 111351885161,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173726552/job/111351885161"
+        },
+        {
+          "id": 111351869009,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173724048/job/111351869009"
+        }
+      ]
+    }
+  ]
+}

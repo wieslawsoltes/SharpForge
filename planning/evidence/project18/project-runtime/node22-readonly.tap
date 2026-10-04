@@ -1,0 +1,106 @@
+(node:7) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:22) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: source member definitions cover every image slot with exact access and private generated backing storage
+ok 1 - source member definitions cover every image slot with exact access and private generated backing storage
+  ---
+  duration_ms: 61.264674
+  type: 'test'
+  ...
+# Subtest: source member metadata disambiguates overloads and partial classes by source location
+ok 2 - source member metadata disambiguates overloads and partial classes by source location
+  ---
+  duration_ms: 3.695254
+  type: 'test'
+  ...
+# Subtest: compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+ok 3 - compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+  ---
+  duration_ms: 35.366863
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal method with CS0122
+ok 4 - separate project assembly rejects internal method with CS0122
+  ---
+  duration_ms: 30.02131
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private method with CS0122
+ok 5 - separate project assembly rejects private method with CS0122
+  ---
+  duration_ms: 13.433912
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal field with CS0122
+ok 6 - separate project assembly rejects internal field with CS0122
+  ---
+  duration_ms: 13.292498
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private field with CS0122
+ok 7 - separate project assembly rejects private field with CS0122
+  ---
+  duration_ms: 8.222692
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal constructor with CS0122
+ok 8 - separate project assembly rejects internal constructor with CS0122
+  ---
+  duration_ms: 8.648175
+  type: 'test'
+  ...
+# Subtest: friend assembly access permits internal methods, fields and constructors while retaining private rejection
+ok 9 - friend assembly access permits internal methods, fields and constructors while retaining private rejection
+  ---
+  duration_ms: 25.555916
+  type: 'test'
+  ...
+# Subtest: readonly fields reject external writes and private setters remain inaccessible
+not ok 10 - readonly fields reject external writes and private setters remain inaccessible
+  ---
+  duration_ms: 20.907705
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-source-member-definitions.test.js:134:1'
+  failureType: 'testCodeFailure'
+  error: '[{"uri":"Program.cs","version":1,"start":49,"length":18,"code":"CS0131","message":"The left-hand side of an assignment must be a variable, property or indexer","severity":"error","range":{"start":{"line":0,"character":49},"end":{"line":0,"character":67}}}]'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-source-member-definitions.test.js:145:3)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: synthesized parameterless constructors retain public access when instance initialization creates an image body
+ok 11 - synthesized parameterless constructors retain public access when instance initialization creates an image body
+  ---
+  duration_ms: 14.06238
+  type: 'test'
+  ...
+# Subtest: the installed CLR initializes and reads emitted instance and static readonly fields
+ok 12 - the installed CLR initializes and reads emitted instance and static readonly fields
+  ---
+  duration_ms: 863.273696
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","runtime":"10.0.12","platform":"linux","architecture":"x64","actualClrReadonlyInitialization":true}
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1592.408202

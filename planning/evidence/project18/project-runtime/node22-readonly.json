@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "043643b35bd97ad4bb137ac6dd704a6025f51129",
+  "node": "v22.23.3",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a23-source-member-definitions.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T00:18:24.637408+00:00",
+  "log": "node22-readonly.tap",
+  "diskPreflight": {
+    "actualFreeBytes": 672628736,
+    "minimumFreeBytes": 536870912
+  },
+  "exitCode": 1,
+  "completedAt": "2026-10-04T00:18:26.389666+00:00",
+  "summary": {
+    "tests": 12,
+    "suites": 0,
+    "pass": 11,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

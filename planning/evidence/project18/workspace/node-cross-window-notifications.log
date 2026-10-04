@@ -1,0 +1,33 @@
+✔ cross-window adoption keeps both sessions dirty until an explicit physical save (25.300151ms)
+✔ a peer buffer resolution prevents older file undo from overwriting it (17.374453ms)
+✔ a peer buffer resolution prevents older file redo from overwriting it (7.153843ms)
+✔ cross-window application verifies exact local and selected bytes before changing a buffer (2.300151ms)
+✔ read-only, generated, missing, malformed and oversized peer resolutions are rejected (1.978024ms)
+✔ an asynchronous edit invalidates peer application before the session commit (1.910482ms)
+✔ an asynchronous replace invalidates peer application before the session commit (1.668107ms)
+✔ an asynchronous bytes invalidates peer application before the session commit (1.802169ms)
+✔ coordinator snapshots local admission before an awaited remote read mutates the same object (1.238118ms)
+✔ a newer notification invalidates an older remote checkpoint before conflict application (0.938646ms)
+✔ a remote notification during async application remains visible (newer remote) (0.945236ms)
+✔ a remote notification during async application remains visible (mine) (0.615969ms)
+✔ coordinator and session preserve UTF-16 mixed endings and binary bytes through an unsaved adoption (7.746437ms)
+✔ explorer sends divergent revisions without waiting for recovery and preserves the other buffer (14.791006ms)
+✔ explorer serializes overlapping checkpoints and saves metadata-only changes with binary bytes (7.274265ms)
+✔ unbound workspaces with the same display name never establish an editing channel (1.006578ms)
+✔ recent identity registration uses isSameEntry and serializes simultaneous first opens (1.120841ms)
+✔ cross-window UTF-16 conflict verifies physical encoding and emits the actual persisted hash (1.567054ms)
+✔ missing symbol ids use source interval ownership and malformed owner cycles stay renderable (1.360733ms)
+✔ batch path rewrites rebase original relative paths once across several moves (1.432151ms)
+✔ revision channels mark peer buffers stale without modifying them and discard duplicate envelopes (5.93887ms)
+✔ two windows saving one baseline yield one commit and one conflict (1.786305ms)
+✔ save ownership rejects unavailable APIs and cancellation without writing (1.103435ms)
+✔ cross-window conflicts require a choice and merge disjoint edits with a new shared revision (3.411266ms)
+✔ cross-window resolution rejects local or remote edits made after the conflict was presented (1.114802ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1482.152225

@@ -1,0 +1,14 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS Legacy MSBuild actions remain present and connection starts no target
+PASS Untrusted profile discovery and selection are target-free visible controls
+PASS Context selector activates exact files, options and readonly generated sources
+PASS Launch button sends selected args, environment, directory and framework
+PASS Publish button explicitly executes selected profile through job lifecycle
+PASS Real portable source worker reports pass/fail/skip
+PASS Real portable cil worker reports pass/fail/skip
+PASS Selected portable test runs in a fresh session and navigates to source
+PASS Native transport results expose source, artifacts and line/branch coverage
+PASS Native live PID handoff and cancellation leave remaining tests not-run
+PASS Portable tests created an actual separate worker
+PASS No application or fixture JavaScript errors

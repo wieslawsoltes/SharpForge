@@ -1,0 +1,161 @@
+Source: beee98a553f73809d5db35cc970a7f7d58b54fca + uncommitted completed navigation files
+(node:7) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:22) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: two independent tools start and a failed third batch restores the container
+ok 1 - two independent tools start and a failed third batch restores the container
+  ---
+  duration_ms: 2.138475
+  type: 'test'
+  ...
+# Subtest: container preflights duplicates, reports disposal errors and rolls back cancellation
+ok 2 - container preflights duplicates, reports disposal errors and rolls back cancellation
+  ---
+  duration_ms: 0.427545
+  type: 'test'
+  ...
+# Subtest: commands preserve handler behavior and reject duplicate registrations
+ok 3 - commands preserve handler behavior and reject duplicate registrations
+  ---
+  duration_ms: 1.6505
+  type: 'test'
+  ...
+# Subtest: tools append menu items without global state or editing Studio
+ok 4 - tools append menu items without global state or editing Studio
+  ---
+  duration_ms: 0.669369
+  type: 'test'
+  ...
+# Subtest: each mount has independent state and DOM, and failed render cleans up
+ok 5 - each mount has independent state and DOM, and failed render cleans up
+  ---
+  duration_ms: 0.398161
+  type: 'test'
+  ...
+# Subtest: automation contributions preserve the complete pre-extraction key surface
+ok 6 - automation contributions preserve the complete pre-extraction key surface
+  ---
+  duration_ms: 9.155328
+  type: 'test'
+  ...
+# Subtest: automation duplicate batches roll back and namespaces dispose cleanly
+ok 7 - automation duplicate batches roll back and namespaces dispose cleanly
+  ---
+  duration_ms: 0.443609
+  type: 'test'
+  ...
+# Subtest: storage preserves v1 payloads, versions and quota failures
+ok 8 - storage preserves v1 payloads, versions and quota failures
+  ---
+  duration_ms: 0.696911
+  type: 'test'
+  ...
+# Subtest: every worker message has a handler seam and unknown messages fail structurally
+ok 9 - every worker message has a handler seam and unknown messages fail structurally
+  ---
+  duration_ms: 0.798565
+  type: 'test'
+  ...
+# Subtest: Studio has no command branches, direct persistence or inline automation literal
+ok 10 - Studio has no command branches, direct persistence or inline automation literal
+  ---
+  duration_ms: 17.14655
+  type: 'test'
+  ...
+# (node:22) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:22) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real compiler and runtime workers dispatch known requests and return structured unknown errors
+ok 11 - real compiler and runtime workers dispatch known requests and return structured unknown errors
+  ---
+  duration_ms: 1155.14413
+  type: 'test'
+  ...
+# (node:36) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Back/Forward preserves unloaded members and serializes lazy reads without recording duplicate history
+ok 12 - Back/Forward preserves unloaded members and serializes lazy reads without recording duplicate history
+  ---
+  duration_ms: 2.392489
+  type: 'test'
+  ...
+# Subtest: failed lazy navigation preserves history and clears replay before the next request
+ok 13 - failed lazy navigation preserves history and clears replay before the next request
+  ---
+  duration_ms: 0.607096
+  type: 'test'
+  ...
+# Subtest: workspace replacement invalidates queued history requests and reset releases their queue capacity
+ok 14 - workspace replacement invalidates queued history requests and reset releases their queue capacity
+  ---
+  duration_ms: 0.37084
+  type: 'test'
+  ...
+# Subtest: history changed during a guarded open is never advanced using an obsolete snapshot
+ok 15 - history changed during a guarded open is never advanced using an obsolete snapshot
+  ---
+  duration_ms: 0.214092
+  type: 'test'
+  ...
+# Subtest: line and range diagnostics load exact source contents before converting offsets
+ok 16 - line and range diagnostics load exact source contents before converting offsets
+  ---
+  duration_ms: 0.652154
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed workspaceEpoch after lazy source I/O
+ok 17 - diagnostic navigation rejects a changed workspaceEpoch after lazy source I/O
+  ---
+  duration_ms: 0.281374
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed disk after lazy source I/O
+ok 18 - diagnostic navigation rejects a changed disk after lazy source I/O
+  ---
+  duration_ms: 0.114012
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed projectSystem after lazy source I/O
+ok 19 - diagnostic navigation rejects a changed projectSystem after lazy source I/O
+  ---
+  duration_ms: 0.102094
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed revision after lazy source I/O
+ok 20 - diagnostic navigation rejects a changed revision after lazy source I/O
+  ---
+  duration_ms: 0.296858
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed nativeMode after lazy source I/O
+ok 21 - diagnostic navigation rejects a changed nativeMode after lazy source I/O
+  ---
+  duration_ms: 0.308565
+  type: 'test'
+  ...
+# Subtest: unavailable source contents reject line navigation instead of silently selecting offset zero
+ok 22 - unavailable source contents reject line navigation instead of silently selecting offset zero
+  ---
+  duration_ms: 0.277058
+  type: 'test'
+  ...
+# Subtest: Close Other Documents awaits each normal close hook before focusing the retained document
+ok 23 - Close Other Documents awaits each normal close hook before focusing the retained document
+  ---
+  duration_ms: 0.484901
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1847.484886

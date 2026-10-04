@@ -1,0 +1,459 @@
+(node:9) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:24) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: explicit member metadata preserves all six access kinds, ctor visibility and readonly flags in canonical PEs
+ok 1 - explicit member metadata preserves all six access kinds, ctor visibility and readonly flags in canonical PEs
+  ---
+  duration_ms: 96.916549
+  type: 'test'
+  ...
+# {"fixture":"Api with six method/field access kinds","legacyBytes":4608,"memberMetadataBytes":5632}
+# Subtest: member projection rejects missing, duplicate, unknown or out-of-range identities before emission
+ok 2 - member projection rejects missing, duplicate, unknown or out-of-range identities before emission
+  ---
+  duration_ms: 10.835657
+  type: 'test'
+  ...
+# Subtest: omitted member metadata retains the previous canonical public-member profile
+ok 3 - omitted member metadata retains the previous canonical public-member profile
+  ---
+  duration_ms: 7.48194
+  type: 'test'
+  ...
+# (node:32) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual project member flags prevent forged canonical references from bypassing visibility
+ok 4 - actual project member flags prevent forged canonical references from bypassing visibility
+  ---
+  duration_ms: 377.873529
+  type: 'test'
+  ...
+# Subtest: actual IVT attributes grant internal project access while keeping private members inaccessible
+ok 5 - actual IVT attributes grant internal project access while keeping private members inaccessible
+  ---
+  duration_ms: 57.22047
+  type: 'test'
+  ...
+# Subtest: actual TypeDef visibility is enforced independently from member visibility
+ok 6 - actual TypeDef visibility is enforced independently from member visibility
+  ---
+  duration_ms: 23.317024
+  type: 'test'
+  ...
+# Subtest: external writes to actual initonly fields are rejected even with friend access
+ok 7 - external writes to actual initonly fields are rejected even with friend access
+  ---
+  duration_ms: 19.956638
+  type: 'test'
+  ...
+# (node:40) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: closed project loading preserves distinct canonical PEs and resolves all six external operations
+ok 8 - closed project loading preserves distinct canonical PEs and resolves all six external operations
+  ---
+  duration_ms: 181.026123
+  type: 'test'
+  ...
+# Subtest: transitive project closure resolves a library without inventing its entry point
+ok 9 - transitive project closure resolves a library without inventing its entry point
+  ---
+  duration_ms: 57.15437
+  type: 'test'
+  ...
+# Subtest: same-named aliased dependency types retain separate objects, statics and opaque assembly names
+ok 10 - same-named aliased dependency types retain separate objects, statics and opaque assembly names
+  ---
+  duration_ms: 26.41472
+  type: 'test'
+  ...
+# Subtest: project type mappings use actual metadata identities and normalize reference assembly casing
+ok 11 - project type mappings use actual metadata identities and normalize reference assembly casing
+  ---
+  duration_ms: 24.573148
+  type: 'test'
+  ...
+# Subtest: project dependency hashes and full identities reject stale or ambiguous outputs before execution
+ok 12 - project dependency hashes and full identities reject stale or ambiguous outputs before execution
+  ---
+  duration_ms: 22.31519
+  type: 'test'
+  ...
+# Subtest: canonical single-module admission preserves unresolved target descriptors for later token verification
+ok 13 - canonical single-module admission preserves unresolved target descriptors for later token verification
+  ---
+  duration_ms: 21.356748
+  type: 'test'
+  ...
+# Subtest: noncanonical CIL, assembly budgets and caller cancellation fail before a runtime can observe effects
+ok 14 - noncanonical CIL, assembly budgets and caller cancellation fail before a runtime can observe effects
+  ---
+  duration_ms: 20.922945
+  type: 'test'
+  ...
+# Subtest: real CLI type initializers preserve the existing source initialization helper and old canonical emission option
+ok 15 - real CLI type initializers preserve the existing source initialization helper and old canonical emission option
+  ---
+  duration_ms: 47.468577
+  type: 'test'
+  ...
+# Subtest: closed assembly images retain original resources, project attributes and assembly provenance
+ok 16 - closed assembly images retain original resources, project attributes and assembly provenance
+  ---
+  duration_ms: 20.074135
+  type: 'test'
+  ...
+# (node:48) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: separate project PEs preserve constructors and static fields on Roslyn, actual CLR and both JavaScript engines
+ok 17 - separate project PEs preserve constructors and static fields on Roslyn, actual CLR and both JavaScript engines
+  ---
+  duration_ms: 4633.595581
+  type: 'test'
+  ...
+# {"sdk":"10.0.401","msbuild":"18.9.11.42413","runtime":"10.0.5","framework":"net10.0","platform":"linux","architecture":"x64","output":"42\\n42\\n44\\nnull\\n","engines":["Roslyn SDK build on CLR","SharpForge separate PE on CLR","SourceVM","CilVirtualMachine"]}
+# (node:169) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: stop banner preserves executable location, source matching and existing navigation actions
+ok 18 - stop banner preserves executable location, source matching and existing navigation actions
+  ---
+  duration_ms: 2.966442
+  type: 'test'
+  ...
+# Subtest: caller, changed-source and muted-state explanations remain escaped and invalidate the banner cache
+ok 19 - caller, changed-source and muted-state explanations remain escaped and invalidate the banner cache
+  ---
+  duration_ms: 0.36488
+  type: 'test'
+  ...
+# Subtest: running sessions hide the banner and sourceless CIL stops retain instruction navigation
+ok 20 - running sessions hide the banner and sourceless CIL stops retain instruction navigation
+  ---
+  duration_ms: 0.346833
+  type: 'test'
+  ...
+# (node:177) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity
+ok 21 - editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity
+  ---
+  duration_ms: 1.396996
+  type: 'test'
+  ...
+# Subtest: edited source withholds execution and selected-frame painting and unbound muted requests stay visible
+ok 22 - edited source withholds execution and selected-frame painting and unbound muted requests stay visible
+  ---
+  duration_ms: 1.194161
+  type: 'test'
+  ...
+# Subtest: toggling a moved binding removes its original workspace anchor without creating a qualified anchor key
+ok 23 - toggling a moved binding removes its original workspace anchor without creating a qualified anchor key
+  ---
+  duration_ms: 0.605573
+  type: 'test'
+  ...
+# Subtest: editing a moved binding preserves its requested line and selected document mapping
+ok 24 - editing a moved binding preserves its requested line and selected document mapping
+  ---
+  duration_ms: 0.396477
+  type: 'test'
+  ...
+# Subtest: late breakpoint replies cannot replace a newer request or another runtime session
+ok 25 - late breakpoint replies cannot replace a newer request or another runtime session
+  ---
+  duration_ms: 0.355736
+  type: 'test'
+  ...
+# Subtest: cancelled edits and unavailable runtime bindings preserve persisted requests
+ok 26 - cancelled edits and unavailable runtime bindings preserve persisted requests
+  ---
+  duration_ms: 0.376037
+  type: 'test'
+  ...
+# (node:185) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: debug navigation opens an exact current original source and preserves executable identity for painting
+ok 27 - debug navigation opens an exact current original source and preserves executable identity for painting
+  ---
+  duration_ms: 2.051293
+  type: 'test'
+  ...
+# Subtest: changed or unavailable source uses the read-only viewer with the exact executing document key
+ok 28 - changed or unavailable source uses the read-only viewer with the exact executing document key
+  ---
+  duration_ms: 0.203276
+  type: 'test'
+  ...
+# Subtest: ambiguous generated paths never select a workspace buffer without matching project context
+ok 29 - ambiguous generated paths never select a workspace buffer without matching project context
+  ---
+  duration_ms: 0.389387
+  type: 'test'
+  ...
+# Subtest: same execution URI shared by identical generated sources requires the point assembly identity
+ok 30 - same execution URI shared by identical generated sources requires the point assembly identity
+  ---
+  duration_ms: 0.261594
+  type: 'test'
+  ...
+# Subtest: frame navigation, source breakpoint bindings and current-source choice use the selected context
+ok 31 - frame navigation, source breakpoint bindings and current-source choice use the selected context
+  ---
+  duration_ms: 0.371019
+  type: 'test'
+  ...
+# Subtest: source record publication is atomic and legacy single-module symbol maps remain supported
+ok 32 - source record publication is atomic and legacy single-module symbol maps remain supported
+  ---
+  duration_ms: 0.468727
+  type: 'test'
+  ...
+# Subtest: worker source publication retains graph provenance without transferring metadata tables
+ok 33 - worker source publication retains graph provenance without transferring metadata tables
+  ---
+  duration_ms: 0.234284
+  type: 'test'
+  ...
+# (node:193) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: canonical property reconstruction preserves all six accessor access kinds without a member override
+ok 34 - canonical property reconstruction preserves all six accessor access kinds without a member override
+  ---
+  duration_ms: 90.946134
+  type: 'test'
+  ...
+# Subtest: explicit accessor member overrides retain actual flags in debug metadata and canonical replay
+ok 35 - explicit accessor member overrides retain actual flags in debug metadata and canonical replay
+  ---
+  duration_ms: 18.378489
+  type: 'test'
+  ...
+# (node:201) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: worker cache keys cover the complete supplied graph, failures preserve the prior cache, and launch overlays are isolated
+ok 36 - worker cache keys cover the complete supplied graph, failures preserve the prior cache, and launch overlays are isolated
+  ---
+  duration_ms: 201.777545
+  type: 'test'
+  ...
+# Subtest: worker CIL cache retains immutable inspection data and creates independent runtime state
+ok 37 - worker CIL cache retains immutable inspection data and creates independent runtime state
+  ---
+  duration_ms: 44.913155
+  type: 'test'
+  ...
+# Subtest: worker artifact normalization removes the entry PE and rejects malformed or oversized requests
+ok 38 - worker artifact normalization removes the entry PE and rejects malformed or oversized requests
+  ---
+  duration_ms: 7.576734
+  type: 'test'
+  ...
+# (node:201) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker source executes the complete supplied project graph
+ok 39 - production worker source executes the complete supplied project graph
+  ---
+  duration_ms: 692.992127
+  type: 'test'
+  ...
+# (node:201) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker source preserves a paused graph when replacement validation fails
+ok 40 - production worker source preserves a paused graph when replacement validation fails
+  ---
+  duration_ms: 651.230065
+  type: 'test'
+  ...
+# (node:201) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker CIL executes the complete supplied project graph
+ok 41 - production worker CIL executes the complete supplied project graph
+  ---
+  duration_ms: 654.668925
+  type: 'test'
+  ...
+# (node:201) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker CIL preserves a paused graph when replacement validation fails
+ok 42 - production worker CIL preserves a paused graph when replacement validation fails
+  ---
+  duration_ms: 558.211604
+  type: 'test'
+  ...
+# (node:213) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: project runtime executes constructors, field initialization, properties, object returns and null faults on both engines
+ok 43 - project runtime executes constructors, field initialization, properties, object returns and null faults on both engines
+  ---
+  duration_ms: 199.27743
+  type: 'test'
+  ...
+# Subtest: transitive project calls share one state and explicit library entry invocation remains available
+ok 44 - transitive project calls share one state and explicit library entry invocation remains available
+  ---
+  duration_ms: 49.316553
+  type: 'test'
+  ...
+# Subtest: assembly-qualified objects, arrays, statics and reflection distinguish equal metadata names
+ok 45 - assembly-qualified objects, arrays, statics and reflection distinguish equal metadata names
+  ---
+  duration_ms: 48.766143
+  type: 'test'
+  ...
+# Subtest: namespace-qualified dependency signatures and runtime reflection retain their metadata names
+ok 46 - namespace-qualified dependency signatures and runtime reflection retain their metadata names
+  ---
+  duration_ms: 27.388974
+  type: 'test'
+  ...
+# Subtest: public VM construction rejects unresolved external operations before any program effect
+ok 47 - public VM construction rejects unresolved external operations before any program effect
+  ---
+  duration_ms: 21.19862
+  type: 'test'
+  ...
+# Subtest: verified graph inspectors retain owned bytes and fresh VM static state across sessions
+ok 48 - verified graph inspectors retain owned bytes and fresh VM static state across sessions
+  ---
+  duration_ms: 26.731322
+  type: 'test'
+  ...
+# Subtest: same-path dependency source files remain independently debuggable on both engines
+ok 49 - same-path dependency source files remain independently debuggable on both engines
+  ---
+  duration_ms: 25.302048
+  type: 'test'
+  ...
+# (node:221) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: source stack frames retain original module identity, CLI token and colliding source provenance
+ok 50 - source stack frames retain original module identity, CLI token and colliding source provenance
+  ---
+  duration_ms: 146.72005
+  type: 'test'
+  ...
+# Subtest: cil stack frames retain original module identity, CLI token and colliding source provenance
+ok 51 - cil stack frames retain original module identity, CLI token and colliding source provenance
+  ---
+  duration_ms: 45.853742
+  type: 'test'
+  ...
+# Subtest: source debugger remains usable with absent or partial optional IL inspection tables
+ok 52 - source debugger remains usable with absent or partial optional IL inspection tables
+  ---
+  duration_ms: 9.51824
+  type: 'test'
+  ...
+# (node:229) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual library type initializers run lazily before external and local calls and once per source session
+ok 53 - actual library type initializers run lazily before external and local calls and once per source session
+  ---
+  duration_ms: 155.32563
+  type: 'test'
+  ...
+# Subtest: namespaced library initializers preserve reentrant default values and constructor initialization order
+ok 54 - namespaced library initializers preserve reentrant default values and constructor initialization order
+  ---
+  duration_ms: 49.970128
+  type: 'test'
+  ...
+# Subtest: failed real library initialization is cached and never repeats initializer effects
+ok 55 - failed real library initialization is cached and never repeats initializer effects
+  ---
+  duration_ms: 27.050213
+  type: 'test'
+  ...
+# (node:237) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: source member definitions cover every image slot with exact access and private generated backing storage
+ok 56 - source member definitions cover every image slot with exact access and private generated backing storage
+  ---
+  duration_ms: 76.581149
+  type: 'test'
+  ...
+# Subtest: source member metadata disambiguates overloads and partial classes by source location
+ok 57 - source member metadata disambiguates overloads and partial classes by source location
+  ---
+  duration_ms: 4.375046
+  type: 'test'
+  ...
+# Subtest: compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+ok 58 - compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+  ---
+  duration_ms: 53.906543
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal method with CS0122
+ok 59 - separate project assembly rejects internal method with CS0122
+  ---
+  duration_ms: 36.601012
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private method with CS0122
+ok 60 - separate project assembly rejects private method with CS0122
+  ---
+  duration_ms: 12.175647
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal field with CS0122
+ok 61 - separate project assembly rejects internal field with CS0122
+  ---
+  duration_ms: 17.234575
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private field with CS0122
+ok 62 - separate project assembly rejects private field with CS0122
+  ---
+  duration_ms: 10.708554
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal constructor with CS0122
+ok 63 - separate project assembly rejects internal constructor with CS0122
+  ---
+  duration_ms: 11.139285
+  type: 'test'
+  ...
+# Subtest: friend assembly access permits internal methods, fields and constructors while retaining private rejection
+ok 64 - friend assembly access permits internal methods, fields and constructors while retaining private rejection
+  ---
+  duration_ms: 29.288958
+  type: 'test'
+  ...
+# Subtest: readonly fields reject external writes and private setters remain inaccessible
+ok 65 - readonly fields reject external writes and private setters remain inaccessible
+  ---
+  duration_ms: 21.004168
+  type: 'test'
+  ...
+# Subtest: semantic project properties retain metadata and reference only the accessors actually used
+ok 66 - semantic project properties retain metadata and reference only the accessors actually used
+  ---
+  duration_ms: 60.154873
+  type: 'test'
+  ...
+# Subtest: synthesized parameterless constructors retain public access when instance initialization creates an image body
+ok 67 - synthesized parameterless constructors retain public access when instance initialization creates an image body
+  ---
+  duration_ms: 9.86972
+  type: 'test'
+  ...
+# Subtest: the installed CLR initializes and reads emitted instance and static readonly fields
+ok 68 - the installed CLR initializes and reads emitted instance and static readonly fields
+  ---
+  duration_ms: 887.990728
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","runtime":"10.0.12","platform":"linux","architecture":"x64","actualClrReadonlyInitialization":true}
+1..68
+# tests 68
+# suites 0
+# pass 68
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17355.193152

@@ -23,6 +23,12 @@ export function nativeConfiguration(context) {
     nativeSourceChanges, renderTabs, renderTree, refreshEngineIndicators, setEditorDecorations,
     renderPanel, openDecompilerFile, setPanel, toast } = context;
   return {
+    onProjectContext: context.onProjectContext,
+    getTestInput: context.getTestInput,
+    getTestSources: context.getTestSources,
+    getTestProject: context.getTestProject,
+    onOpenTestSource: context.onOpenTestSource,
+    download: context.download,
     async onAttach(workspace) {
       const message = 'Switch to the native disk workspace? The browser preview is retained in local recovery. Export a ZIP to keep a separate copy.';
       if (state.dirtyFiles.size && !state.nativeMode && !globalThis.confirm(message)) throw new Error('Workspace switch cancelled');
@@ -31,6 +37,8 @@ export function nativeConfiguration(context) {
       clearTimeout(state.analyzeTimer);
       Object.assign(state, { nativeMode: true, extraFiles: [], folders: [], workspaceMode: 'solution', membershipDirty: false,
         nativeWorkspace: workspace, projectSystem: null, projectSnapshot: null, disk: null, startupProject: null,
+        nativeProjectContext: null, nativeContextFiles: [], nativeCompilationOptions: null, nativeAdditionalFiles: [],
+        recoveryReadOnly: false, recoveryEntry: null, recoveryMetadata: null,
         extensionConfig: null, files: [], tabs: [], active: '', name: workspace.name, image: null, assembly: null, pdb: null,
         logs: [], programOutput: '', result: { diagnostics: [], symbols: [], metrics: { files: 0, errors: 0 } }, breakpoints: {} });
       state.dirtyFiles.clear();
@@ -42,7 +50,8 @@ export function nativeConfiguration(context) {
     async onOpenSource(file, line, column) {
       let source = state.files.find(item => item.uri === file.path);
       if (!source) {
-        source = documents.add({ uri: file.path, text: file.text, version: Date.now(), nativeHash: file.hash, nativeBaseline: file.text });
+        source = documents.add({ ...file, uri: file.path, text: file.text, version: file.version ?? Date.now(),
+          nativeHash: file.hash, nativeBaseline: file.text, readOnly: file.readOnly === true || file.generated === true });
         state.revision++;
         renderWorkspace();
       }

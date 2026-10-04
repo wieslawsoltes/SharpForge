@@ -1,0 +1,3376 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "generatedAt": "2026-10-03T23:45:53.540194+00:00",
+  "aggregateHead": "352517554c1f76393402c7f445f7ee5d54cd80b7",
+  "interpretation": "Coverage of the requested scope, not a claim that all acceptance criteria passed. The allocation selects leaves only; it neither changes ownership nor bypasses Ready/lease rules. Parent rows roll up child work and do not duplicate implementation.",
+  "inventory": {
+    "issues": 189,
+    "epics": 8,
+    "parentTasks": 24,
+    "leaves": 157,
+    "leavesWithImplementationRecords": 157,
+    "missingLeafRecords": [],
+    "unknownLeafRecords": [],
+    "leavesWithMultipleContributors": 21
+  },
+  "sharedAcceptanceBoundaries": [
+    "Actual Studio callback integration remains a prepared patch under the external studio lock; no copied Studio entry is executed.",
+    "The root package-json lock leaves the designer dependency lockfile update prepared but unapplied.",
+    "Windows-native template execution is authored but unqualified on this Linux host.",
+    "SDK8 startup, multi-node named-pipe permissions and the observed NuGet network failure remain explicit native qualification gaps.",
+    "The final closed-project execution scope and final root host qualification are pending."
+  ],
+  "issues": [
+    {
+      "issue": 315,
+      "workId": "SF-A23-E01",
+      "kind": "epic",
+      "title": "[SF-A23-E01] Native build and evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/315",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 316,
+      "workId": "SF-A23-E02",
+      "kind": "epic",
+      "title": "[SF-A23-E02] Design-time and package workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/316",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 317,
+      "workId": "SF-A23-T01",
+      "kind": "parent-task",
+      "title": "[SF-A23-T01] Qualify native build on supported platforms",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/317",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 318,
+      "workId": "SF-A23-T02",
+      "kind": "parent-task",
+      "title": "[SF-A23-T02] Implement design-time build service",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/318",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 319,
+      "workId": "SF-A23-T03",
+      "kind": "parent-task",
+      "title": "[SF-A23-T03] Implement multi-target project contexts",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/319",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 320,
+      "workId": "SF-A23-T04",
+      "kind": "parent-task",
+      "title": "[SF-A23-T04] Complete MSBuild diagnostics and binlogs",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/320",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 321,
+      "workId": "SF-A23-T05",
+      "kind": "parent-task",
+      "title": "[SF-A23-T05] Implement incremental and graph build orchestration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/321",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 322,
+      "workId": "SF-A23-T06",
+      "kind": "parent-task",
+      "title": "[SF-A23-T06] Implement trust and cancellation hardening",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/322",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 323,
+      "workId": "SF-A23-T07",
+      "kind": "parent-task",
+      "title": "[SF-A23-T07] Implement NuGet restore, feeds, lock files and package services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/323",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 324,
+      "workId": "SF-A23-T08",
+      "kind": "parent-task",
+      "title": "[SF-A23-T08] Implement workloads SDK selection and global.json",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/324",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 325,
+      "workId": "SF-A23-T09",
+      "kind": "parent-task",
+      "title": "[SF-A23-T09] Implement project edits without XML loss",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/325",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 326,
+      "workId": "SF-A23-T10",
+      "kind": "parent-task",
+      "title": "[SF-A23-T10] Implement solution configuration mapping",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/326",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 327,
+      "workId": "SF-A23-T11",
+      "kind": "parent-task",
+      "title": "[SF-A23-T11] Implement native Test Explorer adapter",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/327",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 328,
+      "workId": "SF-A23-T12",
+      "kind": "parent-task",
+      "title": "[SF-A23-T12] Qualify portable evaluator against native MSBuild",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/328",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 329,
+      "workId": "SF-A24-E01",
+      "kind": "epic",
+      "title": "[SF-A24-E01] Workspace integrity",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/329",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 330,
+      "workId": "SF-A24-E02",
+      "kind": "epic",
+      "title": "[SF-A24-E02] Explorer and template workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/330",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 331,
+      "workId": "SF-A24-T01",
+      "kind": "parent-task",
+      "title": "[SF-A24-T01] Implement persistent workspace transaction model",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/331",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 332,
+      "workId": "SF-A24-T02",
+      "kind": "parent-task",
+      "title": "[SF-A24-T02] Implement complete explorer hierarchy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/332",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 333,
+      "workId": "SF-A24-T03",
+      "kind": "parent-task",
+      "title": "[SF-A24-T03] Implement explorer operations and drag/drop",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/333",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 334,
+      "workId": "SF-A24-T04",
+      "kind": "parent-task",
+      "title": "[SF-A24-T04] Implement filesystem watching and reload",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/334",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 335,
+      "workId": "SF-A24-T05",
+      "kind": "parent-task",
+      "title": "[SF-A24-T05] Implement workspace and folder scaling",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/335",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 336,
+      "workId": "SF-A24-T06",
+      "kind": "parent-task",
+      "title": "[SF-A24-T06] Implement archive streaming and ZIP64",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/336",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 337,
+      "workId": "SF-A24-T07",
+      "kind": "parent-task",
+      "title": "[SF-A24-T07] Complete project and solution wizard catalog",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/337",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 338,
+      "workId": "SF-A24-T08",
+      "kind": "parent-task",
+      "title": "[SF-A24-T08] Complete WinUI page/control/resource templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/338",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 339,
+      "workId": "SF-A24-T09",
+      "kind": "parent-task",
+      "title": "[SF-A24-T09] Implement native destination selection",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/339",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 340,
+      "workId": "SF-A24-T10",
+      "kind": "parent-task",
+      "title": "[SF-A24-T10] Implement workspace recovery and migration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/340",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 341,
+      "workId": "SF-A24-T11",
+      "kind": "parent-task",
+      "title": "[SF-A24-T11] Implement cross-window workspace coordination",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/341",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 342,
+      "workId": "SF-A24-T12",
+      "kind": "parent-task",
+      "title": "[SF-A24-T12] Qualify explorer/archive end-to-end corpus",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/342",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 562,
+      "workId": "SF-A23-E03",
+      "kind": "epic",
+      "title": "[SF-A23-E03] Portable MSBuild evaluator parity",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/562",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 563,
+      "workId": "SF-A23-E04",
+      "kind": "epic",
+      "title": "[SF-A23-E04] Portable test discovery and execution",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/563",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 564,
+      "workId": "SF-A24-E03",
+      "kind": "epic",
+      "title": "[SF-A24-E03] Virtual file system providers",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/564",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 565,
+      "workId": "SF-A24-E04",
+      "kind": "epic",
+      "title": "[SF-A24-E04] dotnet new template engine compatibility",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/565",
+      "implementationRecords": [],
+      "mappingStatus": "rollup"
+    },
+    {
+      "issue": 3068,
+      "workId": "SF-A23-T13",
+      "kind": "leaf",
+      "title": "[SF-A23-T13] Extract evaluateProject into evaluation modules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3068",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3069,
+      "workId": "SF-A23-T14",
+      "kind": "leaf",
+      "title": "[SF-A23-T14] Implement a real expression scanner for property, item and metadata references",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3069",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3070,
+      "workId": "SF-A23-T15",
+      "kind": "leaf",
+      "title": "[SF-A23-T15] Implement string instance property functions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3070",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "The allow-list covers ordinal/invariant comparisons. Process-culture overloads and Split overloads with a truncating count require native evaluation."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3071,
+      "workId": "SF-A23-T16",
+      "kind": "leaf",
+      "title": "[SF-A23-T16] Implement static .NET property functions allow-list",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3071",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "This is the registered portable subset, not all .NET overloads or formatting/culture behavior. DateTime formatting, numeric precision, Regex syntax and host-root paths remain bounded as documented in the feature boundary."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3072,
+      "workId": "SF-A23-T17",
+      "kind": "leaf",
+      "title": "[SF-A23-T17] Implement [MSBuild]:: intrinsic functions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3072",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "OS, feature-wave and SDK version values are explicit portable inputs. Native host filesystem/environment discovery is not performed."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3073,
+      "workId": "SF-A23-T18",
+      "kind": "leaf",
+      "title": "[SF-A23-T18] Generalise item evaluation to arbitrary item types",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3073",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3074,
+      "workId": "SF-A23-T19",
+      "kind": "leaf",
+      "title": "[SF-A23-T19] Implement item references, transforms and item functions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3074",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3075,
+      "workId": "SF-A23-T20",
+      "kind": "leaf",
+      "title": "[SF-A23-T20] Implement well-known item metadata and metadata references",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3075",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "File timestamps are not synthesized for records that do not supply them."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3076,
+      "workId": "SF-A23-T21",
+      "kind": "leaf",
+      "title": "[SF-A23-T21] Provide reserved, well-known and environment properties",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3076",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Default MSBuild/SDK version strings describe the portable model. Callers can provide reference versions; the evaluator does not discover installed SDKs."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3077,
+      "workId": "SF-A23-T22",
+      "kind": "leaf",
+      "title": "[SF-A23-T22] Model Microsoft.NET.Sdk default properties and items",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3077",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "The bundled model is an evaluation model. Installed SDK workloads and full SDK build targets use the native adapter."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3078,
+      "workId": "SF-A23-T23",
+      "kind": "leaf",
+      "title": "[SF-A23-T23] Resolve SDK references through a pluggable resolver",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3078",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Web/Razor/Worker/MSTest toolchain execution and installed SDK version resolution remain native-only."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3079,
+      "workId": "SF-A23-T24",
+      "kind": "leaf",
+      "title": "[SF-A23-T24] Generate implicit usings and assembly info sources",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3079",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "The named test executes browser-capable engines under Node. A real Studio/browser compile-and-run flow and host AssemblyInfo PE emission are qualified by root integration, not this evidence file."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3080,
+      "workId": "SF-A23-T25",
+      "kind": "leaf",
+      "title": "[SF-A23-T25] Complete Directory.Build and Directory.Packages import semantics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3080",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Restoring transitive packages and editing central version files are owned by the native NuGet service."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3081,
+      "workId": "SF-A23-T26",
+      "kind": "leaf",
+      "title": "[SF-A23-T26] Propagate evaluated compiler options to compilation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3081",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Exact portable-to-native csc-args.js equality is being qualified by workspace_inventory. This file does not infer that acceptance from successful portable execution."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3082,
+      "workId": "SF-A23-T27",
+      "kind": "leaf",
+      "title": "[SF-A23-T27] Plan per-project assemblies instead of source-combined compilation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3082",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Actual cross-assembly execution is an additional coordinated closed SharpForge PE scope in progress; this recorded batch qualifies separate assembly planning, real compiler metadata visibility and seed artifact isolation."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3083,
+      "workId": "SF-A23-T28",
+      "kind": "leaf",
+      "title": "[SF-A23-T28] Evaluate resources: resx parsing and manifest resource naming",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3083",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Serialized/custom resource types and unsupported encodings are blocking native-only cases. Dependent source naming recognizes ordinary namespace/type declarations.",
+            "Root owns actual portable PE manifest-resource/satellite emission; the native oracle established the correct payload/name contract."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3084,
+      "workId": "SF-A23-T29",
+      "kind": "leaf",
+      "title": "[SF-A23-T29] Compute output layout for Content and None items",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3084",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "This module computes a plan. Applying timestamp copy policies and writing native publish output belong to the executing host."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3085,
+      "workId": "SF-A23-T30",
+      "kind": "leaf",
+      "title": "[SF-A23-T30] Read launchSettings.json launch profiles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3085",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Both actual browser and native run-request consumers are external integration acceptance. Root and workspace_inventory own those callers."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Visible profile selection produces args, explicit environment, URL and cwd in Project/Executable native run requests. Root Ctrl+F5 and portable launch hooks are prepared; actual granted native process qualification is reported by native agent4f237a43/dabdfc40."
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+            "Native Project and granted Executable profiles are implemented. IISExpress and other command kinds require their platform-specific adapter."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3086,
+      "workId": "SF-A23-T31",
+      "kind": "leaf",
+      "title": "[SF-A23-T31] Support publish profiles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3086",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Implementation and native folder-publish acceptance were transferred to workspace_inventory; this agent does not claim its native publish run."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Profile list reads files only; explicit publish uses selected profile and normal job lifecycle. Real folder publication is native workstream evidence, not this UI fixture."
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3087,
+      "workId": "SF-A23-T32",
+      "kind": "leaf",
+      "title": "[SF-A23-T32] Build static target graph and define browser task policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3087",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Inputs/Outputs are retained for inspection. Native timestamp-based incremental skipping is not emulated."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3088,
+      "workId": "SF-A23-T33",
+      "kind": "leaf",
+      "title": "[SF-A23-T33] Execute portable targets with batching over the virtual file system",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3088",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Only registered virtual tasks run; no host writes, process execution, arbitrary task assemblies or native incremental scheduler are implied."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3089,
+      "workId": "SF-A23-T34",
+      "kind": "leaf",
+      "title": "[SF-A23-T34] Index workspace paths for Exists and glob evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3089",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Benchmark timings measure 100 directory lookups and exclude index construction. They are not total project-load, build or IDE speedup claims."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3090,
+      "workId": "SF-A23-T35",
+      "kind": "leaf",
+      "title": "[SF-A23-T35] Define test adapter contract and test tree model",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3090",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "All providers share stable project-qualified TestCase selection/results; sourceTests enriches native records. Exact native-vs-portable framework parity remains unqualified."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3091,
+      "workId": "SF-A23-T36",
+      "kind": "leaf",
+      "title": "[SF-A23-T36] Discover xUnit tests from source",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3091",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Portable xUnit discovery executes in a lazy worker with the full prepared project input. Existing package tests cover provider data; actual native framework comparison remains open."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3093,
+      "workId": "SF-A23-T37",
+      "kind": "leaf",
+      "title": "[SF-A23-T37] Discover NUnit tests from source",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3093",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Portable NUnit discovery and execution are surfaced using the shared adapter, preserving not-runnable diagnostics. Existing framework fixture evidence is in testing.json; native parity remains open."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3094,
+      "workId": "SF-A23-T38",
+      "kind": "leaf",
+      "title": "[SF-A23-T38] Discover MSTest tests from source",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3094",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Portable MSTest discovery and execution are surfaced using the shared adapter, preserving not-runnable diagnostics. Existing framework fixture evidence is in testing.json; native parity remains open."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3095,
+      "workId": "SF-A23-T39",
+      "kind": "leaf",
+      "title": "[SF-A23-T39] Execute discovered tests on the managed runtime with isolation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3095",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Actual source and CIL managed sessions run behind isolated workers, with per-test lifecycle, project compile options, cancellation and worker-stop fallback. Native parity, Rust native and Wasm execution are not qualified."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3096,
+      "workId": "SF-A23-B01",
+      "kind": "leaf",
+      "title": "[SF-A23-B01] Condition evaluator expands properties before tokenising",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3096",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3097,
+      "workId": "SF-A23-B02",
+      "kind": "leaf",
+      "title": "[SF-A23-B02] Instance property functions silently expand to empty string",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3097",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3098,
+      "workId": "SF-A23-B03",
+      "kind": "leaf",
+      "title": "[SF-A23-B03] Item and metadata references in conditions are not recognised",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3098",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3099,
+      "workId": "SF-A23-B04",
+      "kind": "leaf",
+      "title": "[SF-A23-B04] Compiler-relevant project properties are dropped before compilation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3099",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "This qualifies option propagation and engine execution under Node; the integrated Studio/browser run is recorded separately by root."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3100,
+      "workId": "SF-A23-B05",
+      "kind": "leaf",
+      "title": "[SF-A23-B05] Solution loader only recognises .csproj project paths",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3100",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "The legacy parser/configuration implementation and its detailed run artifacts are owned by tests_workflows; use that evidence for the .sln parser merge."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3101,
+      "workId": "SF-A24-T13",
+      "kind": "leaf",
+      "title": "[SF-A24-T13] Define FileSystemProvider interface and in-memory provider",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3101",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3102,
+      "workId": "SF-A24-T14",
+      "kind": "leaf",
+      "title": "[SF-A24-T14] Implement File System Access provider",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3102",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "A real operating-system picked-directory permission grant/revocation dialog has not been exercised. OPFS handles do not qualify that dialog.",
+            "Fallback copy/delete rename is explicitly non-atomic. Case-only rename requires native FileSystemHandle.move or reports Unavailable."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3103,
+      "workId": "SF-A24-T15",
+      "kind": "leaf",
+      "title": "[SF-A24-T15] Implement OPFS provider with sync-access worker",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3103",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Browser storage persistence is subject to the browser quota/eviction policy; the qualification profile reported persisted=false.",
+            "Firefox and WebKit are unqualified. Missing OPFS capability reports Unavailable; they are not reported as passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3104,
+      "workId": "SF-A24-T16",
+      "kind": "leaf",
+      "title": "[SF-A24-T16] Implement native-host provider over the MSBuild client",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3104",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Native filesystem qualification was Linux x64 only; Windows and macOS filesystem behavior remains unqualified.",
+            "The native bridge bounds one byte payload at 8 MiB to remain below the existing 34 MiB JSON transport budget."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3105,
+      "workId": "SF-A24-T17",
+      "kind": "leaf",
+      "title": "[SF-A24-T17] Add overlay provider for unsaved buffers and generated files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3105",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3106,
+      "workId": "SF-A24-T18",
+      "kind": "leaf",
+      "title": "[SF-A24-T18] Detect encodings and line endings beyond BOM",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3106",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3107,
+      "workId": "SF-A24-T19",
+      "kind": "leaf",
+      "title": "[SF-A24-T19] Define path identity and case-sensitivity policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3107",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3108,
+      "workId": "SF-A24-T20",
+      "kind": "leaf",
+      "title": "[SF-A24-T20] Parse template.json and evaluate symbols",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3108",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3109,
+      "workId": "SF-A24-T21",
+      "kind": "leaf",
+      "title": "[SF-A24-T21] Apply sourceName replacement, conditionals and file rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3109",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3110,
+      "workId": "SF-A24-T22",
+      "kind": "leaf",
+      "title": "[SF-A24-T22] Install templates from nupkg packages",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3110",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3111,
+      "workId": "SF-A24-B01",
+      "kind": "leaf",
+      "title": "[SF-A24-B01] Workspace.importProject resets document versions to 1",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3111",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified",
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3112,
+      "workId": "SF-A24-B02",
+      "kind": "leaf",
+      "title": "[SF-A24-B02] rewriteProjectPath skips paths containing XML entities",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3112",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified",
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3113,
+      "workId": "SF-A24-B03",
+      "kind": "leaf",
+      "title": "[SF-A24-B03] Folder open reads every file fully and aborts on one oversized file",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3113",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3114,
+      "workId": "SF-A24-B04",
+      "kind": "leaf",
+      "title": "[SF-A24-B04] DiskWorkspace.save cannot persist new or binary-decoded files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3114",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3115,
+      "workId": "SF-A23-T01.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T01.1] Define SDK and platform qualification matrix manifest and runner",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3115",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+            "SDK 8.0.425 is installed but its CLI repeatedly crashes in Process.GetStat/get_StartTime before MSBuild starts; both pinned Node matrix cells retain that failure.",
+            "No preview SDK was installed."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3116,
+      "workId": "SF-A23-T01.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T01.2] Qualify restore, build, pack and publish outputs per platform",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3116",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+            "SDK 8.0.425 is installed but its CLI repeatedly crashes in Process.GetStat/get_StartTime before MSBuild starts; both pinned Node matrix cells retain that failure."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3117,
+      "workId": "SF-A23-T01.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T01.3] Qualify .slnx and legacy .sln builds including graph build",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3117",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+            "SDK 8.0.425 is installed but its CLI repeatedly crashes in Process.GetStat/get_StartTime before MSBuild starts; both pinned Node matrix cells retain that failure."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3118,
+      "workId": "SF-A23-T01.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T01.4] Qualify Windows msbuild.exe engine and process handling",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3118",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows msbuild.exe discovery, long-path/cancel/diagnostic qualification remains unrun because Windows is unavailable."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3119,
+      "workId": "SF-A23-T02.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T02.1] Implement design-time build request and target set",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3119",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3120,
+      "workId": "SF-A23-T02.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T02.2] Parse csc command-line arguments into compilation options",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3120",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3121,
+      "workId": "SF-A23-T02.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T02.3] Cache project contexts keyed by evaluation inputs",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3121",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3122,
+      "workId": "SF-A23-T02.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T02.4] Expose project context API for the IDE semantic model",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3122",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Exact native source and compiler-option hydration; bounded authorized reference decoding; atomic callback activation. Native SDK semantic oracle belongs to the native workstream. Root compiler-request delegate and Studio callback remain unapplied."
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3123,
+      "workId": "SF-A23-T02.5",
+      "kind": "leaf",
+      "title": "[SF-A23-T02.5] Surface SDK-generated sources in contexts",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3123",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Generated inputs are hydrated read-only and disappear when their context is removed. Root editor and refactoring guards are prepared but not applied while Studio is locked."
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Final native test explicitly uses SDK implicit global usings without a user using directive; final result is recorded separately.",
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3125,
+      "workId": "SF-A23-T03.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T03.1] Parse target framework monikers and compute compatibility",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3125",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "The versioned test table covers .NET Framework, netstandard, netcoreapp, modern net and listed platform suffixes. Xamarin/PCL and unrelated NuGet framework aliases are not claimed supported."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "delegated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Ownership and full acceptance qualification are recorded in evaluator.json."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3126,
+      "workId": "SF-A23-T03.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T03.2] Evaluate one project context per target framework",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3126",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Native design-time contexts and the Studio context chooser use the shared public contract but have separate owner validation."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "delegated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Ownership and full acceptance qualification are recorded in evaluator.json."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3127,
+      "workId": "SF-A23-T03.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T03.3] Add active-context selection and per-context diagnostics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3127",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "RID graph extraction/fallback diagnostics are owned by workspace_inventory under T03.4. Root qualifies context-keyed worker artifacts and UI selection."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Visible project/framework/runtime selector, labelled context diagnostics, stale test selection rejected on context change. Reference-TFM compatibility is owned by the evaluator/native context producer."
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "delegated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Ownership and full acceptance qualification are recorded in evaluator.json."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3128,
+      "workId": "SF-A23-T03.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T03.4] Resolve runtime identifier graphs",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3128",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Ownership is workspace_inventory, including the pinned portable graph, public project-system RID helpers and narrow tagContext fallback wiring. No RID parity claim is made by this evaluator handoff."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3129,
+      "workId": "SF-A23-T04.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T04.1] Implement binary log reader",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3129",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Implementation uses the installed SDK reader rather than duplicating the binary schema with @sharpforge/archive; native SDK availability is required.",
+            "An unknown future-version binary record fixture has not been produced; forward-compatible behavior is delegated to the official reader.",
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3130,
+      "workId": "SF-A23-T04.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T04.2] Build structured build-event tree and timing summary",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3130",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Message bodies remain in the paged event spool with context identity rather than being retained as unbounded tree nodes."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3131,
+      "workId": "SF-A23-T04.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T04.3] Serve bounded paged binlog queries from the host",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3131",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "The 512 MiB helper and 512 MiB Node budgets are independent; the conservative sum is checked against 1 GiB. This is a synthetic memory/paging qualification, not a workload speed benchmark.",
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3132,
+      "workId": "SF-A23-T04.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T04.4] Extend text diagnostic parser for MSBuild, NuGet and multi-line forms",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3132",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "A recorded six-SDK diagnostic corpus is not available. Actual installed SDK output and authored cross-format fixtures are qualified; six-version parity is not claimed."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3133,
+      "workId": "SF-A23-T04.5",
+      "kind": "leaf",
+      "title": "[SF-A23-T04.5] Ingest SARIF error logs from the compiler",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3133",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3134,
+      "workId": "SF-A23-T05.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T05.1] Replace single-job 409 with a queued build scheduler",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3134",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3135,
+      "workId": "SF-A23-T05.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T05.2] Implement fast up-to-date check",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3135",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "The optimization is opt-in and requires the caller to provide complete input/output sets; arbitrary side-effecting targets must continue through native MSBuild."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3136,
+      "workId": "SF-A23-T05.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T05.3] Use static graph to build only affected projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3136",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3137,
+      "workId": "SF-A23-T05.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T05.4] Add build server and node-reuse policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3137",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Actual reusable MSBuild/compiler worker timing and cleanup are unavailable on this host: .NET named-pipe socket construction is denied with SocketException13/MSB1025. The failing Node22 log is retained; Node26 excludes that already-diagnosed capability without reporting a pass.",
+            "Windows, macOS and arm64 process cleanup qualification is unavailable."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3138,
+      "workId": "SF-A23-T06.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T06.1] Audit and test process-tree termination",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3138",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3140,
+      "workId": "SF-A23-T06.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T06.2] Persist per-workspace trust decisions on the host",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3140",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3141,
+      "workId": "SF-A23-T06.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T06.3] Scrub child environment and block output-path escapes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3141",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3142,
+      "workId": "SF-A23-T06.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T06.4] Validate response files and additional switches",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3142",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3143,
+      "workId": "SF-A23-T07.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.1] Parse NuGet.Config hierarchy without exposing credentials",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3143",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "User/machine-level config files are accepted through explicit host inheritedFiles rather than silently reading files outside the workspace."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3144,
+      "workId": "SF-A23-T07.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.2] Implement NuGet version and version-range semantics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3144",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3145,
+      "workId": "SF-A23-T07.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.3] Implement NuGet V3 feed client",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3145",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Live nuget.org endpoints cannot be reached through the environment proxy; the transcript records bounded IPv4/v2/v3/forced-proxy diagnostics without repeated restore."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3146,
+      "workId": "SF-A23-T07.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.4] Read project.assets.json and build the transitive graph",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3146",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3147,
+      "workId": "SF-A23-T07.5",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.5] Support packages.lock.json and locked-mode restore",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3147",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3148,
+      "workId": "SF-A23-T07.6",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.6] Support central package management (Directory.Packages.props)",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3148",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/evaluator.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Central version editing, transitive-pinning restore behavior and an actual local-feed NuGet restore are owned/qualified by workspace_inventory. Portable evaluation does not fetch or resolve transitive package assets."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3149,
+      "workId": "SF-A23-T07.7",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.7] Add package add/update/remove and vulnerability services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3149",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Multi-project edits are explicitly not atomic; conflicts and completed operations are returned. Live public advisory service qualification is blocked by endpoint reachability."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3150,
+      "workId": "SF-A23-T07.8",
+      "kind": "leaf",
+      "title": "[SF-A23-T07.8] Read nupkg contents and select assets per target framework",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3150",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "The requested ten popular-package corpus is blocked by public NuGet reachability and an empty package cache; one real local package plus authored selection fixtures is qualified."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3151,
+      "workId": "SF-A23-T08.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T08.1] Discover installed SDKs, runtimes and MSBuild instances",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3151",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Visual Studio/msbuild.exe instance discovery is implemented but Windows is unavailable."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3152,
+      "workId": "SF-A23-T08.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T08.2] Resolve global.json with roll-forward semantics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3152",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3154,
+      "workId": "SF-A23-T08.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T08.3] Report workloads and explain unavailable targets",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3154",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Platform workload installations themselves are not present and are not claimed qualified."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3155,
+      "workId": "SF-A23-T09.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T09.1] Make the XML parser lossless with a concrete syntax tree",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3155",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3156,
+      "workId": "SF-A23-T09.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T09.2] Implement source-preserving property edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3156",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3157,
+      "workId": "SF-A23-T09.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T09.3] Implement source-preserving item and metadata edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3157",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3158,
+      "workId": "SF-A23-T09.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T09.4] Detect external-write conflicts for project file edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3158",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3159,
+      "workId": "SF-A23-T09.5",
+      "kind": "leaf",
+      "title": "[SF-A23-T09.5] Fuzz round-trip project edits on unusual XML",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3159",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3160,
+      "workId": "SF-A23-T10.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T10.1] Parse .slnx configuration and per-project mapping rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3160",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3161,
+      "workId": "SF-A23-T10.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T10.2] Parse legacy .sln configuration sections",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3161",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3162,
+      "workId": "SF-A23-T10.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T10.3] Apply default mapping inference rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3162",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3163,
+      "workId": "SF-A23-T10.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T10.4] Apply solution mapping to build, deploy and portable evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3163",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3164,
+      "workId": "SF-A23-T10.5",
+      "kind": "leaf",
+      "title": "[SF-A23-T10.5] Serialise classic .sln files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3164",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3165,
+      "workId": "SF-A23-T11.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T11.1] Discover tests through the native test host",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3165",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Native VSTest/MTP/bridge discovery selectors and bounded source enrichment. Installed framework data-row discovery remains unqualified because pinned package restore timed out."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3166,
+      "workId": "SF-A23-T11.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T11.2] Run filtered tests and parse TRX results",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3166",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Selected test execution renders TRX-derived per-test outcomes/output/attachments. UI uses an explicit native transport fixture; no real framework run is claimed."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3167,
+      "workId": "SF-A23-T11.3",
+      "kind": "leaf",
+      "title": "[SF-A23-T11.3] Map tests to source locations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3167",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Failure source takes precedence over declaration and delegates shared workspace navigation. Root onOpenTestSource hook is still pending; real framework assertion-line qualification remains open."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3168,
+      "workId": "SF-A23-T11.4",
+      "kind": "leaf",
+      "title": "[SF-A23-T11.4] Support test cancellation, live progress and debugging handoff",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3168",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Cancellation, live progress, retained PID handoff and not-run outcomes are visible. Native transport is mocked here; actual process policy and unavailable native-framework acceptance are separate."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3169,
+      "workId": "SF-A23-T11.5",
+      "kind": "leaf",
+      "title": "[SF-A23-T11.5] Parse code coverage reports",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3169",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/native-studio.json",
+          "implementationStatus": "implementation-ready; acceptance limitations retained",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": "Bounded line/branch coverage tables plus retained artifact downloads. Parsed fixture coverage is qualified; actual coverlet collector qualification remains open."
+        },
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "implemented-unqualified",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3170,
+      "workId": "SF-A23-T12.1",
+      "kind": "leaf",
+      "title": "[SF-A23-T12.1] Build differential harness comparing portable and native evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3170",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3171,
+      "workId": "SF-A23-T12.2",
+      "kind": "leaf",
+      "title": "[SF-A23-T12.2] Maintain machine-readable portable feature boundary",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3171",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/testing.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3172,
+      "workId": "SF-A24-T01.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T01.1] Implement workspace transaction journal",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3172",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Final Studio host callback integration and browser physical-operation corpus are owned by root.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3173,
+      "workId": "SF-A24-T01.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T01.2] Add undo and redo for browser workspace file operations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3173",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Browser/File System Access command UI qualification awaits final Studio wiring. Native redo is an explicit unavailable path and is outside this browser/FSA leaf.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3174,
+      "workId": "SF-A24-T01.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T01.3] Track baselines by content hash for text, XML and binary files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3174",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Unloaded metadata-only files acquire a baseline when loaded; replacing unhydrated bytes without an explicit expected hash is rejected."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3175,
+      "workId": "SF-A24-T01.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T01.4] Create, delete and rename files through directory handles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3175",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Physical multi-file operations report completed mutations and atomic=false. Cross-file rollback/undo belongs the journal adapter integration.",
+            "The final Studio explorer-create/save callback is being qualified by the root integration corpus; OS picker UI remains unqualified."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3176,
+      "workId": "SF-A24-T01.5",
+      "kind": "leaf",
+      "title": "[SF-A24-T01.5] Reconcile unsaved buffers with conflicting disk state",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3176",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Root must bind chooseSaveConflict to the supplied dialog in the locked Studio host; OS-native picker and actual host Save UI remain unqualified.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3177,
+      "workId": "SF-A24-T02.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T02.1] Extract tree builders from buildSolutionTree",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3177",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified",
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3178,
+      "workId": "SF-A24-T02.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T02.2] Show full Dependencies hierarchy per target framework",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3178",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Actual native-context metadata production is qualified by the native/MSBuild owner; these tests exercise the public evaluated model contract."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3179,
+      "workId": "SF-A24-T02.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T02.3] Apply file nesting rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3179",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified",
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3180,
+      "workId": "SF-A24-T02.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T02.4] Show generated files, imports and unloaded projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3180",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Legacy solution parsing and A23 project evaluation are dependency implementations by tests_workflows and portable_evaluator."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3181,
+      "workId": "SF-A24-T02.5",
+      "kind": "leaf",
+      "title": "[SF-A24-T02.5] Guarantee stable node ids and selection across refresh",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3181",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "The authored full-application browser test has not passed on the final Studio host; do not claim its focused-row/rename acceptance yet.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3182,
+      "workId": "SF-A24-T02.6",
+      "kind": "leaf",
+      "title": "[SF-A24-T02.6] Extend symbol children to all type and member kinds",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3182",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "The public symbol list determines which language constructs exist; unsupported compiler constructs retain their language diagnostics."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3183,
+      "workId": "SF-A24-T03.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.1] Split ExplorerCommands into per-operation command modules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3183",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Existing browser explorer suite requires final integrated Studio callbacks before its unchanged-host acceptance is qualified."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3184,
+      "workId": "SF-A24-T03.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.2] Implement cut, copy and paste with collision naming",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3184",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Actual desktop clipboard/keyboard interaction is not qualified by the Node host fixture."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3185,
+      "workId": "SF-A24-T03.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.3] Implement drag and drop between folders and projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3185",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "OS drag gestures are represented by deterministic File/target input fixtures; native desktop drag/drop UI is not claimed as tested."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3186,
+      "workId": "SF-A24-T03.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.4] Rename and move files with reference fix-ups",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3186",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Host prepareTypeRename must be bound in the root Studio patch. Native, multiple project/TFM contexts, aliases, cref, inactive regions, generated edits, incomplete or unaccounted semantic references are explicitly unavailable; no text-only substitute is used."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3187,
+      "workId": "SF-A24-T03.5",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.5] Implement include, exclude and linked-file workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3187",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified",
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3188,
+      "workId": "SF-A24-T03.6",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.6] Coalesce project membership edits instead of appending groups",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3188",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "The source-preserving edit core and its dedicated import/CST qualification are owned by tests_workflows."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3189,
+      "workId": "SF-A24-T03.7",
+      "kind": "leaf",
+      "title": "[SF-A24-T03.7] Reject unsafe moves and report batch results",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3189",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Provider trust/symlink and native filesystem platform policies are separately qualified by their owners."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3190,
+      "workId": "SF-A24-T04.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T04.1] Implement browser file watching with observer and polling fallback",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3190",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Changes to unprioritized files may need a full polling rotation. OS external edits through a native picked-directory watcher are not yet qualified."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3191,
+      "workId": "SF-A24-T04.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T04.2] Coalesce atomic-save patterns and rapid edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3191",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3194,
+      "workId": "SF-A24-T04.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T04.3] Reload changed documents with explicit choices for dirty buffers",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3194",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Browser component tests exercise deterministic host callbacks. Root owns final disk-external-change/disk-reevaluate callbacks and integrated Studio qualification."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3195,
+      "workId": "SF-A24-T05.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T05.1] Remove fixed document ceilings with lazily loaded documents",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3195",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "The final Studio selected-project compiler hydration path belongs to root integration qualification; this evidence covers the public Workspace API."
+          ],
+          "detail": null
+        },
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "Workspace/store and unlocked Studio lifecycle implemented; production entry hook integration remains parent-owned",
+          "qualificationStatus": "Node composition qualified; production Studio/browser close/reopen unqualified",
+          "remaining": [
+            "Root must apply the reviewed Studio onClose/:q/retainRecord hooks and register releaseDocuments in the compiler worker.",
+            "Actual production browser tab lifecycle, detached window and OS permission interactions have not run. Node docking references are a fixture, not platform evidence."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3196,
+      "workId": "SF-A24-T05.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T05.2] Enumerate directories lazily without reading all bytes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3196",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3197,
+      "workId": "SF-A24-T05.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T05.3] Add lazy children and paging to the explorer tree",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3197",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Browser expansion measurements include page materialization and DOM rendering after directory index preparation. Deferred index preparation is asynchronous and measured separately; total first-index completion is not claimed below16ms.",
+            "Large scopes use the explicitly labelled physical Folder view. Deferred project/dependency/linked-file appearances in Solution view are not provided for those scopes; project evaluation and builds are unaffected."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3198,
+      "workId": "SF-A24-T05.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T05.4] Report skipped and non-portable paths instead of failing the import",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3198",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3199,
+      "workId": "SF-A24-T05.5",
+      "kind": "leaf",
+      "title": "[SF-A24-T05.5] Add path and text search index for large workspaces",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3199",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/filesystem.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Browser UI search was qualified with a memory provider; actual disk content reading is separately covered by FSA/OPFS/native provider tests."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3200,
+      "workId": "SF-A24-T06.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.1] Read ZIP64 archives",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3200",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3201,
+      "workId": "SF-A24-T06.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.2] Write ZIP64 when limits are exceeded",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3201",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3202,
+      "workId": "SF-A24-T06.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.3] Implement DEFLATE compression",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3202",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Actual browser stream ZIP test used portable-fixed; platform CompressionStream was qualified on Node24.19.0."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3203,
+      "workId": "SF-A24-T06.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.4] Add streaming ZIP reader over Blob and File",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3203",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3204,
+      "workId": "SF-A24-T06.5",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.5] Add streaming ZIP writer with data descriptors",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3204",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Memory measurement covers writer only; reference validation materializes output afterward. importWorkspaceZipFromBlob returns bounded materialized records; use openZip for lazy extraction."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3205,
+      "workId": "SF-A24-T06.6",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.6] Preserve timestamps and Unix modes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3205",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3206,
+      "workId": "SF-A24-T06.7",
+      "kind": "leaf",
+      "title": "[SF-A24-T06.7] Enforce compression-ratio and overlap budgets with a malformed corpus",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3206",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Default nested ZIP assets remain inert bytes; nestedArchives:reject rejects ZIP payload signatures. This opt-in policy is not a general polyglot detector and performs no recursive extraction. The direct enclosing-archive quine comparison is exact, not a CRC-only heuristic."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3207,
+      "workId": "SF-A24-T07.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.1] Split template catalog into per-template modules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3207",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3208,
+      "workId": "SF-A24-T07.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.2] Add template option model matching dotnet new",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3208",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3209,
+      "workId": "SF-A24-T07.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.3] Add xUnit, NUnit and MSTest project templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3209",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "blocked",
+          "qualificationStatus": null,
+          "remaining": [
+            "Shared real NuGet restore timed out; no native framework packages cached and no actual dotnet test result. See nuget-frameworks gate."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3210,
+      "workId": "SF-A24-T07.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.4] Add native WinUI 3 app, library and test templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3210",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "blocked",
+          "qualificationStatus": null,
+          "remaining": [
+            "Actual Windows App SDK builds and MSTest UI-app execution remain unqualified because this host is Linux. All five Windows-only cases explicitly skipped; do not claim native Windows success."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3211,
+      "workId": "SF-A24-T07.5",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.5] Add solution and configuration file templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3211",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Native OS interpretation of Windows manifest requires Windows; Linux C# compiler acceptance is the recorded test."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3212,
+      "workId": "SF-A24-T07.6",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.6] Add core C# item templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3212",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "xUnit/NUnit/MSTest item compilation awaits actual package restore, same blocker as3209."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3213,
+      "workId": "SF-A24-T07.7",
+      "kind": "leaf",
+      "title": "[SF-A24-T07.7] Qualify every template on its declared targets",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3213",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Full declared-target catalog is not all green: native framework and Windows targets lack passing observations. A selected target gate is enforced, not fabricated cross-platform qualification."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3214,
+      "workId": "SF-A24-T08.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T08.1] Add XAML page, window and user control item templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3214",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Actual Studio browser write suite awaits root host callback wiring behind the shared studio.js lock. Native partial-class compilation/instantiation is covered by the authored Windows runtime harness but is unexecuted here. Literal designer supports a registered subset and explicitly rejects unsupported resource/binding markup."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3215,
+      "workId": "SF-A24-T08.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T08.2] Add templated control and resource dictionary templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3215",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "blocked",
+          "qualificationStatus": null,
+          "remaining": [
+            "The actual Windows render/default-style and resource-lookup harness is authored but was skipped on Linux. Browser literal designer does not load ResourceDictionary/TemplateBinding. Runtime acceptance remains open."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3216,
+      "workId": "SF-A24-T08.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T08.3] Add animation and visual-state templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3216",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": null,
+          "remaining": [
+            "Native XAML animation/transition/state execution is authored in the Windows qualification harness but remains unexecuted on Linux. Only the portable code-first storyboard has passing runtime evidence."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3217,
+      "workId": "SF-A24-T08.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T08.4] Add MVVM and navigation shell templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3217",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "blocked",
+          "qualificationStatus": null,
+          "remaining": [
+            "The actual XAML binding and two-page UI navigation harness is authored but skipped on this Linux host. Browser literal designer diagnoses x:Bind as unsupported. Windows runtime acceptance remains open."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3218,
+      "workId": "SF-A24-T09.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T09.1] Add destination picker flow to the project wizard",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3218",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "NativeOS picker itself is not automated. Root owns final Studio disk attachment integration."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3219,
+      "workId": "SF-A24-T09.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T09.2] Preflight conflicts and permissions before writing a template plan",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3219",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Quota is checked only when caller supplies availableBytes or estimateQuota; File System Access cannot guarantee OS free-space reservation or close cross-process races."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3220,
+      "workId": "SF-A24-T09.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T09.3] Roll back partially created destinations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3220",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/templates.json",
+          "implementationStatus": "validated",
+          "qualificationStatus": null,
+          "remaining": [
+            "Rollback is best-effort and non-atomic; exactleftovers are surfaced. Merge/rollback must be explicit to preserveexisting API default."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3221,
+      "workId": "SF-A24-T10.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T10.1] Define versioned recovery record schema and migrations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3221",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Root must replace the old synchronous legacy bootstrap with restoreLegacyWorkspace; blocked means automatic replacement is prohibited, not that the application UI cannot start."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3222,
+      "workId": "SF-A24-T10.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T10.2] Store recovery data in OPFS instead of localStorage",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3222",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Real OPFS checkpoint/controller qualification is pending in this manifest; VFS real OPFS byte/worker evidence does not by itself qualify this store.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3223,
+      "workId": "SF-A24-T10.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T10.3] Persist folder handles for recent workspaces",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3223",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Real IndexedDB handle cloning and OS file picker grant/revocation UI remain to be qualified; current denial/grant tests use an independent directory-handle fixture.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3224,
+      "workId": "SF-A24-T10.4",
+      "kind": "leaf",
+      "title": "[SF-A24-T10.4] Quarantine corrupt records and exclude secrets",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3224",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Startup host integration must honor blocked recovery without auto-saving a replacement sample.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3225,
+      "workId": "SF-A24-T11.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T11.1] Broadcast document revisions between windows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3225",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "The Node injected EventTarget transport passes; actual two-window browser event-loop timing remains unqualified.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3226,
+      "workId": "SF-A24-T11.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T11.2] Guard saves with Web Locks ownership",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3226",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "The one-success/one-conflict race currently uses deterministic injected Web Locks in Node; actual competing browser windows remain unqualified.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3227,
+      "workId": "SF-A24-T11.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T11.3] Resolve cross-window edit conflicts explicitly",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3227",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/workspace.json",
+          "implementationStatus": "implemented",
+          "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+          "remaining": [
+            "Root must bind the atomic conflict-resolution command callback; full browser dialog/propagation acceptance is pending.",
+            "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3228,
+      "workId": "SF-A24-T12.1",
+      "kind": "leaf",
+      "title": "[SF-A24-T12.1] Assemble round-trip corpus with binaries and unusual encodings",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3228",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/integration.json",
+          "implementationStatus": "implemented test/corpus scope; application entry pending",
+          "qualificationStatus": "pending integrated cohort",
+          "remaining": [
+            "Run the complete corpus qualification; actual browser folder-open qualification awaits Studio integration."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3229,
+      "workId": "SF-A24-T12.2",
+      "kind": "leaf",
+      "title": "[SF-A24-T12.2] Test ZIP and disk re-export byte fidelity",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3229",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/integration.json",
+          "implementationStatus": "implemented test/corpus scope; application entry pending",
+          "qualificationStatus": "pending integrated cohort",
+          "remaining": [
+            "Run the completed round-trip cohort on the integrated source."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    },
+    {
+      "issue": 3230,
+      "workId": "SF-A24-T12.3",
+      "kind": "leaf",
+      "title": "[SF-A24-T12.3] Add browser end-to-end explorer scenario suite",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3230",
+      "implementationRecords": [
+        {
+          "manifest": "planning/evidence/project18/integration.json",
+          "implementationStatus": "implemented test/corpus scope; application entry pending",
+          "qualificationStatus": "pending integrated cohort",
+          "remaining": [
+            "Apply the reviewed Studio integration under valid access, then execute both browser modes; no passing browser claim is made."
+          ],
+          "detail": null
+        }
+      ],
+      "mappingStatus": "recorded"
+    }
+  ]
+}

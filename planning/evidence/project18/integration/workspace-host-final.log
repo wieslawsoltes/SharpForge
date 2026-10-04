@@ -1,0 +1,634 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A24 delayed read rejects concurrent delete without publishing stale disk state
+ok 1 - A24 delayed read rejects concurrent delete without publishing stale disk state
+  ---
+  duration_ms: 16.861039
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent rename without publishing stale disk state
+ok 2 - A24 delayed read rejects concurrent rename without publishing stale disk state
+  ---
+  duration_ms: 2.143195
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent rename away and back without publishing stale disk state
+ok 3 - A24 delayed read rejects concurrent rename away and back without publishing stale disk state
+  ---
+  duration_ms: 1.721388
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent refresh without publishing stale disk state
+ok 4 - A24 delayed read rejects concurrent refresh without publishing stale disk state
+  ---
+  duration_ms: 1.932306
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent replacement without publishing stale disk state
+ok 5 - A24 delayed read rejects concurrent replacement without publishing stale disk state
+  ---
+  duration_ms: 2.924685
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent newer load without publishing stale disk state
+ok 6 - A24 delayed read rejects concurrent newer load without publishing stale disk state
+  ---
+  duration_ms: 1.623631
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent delete without publishing stale disk state
+ok 7 - A24 delayed handle rejects concurrent delete without publishing stale disk state
+  ---
+  duration_ms: 1.060841
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent rename without publishing stale disk state
+ok 8 - A24 delayed handle rejects concurrent rename without publishing stale disk state
+  ---
+  duration_ms: 1.156426
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent rename away and back without publishing stale disk state
+ok 9 - A24 delayed handle rejects concurrent rename away and back without publishing stale disk state
+  ---
+  duration_ms: 1.575688
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent refresh without publishing stale disk state
+ok 10 - A24 delayed handle rejects concurrent refresh without publishing stale disk state
+  ---
+  duration_ms: 1.226171
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent replacement without publishing stale disk state
+ok 11 - A24 delayed handle rejects concurrent replacement without publishing stale disk state
+  ---
+  duration_ms: 1.176736
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent newer load without publishing stale disk state
+ok 12 - A24 delayed handle rejects concurrent newer load without publishing stale disk state
+  ---
+  duration_ms: 1.113912
+  type: 'test'
+  ...
+# Subtest: A24 a load publishes bytes, hash and acquired handle together using the canonical path
+ok 13 - A24 a load publishes bytes, hash and acquired handle together using the canonical path
+  ---
+  duration_ms: 1.696821
+  type: 'test'
+  ...
+# Subtest: A24 changes to another entry do not invalidate a pending load
+ok 14 - A24 changes to another entry do not invalidate a pending load
+  ---
+  duration_ms: 1.547676
+  type: 'test'
+  ...
+# Subtest: A24 a changed baseline without record replacement invalidates a pending load
+ok 15 - A24 a changed baseline without record replacement invalidates a pending load
+  ---
+  duration_ms: 3.004465
+  type: 'test'
+  ...
+# Subtest: A24 failed file-handle acquisition preserves existing record, baseline and handle on reload
+ok 16 - A24 failed file-handle acquisition preserves existing record, baseline and handle on reload
+  ---
+  duration_ms: 1.054542
+  type: 'test'
+  ...
+# Subtest: A24 cancellation during read acquisition leaves disk state unchanged
+ok 17 - A24 cancellation during read acquisition leaves disk state unchanged
+  ---
+  duration_ms: 0.908562
+  type: 'test'
+  ...
+# Subtest: A24 cancellation during handle acquisition leaves disk state unchanged
+ok 18 - A24 cancellation during handle acquisition leaves disk state unchanged
+  ---
+  duration_ms: 0.854069
+  type: 'test'
+  ...
+# Subtest: A24 already-cancelled loading does not perform provider I/O
+ok 19 - A24 already-cancelled loading does not perform provider I/O
+  ---
+  duration_ms: 0.862612
+  type: 'test'
+  ...
+# Subtest: A24 admission rechecks the byte budget after asynchronous handle acquisition
+ok 20 - A24 admission rechecks the byte budget after asynchronous handle acquisition
+  ---
+  duration_ms: 0.949844
+  type: 'test'
+  ...
+# Subtest: A24 a refreshed catalog cannot be repopulated by an unindexed pending read
+ok 21 - A24 a refreshed catalog cannot be repopulated by an unindexed pending read
+  ---
+  duration_ms: 0.918577
+  type: 'test'
+  ...
+# (node:32) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A24 B03 folder open reports oversized and reserved paths without aborting usable files
+ok 22 - A24 B03 folder open reports oversized and reserved paths without aborting usable files
+  ---
+  duration_ms: 10.121837
+  type: 'test'
+  ...
+# Subtest: A24 B04 create/save persists new and formerly binary files using configured encoded-byte budget
+ok 23 - A24 B04 create/save persists new and formerly binary files using configured encoded-byte budget
+  ---
+  duration_ms: 39.912902
+  type: 'test'
+  ...
+# Subtest: A24 disk save detects byte changes even when decoded text is identical
+ok 24 - A24 disk save detects byte changes even when decoded text is identical
+  ---
+  duration_ms: 2.280272
+  type: 'test'
+  ...
+# Subtest: A24 XML and binary saves retain byte baselines and unloading releases retained text
+ok 25 - A24 XML and binary saves retain byte baselines and unloading releases retained text
+  ---
+  duration_ms: 5.886385
+  type: 'test'
+  ...
+# Subtest: A24 case-insensitive directory aliases preserve canonical record paths through rename and delete
+ok 26 - A24 case-insensitive directory aliases preserve canonical record paths through rename and delete
+  ---
+  duration_ms: 8.90515
+  type: 'test'
+  ...
+# Subtest: A24 browser save requires physical-directory coordination before any write and enforces total loaded bytes
+ok 27 - A24 browser save requires physical-directory coordination before any write and enforces total loaded bytes
+  ---
+  duration_ms: 5.38618
+  type: 'test'
+  ...
+# Subtest: A24 coherent disk snapshot adoption rebuilds indexes without advancing retained hashes or admitting invalid partial state
+ok 28 - A24 coherent disk snapshot adoption rebuilds indexes without advancing retained hashes or admitting invalid partial state
+  ---
+  duration_ms: 2.103324
+  type: 'test'
+  ...
+# Subtest: A24 directory operations rename every byte and deny a complete save batch before first write
+ok 29 - A24 directory operations rename every byte and deny a complete save batch before first write
+  ---
+  duration_ms: 6.525028
+  type: 'test'
+  ...
+# Subtest: A24 20000-file scan reads project bytes only; content is loaded explicitly and scan cancellation is atomic
+ok 30 - A24 20000-file scan reads project bytes only; content is loaded explicitly and scan cancellation is atomic
+  ---
+  duration_ms: 780.620888
+  type: 'test'
+  ...
+# Subtest: A24 NFC/NFD/case collisions and gitignore decisions are individually visible
+ok 31 - A24 NFC/NFD/case collisions and gitignore decisions are individually visible
+  ---
+  duration_ms: 18.353161
+  type: 'test'
+  ...
+# Subtest: A24 nested ignore rules support ranges, escaped literals and directory-only matches
+ok 32 - A24 nested ignore rules support ranges, escaped literals and directory-only matches
+  ---
+  duration_ms: 2.899196
+  type: 'test'
+  ...
+# (node:44) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: historical versions retain explicit lazy membership and overlay newer editor text without fabricating bytes
+ok 33 - historical versions retain explicit lazy membership and overlay newer editor text without fabricating bytes
+  ---
+  duration_ms: 12.499115
+  type: 'test'
+  ...
+# Subtest: lazy metadata is bounded and malformed, aliased or cancelled records never become empty source
+ok 34 - lazy metadata is bounded and malformed, aliased or cancelled records never become empty source
+  ---
+  duration_ms: 96.243334
+  type: 'test'
+  ...
+# Subtest: OPFS quota fallback preserves lazy membership and enumerates only omitted loaded binary contents
+ok 35 - OPFS quota fallback preserves lazy membership and enumerates only omitted loaded binary contents
+  ---
+  duration_ms: 5.932604
+  type: 'test'
+  ...
+# Subtest: the explorer checkpoints unopened membership and unsaved paths along with loaded bytes
+ok 36 - the explorer checkpoints unopened membership and unsaved paths along with loaded bytes
+  ---
+  duration_ms: 7.400249
+  type: 'test'
+  ...
+# Subtest: legacy bootstrap restores loaded editors read-only while preserving unloaded project and manifest records
+ok 37 - legacy bootstrap restores loaded editors read-only while preserving unloaded project and manifest records
+  ---
+  duration_ms: 4.532041
+  type: 'test'
+  ...
+# Subtest: corrupt and future legacy snapshots block default replacement and are retained verbatim
+ok 38 - corrupt and future legacy snapshots block default replacement and are retained verbatim
+  ---
+  duration_ms: 0.668139
+  type: 'test'
+  ...
+# Subtest: a granted recent handle restores open-document selection and replaces read-only metadata with real bytes
+ok 39 - a granted recent handle restores open-document selection and replaces read-only metadata with real bytes
+  ---
+  duration_ms: 6.541463
+  type: 'test'
+  ...
+# (node:56) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Save to Disk applies each explicit text resolution and advances exact physical baselines
+ok 40 - Save to Disk applies each explicit text resolution and advances exact physical baselines
+  ---
+  duration_ms: 44.208815
+  type: 'test'
+  ...
+# Subtest: binary and externally deleted files retain explicit complete-version choices
+ok 41 - binary and externally deleted files retain explicit complete-version choices
+  ---
+  duration_ms: 7.877069
+  type: 'test'
+  ...
+# Subtest: all choices precede any write and cancellation retains the complete pending batch
+ok 42 - all choices precede any write and cancellation retains the complete pending batch
+  ---
+  duration_ms: 9.237252
+  type: 'test'
+  ...
+# Subtest: stale editor choices, overlapping edits and invalid limits fail without replacing either version
+ok 43 - stale editor choices, overlapping edits and invalid limits fail without replacing either version
+  ---
+  duration_ms: 3.014089
+  type: 'test'
+  ...
+# Subtest: edits made during a merged write remain dirty and require a new decision against the changed disk
+ok 44 - edits made during a merged write remain dirty and require a new decision against the changed disk
+  ---
+  duration_ms: 11.522752
+  type: 'test'
+  ...
+# Subtest: partial I/O receipts enumerate completed files and a retry clears only persisted current buffers
+ok 45 - partial I/O receipts enumerate completed files and a retry clears only persisted current buffers
+  ---
+  duration_ms: 10.348449
+  type: 'test'
+  ...
+# Subtest: save reentry, cancellation during a dialog and switched folder identity preserve current state
+ok 46 - save reentry, cancellation during a dialog and switched folder identity preserve current state
+  ---
+  duration_ms: 3.646864
+  type: 'test'
+  ...
+# Subtest: save prompt escapes file contents and describes unavailable text merges
+ok 47 - save prompt escapes file contents and describes unavailable text merges
+  ---
+  duration_ms: 0.426263
+  type: 'test'
+  ...
+# Subtest: identity is checked across persistence setup even when the physical disk object is reused
+ok 48 - identity is checked across persistence setup even when the physical disk object is reused
+  ---
+  duration_ms: 2.315474
+  type: 'test'
+  ...
+# Subtest: an editor version changed during asynchronous dirty hashing is re-read before dirty state is cleared
+ok 49 - an editor version changed during asynchronous dirty hashing is re-read before dirty state is cleared
+  ---
+  duration_ms: 3.537319
+  type: 'test'
+  ...
+# (node:68) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the application rejects a lazy read after same-workspace delete
+ok 50 - the application rejects a lazy read after same-workspace delete
+  ---
+  duration_ms: 14.945788
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace rename
+ok 51 - the application rejects a lazy read after same-workspace rename
+  ---
+  duration_ms: 2.766125
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace metadata
+ok 52 - the application rejects a lazy read after same-workspace metadata
+  ---
+  duration_ms: 2.318619
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace disk
+not ok 53 - the application rejects a lazy read after same-workspace disk
+  ---
+  duration_ms: 2.625713
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:49:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Workspace changed while reading B.cs/. Input:
+    
+    'TypeError: state.disk?.record is not a function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'state.disk?.record is not a function'
+  name: 'TypeError'
+  stack: |-
+    folderRecords (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-session.js:25:73)
+    workspaceContext (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-session.js:247:49)
+    host.context (file:///workspace/scratch/3e16369943fd/p18-integration/tests/support/workspace-application.js:18:24)
+    Object.loadRecord (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-session.js:182:26)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the application rejects a lazy read after same-workspace edit
+ok 54 - the application rejects a lazy read after same-workspace edit
+  ---
+  duration_ms: 4.059437
+  type: 'test'
+  ...
+# Subtest: a current lazy read publishes its bytes without opening another source editor or tab
+ok 55 - a current lazy read publishes its bytes without opening another source editor or tab
+  ---
+  duration_ms: 3.497439
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=false
+ok 56 - one accepted project watcher change commits and evaluates exactly once, dirty=false
+  ---
+  duration_ms: 16.415887
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=true
+ok 57 - one accepted project watcher change commits and evaluates exactly once, dirty=true
+  ---
+  duration_ms: 10.300978
+  type: 'test'
+  ...
+# Subtest: project watcher creation and deletion still update membership when no editor is open
+ok 58 - project watcher creation and deletion still update membership when no editor is open
+  ---
+  duration_ms: 6.081369
+  type: 'test'
+  ...
+# (node:80) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+ok 59 - opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+  ---
+  duration_ms: 9.594391
+  type: 'test'
+  ...
+# Subtest: workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+ok 60 - workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+  ---
+  duration_ms: 2.542116
+  type: 'test'
+  ...
+# Subtest: resource naming and file references hydrate before the selected project snapshot becomes visible
+ok 61 - resource naming and file references hydrate before the selected project snapshot becomes visible
+  ---
+  duration_ms: 19.217345
+  type: 'test'
+  ...
+# Subtest: a committed structural edit remaps editor state and retains only explicitly unsaved paths
+ok 62 - a committed structural edit remaps editor state and retains only explicitly unsaved paths
+  ---
+  duration_ms: 0.908331
+  type: 'test'
+  ...
+# Subtest: Save to Disk preserves encodings and saves source, project XML, and binary changes together
+ok 63 - Save to Disk preserves encodings and saves source, project XML, and binary changes together
+  ---
+  duration_ms: 14.47686
+  type: 'test'
+  ...
+# Subtest: external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+ok 64 - external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+  ---
+  duration_ms: 7.590256
+  type: 'test'
+  ...
+# Subtest: metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+ok 65 - metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+  ---
+  duration_ms: 7.474231
+  type: 'test'
+  ...
+# Subtest: permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+ok 66 - permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+  ---
+  duration_ms: 0.928983
+  type: 'test'
+  ...
+# Subtest: metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+ok 67 - metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+  ---
+  duration_ms: 5.073528
+  type: 'test'
+  ...
+# Subtest: a stale rescan leaves the original project model and disk baselines unchanged
+ok 68 - a stale rescan leaves the original project model and disk baselines unchanged
+  ---
+  duration_ms: 3.686764
+  type: 'test'
+  ...
+# Subtest: streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+ok 69 - streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+  ---
+  duration_ms: 8.038993
+  type: 'test'
+  ...
+# Subtest: JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+ok 70 - JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+  ---
+  duration_ms: 0.678524
+  type: 'test'
+  ...
+# Subtest: the registered JSON export command returns asynchronous hydration failures to its caller
+ok 71 - the registered JSON export command returns asynchronous hydration failures to its caller
+  ---
+  duration_ms: 1.308254
+  type: 'test'
+  ...
+# Subtest: wizard application keeps the chosen physical folder attached and retains binary item records
+ok 72 - wizard application keeps the chosen physical folder attached and retains binary item records
+  ---
+  duration_ms: 2.206931
+  type: 'test'
+  ...
+# (node:92) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a later workspace load wins when an earlier load is still awaiting runtime stop
+ok 73 - a later workspace load wins when an earlier load is still awaiting runtime stop
+  ---
+  duration_ms: 3.927801
+  type: 'test'
+  ...
+# Subtest: an edit while runtime stop is pending prevents stale workspace replacement
+ok 74 - an edit while runtime stop is pending prevents stale workspace replacement
+  ---
+  duration_ms: 0.792965
+  type: 'test'
+  ...
+# Subtest: cancellation during runtime stop never publishes the prepared model or saves over recovery
+ok 75 - cancellation during runtime stop never publishes the prepared model or saves over recovery
+  ---
+  duration_ms: 0.339592
+  type: 'test'
+  ...
+# (node:100) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+ok 76 - empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 46.373949
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+ok 77 - empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 13.507953
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+ok 78 - empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 5.56583
+  type: 'test'
+  ...
+# Subtest: empty-folder writer rejects preexisting contents without opening a write stream
+ok 79 - empty-folder writer rejects preexisting contents without opening a write stream
+  ---
+  duration_ms: 0.853656
+  type: 'test'
+  ...
+# Subtest: empty-folder writer resolves denied permission before any mutation
+ok 80 - empty-folder writer resolves denied permission before any mutation
+  ---
+  duration_ms: 0.184608
+  type: 'test'
+  ...
+# Subtest: empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+ok 81 - empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+  ---
+  duration_ms: 0.723451
+  type: 'test'
+  ...
+# Subtest: aborted empty-folder save creates no files
+ok 82 - aborted empty-folder save creates no files
+  ---
+  duration_ms: 0.196506
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A.txt / a.txt
+ok 83 - empty-folder writer validates complete path plan before mutation A.txt / a.txt
+  ---
+  duration_ms: 0.275836
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+ok 84 - empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+  ---
+  duration_ms: 0.324539
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation é.txt / é.txt
+ok 85 - empty-folder writer validates complete path plan before mutation é.txt / é.txt
+  ---
+  duration_ms: 0.552492
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation a / a/b
+ok 86 - empty-folder writer validates complete path plan before mutation a / a/b
+  ---
+  duration_ms: 0.167152
+  type: 'test'
+  ...
+# Subtest: directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+ok 87 - directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+  ---
+  duration_ms: 3.339835
+  type: 'test'
+  ...
+# Subtest: folder manifests reject ambiguity and preserve the original records on failure
+ok 88 - folder manifests reject ambiguity and preserve the original records on failure
+  ---
+  duration_ms: 0.3116
+  type: 'test'
+  ...
+# Subtest: FileList repository prefix is normalized only by a validated workspace manifest
+ok 89 - FileList repository prefix is normalized only by a validated workspace manifest
+  ---
+  duration_ms: 1.504798
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16le and detects external edits before any writing
+ok 90 - disk source save preserves utf-16le and detects external edits before any writing
+  ---
+  duration_ms: 3.090319
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16be and detects external edits before any writing
+ok 91 - disk source save preserves utf-16be and detects external edits before any writing
+  ---
+  duration_ms: 1.680534
+  type: 'test'
+  ...
+# Subtest: disk source save rechecks after permissions and never overwrites a prompt-time change
+ok 92 - disk source save rechecks after permissions and never overwrites a prompt-time change
+  ---
+  duration_ms: 0.941329
+  type: 'test'
+  ...
+# Subtest: native disk creation rejects case-shadow files and parents before applying any batch entry
+ok 93 - native disk creation rejects case-shadow files and parents before applying any batch entry
+  ---
+  duration_ms: 6.428021
+  type: 'test'
+  ...
+# Subtest: native new destination parents use portable case identity within the same batch
+ok 94 - native new destination parents use portable case identity within the same batch
+  ---
+  duration_ms: 0.959406
+  type: 'test'
+  ...
+# Subtest: CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+ok 95 - CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+  ---
+  duration_ms: 1626.311738
+  type: 'test'
+  ...
+# Subtest: CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+ok 96 - CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+  ---
+  duration_ms: 1.366871
+  type: 'test'
+  ...
+1..96
+# tests 96
+# suites 0
+# pass 95
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6920.40671

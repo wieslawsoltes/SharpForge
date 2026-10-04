@@ -1,0 +1,35 @@
+✔ historical versions retain explicit lazy membership and overlay newer editor text without fabricating bytes (14.640212ms)
+✔ lazy metadata is bounded and malformed, aliased or cancelled records never become empty source (78.98307ms)
+✔ OPFS quota fallback preserves lazy membership and enumerates only omitted loaded binary contents (6.673756ms)
+✔ the explorer checkpoints unopened membership and unsaved paths along with loaded bytes (5.949153ms)
+✔ legacy bootstrap restores loaded editors read-only while preserving unloaded project and manifest records (4.186985ms)
+✔ corrupt and future legacy snapshots block default replacement and are retained verbatim (0.601217ms)
+✔ a granted recent handle restores open-document selection and replaces read-only metadata with real bytes (5.249628ms)
+✔ Save to Disk applies each explicit text resolution and advances exact physical baselines (38.020141ms)
+✔ binary and externally deleted files retain explicit complete-version choices (5.582831ms)
+✔ all choices precede any write and cancellation retains the complete pending batch (4.711566ms)
+✔ stale editor choices, overlapping edits and invalid limits fail without replacing either version (3.209371ms)
+✔ edits made during a merged write remain dirty and require a new decision against the changed disk (7.221978ms)
+✔ partial I/O receipts enumerate completed files and a retry clears only persisted current buffers (10.248087ms)
+✔ save reentry, cancellation during a dialog and switched folder identity preserve current state (3.330183ms)
+✔ save prompt escapes file contents and describes unavailable text merges (0.694968ms)
+✔ identity is checked across persistence setup even when the physical disk object is reused (1.401454ms)
+✔ an editor version changed during asynchronous dirty hashing is re-read before dirty state is cleared (3.849176ms)
+✔ opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened (17.517817ms)
+✔ workspace admission permits more than 100 small sources and preserves the old model on invalid replacement (4.558255ms)
+✔ resource naming and file references hydrate before the selected project snapshot becomes visible (20.260088ms)
+✔ a committed structural edit remaps editor state and retains only explicitly unsaved paths (1.109874ms)
+✔ Save to Disk preserves encodings and saves source, project XML, and binary changes together (15.355441ms)
+✔ external reload rejects a stale decision and then adopts accepted bytes without marking them dirty (2.321362ms)
+✔ metadata rescans preserve a dirty file removed externally so its later save detects the conflict (3.093436ms)
+✔ permission-denied recent workspaces recover loaded content read-only and never synthesize missing source (0.984726ms)
+✔ streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision (8.140759ms)
+✔ wizard application keeps the chosen physical folder attached and retains binary item records (2.669527ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1633.241138

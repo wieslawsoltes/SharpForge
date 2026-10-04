@@ -1,0 +1,33 @@
+{
+  "name": "check",
+  "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "npm",
+    "run",
+    "check"
+  ],
+  "startedAt": "2026-10-04T06:36:19.991600+00:00",
+  "resourcePreflight": {
+    "actualFreeBytes": 1044307968,
+    "availableBytes": 1044307968,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8454873088",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 2416141\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "log": "check.log",
+  "completedAt": "2026-10-04T06:36:24.057256+00:00",
+  "exitCode": 0,
+  "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "resourceAfter": {
+    "actualFreeBytes": 1044307968,
+    "availableBytes": 1044307968,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8268587008",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 2416533\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "checkoutStatusAfter": ""
+}

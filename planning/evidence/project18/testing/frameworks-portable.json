@@ -1,0 +1,1061 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.401",
+    "msbuild": null,
+    "node": "v22.23.3",
+    "platform": "linux"
+  },
+  "cases": [
+    {
+      "framework": "xunit",
+      "packages": [
+        {
+          "name": "Microsoft.NET.Test.Sdk",
+          "version": "17.13.0"
+        },
+        {
+          "name": "coverlet.collector",
+          "version": "6.0.4"
+        },
+        {
+          "name": "xunit",
+          "version": "2.9.3"
+        },
+        {
+          "name": "xunit.runner.visualstudio",
+          "version": "3.0.2"
+        }
+      ],
+      "nativeExecuted": false,
+      "status": "native-unavailable",
+      "error": "Shared pinned framework restore reached its 50-second bound (exit124); log contained only Determining projects to restore; cache empty. No further package restore attempted.",
+      "portable": {
+        "source": {
+          "results": [
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-281d9bd6edf35205598eecac6d464c63",
+              "fqn": "ReferenceFixture.Tests.Skip",
+              "displayName": "ReferenceFixture.Tests.Skip",
+              "outcome": "skipped",
+              "durationMs": 0,
+              "message": "planned",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 13,
+                "column": 40,
+                "start": 526,
+                "end": 577
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-20522b46fd24b01d8f29757495d6f8f3",
+              "fqn": "ReferenceFixture.Tests.Pass",
+              "displayName": "ReferenceFixture.Tests.Pass",
+              "outcome": "passed",
+              "durationMs": 0.7897110000000112,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "native and portable\n",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 11,
+                "column": 22,
+                "start": 363,
+                "end": 434
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-9a2be8925772d1e156288340970f0227",
+              "fqn": "ReferenceFixture.Tests.Fail",
+              "displayName": "ReferenceFixture.Tests.Fail",
+              "outcome": "failed",
+              "durationMs": 1.0764639999999872,
+              "message": "SFT_ASSERT: Equal failed",
+              "stackTrace": "Exception: SFT_ASSERT: Equal failed\n    at VirtualMachine.runSlice (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/vm.js:75:179)\n    at CooperativeScheduler.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/scheduler.js:157:15)\n    at VirtualMachine.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/vm.js:86:51)\n    at ManagedInvocationSession.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:111:30)\n    at ManagedInvocationSession.invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:174:29)\n    at invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:53:20)\n    at Object.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:60:43)\n    at file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:84:64\n    at timedInvocation (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:29:26)\n    at runPortableTests (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:84:31)",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 12,
+                "column": 31,
+                "start": 465,
+                "end": 484,
+                "origin": "managed-sequence-point"
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-8f4ea19b7f8b391cada7b3318abdb53a",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "ReferenceFixture.Tests.Inline(value: 1)",
+              "outcome": "passed",
+              "durationMs": 0.29635700000005727,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 14,
+                "column": 54,
+                "start": 631,
+                "end": 676
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-29a541d0e36ec2d7ed0726c2edead109",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "ReferenceFixture.Tests.Inline(value: 2)",
+              "outcome": "passed",
+              "durationMs": 0.2854609999999411,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 14,
+                "column": 54,
+                "start": 631,
+                "end": 676
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-908b4d85274c36622b1d3daf42bd69cc",
+              "fqn": "ReferenceFixture.Tests.Member",
+              "displayName": "ReferenceFixture.Tests.Member(value: 3)",
+              "outcome": "passed",
+              "durationMs": 0.32731300000000374,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 21,
+                "column": 50,
+                "start": 892,
+                "end": 937
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-527b564a64be5cddc803a998ffb6bc9b",
+              "fqn": "ReferenceFixture.Tests.Member",
+              "displayName": "ReferenceFixture.Tests.Member(value: 4)",
+              "outcome": "passed",
+              "durationMs": 0.18738299999995434,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 21,
+                "column": 50,
+                "start": 892,
+                "end": 937
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-d4a1ac4d59a98932b1fad6ebc126d178",
+              "fqn": "ReferenceFixture.Tests.Class",
+              "displayName": "ReferenceFixture.Tests.Class(value: 5)",
+              "outcome": "passed",
+              "durationMs": 0.33957199999997556,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 22,
+                "column": 54,
+                "start": 991,
+                "end": 1035
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            }
+          ],
+          "diagnostics": [],
+          "cancelled": false,
+          "success": false
+        },
+        "cil": {
+          "results": [
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-281d9bd6edf35205598eecac6d464c63",
+              "fqn": "ReferenceFixture.Tests.Skip",
+              "displayName": "ReferenceFixture.Tests.Skip",
+              "outcome": "skipped",
+              "durationMs": 0,
+              "message": "planned",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 13,
+                "column": 40,
+                "start": 526,
+                "end": 577
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-20522b46fd24b01d8f29757495d6f8f3",
+              "fqn": "ReferenceFixture.Tests.Pass",
+              "displayName": "ReferenceFixture.Tests.Pass",
+              "outcome": "passed",
+              "durationMs": 2.594333000000006,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "native and portable\n",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 11,
+                "column": 22,
+                "start": 363,
+                "end": 434
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-9a2be8925772d1e156288340970f0227",
+              "fqn": "ReferenceFixture.Tests.Fail",
+              "displayName": "ReferenceFixture.Tests.Fail",
+              "outcome": "failed",
+              "durationMs": 2.1864570000000185,
+              "message": "SFT_ASSERT: Equal failed",
+              "stackTrace": "System.Exception: SFT_ASSERT: Equal failed\n    at throwFault (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/execution/eh.js:47:11)\n    at file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/execution/handlers/branch.js:7:36\n    at CilVirtualMachine.step (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:125:5)\n    at CilVirtualMachine.runSlice (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:131:160)\n    at CooperativeScheduler.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/scheduler.js:157:15)\n    at CilVirtualMachine.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:138:51)\n    at ManagedInvocationSession.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:111:30)\n    at ManagedInvocationSession.invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:174:29)\n    at invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:53:20)\n    at Object.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:60:43)",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 12,
+                "column": 31,
+                "start": 465,
+                "end": 484,
+                "origin": "managed-sequence-point"
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-8f4ea19b7f8b391cada7b3318abdb53a",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "ReferenceFixture.Tests.Inline(value: 1)",
+              "outcome": "passed",
+              "durationMs": 1.0278600000000324,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 14,
+                "column": 54,
+                "start": 631,
+                "end": 676
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-29a541d0e36ec2d7ed0726c2edead109",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "ReferenceFixture.Tests.Inline(value: 2)",
+              "outcome": "passed",
+              "durationMs": 0.566675000000032,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 14,
+                "column": 54,
+                "start": 631,
+                "end": 676
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-908b4d85274c36622b1d3daf42bd69cc",
+              "fqn": "ReferenceFixture.Tests.Member",
+              "displayName": "ReferenceFixture.Tests.Member(value: 3)",
+              "outcome": "passed",
+              "durationMs": 0.8332370000000537,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 21,
+                "column": 50,
+                "start": 892,
+                "end": 937
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-527b564a64be5cddc803a998ffb6bc9b",
+              "fqn": "ReferenceFixture.Tests.Member",
+              "displayName": "ReferenceFixture.Tests.Member(value: 4)",
+              "outcome": "passed",
+              "durationMs": 0.5830490000000736,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 21,
+                "column": 50,
+                "start": 892,
+                "end": 937
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-d4a1ac4d59a98932b1fad6ebc126d178",
+              "fqn": "ReferenceFixture.Tests.Class",
+              "displayName": "ReferenceFixture.Tests.Class(value: 5)",
+              "outcome": "passed",
+              "durationMs": 0.5187419999999747,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "xunit/Tests.cs",
+                "line": 22,
+                "column": 54,
+                "start": 991,
+                "end": 1035
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            }
+          ],
+          "diagnostics": [],
+          "cancelled": false,
+          "success": false
+        }
+      },
+      "success": false
+    },
+    {
+      "framework": "nunit",
+      "packages": [
+        {
+          "name": "Microsoft.NET.Test.Sdk",
+          "version": "17.13.0"
+        },
+        {
+          "name": "coverlet.collector",
+          "version": "6.0.4"
+        },
+        {
+          "name": "NUnit",
+          "version": "4.3.2"
+        },
+        {
+          "name": "NUnit3TestAdapter",
+          "version": "5.0.0"
+        }
+      ],
+      "nativeExecuted": false,
+      "status": "native-unavailable",
+      "error": "Shared pinned framework restore reached its 50-second bound (exit124); log contained only Determining projects to restore; cache empty. No further package restore attempted.",
+      "portable": {
+        "source": {
+          "results": [
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-8bc03068b5510939971630aa7140076b",
+              "fqn": "ReferenceFixture.Tests.Skip",
+              "displayName": "Skip",
+              "outcome": "skipped",
+              "durationMs": 0,
+              "message": "planned",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 12,
+                "column": 41,
+                "start": 517,
+                "end": 568
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-222474481c7caa89aa227eaabc26cadb",
+              "fqn": "ReferenceFixture.Tests.Pass",
+              "displayName": "Pass",
+              "outcome": "passed",
+              "durationMs": 0.3358069999999316,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 10,
+                "column": 22,
+                "start": 368,
+                "end": 413
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-766dd1267df01ef7abfb97a84869d251",
+              "fqn": "ReferenceFixture.Tests.Fail",
+              "displayName": "Fail",
+              "outcome": "failed",
+              "durationMs": 0.46077500000001237,
+              "message": "SFT_ASSERT: AreEqual failed",
+              "stackTrace": "Exception: SFT_ASSERT: AreEqual failed\n    at VirtualMachine.runSlice (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/vm.js:75:179)\n    at CooperativeScheduler.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/scheduler.js:157:15)\n    at VirtualMachine.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/vm.js:86:51)\n    at ManagedInvocationSession.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:111:30)\n    at ManagedInvocationSession.invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:174:29)\n    at invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:53:20)\n    at Object.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:60:43)\n    at file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:84:64\n    at timedInvocation (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:29:26)\n    at runPortableTests (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:84:31)",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 11,
+                "column": 31,
+                "start": 444,
+                "end": 474,
+                "origin": "managed-sequence-point"
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-baea488c3eda0473aa5f3182f32bd279",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "Inline(1)",
+              "outcome": "passed",
+              "durationMs": 0.3507889999998497,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 13,
+                "column": 42,
+                "start": 610,
+                "end": 666
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-d227dc8799cfa3a86b0150f10fff802a",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "Inline(2)",
+              "outcome": "passed",
+              "durationMs": 0.2347340000001168,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 13,
+                "column": 42,
+                "start": 610,
+                "end": 666
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-e7015332fe3432f58e138848a24a8db3",
+              "fqn": "ReferenceFixture.Tests.Data",
+              "displayName": "Data(5)",
+              "outcome": "passed",
+              "durationMs": 0.32601199999999153,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 19,
+                "column": 46,
+                "start": 898,
+                "end": 954
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            }
+          ],
+          "diagnostics": [],
+          "cancelled": false,
+          "success": false
+        },
+        "cil": {
+          "results": [
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-8bc03068b5510939971630aa7140076b",
+              "fqn": "ReferenceFixture.Tests.Skip",
+              "displayName": "Skip",
+              "outcome": "skipped",
+              "durationMs": 0,
+              "message": "planned",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 12,
+                "column": 41,
+                "start": 517,
+                "end": 568
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-222474481c7caa89aa227eaabc26cadb",
+              "fqn": "ReferenceFixture.Tests.Pass",
+              "displayName": "Pass",
+              "outcome": "passed",
+              "durationMs": 1.1835949999999684,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 10,
+                "column": 22,
+                "start": 368,
+                "end": 413
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-766dd1267df01ef7abfb97a84869d251",
+              "fqn": "ReferenceFixture.Tests.Fail",
+              "displayName": "Fail",
+              "outcome": "failed",
+              "durationMs": 1.1484619999998813,
+              "message": "SFT_ASSERT: AreEqual failed",
+              "stackTrace": "System.Exception: SFT_ASSERT: AreEqual failed\n    at throwFault (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/execution/eh.js:47:11)\n    at file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/execution/handlers/branch.js:7:36\n    at CilVirtualMachine.step (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:125:5)\n    at CilVirtualMachine.runSlice (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:131:160)\n    at CooperativeScheduler.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/scheduler.js:157:15)\n    at CilVirtualMachine.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:138:51)\n    at ManagedInvocationSession.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:111:30)\n    at ManagedInvocationSession.invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:174:29)\n    at invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:53:20)\n    at Object.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:60:43)",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 11,
+                "column": 31,
+                "start": 444,
+                "end": 474,
+                "origin": "managed-sequence-point"
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-baea488c3eda0473aa5f3182f32bd279",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "Inline(1)",
+              "outcome": "passed",
+              "durationMs": 1.1161429999999655,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 13,
+                "column": 42,
+                "start": 610,
+                "end": 666
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-d227dc8799cfa3a86b0150f10fff802a",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "Inline(2)",
+              "outcome": "passed",
+              "durationMs": 0.6925149999999576,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 13,
+                "column": 42,
+                "start": 610,
+                "end": 666
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-e7015332fe3432f58e138848a24a8db3",
+              "fqn": "ReferenceFixture.Tests.Data",
+              "displayName": "Data(5)",
+              "outcome": "passed",
+              "durationMs": 0.7588149999999132,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "setup\ncleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "nunit/Tests.cs",
+                "line": 19,
+                "column": 46,
+                "start": 898,
+                "end": 954
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            }
+          ],
+          "diagnostics": [],
+          "cancelled": false,
+          "success": false
+        }
+      },
+      "success": false
+    },
+    {
+      "framework": "mstest",
+      "packages": [
+        {
+          "name": "Microsoft.NET.Test.Sdk",
+          "version": "17.13.0"
+        },
+        {
+          "name": "coverlet.collector",
+          "version": "6.0.4"
+        },
+        {
+          "name": "MSTest.TestFramework",
+          "version": "3.8.3"
+        },
+        {
+          "name": "MSTest.TestAdapter",
+          "version": "3.8.3"
+        }
+      ],
+      "nativeExecuted": false,
+      "status": "native-unavailable",
+      "error": "Shared pinned framework restore reached its 50-second bound (exit124); log contained only Determining projects to restore; cache empty. No further package restore attempted.",
+      "portable": {
+        "source": {
+          "results": [
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-40957ad3bbf49560a39c06697ad2440e",
+              "fqn": "ReferenceFixture.Tests.Skip",
+              "displayName": "Skip",
+              "outcome": "skipped",
+              "durationMs": 0,
+              "message": "planned",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 10,
+                "column": 47,
+                "start": 438,
+                "end": 489
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-d82c8aaf59aaed54c9fa662d9628c1ca",
+              "fqn": "ReferenceFixture.Tests.Pass",
+              "displayName": "Pass",
+              "outcome": "passed",
+              "durationMs": 0.3144640000000436,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 8,
+                "column": 28,
+                "start": 293,
+                "end": 330
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-81b3846dad302b1ae28791632fbc5120",
+              "fqn": "ReferenceFixture.Tests.Fail",
+              "displayName": "Fail",
+              "outcome": "failed",
+              "durationMs": 0.5504410000000917,
+              "message": "SFT_ASSERT: AreEqual failed",
+              "stackTrace": "Exception: SFT_ASSERT: AreEqual failed\n    at VirtualMachine.runSlice (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/vm.js:75:179)\n    at CooperativeScheduler.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/scheduler.js:157:15)\n    at VirtualMachine.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/vm.js:86:51)\n    at ManagedInvocationSession.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:111:30)\n    at ManagedInvocationSession.invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:174:29)\n    at invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:53:20)\n    at Object.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:60:43)\n    at file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:84:64\n    at timedInvocation (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:29:26)\n    at runPortableTests (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/runner.js:84:31)",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 9,
+                "column": 37,
+                "start": 367,
+                "end": 389,
+                "origin": "managed-sequence-point"
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-7f88d5bc82e0305df017e5d291854d83",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "one row",
+              "outcome": "passed",
+              "durationMs": 0.3093570000000909,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 12,
+                "column": 15,
+                "start": 568,
+                "end": 617
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-29bc5f6a386eaf093363f8bcea25dbeb",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "Inline (2)",
+              "outcome": "passed",
+              "durationMs": 0.3381400000000667,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 12,
+                "column": 15,
+                "start": 568,
+                "end": 617
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-9829c1ab0f6bbfe0614da6a95840f39e",
+              "fqn": "ReferenceFixture.Tests.Data",
+              "displayName": "Data (5)",
+              "outcome": "passed",
+              "durationMs": 0.323167999999896,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 18,
+                "column": 85,
+                "start": 888,
+                "end": 936
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-source",
+              "nativeId": null
+            }
+          ],
+          "diagnostics": [],
+          "cancelled": false,
+          "success": false
+        },
+        "cil": {
+          "results": [
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-40957ad3bbf49560a39c06697ad2440e",
+              "fqn": "ReferenceFixture.Tests.Skip",
+              "displayName": "Skip",
+              "outcome": "skipped",
+              "durationMs": 0,
+              "message": "planned",
+              "stackTrace": "",
+              "stdout": "",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 10,
+                "column": 47,
+                "start": 438,
+                "end": 489
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-d82c8aaf59aaed54c9fa662d9628c1ca",
+              "fqn": "ReferenceFixture.Tests.Pass",
+              "displayName": "Pass",
+              "outcome": "passed",
+              "durationMs": 0.6187139999999545,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 8,
+                "column": 28,
+                "start": 293,
+                "end": 330
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-81b3846dad302b1ae28791632fbc5120",
+              "fqn": "ReferenceFixture.Tests.Fail",
+              "displayName": "Fail",
+              "outcome": "failed",
+              "durationMs": 0.6925639999999476,
+              "message": "SFT_ASSERT: AreEqual failed",
+              "stackTrace": "System.Exception: SFT_ASSERT: AreEqual failed\n    at throwFault (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/execution/eh.js:47:11)\n    at file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/execution/handlers/branch.js:7:36\n    at CilVirtualMachine.step (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:125:5)\n    at CilVirtualMachine.runSlice (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:131:160)\n    at CooperativeScheduler.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/scheduler.js:157:15)\n    at CilVirtualMachine.runAsync (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/cil-vm.js:138:51)\n    at ManagedInvocationSession.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:111:30)\n    at ManagedInvocationSession.invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/runtime/src/invocation-session.js:174:29)\n    at invoke (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:53:20)\n    at Object.execute (file:///workspace/scratch/3e16369943fd/p18-tests/packages/msbuild/src/testing/portable/managed-runtime.js:60:43)",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 9,
+                "column": 37,
+                "start": 367,
+                "end": 389,
+                "origin": "managed-sequence-point"
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-7f88d5bc82e0305df017e5d291854d83",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "one row",
+              "outcome": "passed",
+              "durationMs": 0.4754970000001322,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 12,
+                "column": 15,
+                "start": 568,
+                "end": 617
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-29bc5f6a386eaf093363f8bcea25dbeb",
+              "fqn": "ReferenceFixture.Tests.Inline",
+              "displayName": "Inline (2)",
+              "outcome": "passed",
+              "durationMs": 0.6564300000000003,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 12,
+                "column": 15,
+                "start": 568,
+                "end": 617
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            },
+            {
+              "schemaVersion": 1,
+              "testId": "test-v1-9829c1ab0f6bbfe0614da6a95840f39e",
+              "fqn": "ReferenceFixture.Tests.Data",
+              "displayName": "Data (5)",
+              "outcome": "passed",
+              "durationMs": 0.8357750000000124,
+              "message": "",
+              "stackTrace": "",
+              "stdout": "cleanup\n",
+              "stderr": "",
+              "source": {
+                "path": "mstest/Tests.cs",
+                "line": 18,
+                "column": 85,
+                "start": 888,
+                "end": 936
+              },
+              "attachments": [],
+              "diagnostics": [],
+              "backend": "portable-cil",
+              "nativeId": null
+            }
+          ],
+          "diagnostics": [],
+          "cancelled": false,
+          "success": false
+        }
+      },
+      "success": false
+    }
+  ],
+  "success": false
+}

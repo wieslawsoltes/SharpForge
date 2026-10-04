@@ -1,0 +1,268 @@
+TAP version 13
+# Subtest: status updates read model positions and EOL metadata without flattening a 100 MB document
+ok 1 - status updates read model positions and EOL metadata without flattening a 100 MB document
+  ---
+  duration_ms: 2.198696
+  type: 'test'
+  ...
+# Subtest: status visual columns distinguish tabs, CJK, zero-width clusters and UTF-16 characters
+ok 2 - status visual columns distinguish tabs, CJK, zero-width clusters and UTF-16 characters
+  ---
+  duration_ms: 2.160268
+  type: 'test'
+  ...
+# Subtest: status uses cancellable exact model columns and ignores stale carets without flattening source
+ok 3 - status uses cancellable exact model columns and ignores stale carets without flattening source
+  ---
+  duration_ms: 4.868382
+  type: 'test'
+  ...
+# Subtest: reading one setting preserves workspace null overrides without cloning unrelated layouts
+ok 4 - reading one setting preserves workspace null overrides without cloning unrelated layouts
+  ---
+  duration_ms: 1.708687
+  type: 'test'
+  ...
+# Subtest: Solution Explorer filtering never reads document content synchronously
+ok 5 - Solution Explorer filtering never reads document content synchronously
+  ---
+  duration_ms: 1.075071
+  type: 'test'
+  ...
+# Subtest: definition range reads stay bounded at a caret near the end of a large indexed document
+ok 6 - definition range reads stay bounded at a caret near the end of a large indexed document
+  ---
+  duration_ms: 0.976853
+  type: 'test'
+  ...
+# Subtest: Explorer content searches retain actual worker URI matches and reject stale or cancelled results
+ok 7 - Explorer content searches retain actual worker URI matches and reject stale or cancelled results
+  ---
+  duration_ms: 0.791013
+  type: 'test'
+  ...
+# Subtest: automatic recovery and bookmark construction never materialize a 100 MB model-backed file
+ok 8 - automatic recovery and bookmark construction never materialize a 100 MB model-backed file
+  ---
+  duration_ms: 0.635318
+  type: 'test'
+  ...
+# Subtest: existing recovery is retained until the user restores or discards it
+ok 9 - existing recovery is retained until the user restores or discards it
+  ---
+  duration_ms: 0.259672
+  type: 'test'
+  ...
+# Subtest: bookmark edit transformation handles several pre-edit coordinates and wraps across files
+ok 10 - bookmark edit transformation handles several pre-edit coordinates and wraps across files
+  ---
+  duration_ms: 9.736103
+  type: 'test'
+  ...
+# Subtest: Output filters project and session identity from shared channel entries
+ok 11 - Output filters project and session identity from shared channel entries
+  ---
+  duration_ms: 0.550039
+  type: 'test'
+  ...
+# Subtest: Find Results changes retained project or session scope without requesting another search
+ok 12 - Find Results changes retained project or session scope without requesting another search
+  ---
+  duration_ms: 0.241885
+  type: 'test'
+  ...
+# Subtest: locked result windows remain bounded without silently discarding retained results
+ok 13 - locked result windows remain bounded without silently discarding retained results
+  ---
+  duration_ms: 1.188071
+  type: 'test'
+  ...
+# Subtest: regex replacement retains lookbehind, named captures and original string substitutions
+ok 14 - regex replacement retains lookbehind, named captures and original string substitutions
+  ---
+  duration_ms: 1.814036
+  type: 'test'
+  ...
+# Subtest: keyboard removal applies to default ids before conflict calculation
+ok 15 - keyboard removal applies to default ids before conflict calculation
+  ---
+  duration_ms: 2.08167
+  type: 'test'
+  ...
+# Subtest: provider failures terminate queued test state instead of leaving a run in progress
+ok 16 - provider failures terminate queued test state instead of leaving a run in progress
+  ---
+  duration_ms: 0.566164
+  type: 'test'
+  ...
+# Subtest: The wizard attaches provider records and subsequent saves preserve encoding and binary bytes
+ok 17 - The wizard attaches provider records and subsequent saves preserve encoding and binary bytes
+  ---
+  duration_ms: 19.447328
+  type: 'test'
+  ...
+# Subtest: The wizard keeps completed-write receipts when provider attachment fails
+ok 18 - The wizard keeps completed-write receipts when provider attachment fails
+  ---
+  duration_ms: 0.988431
+  type: 'test'
+  ...
+# Subtest: An already cancelled wizard attachment performs no directory or file writes
+ok 19 - An already cancelled wizard attachment performs no directory or file writes
+  ---
+  duration_ms: 0.300653
+  type: 'test'
+  ...
+# Subtest: Generated source is immediately available when a large existing destination stays lazy
+ok 20 - Generated source is immediately available when a large existing destination stays lazy
+  ---
+  duration_ms: 8.783636
+  type: 'test'
+  ...
+# Subtest: A24 file and report entry budgets remain explicit boundaries
+ok 21 - A24 file and report entry budgets remain explicit boundaries
+  ---
+  duration_ms: 2.333969
+  type: 'test'
+  ...
+# Subtest: replacing a workspace retires shared editor views without resurrecting disposed document models
+ok 22 - replacing a workspace retires shared editor views without resurrecting disposed document models
+  ---
+  duration_ms: 11.873456
+  type: 'test'
+  ...
+# Subtest: all retained views switch to the new owner without publishing the old model during detachment
+ok 23 - all retained views switch to the new owner without publishing the old model during detachment
+  ---
+  duration_ms: 2.04899
+  type: 'test'
+  ...
+# Subtest: closing a view retains its owned model, undo history and saved view state for reopening
+ok 24 - closing a view retains its owned model, undo history and saved view state for reopening
+  ---
+  duration_ms: 2.337204
+  type: 'test'
+  ...
+# Subtest: disposing the document owner leaves no model or editor resurrected by view cleanup
+ok 25 - disposing the document owner leaves no model or editor resurrected by view cleanup
+  ---
+  duration_ms: 0.67655
+  type: 'test'
+  ...
+# Subtest: provider file import retains exact unknown bytes and reports rejected paths without reading them
+ok 26 - provider file import retains exact unknown bytes and reports rejected paths without reading them
+  ---
+  duration_ms: 2.394061
+  type: 'test'
+  ...
+# Subtest: provider file import rejects pre-aborted work and entry limits before content reads
+ok 27 - provider file import rejects pre-aborted work and entry limits before content reads
+  ---
+  duration_ms: 0.528087
+  type: 'test'
+  ...
+# Subtest: project evaluation inputs include auxiliary metadata while source files remain lazy
+ok 28 - project evaluation inputs include auxiliary metadata while source files remain lazy
+  ---
+  duration_ms: 0.316487
+  type: 'test'
+  ...
+# Subtest: reload forwards atomic host evaluation acknowledgment for automatic and chosen XML updates
+ok 29 - reload forwards atomic host evaluation acknowledgment for automatic and chosen XML updates
+  ---
+  duration_ms: 12.731813
+  type: 'test'
+  ...
+# Subtest: reload bounds prompts and preserves dirty buffers for keep and compare
+ok 30 - reload bounds prompts and preserves dirty buffers for keep and compare
+  ---
+  duration_ms: 6.829041
+  type: 'test'
+  ...
+# Subtest: file saves and whole-workspace transactions use the same workspace ownership key
+ok 31 - file saves and whole-workspace transactions use the same workspace ownership key
+  ---
+  duration_ms: 1.501875
+  type: 'test'
+  ...
+# Subtest: a shorter document updates status before the editor publishes its new caret without stopping model listeners
+ok 32 - a shorter document updates status before the editor publishes its new caret without stopping model listeners
+  ---
+  duration_ms: 15.563264
+  type: 'test'
+  ...
+# Subtest: status derives current line and grapheme position instead of retaining a stale explicit visual column
+ok 33 - status derives current line and grapheme position instead of retaining a stale explicit visual column
+  ---
+  duration_ms: 1.68412
+  type: 'test'
+  ...
+# Subtest: status clamps transient empty-document endpoints and hides malformed offsets without changing model selection
+ok 34 - status clamps transient empty-document endpoints and hides malformed offsets without changing model selection
+  ---
+  duration_ms: 1.514064
+  type: 'test'
+  ...
+# Subtest: StatusPosition declines invalid UI offsets while the indexed model retains strict bounds
+ok 35 - StatusPosition declines invalid UI offsets while the indexed model retains strict bounds
+  ---
+  duration_ms: 0.68293
+  type: 'test'
+  ...
+# Subtest: an invalid status request cancels pending exact column work and cannot publish stale completion
+ok 36 - an invalid status request cancels pending exact column work and cannot publish stale completion
+  ---
+  duration_ms: 1.057875
+  type: 'test'
+  ...
+# Subtest: A24 recursive directory admission rolls back entries when the memory budget is exhausted
+ok 37 - A24 recursive directory admission rolls back entries when the memory budget is exhausted
+  ---
+  duration_ms: 1.973517
+  type: 'test'
+  ...
+# Subtest: A24 provider subscriptions stop on cancellation and unsupported operations are explicit
+ok 38 - A24 provider subscriptions stop on cancellation and unsupported operations are explicit
+  ---
+  duration_ms: 5.600638
+  type: 'test'
+  ...
+# Subtest: A24 workspace facade retains the existing versioned document API
+ok 39 - A24 workspace facade retains the existing versioned document API
+  ---
+  duration_ms: 0.618613
+  type: 'test'
+  ...
+# Subtest: A24 native HTTP retains conflict paths, guards builds and preserves raw binary files
+ok 40 - A24 native HTTP retains conflict paths, guards builds and preserves raw binary files
+  ---
+  duration_ms: 69.235767
+  type: 'test'
+  ...
+# Subtest: three-way text merge preserves disjoint edits and reports overlapping edits with all versions
+ok 41 - three-way text merge preserves disjoint edits and reports overlapping edits with all versions
+  ---
+  duration_ms: 1.287893
+  type: 'test'
+  ...
+# Subtest: merge size, work budget and cancellation preserve explicit outcomes
+ok 42 - merge size, work budget and cancellation preserve explicit outcomes
+  ---
+  duration_ms: 0.840839
+  type: 'test'
+  ...
+# Subtest: binary conflicts require a choice and adopted contents do not alias the input
+ok 43 - binary conflicts require a choice and adopted contents do not alias the input
+  ---
+  duration_ms: 0.627356
+  type: 'test'
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 43
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6319.573502

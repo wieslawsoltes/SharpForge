@@ -28,7 +28,13 @@ test('A00 T06 strict schema validates all thirty manifests and rejects unknown f
 test('A00 T06 discovery assigns files once and includes nested contract/conformance suites',async()=>{
  const manifests=await discoverManifests(),files=manifests.flatMap(m=>[...m.nodeFiles,...m.browserScripts]);
  assert.equal(new Set(files).size,files.length);assert(files.includes('planning/contracts/tests/value-abi.test.js'));assert(files.includes('tests/conformance/qualification.test.js'));assert(files.includes('tests/conformance/browser/test_launch.py'));
- const editor=selectManifests(manifests,'A20');assert.equal(editor.length,1);assert(editor[0].nodeFiles.every(path=>path.includes('editor')));assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
+ const editor = selectManifests(manifests, 'A20');
+ assert.equal(editor.length, 1);
+ const textSuites = new Set(['tests/text-buffer.test.js', 'tests/text-diff-merge.test.js',
+  'tests/text-search-regex.test.js', 'tests/text-unicode.test.js']);
+ assert(editor[0].nodeFiles.every(path => path.includes('editor') || textSuites.has(path)));
+ for (const path of textSuites) assert(editor[0].nodeFiles.includes(path), path);
+ assert.throws(() => selectManifests(manifests, 'A99'), /Unknown area/);
 });
 test('A00 T06 missing, duplicate, stale, unsafe and mismatched manifest entries fail with offending paths',async t=>{
  const dir=await fixture(t);await write(dir,'tests/editor.test.js','');

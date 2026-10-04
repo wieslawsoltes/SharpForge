@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 1,
+  "area": "A23",
+  "scope": "Native Studio contexts, launch/publish profiles and Test Explorer UI integration",
+  "recordedAt": "2026-10-03T22:48:54.299364+00:00",
+  "implementationCommit": "6644d340d658062e7eae3f28a6aed94ed23106b0",
+  "status": "implementation-ready; Studio entry-file hooks and aggregate CSP hash review pending",
+  "priorTestingEvidence": "testing.json",
+  "studioHooks": "native-studio/studio-hooks.md",
+  "ownership": {
+    "worktree": "codex/p18-tests",
+    "lockedStudioEdited": false,
+    "newDependencies": false,
+    "entryPoints": [
+      "apps/studio/msbuild-tools.js",
+      "apps/studio/tools/core.js",
+      "apps/studio/tools/definitions.js",
+      "apps/studio/dock-layouts.js",
+      "apps/studio/tools/msbuild-automation.js"
+    ],
+    "design": "Keep the existing MSBuildTools facade; separate state/controllers/views; use public context and testing contracts; load compiler/runtime only in the portable worker."
+  },
+  "validation": [
+    {
+      "id": "node22",
+      "testedCommit": "6644d340d658062e7eae3f28a6aed94ed23106b0",
+      "node": "v22.23.3",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a23-studio-native-contexts.test.js",
+        "tests/a23-studio-native-profiles.test.js",
+        "tests/a23-studio-test-explorer.test.js",
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-studio-tools-registration.test.js",
+        "tests/msbuild-tools.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js",
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-36-provider-projection.test.js"
+      ],
+      "environment": {
+        "SHARPFORGE_TEST_CONCURRENCY": "1"
+      },
+      "exitCode": 0,
+      "summary": {
+        "tests": 106,
+        "pass": 106,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "artifact": "native-studio/node22.log"
+    },
+    {
+      "id": "node26",
+      "testedCommit": "6644d340d658062e7eae3f28a6aed94ed23106b0",
+      "node": "v26.10.0",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a23-studio-native-contexts.test.js",
+        "tests/a23-studio-native-profiles.test.js",
+        "tests/a23-studio-test-explorer.test.js",
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-studio-tools-registration.test.js",
+        "tests/msbuild-tools.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js",
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-36-provider-projection.test.js"
+      ],
+      "environment": {
+        "SHARPFORGE_TEST_CONCURRENCY": "1"
+      },
+      "exitCode": 0,
+      "summary": {
+        "tests": 106,
+        "pass": 106,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "artifact": "native-studio/node26.log"
+    },
+    {
+      "id": "browser",
+      "testedCommit": "14459cc78ebbd91503c48b7b11941d3ebcf29978",
+      "browser": "Chrome for Testing153.0.8010.12",
+      "node": "v22.23.3",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "python",
+        "tests/browser_a23_native_tools_test.py"
+      ],
+      "exitCode": 0,
+      "summary": {
+        "checks": 12,
+        "passed": 12
+      },
+      "artifacts": [
+        "native-studio/browser.json",
+        "native-studio/browser.log",
+        "native-studio/browser.png"
+      ],
+      "qualification": "Actual Chromium production-CSP/module UI and actual separate portable source/CIL managed workers. Native calls use the named fixture transport, never the installed SDK. Later stale-native-selection and source-metadata-bound fixes are covered by final Node22/26; the locked Studio proposal was not executed.",
+      "pendingChanges": [
+        "apps/studio/tools/core.js diagnostic callback, committed later in a3e7117a"
+      ]
+    },
+    {
+      "id": "build",
+      "testedCommit": "14459cc78ebbd91503c48b7b11941d3ebcf29978",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "artifact": "native-studio/build.log",
+      "pendingChanges": [
+        "apps/studio/tools/core.js diagnostic callback, committed later in a3e7117a"
+      ]
+    },
+    {
+      "id": "check",
+      "testedCommit": "cca32de2083e48575a0058dfd889585c87f753d5",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 1,
+      "artifact": "native-studio/check.log",
+      "result": "Manifests and JavaScript syntax pass; stopped at reviewed dynamic-import content hashes. Root owns final aggregate CSP inventory review; no policy broadening performed.",
+      "pendingChanges": [
+        "A23 browser manifest registration",
+        "native-adapter sourceTests input bounds",
+        "native-adapter service regression test"
+      ]
+    },
+    {
+      "id": "structure",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/quality/check-structure.js",
+        "--strict"
+      ],
+      "exitCode": 1,
+      "artifact": "native-studio/structure.log",
+      "result": "269 inherited/concurrent repository findings. No native-build, test-explorer, dock-layouts or MSBuild automation module exceeds limits; existing tools/core.js max line remains1952 and bytes decreased29150 to28403. The baseline was not relaxed."
+    }
+  ],
+  "limits": [
+    "Root must apply reviewed minimal Studio callbacks, compiler request delegate, generated-document guards and Ctrl+F5 native run hook after the live Studio lock is released.",
+    "Native test package restore had one shared50-second timeout with empty cache; no subsequent restore or framework-native run was attempted. See testing/framework-restore.log and testing.json.",
+    "Native VSTest selection uses method filters: selecting a theory row selects every row of that method. MTP preserves native UIDs.",
+    "Metadata-backed semantic binding does not imply arbitrary CLR call execution. Explicit supplied canonical SharpForge PE references have separate qualification in project-runtime/qualification.json; native analyzers execute only on the native host.",
+    "Windows/macOS native runs, Firefox/WebKit browser UI, Rust/Wasm managed invocation and p95/p99/allocation benchmarks were not run in this UI scope."
+  ],
+  "issues": [
+    {
+      "number": 3122,
+      "id": "SF-A23-T02.4",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/native-build/project-context.js",
+        "apps/studio/native-build/metadata.js",
+        "apps/studio/native-build/workspace-state.js"
+      ],
+      "tests": [
+        "tests/a23-studio-native-contexts.test.js",
+        "tests/a23-studio-test-worker.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Exact native source and compiler-option hydration; bounded authorized reference decoding; atomic callback activation. Native SDK semantic oracle belongs to the native workstream. Root compiler-request delegate and Studio callback remain unapplied."
+    },
+    {
+      "number": 3123,
+      "id": "SF-A23-T02.5",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/native-build/project-context.js",
+        "apps/studio/native-build/workspace-state.js"
+      ],
+      "tests": [
+        "tests/a23-studio-native-contexts.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Generated inputs are hydrated read-only and disappear when their context is removed. Root editor and refactoring guards are prepared but not applied while Studio is locked."
+    },
+    {
+      "number": 3127,
+      "id": "SF-A23-T03.3",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/native-build/project-context.js",
+        "apps/studio/native-build/context-view.js",
+        "apps/studio/test-explorer/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-native-contexts.test.js",
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Visible project/framework/runtime selector, labelled context diagnostics, stale test selection rejected on context change. Reference-TFM compatibility is owned by the evaluator/native context producer."
+    },
+    {
+      "number": 3085,
+      "id": "SF-A23-T30",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/native-build/profiles.js",
+        "apps/studio/native-build/context-view.js",
+        "apps/studio/native-build/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-native-profiles.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Visible profile selection produces args, explicit environment, URL and cwd in Project/Executable native run requests. Root Ctrl+F5 and portable launch hooks are prepared; actual granted native process qualification is reported by native agent4f237a43/dabdfc40."
+    },
+    {
+      "number": 3086,
+      "id": "SF-A23-T31",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/native-build/profiles.js",
+        "apps/studio/native-build/context-view.js",
+        "apps/studio/native-build/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-native-profiles.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Profile list reads files only; explicit publish uses selected profile and normal job lifecycle. Real folder publication is native workstream evidence, not this UI fixture."
+    },
+    {
+      "number": 3165,
+      "id": "SF-A23-T11.1",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/controller.js",
+        "apps/studio/test-explorer/native-client.js",
+        "apps/studio/test-explorer/view.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Native VSTest/MTP/bridge discovery selectors and bounded source enrichment. Installed framework data-row discovery remains unqualified because pinned package restore timed out."
+    },
+    {
+      "number": 3166,
+      "id": "SF-A23-T11.2",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/controller.js",
+        "apps/studio/test-explorer/native-client.js",
+        "apps/studio/test-explorer/view.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Selected test execution renders TRX-derived per-test outcomes/output/attachments. UI uses an explicit native transport fixture; no real framework run is claimed."
+    },
+    {
+      "number": 3167,
+      "id": "SF-A23-T11.3",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/controller.js",
+        "apps/studio/test-explorer/view.js",
+        "apps/studio/tools/core.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Failure source takes precedence over declaration and delegates shared workspace navigation. Root onOpenTestSource hook is still pending; real framework assertion-line qualification remains open."
+    },
+    {
+      "number": 3168,
+      "id": "SF-A23-T11.4",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/controller.js",
+        "apps/studio/test-explorer/native-client.js",
+        "apps/studio/test-explorer/worker-client.js",
+        "apps/studio/test-explorer/view.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-explorer.test.js",
+        "tests/a23-studio-test-worker.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Cancellation, live progress, retained PID handoff and not-run outcomes are visible. Native transport is mocked here; actual process policy and unavailable native-framework acceptance are separate."
+    },
+    {
+      "number": 3169,
+      "id": "SF-A23-T11.5",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/view.js",
+        "apps/studio/test-explorer/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Bounded line/branch coverage tables plus retained artifact downloads. Parsed fixture coverage is qualified; actual coverlet collector qualification remains open."
+    },
+    {
+      "number": 3090,
+      "id": "SF-A23-T35",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/controller.js",
+        "apps/studio/test-explorer/view.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "All providers share stable project-qualified TestCase selection/results; sourceTests enriches native records. Exact native-vs-portable framework parity remains unqualified."
+    },
+    {
+      "number": 3091,
+      "id": "SF-A23-T36",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/worker-service.js",
+        "apps/studio/test-explorer/worker-client.js",
+        "apps/studio/test-explorer/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-worker.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Portable xUnit discovery executes in a lazy worker with the full prepared project input. Existing package tests cover provider data; actual native framework comparison remains open."
+    },
+    {
+      "number": 3093,
+      "id": "SF-A23-T37",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/worker-service.js",
+        "apps/studio/test-explorer/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-worker.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Portable NUnit discovery and execution are surfaced using the shared adapter, preserving not-runnable diagnostics. Existing framework fixture evidence is in testing.json; native parity remains open."
+    },
+    {
+      "number": 3094,
+      "id": "SF-A23-T38",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/worker-service.js",
+        "apps/studio/test-explorer/controller.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-worker.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Portable MSTest discovery and execution are surfaced using the shared adapter, preserving not-runnable diagnostics. Existing framework fixture evidence is in testing.json; native parity remains open."
+    },
+    {
+      "number": 3095,
+      "id": "SF-A23-T39",
+      "status": "implementation-ready; acceptance limitations retained",
+      "implementation": [
+        "apps/studio/test-explorer/worker-service.js",
+        "apps/studio/test-explorer/worker-client.js",
+        "apps/studio/test-explorer/test.worker.js",
+        "packages/msbuild/src/testing/portable/managed-runtime.js",
+        "packages/msbuild/src/testing/portable/runtime-data.js"
+      ],
+      "tests": [
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-studio-test-explorer.test.js"
+      ],
+      "evidence": [
+        "node22",
+        "node26",
+        "browser"
+      ],
+      "detail": "Actual source and CIL managed sessions run behind isolated workers, with per-test lifecycle, project compile options, cancellation and worker-stop fallback. Native parity, Rust native and Wasm execution are not qualified."
+    }
+  ],
+  "closedProjectRuntimeFollowup": "project-runtime/qualification.json"
+}

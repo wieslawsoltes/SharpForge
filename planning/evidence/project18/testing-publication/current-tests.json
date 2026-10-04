@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 2,
+  "owner": "tests_workflows",
+  "readbackUtc": "2026-10-04 04:55:00 UTC",
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "counts": {
+    "ownedDrafts": 22,
+    "delegatedGraphCorpusDrafts": 1,
+    "totalTrackedDrafts": 23,
+    "requiredCorePassed": 23
+  },
+  "sourceOwnership": "Released; all owned product sources and final compatibility compositions are frozen for root qualification.",
+  "interpretation": "Required core checks static/manifests/contracts/build/checkout integrity. Unit, browser and platform qualification jobs are skipped by ordinary core policy. Green core is not full acceptance evidence. Raw GitHub mergeability flags are retained without a new main refresh; exact published trees/parents are verified separately.",
+  "published": [
+    {
+      "name": "test-model",
+      "number": 3676,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3676",
+      "branch": "codex/p18-test-model",
+      "remoteHead": "c7449d06738db5a2b322dbfeba544f321c09af2e",
+      "localHead": "b41b9b1b30bec42c4d64b1be53e238da77f7b49e",
+      "base": "main",
+      "baseCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": false,
+      "previousPublishedHead": "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb",
+      "requiredCore": {
+        "runId": 37174198369,
+        "jobId": 111353291984,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37174198369/job/111353291984"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "157c48ce9ba8c7b1207e60892d4b95efbf6e1dfa",
+      "localTree": "157c48ce9ba8c7b1207e60892d4b95efbf6e1dfa",
+      "orderedRemoteParents": [
+        "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "orderedLocalParents": [
+        "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "treeVerified": true,
+      "includesPinnedMain": true
+    },
+    {
+      "name": "solution-configurations",
+      "number": 3703,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3703",
+      "branch": "codex/p18-solution-configurations",
+      "remoteHead": "81e9ae2e0c6d424d5a45c29c5779f80eee6878c2",
+      "localHead": "2bb0ecb72d2f4c6538d00718af241e2ac8bc5e84",
+      "base": "codex/p18-solution-reader",
+      "baseCommit": "67e5bf9a70f1390b1f909572f1bd2c8fb6fe6228",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "requiredCore": {
+        "runId": 37168809359,
+        "jobId": 111337340538,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168809359/job/111337340538"
+      },
+      "cancelledDuplicateRuns": [
+        37168806114
+      ],
+      "tree": "b4ab72af5de4fbe77d4f47c734aeed0b9e6f2d49",
+      "localTree": "b4ab72af5de4fbe77d4f47c734aeed0b9e6f2d49",
+      "orderedRemoteParents": [
+        "67e5bf9a70f1390b1f909572f1bd2c8fb6fe6228"
+      ],
+      "orderedLocalParents": [
+        "67e5bf9a70f1390b1f909572f1bd2c8fb6fe6228"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "test-formats",
+      "number": 3717,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3717",
+      "branch": "codex/p18-test-formats",
+      "remoteHead": "0dfdc76c253dace9d2c0870a25c11b1900cef2c8",
+      "localHead": "87cb6b97367cf1512a6f6befc71a579b59e9c9b7",
+      "base": "codex/p18-test-model",
+      "baseCommit": "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "requiredCore": {
+        "runId": 37169006131,
+        "jobId": 111337938534,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169006131/job/111337938534"
+      },
+      "cancelledDuplicateRuns": [
+        37169003222
+      ],
+      "tree": "4ff4e682595b09b5e83e355a42136013925cbc29",
+      "localTree": "4ff4e682595b09b5e83e355a42136013925cbc29",
+      "orderedRemoteParents": [
+        "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb"
+      ],
+      "orderedLocalParents": [
+        "f69a24c941ff85eb12f5e1525c59b6d74a65d9bb"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "native-testing",
+      "number": 3737,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3737",
+      "branch": "codex/p18-native-testing",
+      "remoteHead": "100fa0b9ff7734e7c34853b1e5fa8698e87b8b66",
+      "localHead": "88113a40c20df93a36399a2560a14b6c384d5758",
+      "base": "codex/p18-native-testing-base",
+      "baseCommit": "84b5678eb8a4284edee508d659244566e65bb12d",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "requiredCore": {
+        "runId": 37169446168,
+        "jobId": 111339221144,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169446168/job/111339221144"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "091173c4e4650c30869cb195b5d2b981aec46bdd",
+      "localTree": "091173c4e4650c30869cb195b5d2b981aec46bdd",
+      "orderedRemoteParents": [
+        "78eb3585fb69bba281efd9a12f5de9fb825bc2ea"
+      ],
+      "orderedLocalParents": [
+        "1782bebbd0aebf56d82e1b19af7c4a1884e0f77d"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "test-symbols",
+      "number": 3789,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3789",
+      "branch": "codex/p18-test-symbols",
+      "remoteHead": "edce4592e010dba4eb6559b76e0e69be4de85953",
+      "localHead": "1a78bc644a7b0c826a38e57e08cd0173cde09fb3",
+      "base": "main",
+      "baseCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": false,
+      "previousPublishedHead": "804336d9df74dbe3725ba7050ddb41ae9397184b",
+      "requiredCore": {
+        "runId": 37174647315,
+        "jobId": 111354637707,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37174647315/job/111354637707"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "111080c164a49adde212584354707a2234670f2c",
+      "localTree": "111080c164a49adde212584354707a2234670f2c",
+      "orderedRemoteParents": [
+        "e853830d827a16ee3c0a2c755fd37ddb103c5137"
+      ],
+      "orderedLocalParents": [
+        "fa8c369cfb265e68a3f21bd01a1d0a181041b8fb"
+      ],
+      "treeVerified": true,
+      "includesPinnedMain": true
+    },
+    {
+      "name": "test-runtime",
+      "number": 3828,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3828",
+      "branch": "codex/p18-test-runtime",
+      "remoteHead": "18a93a256fb77b01846a002bc7c83dc11ff3c1ee",
+      "localHead": "cf0cf5abb1d783c2f01b95080b7f624ee4857001",
+      "base": "codex/p18-test-runtime-base",
+      "baseCommit": "acba61f8aa503f1e4ff482b283eb08ca52c6d0cd",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "previousPublishedHead": "cb84720c45f5e6827089ef4208dad467e1964336",
+      "requiredCore": {
+        "runId": 37177309280,
+        "jobId": 111362513325,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37177309280/job/111362513325"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "5ea568ffe140473ad386aa43a329f19a23e60093",
+      "localTree": "5ea568ffe140473ad386aa43a329f19a23e60093",
+      "orderedRemoteParents": [
+        "cb84720c45f5e6827089ef4208dad467e1964336"
+      ],
+      "orderedLocalParents": [
+        "cb84720c45f5e6827089ef4208dad467e1964336"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "framework-discovery",
+      "number": 3841,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3841",
+      "branch": "codex/p18-framework-discovery",
+      "remoteHead": "4db66c018c4c9db3ee8070dab668602c2e148660",
+      "localHead": "aa7efac35aa6cf98ccddf01f750a550c9708f876",
+      "base": "codex/p18-framework-discovery-base",
+      "baseCommit": "1ac29694e320a4adae56349cf8af9f6c71ac616c",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "previousPublishedHead": "691027333e7d85c98f287e75dedc371ba9b58937",
+      "requiredCore": {
+        "runId": 37177310577,
+        "jobId": 111362517281,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37177310577/job/111362517281"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "66a04873e5d4308410b615d434d337d840d004c6",
+      "localTree": "66a04873e5d4308410b615d434d337d840d004c6",
+      "orderedRemoteParents": [
+        "691027333e7d85c98f287e75dedc371ba9b58937",
+        "18a93a256fb77b01846a002bc7c83dc11ff3c1ee"
+      ],
+      "orderedLocalParents": [
+        "691027333e7d85c98f287e75dedc371ba9b58937",
+        "cf0cf5abb1d783c2f01b95080b7f624ee4857001"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "portable-testing",
+      "number": 3845,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3845",
+      "branch": "codex/p18-portable-testing",
+      "remoteHead": "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+      "localHead": "3df5a5db47509f0708a0d0678a46f0577f0586a5",
+      "base": "codex/p18-framework-discovery",
+      "baseCommit": "4db66c018c4c9db3ee8070dab668602c2e148660",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "previousPublishedHead": "132417dc29ef7ba01a2d1c41b361436e9682b021",
+      "requiredCore": {
+        "runId": 37177312402,
+        "jobId": 111362522595,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37177312402/job/111362522595"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "d4c1c47a241fe96636e18ab1ae4f94dc41eca710",
+      "localTree": "d4c1c47a241fe96636e18ab1ae4f94dc41eca710",
+      "orderedRemoteParents": [
+        "132417dc29ef7ba01a2d1c41b361436e9682b021",
+        "4db66c018c4c9db3ee8070dab668602c2e148660"
+      ],
+      "orderedLocalParents": [
+        "132417dc29ef7ba01a2d1c41b361436e9682b021",
+        "aa7efac35aa6cf98ccddf01f750a550c9708f876"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "test-transports",
+      "number": 3903,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3903",
+      "branch": "codex/p18-test-transports",
+      "remoteHead": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+      "localHead": "41d282692a5435f558eac289251c63542ba6f009",
+      "base": "codex/p18-test-transports-base",
+      "baseCommit": "6faf4b6dd80cacd72253ba88f874626af761668f",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "previousPublishedHead": "067970cf82f8e26c56445ac110f835b9a6292688",
+      "requiredCore": {
+        "runId": 37175318708,
+        "jobId": 111356628229,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175318708/job/111356628229"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "5c337179d85a135c8e824692781b524ab153ece9",
+      "localTree": "5c337179d85a135c8e824692781b524ab153ece9",
+      "orderedRemoteParents": [
+        "067970cf82f8e26c56445ac110f835b9a6292688"
+      ],
+      "orderedLocalParents": [
+        "067970cf82f8e26c56445ac110f835b9a6292688"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "test-explorer",
+      "number": 3908,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3908",
+      "branch": "codex/p18-test-explorer",
+      "remoteHead": "224da54ab1f5f3d53be6c83fda3b1dceee5921dd",
+      "localHead": "3573915987c3a7e0a1bb0c4943479bfba3fb7780",
+      "base": "codex/p18-test-transports",
+      "baseCommit": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "previousPublishedHead": "fd38a35378b6688d343f1f09c4157e21882e9856",
+      "requiredCore": {
+        "runId": 37175360031,
+        "jobId": 111356747106,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175360031/job/111356747106"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "afdbb5e1a8c6113ef196fb63dbbfcc874d895648",
+      "localTree": "afdbb5e1a8c6113ef196fb63dbbfcc874d895648",
+      "orderedRemoteParents": [
+        "fd38a35378b6688d343f1f09c4157e21882e9856",
+        "42ab679e87e56412ad540f59314ead3e51bca6dc"
+      ],
+      "orderedLocalParents": [
+        "fd38a35378b6688d343f1f09c4157e21882e9856",
+        "41d282692a5435f558eac289251c63542ba6f009"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "evaluation-corpus",
+      "number": 4129,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4129",
+      "branch": "codex/p18-evaluation-corpus",
+      "remoteHead": "cde580cba3b5183098e63190ed8d6af835c992be",
+      "localHead": "c31afe2dad5abcd7f26de1300d2432c3c8fb7d04",
+      "base": "codex/p18-evaluation-corpus-base",
+      "baseCommit": "f132dc3680e85efbdeb7826f524cce95ca5a46d9",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "requiredCore": {
+        "runId": 37175610173,
+        "jobId": 111357479762,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175610173/job/111357479762"
+      },
+      "cancelledDuplicateRuns": [
+        37175608689
+      ],
+      "tree": "406826433ad75fd715fb68c672716ced3b2e3b62",
+      "localTree": "406826433ad75fd715fb68c672716ced3b2e3b62",
+      "orderedRemoteParents": [
+        "f132dc3680e85efbdeb7826f524cce95ca5a46d9"
+      ],
+      "orderedLocalParents": [
+        "f132dc3680e85efbdeb7826f524cce95ca5a46d9"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "msbuild-oracles",
+      "number": 4193,
+      "publicationOwner": "tests_workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4193",
+      "branch": "codex/p18-msbuild-oracles",
+      "remoteHead": "75fd6dc0eb76d8d5137109a419f13238903be89d",
+      "localHead": "6f1e91628a9796a342d65f9ae76047460aaecbc6",
+      "base": "codex/p18-msbuild-oracles-base",
+      "baseCommit": "6b58a7da151a5b9bd6fe126e976cdcce4842304c",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "requiredCore": {
+        "runId": 37176551737,
+        "jobId": 111360240823,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37176551737/job/111360240823"
+      },
+      "cancelledDuplicateRuns": [
+        37176549988
+      ],
+      "tree": "4bc1ec298a40f30cfcf10cda481167685cb4dd74",
+      "localTree": "4bc1ec298a40f30cfcf10cda481167685cb4dd74",
+      "orderedRemoteParents": [
+        "6b58a7da151a5b9bd6fe126e976cdcce4842304c"
+      ],
+      "orderedLocalParents": [
+        "6b58a7da151a5b9bd6fe126e976cdcce4842304c"
+      ],
+      "treeVerified": true
+    },
+    {
+      "name": "project-reference-corpus",
+      "number": 4181,
+      "publicationOwner": "workspace_inventory",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4181",
+      "branch": "codex/p18-project-reference-corpus",
+      "remoteHead": "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+      "localHead": "954b50e0e242a24ec36ef8e1fdb90cd6823a8cb7",
+      "base": "codex/p18-project-runtime",
+      "baseCommit": "03432c9ab0d6108adb29b31f5e78ce7d76947538",
+      "draft": true,
+      "state": "open",
+      "reportedMergeable": true,
+      "requiredCore": {
+        "runId": 37176518258,
+        "jobId": 111360136578,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37176518258/job/111360136578"
+      },
+      "cancelledDuplicateRuns": [],
+      "tree": "1d032f06ef6411184a396883edd7290234dfa62d",
+      "localTree": "1d032f06ef6411184a396883edd7290234dfa62d",
+      "orderedRemoteParents": [
+        "7433bf740a71b3c6e33e371b196c8d7173569646",
+        "03432c9ab0d6108adb29b31f5e78ce7d76947538"
+      ],
+      "orderedLocalParents": [
+        "e174152f97a4320663768033e64194eb242c3457",
+        "139bef5fc33ff0316cf7edcfdf0fd5997d739c38"
+      ],
+      "treeVerified": true
+    }
+  ],
+  "remaining": [
+    "Root-owned final pinned-main complete integration qualification; no local rerun is launched during publication.",
+    "Native xUnit/NUnit/MSTest/coverlet acceptance remains unqualified after the single bounded package restore timed out with empty cache.",
+    "Windows/macOS and Rust native/Wasm closed-graph/test invocation qualification are not claimed.",
+    "Three benchmark rows exceed the 5% contribution budget; measurements and non-causal profiling are retained for explicit review/sign-off.",
+    "Protected Studio entry and matching root package-lock integration remain coordinator-owned; prepared source is not represented as applied."
+  ],
+  "canonicalIntegration": {
+    "head": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "tree": "9bf41c0b3ba02032b2e9688b2e51add271cdebcf",
+    "parents": [
+      "1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+      "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+    ],
+    "coordinatorQualification": {
+      "selectedFiles": 227,
+      "status": "pending",
+      "owner": "root"
+    },
+    "sourceOwners": "frozen"
+  }
+}

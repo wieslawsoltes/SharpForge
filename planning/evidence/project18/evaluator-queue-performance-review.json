@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "portable_evaluator",
+  "generatedAt": "2026-10-04T06:40:51.832803+00:00",
+  "mode": "Read-only review of existing exact source and completed raw measurement; no new test, benchmark, profile or product change.",
+  "baselineCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "rawEvidence": {
+    "path": "/tmp/p18-final-qualification-logs/performance-e9f8a8cd/benchmark.json",
+    "sha256": "a1d39556b4568aec135f51a7bae8c8a2c0614958d6fda241038a15b7f135c9db"
+  },
+  "method": {
+    "node": "v22.23.3",
+    "machine": {
+      "system": "Linux",
+      "release": "6.18.44",
+      "architecture": "x86_64"
+    },
+    "pairs": 3,
+    "warmSamplesPerWorkloadAndTree": 12,
+    "p95Method": "nearest rank",
+    "method": "Identical existing benchmark-release14.js; one cold and four warm samples per workload/engine/process; alternating baseline/final order; all processes serial through limited.js.",
+    "limitations": [
+      "Shared machine; root-owned heavy jobs are serial but external work is not stopped.",
+      "Complete-tree comparison does not isolate a single change.",
+      "Managed allocation counter only; JavaScript allocation is not measured.",
+      "Historical failed budget measurements remain retained separately."
+    ]
+  },
+  "commands": [
+    {
+      "label": "baseline",
+      "pair": 1,
+      "sourceCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "startedAt": "2026-10-04T05:49:29.332792+00:00",
+      "resourceBefore": {
+        "freeBytes": 2861559808,
+        "loadAverage": [
+          1.6494140625,
+          2.15771484375,
+          2.4375
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1303233\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "stdout": "baseline-1.json",
+      "stderr": "baseline-1.stderr.txt",
+      "completedAt": "2026-10-04T05:49:37.420414+00:00",
+      "exitCode": 0,
+      "resourceAfter": {
+        "freeBytes": 2861391872,
+        "loadAverage": [
+          1.7578125,
+          2.171875,
+          2.44091796875
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1304463\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "sourceAfter": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "checkoutStatusAfter": ""
+    },
+    {
+      "label": "final",
+      "pair": 1,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "startedAt": "2026-10-04T05:49:37.438036+00:00",
+      "resourceBefore": {
+        "freeBytes": 1046040576,
+        "loadAverage": [
+          1.7578125,
+          2.171875,
+          2.44091796875
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1304463\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "stdout": "final-1.json",
+      "stderr": "final-1.stderr.txt",
+      "completedAt": "2026-10-04T05:49:45.360464+00:00",
+      "exitCode": 0,
+      "resourceAfter": {
+        "freeBytes": 1045700608,
+        "loadAverage": [
+          2.02294921875,
+          2.21630859375,
+          2.453125
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1306005\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "checkoutStatusAfter": ""
+    },
+    {
+      "label": "final",
+      "pair": 2,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "startedAt": "2026-10-04T05:49:45.386342+00:00",
+      "resourceBefore": {
+        "freeBytes": 1045700608,
+        "loadAverage": [
+          2.02294921875,
+          2.21630859375,
+          2.453125
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1306005\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "stdout": "final-2.json",
+      "stderr": "final-2.stderr.txt",
+      "completedAt": "2026-10-04T05:49:53.047295+00:00",
+      "exitCode": 0,
+      "resourceAfter": {
+        "freeBytes": 1045700608,
+        "loadAverage": [
+          2.0869140625,
+          2.22509765625,
+          2.45361328125
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1307729\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "checkoutStatusAfter": ""
+    },
+    {
+      "label": "baseline",
+      "pair": 2,
+      "sourceCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "startedAt": "2026-10-04T05:49:53.078053+00:00",
+      "resourceBefore": {
+        "freeBytes": 2861174784,
+        "loadAverage": [
+          2.0869140625,
+          2.22509765625,
+          2.45361328125
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1307729\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "stdout": "baseline-2.json",
+      "stderr": "baseline-2.stderr.txt",
+      "completedAt": "2026-10-04T05:50:00.654695+00:00",
+      "exitCode": 0,
+      "resourceAfter": {
+        "freeBytes": 2860990464,
+        "loadAverage": [
+          1.99951171875,
+          2.20458984375,
+          2.44580078125
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1309645\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "sourceAfter": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "checkoutStatusAfter": ""
+    },
+    {
+      "label": "baseline",
+      "pair": 3,
+      "sourceCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "startedAt": "2026-10-04T05:50:00.707403+00:00",
+      "resourceBefore": {
+        "freeBytes": 2860986368,
+        "loadAverage": [
+          1.99951171875,
+          2.20458984375,
+          2.44580078125
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1309645\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "stdout": "baseline-3.json",
+      "stderr": "baseline-3.stderr.txt",
+      "completedAt": "2026-10-04T05:50:08.330725+00:00",
+      "exitCode": 0,
+      "resourceAfter": {
+        "freeBytes": 2860978176,
+        "loadAverage": [
+          2.08642578125,
+          2.21484375,
+          2.44677734375
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1310315\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "sourceAfter": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "checkoutStatusAfter": ""
+    },
+    {
+      "label": "final",
+      "pair": 3,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "startedAt": "2026-10-04T05:50:08.346352+00:00",
+      "resourceBefore": {
+        "freeBytes": 1045700608,
+        "loadAverage": [
+          2.08642578125,
+          2.21484375,
+          2.44677734375
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1310315\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "stdout": "final-3.json",
+      "stderr": "final-3.stderr.txt",
+      "completedAt": "2026-10-04T05:50:15.962962+00:00",
+      "exitCode": 0,
+      "resourceAfter": {
+        "freeBytes": 1045700608,
+        "loadAverage": [
+          2.0791015625,
+          2.2109375,
+          2.4443359375
+        ],
+        "memoryEvents": "low 0\nhigh 0\nmax 1311145\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "checkoutStatusAfter": ""
+    }
+  ],
+  "queueSource": {
+    "workload": "queue",
+    "engine": "source",
+    "baseline": {
+      "warmSamplesMs": [
+        29.171183000000383,
+        23.946391999999832,
+        25.383338999999978,
+        24.262087999999494,
+        25.745515999999952,
+        22.38759300000038,
+        23.120076999999583,
+        42.20093199999974,
+        32.30796099999952,
+        25.804987000000438,
+        25.237810999999965,
+        25.259863999999652
+      ],
+      "coldSamplesMs": [
+        48.956027999999606,
+        32.09302899999966,
+        59.63765599999988
+      ],
+      "allocatedBytes": [
+        65984,
+        65984,
+        65984
+      ],
+      "outputs": [
+        "7998000\n",
+        "7998000\n",
+        "7998000\n"
+      ],
+      "medianMs": 25.321601499999815,
+      "p95Ms": 42.20093199999974
+    },
+    "final": {
+      "warmSamplesMs": [
+        30.957368000000315,
+        28.8211510000001,
+        34.60407899999973,
+        38.42706999999973,
+        27.660369000000173,
+        25.28189100000054,
+        23.15393199999926,
+        25.820542999999816,
+        24.349162000000433,
+        31.626242999999704,
+        31.4357059999993,
+        24.835305000000517
+      ],
+      "coldSamplesMs": [
+        51.626814000000195,
+        32.09552799999983,
+        31.71639899999991
+      ],
+      "allocatedBytes": [
+        65984,
+        65984,
+        65984
+      ],
+      "outputs": [
+        "7998000\n",
+        "7998000\n",
+        "7998000\n"
+      ],
+      "medianMs": 28.240760000000137,
+      "p95Ms": 38.42706999999973
+    },
+    "medianChangePercent": 11.528332834715616,
+    "p95ChangePercent": -8.942603447715403,
+    "managedAllocationUnchanged": true,
+    "requiresMedianBudgetReview": true
+  },
+  "pairs": [
+    {
+      "pair": 1,
+      "runOrder": [
+        "baseline",
+        "final"
+      ],
+      "baselineWarmMs": [
+        29.171183000000383,
+        23.946391999999832,
+        25.383338999999978,
+        24.262087999999494
+      ],
+      "finalWarmMs": [
+        30.957368000000315,
+        28.8211510000001,
+        34.60407899999973,
+        38.42706999999973
+      ],
+      "baselineMedianMs": 24.822713499999736,
+      "finalMedianMs": 32.78072350000002,
+      "medianChangePercent": 32.05938786668254
+    },
+    {
+      "pair": 2,
+      "runOrder": [
+        "final",
+        "baseline"
+      ],
+      "baselineWarmMs": [
+        25.745515999999952,
+        22.38759300000038,
+        23.120076999999583,
+        42.20093199999974
+      ],
+      "finalWarmMs": [
+        27.660369000000173,
+        25.28189100000054,
+        23.15393199999926,
+        25.820542999999816
+      ],
+      "baselineMedianMs": 24.432796499999768,
+      "finalMedianMs": 25.55121700000018,
+      "medianChangePercent": 4.577537818892008
+    },
+    {
+      "pair": 3,
+      "runOrder": [
+        "baseline",
+        "final"
+      ],
+      "baselineWarmMs": [
+        32.30796099999952,
+        25.804987000000438,
+        25.237810999999965,
+        25.259863999999652
+      ],
+      "finalWarmMs": [
+        24.349162000000433,
+        31.626242999999704,
+        31.4357059999993,
+        24.835305000000517
+      ],
+      "baselineMedianMs": 25.532425500000045,
+      "finalMedianMs": 28.13550549999991,
+      "medianChangePercent": 10.195192775554585
+    }
+  ],
+  "variance": {
+    "baseline": {
+      "meanMs": 27.068978583333244,
+      "standardDeviationMs": 5.234479199012,
+      "coefficientOfVariationPercent": 19.337557133518672,
+      "minimumMs": 22.38759300000038,
+      "maximumMs": 42.20093199999974
+    },
+    "final": {
+      "meanMs": 28.9144015833333,
+      "standardDeviationMs": 4.432455111583102,
+      "coefficientOfVariationPercent": 15.329575812968013,
+      "minimumMs": 23.15393199999926,
+      "maximumMs": 38.42706999999973
+    }
+  },
+  "unchangedSourceProofs": [
+    {
+      "path": "scripts/benchmark-release14.js",
+      "baselineObject": "5a3758ee9f2ca29cdc09ceb9d8da94d1b9d6150c",
+      "finalObject": "5a3758ee9f2ca29cdc09ceb9d8da94d1b9d6150c",
+      "unchanged": true
+    },
+    {
+      "path": "packages/runtime/src/vm.js",
+      "baselineObject": "a3554a8841621918c61a1225f749bd97aa14e6a4",
+      "finalObject": "a3554a8841621918c61a1225f749bd97aa14e6a4",
+      "unchanged": true
+    },
+    {
+      "path": "packages/runtime/src/heap.js",
+      "baselineObject": "08dfae9340a82d5ccd51a9bf1dca186bee95aa7a",
+      "finalObject": "08dfae9340a82d5ccd51a9bf1dca186bee95aa7a",
+      "unchanged": true
+    },
+    {
+      "path": "packages/runtime/src/platform.js",
+      "baselineObject": "c1386e32242902d9569ac1b7ad4b655274953190",
+      "finalObject": "c1386e32242902d9569ac1b7ad4b655274953190",
+      "unchanged": true
+    },
+    {
+      "path": "packages/runtime/src/execution/source-ops",
+      "baselineObject": "1e6120889794ce21d9e7515a99bec33b69a12295",
+      "finalObject": "1e6120889794ce21d9e7515a99bec33b69a12295",
+      "unchanged": true
+    },
+    {
+      "path": "packages/runtime/src/execution/source-builtins.js",
+      "baselineObject": "a27b3dba8644174121fe34efa32c4fafb4f3e508",
+      "finalObject": "a27b3dba8644174121fe34efa32c4fafb4f3e508",
+      "unchanged": true
+    },
+    {
+      "path": "packages/runtime/src/execution/source-values.js",
+      "baselineObject": "45d422c36539830f94a8a36bb8382152c2da0a8e",
+      "finalObject": "45d422c36539830f94a8a36bb8382152c2da0a8e",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-collections/src",
+      "baselineObject": "92f21ecaf0155213c86c5e82d1c890366028a926",
+      "finalObject": "92f21ecaf0155213c86c5e82d1c890366028a926",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-core/src/registry.js",
+      "baselineObject": "11ba50683c1114d18a1db0e7acf38bfe2d64c235",
+      "finalObject": "11ba50683c1114d18a1db0e7acf38bfe2d64c235",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-core/src/host.js",
+      "baselineObject": "7c5b2033bb794114451ae5cf0aa8375303d114e6",
+      "finalObject": "7c5b2033bb794114451ae5cf0aa8375303d114e6",
+      "unchanged": true
+    }
+  ],
+  "callPath": [
+    "Source VM BUILTIN",
+    "platform.invoke",
+    "BCL adapter / registry family Map",
+    "legacy-closed.invoke",
+    "Queue count / queueEnqueue / peekOrRemove",
+    "indexed storage / cached property indexes / heap"
+  ],
+  "sourceReview": [
+    {
+      "finding": "The measured Queue algorithms and interpreter dispatch files are unchanged.",
+      "evidence": "unchangedSourceProofs; the complete bcl-collections/src tree is identical."
+    },
+    {
+      "finding": "Queue Enqueue, Dequeue and Count do not call MethodTableRegistry.get on each element operation.",
+      "paths": [
+        "packages/bcl-collections/src/legacy-closed.js",
+        "packages/bcl-collections/src/legacy-storage.js",
+        "packages/runtime/src/platform.js"
+      ]
+    },
+    {
+      "finding": "The registered-name normalization checks can run during heap allocation, construction or backing-buffer growth. They are not the per-Queue-operation path.",
+      "paths": [
+        "packages/runtime/src/execution/method-table.js",
+        "packages/runtime/src/execution/type-names.js"
+      ],
+      "limitation": "The nullable registry and object-shape changes remain possible JIT/allocation influences; this static review does not measure their cost."
+    },
+    {
+      "finding": "No assembly-qualified project graph is used by this standalone source benchmark. Its registry remains unqualified.",
+      "paths": [
+        "scripts/benchmark-release14.js",
+        "packages/runtime/src/execution/method-table.js"
+      ]
+    },
+    {
+      "finding": "VM construction, graph admission and compile/emission occur before the measured vm.run interval.",
+      "paths": [
+        "scripts/benchmark-release14.js"
+      ],
+      "limitation": "Generated IR byte identity is not inferred solely from this inspection."
+    },
+    {
+      "finding": "CIL FieldResolutionCache and CIL type-system changes do not execute on the source Queue path; reflection type-display is also absent from this fixture.",
+      "paths": [
+        "packages/runtime/src/execution/field-resolution-cache.js",
+        "packages/runtime/src/execution/type-display.js"
+      ]
+    }
+  ],
+  "allWorkloadDeltas": [
+    {
+      "workload": "dictionary",
+      "engine": "source",
+      "medianChangePercent": 2.2330338542488004,
+      "p95ChangePercent": 10.531808084684545,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "dictionary",
+      "engine": "cil",
+      "medianChangePercent": -1.9900226876862992,
+      "p95ChangePercent": 11.266887497607602,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "list",
+      "engine": "source",
+      "medianChangePercent": -3.0423793622371798,
+      "p95ChangePercent": -7.200541220159518,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "list",
+      "engine": "cil",
+      "medianChangePercent": 4.256193202440461,
+      "p95ChangePercent": -0.120181519011886,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "queue",
+      "engine": "source",
+      "medianChangePercent": 11.528332834715616,
+      "p95ChangePercent": -8.942603447715403,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "queue",
+      "engine": "cil",
+      "medianChangePercent": -10.76639300487109,
+      "p95ChangePercent": -15.626977441309897,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "builder",
+      "engine": "source",
+      "medianChangePercent": -11.514029686779615,
+      "p95ChangePercent": -0.0630494173151308,
+      "managedAllocationUnchanged": true
+    },
+    {
+      "workload": "builder",
+      "engine": "cil",
+      "medianChangePercent": -11.138835930313418,
+      "p95ChangePercent": 17.540741272263816,
+      "managedAllocationUnchanged": true
+    }
+  ],
+  "conclusion": {
+    "cause": "Not established. The three paired medians all increased, with substantial pair-to-pair and within-process variation.",
+    "queueMedianBudgetReview": "Open: +11.528% median exceeds the 5% contribution budget; lower p95 does not cancel that result.",
+    "tailReview": "Dictionary source/CIL and builder CIL p95 increases remain recorded separately.",
+    "action": "No speculative optimization or rollback. Retain review/sign-off requirement and all historical failed budget measurements.",
+    "limits": [
+      "Shared-host activity is a documented limitation, not an established cause.",
+      "Managed allocations do not measure JavaScript allocations.",
+      "A complete-tree comparison cannot isolate a causal change.",
+      "Existing earlier b34/c1 profiles and failures are not replaced by this measurement."
+    ]
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "publishedAt": "2026-10-03",
+  "method": "GitHub Git Data API, forward commits with exact source-tree verification",
+  "qualificationSource": "c480cacc88bf101174bd394440e52564e8a6d11e",
+  "entries": [
+    {
+      "name": "paths",
+      "sha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+      "tree": "c2397b4c87ddad8c8affc3f46472a9154a74dbe9",
+      "pr": 3481,
+      "source": "c293d821a68e0fe0f4583b75a7f8340b62bb8e53",
+      "branch": "codex/p18-foundation-paths",
+      "commitReadBack": {
+        "name": "paths",
+        "remote": "821eacc2618cc816708f88a454ecdb3161aa6959",
+        "tree": "c2397b4c87ddad8c8affc3f46472a9154a74dbe9",
+        "parents": [
+          "0487c35122f2183c2296778e1285f7a30e66edef"
+        ],
+        "treeMatches": true,
+        "parentMatches": null
+      },
+      "pullRequestReadBack": {
+        "name": "paths",
+        "pr": 3481,
+        "head": "821eacc2618cc816708f88a454ecdb3161aa6959",
+        "base": "main",
+        "draft": true,
+        "changedFiles": 8,
+        "additions": 293,
+        "deletions": 33
+      }
+    },
+    {
+      "name": "vfs",
+      "sha": "95d874a8c464ad606f043c6be9387d070eb98353",
+      "tree": "feacac83f49a828e45a618bcb7e8de094bbd7900",
+      "pr": 3511,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3511",
+      "source": "9e33c12e4a871018cdc48815e169049ced12f00f",
+      "sourceBase": "c293d821a68e0fe0f4583b75a7f8340b62bb8e53",
+      "branch": "codex/p18-foundation-vfs",
+      "baseBranch": "codex/p18-foundation-paths",
+      "stats": "11 files changed, 514 insertions(+), 23 deletions(-)",
+      "commitReadBack": {
+        "name": "vfs",
+        "remote": "95d874a8c464ad606f043c6be9387d070eb98353",
+        "tree": "feacac83f49a828e45a618bcb7e8de094bbd7900",
+        "parents": [
+          "821eacc2618cc816708f88a454ecdb3161aa6959"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pullRequestReadBack": {
+        "name": "vfs",
+        "pr": 3511,
+        "head": "95d874a8c464ad606f043c6be9387d070eb98353",
+        "base": "codex/p18-foundation-paths",
+        "draft": true,
+        "changedFiles": 11,
+        "additions": 514,
+        "deletions": 23
+      }
+    },
+    {
+      "name": "watch",
+      "sha": "40f0c2b7fe82040422f3aa8b3c1b53c4469ef871",
+      "tree": "ab8decc4395581263cf732be8f869c8a71490ed6",
+      "pr": 3514,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3514",
+      "source": "32bdd57f8f0192be6e5742942ba383e5ea5585fa",
+      "sourceBase": "9e33c12e4a871018cdc48815e169049ced12f00f",
+      "branch": "codex/p18-foundation-watch",
+      "baseBranch": "codex/p18-foundation-vfs",
+      "stats": "6 files changed, 452 insertions(+)",
+      "commitReadBack": {
+        "name": "watch",
+        "remote": "40f0c2b7fe82040422f3aa8b3c1b53c4469ef871",
+        "tree": "ab8decc4395581263cf732be8f869c8a71490ed6",
+        "parents": [
+          "95d874a8c464ad606f043c6be9387d070eb98353"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pullRequestReadBack": {
+        "name": "watch",
+        "pr": 3514,
+        "head": "40f0c2b7fe82040422f3aa8b3c1b53c4469ef871",
+        "base": "codex/p18-foundation-vfs",
+        "draft": true,
+        "changedFiles": 6,
+        "additions": 452,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "fsa",
+      "sha": "85a65e09fadb02e6ee8bf46a6ba8b664721c0946",
+      "tree": "1e0d6bd0927ae18b7869f8ed7d692eaa7963d84c",
+      "pr": 3515,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3515",
+      "source": "b6a604ddf71b1deed742f34736e8566a761a3653",
+      "sourceBase": "32bdd57f8f0192be6e5742942ba383e5ea5585fa",
+      "branch": "codex/p18-foundation-fsa",
+      "baseBranch": "codex/p18-foundation-watch",
+      "stats": "6 files changed, 560 insertions(+)",
+      "commitReadBack": {
+        "name": "fsa",
+        "remote": "85a65e09fadb02e6ee8bf46a6ba8b664721c0946",
+        "tree": "1e0d6bd0927ae18b7869f8ed7d692eaa7963d84c",
+        "parents": [
+          "40f0c2b7fe82040422f3aa8b3c1b53c4469ef871"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pullRequestReadBack": {
+        "name": "fsa",
+        "pr": 3515,
+        "head": "85a65e09fadb02e6ee8bf46a6ba8b664721c0946",
+        "base": "codex/p18-foundation-watch",
+        "draft": true,
+        "changedFiles": 6,
+        "additions": 560,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "opfs",
+      "sha": "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+      "tree": "0b8abcf6ce3ff7605f3112242daba51a7c2d5fe6",
+      "pr": 3516,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3516",
+      "source": "4e06b3e4748c6c13586a5acb59afce982171b6fe",
+      "sourceBase": "b6a604ddf71b1deed742f34736e8566a761a3653",
+      "branch": "codex/p18-foundation-opfs",
+      "baseBranch": "codex/p18-foundation-fsa",
+      "stats": "8 files changed, 394 insertions(+), 1 deletion(-)",
+      "commitReadBack": {
+        "name": "opfs",
+        "remote": "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+        "tree": "0b8abcf6ce3ff7605f3112242daba51a7c2d5fe6",
+        "parents": [
+          "85a65e09fadb02e6ee8bf46a6ba8b664721c0946"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pullRequestReadBack": {
+        "name": "opfs",
+        "pr": 3516,
+        "head": "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+        "base": "codex/p18-foundation-fsa",
+        "draft": true,
+        "changedFiles": 8,
+        "additions": 394,
+        "deletions": 1
+      }
+    },
+    {
+      "name": "disk-scan",
+      "sha": "4f8072952b21ff80416cba9938d062d51403deb8",
+      "tree": "2a51b52beaae147a912958cfd25e57969fd3eff0",
+      "pr": 3517,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3517",
+      "source": "cd506abf7d2b209e0de40807b4c94999c6004430",
+      "sourceBase": "b6a604ddf71b1deed742f34736e8566a761a3653",
+      "branch": "codex/p18-foundation-disk-scan",
+      "baseBranch": "codex/p18-foundation-fsa",
+      "stats": "6 files changed, 394 insertions(+), 22 deletions(-)",
+      "commitReadBack": {
+        "name": "disk-scan",
+        "remote": "4f8072952b21ff80416cba9938d062d51403deb8",
+        "tree": "2a51b52beaae147a912958cfd25e57969fd3eff0",
+        "parents": [
+          "85a65e09fadb02e6ee8bf46a6ba8b664721c0946"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pullRequestReadBack": {
+        "name": "disk-scan",
+        "pr": 3517,
+        "head": "4f8072952b21ff80416cba9938d062d51403deb8",
+        "base": "codex/p18-foundation-fsa",
+        "draft": true,
+        "changedFiles": 6,
+        "additions": 394,
+        "deletions": 22
+      }
+    },
+    {
+      "name": "overlay",
+      "sha": "106298a1b9ce26c56a4338660831484296c32ee9",
+      "tree": "ea05a582a064ff24eed56ab0111c5e390e86e683",
+      "pr": 3518,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3518",
+      "source": "d9ee92bf4dc9c85eb2efffed58f265d2d8b18bd6",
+      "sourceBase": "9e33c12e4a871018cdc48815e169049ced12f00f",
+      "branch": "codex/p18-foundation-overlay",
+      "baseBranch": "codex/p18-foundation-vfs",
+      "stats": "6 files changed, 508 insertions(+)",
+      "commitReadBack": {
+        "name": "overlay",
+        "remote": "106298a1b9ce26c56a4338660831484296c32ee9",
+        "tree": "ea05a582a064ff24eed56ab0111c5e390e86e683",
+        "parents": [
+          "95d874a8c464ad606f043c6be9387d070eb98353"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pullRequestReadBack": {
+        "name": "overlay",
+        "pr": 3518,
+        "head": "106298a1b9ce26c56a4338660831484296c32ee9",
+        "base": "codex/p18-foundation-vfs",
+        "draft": true,
+        "changedFiles": 6,
+        "additions": 508,
+        "deletions": 0
+      }
+    }
+  ],
+  "constraints": {
+    "forceUpdates": 0,
+    "shellPushes": 0,
+    "mainMerges": 0,
+    "fullCiLabels": 0,
+    "workflowDispatches": 0,
+    "sourceHistory": "Original source branches, worktrees and merge history retained; API commit identities differ because publication uses the actual remote dependency parents."
+  }
+}

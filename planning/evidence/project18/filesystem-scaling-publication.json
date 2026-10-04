@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "method": "GitHub Git Data API, forward commits with exact source-tree verification",
+  "qualificationSource": "6a8429a25c31b0be270efac06d49910a61a2e45c",
+  "implementationSource": "33730e4a",
+  "entries": [
+    {
+      "name": "locks",
+      "sha": "7f4b3edf4a7c5e06ea9b94f6a88502126b7d84f0",
+      "tree": "4a321bc02792680fe7b6abac6a03f45a40b427e5",
+      "pr": 3542,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3542",
+      "source": "8786b5cbf75fe633d521ec6990a2944cc020739e",
+      "sourceBase": "9e33c12e4a871018cdc48815e169049ced12f00f",
+      "branch": "codex/p18-foundation-locks",
+      "baseBranch": "codex/p18-foundation-vfs",
+      "stats": "4 files changed, 134 insertions(+)",
+      "readBack": {
+        "name": "locks",
+        "remote": "7f4b3edf4a7c5e06ea9b94f6a88502126b7d84f0",
+        "tree": "4a321bc02792680fe7b6abac6a03f45a40b427e5",
+        "parents": [
+          "95d874a8c464ad606f043c6be9387d070eb98353"
+        ],
+        "treeMatches": true,
+        "parentMatches": true,
+        "pr": 3542,
+        "base": "codex/p18-foundation-vfs",
+        "draft": true,
+        "changedFiles": 4,
+        "additions": 134,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "identity",
+      "sha": "24e16f029ac07cca18733051f8df03807b7b44ab",
+      "tree": "eca8909444e66b724f31fe6733207234cf77bf06",
+      "pr": 3543,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3543",
+      "source": "2dfc37845c3333dbef8e55fe2aebae956e34a949",
+      "sourceBase": "8786b5cbf75fe633d521ec6990a2944cc020739e",
+      "branch": "codex/p18-foundation-identity",
+      "baseBranch": "codex/p18-foundation-locks",
+      "stats": "6 files changed, 360 insertions(+)",
+      "readBack": {
+        "name": "identity",
+        "remote": "24e16f029ac07cca18733051f8df03807b7b44ab",
+        "tree": "eca8909444e66b724f31fe6733207234cf77bf06",
+        "parents": [
+          "7f4b3edf4a7c5e06ea9b94f6a88502126b7d84f0"
+        ],
+        "treeMatches": true,
+        "parentMatches": true,
+        "pr": 3543,
+        "base": "codex/p18-foundation-locks",
+        "draft": true,
+        "changedFiles": 6,
+        "additions": 360,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "documents",
+      "sha": "6f1a1ed93436899555d91694412c562de049d816",
+      "tree": "f4219f63e23c24337b3e62d203a914083861ffc3",
+      "pr": 3544,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3544",
+      "source": "55e5d6674a90345c0470dfc6f68007d002334b9e",
+      "sourceBase": "9e33c12e4a871018cdc48815e169049ced12f00f",
+      "branch": "codex/p18-foundation-documents",
+      "baseBranch": "codex/p18-foundation-vfs",
+      "stats": "7 files changed, 383 insertions(+)",
+      "readBack": {
+        "name": "documents",
+        "remote": "6f1a1ed93436899555d91694412c562de049d816",
+        "tree": "f4219f63e23c24337b3e62d203a914083861ffc3",
+        "parents": [
+          "95d874a8c464ad606f043c6be9387d070eb98353"
+        ],
+        "treeMatches": true,
+        "parentMatches": true,
+        "pr": 3544,
+        "base": "codex/p18-foundation-vfs",
+        "draft": true,
+        "changedFiles": 7,
+        "additions": 383,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "reload",
+      "sha": "ca666cd96ea832b17cb69900da627dbae1e9ed64",
+      "tree": "60922bfc58fcd39a7e1aa17353618fadd75e91dc",
+      "pr": 3545,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3545",
+      "source": "b766fbd6608a9108a9e36d5c22c035c367696c2b",
+      "sourceBase": "32bdd57f8f0192be6e5742942ba383e5ea5585fa",
+      "branch": "codex/p18-foundation-reload",
+      "baseBranch": "codex/p18-foundation-watch",
+      "stats": "4 files changed, 197 insertions(+)",
+      "readBack": {
+        "name": "reload",
+        "remote": "ca666cd96ea832b17cb69900da627dbae1e9ed64",
+        "tree": "60922bfc58fcd39a7e1aa17353618fadd75e91dc",
+        "parents": [
+          "40f0c2b7fe82040422f3aa8b3c1b53c4469ef871"
+        ],
+        "treeMatches": true,
+        "parentMatches": true,
+        "pr": 3545,
+        "base": "codex/p18-foundation-watch",
+        "draft": true,
+        "changedFiles": 4,
+        "additions": 197,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "search",
+      "sha": "e39b407476bc378dd17c98da2545370e947ecedc",
+      "tree": "26ee089219220f3a9f9a8a300059bf5525fa1404",
+      "pr": 3546,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3546",
+      "source": "1366fdc62acabb1d798dbbce5f1438c37bf79263",
+      "sourceBase": "9e33c12e4a871018cdc48815e169049ced12f00f",
+      "branch": "codex/p18-foundation-search",
+      "baseBranch": "codex/p18-foundation-vfs",
+      "stats": "7 files changed, 642 insertions(+)",
+      "readBack": {
+        "name": "search",
+        "remote": "e39b407476bc378dd17c98da2545370e947ecedc",
+        "tree": "26ee089219220f3a9f9a8a300059bf5525fa1404",
+        "parents": [
+          "95d874a8c464ad606f043c6be9387d070eb98353"
+        ],
+        "treeMatches": true,
+        "parentMatches": true,
+        "pr": 3546,
+        "base": "codex/p18-foundation-vfs",
+        "draft": true,
+        "changedFiles": 7,
+        "additions": 642,
+        "deletions": 0
+      }
+    },
+    {
+      "name": "paging",
+      "sha": "a708f24e6c116edf881b216aaa288d3324e1704e",
+      "tree": "005b1333c720e70da7150a2720e1f58fa3780367",
+      "pr": 3549,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3549",
+      "source": "4d30345495c4e55278ccbd67c5c2a27b6ae479fc",
+      "sourceBase": "c293d821a68e0fe0f4583b75a7f8340b62bb8e53",
+      "branch": "codex/p18-foundation-paging",
+      "baseBranch": "codex/p18-foundation-paths",
+      "stats": "8 files changed, 331 insertions(+), 2 deletions(-)",
+      "readBack": {
+        "name": "paging",
+        "remote": "a708f24e6c116edf881b216aaa288d3324e1704e",
+        "tree": "005b1333c720e70da7150a2720e1f58fa3780367",
+        "parents": [
+          "821eacc2618cc816708f88a454ecdb3161aa6959"
+        ],
+        "treeMatches": true,
+        "parentMatches": true,
+        "pr": 3549,
+        "base": "codex/p18-foundation-paths",
+        "draft": true,
+        "changedFiles": 8,
+        "additions": 331,
+        "deletions": 2
+      }
+    }
+  ],
+  "constraints": {
+    "forceUpdates": 0,
+    "shellPushes": 0,
+    "mainMerges": 0,
+    "fullCiLabels": 0,
+    "workflowDispatches": 0
+  }
+}

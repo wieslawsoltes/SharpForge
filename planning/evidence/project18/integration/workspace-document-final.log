@@ -1,0 +1,132 @@
+(node:61) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:76) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the application rejects a lazy read after same-workspace delete
+ok 1 - the application rejects a lazy read after same-workspace delete
+  ---
+  duration_ms: 15.664005
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace rename
+ok 2 - the application rejects a lazy read after same-workspace rename
+  ---
+  duration_ms: 4.941733
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace metadata
+ok 3 - the application rejects a lazy read after same-workspace metadata
+  ---
+  duration_ms: 3.211663
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace disk
+ok 4 - the application rejects a lazy read after same-workspace disk
+  ---
+  duration_ms: 2.588273
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace edit
+ok 5 - the application rejects a lazy read after same-workspace edit
+  ---
+  duration_ms: 3.02278
+  type: 'test'
+  ...
+# Subtest: a current lazy read publishes its bytes without opening another source editor or tab
+ok 6 - a current lazy read publishes its bytes without opening another source editor or tab
+  ---
+  duration_ms: 4.575081
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=false
+ok 7 - one accepted project watcher change commits and evaluates exactly once, dirty=false
+  ---
+  duration_ms: 13.003473
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=true
+ok 8 - one accepted project watcher change commits and evaluates exactly once, dirty=true
+  ---
+  duration_ms: 10.771196
+  type: 'test'
+  ...
+# Subtest: project watcher creation and deletion still update membership when no editor is open
+ok 9 - project watcher creation and deletion still update membership when no editor is open
+  ---
+  duration_ms: 7.201732
+  type: 'test'
+  ...
+# (node:88) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+ok 10 - validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+  ---
+  duration_ms: 75.352729
+  type: 'test'
+  ...
+# Subtest: validation may hydrate a closed lazy input without treating it as an empty or missing document
+ok 11 - validation may hydrate a closed lazy input without treating it as an empty or missing document
+  ---
+  duration_ms: 6.094162
+  type: 'test'
+  ...
+# Subtest: refactoring stale preserves every buffer and does not admit closed editors
+ok 12 - refactoring stale preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 1.117996
+  type: 'test'
+  ...
+# Subtest: refactoring validation-error preserves every buffer and does not admit closed editors
+ok 13 - refactoring validation-error preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.489008
+  type: 'test'
+  ...
+# Subtest: refactoring revision preserves every buffer and does not admit closed editors
+ok 14 - refactoring revision preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 6.80301
+  type: 'test'
+  ...
+# Subtest: refactoring snapshot preserves every buffer and does not admit closed editors
+ok 15 - refactoring snapshot preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 1.827566
+  type: 'test'
+  ...
+# Subtest: refactoring generated preserves every buffer and does not admit closed editors
+ok 16 - refactoring generated preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.27191
+  type: 'test'
+  ...
+# Subtest: refactoring read-only preserves every buffer and does not admit closed editors
+ok 17 - refactoring read-only preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.259742
+  type: 'test'
+  ...
+# Subtest: source admission rejects oversized or excessive combined buffers before changing application membership
+ok 18 - source admission rejects oversized or excessive combined buffers before changing application membership
+  ---
+  duration_ms: 0.690922
+  type: 'test'
+  ...
+# Subtest: path navigation uses complete workspace metadata without requiring a materialized Explorer page
+ok 19 - path navigation uses complete workspace metadata without requiring a materialized Explorer page
+  ---
+  duration_ms: 1.065046
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1360.029307

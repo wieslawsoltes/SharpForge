@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "suite": "release13",
+  "startedAt": "2026-10-04T07:17:36.732861+00:00",
+  "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+  "outerSemaphoreDirectoryUnchanged": true,
+  "inMemory": false,
+  "securityFlagsAdded": [],
+  "environment": {
+    "TMPDIR": "/dev/shm/p18-browser-release13-u0f_qj4z",
+    "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+    "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+    "SHARPFORGE_BROWSER_ENGINE": "chromium"
+  },
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+  ],
+  "timeoutSeconds": 180,
+  "completedAt": "2026-10-04T07:17:58.146017+00:00",
+  "exitCode": 0
+}

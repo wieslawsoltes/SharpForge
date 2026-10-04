@@ -1,0 +1,435 @@
+TAP version 13
+# Subtest: production compiler worker emits independent project artifacts through the registered build handler
+ok 1 - production compiler worker emits independent project artifacts through the registered build handler
+  ---
+  duration_ms: 626.587443
+  type: 'test'
+  ...
+# Subtest: production compiler worker preserves newer source versions, exact release and emission cache reuse
+ok 2 - production compiler worker preserves newer source versions, exact release and emission cache reuse
+  ---
+  duration_ms: 508.705576
+  type: 'test'
+  ...
+# Subtest: production compiler worker exposes semantic type previews without mutating document content
+ok 3 - production compiler worker exposes semantic type previews without mutating document content
+  ---
+  duration_ms: 616.224384
+  type: 'test'
+  ...
+# Subtest: native tool rendering delegates the supported panel and exact host element
+ok 4 - native tool rendering delegates the supported panel and exact host element
+  ---
+  duration_ms: 1.195693
+  type: 'test'
+  ...
+# Subtest: unrelated and portable project tools retain their existing render paths
+ok 5 - unrelated and portable project tools retain their existing render paths
+  ---
+  duration_ms: 0.143967
+  type: 'test'
+  ...
+# Subtest: native project summary escapes the workspace root and offers existing command hooks
+ok 6 - native project summary escapes the workspace root and offers existing command hooks
+  ---
+  duration_ms: 0.263067
+  type: 'test'
+  ...
+# Subtest: native context markup escapes values and displays at most 100 diagnostics without executing host actions
+ok 7 - native context markup escapes values and displays at most 100 diagnostics without executing host actions
+  ---
+  duration_ms: 1.990612
+  type: 'test'
+  ...
+# Subtest: native context callbacks separate profile inspection from execution and report non-cancellation errors
+ok 8 - native context callbacks separate profile inspection from execution and report non-cancellation errors
+  ---
+  duration_ms: 0.895951
+  type: 'test'
+  ...
+# Subtest: native context controls retain read-only profile inspection while enforcing busy and SDK availability
+ok 9 - native context controls retain read-only profile inspection while enforcing busy and SDK availability
+  ---
+  duration_ms: 0.350639
+  type: 'test'
+  ...
+# Subtest: native build view keeps output inert and forwards only the selected diagnostic or artifact
+ok 10 - native build view keeps output inert and forwards only the selected diagnostic or artifact
+  ---
+  duration_ms: 1.230986
+  type: 'test'
+  ...
+# Subtest: native build rendering disables unavailable or busy operations and ignores detached panels
+ok 11 - native build rendering disables unavailable or busy operations and ignores detached panels
+  ---
+  duration_ms: 0.456308
+  type: 'test'
+  ...
+# Subtest: native source view escapes file contents, preserves buffer identity and routes keyboard save
+ok 12 - native source view escapes file contents, preserves buffer identity and routes keyboard save
+  ---
+  duration_ms: 0.544721
+  type: 'test'
+  ...
+# Subtest: native workspace tree filters case-insensitively, escapes paths and caps its rows at 500
+ok 13 - native workspace tree filters case-insensitively, escapes paths and caps its rows at 500
+  ---
+  duration_ms: 1.077364
+  type: 'test'
+  ...
+# Subtest: native inspector renders escaped bounded values and filters without mutation or transport
+ok 14 - native inspector renders escaped bounded values and filters without mutation or transport
+  ---
+  duration_ms: 1.242042
+  type: 'test'
+  ...
+# Subtest: A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results
+ok 15 - A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results
+  ---
+  duration_ms: 1.358298
+  type: 'test'
+  ...
+# Subtest: A23 project launch rejects incomplete and oversized artifact envelopes before worker transport
+ok 16 - A23 project launch rejects incomplete and oversized artifact envelopes before worker transport
+  ---
+  duration_ms: 1.055011
+  type: 'test'
+  ...
+# Subtest: A23 project launch bounds the entry assembly even without dependencies or when its artifact is duplicated
+ok 17 - A23 project launch bounds the entry assembly even without dependencies or when its artifact is duplicated
+  ---
+  duration_ms: 0.355746
+  type: 'test'
+  ...
+# Subtest: test explorer injected host retains selection, failure location and disposal
+ok 18 - test explorer injected host retains selection, failure location and disposal
+  ---
+  duration_ms: 3.497774
+  type: 'test'
+  ...
+# Subtest: test explorer rejects changed source and project revision before another run
+ok 19 - test explorer rejects changed source and project revision before another run
+  ---
+  duration_ms: 0.450449
+  type: 'test'
+  ...
+# Subtest: native VSTest selection groups theory rows at the supported method filter boundary
+ok 20 - native VSTest selection groups theory rows at the supported method filter boundary
+  ---
+  duration_ms: 0.274985
+  type: 'test'
+  ...
+# Subtest: template.json: typed defaults, symbols, forms, computed dependencies and deterministic generated values
+ok 21 - template.json: typed defaults, symbols, forms, computed dependencies and deterministic generated values
+  ---
+  duration_ms: 3.331113
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {}
+ok 22 - Template instantiation applies option combination {}
+  ---
+  duration_ms: 10.375994
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {"UseProgramMain":true,"Framework":"net9.0"}
+ok 23 - Template instantiation applies option combination {"UseProgramMain":true,"Framework":"net9.0"}
+  ---
+  duration_ms: 0.993037
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {"Nullable":false,"Framework":"net8.0"}
+ok 24 - Template instantiation applies option combination {"Nullable":false,"Framework":"net8.0"}
+  ---
+  duration_ms: 1.003252
+  type: 'test'
+  ...
+# Subtest: Template conditional comments retain CRLF for XML and JSON branches and reject unmatched controls
+ok 25 - Template conditional comments retain CRLF for XML and JSON branches and reject unmatched controls
+  ---
+  duration_ms: 1.074129
+  type: 'test'
+  ...
+# Subtest: Template package installation is catalog-local, validates every template and exposes only manual post-actions
+ok 26 - Template package installation is catalog-local, validates every template and exposes only manual post-actions
+  ---
+  duration_ms: 7.258774
+  type: 'test'
+  ...
+# Subtest: SDK aliases, host bindings, boolean-string conditions and MSBuild template attributes are evaluated before replacement
+ok 27 - SDK aliases, host bindings, boolean-string conditions and MSBuild template attributes are evaluated before replacement
+  ---
+  duration_ms: 1.491598
+  type: 'test'
+  ...
+# Subtest: Template regex generators reject backtracking patterns and preserve explicit name parameters
+ok 28 - Template regex generators reject backtracking patterns and preserve explicit name parameters
+  ---
+  duration_ms: 0.425993
+  type: 'test'
+  ...
+# Subtest: late expansion cannot publish into a replacement workspace node with the same stable ID
+ok 29 - late expansion cannot publish into a replacement workspace node with the same stable ID
+  ---
+  duration_ms: 2.332928
+  type: 'test'
+  ...
+# Subtest: duplicate expansions share one loader across TreeModel recloning and admit its children once
+ok 30 - duplicate expansions share one loader across TreeModel recloning and admit its children once
+  ---
+  duration_ms: 0.538062
+  type: 'test'
+  ...
+# Subtest: duplicate load-more requests are coalesced and a retired parent cannot receive a page
+ok 31 - duplicate load-more requests are coalesced and a retired parent cannot receive a page
+  ---
+  duration_ms: 5.099979
+  type: 'test'
+  ...
+# Subtest: invalid duplicate pages leave the prior tree intact and aborted expansions publish no children
+ok 32 - invalid duplicate pages leave the prior tree intact and aborted expansions publish no children
+  ---
+  duration_ms: 3.907952
+  type: 'test'
+  ...
+# Subtest: a rejected retired loader is ignored while a current loader error remains visible
+ok 33 - a rejected retired loader is ignored while a current loader error remains visible
+  ---
+  duration_ms: 0.963032
+  type: 'test'
+  ...
+# Subtest: A24 evaluated Using items and empty Folder metadata do not become physical explorer paths
+ok 34 - A24 evaluated Using items and empty Folder metadata do not become physical explorer paths
+  ---
+  duration_ms: 18.456006
+  type: 'test'
+  ...
+# Subtest: A24 dependency identities survive display reorder and expose every target framework subtree
+ok 35 - A24 dependency identities survive display reorder and expose every target framework subtree
+  ---
+  duration_ms: 1.454443
+  type: 'test'
+  ...
+# Subtest: A24 default and DependentUpon nesting preserve node ids when the option is toggled
+ok 36 - A24 default and DependentUpon nesting preserve node ids when the option is toggled
+  ---
+  duration_ms: 0.974309
+  type: 'test'
+  ...
+# Subtest: A24 generated source and imports belong to their project and unsupported projects remain visible
+ok 37 - A24 generated source and imports belong to their project and unsupported projects remain visible
+  ---
+  duration_ms: 0.531672
+  type: 'test'
+  ...
+# Subtest: A24 symbols materialize on expansion and include nested types, events and constructors
+ok 38 - A24 symbols materialize on expansion and include nested types, events and constructors
+  ---
+  duration_ms: 0.654627
+  type: 'test'
+  ...
+# Subtest: A24 rename maps selection, expansion and focused identity without following display order
+ok 39 - A24 rename maps selection, expansion and focused identity without following display order
+  ---
+  duration_ms: 3.228258
+  type: 'test'
+  ...
+# Subtest: direct reveal resolves a far page of a 21,000-file directory without admitting preceding siblings
+ok 40 - direct reveal resolves a far page of a 21,000-file directory without admitting preceding siblings
+  ---
+  duration_ms: 63.072385
+  type: 'test'
+  ...
+# Subtest: ancestor resolution follows provider case identity and preserves original Unicode path spelling
+ok 41 - ancestor resolution follows provider case identity and preserves original Unicode path spelling
+  ---
+  duration_ms: 4.100383
+  type: 'test'
+  ...
+# Subtest: revealed pages coexist with ordinary pagination and preserve previously expanded descendants
+ok 42 - revealed pages coexist with ordinary pagination and preserve previously expanded descendants
+  ---
+  duration_ms: 5.952645
+  type: 'test'
+  ...
+# Subtest: delayed reveal cannot select or populate a replacement tree with identical workspace and node IDs
+ok 43 - delayed reveal cannot select or populate a replacement tree with identical workspace and node IDs
+  ---
+  duration_ms: 0.74942
+  type: 'test'
+  ...
+# Subtest: in-place source revision changes and disposal cancel delayed reveal before any staged page is published
+ok 44 - in-place source revision changes and disposal cancel delayed reveal before any staged page is published
+  ---
+  duration_ms: 0.713365
+  type: 'test'
+  ...
+# Subtest: invalid later ancestor pages leave the entire live tree unchanged
+ok 45 - invalid later ancestor pages leave the entire live tree unchanged
+  ---
+  duration_ms: 0.535097
+  type: 'test'
+  ...
+# Subtest: actual lazy view refresh retains a nonactive far-page selection, focus, expansion and scroll
+ok 46 - actual lazy view refresh retains a nonactive far-page selection, focus, expansion and scroll
+  ---
+  duration_ms: 17.645825
+  type: 'test'
+  ...
+# Subtest: scoping retains the full admitted cache and paging inside the scope survives Home
+ok 47 - scoping retains the full admitted cache and paging inside the scope survives Home
+  ---
+  duration_ms: 2.503695
+  type: 'test'
+  ...
+# Subtest: transaction mappings restore a renamed scoped folder and focused file under their current IDs
+ok 48 - transaction mappings restore a renamed scoped folder and focused file under their current IDs
+  ---
+  duration_ms: 1.299419
+  type: 'test'
+  ...
+# Subtest: serialized lazy state restores through stable IDs without retaining the prior node objects
+ok 49 - serialized lazy state restores through stable IDs without retaining the prior node objects
+  ---
+  duration_ms: 0.846156
+  type: 'test'
+  ...
+# Subtest: delayed state restoration discards workspace replacements, edits, user selection, scrolling and cancellation
+ok 50 - delayed state restoration discards workspace replacements, edits, user selection, scrolling and cancellation
+  ---
+  duration_ms: 1.616658
+  type: 'test'
+  ...
+# Subtest: same-ID disk replacement rebuilds the actual view without retaining the previous physical entries
+ok 51 - same-ID disk replacement rebuilds the actual view without retaining the previous physical entries
+  ---
+  duration_ms: 0.621898
+  type: 'test'
+  ...
+# Subtest: invalid current pages never publish a partial restoration into the visible tree or full cache
+not ok 52 - invalid current pages never publish a partial restoration into the visible tree or full cache
+  ---
+  duration_ms: 1.347211
+  type: 'test'
+  location: '/dev/shm/p18-final-qualification/tests/a24-explorer-state-restore.test.js:165:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /unique/. Input:
+    
+    'RangeError: Tree size/depth limit exceeded'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Tree size/depth limit exceeded'
+  name: 'RangeError'
+  stack: |-
+    replace (file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:72:67)
+    file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:74:57
+    Array.map (<anonymous>)
+    replace (file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:74:44)
+    file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:74:57
+    Array.map (<anonymous>)
+    replace (file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:74:44)
+    file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:74:57
+    Array.map (<anonymous>)
+    replace (file:///dev/shm/p18-final-qualification/apps/studio/explorer/child-page.js:74:44)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a24-explorer-state-restore.test.js:175:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: A24 large default solution views choose visible paging without traversing file records
+ok 53 - A24 large default solution views choose visible paging without traversing file records
+  ---
+  duration_ms: 1.011525
+  type: 'test'
+  ...
+# Subtest: A24 folder paging preserves the eager boundary and the requested view for smaller workspaces
+ok 54 - A24 folder paging preserves the eager boundary and the requested view for smaller workspaces
+  ---
+  duration_ms: 0.632193
+  type: 'test'
+  ...
+# Subtest: A24 linked project appearances, generated files and imports also trigger bounded views
+ok 55 - A24 linked project appearances, generated files and imports also trigger bounded views
+  ---
+  duration_ms: 0.210327
+  type: 'test'
+  ...
+# Subtest: lazy folder construction rejects case aliases without replacing an existing directory identity
+ok 56 - lazy folder construction rejects case aliases without replacing an existing directory identity
+  ---
+  duration_ms: 1.358258
+  type: 'test'
+  ...
+# Subtest: lazy folder construction refuses to shadow a file with a new parent directory
+ok 57 - lazy folder construction refuses to shadow a file with a new parent directory
+  ---
+  duration_ms: 0.232831
+  type: 'test'
+  ...
+# Subtest: lazy paging keeps distinct case-sensitive directories and normalizes Unicode file identity
+ok 58 - lazy paging keeps distinct case-sensitive directories and normalizes Unicode file identity
+  ---
+  duration_ms: 1.082632
+  type: 'test'
+  ...
+# Subtest: template config budgets count actual UTF-8 bytes for strings, byte inputs and object inputs
+ok 59 - template config budgets count actual UTF-8 bytes for strings, byte inputs and object inputs
+  ---
+  duration_ms: 2.614812
+  type: 'test'
+  ...
+# Subtest: template byte limits include a UTF-8 BOM and reject oversized malformed bytes before decoding
+ok 60 - template byte limits include a UTF-8 BOM and reject oversized malformed bytes before decoding
+  ---
+  duration_ms: 0.339291
+  type: 'test'
+  ...
+# Subtest: template config byte budgets reject invalid limits before parsing input
+ok 61 - template config byte budgets reject invalid limits before parsing input
+  ---
+  duration_ms: 0.19908
+  type: 'test'
+  ...
+# Subtest: inherited object names cannot act as builtin forms or configured builtin identifiers
+ok 62 - inherited object names cannot act as builtin forms or configured builtin identifiers
+  ---
+  duration_ms: 0.667336
+  type: 'test'
+  ...
+# Subtest: declared forms and builtin transformations retain their behavior while inherited declarations are ignored
+ok 63 - declared forms and builtin transformations retain their behavior while inherited declarations are ignored
+  ---
+  duration_ms: 0.182425
+  type: 'test'
+  ...
+# Subtest: a later invalid package identity leaves the caller catalog completely unchanged
+ok 64 - a later invalid package identity leaves the caller catalog completely unchanged
+  ---
+  duration_ms: 5.528957
+  type: 'test'
+  ...
+# Subtest: a later identity collision also preserves the original catalog and its record identities
+ok 65 - a later identity collision also preserves the original catalog and its record identities
+  ---
+  duration_ms: 0.764413
+  type: 'test'
+  ...
+# Subtest: a validated package installs every template into the same catalog and exposes manual actions
+ok 66 - a validated package installs every template into the same catalog and exposes manual actions
+  ---
+  duration_ms: 1.198747
+  type: 'test'
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 65
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8035.643679

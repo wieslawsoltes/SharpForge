@@ -1,0 +1,10 @@
+✔ shared identities retain unsigned defaults, escaped names and exact identity components (1.875589ms)
+✔ shared identity flags and tokens preserve complete display and parse behavior (0.855521ms)
+✔ shared binding comparison retains strong and weak version policies (0.369297ms)
+✔ shared SHA-1 and public key tokens preserve standard and block-boundary vectors (1.877352ms)
+✔ actual 200 MiB binary log replays and pages within the reader memory budget (20600.885783ms)
+ℹ {"sdk":"10.0.201","node":"v26.10.0","platform":"linux","architecture":"x64","inputBytes":259937699,"events":1204,"spoolBytes":720109981,"readerVersion":"15.1.0.0","readerFileVersion":"18.9.11.42413","readerProductVersion":"18.9.11+e34a38d2ae1fc26406a317517196e55c68ff83ab","helperPeakRss":484974592,"nodePeakRss":236830720,"replayAndPageMs":11989.705555}
+✔ structured event model preserves project/target/task tree and overlapping wall-clock timings (1.256886ms)
+✔ binlog spool queries resume by byte cursor with Unicode and bounded search scans (7.539322ms)
+✔ binlog pages stop at their byte budget without losing the first unreturned event (3.252036ms)
+✔ context compilation input preserves generated flags and rejects unhydrated documents explicitly (1.857982ms)

@@ -57,7 +57,7 @@ for(const id of ["replace"])handlers.set(id,async(command)=>{const {editor}=cont
 for(const id of ["goToLine"])handlers.set(id,async(command)=>{const {editor}=context;editor.gotoBox.classList.remove('hidden');editor.gotoBox.querySelector('input').focus();return;});
 for(const id of ["save"])handlers.set(id,async(command)=>{const {editorHostCommand}=context;await editorHostCommand('save');return;});
 for(const id of ["exportProject"])handlers.set(id,async(command)=>{const {exportProject}=context;await exportProject();return;});
-for(const id of ["exportLegacyProject"])handlers.set(id,async(command)=>{const {exportLegacyProject}=context;exportLegacyProject();return;});
+handlers.set('exportLegacyProject', () => context.exportLegacyProject());
 for(const id of ["newProject"])handlers.set(id,async(command)=>{const {openProjectWizard}=context;await openProjectWizard();return;});
 for(const id of ["saveFolder"])handlers.set(id,async(command)=>{const {saveWorkspaceFolder}=context;await saveWorkspaceFolder();return;});
 for(const id of ["openZip"])handlers.set(id,async(command)=>{const {$}=context;$('#zip-input').click();return;});

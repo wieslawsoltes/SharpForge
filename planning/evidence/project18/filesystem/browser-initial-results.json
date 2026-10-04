@@ -1,0 +1,79 @@
+{
+  "checks": [
+    {
+      "name": "real OPFS sync worker read/write/rename/cancellation/quota",
+      "passed": true,
+      "backend": "opfs-sync-worker",
+      "size": 1048583,
+      "hash": "0cc2c7e23a08451a1ec483600a03ad90521419ec85801ed332e0f9584c8d3df1",
+      "quota": {
+        "usage": 1052337,
+        "quota": 2148535985,
+        "available": 2147483648,
+        "persistent": false
+      },
+      "names": [
+        "renamed.bin"
+      ]
+    },
+    {
+      "name": "real OPFS bytes persist across reload",
+      "passed": true
+    },
+    {
+      "name": "explorer disk services and 10000-file paged DOM",
+      "passed": true,
+      "services": [
+        "visible skipped paths",
+        "closed-file path and text search",
+        "clean reload",
+        "dirty compare and keep",
+        "own-save suppression",
+        "disposal"
+      ],
+      "backend": "Chromium DOM with memory provider; Web Locks",
+      "frameBudgetMs": 16,
+      "expandMedianMs": 1.2000000001862645,
+      "expandP95Ms": 1.6000000005587935,
+      "samples": [
+        {
+          "constructorMs": 0.20000000018626451,
+          "expandMs": 1.6000000005587935,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.099999999627471,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.2000000001862645,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.099999999627471,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0.09999999962747097,
+          "expandMs": 1.2999999998137355,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0.10000000055879354,
+          "expandMs": 1.5,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0.10000000055879354,
+          "expandMs": 1.099999999627471,
+          "rows": 32
+        }
+      ]
+    }
+  ],
+  "engine": "153.0.8010.12",
+  "qualification": "Chromium OPFS, memory-provider UI and Web Locks; native picker permission UI not exercised"
+}

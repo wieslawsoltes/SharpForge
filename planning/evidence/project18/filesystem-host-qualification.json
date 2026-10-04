@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "scope": "Focused search, disk reload and debugger editor qualification within the completed root host cohort. This is not an aggregate pass or protected Studio entry execution.",
+  "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+  "node": "v26.10.0",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a00-03-studio-registries.test.js",
+    "tests/a00-20-styles.test.js",
+    "tests/a24-workspace-session.test.js",
+    "tests/a24-workspace-transition.test.js",
+    "tests/a24-workspace-host-concurrency.test.js",
+    "tests/a24-workspace-refactoring.test.js",
+    "tests/a24-workspace-imports.test.js",
+    "tests/a24-editor-lifecycle.test.js",
+    "tests/a24-disk-load-concurrency.test.js",
+    "tests/a24-workspace-import-regression.test.js",
+    "tests/workspace-io.test.js",
+    "tests/workspace-roundtrip.test.js",
+    "tests/a24-workspace-recovery.test.js",
+    "tests/a24-workspace-navigation.test.js",
+    "tests/a24-diagnostic-source.test.js",
+    "tests/a24-project-panel.test.js",
+    "tests/a24-problems-navigation.test.js",
+    "tests/a24-provider-transactions.test.js",
+    "tests/a24-explorer-transfers.test.js",
+    "tests/a24-recovery-bootstrap.test.js",
+    "tests/a24-peer-buffer-resolution.test.js",
+    "tests/a24-explorer-history.test.js",
+    "tests/a24-editor-lifecycle-foundation.test.js",
+    "tests/a24-explorer-child-loader.test.js",
+    "tests/a24-explorer-reveal.test.js",
+    "tests/a24-explorer-operations.test.js",
+    "tests/a24-type-rename.test.js",
+    "tests/a24-workspace-disk-events.test.js",
+    "tests/a24-workspace-search.test.js",
+    "tests/a24-xml-text-policy.test.js",
+    "tests/a24-xaml-reopen.test.js",
+    "tests/a24-workspace-wizard-native.test.js",
+    "tests/a24-archive-sink-ownership.test.js",
+    "tests/a23-native-designer-files.test.js",
+    "tests/a23-native-publish-encoding.test.js",
+    "tests/a23-native-central-boundaries.test.js",
+    "tests/a23-native-nuget-registration.test.js",
+    "tests/a23-solution-configuration-contract.test.js",
+    "tests/msbuild-solution.test.js",
+    "tests/a23-project-debug-editor.test.js",
+    "tests/a19-03-document-tabs.test.js",
+    "tests/a19-04-docking-model.test.js",
+    "tests/a19-studio-docking-sync.test.js",
+    "tests/a19-window-layouts-navigation.test.js",
+    "tests/project-evaluation-expressions.test.js",
+    "tests/project-evaluation-items.test.js",
+    "tests/project-evaluation-sdk.test.js",
+    "tests/project-evaluation-central-packages.test.js",
+    "tests/project-evaluation-targets.test.js",
+    "tests/project-evaluation-build-stages.test.js",
+    "tests/project-evaluation-build.test.js",
+    "tests/project-evaluation-contexts.test.js",
+    "tests/a24-06-archives.test.js",
+    "tests/a24-06-recursive-archives.test.js",
+    "tests/a24-06-archive-large-metadata.test.js",
+    "tests/a24-06-compression-backends.test.js",
+    "tests/a24-09-destination.test.js",
+    "tests/a23-cil-project-profile.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T01:59:01.289227+00:00",
+  "completedAt": "2026-10-04T01:59:36.114633+00:00",
+  "exitCode": 1,
+  "aggregate": {
+    "tests": 500,
+    "suites": 0,
+    "pass": 495,
+    "fail": 5,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "selected": [
+    {
+      "path": "tests/a24-workspace-search.test.js",
+      "sourceBlob": "1ef7d1221e653f0f93f8cf5be6880c794567a9a1",
+      "passed": 9,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "a superseded search cannot replace newer results with either a late success or failure",
+          "status": "ok",
+          "tapCase": 258
+        },
+        {
+          "name": "workspace identity, disk replacement and revision changes fence successful and failed search completions",
+          "status": "ok",
+          "tapCase": 259
+        },
+        {
+          "name": "loaded matches require their captured version, membership and exact literal span before opening",
+          "status": "ok",
+          "tapCase": 260
+        },
+        {
+          "name": "legacy results without a version bind to the captured document watermark",
+          "status": "ok",
+          "tapCase": 261
+        },
+        {
+          "name": "guarded lazy admission may advance the version and repeated navigation uses that admitted watermark",
+          "status": "ok",
+          "tapCase": 262
+        },
+        {
+          "name": "new lazy bytes must still contain the searched text at its reported UTF-16 offset",
+          "status": "ok",
+          "tapCase": 263
+        },
+        {
+          "name": "workspace replacement, edits, cancellation and a newer query prevent navigation after lazy I/O",
+          "status": "ok",
+          "tapCase": 264
+        },
+        {
+          "name": "case-insensitive and whole-word navigation uses Unicode boundaries without losing UTF-16 offsets",
+          "status": "ok",
+          "tapCase": 265
+        },
+        {
+          "name": "retained result buttons and replacement intents are invalidated on workspace observation and disposal",
+          "status": "ok",
+          "tapCase": 266
+        }
+      ]
+    },
+    {
+      "path": "tests/a24-workspace-disk-events.test.js",
+      "sourceBlob": "b92690a7fa112b08845bac7002628375f9762205",
+      "passed": 2,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "versionless imported text reloads at version zero independently of the workspace revision",
+          "status": "ok",
+          "tapCase": 218
+        },
+        {
+          "name": "version-zero fallback still rejects stale workspace revisions and identity changes during reload preparation",
+          "status": "ok",
+          "tapCase": 219
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-debug-editor.test.js",
+      "sourceBlob": "3eeb2f6839ed5e6552011e5d9bfa07161c4d2321",
+      "passed": 7,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity",
+          "status": "ok",
+          "tapCase": 56
+        },
+        {
+          "name": "edited source withholds execution and selected-frame painting and unbound muted requests stay visible",
+          "status": "ok",
+          "tapCase": 57
+        },
+        {
+          "name": "toggling a moved binding removes its original workspace anchor without creating a qualified anchor key",
+          "status": "ok",
+          "tapCase": 58
+        },
+        {
+          "name": "editing a moved binding preserves its requested line and selected document mapping",
+          "status": "ok",
+          "tapCase": 59
+        },
+        {
+          "name": "late breakpoint replies cannot replace a newer request or another runtime session",
+          "status": "ok",
+          "tapCase": 60
+        },
+        {
+          "name": "cancelled edits and unavailable runtime bindings preserve persisted requests",
+          "status": "ok",
+          "tapCase": 61
+        },
+        {
+          "name": "late breakpoint failures cannot report into a newer request or session while current errors remain visible",
+          "status": "ok",
+          "tapCase": 62
+        }
+      ]
+    }
+  ],
+  "selectedPassed": 18,
+  "selectedFailed": 0,
+  "unrelatedFailures": [
+    {
+      "name": "unreviewed hashes, contents, budgets and cancelled requests never commit a peer buffer",
+      "status": "not ok",
+      "tapCase": 185
+    },
+    {
+      "name": "Read-only recovery and unsupported projects expose their limits without enabled save or build actions",
+      "status": "not ok",
+      "tapCase": 196
+    },
+    {
+      "name": "native wizard selects the newly refreshed project for startup, evaluation and launch after a successful mutation",
+      "status": "not ok",
+      "tapCase": 285
+    },
+    {
+      "name": "a failed native wizard mutation preserves every startup selection and active compilation",
+      "status": "not ok",
+      "tapCase": 286
+    },
+    {
+      "name": "a refreshed workspace that lacks the new startup project preserves the previous native selection",
+      "status": "not ok",
+      "tapCase": 287
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json",
+      "sha256": "9d066126659e596d394147853c87e778fee5ee322922654e3f4b0f2b32c037e4"
+    },
+    {
+      "path": "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.tap",
+      "sha256": "6cd9581a89d149c26ef4b9deb0c57953631e833054cb2b314ac87ba313e99ef6"
+    }
+  ],
+  "applicationIntegration": "Protected Studio getter/application entry remains prepared under live lease; actual host PR dependency is still pending."
+}

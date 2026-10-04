@@ -1,0 +1,52 @@
+{
+  "name": "node26-correction-2",
+  "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a19-explorer-resource-transaction.test.js",
+    "tests/a19-explorer-snapshots.test.js",
+    "tests/a24-explorer-history.test.js",
+    "tests/a24-explorer-operations.test.js",
+    "tests/a24-explorer-prepared-journal.test.js",
+    "tests/a24-explorer-resource-errors.test.js",
+    "tests/a24-provider-transactions.test.js",
+    "tests/a24-type-rename.test.js"
+  ],
+  "startedAt": "2026-10-04T05:21:20.794897+00:00",
+  "resourcePreflight": {
+    "actualFreeBytes": 1055940608,
+    "availableBytes": 1055940608,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8550739968",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 1093927\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "log": "node26-correction-2.tap",
+  "completedAt": "2026-10-04T05:21:38.579848+00:00",
+  "exitCode": 0,
+  "sourceAfter": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+  "resourceAfter": {
+    "actualFreeBytes": 1055920128,
+    "availableBytes": 1055920128,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8281579520",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 1096599\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "checkoutStatusAfter": "",
+  "summary": {
+    "tests": 52,
+    "suites": 0,
+    "pass": 52,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "qualificationIncomplete": false
+}

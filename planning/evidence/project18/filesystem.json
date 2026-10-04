@@ -1,0 +1,895 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "A24 filesystem providers, byte/path identity, disk operations, watch/reload and scaling",
+  "agent": "filesystem_providers",
+  "branch": "codex/p18-vfs",
+  "generatedAt": "2026-10-04",
+  "implementationHead": "53f375875617147bc68f2e96384a60d366b52ff0",
+  "interpretation": "validated means the stated acceptance evidence passed on the explicitly listed toolchains; it does not imply an unrun OS/browser matrix.",
+  "toolchain": {
+    "node": "v24.19.0",
+    "platform": "Linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalProcessors": 9,
+    "python": "3.12.14",
+    "browser": "Chrome Headless Shell 153.0.8010.12",
+    "browserMode": "production HTTP CSP, zero CSP violations",
+    "executionEngines": "Filesystem services are host JavaScript; no source VM/direct CIL/Rust instruction semantics are changed. Full compiler/runtime matrix belongs root integration.",
+    "playwright": "1.63.0"
+  },
+  "validation": [
+    {
+      "id": "node",
+      "command": "node --test tests/a24-path-encoding.test.js tests/a24-vfs-conformance.test.js tests/a24-opfs-worker.test.js tests/a24-watch-reload.test.js tests/a24-disk-scaling.test.js tests/a24-lazy-search.test.js tests/workspace-io.test.js",
+      "result": "69/69 pass, zero failures, skips or cancellations",
+      "artifact": "filesystem/node-tests.log"
+    },
+    {
+      "id": "admission",
+      "command": "node --test tests/a24-lazy-search.test.js tests/a24-disk-scaling.test.js",
+      "result": "19/19 pass after final metadata-admission boundary and actual Workspace SourceText/parse integration case",
+      "artifact": "filesystem/admission-tests.log"
+    },
+    {
+      "id": "browser",
+      "command": "CHROMIUM_EXECUTABLE=/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell PYTHONPATH=/workspace/scratch/3e16369943fd/python-deps SHARPFORGE_RESULTS_DIR=/tmp/p18-vfs-browser-results-qualified python tests/browser_a24_vfs_test.py",
+      "result": "3/3 groups pass; native OPFS worker+reload, actual DOM services and busy-transaction isolation",
+      "artifact": "filesystem/browser-results.json",
+      "session": "filesystem/browser-session.json",
+      "testedImplementation": "b5ff8828 plus watcher transaction isolation subsequently committed in ce4cded8; root final integrated Studio callbacks remain separate qualification"
+    },
+    {
+      "id": "native-http",
+      "command": "node --test tests/a24-vfs-conformance.test.js",
+      "result": "10/10 pass over real Linux filesystem and authenticated HTTP loopback",
+      "artifact": "filesystem/native-http-tests.log"
+    },
+    {
+      "id": "check",
+      "command": "npm run check",
+      "result": "1728 JavaScript modules, zero syntax errors; 395 Node files, 24 browser scripts; zero unassigned/duplicate tests",
+      "artifact": "filesystem/syntax-check.log"
+    },
+    {
+      "id": "build",
+      "command": "npm run build",
+      "result": "pass; dependency-free browser application including static OPFS worker",
+      "artifact": "filesystem/build.log"
+    },
+    {
+      "id": "structure",
+      "command": "node scripts/quality/check-structure.js --strict",
+      "result": "blocked globally by267 existing/integrated other-scope violations; zero matches in this agent owned changed modules",
+      "artifact": "filesystem/structure.log"
+    },
+    {
+      "id": "view-policy",
+      "command": "node --test tests/a24-explorer-view-policy.test.js tests/a24-lazy-search.test.js",
+      "result": "11/11 pass including default 20k solution selection, eager-size boundary, no file/item traversal and lazy admission/search regressions",
+      "artifact": "filesystem/view-policy-tests.log"
+    },
+    {
+      "id": "disk-load-concurrency",
+      "command": "node scripts/limited.js node --test tests/a24-disk-load-concurrency.test.js tests/a24-disk-scaling.test.js tests/workspace-io.test.js",
+      "testedImplementation": "0d54435c",
+      "toolchain": "Node v24.19.0 on Linux x64, deterministic in-memory provider with delayed reads and handle acquisition",
+      "result": "All 21 new concurrency tests and all 11 disk-scaling tests passed; the complete command passed 51/53 with two unrelated existing destination-writer compatibility failures.",
+      "testSummary": {
+        "tests": 53,
+        "passed": 51,
+        "failed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 1,
+        "complete": true
+      },
+      "remaining": [
+        "tests/workspace-io.test.js: empty destination enforcement and completed-write error text failed on parent 215a09e4. Templates owner reports both fixed in 30cafd29; that later commit was not included in this run.",
+        "This follow-up qualifies JavaScript admission concurrency. It does not claim another OS picker/browser matrix or integrated Studio qualification."
+      ]
+    },
+    {
+      "id": "cache-publication",
+      "command": "node scripts/limited.js node --test tests/a24-cache-publication.test.js tests/a24-lazy-search.test.js tests/a24-disk-load-concurrency.test.js",
+      "testedImplementation": "abb236f1",
+      "toolchain": "Node v24.19.0 on Linux x64 with deterministic delayed provider reads",
+      "result": "43/43 pass, including all 14 new document/search publication regressions, eight existing lazy/search tests and 21 disk loading concurrency tests.",
+      "testSummary": {
+        "tests": 43,
+        "passed": 43,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 0,
+        "complete": true
+      },
+      "remaining": [
+        "This JavaScript admission follow-up does not claim another browser or operating-system matrix."
+      ]
+    },
+    {
+      "id": "browser-large",
+      "command": "CHROMIUM_EXECUTABLE=/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell PYTHONPATH=/workspace/scratch/3e16369943fd/python-deps SHARPFORGE_RESULTS_DIR=/tmp/p18-vfs-large-explorer-results python tests/browser_a24_vfs_test.py",
+      "result": "4/4 groups pass including actual SolutionExplorer default 20000-file paging, toolbar explanation, load-more, preference restoration and disposal",
+      "artifact": "filesystem/browser-large-results.json",
+      "session": "filesystem/browser-large-session.json",
+      "testedImplementation": "640e3186; actual Explorer presentation and deterministic disk-service host callbacks; root full Studio callbacks remain separate qualification"
+    },
+    {
+      "id": "foundation-node",
+      "command": "node scripts/limited.js node --test tests/a24-path-encoding.test.js tests/a24-vfs-memory.test.js tests/a24-vfs-watch.test.js tests/a24-vfs-fsa.test.js tests/a24-opfs-worker.test.js tests/a24-disk-scan.test.js tests/a24-vfs-overlay.test.js tests/a24-overlay-publication.test.js tests/workspace-io.test.js tests/workspace-grammar-options.test.js",
+      "testedImplementation": "3d2d3b4b",
+      "toolchain": "Node v24.19.0 on Linux x64",
+      "result": "70/70 passed, including 11 delayed overlay publication/save/move/delete regressions and unchanged workspace I/O and grammar suites.",
+      "testSummary": {
+        "tests": 70,
+        "passed": 70,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 0,
+        "complete": true
+      },
+      "artifact": "filesystem/foundation-node.log",
+      "remaining": [
+        "No browser/OS matrix was rerun for publication. Tests qualify the isolated source cohort, not the final integrated Studio host."
+      ]
+    },
+    {
+      "id": "foundation-watch-final",
+      "command": "node scripts/limited.js node --test tests/a24-watch-fairness.test.js tests/a24-vfs-watch.test.js tests/a24-vfs-fsa.test.js",
+      "testedImplementation": "c480cacc88bf101174bd394440e52564e8a6d11e",
+      "toolchain": "Node v24.19.0 on Linux x64",
+      "result": "10/10 passed after the static FSA import and watcher fairness corrections: eight repeated scenarios plus two new saturated-budget regressions, not 10 additional unique scenarios.",
+      "testSummary": {
+        "tests": 10,
+        "passed": 10,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 0,
+        "complete": true
+      },
+      "artifact": "filesystem/foundation-watch-final.log"
+    },
+    {
+      "id": "foundation-check-initial",
+      "command": "node scripts/limited.js npm run check",
+      "testedImplementation": "3d2d3b4b",
+      "toolchain": "Node v24.19.0 on Linux x64",
+      "result": "Initial check failed on the FSA rename dynamic import. The helper now uses a static import; no dynamic-code allowlist was changed. Retained as failure evidence.",
+      "artifact": "filesystem/foundation-check-initial.log"
+    },
+    {
+      "id": "foundation-check-final",
+      "command": "node scripts/limited.js npm run check",
+      "testedImplementation": "c480cacc88bf101174bd394440e52564e8a6d11e",
+      "toolchain": "Node v24.19.0 on Linux x64",
+      "result": "Passed: 1764 JavaScript modules, zero syntax errors; 1760 inspected dynamic-code modules, zero findings; 441 Node files and 23 browser scripts with zero unassigned or duplicate tests.",
+      "artifact": "filesystem/foundation-check-final.log"
+    },
+    {
+      "id": "foundation-build",
+      "command": "node scripts/limited.js npm run build",
+      "testedImplementation": "c480cacc88bf101174bd394440e52564e8a6d11e",
+      "toolchain": "Node v24.19.0 on Linux x64",
+      "result": "Passed: dependency-free production browser application, including the statically contributed OPFS worker.",
+      "artifact": "filesystem/foundation-build.log"
+    },
+    {
+      "id": "scaling-cohort",
+      "command": "node scripts/limited.js node --test tests/a24-reload-coordinator.test.js tests/a24-document-store.test.js tests/a24-document-publication.test.js tests/a24-document-disposal.test.js tests/a24-search-index.test.js tests/a24-search-publication.test.js tests/a24-search-lifecycle.test.js tests/a24-explorer-paging.test.js tests/a24-explorer-view-policy.test.js tests/a24-lazy-tree-identity.test.js tests/a24-save-locks.test.js tests/a24-handle-identity.test.js tests/a24-overlay-publication.test.js tests/release08-explorer.test.js",
+      "testedImplementation": "6a8429a25c31b0be270efac06d49910a61a2e45c",
+      "toolchain": "Node v24.19.0 on Linux x64",
+      "result": "82/82 passed after the complete six-batch cohort was assembled; includes the isolated service/regression tests, unchanged legacy Explorer coverage and existing overlay publication tests.",
+      "testSummary": {
+        "tests": 82,
+        "passed": 82,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 0,
+        "complete": true
+      },
+      "artifact": "filesystem/scaling-node.log",
+      "remaining": [
+        "Identity tests use an explicit IndexedDB request/transaction fake and Web Locks adapter. No actual browser picker, permission dialog or multiwindow IndexedDB qualification is claimed.",
+        "This is the isolated publication cohort; it does not qualify the entire root Studio application composition."
+      ]
+    },
+    {
+      "id": "scaling-check",
+      "command": "node scripts/limited.js npm run check",
+      "testedImplementation": "6a8429a25c31b0be270efac06d49910a61a2e45c",
+      "result": "Passed: 1786 JavaScript modules, zero syntax errors; 1782 dynamic-code modules inspected with zero findings; 453 Node test files and 23 browser scripts with zero unassigned/duplicate files.",
+      "artifact": "filesystem/scaling-check.log"
+    },
+    {
+      "id": "scaling-build",
+      "command": "node scripts/limited.js npm run build",
+      "testedImplementation": "6a8429a25c31b0be270efac06d49910a61a2e45c",
+      "result": "Passed: dependency-free production browser application and existing OPFS worker.",
+      "artifact": "filesystem/scaling-build.log"
+    },
+    {
+      "id": "disk-publication-node26",
+      "command": "node scripts/limited.js node --test tests/a24-provider-disk-read.test.js tests/a24-provider-disk-admission.test.js tests/a24-provider-disk-guard.test.js tests/a24-provider-files.test.js tests/a24-provider-disk-writes.test.js tests/a24-provider-disk-mutations.test.js tests/a24-provider-disk-held-signal.test.js tests/a24-provider-api-compatibility.test.js tests/a24-search-index.test.js tests/a24-search-publication.test.js tests/a24-search-lifecycle.test.js tests/a24-search-result-versions.test.js tests/a24-reload-coordinator.test.js tests/a24-save-locks.test.js tests/a24-handle-identity.test.js tests/a24-disk-notifications.test.js tests/a24-disk-services.test.js tests/project-system.test.js tests/release04.test.js tests/templates-archive.test.js tests/workspace-io.test.js tests/a00-06-registration.test.js tests/a00-20-styles.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-cross-window-session.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-editor-lifecycle.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-folder-compilation.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-provider-transactions.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-save-conflicts.test.js",
+      "toolchain": "Node v26.10.0 on Linux x64 using scripts/limited.js",
+      "artifact": "filesystem/disk-cohort-node26.log",
+      "detailedOutcome": "filesystem-disk-qualification.json",
+      "result": "Initial 314/326 passed; 12 checkout/upstream assertion failures resolved by the retained affected runs."
+    },
+    {
+      "id": "disk-publication-affected-node26",
+      "command": "node scripts/limited.js node --test --test-name-pattern 'contributed stylesheet bytes|contributed per-tool CSS|0.4 CLI|CLI ZIP/extraction|CLI writePlan' tests/a00-06-registration.test.js tests/a00-20-styles.test.js tests/release04.test.js tests/workspace-io.test.js",
+      "toolchain": "Node v26.10.0 on Linux x64 using scripts/limited.js",
+      "artifact": "filesystem/disk-cohort-affected-node26.log",
+      "detailedOutcome": "filesystem-disk-qualification.json",
+      "result": "10/10 passed"
+    },
+    {
+      "id": "disk-publication-archive-compat-node26",
+      "command": "node scripts/limited.js node --test tests/templates-archive.test.js",
+      "toolchain": "Node v26.10.0 on Linux x64 using scripts/limited.js",
+      "artifact": "filesystem/disk-cohort-archive-compat-node26.log",
+      "detailedOutcome": "filesystem-disk-qualification.json",
+      "result": "107/107 passed"
+    },
+    {
+      "id": "disk-publication-manifest-node26",
+      "command": "node scripts/limited.js node --test --test-name-pattern 'discovery assigns files once' tests/a00-06-registration.test.js",
+      "toolchain": "Node v26.10.0 on Linux x64 using scripts/limited.js",
+      "artifact": "filesystem/disk-cohort-manifest-node26.log",
+      "detailedOutcome": "filesystem-disk-qualification.json",
+      "result": "1/1 passed"
+    },
+    {
+      "id": "disk-publication-check-node26",
+      "command": "node scripts/limited.js npm run check",
+      "toolchain": "Node v26.10.0 on Linux x64 using scripts/limited.js",
+      "artifact": "filesystem/disk-cohort-check-node26.log",
+      "detailedOutcome": "filesystem-disk-qualification.json",
+      "result": "passed"
+    },
+    {
+      "id": "disk-publication-build-node26",
+      "command": "node scripts/limited.js npm run build",
+      "toolchain": "Node v26.10.0 on Linux x64 using scripts/limited.js",
+      "artifact": "filesystem/disk-cohort-build-node26.log",
+      "detailedOutcome": "filesystem-disk-qualification.json",
+      "result": "passed"
+    }
+  ],
+  "performance": {
+    "command": "node scripts/benchmark-a24-workspace.js --defer-index",
+    "files": 20000,
+    "rawBefore": "filesystem/benchmark-before.json",
+    "rawAfter": "filesystem/benchmark-after.json",
+    "rawDeferred": "filesystem/benchmark-deferred.json",
+    "browser": "filesystem/browser-large-results.json",
+    "caveats": [
+      "Shared virtual runner with concurrent agents; initial benchmark overlapped build/tests. These are raw exploratory measurements, not a controlled speedup claim.",
+      "loadedBytes and indexedBytes are explicit admission costs, not measured process heap or RSS.",
+      "Before/after eager-index samples and current deferred-index samples are separate modes. Browser page expansion excludes already-completed cooperative indexing.",
+      "Actual SolutionExplorer 20000-file initial rendering was one measured sample (0.8 ms, one node), not a median or controlled speedup claim. Its first page was 2.9 ms after index preparation, 104 model nodes and 32 DOM rows. The separate seven-run 10000-file page fixture measured median 1.2 ms and p95 1.5 ms."
+    ],
+    "initialBrowser": "filesystem/browser-initial-results.json",
+    "previousBrowser": "filesystem/browser-results.json"
+  },
+  "integrationContract": {
+    "controller": "new ExplorerDiskServices(view); observe(data); dispose()",
+    "viewFields": [
+      "element",
+      "tree",
+      "search",
+      "getData",
+      "onCommand",
+      "onOpen",
+      "onError"
+    ],
+    "dataFields": [
+      "disk",
+      "provider",
+      "records including path/text/version/lazy",
+      "dirty path array",
+      "tabs",
+      "revision"
+    ],
+    "actions": {
+      "disk-external-change": "{path,record,event,expectedVersion}; root validates version then atomically adopts record/delete/rename and updates physical hashes without dirtying source",
+      "disk-reevaluate": "{path,event,record} or {path,event,rescan:true,records,folders,report}; root overlays current dirty records and reevaluates project membership"
+    },
+    "findInFiles": "await disk.findInFiles(query,{matchCase,wholeWord,maxMatches,signal}); returns the LanguageService response shape",
+    "save": "Await physical-directory persistence identity; inject disk.saveLocks or resolveSaveLocks. Browser save otherwise reports Unavailable; there is no workspace-name fallback.",
+    "adoptRecords": "disk.adoptRecords(records,{folders,report,preserveBaselines:true}); caller sets committed new path hashes after adoption.",
+    "additiveAPI": [
+      "ProviderDiskWorkspace",
+      "readProviderDirectory",
+      "readProviderFiles"
+    ],
+    "legacyAPI": "DiskWorkspace/readDirectory/readBrowserFiles keep prior defaults; the protected host migrates aliases explicitly with its lifecycle hooks.",
+    "reevaluationAcknowledgment": "Return {reevaluated:true} after atomic host application to avoid a second XML evaluation."
+  },
+  "remainingPlatformQualification": [
+    "Native OS file picker permission grant and revocation UI is unqualified.",
+    "Windows and macOS native filesystem operations are unqualified.",
+    "Firefox and WebKit are unqualified; absent APIs fail explicitly instead of being reported as supported.",
+    "The complete named Node host scope passed at5269. Final protected Studio entry and browser component acceptance remain separate; a root diagnostic probe isolated Chromium153 SIGTRAP when IndexedDB deserializes a persisted FileSystemDirectoryHandle, so isSameEntry/WebLock/component follow-through is unrun."
+  ],
+  "issues": [
+    {
+      "issue": 3101,
+      "workId": "SF-A24-T13",
+      "title": "[SF-A24-T13] Define FileSystemProvider interface and in-memory provider",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3101",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/vfs/provider.js",
+        "packages/workspace/src/vfs/memory.js",
+        "packages/workspace/src/vfs/index.js"
+      ],
+      "testedAcceptance": [
+        "All provider operations are Promise-based, accept AbortSignal and expose stable typed errors.",
+        "Read/write copies preserve byte identity; per-file hashes and memory/entry limits reject changes before mutation."
+      ],
+      "evidence": [
+        "node: tests/a24-vfs-conformance.test.js \u2014 memory conformance, bounded writes, case identity, conflicts, cancellation, disposal",
+        "browser: memory provider used by explorer disk services"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3102,
+      "workId": "SF-A24-T14",
+      "title": "[SF-A24-T14] Implement File System Access provider",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3102",
+      "status": "implemented",
+      "implementation": [
+        "packages/workspace/src/vfs/fsa.js",
+        "packages/workspace/src/vfs/fsa-rename.js",
+        "packages/project-system/src/provider-disk-workspace.js"
+      ],
+      "testedAcceptance": [
+        "Permission denial is NoPermissions; failed atomic close retains original file.",
+        "Fallback directory rename checks full source membership and hashes before deleting source; new external files cause destination rollback."
+      ],
+      "evidence": [
+        "node: tests/a24-vfs-conformance.test.js \u2014 FSA handle conformance, permission loss, writable close failure, directory-rename rollback",
+        "browser: real Chromium OPFS directory handles exercise the FSA adapter, byte-preserving rename, and writes"
+      ],
+      "remaining": [
+        "A real operating-system picked-directory permission grant/revocation dialog has not been exercised. OPFS handles do not qualify that dialog.",
+        "Fallback copy/delete rename is explicitly non-atomic. Case-only rename requires native FileSystemHandle.move or reports Unavailable."
+      ]
+    },
+    {
+      "issue": 3103,
+      "workId": "SF-A24-T15",
+      "title": "[SF-A24-T15] Implement OPFS provider with sync-access worker",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3103",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/vfs/opfs.js",
+        "packages/workspace/src/vfs/opfs-worker-client.js",
+        "packages/workspace/src/vfs/opfs-worker-service.js",
+        "packages/workspace/src/vfs/opfs.worker.js",
+        "packages/workspace/build.contrib.json"
+      ],
+      "testedAcceptance": [
+        "Dedicated sync-access worker preserves every byte across write/read/rename and full page reload under production CSP.",
+        "Quota reporting, staging cleanup, cancellation acknowledgement and absent-storage diagnostics are covered."
+      ],
+      "evidence": [
+        "node: tests/a24-opfs-worker.test.js",
+        "node: tests/a24-vfs-conformance.test.js \u2014 OPFS async handle conformance",
+        "browser: browser-results.json checks 1 and 2; backend opfs-sync-worker, 1048583 bytes, SHA256 0cc2c7e23a08451a1ec483600a03ad90521419ec85801ed332e0f9584c8d3df1"
+      ],
+      "remaining": [
+        "Browser storage persistence is subject to the browser quota/eviction policy; the qualification profile reported persisted=false.",
+        "Firefox and WebKit are unqualified. Missing OPFS capability reports Unavailable; they are not reported as passing."
+      ]
+    },
+    {
+      "issue": 3104,
+      "workId": "SF-A24-T16",
+      "title": "[SF-A24-T16] Implement native-host provider over the MSBuild client",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3104",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/vfs/native-host.js",
+        "packages/msbuild/src/native-vfs.js",
+        "packages/msbuild/src/client.js",
+        "packages/msbuild/src/server.js"
+      ],
+      "testedAcceptance": [
+        "Native read/list/stat/write/create/delete/rename preserve bytes and map transport errors to common provider errors.",
+        "The actual loopback service refuses writes and directory creation during an active build; read operations still work."
+      ],
+      "evidence": [
+        "node: tests/a24-vfs-conformance.test.js \u2014 real temporary Linux filesystem through direct service and authenticated HTTP MSBuildClient",
+        "native-http-tests.log \u2014 10/10 including DirectoryNotEmpty, stale-hash Conflict and build-busy createDirectory/writeFile guards"
+      ],
+      "remaining": [
+        "Native filesystem qualification was Linux x64 only; Windows and macOS filesystem behavior remains unqualified.",
+        "The native bridge bounds one byte payload at 8 MiB to remain below the existing 34 MiB JSON transport budget."
+      ]
+    },
+    {
+      "issue": 3105,
+      "workId": "SF-A24-T17",
+      "title": "[SF-A24-T17] Add overlay provider for unsaved buffers and generated files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3105",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/vfs/overlay.js"
+      ],
+      "testedAcceptance": [
+        "Reads return unsaved bytes over the base provider; save flushes exact bytes with the loaded baseline hash.",
+        "Generated documents reject mutation and dirty buffers survive base conflicts.",
+        "Delayed read/hash work checks entry identity and publication generation before admitting bytes; discard, disposal, newer buffers and quota races cannot publish stale content.",
+        "Completed physical saves preserve newer dirty buffers and update their baseline; delayed rename/delete operations preserve concurrent edits."
+      ],
+      "evidence": [
+        "node: tests/a24-vfs-conformance.test.js \u2014 dirty overlays, generated read-only URIs, save/conflict/new-file behavior",
+        "foundation-node: tests/a24-overlay-publication.test.js \u2014 11 deterministic asynchronous publication and save/move/delete scenarios."
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3106,
+      "workId": "SF-A24-T18",
+      "title": "[SF-A24-T18] Detect encodings and line endings beyond BOM",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3106",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/text-encoding.js"
+      ],
+      "testedAcceptance": [
+        "Unedited Windows-1252 fallback has lossy=true and re-encodes byte-identically; unrepresentable edits fail explicitly.",
+        "Mixed per-line CRLF/LF/CR and final-newline state survive normalized edits; malformed UTF-16 stays binary."
+      ],
+      "evidence": [
+        "node: tests/a24-path-encoding.test.js \u2014 UTF-8, UTF-16LE/BE, BOM/no-BOM, Windows-1252 and malformed/binary cases",
+        "node: tests/workspace-io.test.js \u2014 UTF-16 disk save/reopen byte preservation"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3107,
+      "workId": "SF-A24-T19",
+      "title": "[SF-A24-T19] Define path identity and case-sensitivity policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3107",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/path-policy.js",
+        "packages/project-system/src/paths.js",
+        "packages/project-system/src/paths-normalize.js",
+        "packages/project-system/src/import-report.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "packages/project-system/src/disk-operations.js"
+      ],
+      "testedAcceptance": [
+        "Program.CS and program.cs resolve to one file on a case-insensitive provider without rewriting original spelling.",
+        "NFC/NFD identity is explicit; collisions, reserved names, traversal and nonportable paths produce per-file diagnostics."
+      ],
+      "evidence": [
+        "node: tests/a24-path-encoding.test.js \u2014 NFC/NFD, case sensitivity, root escape, length/depth and reserved-name bounds",
+        "node: tests/a24-disk-scaling.test.js \u2014 case-insensitive open/create/rename/delete retain canonical spelling"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3113,
+      "workId": "SF-A24-B03",
+      "title": "[SF-A24-B03] Folder open reads every file fully and aborts on one oversized file",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3113",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/provider-disk-open.js",
+        "packages/project-system/src/disk-scan.js",
+        "packages/project-system/src/import-report.js"
+      ],
+      "testedAcceptance": [
+        "An oversized file is skipped and reported while usable files still open; size is inspected before its contents are read."
+      ],
+      "evidence": [
+        "node: tests/a24-disk-scaling.test.js \u2014 B03 oversized/reserved path fixture, zero oversized-file reads"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3114,
+      "workId": "SF-A24-B04",
+      "title": "[SF-A24-B04] DiskWorkspace.save cannot persist new or binary-decoded files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3114",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/disk-save.js",
+        "packages/project-system/src/provider-disk-workspace.js"
+      ],
+      "testedAcceptance": [
+        "New files are created through the root directory provider. Configured encoded-byte limits replace the fixed character ceiling.",
+        "Binary and XML records can save with exact-byte conflict checks."
+      ],
+      "evidence": [
+        "node: tests/a24-disk-scaling.test.js \u2014 B04 creates 2000001-character source and converts formerly binary source",
+        "node: UTF-8 multibyte overflow fixture rejects before opening a stream"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3174,
+      "workId": "SF-A24-T01.3",
+      "title": "[SF-A24-T01.3] Track baselines by content hash for text, XML and binary files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3174",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/disk-baseline.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "packages/project-system/src/disk-save.js",
+        "packages/workspace/src/content-hash.js"
+      ],
+      "testedAcceptance": [
+        "SHA256 byte hashes are the independent baselines; a compatibility text view does not retain strings after unload.",
+        "BOM-only external modification conflicts even when decoded text is equal. .resx and binary writes succeed and subsequent external binary changes conflict.",
+        "adoptRecords validates a complete snapshot before publishing, retains only relevant hashes and rebuilds all indexes and loaded-byte accounting.",
+        "Loading publishes bytes, hash and file handle together after I/O; cancelled reads, failed handles and changed baselines leave the prior state intact.",
+        "Held ownership signals reach actual baseline reads and writes; save versions survive load/save/unload/load, and exhausted versions reject before physical writes."
+      ],
+      "evidence": [
+        "node: tests/a24-disk-scaling.test.js \u2014 BOM-only conflict; XML/binary saves; byte accounting/unload; coherent adoptRecords regression",
+        "disk-load-concurrency: tests/a24-disk-load-concurrency.test.js \u2014 staged handle acquisition, cancellation, changed baseline and atomic byte admission",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": [
+        "Unloaded metadata-only files acquire a baseline when loaded; replacing unhydrated bytes without an explicit expected hash is rejected."
+      ]
+    },
+    {
+      "issue": 3175,
+      "workId": "SF-A24-T01.4",
+      "title": "[SF-A24-T01.4] Create, delete and rename files through directory handles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3175",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/disk-operations.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "packages/project-system/src/disk-save.js"
+      ],
+      "testedAcceptance": [
+        "All targets undergo permission and collision preflight before the first mutation; denied second-file permission leaves the first file untouched.",
+        "Create, delete, move and rename update physical records, path indexes, hashes and handles; byte-preserving binary rename is covered.",
+        "The explicit provider API performs directory operations while unchanged legacy defaults remain available; whole-operation preflight and partial-completion receipts are covered."
+      ],
+      "evidence": [
+        "node: tests/a24-disk-scaling.test.js \u2014 create/save, binary rename/delete, canonical directory rename, all-target permission preflight",
+        "node: tests/a24-vfs-conformance.test.js \u2014 real native HTTP create/rename/delete; browser: FSA adapter rename on real OPFS handle",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": [
+        "Physical multi-file operations report completed mutations and atomic=false. The composed journal/provider adapter and session cases passed in the named5269 Node scope; actual picker/Explorer DOM acceptance remains unqualified."
+      ],
+      "historicalRemaining": [
+        "Physical multi-file operations report completed mutations and atomic=false. Cross-file rollback/undo belongs the journal adapter integration.",
+        "The final Studio explorer-create/save callback is being qualified by the root integration corpus; OS picker UI remains unqualified."
+      ],
+      "canonicalFollowupEvidence": "canonical-port-qualification.json"
+    },
+    {
+      "issue": 3190,
+      "workId": "SF-A24-T04.1",
+      "title": "[SF-A24-T04.1] Implement browser file watching with observer and polling fallback",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3190",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/watch.js",
+        "packages/workspace/src/vfs/fsa.js",
+        "apps/studio/explorer/disk-services.js"
+      ],
+      "testedAcceptance": [
+        "Open files receive bounded priority without starving other open files or background paths; even a one-probe saturated budget rotates fairly.",
+        "The watcher emits distinct event type/kind fields, compares exact hashes for open files, and identifies unique hash-preserving renames.",
+        "Notifications wait while a file transaction is busy; exact committed hashes and already-adopted deletes are ignored after it completes."
+      ],
+      "evidence": [
+        "node: tests/a24-watch-reload.test.js \u2014 20000-file bounded polling/open-file priority; observer fallback/dispose; hashed rename",
+        "browser: explorer controller consumes actual provider events and disposes watchers",
+        "foundation-watch-final: tests/a24-watch-fairness.test.js \u2014 budgets one and three visit all eight priority and two background files within 20 ticks without exceeding the per-tick probe limit."
+      ],
+      "remaining": [
+        "Changes to unprioritized files may need a full polling rotation. OS external edits through a native picked-directory watcher are not yet qualified."
+      ]
+    },
+    {
+      "issue": 3191,
+      "workId": "SF-A24-T04.2",
+      "title": "[SF-A24-T04.2] Coalesce atomic-save patterns and rapid edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3191",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/watch-coalesce.js",
+        "apps/studio/explorer/disk-services.js",
+        "packages/project-system/src/disk-save.js"
+      ],
+      "testedAcceptance": [
+        "Atomic delete/create and temporary-file rename bursts collapse to one change.",
+        "Own-save acknowledgement suppresses only the matching exact hash, including an event already queued before acknowledgement."
+      ],
+      "evidence": [
+        "node: tests/a24-watch-reload.test.js \u2014 atomic replacement, temporary-file rename and own-hash suppression",
+        "browser: own Studio-style disk.save acknowledgement causes no command/prompt; different external hash still prompts"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3194,
+      "workId": "SF-A24-T04.3",
+      "title": "[SF-A24-T04.3] Reload changed documents with explicit choices for dirty buffers",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3194",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/reload.js",
+        "apps/studio/explorer/disk-services.js",
+        "apps/studio/explorer/disk-services-view.js"
+      ],
+      "testedAcceptance": [
+        "Clean documents reload automatically with expected versions; dirty documents retain text until a visible Reload/Keep/Compare choice.",
+        "Project/props/targets/solution changes request reevaluation and directory changes send coherent cancellable metadata scans.",
+        "A reevaluated:true host acknowledgment prevents duplicate XML reevaluation; provider/revision/workspace lifetime guards discard stale callbacks and busy transaction scans."
+      ],
+      "evidence": [
+        "node: tests/a24-watch-reload.test.js \u2014 clean reload, dirty reload/keep/compare, stale reload and project reevaluation callback",
+        "browser: clean document reload, dirty text retained, both compare texts rendered, keep preserves local text",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": [
+        "The disk-event/search/session host callback cases passed in the complete5269 Node scope. Protected production-entry and real-browser component integration remain separate acceptance."
+      ],
+      "historicalRemaining": [
+        "Browser component tests exercise deterministic host callbacks. Root owns final disk-external-change/disk-reevaluate callbacks and integrated Studio qualification."
+      ],
+      "canonicalFollowupEvidence": "canonical-port-qualification.json"
+    },
+    {
+      "issue": 3195,
+      "workId": "SF-A24-T05.1",
+      "title": "[SF-A24-T05.1] Remove fixed document ceilings with lazily loaded documents",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3195",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/lazy/document-store.js",
+        "packages/workspace/src/workspace.js",
+        "packages/project-system/src/provider-disk-workspace.js"
+      ],
+      "testedAcceptance": [
+        "Registering 5000 closed files reads no contents. Loaded records are admitted by byte budget and dirty/pinned buffers are not evicted.",
+        "Workspace can subscribe to eviction without replacing the embedding host callback; closed records remain explicit lazy metadata.",
+        "Actual Workspace opens and parses only requested files; compileAsync admits only records selected for compilation. Metadata APIs reject embedded contents outside the admission budget.",
+        "Delayed disk reads cannot restore entries deleted, renamed, refreshed or replaced while loading; unrelated entry changes remain valid and concurrent admission rechecks the final byte budget.",
+        "Bulk metadata admission after document-store disposal rejects without repopulating entries.",
+        "Final synchronous beforeAdmit guards reject without partial publication; load/unload preserve monotonic watermarks, with actual editor lifecycle and physical transaction regressions."
+      ],
+      "evidence": [
+        "node: tests/a24-lazy-search.test.js \u2014 5000 metadata-only files, LRU byte budgets, pin/dirty preservation, cancellation and stale-load rejection",
+        "node: tests/a24-lazy-search.test.js \u2014 actual Workspace SourceText/syntax allocation, close eviction, compileAsync selected inputs, monotonic reopen versions; admission-tests.log",
+        "disk-load-concurrency: tests/a24-disk-load-concurrency.test.js \u2014 21 deterministic positive, stale load, cancellation and admission regressions",
+        "cache-publication: tests/a24-cache-publication.test.js \u2014 delayed loads retain intervening dirty buffers and close decisions; remove/register entry identity, abort and disposal guards",
+        "scaling-cohort: tests/a24-document-disposal.test.js and split document admission/publication suites.",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": [
+        "Versioned admission/unload/worker lifecycle and folder compilation cases passed in the complete5269 Node scope. This does not qualify the protected production-entry or browser memory/OS matrix."
+      ],
+      "historicalRemaining": [
+        "The final Studio selected-project compiler hydration path belongs to root integration qualification; this evidence covers the public Workspace API."
+      ],
+      "canonicalFollowupEvidence": "canonical-port-qualification.json"
+    },
+    {
+      "issue": 3196,
+      "workId": "SF-A24-T05.2",
+      "title": "[SF-A24-T05.2] Enumerate directories lazily without reading all bytes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3196",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/disk-scan.js",
+        "packages/project-system/src/provider-disk-open.js",
+        "packages/project-system/src/provider-disk-workspace.js"
+      ],
+      "testedAcceptance": [
+        "Large directory opening reads only project/evaluation inputs and explicitly opened documents; ordinary source files remain metadata-only.",
+        "Progress is chunked and cancellation prevents partial workspace publication.",
+        "Additive readProviderDirectory/readProviderFiles preserve metadata-first imports and explicitly requested open paths without changing the legacy eager entry points."
+      ],
+      "evidence": [
+        "node: tests/a24-disk-scaling.test.js \u2014 20000-file scan reads one project only, explicit load adds one read, cancellation publishes no partial workspace",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3197,
+      "workId": "SF-A24-T05.3",
+      "title": "[SF-A24-T05.3] Add lazy children and paging to the explorer tree",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3197",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/explorer/lazy-tree.js",
+        "apps/studio/explorer/view.js",
+        "packages/controls/src/tree-view.js",
+        "apps/studio/explorer/view-policy.js",
+        "apps/studio/explorer/toolbar.js"
+      ],
+      "testedAcceptance": [
+        "Folder nodes expose child counts and asynchronous loaders; node pages and virtualized DOM rows are bounded.",
+        "Deferred construction retains no file index before expansion; directory indexing yields in cooperative time slices.",
+        "The default 20000-file evaluated solution visibly selects paged Folder view before allocating the hierarchy; its requested Solution preference remains intact and returns for smaller scopes. Toolbar and menu explain the bounded view.",
+        "Case aliases and file/directory shadows fail before replacing existing lazy directory nodes; canonical Unicode file collisions reject."
+      ],
+      "evidence": [
+        "node: tests/a24-lazy-search.test.js \u2014 10000-file pages, max page bounds, deferred construction and cancelled expansion",
+        "browser: browser-results.json \u201410000 files,page100,32 actual DOM rows,7 samples,median1.7ms/p952.7ms; prior1.2ms/p951.6ms retained separately",
+        "node: tests/a24-explorer-view-policy.test.js and browser-large-results.json \u2014 actual SolutionExplorer starts with one node, pages 100 files, renders 32 DOM rows, supports next-page action and disposes the old model when returning to a smaller solution",
+        "scaling-cohort: tests/a24-lazy-tree-identity.test.js and standalone model/view-policy suites."
+      ],
+      "remaining": [
+        "Browser expansion measurements include page materialization and DOM rendering after directory index preparation. Deferred index preparation is asynchronous and measured separately; total first-index completion is not claimed below16ms.",
+        "Large scopes use the explicitly labelled physical Folder view. Deferred project/dependency/linked-file appearances in Solution view are not provided for those scopes; project evaluation and builds are unaffected."
+      ]
+    },
+    {
+      "issue": 3198,
+      "workId": "SF-A24-T05.4",
+      "title": "[SF-A24-T05.4] Report skipped and non-portable paths instead of failing the import",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3198",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/import-report.js",
+        "packages/project-system/src/disk-scan.js",
+        "apps/studio/explorer/disk-services.js",
+        "apps/studio/explorer/disk-services-view.js"
+      ],
+      "testedAcceptance": [
+        "Rejected paths are visible per-path outcomes and never discard usable files.",
+        "Optional ordered root and nested ignore rules include negation, directory patterns, *, **, ?, ranges and escaped literals.",
+        "Visible reports use bounded pages of at most 100 rows; comparison panes are read-only and discarded rows are replaced rather than accumulated."
+      ],
+      "evidence": [
+        "node: tests/a24-disk-scaling.test.js \u2014 con.txt, oversized entries, NFC/NFD/case collisions, root/nested gitignore, ranges/escapes/directory-only patterns",
+        "browser: skipped con.txt path visibly rendered in expandable report",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3199,
+      "workId": "SF-A24-T05.5",
+      "title": "[SF-A24-T05.5] Add path and text search index for large workspaces",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3199",
+      "status": "validated",
+      "implementation": [
+        "packages/workspace/src/search-index.js",
+        "apps/studio/explorer/disk-services.js",
+        "apps/studio/explorer/disk-services-view.js"
+      ],
+      "testedAcceptance": [
+        "Path postings and text cache have independent memory budgets; searches are cancellable and watchers update/invalidate the index.",
+        "Explorer search includes closed paths. disk.findInFiles exposes {matches,truncated,scannedFiles} with UTF-16 offsets and zero-based lines for root request routing.",
+        "Delayed status reads cannot restore deleted/replaced entries; pending status probes are bounded; aborted/superseded watch setup disposes returned subscriptions, and disposal clears byte counters.",
+        "Every streamed match retains its captured document version; deletion, replacement, invalidation, cancellation and final pending-read disposal cannot publish stale matches. Search membership is a bounded snapshot."
+      ],
+      "evidence": [
+        "node: tests/a24-lazy-search.test.js \u2014 20000 path index, streaming first content result, bounded cache, Unicode offsets, cancellation and watch updates",
+        "browser: closed-file explorer search and LanguageService-compatible Find in Files coordinates without disk hydration",
+        "benchmark-deferred.json \u2014 seven20k-file samples, actual Node metadata provider and explicit admission estimates",
+        "cache-publication: tests/a24-cache-publication.test.js \u2014 invalidation/watcher/recreation prevent stale cache fills, simultaneous reads count bytes once, cancellation and disposal prevent publication",
+        "scaling-cohort: tests/a24-search-lifecycle.test.js plus standalone search/publication suites.",
+        "disk-publication completed cohort and affected corrections: filesystem-disk-qualification.json (Node v26.10.0 Linux x64)."
+      ],
+      "remaining": [
+        "Browser UI search was qualified with a memory provider; actual disk content reading is separately covered by FSA/OPFS/native provider tests."
+      ]
+    }
+  ],
+  "publication": "filesystem-publication.json",
+  "scalingPublication": "filesystem-scaling-publication.json",
+  "crossScopeCorrections": [
+    {
+      "issues": [
+        3223,
+        3226
+      ],
+      "owner": "workspace_integrity",
+      "implementation": [
+        "packages/workspace/src/recovery/handles.js",
+        "packages/workspace/src/recovery/sanitize.js",
+        "packages/workspace/src/coordination/locks.js"
+      ],
+      "description": "Stable physical identities persist independently of the 20-item recent menu, never rotate on eviction, and fail explicitly at bounded registry capacity. Version-one keys migrate, duplicate keys reject and handle comparisons recheck cancellation/disposal.",
+      "evidence": "scaling-cohort: tests/a24-handle-identity.test.js and tests/a24-save-locks.test.js",
+      "remaining": [
+        "Real browser IndexedDB handle persistence, permissions and multiple windows remain platform qualification owned by the workspace integration."
+      ]
+    }
+  ],
+  "diskPublication": "filesystem-disk-publication.json",
+  "diskQualification": "filesystem-disk-qualification.json",
+  "apiMigration": "filesystem-api-migration.json",
+  "canonicalIntegrationFollowup": {
+    "recordedAt": "2026-10-04T06:22:31.993489+00:00",
+    "canonicalSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "fullSourceScope": {
+      "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "toolchain": "Node22.23.3 on Linux x64",
+      "result": "228 named files,1877/1877 cases passed, zero failed/skipped/cancelled/todo.",
+      "evidence": "canonical-port-qualification.json"
+    },
+    "contributionCorrection": {
+      "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "toolchain": "Node26.10.0 on Linux x64",
+      "result": "18 existing files,382/382 cases passed; check/build/clean-checkout passed. Strict structure remains265 historical violations with all seven actual pinned legacy files now shrinking by lines or bytes.",
+      "evidence": "legacy-cleanup-qualification.json"
+    },
+    "publication": {
+      "ingress": "prepared-ingress-publication.json",
+      "registry": "compiler-worker-registry-publication.json",
+      "xmlFacade": "xml-facade-cleanup-publication.json",
+      "diskFacade": "disk-facade-cleanup-publication.json",
+      "allFamilyCensus": "final-publication-audit.json",
+      "exactCanonicalPaths": "final-port-path-audit.json"
+    },
+    "limits": [
+      "Preserve original failed aggregates: initial bb2Node26 1809/1875, correction7b0 259/260; finalNode22 and cleanupNode26 are separate scopes.",
+      "Named Node host/session/search/disk cases passed. Protected production Studio entry and final real-browser integration are not inferred from those results.",
+      "Published-only split test files contain several additional direct API/boundary assertions; see filesystem-published-only-test-map.json. They are not silently counted as part of the final228-file source cohort."
+    ]
+  },
+  "browserStorageFollowup": {
+    "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "ownerManifest": "workspace-prepared-publication.json",
+    "result": "OPFS byte roundtrip and plain IndexedDB put/get passed; directory-handle put succeeded but get triggered native Chromium SIGTRAP. This does not qualify picker/permission/recovery component acceptance.",
+    "rawLog": "/tmp/p18-final-qualification-logs/storage-probe-e9f8a8cd/browser-storage-probe.log",
+    "rawLogSha256": "39fa39a74a2d19acbd1d5c7ad98cb1426db24e92f6d985b381400ebf89703862"
+  },
+  "finalAuditSeal": {
+    "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+    "evidence": "planning/evidence/project18/final-publication-audit.json",
+    "issueCoverage": "planning/evidence/project18/coverage.json",
+    "browserScope": {
+      "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+      "suite": "browser_release13_test",
+      "qualification": "passed",
+      "checks": 16,
+      "passed": 16,
+      "failed": 0,
+      "exitCode": 0,
+      "errors": [],
+      "session": {
+        "suite": "browser_release13_test",
+        "passed": true,
+        "engine": "chromium",
+        "cspViolations": [],
+        "browser": "153.0.8010.12",
+        "executable": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+        "mode": "http",
+        "seconds": 20.607364868999866,
+        "diagnosticErrors": []
+      },
+      "qualifiedProductSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "differenceFromQualifiedProduct": [
+        "tests/browser_release13_test.py"
+      ],
+      "entryBoundary": "Built committed actual Studio; no copied proposed or protected entry patch was applied or executed.",
+      "evidence": "planning/evidence/project18/final-browser-qualification.json"
+    },
+    "interpretation": "The final browser pass is scoped to its sixteen named C# designer, source/CIL launch and ownership checks. It does not supersede the provider-storage, native-picker or platform limits below."
+  }
+}

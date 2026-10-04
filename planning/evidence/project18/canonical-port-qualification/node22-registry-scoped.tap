@@ -1,0 +1,74 @@
+TAP version 13
+# Selected verbatim blocks; original numbering retained.
+# Subtest: two independent tools start and a failed third batch restores the container
+ok 17 - two independent tools start and a failed third batch restores the container
+  ---
+  duration_ms: 2.237593
+  type: 'test'
+  ...
+# Subtest: container preflights duplicates, reports disposal errors and rolls back cancellation
+ok 18 - container preflights duplicates, reports disposal errors and rolls back cancellation
+  ---
+  duration_ms: 0.451801
+  type: 'test'
+  ...
+# Subtest: commands preserve handler behavior and reject duplicate registrations
+ok 19 - commands preserve handler behavior and reject duplicate registrations
+  ---
+  duration_ms: 2.046335
+  type: 'test'
+  ...
+# Subtest: tools append menu items without global state or editing Studio
+ok 20 - tools append menu items without global state or editing Studio
+  ---
+  duration_ms: 0.732714
+  type: 'test'
+  ...
+# Subtest: each mount has independent state and DOM, and failed render cleans up
+ok 21 - each mount has independent state and DOM, and failed render cleans up
+  ---
+  duration_ms: 1.771109
+  type: 'test'
+  ...
+# Subtest: automation contributions preserve the complete pre-extraction key surface
+ok 22 - automation contributions preserve the complete pre-extraction key surface
+  ---
+  duration_ms: 9.039867
+  type: 'test'
+  ...
+# Subtest: automation duplicate batches roll back and namespaces dispose cleanly
+ok 23 - automation duplicate batches roll back and namespaces dispose cleanly
+  ---
+  duration_ms: 0.349918
+  type: 'test'
+  ...
+# Subtest: storage preserves v1 payloads, versions and quota failures
+ok 24 - storage preserves v1 payloads, versions and quota failures
+  ---
+  duration_ms: 0.598092
+  type: 'test'
+  ...
+# Subtest: every worker message has a handler seam and unknown messages fail structurally
+ok 25 - every worker message has a handler seam and unknown messages fail structurally
+  ---
+  duration_ms: 0.839475
+  type: 'test'
+  ...
+# Subtest: Studio has no command branches, direct persistence or inline automation literal
+ok 26 - Studio has no command branches, direct persistence or inline automation literal
+  ---
+  duration_ms: 32.92227
+  type: 'test'
+  ...
+# (node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real compiler and runtime workers dispatch known requests and return structured unknown errors
+ok 27 - real compiler and runtime workers dispatch known requests and return structured unknown errors
+  ---
+  duration_ms: 1304.559714
+  type: 'test'
+  ...
+# (node:83) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)

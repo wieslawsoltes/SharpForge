@@ -1,4 +1,4 @@
-import { createProjectPlan, createItemPlan, defaultNamespace, searchTemplates } from '../../../packages/templates/src/index.js';
+import { createProjectPlan, createItemPlan, defaultNamespace, searchTemplates } from '@sharpforge/templates';
 
 const dir = path => path?.includes('/') ? path.slice(0, path.lastIndexOf('/')) : '';
 

@@ -1,0 +1,150 @@
+{
+  "output": "/workspace/scratch/3e16369943fd/p18-integration/planning/evidence/project18/integration/upstream-performance/profile-integrated",
+  "backend": "cil",
+  "correctness": {
+    "passed": true
+  },
+  "samples": [
+    883,
+    746,
+    700,
+    707
+  ],
+  "top": [
+    {
+      "url": "node:inspector",
+      "functionName": "post",
+      "line": 118,
+      "selfSamples": 4,
+      "selfMicroseconds": 281383,
+      "inclusiveSamples": 8,
+      "inclusiveMicroseconds": 282155
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/frame-pool.js",
+      "functionName": "flush",
+      "line": 78,
+      "selfSamples": 355,
+      "selfMicroseconds": 61609,
+      "inclusiveSamples": 355,
+      "inclusiveMicroseconds": 61609
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/type-names.js",
+      "functionName": "runtimeTypeName",
+      "line": 40,
+      "selfSamples": 198,
+      "selfMicroseconds": 34475,
+      "inclusiveSamples": 237,
+      "inclusiveMicroseconds": 41140
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/cil-vm.js",
+      "functionName": "step",
+      "line": 94,
+      "selfSamples": 162,
+      "selfMicroseconds": 29094,
+      "inclusiveSamples": 2446,
+      "inclusiveMicroseconds": 426696
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/cil-slice.js",
+      "functionName": "runCilSlice",
+      "line": 19,
+      "selfSamples": 167,
+      "selfMicroseconds": 28755,
+      "inclusiveSamples": 2886,
+      "inclusiveMicroseconds": 503544
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/generic-signatures.js",
+      "functionName": "normalizeCallType",
+      "line": 28,
+      "selfSamples": 150,
+      "selfMicroseconds": 26420,
+      "inclusiveSamples": 175,
+      "inclusiveMicroseconds": 30861
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/framework/src/registry.js",
+      "functionName": "canonicalType",
+      "line": 26,
+      "selfSamples": 126,
+      "selfMicroseconds": 21648,
+      "inclusiveSamples": 126,
+      "inclusiveMicroseconds": 21648
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/frame-pool.js",
+      "functionName": "flushFramePool",
+      "line": 128,
+      "selfSamples": 107,
+      "selfMicroseconds": 18949,
+      "inclusiveSamples": 461,
+      "inclusiveMicroseconds": 80392
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/cil-step.js",
+      "functionName": "executeCilStep",
+      "line": 9,
+      "selfSamples": 106,
+      "selfMicroseconds": 18714,
+      "inclusiveSamples": 2283,
+      "inclusiveMicroseconds": 397440
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/generic-signatures.js",
+      "functionName": "substituteTypeArguments",
+      "line": 14,
+      "selfSamples": 100,
+      "selfMicroseconds": 17606,
+      "inclusiveSamples": 100,
+      "inclusiveMicroseconds": 17606
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/intrinsic-profile.js",
+      "functionName": "intrinsicDefinition",
+      "line": 96,
+      "selfSamples": 96,
+      "selfMicroseconds": 17104,
+      "inclusiveSamples": 253,
+      "inclusiveMicroseconds": 44249
+    },
+    {
+      "url": "",
+      "functionName": "(garbage collector)",
+      "line": 0,
+      "selfSamples": 87,
+      "selfMicroseconds": 15246,
+      "inclusiveSamples": 87,
+      "inclusiveMicroseconds": 15246
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/code-version.js",
+      "functionName": "executionCodeState",
+      "line": 26,
+      "selfSamples": 87,
+      "selfMicroseconds": 15111,
+      "inclusiveSamples": 87,
+      "inclusiveMicroseconds": 15111
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/method-table.js",
+      "functionName": "get",
+      "line": 76,
+      "selfSamples": 83,
+      "selfMicroseconds": 14299,
+      "inclusiveSamples": 323,
+      "inclusiveMicroseconds": 55847
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-integration/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 23,
+      "selfSamples": 74,
+      "selfMicroseconds": 13163,
+      "inclusiveSamples": 526,
+      "inclusiveMicroseconds": 91886
+    }
+  ]
+}

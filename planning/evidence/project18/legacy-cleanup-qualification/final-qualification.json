@@ -1,0 +1,216 @@
+{
+  "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "checkout": "/dev/shm/p18-final-qualification",
+  "startedAt": "2026-10-04T05:47:00.486322+00:00",
+  "toolchain": {
+    "node": "v26.10.0",
+    "npm": "11.19.1"
+  },
+  "environment": {
+    "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+    "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/results",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+    "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+  },
+  "steps": [
+    {
+      "name": "node26-legacy-final",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/a20-disk-save-cancellation.test.js",
+        "tests/a20-large-file-disk.test.js",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-metadata-inspection.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a24-explorer-xml-regression.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/cil.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/msbuild-native.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/project-system.test.js"
+      ],
+      "startedAt": "2026-10-04T05:47:00.489276+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 1046085632,
+        "availableBytes": 1046085632,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8589918208",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1283363\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "node26-legacy-final.tap",
+      "completedAt": "2026-10-04T05:47:12.798524+00:00",
+      "exitCode": 0,
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "resourceAfter": {
+        "actualFreeBytes": 1046085632,
+        "availableBytes": 1046085632,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8460976128",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1288117\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": "",
+      "summary": {
+        "tests": 382,
+        "suites": 0,
+        "pass": 382,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "qualificationIncomplete": false
+    },
+    {
+      "name": "check",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-10-04T05:47:12.825274+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 1046085632,
+        "availableBytes": 1046085632,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8480886784",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1288117\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "check.log",
+      "completedAt": "2026-10-04T05:47:16.790102+00:00",
+      "exitCode": 0,
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "resourceAfter": {
+        "actualFreeBytes": 1046085632,
+        "availableBytes": 1046085632,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8244363264",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1289443\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "name": "build",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-04T05:47:16.815244+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 1046085632,
+        "availableBytes": 1046085632,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8245579776",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1289443\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "build.log",
+      "completedAt": "2026-10-04T05:47:21.667480+00:00",
+      "exitCode": 0,
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "resourceAfter": {
+        "actualFreeBytes": 1046044672,
+        "availableBytes": 1046044672,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8236306432",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "name": "clean-checkout",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/clean-checkout.js"
+      ],
+      "startedAt": "2026-10-04T05:47:21.697507+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 1046044672,
+        "availableBytes": 1046044672,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8237694976",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "clean-checkout.log",
+      "completedAt": "2026-10-04T05:47:21.849949+00:00",
+      "exitCode": 0,
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "resourceAfter": {
+        "actualFreeBytes": 1046044672,
+        "availableBytes": 1046044672,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8248922112",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "name": "structure",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/quality/check-structure.js",
+        "--strict"
+      ],
+      "startedAt": "2026-10-04T05:47:21.877147+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 1046044672,
+        "availableBytes": 1046044672,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8247627776",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "structure.log",
+      "completedAt": "2026-10-04T05:47:22.243345+00:00",
+      "exitCode": 1,
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "resourceAfter": {
+        "actualFreeBytes": 1046044672,
+        "availableBytes": 1046044672,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8268058624",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    }
+  ]
+}

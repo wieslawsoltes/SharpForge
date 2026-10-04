@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 2,
+  "kind": "read-only-contract-review",
+  "candidateSha256": "6f37a3e450a5ab39bb10143156502f993b5c0a80bb844f8b6823e9a7589d196b",
+  "nativeOwnerReportedFrozen": true,
+  "native": {
+    "mismatches": [],
+    "confirmed": [
+      "createNativeContextHooks receives the actual DocumentService; prepared replacement owns model adoption and editor preservation.",
+      "collectNativeSourceChanges receives state plus Documents and captures immutable changed-source revisions.",
+      "refreshNativeExplorerWorkspace receives state, Documents, nativeBuild and renderWorkspace, followed by mappings and {partial,signal}.",
+      "The Explorer operation signal is passed by the protected proposal; native refresh checks client, workspace, document and model ownership before replacement."
+    ],
+    "sources": [
+      {
+        "path": "apps/studio/native-build/workspace-state.js",
+        "sha256": "189c4d0b6d27707dfbff247213eec2bce86353b7f153afb4f8b021ad58a589d5"
+      },
+      {
+        "path": "apps/studio/native-build/document-records.js",
+        "sha256": "1378c277e8a5fa61304db03c71f6f9538774473f17459811c965527544db7f42"
+      },
+      {
+        "path": "apps/studio/native-build/document-replacement.js",
+        "sha256": "0b8a5623271e1958a3a95c32c04b9b38de513f0b90c574affa148f237d732251"
+      },
+      {
+        "path": "apps/studio/native-build/explorer-refresh.js",
+        "sha256": "f7690d254e8a8fda5a2d1ba38b321a83a0b63437598bc2ff4f1461f2488618fb"
+      }
+    ]
+  },
+  "saveOwnerReportedFrozen": true,
+  "saveOwnerContractConfirmed": true,
+  "saveCallsiteChangesRequired": false,
+  "applicationExecuted": false,
+  "testsRun": false,
+  "sharedSourceChanged": false,
+  "canonicalSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "canonicalTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "save": {
+    "mismatches": [],
+    "confirmed": [
+      "The proposal passes DocumentService and the workbench context into the single workspace-session facade; load and commit delegate to Documents and WorkspaceLoads.",
+      "StudioSave forwards captures, disk, signal, synchronous ownership check, wholeWorkspace and excludedPaths unchanged to workspaceSession.save.",
+      "Per-document SaveAs targets retain captured document/model ownership and do not become the workspace target.",
+      "loadRecord returns the owned prepared record; ensureSource adopts it through DocumentService without reading its compatibility text getter.",
+      "Provider save reconciliation retains committed physical baselines and preserves newly edited source revisions."
+    ],
+    "sources": [
+      {
+        "path": "apps/studio/workspace-session.js",
+        "sha256": "841a5cc3d1b2bb13d0d97517bb0f8629a9b5d2fe8b3106d45294182d75370399"
+      },
+      {
+        "path": "apps/studio/workspace-save.js",
+        "sha256": "58c73842ca53f580fd24428e92480c2b603579242ba955a985fb9ed58e909b1e"
+      },
+      {
+        "path": "apps/studio/workspace-save-scope.js",
+        "sha256": "34c1fe0ccf4ac020539ca732c8e49225dd21531a6440d8ec8ab04ff82a485e6b"
+      },
+      {
+        "path": "apps/studio/workspace-editor-lifecycle.js",
+        "sha256": "1c60860627df9f7b496336cafebb9c242d7a06101033f177e237a8b91d174ec7"
+      },
+      {
+        "path": "apps/studio/workspace-source-records.js",
+        "sha256": "bd9c3a444587086658338a8a45e89e8c1b9e5887df5ca3fee237e51cb2bd9248"
+      },
+      {
+        "path": "apps/studio/workbench/studio-save.js",
+        "sha256": "b305f747bcd8b0aa1214c88669634756fa5658d333694b24a447bf7fbc3b8402"
+      },
+      {
+        "path": "apps/studio/workbench/studio-save-operation.js",
+        "sha256": "c9d8a441df836a160d579a1498dcb8ff02f49c29c968447030126407bb3d3854"
+      },
+      {
+        "path": "apps/studio/workbench/studio-workspace-loader.js",
+        "sha256": "55bcbfb0676ce343d3c7ecc348ad3218eb10baa83864b540a071b9fb8613ed15"
+      },
+      {
+        "path": "apps/studio/workbench/studio-explorer-workspace.js",
+        "sha256": "06fe52cf6120b06c031490467f3aaf58dc2dae6e2bbe2b350a0a62fa60e952e7"
+      },
+      {
+        "path": "apps/studio/workbench/studio-workspace-ports.js",
+        "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b"
+      }
+    ]
+  },
+  "reviewUpdatedAt": "2026-10-04T07:25:36.383796+00:00",
+  "priorContractReviewSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+  "sourceHashReview": [
+    {
+      "path": "apps/studio/native-build/workspace-state.js",
+      "sha256": "189c4d0b6d27707dfbff247213eec2bce86353b7f153afb4f8b021ad58a589d5",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/native-build/document-records.js",
+      "sha256": "1378c277e8a5fa61304db03c71f6f9538774473f17459811c965527544db7f42",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/native-build/document-replacement.js",
+      "sha256": "0b8a5623271e1958a3a95c32c04b9b38de513f0b90c574affa148f237d732251",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/native-build/explorer-refresh.js",
+      "sha256": "f7690d254e8a8fda5a2d1ba38b321a83a0b63437598bc2ff4f1461f2488618fb",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workspace-session.js",
+      "sha256": "841a5cc3d1b2bb13d0d97517bb0f8629a9b5d2fe8b3106d45294182d75370399",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workspace-save.js",
+      "sha256": "58c73842ca53f580fd24428e92480c2b603579242ba955a985fb9ed58e909b1e",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workspace-save-scope.js",
+      "sha256": "34c1fe0ccf4ac020539ca732c8e49225dd21531a6440d8ec8ab04ff82a485e6b",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workspace-editor-lifecycle.js",
+      "sha256": "1c60860627df9f7b496336cafebb9c242d7a06101033f177e237a8b91d174ec7",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workspace-source-records.js",
+      "sha256": "bd9c3a444587086658338a8a45e89e8c1b9e5887df5ca3fee237e51cb2bd9248",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/studio-save.js",
+      "sha256": "b305f747bcd8b0aa1214c88669634756fa5658d333694b24a447bf7fbc3b8402",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/studio-save-operation.js",
+      "sha256": "c9d8a441df836a160d579a1498dcb8ff02f49c29c968447030126407bb3d3854",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/studio-workspace-loader.js",
+      "sha256": "55bcbfb0676ce343d3c7ecc348ad3218eb10baa83864b540a071b9fb8613ed15",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/studio-explorer-workspace.js",
+      "sha256": "06fe52cf6120b06c031490467f3aaf58dc2dae6e2bbe2b350a0a62fa60e952e7",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    },
+    {
+      "path": "apps/studio/workbench/studio-workspace-ports.js",
+      "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b",
+      "sameAsPriorReview": true,
+      "matchingSources": [
+        "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+      ]
+    }
+  ],
+  "sourceHashesAlsoMatch": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "executionBoundary": "applicationExecuted and testsRun refer only to this proposed-entry text review. Root separately built and browser-tested the actual canonical entry.",
+  "proposedEntryExecuted": false,
+  "actualCanonicalEntryBuilt": true,
+  "actualCanonicalEntryBrowserTested": true,
+  "actualCanonicalEntryBrowserComplete": true,
+  "rootQualificationRecord": "prepared-integration.json",
+  "sourceReviewHistory": [
+    {
+      "source": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "tree": "ca911994aa352381fde19f9dcf5bc9bbffbf447c",
+      "reviewUpdatedAt": "2026-10-04T06:27:27.395649+00:00",
+      "sourceHashesAlsoMatch": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+      "sourceHashReview": [
+        {
+          "path": "apps/studio/native-build/workspace-state.js",
+          "sha256": "189c4d0b6d27707dfbff247213eec2bce86353b7f153afb4f8b021ad58a589d5",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/native-build/document-records.js",
+          "sha256": "1378c277e8a5fa61304db03c71f6f9538774473f17459811c965527544db7f42",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/native-build/document-replacement.js",
+          "sha256": "0b8a5623271e1958a3a95c32c04b9b38de513f0b90c574affa148f237d732251",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/native-build/explorer-refresh.js",
+          "sha256": "f7690d254e8a8fda5a2d1ba38b321a83a0b63437598bc2ff4f1461f2488618fb",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-session.js",
+          "sha256": "841a5cc3d1b2bb13d0d97517bb0f8629a9b5d2fe8b3106d45294182d75370399",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-save.js",
+          "sha256": "58c73842ca53f580fd24428e92480c2b603579242ba955a985fb9ed58e909b1e",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-save-scope.js",
+          "sha256": "34c1fe0ccf4ac020539ca732c8e49225dd21531a6440d8ec8ab04ff82a485e6b",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-editor-lifecycle.js",
+          "sha256": "1c60860627df9f7b496336cafebb9c242d7a06101033f177e237a8b91d174ec7",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-source-records.js",
+          "sha256": "bd9c3a444587086658338a8a45e89e8c1b9e5887df5ca3fee237e51cb2bd9248",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-save.js",
+          "sha256": "b305f747bcd8b0aa1214c88669634756fa5658d333694b24a447bf7fbc3b8402",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-save-operation.js",
+          "sha256": "c9d8a441df836a160d579a1498dcb8ff02f49c29c968447030126407bb3d3854",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-loader.js",
+          "sha256": "55bcbfb0676ce343d3c7ecc348ad3218eb10baa83864b540a071b9fb8613ed15",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-explorer-workspace.js",
+          "sha256": "06fe52cf6120b06c031490467f3aaf58dc2dae6e2bbe2b350a0a62fa60e952e7",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-ports.js",
+          "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b",
+          "sameAsPriorReview": true
+        }
+      ]
+    },
+    {
+      "source": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "tree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+      "reviewUpdatedAt": "2026-10-04T06:52:36.367634+00:00",
+      "sourceHashesAlsoMatch": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "sourceHashReview": [
+        {
+          "path": "apps/studio/native-build/workspace-state.js",
+          "sha256": "189c4d0b6d27707dfbff247213eec2bce86353b7f153afb4f8b021ad58a589d5",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/native-build/document-records.js",
+          "sha256": "1378c277e8a5fa61304db03c71f6f9538774473f17459811c965527544db7f42",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/native-build/document-replacement.js",
+          "sha256": "0b8a5623271e1958a3a95c32c04b9b38de513f0b90c574affa148f237d732251",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/native-build/explorer-refresh.js",
+          "sha256": "f7690d254e8a8fda5a2d1ba38b321a83a0b63437598bc2ff4f1461f2488618fb",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-session.js",
+          "sha256": "841a5cc3d1b2bb13d0d97517bb0f8629a9b5d2fe8b3106d45294182d75370399",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-save.js",
+          "sha256": "58c73842ca53f580fd24428e92480c2b603579242ba955a985fb9ed58e909b1e",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-save-scope.js",
+          "sha256": "34c1fe0ccf4ac020539ca732c8e49225dd21531a6440d8ec8ab04ff82a485e6b",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-editor-lifecycle.js",
+          "sha256": "1c60860627df9f7b496336cafebb9c242d7a06101033f177e237a8b91d174ec7",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workspace-source-records.js",
+          "sha256": "bd9c3a444587086658338a8a45e89e8c1b9e5887df5ca3fee237e51cb2bd9248",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-save.js",
+          "sha256": "b305f747bcd8b0aa1214c88669634756fa5658d333694b24a447bf7fbc3b8402",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-save-operation.js",
+          "sha256": "c9d8a441df836a160d579a1498dcb8ff02f49c29c968447030126407bb3d3854",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-loader.js",
+          "sha256": "55bcbfb0676ce343d3c7ecc348ad3218eb10baa83864b540a071b9fb8613ed15",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-explorer-workspace.js",
+          "sha256": "06fe52cf6120b06c031490467f3aaf58dc2dae6e2bbe2b350a0a62fa60e952e7",
+          "sameAsPriorReview": true
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-ports.js",
+          "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b",
+          "sameAsPriorReview": true
+        }
+      ]
+    }
+  ],
+  "latestActualBrowserCompletedChecks": 16,
+  "runtimeProbeQualified": false,
+  "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "productBuildTree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd",
+  "actualCanonicalEntryBrowserScope": "Release13 only",
+  "actualCanonicalEntryBrowserErrors": [],
+  "otherBrowserAcceptanceComplete": false
+}

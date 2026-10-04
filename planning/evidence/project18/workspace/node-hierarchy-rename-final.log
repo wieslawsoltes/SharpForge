@@ -1,0 +1,25 @@
+✔ A24 evaluated Using items and empty Folder metadata do not become physical explorer paths (18.137943ms)
+✔ A24 dependency identities survive display reorder and expose every target framework subtree (1.279611ms)
+✔ A24 default and DependentUpon nesting preserve node ids when the option is toggled (1.019598ms)
+✔ A24 generated source and imports belong to their project and unsupported projects remain visible (0.800467ms)
+✔ A24 symbols materialize on expansion and include nested types, events and constructors (0.900128ms)
+✔ A24 rename maps selection, expansion and focused identity without following display order (0.634086ms)
+✔ nested physical source children retain their own lazy symbol materializers (1.415064ms)
+✔ restored nested-file expansion materializes only that child and retains an empty parent symbol state (0.241435ms)
+✔ A24 type rename binds declarations, constructors, annotations, static access and creation across files (96.535076ms)
+✔ A24 same-spelled types, value members, comments and strings are not changed by textual coincidence (10.551488ms)
+✔ A24 type rename rejects name capture, unsupported reference sources, invalid names and limits visibly (11.685609ms)
+✔ A24 semantic preview handles generic and nested type identities or reports an explicit complete-binding boundary (5.533588ms)
+✔ A24 public language and worker preview preserve versions and reject generated/unloaded inputs (13.626598ms)
+✔ A24 accepted type/file/project rename is one undo entry and decline preserves type spelling (39.185246ms)
+✔ A24 changing any semantic input while the confirmation is open rejects the whole rename (2.789539ms)
+✔ A24 host refuses separate project contexts and native semantic gaps without invoking a worker (0.243717ms)
+✔ A24 type rename refuses an edit extending one character past the reviewed document (0.557521ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1684.22533

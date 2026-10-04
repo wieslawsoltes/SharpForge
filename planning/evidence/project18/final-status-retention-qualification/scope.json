@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "sourceTree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+  "selectedPaths": [
+    "tests/a24-09-wizard-provider.test.js",
+    "tests/a24-disk-scan.test.js",
+    "tests/a24-provider-files.test.js",
+    "tests/a24-reload-coordinator.test.js",
+    "tests/a24-save-locks.test.js",
+    "tests/a24-vfs-memory.test.js",
+    "tests/a24-vfs-native.test.js",
+    "tests/a24-workspace-reconcile.test.js",
+    "tests/a24-status-caret-ownership.test.js",
+    "tests/a19-shell-boundaries.test.js",
+    "tests/a24-editor-model-ownership.test.js"
+  ],
+  "newPreservedCases": 18,
+  "newStatusCases": 5,
+  "reason": "Complete status caret bug fix, existing status/lifecycle regressions, and all unique qualification cases recovered from the full published-parent omission audit.",
+  "separatePriorFullScope": "5269 Node22 1877/1877; not rerun or relabeled here."
+}

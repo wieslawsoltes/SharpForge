@@ -1,0 +1,56 @@
+{
+  "machine": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemory": 10451464192
+  },
+  "timings": {
+    "after": {
+      "writeZip": {
+        "runs": 25,
+        "medianMs": 3.653603000000004,
+        "p95Ms": 4.695313999999996
+      },
+      "readZip": {
+        "runs": 25,
+        "medianMs": 3.3239050000000248,
+        "p95Ms": 4.398537000000005
+      }
+    },
+    "before": {
+      "revision": "2706a82f",
+      "writeZip": {
+        "runs": 25,
+        "medianMs": 2.5008339999999976,
+        "p95Ms": 4.3812110000000075
+      },
+      "readZip": {
+        "runs": 25,
+        "medianMs": 2.4299859999999853,
+        "p95Ms": 2.6630890000000136
+      }
+    }
+  },
+  "streaming": {
+    "entries": 1001,
+    "inputBytes": 524288154,
+    "outputBytes": 7133409,
+    "compressionBackend": "portable-fixed",
+    "seconds": 5.514296704,
+    "sourceBytes": 524288000,
+    "peakRss": 122957824,
+    "rssIncrease": 58236928,
+    "externalIncrease": 59436742,
+    "heapIncrease": 2748664,
+    "reference": {
+      "version": "3.12.14",
+      "entries": 1001,
+      "bytes": 524288154
+    },
+    "readZipValidated": true,
+    "memoryScope": "writer only; input generated in 64KiB chunks; validation materialization excluded"
+  }
+}

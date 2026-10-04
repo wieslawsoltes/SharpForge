@@ -13,6 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@sharpforge/archive": "0.14.0"
+    "@sharpforge/archive": "0.14.0",
+    "@sharpforge/workspace": "0.14.0"
   }
 }

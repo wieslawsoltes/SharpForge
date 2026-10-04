@@ -1,0 +1,46 @@
+{
+  "name": "node26-capture-timer-final",
+  "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a19-execution-capture-timer-owner.test.js",
+    "tests/a19-execution-capture.test.js"
+  ],
+  "startedAt": "2026-10-04T06:52:45.355771+00:00",
+  "resourcePreflight": {
+    "actualFreeBytes": 1043460096,
+    "availableBytes": 1043460096,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8589832192",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 2589667\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "log": "node26-capture-timer-final.tap",
+  "completedAt": "2026-10-04T06:52:45.752879+00:00",
+  "exitCode": 0,
+  "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+  "resourceAfter": {
+    "actualFreeBytes": 1043460096,
+    "availableBytes": 1043460096,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8513032192",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 2589805\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "checkoutStatusAfter": "",
+  "summary": {
+    "tests": 11,
+    "suites": 0,
+    "pass": 11,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "qualificationIncomplete": false
+}

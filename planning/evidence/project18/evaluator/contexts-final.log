@@ -1,0 +1,21 @@
+✔ inner evaluations isolate framework-conditioned sources, properties, items and generated documents (10.978762ms)
+✔ inactive context diagnostics are labeled and cannot block the selected build context (10.700442ms)
+✔ active context changes re-evaluate configuration/runtime and invalidate stale identities (13.484802ms)
+✔ ProjectReference selects nearest compatible framework independently of the explorer active context (3.79816ms)
+✔ diamond dependencies retain two independently compiled contexts of the same library (2.204125ms)
+✔ portable targets update only the requested framework context and preserve the selected context (7.415717ms)
+✔ context graphs reject incompatible references and context-budget overflow explicitly (1.281583ms)
+✔ shared native/portable selection removes obsolete contexts on replacement (0.409918ms)
+✔ selected contexts expose metadata-only paths before hydration and preserve available assembly bytes (1.001541ms)
+✔ resource input discovery expands after resx hydration and never loads unrelated compile files (2.402835ms)
+✔ 47 TFM parsing rows, all compatibility pairs and nearest assets match native NuGet.Frameworks (1000.653317ms)
+✔ unsupported frameworks are explicit and do not become compatible fallback assets (0.209135ms)
+✔ framework symbols include platform and earlier SDK thresholds and can be disabled explicitly (5.979691ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1156.213682

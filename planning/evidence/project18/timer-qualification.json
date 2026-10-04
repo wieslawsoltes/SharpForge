@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T07:14:46.440287+00:00",
+  "scopes": [
+    {
+      "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-execution-capture-timer-owner.test.js",
+        "tests/a19-execution-capture.test.js"
+      ],
+      "summary": {
+        "tests": 11,
+        "suites": 0,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "testFiles": 2,
+      "gates": [
+        {
+          "name": "check",
+          "exitCode": 0,
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04"
+        },
+        {
+          "name": "build",
+          "exitCode": 0,
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04"
+        },
+        {
+          "name": "clean-checkout",
+          "exitCode": 0,
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/build.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/build.json",
+          "sha256": "9930f16aacaf87ee6c81c9406fe5df4c10acdce3df23553af5bdcae692a8aee7",
+          "bytes": 1052
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/build.log",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/build.log",
+          "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "bytes": 257
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/check.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/check.json",
+          "sha256": "8e4ce1585fdc9c594b31dc0f68c2fdfb86bc9b4d21c89bcac8b1d5c3d8d6d99b",
+          "bytes": 1052
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/check.log",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/check.log",
+          "sha256": "76d3a7acde398f764a5c884dd50829606b34660285656fee838be182585f48ec",
+          "bytes": 433
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/clean-checkout.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/clean-checkout.json",
+          "sha256": "6d9b16cca57725950bb55b92239c5641039ef8b72e0e7ac1cd4de58eb35c7897",
+          "bytes": 1092
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/clean-checkout.log",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/clean-checkout.log",
+          "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "bytes": 63
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/final-qualification.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/final-qualification.json",
+          "sha256": "3bceed107339e4ac9a9e6a4e312925fe9d13fdc32af133ce87c551be37459518",
+          "bytes": 6253
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/node26-capture-timer-final.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.json",
+          "sha256": "df6726d99678e25fb04927655cd523f48f0497f0fdf7a5aea8ae5a22d148ca5c",
+          "bytes": 1411
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap",
+          "sourcePath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap",
+          "sha256": "923da70d2cba0f13fd8c3a6c73bd2f5a4ca0981ddde799405a87cfa4dbb6a9a9",
+          "bytes": 2706
+        }
+      ]
+    },
+    {
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-runtime-activity-timer-owner.test.js",
+        "tests/a19-execution-capture-timer-owner.test.js",
+        "tests/a19-execution-capture.test.js",
+        "tests/a19-execution-occupancy.test.js",
+        "tests/a19-runtime-worker-launch.test.js",
+        "tests/a19-execution-worker.test.js"
+      ],
+      "summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "testFiles": 6,
+      "gates": [
+        {
+          "name": "check",
+          "exitCode": 0,
+          "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1"
+        },
+        {
+          "name": "build",
+          "exitCode": 0,
+          "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1"
+        },
+        {
+          "name": "clean-checkout",
+          "exitCode": 0,
+          "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/build.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/build.json",
+          "sha256": "76424a6a38242172b0ebd80aee56d56de539d72768e37d913314f25d7105b5b1",
+          "bytes": 1052
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/build.log",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/build.log",
+          "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "bytes": 257
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/check.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/check.json",
+          "sha256": "bca857d9008ed07b0c5e2c9f74103635346e9fbaab0a2a225e6183cf306b8e2d",
+          "bytes": 1052
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/check.log",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/check.log",
+          "sha256": "448cca54e7330332f85569a39d4f20cd049e4d12c8ac5b8e28ee4df6a0bc8e03",
+          "bytes": 433
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/clean-checkout.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/clean-checkout.json",
+          "sha256": "85fe4c6ed08b18287b46888d7033c6de3324aa2f0cd2f7e1874e2e1af94d701a",
+          "bytes": 1092
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/clean-checkout.log",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/clean-checkout.log",
+          "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "bytes": 63
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/final-qualification.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/final-qualification.json",
+          "sha256": "bde11938560ec2854ec07b9607ce3272c6ef9be9d04e20fddf1e95b41c22b530",
+          "bytes": 6457
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.json",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.json",
+          "sha256": "b5b1f8587dd8c86af3aed4dccf54c76d92f35d478014cfa415482215c041f16c",
+          "bytes": 1599
+        },
+        {
+          "path": "planning/evidence/project18/timer-qualification/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap",
+          "sourcePath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap",
+          "sha256": "bf7e8d658a8ac6315bc9f56d0b180d378c1d34550c97e7de2189ba277ef4a16a",
+          "bytes": 8224
+        }
+      ]
+    }
+  ],
+  "interpretation": "Two completed, overlapping corrective Node26 scopes are retained separately. de9 covers the host ExecutionCapture timer owner;7d4 additionally covers the worker RuntimeActivity timers and existing launch/occupancy behavior. Both scopes and their check/build/clean-checkout gates passed. No new local runs occurred during evidence capture.",
+  "browserStatus": {
+    "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+    "suite": "browser_release13_test",
+    "qualification": "passed",
+    "checks": 16,
+    "passed": 16,
+    "failed": 0,
+    "exitCode": 0,
+    "errors": [],
+    "session": {
+      "suite": "browser_release13_test",
+      "passed": true,
+      "engine": "chromium",
+      "cspViolations": [],
+      "browser": "153.0.8010.12",
+      "executable": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+      "mode": "http",
+      "seconds": 20.607364868999866,
+      "diagnosticErrors": []
+    },
+    "qualifiedProductSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+    "differenceFromQualifiedProduct": [
+      "tests/browser_release13_test.py"
+    ],
+    "entryBoundary": "Built committed actual Studio; no copied proposed or protected entry patch was applied or executed.",
+    "evidence": "planning/evidence/project18/final-browser-qualification.json"
+  },
+  "negativeControl": "Root reproduced the host timer bug with two failing regression cases before the fix. The raw negative-control artifact is held with root qualification evidence; these positive-run receipts do not erase that failure.",
+  "historicalBrowserStatus": "Final7d4 replay is separately owned by root and not yet recorded here; earlier ten-check/launch failures remain historical."
+}

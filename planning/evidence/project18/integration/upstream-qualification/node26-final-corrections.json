@@ -1,0 +1,58 @@
+{
+  "name": "node26-final-corrections",
+  "sourceCommit": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a24-explorer-state-restore.test.js",
+    "tests/a24-explorer-reveal.test.js",
+    "tests/a24-explorer-child-loader.test.js",
+    "tests/a24-explorer-view-policy.test.js",
+    "tests/a24-lazy-tree-identity.test.js",
+    "tests/a24-explorer-hierarchy.test.js",
+    "tests/a23-project-runtime-input.test.js",
+    "tests/a23-native-tool-renderer.test.js",
+    "tests/a23-compiler-worker-entry.test.js",
+    "tests/a24-20-template-engine.test.js",
+    "tests/a24-template-package-atomicity.test.js",
+    "tests/a24-template-engine-boundaries.test.js",
+    "tests/a23-test-explorer-controller.test.js",
+    "tests/a23-native-view-contracts.test.js"
+  ],
+  "startedAt": "2026-10-04T03:16:11.823359+00:00",
+  "resourcePreflight": {
+    "actualFreeBytes": 2879488000,
+    "availableBytes": 2879488000,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "7939235840",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "log": "node26-final-corrections.tap",
+  "completedAt": "2026-10-04T03:16:19.983677+00:00",
+  "exitCode": 1,
+  "sourceAfter": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+  "resourceAfter": {
+    "actualFreeBytes": 2879488000,
+    "availableBytes": 2879488000,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8051847168",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "checkoutStatusAfter": "",
+  "summary": {
+    "tests": 66,
+    "suites": 0,
+    "pass": 65,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "qualificationIncomplete": true
+}

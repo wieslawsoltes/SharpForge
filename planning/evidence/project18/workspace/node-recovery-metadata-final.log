@@ -1,0 +1,27 @@
+✔ explorer sends divergent revisions without waiting for recovery and preserves the other buffer (9.345705ms)
+✔ explorer serializes overlapping checkpoints and saves metadata-only changes with binary bytes (7.424569ms)
+✔ unbound workspaces with the same display name never establish an editing channel (1.609007ms)
+✔ recent identity registration uses isSameEntry and serializes simultaneous first opens (1.429306ms)
+✔ cross-window UTF-16 conflict verifies physical encoding and emits the actual persisted hash (2.06875ms)
+✔ missing symbol ids use source interval ownership and malformed owner cycles stay renderable (1.027299ms)
+✔ batch path rewrites rebase original relative paths once across several moves (1.434544ms)
+✔ historical versions retain explicit lazy membership and overlay newer editor text without fabricating bytes (11.829732ms)
+✔ lazy metadata is bounded and malformed, aliased or cancelled records never become empty source (86.620248ms)
+✔ OPFS quota fallback preserves lazy membership and enumerates only omitted loaded binary contents (6.724723ms)
+✔ the explorer checkpoints unopened membership and unsaved paths along with loaded bytes (3.829075ms)
+✔ legacy bootstrap restores loaded editors read-only while preserving unloaded project and manifest records (4.61481ms)
+✔ corrupt and future legacy snapshots block default replacement and are retained verbatim (0.588247ms)
+✔ a granted recent handle restores open-document selection and replaces read-only metadata with real bytes (5.963855ms)
+✔ every historical recovery version migrates bytes, document versions and Unicode spelling without authority (13.319404ms)
+✔ corrupt checkpoints are quarantined while newer schemas are preserved intact (2.235412ms)
+✔ OPFS checkpoint commit failure retains the last committed generation (4.187156ms)
+✔ OPFS load falls back to the prior checksum-verified generation after corruption (2.400561ms)
+✔ quota exhaustion explicitly lists omitted binaries and preserves text recovery (4.500318ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1459.092245

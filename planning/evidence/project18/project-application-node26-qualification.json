@@ -1,0 +1,327 @@
+{
+  "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+  "metadata": {
+    "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+    "node": "v26.10.0",
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "tests/a23-worker-emission-cache.test.js",
+      "tests/a23-project-plan-artifacts.test.js",
+      "tests/a23-project-build.test.js",
+      "tests/a23-project-build-order.test.js",
+      "tests/a23-project-target-lifecycle.test.js",
+      "tests/a23-project-artifact-cache.test.js",
+      "tests/a23-project-target-native.test.js",
+      "tests/a24-folder-compilation.test.js",
+      "tests/a23-cil-project-profile.test.js",
+      "tests/a23-cil-project-graph-contract.test.js",
+      "tests/a23-test-symbol-contract.test.js",
+      "tests/a23-test-runtime-contract.test.js",
+      "tests/a23-native-workspace-state.test.js",
+      "tests/a23-native-context-ui-model.test.js",
+      "tests/a23-native-reference-metadata.test.js",
+      "tests/a23-native-profile-ui-model.test.js",
+      "tests/a23-source-emission-model.test.js",
+      "tests/a23-project-reference-emission.test.js",
+      "tests/a23-project-reference-binding.test.js",
+      "tests/a23-member-definitions.test.js",
+      "tests/a23-upstream-emission-composition.test.js"
+    ],
+    "environment": {
+      "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+      "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+      "SHARPFORGE_NATIVE_SDK": "10.0.201",
+      "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+    },
+    "startedAt": "2026-10-04T02:30:54.996103+00:00",
+    "log": "node26-worker-model-complete.tap",
+    "diskPreflight": {
+      "actualFreeBytes": 664993792,
+      "minimumFreeBytes": 536870912
+    },
+    "exitCode": 1,
+    "completedAt": "2026-10-04T02:31:13.528581+00:00",
+    "summary": {
+      "tests": 96,
+      "suites": 0,
+      "pass": 95,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "metadataPath": "planning/evidence/project18/integration/upstream-qualification/node26-worker-model-complete.json",
+  "tapPath": "planning/evidence/project18/integration/upstream-qualification/node26-worker-model-complete.tap",
+  "metadataSha256": "3e53263b612e2500793a4cb7615ec68f8767ac672fe1a14764ff8a7b55389137",
+  "tapSha256": "dbf510ca0cda4a0f48c2eac728b275e759de27a2923cef105e63bc35be2d916a",
+  "selectedFiles": [
+    {
+      "path": "tests/a23-worker-emission-cache.test.js",
+      "sourceBlob": "aa8687adf944fed122d51a4fa262c4e78182c771",
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "worker emission reuses equivalent newly derived metadata and invalidates after a source access change",
+          "tapId": 90,
+          "result": "passed"
+        },
+        {
+          "name": "assembly cache distinguishes image, name, options, metadata and reference bytes without byte serialization",
+          "tapId": 91,
+          "result": "passed"
+        },
+        {
+          "name": "cache budgets, unsupported option objects and per-image names bound optional reuse",
+          "tapId": 92,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-plan-artifacts.test.js",
+      "sourceBlob": "27861cebfa02c906684a90656e065f23ab4d9ecc",
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "a later worker build accepts a real previous artifact and resolves its separately emitted dependency",
+          "tapId": 44,
+          "result": "passed"
+        },
+        {
+          "name": "seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts",
+          "tapId": 45,
+          "result": "passed"
+        },
+        {
+          "name": "seed artifact count and byte budgets are explicit before compilation begins",
+          "tapId": 46,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-build.test.js",
+      "sourceBlob": "9635c78ef48e99c5b067baaca8b9128164cd6731",
+      "passed": 10,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers",
+          "tapId": 34,
+          "result": "passed"
+        },
+        {
+          "name": "generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler",
+          "tapId": 35,
+          "result": "passed"
+        },
+        {
+          "name": "dependency units keep separate source sets and suppress non-output references",
+          "tapId": 36,
+          "result": "passed"
+        },
+        {
+          "name": "failed dependencies block consumers and do not publish a partial startup assembly",
+          "tapId": 37,
+          "result": "passed"
+        },
+        {
+          "name": "a project built for two target contexts produces distinct dependency artifacts",
+          "tapId": 38,
+          "result": "passed"
+        },
+        {
+          "name": "standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly",
+          "tapId": 39,
+          "result": "passed"
+        },
+        {
+          "name": "application file search delegates options to the streaming disk index without compiling the workspace",
+          "tapId": 40,
+          "result": "passed"
+        },
+        {
+          "name": "culture resources produce satellite assemblies instead of disappearing from successful builds",
+          "tapId": 41,
+          "result": "passed"
+        },
+        {
+          "name": "launch profiles carry explicit browser arguments and environment; executable profiles require native execution",
+          "tapId": 42,
+          "result": "passed"
+        },
+        {
+          "name": "lazy export and cancelled or stale hydration never substitute empty file contents",
+          "tapId": 43,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-build-order.test.js",
+      "sourceBlob": "0cb5b6595a713ae266a026cc42416380b0473286",
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "dependency after-build outputs feed consumer preparation before its separate worker compilation",
+          "tapId": 30,
+          "result": "passed"
+        },
+        {
+          "name": "failed dependency compilation or after targets prevent consumer preparation and lazy reads",
+          "tapId": 31,
+          "result": "passed"
+        },
+        {
+          "name": "buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts",
+          "tapId": 32,
+          "result": "passed"
+        },
+        {
+          "name": "cancellation while a dependency compiles runs no after hooks or consumer requests",
+          "tapId": 33,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-target-lifecycle.test.js",
+      "sourceBlob": "3fcb1602e1fdedf129c8e2f98fc401e94f4981ee",
+      "passed": 9,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns",
+          "tapId": 61,
+          "result": "passed"
+        },
+        {
+          "name": "failed compilation never publishes an output assembly or executes after targets",
+          "tapId": 62,
+          "result": "passed"
+        },
+        {
+          "name": "the same generated source path stays isolated in a two-framework diamond build and on rebuild",
+          "tapId": 63,
+          "result": "passed"
+        },
+        {
+          "name": "lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context",
+          "tapId": 64,
+          "result": "passed"
+        },
+        {
+          "name": "after-target errors fail the build and do not publish the phase partial writes",
+          "tapId": 65,
+          "result": "passed"
+        },
+        {
+          "name": "cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets",
+          "tapId": 66,
+          "result": "passed"
+        },
+        {
+          "name": "native-only property and task diagnostics survive target preparation without publishing partial writes",
+          "tapId": 67,
+          "result": "passed"
+        },
+        {
+          "name": "native semantic requests use the explicitly selected native context and skip portable targets",
+          "tapId": 68,
+          "result": "passed"
+        },
+        {
+          "name": "disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration",
+          "tapId": 69,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-artifact-cache.test.js",
+      "sourceBlob": "7fa58072cfefe203a7114fa0793e71991b0d1a8b",
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile",
+          "tapId": 26,
+          "result": "passed"
+        },
+        {
+          "name": "startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it",
+          "tapId": 27,
+          "result": "passed"
+        },
+        {
+          "name": "a later failed dependency build clears previously emitted cache entries",
+          "tapId": 28,
+          "result": "passed"
+        },
+        {
+          "name": "external HintPath references preserve case-insensitive aliases without an emitted sibling profile",
+          "tapId": 29,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a23-project-target-native.test.js",
+      "sourceBlob": "ac022363dfd5577a3187567a0f269bb1cbd26d04",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "dependency-generated consumer source and execution match an actual offline SDK build",
+          "tapId": 70,
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "path": "tests/a24-folder-compilation.test.js",
+      "sourceBlob": "2387ef0f0dec8378997f7cbfc87d29081272570b",
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "a real 300-file folder builds and analyzes all closed C# sources while keeping one editor buffer",
+          "tapId": 93,
+          "result": "passed"
+        },
+        {
+          "name": "folder membership remains authoritative after a virtual deletion even when disk still has the original file",
+          "tapId": 94,
+          "result": "passed"
+        },
+        {
+          "name": "folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text",
+          "tapId": 95,
+          "result": "passed"
+        },
+        {
+          "name": "cancelled and replaced folder hydrations retain the original unopened membership",
+          "tapId": 96,
+          "result": "passed"
+        }
+      ]
+    }
+  ],
+  "selectedPassed": 38,
+  "selectedFailed": 0,
+  "aggregateFailures": [
+    "not ok 2 - public project graph rejects missing content, forged hashes and incorrect target method definitions"
+  ],
+  "nativeDiagnostic": [
+    "# {\"sdk\":\"10.0.401\",\"msbuild\":\"18.9.11.42413\",\"framework\":\"net10.0\",\"platform\":\"linux\",\"architecture\":\"x64\",\"sourceFilesEqual\":true,\"nativeOutput\":\"42\",\"portableEngines\":[\"SourceVM\",\"CilVirtualMachine\"]}"
+  ]
+}

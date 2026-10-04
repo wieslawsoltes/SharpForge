@@ -1,0 +1,90 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+ok 1 - successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+  ---
+  duration_ms: 129.516475
+  type: 'test'
+  ...
+# Subtest: startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+ok 2 - startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+  ---
+  duration_ms: 95.771116
+  type: 'test'
+  ...
+# Subtest: a later failed dependency build clears previously emitted cache entries
+ok 3 - a later failed dependency build clears previously emitted cache entries
+  ---
+  duration_ms: 27.853799
+  type: 'test'
+  ...
+# Subtest: external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+ok 4 - external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+  ---
+  duration_ms: 17.76519
+  type: 'test'
+  ...
+# (node:28) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+ok 5 - application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+  ---
+  duration_ms: 84.043985
+  type: 'test'
+  ...
+# Subtest: failed compilation never publishes an output assembly or executes after targets
+ok 6 - failed compilation never publishes an output assembly or executes after targets
+  ---
+  duration_ms: 15.573724
+  type: 'test'
+  ...
+# Subtest: the same generated source path stays isolated in a two-framework diamond build and on rebuild
+ok 7 - the same generated source path stays isolated in a two-framework diamond build and on rebuild
+  ---
+  duration_ms: 84.206937
+  type: 'test'
+  ...
+# Subtest: lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+ok 8 - lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+  ---
+  duration_ms: 8.585221
+  type: 'test'
+  ...
+# Subtest: after-target errors fail the build and do not publish the phase partial writes
+ok 9 - after-target errors fail the build and do not publish the phase partial writes
+  ---
+  duration_ms: 5.074856
+  type: 'test'
+  ...
+# Subtest: cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+ok 10 - cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+  ---
+  duration_ms: 21.135104
+  type: 'test'
+  ...
+# Subtest: native-only property and task diagnostics survive target preparation without publishing partial writes
+ok 11 - native-only property and task diagnostics survive target preparation without publishing partial writes
+  ---
+  duration_ms: 3.416974
+  type: 'test'
+  ...
+# Subtest: native semantic requests use the explicitly selected native context and skip portable targets
+ok 12 - native semantic requests use the explicitly selected native context and skip portable targets
+  ---
+  duration_ms: 0.66306
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1624.56408

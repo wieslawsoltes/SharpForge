@@ -1,0 +1,28 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native metadata reads require an authorized context reference and enforce file/count/total budgets
+ok 1 - native metadata reads require an authorized context reference and enforce file/count/total budgets
+  ---
+  duration_ms: 14.209777
+  type: 'test'
+  ...
+# Subtest: actual native contexts deliver SDK metadata over authenticated HTTP for LINQ completion and semantic binding
+ok 2 - actual native contexts deliver SDK metadata over authenticated HTTP for LINQ completion and semantic binding
+  ---
+  duration_ms: 5028.468748
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5600.431466

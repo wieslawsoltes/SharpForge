@@ -1,0 +1,779 @@
+(node:60) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:75) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+ok 1 - successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+  ---
+  duration_ms: 100.027242
+  type: 'test'
+  ...
+# Subtest: changes in the active file keep unchanged dependency metadata; dependency source and context changes invalidate it
+not ok 2 - changes in the active file keep unchanged dependency metadata; dependency source and context changes invalidate it
+  ---
+  duration_ms: 51.9888
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-evaluator/tests/a23-project-artifact-cache.test.js:36:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    context
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-evaluator/tests/a23-project-artifact-cache.test.js:45:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a later failed dependency build clears previously emitted cache entries
+ok 3 - a later failed dependency build clears previously emitted cache entries
+  ---
+  duration_ms: 29.14
+  type: 'test'
+  ...
+# Subtest: external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+ok 4 - external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+  ---
+  duration_ms: 13.75465
+  type: 'test'
+  ...
+# (node:83) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: dependency after-build outputs feed consumer preparation before its separate worker compilation
+ok 5 - dependency after-build outputs feed consumer preparation before its separate worker compilation
+  ---
+  duration_ms: 127.597899
+  type: 'test'
+  ...
+# Subtest: failed dependency compilation or after targets prevent consumer preparation and lazy reads
+ok 6 - failed dependency compilation or after targets prevent consumer preparation and lazy reads
+  ---
+  duration_ms: 15.678551
+  type: 'test'
+  ...
+# Subtest: buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+ok 7 - buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+  ---
+  duration_ms: 2.390055
+  type: 'test'
+  ...
+# Subtest: cancellation while a dependency compiles runs no after hooks or consumer requests
+ok 8 - cancellation while a dependency compiles runs no after hooks or consumer requests
+  ---
+  duration_ms: 6.345091
+  type: 'test'
+  ...
+# (node:91) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+ok 9 - application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+  ---
+  duration_ms: 16.582063
+  type: 'test'
+  ...
+# Subtest: generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+ok 10 - generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+  ---
+  duration_ms: 79.428464
+  type: 'test'
+  ...
+# Subtest: dependency units keep separate source sets and suppress non-output references
+ok 11 - dependency units keep separate source sets and suppress non-output references
+  ---
+  duration_ms: 0.745684
+  type: 'test'
+  ...
+# Subtest: failed dependencies block consumers and do not publish a partial startup assembly
+ok 12 - failed dependencies block consumers and do not publish a partial startup assembly
+  ---
+  duration_ms: 0.270338
+  type: 'test'
+  ...
+# Subtest: a project built for two target contexts produces distinct dependency artifacts
+ok 13 - a project built for two target contexts produces distinct dependency artifacts
+  ---
+  duration_ms: 0.664122
+  type: 'test'
+  ...
+# Subtest: standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+ok 14 - standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+  ---
+  duration_ms: 5.03799
+  type: 'test'
+  ...
+# Subtest: application file search delegates options to the streaming disk index without compiling the workspace
+ok 15 - application file search delegates options to the streaming disk index without compiling the workspace
+  ---
+  duration_ms: 0.41769
+  type: 'test'
+  ...
+# Subtest: culture resources produce satellite assemblies instead of disappearing from successful builds
+ok 16 - culture resources produce satellite assemblies instead of disappearing from successful builds
+  ---
+  duration_ms: 11.105612
+  type: 'test'
+  ...
+# Subtest: launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+ok 17 - launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+  ---
+  duration_ms: 2.195161
+  type: 'test'
+  ...
+# Subtest: lazy export and cancelled or stale hydration never substitute empty file contents
+ok 18 - lazy export and cancelled or stale hydration never substitute empty file contents
+  ---
+  duration_ms: 1.798433
+  type: 'test'
+  ...
+# (node:99) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a later worker build accepts a real previous artifact and preserves the explicit runtime execution boundary
+ok 19 - a later worker build accepts a real previous artifact and preserves the explicit runtime execution boundary
+  ---
+  duration_ms: 95.911748
+  type: 'test'
+  ...
+# Subtest: seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts
+ok 20 - seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts
+  ---
+  duration_ms: 2.042891
+  type: 'test'
+  ...
+# Subtest: seed artifact count and byte budgets are explicit before compilation begins
+ok 21 - seed artifact count and byte budgets are explicit before compilation begins
+  ---
+  duration_ms: 1.194271
+  type: 'test'
+  ...
+# (node:107) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real emitted project reference preserves public visibility and primitive return types
+ok 22 - real emitted project reference preserves public visibility and primitive return types
+  ---
+  duration_ms: 120.737916
+  type: 'test'
+  ...
+# Subtest: real emitted project reference preserves internal visibility and primitive return types
+ok 23 - real emitted project reference preserves internal visibility and primitive return types
+  ---
+  duration_ms: 17.139544
+  type: 'test'
+  ...
+# Subtest: real emitted project reference preserves friend internal visibility and primitive return types
+ok 24 - real emitted project reference preserves friend internal visibility and primitive return types
+  ---
+  duration_ms: 22.579695
+  type: 'test'
+  ...
+# Subtest: an external reference remains strict unless its producer explicitly selects the SharpForge runtime profile
+ok 25 - an external reference remains strict unless its producer explicitly selects the SharpForge runtime profile
+  ---
+  duration_ms: 31.539075
+  type: 'test'
+  ...
+# Subtest: metadata-backed language sessions complete imported methods, bind hover and invalidate edited sources
+ok 26 - metadata-backed language sessions complete imported methods, bind hover and invalidate edited sources
+  ---
+  duration_ms: 26.754688
+  type: 'test'
+  ...
+# (node:115) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+ok 27 - application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+  ---
+  duration_ms: 80.851195
+  type: 'test'
+  ...
+# Subtest: failed compilation never publishes an output assembly or executes after targets
+ok 28 - failed compilation never publishes an output assembly or executes after targets
+  ---
+  duration_ms: 14.097636
+  type: 'test'
+  ...
+# Subtest: the same generated source path stays isolated in a two-framework diamond build and on rebuild
+ok 29 - the same generated source path stays isolated in a two-framework diamond build and on rebuild
+  ---
+  duration_ms: 63.960261
+  type: 'test'
+  ...
+# Subtest: lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+ok 30 - lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+  ---
+  duration_ms: 5.347918
+  type: 'test'
+  ...
+# Subtest: after-target errors fail the build and do not publish the phase partial writes
+ok 31 - after-target errors fail the build and do not publish the phase partial writes
+  ---
+  duration_ms: 3.411736
+  type: 'test'
+  ...
+# Subtest: cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+ok 32 - cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+  ---
+  duration_ms: 15.596517
+  type: 'test'
+  ...
+# Subtest: native-only property and task diagnostics survive target preparation without publishing partial writes
+not ok 33 - native-only property and task diagnostics survive target preparation without publishing partial writes
+  ---
+  duration_ms: 2.280841
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-evaluator/tests/a23-project-target-lifecycle.test.js:150:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /requires native|not allowlisted|not supported|Unsupported/i. Input:
+    
+    "Error: Static property function 'Blocked.Type::Run' is not allowed."
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: "Static property function 'Blocked.Type::Run' is not allowed."
+  stack: |-
+    runPhase (file:///workspace/scratch/3e16369943fd/p18-evaluator/apps/studio/project-targets.js:55:21)
+    prepareBuildContext (file:///workspace/scratch/3e16369943fd/p18-evaluator/apps/studio/project-targets.js:87:24)
+    prepareBuildTargets (file:///workspace/scratch/3e16369943fd/p18-evaluator/apps/studio/project-targets.js:79:11)
+    prepareProjectRequest (file:///workspace/scratch/3e16369943fd/p18-evaluator/apps/studio/project-build.js:130:11)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-evaluator/tests/a23-project-target-lifecycle.test.js:156:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-evaluator/tests/a23-project-target-lifecycle.test.js:156:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: native semantic requests use the explicitly selected native context and skip portable targets
+ok 34 - native semantic requests use the explicitly selected native context and skip portable targets
+  ---
+  duration_ms: 0.375496
+  type: 'test'
+  ...
+# (node:123) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: dependency-generated consumer source and execution match an actual offline SDK build
+ok 35 - dependency-generated consumer source and execution match an actual offline SDK build
+  ---
+  duration_ms: 4943.130634
+  type: 'test'
+  ...
+# {"sdk":"10.0.401","msbuild":"18.9.11.42413","framework":"net10.0","platform":"linux","architecture":"x64","sourceFilesEqual":true,"nativeOutput":"42","portableEngines":["SourceVM","CilVirtualMachine"]}
+# (node:246) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a real 300-file folder builds and analyzes all closed C\# sources while keeping one editor buffer
+ok 36 - a real 300-file folder builds and analyzes all closed C\# sources while keeping one editor buffer
+  ---
+  duration_ms: 434.339489
+  type: 'test'
+  ...
+# Subtest: folder membership remains authoritative after a virtual deletion even when disk still has the original file
+ok 37 - folder membership remains authoritative after a virtual deletion even when disk still has the original file
+  ---
+  duration_ms: 2.056002
+  type: 'test'
+  ...
+# Subtest: folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text
+ok 38 - folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text
+  ---
+  duration_ms: 10.680772
+  type: 'test'
+  ...
+# Subtest: cancelled and replaced folder hydrations retain the original unopened membership
+ok 39 - cancelled and replaced folder hydrations retain the original unopened membership
+  ---
+  duration_ms: 1.191958
+  type: 'test'
+  ...
+# (node:258) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: SDK target stages run every before hook and pause before after hooks until actual output bytes arrive
+ok 40 - SDK target stages run every before hook and pause before after hooks until actual output bytes arrive
+  ---
+  duration_ms: 14.097427
+  type: 'test'
+  ...
+# Subtest: framework contexts retain distinct target-generated bytes at the same path and rebuild from initial items
+ok 41 - framework contexts retain distinct target-generated bytes at the same path and rebuild from initial items
+  ---
+  duration_ms: 6.335918
+  type: 'test'
+  ...
+# Subtest: post-compile input hydration failure is atomic and retries retain the same pending build phase
+ok 42 - post-compile input hydration failure is atomic and retries retain the same pending build phase
+  ---
+  duration_ms: 3.054938
+  type: 'test'
+  ...
+# Subtest: SDK compiler defaults preserve props replacement and apply configuration and compiler-time defaults
+ok 43 - SDK compiler defaults preserve props replacement and apply configuration and compiler-time defaults
+  ---
+  duration_ms: 2.069863
+  type: 'test'
+  ...
+# Subtest: public metadata lookup prefers exact spelling and never resolves inherited object members
+ok 44 - public metadata lookup prefers exact spelling and never resolves inherited object members
+  ---
+  duration_ms: 0.182305
+  type: 'test'
+  ...
+# (node:266) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: build plan keeps project assemblies, sources, references and internal visibility isolated
+ok 45 - build plan keeps project assemblies, sources, references and internal visibility isolated
+  ---
+  duration_ms: 42.50722
+  type: 'test'
+  ...
+# Subtest: build plan does not grant internal visibility without an explicit friend assembly
+ok 46 - build plan does not grant internal visibility without an explicit friend assembly
+  ---
+  duration_ms: 7.192972
+  type: 'test'
+  ...
+# Subtest: ReferenceOutputAssembly=false retains build order but is excluded from metadata references
+ok 47 - ReferenceOutputAssembly=false retains build order but is excluded from metadata references
+  ---
+  duration_ms: 1.322415
+  type: 'test'
+  ...
+# Subtest: build plans reject project cycles and unavailable sources
+ok 48 - build plans reject project cycles and unavailable sources
+  ---
+  duration_ms: 5.742052
+  type: 'test'
+  ...
+# Subtest: string and primitive resx values round-trip through the .resources binary reader
+ok 49 - string and primitive resx values round-trip through the .resources binary reader
+  ---
+  duration_ms: 20.654564
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 50 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.303398
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 51 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.252691
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 52 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.236216
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 53 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.422968
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 54 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.570871
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{}
+ok 55 - manifest resource identity Strings.resx{}
+  ---
+  duration_ms: 1.790321
+  type: 'test'
+  ...
+# Subtest: manifest resource identity folder/Strings.resx{}
+ok 56 - manifest resource identity folder/Strings.resx{}
+  ---
+  duration_ms: 0.925446
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.fr.resx{}
+ok 57 - manifest resource identity Strings.fr.resx{}
+  ---
+  duration_ms: 0.789772
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.pl-PL.resx{}
+ok 58 - manifest resource identity Strings.pl-PL.resx{}
+  ---
+  duration_ms: 0.603951
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{"LogicalName":"Exact.Name"}
+ok 59 - manifest resource identity Strings.resx{"LogicalName":"Exact.Name"}
+  ---
+  duration_ms: 0.800838
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{"ManifestResourceName":"Override.Name"}
+ok 60 - manifest resource identity Strings.resx{"ManifestResourceName":"Override.Name"}
+  ---
+  duration_ms: 0.520015
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{"Link":"linked/Strings.resx"}
+ok 61 - manifest resource identity Strings.resx{"Link":"linked/Strings.resx"}
+  ---
+  duration_ms: 0.510129
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.fr.resx{"WithCulture":"false"}
+ok 62 - manifest resource identity Strings.fr.resx{"WithCulture":"false"}
+  ---
+  duration_ms: 0.528287
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Payload.txt{}
+ok 63 - manifest resource identity Payload.txt{}
+  ---
+  duration_ms: 0.510761
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Payload.bin{"LogicalName":"bytes"}
+ok 64 - manifest resource identity Payload.bin{"LogicalName":"bytes"}
+  ---
+  duration_ms: 0.491722
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Name.resx{"DependentUpon":"Types.cs"}
+ok 65 - manifest resource identity Name.resx{"DependentUpon":"Types.cs"}
+  ---
+  duration_ms: 0.825976
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Name.fr.resx{"DependentUpon":"Types.cs"}
+ok 66 - manifest resource identity Name.fr.resx{"DependentUpon":"Types.cs"}
+  ---
+  duration_ms: 0.619424
+  type: 'test'
+  ...
+# Subtest: resx file references resolve only within the supplied virtual workspace
+ok 67 - resx file references resolve only within the supplied virtual workspace
+  ---
+  duration_ms: 0.950594
+  type: 'test'
+  ...
+# Subtest: output layout includes copied content, links, publish policy and referenced project files
+ok 68 - output layout includes copied content, links, publish policy and referenced project files
+  ---
+  duration_ms: 1.200862
+  type: 'test'
+  ...
+# Subtest: output layout rejects traversal and conflicting destinations
+ok 69 - output layout rejects traversal and conflicting destinations
+  ---
+  duration_ms: 1.002402
+  type: 'test'
+  ...
+# Subtest: launch settings accept comments/trailing commas and select the requested run context
+ok 70 - launch settings accept comments/trailing commas and select the requested run context
+  ---
+  duration_ms: 1.678602
+  type: 'test'
+  ...
+# Subtest: invalid launch settings are located diagnostics and unknown profiles are rejected
+ok 71 - invalid launch settings are located diagnostics and unknown profiles are rejected
+  ---
+  duration_ms: 0.630681
+  type: 'test'
+  ...
+# Subtest: shared JSONC parser preserves Unicode, comments, strings, trailing commas and safe object keys
+ok 72 - shared JSONC parser preserves Unicode, comments, strings, trailing commas and safe object keys
+  ---
+  duration_ms: 0.725385
+  type: 'test'
+  ...
+# Subtest: B05 mixed slnx projects remain visible as explicit unloaded nodes
+ok 73 - B05 mixed slnx projects remain visible as explicit unloaded nodes
+  ---
+  duration_ms: 0.900038
+  type: 'test'
+  ...
+# Subtest: lazy file records participate in evaluation but must hydrate before compilation
+ok 74 - lazy file records participate in evaluation but must hydrate before compilation
+  ---
+  duration_ms: 1.975109
+  type: 'test'
+  ...
+# Subtest: resource file references and dependent source naming reject unhydrated records
+ok 75 - resource file references and dependent source naming reject unhydrated records
+  ---
+  duration_ms: 0.710621
+  type: 'test'
+  ...
+# (node:274) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: inner evaluations isolate framework-conditioned sources, properties, items and generated documents
+ok 76 - inner evaluations isolate framework-conditioned sources, properties, items and generated documents
+  ---
+  duration_ms: 12.084184
+  type: 'test'
+  ...
+# Subtest: inactive context diagnostics are labeled and cannot block the selected build context
+ok 77 - inactive context diagnostics are labeled and cannot block the selected build context
+  ---
+  duration_ms: 10.085044
+  type: 'test'
+  ...
+# Subtest: active context changes re-evaluate configuration/runtime and invalidate stale identities
+ok 78 - active context changes re-evaluate configuration/runtime and invalidate stale identities
+  ---
+  duration_ms: 22.367889
+  type: 'test'
+  ...
+# Subtest: ProjectReference selects nearest compatible framework independently of the explorer active context
+ok 79 - ProjectReference selects nearest compatible framework independently of the explorer active context
+  ---
+  duration_ms: 5.405128
+  type: 'test'
+  ...
+# Subtest: diamond dependencies retain two independently compiled contexts of the same library
+ok 80 - diamond dependencies retain two independently compiled contexts of the same library
+  ---
+  duration_ms: 2.705521
+  type: 'test'
+  ...
+# Subtest: portable targets update only the requested framework context and preserve the selected context
+ok 81 - portable targets update only the requested framework context and preserve the selected context
+  ---
+  duration_ms: 5.722093
+  type: 'test'
+  ...
+# Subtest: context graphs reject incompatible references and context-budget overflow explicitly
+ok 82 - context graphs reject incompatible references and context-budget overflow explicitly
+  ---
+  duration_ms: 1.621005
+  type: 'test'
+  ...
+# Subtest: shared native/portable selection removes obsolete contexts on replacement
+ok 83 - shared native/portable selection removes obsolete contexts on replacement
+  ---
+  duration_ms: 0.47043
+  type: 'test'
+  ...
+# Subtest: selected contexts expose metadata-only paths before hydration and preserve available assembly bytes
+ok 84 - selected contexts expose metadata-only paths before hydration and preserve available assembly bytes
+  ---
+  duration_ms: 1.167281
+  type: 'test'
+  ...
+# Subtest: resource input discovery expands after resx hydration and never loads unrelated compile files
+ok 85 - resource input discovery expands after resx hydration and never loads unrelated compile files
+  ---
+  duration_ms: 3.762537
+  type: 'test'
+  ...
+# (node:282) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 47 TFM parsing rows, all compatibility pairs and nearest assets match native NuGet.Frameworks
+ok 86 - 47 TFM parsing rows, all compatibility pairs and nearest assets match native NuGet.Frameworks
+  ---
+  duration_ms: 1027.876644
+  type: 'test'
+  ...
+# Subtest: unsupported frameworks are explicit and do not become compatible fallback assets
+ok 87 - unsupported frameworks are explicit and do not become compatible fallback assets
+  ---
+  duration_ms: 0.363689
+  type: 'test'
+  ...
+# Subtest: framework symbols include platform and earlier SDK thresholds and can be disabled explicitly
+ok 88 - framework symbols include platform and earlier SDK thresholds and can be disabled explicitly
+  ---
+  duration_ms: 13.26488
+  type: 'test'
+  ...
+# (node:335) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: reserved, environment and TreatAsLocalProperty values have distinct precedence
+ok 89 - reserved, environment and TreatAsLocalProperty values have distinct precedence
+  ---
+  duration_ms: 6.538664
+  type: 'test'
+  ...
+# Subtest: per-project global mappings override solution defaults
+ok 90 - per-project global mappings override solution defaults
+  ---
+  duration_ms: 0.502088
+  type: 'test'
+  ...
+# Subtest: SDK default properties cover configuration, framework, compilation and output layout
+ok 91 - SDK default properties cover configuration, framework, compilation and output layout
+  ---
+  duration_ms: 2.962038
+  type: 'test'
+  ...
+# Subtest: SDK default Compile, EmbeddedResource and None globs are disjoint and respect exclusions
+ok 92 - SDK default Compile, EmbeddedResource and None globs are disjoint and respect exclusions
+  ---
+  duration_ms: 2.014569
+  type: 'test'
+  ...
+# Subtest: SDK default items can be disabled independently
+ok 93 - SDK default items can be disabled independently
+  ---
+  duration_ms: 1.045227
+  type: 'test'
+  ...
+# Subtest: explicit SDK imports evaluate the same key defaults as the SDK attribute
+ok 94 - explicit SDK imports evaluate the same key defaults as the SDK attribute
+  ---
+  duration_ms: 1.993557
+  type: 'test'
+  ...
+# Subtest: SDK declarations and caller resolvers are explicit and unknown SDKs block evaluation
+ok 95 - SDK declarations and caller resolvers are explicit and unknown SDKs block evaluation
+  ---
+  duration_ms: 3.308862
+  type: 'test'
+  ...
+# Subtest: Directory.Build import switches, overrides and label provenance are retained
+ok 96 - Directory.Build import switches, overrides and label provenance are retained
+  ---
+  duration_ms: 1.042693
+  type: 'test'
+  ...
+# Subtest: GetPathOfFileAbove composes nested Directory.Build.props with its parent
+ok 97 - GetPathOfFileAbove composes nested Directory.Build.props with its parent
+  ---
+  duration_ms: 1.033449
+  type: 'test'
+  ...
+# Subtest: central package versions and explicit overrides flow into PackageReference metadata
+ok 98 - central package versions and explicit overrides flow into PackageReference metadata
+  ---
+  duration_ms: 1.947708
+  type: 'test'
+  ...
+# Subtest: implicit global usings honor Using Remove, aliases and static metadata
+ok 99 - implicit global usings honor Using Remove, aliases and static metadata
+  ---
+  duration_ms: 1.167271
+  type: 'test'
+  ...
+# Subtest: assembly info sources include versions, company and friend assemblies with escaping
+ok 100 - assembly info sources include versions, company and friend assemblies with escaping
+  ---
+  duration_ms: 0.731012
+  type: 'test'
+  ...
+# Subtest: B04 evaluated Debug/Release symbols actually reach compiler preprocessing and execution
+ok 101 - B04 evaluated Debug/Release symbols actually reach compiler preprocessing and execution
+  ---
+  duration_ms: 120.709446
+  type: 'test'
+  ...
+# Subtest: implicit usings compile Console and List without user using declarations on both browser engines
+ok 102 - implicit usings compile Console and List without user using declarations on both browser engines
+  ---
+  duration_ms: 18.25604
+  type: 'test'
+  ...
+# (node:343) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: portable target graph retains dependencies, hooks, incremental declarations and initial/default targets
+ok 103 - portable target graph retains dependencies, hooks, incremental declarations and initial/default targets
+  ---
+  duration_ms: 8.369035
+  type: 'test'
+  ...
+# Subtest: target policy blocks each native-only task by name while allowing portable tasks
+ok 104 - target policy blocks each native-only task by name while allowing portable tasks
+  ---
+  duration_ms: 5.492285
+  type: 'test'
+  ...
+# Subtest: target execution writes generated source, adds Compile and makes it available to the build plan
+ok 105 - target execution writes generated source, adds Compile and makes it available to the build plan
+  ---
+  duration_ms: 10.193928
+  type: 'test'
+  ...
+# Subtest: portable tasks honor Condition and do not mutate a workspace when apply=false
+ok 106 - portable tasks honor Condition and do not mutate a workspace when apply=false
+  ---
+  duration_ms: 1.239129
+  type: 'test'
+  ...
+# Subtest: Copy outputs, in-target properties/items, read lines and directory existence work together
+ok 107 - Copy outputs, in-target properties/items, read lines and directory existence work together
+  ---
+  duration_ms: 2.483196
+  type: 'test'
+  ...
+# Subtest: task metadata batching groups values and exposes each item bucket
+ok 108 - task metadata batching groups values and exposes each item bucket
+  ---
+  duration_ms: 2.888066
+  type: 'test'
+  ...
+# Subtest: target batching writes one output per metadata bucket
+ok 109 - target batching writes one output per metadata bucket
+  ---
+  duration_ms: 1.471069
+  type: 'test'
+  ...
+# Subtest: ContinueOnError obeys warning/continuation semantics and default failure rolls back virtual changes
+ok 110 - ContinueOnError obeys warning/continuation semantics and default failure rolls back virtual changes
+  ---
+  duration_ms: 1.755078
+  type: 'test'
+  ...
+# Subtest: CallTarget executes a target at most once and rejects recursive invocation
+ok 111 - CallTarget executes a target at most once and rejects recursive invocation
+  ---
+  duration_ms: 1.925305
+  type: 'test'
+  ...
+# Subtest: Delete and RemoveDir update virtual existence without host file access
+ok 112 - Delete and RemoveDir update virtual existence without host file access
+  ---
+  duration_ms: 1.101822
+  type: 'test'
+  ...
+# Subtest: portable target execution enforces steps, output bytes and cancellation
+ok 113 - portable target execution enforces steps, output bytes and cancellation
+  ---
+  duration_ms: 1.129664
+  type: 'test'
+  ...
+# Subtest: portable file tasks preserve escaped semicolons in path lists
+ok 114 - portable file tasks preserve escaped semicolons in path lists
+  ---
+  duration_ms: 0.600696
+  type: 'test'
+  ...
+# Subtest: lazy task inputs are an atomic hydration request and can be retried after materialization
+ok 115 - lazy task inputs are an atomic hydration request and can be retried after materialization
+  ---
+  duration_ms: 2.26641
+  type: 'test'
+  ...
+1..115
+# tests 115
+# suites 0
+# pass 113
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15755.291348

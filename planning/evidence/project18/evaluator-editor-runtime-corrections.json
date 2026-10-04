@@ -1,0 +1,2601 @@
+{
+  "schemaVersion": 1,
+  "agent": "portable_evaluator",
+  "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "publication": {
+    "branch": "codex/p18-editor-view-retirement",
+    "local": "e42773833954c386c8df3579d373c6d6b6189aeb",
+    "remote": "675e1f86ace7510a9d9744db3d88773a862d254c",
+    "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+    "remoteBase": "4d209fb03d43131fae53c0de3edc57627c239e50",
+    "commitChain": [
+      {
+        "index": 1,
+        "local": "2a0840291c281904e886ed81ecc15c6f00488331",
+        "tree": "5a24c6196605b7b537af8dc7f1c0fae70eddd13f",
+        "remote": "158d3879ae996ee8511b6cc70c5880683fdefad9",
+        "remoteParents": [
+          "4d209fb03d43131fae53c0de3edc57627c239e50"
+        ],
+        "localParents": [
+          "70db33085e79cea3bd270070ff9fb2e9d6019ec9"
+        ],
+        "readBack": {
+          "sha": "158d3879ae996ee8511b6cc70c5880683fdefad9",
+          "tree": "5a24c6196605b7b537af8dc7f1c0fae70eddd13f",
+          "parents": [
+            "4d209fb03d43131fae53c0de3edc57627c239e50"
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "local": "004986ec1c0bbac9b9dc99bbac4065091ee2e136",
+        "tree": "4a6e5fdbec36bbd9c217f54a2d319c8c503c6e10",
+        "remote": "f22fcf023de49638c657f19bb7dd9dca004c5fbb",
+        "remoteParents": [
+          "158d3879ae996ee8511b6cc70c5880683fdefad9"
+        ],
+        "localParents": [
+          "2a0840291c281904e886ed81ecc15c6f00488331"
+        ],
+        "readBack": {
+          "sha": "f22fcf023de49638c657f19bb7dd9dca004c5fbb",
+          "tree": "4a6e5fdbec36bbd9c217f54a2d319c8c503c6e10",
+          "parents": [
+            "158d3879ae996ee8511b6cc70c5880683fdefad9"
+          ]
+        }
+      },
+      {
+        "index": 3,
+        "local": "eae64481787d65f384d44e970271dfa9b35d3016",
+        "tree": "50b544464eed32d6303fefe8e96f27f07530ac1e",
+        "remote": "315b4940d7238e618ee8b456f1c7b3340d742141",
+        "remoteParents": [
+          "f22fcf023de49638c657f19bb7dd9dca004c5fbb"
+        ],
+        "localParents": [
+          "004986ec1c0bbac9b9dc99bbac4065091ee2e136"
+        ],
+        "readBack": {
+          "sha": "315b4940d7238e618ee8b456f1c7b3340d742141",
+          "tree": "50b544464eed32d6303fefe8e96f27f07530ac1e",
+          "parents": [
+            "f22fcf023de49638c657f19bb7dd9dca004c5fbb"
+          ]
+        }
+      },
+      {
+        "index": 4,
+        "local": "f2c2e8f24328d3ace05229bb2cd8dba9450c9337",
+        "tree": "5431605944a2bc7233990ca0e215ace89fc0ac72",
+        "remote": "8ef514a81db216c2756953bd0ef38eb3d5f9e629",
+        "remoteParents": [
+          "315b4940d7238e618ee8b456f1c7b3340d742141"
+        ],
+        "localParents": [
+          "eae64481787d65f384d44e970271dfa9b35d3016"
+        ],
+        "readBack": {
+          "sha": "8ef514a81db216c2756953bd0ef38eb3d5f9e629",
+          "tree": "5431605944a2bc7233990ca0e215ace89fc0ac72",
+          "parents": [
+            "315b4940d7238e618ee8b456f1c7b3340d742141"
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "local": "85d1b5e27d7bc2b30268e44544ed0ddabce60177",
+        "tree": "2e0baaef6d04165d591202060588aff96fdc934c",
+        "remote": "4b584525854f767579c3e8463adc4c0972bc5119",
+        "remoteParents": [
+          "8ef514a81db216c2756953bd0ef38eb3d5f9e629"
+        ],
+        "localParents": [
+          "f2c2e8f24328d3ace05229bb2cd8dba9450c9337"
+        ],
+        "readBack": {
+          "sha": "4b584525854f767579c3e8463adc4c0972bc5119",
+          "tree": "2e0baaef6d04165d591202060588aff96fdc934c",
+          "parents": [
+            "8ef514a81db216c2756953bd0ef38eb3d5f9e629"
+          ]
+        }
+      },
+      {
+        "index": 6,
+        "local": "e42773833954c386c8df3579d373c6d6b6189aeb",
+        "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+        "remote": "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "remoteParents": [
+          "4b584525854f767579c3e8463adc4c0972bc5119"
+        ],
+        "localParents": [
+          "85d1b5e27d7bc2b30268e44544ed0ddabce60177"
+        ],
+        "readBack": {
+          "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+          "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+          "parents": [
+            "4b584525854f767579c3e8463adc4c0972bc5119"
+          ]
+        }
+      }
+    ],
+    "pullRequest": 4447,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/4447",
+    "requiredCore": {
+      "run": 37185578856,
+      "job": 111386673663,
+      "head": "675e1f86ace7510a9d9744db3d88773a862d254c",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37185578856/job/111386673663",
+      "broadQualificationInferred": false
+    },
+    "status": "Published draft; exact tree and ordered parents verified; required core passed."
+  },
+  "scope": [
+    "Retired editor views cannot republish their disposed model into Documents ownership.",
+    "Status UI samples current source/caret bounds before using strict Unicode and tab indices.",
+    "ExecutionCapture and RuntimeActivity preserve host timer receivers for default scheduling and cancellation.",
+    "Release13 edits exercise the actual hidden-input keymap and verify the resulting source exactly.",
+    "Release13 checks exact live Worker identities and public current owner bounds instead of historical creation totals."
+  ],
+  "sourceCommits": [
+    "2e92957c8dc3d2dab505d5d125f506a360c6d817",
+    "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+    "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+    "e1f7a6d78bd0936f748991008c95081b13b79979",
+    "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+    "b2daf365e51d1c13f77c39a7336564f251b1694d",
+    "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+    "57af4c49e2ea1e292864c70809a89d954d7c681a",
+    "077d2b13a215144f905de5d5a43cfab9813f9bd4"
+  ],
+  "canonicalSourceProofs": [
+    {
+      "path": "apps/studio/workbench/status-bar.js",
+      "canonicalBlob": "87f08046bb5d792cca217be1f4b1f2d8f7f96cc3",
+      "projectionBlob": "87f08046bb5d792cca217be1f4b1f2d8f7f96cc3"
+    },
+    {
+      "path": "apps/studio/workbench/status-position.js",
+      "canonicalBlob": "a58440b3da9ad188e9ab00fd5669f744aa040a3d",
+      "projectionBlob": "a58440b3da9ad188e9ab00fd5669f744aa040a3d"
+    },
+    {
+      "path": "packages/editor/README.md",
+      "canonicalBlob": "20502fcb143327e302b9859b20b4e88cf73b2a47",
+      "projectionBlob": "20502fcb143327e302b9859b20b4e88cf73b2a47"
+    },
+    {
+      "path": "packages/editor/src/core/code-editor.js",
+      "canonicalBlob": "60d3b3e8e5a7fb733c0bd320f161e52a3aee8e80",
+      "projectionBlob": "60d3b3e8e5a7fb733c0bd320f161e52a3aee8e80"
+    },
+    {
+      "path": "tests/a24-editor-model-ownership.test.js",
+      "canonicalBlob": "dcff661b86ff9e483546d512b2cc61abb4be9a7b",
+      "projectionBlob": "dcff661b86ff9e483546d512b2cc61abb4be9a7b"
+    },
+    {
+      "path": "tests/a24-status-caret-ownership.test.js",
+      "canonicalBlob": "84394aab6a5cc8f97543a2ebdac3fd6e39c69cdd",
+      "projectionBlob": "84394aab6a5cc8f97543a2ebdac3fd6e39c69cdd"
+    },
+    {
+      "path": "tests/browser_release13_test.py",
+      "canonicalBlob": "0b84c00185f963a650051d2ea35f6d263b18637a",
+      "projectionBlob": "0b84c00185f963a650051d2ea35f6d263b18637a"
+    },
+    {
+      "path": "apps/studio/workbench/tools/execution-capture.js",
+      "canonicalBlob": "9b82823767edef4bca73b3e67b5478836e35cca3",
+      "projectionBlob": "9b82823767edef4bca73b3e67b5478836e35cca3"
+    },
+    {
+      "path": "tests/a19-execution-capture-timer-owner.test.js",
+      "canonicalBlob": "a21cb18211fd7a12bf8a284c77810764ca4c4415",
+      "projectionBlob": "a21cb18211fd7a12bf8a284c77810764ca4c4415"
+    },
+    {
+      "path": "apps/studio/workers/runtime-activity.js",
+      "canonicalBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee",
+      "projectionBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee"
+    },
+    {
+      "path": "tests/a19-runtime-activity-timer-owner.test.js",
+      "canonicalBlob": "f08e4cf0fff0f10b065676383fd4453c138eabbb",
+      "projectionBlob": "f08e4cf0fff0f10b065676383fd4453c138eabbb"
+    },
+    {
+      "path": "tests/a19-runtime-worker-client.js",
+      "canonicalBlob": "2b197751cae145f57da9d91a405c335157af309e",
+      "projectionBlob": "2b197751cae145f57da9d91a405c335157af309e"
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-timer-host.js",
+      "canonicalBlob": "cdda448ba2a136216588a70eb09b1f7eed56aa62",
+      "projectionBlob": "cdda448ba2a136216588a70eb09b1f7eed56aa62"
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-timer-node.js",
+      "canonicalBlob": "3cc9791d4f4769b38f26a63228b19efa7fdd5d01",
+      "projectionBlob": "3cc9791d4f4769b38f26a63228b19efa7fdd5d01"
+    }
+  ],
+  "derivedFiles": [
+    "tests/manifests/A24.json"
+  ],
+  "qualificationInterpretation": "Root ran complete source scopes serially. These are exact canonical-source results, not a standalone PR unit run inferred from its required core. No local duplicate tests, checks, builds, browser runs or profiling were performed for these projections.",
+  "qualifications": {
+    "editor-ownership-2e92957c": {
+      "directory": "/tmp/p18-final-qualification-logs/editor-ownership-2e92957c",
+      "report": {
+        "sourceCommit": "2e92957c8dc3d2dab505d5d125f506a360c6d817",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T06:08:18.298398+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/editor-ownership-2e92957c/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-editor-ownership",
+            "sourceCommit": "2e92957c8dc3d2dab505d5d125f506a360c6d817",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a24-editor-model-ownership.test.js",
+              "tests/a19-document-models.test.js",
+              "tests/a19-prepared-documents.test.js",
+              "tests/a24-studio-document-policy.test.js",
+              "tests/a20-editor-integration-corrections.test.js"
+            ],
+            "startedAt": "2026-10-04T06:08:18.301424+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1045221376,
+              "availableBytes": 1045221376,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8576458752",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1708728\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-editor-ownership.tap",
+            "completedAt": "2026-10-04T06:08:22.001298+00:00",
+            "exitCode": 1,
+            "sourceAfter": "2e92957c8dc3d2dab505d5d125f506a360c6d817",
+            "resourceAfter": {
+              "actualFreeBytes": 1045221376,
+              "availableBytes": 1045221376,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8262356992",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1710113\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 40,
+              "suites": 0,
+              "pass": 39,
+              "fail": 1,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": true
+          }
+        ]
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-2e92957c/final-qualification.json",
+          "bytes": 2657,
+          "sha256": "2fd814822a89035717588e48048c9bd7bf2deb9be03c4cd716069a270539ad0a"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-2e92957c/node26-editor-ownership.tap",
+          "bytes": 11533,
+          "sha256": "dc25d37cdf092bb1351fd61709e4aae4a922724f9e1434c7cb0b38b1c3c27ab5"
+        }
+      ],
+      "allStepsPassed": false
+    },
+    "editor-ownership-362f1337": {
+      "directory": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337",
+      "report": {
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T06:11:27.450297+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-editor-ownership",
+            "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a24-editor-model-ownership.test.js",
+              "tests/a19-document-models.test.js",
+              "tests/a19-prepared-documents.test.js",
+              "tests/a24-studio-document-policy.test.js",
+              "tests/a20-editor-integration-corrections.test.js"
+            ],
+            "startedAt": "2026-10-04T06:11:27.452852+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8567738368",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1781944\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-editor-ownership.tap",
+            "completedAt": "2026-10-04T06:11:30.809759+00:00",
+            "exitCode": 0,
+            "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "resourceAfter": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8449650688",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1782822\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 40,
+              "suites": 0,
+              "pass": 40,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": false
+          },
+          {
+            "name": "check",
+            "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "check"
+            ],
+            "startedAt": "2026-10-04T06:11:30.837360+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8454094848",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1782822\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "check.log",
+            "completedAt": "2026-10-04T06:11:35.457035+00:00",
+            "exitCode": 0,
+            "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "resourceAfter": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8262418432",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1784696\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "build",
+            "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "build"
+            ],
+            "startedAt": "2026-10-04T06:11:35.481970+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8261816320",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1784696\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "build.log",
+            "completedAt": "2026-10-04T06:11:40.226787+00:00",
+            "exitCode": 0,
+            "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "resourceAfter": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8299847680",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1789606\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "clean-checkout",
+            "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "scripts/conformance/clean-checkout.js"
+            ],
+            "startedAt": "2026-10-04T06:11:40.259884+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8310165504",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1789606\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "clean-checkout.log",
+            "completedAt": "2026-10-04T06:11:40.406153+00:00",
+            "exitCode": 0,
+            "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "resourceAfter": {
+              "actualFreeBytes": 1045168128,
+              "availableBytes": 1045168128,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8360972288",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 1789606\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          }
+        ],
+        "completedAt": "2026-10-04T06:11:40.431627+00:00",
+        "finalStatus": "",
+        "summary": {
+          "commands": 4,
+          "passed": 4,
+          "failed": 0
+        }
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/final-qualification.json",
+          "bytes": 6395,
+          "sha256": "9bcffa3c41765449ebb0bafe05c667f7a4e75f2bcdd61a1c3cc88604db11ddd4"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/node26-editor-ownership.tap",
+          "bytes": 10554,
+          "sha256": "67ad009406da89d9b8bb1a2230d49dc7fd6370644122c2cf5b35289f10ebb2a9"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/check.log",
+          "bytes": 432,
+          "sha256": "6bd7a60c31519819e28b81ceae42740fdc868d9b14eda80f73e3035939592120"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/build.log",
+          "bytes": 257,
+          "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/clean-checkout.log",
+          "bytes": 63,
+          "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2"
+        }
+      ],
+      "allStepsPassed": true
+    },
+    "final-status-and-retained-886fb139": {
+      "directory": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139",
+      "report": {
+        "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T06:36:13.500781+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-final-status-and-retained",
+            "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a24-09-wizard-provider.test.js",
+              "tests/a24-disk-scan.test.js",
+              "tests/a24-provider-files.test.js",
+              "tests/a24-reload-coordinator.test.js",
+              "tests/a24-save-locks.test.js",
+              "tests/a24-vfs-memory.test.js",
+              "tests/a24-vfs-native.test.js",
+              "tests/a24-workspace-reconcile.test.js",
+              "tests/a24-status-caret-ownership.test.js",
+              "tests/a19-shell-boundaries.test.js",
+              "tests/a24-editor-model-ownership.test.js"
+            ],
+            "startedAt": "2026-10-04T06:36:13.502944+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8564060160",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2415944\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-final-status-and-retained.tap",
+            "completedAt": "2026-10-04T06:36:19.958226+00:00",
+            "exitCode": 0,
+            "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "resourceAfter": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8453537792",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416141\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 43,
+              "suites": 0,
+              "pass": 43,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": false
+          },
+          {
+            "name": "check",
+            "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "check"
+            ],
+            "startedAt": "2026-10-04T06:36:19.991600+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8454873088",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416141\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "check.log",
+            "completedAt": "2026-10-04T06:36:24.057256+00:00",
+            "exitCode": 0,
+            "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "resourceAfter": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8268587008",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416533\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "build",
+            "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "build"
+            ],
+            "startedAt": "2026-10-04T06:36:24.078424+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8268431360",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416533\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "build.log",
+            "completedAt": "2026-10-04T06:36:28.526686+00:00",
+            "exitCode": 0,
+            "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "resourceAfter": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8273235968",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416736\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "clean-checkout",
+            "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "scripts/conformance/clean-checkout.js"
+            ],
+            "startedAt": "2026-10-04T06:36:28.550781+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8275189760",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416736\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "clean-checkout.log",
+            "completedAt": "2026-10-04T06:36:28.675948+00:00",
+            "exitCode": 0,
+            "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "resourceAfter": {
+              "actualFreeBytes": 1044307968,
+              "availableBytes": 1044307968,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8296202240",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2416736\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          }
+        ],
+        "completedAt": "2026-10-04T06:36:28.694049+00:00",
+        "finalStatus": "",
+        "summary": {
+          "commands": 4,
+          "passed": 4,
+          "failed": 0
+        }
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/final-qualification.json",
+          "bytes": 6663,
+          "sha256": "7ca75ab56829519af9f9ff70109384a539b4726dcdd9d9ae72e2dc20cecb3d93"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.tap",
+          "bytes": 10480,
+          "sha256": "34ff5a4b7e33c83883ee815a2ece3f93d26f55c47388a42f23269d61499e7595"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/check.log",
+          "bytes": 433,
+          "sha256": "2d04264868582f5dd0aaa9436544f52153ca9e68a33475d5555cbb297c2406ef"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/build.log",
+          "bytes": 257,
+          "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/clean-checkout.log",
+          "bytes": 63,
+          "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2"
+        }
+      ],
+      "allStepsPassed": true
+    },
+    "capture-timer-negative-2ecaddeda": {
+      "directory": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda",
+      "report": {
+        "sourceCommit": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T06:52:27.811205+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-capture-timer-negative",
+            "sourceCommit": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a19-execution-capture-timer-owner.test.js"
+            ],
+            "startedAt": "2026-10-04T06:52:27.814548+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1044017152,
+              "availableBytes": 1044017152,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8299728896",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2588387\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-capture-timer-negative.tap",
+            "completedAt": "2026-10-04T06:52:28.078783+00:00",
+            "exitCode": 1,
+            "sourceAfter": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+            "resourceAfter": {
+              "actualFreeBytes": 1044017152,
+              "availableBytes": 1044017152,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8335618048",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2588387\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 2,
+              "suites": 0,
+              "pass": 0,
+              "fail": 2,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": true
+          }
+        ]
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/final-qualification.json",
+          "bytes": 2476,
+          "sha256": "c13155c836115c96e12316a4b66f6de9451b5116471d9994d6394571dcd23090"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/node26-capture-timer-negative.tap",
+          "bytes": 3391,
+          "sha256": "35e4753934ff6b5d1378029297653c9873854cef5c8db488a4834c4f33f2b0be"
+        }
+      ],
+      "allStepsPassed": false,
+      "regressionOnlyOutput": "TAP version 13\n# Subtest: runtime UI events preserve the browser timer receiver through capture wake, pause and disposal\nnot ok 1 - runtime UI events preserve the browser timer receiver through capture wake, pause and disposal\n  ---\n  duration_ms: 4.741875\n  type: 'test'\n  location: '/dev/shm/p18-final-qualification/tests/a19-execution-capture-timer-owner.test.js:35:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Got unwanted exception.\n    Actual message: \"Workbench event listeners failed\"\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual:\n  error: 'Workbench event listeners failed'\n  stack: |-\n    WorkbenchEvents.emit (file:///dev/shm/p18-final-qualification/apps/studio/workbench/state-events.js:46:32)\n    AppSession.emit (file:///dev/shm/p18-final-qualification/apps/studio/workbench/app-session.js:78:17)\n    AppSession.receive (file:///dev/shm/p18-final-qualification/apps/studio/workbench/app-session.js:122:41)\n    Object.onEvent (file:///dev/shm/p18-final-qualification/apps/studio/workbench/app-session.js:56:42)\n    WorkerClient.receive (file:///dev/shm/p18-final-qualification/apps/studio/workbench/worker-client.js:63:29)\n    worker.onmessage (file:///dev/shm/p18-final-qualification/apps/studio/workbench/worker-client.js:39:12)\n    FakeWorker.emit (file:///dev/shm/p18-final-qualification/tests/a19-session-fixtures.js:31:33)\n    file:///dev/shm/p18-final-qualification/tests/a19-execution-capture-timer-owner.test.js:48:40\n    getActual (node:assert:580:5)\n    strict.doesNotThrow (node:assert:748:32)\n  operator: 'doesNotThrow'\n  stack: |-\n    TestContext.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-execution-capture-timer-owner.test.js:48:10)\n    Test.runInAsyncScope (node:async_hooks:226:14)\n    Test.run (node:internal/test_runner/test:1402:25)\n    Test.start (node:internal/test_runner/test:1262:17)\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)\n  ...\n# Subtest: default browser timers rearm bounded polling after completion and cancel the next wake\nnot ok 2 - default browser timers rearm bounded polling after completion and cancel the next wake\n  ---\n  duration_ms: 0.455607\n  type: 'test'\n  location: '/dev/shm/p18-final-qualification/tests/a19-execution-capture-timer-owner.test.js:67:1'\n  failureType: 'testCodeFailure'\n  error: 'Illegal invocation: browser timer receiver'\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    ExecutionCapture.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-execution-capture-timer-owner.test.js:14:36)\n    Object.apply (node:internal/test_runner/mock/mock:805:20)\n    ExecutionCapture.wake (file:///dev/shm/p18-final-qualification/apps/studio/workbench/tools/execution-capture.js:65:23)\n    ExecutionCapture.start (file:///dev/shm/p18-final-qualification/apps/studio/workbench/tools/execution-capture.js:55:10)\n    TestContext.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-execution-capture-timer-owner.test.js:85:11)\n    Test.runInAsyncScope (node:async_hooks:226:14)\n    Test.run (node:internal/test_runner/test:1402:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n    Test.postRun (node:internal/test_runner/test:1542:19)\n    Test.run (node:internal/test_runner/test:1467:12)\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 0\n# fail 2\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 104.518263\n"
+    },
+    "capture-timer-final-de9a5e8f": {
+      "directory": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f",
+      "report": {
+        "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T06:52:45.351004+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-capture-timer-final",
+            "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a19-execution-capture-timer-owner.test.js",
+              "tests/a19-execution-capture.test.js"
+            ],
+            "startedAt": "2026-10-04T06:52:45.355771+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8589832192",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2589667\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-capture-timer-final.tap",
+            "completedAt": "2026-10-04T06:52:45.752879+00:00",
+            "exitCode": 0,
+            "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "resourceAfter": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8513032192",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2589805\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 11,
+              "suites": 0,
+              "pass": 11,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": false
+          },
+          {
+            "name": "check",
+            "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "check"
+            ],
+            "startedAt": "2026-10-04T06:52:45.782729+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8517451776",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2589805\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "check.log",
+            "completedAt": "2026-10-04T06:52:50.635146+00:00",
+            "exitCode": 0,
+            "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "resourceAfter": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8277106688",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2591850\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "build",
+            "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "build"
+            ],
+            "startedAt": "2026-10-04T06:52:50.659038+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8283484160",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2591850\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "build.log",
+            "completedAt": "2026-10-04T06:52:55.258494+00:00",
+            "exitCode": 0,
+            "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "resourceAfter": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8297394176",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2592600\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "clean-checkout",
+            "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "scripts/conformance/clean-checkout.js"
+            ],
+            "startedAt": "2026-10-04T06:52:55.298817+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8299712512",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2592600\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "clean-checkout.log",
+            "completedAt": "2026-10-04T06:52:55.451525+00:00",
+            "exitCode": 0,
+            "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "resourceAfter": {
+              "actualFreeBytes": 1043460096,
+              "availableBytes": 1043460096,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8328568832",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2592600\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          }
+        ],
+        "completedAt": "2026-10-04T06:52:55.474809+00:00",
+        "finalStatus": "",
+        "summary": {
+          "commands": 4,
+          "passed": 4,
+          "failed": 0
+        }
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/final-qualification.json",
+          "bytes": 6253,
+          "sha256": "3bceed107339e4ac9a9e6a4e312925fe9d13fdc32af133ce87c551be37459518"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap",
+          "bytes": 2706,
+          "sha256": "923da70d2cba0f13fd8c3a6c73bd2f5a4ca0981ddde799405a87cfa4dbb6a9a9"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/check.log",
+          "bytes": 433,
+          "sha256": "76d3a7acde398f764a5c884dd50829606b34660285656fee838be182585f48ec"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/build.log",
+          "bytes": 257,
+          "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/clean-checkout.log",
+          "bytes": 63,
+          "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2"
+        }
+      ],
+      "allStepsPassed": true
+    },
+    "runtime-timer-negative-2db6a9ac": {
+      "directory": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac",
+      "report": {
+        "sourceCommit": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T07:05:37.467865+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-runtime-timer-negative",
+            "sourceCommit": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a19-runtime-activity-timer-owner.test.js"
+            ],
+            "startedAt": "2026-10-04T07:05:37.470196+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8589512704",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2721113\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-runtime-timer-negative.tap",
+            "completedAt": "2026-10-04T07:05:39.807752+00:00",
+            "exitCode": 1,
+            "sourceAfter": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+            "resourceAfter": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8372228096",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2721647\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 3,
+              "suites": 0,
+              "pass": 0,
+              "fail": 3,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": true
+          }
+        ]
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/final-qualification.json",
+          "bytes": 2474,
+          "sha256": "07c089134ec575a1bbb73a8f973a1e9c1f440c9440ec93a065e17d5c42e27880"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/node26-runtime-timer-negative.tap",
+          "bytes": 3050,
+          "sha256": "29c45b46d7482200e12717e55050bdcd46e22a9f336da682c0346f1479083a75"
+        }
+      ],
+      "allStepsPassed": false,
+      "regressionOnlyOutput": "TAP version 13\n# Subtest: runtime browser timers preserve sampling, pumping and animation ownership through replacement and stop\nnot ok 1 - runtime browser timers preserve sampling, pumping and animation ownership through replacement and stop\n  ---\n  duration_ms: 2.176262\n  type: 'test'\n  location: '/dev/shm/p18-final-qualification/tests/a19-runtime-activity-timer-owner.test.js:61:1'\n  failureType: 'testCodeFailure'\n  error: 'Illegal invocation: worker timer receiver'\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    RuntimeActivity.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-runtime-activity-timer-owner.test.js:13:58)\n    Object.apply (node:internal/test_runner/mock/mock:805:20)\n    RuntimeActivity.ensureSampling (file:///dev/shm/p18-final-qualification/apps/studio/workers/runtime-activity.js:46:30)\n    RuntimeActivity.start (file:///dev/shm/p18-final-qualification/apps/studio/workers/runtime-activity.js:28:10)\n    TestContext.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-runtime-activity-timer-owner.test.js:81:12)\n    Test.runInAsyncScope (node:async_hooks:226:14)\n    Test.run (node:internal/test_runner/test:1402:25)\n    Test.start (node:internal/test_runner/test:1262:17)\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)\n  ...\n# Subtest: real source worker reaches loaded and state with browser timer receivers\nnot ok 2 - real source worker reaches loaded and state with browser timer receivers\n  ---\n  duration_ms: 765.49146\n  type: 'test'\n  location: '/dev/shm/p18-final-qualification/tests/a19-runtime-activity-timer-owner.test.js:131:3'\n  failureType: 'testCodeFailure'\n  error: 'Illegal invocation: worker timer receiver'\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    Worker.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-runtime-worker-client.js:31:55)\n    Worker.emit (node:events:514:20)\n    MessagePort.<anonymous> (node:internal/worker:354:14)\n    [nodejs.internal.kHybridDispatch] (node:internal/event_target:872:20)\n    MessagePort.<anonymous> (node:internal/per_context/messageport:23:28)\n  ...\n# Subtest: real CIL worker reaches loaded and state with browser timer receivers\nnot ok 3 - real CIL worker reaches loaded and state with browser timer receivers\n  ---\n  duration_ms: 584.792835\n  type: 'test'\n  location: '/dev/shm/p18-final-qualification/tests/a19-runtime-activity-timer-owner.test.js:131:3'\n  failureType: 'testCodeFailure'\n  error: 'Illegal invocation: worker timer receiver'\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    Worker.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a19-runtime-worker-client.js:31:55)\n    Worker.emit (node:events:514:20)\n    MessagePort.<anonymous> (node:internal/worker:354:14)\n    [nodejs.internal.kHybridDispatch] (node:internal/event_target:872:20)\n    MessagePort.<anonymous> (node:internal/per_context/messageport:23:28)\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 0\n# fail 3\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2197.463969\n"
+    },
+    "runtime-timer-final-7d4c97d2": {
+      "directory": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2",
+      "report": {
+        "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "checkout": "/dev/shm/p18-final-qualification",
+        "startedAt": "2026-10-04T07:06:23.254918+00:00",
+        "toolchain": {
+          "node": "v26.10.0",
+          "npm": "11.19.1"
+        },
+        "environment": {
+          "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+          "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/results",
+          "SHARPFORGE_TEST_CONCURRENCY": "1",
+          "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+          "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SHARPFORGE_NATIVE_SDK": "10.0.201",
+          "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+          "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+        },
+        "steps": [
+          {
+            "name": "node26-runtime-timer-final",
+            "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "--test",
+              "--test-concurrency=1",
+              "--test-reporter=tap",
+              "tests/a19-runtime-activity-timer-owner.test.js",
+              "tests/a19-execution-capture-timer-owner.test.js",
+              "tests/a19-execution-capture.test.js",
+              "tests/a19-execution-occupancy.test.js",
+              "tests/a19-runtime-worker-launch.test.js",
+              "tests/a19-execution-worker.test.js"
+            ],
+            "startedAt": "2026-10-04T07:06:23.257306+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8589324288",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2728620\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "node26-runtime-timer-final.tap",
+            "completedAt": "2026-10-04T07:06:37.049399+00:00",
+            "exitCode": 0,
+            "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "resourceAfter": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8313405440",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2731899\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": "",
+            "summary": {
+              "tests": 34,
+              "suites": 0,
+              "pass": 34,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "qualificationIncomplete": false
+          },
+          {
+            "name": "check",
+            "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "check"
+            ],
+            "startedAt": "2026-10-04T07:06:37.078987+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8326729728",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2731899\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "check.log",
+            "completedAt": "2026-10-04T07:06:41.614345+00:00",
+            "exitCode": 0,
+            "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "resourceAfter": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8269938688",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2732053\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "build",
+            "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "npm",
+              "run",
+              "build"
+            ],
+            "startedAt": "2026-10-04T07:06:41.638826+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8271052800",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2732053\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "build.log",
+            "completedAt": "2026-10-04T07:06:45.482597+00:00",
+            "exitCode": 0,
+            "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "resourceAfter": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8278704128",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2732053\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          },
+          {
+            "name": "clean-checkout",
+            "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "argv": [
+              "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+              "scripts/limited.js",
+              "node",
+              "scripts/conformance/clean-checkout.js"
+            ],
+            "startedAt": "2026-10-04T07:06:45.504764+00:00",
+            "resourcePreflight": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8275935232",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2732053\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "log": "clean-checkout.log",
+            "completedAt": "2026-10-04T07:06:45.631675+00:00",
+            "exitCode": 0,
+            "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "resourceAfter": {
+              "actualFreeBytes": 1043402752,
+              "availableBytes": 1043402752,
+              "minimumFreeBytes": 536870912,
+              "memory.current": "8283185152",
+              "memory.max": "8589934592",
+              "memory.events": "low 0\nhigh 0\nmax 2732053\noom 5\noom_kill 3\noom_group_kill 0"
+            },
+            "checkoutStatusAfter": ""
+          }
+        ],
+        "completedAt": "2026-10-04T07:06:45.649659+00:00",
+        "finalStatus": "",
+        "summary": {
+          "commands": 4,
+          "passed": 4,
+          "failed": 0
+        }
+      },
+      "artifacts": [
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/final-qualification.json",
+          "bytes": 6457,
+          "sha256": "bde11938560ec2854ec07b9607ce3272c6ef9be9d04e20fddf1e95b41c22b530"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap",
+          "bytes": 8224,
+          "sha256": "bf7e8d658a8ac6315bc9f56d0b180d378c1d34550c97e7de2189ba277ef4a16a"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/check.log",
+          "bytes": 433,
+          "sha256": "448cca54e7330332f85569a39d4f20cd049e4d12c8ac5b8e28ee4df6a0bc8e03"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/build.log",
+          "bytes": 257,
+          "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9"
+        },
+        {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/clean-checkout.log",
+          "bytes": 63,
+          "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2"
+        }
+      ],
+      "allStepsPassed": true
+    }
+  },
+  "browserHistory": [
+    {
+      "directory": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd",
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-release13.log",
+        "bytes": 9689,
+        "sha256": "20b5603d71b38fcb10c835679ca429d5f8601f1c02e99ff848226cceef2b6f7d"
+      },
+      "passedCheckLines": [],
+      "endingLines": [
+        "             ^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/sync_api/_generated.py\", line 9413, in evaluate",
+        "    self._sync(",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_sync_base.py\", line 115, in _sync",
+        "    return task.result()",
+        "           ^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_page.py\", line 474, in evaluate",
+        "    return await self._main_frame.evaluate(expression, arg)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_frame.py\", line 346, in evaluate",
+        "    await self._channel.send(",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_connection.py\", line 76, in send",
+        "    return await self._connection.wrap_api_call(",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_connection.py\", line 632, in wrap_api_call",
+        "    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None",
+        "playwright._impl._errors.Error: Page.evaluate: AggregateError: Documents committed, but a view or cleanup callback failed",
+        "    at DocumentService.afterCommit (http://127.0.0.1:60965/workbench/documents.js:419:21)",
+        "    at DocumentService.finishReplacement (http://127.0.0.1:60965/workbench/documents.js:410:10)",
+        "    at DocumentService.replace (http://127.0.0.1:60965/workbench/documents.js:91:10)",
+        "    at loadStudioWorkspace (http://127.0.0.1:60965/workbench/studio-workspace-loader.js:116:25)",
+        "    at async <anonymous>:337:30"
+      ],
+      "browser-release13.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-release13.json",
+          "bytes": 1379,
+          "sha256": "1c49c559ead079205ddf7ac090c10a754b95a393d4cc6096619ad15cfbe7a202"
+        },
+        "content": {
+          "name": "browser-release13",
+          "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-prepared/run-final-browser.py",
+            "--source",
+            "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+            "--suite",
+            "release13",
+            "--output",
+            "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd",
+            "--inside-slot"
+          ],
+          "startedAt": "2026-10-04T05:52:24.825060+00:00",
+          "resourcePreflight": {
+            "actualFreeBytes": 1045671936,
+            "availableBytes": 1045671936,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "8545312768",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 1328590\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "log": "browser-release13.log",
+          "completedAt": "2026-10-04T05:52:30.715516+00:00",
+          "exitCode": 1,
+          "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "resourceAfter": {
+            "actualFreeBytes": 1045671936,
+            "availableBytes": 1045671936,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "7957827584",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 1332639\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "checkoutStatusAfter": ""
+        }
+      },
+      "browser-environment.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-environment.json",
+          "bytes": 837,
+          "sha256": "980aaea24715d4ba951cdd04980bfa2e3940738ccafbd920a08ca61962937e27"
+        },
+        "content": {
+          "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "suite": "release13",
+          "startedAt": "2026-10-04T05:52:24.905311+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-m5u8amz9",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180
+        }
+      },
+      "browser-process.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-process.json",
+          "bytes": 907,
+          "sha256": "a6f8aace0ac557cbe075b0bfa440a0a00147fb40830a9c43cdaac6b07c31eead"
+        },
+        "content": {
+          "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "suite": "release13",
+          "startedAt": "2026-10-04T05:52:24.905311+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-m5u8amz9",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180,
+          "completedAt": "2026-10-04T05:52:30.701977+00:00",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "directory": "/tmp/p18-final-qualification-logs/designer-release13-362f1337",
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.log",
+        "bytes": 7504,
+        "sha256": "feaaf1c20fafc8e4e5cbf3580c39f34d299367705a43f1f3909a4390d624565e"
+      },
+      "passedCheckLines": [
+        "PASS connect an existing hand-written construction method without replacing source or workers",
+        "PASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "PASS designer property changes compile-check a minimal C# edit and preserve every other byte"
+      ],
+      "endingLines": [
+        "STATE [{\"uri\": \"Program.cs\", \"version\": 3, \"start\": 930, \"length\": 13, \"code\": \"CS1529\", \"message\": \"A using clause must precede all other elements defined in the namespace except extern alias declarations\", \"severity\": \"error\", \"range\": {\"start\": {\"line\": 21, \"character\": 1}, \"end\": {\"line\": 21, \"character\": 14}}}, {\"uri\": \"Program.cs\", \"version\": 3, \"start\": 944, \"length\": 24, \"code\": \"CS1529\", \"message\": \"A using clause must precede all other elements defined in the namespace except extern alias declarations\", \"severity\": \"error\", \"range\": {\"start\": {\"line\": 22, \"character\": 0}, \"end\": {\"line\": 22, \"character\": 24}}}, {\"uri\": \"Program.cs\", \"version\": 3, \"start\": 969, \"length\": 33, \"code\": \"CS1529\", \"message\": \"A using clause must precede all other elements defined in the namespace except extern alias declarations\", \"severity\": \"error\", \"range\": {\"start\": {\"line\": 23, \"character\": 0}, \"end\": {\"line\": 23, \"character\": 33}}}, {\"uri\": \"Program.cs\", \"version\": 3, \"start\": 1009, \"length\": 4, \"code\": \"CS0101\", \"message\": \"The namespace '<global namespace>' already contains a definition for 'View'\", \"severity\": \"error\", \"range\": {\"start\": {\"line\": 24, \"character\": 6}, \"end\": {\"line\": 24, \"character\": 10}}}]",
+        "Traceback (most recent call last):",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 58, in <module>",
+        "    check('real source editor input updates the design preview automatically',editor_read)",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 12, in check",
+        "    t=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-t)*1000,2)});print('PASS',name,flush=True)",
+        "                          ^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 57, in editor_read",
+        "    edit(text().replace('\"Keep my code\"','\"Edited in C#\"'));wait('sharpforge.designer.get().document.nodes.some(n=>n.id===\"label\"&&n.properties.Text===\"Edited in C#\")');truth(page.locator('.design-preview [data-sf-id=\"label\"]').inner_text()=='Edited in C#');truth(ds()['sourceSync']['state']=='synced')",
+        "                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 38, in wait",
+        "    def wait(code):return wait_condition(page,code,timeout=30000)",
+        "                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_harness.py\", line 97, in wait_condition",
+        "    return page.wait_for_function(predicate, timeout=timeout)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/conformance/browser/launch.py\", line 166, in checked",
+        "    result = value(*args, **kwargs)",
+        "             ^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_harness.py\", line 32, in _wait_for_function",
+        "    raise TimeoutError('Browser predicate remained false: ' + expression)",
+        "TimeoutError: Browser predicate remained false: sharpforge.designer.get().document.nodes.some(n=>n.id===\"label\"&&n.properties.Text===\"Edited in C#\")"
+      ],
+      "browser-release13.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.json",
+          "bytes": 1379,
+          "sha256": "2556cd8c1733570a9d42e8628f8b553212d88d5303ab9e209c78b3fd5fe0834a"
+        },
+        "content": {
+          "name": "browser-release13",
+          "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-prepared/run-final-browser.py",
+            "--source",
+            "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+            "--suite",
+            "release13",
+            "--output",
+            "/tmp/p18-final-qualification-logs/designer-release13-362f1337",
+            "--inside-slot"
+          ],
+          "startedAt": "2026-10-04T06:12:34.995667+00:00",
+          "resourcePreflight": {
+            "actualFreeBytes": 1045110784,
+            "availableBytes": 1045110784,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "8568393728",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 1816226\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "log": "browser-release13.log",
+          "completedAt": "2026-10-04T06:13:13.405873+00:00",
+          "exitCode": 1,
+          "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "resourceAfter": {
+            "actualFreeBytes": 1045020672,
+            "availableBytes": 1045020672,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "7873077248",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 1834424\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "checkoutStatusAfter": ""
+        }
+      },
+      "browser-environment.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-environment.json",
+          "bytes": 837,
+          "sha256": "c064c81cca0d68339f99296b932778732cccb43c1ee2dc390132648c25f0ec7f"
+        },
+        "content": {
+          "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:12:35.084785+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-hotnz_9r",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180
+        }
+      },
+      "browser-process.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-process.json",
+          "bytes": 907,
+          "sha256": "67b892c66fb7c854dbff01ec83a576e3e8d65367bc5e1a4949d74c44fa9e6604"
+        },
+        "content": {
+          "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:12:35.084785+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-hotnz_9r",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180,
+          "completedAt": "2026-10-04T06:13:13.374055+00:00",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "directory": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab",
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.log",
+        "bytes": 9895,
+        "sha256": "801d2f1ec433e7823406b7509e4efaffb219b4b69f6cb65d7d260d2b0e1de228"
+      },
+      "passedCheckLines": [
+        "PASS connect an existing hand-written construction method without replacing source or workers",
+        "PASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "PASS designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "PASS real source editor input updates the design preview automatically",
+        "PASS source undo and redo resynchronize the preview without replacing the editor"
+      ],
+      "endingLines": [
+        "           ^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_page.py\", line 474, in evaluate",
+        "    return await self._main_frame.evaluate(expression, arg)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_frame.py\", line 346, in evaluate",
+        "    await self._channel.send(",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_connection.py\", line 76, in send",
+        "    return await self._connection.wrap_api_call(",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_connection.py\", line 632, in wrap_api_call",
+        "    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None",
+        "playwright._impl._errors.Error: Page.evaluate: RangeError: Visual column offset outside document",
+        "    at #locate (http://127.0.0.1:43907/packages/text/src/visual-column-index.js:77:94)",
+        "    at VisualColumnIndex.getCached (http://127.0.0.1:43907/packages/text/src/visual-column-index.js:42:34)",
+        "    at EditorModel.cachedVisualColumnAtOffset (http://127.0.0.1:43907/packages/editor/src/model.js:64:76)",
+        "    at StatusPosition.column (http://127.0.0.1:43907/workbench/status-position.js:19:55)",
+        "    at cursor (http://127.0.0.1:43907/workbench/status-bar.js:65:35)",
+        "    at value (http://127.0.0.1:43907/workbench/status-bar.js:74:23)",
+        "    at Object.update (http://127.0.0.1:43907/workbench/status-bar.js:18:23)",
+        "    at WorkbenchStatusBar.update (http://127.0.0.1:43907/workbench/status-bar.js:31:65)",
+        "    at WorkbenchShell.updateContext (http://127.0.0.1:43907/workbench/shell.js:95:21)",
+        "    at WorkbenchShell.update (http://127.0.0.1:43907/workbench/shell.js:235:10)"
+      ],
+      "browser-release13.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.json",
+          "bytes": 1379,
+          "sha256": "27c4a1a6df96dd1894452cb05597a1812ce876d8784724c63d93a9fe527bb419"
+        },
+        "content": {
+          "name": "browser-release13",
+          "sourceCommit": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-prepared/run-final-browser.py",
+            "--source",
+            "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+            "--suite",
+            "release13",
+            "--output",
+            "/tmp/p18-final-qualification-logs/designer-release13-7d558dab",
+            "--inside-slot"
+          ],
+          "startedAt": "2026-10-04T06:17:16.000584+00:00",
+          "resourcePreflight": {
+            "actualFreeBytes": 1045020672,
+            "availableBytes": 1045020672,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "8562937856",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 1948388\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "log": "browser-release13.log",
+          "completedAt": "2026-10-04T06:17:26.651269+00:00",
+          "exitCode": 1,
+          "sourceAfter": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "resourceAfter": {
+            "actualFreeBytes": 1045020672,
+            "availableBytes": 1045020672,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "7859724288",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 1956824\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "checkoutStatusAfter": ""
+        }
+      },
+      "browser-environment.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-environment.json",
+          "bytes": 837,
+          "sha256": "9e307573d60f5c03a3ae8a1b361871ca5879513b8721e7589ea69a240d475a20"
+        },
+        "content": {
+          "sourceCommit": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:17:16.107090+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-6_cpb8aa",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180
+        }
+      },
+      "browser-process.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-process.json",
+          "bytes": 907,
+          "sha256": "c717a2440a199474e6d3be3e8a926cef7f821603d09c1ae67b8c43928e89865d"
+        },
+        "content": {
+          "sourceCommit": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:17:16.107090+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-6_cpb8aa",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180,
+          "completedAt": "2026-10-04T06:17:26.633379+00:00",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "directory": "/tmp/p18-final-qualification-logs/designer-release13-886fb139",
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-release13.log",
+        "bytes": 7056,
+        "sha256": "49369eab59bcb3e4d180ee987a6452e205e2241176811bc24e9dab1d3fd24489"
+      },
+      "passedCheckLines": [
+        "PASS connect an existing hand-written construction method without replacing source or workers",
+        "PASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "PASS designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "PASS real source editor input updates the design preview automatically",
+        "PASS source undo and redo resynchronize the preview without replacing the editor",
+        "PASS incomplete C# keeps the last valid preview and recovers when corrected",
+        "PASS structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+        "PASS concurrent source and designer edits are rejected without overwriting either side",
+        "PASS dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+        "PASS device presets and Design/Split/C#/Preview views use the original editor and artboard"
+      ],
+      "endingLines": [
+        "STATE []",
+        "Traceback (most recent call last):",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 85, in <module>",
+        "    check('synchronized source builds and runs its retained C# event handler and formatted interpolation',run_handlers)",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 12, in check",
+        "    t=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-t)*1000,2)});print('PASS',name,flush=True)",
+        "                          ^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 84, in run_handlers",
+        "    ev('sharpforge.designer.writeSource()');cmd('winuiLayout');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');ev('async()=>{const scene=await sharpforge.getUIScene();await sharpforge.dispatchUIEvent(scene.nodes.find(n=>n.properties.Name===\"Action\").id,\"Click\",{});}');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text===\"Clicks: 01\")');cmd('stop')",
+        "                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 38, in wait",
+        "    def wait(code):return wait_condition(page,code,timeout=30000)",
+        "                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_harness.py\", line 97, in wait_condition",
+        "    return page.wait_for_function(predicate, timeout=timeout)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/conformance/browser/launch.py\", line 166, in checked",
+        "    result = value(*args, **kwargs)",
+        "             ^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_harness.py\", line 32, in _wait_for_function",
+        "    raise TimeoutError('Browser predicate remained false: ' + expression)",
+        "TimeoutError: Browser predicate remained false: sharpforge.getState().debug?.uiActive"
+      ],
+      "browser-release13.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-release13.json",
+          "bytes": 1379,
+          "sha256": "6c5746f5e5fe2f2248d7a9444a12bf8f9dae968741ee18771ca63cdfe3f31847"
+        },
+        "content": {
+          "name": "browser-release13",
+          "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-prepared/run-final-browser.py",
+            "--source",
+            "886fb139fc647f0532085b5a0866a498fa7fca52",
+            "--suite",
+            "release13",
+            "--output",
+            "/tmp/p18-final-qualification-logs/designer-release13-886fb139",
+            "--inside-slot"
+          ],
+          "startedAt": "2026-10-04T06:37:30.663337+00:00",
+          "resourcePreflight": {
+            "actualFreeBytes": 1044066304,
+            "availableBytes": 1044066304,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "8589713408",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 2427004\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "log": "browser-release13.log",
+          "completedAt": "2026-10-04T06:38:16.020984+00:00",
+          "exitCode": 1,
+          "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "resourceAfter": {
+            "actualFreeBytes": 1044074496,
+            "availableBytes": 1044074496,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "7839469568",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 2443831\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "checkoutStatusAfter": ""
+        }
+      },
+      "browser-environment.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-environment.json",
+          "bytes": 837,
+          "sha256": "f17dda870c2bcbf8ed4c1ef8b7c94087a1fd69960b8fc89c1175ab9fe87655e2"
+        },
+        "content": {
+          "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:37:30.757919+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-18akax2_",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180
+        }
+      },
+      "browser-process.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-process.json",
+          "bytes": 907,
+          "sha256": "55e6e650e00caf006bb2ba5137b2508b38057d3fc8a02d369707edc61c3e0cef"
+        },
+        "content": {
+          "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:37:30.757919+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-18akax2_",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180,
+          "completedAt": "2026-10-04T06:38:15.988477+00:00",
+          "exitCode": 1
+        }
+      }
+    },
+    {
+      "directory": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f",
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-release13.log",
+        "bytes": 6489,
+        "sha256": "c2f1f0e830ed60212d623202f35d937f0ce94b062dd08f29793ae65dd65da393"
+      },
+      "passedCheckLines": [
+        "PASS connect an existing hand-written construction method without replacing source or workers",
+        "PASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "PASS designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "PASS real source editor input updates the design preview automatically",
+        "PASS source undo and redo resynchronize the preview without replacing the editor",
+        "PASS incomplete C# keeps the last valid preview and recovers when corrected",
+        "PASS structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+        "PASS concurrent source and designer edits are rejected without overwriting either side",
+        "PASS dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+        "PASS device presets and Design/Split/C#/Preview views use the original editor and artboard"
+      ],
+      "endingLines": [
+        "STATE []",
+        "Traceback (most recent call last):",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 85, in <module>",
+        "    check('synchronized source builds and runs its retained C# event handler and formatted interpolation',run_handlers)",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 12, in check",
+        "    t=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-t)*1000,2)});print('PASS',name,flush=True)",
+        "                          ^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 84, in run_handlers",
+        "    ev('sharpforge.designer.writeSource()');cmd('winuiLayout');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');ev('async()=>{const scene=await sharpforge.getUIScene();await sharpforge.dispatchUIEvent(scene.nodes.find(n=>n.properties.Name===\"Action\").id,\"Click\",{});}');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text===\"Clicks: 01\")');cmd('stop')",
+        "                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 38, in wait",
+        "    def wait(code):return wait_condition(page,code,timeout=30000)",
+        "                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_harness.py\", line 97, in wait_condition",
+        "    return page.wait_for_function(predicate, timeout=timeout)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/conformance/browser/launch.py\", line 166, in checked",
+        "    result = value(*args, **kwargs)",
+        "             ^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_harness.py\", line 32, in _wait_for_function",
+        "    raise TimeoutError('Browser predicate remained false: ' + expression)",
+        "TimeoutError: Browser predicate remained false: sharpforge.getState().debug?.uiActive"
+      ],
+      "browser-release13.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-release13.json",
+          "bytes": 1380,
+          "sha256": "090b9a5515c81e3161643a06f8a5343f225315e1410e104fa85b044e94d7522f"
+        },
+        "content": {
+          "name": "browser-release13",
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/dev/shm/p18-final-prepared/run-final-browser.py",
+            "--source",
+            "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+            "--suite",
+            "release13",
+            "--output",
+            "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f",
+            "--inside-slot"
+          ],
+          "startedAt": "2026-10-04T06:53:49.606298+00:00",
+          "resourcePreflight": {
+            "actualFreeBytes": 1043460096,
+            "availableBytes": 1043460096,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "8566476800",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 2601622\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "log": "browser-release13.log",
+          "completedAt": "2026-10-04T06:54:35.695797+00:00",
+          "exitCode": 1,
+          "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "resourceAfter": {
+            "actualFreeBytes": 1043460096,
+            "availableBytes": 1043460096,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "7391113216",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 2608097\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "checkoutStatusAfter": ""
+        }
+      },
+      "browser-environment.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-environment.json",
+          "bytes": 838,
+          "sha256": "a460da79aa11008ef24ae3121b0797b84b8cd2b6aa6ab1f70aff712cc34f8297"
+        },
+        "content": {
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:53:49.736671+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-lv7lym06",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180
+        }
+      },
+      "browser-process.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-process.json",
+          "bytes": 908,
+          "sha256": "8404e00e245e4d9a0ab9e3d025e9c22f22fab34662a026e06b4062b9c70bc38b"
+        },
+        "content": {
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "suite": "release13",
+          "startedAt": "2026-10-04T06:53:49.736671+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-lv7lym06",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180,
+          "completedAt": "2026-10-04T06:54:35.680790+00:00",
+          "exitCode": 1
+        }
+      },
+      "runtime-launch-return.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/runtime-launch-return.json",
+          "bytes": 3177,
+          "sha256": "48a23969499a1133b4d1762b64c312a64d52f0ba96884d70f0eb00de6e5b29e8"
+        },
+        "content": {
+          "kind": "read-only-existing-trace-analysis",
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "traceRelativePath": "results/browser_release13_test/trace.zip",
+          "traceSha256": "f9bab505086910492fd0679ed84f1d236a5deb667798ef46a81e08acbaf4236b",
+          "member": "trace.trace",
+          "callId": "call@457",
+          "rawRecords": [
+            {
+              "type": "before",
+              "callId": "call@457",
+              "startTime": 13864.189,
+              "class": "Frame",
+              "method": "evaluateExpression",
+              "params": {
+                "expression": "sharpforge.run()",
+                "arg": {
+                  "value": {
+                    "v": "null"
+                  },
+                  "handles": []
+                }
+              }
+            },
+            {
+              "type": "after",
+              "callId": "call@457",
+              "endTime": 14695.813,
+              "result": {
+                "value": {
+                  "o": [
+                    {
+                      "k": "id",
+                      "v": {
+                        "s": "launch:1"
+                      }
+                    },
+                    {
+                      "k": "started",
+                      "v": {
+                        "a": [],
+                        "id": 2
+                      }
+                    },
+                    {
+                      "k": "failed",
+                      "v": {
+                        "a": [
+                          {
+                            "o": [
+                              {
+                                "k": "projectId",
+                                "v": {
+                                  "s": "$workspace"
+                                }
+                              },
+                              {
+                                "k": "error",
+                                "v": {
+                                  "e": {
+                                    "n": "TypeError",
+                                    "m": "Illegal invocation",
+                                    "s": "TypeError: Illegal invocation\n    at workbenchError (http://127.0.0.1:56827/workbench/state-events.js:58:17)\n    at WorkerClient.receive (http://127.0.0.1:56827/workbench/worker-client.js:71:21)\n    at worker.onmessage (http://127.0.0.1:56827/workbench/worker-client.js:39:12)"
+                                  }
+                                }
+                              }
+                            ],
+                            "id": 4
+                          }
+                        ],
+                        "id": 3
+                      }
+                    },
+                    {
+                      "k": "cancelled",
+                      "v": {
+                        "a": [],
+                        "id": 5
+                      }
+                    }
+                  ],
+                  "id": 1
+                }
+              }
+            }
+          ],
+          "decodedLaunchResult": {
+            "id": "launch:1",
+            "started": [],
+            "failed": [
+              {
+                "projectId": "$workspace",
+                "error": {
+                  "name": "TypeError",
+                  "message": "Illegal invocation",
+                  "stack": "TypeError: Illegal invocation\n    at workbenchError (http://127.0.0.1:56827/workbench/state-events.js:58:17)\n    at WorkerClient.receive (http://127.0.0.1:56827/workbench/worker-client.js:71:21)\n    at worker.onmessage (http://127.0.0.1:56827/workbench/worker-client.js:39:12)"
+                }
+              }
+            ],
+            "cancelled": []
+          },
+          "inference": "The run call returned a worker TypeError before any app started. The current runtime launch emits its reset UI event and then RuntimeActivity.start stores and invokes an unbound host timer before loaded/state events."
+        }
+      }
+    },
+    {
+      "directory": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2",
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-release13.log",
+        "bytes": 10811,
+        "sha256": "e755e5d20a43c92d627841ea7a60e9358768809deea166d71e914ccd727375cc"
+      },
+      "passedCheckLines": [
+        "PASS connect an existing hand-written construction method without replacing source or workers",
+        "PASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "PASS designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "PASS real source editor input updates the design preview automatically",
+        "PASS source undo and redo resynchronize the preview without replacing the editor",
+        "PASS incomplete C# keeps the last valid preview and recovers when corrected",
+        "PASS structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+        "PASS concurrent source and designer edits are rejected without overwriting either side",
+        "PASS dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+        "PASS device presets and Design/Split/C#/Preview views use the original editor and artboard",
+        "PASS synchronized source builds and runs its retained C# event handler and formatted interpolation",
+        "PASS independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+        "PASS VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+        "PASS source VM real worker clock animates after Main and runs managed Completed handler",
+        "PASS direct CIL real worker clock animates after Main and runs managed Completed handler"
+      ],
+      "endingLines": [
+        "    cmd('stop');ev('sharpforge.designer.disconnect()');ev('sharpforge.loadSample(\"designer-csharp-sync\",true)');ev('sharpforge.designer.open();sharpforge.designer.connect(\"Program.cs\");sharpforge.designer.select(\"action\");sharpforge.openTool(\"designer-properties\");sharpforge.designer.action(\"fit\")');page.locator('[data-design-goto-source]').click();truth(ev('sharpforge.getEditorState(\"Program.cs\").start')==text().index('var action ='));page.wait_for_timeout(300);page.screenshot(path=str(RESULTS/'screenshots/release13-designer-sync.png'));cmd('theme');page.wait_for_timeout(100);truth(ev('getComputedStyle(document.querySelector(\".design-mode-bar\")).backgroundColor')=='rgb(237, 242, 247)');page.screenshot(path=str(RESULTS/'screenshots/release13-designer-light.png'));cmd('theme');truth(not errors,json.dumps(errors));truth(len(workers)==2,str(workers))",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 10, in truth",
+        "    if not v:raise AssertionError(msg)",
+        "             ^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: ['http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/runtime.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/runtime.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/runtime.worker.js', 'http://127.0.0.1:38273/compiler.worker.js']",
+        "ERRORS []",
+        "DESIGN {\"sourceSync\": {\"uri\": \"Program.cs\", \"method\": \"Create\", \"format\": \"csharp\", \"state\": \"synced\", \"message\": \"Linked Program.cs \\u00b7 Create \\u00b7 0 protected expression(s)\", \"auto\": false, \"dirty\": false, \"warnings\": [], \"structuralEditable\": true}, \"viewMode\": \"split\", \"document\": {\"version\": 1, \"name\": \"Program\", \"width\": 920, \"height\": 560, \"root\": \"window\", \"nodes\": [{\"id\": \"window\", \"type\": \"Microsoft.UI.Xaml.Window\", \"properties\": {\"Title\": \"Source + Design Studio\"}, \"children\": [\"surface\"], \"events\": {}}, {\"id\": \"surface\", \"type\": \"Microsoft.UI.Xaml.Controls.Canvas\", \"properties\": {\"Name\": \"Surface\", \"Width\": 920, \"Height\": 560, \"Background\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 0, \"G\": 0, \"B\": 0}}}, \"children\": [\"eyebrow\", \"title\", \"subtitle\", \"card\", \"action\", \"footer\"], \"events\": {}}, {\"id\": \"eyebrow\", \"type\": \"Microsoft.UI.Xaml.Controls.TextBlock\", \"properties\": {\"Text\": \"SHARPFORGE / TWO-WAY AUTHORING\", \"FontSize\": 13, \"Foreground\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 100, \"G\": 149, \"B\": 237}}, \"Left\": 42, \"Top\": 30}, \"children\": [], \"events\": {}}, {\"id\": \"title\", \"type\": \"Microsoft.UI.Xaml.Controls.TextBlock\", \"properties\": {\"Name\": \"Heading\", \"Text\": \"Code and design, together.\", \"FontSize\": 34, \"Width\": 820, \"Foreground\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 255, \"G\": 255, \"B\": 255}}, \"Left\": 40, \"Top\": 76}, \"children\": [], \"events\": {}}, {\"id\": \"subtitle\", \"type\": \"Microsoft.UI.Xaml.Controls.TextBlock\", \"properties\": {\"Text\": \"Change properties here. Edit the same C# in the full editor.\", \"FontSize\": 17, \"Width\": 820, \"Foreground\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 128, \"G\": 128, \"B\": 128}}, \"Left\": 42, \"Top\": 135}, \"children\": [], \"events\": {}}, {\"id\": \"card\", \"type\": \"Microsoft.UI.Xaml.Controls.Border\", \"properties\": {\"Width\": 824, \"Height\": 178, \"Padding\": {\"valueType\": \"Microsoft.UI.Xaml.Thickness\", \"Left\": 24, \"Top\": 24, \"Right\": 24, \"Bottom\": 24}, \"CornerRadius\": {\"valueType\": \"Microsoft.UI.Xaml.CornerRadius\", \"TopLeft\": 12, \"TopRight\": 12, \"BottomRight\": 12, \"BottomLeft\": 12}, \"Background\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 34, \"G\": 48, \"B\": 58}}, \"Left\": 42, \"Top\": 198}, \"children\": [\"content\"], \"events\": {}}, {\"id\": \"content\", \"type\": \"Microsoft.UI.Xaml.Controls.StackPanel\", \"properties\": {\"Spacing\": 14}, \"children\": [\"heading\", \"summary\", \"note\"], \"events\": {}}, {\"id\": \"heading\", \"type\": \"Microsoft.UI.Xaml.Controls.TextBlock\", \"properties\": {\"Text\": \"Your code stays yours\", \"FontSize\": 22, \"Foreground\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 255, \"G\": 255, \"B\": 255}}}, \"children\": [], \"events\": {}}, {\"id\": \"summary\", \"type\": \"Microsoft.UI.Xaml.Controls.TextBlock\", \"properties\": {\"Name\": \"Summary\", \"Text\": \"0 edits applied / handlers are preserved\", \"FontSize\": 18, \"Foreground\": {\"valueType\": \"Microsoft.UI.Xaml.Media.SolidColorBrush\", \"Color\": {\"valueType\": \"Windows.UI.Color\", \"A\": 255, \"R\": 211, \"G\": 211, \"B\": 211}}}, \"children\": [], \"events\": {}}, {\"id\": \"note\", \"type\": \"Microsoft.UI.Xaml.Controls.TextBlock\", \"properties\": {\"Text\": \"Source spans",
+        "STATE []",
+        "Traceback (most recent call last):",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 99, in <module>",
+        "    check('all integration workflows finish without page errors and retain two real workers',final)",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 12, in check",
+        "    t=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-t)*1000,2)});print('PASS',name,flush=True)",
+        "                          ^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 98, in final",
+        "    cmd('stop');ev('sharpforge.designer.disconnect()');ev('sharpforge.loadSample(\"designer-csharp-sync\",true)');ev('sharpforge.designer.open();sharpforge.designer.connect(\"Program.cs\");sharpforge.designer.select(\"action\");sharpforge.openTool(\"designer-properties\");sharpforge.designer.action(\"fit\")');page.locator('[data-design-goto-source]').click();truth(ev('sharpforge.getEditorState(\"Program.cs\").start')==text().index('var action ='));page.wait_for_timeout(300);page.screenshot(path=str(RESULTS/'screenshots/release13-designer-sync.png'));cmd('theme');page.wait_for_timeout(100);truth(ev('getComputedStyle(document.querySelector(\".design-mode-bar\")).backgroundColor')=='rgb(237, 242, 247)');page.screenshot(path=str(RESULTS/'screenshots/release13-designer-light.png'));cmd('theme');truth(not errors,json.dumps(errors));truth(len(workers)==2,str(workers))",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"/dev/shm/p18-final-qualification/tests/browser_release13_test.py\", line 10, in truth",
+        "    if not v:raise AssertionError(msg)",
+        "             ^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: ['http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/runtime.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/runtime.worker.js', 'http://127.0.0.1:38273/compiler.worker.js', 'http://127.0.0.1:38273/runtime.worker.js', 'http://127.0.0.1:38273/compiler.worker.js']"
+      ],
+      "browser-release13.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-release13.json",
+          "bytes": 1380,
+          "sha256": "50d8c736578c0ab0281c2b64d8d0a80d652ec576c48851135f88671f4909c083"
+        },
+        "content": {
+          "name": "browser-release13",
+          "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/dev/shm/p18-final-prepared/run-final-browser.py",
+            "--source",
+            "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+            "--suite",
+            "release13",
+            "--output",
+            "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2",
+            "--inside-slot"
+          ],
+          "startedAt": "2026-10-04T07:07:18.073299+00:00",
+          "resourcePreflight": {
+            "actualFreeBytes": 1043402752,
+            "availableBytes": 1043402752,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "8524201984",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 2739040\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "log": "browser-release13.log",
+          "completedAt": "2026-10-04T07:07:40.767233+00:00",
+          "exitCode": 1,
+          "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "resourceAfter": {
+            "actualFreeBytes": 1043402752,
+            "availableBytes": 1043402752,
+            "minimumFreeBytes": 536870912,
+            "memory.current": "7774699520",
+            "memory.max": "8589934592",
+            "memory.events": "low 0\nhigh 0\nmax 2742504\noom 5\noom_kill 3\noom_group_kill 0"
+          },
+          "checkoutStatusAfter": ""
+        }
+      },
+      "browser-environment.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-environment.json",
+          "bytes": 838,
+          "sha256": "6e21bc0ca03bb6029f675ff1e900ff6f64c7d42f7675eb0d5dd388a5345d8299"
+        },
+        "content": {
+          "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "suite": "release13",
+          "startedAt": "2026-10-04T07:07:18.190079+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-vz94akoo",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180
+        }
+      },
+      "browser-process.json": {
+        "artifact": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-process.json",
+          "bytes": 908,
+          "sha256": "13484d6cdd08ef77ce53508eb2553cef60ea8f982297d1fcd6456c40494e97ca"
+        },
+        "content": {
+          "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "suite": "release13",
+          "startedAt": "2026-10-04T07:07:18.190079+00:00",
+          "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+          "outerSemaphoreDirectoryUnchanged": true,
+          "inMemory": false,
+          "securityFlagsAdded": [],
+          "environment": {
+            "TMPDIR": "/dev/shm/p18-browser-release13-vz94akoo",
+            "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+            "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+            "SHARPFORGE_BROWSER_ENGINE": "chromium"
+          },
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+          ],
+          "timeoutSeconds": 180,
+          "completedAt": "2026-10-04T07:07:40.728296+00:00",
+          "exitCode": 1
+        }
+      }
+    }
+  ],
+  "existingAgentReview": {
+    "localMain": "2706a82f99f02acef4485f75c288fb37ef5a94bd",
+    "originMain": "8f6d64e7a44cc99f556b37572d821686a89f3dfb",
+    "refreshed": false,
+    "finding": "The newer available origin object still retained the editor cache write; neither available ref contained RuntimeActivity or ExecutionCapture. No existing correction was duplicated."
+  },
+  "timerReview": "Independent bounded review found no further receiver defect in the two owners or immediate worker call sites. Existing launch-serial guards, callback closure ownership, monotonic clock and injected timer contracts were retained.",
+  "workerFixtureContract": {
+    "bareTimerCallsAccepted": true,
+    "hostTimerCallsAccepted": true,
+    "unrelatedTimerReceiversRejected": true,
+    "retainedStoppedSessionWorkersAllowed": true,
+    "designerCreatesOrReplacesWorkers": false,
+    "finalFlatWorkspaceCompilers": 1,
+    "finalRuntimeSessions": 0,
+    "legacyDebugSessionId": "AppSession.identity",
+    "legacyDebugRuntimeSessionId": "AppSession.runtimeSession"
+  },
+  "pending": null,
+  "finalBrowser": {
+    "browser-release13.json": {
+      "artifact": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.json",
+        "bytes": 1380,
+        "sha256": "b82b5a0b73d00b870c72e27fb86134dacc4e91f5b7cdbe1bdc455067593fc9e8"
+      },
+      "content": {
+        "name": "browser-release13",
+        "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T07:17:36.638015+00:00",
+        "resourcePreflight": {
+          "actualFreeBytes": 1043357696,
+          "availableBytes": 1043357696,
+          "minimumFreeBytes": 536870912,
+          "memory.current": "8561016832",
+          "memory.max": "8589934592",
+          "memory.events": "low 0\nhigh 0\nmax 2867540\noom 5\noom_kill 3\noom_group_kill 0"
+        },
+        "log": "browser-release13.log",
+        "completedAt": "2026-10-04T07:17:58.184298+00:00",
+        "exitCode": 0,
+        "sourceAfter": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "resourceAfter": {
+          "actualFreeBytes": 1043357696,
+          "availableBytes": 1043357696,
+          "minimumFreeBytes": 536870912,
+          "memory.current": "7738220544",
+          "memory.max": "8589934592",
+          "memory.events": "low 0\nhigh 0\nmax 2879097\noom 5\noom_kill 3\noom_group_kill 0"
+        },
+        "checkoutStatusAfter": ""
+      }
+    },
+    "browser-process.json": {
+      "artifact": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-process.json",
+        "bytes": 908,
+        "sha256": "1772c0f9d044ae7ff6e699f3504334d9e0fca45c233cb56b5ac1c467194bd924"
+      },
+      "content": {
+        "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "suite": "release13",
+        "startedAt": "2026-10-04T07:17:36.732861+00:00",
+        "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+        "outerSemaphoreDirectoryUnchanged": true,
+        "inMemory": false,
+        "securityFlagsAdded": [],
+        "environment": {
+          "TMPDIR": "/dev/shm/p18-browser-release13-u0f_qj4z",
+          "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+          "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+          "SHARPFORGE_BROWSER_ENGINE": "chromium"
+        },
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+        ],
+        "timeoutSeconds": 180,
+        "completedAt": "2026-10-04T07:17:58.146017+00:00",
+        "exitCode": 0
+      }
+    },
+    "browser-environment.json": {
+      "artifact": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-environment.json",
+        "bytes": 838,
+        "sha256": "7c7ab63b41b8d6aab9541671c5f9ca2a5e0f20eb089a0fddbdb44605e61e583d"
+      },
+      "content": {
+        "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "suite": "release13",
+        "startedAt": "2026-10-04T07:17:36.732861+00:00",
+        "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+        "outerSemaphoreDirectoryUnchanged": true,
+        "inMemory": false,
+        "securityFlagsAdded": [],
+        "environment": {
+          "TMPDIR": "/dev/shm/p18-browser-release13-u0f_qj4z",
+          "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+          "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+          "SHARPFORGE_BROWSER_ENGINE": "chromium"
+        },
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+        ],
+        "timeoutSeconds": 180
+      }
+    },
+    "results/browser-release13-validation.json": {
+      "artifact": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results/browser-release13-validation.json",
+        "bytes": 3964,
+        "sha256": "5c3fbdd1c79b5266463a312a515e169d78d6dcd3531542b4f65e2541bf117432"
+      },
+      "content": {
+        "checks": [
+          {
+            "name": "connect an existing hand-written construction method without replacing source or workers",
+            "passed": true,
+            "milliseconds": 1271.65
+          },
+          {
+            "name": "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "passed": true,
+            "milliseconds": 283.48
+          },
+          {
+            "name": "designer property changes compile-check a minimal C# edit and preserve every other byte",
+            "passed": true,
+            "milliseconds": 540.34
+          },
+          {
+            "name": "real source editor input updates the design preview automatically",
+            "passed": true,
+            "milliseconds": 821.57
+          },
+          {
+            "name": "source undo and redo resynchronize the preview without replacing the editor",
+            "passed": true,
+            "milliseconds": 1150.31
+          },
+          {
+            "name": "incomplete C# keeps the last valid preview and recovers when corrected",
+            "passed": true,
+            "milliseconds": 1387.28
+          },
+          {
+            "name": "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+            "passed": true,
+            "milliseconds": 526.07
+          },
+          {
+            "name": "concurrent source and designer edits are rejected without overwriting either side",
+            "passed": true,
+            "milliseconds": 598.54
+          },
+          {
+            "name": "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+            "passed": true,
+            "milliseconds": 1526.72
+          },
+          {
+            "name": "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+            "passed": true,
+            "milliseconds": 1760.68
+          },
+          {
+            "name": "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+            "passed": true,
+            "milliseconds": 1110.78
+          },
+          {
+            "name": "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+            "passed": true,
+            "milliseconds": 55.2
+          },
+          {
+            "name": "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+            "passed": true,
+            "milliseconds": 167.41
+          },
+          {
+            "name": "source VM real worker clock animates after Main and runs managed Completed handler",
+            "passed": true,
+            "milliseconds": 1817.34
+          },
+          {
+            "name": "direct CIL real worker clock animates after Main and runs managed Completed handler",
+            "passed": true,
+            "milliseconds": 1875.09
+          },
+          {
+            "name": "all integration workflows finish without page errors or unowned and churned workers",
+            "passed": true,
+            "milliseconds": 2632.88
+          }
+        ],
+        "errors": [],
+        "workers": 10,
+        "liveWorkers": 1,
+        "workerOwners": {
+          "compilers": [
+            {
+              "id": "$workspace",
+              "name": "compiler:$workspace",
+              "generation": 1
+            }
+          ],
+          "applications": [],
+          "resources": {
+            "limit": 4,
+            "count": 0,
+            "live": 0
+          },
+          "valid": true,
+          "distinct": true
+        },
+        "workerHistory": [
+          {
+            "id": 1,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          },
+          {
+            "id": 2,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          },
+          {
+            "id": 3,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          },
+          {
+            "id": 4,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          },
+          {
+            "id": 5,
+            "url": "http://127.0.0.1:42073/runtime.worker.js"
+          },
+          {
+            "id": 6,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          },
+          {
+            "id": 7,
+            "url": "http://127.0.0.1:42073/runtime.worker.js"
+          },
+          {
+            "id": 8,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          },
+          {
+            "id": 9,
+            "url": "http://127.0.0.1:42073/runtime.worker.js"
+          },
+          {
+            "id": 10,
+            "url": "http://127.0.0.1:42073/compiler.worker.js"
+          }
+        ],
+        "harness": "CSP HTTP and real workers"
+      }
+    },
+    "log": {
+      "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.log",
+      "bytes": 1482,
+      "sha256": "97255d7614ff8ffaca33acfe84263580d3c3c1bb84a58e709f0af8f12ef1dce0"
+    },
+    "logText": "PASS connect an existing hand-written construction method without replacing source or workers\nPASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize\nPASS designer property changes compile-check a minimal C# edit and preserve every other byte\nPASS real source editor input updates the design preview automatically\nPASS source undo and redo resynchronize the preview without replacing the editor\nPASS incomplete C# keeps the last valid preview and recovers when corrected\nPASS structural insertion rewrites only the proven construction method and preserves the hand-written handler\nPASS concurrent source and designer edits are rejected without overwriting either side\nPASS dynamic C# expressions stay code-owned while independent scalar properties remain editable\nPASS device presets and Design/Split/C#/Preview views use the original editor and artboard\nPASS synchronized source builds and runs its retained C# event handler and formatted interpolation\nPASS independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration\nPASS VariableSizedWrapGrid lays out measured two-cell spans and wraps following items\nPASS source VM real worker clock animates after Main and runs managed Completed handler\nPASS direct CIL real worker clock animates after Main and runs managed Completed handler\nPASS all integration workflows finish without page errors or unowned and churned workers\n{\"passed\": 16, \"errors\": []}\n"
+  },
+  "buildEquivalence": {
+    "artifact": {
+      "path": "/workspace/scratch/3e16369943fd/p18-publication/final-browser-build-equivalence.json",
+      "bytes": 566,
+      "sha256": "4c8bdb6a530e8a77d8ae49eb558808462a2fd7f6de3c7daeda1bb992d50543fa"
+    },
+    "content": {
+      "buildSourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "browserSourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "browserSourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+      "changedPaths": [
+        "tests/browser_release13_test.py"
+      ],
+      "interpretation": "Only the browser qualification fixture changes; the previously successful build at7d4 is reused without rerunning product build or Node tests. The actual committed entry remains unchanged.",
+      "entrySha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab"
+    }
+  }
+}

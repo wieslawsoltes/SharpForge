@@ -1,0 +1,34 @@
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -237,6 +237,7 @@
+       "license": "MIT",
+       "dependencies": {
+         "@sharpforge/framework": "0.14.0",
++        "@sharpforge/project-system": "0.14.0",
+         "@sharpforge/syntax": "0.14.0",
+         "@sharpforge/text": "0.14.0"
+       }
+@@ -301,8 +302,12 @@
+       "version": "0.14.0",
+       "license": "MIT",
+       "dependencies": {
++        "@sharpforge/compiler": "0.14.0",
++        "@sharpforge/project-system": "0.14.0",
+         "@sharpforge/network": "0.14.0",
+-        "@sharpforge/project-system": "0.14.0"
++        "@sharpforge/runtime": "0.14.0",
++        "@sharpforge/syntax": "0.14.0",
++        "@sharpforge/archive": "0.14.0"
+       },
+       "bin": {
+         "sharpforge-msbuild": "bin/sharpforge-msbuild.js"
+@@ -324,7 +329,8 @@
+       "version": "0.14.0",
+       "license": "MIT",
+       "dependencies": {
+-        "@sharpforge/archive": "0.14.0"
++        "@sharpforge/archive": "0.14.0",
++        "@sharpforge/workspace": "0.14.0"
+       }
+     },
+     "packages/protocol": {

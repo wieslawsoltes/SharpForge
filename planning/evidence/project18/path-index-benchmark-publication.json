@@ -1,0 +1,82 @@
+{
+  "name": "path-index-benchmark",
+  "sourceOrigin": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+  "sourceHead": "f04662b241e7a1bbfa44984ded52a074c50ec84a",
+  "sourceBase": "9034a4b7b0ba0c0427712b3b52c9f811cef6888a",
+  "sourceTree": "c51368ec001a41220d77782ffc2a936708f4181b",
+  "branch": "codex/p18-path-index-benchmark",
+  "baseBranch": "codex/p18-expressions",
+  "remoteCommit": "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+  "parents": [
+    "2b32ac987175db8f7374d581e6c9c4a7a99a5609"
+  ],
+  "files": [
+    "packages/project-system/bench/path-index.js",
+    "planning/evidence/project18/evaluator/path-index-benchmark.json"
+  ],
+  "stats": "2 files changed, 53 insertions(+)",
+  "draft": true,
+  "treeVerified": true,
+  "qualification": {
+    "historicalOnly": true,
+    "runtime": "v24.19.0",
+    "platform": "Linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "artifact": "planning/evidence/project18/evaluator/path-index-benchmark.json",
+    "limitations": [
+      "Shared machine; no quiet-machine claim.",
+      "100 directory lookups over 20,000 paths; construction excluded from lookup times.",
+      "10 warmups, 50 measured iterations; counters include all 60 iterations.",
+      "No new measurement or local test."
+    ],
+    "core": "success"
+  },
+  "pr": 4008,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/4008",
+  "parentVerified": true,
+  "branchVerified": true,
+  "prVerified": true,
+  "mergeableAtReadback": true,
+  "core": {
+    "head": "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+    "runId": 37174169555,
+    "jobId": 111353204690,
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37174169555/job/111353204690",
+    "broadJobs": [
+      {
+        "name": "core-platforms",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "build",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "packages",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "native-il",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "native-msbuild",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "clr-wasm",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "ci-ok",
+        "conclusion": "skipped"
+      }
+    ],
+    "cancelledDuplicateRun": 37174167596
+  }
+}

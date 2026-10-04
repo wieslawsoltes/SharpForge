@@ -1,0 +1,117 @@
+[
+  {
+    "name": "vfs",
+    "branch": "codex/p18-foundation-vfs",
+    "head": "9e33c12e4a871018cdc48815e169049ced12f00f"
+  },
+  {
+    "name": "fsa",
+    "branch": "codex/p18-foundation-fsa",
+    "head": "b6a604ddf71b1deed742f34736e8566a761a3653"
+  },
+  {
+    "name": "opfs",
+    "branch": "codex/p18-foundation-opfs",
+    "head": "4e06b3e4748c6c13586a5acb59afce982171b6fe"
+  },
+  {
+    "name": "disk-scan",
+    "branch": "codex/p18-foundation-disk-scan",
+    "head": "cd506abf7d2b209e0de40807b4c94999c6004430"
+  },
+  {
+    "name": "overlay",
+    "branch": "codex/p18-foundation-overlay",
+    "head": "d9ee92bf4dc9c85eb2efffed58f265d2d8b18bd6"
+  },
+  {
+    "name": "reload",
+    "branch": "codex/p18-foundation-reload",
+    "head": "b766fbd6608a9108a9e36d5c22c035c367696c2b"
+  },
+  {
+    "name": "documents",
+    "branch": "codex/p18-foundation-documents",
+    "head": "55e5d6674a90345c0470dfc6f68007d002334b9e"
+  },
+  {
+    "name": "search",
+    "branch": "codex/p18-foundation-search",
+    "head": "1366fdc62acabb1d798dbbce5f1438c37bf79263"
+  },
+  {
+    "name": "paging",
+    "branch": "codex/p18-foundation-paging",
+    "head": "4d30345495c4e55278ccbd67c5c2a27b6ae479fc"
+  },
+  {
+    "name": "locks",
+    "branch": "codex/p18-foundation-locks",
+    "head": "8786b5cbf75fe633d521ec6990a2944cc020739e"
+  },
+  {
+    "name": "identity",
+    "branch": "codex/p18-foundation-identity",
+    "head": "2dfc37845c3333dbef8e55fe2aebae956e34a949"
+  },
+  {
+    "name": "qualification",
+    "branch": "codex/p18-foundation-qualification",
+    "head": "c480cacc88bf101174bd394440e52564e8a6d11e"
+  },
+  {
+    "name": "scaling-qualification",
+    "branch": "codex/p18-scaling-qualification",
+    "head": "6a8429a25c31b0be270efac06d49910a61a2e45c"
+  },
+  {
+    "name": "disk-admission",
+    "branch": "codex/p18-foundation-disk-admission",
+    "head": "4464c6a346aaecbef669223e5305f3729db73e60",
+    "residual": "Directory remains after successful deregistration; left untouched per parent."
+  },
+  {
+    "name": "disk-qualification",
+    "path": "/workspace/scratch/3e16369943fd/p18-publish-disk-qualification",
+    "branch": "codex/p18-disk-qualification",
+    "head": "c6a0d8e51d2fe55a66548fdcebac5a9f6cb1214b",
+    "cleanBeforeRemoval": true,
+    "exitCode": 0,
+    "registeredAfter": false,
+    "physicalResidual": false,
+    "sourceBranchPreserved": true
+  },
+  {
+    "name": "disk-writes",
+    "path": "/workspace/scratch/3e16369943fd/p18-publish-disk-writes",
+    "branch": "codex/p18-foundation-disk-writes",
+    "head": "9d8296445dc474224ae348b76a3e6a359b908d35",
+    "cleanBeforeRemoval": true,
+    "exitCode": 0,
+    "registeredAfter": false,
+    "physicalResidual": false,
+    "sourceBranchPreserved": true
+  },
+  {
+    "name": "search-versions",
+    "path": "/workspace/scratch/3e16369943fd/p18-publish-search-versions",
+    "branch": "codex/p18-foundation-search-versions",
+    "head": "7668b45e3e9d8838de2874f6ac27baa8079c0d17",
+    "cleanBeforeRemoval": true,
+    "exitCode": 0,
+    "registeredAfter": false,
+    "physicalResidual": false,
+    "sourceBranchPreserved": true
+  },
+  {
+    "name": "disk-dependencies",
+    "path": "/workspace/scratch/3e16369943fd/p18-publish-disk-dependencies",
+    "branch": "codex/p18-disk-services",
+    "head": "0a40917f213801078e38a8c540c47d985e36a05a",
+    "cleanBeforeRemoval": true,
+    "exitCode": 0,
+    "registeredAfter": false,
+    "physicalResidual": false,
+    "sourceBranchPreserved": true
+  }
+]

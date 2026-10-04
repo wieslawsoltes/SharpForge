@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "kind": "read-only-runtime-hot-path-review",
+  "baseline": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "integrated": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "runtimeExecutedByThisReview": false,
+  "findings": [
+    {
+      "paths": [
+        "scripts/benchmark-release14.js"
+      ],
+      "finding": "Compilation and VM construction precede performance.now. Standalone workloads instantiate no project graph loader or composite inspector."
+    },
+    {
+      "paths": [
+        "packages/cil/src/call-profile.js",
+        "packages/cil/src/field-profile.js",
+        "packages/runtime/src/execution/calls.js",
+        "packages/runtime/src/execution/generic-calls.js",
+        "packages/runtime/src/execution/intrinsics.js"
+      ],
+      "finding": "These files are byte-identical between the recorded baseline and integrated commits. Runtime invoke still normalizes the closed generic owner before dispatching a BCL contract."
+    },
+    {
+      "paths": [
+        "packages/runtime/src/execution/field-resolution-cache.js"
+      ],
+      "finding": "The only correction occurs after the existing entries.has(token) cache-hit return. Closed MemberRefs retain their existing substituted signature; no extra cache-hit work is added."
+    },
+    {
+      "paths": [
+        "packages/bcl-collections/src/dictionary.js",
+        "packages/bcl-collections/src/legacy-storage.js",
+        "packages/bcl-collections/src/object-equality.js"
+      ],
+      "finding": "The benchmark Dictionary<int,int> uses indexMap/keyOf with primitive string keys. It does not execute object-comparison default ordering or obtain a MethodTable for every primitive key."
+    },
+    {
+      "paths": [
+        "packages/runtime/src/execution/type-system.js",
+        "packages/runtime/src/execution/method-table.js",
+        "packages/runtime/src/execution/type-names.js"
+      ],
+      "finding": "New type provenance is constructor/materialization data. Generic owner normalization remains on each direct-CIL call: source-derived counts are dictionary6001, queue12002, list24001 including constructors. These are static workload counts, not instrumented measurements; frequency alone does not explain the differing regressions."
+    }
+  ],
+  "profileFollowup": {
+    "owner": "tests_workflows/root",
+    "artifacts": "planning/evidence/project18/integration/upstream-performance/profile-{baseline,integrated}",
+    "reportedRuntimeTypeNameInclusiveMicroseconds": {
+      "baseline": 49568,
+      "integrated": 41140
+    },
+    "interpretation": "CPU-sampled integrated dictionary was not slower. Sampling does not reproduce or negate the original uninstrumented >5% regression; neither result establishes causality."
+  },
+  "conclusion": "No speculative optimization, tests or additional benchmark runs. Original performance-budget review/sign-off obligations remain explicit."
+}

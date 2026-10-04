@@ -1,0 +1,17 @@
+✔ A24 type rename binds declarations, constructors, annotations, static access and creation across files (94.76517ms)
+✔ A24 same-spelled types, value members, comments and strings are not changed by textual coincidence (16.288782ms)
+✔ A24 type rename rejects name capture, unsupported reference sources, invalid names and limits visibly (9.374959ms)
+✔ A24 semantic preview handles generic and nested type identities or reports an explicit complete-binding boundary (7.394142ms)
+✔ A24 public language and worker preview preserve versions and reject generated/unloaded inputs (16.314891ms)
+✔ A24 accepted type/file/project rename is one undo entry and decline preserves type spelling (31.875238ms)
+✔ A24 changing any semantic input while the confirmation is open rejects the whole rename (2.80461ms)
+✔ A24 host refuses separate project contexts and native semantic gaps without invoking a worker (0.235565ms)
+✔ A24 type rename refuses an edit extending one character past the reviewed document (0.412903ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 640.876469

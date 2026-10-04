@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "status": "qualified-source-and-publication-proof-ready; durable-artifact-publication-pending",
+  "source": {
+    "qualifiedProductAndTestCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "qualifiedTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+    "productBuildCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+    "productBuildTree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd",
+    "onlyDifference": [
+      "tests/browser_release13_test.py"
+    ],
+    "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "metadataBaseAtPreparation": "a4f1131f14637f3d7693c6a0974b6af786d06911",
+    "scope": "This handoff adds evidence only; final aggregate identity will be recorded after canonical metadata freeze."
+  },
+  "coverage": {
+    "epics": 8,
+    "parentTasks": 24,
+    "issueIdentities": 189,
+    "leafIdentities": 157,
+    "implementationRecords": 166,
+    "leavesWithOverlappingContributions": 9,
+    "recordPresenceIsAcceptance": false,
+    "distinctFeaturePrs": 159
+  },
+  "publicationParentProof": {
+    "status": "complete",
+    "recordedHeads": 159,
+    "distinctHeads": 159,
+    "maximalActualParents": 34,
+    "unresolvedAncestryNodes": 0,
+    "ownerTreeOrParentMismatches": 0,
+    "pinnedMainAlreadyCovered": true,
+    "publicationRowIdentitySha256": "9853296212a7568ea4a55857d765e304a50244e0ced32bc4afbfed4b9f68febc",
+    "rowIdentityFields": [
+      "number",
+      "publishedHeadAtReceipt",
+      "exactTree",
+      "orderedRemoteParents"
+    ],
+    "rowEncoding": "JSON sorted by PR number; keys sorted; compact separators; UTF-8",
+    "orderedParents": [
+      {
+        "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "tree": "2aeb66b2acf05d6581b480d43eb2623c4401c222",
+        "prs": [
+          4407
+        ],
+        "recordedHeadsCovered": 74
+      },
+      {
+        "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "tree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+        "prs": [
+          4363
+        ],
+        "recordedHeadsCovered": 46
+      },
+      {
+        "sha": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "tree": "2eebacfd83af33df63c9420be094a64864ba7479",
+        "prs": [
+          4362
+        ],
+        "recordedHeadsCovered": 45
+      },
+      {
+        "sha": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+        "tree": "b4a303b03f2a4a060c6cf2e7e69844a4a4816795",
+        "prs": [
+          4364
+        ],
+        "recordedHeadsCovered": 45
+      },
+      {
+        "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "tree": "deba072cecf59906fd73f90c73e2c78966d46d15",
+        "prs": [
+          4328
+        ],
+        "recordedHeadsCovered": 43
+      },
+      {
+        "sha": "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+        "tree": "87c896b168576714a17030edb39a8fa4ef68b763",
+        "prs": [
+          3949
+        ],
+        "recordedHeadsCovered": 38
+      },
+      {
+        "sha": "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+        "tree": "484b9d02cfdcac897c8a5925608b29ce0d67fbd7",
+        "prs": [
+          3969
+        ],
+        "recordedHeadsCovered": 38
+      },
+      {
+        "sha": "44b499483f3604a451c9f9f5f46571bc3049d1cd",
+        "tree": "8dc2dbab203ad72719b3c72f49821f56f19b2ada",
+        "prs": [
+          3956
+        ],
+        "recordedHeadsCovered": 34
+      },
+      {
+        "sha": "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+        "tree": "fab19d39d4ec7d6b83db5c1ae937c76150c2c64f",
+        "prs": [
+          3884
+        ],
+        "recordedHeadsCovered": 33
+      },
+      {
+        "sha": "486b19a5177de1be5da630460bcafa733ccf3e44",
+        "tree": "4a58af88487d5644d720d77aad7a23a09cdec351",
+        "prs": [
+          3951
+        ],
+        "recordedHeadsCovered": 31
+      },
+      {
+        "sha": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+        "tree": "58a5f8330d9b3ae98e5c8d9c91dbfa9a1bb3ef02",
+        "prs": [
+          3888
+        ],
+        "recordedHeadsCovered": 29
+      },
+      {
+        "sha": "75fd6dc0eb76d8d5137109a419f13238903be89d",
+        "tree": "4bc1ec298a40f30cfcf10cda481167685cb4dd74",
+        "prs": [
+          4193
+        ],
+        "recordedHeadsCovered": 29
+      },
+      {
+        "sha": "30da8452fcf10107d742a12f3f5b3359b4765fc6",
+        "tree": "a2bce1cf8b1b39d720892657c235a0cdb072cd96",
+        "prs": [
+          4378
+        ],
+        "recordedHeadsCovered": 29
+      },
+      {
+        "sha": "484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+        "tree": "4e8a3317d5d198121e27e94b09b738c5b3102fa2",
+        "prs": [
+          3797
+        ],
+        "recordedHeadsCovered": 28
+      },
+      {
+        "sha": "5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+        "tree": "8d904310aff31ff817efd1395719470cf2f93791",
+        "prs": [
+          3892
+        ],
+        "recordedHeadsCovered": 25
+      },
+      {
+        "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+        "prs": [
+          4401
+        ],
+        "recordedHeadsCovered": 24
+      },
+      {
+        "sha": "06ed476b97c5d401055d766b593cfe3c48902e33",
+        "tree": "3c2baa755f67b45c8f6e432e8d9b504959881c35",
+        "prs": [
+          4342
+        ],
+        "recordedHeadsCovered": 21
+      },
+      {
+        "sha": "75694942b9f12e1b85aac4a8d2c4b84797507106",
+        "tree": "3a6a6dbbf7d242c3e955f159be6a027c60a947a2",
+        "prs": [
+          3773
+        ],
+        "recordedHeadsCovered": 16
+      },
+      {
+        "sha": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+        "tree": "01d72c6cfe394f086ec5326b631612a252eeb3ca",
+        "prs": [
+          4376
+        ],
+        "recordedHeadsCovered": 13
+      },
+      {
+        "sha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+        "tree": "1a327e35faf232c05f95765437f1876507aff8b3",
+        "prs": [
+          3580
+        ],
+        "recordedHeadsCovered": 10
+      },
+      {
+        "sha": "536287f7c03caf2511de744db6527d6614f1a984",
+        "tree": "dd43f32a43b58c51f6528743eda8c26e9ceaf345",
+        "prs": [
+          3796
+        ],
+        "recordedHeadsCovered": 10
+      },
+      {
+        "sha": "734500d5545796c89ae8cb059e3d927cb2da04af",
+        "tree": "6f78af7c9767728160960ab2d51da817eed0074c",
+        "prs": [
+          3957
+        ],
+        "recordedHeadsCovered": 8
+      },
+      {
+        "sha": "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+        "tree": "0b8abcf6ce3ff7605f3112242daba51a7c2d5fe6",
+        "prs": [
+          3516
+        ],
+        "recordedHeadsCovered": 5
+      },
+      {
+        "sha": "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+        "tree": "c51368ec001a41220d77782ffc2a936708f4181b",
+        "prs": [
+          4008
+        ],
+        "recordedHeadsCovered": 5
+      },
+      {
+        "sha": "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+        "tree": "1d032f06ef6411184a396883edd7290234dfa62d",
+        "prs": [
+          4181
+        ],
+        "recordedHeadsCovered": 5
+      },
+      {
+        "sha": "a1494556a244f2747ae3e4edf392c0b8718a72de",
+        "tree": "7298bf8e8f8bc37889aa044daf157bd523eb918a",
+        "prs": [
+          3837
+        ],
+        "recordedHeadsCovered": 4
+      },
+      {
+        "sha": "106298a1b9ce26c56a4338660831484296c32ee9",
+        "tree": "ea05a582a064ff24eed56ab0111c5e390e86e683",
+        "prs": [
+          3518
+        ],
+        "recordedHeadsCovered": 3
+      },
+      {
+        "sha": "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+        "tree": "d4c1c47a241fe96636e18ab1ae4f94dc41eca710",
+        "prs": [
+          3845
+        ],
+        "recordedHeadsCovered": 3
+      },
+      {
+        "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+        "prs": [
+          3553
+        ],
+        "recordedHeadsCovered": 2
+      },
+      {
+        "sha": "9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+        "tree": "5852f11e62e5cb4b1e05cd18dec3d6ce4bc2befa",
+        "prs": [
+          3767
+        ],
+        "recordedHeadsCovered": 2
+      },
+      {
+        "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+        "prs": [
+          4447
+        ],
+        "recordedHeadsCovered": 2
+      },
+      {
+        "sha": "c7449d06738db5a2b322dbfeba544f321c09af2e",
+        "tree": "157c48ce9ba8c7b1207e60892d4b95efbf6e1dfa",
+        "prs": [
+          3676
+        ],
+        "recordedHeadsCovered": 1
+      },
+      {
+        "sha": "edce4592e010dba4eb6559b76e0e69be4de85953",
+        "tree": "111080c164a49adde212584354707a2234670f2c",
+        "prs": [
+          3789
+        ],
+        "recordedHeadsCovered": 1
+      },
+      {
+        "sha": "98403f2cab6becebe5225d0a9c95fe9ee556ec26",
+        "tree": "bdee12db9610043ce85f5dff3a06cedfdd584e3c",
+        "prs": [
+          3886
+        ],
+        "recordedHeadsCovered": 1
+      }
+    ],
+    "proofCheckpoint": "678440419b7612af8bf89cbf908e0732fa41354c",
+    "archiveMember": "assessment/publication-plan/aggregate-final-159-parent-proof.json",
+    "indexContentHash": "Final sealed census; row identities independently reconciled with actual GitData parent proofs.",
+    "sourceIndexSha256": "b026bdf4f6bac3916a077149521965640e2ebf92577843de7dafe580e048b032",
+    "sourceIndexCommit": "892f1bf54dde759768ab3cc5f2f229aaf15d08ec"
+  },
+  "qualification": [
+    {
+      "source": "bb2b8d84",
+      "engine": "Node 26",
+      "total": 1875,
+      "passed": 1809,
+      "failed": 66,
+      "status": "initial-complete-scope-failures-retained"
+    },
+    {
+      "source": "7b087e0f",
+      "engine": "Node 26",
+      "total": 260,
+      "passed": 259,
+      "failed": 1,
+      "status": "affected-correction-scope"
+    },
+    {
+      "source": "5269d397",
+      "engine": "Node 26",
+      "total": 52,
+      "passed": 52,
+      "failed": 0,
+      "status": "remaining-resource-corrections"
+    },
+    {
+      "source": "5269d397",
+      "engine": "Node 22",
+      "total": 1877,
+      "passed": 1877,
+      "failed": 0,
+      "skipped": 0,
+      "status": "complete-owned-scope"
+    },
+    {
+      "source": "e9f8a8cd",
+      "engine": "Node 26",
+      "total": 382,
+      "passed": 382,
+      "failed": 0,
+      "status": "complete-seven-legacy-extraction-scope"
+    },
+    {
+      "source": "886fb139",
+      "engine": "Node 26",
+      "total": 43,
+      "passed": 43,
+      "failed": 0,
+      "status": "status-and-retained-tests-scope-including-18-unique-cases"
+    },
+    {
+      "source": "de9a5e8f",
+      "engine": "Node 26",
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "status": "execution-capture-timer-correction"
+    },
+    {
+      "source": "7d4c97d2",
+      "engine": "Node 26",
+      "total": 34,
+      "passed": 34,
+      "failed": 0,
+      "status": "combined-capture-worker-timer-scope"
+    },
+    {
+      "source": "0bb2ed36",
+      "engine": "actual Chromium Release13",
+      "checks": 16,
+      "passed": 16,
+      "errors": [],
+      "exitCode": 0,
+      "status": "completed-with-Python-only-fixture-and-exact-build-equivalence"
+    }
+  ],
+  "qualificationInterpretation": "Scopes overlap and must not be summed. Check, build and clean-checkout pass at the final product build. Initial failures and negative controls remain in the raw archive.",
+  "structure": {
+    "pinnedProblemRows": 268,
+    "finalProblemRows": 265,
+    "strictGatePassed": false,
+    "introducedRows": 0,
+    "worsenedDimensions": 0,
+    "actualFrozenFileGrowth": 0,
+    "unchangedBaselineEntries": 159,
+    "baselineRelaxed": false
+  },
+  "performance": {
+    "measuredSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "baseline": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "pairs": 3,
+    "warmSamplesPerWorkloadAndTree": 12,
+    "allEightOutputsCorrect": true,
+    "managedAllocationsChanged": false,
+    "queueSourceMedianPercent": 11.5283,
+    "queueSourceP95Percent": -8.9426,
+    "signOffOutstanding": true,
+    "scope": "Exact benchmark script/launcher/manifests and all 16 dependency-package trees match the final product source; application/editor performance equivalence is not claimed."
+  },
+  "rawEvidence": {
+    "commit": "cba546ab959247462ce319f89683c06b7861c4ff",
+    "tree": "e1759c7c16a0dc2c1d628d0394260bc187552b6b",
+    "prefix": "planning/evidence/project18/integration/final-qualification",
+    "subtreeTree": "7f78c14a1d61474caa78228f60027fcf5492317d",
+    "manifestSha256": "264247c117bcdf40770c7defa856c1c52e8884485782d210ca70221373d3f1df",
+    "payloadCount": 319,
+    "payloadBytes": 64887154,
+    "trackedFileCount": 330,
+    "trackedBytes": 64956196,
+    "archivePrefix": "qualification/final/",
+    "mergeIntoCanonical": false
+  },
+  "protectedReview": {
+    "selectionAuthority": "final-protected-review-copy.json",
+    "authoritySha256": "6875c06b24f3885d39cb6b3862dab12888ed6484738ab5b5dd086ce81ed0af0a",
+    "copiedIntoCanonicalAt": "cd3cf28e36f62d8684e25166bef579435286bc74",
+    "fileCount": 13,
+    "currentLockPatchSha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985",
+    "currentStudioPatchSha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+    "lastLeaseObservation": "2026-10-04T07:28:19.915666+00:00",
+    "textApplicabilityPassed": true,
+    "patchesApplied": false,
+    "candidateExecuted": false,
+    "actualProtectedFilesEqualPinnedMain": true
+  },
+  "remainingGates": [
+    "Apply the reviewed Studio and root lockfile patches only through the existing owner/lease coordination; proposed entry remains unapplied and unexecuted.",
+    "Retain the real Chromium IndexedDB persisted-handle GET SIGTRAP as an unresolved storage qualification limit; subsequent identity/Web Lock checks were not run.",
+    "Obtain performance justification/sign-off for the queue/source median above 5 percent and review the recorded p95 increases.",
+    "Keep unavailable native framework restores, Windows/macOS, other browsers and Rust/Wasm matrix cells explicit; no mock or source test is represented as that qualification.",
+    "Freeze canonical metadata and the exact file selection before root packing, aggregate branch publication and the single evidence draft."
+  ],
+  "durability": {
+    "aggregateBranch": "refs/heads/codex/p18-final-integration",
+    "aggregateTree": "Must equal final canonical metadata tree exactly",
+    "aggregateParents": "The 34 actual ordered parents above; no large product PR, main merge, force push, rebase or squash",
+    "originalHistory": "Incremental integration.bundle excluding pinned-main ancestors, with all required original source objects verified",
+    "rawArtifact": "qualification-raw.tar.gz with explicit sorted safe member paths and SHA-256 inventory",
+    "preparedToolsCheckpoint": "678440419b7612af8bf89cbf908e0732fa41354c",
+    "packingOwner": "root",
+    "binaryUploadOwner": "workspace_inventory after root release",
+    "aggregateAndEvidencePublicationOwner": "tests_workflows",
+    "state": "prepared; no packing, binary upload, aggregate or evidence PR publication performed by this handoff"
+  }
+}

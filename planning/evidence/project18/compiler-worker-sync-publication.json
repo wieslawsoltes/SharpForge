@@ -1,0 +1,681 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T04:22:45.793Z",
+  "pr": 3888,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/3888",
+  "branch": "codex/p18-compiler-worker-entry",
+  "baseBranch": "codex/p18-compiler-worker-dependencies",
+  "sourceFeature": "0c4e9d34999dda29876a2d4a0843106fd80f9b67",
+  "sourceBase": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+  "head": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+  "base": "eac6c49e49edbf5a2be77814277419b61120af47",
+  "tree": "58490a9e90c023fa563347075c278b527302e988",
+  "draft": true,
+  "publications": [
+    {
+      "name": "compiler-worker-sync-base",
+      "branch": "codex/p18-compiler-worker-dependencies",
+      "sourceHead": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+      "sourceTree": "d52551a5defba0751d93b41d46b5415329ed1290",
+      "sourceParents": [
+        "91b7221559502a31c3f66b634db57d4be7e105f0",
+        "9c5273b53734d5646fa9a958f0a03668a0050f3a"
+      ],
+      "treeBaseSource": "9c5273b53734d5646fa9a958f0a03668a0050f3a",
+      "treeBase": "573677d7c86a2077be4ba2f4d95c66cf1ae3a5dc",
+      "remotePrevious": "91b7221559502a31c3f66b634db57d4be7e105f0",
+      "remoteParents": [
+        "91b7221559502a31c3f66b634db57d4be7e105f0",
+        "9c5273b53734d5646fa9a958f0a03668a0050f3a"
+      ],
+      "sourceFeatureDiff": "206 files changed, 14022 insertions(+), 294 deletions(-)",
+      "paths": [
+        "apps/studio/WORKSPACE-EDITOR-LIFECYCLE.md",
+        "apps/studio/workers/PROJECT-COMPILATION.md",
+        "apps/studio/workers/assembly-artifact-cache.js",
+        "apps/studio/workers/compilation-handler.js",
+        "apps/studio/workers/document-lifecycle.js",
+        "apps/studio/workers/project-emission.js",
+        "apps/studio/workers/project-plan-input.js",
+        "apps/studio/workers/protocol.js",
+        "apps/studio/workers/type-rename.js",
+        "apps/studio/workspace-editor-lifecycle.js",
+        "package-lock.json",
+        "packages/archive/README.md",
+        "packages/archive/src/index.js",
+        "packages/archive/src/path-policy.js",
+        "packages/archive/src/text-encoding.js",
+        "packages/compiler/README.md",
+        "packages/compiler/TYPE-RENAME.md",
+        "packages/compiler/docs/project-references.md",
+        "packages/compiler/docs/source-emission.md",
+        "packages/compiler/src/codegen/semantic/body-translator.js",
+        "packages/compiler/src/codegen/semantic/declarations.js",
+        "packages/compiler/src/codegen/semantic/generator.js",
+        "packages/compiler/src/codegen/semantic/jump-emitter.js",
+        "packages/compiler/src/codegen/semantic/program-model.js",
+        "packages/compiler/src/codegen/semantic/project-reference-emitter.js",
+        "packages/compiler/src/codegen/semantic/project-reference-translation.js",
+        "packages/compiler/src/codegen/semantic/project-references.js",
+        "packages/compiler/src/codegen/semantic/type-mapper.js",
+        "packages/compiler/src/compile-cil.js",
+        "packages/compiler/src/compile.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/metadata-import/compilation-references.js",
+        "packages/compiler/src/metadata-import/metadata-type-names.js",
+        "packages/compiler/src/metadata-import/pe-symbols.js",
+        "packages/compiler/src/metadata-import/pe-type-reference.js",
+        "packages/compiler/src/metadata-import/reference-input.js",
+        "packages/compiler/src/metadata-import/runtime-profile.js",
+        "packages/compiler/src/metadata-reference.js",
+        "packages/compiler/src/source-member-definitions.js",
+        "packages/compiler/src/source-type-definitions.js",
+        "packages/compiler/src/type-rename-index.js",
+        "packages/compiler/src/type-rename.js",
+        "packages/language/src/index.js",
+        "packages/language/src/rename.js",
+        "packages/language/src/source-queries.js",
+        "packages/msbuild/src/node.js",
+        "packages/msbuild/src/project-edits/conflicts.js",
+        "packages/msbuild/src/project-edits/index.js",
+        "packages/msbuild/src/project-edits/items.js",
+        "packages/msbuild/src/project-edits/properties.js",
+        "packages/project-system/PROVIDER-DISK.md",
+        "packages/project-system/README.md",
+        "packages/project-system/docs/configuration-contract.md",
+        "packages/project-system/docs/evaluation-contract.md",
+        "packages/project-system/docs/expression-contract.md",
+        "packages/project-system/docs/framework-context-contract.md",
+        "packages/project-system/docs/lossless-edits.md",
+        "packages/project-system/docs/project-build-contract.md",
+        "packages/project-system/docs/project-input-contract.md",
+        "packages/project-system/docs/resource-contract.md",
+        "packages/project-system/docs/solution-reader-contract.md",
+        "packages/project-system/src/build-contexts.js",
+        "packages/project-system/src/build-plan.js",
+        "packages/project-system/src/build-unit.js",
+        "packages/project-system/src/condition-parser.js",
+        "packages/project-system/src/conditions.js",
+        "packages/project-system/src/configuration-exports.js",
+        "packages/project-system/src/configuration-json.js",
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/disk-api.js",
+        "packages/project-system/src/disk-baseline.js",
+        "packages/project-system/src/disk-handle-map.js",
+        "packages/project-system/src/disk-inputs.js",
+        "packages/project-system/src/disk-operations.js",
+        "packages/project-system/src/disk-save.js",
+        "packages/project-system/src/disk-scan.js",
+        "packages/project-system/src/disk-workspace.js",
+        "packages/project-system/src/disk.js",
+        "packages/project-system/src/evaluation/central-packages.js",
+        "packages/project-system/src/evaluation/compiler-options.js",
+        "packages/project-system/src/evaluation/context.js",
+        "packages/project-system/src/evaluation/errors.js",
+        "packages/project-system/src/evaluation/expander.js",
+        "packages/project-system/src/evaluation/expression-scanner.js",
+        "packages/project-system/src/evaluation/functions-msbuild.js",
+        "packages/project-system/src/evaluation/functions-static.js",
+        "packages/project-system/src/evaluation/functions-string.js",
+        "packages/project-system/src/evaluation/imports.js",
+        "packages/project-system/src/evaluation/index.js",
+        "packages/project-system/src/evaluation/item-expressions.js",
+        "packages/project-system/src/evaluation/item-metadata.js",
+        "packages/project-system/src/evaluation/items.js",
+        "packages/project-system/src/evaluation/path-index.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/reserved-properties.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/project-system/src/evaluation/sdk/build-targets.js",
+        "packages/project-system/src/evaluation/sdk/generated-sources.js",
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js",
+        "packages/project-system/src/evaluation/sdk/resolver.js",
+        "packages/project-system/src/evaluation/target-batching.js",
+        "packages/project-system/src/evaluation/target-files.js",
+        "packages/project-system/src/evaluation/target-runner.js",
+        "packages/project-system/src/evaluation/targets.js",
+        "packages/project-system/src/evaluation/virtual-tasks.js",
+        "packages/project-system/src/import-report.js",
+        "packages/project-system/src/index.js",
+        "packages/project-system/src/launch-settings.js",
+        "packages/project-system/src/legacy-solution.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/project-system/src/output-layout.js",
+        "packages/project-system/src/paths-normalize.js",
+        "packages/project-system/src/paths.js",
+        "packages/project-system/src/portable-rid-graph.js",
+        "packages/project-system/src/project-edit-exports.js",
+        "packages/project-system/src/project-edit/index.js",
+        "packages/project-system/src/project-edit/items.js",
+        "packages/project-system/src/project-edit/membership.js",
+        "packages/project-system/src/project-edit/properties.js",
+        "packages/project-system/src/project-edit/tree.js",
+        "packages/project-system/src/project-loader.js",
+        "packages/project-system/src/project-system.js",
+        "packages/project-system/src/provider-disk-open.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "packages/project-system/src/resource-binary.js",
+        "packages/project-system/src/resources.js",
+        "packages/project-system/src/rid.js",
+        "packages/project-system/src/solution-legacy.js",
+        "packages/project-system/src/tfm.js",
+        "packages/project-system/src/xml-cst.js",
+        "packages/project-system/src/xml.js",
+        "packages/workspace/DOCUMENTS.md",
+        "packages/workspace/HANDLE-IDENTITY.md",
+        "packages/workspace/README.md",
+        "packages/workspace/SAVE-LOCKS.md",
+        "packages/workspace/WORKSPACE-DOCUMENTS.md",
+        "packages/workspace/package.json",
+        "packages/workspace/src/content-hash.js",
+        "packages/workspace/src/coordination/locks.js",
+        "packages/workspace/src/index.js",
+        "packages/workspace/src/lazy/document-store.js",
+        "packages/workspace/src/recovery/handles.js",
+        "packages/workspace/src/recovery/sanitize.js",
+        "packages/workspace/src/vfs/fsa-rename.js",
+        "packages/workspace/src/vfs/fsa.js",
+        "packages/workspace/src/vfs/index.js",
+        "packages/workspace/src/vfs/memory.js",
+        "packages/workspace/src/vfs/provider.js",
+        "packages/workspace/src/watch-coalesce.js",
+        "packages/workspace/src/watch.js",
+        "packages/workspace/src/workspace.js",
+        "scripts/conformance/static/allowlist.json",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-metadata-inspection.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-reference-binding.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a23-worker-emission-cache.test.js",
+        "tests/a24-disk-scan.test.js",
+        "tests/a24-document-disposal.test.js",
+        "tests/a24-document-publication.test.js",
+        "tests/a24-document-store.test.js",
+        "tests/a24-editor-lifecycle-foundation.test.js",
+        "tests/a24-handle-identity.test.js",
+        "tests/a24-path-encoding.test.js",
+        "tests/a24-provider-api-compatibility.test.js",
+        "tests/a24-provider-disk-admission.test.js",
+        "tests/a24-provider-disk-guard.test.js",
+        "tests/a24-provider-disk-held-signal.test.js",
+        "tests/a24-provider-disk-mutations.test.js",
+        "tests/a24-provider-disk-read.test.js",
+        "tests/a24-provider-disk-writes.test.js",
+        "tests/a24-provider-files.test.js",
+        "tests/a24-save-locks.test.js",
+        "tests/a24-type-rename-preview.test.js",
+        "tests/a24-vfs-fsa.test.js",
+        "tests/a24-vfs-memory.test.js",
+        "tests/a24-vfs-watch.test.js",
+        "tests/a24-watch-fairness.test.js",
+        "tests/a24-workspace-document-admission.test.js",
+        "tests/a24-workspace-import-regression.test.js",
+        "tests/helpers/project-evaluation.js",
+        "tests/manifests/A23.json",
+        "tests/manifests/A24.json",
+        "tests/project-configuration-contract.test.js",
+        "tests/project-context-contract.test.js",
+        "tests/project-core-contract.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/project-evaluation-build-stages.test.js",
+        "tests/project-evaluation-build.test.js",
+        "tests/project-evaluation-central-packages.test.js",
+        "tests/project-evaluation-contexts.test.js",
+        "tests/project-evaluation-expressions.test.js",
+        "tests/project-evaluation-items.test.js",
+        "tests/project-evaluation-sdk.test.js",
+        "tests/project-evaluation-targets.test.js",
+        "tests/project-expression-contract.test.js",
+        "tests/project-input-contract.test.js",
+        "tests/project-resource-contract.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/support/a24-delayed-provider.js",
+        "tests/support/a24-fsa.js",
+        "tests/support/a24-handle-database.js",
+        "tests/support/a24-provider-conformance.js"
+      ],
+      "newBlobs": [
+        "apps/studio/workers/protocol.js",
+        "packages/compiler/README.md",
+        "packages/compiler/src/index.js",
+        "packages/language/src/index.js",
+        "packages/language/src/rename.js",
+        "packages/language/src/source-queries.js",
+        "packages/project-system/README.md",
+        "packages/project-system/src/disk-api.js",
+        "packages/project-system/src/disk.js",
+        "packages/project-system/src/index.js",
+        "packages/workspace/src/workspace.js",
+        "scripts/conformance/static/allowlist.json",
+        "tests/a00-03-studio-registries.test.js"
+      ],
+      "remoteCommit": "eac6c49e49edbf5a2be77814277419b61120af47",
+      "treeVerified": true,
+      "kind": "dependency-merge",
+      "gitFetchProof": {
+        "sha": "eac6c49e49edbf5a2be77814277419b61120af47",
+        "node_id": "C_kwDOU59Ms9oAKGVhYzZjNDllNDllZGJmNWEyYmU3NzgxNDI3NzQxOWI2MTEyMGFmNDc",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/eac6c49e49edbf5a2be77814277419b61120af47",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/eac6c49e49edbf5a2be77814277419b61120af47",
+        "author": {
+          "name": "Wies\u0142aw \u0160olt\u00e9s",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T04:18:48Z"
+        },
+        "committer": {
+          "name": "Wies\u0142aw \u0160olt\u00e9s",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T04:18:48Z"
+        },
+        "tree": {
+          "sha": "d52551a5defba0751d93b41d46b5415329ed1290",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/d52551a5defba0751d93b41d46b5415329ed1290"
+        },
+        "message": "SF-A23-T27 merge current graph into compiler-worker dependencies\n\nPreserve the existing compiler, editor lifecycle and type-rename join history. Reconcile only demonstrated source-model/language/compiler/disk facade conflicts and the reviewed complete worker registry. No new main refresh or local validation.\n\nSource-Worktree-Commit: c765c26e03cbcb3bf33da7e00c26407db4435314\nSource-Tree: d52551a5defba0751d93b41d46b5415329ed1290\nExisting-Dependency-Join: 91b7221559502a31c3f66b634db57d4be7e105f0\nGraph-Prerequisite: 9c5273b53734d5646fa9a958f0a03668a0050f3a",
+        "parents": [
+          {
+            "sha": "91b7221559502a31c3f66b634db57d4be7e105f0",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/91b7221559502a31c3f66b634db57d4be7e105f0",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/91b7221559502a31c3f66b634db57d4be7e105f0"
+          },
+          {
+            "sha": "9c5273b53734d5646fa9a958f0a03668a0050f3a",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9c5273b53734d5646fa9a958f0a03668a0050f3a",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/9c5273b53734d5646fa9a958f0a03668a0050f3a"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      }
+    },
+    {
+      "name": "compiler-worker-sync-feature",
+      "branch": "codex/p18-compiler-worker-entry",
+      "sourceHead": "0c4e9d34999dda29876a2d4a0843106fd80f9b67",
+      "sourceTree": "58490a9e90c023fa563347075c278b527302e988",
+      "sourceParents": [
+        "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+        "c765c26e03cbcb3bf33da7e00c26407db4435314"
+      ],
+      "treeBaseSource": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+      "treeBase": "d52551a5defba0751d93b41d46b5415329ed1290",
+      "remotePrevious": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+      "remoteParents": [
+        "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+        "eac6c49e49edbf5a2be77814277419b61120af47"
+      ],
+      "sourceFeatureDiff": "6 files changed, 116 insertions(+), 22 deletions(-)",
+      "paths": [
+        "apps/studio/compiler.worker.js",
+        "apps/studio/workers/type-rename.js",
+        "tests/a23-compiler-worker-entry.test.js",
+        "tests/manifests/A23.json",
+        "tests/support/compiler-project-worker.mjs",
+        "tests/support/compiler-worker-transport.mjs"
+      ],
+      "newBlobs": [
+        "apps/studio/compiler.worker.js",
+        "apps/studio/workers/type-rename.js"
+      ],
+      "remoteCommit": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+      "treeVerified": true,
+      "kind": "feature-merge",
+      "gitFetchProof": {
+        "sha": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+        "node_id": "C_kwDOU59Ms9oAKDJlNGU1NTJhNWJiNTY3ZGRkZmU5MjQwMzg2Yjg1MTRkODAyYmY2Yzc",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+        "author": {
+          "name": "Wies\u0142aw \u0160olt\u00e9s",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T04:19:33Z"
+        },
+        "committer": {
+          "name": "Wies\u0142aw \u0160olt\u00e9s",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T04:19:33Z"
+        },
+        "tree": {
+          "sha": "58490a9e90c023fa563347075c278b527302e988",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/58490a9e90c023fa563347075c278b527302e988"
+        },
+        "message": "SF-A23-T27 compose graph compiler with versioned editor handlers\n\nMerge the refreshed actual compiler-worker dependencies while preserving document lifecycle, project graph emission and assembly features. Use the reviewed production entry and optional type-rename registration so upstream owns the one rename handler. Keep complete protocol and registry assertions.\n\nSource-Worktree-Commit: 0c4e9d34999dda29876a2d4a0843106fd80f9b67\nSource-Tree: 58490a9e90c023fa563347075c278b527302e988\nPrevious-Published-Feature: a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf\nActual-Dependency-Merge: eac6c49e49edbf5a2be77814277419b61120af47",
+        "parents": [
+          {
+            "sha": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf"
+          },
+          {
+            "sha": "eac6c49e49edbf5a2be77814277419b61120af47",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/eac6c49e49edbf5a2be77814277419b61120af47",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/eac6c49e49edbf5a2be77814277419b61120af47"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      }
+    }
+  ],
+  "readback": {
+    "head": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+    "headBranch": "codex/p18-compiler-worker-entry",
+    "base": "eac6c49e49edbf5a2be77814277419b61120af47",
+    "baseBranch": "codex/p18-compiler-worker-dependencies",
+    "draft": true,
+    "mergeable": true,
+    "mergeableState": "clean",
+    "bodyVerified": true,
+    "refsVerified": true
+  },
+  "scope": {
+    "changedFiles": 6,
+    "additions": 116,
+    "deletions": 22
+  },
+  "currentCore": {
+    "runId": 37176681072,
+    "jobId": 111360633189,
+    "head": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37176681072/job/111360633189",
+    "steps": [
+      {
+        "name": "Set up job",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+        "conclusion": "success"
+      },
+      {
+        "name": "Review contract changes and seam lock against the PR snapshot",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run npm run check",
+        "conclusion": "success"
+      },
+      {
+        "name": "Plan affected areas with conservative fallback",
+        "conclusion": "success"
+      },
+      {
+        "name": "Reject expired test quarantines",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run npm test",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Run npm run build",
+        "conclusion": "success"
+      },
+      {
+        "name": "Require a clean checkout",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Full qualification Python infrastructure regressions",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Run ./.github/actions/qualification-evidence",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Record provenance for the existing PR preview build",
+        "conclusion": "success"
+      },
+      {
+        "name": "Upload PR preview without a second build or deployment",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "conclusion": "success"
+      },
+      {
+        "name": "Complete job",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "id": 111360633189,
+      "name": "core",
+      "conclusion": "success"
+    },
+    {
+      "id": 111360705738,
+      "name": "core-platforms",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360706406,
+      "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360706480,
+      "name": "build",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360706646,
+      "name": "packages",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360707102,
+      "name": "native-il",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360707150,
+      "name": "native-msbuild",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360707342,
+      "name": "clr-wasm",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111360707530,
+      "name": "ci-ok",
+      "conclusion": "skipped"
+    }
+  ],
+  "previousRuns": [
+    {
+      "id": 37173004374,
+      "head": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+      "path": ".github/workflows/ci.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 37173003625,
+      "head": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+      "path": ".github/workflows/ci.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 37173003171,
+      "head": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+      "path": ".github/workflows/ci.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled"
+    }
+  ],
+  "qualification": {
+    "localTestsOrBuildsRun": false,
+    "newMainRefresh": false,
+    "manualCiDispatch": false,
+    "historicalNodeScope": {
+      "source": "843fc516e466e3571dfbe925eaa322ee1bf6cad3",
+      "node": "v26.10.0",
+      "passed": 6,
+      "failed": 0,
+      "log": "planning/evidence/project18/integration/upstream-qualification/node26-compiler-graph-composition.tap"
+    },
+    "finalAssembledApplication": "Separate root qualification; the previous Node result does not qualify this later pinned composition."
+  },
+  "review": {
+    "schemaVersion": 1,
+    "previousBase": "91b7221559502a31c3f66b634db57d4be7e105f0",
+    "graph": "9c5273b53734d5646fa9a958f0a03668a0050f3a",
+    "graphTree": "573677d7c86a2077be4ba2f4d95c66cf1ae3a5dc",
+    "previousFeature": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+    "preservedDependencyParents": [
+      "f3ac57b9c5713494fc8cb0b4323420c82b16cc64",
+      "185bfbab5fa66ca7274b6b1fe61f4ae823b07cf9"
+    ],
+    "reviewedBlobs": {
+      "apps/studio/workers/protocol.js": "7a072bf4f3f324799f61a52031a8e632890f37a8",
+      "tests/a00-03-studio-registries.test.js": "faddfa7f0cb0b227df51ad43170b77d0d443752d",
+      "apps/studio/compiler.worker.js": "de4392e47343e4804080f0377c47ac2ce735ecd9",
+      "apps/studio/workers/type-rename.js": "babcfd7251b65e61e2bff5edaa290ee1d3c71ca0"
+    },
+    "reviewedRegistrySha256": "569e621fa1ffddcfbbceb1a1d4c35edc654a6856ffa584239042abc1b944066c",
+    "manualBaseResolutions": [
+      "apps/studio/workers/protocol.js",
+      "packages/compiler/README.md",
+      "packages/compiler/src/index.js",
+      "packages/language/src/index.js",
+      "packages/language/src/rename.js",
+      "packages/project-system/src/disk.js",
+      "packages/project-system/src/index.js",
+      "packages/workspace/src/index.js",
+      "tests/a00-03-studio-registries.test.js"
+    ],
+    "supportingBaseAlignments": [
+      "packages/project-system/src/disk-api.js",
+      "scripts/conformance/static/allowlist.json",
+      "packages/language/src/source-queries.js",
+      "packages/workspace/src/workspace.js"
+    ],
+    "validation": "No local tests/builds. Actual graph prerequisite core37175343433 passed; final feature required core pending publication.",
+    "sourceBaseMerge": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+    "sourceBaseTree": "d52551a5defba0751d93b41d46b5415329ed1290",
+    "sourceFeatureMerge": "0c4e9d34999dda29876a2d4a0843106fd80f9b67",
+    "sourceFeatureTree": "58490a9e90c023fa563347075c278b527302e988",
+    "manualFeatureResolutions": [
+      "apps/studio/compiler.worker.js",
+      "scripts/conformance/static/allowlist.json",
+      "tests/a00-03-studio-registries.test.js"
+    ],
+    "supportingFeatureAlignments": [
+      "apps/studio/workers/type-rename.js"
+    ]
+  },
+  "originalPublication": {
+    "schemaVersion": 1,
+    "sourceCommit": "843fc516e466e3571dfbe925eaa322ee1bf6cad3",
+    "pr": 3888,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3888",
+    "branch": "codex/p18-compiler-worker-entry",
+    "baseBranch": "codex/p18-compiler-worker-dependencies",
+    "head": "e7c3a6e70c4276999d807d9e7c8fa61d9a8c2dd6",
+    "base": "91b7221559502a31c3f66b634db57d4be7e105f0",
+    "draft": true,
+    "tree": "b29ce93f92e7cd7186ba1edd838ed032df362d00",
+    "commits": [
+      {
+        "local": "543ac631c6e4a0c3042e6045d2ed43da24f4ea87",
+        "remote": "2c8bbec11b2d36e1e525c45952f715868a94189d",
+        "tree": "4eac6aea6b9210ef6cc328eb76e2863059c251d8",
+        "parents": [
+          "917c5bc8291d59f124ffc3c68abddd5366daa4a4",
+          "bc888b66d2838bc69cce5e93b0f01a38d10f68ca"
+        ],
+        "feature": false
+      },
+      {
+        "local": "e64e8d7980b7a9af3f0ca9c967a4ade286c524ff",
+        "remote": "086e0e5c95d46d565d68b0c642fbd915a00c3a7a",
+        "tree": "86163b1835f1d5770cc2068ee5cdb81e1b612e5d",
+        "parents": [
+          "2c8bbec11b2d36e1e525c45952f715868a94189d",
+          "f3ac57b9c5713494fc8cb0b4323420c82b16cc64"
+        ],
+        "feature": false
+      },
+      {
+        "local": "9765f1e670a95de8e1403f7f4a2ec5a7aedb6c8d",
+        "remote": "91b7221559502a31c3f66b634db57d4be7e105f0",
+        "tree": "9abc845b67c77a39dd6d19b3cc73b68cfa7110e1",
+        "parents": [
+          "086e0e5c95d46d565d68b0c642fbd915a00c3a7a",
+          "185bfbab5fa66ca7274b6b1fe61f4ae823b07cf9"
+        ],
+        "feature": false
+      },
+      {
+        "local": "c1321391406d3696c7152197da745a8fac4017c0",
+        "remote": "e7c3a6e70c4276999d807d9e7c8fa61d9a8c2dd6",
+        "tree": "b29ce93f92e7cd7186ba1edd838ed032df362d00",
+        "parents": [
+          "91b7221559502a31c3f66b634db57d4be7e105f0"
+        ],
+        "feature": true
+      }
+    ],
+    "verification": {
+      "apiTreeMatches": true,
+      "prReadback": true,
+      "gitParentReadback": true
+    },
+    "qualification": {
+      "node": "v26.10.0",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "log": "planning/evidence/project18/integration/upstream-qualification/node26-compiler-graph-composition.tap"
+    },
+    "constraints": [
+      "Studio host composition is prepared under another agent's live studio lease; not applied.",
+      "Required core and browser qualification are distinct from the completed Node scope."
+    ]
+  },
+  "exactRemoteObjectsInstalledLocally": true
+}

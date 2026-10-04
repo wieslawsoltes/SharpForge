@@ -1,0 +1,882 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "A23T09\u2013T12 children,T35\u2013T39,B05;authorizedT29/T30 runtime launch support",
+  "agent": "tests_workflows",
+  "branch": "codex/p18-tests",
+  "generatedAt": "2026-10-03T21:51:52.227100+00:00",
+  "implementationHead": "bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+  "productHead": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+  "interpretation": "validated applies only to the precise fixtures,engines andtoolchains listed. implemented-unqualified means product code exists but native framework acceptance is not established. No unavailable test is treated as passing.",
+  "toolchain": {
+    "platform": "Linux x64",
+    "nodes": [
+      "v22.23.3",
+      "v26.10.0"
+    ],
+    "sdk": "10.0.201",
+    "msbuild": "18.3.0.15422",
+    "nativeFrameworkRestoreSdk": "10.0.401",
+    "sourceRuntime": "JavaScript source VM",
+    "cilRuntime": "JavaScript direct managed CIL VM"
+  },
+  "validation": [
+    {
+      "id": "node22",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js",
+        "tests/a23-12-evaluation-differential.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/release08-explorer.test.js",
+        "tests/release08-commands.test.js",
+        "tests/a07-13-registry.test.js",
+        "tests/a00-02-registry.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-09-native-conflicts.test.js"
+      ],
+      "node": "v22.23.3",
+      "testedCommit": "bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+      "result": "135/135 pass; zero failures, skips or cancellations",
+      "summary": {
+        "tests": 135,
+        "pass": 135,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "artifact": "testing/node22.tap"
+    },
+    {
+      "id": "node26",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js",
+        "tests/a23-12-evaluation-differential.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/release08-explorer.test.js",
+        "tests/release08-commands.test.js",
+        "tests/a07-13-registry.test.js",
+        "tests/a00-02-registry.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-09-native-conflicts.test.js"
+      ],
+      "node": "v26.10.0",
+      "testedCommit": "bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+      "result": "135/135 pass; zero failures, skips or cancellations",
+      "summary": {
+        "tests": 135,
+        "pass": 135,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "artifact": "testing/node26.tap"
+    },
+    {
+      "id": "native-evaluation",
+      "argv": [
+        "node",
+        "tests/msbuild-differential/run.mjs",
+        "--output",
+        "evaluation-native.json"
+      ],
+      "environment": {
+        "SHARPFORGE_SDK": "10.0.201",
+        "SHARPFORGE_DOTNET": "<dotnet-sdk-root>/dotnet"
+      },
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "result": "5 real native property/item query comparisons match;10 native-only fixtures enforce their blocking diagnostics;zero divergences",
+      "exitCode": 0,
+      "artifact": "testing/evaluation-native.json"
+    },
+    {
+      "id": "native-solutions",
+      "argv": [
+        "node",
+        "tests/msbuild-differential/solutions.mjs",
+        "--output",
+        "solutions-native.json"
+      ],
+      "environment": {
+        "SHARPFORGE_SDK": "10.0.201",
+        "SHARPFORGE_DOTNET": "<dotnet-sdk-root>/dotnet"
+      },
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "result": "22/22 checks:16 real solution builds across slnx/sln,3 mapped direct project builds,3 portable effective-configuration checks",
+      "exitCode": 0,
+      "artifact": "testing/solutions-native.json",
+      "limits": "Package-free MSBuild Build targets observe mapping. This does not qualify native C++ compilation or every project SDK."
+    },
+    {
+      "id": "framework-shared",
+      "argv": [
+        "node",
+        "tests/msbuild-differential/frameworks.mjs",
+        "--output",
+        "frameworks-portable.json"
+      ],
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "environment": {
+        "SHARPFORGE_SDK": "10.0.401",
+        "SHARPFORGE_NATIVE_TESTS_UNAVAILABLE": "Shared pinned package restore reached50seconds,exit124;cache remained empty."
+      },
+      "result": "Both engines run identical shared source fixtures: xUnit6passed+1intentional failure+1skip;NUnit andMSTest4passed+1intentional failure+1skip each. Native comparison unexecuted, overall qualification unsuccessful. Exact shared sources are also asserted in node22/node26 TAP.",
+      "exitCode": 1,
+      "artifact": "testing/frameworks-portable.json"
+    },
+    {
+      "id": "native-framework-restore",
+      "argv": [
+        "dotnet",
+        "restore",
+        "Probe.csproj",
+        "--disable-parallel",
+        "-p:NuGetAudit=false"
+      ],
+      "sdk": "10.0.401",
+      "result": "One shared restore attempt by templates_archives reached its50-second limit with exit124;only Determining projects to restore was logged;cache empty. No definitive failure cause inferred. No retry by testing agent.",
+      "exitCode": 124,
+      "artifact": "testing/framework-restore.log",
+      "project": "testing/framework-restore.csproj"
+    },
+    {
+      "id": "abi",
+      "argv": [
+        "node",
+        "--test",
+        "tests/a00-02-registry.test.js",
+        "tests/a23-29-abi-extensions.test.js"
+      ],
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "result": "18/18 pass; released framework and runtime builtin identities unchanged;both real dispatchers meet reachability baseline;reserved sparse holes preserved. Also rerun within final complete node22/node26 batches.",
+      "exitCode": 0,
+      "artifact": "testing/abi.tap"
+    },
+    {
+      "id": "check",
+      "argv": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "testedCommit": "bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+      "result": "Blocked at manifest gate in this isolated dependency branch: tests/manifests/A24.json references tests/browser_a24_vfs_test.py absent here. Root integration contains the A24 provider/browser changes. No manifest assertion weakened.",
+      "exitCode": 1,
+      "artifact": "testing/check.log"
+    },
+    {
+      "id": "structure",
+      "argv": [
+        "node",
+        "scripts/quality/check-structure.js",
+        "--strict"
+      ],
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "result": "267 pre-existing or other-workstream violations. All newly introduced owned modules satisfy500lines/40KB/160columns. Modified pre-existing bytecode/builtins.js remains over160columns but longest line shrank412to292; no new or grown violation from this work.",
+      "exitCode": 1,
+      "artifact": "testing/structure.log"
+    },
+    {
+      "id": "bcl-inventory",
+      "argv": [
+        "node",
+        "packages/bcl-core/scripts/inventory.js",
+        "--check"
+      ],
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "result": "Generated BCL module inventory is current;new environment API has no pinned native metadata coverage claim.",
+      "exitCode": 0
+    },
+    {
+      "id": "syntax",
+      "argv": [
+        "node",
+        "scripts/check.js"
+      ],
+      "testedCommit": "7dd9f8c9e5c956f3474da96973ccaf6140234f5d",
+      "result": "1694 JavaScript modules checked;zero syntax errors. Production code remained stable after this check began;subsequent test-only additions are exercised in the final135-test Node22/Node26 batches.",
+      "exitCode": 0,
+      "artifact": "testing/syntax.log"
+    }
+  ],
+  "issues": [
+    {
+      "issue": 3155,
+      "workId": "SF-A23-T09.1",
+      "title": "[SF-A23-T09.1] Make the XML parser lossless with a concrete syntax tree",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3155",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/xml-cst.js",
+        "packages/project-system/src/xml.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "details": "50 unusual documents preserve BOM,CRLF,quote styles,entities,comments,CDATA and concrete source spans. Bounded parsing rejects DTD/external entities,malformed input,stale/overlapping edits and cancellation.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3156,
+      "workId": "SF-A23-T09.2",
+      "title": "[SF-A23-T09.2] Implement source-preserving property edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3156",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/project-edit/properties.js",
+        "packages/project-system/src/project-edit/tree.js",
+        "packages/msbuild/src/project-edits/index.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "details": "Condition-selected property edits replace exactly one existing value span;removing the last property removes only its now-empty group. Ambiguity and structured child replacement fail explicitly.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3157,
+      "workId": "SF-A23-T09.3",
+      "title": "[SF-A23-T09.3] Implement source-preserving item and metadata edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3157",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/project-edit/items.js",
+        "packages/project-system/src/project-edit/membership.js",
+        "packages/msbuild/src/project-edits/index.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js",
+        "tests/release08-commands.test.js",
+        "tests/release08-explorer.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "details": "Item/metadata edits reuse matching ItemGroups and quote/attribute forms;implicit Compile Remove toggles return to original bytes. Explicit imports preserve ordered Remove/Include overrides required by existing explorer behavior.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3158,
+      "workId": "SF-A23-T09.4",
+      "title": "[SF-A23-T09.4] Detect external-write conflicts for project file edits",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3158",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/project-edits/conflicts.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-09-native-conflicts.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "details": "Both real disk races before the initial read and before NativeWorkspace.save return expected/current hashes and base/local/remote texts, retaining the external writer bytes with no partial overwrite.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3159,
+      "workId": "SF-A23-T09.5",
+      "title": "[SF-A23-T09.5] Fuzz round-trip project edits on unusual XML",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3159",
+      "status": "validated",
+      "implementation": [
+        "tests/project-edits-roundtrip.test.js"
+      ],
+      "tests": [
+        "tests/project-edits-roundtrip.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "details": "1000 seeded edit/undo pairs restore exact input strings and parse every intermediate document;corpus covers BOM,CRLF,comments,Choose,entities,CDATA and namespaces.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3160,
+      "workId": "SF-A23-T10.1",
+      "title": "[SF-A23-T10.1] Parse .slnx configuration and per-project mapping rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3160",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/solution-configurations.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "details": "Parses configuration dimensions,project type inheritance,build/deploy flags and ordered per-project rules. Native authored slnx builds observe matching selected globals and exclusions.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3161,
+      "workId": "SF-A23-T10.2",
+      "title": "[SF-A23-T10.2] Parse legacy .sln configuration sections",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3161",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/sln-configurations.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "details": "ActiveCfg is independent of Build.0/Deploy.0;missing Build.0 excludes a project. Project globals normalize Any CPU to AnyCPU as native MSBuild does;case-insensitive configuration keys and action suffixes coalesce.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3162,
+      "workId": "SF-A23-T10.3",
+      "title": "[SF-A23-T10.3] Apply default mapping inference rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3162",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/solution-defaults.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "details": "Debug/Release plus Any CPU defaults match native CLR AnyCPU and VC x64 rules. Explicit Win32/x86 and project override mappings are covered by unit fixtures. Mixed native oracle uses package-free projects,not MSVC compilation.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3163,
+      "workId": "SF-A23-T10.4",
+      "title": "[SF-A23-T10.4] Apply solution mapping to build, deploy and portable evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3163",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/solution-selection.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/msbuild/src/build-service.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "details": "Build/deploy participation,configuration-manager data and projectProperties overlays are explicit. Saved-solution resolver retains original selection and is idempotent for UI-premapped requests. Direct mapped native builds and portable effective globals agree. NativeBuildService now invokes the resolver immediately after authorization (owner integration 2e1510d5).",
+      "remainingAcceptance": [
+        "Saved-solution mapping through an actual authenticated build-service route has not been separately captured; helper and direct mapped native build evidence is retained above."
+      ]
+    },
+    {
+      "issue": 3164,
+      "workId": "SF-A23-T10.5",
+      "title": "[SF-A23-T10.5] Serialise classic .sln files",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3164",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/sln-writer.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "details": "Serialized classic solutions build through dotnet and re-read matching configurations,GUIDs,folders,dependencies and unsupported project records. New IDs are deterministic;existing GUIDs and custom sections remain preserved.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3165,
+      "workId": "SF-A23-T11.1",
+      "title": "[SF-A23-T11.1] Discover tests through the native test host",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3165",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/discovery.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "details": "Native discovery runs through trusted runTool for VSTest,MTP and bridge requests;parser supports text/structured events and supplied source enrichment for stable IDs. No console success is treated as test execution.",
+      "remainingAcceptance": [
+        "Pinned xUnit/NUnit/MSTest native adapter acquisition timed out in the shared restore;actual native names,TRX outcomes,testhost debugging and collector output must still be qualified.",
+        "Windows/macOS native test hosts andactual browser runtime are not qualified by these Node results."
+      ]
+    },
+    {
+      "issue": 3166,
+      "workId": "SF-A23-T11.2",
+      "title": "[SF-A23-T11.2] Run filtered tests and parse TRX results",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3166",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/run.js",
+        "packages/msbuild/src/testing/trx.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-framework-restore"
+      ],
+      "details": "Filtered selection is escaped;TRX results retain per-test outcome,duration,stdout/stderr,messages,stack and attachments. Real temporary job directories are read and only recorded retained artifacts are retrievable through testing/artifact.",
+      "remainingAcceptance": [
+        "Pinned xUnit/NUnit/MSTest native adapter acquisition timed out in the shared restore;actual native names,TRX outcomes,testhost debugging and collector output must still be qualified.",
+        "Windows/macOS native test hosts andactual browser runtime are not qualified by these Node results."
+      ]
+    },
+    {
+      "issue": 3167,
+      "workId": "SF-A23-T11.3",
+      "title": "[SF-A23-T11.3] Map tests to source locations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3167",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/source-map.js",
+        "packages/msbuild/src/testing/portable/source-symbols.js",
+        "packages/runtime/src/invocation-session.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared"
+      ],
+      "details": "Mapping prefers stack coordinates,then supplied Portable PDB sequence points,then source declarations. Shared source/CIL fixture tests assert both declaration offsets and failing assertion offsets/lines.",
+      "remainingAcceptance": [
+        "Actual native fixture source maps and native PDB/stack reports remain unqualified until native test packages are available."
+      ]
+    },
+    {
+      "issue": 3168,
+      "workId": "SF-A23-T11.4",
+      "title": "[SF-A23-T11.4] Support test cancellation, live progress and debugging handoff",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3168",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/session.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-framework-restore"
+      ],
+      "details": "Sessions stream bounded replayable output/per-test progress,pass cancellation to trusted process-tree executor and publish VSTEST_HOST_DEBUG process-ID handoff. Start resolves only after operation registration;close awaits retained operations.",
+      "remainingAcceptance": [
+        "Actual long-running native testhost cancellation and live debugger attach require the unacquired native framework fixtures;host seam tests use an injected process adapter."
+      ]
+    },
+    {
+      "issue": 3169,
+      "workId": "SF-A23-T11.5",
+      "title": "[SF-A23-T11.5] Parse code coverage reports",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3169",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/coverage.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-framework-restore"
+      ],
+      "details": "Cobertura parser preserves covered/uncovered lines and branch counts,merges duplicate file/line entries and identifies external paths. Collector files are retained as test artifacts.",
+      "remainingAcceptance": [
+        "Actual coverlet collector output for the pinned native framework fixtures remains unqualified."
+      ]
+    },
+    {
+      "issue": 3170,
+      "workId": "SF-A23-T12.1",
+      "title": "[SF-A23-T12.1] Build differential harness comparing portable and native evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3170",
+      "status": "validated",
+      "implementation": [
+        "packages/msbuild/src/evaluation-differential.js",
+        "tests/msbuild-differential/corpus.js",
+        "tests/msbuild-differential/portable.js",
+        "tests/msbuild-differential/run.mjs"
+      ],
+      "tests": [
+        "tests/a23-12-evaluation-differential.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-evaluation"
+      ],
+      "details": "Five supported native property/item fixtures match exactly. Reports identify feature,property/item,index and differing values;missing versus empty values and ordered metadata are preserved. Supported divergences fail qualification.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3171,
+      "workId": "SF-A23-T12.2",
+      "title": "[SF-A23-T12.2] Maintain machine-readable portable feature boundary",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3171",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/boundary.json",
+        "packages/msbuild/src/evaluation-differential.js",
+        "tests/msbuild-differential/corpus.js"
+      ],
+      "tests": [
+        "tests/a23-12-evaluation-differential.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-evaluation"
+      ],
+      "details": "Machine-readable supported/approximated/native-only boundary covers every declared native-only feature with a fixture and required blocking diagnostic. Ten boundary fixtures prohibit unsupported success.",
+      "remainingAcceptance": []
+    },
+    {
+      "issue": 3090,
+      "workId": "SF-A23-T35",
+      "title": "[SF-A23-T35] Define test adapter contract and test tree model",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3090",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/model.js",
+        "packages/msbuild/src/testing/discovery.js"
+      ],
+      "tests": [
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "details": "Shared TestCase/result/adapter tree model uses deterministic source/native-enriched identities. Test vectors prove equal IDs for same fixtures supplied through native and portable schemas;no actual native-list qualification is claimed.",
+      "remainingAcceptance": [
+        "Native discovery output for all three pinned framework fixtures must still be compared after package availability."
+      ]
+    },
+    {
+      "issue": 3091,
+      "workId": "SF-A23-T36",
+      "title": "[SF-A23-T36] Discover xUnit tests from source",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3091",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/xunit.js",
+        "packages/msbuild/src/testing/portable/source-symbols.js",
+        "packages/msbuild/src/testing/portable/data-sources.js",
+        "packages/msbuild/src/testing/portable/runtime-data.js",
+        "packages/msbuild/src/testing/portable/provider-projection.js"
+      ],
+      "tests": [
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "details": "Fact,Theory,InlineData,MemberData,ClassData,traits,skip and fixture metadata are discovered. Computed rows execute in fresh bounded managed sessions;pure constant discovery-only classes can be projected away only with reference-span proof. Exact shared xUnit fixture yields8 tests and correct portable outcomes.",
+      "remainingAcceptance": [
+        "Display-name parity with real dotnet test --list-tests remains unqualified.",
+        "Stateful or executable-referenced provider declarations must remain within the current compiler/runtime profile;unsupported ones produce not-runnable."
+      ]
+    },
+    {
+      "issue": 3093,
+      "workId": "SF-A23-T37",
+      "title": "[SF-A23-T37] Discover NUnit tests from source",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3093",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/nunit.js",
+        "packages/msbuild/src/testing/portable/discovery-shared.js",
+        "packages/msbuild/src/testing/portable/data-sources.js"
+      ],
+      "tests": [
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "details": "Parameterized fixtures,TestCase/TestCaseSource,ExpectedResult,Ignore/Explicit,traits and setup/teardown metadata are retained. Shared fixture yields6 tests and source/CIL lifecycle/outcome assertions pass.",
+      "remainingAcceptance": [
+        "Real NUnit native display names and parameterized fixture identity parity remain unqualified."
+      ]
+    },
+    {
+      "issue": 3094,
+      "workId": "SF-A23-T38",
+      "title": "[SF-A23-T38] Discover MSTest tests from source",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3094",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/mstest.js",
+        "packages/msbuild/src/testing/portable/discovery-shared.js",
+        "packages/msbuild/src/testing/portable/data-sources.js"
+      ],
+      "tests": [
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "details": "TestClass/TestMethod/DataRow display names,DynamicData,Ignore,Timeout and initialize/cleanup metadata are discovered. Shared fixture yields6 tests with matching source/CIL outcomes.",
+      "remainingAcceptance": [
+        "Real MSTest adapter display-name and DataRow identity parity remain unqualified."
+      ]
+    },
+    {
+      "issue": 3095,
+      "workId": "SF-A23-T39",
+      "title": "[SF-A23-T39] Execute discovered tests on the managed runtime with isolation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3095",
+      "status": "implemented-unqualified",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/runner.js",
+        "packages/msbuild/src/testing/portable/harness.js",
+        "packages/msbuild/src/testing/portable/managed-runtime.js",
+        "packages/msbuild/src/testing/portable/assertion-profile.js",
+        "packages/runtime/src/invocation-session.js"
+      ],
+      "tests": [
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "details": "Actual source/CIL managed methods execute scalar assertions,lifecycle hooks,class/collection fixtures and computed rows. Each run owns heap/statics/scheduler;async callees are verified before CIL entry. Budgets,cancellation and unavailable APIs never turn remaining tests into passed outcomes.",
+      "remainingAcceptance": [
+        "Native pass/fail/skip reference comparison is still unavailable after shared package-restore timeout.",
+        "Full framework reflection,arbitrary external assertion libraries and inaccessible lifecycle code are outside the documented portable runtime profile.",
+        "Rust native/Wasm invocation is not implemented;actual browser execution is separate root qualification."
+      ]
+    },
+    {
+      "issue": 3100,
+      "workId": "SF-A23-B05",
+      "title": "[SF-A23-B05] Solution loader only recognises .csproj project paths",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3100",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/legacy-solution.js",
+        "packages/project-system/src/project-loader.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "details": "Mixed .sln projects remain visible as unloaded records with native-toolchain reasons;portable C# project paths remain separate. Both reader name and public snapshot.solution.name strip .sln.",
+      "remainingAcceptance": []
+    }
+  ],
+  "additionalContributions": [
+    {
+      "issue": 3084,
+      "workId": "SF-A23-T29",
+      "scope": "Authorized cross-area runtime seam only;remaining original task implementation belongs root/native agent.",
+      "implementation": [
+        "packages/bcl-core/src/system/environment.js",
+        "packages/bcl-core/src/system/environment-dictionary.js",
+        "packages/bytecode/src/builtin-table.js"
+      ],
+      "tests": [
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-29-abi-extensions.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "abi"
+      ],
+      "details": "Per-session Environment getters and separate IDictionary snapshots dispatch on both engines through A07 contribution registration. Empty environment and root directory defaults;no OS process access. First reserved extension no longer renumbers released runtime builtins."
+    },
+    {
+      "issue": 3085,
+      "workId": "SF-A23-T30",
+      "scope": "Authorized cross-area runtime seam only;remaining original task implementation belongs root/native agent.",
+      "implementation": [
+        "packages/runtime/src/launch-arguments.js"
+      ],
+      "tests": [
+        "tests/a23-30-launch-arguments.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "abi"
+      ],
+      "details": "Argument overlay preserves static initialization and async Main. Source,direct-CIL and source-decoded-from-CIL paths are tested. Root owns browser worker/profile wiring."
+    }
+  ],
+  "integrationRequirements": [
+    "NativeBuildService now applies resolveSolutionBuildRequest after authorization; the former merge requirement is satisfied in the integrated source. Exact native framework qualification remains limited below.",
+    "The runtime worker applies decoded launch arguments and per-session environment/working-directory options. Root still owns application of the protected Studio entry callbacks and final browser launch qualification.",
+    "Root owns the final combined core/build/CSP gate and complete A23/A24 manifest composition; the current integrated source contains the previously missing A24 modules."
+  ],
+  "remainingPlatformQualification": [
+    "Windows/macOS native solution/test hosts were not exercised here.",
+    "Native xUnit/NUnit/MSTest/coverlet reference qualification remains unavailable after the single controlled shared package-restore timeout.",
+    "The native-studio record retains its actual portable test-worker browser checks. Final Studio application/browser qualification for the closed separate-PE graph remains with root; the Node graph passes do not qualify a browser.",
+    "The portable test adapter has no Rust native/Wasm invocation backend."
+  ],
+  "ownershipNotes": [
+    "XML parser/evaluator shared exports coordinated with portable_evaluator;project edits avoid parser cycles.",
+    "Native engine/client/server/index ownership remained with workspace_inventory;adapter registers through services contribution seam.",
+    "Managed invocation and launch/environment support use separate public runtime modules and BCL contribution registration;vm.js/cil-vm.js were not modified.",
+    "Root explicitly authorized the bytecode table reservation fix triggered by first A07 environment extension.",
+    "Existing upstream compiler differential baseline.json was present before our validation;it was neither generated nor changed by this agent."
+  ],
+  "retainedArtifacts": {
+    "node26.tap": {
+      "sha256": "9807dc8ec4bd9eb839f9868aa6418cb6aeea43b248c13bb777b3e3b5c4e8c314",
+      "bytes": 30392
+    },
+    "structure.log": {
+      "sha256": "a2b8332f62285fb77e42062b57c5d1cac3ef04fe90303116c5d21aa244b3240e",
+      "bytes": 21352
+    },
+    "syntax.log": {
+      "sha256": "657df38a19294bcbc6a0f51267f7304d11106ad99565045abdfadace0be6a5b8",
+      "bytes": 224
+    },
+    "solutions-native.json": {
+      "sha256": "a11dfb937bcf807c2173147cd99cc1009a2383248c5e4748af8bdfca38c14444",
+      "bytes": 16413
+    },
+    "abi.tap": {
+      "sha256": "5524f26c61127a4ffbf0c971a79daf72abf534dac051cb1abe91697d96e8d16c",
+      "bytes": 4276
+    },
+    "frameworks-portable.json": {
+      "sha256": "2a56e16ce7b6d030bbc401f2e806fe2fdc2ef6f4541ecf64c20be91616752cde",
+      "bytes": 42879
+    },
+    "check.log": {
+      "sha256": "e430dade01f822fd26d013e4e7f6bb5d4788872a972824f072665f422ca36dcc",
+      "bytes": 649
+    },
+    "framework-restore.csproj": {
+      "sha256": "9ba27bb45191f021a71a101c2ce683e97af9df2c8985a88f8f2f906d118bbb7d",
+      "bytes": 728
+    },
+    "node22.tap": {
+      "sha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b",
+      "bytes": 34333
+    },
+    "evaluation-native.json": {
+      "sha256": "32c78dd349a1c8c4f6d511bd51d401fb179e4cae2815f9bb726cb05511abf815",
+      "bytes": 4494
+    },
+    "framework-restore.log": {
+      "sha256": "c329f2e5bf20a1827c9a6a206937d166ae309f96376e450013bc4519180278d3",
+      "bytes": 37
+    }
+  },
+  "closedProjectRuntimeFollowup": "project-runtime/qualification.json"
+}

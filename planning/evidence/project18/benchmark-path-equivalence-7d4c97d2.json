@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T07:11:42.014960+00:00",
+  "before": {
+    "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "tree": "c5cb8401b9d26fde41be02c0383aa8cfeef642f9"
+  },
+  "after": {
+    "source": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+    "tree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd"
+  },
+  "method": "Read-only exact Git blob/tree comparison. The release14 script directly imports compiler/runtime; the package closure is resolved from their checked-in dependency manifests. Complete package directory trees, the launcher, root dependency manifests and the benchmark script are equal. No benchmarks, tests, builds, installs or network calls were run.",
+  "benchmark": "scripts/benchmark-release14.js",
+  "workloads": [
+    "dictionary",
+    "list",
+    "queue",
+    "builder"
+  ],
+  "engines": [
+    "source",
+    "cil"
+  ],
+  "exactInputFiles": [
+    {
+      "path": "scripts/benchmark-release14.js",
+      "beforeBlob": "5a3758ee9f2ca29cdc09ceb9d8da94d1b9d6150c",
+      "afterBlob": "5a3758ee9f2ca29cdc09ceb9d8da94d1b9d6150c",
+      "sha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "identical": true
+    },
+    {
+      "path": "scripts/limited.js",
+      "beforeBlob": "cecc071634fa4b4b738dfaa0a1ac516bf3e059dd",
+      "afterBlob": "cecc071634fa4b4b738dfaa0a1ac516bf3e059dd",
+      "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+      "identical": true
+    },
+    {
+      "path": "package.json",
+      "beforeBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "afterBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+      "identical": true
+    },
+    {
+      "path": "package-lock.json",
+      "beforeBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "afterBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "identical": true
+    }
+  ],
+  "workspaceDependencySeeds": [
+    "@sharpforge/compiler",
+    "@sharpforge/runtime"
+  ],
+  "workspaceDependencyClosure": [
+    {
+      "name": "@sharpforge/archive",
+      "path": "packages/archive",
+      "beforeTree": "136aed1ab485413e1a81079332e7f6f0f1c5944e",
+      "afterTree": "136aed1ab485413e1a81079332e7f6f0f1c5944e",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/bcl-collections",
+      "path": "packages/bcl-collections",
+      "beforeTree": "71e38278536a6e9cbf19f12ac991cef100f7c82d",
+      "afterTree": "71e38278536a6e9cbf19f12ac991cef100f7c82d",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/bcl-core",
+      "path": "packages/bcl-core",
+      "beforeTree": "a15dc90a1e9a9ec0e33774dfccf5b71ed25ef5ed",
+      "afterTree": "a15dc90a1e9a9ec0e33774dfccf5b71ed25ef5ed",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/bytecode",
+      "path": "packages/bytecode",
+      "beforeTree": "41abf39c19c7fa4d0600e53eab282c2db92dfeb4",
+      "afterTree": "41abf39c19c7fa4d0600e53eab282c2db92dfeb4",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/cil",
+      "path": "packages/cil",
+      "beforeTree": "b7e6cdfef4a7fdf0c0e258b19158a8c2dc3ee36c",
+      "afterTree": "b7e6cdfef4a7fdf0c0e258b19158a8c2dc3ee36c",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/compiler",
+      "path": "packages/compiler",
+      "beforeTree": "a432a0f06af4ef3dfcf0deaf618f0fa025f67312",
+      "afterTree": "a432a0f06af4ef3dfcf0deaf618f0fa025f67312",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/compute",
+      "path": "packages/compute",
+      "beforeTree": "0ba385b2754947d34e884b975fee619d6d2b71ec",
+      "afterTree": "0ba385b2754947d34e884b975fee619d6d2b71ec",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/designer",
+      "path": "packages/designer",
+      "beforeTree": "71dfd72f88c6b0060f15d0674ca75c7b86d6ec99",
+      "afterTree": "71dfd72f88c6b0060f15d0674ca75c7b86d6ec99",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/framework",
+      "path": "packages/framework",
+      "beforeTree": "0f362d1495aa2b385944dc63fcf6fd01e4ea1cf0",
+      "afterTree": "0f362d1495aa2b385944dc63fcf6fd01e4ea1cf0",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/network",
+      "path": "packages/network",
+      "beforeTree": "a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5",
+      "afterTree": "a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/project-system",
+      "path": "packages/project-system",
+      "beforeTree": "2d4812de3ad70a8f30d7a02602909c189c5e5532",
+      "afterTree": "2d4812de3ad70a8f30d7a02602909c189c5e5532",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/runtime",
+      "path": "packages/runtime",
+      "beforeTree": "4a08ab27b73e370233a10a594e0d9f19d02de2fe",
+      "afterTree": "4a08ab27b73e370233a10a594e0d9f19d02de2fe",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/symbols",
+      "path": "packages/symbols",
+      "beforeTree": "7b4e5f933ecee07d4e8f0ce99c29ef15d8d0e509",
+      "afterTree": "7b4e5f933ecee07d4e8f0ce99c29ef15d8d0e509",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/syntax",
+      "path": "packages/syntax",
+      "beforeTree": "3462eee3ed62ed6e49dd819f54349a92e7042e80",
+      "afterTree": "3462eee3ed62ed6e49dd819f54349a92e7042e80",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/text",
+      "path": "packages/text",
+      "beforeTree": "e68012e1423ba4c7dcb5fcab453f22fa87ffda05",
+      "afterTree": "e68012e1423ba4c7dcb5fcab453f22fa87ffda05",
+      "identical": true
+    },
+    {
+      "name": "@sharpforge/workspace",
+      "path": "packages/workspace",
+      "beforeTree": "66cc1f9121addace7c596956e3b8ca67c03be6f0",
+      "afterTree": "66cc1f9121addace7c596956e3b8ca67c03be6f0",
+      "identical": true
+    }
+  ],
+  "externalPackageDependencies": {},
+  "equivalentRelease14InputPaths": true,
+  "allBenchmarkFilesExamined": 142,
+  "changedBenchmarkFiles": [],
+  "packageDirectoriesOutsideClosureChanged": [
+    {
+      "name": "@sharpforge/editor",
+      "path": "packages/editor",
+      "beforeTree": "fb6d657ab77fde47d7b3654ad5d083f06e1b6725",
+      "afterTree": "816811ce52787ec03cc95e7246b7695812b2ed8d"
+    }
+  ],
+  "changedNonEvidencePaths": [
+    "apps/studio/native-build/README.md",
+    "apps/studio/workbench/status-bar.js",
+    "apps/studio/workbench/status-position.js",
+    "apps/studio/workbench/tools/execution-capture.js",
+    "apps/studio/workers/runtime-activity.js",
+    "packages/editor/README.md",
+    "packages/editor/src/core/code-editor.js",
+    "tests/a19-execution-capture-timer-owner.test.js",
+    "tests/a19-runtime-activity-timer-owner.test.js",
+    "tests/a19-runtime-worker-client.js",
+    "tests/a24-09-wizard-provider.test.js",
+    "tests/a24-disk-scan.test.js",
+    "tests/a24-editor-model-ownership.test.js",
+    "tests/a24-provider-files.test.js",
+    "tests/a24-reload-coordinator.test.js",
+    "tests/a24-save-locks.test.js",
+    "tests/a24-status-caret-ownership.test.js",
+    "tests/a24-vfs-memory.test.js",
+    "tests/a24-vfs-native.test.js",
+    "tests/a24-workspace-reconcile.test.js",
+    "tests/browser_release13_test.py",
+    "tests/fixtures/a19/runtime-worker-timer-host.js",
+    "tests/fixtures/a19/runtime-worker-timer-node.js"
+  ],
+  "interpretation": "This supports retaining the existing e9 release14 measurement as source-equivalent for these kernel benchmark inputs. It creates no new timing samples or acceptance decision. Editor and browser/application paths changed, so no application/editor performance equivalence is claimed. Earlier regressions, platform limitations and sign-off requirements remain unchanged."
+}

@@ -1,0 +1,17 @@
+PASS connect an existing hand-written construction method without replacing source or workers
+PASS designer modes, grouped property grid, breadcrumb selection and compact chrome initialize
+PASS designer property changes compile-check a minimal C# edit and preserve every other byte
+PASS real source editor input updates the design preview automatically
+PASS source undo and redo resynchronize the preview without replacing the editor
+PASS incomplete C# keeps the last valid preview and recovers when corrected
+PASS structural insertion rewrites only the proven construction method and preserves the hand-written handler
+PASS concurrent source and designer edits are rejected without overwriting either side
+PASS dynamic C# expressions stay code-owned while independent scalar properties remain editable
+PASS device presets and Design/Split/C#/Preview views use the original editor and artboard
+PASS synchronized source builds and runs its retained C# event handler and formatted interpolation
+PASS independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration
+PASS VariableSizedWrapGrid lays out measured two-cell spans and wraps following items
+PASS source VM real worker clock animates after Main and runs managed Completed handler
+PASS direct CIL real worker clock animates after Main and runs managed Completed handler
+PASS all integration workflows finish without page errors and retain two real workers
+{"passed": 16, "errors": []}

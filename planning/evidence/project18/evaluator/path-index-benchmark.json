@@ -1,0 +1,26 @@
+{
+  "benchmark": "100 directory Exists queries over 20000 paths; excludes index construction",
+  "runtime": "v24.19.0",
+  "machine": {
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "indexConstructionMs": 41.99334400000001,
+  "before": {
+    "medianMs": 10.636151000000012,
+    "p95Ms": 13.945152000000007,
+    "count": 6000
+  },
+  "after": {
+    "medianMs": 0.027692000000001826,
+    "p95Ms": 0.029755000000022847,
+    "count": 6000
+  },
+  "counters": {
+    "exists": 6000,
+    "directorySteps": 12000,
+    "globCandidates": 0,
+    "globQueries": 0
+  }
+}

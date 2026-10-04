@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "sourceTree": "c5cb8401b9d26fde41be02c0383aa8cfeef642f9",
+  "baseline": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "baselineFile": {
+    "path": "scripts/quality/structure-baseline.json",
+    "identicalBytes": true,
+    "sha256": "b3ff90df9502985e3df99ec38db2396e1ba8d0af8415c96fd91978b82ecc7572",
+    "entries": 159
+  },
+  "checker": {
+    "path": "scripts/quality/check-structure.js",
+    "limits": {
+      "lines": 500,
+      "bytes": 40000,
+      "lineLength": 160
+    },
+    "roots": [
+      "packages",
+      "apps",
+      "scripts",
+      "rust"
+    ],
+    "extensions": "js,mjs,rs,css",
+    "measurement": "Exactly split on LF including trailing empty line, UTF-8 byte length, UTF-16 code units per line; no Node gate rerun."
+  },
+  "counts": {
+    "baselineSourceFiles": 2079,
+    "finalSourceFiles": 2617,
+    "changedOrNewSourceFiles": 643,
+    "baselineProblems": 268,
+    "finalProblemsWithPinnedBaseline": 265,
+    "finalProblemsWithOwnBaseline": 265,
+    "introducedProblemRows": 0,
+    "resolvedProblemRows": 3,
+    "worsenedExistingDimensions": 0,
+    "improvedExistingDimensions": 3,
+    "legacyFilesGrowingVsActualPinnedSource": 0,
+    "legacyFilesShrinkingVsActualPinnedSource": 38
+  },
+  "introduced": [],
+  "resolved": [
+    {
+      "path": "apps/studio/tools/definitions.js",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 5,
+        "bytes": 1494,
+        "lineLength": 1161
+      },
+      "kind": "not-in-baseline",
+      "message": "apps/studio/tools/definitions.js: new file exceeds lineLength 1161 > 160"
+    },
+    {
+      "path": "apps/studio/tools/msbuild-automation.js",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 5,
+        "bytes": 494,
+        "lineLength": 425
+      },
+      "kind": "not-in-baseline",
+      "message": "apps/studio/tools/msbuild-automation.js: new file exceeds lineLength 425 > 160"
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/assembly-identity.js",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 114,
+        "bytes": 10809,
+        "lineLength": 319
+      },
+      "kind": "not-in-baseline",
+      "message": "packages/compiler/src/metadata-import/assembly-identity.js: new file exceeds lineLength 319 > 160"
+    }
+  ],
+  "worsenedExistingDimensions": [],
+  "improvedExistingDimensions": [
+    {
+      "path": "apps/studio/tools/core.js",
+      "dimension": "lineLength",
+      "before": 1952,
+      "after": 1930
+    },
+    {
+      "path": "packages/runtime/src/execution/method-table.js",
+      "dimension": "lineLength",
+      "before": 404,
+      "after": 356
+    },
+    {
+      "path": "packages/runtime/src/execution/tokens.js",
+      "dimension": "lineLength",
+      "before": 222,
+      "after": 161
+    }
+  ],
+  "legacyGrowthVsActualPinnedSource": [],
+  "elapsedSeconds": 0.48,
+  "interpretation": "Read-only static metadata comparison against actual pinned source and unchanged recorded baseline. Strict structure remains a failure while existing problem rows persist. No source mutation, baseline expansion or validation rerun occurred."
+}

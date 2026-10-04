@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 2,
+  "status": "prepared; not applied or executed",
+  "preparedAgainst": "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+  "generatedAt": "2026-10-04T03:20:12.412518+00:00",
+  "files": [
+    {
+      "path": "apps/studio/studio.js",
+      "patch": "planning/evidence/project18/integration/studio-entry.patch",
+      "oldSha256": "97a3ebe8eeefd0304bfeeb60f97257052e2dc1d72c344045c8436053655a0603",
+      "newSha256": "950b2bc54de7de54dc6bab840bcf6f3dcfe9a4cde9d9fdf4bf9152ab08d50c1d",
+      "oldBytes": 131651,
+      "newBytes": 115226,
+      "oldLines": 650,
+      "newLines": 650
+    },
+    {
+      "path": "package-lock.json",
+      "patch": "planning/evidence/project18/integration/package-lock.patch",
+      "oldSha256": "5ee4d3ddcbaf4039f14420132ea4e7e02f49679b50725302e06cc6c85ee66169",
+      "newSha256": "439c78370290c79d2255ebf751b200e4f6a4bc1945466d3c9c51ec4f507bce0f",
+      "oldBytes": 10960,
+      "newBytes": 11215,
+      "oldLines": 438,
+      "newLines": 444,
+      "workspaceDependencyChanges": [
+        {
+          "package": "packages/designer",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/framework": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/text": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/framework": "0.14.0",
+            "@sharpforge/project-system": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/text": "0.14.0"
+          }
+        },
+        {
+          "package": "packages/msbuild",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/network": "0.14.0",
+            "@sharpforge/project-system": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/compiler": "0.14.0",
+            "@sharpforge/project-system": "0.14.0",
+            "@sharpforge/network": "0.14.0",
+            "@sharpforge/runtime": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/archive": "0.14.0"
+          }
+        },
+        {
+          "package": "packages/project-system",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/archive": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/archive": "0.14.0",
+            "@sharpforge/workspace": "0.14.0"
+          }
+        }
+      ]
+    }
+  ],
+  "textChecks": [
+    {
+      "patch": "studio-entry.patch",
+      "applyCheckExitCode": 0,
+      "applied": false,
+      "executed": false
+    },
+    {
+      "patch": "package-lock.patch",
+      "applyCheckExitCode": 0,
+      "applied": false,
+      "executed": false
+    }
+  ],
+  "protectedLeases": [
+    {
+      "key": "studio",
+      "ref": "refs/heads/agent-locks/studio",
+      "commit": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.10",
+        "issue": 2081,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "e1c09939-b609-421f-9eab-a361232d7203",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/src/service.js",
+          "packages/git/src/worker/**",
+          "apps/studio/git-worker.js"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    },
+    {
+      "key": "package-json",
+      "ref": "refs/heads/agent-locks/package-json",
+      "commit": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.1",
+        "issue": 2072,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/package.json",
+          "packages/git/src/errors.js",
+          "packages/git/src/index.js",
+          "packages/git/build.contrib.json"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    }
+  ],
+  "constraint": "planning/contracts/locks.json protects apps/studio/studio.js and root package manifests. claim-runbook.md forbids deleting a mutex while its owner process might still run. Both observed lock refs remain reserved by codex-p19-core until the recorded expiry. No lease was acquired, replaced or released.",
+  "composition": [
+    "Workspace session, document and provider lifetime with save/recovery ownership",
+    "Lazy Explorer source hydration and navigation",
+    "Project build/runtime dependency and worker composition",
+    "Native build, project context, profiles, tests and designer/XAML host adapters",
+    "Search renderer explorerContext and loadWorkspaceRecord getters",
+    "Streaming archive import/export and workspace wizard creation"
+  ],
+  "remainingComposition": "Apply the exact entry and internal workspace lockfile changes after a coordinated seam handoff, then qualify the actual application. The proposed entry has not been executed.",
+  "dependencyNote": "Language-to-compiler already matches the existing root lockfile. Only three workspace dependency records require synchronization; all resulting dependencies are internal @sharpforge 0.14.0 packages."
+}

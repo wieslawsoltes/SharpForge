@@ -1,0 +1,64 @@
+(node:45) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:60) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: resx primitives produce real resources v2 records including Unicode and 64-bit values
+ok 1 - resx primitives produce real resources v2 records including Unicode and 64-bit values
+  ---
+  duration_ms: 5.589946
+  type: 'test'
+  ...
+# Subtest: all supported binary primitive codes round-trip independently of resource name ordering
+ok 2 - all supported binary primitive codes round-trip independently of resource name ordering
+  ---
+  duration_ms: 0.767077
+  type: 'test'
+  ...
+# Subtest: resx serialized objects, invalid primitives and unsupported XML fail explicitly
+ok 3 - resx serialized objects, invalid primitives and unsupported XML fail explicitly
+  ---
+  duration_ms: 1.349594
+  type: 'test'
+  ...
+# Subtest: file references use explicit virtual content and request hydration before conversion
+ok 4 - file references use explicit virtual content and request hydration before conversion
+  ---
+  duration_ms: 0.84923
+  type: 'test'
+  ...
+# Subtest: manifest identity honors explicit names, culture and dependent-source conventions
+ok 5 - manifest identity honors explicit names, culture and dependent-source conventions
+  ---
+  duration_ms: 0.867598
+  type: 'test'
+  ...
+# Subtest: resource input discovery converges after resx hydration and retains context diagnostics
+ok 6 - resource input discovery converges after resx hydration and retains context diagnostics
+  ---
+  duration_ms: 0.418591
+  type: 'test'
+  ...
+# Subtest: resource evaluation emits payloads and fails lazy content without empty-byte substitution
+ok 7 - resource evaluation emits payloads and fails lazy content without empty-byte substitution
+  ---
+  duration_ms: 0.474345
+  type: 'test'
+  ...
+# Subtest: resource payload reader and writer reject duplicates, unsupported types and bounded/truncated input
+ok 8 - resource payload reader and writer reject duplicates, unsupported types and bounded/truncated input
+  ---
+  duration_ms: 6.223731
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 138.140049

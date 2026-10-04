@@ -1,0 +1,11 @@
+{
+  "authorizedBy": "Root coordinator; obsolete full Chrome, downloaded headless archive and unused broken SDK8 only",
+  "at": "2026-10-04T00:28:55.305602+00:00",
+  "beforeFreeBytes": 109576192,
+  "removed": [
+    "/workspace/scratch/3e16369943fd/browser-vendor/chrome-linux64",
+    "/workspace/scratch/3e16369943fd/browser-vendor/headless-shell.zip",
+    "/workspace/scratch/3e16369943fd/dotnet/sdk/8.0.425"
+  ],
+  "afterFreeBytes": 1051533312
+}

@@ -57,6 +57,7 @@ export class TypeMapper {
     const special = type.specialType;
     if (special && specialNames[special]) return specialNames[special];
     if (type.isErrorType?.()) unsupported('a type the framework registry does not list', syntax);
+    if (this.host.projectReferences?.handles(type)) return this.host.projectReferences.type(type, syntax).imageName;
     const core = this.host.analysis.core,
       definition = type.originalDefinition;
     const sequences = [core.ienumerableT, core.ienumeratorT, core.iasyncEnumerableT, core.iasyncEnumeratorT];

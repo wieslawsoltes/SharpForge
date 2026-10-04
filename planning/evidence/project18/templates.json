@@ -1,0 +1,900 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "A24 T06.1-T06.7, T07.1-T07.7, T08.1-T08.4, T09.1-T09.3, T20-T22 (24 leaves)",
+  "agent": "templates_archives",
+  "branch": "codex/p18-templates",
+  "generatedAt": "2026-10-04T03:27:51Z",
+  "implementationHead": "f6cf31b591e3d02eeb06ab1a9a86315b0c2898ee",
+  "interpretation": "validated means the stated acceptance evidence passed on the explicitly named target. implemented means code exists but listed acceptance evidence remains pending. blocked means an actual prerequisite prevented acceptance qualification. Unavailable/skipped targets are never counted as passing.",
+  "toolchain": {
+    "platform": "Linux x64",
+    "node": "24.19.0",
+    "sdk": "10.0.401",
+    "referenceUnzip": "Python zipfile 3.12.14",
+    "chromium": "153.0.8010.12",
+    "browserMode": "HTTP, shipped CSP, actual dedicated workers"
+  },
+  "workRules": {
+    "validation": "Whole assigned scope authored before broad qualification. Subsequent fixes ran focused completed batches. Tests after upstream215a09e4 use node scripts/limited.js; no parallel heavy jobs in this agent.",
+    "storage": "Isolated git worktree; no pushes by this agent; root owns stacked PR publication.",
+    "sharedFiles": "studio.js remains untouched by this agent because its external Project19 lock is active. Root owns callback wiring and disk attachment.",
+    "dependencies": "No new external runtime dependencies. Designer reuses the public project-system XML CST API via a declared internal package dependency; no reverse dependency/cycle."
+  },
+  "validation": [
+    {
+      "id": "portable",
+      "result": "159/159 passed, 0 failed/skipped",
+      "artifact": "templates/portable-scope.log",
+      "testFiles": [
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-archive-large-metadata.test.js",
+        "tests/a24-09-destination.test.js",
+        "tests/a24-07-template-catalog.test.js",
+        "tests/a24-08-winui-templates.test.js",
+        "tests/a24-20-template-engine.test.js",
+        "tests/template-qualification.test.js",
+        "tests/templates-archive.test.js",
+        "tests/template-examples.test.js"
+      ],
+      "scope": "Archive codecs/budgets, destination transaction, catalog, native shapes, template engine, every legacy example and browser-managed project. This predates the explicit merge compatibility and XAML source seam; those are qualified separately."
+    },
+    {
+      "id": "native-sdk",
+      "result": "14/14 passed, 0 failed/skipped",
+      "artifact": "templates/native-sdk.log",
+      "testFiles": [
+        "tests/a24-07-native-qualification.test.js",
+        "tests/a24-20-sdk-template-parity.test.js"
+      ],
+      "selection": "Six shipped native-compatible projects; nine package-free C# items in one host; configuration; actual SDK symbol defaults; five byte-identical SDK scenarios. Framework package tests were not selected.",
+      "reference": "dotnet SDK10.0.401, NativeMSBuild, dotnet run, real SDK nupkg"
+    },
+    {
+      "id": "native-model",
+      "result": "2/2 passed, 0 failed/skipped",
+      "artifact": "templates/native-model-configuration.log",
+      "scope": "Configuration rerun with appsettings parity and actual CLR observable model/RelayCommand; configuration overlaps native-sdk and is not an additional unique test."
+    },
+    {
+      "id": "native-manifest",
+      "result": "1/1 passed, 0 failed/skipped",
+      "artifact": "templates/native-config-manifest.log",
+      "command": "SHARPFORGE_TEMPLATE_NATIVE=1 DOTNET_ROOT=<SDK> NUGET_PACKAGES=<shared-cache> node scripts/limited.js node --test --test-reporter=tap --test-name-pattern=\"Generated configuration\" tests/a24-07-native-qualification.test.js",
+      "scope": "All nine configuration types; generated app.manifest supplied as ApplicationManifest to the C# compiler, appsettings keys equal dotnet new web. Does not qualify Windows OS manifest semantics."
+    },
+    {
+      "id": "compatibility",
+      "result": "48/48 passed, 0 failed/skipped",
+      "artifact": "templates/compatibility.log",
+      "command": "node scripts/limited.js node --test --test-reporter=tap tests/a24-08-xaml-designer.test.js tests/a24-08-xaml-source-services.test.js tests/a24-07-template-catalog.test.js tests/a24-09-destination.test.js tests/workspace-io.test.js",
+      "scope": "Four XAML pairs project to actual source/CIL scenes; source-preserving designer writes, conflicts, boundaries; single-module contribution; strict-empty compatibility; explicit merge rollback; unchanged workspace I/O regressions."
+    },
+    {
+      "id": "compression-backend",
+      "result": "3/3 passed, 0 failed/skipped",
+      "artifact": "templates/xaml-initial.log",
+      "testFiles": [
+        "tests/a24-06-compression-backends.test.js"
+      ],
+      "scope": "Portable and actual Node CompressionStream raw DEFLATE, zlib reference, output/input budgets, active cancellation. The same 46-test log has one new XAML fixture misuse (remove expects array), fixed and passed in compatibility; do not count that initial batch as all passing."
+    },
+    {
+      "id": "browser-release11",
+      "result": "23/23 passed; no JavaScript/CSP errors",
+      "artifact": "templates/browser-release11.json",
+      "session": "templates/browser-release11-session.json",
+      "command": "CHROMIUM_EXECUTABLE=<headless-shell> PYTHONPATH=<playwright> python tests/browser_release11_test.py",
+      "scope": "Actual Studio wizard, templates, new/open/ZIP workflows before final XAML seam."
+    },
+    {
+      "id": "browser-wizard",
+      "result": "6/6 passed; no JavaScript/CSP errors",
+      "artifact": "templates/browser-wizard.json",
+      "session": "templates/browser-wizard-session.json",
+      "command": "CHROMIUM_EXECUTABLE=<headless-shell> PYTHONPATH=<playwright> python tests/browser_a24_templates_test.py",
+      "scope": "Actual wizard DOM cancel/options/native prerequisites; real OPFS overwrite decline, explicit merge mode, byte-exact rollback and attachable disk; Blob/ReadableStream/WritableStream ZIP64. Repeated after automatic builtin discovery. Native OS picker itself is not automated."
+    },
+    {
+      "id": "recursive-archives",
+      "result": "18/18 passed; zero failures/skips",
+      "artifact": "templates/recursive-final.log",
+      "command": "node scripts/limited.js node --test --test-reporter=tap tests/a24-06-recursive-archives.test.js tests/a24-06-archives.test.js tests/a24-06-compression-backends.test.js tests/a24-06-archive-large-metadata.test.js",
+      "scope": "Actual pinned MIT ZIP quine with reference Python self-reproduction; bounded sync/stream rejection; nested-bomb strict policy; ordinary equal-size negative case; all archive regression suites."
+    },
+    {
+      "id": "catalog-discovery",
+      "result": "154/156 passed; zero skips; both failures are unchanged A00 CSS snapshots for the new explorer-disk-services stylesheet",
+      "artifact": "templates/catalog-discovery.log",
+      "command": "node scripts/limited.js node --test --test-reporter=tap tests/a24-07-catalog-discovery.test.js tests/a24-07-template-catalog.test.js tests/template-qualification.test.js tests/templates-archive.test.js tests/template-examples.test.js tests/a24-20-template-engine.test.js tests/a00-06-registration.test.js tests/a00-20-styles.test.js",
+      "scope": "All catalog, legacy template/archive/example, template-engine and new build-discovery tests pass. Root owns intentional CSS order/fingerprint reconciliation (770 bytes, 9 rules); no CSS changed in this batch."
+    },
+    {
+      "id": "catalog-build",
+      "result": "passed",
+      "artifact": "templates/catalog-build.log",
+      "command": "npm run build",
+      "scope": "Deterministic generated static catalog; source package imports rewritten; full dependency-free browser distribution built."
+    },
+    {
+      "id": "designer-browser-regression",
+      "result": "16/16 passed; no page errors; two real workers",
+      "artifact": "templates/browser-designer-release13.json",
+      "command": "CHROMIUM_EXECUTABLE=<headless-shell> PYTHONPATH=<playwright> python tests/browser_release13_test.py",
+      "scope": "C# designer source synchronization, preview, editing, event handlers, runtime storyboard and direct-CIL/source-VM workers. This does not qualify the pending Studio XAML callback wiring."
+    },
+    {
+      "id": "windows-plan-followup",
+      "result": "33 passed, 0 failed, 5 Windows-only cases skipped (38 total)",
+      "artifact": "templates/windows-plan-qualification.log",
+      "command": "SHARPFORGE_TEMPLATE_NATIVE=0 node scripts/limited.js node --test --test-reporter=tap tests/a24-08-windows-qualification.test.js tests/a24-08-winui-templates.test.js tests/a24-07-template-catalog.test.js tests/a24-07-catalog-discovery.test.js tests/a24-08-xaml-designer.test.js tests/a24-08-xaml-source-services.test.js tests/template-qualification.test.js",
+      "durationMs": 5231.781881,
+      "scope": "Portable generation proves the WinUI MSTest executable owns App/XAML UI-thread dispatch and propagates runner results; library and native animation XAML partial pairs have project membership; composed runtime plans preserve optimistic edits and unique resource keys. Existing catalog, source/CIL storyboard and designer source-sync regressions pass. The five authored Windows tests did not execute on this Linux host.",
+      "windowsHarness": {
+        "test": "tests/a24-08-windows-qualification.test.js",
+        "composition": "tests/helpers/a24-windows-qualification.js",
+        "runtime": "tests/fixtures/templates/windows/TemplateRuntimeChecks.cs",
+        "pendingCommand": "SHARPFORGE_TEMPLATE_NATIVE=1 node scripts/limited.js node --test tests/a24-08-windows-qualification.test.js",
+        "cases": [
+          "Windows App SDK build of unpackaged app",
+          "Windows App SDK build of packaged app",
+          "Windows App SDK build of XAML library",
+          "Windows App SDK build and actual MSTest app pass plus intentional failure exit",
+          "Actual generated XAML controls, styles, dictionaries, storyboards, visual states, MVVM bindings and two-page navigation"
+        ],
+        "references": [
+          "https://learn.microsoft.com/dotnet/core/testing/unit-testing-mstest-winui",
+          "https://github.com/microsoft/testfx/blob/v3.8.3/src/TestFramework/TestFramework.Extensions/Attributes/WinUI_UITestMethodAttribute.cs"
+        ],
+        "qualificationStatus": "pending Windows execution; authoring and portable checks are not native runtime qualification"
+      }
+    },
+    {
+      "id": "host-text-sink-reopen",
+      "result": "9 assigned cases passed: XML text policy 1, writer ownership 5, XAML reopen 3. Full host cohort 495/500; five failures outside these three files remain recorded.",
+      "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "artifact": "integration/upstream-qualification/node26-host-complete.json",
+      "testFiles": [
+        "tests/a24-xml-text-policy.test.js",
+        "tests/a24-archive-sink-ownership.test.js",
+        "tests/a24-xaml-reopen.test.js"
+      ],
+      "scope": "Shared XAML/manifest/pubxml text admission; owned stream abort/release; generated XAML decode→DesignerSourceSync connect/edit/reopen through public ZIP, Blob and provider APIs. No protected entry execution. Three original wizard-fixture failures were corrected and passed in the separate 39/39 correction scope."
+    },
+    {
+      "id": "host-package-wizard-corrections",
+      "result": "39/39 complete correction cases passed, zero failed/skipped; includes atomicity 3, native wizard helper 4 and existing template engine 8.",
+      "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+      "artifact": "integration/upstream-qualification/node26-host-corrections.json",
+      "testFiles": [
+        "tests/a24-template-package-atomicity.test.js",
+        "tests/a24-workspace-wizard-native.test.js",
+        "tests/a24-20-template-engine.test.js"
+      ],
+      "scope": "All-or-nothing package catalog admission and startup/context selection after successful native wizard mutation."
+    },
+    {
+      "id": "native-ui-model-ports",
+      "result": "10/10 direct model/metadata/profile cases passed; full 95/96 cohort retained with one unrelated forged-token fixture failure.",
+      "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+      "artifact": "integration/upstream-qualification/node26-worker-model-complete.json",
+      "testFiles": [
+        "tests/a23-native-context-ui-model.test.js",
+        "tests/a23-native-reference-metadata.test.js",
+        "tests/a23-native-profile-ui-model.test.js"
+      ],
+      "scope": "Explicit transport/cancellation/host models, not controller or native process execution."
+    },
+    {
+      "id": "final-native-views-engine-boundaries",
+      "result": "13/13 assigned new cases passed: native views 8, UTF-8/value-form boundaries 5. Full 65/66 cohort retained with one unrelated Explorer error expectation failure.",
+      "sourceCommit": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+      "artifact": "integration/upstream-qualification/node26-final-corrections.json",
+      "testFiles": [
+        "tests/a23-native-view-contracts.test.js",
+        "tests/a24-template-engine-boundaries.test.js"
+      ],
+      "scope": "Complete public view contracts with an explicit element port, exact configuration byte budgets and own-key form lookup. Existing engine/atomicity files were included in the same run."
+    },
+    {
+      "scope": "Completed canonical workbench port and compatibility composition",
+      "record": "templates-workbench-qualification.json",
+      "source": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "fullNode22": {
+        "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "tests": 1877,
+        "pass": 1877,
+        "fail": 0
+      },
+      "ownedAndRelatedCases": 31,
+      "legacyNode26": {
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "tests": 382,
+        "pass": 382,
+        "fail": 0
+      },
+      "editorNode26": {
+        "source": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "tests": 40,
+        "pass": 40,
+        "fail": 0
+      },
+      "proposedEntryExecuted": false,
+      "actualCanonicalBrowserComplete": false,
+      "earlierFailuresRetained": true
+    }
+  ],
+  "performance": {
+    "command": "node packages/project-system/examples/archive-benchmark.mjs --baseline=2706a82f",
+    "measurementRevision": "c97887ed",
+    "machineShared": true,
+    "quietMachineClaim": false,
+    "initial": "templates/benchmark-initial.json",
+    "optimized": "templates/benchmark-optimized.json",
+    "final": "templates/benchmark-final.json",
+    "initialRegression": {
+      "writeMedianMs": [
+        2.500834,
+        3.653603
+      ],
+      "readMedianMs": [
+        2.429986,
+        3.323905
+      ],
+      "reason": "New metadata conversion, CRC calls and repeated path/entry scans exceeded the existing hot-path budget.",
+      "signoffWasRequired": true,
+      "signoffReceived": false,
+      "resolution": "f900e1be removes avoidable metadata work, uses slicing-by-eight CRC and indexes entry boundaries; e5a94692 also indexes destination preflight/rollback. Initial regression retained for review, not concealed."
+    },
+    "finalSmallArchive": {
+      "corpus": "200 entries of 1920 bytes, stored,25 trials",
+      "writeMedianMs": [
+        2.415644,
+        2.132957
+      ],
+      "writeP95Ms": [
+        4.132213,
+        2.883019
+      ],
+      "readMedianMs": [
+        2.261432,
+        1.877181
+      ],
+      "readP95Ms": [
+        2.692883,
+        2.546541
+      ],
+      "exceeds5PercentRegressionBudget": false,
+      "limitation": "Same-run baseline comparison on shared AMD EPYC9V74 machine; other agents may affect variance. No dedicated-host speedup guarantee."
+    },
+    "streaming": {
+      "entries": 1001,
+      "inputBytes": 524288154,
+      "outputBytes": 7133409,
+      "compressionBackend": "portable-fixed",
+      "seconds": 4.393790901,
+      "sourceBytes": 524288000,
+      "peakRss": 147316736,
+      "rssIncrease": 81604608,
+      "externalIncrease": 83109382,
+      "heapIncrease": 2997976,
+      "reference": {
+        "version": "3.12.14",
+        "entries": 1001,
+        "bytes": 524288154
+      },
+      "readZipValidated": true,
+      "memoryScope": "writer only; input generated in 64KiB chunks; validation materialization excluded"
+    },
+    "recursiveFollowup": {
+      "artifact": "templates/benchmark-recursive.json",
+      "command": "node scripts/limited.js node packages/project-system/examples/archive-benchmark.mjs --baseline=2706a82f",
+      "machineShared": true,
+      "writeMedianMs": [
+        2.583957,
+        1.65107
+      ],
+      "writeP95Ms": [
+        4.201747,
+        2.705992
+      ],
+      "readMedianMs": [
+        2.246699,
+        1.276616
+      ],
+      "readP95Ms": [
+        2.640362,
+        1.880256
+      ],
+      "exceeds5PercentRegressionBudget": false,
+      "streaming": {
+        "entries": 1001,
+        "inputBytes": 524288154,
+        "outputBytes": 7133409,
+        "compressionBackend": "portable-fixed",
+        "seconds": 4.453098239,
+        "sourceBytes": 524288000,
+        "peakRss": 120791040,
+        "rssIncrease": 54218752,
+        "externalIncrease": 55307846,
+        "heapIncrease": 2704352,
+        "reference": {
+          "version": "3.12.14",
+          "entries": 1001,
+          "bytes": 524288154
+        },
+        "readZipValidated": true,
+        "memoryScope": "writer only; input generated in 64KiB chunks; validation materialization excluded"
+      }
+    },
+    "catalogImport": {
+      "command": "node scripts/limited.js node packages/templates/examples/catalog-import-benchmark.mjs --baseline=4b0c8a7e",
+      "artifact": "templates/catalog-import-benchmark.json",
+      "sharedMachine": true,
+      "before": {
+        "medianMs": 396.296455,
+        "p95Ms": 454.994183,
+        "medianHeapBytes": 29534384
+      },
+      "after": {
+        "medianMs": 396.02148900000003,
+        "p95Ms": 453.43025,
+        "medianHeapBytes": 30634928
+      },
+      "sourceBytes": [
+        121749,
+        154910
+      ],
+      "exceeds5PercentRegressionBudget": false,
+      "limits": "Node import only, warm filesystem; HTTP first paint is not measured. Per-template source formatting duplicates metadata and increases package source bytes; whole application output size is assessed separately. Modules load statically, generators execute only on plan creation; no lazy code-chunk claim."
+    }
+  },
+  "remainingGates": [
+    {
+      "id": "windows",
+      "status": "blocked",
+      "reason": "This host is Linux. No Windows App SDK build or actual Windows XAML binding/default-style/navigation execution was performed. Five bounded opt-in Windows qualification cases now build all four native projects, run both passing and intentionally failing MSTest UI apps, and exercise real generated XAML runtime behavior. They are explicitly skipped here; native shape checks and harness authoring are not Windows qualification.",
+      "test": "tests/a24-08-windows-qualification.test.js"
+    },
+    {
+      "id": "nuget-frameworks",
+      "status": "blocked",
+      "reason": "One shared bounded SDK10.0.401 restore timed out after50 seconds with exit124; only Determining projects to restore was logged and cache remained empty. No retries or inferred network-denial claim.",
+      "artifact": "testing/framework-restore.log",
+      "packages": [
+        "Microsoft.NET.Test.Sdk17.13.0",
+        "xunit2.9.3",
+        "xunit.runner.visualstudio3.0.2",
+        "NUnit4.3.2",
+        "NUnit3TestAdapter5.0.0",
+        "MSTest.TestAdapter3.8.3",
+        "MSTest.TestFramework3.8.3",
+        "coverlet.collector6.0.4"
+      ]
+    },
+    {
+      "id": "studio-callback",
+      "status": "implemented",
+      "reason": "XAML callbacks, lazy native/designer services and source-preserving workspace ports are implemented and published. All20 new port fixture cases and11 related cases passed the canonical1877-case Node22 scope. The exact82-transformation protected entry proposal remains unapplied and unexecuted. Root actual canonical browser runs passed3 then5 checks but remain incomplete after the recorded fixture and status-column failures; those runs do not qualify the proposed entry wiring."
+    }
+  ],
+  "issues": [
+    {
+      "number": 3108,
+      "workId": "SF-A24-T20",
+      "title": "Parse template.json and evaluate symbols",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3108",
+      "status": "validated",
+      "implementation": [
+        "packages/templates/src/engine/template-config.js",
+        "packages/templates/src/engine/expression.js",
+        "packages/templates/src/engine/value-forms.js"
+      ],
+      "tests": [
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-20-sdk-template-parity.test.js",
+        "tests/a24-template-engine-boundaries.test.js"
+      ],
+      "acceptanceEvidence": "SDK console/classlib actual package parses with framework/skipRestore/langVersion/HostIdentifier defaults and computed values; unknown parameters/choice/cycles/budget/unsafe expression rejected. Native-sdk log records SDK10.0.401. Final UTF-8 boundary cases pass at af15e96b: exact string/byte/object limits, multibyte text/surrogates, BOM accounting, rejection before decode and invalid-budget diagnostics.",
+      "remaining": []
+    },
+    {
+      "number": 3109,
+      "workId": "SF-A24-T21",
+      "title": "Apply sourceName replacement, conditionals and file rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3109",
+      "status": "validated",
+      "implementation": [
+        "packages/templates/src/engine/instantiate.js",
+        "packages/templates/src/engine/file-rules.js",
+        "packages/templates/src/engine/msbuild-conditions.js"
+      ],
+      "tests": [
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-20-sdk-template-parity.test.js",
+        "tests/a24-template-engine-boundaries.test.js"
+      ],
+      "acceptanceEvidence": "Byte-identical files versus dotnet new for ConsoleDefault, ConsoleMain, ConsoleOldLanguage7.3, Console-Hyphen and LibraryDefault; all native-built, consoles executed. Content/path replacement, include/exclude/rename/copyOnly, CRLF XML/JSON/C# branches and malformed cases tested. Inherited Object keys cannot resolve built-in or configured value forms; unsupported identifiers retain SFTPL011. Legitimate own-key aliases and explicit reserved-looking names pass.",
+      "remaining": []
+    },
+    {
+      "number": 3110,
+      "workId": "SF-A24-T22",
+      "title": "Install templates from nupkg packages",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3110",
+      "status": "validated",
+      "implementation": [
+        "packages/templates/src/engine/packages.js",
+        "packages/templates/src/registry.js"
+      ],
+      "tests": [
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-20-sdk-template-parity.test.js",
+        "tests/a24-template-package-atomicity.test.js"
+      ],
+      "acceptanceEvidence": "Installing nupkg fixture adds searchable templates only to caller catalog, creates concrete project, rejects duplicates/invalid packages, uninstall removes it. All process/restore/open post-actions are manual data. Real SDK nupkg installs for parity suite. A temporary TemplateCatalog validates every pending addition and prepares manual post-actions before caller mutation. Invalid later identities and duplicate existing identities preserve the complete catalog; multi-template success is covered (3/3 at 3f271792).",
+      "remaining": []
+    },
+    {
+      "number": 3200,
+      "workId": "SF-A24-T06.1",
+      "title": "Read ZIP64 archives",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3200",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/zip64.js",
+        "packages/archive/src/zip-directory.js",
+        "packages/archive/src/zip-reader.js"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-archive-large-metadata.test.js"
+      ],
+      "acceptanceEvidence": "70000-entry read; synthetic5GiB stored entry lists using <131072 bytes and largest read<=65557 bytes; saturated fields require precise extra metadata, unsafe integers/missing locator malformed.",
+      "remaining": []
+    },
+    {
+      "number": 3201,
+      "workId": "SF-A24-T06.2",
+      "title": "Write ZIP64 when limits are exceeded",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3201",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/zip-writer.js",
+        "packages/archive/src/zip-headers.js",
+        "packages/archive/src/zip64.js"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-archive-large-metadata.test.js"
+      ],
+      "acceptanceEvidence": "70000 small entries automatically write ZIP64 and read back; Python zipfile accepts all70000 and testzip returnsNone. Forced small ZIP64 and unsafe metadata boundaries covered.",
+      "remaining": []
+    },
+    {
+      "number": 3202,
+      "workId": "SF-A24-T06.3",
+      "title": "Implement DEFLATE compression",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3202",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/deflate-compress.js",
+        "packages/archive/src/deflate-dynamic.js",
+        "packages/archive/src/deflate-platform.js",
+        "packages/archive/src/deflate-stream.js"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-compression-backends.test.js"
+      ],
+      "acceptanceEvidence": "Fixed/dynamic raw DEFLATE round-trips through own reader and zlib, text corpus<40%; stored fallback; actual Node CompressionStream backend, input/output limits and active abort pass. Dynamic compressor reuses existing fixed implementation.",
+      "remaining": [
+        "Actual browser stream ZIP test used portable-fixed; platform CompressionStream was qualified on Node24.19.0."
+      ]
+    },
+    {
+      "number": 3203,
+      "workId": "SF-A24-T06.4",
+      "title": "Add streaming ZIP reader over Blob and File",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3203",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/zip-stream-reader.js",
+        "packages/archive/src/deflate-stream.js"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-archive-large-metadata.test.js"
+      ],
+      "acceptanceEvidence": "Sparse5GiB Blob lists with bounded tail/directory reads (stronger than1GiB requested). Single-entry streams verify CRC at EOF; malformed CRC rejects; close cancels active readers and later reads reject. Entry payloads are read on demand.",
+      "remaining": []
+    },
+    {
+      "number": 3204,
+      "workId": "SF-A24-T06.5",
+      "title": "Add streaming ZIP writer with data descriptors",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3204",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/zip-stream-writer.js",
+        "packages/project-system/src/archive-stream.js",
+        "packages/project-system/examples/archive-benchmark.mjs"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/browser_a24_templates_test.py",
+        "tests/a24-archive-sink-ownership.test.js"
+      ],
+      "acceptanceEvidence": "Actual500MiB chunk-generated workspace exports in4.393790901s; writer peakRSS147316736 and increase81604608 bytes, no whole-input allocation;1001 entries/524288154 bytes validate with readZip and Python3.12.14. CRC data descriptors, backpressure and cancellation tested. Five additional early-validation cases pass: accepted sinks abort/release exactly once for invalid names/settings/workspace records; another caller's locked writer is untouched and success preserves backpressure/close semantics.",
+      "remaining": [
+        "Memory measurement covers writer only; reference validation materializes output afterward. importWorkspaceZipFromBlob returns bounded materialized records; use openZip for lazy extraction."
+      ]
+    },
+    {
+      "number": 3205,
+      "workId": "SF-A24-T06.6",
+      "title": "Preserve timestamps and Unix modes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3205",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/zip-metadata.js",
+        "packages/project-system/src/archive.js",
+        "packages/project-system/src/archive-stream.js"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/workspace-io.test.js"
+      ],
+      "acceptanceEvidence": "preserveMetadata keeps UTC-second mtime and executable100755 mode; default ignores varying timestamps/modes and stays byte-identical. Unsupported symlink/special-file modes reject. Workspace byte encodings retained.",
+      "remaining": []
+    },
+    {
+      "number": 3206,
+      "workId": "SF-A24-T06.7",
+      "title": "Enforce compression-ratio and overlap budgets with a malformed corpus",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3206",
+      "status": "validated",
+      "implementation": [
+        "packages/archive/src/zip-budgets.js",
+        "packages/archive/src/zip-directory.js",
+        "packages/archive/src/zip-reader.js",
+        "packages/archive/src/zip-stream-reader.js",
+        "packages/archive/src/zip-content-policy.js"
+      ],
+      "tests": [
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-archive-large-metadata.test.js",
+        "tests/a24-06-recursive-archives.test.js"
+      ],
+      "acceptanceEvidence": "SpecificSFZIP diagnostics cover ratios, size/count/path limits, malformed Unicode/traversal, local-header/central overlap, truncation, CRC and malformedZIP64 before returning records. Incremental output and streaming byte budgets enforced. The exact 866-byte MIT ZIP quine is pinned by Git blob, proved self-reproducing by Python zipfile, and rejected with SFZIP014 by both readers. Generated nested bomb is rejected by strict nested policy before its inner contents are opened; low file budgets reject before output allocation.",
+      "remaining": [
+        "Default nested ZIP assets remain inert bytes; nestedArchives:reject rejects ZIP payload signatures. This opt-in policy is not a general polyglot detector and performs no recursive extraction. The direct enclosing-archive quine comparison is exact, not a CRC-only heuristic."
+      ]
+    },
+    {
+      "number": 3207,
+      "workId": "SF-A24-T07.1",
+      "title": "Split template catalog into per-template modules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3207",
+      "status": "validated",
+      "implementation": [
+        "packages/templates/src/registry.js",
+        "packages/templates/src/project/",
+        "packages/templates/src/item/",
+        "packages/templates/examples/notice-template.mjs",
+        "packages/templates/build-catalog.js",
+        "packages/templates/src/catalog.generated.js",
+        "packages/templates/build.contrib.json",
+        "scripts/build-generators.js",
+        "scripts/build-assets.js",
+        "scripts/build-contributions.js"
+      ],
+      "tests": [
+        "tests/a24-07-template-catalog.test.js",
+        "tests/templates-archive.test.js",
+        "tests/template-examples.test.js",
+        "tests/a24-07-catalog-discovery.test.js"
+      ],
+      "acceptanceEvidence": "All 73 builtin definitions are individual project/item modules. Adding only one authored *.template.js file is discovered, indexed, searched and instantiated through the unchanged build contribution pipeline, without a handwritten registry/import-list edit. The checked-in index is a mechanical generated artifact for source/CLI consumers. Complete metadata equals the prior catalog and the released 11-project/19-item inventories; unchanged legacy tests pass. Invalid kind/generator/targets/order, duplicate IDs, size/count limits, cancellation and unsafe generator outputs are tested. Actual browser build and six wizard/OPFS/ZIP checks pass.",
+      "remaining": []
+    },
+    {
+      "number": 3208,
+      "workId": "SF-A24-T07.2",
+      "title": "Add template option model matching dotnet new",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3208",
+      "status": "validated",
+      "implementation": [
+        "packages/templates/src/options.js",
+        "packages/templates/src/project-plan.js",
+        "apps/studio/project-wizard/"
+      ],
+      "tests": [
+        "tests/a24-07-template-catalog.test.js",
+        "tests/browser_a24_templates_test.py",
+        "tests/a24-20-sdk-template-parity.test.js"
+      ],
+      "acceptanceEvidence": "use-program-main=false emits actual top-level Console code; framework/nullable/implicit usings/Main/noRestore/output/langVersion/namespace/layout validated. Browser wizard produces runnable top-level project/classicSLN in same directory; invalid types rejected.",
+      "remaining": []
+    },
+    {
+      "number": 3209,
+      "workId": "SF-A24-T07.3",
+      "title": "Add xUnit, NUnit and MSTest project templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3209",
+      "status": "blocked",
+      "implementation": [
+        "packages/templates/src/project/tests.js",
+        "packages/templates/src/item/code.js"
+      ],
+      "tests": [
+        "tests/a24-07-template-catalog.test.js",
+        "tests/a24-07-native-qualification.test.js"
+      ],
+      "acceptanceEvidence": "xUnit/NUnit/MSTest project plans include deterministic package versions, IsTestProject, test SDK/adapter/framework and a passing test; adding test item adds second body and package metadata. Native restore/build/test tests are authored.",
+      "remaining": [
+        "Shared real NuGet restore timed out; no native framework packages cached and no actual dotnet test result. See nuget-frameworks gate."
+      ]
+    },
+    {
+      "number": 3210,
+      "workId": "SF-A24-T07.4",
+      "title": "Add native WinUI 3 app, library and test templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3210",
+      "status": "blocked",
+      "implementation": [
+        "packages/templates/src/project/winui-native.js",
+        "packages/templates/src/project/assets.js",
+        "packages/templates/src/project/winui-test-host.js"
+      ],
+      "tests": [
+        "tests/a24-07-template-catalog.test.js",
+        "tests/a24-08-windows-qualification.test.js"
+      ],
+      "acceptanceEvidence": "Unpackaged/MSIX apps, XAML class library and a real Exe test app emit Windows-targeted projects, WindowsAppSDK1.8.260921001, compiled XAML/code-behind, manifests and correctly dimensioned PNGs. The test App owns the XAML UI thread, registers the MSTest3.8.3 UITestMethod dispatcher, hosts Microsoft.Testing.Platform and propagates runner exit codes before closing. Portable generation, XML, unsupported-host and incompatible-framework checks pass. Four opt-in native build cases and the test-app pass/intentional-failure execution cases are authored.",
+      "remaining": [
+        "Actual Windows App SDK builds and MSTest UI-app execution remain unqualified because this host is Linux. All five Windows-only cases explicitly skipped; do not claim native Windows success."
+      ]
+    },
+    {
+      "number": 3211,
+      "workId": "SF-A24-T07.5",
+      "title": "Add solution and configuration file templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3211",
+      "status": "validated",
+      "implementation": [
+        "packages/templates/src/item/config-files.js",
+        "packages/templates/src/project/solution.js"
+      ],
+      "tests": [
+        "tests/a24-07-template-catalog.test.js",
+        "tests/a24-07-native-qualification.test.js"
+      ],
+      "acceptanceEvidence": "All9configuration types consumed by SDK10.0.401/Git: SDK selection, NuGet list, empty tool restore, SLN list, NativeMSBuild central-packages and app.manifest compiler input, launch profile, ignore and attributes; appsettings equals dotnet new web JSON.",
+      "remaining": [
+        "Native OS interpretation of Windows manifest requires Windows; Linux C# compiler acceptance is the recorded test."
+      ]
+    },
+    {
+      "number": 3212,
+      "workId": "SF-A24-T07.6",
+      "title": "Add core C# item templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3212",
+      "status": "implemented",
+      "implementation": [
+        "packages/templates/src/item/code.js"
+      ],
+      "tests": [
+        "tests/a24-07-template-catalog.test.js",
+        "tests/a24-07-native-qualification.test.js"
+      ],
+      "acceptanceEvidence": "Nine package-free code items compile together in a real native console with file-scoped namespace and nullable option; top-level program runs. Test items generate framework-specific passing bodies and package references.",
+      "remaining": [
+        "xUnit/NUnit/MSTest item compilation awaits actual package restore, same blocker as3209."
+      ]
+    },
+    {
+      "number": 3213,
+      "workId": "SF-A24-T07.7",
+      "title": "Qualify every template on its declared targets",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3213",
+      "status": "implemented",
+      "implementation": [
+        "packages/templates/src/qualification.js",
+        "tests/template-qualification.test.js",
+        "tests/a24-07-native-qualification.test.js"
+      ],
+      "tests": [
+        "tests/template-qualification.test.js",
+        "tests/a24-07-native-qualification.test.js",
+        "tests/a24-20-sdk-template-parity.test.js",
+        "tests/a24-08-windows-qualification.test.js"
+      ],
+      "acceptanceEvidence": "All11 declared browser-managed projects source/CIL-qualified; six shipped native-compatible projects native-built and runnable ones executed. Gate rejects missing/skipped/duplicate/wrong-target evidence withSFTPL020 and retains prerequisites.",
+      "remaining": [
+        "Full declared-target catalog is not all green: native framework and Windows targets lack passing observations. A selected target gate is enforced, not fabricated cross-platform qualification."
+      ]
+    },
+    {
+      "number": 3214,
+      "workId": "SF-A24-T08.1",
+      "title": "Add XAML page, window and user control item templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3214",
+      "status": "implemented",
+      "implementation": [
+        "packages/templates/src/item/winui-xaml.js",
+        "packages/designer/src/xaml-reader.js",
+        "packages/designer/src/xaml-writer.js",
+        "packages/designer/src/xaml-session.js",
+        "apps/studio/designer/markup-services.js",
+        "apps/studio/designer/source-sync.js",
+        "packages/archive/src/text-encoding.js"
+      ],
+      "tests": [
+        "tests/a24-08-winui-templates.test.js",
+        "tests/a24-08-xaml-designer.test.js",
+        "tests/a24-08-xaml-source-services.test.js",
+        "tests/browser_a24_xaml_designer_test.py",
+        "tests/a24-08-windows-qualification.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/a24-xaml-reopen.test.js"
+      ],
+      "acceptanceEvidence": "Four generated pairs load to designer documents and no-op sync unchanged; actual projected source/CIL scenes have correct text and no unsupported APIs. Scalar span edits preserve BOM/CRLF/quotes/comments; structural changes preserve x:Class, window identity and code-behind. Conflicts/unknown APIs/bindings/malformed XML/budgets/cancellation reject. Public text policy admits .xaml/.manifest/.appxmanifest/.pubxml, preserving strict binary rejection. Three generated XAML ZIP/Blob/provider reopen cases connect real DesignerSourceSync, edit and reconnect with UTF-16BE/BOM/CRLF and binary records preserved. This does not claim the protected Studio entry was wired or executed.",
+      "remaining": [
+        "Actual Studio browser write suite awaits root host callback wiring behind the shared studio.js lock. Native partial-class compilation/instantiation is covered by the authored Windows runtime harness but is unexecuted here. Literal designer supports a registered subset and explicitly rejects unsupported resource/binding markup."
+      ]
+    },
+    {
+      "number": 3215,
+      "workId": "SF-A24-T08.2",
+      "title": "Add templated control and resource dictionary templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3215",
+      "status": "blocked",
+      "implementation": [
+        "packages/templates/src/item/winui-controls.js"
+      ],
+      "tests": [
+        "tests/a24-08-winui-templates.test.js",
+        "tests/a24-08-windows-qualification.test.js"
+      ],
+      "acceptanceEvidence": "Native templated controls emit DefaultStyleKey and Themes/Generic.xaml styles; dictionary/style/ControlTemplate/DataTemplate files are generated. Second-control dictionary edits preserve unique implicit/explicit keys and reject incompatible namespaces. The composed Windows harness applies both control plans, instantiates and displays them, checks the rendered TemplateBinding/background and layout, and loads all dictionaries through the actual XAML runtime; portable composition checks pass.",
+      "remaining": [
+        "The actual Windows render/default-style and resource-lookup harness is authored but was skipped on Linux. Browser literal designer does not load ResourceDictionary/TemplateBinding. Runtime acceptance remains open."
+      ]
+    },
+    {
+      "number": 3216,
+      "workId": "SF-A24-T08.3",
+      "title": "Add animation and visual-state templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3216",
+      "status": "implemented",
+      "implementation": [
+        "packages/templates/src/item/winui-animation.js"
+      ],
+      "tests": [
+        "tests/a24-08-winui-templates.test.js",
+        "tests/a24-08-windows-qualification.test.js"
+      ],
+      "acceptanceEvidence": "Generated code-first opacity Storyboard executes on actual source and direct CIL animation clocks and reaches 0.5 at 100ms of its 200ms duration; unsupported animation properties are not emitted. Native theme-transition/visual-state templates now emit compiled Page XAML plus matching partial classes and membership. The Windows harness instantiates those generated pages and runs both code/XAML storyboards, checking completion, base-value restoration and visual-state setters; portable shape and existing animation-runtime checks pass.",
+      "remaining": [
+        "Native XAML animation/transition/state execution is authored in the Windows qualification harness but remains unexecuted on Linux. Only the portable code-first storyboard has passing runtime evidence."
+      ]
+    },
+    {
+      "number": 3217,
+      "workId": "SF-A24-T08.4",
+      "title": "Add MVVM and navigation shell templates",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3217",
+      "status": "blocked",
+      "implementation": [
+        "packages/templates/src/item/winui-mvvm.js"
+      ],
+      "tests": [
+        "tests/a24-08-winui-templates.test.js",
+        "tests/a24-07-native-qualification.test.js",
+        "tests/a24-08-windows-qualification.test.js"
+      ],
+      "acceptanceEvidence": "Native observable model/RelayCommand previously built and executed on Linux .NET10: change notifications, duplicate-value suppression, command enable/reset. Generated Home/Settings shell contains x:Bind TwoWay/OneWay, command binding, and checked NavigateTo routes. The Windows runtime harness changes the actual model and TextBox in both directions, invokes the reset command, navigates both generated pages and rejects an unknown route without changing the Frame; portable composition checks pass.",
+      "remaining": [
+        "The actual XAML binding and two-page UI navigation harness is authored but skipped on this Linux host. Browser literal designer diagnoses x:Bind as unsupported. Windows runtime acceptance remains open."
+      ]
+    },
+    {
+      "number": 3218,
+      "workId": "SF-A24-T09.1",
+      "title": "Add destination picker flow to the project wizard",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3218",
+      "status": "validated",
+      "implementation": [
+        "apps/studio/project-wizard.js",
+        "apps/studio/project-wizard/controller.js",
+        "apps/studio/project-wizard/model.js",
+        "apps/studio/project-wizard/view.js",
+        "apps/studio/project-wizard/destination.js",
+        "apps/studio/workspace-wizard.js",
+        "apps/studio/workspace-session.js"
+      ],
+      "tests": [
+        "tests/a24-09-destination.test.js",
+        "tests/browser_a24_templates_test.py",
+        "tests/a24-workspace-wizard-native.test.js"
+      ],
+      "acceptanceEvidence": "Actual wizard DOM cancellation leaves open state, no selected destination, disabledCreate and no success; selected path andsame-directory/subfolder options reflected in preview. Real OPFS commit returns the selected directory workspace and same directory handle; the current additive adapter is ProviderDiskWorkspace. The host helper uses actual native toolchain OS for availability and selects a new native startup/context only after successful mutation and refreshed-project acceptance. Four direct cases pass, including failed mutation and missing-new-project selection preservation; failed post-write selection does not claim disk rollback.",
+      "remaining": [
+        "NativeOS picker itself is not automated. Root owns final Studio disk attachment integration."
+      ]
+    },
+    {
+      "number": 3219,
+      "workId": "SF-A24-T09.2",
+      "title": "Preflight conflicts and permissions before writing a template plan",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3219",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/destination-preflight.js",
+        "packages/project-system/src/destination-writer.js"
+      ],
+      "tests": [
+        "tests/a24-09-destination.test.js",
+        "tests/browser_a24_templates_test.py",
+        "tests/workspace-io.test.js"
+      ],
+      "acceptanceEvidence": "All paths validated before mutation: exact existing-file overwrite list, NFC/case aliases, parent-file/type conflicts, permissions and supplied quota. Declining overwrites/denied permissions createsnothing. ExistingUTF16 expectedText precondition decodescorrectly; metadata budgets/indexing bounded.",
+      "remaining": [
+        "Quota is checked only when caller supplies availableBytes or estimateQuota; File System Access cannot guarantee OS free-space reservation or close cross-process races."
+      ]
+    },
+    {
+      "number": 3220,
+      "workId": "SF-A24-T09.3",
+      "title": "Roll back partially created destinations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3220",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/destination-rollback.js",
+        "packages/project-system/src/destination-writer.js",
+        "packages/project-system/src/destination-mode.js"
+      ],
+      "tests": [
+        "tests/a24-09-destination.test.js",
+        "tests/browser_a24_templates_test.py",
+        "tests/workspace-io.test.js"
+      ],
+      "acceptanceEvidence": "Wizard explicitmode:merge journals createdentries and bounded exactoriginalbytes; injected failure/cancel restores actualOPFS bytes and removesnewdirectories; cleanup failures list exactleftovers. Legacy strict-empty partialsave contract remains unchanged and separately tested.",
+      "remaining": [
+        "Rollback is best-effort and non-atomic; exactleftovers are surfaced. Merge/rollback must be explicit to preserveexisting API default."
+      ]
+    }
+  ],
+  "followupImplementationHeads": [
+    "ed72d97ce22bcc361da5b6d0f0176d3c46728687",
+    "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+    "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+    "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+    "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+    "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "362f1337870ca5dca302ab7dc0dfc9f58629523f"
+  ],
+  "followupPublication": {
+    "manifest": "templates-publication.json",
+    "featureDrafts": 25,
+    "dependencyOnlyBranches": 15,
+    "delegatedMaintenancePRs": [
+      3816,
+      3880
+    ],
+    "automaticCore": "All 25 latest feature heads and both delegated maintenance heads have successful required core records.",
+    "protectedEntryIntegration": "Exact82-transformation proposal remains unapplied/unexecuted. Actual canonical entry has separate, incomplete browser qualification; these results are not conflated.",
+    "workbenchManifest": "templates-workbench-publication.json"
+  },
+  "workbenchSourceReview": {
+    "source": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+    "manifest": "templates-workbench-publication.json",
+    "reviewedSourceFiles": 26,
+    "preparedEntryHash": "6f37a3e450a5ab39bb10143156502f993b5c0a80bb844f8b6823e9a7589d196b",
+    "entryPatchHash": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+    "transformations": 82
+  }
+}

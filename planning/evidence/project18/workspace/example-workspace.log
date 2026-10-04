@@ -1,0 +1,13 @@
+{
+  "status": "committed",
+  "files": [
+    "Assets/raw.bin",
+    "Source/Program.cs"
+  ],
+  "merged": "FIRST\nsecond\nTHIRD\n",
+  "recoveredBinary": [
+    0,
+    128,
+    255
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "scope": "Later graph negative-fixture correction and production compiler-worker composition; preserves the earlier 95/96 full-model run separately.",
+  "metadata": {
+    "sourceCommit": "843fc516e466e3571dfbe925eaa322ee1bf6cad3",
+    "node": "v26.10.0",
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "tests/a23-cil-project-graph-contract.test.js",
+      "tests/a23-compiler-worker-entry.test.js"
+    ],
+    "environment": {
+      "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+      "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+      "SHARPFORGE_NATIVE_SDK": "10.0.201",
+      "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+    },
+    "startedAt": "2026-10-04T02:39:00.790552+00:00",
+    "log": "node26-compiler-graph-composition.tap",
+    "diskPreflight": {
+      "actualFreeBytes": 644468736,
+      "minimumFreeBytes": 536870912
+    },
+    "exitCode": 0,
+    "completedAt": "2026-10-04T02:39:04.046314+00:00",
+    "summary": {
+      "tests": 6,
+      "suites": 0,
+      "pass": 6,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "cases": [
+    {
+      "tap": 1,
+      "name": "public project graph resolves real PE tokens and retains independent modules and source provenance",
+      "result": "passed"
+    },
+    {
+      "tap": 2,
+      "name": "public project graph rejects missing content, forged hashes and incorrect target method definitions",
+      "result": "passed"
+    },
+    {
+      "tap": 3,
+      "name": "public project graph accepts a library entry and bounded identical inputs, and observes cancellation",
+      "result": "passed"
+    },
+    {
+      "tap": 4,
+      "name": "production compiler worker emits independent project artifacts through the registered build handler",
+      "result": "passed"
+    },
+    {
+      "tap": 5,
+      "name": "production compiler worker preserves newer source versions, exact release and emission cache reuse",
+      "result": "passed"
+    },
+    {
+      "tap": 6,
+      "name": "production compiler worker exposes semantic type previews without mutating document content",
+      "result": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "planning/evidence/project18/integration/upstream-qualification/node26-compiler-graph-composition.json",
+      "sha256": "236f6713fcf75d4e9a24dbc3ea2cb169cf7849f038e726e7f6d1e4d32dcdc100"
+    },
+    {
+      "path": "planning/evidence/project18/integration/upstream-qualification/node26-compiler-graph-composition.tap",
+      "sha256": "293940548a18682fce9dbc1b0ca769c0398261254abb24fcc691a22dd0824f6e"
+    }
+  ],
+  "initialQualification": "project-application-node26-qualification.json",
+  "qualificationLimit": "Actual Node26 Linux x64 composition; no browser or cross-platform claim."
+}

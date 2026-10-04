@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "readbackDate": "2026-10-04",
+  "scope": "The five newly published filesystem disk/search/UI drafts. Actual head-scoped core results; broad qualification jobs were skipped, no retry was initiated.",
+  "pullRequests": [
+    {
+      "pr": 3650,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3650",
+      "head": "4702f42e547a9d842e72b44c1286af2b36688ed4",
+      "branch": "codex/p18-foundation-disk-admission",
+      "run": 37166849609,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166849609",
+      "runAttempt": 1,
+      "runConclusion": "success",
+      "coreJob": 111331431647,
+      "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166849609/job/111331431647",
+      "coreConclusion": "success",
+      "completedAt": "2026-10-04T01:04:13Z",
+      "skippedJobs": [
+        "core-platforms",
+        "build",
+        "packages",
+        "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "native-il",
+        "native-msbuild",
+        "clr-wasm",
+        "ci-ok"
+      ]
+    },
+    {
+      "pr": 3652,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3652",
+      "head": "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3",
+      "branch": "codex/p18-foundation-disk-writes",
+      "run": 37166916440,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166916440",
+      "runAttempt": 1,
+      "runConclusion": "success",
+      "coreJob": 111331637496,
+      "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166916440/job/111331637496",
+      "coreConclusion": "success",
+      "completedAt": "2026-10-04T01:05:18Z",
+      "skippedJobs": [
+        "core-platforms",
+        "build",
+        "packages",
+        "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "native-il",
+        "native-msbuild",
+        "clr-wasm",
+        "ci-ok"
+      ]
+    },
+    {
+      "pr": 3657,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3657",
+      "head": "4f601b394b87ba95bd8e7292e95d714bedab0873",
+      "branch": "codex/p18-foundation-search-versions",
+      "run": 37167050804,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167050804",
+      "runAttempt": 1,
+      "runConclusion": "success",
+      "coreJob": 111332041893,
+      "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167050804/job/111332041893",
+      "coreConclusion": "success",
+      "completedAt": "2026-10-04T01:08:03Z",
+      "skippedJobs": [
+        "core-platforms",
+        "build",
+        "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "packages",
+        "native-il",
+        "native-msbuild",
+        "clr-wasm",
+        "ci-ok"
+      ]
+    },
+    {
+      "pr": 3661,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3661",
+      "head": "46efd631e414ce6645675ba02fdc9f5ba781dbc3",
+      "branch": "codex/p18-disk-notifications",
+      "run": 37167268675,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167268675",
+      "runAttempt": 1,
+      "runConclusion": "success",
+      "coreJob": 111332713819,
+      "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167268675/job/111332713819",
+      "coreConclusion": "success",
+      "completedAt": "2026-10-04T01:12:17Z",
+      "skippedJobs": [
+        "core-platforms",
+        "build",
+        "packages",
+        "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "native-il",
+        "native-msbuild",
+        "clr-wasm",
+        "ci-ok"
+      ]
+    },
+    {
+      "pr": 3662,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3662",
+      "head": "e3a115e174cf451c3b3ee10f32af9693a0ab2bc6",
+      "branch": "codex/p18-disk-services",
+      "run": 37167333983,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167333983",
+      "runAttempt": 1,
+      "runConclusion": "success",
+      "coreJob": 111332909492,
+      "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167333983/job/111332909492",
+      "coreConclusion": "success",
+      "completedAt": "2026-10-04T01:13:35Z",
+      "skippedJobs": [
+        "core-platforms",
+        "build",
+        "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "packages",
+        "native-il",
+        "native-msbuild",
+        "clr-wasm",
+        "ci-ok"
+      ]
+    }
+  ]
+}

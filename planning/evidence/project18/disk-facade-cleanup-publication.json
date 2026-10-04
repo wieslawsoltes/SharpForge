@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "name": "disk-facade-cleanup",
+  "base": "90185d880fafccead5df8e1129aa358a020646b8",
+  "baseBranch": "codex/p18-provider-source-saves",
+  "branch": "codex/p18-disk-facade-cleanup",
+  "pr": 4376,
+  "files": [
+    "packages/project-system/src/disk.js",
+    "packages/project-system/src/disk/index.js"
+  ],
+  "message": "SF-A24-T01: keep the disk facade shrinking while preserving provider exports\n\nCarry the exact completed source correction; preserve public exports and\nbehavior. Root completed the 18-file Node26 cleanup scope (382/382) and\ncheck/build/clean-checkout. No projection tests or main refresh.\n\nCanonical-Source: e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40\nLocal-Projection: 799d4f3b4d4475427da2b1d7503fa2b932e38f21",
+  "repository_full_name": "wieslawsoltes/SharpForge",
+  "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "worktree": "/dev/shm/p18-disk-facade-cleanup",
+  "localBranch": "codex/p18-local-disk-facade-cleanup",
+  "local": "799d4f3b4d4475427da2b1d7503fa2b932e38f21",
+  "tree": "01d72c6cfe394f086ec5326b631612a252eeb3ca",
+  "baseTree": "e8f94cc1ad98aad31425fe024852bca70f634e7b",
+  "sourceProofs": [
+    {
+      "path": "packages/project-system/src/disk.js",
+      "blob": "9674c9c5ca5441e1a4fec5391489a4890463a069",
+      "sha256": "70920d03d54c7e28624087c99b52bbf6261f9df045a2c8bc0e0028e74f372ed5",
+      "matchesCanonical": true
+    },
+    {
+      "path": "packages/project-system/src/disk/index.js",
+      "blob": "312751a91531674d3e79fab1fbde909cf0fd3712",
+      "sha256": "897b12a09e810be82c0211a86460eea6b46645acf87810f9de7f2780c219fed9",
+      "matchesCanonical": true
+    }
+  ],
+  "stats": "2 files changed, 5 insertions(+), 4 deletions(-)",
+  "remote": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+  "treeVerified": true,
+  "recordedAt": "2026-10-04T05:52:27.600Z",
+  "core": {
+    "runId": 37181191152,
+    "jobId": 111373965338,
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181191152/job/111373965338"
+  },
+  "jobs": [
+    {
+      "id": 111373965338,
+      "name": "core",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111374043965,
+      "name": "core-platforms",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374044237,
+      "name": "packages",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374044364,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374044623,
+      "name": "native-il",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374044707,
+      "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374044836,
+      "name": "native-msbuild",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374045177,
+      "name": "clr-wasm",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111374045833,
+      "name": "ci-ok",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "commitReadback": {
+    "sha": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+    "tree": "01d72c6cfe394f086ec5326b631612a252eeb3ca",
+    "parents": [
+      "90185d880fafccead5df8e1129aa358a020646b8"
+    ]
+  },
+  "refReadback": {
+    "ref": "refs/heads/codex/p18-disk-facade-cleanup",
+    "sha": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1"
+  },
+  "pullRequest": {
+    "number": 4376,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/4376",
+    "head": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+    "base": "codex/p18-provider-source-saves",
+    "baseSha": "90185d880fafccead5df8e1129aa358a020646b8",
+    "draft": true,
+    "mergeable": true,
+    "mergeableState": "unstable"
+  },
+  "restrictions": {
+    "localTests": false,
+    "localBuild": false,
+    "mainRefresh": false,
+    "forceUpdate": false,
+    "descendantRefresh": false,
+    "publicContractChanged": false
+  },
+  "publicationKind": "new dependent draft",
+  "cancelledDuplicateRuns": [
+    37181189368
+  ],
+  "qualification": {
+    "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "tests": 382,
+    "pass": 382,
+    "fail": 0,
+    "skip": 0,
+    "cancel": 0,
+    "node": "v26.10.0",
+    "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+    "tap": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+    "gates": "check/build/clean-checkout passed; strict historical265 legacy count preserved",
+    "publisherRepeatedValidation": false
+  },
+  "retainedQualificationEvidence": "planning/evidence/project18/legacy-cleanup-qualification.json",
+  "retainedQualificationEvidenceSha256": "f1bfff6df4f29b58998d3f9e1f098894fa0eccaed612e19ac1b65802310c56a5"
+}

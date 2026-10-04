@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "baseSource": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+  "comparisonSource": "2e92957c8dc3d2dab505d5d125f506a360c6d817",
+  "method": "Published Git blobs only. Preserve complete unique cases; remove duplicate split cases. No test or build execution during preparation.",
+  "testFiles": 8,
+  "testCases": 18,
+  "validation": "Pending one parent-coordinated combined batch after the entire identified scope is integrated.",
+  "registry": "Existing tests/manifests/A24.json nodeGlobs includes tests/a24-*.test.js; no registry edit.",
+  "existingSupportFiles": [
+    "tests/support/a24-fsa.js",
+    "tests/helpers/a24-directory.js"
+  ],
+  "files": [
+    {
+      "path": "tests/a24-provider-files.test.js",
+      "mode": "whole-published-file",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "4c459b1c3174803528a47254625145c879ade1e1",
+      "outputSha256": "20e59949c971e681d7363205f7a4d21e1c99c5b625aa8be94778b1691b51d64a",
+      "cases": [
+        {
+          "title": "provider file import retains exact unknown bytes and reports rejected paths without reading them",
+          "sourceLines": [10, 19],
+          "sourceSha256": "7948f38f307121fc1b630e9d60bcba4268a101038eac65b6a11714c7d3d045a4"
+        },
+        {
+          "title": "provider file import rejects pre-aborted work and entry limits before content reads",
+          "sourceLines": [21, 26],
+          "sourceSha256": "e3a17ccec03189889ae0b7132599bcdbb1899314630a68fd613478d240717d0e"
+        },
+        {
+          "title": "project evaluation inputs include auxiliary metadata while source files remain lazy",
+          "sourceLines": [28, 35],
+          "sourceSha256": "4b9288768f1d7f9070b5e9e765f29b2ad95d344bef1f1ad93a8804ba610d2ede"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/project-system"
+      ],
+      "notes": []
+    },
+    {
+      "path": "tests/a24-09-wizard-provider.test.js",
+      "mode": "whole-published-file",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "632a2f34590ec2732cfbff4f7441d578abfef600",
+      "outputSha256": "8d50970df2e9871646750ff3dceb41d01af9c6b7006760bd52161c970b5fc04c",
+      "cases": [
+        {
+          "title": "The wizard attaches provider records and subsequent saves preserve encoding and binary bytes",
+          "sourceLines": [8, 32],
+          "sourceSha256": "8a9b99c8c08e93eceac3b523739c2fbca8adafbdd1bf51b71c2fbcbe2973402f"
+        },
+        {
+          "title": "The wizard keeps completed-write receipts when provider attachment fails",
+          "sourceLines": [34, 47],
+          "sourceSha256": "6da136f442502c59577444ba45c4869d4226baea7228044ff29aaea8108129d1"
+        },
+        {
+          "title": "An already cancelled wizard attachment performs no directory or file writes",
+          "sourceLines": [49, 58],
+          "sourceSha256": "b2756f997ab0bbf9bcd9cbad0b60b36fce44a54647081d53ece22437788c13dd"
+        },
+        {
+          "title": "Generated source is immediately available when a large existing destination stays lazy",
+          "sourceLines": [60, 74],
+          "sourceSha256": "5b6abe66a2a545e1a40cc3ba8fd176821302d434967326fe0280eaea3e41bd32"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/project-system",
+        "@sharpforge/archive",
+        "../apps/studio/project-wizard/destination.js",
+        "./helpers/a24-directory.js"
+      ],
+      "notes": []
+    },
+    {
+      "path": "tests/a24-workspace-reconcile.test.js",
+      "mode": "whole-published-file",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "ed1a5d9bf79ef58470b14965296f204d0277ec97",
+      "outputSha256": "ae96976c740c11669e3e013b0385b39dd611490f5635e3528e4fda359fb1c024",
+      "cases": [
+        {
+          "title": "three-way text merge preserves disjoint edits and reports overlapping edits with all versions",
+          "sourceLines": [5, 14],
+          "sourceSha256": "62fa499d287535f04dd9aa22e78c7cfcdbcb03d0ee49972caccfe90adff3422f"
+        },
+        {
+          "title": "merge size, work budget and cancellation preserve explicit outcomes",
+          "sourceLines": [16, 23],
+          "sourceSha256": "5d78dd49241d4ccaad0b0ab0af0536f195794250f8350c7def18f157e981fca9"
+        },
+        {
+          "title": "binary conflicts require a choice and adopted contents do not alias the input",
+          "sourceLines": [25, 35],
+          "sourceSha256": "c56931273c667d839df8c6c3c79a29dd7bcd376634eb9371c1b3905d459d2d5c"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/workspace"
+      ],
+      "notes": []
+    },
+    {
+      "path": "tests/a24-disk-scan.test.js",
+      "mode": "unchanged-case-extraction",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "8ee5e1347bfa2066fb6801c12ead9629dbd3ba80",
+      "outputSha256": "3a2a3d1da1272d625a95df9f475a3bee99c44cbab98770fbf35a98bbf28b40a1",
+      "cases": [
+        {
+          "title": "A24 file and report entry budgets remain explicit boundaries",
+          "sourceLines": [69, 80],
+          "sourceSha256": "4e01813da4d20218e03ea8552f424e846e343a2b27614ea35ed50faa06b0c016"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/project-system",
+        "@sharpforge/workspace",
+        "./support/a24-fsa.js"
+      ],
+      "notes": [
+        "The other three scanner cases are retained in a24-disk-scaling.test.js."
+      ]
+    },
+    {
+      "path": "tests/a24-reload-coordinator.test.js",
+      "mode": "unchanged-case-extraction",
+      "sourceHead": "ab0e62e4043d21be7654201917fdad15777439b2",
+      "sourceTree": "e8e3f988206d90675d7326185a990a6837eed060",
+      "sourceBlob": "a69e212f7914a6b83bee625893d0d54c243a887c",
+      "outputSha256": "38d1c6ab80a9ce8a342d25483a44bd0265dea575b8bbf6b92e503a89d9919512",
+      "cases": [
+        {
+          "title": "reload forwards atomic host evaluation acknowledgment for automatic and chosen XML updates",
+          "sourceLines": [7, 25],
+          "sourceSha256": "275ef451016f72db97817caf7532301fcadd42de92f4dae4236b6f6c1b5dbb8d"
+        },
+        {
+          "title": "reload bounds prompts and preserves dirty buffers for keep and compare",
+          "sourceLines": [27, 42],
+          "sourceSha256": "d9887cb866e7ae771798367625c252ed9424ca9e9bffe0fc450cec72409a9df6"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/workspace"
+      ],
+      "notes": [
+        "The third case is retained in a24-watch-reload.test.js."
+      ]
+    },
+    {
+      "path": "tests/a24-save-locks.test.js",
+      "mode": "unchanged-case-extraction",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "5041c9428ca5b49eed6624b521e4b5f84067d03b",
+      "outputSha256": "740298d2220dae1518f1041634547a1b2ff929ab1fd34a92445ea9a4dd4669fd",
+      "cases": [
+        {
+          "title": "file saves and whole-workspace transactions use the same workspace ownership key",
+          "sourceLines": [7, 17],
+          "sourceSha256": "34063aec6eaf426a67d6fe3d779dc16cc9ff6b8bf36570fceafdefc9a6c2aa43"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/workspace"
+      ],
+      "notes": [
+        "The two guarded-save cases are retained in a24-workspace-coordination.test.js."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-memory.test.js",
+      "mode": "unchanged-assertion-and-case-extraction",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "50aa5271666c1ace32fb8b5b74ac90d1aaf95ea5",
+      "outputSha256": "c763a21953f5e2812bffd01bf16770708c06cf1caaab1cbaa919a25391536c20",
+      "cases": [
+        {
+          "title": "A24 recursive directory admission rolls back entries when the memory budget is exhausted",
+          "sourceLines": [22, 24],
+          "sourceSha256": "9c8039de6176f0fdcd9ed2bcd9a5afe72d77e41af452da7e3bbd9c8092956397",
+          "additionalSourceLines": [27, 27],
+          "additionalSourceSha256": "d8a5f110458090b26c6b33877d1bbc3c9820dfd18519a641f31360e62f08f673",
+          "originalTitle": "A24 memory identity and bounded writes preserve contents on conflict and quota failure"
+        },
+        {
+          "title": "A24 provider subscriptions stop on cancellation and unsupported operations are explicit",
+          "sourceLines": [30, 41],
+          "sourceSha256": "963fb3148fcd313f8fb3ced2b2ccab3147abeeac42dde8404d4caba22a9c5d8c"
+        },
+        {
+          "title": "A24 workspace facade retains the existing versioned document API",
+          "sourceLines": [43, 51],
+          "sourceSha256": "c9bc27c900d4180c3eeb305259f852c8f1bd403a1d92232f1249c83efe334c19"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "@sharpforge/workspace"
+      ],
+      "notes": [
+        "The recursive quota assertions and dispose statement are unchanged; only their test wrapper/title is new.",
+        "Byte-quota/case/readonly assertions and the shared conformance wrapper are already retained in a24-vfs-conformance.test.js.",
+        "The facade case retains the same-version rejection boundary as well as the original export/import assertion."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-native.test.js",
+      "mode": "unchanged-case-extraction",
+      "sourceHead": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "sourceTree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "sourceBlob": "863bd31a0fa6883d67179d0cc69cc852f1cf9c3b",
+      "outputSha256": "8166756a67f64c34585648561902a4134b36935399590b711fbb3d42c9693a60",
+      "cases": [
+        {
+          "title": "A24 native HTTP retains conflict paths, guards builds and preserves raw binary files",
+          "sourceLines": [29, 49],
+          "sourceSha256": "4979d2950a21d70278708692fce93dc00f1ccc0198fc362f81052db3873155f2"
+        }
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "@sharpforge/workspace",
+        "@sharpforge/msbuild/node",
+        "@sharpforge/msbuild"
+      ],
+      "notes": [
+        "The exact published fixture is retained. The direct client.binary opaque-file assertion is unique; surrounding build/conflict assertions preserve its qualified setup.",
+        "The conformance wrapper is already retained in the canonical authenticated HTTP provider matrix."
+      ]
+    }
+  ]
+}

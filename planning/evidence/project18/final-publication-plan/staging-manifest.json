@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "status": "planning-only-awaiting-final-source-results-and-packing-release",
+  "repository": "wieslawsoltes/SharpForge",
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "candidateSource": {
+    "sha": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "tree": "c5cb8401b9d26fde41be02c0383aa8cfeef642f9",
+    "ref": "refs/heads/codex/p18-integration",
+    "qualification": "complete legacy cleanup batch running; not a final release assertion"
+  },
+  "destination": "planning/evidence/project18/final",
+  "binaryArtifacts": [
+    {
+      "path": "artifacts/integration.bundle",
+      "required": true,
+      "producer": "root-after-heavy-slot-release",
+      "scope": "frozen canonical source ancestry excluding pinned-main ancestors",
+      "mustVerify": ["prerequisite", "advertised refs", "final commit and tree", "referenced source reachability"]
+    },
+    {
+      "path": "artifacts/qualification-raw.tar.gz",
+      "required": true,
+      "producer": "explicit frozen archive file manifest after final results",
+      "scope": "raw historical and final qualification plus publication and protected-patch evidence",
+      "mustVerify": ["entry paths", "original byte hashes", "deterministic archive metadata", "manifest completeness"]
+    }
+  ],
+  "readableRecords": [
+    "README.md",
+    "coverage.json",
+    "pull-requests.json",
+    "source.json",
+    "artifacts.json",
+    "qualification.json",
+    "protected/review.json"
+  ],
+  "mandatoryInputs": [
+    {
+      "category": "final-source",
+      "source": "root's final canonical Git commit and tree",
+      "state": "awaiting final freeze after e9f8 cleanup qualification",
+      "archivePrefix": "source"
+    },
+    {
+      "category": "coverage-and-pr-index",
+      "source": "/workspace/scratch/3e16369943fd/p18-publication/coverage-recommended.json",
+      "companion": "/workspace/scratch/3e16369943fd/p18-publication/final-publication-audit.json",
+      "state": "03:33 historical snapshots; require refreshed final maps",
+      "requirements": ["157 leaf identities", "all implementation records", "remaining acceptance", "unique feature PRs", "actual dependency joins"]
+    },
+    {
+      "category": "tracked-historical-evidence",
+      "source": "final Git tree:planning/evidence/project18/**",
+      "state": "enumerate exact tracked blobs from frozen final source",
+      "archivePrefix": "tracked/planning/evidence/project18"
+    },
+    {
+      "category": "final-qualification",
+      "source": "/tmp/p18-final-qualification-logs",
+      "state": "root still producing final cleanup, browser and matched performance records",
+      "archivePrefix": "qualification",
+      "requirements": ["initial failures", "affected replays", "Node22 scope", "Node26 scope", "core", "build", "checkout", "strict structure", "browser diagnostics"]
+    },
+    {
+      "category": "performance",
+      "source": "final Git tree:planning/evidence/project18/{project-runtime,integration/upstream-performance}/**",
+      "state": "historical evidence exists; final matched run pending",
+      "archivePrefix": "performance",
+      "requirements": ["unchanged workload identity", "baseline and final source", "raw samples", "median and p95", "CPU profiles", "resource observations", "unresolved budget sign-off"]
+    },
+    {
+      "category": "native-framework-restore",
+      "source": "/workspace/scratch/3e16369943fd/p18-nuget-probe/restore.log",
+      "state": "single bounded attempt; exit124 and empty cache; no retry or inferred cause",
+      "archivePrefix": "native/nuget-probe"
+    },
+    {
+      "category": "publication-receipts",
+      "source": "/workspace/scratch/3e16369943fd/p18-{publication,testing-publication,evaluator-publication,template-publication,workspace-publication}",
+      "state": "select exact evidence files from final owner maps; exclude worktrees and unrelated files",
+      "archivePrefix": "publication",
+      "requirements": ["source projection", "remote head", "exact tree", "ordered parents", "PR base", "core job receipt", "retained superseded failures"]
+    },
+    {
+      "category": "protected-studio-patch",
+      "source": "/workspace/scratch/3e16369943fd/p18-studio-integration-main1db.patch",
+      "state": "unapplied; final root review and hash required",
+      "destination": "protected/studio-entry.patch"
+    },
+    {
+      "category": "protected-lock-patch",
+      "source": "/workspace/scratch/3e16369943fd/p18-package-lock-integration.patch",
+      "state": "unapplied; final root review and hash required",
+      "destination": "protected/package-lock.patch"
+    },
+    {
+      "category": "protected-review",
+      "source": "/workspace/scratch/3e16369943fd/p18-publication/{protected-lease-readback,final-sync-allowlist-review}.json",
+      "state": "retain observation time; final source equality and patch reviews required",
+      "archivePrefix": "protected/reviews"
+    },
+    {
+      "category": "static-dimensions",
+      "source": "/dev/shm/p18-final-evidence-plan/planning/evidence/project18/final-publication-plan/source-dimensions*.json",
+      "state": "5269 historical growth and exact e9f8 correction retained; no gate rerun",
+      "archivePrefix": "structure"
+    }
+  ],
+  "protectedCanonicalPaths": [
+    "apps/studio/studio.js",
+    "package.json",
+    "package-lock.json"
+  ],
+  "excludedPayloads": [
+    "generated executable Studio candidate copies",
+    "working checkouts and repository administration directories",
+    "dependency and NuGet caches",
+    "browser or SDK binaries",
+    "build output directories",
+    "credentials or unrelated user files"
+  ],
+  "transport": {
+    "tool": "github_create_blob",
+    "encoding": "base64",
+    "partBytesIfRequired": 4194304,
+    "boundedReadChunkBytes": 49152,
+    "payloadLimit": "not advertised by tool schema; actual transfer must be observed",
+    "verify": ["whole SHA256", "part SHA256", "byte length", "Git blob SHA", "tree and ordered-parent readback"]
+  },
+  "releaseConditions": [
+    "root confirms final source and all source owners released",
+    "final logs and coverage/index are frozen",
+    "root releases packing after heavy qualification",
+    "root confirms evidence publication is ready",
+    "bundle and archive identities are verified before branch update"
+  ],
+  "performed": {
+    "sourceMetadataInspection": true,
+    "packing": false,
+    "compression": false,
+    "upload": false,
+    "publication": false,
+    "testsOrBuilds": false
+  }
+}

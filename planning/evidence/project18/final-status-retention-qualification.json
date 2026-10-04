@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T06:53:22.254526+00:00",
+  "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "sourceTree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+  "toolchain": {
+    "node": "v26.10.0",
+    "npm": "11.19.1"
+  },
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a24-09-wizard-provider.test.js",
+    "tests/a24-disk-scan.test.js",
+    "tests/a24-provider-files.test.js",
+    "tests/a24-reload-coordinator.test.js",
+    "tests/a24-save-locks.test.js",
+    "tests/a24-vfs-memory.test.js",
+    "tests/a24-vfs-native.test.js",
+    "tests/a24-workspace-reconcile.test.js",
+    "tests/a24-status-caret-ownership.test.js",
+    "tests/a19-shell-boundaries.test.js",
+    "tests/a24-editor-model-ownership.test.js"
+  ],
+  "summary": {
+    "tests": 43,
+    "suites": 0,
+    "pass": 43,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "exitCode": 0,
+  "testFiles": 11,
+  "scope": {
+    "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+    "sourceTree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+    "selectedPaths": [
+      "tests/a24-09-wizard-provider.test.js",
+      "tests/a24-disk-scan.test.js",
+      "tests/a24-provider-files.test.js",
+      "tests/a24-reload-coordinator.test.js",
+      "tests/a24-save-locks.test.js",
+      "tests/a24-vfs-memory.test.js",
+      "tests/a24-vfs-native.test.js",
+      "tests/a24-workspace-reconcile.test.js",
+      "tests/a24-status-caret-ownership.test.js",
+      "tests/a19-shell-boundaries.test.js",
+      "tests/a24-editor-model-ownership.test.js"
+    ],
+    "newPreservedCases": 18,
+    "newStatusCases": 5,
+    "reason": "Complete status caret bug fix, existing status/lifecycle regressions, and all unique qualification cases recovered from the full published-parent omission audit.",
+    "separatePriorFullScope": "5269 Node22 1877/1877; not rerun or relabeled here."
+  },
+  "testBlobs": {
+    "tests/a24-09-wizard-provider.test.js": "632a2f34590ec2732cfbff4f7441d578abfef600",
+    "tests/a24-disk-scan.test.js": "62b7921574535a3bb8e0b88a453e112fae0ccf98",
+    "tests/a24-provider-files.test.js": "4c459b1c3174803528a47254625145c879ade1e1",
+    "tests/a24-reload-coordinator.test.js": "8058c39b19a25afef12f7675a3368aff9269e83d",
+    "tests/a24-save-locks.test.js": "aaff6c9784a7af8d67fd7a51ada0124ba3c5a205",
+    "tests/a24-vfs-memory.test.js": "d0205e61df16ce5b1b4a91ffd487c53d951f90cf",
+    "tests/a24-vfs-native.test.js": "c0f65717288dec938051244e56cdb41a4f118b74",
+    "tests/a24-workspace-reconcile.test.js": "ed1a5d9bf79ef58470b14965296f204d0277ec97",
+    "tests/a24-status-caret-ownership.test.js": "84394aab6a5cc8f97543a2ebdac3fd6e39c69cdd",
+    "tests/a19-shell-boundaries.test.js": "699f0a8da3db151f339a735368e3518402a630de",
+    "tests/a24-editor-model-ownership.test.js": "dcff661b86ff9e483546d512b2cc61abb4be9a7b"
+  },
+  "gates": [
+    {
+      "name": "check",
+      "exitCode": 0,
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "metadata": "planning/evidence/project18/final-status-retention-qualification/check.json"
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "metadata": "planning/evidence/project18/final-status-retention-qualification/build.json"
+    },
+    {
+      "name": "clean-checkout",
+      "exitCode": 0,
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "metadata": "planning/evidence/project18/final-status-retention-qualification/clean-checkout.json"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/build.json",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/build.json",
+      "sha256": "6b44311cdbf0269fa51196d28dc3a3fe94fa70108bd8c0d004b75cf5013f1024",
+      "bytes": 1052
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/build.log",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/build.log",
+      "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+      "bytes": 257
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/check.json",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/check.json",
+      "sha256": "5417d38548cb8f577e05406a891618d8fb86498ec4b54bd201a3b7a14839e61a",
+      "bytes": 1052
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/check.log",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/check.log",
+      "sha256": "2d04264868582f5dd0aaa9436544f52153ca9e68a33475d5555cbb297c2406ef",
+      "bytes": 433
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/clean-checkout.json",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/clean-checkout.json",
+      "sha256": "1c2f2c8b6997b9146c3d3b3be6ef2cee1932189b0ebeb0257f698f2b640ece98",
+      "bytes": 1092
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/clean-checkout.log",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/clean-checkout.log",
+      "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+      "bytes": 63
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/final-qualification.json",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/final-qualification.json",
+      "sha256": "7ca75ab56829519af9f9ff70109384a539b4726dcdd9d9ae72e2dc20cecb3d93",
+      "bytes": 6663
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/node26-final-status-and-retained.json",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.json",
+      "sha256": "1d98d52787b5d9c446ef8210227ad5385c12f221ba9786fdf72da63d061a8ec1",
+      "bytes": 1779
+    },
+    {
+      "path": "planning/evidence/project18/final-status-retention-qualification/node26-final-status-and-retained.tap",
+      "sourcePath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.tap",
+      "sha256": "34ff5a4b7e33c83883ee815a2ece3f93d26f55c47388a42f23269d61499e7595",
+      "bytes": 10480
+    }
+  ],
+  "interpretation": "Completed affected source scope: all18 retained unique cases and status/editor boundaries passed in43 tests from11 files. This run is separate from the prior5269 Node22 1877/1877 and e9 Node26 382/382 scopes; overlapping totals are not added. No new local replay was run during evidence capture.",
+  "browserBoundary": {
+    "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+    "designerRelease13": "Root reports ten passing checks followed by UI launch Aggregate timeout; not a suite pass.",
+    "runtimeProbe": "Diagnostic captured an Illegal invocation from the ExecutionCapture default timer receiver.",
+    "pending": "Minimal timer correction and focused regression remain with portable_evaluator/root; no browser acceptance is inferred."
+  },
+  "structureComparison": "planning/evidence/project18/source-dimensions-886fb139.json"
+}

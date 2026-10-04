@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T07:28:39.858181+00:00",
+  "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "suite": "browser_release13_test",
+  "qualification": "passed",
+  "checks": 16,
+  "passed": 16,
+  "failed": 0,
+  "errors": [],
+  "session": {
+    "suite": "browser_release13_test",
+    "passed": true,
+    "engine": "chromium",
+    "cspViolations": [],
+    "browser": "153.0.8010.12",
+    "executable": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+    "mode": "http",
+    "seconds": 20.607364868999866,
+    "diagnosticErrors": []
+  },
+  "checkDetails": [
+    {
+      "name": "connect an existing hand-written construction method without replacing source or workers",
+      "passed": true,
+      "milliseconds": 1271.65
+    },
+    {
+      "name": "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+      "passed": true,
+      "milliseconds": 283.48
+    },
+    {
+      "name": "designer property changes compile-check a minimal C# edit and preserve every other byte",
+      "passed": true,
+      "milliseconds": 540.34
+    },
+    {
+      "name": "real source editor input updates the design preview automatically",
+      "passed": true,
+      "milliseconds": 821.57
+    },
+    {
+      "name": "source undo and redo resynchronize the preview without replacing the editor",
+      "passed": true,
+      "milliseconds": 1150.31
+    },
+    {
+      "name": "incomplete C# keeps the last valid preview and recovers when corrected",
+      "passed": true,
+      "milliseconds": 1387.28
+    },
+    {
+      "name": "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+      "passed": true,
+      "milliseconds": 526.07
+    },
+    {
+      "name": "concurrent source and designer edits are rejected without overwriting either side",
+      "passed": true,
+      "milliseconds": 598.54
+    },
+    {
+      "name": "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+      "passed": true,
+      "milliseconds": 1526.72
+    },
+    {
+      "name": "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+      "passed": true,
+      "milliseconds": 1760.68
+    },
+    {
+      "name": "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+      "passed": true,
+      "milliseconds": 1110.78
+    },
+    {
+      "name": "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+      "passed": true,
+      "milliseconds": 55.2
+    },
+    {
+      "name": "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+      "passed": true,
+      "milliseconds": 167.41
+    },
+    {
+      "name": "source VM real worker clock animates after Main and runs managed Completed handler",
+      "passed": true,
+      "milliseconds": 1817.34
+    },
+    {
+      "name": "direct CIL real worker clock animates after Main and runs managed Completed handler",
+      "passed": true,
+      "milliseconds": 1875.09
+    },
+    {
+      "name": "all integration workflows finish without page errors or unowned and churned workers",
+      "passed": true,
+      "milliseconds": 2632.88
+    }
+  ],
+  "qualifiedProductSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "differenceFromQualifiedProduct": [
+    "tests/browser_release13_test.py"
+  ],
+  "entryBoundary": "Built committed actual Studio; no copied proposed or protected entry patch was applied or executed.",
+  "interpretation": "This actual Chromium HTTP and real-worker suite passed all sixteen named checks. It does not establish every Project18 UI, provider, platform or performance acceptance criterion. Earlier Node/browser failures and negative controls remain in the named historical evidence.",
+  "artifacts": [
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/browser-process.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-process.json",
+      "sha256": "1772c0f9d044ae7ff6e699f3504334d9e0fca45c233cb56b5ac1c467194bd924",
+      "bytes": 908
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/browser-release13.log",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.log",
+      "sha256": "97255d7614ff8ffaca33acfe84263580d3c3c1bb84a58e709f0af8f12ef1dce0",
+      "bytes": 1482
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/final-qualification.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/final-qualification.json",
+      "sha256": "ba2f65dce4b799e4b6a7f88fa5526b4dabcbb8db5454fc677f82afe8dba79d40",
+      "bytes": 2602
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/browser-environment.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-environment.json",
+      "sha256": "7c7ab63b41b8d6aab9541671c5f9ca2a5e0f20eb089a0fddbdb44605e61e583d",
+      "bytes": 838
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/browser-release13.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.json",
+      "sha256": "b82b5a0b73d00b870c72e27fb86134dacc4e91f5b7cdbe1bdc455067593fc9e8",
+      "bytes": 1380
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/results/browser-release13-validation.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results/browser-release13-validation.json",
+      "sha256": "5c3fbdd1c79b5266463a312a515e169d78d6dcd3531542b4f65e2541bf117432",
+      "bytes": 3964
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/results/browser_release13_test/console.log",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results/browser_release13_test/console.log",
+      "sha256": "df2c637645b63003573429fc7fe82de1f16a445138641a906a068f2dba62e001",
+      "bytes": 210
+    },
+    {
+      "path": "planning/evidence/project18/final-browser-qualification/results/browser_release13_test/session.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results/browser_release13_test/session.json",
+      "sha256": "eb937e212944cb49d51dad24888a6f41ef356049822766e254c8b33acfeb7cef",
+      "bytes": 330
+    }
+  ],
+  "completeRawQualificationArchive": {
+    "commit": "cba546ab959247462ce319f89683c06b7861c4ff",
+    "path": "planning/evidence/project18/integration/final-qualification",
+    "payloadArtifacts": 319,
+    "payloadBytes": 64887154,
+    "manifestSha256": "264247c117bcdf40770c7defa856c1c52e8884485782d210ca70221373d3f1df"
+  },
+  "sourceDimensionProof": "planning/evidence/project18/source-dimensions-0bb2ed36.json",
+  "benchmarkPathEquivalence": "planning/evidence/project18/benchmark-path-equivalence-0bb2ed36.json",
+  "exitCode": 0,
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/dev/shm/p18-final-prepared/run-final-browser.py",
+    "--source",
+    "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "--suite",
+    "release13",
+    "--output",
+    "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36",
+    "--inside-slot"
+  ],
+  "toolchain": {
+    "node": "v26.10.0",
+    "npm": "11.19.1"
+  },
+  "startedAt": "2026-10-04T07:17:36.638015+00:00",
+  "completedAt": "2026-10-04T07:17:58.184298+00:00",
+  "checkoutStatusAfter": ""
+}

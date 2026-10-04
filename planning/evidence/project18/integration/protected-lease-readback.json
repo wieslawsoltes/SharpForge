@@ -1,0 +1,131 @@
+{
+  "observedFrom": "2026-10-04T07:27:02.568749+00:00",
+  "observedThrough": "2026-10-04T07:27:15.109531+00:00",
+  "command": [
+    "git",
+    "ls-remote",
+    "origin",
+    "refs/heads/agent-locks/studio",
+    "refs/heads/agent-locks/package-json"
+  ],
+  "exitCode": 0,
+  "refs": {
+    "refs/heads/agent-locks/package-json": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+    "refs/heads/agent-locks/studio": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220"
+  },
+  "interpretation": "Read-only remote lease observation; no lease changed or acquired.",
+  "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "metadataBeforeCopy": "dedaa632841d85c4d130476ded01f76b51cf74af",
+  "claims": [
+    {
+      "ref": "refs/heads/agent-locks/package-json",
+      "commit": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+      "claimBlob": "304b561b82ac424d8d01e2fbe79446ce8284cc3e",
+      "claimSha256": "d04a34f87aec83ace11980f3906f5f70eb4b14e22c05c39788a690dd56ca3ade",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.1",
+        "issue": 2072,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/package.json",
+          "packages/git/src/errors.js",
+          "packages/git/src/index.js",
+          "packages/git/build.contrib.json"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    },
+    {
+      "ref": "refs/heads/agent-locks/studio",
+      "commit": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+      "claimBlob": "4546f318b754cf8f202c5d2c0acf504b4de68ba6",
+      "claimSha256": "42cc900dd009376f642deef48289a7a15a885235ccf21f7107b1dfad6e69571f",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.10",
+        "issue": 2081,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "e1c09939-b609-421f-9eab-a361232d7203",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/src/service.js",
+          "packages/git/src/worker/**",
+          "apps/studio/git-worker.js"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    }
+  ],
+  "textApplicability": [
+    {
+      "patch": "studio-entry.patch",
+      "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+      "bytes": 69556,
+      "command": [
+        "git",
+        "apply",
+        "--check",
+        "--whitespace=nowarn",
+        "studio-entry.patch"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "package-lock.patch",
+      "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985",
+      "bytes": 1688,
+      "command": [
+        "git",
+        "apply",
+        "--check",
+        "--whitespace=nowarn",
+        "package-lock.patch"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "protectedFiles": [
+    {
+      "path": "apps/studio/studio.js",
+      "sha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+      "bytes": 104693,
+      "matchesPinnedMain": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+      "bytes": 3136,
+      "matchesPinnedMain": true
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "bytes": 10877,
+      "matchesPinnedMain": true
+    }
+  ],
+  "completedAt": "2026-10-04T07:28:19.915666+00:00",
+  "boundary": "Text applicability only. No proposed entry or lock patch was applied, parsed, executed, built or browser-qualified. No lease was acquired, changed or released.",
+  "coordinationRequiredBy": "planning/AGENTS.md: the specific hot-file lock is required; no implicit takeover of a live or expired lease."
+}

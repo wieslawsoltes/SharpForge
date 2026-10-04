@@ -1,0 +1,1802 @@
+TAP version 13
+# Subtest: shared identities retain unsigned defaults, escaped names and exact identity components
+ok 1 - shared identities retain unsigned defaults, escaped names and exact identity components
+  ---
+  duration_ms: 1.941799
+  type: 'test'
+  ...
+# Subtest: shared identity flags and tokens preserve complete display and parse behavior
+ok 2 - shared identity flags and tokens preserve complete display and parse behavior
+  ---
+  duration_ms: 0.75565
+  type: 'test'
+  ...
+# Subtest: shared binding comparison retains strong and weak version policies
+ok 3 - shared binding comparison retains strong and weak version policies
+  ---
+  duration_ms: 0.491501
+  type: 'test'
+  ...
+# Subtest: shared SHA-1 and public key tokens preserve standard and block-boundary vectors
+ok 4 - shared SHA-1 and public key tokens preserve standard and block-boundary vectors
+  ---
+  duration_ms: 1.552432
+  type: 'test'
+  ...
+1..0
+# Subtest: tests/a23-native-binlog-large.test.js
+ok 2 - tests/a23-native-binlog-large.test.js
+  ---
+  duration_ms: 492.809201
+  type: 'test'
+  ...
+# Subtest: structured event model preserves project/target/task tree and overlapping wall-clock timings
+ok 6 - structured event model preserves project/target/task tree and overlapping wall-clock timings
+  ---
+  duration_ms: 1.830371
+  type: 'test'
+  ...
+# Subtest: binlog spool queries resume by byte cursor with Unicode and bounded search scans
+ok 7 - binlog spool queries resume by byte cursor with Unicode and bounded search scans
+  ---
+  duration_ms: 9.594021
+  type: 'test'
+  ...
+# Subtest: binlog pages stop at their byte budget without losing the first unreturned event
+ok 8 - binlog pages stop at their byte budget without losing the first unreturned event
+  ---
+  duration_ms: 4.252133
+  type: 'test'
+  ...
+# Subtest: context compilation input preserves generated flags and rejects unhydrated documents explicitly
+ok 9 - context compilation input preserves generated flags and rejects unhydrated documents explicitly
+  ---
+  duration_ms: 1.872043
+  type: 'test'
+  ...
+# Subtest: actual native and portable contexts build language workspaces with equal sources and options
+ok 10 - actual native and portable contexts build language workspaces with equal sources and options
+  ---
+  duration_ms: 2107.436724
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","platform":"linux","architecture":"x64","sourceSetsEqual":true,"compilerOptionsEqual":true,"nativeGeneratedLinqUsing":true,"note":"Console/List bind through generated usings; Enumerable metadata binding is a separate IDE qualification."}
+# Subtest: compiler option preservation: /define:A;B /langversion:preview
+ok 11 - compiler option preservation: /define:A;B /langversion:preview
+  ---
+  duration_ms: 2.14799
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /nullable:enable /unsafe+ /checked+
+ok 12 - compiler option preservation: /nullable:enable /unsafe+ /checked+
+  ---
+  duration_ms: 0.203678
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /reference:alias1,alias2="a b.dll"
+ok 13 - compiler option preservation: /reference:alias1,alias2="a b.dll"
+  ---
+  duration_ms: 0.178359
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /analyzer:a.dll /additionalfile:data.json
+ok 14 - compiler option preservation: /analyzer:a.dll /additionalfile:data.json
+  ---
+  duration_ms: 0.160442
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /analyzerconfig:rules.editorconfig
+ok 15 - compiler option preservation: /analyzerconfig:rules.editorconfig
+  ---
+  duration_ms: 0.131369
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /nowarn:CS1000,CS1001 /warnaserror:CS1002
+ok 16 - compiler option preservation: /nowarn:CS1000,CS1001 /warnaserror:CS1002
+  ---
+  duration_ms: 0.126581
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /warnaserror+ /warnaserror-:CS2000
+ok 17 - compiler option preservation: /warnaserror+ /warnaserror-:CS2000
+  ---
+  duration_ms: 0.162465
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /out:App.dll /target:exe
+ok 18 - compiler option preservation: /out:App.dll /target:exe
+  ---
+  duration_ms: 0.107983
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /unknown:kept Program.cs
+ok 19 - compiler option preservation: /unknown:kept Program.cs
+  ---
+  duration_ms: 0.340714
+  type: 'test'
+  ...
+# Subtest: compiler option preservation: /unsafe- /checked- /d:ONE,ONE
+ok 20 - compiler option preservation: /unsafe- /checked- /d:ONE,ONE
+  ---
+  duration_ms: 0.25193
+  type: 'test'
+  ...
+# Subtest: compiler response expansion rejects cycles and preserves unknown arguments
+ok 21 - compiler response expansion rejects cycles and preserves unknown arguments
+  ---
+  duration_ms: 0.880147
+  type: 'test'
+  ...
+# Subtest: compiler inputs preserve absolute source paths and bound aggregate argument/response text
+ok 22 - compiler inputs preserve absolute source paths and bound aggregate argument/response text
+  ---
+  duration_ms: 0.396759
+  type: 'test'
+  ...
+# Subtest: design-time requests avoid assembly emission and request semantic compiler inputs
+ok 23 - design-time requests avoid assembly emission and request semantic compiler inputs
+  ---
+  duration_ms: 0.25841
+  type: 'test'
+  ...
+# Subtest: contexts retain independent TFM/RID identity and inactive diagnostic labels
+ok 24 - contexts retain independent TFM/RID identity and inactive diagnostic labels
+  ---
+  duration_ms: 1.444159
+  type: 'test'
+  ...
+# Subtest: shared import edits invalidate every cached project context
+ok 25 - shared import edits invalidate every cached project context
+  ---
+  duration_ms: 0.675038
+  type: 'test'
+  ...
+# Subtest: queued user builds precede superseding design-time requests
+ok 26 - queued user builds precede superseding design-time requests
+  ---
+  duration_ms: 1.486001
+  type: 'test'
+  ...
+# Subtest: runtime fallback graphs reject cycles and diagnose unknown RIDs
+ok 27 - runtime fallback graphs reject cycles and diagnose unknown RIDs
+  ---
+  duration_ms: 0.346864
+  type: 'test'
+  ...
+# Subtest: ten independently recorded SDK Csc command lines preserve expected compiler option objects
+ok 28 - ten independently recorded SDK Csc command lines preserve expected compiler option objects
+  ---
+  duration_ms: 11993.104525
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","node":"v26.10.0","recordedCommands":10,"expectedOptionsVerified":true,"unknownSwitchesPreserved":true,"artifact":"/workspace/scratch/3e16369943fd/native-csc-node26.json"}
+# Subtest: native ExplorerWorkshop preserves its public assembly boundary and produces both answers
+ok 29 - native ExplorerWorkshop preserves its public assembly boundary and produces both answers
+  ---
+  duration_ms: 9847.273516
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","platform":"linux","architecture":"x64","distinctAssemblies":true,"output":"42\\n42\\n","internalCounterDiagnostic":"CS0122"}
+# Subtest: installed SDK: restore/build, design-time inputs/cache, no-op build, binlog replay, publish profile
+ok 30 - installed SDK: restore/build, design-time inputs/cache, no-op build, binlog replay, publish profile
+  ---
+  duration_ms: 27940.373053
+  type: 'test'
+  ...
+# Real native SDK qualification: 10.0.201 on linux/x64
+# Subtest: launch environments carry only explicit application variables plus allowed tool-discovery inheritance
+ok 31 - launch environments carry only explicit application variables plus allowed tool-discovery inheritance
+  ---
+  duration_ms: 1.858453
+  type: 'test'
+  ...
+# Subtest: saved and explicit launch profiles resolve arguments, URLs and granted working directories without shell interpolation
+ok 32 - saved and explicit launch profiles resolve arguments, URLs and granted working directories without shell interpolation
+  ---
+  duration_ms: 19.71511
+  type: 'test'
+  ...
+# Subtest: actual native launches apply selected and explicit profile data through authenticated HTTP
+ok 33 - actual native launches apply selected and explicit profile data through authenticated HTTP
+  ---
+  duration_ms: 5157.166506
+  type: 'test'
+  ...
+# Subtest: native metadata reads require an authorized context reference and enforce file/count/total budgets
+ok 34 - native metadata reads require an authorized context reference and enforce file/count/total budgets
+  ---
+  duration_ms: 14.609244
+  type: 'test'
+  ...
+# Subtest: actual native contexts deliver SDK metadata over authenticated HTTP for LINQ completion and semantic binding
+ok 35 - actual native contexts deliver SDK metadata over authenticated HTTP for LINQ completion and semantic binding
+  ---
+  duration_ms: 5050.165404
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","node":"v26.10.0","backend":"SDK metadata with compiler semantic model","referenceCount":167,"referenceBytes":6125768,"coldMetadataMs":284.1529329999994,"warmCompletionMedianMs":2.963049000000865,"warmCompletionP95Ms":4.0337939999999435,"reusedModel":true}
+# Subtest: NuGet version, comparison and floating range vectors match the installed NuGet.Versioning assembly
+ok 36 - NuGet version, comparison and floating range vectors match the installed NuGet.Versioning assembly
+  ---
+  duration_ms: 1310.850974
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","runtime":"10.0.12","nuget":"7.3.0.0","parseVectors":29,"comparisons":11,"ranges":22,"candidates":11}
+# Subtest: NuGet version normalization 1
+ok 37 - NuGet version normalization 1
+  ---
+  duration_ms: 1.812864
+  type: 'test'
+  ...
+# Subtest: NuGet version normalization 1.02
+ok 38 - NuGet version normalization 1.02
+  ---
+  duration_ms: 0.283989
+  type: 'test'
+  ...
+# Subtest: NuGet version normalization 1.2.3.0
+ok 39 - NuGet version normalization 1.2.3.0
+  ---
+  duration_ms: 0.138549
+  type: 'test'
+  ...
+# Subtest: NuGet version normalization 1.2.3.4
+ok 40 - NuGet version normalization 1.2.3.4
+  ---
+  duration_ms: 0.114222
+  type: 'test'
+  ...
+# Subtest: NuGet version normalization 1.2.3-beta.2+commit
+ok 41 - NuGet version normalization 1.2.3-beta.2+commit
+  ---
+  duration_ms: 0.290048
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.5 in [1.0,2.0)
+ok 42 - NuGet range 1.5 in [1.0,2.0)
+  ---
+  duration_ms: 0.61677
+  type: 'test'
+  ...
+# Subtest: NuGet range 2.0 in [1.0,2.0)
+ok 43 - NuGet range 2.0 in [1.0,2.0)
+  ---
+  duration_ms: 0.225921
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.2 in [1.2]
+ok 44 - NuGet range 1.2 in [1.2]
+  ---
+  duration_ms: 0.196266
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.2.1 in [1.2]
+ok 45 - NuGet range 1.2.1 in [1.2]
+  ---
+  duration_ms: 0.208354
+  type: 'test'
+  ...
+# Subtest: NuGet range 2.0 in 1.0
+ok 46 - NuGet range 2.0 in 1.0
+  ---
+  duration_ms: 0.279782
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.9 in 1.*
+ok 47 - NuGet range 1.9 in 1.*
+  ---
+  duration_ms: 0.377379
+  type: 'test'
+  ...
+# Subtest: NuGet range 2.0 in 1.*
+ok 48 - NuGet range 2.0 in 1.*
+  ---
+  duration_ms: 0.199931
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.2.0-alpha in 1.*
+ok 49 - NuGet range 1.2.0-alpha in 1.*
+  ---
+  duration_ms: 0.096956
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.2.0-alpha in 1.2.0-*
+ok 50 - NuGet range 1.2.0-alpha in 1.2.0-*
+  ---
+  duration_ms: 0.101463
+  type: 'test'
+  ...
+# Subtest: NuGet range 1.2.0-beta.2 in 1.2.0-beta.*
+ok 51 - NuGet range 1.2.0-beta.2 in 1.2.0-beta.*
+  ---
+  duration_ms: 0.113942
+  type: 'test'
+  ...
+# Subtest: NuGet SemVer ordering handles numeric labels, release precedence and case folding
+ok 52 - NuGet SemVer ordering handles numeric labels, release precedence and case folding
+  ---
+  duration_ms: 0.711102
+  type: 'test'
+  ...
+# Subtest: NuGet hierarchy applies clears, disabled feeds, source specificity, and never returns credentials
+ok 53 - NuGet hierarchy applies clears, disabled feeds, source specificity, and never returns credentials
+  ---
+  duration_ms: 3.08893
+  type: 'test'
+  ...
+# Subtest: assets keep TFM/RID dependency identities and NU1605 restore errors
+ok 54 - assets keep TFM/RID dependency identities and NU1605 restore errors
+  ---
+  duration_ms: 0.632494
+  type: 'test'
+  ...
+# Subtest: lock files round-trip unchanged formatting and report drift without rewriting input
+ok 55 - lock files round-trip unchanged formatting and report drift without rewriting input
+  ---
+  duration_ms: 0.583711
+  type: 'test'
+  ...
+# Subtest: central versions resolve overrides and reject absent declarations
+ok 56 - central versions resolve overrides and reject absent declarations
+  ---
+  duration_ms: 0.594907
+  type: 'test'
+  ...
+# Subtest: V3 recorded protocol fixture covers service lookup, caching, versions and nuspec
+ok 57 - V3 recorded protocol fixture covers service lookup, caching, versions and nuspec
+  ---
+  duration_ms: 5.831815
+  type: 'test'
+  ...
+# Subtest: V3 resource and cache budgets reject zero, overflow and non-integer limits before fetching
+ok 58 - V3 resource and cache budgets reject zero, overflow and non-integer limits before fetching
+  ---
+  duration_ms: 0.337289
+  type: 'test'
+  ...
+# Subtest: nupkg selects ref compile assets independently from RID runtime and rejects invalid archives
+ok 59 - nupkg selects ref compile assets independently from RID runtime and rejects invalid archives
+  ---
+  duration_ms: 4.012773
+  type: 'test'
+  ...
+# Subtest: local packed feed: hierarchy, minimal package edits, assets, lock drift and central versions use the actual SDK
+ok 60 - local packed feed: hierarchy, minimal package edits, assets, lock drift and central versions use the actual SDK
+  ---
+  duration_ms: 20578.008944
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","platform":"linux","architecture":"x64","feed":"three locally SDK-packed packages; no external feed","packages":["Local.Dependency/1.0.0","Local.Example/1.0.0"]}
+# Subtest: native environment retains tool discovery but excludes host secrets and startup hooks
+ok 61 - native environment retains tool discovery but excludes host secrets and startup hooks
+  ---
+  duration_ms: 1.415786
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"OutputPath":"../../x"}
+ok 62 - native output boundary rejects {"OutputPath":"../../x"}
+  ---
+  duration_ms: 1.711942
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"PublishDir":"/tmp/output"}
+ok 63 - native output boundary rejects {"PublishDir":"/tmp/output"}
+  ---
+  duration_ms: 0.171499
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"BaseIntermediateOutputPath":"C:\\\\temp"}
+ok 64 - native output boundary rejects {"BaseIntermediateOutputPath":"C:\\\\temp"}
+  ---
+  duration_ms: 0.107312
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"ArtifactsPath":"$(OtherPath)"}
+ok 65 - native output boundary rejects {"ArtifactsPath":"$(OtherPath)"}
+  ---
+  duration_ms: 0.216937
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"OutputPath":"%2e%2e/x"}
+ok 66 - native output boundary rejects {"OutputPath":"%2e%2e/x"}
+  ---
+  duration_ms: 0.126071
+  type: 'test'
+  ...
+# Subtest: logger/response switch policy is explicit and rejects nested traversal
+ok 67 - logger/response switch policy is explicit and rejects nested traversal
+  ---
+  duration_ms: 1.769459
+  type: 'test'
+  ...
+# Subtest: trust is stored per canonical root and revocation survives reopening the store
+ok 68 - trust is stored per canonical root and revocation survives reopening the store
+  ---
+  duration_ms: 11.601778
+  type: 'test'
+  ...
+# Subtest: native tool transport scrubs actual child environment and captures unicode lines
+ok 69 - native tool transport scrubs actual child environment and captures unicode lines
+  ---
+  duration_ms: 27.354354
+  type: 'test'
+  ...
+# Subtest: native process timeout is distinct from successful completion
+ok 70 - native process timeout is distinct from successful completion
+  ---
+  duration_ms: 106.037046
+  type: 'test'
+  ...
+# Subtest: cancellation terminates children and grandchildren in the actual process tree
+ok 71 - cancellation terminates children and grandchildren in the actual process tree
+  ---
+  duration_ms: 162.531744
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.100/disable
+ok 72 - SDK resolution 8.0.100/disable
+  ---
+  duration_ms: 1.325328
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.102/disable
+ok 73 - SDK resolution 8.0.102/disable
+  ---
+  duration_ms: 0.276787
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.100/patch
+ok 74 - SDK resolution 8.0.100/patch
+  ---
+  duration_ms: 0.143948
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.100/latestPatch
+ok 75 - SDK resolution 8.0.100/latestPatch
+  ---
+  duration_ms: 0.087292
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.102/feature
+ok 76 - SDK resolution 8.0.102/feature
+  ---
+  duration_ms: 0.193572
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.100/latestFeature
+ok 77 - SDK resolution 8.0.100/latestFeature
+  ---
+  duration_ms: 0.178619
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.300/minor
+ok 78 - SDK resolution 8.0.300/minor
+  ---
+  duration_ms: 0.296227
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.100/latestMinor
+ok 79 - SDK resolution 8.0.100/latestMinor
+  ---
+  duration_ms: 0.095314
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.2.100/major
+ok 80 - SDK resolution 8.2.100/major
+  ---
+  duration_ms: 0.10581
+  type: 'test'
+  ...
+# Subtest: SDK resolution 8.0.100/latestMajor
+ok 81 - SDK resolution 8.0.100/latestMajor
+  ---
+  duration_ms: 0.169826
+  type: 'test'
+  ...
+# Subtest: SDK resolution 11.0.100/major
+ok 82 - SDK resolution 11.0.100/major
+  ---
+  duration_ms: 0.109976
+  type: 'test'
+  ...
+# Subtest: SDK resolution 9.0.100/feature
+ok 83 - SDK resolution 9.0.100/feature
+  ---
+  duration_ms: 0.236187
+  type: 'test'
+  ...
+# Subtest: SDK discovery preserves paths, previews and host RID
+ok 84 - SDK discovery preserves paths, previews and host RID
+  ---
+  duration_ms: 1.294963
+  type: 'test'
+  ...
+# Subtest: workload preflight identifies missing Android and host-specific Windows target restrictions
+ok 85 - workload preflight identifies missing Android and host-specific Windows target restrictions
+  ---
+  duration_ms: 0.583971
+  type: 'test'
+  ...
+# Subtest: project graph changes rebuild only the owning node and transitive dependents
+ok 86 - project graph changes rebuild only the owning node and transitive dependents
+  ---
+  duration_ms: 0.650801
+  type: 'test'
+  ...
+# Subtest: fast up-to-date check detects input and output changes with an explanation
+ok 87 - fast up-to-date check detects input and output changes with an explanation
+  ---
+  duration_ms: 0.535788
+  type: 'test'
+  ...
+# Subtest: publish profiles are inspectable without executing conditioned properties
+ok 88 - publish profiles are inspectable without executing conditioned properties
+  ---
+  duration_ms: 0.835409
+  type: 'test'
+  ...
+# Subtest: SARIF preserves suppressed diagnostics, rule help and related locations
+ok 89 - SARIF preserves suppressed diagnostics, rule help and related locations
+  ---
+  duration_ms: 0.251219
+  type: 'test'
+  ...
+# Subtest: diagnostic stream preserves continuation text and removes summary duplicates
+ok 90 - diagnostic stream preserves continuation text and removes summary duplicates
+  ---
+  duration_ms: 1.198658
+  type: 'test'
+  ...
+# Subtest: build server shutdown invokes the SDK command and reports an unsuccessful shutdown explicitly
+ok 91 - build server shutdown invokes the SDK command and reports an unsuccessful shutdown explicitly
+  ---
+  duration_ms: 56.652321
+  type: 'test'
+  ...
+# Subtest: both engines share the full immutable portable graph and NuGet breadth-first ordering
+ok 92 - both engines share the full immutable portable graph and NuGet breadth-first ordering
+  ---
+  duration_ms: 1.704481
+  type: 'test'
+  ...
+# Subtest: runtime graph input is copied and malformed, cyclic or oversized graphs fail explicitly
+ok 93 - runtime graph input is copied and malformed, cyclic or oversized graphs fail explicitly
+  ---
+  duration_ms: 0.94797
+  type: 'test'
+  ...
+# Subtest: 20,000-deep graphs resolve iteratively and the next node is rejected by the graph budget
+ok 94 - 20,000-deep graphs resolve iteratively and the next node is rejected by the graph budget
+  ---
+  duration_ms: 59.823808
+  type: 'test'
+  ...
+# Subtest: RuntimeIdentifier and RuntimeIdentifiers retain selection, unique fallback chains and context diagnostics
+ok 95 - RuntimeIdentifier and RuntimeIdentifiers retain selection, unique fallback chains and context diagnostics
+  ---
+  duration_ms: 9.455651
+  type: 'test'
+  ...
+# Subtest: all 85 portable RID expansions match the installed NuGet.RuntimeModel implementation
+ok 96 - all 85 portable RID expansions match the installed NuGet.RuntimeModel implementation
+  ---
+  duration_ms: 1058.337776
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","runtime":"10.0.12","nuget":"7.3.0.0","ridVectors":85,"graphSource":{"sdk":"10.0.201","sha256":"443da2d132830ce72cbcd3cede5a396452949ec118a52f55d78bb99720e1f93c","url":"https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.NETCore.Platforms/src/PortableRuntimeIdentifierGraph.json"}}
+# Subtest: global.json selection matches actual dotnet --version for twelve policy combinations
+ok 97 - global.json selection matches actual dotnet --version for twelve policy combinations
+  ---
+  duration_ms: 1338.11465
+  type: 'test'
+  ...
+# {"node":"v26.10.0","installed":["8.0.425","10.0.201","10.0.401"],"observations":[{"version":"10.0.401","rollForward":"disable","selected":"10.0.401","exitCode":0},{"version":"10.0.500","rollForward":"disable","selected":null,"exitCode":155},{"version":"10.0.401","rollForward":"patch","selected":"10.0.401","exitCode":0},{"version":"10.0.400","rollForward":"patch","selected":"10.0.401","exitCode":0},{"version":"10.0.400","rollForward":"latestPatch","selected":"10.0.401","exitCode":0},{"version":"10.0.100","rollForward":"feature","selected":"10.0.201","exitCode":0},{"version":"10.0.100","rollForward":"latestFeature","selected":"10.0.401","exitCode":0},{"version":"10.0.500","rollForward":"minor","selected":null,"exitCode":155},{"version":"10.0.400","rollForward":"latestMinor","selected":"10.0.401","exitCode":0},{"version":"9.0.999","rollForward":"major","selected":"10.0.201","exitCode":0},{"version":"10.0.400","rollForward":"latestMajor","allowPrerelease":false,"selected":"10.0.401","exitCode":0},{"version":"11.0.100","rollForward":"major","selected":null,"exitCode":155}]}
+# Subtest: A02-T21 custom attribute blobs decode to typed constructor and named arguments
+ok 98 - A02-T21 custom attribute blobs decode to typed constructor and named arguments
+  ---
+  duration_ms: 4.547348
+  type: 'test'
+  ...
+# Subtest: A02-T21 ParamArray and Extension: isParams and isExtensionMethod
+ok 99 - A02-T21 ParamArray and Extension: isParams and isExtensionMethod
+  ---
+  duration_ms: 3.159966
+  type: 'test'
+  ...
+# Subtest: A02-T21 Obsolete: message, error flag, DiagnosticId and UrlFormat, with the Roslyn diagnostics
+ok 100 - A02-T21 Obsolete: message, error flag, DiagnosticId and UrlFormat, with the Roslyn diagnostics
+  ---
+  duration_ms: 0.711553
+  type: 'test'
+  ...
+# Subtest: A02-T21 Conditional and DefaultMember
+ok 101 - A02-T21 Conditional and DefaultMember
+  ---
+  duration_ms: 0.720186
+  type: 'test'
+  ...
+# Subtest: A02-T21 Nullable and NullableContext give every type position its annotation
+ok 102 - A02-T21 Nullable and NullableContext give every type position its annotation
+  ---
+  duration_ms: 2.065384
+  type: 'test'
+  ...
+# Subtest: A02-T21 the nullable transform follows the metadata encoding and rejects data that does not fit
+ok 103 - A02-T21 the nullable transform follows the metadata encoding and rejects data that does not fit
+  ---
+  duration_ms: 0.422217
+  type: 'test'
+  ...
+# Subtest: A02-T21 TupleElementNames and Dynamic transforms
+ok 104 - A02-T21 TupleElementNames and Dynamic transforms
+  ---
+  duration_ms: 1.315354
+  type: 'test'
+  ...
+# Subtest: A02-T21 IsReadOnly, IsByRefLike, RequiredMember and CompilerFeatureRequired
+ok 105 - A02-T21 IsReadOnly, IsByRefLike, RequiredMember and CompilerFeatureRequired
+  ---
+  duration_ms: 0.569188
+  type: 'test'
+  ...
+# Subtest: A02-T21 InternalsVisibleTo declarations and friend checks
+ok 106 - A02-T21 InternalsVisibleTo declarations and friend checks
+  ---
+  duration_ms: 1.735778
+  type: 'test'
+  ...
+# Subtest: A02-T20 an assembly image becomes an assembly symbol with identity and a metadata namespace tree
+ok 107 - A02-T20 an assembly image becomes an assembly symbol with identity and a metadata namespace tree
+  ---
+  duration_ms: 1.778963
+  type: 'test'
+  ...
+# Subtest: A02-T20 a reference to a netstandard-style DLL binds System.Console.WriteLine with a string argument
+ok 108 - A02-T20 a reference to a netstandard-style DLL binds System.Console.WriteLine with a string argument
+  ---
+  duration_ms: 3.513969
+  type: 'test'
+  ...
+# Subtest: A02-T20 a generic List<T>.Add call binds on the constructed type with the parameter substituted
+ok 109 - A02-T20 a generic List<T>.Add call binds on the constructed type with the parameter substituted
+  ---
+  duration_ms: 3.435962
+  type: 'test'
+  ...
+# Subtest: A02-T20 core types carry special-type ids and display as keywords
+ok 110 - A02-T20 core types carry special-type ids and display as keywords
+  ---
+  duration_ms: 0.498703
+  type: 'test'
+  ...
+# Subtest: A02-T20 type kinds, accessibility, modifiers, base types and interfaces come from TypeDef rows
+ok 111 - A02-T20 type kinds, accessibility, modifiers, base types and interfaces come from TypeDef rows
+  ---
+  duration_ms: 1.035091
+  type: 'test'
+  ...
+# Subtest: A02-T20 type parameters import variance and constraints
+ok 112 - A02-T20 type parameters import variance and constraints
+  ---
+  duration_ms: 0.689149
+  type: 'test'
+  ...
+# Subtest: A02-T20 nested types and generic signatures map VAR/MVAR/GENERICINST to the right symbols
+ok 113 - A02-T20 nested types and generic signatures map VAR/MVAR/GENERICINST to the right symbols
+  ---
+  duration_ms: 1.838263
+  type: 'test'
+  ...
+# Subtest: A02-T20 members import kinds, accessibility and declaration modifiers
+ok 114 - A02-T20 members import kinds, accessibility and declaration modifiers
+  ---
+  duration_ms: 8.299577
+  type: 'test'
+  ...
+# Subtest: A02-T20 by-reference parameters and returns become RefKind; arrays, pointers and function pointers import structurally
+ok 115 - A02-T20 by-reference parameters and returns become RefKind; arrays, pointers and function pointers import structurally
+  ---
+  duration_ms: 1.38563
+  type: 'test'
+  ...
+# Subtest: A02-T20 types from assemblies that are not bound are error types with a reason
+ok 116 - A02-T20 types from assemblies that are not bound are error types with a reason
+  ---
+  duration_ms: 3.262911
+  type: 'test'
+  ...
+# Subtest: A02-T22 assembly identities parse, display and compare like Roslyn
+ok 117 - A02-T22 assembly identities parse, display and compare like Roslyn
+  ---
+  duration_ms: 9.189428
+  type: 'test'
+  ...
+# Subtest: A02-T22 an assembly reference binds to an exact match, else the lowest higher version, else the highest lower version
+ok 118 - A02-T22 an assembly reference binds to an exact match, else the lowest higher version, else the highest lower version
+  ---
+  duration_ms: 0.544972
+  type: 'test'
+  ...
+# Subtest: A02-T22 references bind without diagnostics when every identity matches
+ok 119 - A02-T22 references bind without diagnostics when every identity matches
+  ---
+  duration_ms: 8.650576
+  type: 'test'
+  ...
+# Subtest: A02-T22 a reference to an older version unifies with the supplied higher version: CS1701 / CS1702
+ok 120 - A02-T22 a reference to an older version unifies with the supplied higher version: CS1701 / CS1702
+  ---
+  duration_ms: 11.668748
+  type: 'test'
+  ...
+# Subtest: A02-T22 a reference that needs a higher version than the one supplied is CS1705
+ok 121 - A02-T22 a reference that needs a higher version than the one supplied is CS1705
+  ---
+  duration_ms: 9.934473
+  type: 'test'
+  ...
+# Subtest: A02-T22 a type defined in an assembly that is not referenced is CS0012
+ok 122 - A02-T22 a type defined in an assembly that is not referenced is CS0012
+  ---
+  duration_ms: 5.398082
+  type: 'test'
+  ...
+# Subtest: A02-T22 duplicate references: identical identities merge, equivalent ones are CS1703, weak same-name ones CS1704
+ok 123 - A02-T22 duplicate references: identical identities merge, equivalent ones are CS1703, weak same-name ones CS1704
+  ---
+  duration_ms: 10.313214
+  type: 'test'
+  ...
+# Subtest: A02-T22 extern aliases select the references a namespace root can see
+ok 124 - A02-T22 extern aliases select the references a namespace root can see
+  ---
+  duration_ms: 2.583547
+  type: 'test'
+  ...
+# Subtest: A02-T22 type forwarders are followed to the assembly that defines the type
+ok 125 - A02-T22 type forwarders are followed to the assembly that defines the type
+  ---
+  duration_ms: 11.567746
+  type: 'test'
+  ...
+# Subtest: A02-T22 a type forwarder cycle is CS0731 and a forwarded type missing from its destination is CS7069
+ok 126 - A02-T22 a type forwarder cycle is CS0731 and a forwarded type missing from its destination is CS7069
+  ---
+  duration_ms: 5.504201
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: cast int
+ok 127 - C\# language additions on IR, strict IL and direct CIL: cast int
+  ---
+  duration_ms: 79.987157
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: cast double
+ok 128 - C\# language additions on IR, strict IL and direct CIL: cast double
+  ---
+  duration_ms: 11.299436
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: typed defaults
+ok 129 - C\# language additions on IR, strict IL and direct CIL: typed defaults
+  ---
+  duration_ms: 6.916691
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: switch grouped
+ok 130 - C\# language additions on IR, strict IL and direct CIL: switch grouped
+  ---
+  duration_ms: 15.485384
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: string switch
+ok 131 - C\# language additions on IR, strict IL and direct CIL: string switch
+  ---
+  duration_ms: 11.984655
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null switch
+ok 132 - C\# language additions on IR, strict IL and direct CIL: null switch
+  ---
+  duration_ms: 5.476099
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: negative pattern
+ok 133 - C\# language additions on IR, strict IL and direct CIL: negative pattern
+  ---
+  duration_ms: 6.000799
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: switch expression
+ok 134 - C\# language additions on IR, strict IL and direct CIL: switch expression
+  ---
+  duration_ms: 8.43392
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: numeric switch expression
+ok 135 - C\# language additions on IR, strict IL and direct CIL: numeric switch expression
+  ---
+  duration_ms: 7.295803
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: nested switch continue
+ok 136 - C\# language additions on IR, strict IL and direct CIL: nested switch continue
+  ---
+  duration_ms: 7.32723
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null coalescing assignment once
+ok 137 - C\# language additions on IR, strict IL and direct CIL: null coalescing assignment once
+  ---
+  duration_ms: 8.292465
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null coalescing field
+ok 138 - C\# language additions on IR, strict IL and direct CIL: null coalescing field
+  ---
+  duration_ms: 10.712667
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: unchecked overflow
+ok 139 - C\# language additions on IR, strict IL and direct CIL: unchecked overflow
+  ---
+  duration_ms: 3.892991
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: unchecked block
+ok 140 - C\# language additions on IR, strict IL and direct CIL: unchecked block
+  ---
+  duration_ms: 4.344592
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: duplicate switch
+ok 141 - C\# diagnostics: duplicate switch
+  ---
+  duration_ms: 8.529524
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: fallthrough
+ok 142 - C\# diagnostics: fallthrough
+  ---
+  duration_ms: 4.306054
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: nonconstant switch
+ok 143 - C\# diagnostics: nonconstant switch
+  ---
+  duration_ms: 2.999524
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: invalid cast
+ok 144 - C\# diagnostics: invalid cast
+  ---
+  duration_ms: 3.153896
+  type: 'test'
+  ...
+# Subtest: C\# nonexhaustive switch expression warns and throws for unmatched value
+ok 145 - C\# nonexhaustive switch expression warns and throws for unmatched value
+  ---
+  duration_ms: 4.410742
+  type: 'test'
+  ...
+# Subtest: Generators: build-info source participates in binding and execution
+ok 146 - Generators: build-info source participates in binding and execution
+  ---
+  duration_ms: 3.521692
+  type: 'test'
+  ...
+# Subtest: Generators: source/additional/options snapshots invalidate input cache
+ok 147 - Generators: source/additional/options snapshots invalidate input cache
+  ---
+  duration_ms: 2.20809
+  type: 'test'
+  ...
+# Subtest: Generators: cache reused when compiler-only options change
+ok 148 - Generators: cache reused when compiler-only options change
+  ---
+  duration_ms: 1.663199
+  type: 'test'
+  ...
+# Subtest: Generators: JSON schema classes are usable by source
+ok 149 - Generators: JSON schema classes are usable by source
+  ---
+  duration_ms: 2.518077
+  type: 'test'
+  ...
+# Subtest: Generators: failure rolls back partial output and blocks emission
+ok 150 - Generators: failure rolls back partial output and blocks emission
+  ---
+  duration_ms: 0.838665
+  type: 'test'
+  ...
+# Subtest: Generators: Promise callbacks explicitly refused
+ok 151 - Generators: Promise callbacks explicitly refused
+  ---
+  duration_ms: 0.766967
+  type: 'test'
+  ...
+# Subtest: Generators: duplicate paths and traversal rejected
+ok 152 - Generators: duplicate paths and traversal rejected
+  ---
+  duration_ms: 1.696008
+  type: 'test'
+  ...
+# Subtest: Generators: generated-document API cannot be edited as user source
+ok 153 - Generators: generated-document API cannot be edited as user source
+  ---
+  duration_ms: 1.111696
+  type: 'test'
+  ...
+# Subtest: Generators: output budgets reject oversized generators
+ok 154 - Generators: output budgets reject oversized generators
+  ---
+  duration_ms: 0.651062
+  type: 'test'
+  ...
+# Subtest: Analyzers: unreferenced locals and empty catches use actual source spans
+ok 155 - Analyzers: unreferenced locals and empty catches use actual source spans
+  ---
+  duration_ms: 1.787706
+  type: 'test'
+  ...
+# Subtest: Analyzers: severity overrides can suppress or block compilation
+ok 156 - Analyzers: severity overrides can suppress or block compilation
+  ---
+  duration_ms: 0.826426
+  type: 'test'
+  ...
+# Subtest: Extensions: cancellation precedes callback execution
+ok 157 - Extensions: cancellation precedes callback execution
+  ---
+  duration_ms: 0.201414
+  type: 'test'
+  ...
+# Subtest: Refactoring: bound var to explicit type applies transactionally
+ok 158 - Refactoring: bound var to explicit type applies transactionally
+  ---
+  duration_ms: 2.916649
+  type: 'test'
+  ...
+# Subtest: Refactoring: stale, overlapping and malformed multi-file edits never partially apply
+ok 159 - Refactoring: stale, overlapping and malformed multi-file edits never partially apply
+  ---
+  duration_ms: 0.892346
+  type: 'test'
+  ...
+# Subtest: Refactoring: successful project rejects a rewrite that introduces compile errors
+ok 160 - Refactoring: successful project rejects a rewrite that introduces compile errors
+  ---
+  duration_ms: 2.782296
+  type: 'test'
+  ...
+# Subtest: Refactoring: rename updates bound references, not strings or comments
+ok 161 - Refactoring: rename updates bound references, not strings or comments
+  ---
+  duration_ms: 2.490166
+  type: 'test'
+  ...
+# Subtest: Formatting: indentation preserves literal and comment text
+ok 162 - Formatting: indentation preserves literal and comment text
+  ---
+  duration_ms: 2.378147
+  type: 'test'
+  ...
+# Subtest: Folding and selection ranges are nested and ignore braces inside literals
+ok 163 - Folding and selection ranges are nested and ignore braces inside literals
+  ---
+  duration_ms: 1.029673
+  type: 'test'
+  ...
+# Subtest: LSP: new capabilities correspond to actual handlers
+ok 164 - LSP: new capabilities correspond to actual handlers
+  ---
+  duration_ms: 1.951473
+  type: 'test'
+  ...
+# Subtest: LSP: code actions carry versions and type hints use inferred types
+ok 165 - LSP: code actions carry versions and type hints use inferred types
+  ---
+  duration_ms: 1.575075
+  type: 'test'
+  ...
+# Subtest: LSP: versioned rename WorkspaceEdit when client supports documentChanges
+ok 166 - LSP: versioned rename WorkspaceEdit when client supports documentChanges
+  ---
+  duration_ms: 0.847258
+  type: 'test'
+  ...
+# Subtest: workspace: unchanged compilation returns cached identity
+ok 167 - workspace: unchanged compilation returns cached identity
+  ---
+  duration_ms: 49.738222
+  type: 'test'
+  ...
+# Subtest: workspace: edit retains other document tree and reparses only changed file
+ok 168 - workspace: edit retains other document tree and reparses only changed file
+  ---
+  duration_ms: 6.259971
+  type: 'test'
+  ...
+# Subtest: workspace: rejects stale changes
+ok 169 - workspace: rejects stale changes
+  ---
+  duration_ms: 0.166381
+  type: 'test'
+  ...
+# Subtest: workspace: incremental UTF-16 document changes
+ok 170 - workspace: incremental UTF-16 document changes
+  ---
+  duration_ms: 2.551839
+  type: 'test'
+  ...
+# Subtest: workspace: pre-cancelled request aborts
+ok 171 - workspace: pre-cancelled request aborts
+  ---
+  duration_ms: 0.71646
+  type: 'test'
+  ...
+# Subtest: workspace: limits and atomic project imports
+ok 172 - workspace: limits and atomic project imports
+  ---
+  duration_ms: 0.315806
+  type: 'test'
+  ...
+# Subtest: workspace: export/import roundtrip
+ok 173 - workspace: export/import roundtrip
+  ---
+  duration_ms: 1.052478
+  type: 'test'
+  ...
+# Subtest: language: member completion on unfinished file
+ok 174 - language: member completion on unfinished file
+  ---
+  duration_ms: 31.592215
+  type: 'test'
+  ...
+# Subtest: language: local type-aware array completion
+ok 175 - language: local type-aware array completion
+  ---
+  duration_ms: 24.295852
+  type: 'test'
+  ...
+# Subtest: language: definitions, bound references, hover and rename
+ok 176 - language: definitions, bound references, hover and rename
+  ---
+  duration_ms: 2.491467
+  type: 'test'
+  ...
+# Subtest: language: rename collision rejected
+ok 177 - language: rename collision rejected
+  ---
+  duration_ms: 2.72508
+  type: 'test'
+  ...
+# Subtest: language: no unbound text replacements during rename
+ok 178 - language: no unbound text replacements during rename
+  ---
+  duration_ms: 2.392458
+  type: 'test'
+  ...
+# Subtest: language: cross-file method definition
+ok 179 - language: cross-file method definition
+  ---
+  duration_ms: 3.220597
+  type: 'test'
+  ...
+# Subtest: language: document symbols and semantic tokens
+ok 180 - language: document symbols and semantic tokens
+  ---
+  duration_ms: 2.0295
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports build
+ok 181 - MSBuild contract supports build
+  ---
+  duration_ms: 1.789038
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports rebuild
+ok 182 - MSBuild contract supports rebuild
+  ---
+  duration_ms: 0.220092
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports clean
+ok 183 - MSBuild contract supports clean
+  ---
+  duration_ms: 0.137157
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports restore
+ok 184 - MSBuild contract supports restore
+  ---
+  duration_ms: 0.147743
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports pack
+ok 185 - MSBuild contract supports pack
+  ---
+  duration_ms: 0.15284
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports publish
+ok 186 - MSBuild contract supports publish
+  ---
+  duration_ms: 0.095684
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports test
+ok 187 - MSBuild contract supports test
+  ---
+  duration_ms: 0.101974
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports target
+ok 188 - MSBuild contract supports target
+  ---
+  duration_ms: 0.11914
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports evaluate
+ok 189 - MSBuild contract supports evaluate
+  ---
+  duration_ms: 0.110496
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports preprocess
+ok 190 - MSBuild contract supports preprocess
+  ---
+  duration_ms: 0.145229
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports targets
+ok 191 - MSBuild contract supports targets
+  ---
+  duration_ms: 0.077256
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "../outside.csproj"
+ok 192 - MSBuild rejects invalid workspace path "../outside.csproj"
+  ---
+  duration_ms: 0.222306
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "/tmp/X.csproj"
+ok 193 - MSBuild rejects invalid workspace path "/tmp/X.csproj"
+  ---
+  duration_ms: 0.050937
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "C:\\\\X.csproj"
+ok 194 - MSBuild rejects invalid workspace path "C:\\\\X.csproj"
+  ---
+  duration_ms: 0.037607
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a/../X.csproj"
+ok 195 - MSBuild rejects invalid workspace path "a/../X.csproj"
+  ---
+  duration_ms: 0.032619
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a//X.csproj"
+ok 196 - MSBuild rejects invalid workspace path "a//X.csproj"
+  ---
+  duration_ms: 0.032369
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a/./X.csproj"
+ok 197 - MSBuild rejects invalid workspace path "a/./X.csproj"
+  ---
+  duration_ms: 0.029494
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "-something.csproj"
+ok 198 - MSBuild rejects invalid workspace path "-something.csproj"
+  ---
+  duration_ms: 0.027171
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "https://x.csproj"
+ok 199 - MSBuild rejects invalid workspace path "https://x.csproj"
+  ---
+  duration_ms: 0.026179
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a\\u0000.csproj"
+ok 200 - MSBuild rejects invalid workspace path "a\\u0000.csproj"
+  ---
+  duration_ms: 0.055193
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path ""
+ok 201 - MSBuild rejects invalid workspace path ""
+  ---
+  duration_ms: 0.061463
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"action":"exec"}
+ok 202 - MSBuild request rejects {"action":"exec"}
+  ---
+  duration_ms: 0.073481
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"project":"input.cs"}
+ok 203 - MSBuild request rejects {"project":"input.cs"}
+  ---
+  duration_ms: 0.038708
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"properties":[]}
+ok 204 - MSBuild request rejects {"properties":[]}
+  ---
+  duration_ms: 0.034171
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":0}
+ok 205 - MSBuild request rejects {"maxNodes":0}
+  ---
+  duration_ms: 0.052209
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":65}
+ok 206 - MSBuild request rejects {"maxNodes":65}
+  ---
+  duration_ms: 0.075674
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":1.2}
+ok 207 - MSBuild request rejects {"maxNodes":1.2}
+  ---
+  duration_ms: 0.074662
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"verbosity":"verbose"}
+ok 208 - MSBuild request rejects {"verbosity":"verbose"}
+  ---
+  duration_ms: 0.061933
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"arguments":["not-a-switch"]}
+ok 209 - MSBuild request rejects {"arguments":["not-a-switch"]}
+  ---
+  duration_ms: 0.134293
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"arguments":["-p:X=a\\nb"]}
+ok 210 - MSBuild request rejects {"arguments":["-p:X=a\\nb"]}
+  ---
+  duration_ms: 0.063295
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"targets":["x;Build"]}
+ok 211 - MSBuild request rejects {"targets":["x;Build"]}
+  ---
+  duration_ms: 0.071407
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"propertyNames":["A,B"]}
+ok 212 - MSBuild request rejects {"propertyNames":["A,B"]}
+  ---
+  duration_ms: 0.078719
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"itemNames":["*"]}
+ok 213 - MSBuild request rejects {"itemNames":["*"]}
+  ---
+  duration_ms: 0.110316
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"trusted":"true"}
+ok 214 - MSBuild request rejects {"trusted":"true"}
+  ---
+  duration_ms: 0.083005
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"restore":1}
+ok 215 - MSBuild request rejects {"restore":1}
+  ---
+  duration_ms: 0.058228
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"action":"target"}
+ok 216 - MSBuild request rejects {"action":"target"}
+  ---
+  duration_ms: 0.034883
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"properties":{"A":"1","a":"2"}}
+ok 217 - MSBuild request rejects {"properties":{"A":"1","a":"2"}}
+  ---
+  duration_ms: 0.113912
+  type: 'test'
+  ...
+# Subtest: Global property parser preserves equals, spaces, Unicode, no shell interpretation
+ok 218 - Global property parser preserves equals, spaces, Unicode, no shell interpretation
+  ---
+  duration_ms: 1.013439
+  type: 'test'
+  ...
+# Subtest: Properties escape all MSBuild special characters without shell quoting
+ok 219 - Properties escape all MSBuild special characters without shell quoting
+  ---
+  duration_ms: 0.158369
+  type: 'test'
+  ...
+# Subtest: Node invocation preserves actual engine and project path; build flags global properties
+ok 220 - Node invocation preserves actual engine and project path; build flags global properties
+  ---
+  duration_ms: 0.418441
+  type: 'test'
+  ...
+# Subtest: MSBuild.exe engine omits dotnet subcommand and forwards advanced switches separately
+ok 221 - MSBuild.exe engine omits dotnet subcommand and forwards advanced switches separately
+  ---
+  duration_ms: 0.512913
+  type: 'test'
+  ...
+# Subtest: Evaluation emits JSON queries without targets, restore or graph execution by default
+ok 222 - Evaluation emits JSON queries without targets, restore or graph execution by default
+  ---
+  duration_ms: 0.36443
+  type: 'test'
+  ...
+# Subtest: Native build calls Build
+ok 223 - Native build calls Build
+  ---
+  duration_ms: 0.231329
+  type: 'test'
+  ...
+# Subtest: Native rebuild calls Rebuild
+ok 224 - Native rebuild calls Rebuild
+  ---
+  duration_ms: 0.075854
+  type: 'test'
+  ...
+# Subtest: Native restore calls Restore
+ok 225 - Native restore calls Restore
+  ---
+  duration_ms: 0.060862
+  type: 'test'
+  ...
+# Subtest: Native pack calls Pack
+ok 226 - Native pack calls Pack
+  ---
+  duration_ms: 0.052009
+  type: 'test'
+  ...
+# Subtest: Native publish calls Publish
+ok 227 - Native publish calls Publish
+  ---
+  duration_ms: 0.05983
+  type: 'test'
+  ...
+# Subtest: Native clean calls Clean
+ok 228 - Native clean calls Clean
+  ---
+  duration_ms: 0.058308
+  type: 'test'
+  ...
+# Subtest: Native test calls VSTest
+ok 229 - Native test calls VSTest
+  ---
+  duration_ms: 0.044186
+  type: 'test'
+  ...
+# Subtest: custom targets and requested target results are explicit
+ok 230 - custom targets and requested target results are explicit
+  ---
+  duration_ms: 0.096005
+  type: 'test'
+  ...
+# Subtest: preprocessed and target listing files use the owner-provided job directory
+ok 231 - preprocessed and target listing files use the owner-provided job directory
+  ---
+  duration_ms: 0.210648
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic 1>C:\\Code Dir\\App.cs(12,7): error CS1002: ; expected [C:\\Code Dir\\App.csproj]
+ok 232 - Parses diagnostic 1>C:\\Code Dir\\App.cs(12,7): error CS1002: ; expected [C:\\Code Dir\\App.csproj]
+  ---
+  duration_ms: 0.78238
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic /tmp/A.cs(3,4,3,8): warning CS0168: unused [/tmp/App.csproj]
+ok 233 - Parses diagnostic /tmp/A.cs(3,4,3,8): warning CS0168: unused [/tmp/App.csproj]
+  ---
+  duration_ms: 0.184559
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic MSBUILD : error MSB1001: Unknown switch.
+ok 234 - Parses diagnostic MSBUILD : error MSB1001: Unknown switch.
+  ---
+  duration_ms: 0.053381
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic App.csproj : error NU1101: Package unavailable
+ok 235 - Parses diagnostic App.csproj : error NU1101: Package unavailable
+  ---
+  duration_ms: 0.057357
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic CSC : warning CS2008: No source files specified.
+ok 236 - Parses diagnostic CSC : warning CS2008: No source files specified.
+  ---
+  duration_ms: 0.044096
+  type: 'test'
+  ...
+# Subtest: Non-diagnostic output is never promoted to an error
+ok 237 - Non-diagnostic output is never promoted to an error
+  ---
+  duration_ms: 0.174333
+  type: 'test'
+  ...
+# Subtest: MSBuild JSON parsing tolerates startup banner but rejects malformed/trailing logs
+ok 238 - MSBuild JSON parsing tolerates startup banner but rejects malformed/trailing logs
+  ---
+  duration_ms: 0.33845
+  type: 'test'
+  ...
+# Subtest: Browser client uses same-origin bearer requests; token is not persisted in request URL
+ok 239 - Browser client uses same-origin bearer requests; token is not persisted in request URL
+  ---
+  duration_ms: 0.509668
+  type: 'test'
+  ...
+# Subtest: Browser client strips only the fragment token and retains unrelated hash data
+ok 240 - Browser client strips only the fragment token and retains unrelated hash data
+  ---
+  duration_ms: 0.238009
+  type: 'test'
+  ...
+# Subtest: Browser client propagates disk conflicts and rejects foreign endpoint origins
+ok 241 - Browser client propagates disk conflicts and rejects foreign endpoint origins
+  ---
+  duration_ms: 0.407755
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: IncrementalPipeline/Build.proj
+ok 242 - MSBuild example XML syntax: IncrementalPipeline/Build.proj
+  ---
+  duration_ms: 3.562283
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: IncrementalPipeline/Inline.targets
+ok 243 - MSBuild example XML syntax: IncrementalPipeline/Inline.targets
+  ---
+  duration_ms: 1.049403
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: IncrementalPipeline/Pipeline.props
+ok 244 - MSBuild example XML syntax: IncrementalPipeline/Pipeline.props
+  ---
+  duration_ms: 1.291067
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: LocalPackages/Consumer/Consumer.csproj
+ok 245 - MSBuild example XML syntax: LocalPackages/Consumer/Consumer.csproj
+  ---
+  duration_ms: 0.761328
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: LocalPackages/Directory.Packages.props
+ok 246 - MSBuild example XML syntax: LocalPackages/Directory.Packages.props
+  ---
+  duration_ms: 0.549198
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: LocalPackages/NuGet.config
+ok 247 - MSBuild example XML syntax: LocalPackages/NuGet.config
+  ---
+  duration_ms: 0.605292
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: LocalPackages/Producer/Producer.csproj
+ok 248 - MSBuild example XML syntax: LocalPackages/Producer/Producer.csproj
+  ---
+  duration_ms: 0.376077
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: MultiTarget/MultiTarget.csproj
+ok 249 - MSBuild example XML syntax: MultiTarget/MultiTarget.csproj
+  ---
+  duration_ms: 0.897043
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/App/App.csproj
+ok 250 - MSBuild example XML syntax: SdkWorkspace/App/App.csproj
+  ---
+  duration_ms: 0.795179
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/Directory.Build.props
+ok 251 - MSBuild example XML syntax: SdkWorkspace/Directory.Build.props
+  ---
+  duration_ms: 0.997895
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/Directory.Build.targets
+ok 252 - MSBuild example XML syntax: SdkWorkspace/Directory.Build.targets
+  ---
+  duration_ms: 0.381846
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/Library/Library.csproj
+ok 253 - MSBuild example XML syntax: SdkWorkspace/Library/Library.csproj
+  ---
+  duration_ms: 0.348345
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/NuGet.config
+ok 254 - MSBuild example XML syntax: SdkWorkspace/NuGet.config
+  ---
+  duration_ms: 0.224559
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/Workspace.slnx
+ok 255 - MSBuild example XML syntax: SdkWorkspace/Workspace.slnx
+  ---
+  duration_ms: 0.247844
+  type: 'test'
+  ...
+# Subtest: MSBuild example XML syntax: SdkWorkspace/shared/Version.props
+ok 256 - MSBuild example XML syntax: SdkWorkspace/shared/Version.props
+  ---
+  duration_ms: 0.339552
+  type: 'test'
+  ...
+# Subtest: native example manifest entries all exist
+ok 257 - native example manifest entries all exist
+  ---
+  duration_ms: 0.679756
+  type: 'test'
+  ...
+# Subtest: SDK solution references real projects and retains native build dependency
+ok 258 - SDK solution references real projects and retains native build dependency
+  ---
+  duration_ms: 1.893336
+  type: 'test'
+  ...
+# Subtest: Workspace scan lists build/source files, not outputs or ignored folders
+ok 259 - Workspace scan lists build/source files, not outputs or ignored folders
+  ---
+  duration_ms: 27.989373
+  type: 'test'
+  ...
+# Subtest: Native read returns content and SHA-256; existing saves use actual disk data
+ok 260 - Native read returns content and SHA-256; existing saves use actual disk data
+  ---
+  duration_ms: 5.670572
+  type: 'test'
+  ...
+# Subtest: Preflight checks all files before write on a multi-file conflict
+ok 261 - Preflight checks all files before write on a multi-file conflict
+  ---
+  duration_ms: 5.060992
+  type: 'test'
+  ...
+# Subtest: Missing hash, duplicate paths, invalid XML and invalid file types fail without writes
+ok 262 - Missing hash, duplicate paths, invalid XML and invalid file types fail without writes
+  ---
+  duration_ms: 3.667821
+  type: 'test'
+  ...
+# Subtest: Create project files is exclusive and does not overwrite existing files
+ok 263 - Create project files is exclusive and does not overwrite existing files
+  ---
+  duration_ms: 2.788495
+  type: 'test'
+  ...
+# Subtest: Workspace APIs reject traversal and reserved paths
+ok 264 - Workspace APIs reject traversal and reserved paths
+  ---
+  duration_ms: 1.978033
+  type: 'test'
+  ...
+# Subtest: Symlink files and ancestor folders are never followed by API reads/saves
+ok 265 - Symlink files and ancestor folders are never followed by API reads/saves
+  ---
+  duration_ms: 6.889286
+  type: 'test'
+  ...
+# Subtest: Native operations require host and request trust, including evaluation
+ok 266 - Native operations require host and request trust, including evaluation
+  ---
+  duration_ms: 4.773429
+  type: 'test'
+  ...
+# Subtest: Real child-process transport collects UTF-8 logs, diagnostics and artifacts (simulated engine)
+ok 267 - Real child-process transport collects UTF-8 logs, diagnostics and artifacts (simulated engine)
+  ---
+  duration_ms: 49.161412
+  type: 'test'
+  ...
+# Subtest: Evaluation result and inspection files are exposed with actual invocation (simulator)
+ok 268 - Evaluation result and inspection files are exposed with actual invocation (simulator)
+  ---
+  duration_ms: 110.245463
+  type: 'test'
+  ...
+# Subtest: Nonzero exit is failure even when output is otherwise valid
+ok 269 - Nonzero exit is failure even when output is otherwise valid
+  ---
+  duration_ms: 29.959736
+  type: 'test'
+  ...
+# Subtest: Missing native executable is explicit; never substitutes the browser compiler
+ok 270 - Missing native executable is explicit; never substitutes the browser compiler
+  ---
+  duration_ms: 7.998533
+  type: 'test'
+  ...
+# Subtest: Cancellation terminates an actual long-running child while a queued operation completes
+ok 271 - Cancellation terminates an actual long-running child while a queued operation completes
+  ---
+  duration_ms: 119.428514
+  type: 'test'
+  ...
+# Subtest: Output limits cancel noisy child instead of unbounded capture
+ok 272 - Output limits cancel noisy child instead of unbounded capture
+  ---
+  duration_ms: 29.170685
+  type: 'test'
+  ...
+# Subtest: Timeout cancels jobs and host shutdown prevents future launches
+ok 273 - Timeout cancels jobs and host shutdown prevents future launches
+  ---
+  duration_ms: 110.259425
+  type: 'test'
+  ...
+# Subtest: Completed job retention is bounded and cursors do not repeat logs
+ok 274 - Completed job retention is bounded and cursors do not repeat logs
+  ---
+  duration_ms: 69.793874
+  type: 'test'
+  ...
+# Subtest: Loopback HTTP host authenticates APIs, enforces same-origin and does not leak token
+ok 275 - Loopback HTTP host authenticates APIs, enforces same-origin and does not leak token
+  ---
+  duration_ms: 225.176164
+  type: 'test'
+  ...
+# Subtest: HTTP job start/poll/artifact and JSON file writes use real API routes (simulated engine)
+ok 276 - HTTP job start/poll/artifact and JSON file writes use real API routes (simulated engine)
+  ---
+  duration_ms: 47.181028
+  type: 'test'
+  ...
+# Subtest: HTTP rejects non-JSON mutations, untrusted operations, invalid cursors and saves during a build
+ok 277 - HTTP rejects non-JSON mutations, untrusted operations, invalid cursors and saves during a build
+  ---
+  duration_ms: 11.262456
+  type: 'test'
+  ...
+# Subtest: Native saves preserve utf-8-bom bytes and SHA-256
+ok 278 - Native saves preserve utf-8-bom bytes and SHA-256
+  ---
+  duration_ms: 4.149117
+  type: 'test'
+  ...
+# Subtest: Native saves preserve utf-16le bytes and SHA-256
+ok 279 - Native saves preserve utf-16le bytes and SHA-256
+  ---
+  duration_ms: 3.037031
+  type: 'test'
+  ...
+# Subtest: Native saves preserve utf-16be bytes and SHA-256
+ok 280 - Native saves preserve utf-16be bytes and SHA-256
+  ---
+  duration_ms: 2.669346
+  type: 'test'
+  ...
+# Subtest: Native MSBuild response files must be workspace files before process creation
+ok 281 - Native MSBuild response files must be workspace files before process creation
+  ---
+  duration_ms: 40.682468
+  type: 'test'
+  ...
+# Subtest: Terminal status is not visible before output discovery completes
+ok 282 - Terminal status is not visible before output discovery completes
+  ---
+  duration_ms: 43.294868
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves project basename diagnostic
+ok 283 - Native diagnostic resolves project basename diagnostic
+  ---
+  duration_ms: 2.881186
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves project-relative compiler filename
+ok 284 - Native diagnostic resolves project-relative compiler filename
+  ---
+  duration_ms: 1.427904
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves project-relative generated file
+ok 285 - Native diagnostic resolves project-relative generated file
+  ---
+  duration_ms: 1.424428
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves workspace-prefixed filename
+ok 286 - Native diagnostic resolves workspace-prefixed filename
+  ---
+  duration_ms: 1.447343
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves linked source in sibling directory
+ok 287 - Native diagnostic resolves linked source in sibling directory
+  ---
+  duration_ms: 1.43208
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves target-framework project suffix
+ok 288 - Native diagnostic resolves target-framework project suffix
+  ---
+  duration_ms: 1.501715
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves external linked source remains not navigable
+ok 289 - Native diagnostic resolves external linked source remains not navigable
+  ---
+  duration_ms: 1.67122
+  type: 'test'
+  ...
+# Subtest: SLNX structure retains folders, configuration and project build/deploy rules
+ok 290 - SLNX structure retains folders, configuration and project build/deploy rules
+  ---
+  duration_ms: 2.280279
+  type: 'test'
+  ...
+# Subtest: SLNX inspector rejects missing paths and invalid XML instead of guessing
+ok 291 - SLNX inspector rejects missing paths and invalid XML instead of guessing
+  ---
+  duration_ms: 0.436678
+  type: 'test'
+  ...
+# Subtest: SLNX creation uses relative paths at Workspace.slnx
+ok 292 - SLNX creation uses relative paths at Workspace.slnx
+  ---
+  duration_ms: 0.881279
+  type: 'test'
+  ...
+# Subtest: SLNX creation uses relative paths at solutions/Workspace.slnx
+ok 293 - SLNX creation uses relative paths at solutions/Workspace.slnx
+  ---
+  duration_ms: 0.227253
+  type: 'test'
+  ...
+# Subtest: SLNX creation uses relative paths at App/Workspace.slnx
+ok 294 - SLNX creation uses relative paths at App/Workspace.slnx
+  ---
+  duration_ms: 0.201674
+  type: 'test'
+  ...
+# Subtest: Native UI reconciles earlier writes after a multi-file save failure
+ok 295 - Native UI reconciles earlier writes after a multi-file save failure
+  ---
+  duration_ms: 2.202823
+  type: 'test'
+  ...
+# Subtest: Native UI preserves changes typed while a save is in flight
+ok 296 - Native UI preserves changes typed while a save is in flight
+  ---
+  duration_ms: 0.597781
+  type: 'test'
+  ...
+# Subtest: Native UI passes target result requests without shell parsing
+ok 297 - Native UI passes target result requests without shell parsing
+  ---
+  duration_ms: 0.380254
+  type: 'test'
+  ...
+1..297
+# tests 297
+# suites 0
+# pass 297
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 100057.99159

@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04 04:55:00 UTC",
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "featureForwards": [
+    {
+      "feature": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "name": "runtime-worker-forward",
+        "branch": "codex/p18-runtime-graph-worker",
+        "base": "8a768af2a6bd9fe38514053b73901d56d2a23023",
+        "baseTree": "e8df3ac90abbbf1ca63925619c30b205591c6435",
+        "localHead": "48b9a9d3705dcef143307b973e1cf5d350e48df1",
+        "localTree": "69ae9904e7bc75a2780cbb89e577d47de3ed7a0a",
+        "parents": [
+          "339ad2e7e630b0f2bb307e08eeba24d3f2bbb4ae",
+          "8a768af2a6bd9fe38514053b73901d56d2a23023"
+        ],
+        "message": "SF-A23-T28: compose runtime activity with verified project execution",
+        "remoteHead": "05d4c991a132643ce05248c7f42f3b2b0f168c70",
+        "number": 3956
+      },
+      "base": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "name": "runtime-worker-forward-base",
+        "branch": "codex/p18-project-worker-base",
+        "base": "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+        "baseTree": "58490a9e90c023fa563347075c278b527302e988",
+        "localHead": "0ee3ce797f66a490c6c3b150ef6c191a159d3e69",
+        "localTree": "e8df3ac90abbbf1ca63925619c30b205591c6435",
+        "parents": [
+          "a28cfedef468a4fda2400c62d1757c4f5b4a38e3",
+          "2e4e552a5bb567dddfe9240386b8514d802bf6c7",
+          "a5431950f395377e99eb0a0b22910cbf5dbe6ee0",
+          "d8a62ba5cff1d70960f3fec886542d8d75870fab",
+          "cbd0ed9f978770b594a49004414e109dda95b16b",
+          "0cc07293309772f32dac8d5dd09bdb5c6a798e0d"
+        ],
+        "message": "SF-A23-T28: synchronize published runtime worker dependencies",
+        "remoteHead": "8a768af2a6bd9fe38514053b73901d56d2a23023"
+      }
+    },
+    {
+      "feature": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "name": "native-controller-forward",
+        "branch": "codex/p18-native-controller",
+        "base": "888a8073612d6167d55baf4e50784b437209ad09",
+        "baseTree": "5e089122f2a2cebde90a9ede56929d39f819c8f6",
+        "localHead": "fb043774ea67c425647617be4f7a181bcafd7822",
+        "localTree": "5213a88edbb6eaef5429a2901fc8ab93835150ad",
+        "parents": [
+          "f4545ccf74739637f5c34623a0f8e3b595e9f89f",
+          "888a8073612d6167d55baf4e50784b437209ad09"
+        ],
+        "message": "SF-A23-T29: compose captured native job ownership with project and test tools",
+        "remoteHead": "87af20b3951ee05be79357190e1babb74dff3e87",
+        "number": 3973
+      },
+      "base": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "name": "native-controller-forward-base",
+        "branch": "codex/p18-native-controller-base",
+        "base": "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+        "baseTree": "4c6dbd4821d636ea3f542e384de82161db6e07d8",
+        "localHead": "8ab572913c94334a97b689f91ad3cb02e46a3b08",
+        "localTree": "5e089122f2a2cebde90a9ede56929d39f819c8f6",
+        "parents": [
+          "4b3de7d6da89fb8ff18d1be17c33a3986914f663",
+          "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+          "d4f4df7a485a877c78dc0b27fa1080d6fc473a33",
+          "224da54ab1f5f3d53be6c83fda3b1dceee5921dd"
+        ],
+        "message": "SF-A23-T29: synchronize published native controller dependencies",
+        "remoteHead": "888a8073612d6167d55baf4e50784b437209ad09"
+      }
+    },
+    {
+      "feature": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "name": "native-registration-forward",
+        "branch": "codex/p18-native-registration",
+        "base": "7b7a54f6d7e6bc95c6a561975daf10a57240ae24",
+        "baseTree": "caad612f6ef1caf73a2e6f8c5ff7f765b7259ed9",
+        "localHead": "1ff9c65cbf347823fd590a6ac86abe3e43bb0191",
+        "localTree": "8e6c6d91e67667da543aefc32a457dc3d0a8442c",
+        "parents": [
+          "ca15377b4d6668d8b79382466dd444c250fdc581",
+          "7b7a54f6d7e6bc95c6a561975daf10a57240ae24"
+        ],
+        "message": "SF-A23-T11: synchronize captured native controller tool registration",
+        "remoteHead": "c92984e79368d4f1d863a8e50a6e0906d3ba3b54",
+        "number": 3991
+      },
+      "base": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "name": "native-registration-forward-base",
+        "branch": "codex/p18-native-registration-base",
+        "base": "87af20b3951ee05be79357190e1babb74dff3e87",
+        "baseTree": "5213a88edbb6eaef5429a2901fc8ab93835150ad",
+        "localHead": "adb802b6c18f0d4b761d690f8a3d82a7ce63317d",
+        "localTree": "caad612f6ef1caf73a2e6f8c5ff7f765b7259ed9",
+        "parents": [
+          "a15d1557c0a71b373c07b8248daff8cc3be07424",
+          "87af20b3951ee05be79357190e1babb74dff3e87",
+          "d49d58ed476dee5f0427528de00ebb260a29a2a8"
+        ],
+        "message": "SF-A23-T11: synchronize native controller and tool renderer dependencies",
+        "remoteHead": "7b7a54f6d7e6bc95c6a561975daf10a57240ae24"
+      }
+    }
+  ],
+  "sourceProofs": {
+    "runtime-worker-forward": [
+      {
+        "path": "apps/studio/runtime.worker.js",
+        "matchesPrepared": true,
+        "sha256": "270c133c51cd4c695e143dfe4bee17a38f2f3fc8a9e68c2bd193b8ca9993fb0d"
+      },
+      {
+        "path": "apps/studio/workers/runtime-launch.js",
+        "matchesPrepared": true,
+        "sha256": "f84f46a30a45b8614af5bd2be8b8e204eb8150e404addb8249f35dbc9053b1e4"
+      },
+      {
+        "path": "apps/studio/workers/runtime-inputs.js",
+        "matchesPrepared": true,
+        "sha256": "b64b545899a4338e0b24be99d90d3c04f6601bccede822afbcd68f41a42adad7"
+      },
+      {
+        "path": "apps/studio/workers/runtime-sources.js",
+        "matchesPrepared": true,
+        "sha256": "0cf18372761de881b91a9d3585bd7f6d50097f3400352e1163b5dfbdfc9071fb"
+      },
+      {
+        "path": "apps/studio/workers/protocol.js",
+        "matchesPrepared": true,
+        "sha256": "09e61a608b84d1d43cca38d552583e0cfdc65b2a82ca59569e5b26c15216e683"
+      },
+      {
+        "path": "tests/a00-03-studio-registries.test.js",
+        "matchesPrepared": true,
+        "sha256": "569e621fa1ffddcfbbceb1a1d4c35edc654a6856ffa584239042abc1b944066c"
+      }
+    ],
+    "native-controller-forward": [
+      {
+        "path": "apps/studio/msbuild-tools.js",
+        "sha256": "3f686bc41caa1019a7ae665b4b0cdc15587d225c7445a602deadf232e03379d8",
+        "gitBlob": "c9858f42595ecaaff79e00936873fece785c3ebe"
+      },
+      {
+        "path": "apps/studio/native-build/controller.js",
+        "sha256": "3f8b3014682668b0ad3fff2878c03f7072eeffb73c3c6abf9c610dae980db42c",
+        "gitBlob": "a6c2507c5faf1748081223f11981d496d632710d"
+      }
+    ],
+    "native-registration-forward": [
+      {
+        "path": "apps/studio/dock-layouts.js",
+        "matchesPreparedRoot": true,
+        "sha256": "ac78db6e7e3089362e0fe7feb708ede26e916de9d202b635ff41a77184636f3b",
+        "bytes": 1911,
+        "lines": 26
+      },
+      {
+        "path": "apps/studio/docking-workspace.js",
+        "matchesPreparedRoot": true,
+        "sha256": "fd999dbab9dd01ba504cd5a69c44d08dddb51fab484bb3565317c3d245d31e4f",
+        "bytes": 903,
+        "lines": 23
+      },
+      {
+        "path": "apps/studio/tools/definitions.js",
+        "matchesPreparedRoot": true,
+        "sha256": "8f3d10b4839c5d88b4e1490cd60e511e56642b67c62634d2cbc6fc89c0e5170e",
+        "bytes": 1651,
+        "lines": 47
+      },
+      {
+        "path": "apps/studio/tools/msbuild-automation.js",
+        "matchesPreparedRoot": true,
+        "sha256": "f8abce70dd8c0995bba09dd09ac798b4d1bcb6654cdd148b7bfc0acb0eab3c64",
+        "bytes": 1603,
+        "lines": 38
+      },
+      {
+        "path": "tests/a23-studio-tools-registration.test.js",
+        "matchesPreparedRoot": true,
+        "sha256": "a0ff5e1c9a78b5a5225a2c474a83f5c4e46ab28fc66913a7534a715906205ce9",
+        "bytes": 3004,
+        "lines": 49
+      }
+    ]
+  },
+  "rules": [
+    "Previous actual published feature heads remain first parents.",
+    "Only required actual dependency joins were forwarded; main was not refreshed again.",
+    "Production sources were frozen before the coordinator qualification; no local tests or builds were launched during this publication.",
+    "Remote tree identities match all corresponding local projection trees."
+  ],
+  "delegatedMaintenanceReceipts": [
+    "p18-publication/testing-policy-maintenance.json at 451b4b97fc540ecb0adb7a0ed7d7bde179595a76",
+    "p18-publication/portable-policy-maintenance.json at 695479151fedef45302a21f22d5afac2c043a5c9",
+    "p18-publication/runtime-types-test-selection-published.json",
+    "p18-publication/project-debug-test-selection-published.json",
+    "p18-publication/project-reference-corpus-published.json",
+    "p18-publication/compiler-worker-sync-published.json"
+  ],
+  "canonicalIntegration": {
+    "head": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "tree": "9bf41c0b3ba02032b2e9688b2e51add271cdebcf",
+    "parents": [
+      "1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+      "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+    ],
+    "coordinatorQualification": {
+      "selectedFiles": 227,
+      "status": "pending",
+      "owner": "root"
+    },
+    "sourceOwners": "frozen"
+  }
+}

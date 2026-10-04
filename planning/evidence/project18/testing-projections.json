@@ -1,0 +1,1208 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+  "scope": "Tests/workflows/native Studio/runtime review boundaries; not a completion or exact projected-tree validation claim",
+  "policy": "Copy owned file snapshots only. Incremental facades/manifests must expose only available modules; record every composed facade as a derived change. Never copy this whole integrated branch to a publication PR.",
+  "externalDependencies": [
+    {
+      "id": "project-edits",
+      "owner": "templates_archives",
+      "pr": 3553,
+      "head": "codex/p18-project-edits",
+      "commit": "a925a35802f44b7d158f6e57d35938075913d27a",
+      "tree": "7e5bd74f5f3ff041ee829c075ddeb648899079ac",
+      "excluded": "All XML/CST/project-edit modules and native applyProjectEdit conflict contract"
+    },
+    {
+      "id": "native-http-engine",
+      "owner": "workspace_inventory",
+      "status": "Native process and engine are published separately; coherent HTTP service registry projection is pending. Native adapter requires engine.runTool plus the explicit testing service contribution.",
+      "processPrerequisite": {
+        "pr": 3571,
+        "head": "codex/p18-native-process",
+        "commit": "212237c6ba56b7433b109755bc4e2c9631f9114e"
+      },
+      "enginePrerequisite": {
+        "pr": 3602,
+        "head": "codex/p18-native-engine",
+        "commit": "089b1eba6926a22df7cad392b89be41cb01638e5",
+        "sourceProjection": "31c8dcba865ab8aec0e2c7d9e9c0bb32bcde650e",
+        "tree": "1791920947477cfda03c4b34aec69a6687f6d1cc"
+      }
+    },
+    {
+      "id": "native-metadata",
+      "owner": "workspace_inventory",
+      "sourceCommit": "c45fa3cb",
+      "contract": "client.projectContext/projectMetadata and projectContextCompilationInput"
+    },
+    {
+      "id": "native-launch-publish",
+      "owner": "workspace_inventory",
+      "sourceCommits": [
+        "dabdfc40",
+        "4f237a43"
+      ],
+      "contract": "Granted Project/Executable launches and file-only profile listing"
+    },
+    {
+      "id": "portable-evaluator",
+      "owner": "portable_evaluator",
+      "excluded": "evaluation/** including boundary.json, project-loader.js and native context implementation"
+    },
+    {
+      "id": "bytecode-project-references",
+      "owner": "root",
+      "sourceCommit": "2fe3ecc3",
+      "excluded": "EXT opcode/descriptor/verifier modules"
+    },
+    {
+      "id": "cil-project-graph",
+      "owner": "portable_evaluator",
+      "status": "Graph initialization/token/source maps and complete property/accessor canonical correction passed the completed joint scope; compiler shared identity/member projection prerequisites remain explicit.",
+      "sourceCommit": "817156817e09a9892ecee640f9a3addd9cefac06"
+    },
+    {
+      "id": "workspace-documents",
+      "owner": "root",
+      "sourceCommit": "872a5a93",
+      "excluded": "workspace-documents.js and protected Studio application"
+    },
+    {
+      "id": "legacy-solution-parser",
+      "owner": "portable_evaluator",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "sourceBlob": "acb3e0398436f1e352aa070963d0292c3d47c607",
+      "excludedPaths": [
+        "packages/project-system/src/legacy-solution.js"
+      ],
+      "status": "Owner-authorized transfer to an extracted parser/B05 foundation: portable_evaluator will move the preserved parser body to a new formatted module and shrink the frozen legacy-solution.js to a facade. Original source blob records provenance, not byte-identical projected facade content. Publication head and its focused qualification are pending."
+    }
+  ],
+  "sharedComposition": [
+    {
+      "path": "packages/msbuild/src/index.js",
+      "action": "Add per-batch public exports only for present solution, project-edits, test-model/formats, portable and differential modules."
+    },
+    {
+      "path": "packages/msbuild/src/testing/index.js",
+      "action": "Build incremental test facade; final snapshot imports later portable runner and cannot precede it."
+    },
+    {
+      "path": "packages/msbuild/src/node.js",
+      "action": "Add NativeTestAdapter export after adapter dependency lands."
+    },
+    {
+      "path": "packages/msbuild/src/services.js",
+      "action": "Native owner integrates registerNativeTestingServices only after adapter contribution exists."
+    },
+    {
+      "path": "packages/msbuild/package.json",
+      "action": "Root owns compiler/runtime/syntax declared internal dependencies and matching lock; preserve all independent native dependencies."
+    },
+    {
+      "path": "packages/runtime/src/index.js",
+      "action": "Append ManagedInvocationSession, withSourceLaunchArguments and createProjectAssemblyInspector separately while preserving upstream lifecycle/event/numeric exports."
+    },
+    {
+      "path": "packages/bcl-core/src/modules.js",
+      "action": "Append Environment to extensions group without changing released runtime14 IDs; preserve current upstream builtin table ABI."
+    },
+    {
+      "path": "packages/bcl-core/inventory.json",
+      "action": "Regenerate only from final composed module registry; do not restore older whole snapshot."
+    },
+    {
+      "path": "apps/studio/studio.js",
+      "action": "Protected entry remains unapplied. Root owns exact reviewed generator and p18-studio-runtime-patch.py transforms; do not execute copies."
+    },
+    {
+      "path": "tests/manifests/A23.json",
+      "action": "Root owns manifest integration. Auto a23-*.test.js selection and explicit native/browser harness registration must stay complete."
+    }
+  ],
+  "qualification": {
+    "testing": "planning/evidence/project18/testing.json",
+    "nativeStudio": "planning/evidence/project18/native-studio.json",
+    "runtime": "project-runtime/qualification.json: Node26complete415/415 and finalNode22affected68/68; all failures retained. Performance and protectedentry obligations remain explicit.",
+    "limits": [
+      "Pinned native xUnit/NUnit/MSTest/coverlet restore timed out once; no framework parity claimed.",
+      "No Windows/macOS/Rust/Wasm qualification.",
+      "Protected Studio integration and aggregate browser launch require root application after lock release.",
+      "Current inventory source blobs are review inputs, not evidence that a remote projected tree passed tests."
+    ],
+    "performance": "project-runtime/benchmark.json and benchmark-diagnosis.json: two balanced pairs, one unmatched baseline; three pooled-median rows exceed5% and require review."
+  },
+  "reviewSizing": "Larger portable-framework and native-Studio units describe complete feature ownership; derive smaller tested projection commits where dependency seams permit. Full source line totals include pre-existing files and are not diff sizes.",
+  "batches": [
+    {
+      "id": "solution-configurations",
+      "dependsOn": [
+        "project-edits",
+        "legacy-solution-parser"
+      ],
+      "issues": [
+        3160,
+        3161,
+        3162,
+        3163,
+        3164,
+        3100
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/msbuild/src/solution-configurations.js",
+          "sourceBlob": "7532d332edbd8d08a7bf4a2a6d34b32369a3e591",
+          "sha256": "2ecff4be3236125175693e578d88dabeeeadeabcf3b92dabde8b693482286c05",
+          "bytes": 7019,
+          "lines": 108
+        },
+        {
+          "path": "packages/msbuild/src/solution-defaults.js",
+          "sourceBlob": "25c891696475ada00b931d7abc9db1969b9f1560",
+          "sha256": "c7ebccf7c36a93636c3ede715c368cc1bc52b2b72326922617b449401b015c41",
+          "bytes": 2116,
+          "lines": 39
+        },
+        {
+          "path": "packages/msbuild/src/solution-selection.js",
+          "sourceBlob": "e718cc73cb863bbe15d8b35026d3d1041aa58a12",
+          "sha256": "e6c988249e1f047bda4f4d83348cc741c7ab48f6746b54c0bc7f4623eeee8930",
+          "bytes": 4209,
+          "lines": 55
+        },
+        {
+          "path": "packages/msbuild/src/solution.js",
+          "sourceBlob": "64139deca2554bd518441c143162968dc10ec4b9",
+          "sha256": "f9dacb784dda3104d2e05c2b3e21ccc7e89f54e8d532a6c01955d2918297167b",
+          "bytes": 2180,
+          "lines": 14
+        },
+        {
+          "path": "packages/msbuild/src/sln-configurations.js",
+          "sourceBlob": "25e8e08b6e5f1d62a4caf32de6d20db987cd64a7",
+          "sha256": "92ed3a2a739b2efad88bf0d632dc762f2fc82b7fb461c9927f11ce0cacbf5da0",
+          "bytes": 2803,
+          "lines": 43
+        },
+        {
+          "path": "packages/msbuild/src/sln-writer.js",
+          "sourceBlob": "c381864f6e7b5ebec5e0cc7d2bce1cf4d42e9e63",
+          "sha256": "aef54c5723d991f126f1169950b5e3001b57dd954c0a591cc0e8513300bed3a5",
+          "bytes": 7095,
+          "lines": 129
+        },
+        {
+          "path": "tests/a23-10-solution-configurations.test.js",
+          "sourceBlob": "f7f3fc8ef5810b9373b9fa5a60075861ad3ac55c",
+          "sha256": "0aa316bd0057976865fbc8d7d1dede251a62de021cff139797e873f4e25825f2",
+          "bytes": 8563,
+          "lines": 121
+        },
+        {
+          "path": "tests/msbuild-differential/solutions.mjs",
+          "sourceBlob": "86a67a9886cf2ef3b6ca737e557fb7bce4b3c92a",
+          "sha256": "59c19420b9b0979e9b5102d0cf2a5cb2ce4e292885fcb110e69a07a6f6c3ab58",
+          "bytes": 7221,
+          "lines": 103
+        }
+      ],
+      "fileCount": 8,
+      "fullSourceLines": 612
+    },
+    {
+      "id": "testing-model",
+      "dependsOn": [],
+      "issues": [
+        3090
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/msbuild/src/testing/model.js",
+          "sourceBlob": "b2dd5e264ca28b6088a3a71f00047e056eb33572",
+          "sha256": "86109a2603121f697dc99037b760d42c2ee87345660a313e6a936a562a3b2be8",
+          "bytes": 5634,
+          "lines": 95
+        },
+        {
+          "path": "packages/msbuild/src/testing/session.js",
+          "sourceBlob": "cae40112482fbd2bfee8cb54797c31b6c174fd3e",
+          "sha256": "fee4a17c5f40ef3126801189ddb0b2e27f09b9d5dad91395ece22695d34e5a38",
+          "bytes": 3400,
+          "lines": 81
+        },
+        {
+          "path": "tests/a23-35-test-model.test.js",
+          "sourceBlob": "30db3d652e9ebb131460ae79eb65341a6f39d030",
+          "sha256": "f45b0fbee2fc9ad59f6bb6f94e09ea82cdf30bd44c8234da4e193db60ebc6027",
+          "bytes": 1897,
+          "lines": 28
+        }
+      ],
+      "fileCount": 3,
+      "fullSourceLines": 204
+    },
+    {
+      "id": "native-test-formats",
+      "dependsOn": [
+        "testing-model",
+        "project-edits"
+      ],
+      "issues": [
+        3165,
+        3166,
+        3167,
+        3169
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/msbuild/src/testing/discovery.js",
+          "sourceBlob": "b93c3cffe13a36903abb7e87a237a97d8d683a47",
+          "sha256": "b13ea0bd8e6d38d8ff8b17d4bb03aecccf75c6189f9cb94a1b6e8ed44d6da6c3",
+          "bytes": 3265,
+          "lines": 58
+        },
+        {
+          "path": "packages/msbuild/src/testing/run.js",
+          "sourceBlob": "203336f1d57c8960beb51ad7f8d7daba00bd3252",
+          "sha256": "a1eccb5df32e3a2ce673d0583c5c1abaaa1f081c7f97298df263330cd7d1a0fe",
+          "bytes": 2583,
+          "lines": 40
+        },
+        {
+          "path": "packages/msbuild/src/testing/trx.js",
+          "sourceBlob": "5638c39fc0f5d832a8ee22026ad29d5a3ff56d5f",
+          "sha256": "6ddf228d89b3aa3ce39625f4ed8c3b68b8c8863153a6ace5431a9920f2c38d37",
+          "bytes": 4741,
+          "lines": 73
+        },
+        {
+          "path": "packages/msbuild/src/testing/source-map.js",
+          "sourceBlob": "139785d9d554b9fca2bf33ee8ffc998aa53b88ad",
+          "sha256": "6c51b33b15627d4a0aa5fa016b9c15940fcf2add1b2343a538ba3f96b63ccc72",
+          "bytes": 1520,
+          "lines": 23
+        },
+        {
+          "path": "packages/msbuild/src/testing/coverage.js",
+          "sourceBlob": "5d349fc2cc9a0f87a0fc2b79e6365b660f3134e2",
+          "sha256": "30b29c494704734d285d7a12b72bebafc6cddd9fa3f516c7899aeab0a92c9c34",
+          "bytes": 3557,
+          "lines": 66
+        },
+        {
+          "path": "tests/a23-11-native-testing.test.js",
+          "sourceBlob": "4f9015485e32963ca11132157c63db27b0c71454",
+          "sha256": "996346b444479d57e4f377b8909f7e61f47cc163b16a56f56679a47fe8c659e8",
+          "bytes": 5609,
+          "lines": 82
+        }
+      ],
+      "fileCount": 6,
+      "fullSourceLines": 342
+    },
+    {
+      "id": "native-test-adapter",
+      "dependsOn": [
+        "native-test-formats",
+        "native-http-engine"
+      ],
+      "issues": [
+        3165,
+        3166,
+        3167,
+        3168,
+        3169
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/msbuild/src/testing/native-adapter.js",
+          "sourceBlob": "c93726cf4893bc951f9d854b32e3cf0380303102",
+          "sha256": "f5b9756c7fa6854b0c76af606d528965d56784c5e0b13cb0a6f8d972c37236ec",
+          "bytes": 9692,
+          "lines": 194
+        },
+        {
+          "path": "tests/a23-11-native-adapter.test.js",
+          "sourceBlob": "610e7dd4757b6bca4a7da104ad31d324dca0cd50",
+          "sha256": "097a2bc9f5878013be0cd14e5aacf556b0415a9b1f8d16c25cfbad2cd89386b6",
+          "bytes": 5462,
+          "lines": 92
+        }
+      ],
+      "fileCount": 2,
+      "fullSourceLines": 286
+    },
+    {
+      "id": "managed-invocation",
+      "dependsOn": [],
+      "issues": [
+        3095
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/runtime/src/invocation-session.js",
+          "sourceBlob": "b44c38f2ba502939f20e9b3ed7c563339a8e9acc",
+          "sha256": "8ff9314056fa12841c31f256d42e2ff89a87774f621ff34e2eec88be1374db7f",
+          "bytes": 8825,
+          "lines": 183
+        },
+        {
+          "path": "tests/a23-39-managed-invocation.test.js",
+          "sourceBlob": "b0f6a05c8fbbae6babe3862944739af3b24ba2f6",
+          "sha256": "d6f2e5a850d2e25772560bc50e96e2ea90a69d05e8deac5c3d574e5134c1d607",
+          "bytes": 2588,
+          "lines": 49
+        }
+      ],
+      "fileCount": 2,
+      "fullSourceLines": 232
+    },
+    {
+      "id": "portable-framework-testing",
+      "dependsOn": [
+        "testing-model",
+        "managed-invocation"
+      ],
+      "issues": [
+        3091,
+        3093,
+        3094,
+        3095
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/msbuild/src/testing/portable/assertion-profile.js",
+          "sourceBlob": "dbcd6a44048bc908c23b1bec0be7b4d1af0e991a",
+          "sha256": "6eeb6295e0f3f72d00b6b2119fcc42e1cff0ce8105249d3a90090f86162e4b09",
+          "bytes": 5119,
+          "lines": 65
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/attribute-values.js",
+          "sourceBlob": "d0e36e97004fb406d5fb1afb1d80bd84f346c625",
+          "sha256": "23565008f23a952d6ff7f16a24df13295bde276e5f8cc2ef577b929d8eafb9b2",
+          "bytes": 4915,
+          "lines": 88
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/data-sources.js",
+          "sourceBlob": "d0d2b30daa9fdfc6c561c295c7a82fb840db7f1b",
+          "sha256": "a4e0d5591b589504078488419f46278255e227052d316dddba93eb25674f330e",
+          "bytes": 1651,
+          "lines": 26
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/discovery-shared.js",
+          "sourceBlob": "984de5412a08eb080e0cb71ccae6ce7755e8cb49",
+          "sha256": "113ec8f46fb5e5bc7ac2c7de317533f152d6382c7c7e30c83b34c122523aaeb5",
+          "bytes": 2075,
+          "lines": 31
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/discovery.js",
+          "sourceBlob": "0cb900c11ef9bcec1f770b4125c18a2a7afec6e2",
+          "sha256": "47ebd23c64b8e30077c3398deb420143a955225f86662afd583d2149ff4e334f",
+          "bytes": 1222,
+          "lines": 22
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/harness.js",
+          "sourceBlob": "e10373a229a002926ec0821f0493d9c12215cd00",
+          "sha256": "99a907cb4844f8a85faabbe5b046b7975a506385e3deda16bcabe5ab6b38bb02",
+          "bytes": 10056,
+          "lines": 153
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/managed-runtime.js",
+          "sourceBlob": "6b2dbbe338174060fbf4c263c18f0a69c5a17426",
+          "sha256": "54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65",
+          "bytes": 3754,
+          "lines": 62
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/mstest.js",
+          "sourceBlob": "c1c462f53371521a01310b450b0d089b0614a155",
+          "sha256": "e0ae61d8daa0308d888f753e19b4d3e41a5dd2b508a9af56c756dfd6c9e2ee93",
+          "bytes": 2335,
+          "lines": 36
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/nunit.js",
+          "sourceBlob": "79d6b770b193a88ac2cc5328aeb758f05a1651a7",
+          "sha256": "80fc9fc8454141f5f0cc427ee5465251b070b1d0222834471d8296104384fe86",
+          "bytes": 3214,
+          "lines": 47
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/provider-projection.js",
+          "sourceBlob": "6197dcd92bcba8633e4f586965abfe06b9045539",
+          "sha256": "1eb2705040a86d32620874e053a1c4adb644dbee073c5ccff68f4e9e270cd98f",
+          "bytes": 1359,
+          "lines": 21
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/runner.js",
+          "sourceBlob": "c598da410c5dbdfc25027ccbd479b9dc791b99b3",
+          "sha256": "cfcf9b8e7e7e98b1ea3aa98d17ba06ce208de3dacd050d7fca69ed61a9e6cabc",
+          "bytes": 9030,
+          "lines": 161
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/runtime-data.js",
+          "sourceBlob": "44e5ce66103d99162630e03c1b822830301b74b9",
+          "sha256": "23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff",
+          "bytes": 3471,
+          "lines": 53
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+          "sourceBlob": "14c3196ccb391679b70f5fbe9a1df19606519eb3",
+          "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+          "bytes": 7668,
+          "lines": 134
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/xunit.js",
+          "sourceBlob": "ea9ead3b02e09f12bdb1b7ed1838d6c5056a5c9c",
+          "sha256": "031bc3b2652931b51353a55c3281454afcb1134da53a0f876da6b66b00f7ec2b",
+          "bytes": 2904,
+          "lines": 48
+        },
+        {
+          "path": "tests/a23-36-38-portable-discovery.test.js",
+          "sourceBlob": "a0e93889d089185be19d42eed392e998ac0b4f1e",
+          "sha256": "ce7840b518e5bb640028bd3c19a1c3962dad202cb50e047e5d7a64c7d405993f",
+          "bytes": 4619,
+          "lines": 80
+        },
+        {
+          "path": "tests/a23-36-provider-projection.test.js",
+          "sourceBlob": "8a6c8b25ee5d41afb330f4b87906d622533b471a",
+          "sha256": "936c43315468c94634f307857d2c1e22dc80349c55556d29a1b315b42b638099",
+          "bytes": 2426,
+          "lines": 38
+        },
+        {
+          "path": "tests/a23-39-portable-runner.test.js",
+          "sourceBlob": "d067cc656cc64947d947b544612a60410763468d",
+          "sha256": "3ad5ea3df392d275e80f2ad360d42f6334a97cf6da2155d16bdeff8f75fd5a29",
+          "bytes": 4004,
+          "lines": 71
+        },
+        {
+          "path": "tests/a23-39-portable-fixtures.test.js",
+          "sourceBlob": "e0e7978b6dc6f084e6b50aa61339d6ce1ae743b0",
+          "sha256": "3dc131a1ba293bed4276d804ac839a9301876eedae46ca9eab47676e830c9b60",
+          "bytes": 3774,
+          "lines": 82
+        },
+        {
+          "path": "tests/a23-39-shared-framework-fixtures.test.js",
+          "sourceBlob": "c943ad7dee9509d26fc507e2f99e0920eb3b77a8",
+          "sha256": "c4d67fc3d2dd83536161041dd5e6cf14d7abae26173e2e45f0fc81dd7cb508c0",
+          "bytes": 1818,
+          "lines": 29
+        },
+        {
+          "path": "tests/msbuild-differential/framework-fixtures.js",
+          "sourceBlob": "ac087a86e776d1fd53dc7231bf525e95b98ed972",
+          "sha256": "a1afc7c859bd7b148a52737c4888c808d57efb0c6594887be494cc3c2e0d4014",
+          "bytes": 4236,
+          "lines": 82
+        },
+        {
+          "path": "tests/msbuild-differential/frameworks.mjs",
+          "sourceBlob": "a8c6b40e524ac1aa8a2c37b90007daa4923e40ce",
+          "sha256": "eaaa9aa11ab7b839d2c5d5bafa2e59e1473cf49ceccefa1102c478e45029682a",
+          "bytes": 4706,
+          "lines": 72
+        },
+        {
+          "path": "packages/msbuild/docs/testing.md",
+          "sourceBlob": "bb35278801fc25c826e31aabb30c9d24d5b18c27",
+          "sha256": "49cfe950938f0be987778630c36db43713bfa8a6d3091c6ae113ba3eb025d7bc",
+          "bytes": 10727,
+          "lines": 181
+        }
+      ],
+      "fileCount": 22,
+      "fullSourceLines": 1582
+    },
+    {
+      "id": "evaluation-differential",
+      "dependsOn": [
+        "portable-evaluator"
+      ],
+      "issues": [
+        3170,
+        3171
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/msbuild/src/evaluation-differential.js",
+          "sourceBlob": "8eaa5f42a20cce37c5309afc45cee0ca3c7688e2",
+          "sha256": "456c2e38d11bbff503158c9064905d61f0257caf5fef5e3445c666c9677b59dc",
+          "bytes": 5215,
+          "lines": 83
+        },
+        {
+          "path": "tests/a23-12-evaluation-differential.test.js",
+          "sourceBlob": "270e99577e9504f37da69f4581f91b7d33d8f450",
+          "sha256": "6fa8ab8c97b2ccdfcfdb358ea3c6165f432a92e516a0261c976b0e681f63fa47",
+          "bytes": 4099,
+          "lines": 58
+        },
+        {
+          "path": "tests/msbuild-differential/corpus.js",
+          "sourceBlob": "46632712b4c1794af4f4067be819a059e2f67450",
+          "sha256": "c7c6f158c7e5c133584211d4c1d5fc188c1329f0f3f29815364a7c3b50cf3eeb",
+          "bytes": 3454,
+          "lines": 38
+        },
+        {
+          "path": "tests/msbuild-differential/portable.js",
+          "sourceBlob": "92b32d4838d743685046703564f676dee131c8d5",
+          "sha256": "74eb4a991b38853fb05074698447f45c28798f84cd87e8c5004bedcf03e45b9b",
+          "bytes": 656,
+          "lines": 12
+        },
+        {
+          "path": "tests/msbuild-differential/run.mjs",
+          "sourceBlob": "51cebc753d247c0b51e3d76351f0f1dcf9fb4b7d",
+          "sha256": "1c8ae27e7fd18eccacca6699dda464c7d168a946bc053a6be4f029c19e6b241c",
+          "bytes": 3607,
+          "lines": 58
+        }
+      ],
+      "fileCount": 5,
+      "fullSourceLines": 249
+    },
+    {
+      "id": "managed-launch",
+      "dependsOn": [],
+      "issues": [
+        3084,
+        3085
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/runtime/src/launch-arguments.js",
+          "sourceBlob": "16fa9ad5837773891a4abcd14da82d97676a7f84",
+          "sha256": "e49d2e3efc790960fe45b5faba877508be9417a2bc3d2e0a956dde4eba33cb26",
+          "bytes": 3314,
+          "lines": 53
+        },
+        {
+          "path": "packages/bcl-core/src/system/environment.js",
+          "sourceBlob": "c2bde8331ea4d6d9255ee2489d883237d8b0f3d9",
+          "sha256": "9480514aea03b4e36b422f8976aa5c298f874a34366579bce4a6115ff9b597c3",
+          "bytes": 3362,
+          "lines": 69
+        },
+        {
+          "path": "tests/a23-29-managed-environment.test.js",
+          "sourceBlob": "cf6029be0b260afc93ed6276961b59b2cc32cc75",
+          "sha256": "4f12f3466a49ef4cacb00d10817019133afa95d2fe35a96d62b8d8f930dabed6",
+          "bytes": 4924,
+          "lines": 87
+        },
+        {
+          "path": "tests/a23-29-abi-extensions.test.js",
+          "sourceBlob": "c2a9eb651d94fd95e5e61c31d242fd7917a8424c",
+          "sha256": "d80bed95b62841cacdddfeaf5e2f7ada38bc3ee31aa6f7d35a3a713e3976ea8a",
+          "bytes": 1685,
+          "lines": 31
+        },
+        {
+          "path": "tests/a23-30-launch-arguments.test.js",
+          "sourceBlob": "e759a124bab74f4feb124d17563a76308e5fa17c",
+          "sha256": "b15658ce1af4f64f24a460991ba8c5d500a614ed9469a0460cb6764dd8a8dcc0",
+          "bytes": 2175,
+          "lines": 38
+        }
+      ],
+      "fileCount": 5,
+      "fullSourceLines": 278
+    },
+    {
+      "id": "studio-native-contexts",
+      "dependsOn": [
+        "native-http-engine",
+        "native-metadata",
+        "native-launch-publish",
+        "portable-framework-testing",
+        "native-test-adapter"
+      ],
+      "issues": [
+        3122,
+        3123,
+        3127,
+        3085,
+        3086,
+        3165,
+        3166,
+        3167,
+        3168,
+        3169,
+        3090,
+        3091,
+        3093,
+        3094,
+        3095
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "apps/studio/native-build/build-view.js",
+          "sourceBlob": "bc01a6a37b3a84b80bb21ba6a619c5b1b607adee",
+          "sha256": "319b1b5bd26f019a0b6d4d9729114a2d022bfbe8f1b117efd7f30fa473116a32",
+          "bytes": 9925,
+          "lines": 143
+        },
+        {
+          "path": "apps/studio/native-build/context-view.js",
+          "sourceBlob": "a17595392c30008a5b90200215e19094c99c9fb0",
+          "sha256": "51c822fec99772790d1b994770f0266b74ddaae5e60d67ec394b3d3bca9dcab9",
+          "bytes": 6507,
+          "lines": 81
+        },
+        {
+          "path": "apps/studio/native-build/controller.js",
+          "sourceBlob": "78854431a89306ca83f6aa9f744cca85de80bc2c",
+          "sha256": "226c36530916e38b7de9cecf4664d21d5a31d081b7ec6c836a5d3f2176d7ca25",
+          "bytes": 11420,
+          "lines": 261
+        },
+        {
+          "path": "apps/studio/native-build/inspector-view.js",
+          "sourceBlob": "ef46ccaca7313077f5f902938c6eae29ce48e683",
+          "sha256": "23a32b19199cfc746430b039b9b22a250dc06e040bab4f1a9dc9d590e590f6ef",
+          "bytes": 2500,
+          "lines": 40
+        },
+        {
+          "path": "apps/studio/native-build/metadata.js",
+          "sourceBlob": "790f84ebf7966c480162f7c29071b28687fb8c1e",
+          "sha256": "fac30217aad8b4fec5012fcc57fca4eaef841bdb8b26f7b65447a28a437e19ff",
+          "bytes": 2918,
+          "lines": 44
+        },
+        {
+          "path": "apps/studio/native-build/profiles.js",
+          "sourceBlob": "ef291fb92c059d64cc4147bb01eefb50d005fda1",
+          "sha256": "4a64c479bf44bd94d13d7f8996766e0d624aad5e0b7f0ce9d0f6bf944201f8d9",
+          "bytes": 4799,
+          "lines": 88
+        },
+        {
+          "path": "apps/studio/native-build/project-context.js",
+          "sourceBlob": "97a16ef06cd1d6236dc42e4c4533cdf8f89b4dac",
+          "sha256": "b9b0e6507d1f8b32e02272a058d60b984d054a69c1c37004857b0a907f42b198",
+          "bytes": 6048,
+          "lines": 120
+        },
+        {
+          "path": "apps/studio/native-build/settings.js",
+          "sourceBlob": "ab47a085edae2c718d490c5da0b7594387e67f06",
+          "sha256": "5f02c78b86349415bc734ca40a18aea4ad3a36379858e6137e354a71aa66eb74",
+          "bytes": 2946,
+          "lines": 59
+        },
+        {
+          "path": "apps/studio/native-build/source-view.js",
+          "sourceBlob": "effd765d8cbbf97a4197b173cd18a80808f2e23a",
+          "sha256": "7f6ed53bb898c6cbc1858f3178dd09040136e2860493785efeb6395b0a9f0e6e",
+          "bytes": 4655,
+          "lines": 76
+        },
+        {
+          "path": "apps/studio/native-build/tool-renderer.js",
+          "sourceBlob": "5f282443898d7eb56a5703c4b26e4c4441f19d52",
+          "sha256": "85046cd8fd7f7c731d36ac263680e67ee9cefac2ca8979d5df54c596de9da112",
+          "bytes": 1232,
+          "lines": 18
+        },
+        {
+          "path": "apps/studio/native-build/workspace-state.js",
+          "sourceBlob": "bf92e02586abe6c84d1f3c4ac06c0bbe859bde26",
+          "sha256": "21bb88efc04137415404a2c2e5b264ebf0d8c27979f51a74850d184dba388da7",
+          "bytes": 4736,
+          "lines": 98
+        },
+        {
+          "path": "apps/studio/test-explorer/controller.js",
+          "sourceBlob": "0e260f0e5226fc0a95ac22d0c116e6e67ddab784",
+          "sha256": "4c1e657cff176703c7685ef48bc212ad0c008bcc01f7b75b284a3ac7c617b2c7",
+          "bytes": 11264,
+          "lines": 241
+        },
+        {
+          "path": "apps/studio/test-explorer/native-client.js",
+          "sourceBlob": "86e087374dd4b1bb57102174c33c8995cd4eca0e",
+          "sha256": "b2628dae5f71029aecbfe3e450f38b32dc7453fd141b1788f9751d9e3ffd4063",
+          "bytes": 2933,
+          "lines": 70
+        },
+        {
+          "path": "apps/studio/test-explorer/test.worker.js",
+          "sourceBlob": "97939d55bbbb4a681bfea0682e55a345e94e1211",
+          "sha256": "77c043381544010ba6113eb04137679d0f3113879241ad961546fbc42c516565",
+          "bytes": 221,
+          "lines": 4
+        },
+        {
+          "path": "apps/studio/test-explorer/view.js",
+          "sourceBlob": "d4a2faea87367c889c504a3061c3fd5dc3086cb7",
+          "sha256": "5af04dbfeb3a49fa7150fdcb7d21ed6cb54d95cfd5810c6753e7fd22de01dfa6",
+          "bytes": 11153,
+          "lines": 146
+        },
+        {
+          "path": "apps/studio/test-explorer/worker-client.js",
+          "sourceBlob": "a96a5e885f66ea73c701c2ab2fdc004fcfa44bef",
+          "sha256": "41dd9997cc44ab08cb8118171bb425329cf8da0460d5923eb4cc9e0440b31f86",
+          "bytes": 3056,
+          "lines": 72
+        },
+        {
+          "path": "apps/studio/test-explorer/worker-service.js",
+          "sourceBlob": "229e67a0e605040de2cb1a985dd79b7a35b42f5a",
+          "sha256": "df14e607424952a5b694abf0bda3feaec97270d2c7b1e2637b3fefa4dc452b91",
+          "bytes": 3582,
+          "lines": 68
+        },
+        {
+          "path": "tests/a23-studio-native-contexts.test.js",
+          "sourceBlob": "65534a4f975a0e58d98abd348348d5c4090beb2c",
+          "sha256": "e226f481bc6b2f9218c3c90c704aa84e97f6c0f91263c7edfaa68a761308285f",
+          "bytes": 5665,
+          "lines": 91
+        },
+        {
+          "path": "tests/a23-studio-native-profiles.test.js",
+          "sourceBlob": "51f53cfbe76864a8d2b889b9cd20f3588699adce",
+          "sha256": "a9037b9f7ae4444b679314c0b4902408ee6b31e053f27cd4614000d37f8eec72",
+          "bytes": 3866,
+          "lines": 79
+        },
+        {
+          "path": "tests/a23-studio-test-explorer.test.js",
+          "sourceBlob": "d9e7b7b37af78bc0a6e68d0b8acb9ff47331e3a9",
+          "sha256": "d773af1d360f7fd7ffb3043eb4cdffbdb9063e0b11a72ee20aa8356edabc5a4c",
+          "bytes": 8567,
+          "lines": 164
+        },
+        {
+          "path": "tests/a23-studio-test-worker.test.js",
+          "sourceBlob": "8269f2b4fbbe190012b940510a11b009c9f96037",
+          "sha256": "a7ff0625c3e0641876bc4b47ff392c4c966202526b904379e5d28dcbbbc6077c",
+          "bytes": 5476,
+          "lines": 98
+        },
+        {
+          "path": "tests/a23-studio-tools-registration.test.js",
+          "sourceBlob": "895935b3d109d652e36e9b29dd051f05d27458e8",
+          "sha256": "a0ff5e1c9a78b5a5225a2c474a83f5c4e46ab28fc66913a7534a715906205ce9",
+          "bytes": 3004,
+          "lines": 49
+        },
+        {
+          "path": "apps/studio/msbuild-tools.js",
+          "sourceBlob": "c9858f42595ecaaff79e00936873fece785c3ebe",
+          "sha256": "3f686bc41caa1019a7ae665b4b0cdc15587d225c7445a602deadf232e03379d8",
+          "bytes": 59,
+          "lines": 1
+        },
+        {
+          "path": "apps/studio/native-build/README.md",
+          "sourceBlob": "8bc717d8c7fde4a570fafb2b58b83a32ebb5090f",
+          "sha256": "0d5599d9ceef8bc51ce106286a7aee35bcebcb4a17eb81c96ce9b645e1d95a8e",
+          "bytes": 4521,
+          "lines": 75
+        },
+        {
+          "path": "tests/support/a23-native-tools.js",
+          "sourceBlob": "7eac813ed5633bc186105324bc288b2cb6b90760",
+          "sha256": "cb9f0804867e500280b2785c1274aabdf0d02e738ee62d5c1b77f94d7e2799a3",
+          "bytes": 4391,
+          "lines": 61
+        }
+      ],
+      "fileCount": 25,
+      "fullSourceLines": 2247
+    },
+    {
+      "id": "studio-native-registration",
+      "dependsOn": [
+        "studio-native-contexts",
+        "workspace-documents"
+      ],
+      "issues": [
+        3085,
+        3086,
+        3165,
+        3166,
+        3167,
+        3168,
+        3169
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "apps/studio/tools/definitions.js",
+          "sourceBlob": "4d25f3473850d9d701cd5f2547d985d29fc21f52",
+          "sha256": "8f3d10b4839c5d88b4e1490cd60e511e56642b67c62634d2cbc6fc89c0e5170e",
+          "bytes": 1651,
+          "lines": 47
+        },
+        {
+          "path": "apps/studio/tools/core.js",
+          "sourceBlob": "5d7e1df08559c63084c1445fce559d57a36c29ba",
+          "sha256": "019df0f29dcbe7bc8d507830f75710efacc7f6a2ac18cc5ab5a8d224732c6ca2",
+          "bytes": 28403,
+          "lines": 101
+        },
+        {
+          "path": "apps/studio/tools/msbuild-automation.js",
+          "sourceBlob": "72d519f0f73f4f533d79a2ab3922044129a91789",
+          "sha256": "f8abce70dd8c0995bba09dd09ac798b4d1bcb6654cdd148b7bfc0acb0eab3c64",
+          "bytes": 1603,
+          "lines": 38
+        },
+        {
+          "path": "apps/studio/docking-workspace.js",
+          "sourceBlob": "f82d37b3638b383925abb225a146d7e5a9209528",
+          "sha256": "dc0dd9b92088f15b28704818ac501ec61527c0c382d16281ef6439305c4a8c9d",
+          "bytes": 6561,
+          "lines": 58
+        }
+      ],
+      "fileCount": 4,
+      "fullSourceLines": 244
+    },
+    {
+      "id": "runtime-type-identity",
+      "dependsOn": [
+        "bytecode-project-references"
+      ],
+      "issues": [
+        3083
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/runtime/src/project-assemblies/admission.js",
+          "sourceBlob": "aeb74a1deb636aba35b73089168c27c70bbff6cb",
+          "sha256": "69433f4aab86a02a41fb575734b7a446194293cf60515e58210aafd76518775f",
+          "bytes": 392,
+          "lines": 6
+        },
+        {
+          "path": "packages/runtime/src/execution/type-qualification.js",
+          "sourceBlob": "dd7a6d3cadaac3734c2648a442ef1e7577985a36",
+          "sha256": "a726fe9d9ae3d133559c3a7a1762a8207a6e7f7297d990eab8a519608643b198",
+          "bytes": 999,
+          "lines": 34
+        },
+        {
+          "path": "packages/runtime/src/execution/type-names.js",
+          "sourceBlob": "4ddfa744b816bd45b88eedcff92af21e471ec3c2",
+          "sha256": "e8d60f1771c572876c1b6b808a34733dd69ce803c687cd041b23a4fbddd59f85",
+          "bytes": 3988,
+          "lines": 75
+        },
+        {
+          "path": "packages/runtime/src/execution/method-table.js",
+          "sourceBlob": "cd52639d52c9cf847450232a8e79c30bb97488b7",
+          "sha256": "a0c7d2a9c523404429730b6410a71f506c8cea77a8024c1a7ddb8d9ca92a756d",
+          "bytes": 14576,
+          "lines": 174
+        },
+        {
+          "path": "packages/runtime/src/execution/type-system.js",
+          "sourceBlob": "7e36c443ad1ca74d07f1f415a1abfea8fd0e9c07",
+          "sha256": "51e7f36d8201bfba2681bf9d3802d951e10b3ac8fe32dab3cb06704ed74d03d9",
+          "bytes": 4405,
+          "lines": 70
+        },
+        {
+          "path": "packages/runtime/src/execution/type-display.js",
+          "sourceBlob": "b70b713d93fc0c164fbeeb3639740fc214cde7a7",
+          "sha256": "19aff295ee51d752bf0e5077f24cf236300a264b252f922b1a4304147a4cfe01",
+          "bytes": 3582,
+          "lines": 68
+        },
+        {
+          "path": "packages/runtime/src/execution/tokens.js",
+          "sourceBlob": "7f037660ab521b9823e5f8d11b85f80f91d283e1",
+          "sha256": "aa29f4d75f6c8f7684a42b1dc73a0092eed850ca015b090f7c03bb765df0a5eb",
+          "bytes": 5159,
+          "lines": 94
+        },
+        {
+          "path": "tests/a23-project-runtime-types.test.js",
+          "sourceBlob": "d64ae91c3c41f9cdad6cfe223840e9ae14dfbb4f",
+          "sha256": "9b8325256874464285d0829dff622f2f89de02826ec05a667b861948b5743223",
+          "bytes": 4045,
+          "lines": 62
+        }
+      ],
+      "fileCount": 8,
+      "fullSourceLines": 583
+    },
+    {
+      "id": "runtime-project-assemblies",
+      "dependsOn": [
+        "runtime-type-identity",
+        "cil-project-graph"
+      ],
+      "issues": [
+        3083
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/runtime/src/project-assemblies/metadata.js",
+          "sourceBlob": "4dafc8a1d068f5481eefe57deb66c0ae118dae06",
+          "sha256": "6b87e1253515306d7dc6da00ff857ee223c92b05433c8245e7a9387fc84599c9",
+          "bytes": 5609,
+          "lines": 133
+        },
+        {
+          "path": "packages/runtime/src/project-assemblies/identities.js",
+          "sourceBlob": "d0bd30925486132d984fbb08a87d0996df3f2a4b",
+          "sha256": "66b8cc34d055de4b92bd2f04ad3990477e58edef4cbd0460aadcada8f978de22",
+          "bytes": 718,
+          "lines": 20
+        },
+        {
+          "path": "packages/runtime/src/project-assemblies/debug-info.js",
+          "sourceBlob": "c3eace0cff0d6cb6ad0d44e8d0fd391483c0dfe2",
+          "sha256": "46526e7fbeb1b864bc455ec309509851ddf0e5c0077d0e49a72f7caedee3a992",
+          "bytes": 1912,
+          "lines": 36
+        },
+        {
+          "path": "packages/runtime/src/project-assemblies/inspector.js",
+          "sourceBlob": "22af9d84928e87180d654fa94b223756c5976c89",
+          "sha256": "397e8cf9f48f6d4722460bc785702aaf716ebc44bf8ccc437969c66c377b07cb",
+          "bytes": 12057,
+          "lines": 232
+        },
+        {
+          "path": "packages/runtime/PROJECT-ASSEMBLIES.md",
+          "sourceBlob": "38d8eed9618bb83beb88cc783321978dc6df7d9b",
+          "sha256": "8a5993c41d75ec6c8b625763f2ed950e2ed64577afb8b156e80a686b700d4323",
+          "bytes": 5924,
+          "lines": 97
+        },
+        {
+          "path": "tests/a23-project-runtime.test.js",
+          "sourceBlob": "51144c033eb2f47ed451ac77891a8fa9c0b516fb",
+          "sha256": "048c1c01213c4277252a64506f4ad05aa90fcc655c4568c6ce854ac81a4037dc",
+          "bytes": 8414,
+          "lines": 135
+        }
+      ],
+      "fileCount": 6,
+      "fullSourceLines": 653
+    },
+    {
+      "id": "runtime-project-worker",
+      "dependsOn": [
+        "runtime-project-assemblies",
+        "managed-launch"
+      ],
+      "issues": [
+        3083,
+        3085
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "apps/studio/workers/runtime-inputs.js",
+          "sourceBlob": "663cbbe13701daa3b4a46b47934c6bdc9b04ef48",
+          "sha256": "b64b545899a4338e0b24be99d90d3c04f6601bccede822afbcd68f41a42adad7",
+          "bytes": 3020,
+          "lines": 56
+        },
+        {
+          "path": "apps/studio/workers/runtime-launch.js",
+          "sourceBlob": "8a0d99a6b260bb23f08827b6afceb646fc9617bb",
+          "sha256": "cddc793613d1d0a66803f9aac99dcbf12ba2cf82bd43f9336079f056bd90525b",
+          "bytes": 2331,
+          "lines": 41
+        },
+        {
+          "path": "apps/studio/workers/runtime-sources.js",
+          "sourceBlob": "856eb24d105f98498d661358933954dddfee18c3",
+          "sha256": "0cf18372761de881b91a9d3585bd7f6d50097f3400352e1163b5dfbdfc9071fb",
+          "bytes": 535,
+          "lines": 11
+        },
+        {
+          "path": "apps/studio/runtime.worker.js",
+          "sourceBlob": "09e643a68be95a50acda521928c936de6ed640ae",
+          "sha256": "a7350ece3184494e34f91d6fde0683c8bbbc65f8ac5edaa1c86c5ec4b1f39637",
+          "bytes": 14946,
+          "lines": 111
+        },
+        {
+          "path": "tests/a23-project-runtime-worker.test.js",
+          "sourceBlob": "667dd0cbca7cc704a18e6b4d286dffd84e39e422",
+          "sha256": "b84283cb7a9439f5fd7a3b6697fe18b26a58446bab62b227dd114677b7c8330c",
+          "bytes": 6385,
+          "lines": 94
+        },
+        {
+          "path": "tests/support/runtime-project-worker.mjs",
+          "sourceBlob": "9a9efec84443c080636d4bf0fc366825cb7a9f16",
+          "sha256": "4161af84e673e3d284522f96d56318fc9417b1bc31938462c6b4a28428071a97",
+          "bytes": 275,
+          "lines": 6
+        },
+        {
+          "path": "tests/support/runtime-worker-client.js",
+          "sourceBlob": "931b1479a657f209ffdd5b2be7333be534c6792d",
+          "sha256": "3ac599b8d31260a82b41b852e54d03bef3415f69e1ca5935160d84f838ed939c",
+          "bytes": 2299,
+          "lines": 65
+        }
+      ],
+      "fileCount": 7,
+      "fullSourceLines": 384
+    },
+    {
+      "id": "project-debug-navigation",
+      "dependsOn": [
+        "runtime-project-assemblies"
+      ],
+      "issues": [
+        3083
+      ],
+      "publicationStatus": "inventory-only; no branch or PR created by tests_workflows",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "files": [
+        {
+          "path": "packages/debugger/src/stack-trace.js",
+          "sourceBlob": "aa0eefd6d3aefa510cb02e36af7338555ccaf24f",
+          "sha256": "888cdec52d5e4332fd4b0126c2f8a546a2bb80781e2d24d00f9a02e84a37994e",
+          "bytes": 3102,
+          "lines": 49
+        },
+        {
+          "path": "packages/debugger/src/index.js",
+          "sourceBlob": "856b2086b97d2d1aac8f6c7fd8117b7084f00002",
+          "sha256": "3a4d8c187d6ba161154dbd8bb7a6ee1dfd31aa9f11ae5a96ed2193e441c7adec",
+          "bytes": 33251,
+          "lines": 397
+        },
+        {
+          "path": "packages/debugger/src/cil-debugger.js",
+          "sourceBlob": "2e9d9c46e9f6d10f8fae671e02583b472a05e720",
+          "sha256": "95f45016b4d010de22c79bc2b75025cfafaf1c5111341f4070cb9baf044f3338",
+          "bytes": 37345,
+          "lines": 375
+        },
+        {
+          "path": "apps/studio/debug-sources.js",
+          "sourceBlob": "4eff6305a0a7eba9895c2a2bdcf4f5c9bd2c5ae4",
+          "sha256": "34ae0b837875ccb25e3963390df31453dc681515b3421c0082f2fa9efc690800",
+          "bytes": 5283,
+          "lines": 102
+        },
+        {
+          "path": "apps/studio/debug-breakpoint-rows.js",
+          "sourceBlob": "e42d1b1ff0efec68d0740c993c041640c245256f",
+          "sha256": "434dac2a28909df37058067c81bd1e15298a7201e6f6a06804b08d6767d25640",
+          "bytes": 1263,
+          "lines": 19
+        },
+        {
+          "path": "apps/studio/debug-editor-decorations.js",
+          "sourceBlob": "3fc6a57839d6536755b59e2998afbe713c6660da",
+          "sha256": "b48f84a72632373a50d18537eec4724c35d765c9848d23d6c23f03664aefd54f",
+          "bytes": 2034,
+          "lines": 33
+        },
+        {
+          "path": "apps/studio/debug-source-breakpoints.js",
+          "sourceBlob": "21fa86b4f7b8e48e3668805e5f731ff300b7cda5",
+          "sha256": "98617b24c5f10ed433c64c386e73f56f8f1e0feca33ef7844af23cb80aff2f2d",
+          "bytes": 2602,
+          "lines": 65
+        },
+        {
+          "path": "apps/studio/debugger-tools.js",
+          "sourceBlob": "f7a40bec6c39369a2d0662198995ef5acba45623",
+          "sha256": "3eea35bb97fbf933766cdc06725eb3eef1015355d611d20525a82b46812dde3e",
+          "bytes": 17867,
+          "lines": 56
+        },
+        {
+          "path": "tests/a23-project-debug-sources.test.js",
+          "sourceBlob": "7ec161f9e187448239291b82ee356405ecea562a",
+          "sha256": "b86bccc95e647f0b5cadec902e25cc184621500667e5e6b3686bee06e95221d7",
+          "bytes": 6394,
+          "lines": 108
+        },
+        {
+          "path": "tests/a23-project-debug-editor.test.js",
+          "sourceBlob": "025d0786a897ad37ed4734ddceb041f6bd8adf35",
+          "sha256": "1a39c517bd6b869478c6b507284dab67acec536d5d306daf8dd206c2d9e2ec1c",
+          "bytes": 6711,
+          "lines": 132
+        },
+        {
+          "path": "tests/a23-project-stack-provenance.test.js",
+          "sourceBlob": "e8d360a453a5d854397f1b64097c9c80cd6beb25",
+          "sha256": "2687f14420593da9dcbe2d5d3e91301b33cf7ee65216b689d92cc2e6e71f3a86",
+          "bytes": 3382,
+          "lines": 63
+        },
+        {
+          "path": "apps/studio/debug-stop-banner.js",
+          "sourceBlob": "87a68885a21cc91259242907aba73bf4e7af6c4e",
+          "sha256": "c57366c70ccedd40eea6781c5238d8816c250e70e13b82d6cdd437ffb11afec7",
+          "bytes": 2809,
+          "lines": 51
+        },
+        {
+          "path": "tests/a23-project-debug-banner.test.js",
+          "sourceBlob": "0dd54d784324eaef1c5144fb2bd81b9e4c1d15fe",
+          "sha256": "4f3337560a298aa64fcf1140e6235857c8d877e7a4f73088cc0c1f6da3bc5704",
+          "bytes": 3490,
+          "lines": 72
+        }
+      ],
+      "fileCount": 13,
+      "fullSourceLines": 1522
+    }
+  ],
+  "inventoryCount": {
+    "batches": 14,
+    "files": 116
+  }
+}

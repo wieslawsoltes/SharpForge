@@ -1,0 +1,304 @@
+TAP version 13
+# Subtest: Every DEFLATE backend enforces its input budget before starting compression
+ok 1 - Every DEFLATE backend enforces its input budget before starting compression
+  ---
+  duration_ms: 1.790291
+  type: 'test'
+  ...
+# Subtest: Platform and portable compressors report actual backends and match zlib bytes
+ok 2 - Platform and portable compressors report actual backends and match zlib bytes
+  ---
+  duration_ms: 22.650645
+  type: 'test'
+  ...
+# {"requested":"portable","actual":"portable","runtime":"v24.19.0"}
+# {"requested":"auto","actual":"CompressionStream","runtime":"v24.19.0"}
+# Subtest: Aborting an active platform compression cancels the stream
+ok 3 - Aborting an active platform compression cancels the stream
+  ---
+  duration_ms: 6.068241
+  type: 'test'
+  ...
+# Subtest: Native XAML page: code-behind and DependentUpon agree
+ok 4 - Native XAML page: code-behind and DependentUpon agree
+  ---
+  duration_ms: 7.026872
+  type: 'test'
+  ...
+# Subtest: Native XAML window: code-behind and DependentUpon agree
+ok 5 - Native XAML window: code-behind and DependentUpon agree
+  ---
+  duration_ms: 3.857049
+  type: 'test'
+  ...
+# Subtest: Native XAML user-control: code-behind and DependentUpon agree
+ok 6 - Native XAML user-control: code-behind and DependentUpon agree
+  ---
+  duration_ms: 0.761008
+  type: 'test'
+  ...
+# Subtest: Native XAML content-dialog: code-behind and DependentUpon agree
+ok 7 - Native XAML content-dialog: code-behind and DependentUpon agree
+  ---
+  duration_ms: 0.716831
+  type: 'test'
+  ...
+# Subtest: Native templated controls merge Generic.xaml without duplicate resource keys
+ok 8 - Native templated controls merge Generic.xaml without duplicate resource keys
+  ---
+  duration_ms: 1.258098
+  type: 'test'
+  ...
+# Subtest: Portable generated storyboard runs on source and direct CIL engines
+ok 9 - Portable generated storyboard runs on source and direct CIL engines
+  ---
+  duration_ms: 98.133602
+  type: 'test'
+  ...
+# Subtest: Native MVVM shell wires observable settings, RelayCommand and two navigation pages
+ok 10 - Native MVVM shell wires observable settings, RelayCommand and two navigation pages
+  ---
+  duration_ms: 0.659585
+  type: 'test'
+  ...
+# Subtest: Generated XAML page loads, preserves its source, and projects to source/CIL runtime scenes
+ok 11 - Generated XAML page loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 110.639735
+  type: 'test'
+  ...
+# Subtest: Generated XAML window loads, preserves its source, and projects to source/CIL runtime scenes
+ok 12 - Generated XAML window loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 20.540681
+  type: 'test'
+  ...
+# Subtest: Generated XAML user-control loads, preserves its source, and projects to source/CIL runtime scenes
+ok 13 - Generated XAML user-control loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 15.689622
+  type: 'test'
+  ...
+# Subtest: Generated XAML content-dialog loads, preserves its source, and projects to source/CIL runtime scenes
+ok 14 - Generated XAML content-dialog loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 24.34486
+  type: 'test'
+  ...
+# Subtest: XAML scalar spans preserve BOM, CRLF, quotes, comments and unrelated event attributes
+ok 15 - XAML scalar spans preserve BOM, CRLF, quotes, comments and unrelated event attributes
+  ---
+  duration_ms: 7.208066
+  type: 'test'
+  ...
+# Subtest: XAML Grid tracks, property containers, literal text and attached properties round-trip
+ok 16 - XAML Grid tracks, property containers, literal text and attached properties round-trip
+  ---
+  duration_ms: 4.398616
+  type: 'test'
+  ...
+# Subtest: XAML structural edits retain metadata/comments and identities; Name changes remain synchronized
+not ok 17 - XAML structural edits retain metadata/comments and identities; Name changes remain synchronized
+  ---
+  duration_ms: 5.416723
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-templates/tests/a24-08-xaml-designer.test.js:73:1'
+  failureType: 'testCodeFailure'
+  error: 'ids.forEach is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    file:///workspace/scratch/3e16369943fd/p18-templates/packages/designer/src/model.js:44:288
+    DesignDocument.change (file:///workspace/scratch/3e16369943fd/p18-templates/packages/designer/src/model.js:39:193)
+    DesignDocument.remove (file:///workspace/scratch/3e16369943fd/p18-templates/packages/designer/src/model.js:44:120)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-templates/tests/a24-08-xaml-designer.test.js:87:8)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: XAML malformed inputs, unsupported APIs, namespaces, bindings and budgets produce stable diagnostics
+ok 18 - XAML malformed inputs, unsupported APIs, namespaces, bindings and budgets produce stable diagnostics
+  ---
+  duration_ms: 1.661557
+  type: 'test'
+  ...
+# Subtest: XAML optimistic sessions reject stale edits and malformed reads without replacing their baseline
+ok 19 - XAML optimistic sessions reject stale edits and malformed reads without replacing their baseline
+  ---
+  duration_ms: 4.091914
+  type: 'test'
+  ...
+# Subtest: XAML source-format services commit exact workspace records and leave code-behind unchanged
+ok 20 - XAML source-format services commit exact workspace records and leave code-behind unchanged
+  ---
+  duration_ms: 10.856339
+  type: 'test'
+  ...
+# Subtest: XAML source-format services refuse conflicts, stale editor versions and host validation races
+ok 21 - XAML source-format services refuse conflicts, stale editor versions and host validation races
+  ---
+  duration_ms: 10.9822
+  type: 'test'
+  ...
+# Subtest: C\# source reader imports generated graph, resources and variables without executing it
+ok 22 - C\# source reader imports generated graph, resources and variables without executing it
+  ---
+  duration_ms: 26.729098
+  type: 'test'
+  ...
+# Subtest: no-op source roundtrip is byte-identical including comments/newlines
+ok 23 - no-op source roundtrip is byte-identical including comments/newlines
+  ---
+  duration_ms: 25.189905
+  type: 'test'
+  ...
+# Subtest: C\# scalar/property/attached/event edits only touch the mapped expressions
+ok 24 - C\# scalar/property/attached/event edits only touch the mapped expressions
+  ---
+  duration_ms: 4.451886
+  type: 'test'
+  ...
+# Subtest: reading edited C\# updates designer geometry/text without rewriting source
+ok 25 - reading edited C\# updates designer geometry/text without rewriting source
+  ---
+  duration_ms: 8.388116
+  type: 'test'
+  ...
+# Subtest: C\# syntax errors leave synchronized baseline unchanged
+ok 26 - C\# syntax errors leave synchronized baseline unchanged
+  ---
+  duration_ms: 3.266729
+  type: 'test'
+  ...
+# Subtest: stale source update and optimistic session commits are rejected
+ok 27 - stale source update and optimistic session commits are rejected
+  ---
+  duration_ms: 4.352046
+  type: 'test'
+  ...
+# Subtest: structural updates preserve hand-written handler bodies, identifiers and comments
+ok 28 - structural updates preserve hand-written handler bodies, identifiers and comments
+  ---
+  duration_ms: 88.16796
+  type: 'test'
+  ...
+# Subtest: generated view structural updates compile and preserve names of existing fields
+ok 29 - generated view structural updates compile and preserve names of existing fields
+  ---
+  duration_ms: 47.266644
+  type: 'test'
+  ...
+# Subtest: new scalar property inserts before Activate and is available in the preview
+ok 30 - new scalar property inserts before Activate and is available in the preview
+  ---
+  duration_ms: 7.350751
+  type: 'test'
+  ...
+# Subtest: clear object initializer property Name
+ok 31 - clear object initializer property Name
+  ---
+  duration_ms: 11.206398
+  type: 'test'
+  ...
+# Subtest: clear object initializer property Content
+ok 32 - clear object initializer property Content
+  ---
+  duration_ms: 12.408732
+  type: 'test'
+  ...
+# Subtest: clear object initializer property Width
+ok 33 - clear object initializer property Width
+  ---
+  duration_ms: 11.099015
+  type: 'test'
+  ...
+# Subtest: clear object initializer property Height
+ok 34 - clear object initializer property Height
+  ---
+  duration_ms: 8.958116
+  type: 'test'
+  ...
+# Subtest: clearing every object initializer remains syntactically valid
+ok 35 - clearing every object initializer remains syntactically valid
+  ---
+  duration_ms: 9.058898
+  type: 'test'
+  ...
+# Subtest: dynamic expressions are never executed or overwritten and unrelated properties remain editable
+ok 36 - dynamic expressions are never executed or overwritten and unrelated properties remain editable
+  ---
+  duration_ms: 4.389272
+  type: 'test'
+  ...
+# Subtest: unknown statements block structural edits but retain minimal property editing
+ok 37 - unknown statements block structural edits but retain minimal property editing
+  ---
+  duration_ms: 5.895415
+  type: 'test'
+  ...
+# Subtest: multiple same-control event subscriptions are never silently collapsed on writeback
+ok 38 - multiple same-control event subscriptions are never silently collapsed on writeback
+  ---
+  duration_ms: 3.18122
+  type: 'test'
+  ...
+# Subtest: shared styles, BasedOn and template factories survive structural sync
+ok 39 - shared styles, BasedOn and template factories survive structural sync
+  ---
+  duration_ms: 37.431025
+  type: 'test'
+  ...
+# Subtest: C\# Grid definitions and spans are read and updated
+ok 40 - C\# Grid definitions and spans are read and updated
+  ---
+  duration_ms: 30.716294
+  type: 'test'
+  ...
+# Subtest: UTF16 unicode and CRLF offsets produce minimal correct edits
+ok 41 - UTF16 unicode and CRLF offsets produce minimal correct edits
+  ---
+  duration_ms: 3.247059
+  type: 'test'
+  ...
+# Subtest: structural sync does not activate a returned Window because of a comment or a method named Main
+ok 42 - structural sync does not activate a returned Window because of a comment or a method named Main
+  ---
+  duration_ms: 75.428639
+  type: 'test'
+  ...
+# Subtest: source sync records all wrap-grid attached spans without confusing Grid row/column spans
+ok 43 - source sync records all wrap-grid attached spans without confusing Grid row/column spans
+  ---
+  duration_ms: 7.422068
+  type: 'test'
+  ...
+# Subtest: explicit non-Button resource target types survive unused-resource and structural source round trips
+ok 44 - explicit non-Button resource target types survive unused-resource and structural source round trips
+  ---
+  duration_ms: 9.939085
+  type: 'test'
+  ...
+# Subtest: designer sync: incomplete C\# blocks the source read with SFSYNC_PARSE
+ok 45 - designer sync: incomplete C\# blocks the source read with SFSYNC_PARSE
+  ---
+  duration_ms: 36.034047
+  type: 'test'
+  ...
+# Subtest: designer sync: a leading-dot real literal is valid source and reads as a number
+ok 46 - designer sync: a leading-dot real literal is valid source and reads as a number
+  ---
+  duration_ms: 9.331128
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 45
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3366.237966

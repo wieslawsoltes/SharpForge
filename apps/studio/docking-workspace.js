@@ -1,1 +1,1 @@
-export { StudioDocking, defaultDockLayout, toolDefinitions } from './workbench/layout-workspace.js';
+export {StudioDocking, defaultDockLayout, toolDefinitions} from './native-build/docking.js';

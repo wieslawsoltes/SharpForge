@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: public project graph resolves real PE tokens and retains independent modules and source provenance
+ok 1 - public project graph resolves real PE tokens and retains independent modules and source provenance
+  ---
+  duration_ms: 90.113041
+  type: 'test'
+  ...
+# Subtest: public project graph rejects missing content, forged hashes and incorrect target method definitions
+ok 2 - public project graph rejects missing content, forged hashes and incorrect target method definitions
+  ---
+  duration_ms: 22.953506
+  type: 'test'
+  ...
+# Subtest: public project graph accepts a library entry and bounded identical inputs, and observes cancellation
+ok 3 - public project graph accepts a library entry and bounded identical inputs, and observes cancellation
+  ---
+  duration_ms: 6.087591
+  type: 'test'
+  ...
+# Subtest: production compiler worker emits independent project artifacts through the registered build handler
+ok 4 - production compiler worker emits independent project artifacts through the registered build handler
+  ---
+  duration_ms: 629.096207
+  type: 'test'
+  ...
+# Subtest: production compiler worker preserves newer source versions, exact release and emission cache reuse
+ok 5 - production compiler worker preserves newer source versions, exact release and emission cache reuse
+  ---
+  duration_ms: 541.520778
+  type: 'test'
+  ...
+# Subtest: production compiler worker exposes semantic type previews without mutating document content
+ok 6 - production compiler worker exposes semantic type previews without mutating document content
+  ---
+  duration_ms: 503.404355
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2923.228691

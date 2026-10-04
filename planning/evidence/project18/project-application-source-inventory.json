@@ -1,0 +1,176 @@
+{
+  "sourceOrigin": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "forwardCorrection": "810bcea3b0d25c47c258a69301fafdb685f7be09",
+  "units": [
+    {
+      "name": "worker",
+      "files": [
+        {
+          "path": "apps/studio/workers/compilation-handler.js",
+          "sourceCommit": "810bcea3b0d25c47c258a69301fafdb685f7be09",
+          "blob": "e5113310d6dd665e6f309e49da240052b53df1a1",
+          "lines": 99,
+          "bytes": 6207,
+          "sha256": "ea20951cf485c08353cbed59755fb02337f583302ffc8e161ea5a8ecb2a483f6"
+        },
+        {
+          "path": "apps/studio/workers/assembly-artifact-cache.js",
+          "sourceCommit": "810bcea3b0d25c47c258a69301fafdb685f7be09",
+          "blob": "3800f0e4afce7edbac6a3fb03898baea373d39cb",
+          "lines": 93,
+          "bytes": 4046,
+          "sha256": "5b05dd94d33558a619d1b4ce8c0e770fd31308c4a15eeac02dbe0b392a327b8b"
+        },
+        {
+          "path": "apps/studio/workers/project-emission.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "f201cfb6a4648a341112af42248445435b951a35",
+          "lines": 45,
+          "bytes": 2806,
+          "sha256": "9d673351841c0879f7b60b8cb715caae2103bb62840fa397e7ea2da4aa629f75"
+        },
+        {
+          "path": "apps/studio/workers/project-plan-input.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "d3379fac355ddc22a472882a5a9c35c1d08caee7",
+          "lines": 43,
+          "bytes": 2290,
+          "sha256": "94f752f2e2189082fc8ae2b6e5121fc18f23c16b8a5c2e1e87c64c24c559bbfd"
+        },
+        {
+          "path": "tests/a23-project-plan-artifacts.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "27861cebfa02c906684a90656e065f23ab4d9ecc",
+          "lines": 56,
+          "bytes": 4473,
+          "sha256": "06b3bb96cb8beff3b05dab010f28ed0b5f255e6ee8295f1a5bcca76995d08756"
+        },
+        {
+          "path": "tests/a23-worker-emission-cache.test.js",
+          "sourceCommit": "810bcea3b0d25c47c258a69301fafdb685f7be09",
+          "blob": "aa8687adf944fed122d51a4fa262c4e78182c771",
+          "lines": 83,
+          "bytes": 4849,
+          "sha256": "6f4b0b4b9015c4fb46acf4c4637d2a726deaaf1285ed6b1808e041b6176a3978"
+        }
+      ],
+      "sourceLines": 419,
+      "status": "preparing actual dependency joins"
+    },
+    {
+      "name": "build-session",
+      "files": [
+        {
+          "path": "apps/studio/project-build.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "99303ecc11cf21fdd3d157893f7c17f969e557b5",
+          "lines": 182,
+          "bytes": 10884,
+          "sha256": "f38f1196f3a66260a97d3106716b2c5eb5dd308a571785a991ebd5fe212e9866"
+        },
+        {
+          "path": "apps/studio/project-build-runner.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "12cd2f12038e170154171fa371e5ed2bb391378c",
+          "lines": 71,
+          "bytes": 4313,
+          "sha256": "7d506c23101baf437f4df964f843f6078016088cff56ea487c801eb41020b7af"
+        },
+        {
+          "path": "apps/studio/project-targets.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "eaf61935a020d85164cced696869f2fd005b1404",
+          "lines": 154,
+          "bytes": 8076,
+          "sha256": "ec86a2c129de2ef4b471faf20abdb0628b557135f88b8496db32033e379f6115"
+        },
+        {
+          "path": "apps/studio/project-artifacts.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "d68a624d05b049224bfd1e3e75f410c122a089fa",
+          "lines": 54,
+          "bytes": 3021,
+          "sha256": "d7c45640d1ad28d9813567503ef0b186f31298d25f8fd5775a709b59a9437276"
+        },
+        {
+          "path": "apps/studio/folder-compilation.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "9650e06165c5a60562192cb8640e51efa1df158e",
+          "lines": 62,
+          "bytes": 2880,
+          "sha256": "27d85969ccda3a692ce9fa1e86360a2556045ae19cee390adc4f55b7a190d5fb"
+        },
+        {
+          "path": "tests/a23-project-build.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "9635c78ef48e99c5b067baaca8b9128164cd6731",
+          "lines": 165,
+          "bytes": 10662,
+          "sha256": "cd20c1fd05aae5fcc17a5b108f9d61886d5090212cbd130970e65f7911f2de9d"
+        }
+      ],
+      "sourceLines": 688,
+      "status": "preparing actual dependency joins"
+    },
+    {
+      "name": "build-qualification",
+      "files": [
+        {
+          "path": "tests/a23-project-build-order.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "0cb5b6595a713ae266a026cc42416380b0473286",
+          "lines": 95,
+          "bytes": 5145,
+          "sha256": "f3d6f918ee225f0706f701297f0b359ef570bfcc7b9b8c11aa35f002e2266910"
+        },
+        {
+          "path": "tests/a23-project-target-lifecycle.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "3fcb1602e1fdedf129c8e2f98fc401e94f4981ee",
+          "lines": 196,
+          "bytes": 12848,
+          "sha256": "a782618fe920091d5e96ac5fc2b0af9d7c4fa32182cfb9192599f25fd648fa73"
+        },
+        {
+          "path": "tests/a23-project-artifact-cache.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "7fa58072cfefe203a7114fa0793e71991b0d1a8b",
+          "lines": 78,
+          "bytes": 4750,
+          "sha256": "23ebd090d5972d8def2b714f09826b19ad798b2c1dcaab92312ae24fec2c6c82"
+        },
+        {
+          "path": "tests/a23-project-target-native.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "ac022363dfd5577a3187567a0f269bb1cbd26d04",
+          "lines": 54,
+          "bytes": 3616,
+          "sha256": "25c34a30d09213a6b38e86297e0471ba4e0ef56d8d4be238cbf7cbec5bdce017"
+        },
+        {
+          "path": "tests/a24-folder-compilation.test.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "2387ef0f0dec8378997f7cbfc87d29081272570b",
+          "lines": 80,
+          "bytes": 5281,
+          "sha256": "7a8a75dee1835b64f4b3ef1b19b4e7a4cb10f09e657412596831c6b848e2538d"
+        },
+        {
+          "path": "tests/support/project-build-order-fixture.js",
+          "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+          "blob": "2362ca6cd0819cf18020f69609e873a0ddebad66",
+          "lines": 20,
+          "bytes": 1580,
+          "sha256": "2b0f7be50a27e975891564a8ead6db8578f9e32a4d94b5c9646ea208ab634497"
+        }
+      ],
+      "sourceLines": 523,
+      "status": "preparing actual dependency joins"
+    }
+  ],
+  "restrictions": [
+    "Drafts only; no protected entry wiring",
+    "No new test run; scheduled root correction cohort includes worker cache",
+    "Exact source/remote tree equality and ordered parent readbacks required"
+  ]
+}

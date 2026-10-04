@@ -1,0 +1,108 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the ordinary file picker imports more than 100 source files plus exact binary and UTF-16 content
+ok 1 - the ordinary file picker imports more than 100 source files plus exact binary and UTF-16 content
+  ---
+  duration_ms: 11.51856
+  type: 'test'
+  ...
+# Subtest: legacy JSON source projects use workspace budgets and reject malformed replacements without retiring the old model
+ok 2 - legacy JSON source projects use workspace budgets and reject malformed replacements without retiring the old model
+  ---
+  duration_ms: 2.865754
+  type: 'test'
+  ...
+# Subtest: file-picker import retains the skipped-name report for Explorer and rejects oversized membership before reading
+ok 3 - file-picker import retains the skipped-name report for Explorer and rejects oversized membership before reading
+  ---
+  duration_ms: 0.836242
+  type: 'test'
+  ...
+# Subtest: an imported native inspection and a v1 byte bundle use their existing explicit host contracts
+ok 4 - an imported native inspection and a v1 byte bundle use their existing explicit host contracts
+  ---
+  duration_ms: 0.425722
+  type: 'test'
+  ...
+# (node:28) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+ok 5 - validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+  ---
+  duration_ms: 52.726902
+  type: 'test'
+  ...
+# Subtest: validation may hydrate a closed lazy input without treating it as an empty or missing document
+ok 6 - validation may hydrate a closed lazy input without treating it as an empty or missing document
+  ---
+  duration_ms: 3.737619
+  type: 'test'
+  ...
+# Subtest: refactoring stale preserves every buffer and does not admit closed editors
+ok 7 - refactoring stale preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.693056
+  type: 'test'
+  ...
+# Subtest: refactoring validation-error preserves every buffer and does not admit closed editors
+ok 8 - refactoring validation-error preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.286973
+  type: 'test'
+  ...
+# Subtest: refactoring revision preserves every buffer and does not admit closed editors
+ok 9 - refactoring revision preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 4.214269
+  type: 'test'
+  ...
+# Subtest: refactoring snapshot preserves every buffer and does not admit closed editors
+ok 10 - refactoring snapshot preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 1.650591
+  type: 'test'
+  ...
+# Subtest: refactoring generated preserves every buffer and does not admit closed editors
+ok 11 - refactoring generated preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.275205
+  type: 'test'
+  ...
+# Subtest: refactoring read-only preserves every buffer and does not admit closed editors
+ok 12 - refactoring read-only preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.21845
+  type: 'test'
+  ...
+# Subtest: source admission rejects oversized or excessive combined buffers before changing application membership
+ok 13 - source admission rejects oversized or excessive combined buffers before changing application membership
+  ---
+  duration_ms: 0.770533
+  type: 'test'
+  ...
+# Subtest: path navigation uses complete workspace metadata without requiring a materialized Explorer page
+ok 14 - path navigation uses complete workspace metadata without requiring a materialized Explorer page
+  ---
+  duration_ms: 0.981361
+  type: 'test'
+  ...
+# Subtest: test failures navigate from one-based lines and columns or LSP ranges to the failing source span
+ok 15 - test failures navigate from one-based lines and columns or LSP ranges to the failing source span
+  ---
+  duration_ms: 0.274424
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1323.053735

@@ -1,6 +1,6 @@
 import { storage, storageKeys } from '../settings/storage.js';
-import { searchTemplates, templateAvailability } from '../../../packages/templates/src/index.js';
-import { workspaceCandidates } from '../../../packages/project-system/src/index.js';
+import { searchTemplates, templateAvailability } from '@sharpforge/templates';
+import { workspaceCandidates } from '@sharpforge/project-system';
 import { WizardModel } from './model.js';
 import { wizardView, escapeWizardHtml as escape } from './view.js';
 import { chooseWizardDirectory, commitWizardDirectory } from './destination.js';

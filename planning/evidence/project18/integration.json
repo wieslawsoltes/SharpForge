@@ -1,0 +1,1013 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "SF-A24-T12 workspace corpus and root application composition",
+  "branch": "codex/p18-integration",
+  "implementationHead": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "interpretation": "Implementation and qualification are distinct. The project allocation is not an ownership claim. Historical passes do not qualify later changes.",
+  "protectedIntegration": {
+    "studio": "The separately prepared Project18 Studio entry proposal remains unapplied and unexecuted. Actual canonical Studio was built and exercised by the recorded browser attempts; those attempts do not qualify the proposed entry.",
+    "rootManifest": "The package-lock proposal for five workspace records and eight internal dependency declarations remains unapplied. Successful npm ci/builds used the actual pinned package manifest/lock bytes; no application or approval is inferred.",
+    "reviewEvidence": "/dev/shm/p18-final-prepared/review-evidence",
+    "ownershipBoundary": "Protected studio.js and root package manifests require a valid ownership reconciliation before applying proposals. Earlier lease observations are historical and must be refreshed by the root before application."
+  },
+  "validation": {
+    "historicalLogs": [
+      {
+        "path": "planning/evidence/project18/integration/upstream-integration-tests.log",
+        "sha256": "9251618c3634d7d44585da60d8dcba30c1512be170bf3108cfebb570ccad6f46",
+        "recordedSource": null,
+        "status": "274/274 passed",
+        "role": "historical; does not qualify later aggregate head",
+        "sourceNote": "The raw historical log contains no commit header; no exact source claim is inferred from it."
+      },
+      {
+        "path": "planning/evidence/project18/integration/workspace-host-final.log",
+        "sha256": "29185d636d77b3be92dcf433b1b38140681ddf7bb08a09a5c6e7c328a7ef749c",
+        "recordedSource": null,
+        "status": "95/96 passed; DiskWorkspace fixture prototype lost by object spread, corrected in later focused cohort",
+        "role": "historical; does not qualify later aggregate head"
+      },
+      {
+        "path": "planning/evidence/project18/integration/workspace-document-final.log",
+        "sha256": "c235ceae346eda21ec943ed9a0ebe3e2b0124a2e08fd8aa97f1eb4bed4c59b02",
+        "recordedSource": null,
+        "status": "19/19 passed, including corrected host fixture",
+        "role": "historical; does not qualify later aggregate head"
+      },
+      {
+        "path": "planning/evidence/project18/integration/workspace-import-final.log",
+        "sha256": "a4936033e087a53d49a24e048812d87eff60705fc8ce38c540916ddef520cf7a",
+        "recordedSource": null,
+        "status": "15/15 passed after bounded file-list import",
+        "role": "historical; does not qualify later aggregate head"
+      },
+      {
+        "path": "planning/evidence/project18/integration/disk-host-regressions.log",
+        "sha256": "060a0ac76eded3cbaf28dc34f13e4505ef61cf0f8917ba83a4294303d2f91297",
+        "recordedSource": null,
+        "status": "43/46 passed initially; retained diagnostic run, destination/fixture failures corrected later",
+        "role": "historical; does not qualify later aggregate head"
+      }
+    ],
+    "finalCombinedHostScope": {
+      "status": "Completed affected scope; full 1,877-case source qualification is retained separately without a broad repeat.",
+      "completedFullScope": "validation.synchronizedQualification.completedNode22Scope",
+      "affectedScope": {
+        "recordedSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.json",
+          "sha256": "b5b1f8587dd8c86af3aed4dccf54c76d92f35d478014cfa415482215c041f16c"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap",
+          "sha256": "bf7e8d658a8ac6315bc9f56d0b180d378c1d34550c97e7de2189ba277ef4a16a"
+        },
+        "exitCode": 0,
+        "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 6
+      },
+      "qualificationRule": "Result counts and source are taken from the exact recorded command, not inferred from the prepared test list."
+    },
+    "actualStudioBrowser": {
+      "status": "Release13 passed on its recorded actual canonical source; the separate Explorer browser corpus and proposed entry remain unqualified.",
+      "entry": "Actual committed apps/studio/studio.js; no copied/proposed entry executed.",
+      "attempts": [
+        {
+          "recordedSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-release13.json",
+            "sha256": "1c49c559ead079205ddf7ac090c10a754b95a393d4cc6096619ad15cfbe7a202"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-release13.log",
+            "sha256": "20b5603d71b38fcb10c835679ca429d5f8601f1c02e99ff848226cceef2b6f7d"
+          },
+          "exitCode": 1,
+          "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": false,
+          "completedChecks": 0,
+          "passedCheckNames": [],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "failure": "Documents committed, but a view or cleanup callback failed during loadStudioWorkspace; no Release13 check completed."
+        },
+        {
+          "recordedSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.json",
+            "sha256": "2556cd8c1733570a9d42e8628f8b553212d88d5303ab9e209c78b3fd5fe0834a"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.log",
+            "sha256": "feaaf1c20fafc8e4e5cbf3580c39f34d299367705a43f1f3909a4390d624565e"
+          },
+          "exitCode": 1,
+          "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": false,
+          "completedChecks": 3,
+          "passedCheckNames": [
+            "connect an existing hand-written construction method without replacing source or workers",
+            "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "designer property changes compile-check a minimal C# edit and preserve every other byte"
+          ],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "failure": "The fourth check timed out after the old fixture editing path appended source, producing using-clause/duplicate-type diagnostics. The first three real checks passed; the later fixture correction preserves the failure history."
+        },
+        {
+          "recordedSource": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.json",
+            "sha256": "27c4a1a6df96dd1894452cb05597a1812ce876d8784724c63d93a9fe527bb419"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.log",
+            "sha256": "801d2f1ec433e7823406b7509e4efaffb219b4b69f6cb65d7d260d2b0e1de228"
+          },
+          "exitCode": 1,
+          "sourceAfter": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": false,
+          "completedChecks": 5,
+          "passedCheckNames": [
+            "connect an existing hand-written construction method without replacing source or workers",
+            "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "designer property changes compile-check a minimal C# edit and preserve every other byte",
+            "real source editor input updates the design preview automatically",
+            "source undo and redo resynchronize the preview without replacing the editor"
+          ],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "failure": "After five checks passed, shortening source exposed stale status-caret ownership: RangeError Visual column offset outside document before the editor cursor listener updated."
+        },
+        {
+          "recordedSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-release13.json",
+            "sha256": "6c5746f5e5fe2f2248d7a9444a12bf8f9dae968741ee18771ca63cdfe3f31847"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-release13.log",
+            "sha256": "49369eab59bcb3e4d180ee987a6452e205e2241176811bc24e9dab1d3fd24489"
+          },
+          "exitCode": 1,
+          "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": false,
+          "completedChecks": 10,
+          "passedCheckNames": [
+            "connect an existing hand-written construction method without replacing source or workers",
+            "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "designer property changes compile-check a minimal C# edit and preserve every other byte",
+            "real source editor input updates the design preview automatically",
+            "source undo and redo resynchronize the preview without replacing the editor",
+            "incomplete C# keeps the last valid preview and recovers when corrected",
+            "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+            "concurrent source and designer edits are rejected without overwriting either side",
+            "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+            "device presets and Design/Split/C#/Preview views use the original editor and artboard"
+          ],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "failure": "After ten checks passed, retained C# handler execution timed out waiting for debug.uiActive; the log records Workbench event-listener AggregateError on AppSession.receive. No complete Release13 pass."
+        },
+        {
+          "recordedSource": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-release13.json",
+            "sha256": "090b9a5515c81e3161643a06f8a5343f225315e1410e104fa85b044e94d7522f"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-release13.log",
+            "sha256": "c2f1f0e830ed60212d623202f35d937f0ce94b062dd08f29793ae65dd65da393"
+          },
+          "exitCode": 1,
+          "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": false,
+          "completedChecks": 10,
+          "passedCheckNames": [
+            "connect an existing hand-written construction method without replacing source or workers",
+            "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "designer property changes compile-check a minimal C# edit and preserve every other byte",
+            "real source editor input updates the design preview automatically",
+            "source undo and redo resynchronize the preview without replacing the editor",
+            "incomplete C# keeps the last valid preview and recovers when corrected",
+            "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+            "concurrent source and designer edits are rejected without overwriting either side",
+            "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+            "device presets and Design/Split/C#/Preview views use the original editor and artboard"
+          ],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "failure": "After ten checks passed, retained C# handler execution still timed out waiting for debug.uiActive. Page errors were empty; the existing trace shows run() returned started:[] with a worker TypeError Illegal invocation. The prior ExecutionCapture listener error no longer appeared, but Release13 remained incomplete.",
+          "diagnosticEvidence": "validation.runtimeWorkerLaunchBoundary"
+        },
+        {
+          "recordedSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-release13.json",
+            "sha256": "50d8c736578c0ab0281c2b64d8d0a80d652ec576c48851135f88671f4909c083"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-release13.log",
+            "sha256": "e755e5d20a43c92d627841ea7a60e9358768809deea166d71e914ccd727375cc"
+          },
+          "exitCode": 1,
+          "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": false,
+          "completedChecks": 15,
+          "passedCheckNames": [
+            "connect an existing hand-written construction method without replacing source or workers",
+            "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "designer property changes compile-check a minimal C# edit and preserve every other byte",
+            "real source editor input updates the design preview automatically",
+            "source undo and redo resynchronize the preview without replacing the editor",
+            "incomplete C# keeps the last valid preview and recovers when corrected",
+            "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+            "concurrent source and designer edits are rejected without overwriting either side",
+            "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+            "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+            "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+            "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+            "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+            "source VM real worker clock animates after Main and runs managed Completed handler",
+            "direct CIL real worker clock animates after Main and runs managed Completed handler"
+          ],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "failure": "All fifteen functional checks passed, including managed UI event handlers and source/CIL worker animation clocks, with no page errors. The final fixture assertion expected two lifetime worker creations but observed ten; current workspace/project and app owners intentionally create and retire workers across replacements. The overall suite still failed, and a fixture correction preserving no-designer-churn/current-owner bounds remains pending.",
+          "fixtureBoundary": {
+            "observedLifetimeWorkerCreations": 10,
+            "legacyExpectedLifetimeWorkerCreations": 2,
+            "pageErrors": []
+          }
+        },
+        {
+          "recordedSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+          "record": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.json",
+            "sha256": "b82b5a0b73d00b870c72e27fb86134dacc4e91f5b7cdbe1bdc455067593fc9e8"
+          },
+          "log": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.log",
+            "sha256": "97255d7614ff8ffaca33acfe84263580d3c3c1bb84a58e709f0af8f12ef1dce0"
+          },
+          "exitCode": 0,
+          "sourceAfter": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+          "checkoutStatusAfter": "",
+          "argvField": "record.argv",
+          "suite": "tests/browser_release13_test.py",
+          "engine": "Chromium 153.0.8010.12",
+          "mode": "http",
+          "passed": true,
+          "completedChecks": 16,
+          "passedCheckNames": [
+            "connect an existing hand-written construction method without replacing source or workers",
+            "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+            "designer property changes compile-check a minimal C# edit and preserve every other byte",
+            "real source editor input updates the design preview automatically",
+            "source undo and redo resynchronize the preview without replacing the editor",
+            "incomplete C# keeps the last valid preview and recovers when corrected",
+            "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+            "concurrent source and designer edits are rejected without overwriting either side",
+            "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+            "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+            "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+            "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+            "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+            "source VM real worker clock animates after Main and runs managed Completed handler",
+            "direct CIL real worker clock animates after Main and runs managed Completed handler",
+            "all integration workflows finish without page errors or unowned and churned workers"
+          ],
+          "cspViolations": [],
+          "proposedEntryApplied": false,
+          "validationRecord": {
+            "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results/browser-release13-validation.json",
+            "sha256": "5c3fbdd1c79b5266463a312a515e169d78d6dcd3531542b4f65e2541bf117432"
+          },
+          "pageErrors": [],
+          "workerOwnership": {
+            "historicalCreations": 10,
+            "liveWorkers": 1,
+            "owners": {
+              "compilers": [
+                {
+                  "id": "$workspace",
+                  "name": "compiler:$workspace",
+                  "generation": 1
+                }
+              ],
+              "applications": [],
+              "resources": {
+                "limit": 4,
+                "count": 0,
+                "live": 0
+              },
+              "valid": true,
+              "distinct": true
+            }
+          }
+        }
+      ],
+      "browserCorpus": {
+        "suite": "tests/browser_explorer_corpus_test.py",
+        "status": "not run",
+        "modes": [
+          "browser-folder",
+          "native-host"
+        ],
+        "passedScenarios": 0
+      },
+      "qualificationBoundary": "Release13 exercises designer/source/workbench behavior. Its passed checks do not qualify the separate Explorer corpus or the unapplied Project18 entry proposal."
+    },
+    "hostCorpusNode22": [
+      {
+        "path": "planning/evidence/project18/integration/host-corpus-node22-initial.log",
+        "sha256": "5445d8c3df44e8e4fd5935851e8ccc747b150515c5797e7fd73e37597c2fe893",
+        "recordedSource": "ce07b853c4e6f950d669ee35c7b731671a927c34",
+        "workingTreeChanges": [],
+        "tests": 130,
+        "passed": 124,
+        "failed": 6,
+        "skipped": 0,
+        "note": "Completed13-file host/corpus scope. Failures: automation API snapshot21 additive native paths;5 stale plain-error assertions for the typed FileSystemError. All byte-fidelity/native HTTP corpus cases passed."
+      },
+      {
+        "path": "planning/evidence/project18/integration/host-corpus-node22-corrections.log",
+        "sha256": "cab7e7bb9fc78ae13ff8434e8aa86a6f6efe69a487d10121d1151d3e8e582a22",
+        "recordedSource": "ce07b853c4e6f950d669ee35c7b731671a927c34",
+        "workingTreeChanges": [
+          "planning/contracts/studio-automation.lock.json",
+          "tests/a00-03-studio-registries.test.js",
+          "tests/a24-workspace-host-concurrency.test.js"
+        ],
+        "tests": 20,
+        "passed": 20,
+        "failed": 0,
+        "skipped": 0,
+        "note": "Affected2-file follow-up after correcting expectations. Automation lock was subsequently changed to append-only order and the assertion to compare a sorted copy; that final contract-order correction awaits focused verification."
+      }
+    ],
+    "synchronizedQualification": {
+      "initialFailedScope": {
+        "recordedSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.json",
+          "sha256": "2bd561f475577b4457f6381dd770c71cff01c4fcbf6a6ba25bf395190c6084a6"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+          "sha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da"
+        },
+        "exitCode": 1,
+        "sourceAfter": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "node": "26.10.0",
+        "tests": 1875,
+        "suites": 0,
+        "pass": 1809,
+        "fail": 66,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "role": "Historical failed complete scope; retained rather than replaced by the later successful Node22 source."
+      },
+      "completedNode22Scope": {
+        "recordedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+          "sha256": "d1999a85e9f4acda1afae848e082dffd0f41ac9fc1e7ba0e04d4d9bb43180203"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+          "sha256": "826227b2a62d971fc68a371e20f79c7514e37964b0b4fca74841a0c3bd25750a"
+        },
+        "exitCode": 0,
+        "sourceAfter": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "node": "22.23.3",
+        "platform": "Linux x64",
+        "testFiles": 228,
+        "tests": 1877,
+        "suites": 0,
+        "pass": 1877,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "historicalAffectedNodeScopes": [
+      {
+        "recordedSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.json",
+          "sha256": "1d98d52787b5d9c446ef8210227ad5385c12f221ba9786fdf72da63d061a8ec1"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.tap",
+          "sha256": "34ff5a4b7e33c83883ee815a2ece3f93d26f55c47388a42f23269d61499e7595"
+        },
+        "exitCode": 0,
+        "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 43,
+        "suites": 0,
+        "pass": 43,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 11
+      },
+      {
+        "recordedSource": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.json",
+          "sha256": "df6726d99678e25fb04927655cd523f48f0497f0fdf7a5aea8ae5a22d148ca5c"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap",
+          "sha256": "923da70d2cba0f13fd8c3a6c73bd2f5a4ca0981ddde799405a87cfa4dbb6a9a9"
+        },
+        "exitCode": 0,
+        "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 11,
+        "suites": 0,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 2
+      }
+    ],
+    "runtimeTimerCorrection": {
+      "negativeControl": {
+        "recordedSource": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/node26-capture-timer-negative.json",
+          "sha256": "c4dcd36ebe3750fe3b5496d7b8f5e44769d11713b1931bc6a35a41756a5b0f26"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/node26-capture-timer-negative.tap",
+          "sha256": "35e4753934ff6b5d1378029297653c9873854cef5c8db488a4834c4f33f2b0be"
+        },
+        "exitCode": 1,
+        "sourceAfter": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 2,
+        "suites": 0,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 1
+      },
+      "correctedScope": {
+        "recordedSource": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.json",
+          "sha256": "df6726d99678e25fb04927655cd523f48f0497f0fdf7a5aea8ae5a22d148ca5c"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap",
+          "sha256": "923da70d2cba0f13fd8c3a6c73bd2f5a4ca0981ddde799405a87cfa4dbb6a9a9"
+        },
+        "exitCode": 0,
+        "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 11,
+        "suites": 0,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 2
+      },
+      "negativeControlMeaning": "The committed regression fixture failed both cases against the pre-fix timer implementation, as expected; retain exit 1 and 0/2 without classifying them as a passing test run.",
+      "qualificationBoundary": "The two-file corrected Node scope qualifies the timer ownership/cancellation behavior at de9a5e8f. It is not a repeat of the complete 1,877-case scope or a complete Release13 browser result."
+    },
+    "runtimeActivityTimerCorrection": {
+      "negativeControl": {
+        "recordedSource": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/node26-runtime-timer-negative.json",
+          "sha256": "403fd9db4ab4d122c069e9d54bc6a19eb820ecca7d550190751799345bc41313"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/node26-runtime-timer-negative.tap",
+          "sha256": "29c45b46d7482200e12717e55050bdcd46e22a9f336da682c0346f1479083a75"
+        },
+        "exitCode": 1,
+        "sourceAfter": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 3,
+        "suites": 0,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 1
+      },
+      "correctedScope": {
+        "recordedSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.json",
+          "sha256": "b5b1f8587dd8c86af3aed4dccf54c76d92f35d478014cfa415482215c041f16c"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap",
+          "sha256": "bf7e8d658a8ac6315bc9f56d0b180d378c1d34550c97e7de2189ba277ef4a16a"
+        },
+        "exitCode": 0,
+        "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv",
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "node": "26.10.0",
+        "platform": "Linux x64",
+        "testFiles": 6
+      },
+      "negativeControlMeaning": "All three committed receiver regressions failed against the old RuntimeActivity implementation. The failing negative control remains separate from the corrected scope.",
+      "qualificationBoundary": "The six-file, 34-case Node result qualifies the combined timer/occupancy/worker launch scope at 7d4c97d2 only. Full Release13 and the Explorer browser corpus require their own recorded browser results."
+    },
+    "workspaceCorpus": {
+      "status": "passed on recorded Node 22 source",
+      "recordedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "testFile": "tests/workspace-roundtrip.test.js",
+      "node": "22.23.3",
+      "platform": "Linux x64",
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "selection": {
+        "zipReexport": 3,
+        "nativeHttpRoundtrip": 3,
+        "malformedArchiveAndPathBoundaries": 1,
+        "nativeUtf16SaveAndStaleHash": 1
+      },
+      "testNames": [
+        "workspace corpus mixed-encoding-solution: ZIP re-export retains bytes, membership and empty directories",
+        "workspace corpus mixed-encoding-solution: native HTTP bytes match the ZIP import",
+        "workspace corpus legacy-solution: ZIP re-export retains bytes, membership and empty directories",
+        "workspace corpus legacy-solution: native HTTP bytes match the ZIP import",
+        "workspace corpus folder-only: ZIP re-export retains bytes, membership and empty directories",
+        "workspace corpus folder-only: native HTTP bytes match the ZIP import",
+        "workspace corpus rejects malformed archives and traversing output before producing records",
+        "native corpus saves unchanged UTF-16 text without changing BOM or byte order"
+      ],
+      "evidence": "validation.synchronizedQualification.completedNode22Scope",
+      "nativeBoundary": "Actual authenticated loopback HTTP filesystem operations against temporary Linux directories were exercised. This is not Windows/macOS filesystem, native OS picker, or full MSBuild/WinUI qualification.",
+      "browserBoundary": "tests/browser_explorer_corpus_test.py remains unrun in both browser-folder and native-host browser modes."
+    },
+    "storageBoundaryProbe": {
+      "status": "native browser process failure diagnosed at IndexedDB directory-handle retrieval; diagnostic scope only",
+      "recordedSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "engine": "Chromium 153.0.8010.12",
+      "mode": "production HTTP/CSP",
+      "result": {
+        "path": "/tmp/p18-final-qualification-logs/storage-probe-e9f8a8cd/results/storage-boundary-probe.json",
+        "sha256": "60d2b1b703a7abb376c8d8e482fd22d9e5b5143ce5847668d469bf5853792962"
+      },
+      "log": {
+        "path": "/tmp/p18-final-qualification-logs/storage-probe-e9f8a8cd/browser-storage-probe.log",
+        "sha256": "39fa39a74a2d19acbd1d5c7ad98cb1426db24e92f6d985b381400ebf89703862"
+      },
+      "passedSteps": [
+        "production-http-csp",
+        "opfs-write-read",
+        "idb-open",
+        "idb-plain-put",
+        "idb-plain-get",
+        "idb-handle-put"
+      ],
+      "failedStep": "idb-handle-get",
+      "processExit": {
+        "exitCode": null,
+        "signal": "SIGTRAP"
+      },
+      "notReached": [
+        "isSameEntry",
+        "separate WebLock probe",
+        "Explorer/session component assertions"
+      ],
+      "qualificationBoundary": "This isolated probe used real OPFS/IndexedDB APIs and diagnosed a native browser boundary; it is not a product assertion pass or folder-picker acceptance."
+    },
+    "runtimeSessionProbe": {
+      "status": "Historical nested listener failure retained; subsequent timer corrections and the recorded complete Release13 replay passed.",
+      "kind": "diagnostic-only",
+      "recordedSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "engine": "Chromium 153.0.8010.12",
+      "mode": "production HTTP/CSP",
+      "record": {
+        "recordedSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139/browser-runtime-session-probe.json",
+          "sha256": "c19f0d2615be196096c2d878b841418004241810d87ed6ccc007c4475709ba87"
+        },
+        "log": {
+          "path": "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139/browser-runtime-session-probe.log",
+          "sha256": "dba0b852e283158346df0f378251efe859a3b9f649679755fc23c82bc751f131"
+        },
+        "exitCode": 1,
+        "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "checkoutStatusAfter": "",
+        "argvField": "record.argv"
+      },
+      "result": {
+        "path": "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139/results/runtime-session-probe.json",
+        "sha256": "6f7b1d118921a68653e6e9a81e6d7f76cda6b5e254eefc4a14ae1184cf581e01"
+      },
+      "captureScript": {
+        "path": "/tmp/p18-runtime-session-probe.py",
+        "sha256": "82287c52193b2168d7c3d8d8dfc803e11c425aa87b41fb08c947fb210512560b"
+      },
+      "observedCompletedCalls": [
+        "stop",
+        "disconnect-designer",
+        "load-source",
+        "build",
+        "run"
+      ],
+      "runtimeReady": false,
+      "diagnosticCount": 0,
+      "capturedErrors": 1,
+      "droppedErrors": 0,
+      "failure": {
+        "name": "TypeError",
+        "message": "Illegal invocation",
+        "site": "apps/studio/workbench/tools/execution-capture.js:65 ExecutionCapture.wake",
+        "listenerChain": [
+          "AppSession.receive",
+          "SessionManager.receive",
+          "ExecutionCapture.wake"
+        ],
+        "wrappers": [
+          "Workbench event listeners failed",
+          "Workbench event listeners failed"
+        ]
+      },
+      "proposedEntryApplied": false,
+      "sourcePatchApplied": false,
+      "correctionEvidence": "validation.runtimeTimerCorrection",
+      "qualificationBoundary": "A read-only window error/unhandledrejection observer captured nested AggregateError.errors from the actual application. Successful public load/build/run call returns did not establish runtime readiness. This probe does not qualify Release13, the Explorer corpus, or the separately prepared entry.",
+      "subsequentBrowserReplay": {
+        "recordedSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.json",
+          "sha256": "b82b5a0b73d00b870c72e27fb86134dacc4e91f5b7cdbe1bdc455067593fc9e8"
+        },
+        "scope": "Complete recorded Release13 suite; separate Explorer corpus and proposed entry remain unqualified."
+      }
+    },
+    "runtimeWorkerLaunchBoundary": {
+      "status": "Historical worker launch failure retained; subsequent timer correction and the recorded complete Release13 replay passed.",
+      "kind": "read-only-existing-trace-analysis",
+      "recordedSource": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "result": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/runtime-launch-return.json",
+        "sha256": "48a23969499a1133b4d1762b64c312a64d52f0ba96884d70f0eb00de6e5b29e8"
+      },
+      "existingTrace": {
+        "path": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/results/browser_release13_test/trace.zip",
+        "sha256": "f9bab505086910492fd0679ed84f1d236a5deb667798ef46a81e08acbaf4236b"
+      },
+      "started": [],
+      "failed": [
+        {
+          "projectId": "$workspace",
+          "name": "TypeError",
+          "message": "Illegal invocation"
+        }
+      ],
+      "cancelled": [],
+      "rootSourceInference": "The run call returned a worker TypeError before any app started. The current runtime launch emits its reset UI event and then RuntimeActivity.start stores and invokes an unbound host timer before loaded/state events.",
+      "correctionEvidence": "validation.runtimeActivityTimerCorrection",
+      "qualificationBoundary": "Read-only decoding of the existing failed Release13 trace; no second probe or app patch. The trace establishes the worker launch error, while the RuntimeActivity attribution is the stated source-inspection inference.",
+      "subsequentBrowserReplay": {
+        "recordedSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.json",
+          "sha256": "b82b5a0b73d00b870c72e27fb86134dacc4e91f5b7cdbe1bdc455067593fc9e8"
+        },
+        "scope": "Complete recorded Release13 suite; separate Explorer corpus and proposed entry remain unqualified."
+      }
+    },
+    "actualCanonicalBuild": {
+      "recordedSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "record": {
+        "path": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/final-qualification.json",
+        "sha256": "bde11938560ec2854ec07b9607ce3272c6ef9be9d04e20fddf1e95b41c22b530"
+      },
+      "steps": [
+        {
+          "name": "check",
+          "exitCode": 0
+        },
+        {
+          "name": "build",
+          "exitCode": 0
+        },
+        {
+          "name": "clean-checkout",
+          "exitCode": 0
+        }
+      ],
+      "entryBoundary": "Actual canonical Studio/package lock only. These passes do not apply or qualify the separately prepared protected-file proposals.",
+      "finalBrowserSourceEquivalence": {
+        "record": {
+          "path": "/workspace/scratch/3e16369943fd/p18-publication/final-browser-build-equivalence.json",
+          "sha256": "4c8bdb6a530e8a77d8ae49eb558808462a2fd7f6de3c7daeda1bb992d50543fa"
+        },
+        "buildSourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "browserSourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "browserSourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+        "changedPaths": [
+          "tests/browser_release13_test.py"
+        ],
+        "interpretation": "Only the browser qualification fixture changes; the previously successful build at7d4 is reused without rerunning product build or Node tests. The actual committed entry remains unchanged.",
+        "entrySha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+        "qualificationBoundary": "Only the browser fixture differs between the recorded build source and final browser source; no product rebuild or broad Node replay is inferred."
+      }
+    },
+    "historicalCanonicalBuilds": [
+      {
+        "recordedSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/final-qualification.json",
+          "sha256": "09c66cfb0602aeffabf8096fcabfe76b190b5f83ea7e36bc5fd3adee6d15bf96"
+        },
+        "steps": [
+          {
+            "name": "check",
+            "exitCode": 0
+          },
+          {
+            "name": "build",
+            "exitCode": 0
+          },
+          {
+            "name": "clean-checkout",
+            "exitCode": 0
+          },
+          {
+            "name": "structure",
+            "exitCode": 1
+          }
+        ],
+        "strictStructureBoundary": "Strict structure returned exit 1. The separate root comparison records inherited baseline debt; this manifest does not convert that failure to a pass.",
+        "entryBoundary": "The production build uses actual canonical entry/lock bytes; separately prepared protected-file proposals were not applied."
+      },
+      {
+        "recordedSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/final-qualification.json",
+          "sha256": "7ca75ab56829519af9f9ff70109384a539b4726dcdd9d9ae72e2dc20cecb3d93"
+        },
+        "steps": [
+          {
+            "name": "check",
+            "exitCode": 0
+          },
+          {
+            "name": "build",
+            "exitCode": 0
+          },
+          {
+            "name": "clean-checkout",
+            "exitCode": 0
+          }
+        ],
+        "entryBoundary": "Actual canonical Studio/package lock only; retained as exact prior-source evidence."
+      },
+      {
+        "recordedSource": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "record": {
+          "path": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/final-qualification.json",
+          "sha256": "3bceed107339e4ac9a9e6a4e312925fe9d13fdc32af133ce87c551be37459518"
+        },
+        "steps": [
+          {
+            "name": "check",
+            "exitCode": 0
+          },
+          {
+            "name": "build",
+            "exitCode": 0
+          },
+          {
+            "name": "clean-checkout",
+            "exitCode": 0
+          }
+        ],
+        "entryBoundary": "Actual canonical Studio/package lock only; retained as exact prior-source evidence."
+      }
+    ]
+  },
+  "issues": [
+    {
+      "issue": 3228,
+      "workId": "SF-A24-T12.1",
+      "title": "[SF-A24-T12.1] Assemble round-trip corpus with binaries and unusual encodings",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3228",
+      "implementationStatus": "Corpus implemented; ZIP and native HTTP records qualified on Node 22; browser folder-open acceptance remains pending.",
+      "qualificationStatus": "8/8 round-trip corpus cases passed within 1,877/1,877 at 5269d397; actual Explorer browser corpus remains unrun.",
+      "implementation": [
+        "tests/fixtures/workspace-corpus",
+        "tests/support/workspace-corpus.js",
+        "tests/workspace_corpus_support.py"
+      ],
+      "evidence": [
+        "tests/workspace-roundtrip.test.js",
+        "tests/browser_explorer_corpus_test.py"
+      ],
+      "implementedAcceptance": [
+        "Three fixtures retain UTF-16 LE/BE with and without BOM, UTF-8 BOM, CRLF/LF, binary payloads, empty directories, deep paths, and Unicode NFC/NFD in distinct folders.",
+        "The same manifest is consumed by ZIP, actual native HTTP file operations, and browser folder scenarios."
+      ],
+      "remaining": [
+        "Execute tests/browser_explorer_corpus_test.py in browser-folder and native-host browser modes after protected composition is valid.",
+        "Windows/macOS filesystems, native OS picker and other browser engines are not qualified by the recorded Linux Node/Chromium attempts."
+      ],
+      "currentEvidence": "validation.workspaceCorpus"
+    },
+    {
+      "issue": 3229,
+      "workId": "SF-A24-T12.2",
+      "title": "[SF-A24-T12.2] Test ZIP and disk re-export byte fidelity",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3229",
+      "implementationStatus": "ZIP/disk byte-fidelity suite implemented with path-named diagnostics, empty-directory checks, native inverses and encoding/stale-hash boundaries.",
+      "qualificationStatus": "8/8 corpus cases passed on Node 22.23.3/Linux at 5269d397; this is recorded-source qualification, not a claim for every platform.",
+      "implementation": [
+        "tests/workspace-roundtrip.test.js",
+        "tests/support/workspace-corpus.js"
+      ],
+      "evidence": [
+        "tests/workspace-roundtrip.test.js"
+      ],
+      "implementedAcceptance": [
+        "Path-named assertions compare SHA-256 and byte lengths, exact file path sets, project membership and empty directories through ZIP re-export.",
+        "Actual native HTTP create/move/delete/inverse operations compare final disk bytes; UTF-16 save preserves BOM and byte order, stale hashes reject."
+      ],
+      "remaining": [
+        "Browser filesystem round trips and Windows/macOS platform runs are not covered by this Node22/Linux result."
+      ],
+      "currentEvidence": "validation.workspaceCorpus"
+    },
+    {
+      "issue": 3230,
+      "workId": "SF-A24-T12.3",
+      "title": "[SF-A24-T12.3] Add browser end-to-end explorer scenario suite",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3230",
+      "implementationStatus": "Browser Explorer scenario harness implemented; protected Project18 entry proposal remains unapplied.",
+      "qualificationStatus": "Not run: neither browser-folder nor native-host browser corpus mode has a passing scenario result.",
+      "implementation": [
+        "tests/browser_explorer_corpus_test.py",
+        "tests/workspace_corpus_support.py"
+      ],
+      "evidence": [
+        "tests/browser_explorer_corpus_test.py"
+      ],
+      "implementedAcceptance": [
+        "Chromium harness exercises open, add, rename, move, delete, undo, save and reopen against the corpus in browser and native-host modes.",
+        "Each physical scenario compares the resulting filesystem with a named expected manifest."
+      ],
+      "remaining": [
+        "Reconcile protected ownership, apply the reviewed entry proposal when authorized, and qualify that actual composition.",
+        "Run the complete Explorer corpus in both browser modes and compare each physical manifest; Release13 partial/passing checks do not substitute for this suite."
+      ],
+      "currentEvidence": "validation.actualStudioBrowser.browserCorpus"
+    }
+  ],
+  "manifestHistory": [
+    {
+      "manifestSource": "6b1280efa24b89397ec9613d6a37385d1e3d640b",
+      "manifestBlob": "33592a33a27dfb7f821e1db7806e778210521954",
+      "manifestSha256": "c0240dcc4e620a3bef5425c595c6111641bea88744b8e5572b0c3c542c188db9",
+      "reason": "Preserve the previous implementation binding and then-current qualification/permission statements without rewriting historical claims.",
+      "implementationHead": "352517554c1f76393402c7f445f7ee5d54cd80b7",
+      "protectedIntegration": {
+        "studio": "Prepared patch only; current external studio lock prevents applying and executing the application entry.",
+        "rootManifest": "Prepared internal workspace dependency lockfile entries remain pending the external package-json lock."
+      },
+      "validationStatus": {
+        "finalCombinedHostScope": {
+          "status": "Node22 completed scope and affected correction recorded; final contract-order/history navigation integration and Node26 pending",
+          "command": null
+        },
+        "actualStudioBrowser": {
+          "status": "not run",
+          "reason": "Actual Studio entry integration is pending protected-file access; no copied entry executed."
+        }
+      },
+      "issues": [
+        {
+          "issue": 3228,
+          "implementationStatus": "implemented test/corpus scope; application entry pending",
+          "qualificationStatus": "pending integrated cohort",
+          "remaining": [
+            "Run the complete corpus qualification; actual browser folder-open qualification awaits Studio integration."
+          ]
+        },
+        {
+          "issue": 3229,
+          "implementationStatus": "implemented test/corpus scope; application entry pending",
+          "qualificationStatus": "pending integrated cohort",
+          "remaining": [
+            "Run the completed round-trip cohort on the integrated source."
+          ]
+        },
+        {
+          "issue": 3230,
+          "implementationStatus": "implemented test/corpus scope; application entry pending",
+          "qualificationStatus": "pending integrated cohort",
+          "remaining": [
+            "Apply the reviewed Studio integration under valid access, then execute both browser modes; no passing browser claim is made."
+          ]
+        }
+      ]
+    }
+  ],
+  "implementationBinding": {
+    "status": "final source recorded",
+    "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+    "qualificationRule": "Each result below qualifies its recorded source and scope only; later source or proposed entry changes are not silently covered."
+  },
+  "qualificationBoundaries": {
+    "counts": "The 1,877-case complete Node22 run, later 43/11/34-case Node26 cohorts, negative controls, and 16-check Release13 replay remain separate exact-source/scope records. They are not summed into a fictional final full-suite result.",
+    "explorerCorpus": "The browser-folder and native-host modes of tests/browser_explorer_corpus_test.py remain unrun.",
+    "storage": "The separate real IndexedDB directory-handle GET probe ended in native Chromium SIGTRAP. Successful Release13 behavior does not resolve or qualify that storage boundary.",
+    "platformsAndFrameworks": "This Linux Node/Chromium evidence does not establish native OS-picker acceptance, other browser engines, Windows/macOS filesystem parity, or all Windows desktop/WinUI/WPF/MAUI framework workloads; those require their own platform evidence.",
+    "protectedProposals": "The separately prepared Project18 Studio entry and root package-lock proposals remain unapplied and unexecuted. Actual canonical entry/lock bytes were used for the recorded qualification.",
+    "structure": "The historical strict-structure exit1 and inherited-debt comparison are retained; successful check/build/clean steps are not represented as a strict-structure pass."
+  }
+}

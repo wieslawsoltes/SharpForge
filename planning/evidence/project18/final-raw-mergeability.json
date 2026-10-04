@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T05:24:05.562Z",
+  "interpretation": "These raw REST snapshots supersede normalized false booleans in the historical testing-owner map. Null/unknown is not evidence of a merge conflict.",
+  "pullRequests": [
+    {
+      "number": 3676,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3676",
+      "head": "c7449d06738db5a2b322dbfeba544f321c09af2e",
+      "headBranch": "codex/p18-test-model",
+      "base": "main",
+      "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "mergeable": null,
+      "mergeableState": "unknown",
+      "readbackAt": "2026-10-04T05:11:01.843Z",
+      "source": "GitHub REST pull request through github_fetch (raw JSON)"
+    },
+    {
+      "number": 3680,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3680",
+      "head": "d4f4df7a485a877c78dc0b27fa1080d6fc473a33",
+      "headBranch": "codex/p18-managed-invocation",
+      "base": "main",
+      "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "mergeable": null,
+      "mergeableState": "unknown",
+      "readbackAt": "2026-10-04T05:11:01.941Z",
+      "source": "GitHub REST pull request through github_fetch (raw JSON)"
+    },
+    {
+      "number": 3789,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3789",
+      "head": "edce4592e010dba4eb6559b76e0e69be4de85953",
+      "headBranch": "codex/p18-test-symbols",
+      "base": "main",
+      "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "mergeable": null,
+      "mergeableState": "unknown",
+      "readbackAt": "2026-10-04T05:11:01.913Z",
+      "source": "GitHub REST pull request through github_fetch (raw JSON)"
+    },
+    {
+      "number": 3816,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3816",
+      "head": "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+      "headBranch": "codex/p18-native-workspace-state",
+      "base": "main",
+      "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "mergeable": null,
+      "mergeableState": "unknown",
+      "readbackAt": "2026-10-04T05:11:01.868Z",
+      "source": "GitHub REST pull request through github_fetch (raw JSON)"
+    },
+    {
+      "number": 3880,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3880",
+      "head": "d49d58ed476dee5f0427528de00ebb260a29a2a8",
+      "headBranch": "codex/p18-native-tool-renderer",
+      "base": "main",
+      "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "draft": true,
+      "state": "open",
+      "mergeable": null,
+      "mergeableState": "unknown",
+      "readbackAt": "2026-10-04T05:11:01.883Z",
+      "source": "GitHub REST pull request through github_fetch (raw JSON)"
+    }
+  ]
+}

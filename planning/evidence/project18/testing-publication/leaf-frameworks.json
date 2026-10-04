@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "originalEvidence": "planning/evidence/project18/testing.json at 1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+  "interpretation": "All 23 assigned leaf/bug records have published implementation. Historical qualification remains distinct from pending final pinned-main composition and native/platform gaps. No issue is closed by this publication evidence.",
+  "issues": [
+    {
+      "issue": 3090,
+      "workId": "SF-A23-T35",
+      "title": "[SF-A23-T35] Define test adapter contract and test tree model",
+      "implementation": [
+        "packages/msbuild/src/testing/model.js",
+        "packages/msbuild/src/testing/discovery.js"
+      ],
+      "tests": [
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Native discovery output for all three pinned framework fixtures must still be compared after package availability."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3676,
+        4193
+      ]
+    },
+    {
+      "issue": 3091,
+      "workId": "SF-A23-T36",
+      "title": "[SF-A23-T36] Discover xUnit tests from source",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/xunit.js",
+        "packages/msbuild/src/testing/portable/source-symbols.js",
+        "packages/msbuild/src/testing/portable/data-sources.js",
+        "packages/msbuild/src/testing/portable/runtime-data.js",
+        "packages/msbuild/src/testing/portable/provider-projection.js"
+      ],
+      "tests": [
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Display-name parity with real dotnet test --list-tests remains unqualified.",
+        "Stateful or executable-referenced provider declarations must remain within the current compiler/runtime profile;unsupported ones produce not-runnable."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3789,
+        3828,
+        3841,
+        4193
+      ]
+    },
+    {
+      "issue": 3093,
+      "workId": "SF-A23-T37",
+      "title": "[SF-A23-T37] Discover NUnit tests from source",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/nunit.js",
+        "packages/msbuild/src/testing/portable/discovery-shared.js",
+        "packages/msbuild/src/testing/portable/data-sources.js"
+      ],
+      "tests": [
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Real NUnit native display names and parameterized fixture identity parity remain unqualified."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3841,
+        4193
+      ]
+    },
+    {
+      "issue": 3094,
+      "workId": "SF-A23-T38",
+      "title": "[SF-A23-T38] Discover MSTest tests from source",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/mstest.js",
+        "packages/msbuild/src/testing/portable/discovery-shared.js",
+        "packages/msbuild/src/testing/portable/data-sources.js"
+      ],
+      "tests": [
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Real MSTest adapter display-name and DataRow identity parity remain unqualified."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3841,
+        4193
+      ]
+    },
+    {
+      "issue": 3095,
+      "workId": "SF-A23-T39",
+      "title": "[SF-A23-T39] Execute discovered tests on the managed runtime with isolation",
+      "implementation": [
+        "packages/msbuild/src/testing/portable/runner.js",
+        "packages/msbuild/src/testing/portable/harness.js",
+        "packages/msbuild/src/testing/portable/managed-runtime.js",
+        "packages/msbuild/src/testing/portable/assertion-profile.js",
+        "packages/runtime/src/invocation-session.js"
+      ],
+      "tests": [
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Native pass/fail/skip reference comparison is still unavailable after shared package-restore timeout.",
+        "Full framework reflection,arbitrary external assertion libraries and inaccessible lifecycle code are outside the documented portable runtime profile.",
+        "Rust native/Wasm invocation is not implemented;actual browser execution is separate root qualification."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3680,
+        3828,
+        3845,
+        3903,
+        3908,
+        4193
+      ]
+    },
+    {
+      "issue": 3100,
+      "workId": "SF-A23-B05",
+      "title": "[SF-A23-B05] Solution loader only recognises .csproj project paths",
+      "implementation": [
+        "packages/project-system/src/legacy-solution.js",
+        "packages/project-system/src/solution-legacy.js",
+        "packages/project-system/src/project-loader.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3666,
+        3684,
+        3703
+      ]
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+TAP version 13
+# Subtest: Adding one builtin module changes the built catalog without a central registry or import-list edit
+ok 1 - Adding one builtin module changes the built catalog without a central registry or import-list edit
+  ---
+  duration_ms: 42.369914
+  type: 'test'
+  ...
+# Subtest: The checked-in builtin index is deterministic, complete and preserves all released inventories
+ok 2 - The checked-in builtin index is deterministic, complete and preserves all released inventories
+  ---
+  duration_ms: 191.859502
+  type: 'test'
+  ...
+# Subtest: Catalog discovery rejects duplicate identities, invalid declarations, limits and cancellation
+ok 3 - Catalog discovery rejects duplicate identities, invalid declarations, limits and cancellation
+  ---
+  duration_ms: 18.332575
+  type: 'test'
+  ...
+# Subtest: Build generator contributions reject escaping/duplicate targets, bad results and cancellation
+ok 4 - Build generator contributions reject escaping/duplicate targets, bad results and cancellation
+  ---
+  duration_ms: 11.496689
+  type: 'test'
+  ...
+# Subtest: One template module registers and generates through an explicit catalog without changing the built-in registry
+ok 5 - One template module registers and generates through an explicit catalog without changing the built-in registry
+  ---
+  duration_ms: 2.588944
+  type: 'test'
+  ...
+# Subtest: Template catalog has native distinctions and deterministic SDK test project packages
+ok 6 - Template catalog has native distinctions and deterministic SDK test project packages
+  ---
+  duration_ms: 3.430995
+  type: 'test'
+  ...
+# Subtest: Windows App SDK template catalog creates manifests, XAML and correctly dimensioned PNGs
+ok 7 - Windows App SDK template catalog creates manifests, XAML and correctly dimensioned PNGs
+  ---
+  duration_ms: 27.991948
+  type: 'test'
+  ...
+# Subtest: Template options create top-level code, nullable metadata, namespace style and classic solution
+ok 8 - Template options create top-level code, nullable metadata, namespace style and classic solution
+  ---
+  duration_ms: 7.631239
+  type: 'test'
+  ...
+# Subtest: Configuration files and core C\# items preserve options and strict path validation
+ok 9 - Configuration files and core C\# items preserve options and strict path validation
+  ---
+  duration_ms: 1.552151
+  type: 'test'
+  ...
+# Subtest: WinUI test template emits an application-owned XAML UI thread and propagates runner results
+ok 10 - WinUI test template emits an application-owned XAML UI thread and propagates runner results
+  ---
+  duration_ms: 9.319746
+  type: 'test'
+  ...
+# Subtest: Native library and animation pages contain matching XAML partial classes and membership
+ok 11 - Native library and animation pages contain matching XAML partial classes and membership
+  ---
+  duration_ms: 5.205431
+  type: 'test'
+  ...
+# Subtest: Windows runtime qualification composes real file plans and conflict-checked shared dictionaries
+ok 12 - Windows runtime qualification composes real file plans and conflict-checked shared dictionaries
+  ---
+  duration_ms: 23.934489
+  type: 'test'
+  ...
+# Subtest: Windows App SDK builds the generated native template: winui-native-unpackaged
+ok 13 - Windows App SDK builds the generated native template: winui-native-unpackaged # SKIP Requires a Windows desktop session, Windows SDK and SHARPFORGE_TEMPLATE_NATIVE=1; generation checks do not qualify Windows execution
+  ---
+  duration_ms: 0.217328
+  type: 'test'
+  ...
+# Subtest: Windows App SDK builds the generated native template: winui-native-packaged
+ok 14 - Windows App SDK builds the generated native template: winui-native-packaged # SKIP Requires a Windows desktop session, Windows SDK and SHARPFORGE_TEMPLATE_NATIVE=1; generation checks do not qualify Windows execution
+  ---
+  duration_ms: 0.09966
+  type: 'test'
+  ...
+# Subtest: Windows App SDK builds the generated native template: winui-native-library
+ok 15 - Windows App SDK builds the generated native template: winui-native-library # SKIP Requires a Windows desktop session, Windows SDK and SHARPFORGE_TEMPLATE_NATIVE=1; generation checks do not qualify Windows execution
+  ---
+  duration_ms: 0.089926
+  type: 'test'
+  ...
+# Subtest: Windows App SDK builds the generated native template: winui-native-tests
+ok 16 - Windows App SDK builds the generated native template: winui-native-tests # SKIP Requires a Windows desktop session, Windows SDK and SHARPFORGE_TEMPLATE_NATIVE=1; generation checks do not qualify Windows execution
+  ---
+  duration_ms: 0.145689
+  type: 'test'
+  ...
+# Subtest: Windows generated controls render, bindings update UI and pages navigate in the actual XAML runtime
+ok 17 - Windows generated controls render, bindings update UI and pages navigate in the actual XAML runtime # SKIP Requires a Windows desktop session, Windows SDK and SHARPFORGE_TEMPLATE_NATIVE=1; generation checks do not qualify Windows execution
+  ---
+  duration_ms: 0.137568
+  type: 'test'
+  ...
+# Subtest: Native XAML page: code-behind and DependentUpon agree
+ok 18 - Native XAML page: code-behind and DependentUpon agree
+  ---
+  duration_ms: 7.219789
+  type: 'test'
+  ...
+# Subtest: Native XAML window: code-behind and DependentUpon agree
+ok 19 - Native XAML window: code-behind and DependentUpon agree
+  ---
+  duration_ms: 3.993202
+  type: 'test'
+  ...
+# Subtest: Native XAML user-control: code-behind and DependentUpon agree
+ok 20 - Native XAML user-control: code-behind and DependentUpon agree
+  ---
+  duration_ms: 0.788499
+  type: 'test'
+  ...
+# Subtest: Native XAML content-dialog: code-behind and DependentUpon agree
+ok 21 - Native XAML content-dialog: code-behind and DependentUpon agree
+  ---
+  duration_ms: 0.832636
+  type: 'test'
+  ...
+# Subtest: Native templated controls merge Generic.xaml without duplicate resource keys
+ok 22 - Native templated controls merge Generic.xaml without duplicate resource keys
+  ---
+  duration_ms: 1.552061
+  type: 'test'
+  ...
+# Subtest: Portable generated storyboard runs on source and direct CIL engines
+ok 23 - Portable generated storyboard runs on source and direct CIL engines
+  ---
+  duration_ms: 105.695492
+  type: 'test'
+  ...
+# Subtest: Native MVVM shell wires observable settings, RelayCommand and two navigation pages
+ok 24 - Native MVVM shell wires observable settings, RelayCommand and two navigation pages
+  ---
+  duration_ms: 0.697422
+  type: 'test'
+  ...
+# Subtest: Generated XAML page loads, preserves its source, and projects to source/CIL runtime scenes
+ok 25 - Generated XAML page loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 135.621732
+  type: 'test'
+  ...
+# Subtest: Generated XAML window loads, preserves its source, and projects to source/CIL runtime scenes
+ok 26 - Generated XAML window loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 31.781765
+  type: 'test'
+  ...
+# Subtest: Generated XAML user-control loads, preserves its source, and projects to source/CIL runtime scenes
+ok 27 - Generated XAML user-control loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 18.672608
+  type: 'test'
+  ...
+# Subtest: Generated XAML content-dialog loads, preserves its source, and projects to source/CIL runtime scenes
+ok 28 - Generated XAML content-dialog loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 21.473232
+  type: 'test'
+  ...
+# Subtest: XAML scalar spans preserve BOM, CRLF, quotes, comments and unrelated event attributes
+ok 29 - XAML scalar spans preserve BOM, CRLF, quotes, comments and unrelated event attributes
+  ---
+  duration_ms: 7.186019
+  type: 'test'
+  ...
+# Subtest: XAML Grid tracks, property containers, literal text and attached properties round-trip
+ok 30 - XAML Grid tracks, property containers, literal text and attached properties round-trip
+  ---
+  duration_ms: 4.311222
+  type: 'test'
+  ...
+# Subtest: XAML structural edits retain metadata/comments and identities; Name changes remain synchronized
+ok 31 - XAML structural edits retain metadata/comments and identities; Name changes remain synchronized
+  ---
+  duration_ms: 7.891383
+  type: 'test'
+  ...
+# Subtest: XAML Window identity metadata survives structural edits and inherited-object names stay ordinary identities
+ok 32 - XAML Window identity metadata survives structural edits and inherited-object names stay ordinary identities
+  ---
+  duration_ms: 2.159587
+  type: 'test'
+  ...
+# Subtest: XAML malformed inputs, unsupported APIs, namespaces, bindings and budgets produce stable diagnostics
+ok 33 - XAML malformed inputs, unsupported APIs, namespaces, bindings and budgets produce stable diagnostics
+  ---
+  duration_ms: 1.663899
+  type: 'test'
+  ...
+# Subtest: XAML optimistic sessions reject stale edits and malformed reads without replacing their baseline
+ok 34 - XAML optimistic sessions reject stale edits and malformed reads without replacing their baseline
+  ---
+  duration_ms: 3.93237
+  type: 'test'
+  ...
+# Subtest: XAML source-format services commit exact workspace records and leave code-behind unchanged
+ok 35 - XAML source-format services commit exact workspace records and leave code-behind unchanged
+  ---
+  duration_ms: 15.378556
+  type: 'test'
+  ...
+# Subtest: XAML source-format services refuse conflicts, stale editor versions and host validation races
+ok 36 - XAML source-format services refuse conflicts, stale editor versions and host validation races
+  ---
+  duration_ms: 3.357814
+  type: 'test'
+  ...
+# Subtest: Every declared browser project template compiles and executes on source and direct CIL engines
+ok 37 - Every declared browser project template compiles and executes on source and direct CIL engines
+  ---
+  duration_ms: 319.439592
+  type: 'test'
+  ...
+# {"target":"browser-managed","observations":[{"template":"console","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"console-async","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"class-library","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"empty-project","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-blank","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-navigation","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-controls-library","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"test-console","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"blank-solution","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"console-library-solution","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-library-solution","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"}]}
+# Subtest: Qualification rejects a missing, skipped, duplicate or wrong-target observation
+ok 38 - Qualification rejects a missing, skipped, duplicate or wrong-target observation
+  ---
+  duration_ms: 4.831675
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 5231.781881

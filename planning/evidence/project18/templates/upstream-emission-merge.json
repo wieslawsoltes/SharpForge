@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "scope": "Normal merge of Project18 integration with current upstream",
+  "parents": [
+    "2d0458b6",
+    "2e700ad8"
+  ],
+  "textualConflicts": [
+    "packages/cil/src/emitter.js",
+    "packages/cil/src/emit/pe-options.js"
+  ],
+  "resolution": [
+    "Keep upstream prepareEmission, full assembly/reference identities, strong names, deterministic PE choices and netmodule manifest linking.",
+    "Project managed resources feed the same PE writer; generated attributes and type namespace/access metadata remain enabled.",
+    "Project type descriptors reuse upstream internal netmodule scaffolding instead of duplicating definition flags.",
+    "prepareEmission also returns project type descriptors and emits project attributes, so frozen emitter does not grow against either side.",
+    "Culture is normalized once in the upstream MetadataBuilder and replayed from actual Assembly metadata; remove its duplicate debug-profile field.",
+    "Retain project attribute/type/resource debug profiles and full canonical byte verification. Reject conflicting explicit/attribute versions and assembly attributes on module-only output.",
+    "Preserve upstream runtime event/code-version exports and bytecode numeric exports. No Studio or root package-manifest edits."
+  ],
+  "validation": {
+    "command": "SF_NATIVE_DOTNET=<SDK10.0.401>/dotnet DOTNET_ROOT=<SDK10.0.401> node scripts/limited.js node --test --test-reporter=tap tests/a23-upstream-emission-composition.test.js tests/a23-project-emission.test.js tests/a03-03-assembly-definition.test.js tests/a03-03-assembly-references.test.js tests/a03-03-public-sign.test.js tests/a03-03-netmodule.test.js tests/a03-03-module-linking.test.js tests/a03-03-managed-resources.test.js tests/a03-03-determinism.test.js tests/a03-03-win32-resources.test.js",
+    "result": "82/82 passed, zero skipped, 9.408 seconds",
+    "log": "upstream-emission-merge.log",
+    "actualEngines": [
+      "source VM",
+      "direct CIL",
+      "Linux .NET10.0.401 SDK / CLR project metadata probe"
+    ],
+    "remaining": "No full matrix or Windows qualification was run; this is focused completed-merge validation."
+  }
+}

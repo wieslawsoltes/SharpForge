@@ -1,0 +1,43 @@
+{
+  "passed": 6,
+  "checks": [
+    {
+      "name": "Cancelling the real wizard picker flow keeps the wizard open and creation disabled",
+      "passed": true,
+      "milliseconds": 485.21732200060796
+    },
+    {
+      "name": "Native test and Windows templates display their actual prerequisites",
+      "passed": true,
+      "milliseconds": 267.2089860006963
+    },
+    {
+      "name": "Wizard options create a runnable top-level project and classic solution in the chosen layout",
+      "passed": true,
+      "milliseconds": 844.2661200006114
+    },
+    {
+      "name": "Actual OPFS files honor overwrite preflight, restore byte-exactly on failure, and return attachable disk records",
+      "passed": true,
+      "milliseconds": 55.814634999478585
+    },
+    {
+      "name": "Chromium Blob, ReadableStream and WritableStream ZIP64 compression round-trip exact bytes",
+      "passed": true,
+      "milliseconds": 47.3833010000817
+    },
+    {
+      "name": "No page JavaScript errors",
+      "passed": true,
+      "milliseconds": 0.014601999282604083
+    }
+  ],
+  "errors": [],
+  "filesystem": "actual origin-private file system",
+  "picker": "DOM workflow with explicit cancellation response; native OS dialog not automated",
+  "targets": [
+    "Chromium HTTP/CSP",
+    "OPFS"
+  ],
+  "windowsNative": "not qualified"
+}

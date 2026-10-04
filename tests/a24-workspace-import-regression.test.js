@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Workspace} from '@sharpforge/workspace';
+import {Workspace} from '../packages/workspace/src/index.js';
 
 test('B01 import advances every URI watermark and rejects edits prepared before import', () => {
   const workspace = new Workspace();

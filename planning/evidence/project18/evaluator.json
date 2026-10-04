@@ -1,0 +1,1683 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "A23 portable evaluator T13\u2013T34 and B01\u2013B05; additional T03.1\u2013T03.3 and portable T07.6",
+  "agent": "portable_evaluator",
+  "branch": "codex/p18-evaluator",
+  "generatedAt": "2026-10-04T07:28:05.145423+00:00",
+  "implementationHead": "ca396ad036db5d897054ef61f0830910c3f3dd8e",
+  "interpretation": "Validated refers only to the named acceptance assertions and platform evidence. Implemented identifies remaining host/native acceptance or transferred ownership. Separate overlapping run counts must not be added together as distinct coverage. This is not a claim that every Project 18 issue or platform matrix is complete.",
+  "toolchain": {
+    "node": "v24.19.0",
+    "platform": "Ubuntu 24.04 Linux x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "dotnet": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "referenceSdk": "10.0.401",
+    "referenceMsbuild": "18.9.11+e34a38d2a",
+    "currentHost": "10.0.12",
+    "nativeReference": "Native MSBuild queries plus offline C# probes using SDK NuGet.Frameworks.dll, CLR ResourceReader/ResourceWriter and an SDK-built satellite assembly. Historical logs do not pin the CLR patch for every run.",
+    "engines": [
+      "Portable evaluator host JavaScript under Node",
+      "SourceVM under Node",
+      "CilVirtualMachine under Node",
+      "Native MSBuild/CLR on Linux"
+    ],
+    "notRunHere": [
+      "Actual Studio/browser UI",
+      "Windows",
+      "macOS",
+      "Rust runtime",
+      "Wasm runtime"
+    ]
+  },
+  "validation": [
+    {
+      "id": "scope",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test tests/project-system.test.js tests/project-msbuild-evaluation.test.js tests/project-evaluation-*.test.js tests/release06-project-extensions.test.js tests/project-runtime14.test.js",
+      "result": "264/264 pass; zero skips, after the original complete evaluator scope",
+      "artifact": "evaluator/scope-tests.log"
+    },
+    {
+      "id": "resources",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test tests/project-evaluation-build.test.js tests/project-evaluation-native-parity.test.js",
+      "result": "40/40 pass; zero skips, after complete resource-name/payload additions",
+      "artifact": "evaluator/resource-tests.log"
+    },
+    {
+      "id": "satellite",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test --test-name-pattern='native satellite' tests/project-evaluation-native-parity.test.js",
+      "result": "1/1 selected test pass; actual SDK-built satellite reflection",
+      "artifact": "evaluator/satellite-native.log"
+    },
+    {
+      "id": "contexts-initial",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test tests/project-system.test.js tests/project-msbuild-evaluation.test.js tests/project-evaluation-*.test.js",
+      "result": "241/242 pass initially; one native nearest-framework mismatch. Fixed by 12c152cb; the corrected matrix is qualified by contexts-focused/contexts-final.",
+      "artifact": "evaluator/contexts-initial.log"
+    },
+    {
+      "id": "contexts-focused",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test tests/project-evaluation-contexts.test.js tests/project-evaluation-frameworks.test.js tests/project-evaluation-native-parity.test.js",
+      "result": "22/22 pass; zero skips after fixing the native reducer mismatch",
+      "artifact": "evaluator/contexts-focused.log"
+    },
+    {
+      "id": "contexts-final",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test tests/project-evaluation-frameworks.test.js tests/project-evaluation-contexts.test.js",
+      "result": "13/13 pass; zero skips, including framework define control",
+      "artifact": "evaluator/contexts-final.log"
+    },
+    {
+      "id": "closeout",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet node --test tests/project-evaluation-central-packages.test.js tests/project-evaluation-sdk.test.js tests/project-evaluation-items.test.js tests/project-evaluation-expressions.test.js tests/project-evaluation-build.test.js tests/project-evaluation-contexts.test.js",
+      "result": "158/158 pass; zero skips after central package and nested-expression/input-boundary additions",
+      "artifact": "evaluator/closeout-tests.log"
+    },
+    {
+      "id": "hydration",
+      "command": "node --test tests/project-evaluation-targets.test.js tests/project-evaluation-contexts.test.js",
+      "result": "23/23 pass; zero skips after atomic task hydration and escaped-path fixes",
+      "artifact": "evaluator/target-hydration-tests.log"
+    },
+    {
+      "id": "check",
+      "command": "npm run check",
+      "result": "1419 JavaScript modules checked; zero syntax errors; 332 Node test files and 22 browser scripts registered with zero unassigned/duplicate files.",
+      "artifact": "evaluator/check.log"
+    },
+    {
+      "id": "structure",
+      "command": "npm run check:structure",
+      "result": "Exit 0. Existing repository structure findings remain; none match evaluator-owned changed modules. This is not a clean repository-wide strict gate.",
+      "artifact": "evaluator/structure.log"
+    },
+    {
+      "id": "benchmark",
+      "command": "node packages/project-system/bench/path-index.js",
+      "result": "100 directory Exists queries over 20,000 paths; explicit index construction and lookup counters recorded separately.",
+      "artifact": "evaluator/path-index-benchmark.json"
+    },
+    {
+      "name": "current-main-model-and-CIL",
+      "evidence": "planning/evidence/project18/evaluator-publication.json",
+      "interpretation": "Per-file completed Node22/Node26 shared-scope evidence and exact-head required checks are retained separately. The final graph/compiler replay passed6/6; original failures remain, and only the new transport entry-boundary assertion is queued. No aggregate counts are summed."
+    }
+  ],
+  "performance": {
+    "fixture": "100 directory lookups over 20,000 paths",
+    "indexConstructionMs": 41.99334400000001,
+    "before": {
+      "medianMs": 10.636151000000012,
+      "p95Ms": 13.945152000000007
+    },
+    "after": {
+      "medianMs": 0.027692000000001826,
+      "p95Ms": 0.029755000000022847
+    },
+    "counters": {
+      "exists": 6000,
+      "directorySteps": 12000,
+      "globCandidates": 0,
+      "globQueries": 0
+    },
+    "caveats": [
+      "Lookup measurements exclude construction.",
+      "Shared machine with concurrent agents; this is reproducible fixture evidence, not a total IDE/build performance claim."
+    ]
+  },
+  "integration": {
+    "exactContextBuild": "buildContexts(startup) returns dependency-ordered selected context snapshots without loading source text; buildPlan still rejects unopened Compile or referenced-assembly content.",
+    "resourceHydration": "evaluationInputs() returns resources and existing dependent/convention sources; repeat after .resx hydration to discover ResXFileRef paths. Re-load the project after reading inputs.",
+    "targetHydration": "runTargets(project,targets,{contextId}) returns requiredFiles plus located diagnostics on atomic input failure. Hosts hydrate and retry the same context with revision and retry guards, then re-enumerate buildContexts for newly added Compile inputs.",
+    "compilerAttributes": "Generated AssemblyInfo source and units carry assemblyAttributes:[{type,value}]. The root host emits real metadata before omitting that generated file from source parsing.",
+    "resources": "Unit resources carry path,manifestName,culture,bytes. Native proof retains the culture segment in App.Strings.fr.resources inside fr/App.resources.dll.",
+    "exports": "Tests/workflows owns lossless edit/CST exports; workspace_inventory owns shared RID exports and strict global.json trailing-comma policy.",
+    "boundary": "tests_workflows commit 0a3c1b86 owns the final supported/approximated/native-only schema and ten blocking native-only fixtures.",
+    "applicationBuild": "requestProjectCompilation uses runProjectBuild to prepare/compile/finalize one exact context at a time; prepared full-plan requests remain a compatibility API. buildUnit(startup,contextId) enumerates only the selected unit.",
+    "targetPhases": "runTargets(...,{contextId,phase:beforeCompile}) stops at logical CoreCompile; afterCompile requires the actual compiler outputs. No phantom assemblies or after-target execution on failed compilation.",
+    "folderInputs": "hydrateProjectSources includes folder mode using authoritative workspace membership and applies dirty buffer overlays without opening additional editors.",
+    "artifactCache": "ProjectSystem-scoped successful artifact cache validates exact source/options/resource/attribute/reference inputs. Bounded worker seeds carry explicit runtimeProfile sharpforge, never applied to arbitrary external DLLs.",
+    "closedProjectAssemblies": "Published CIL graph#3837 verifies explicit full-identity/hash/token/access closure and returns original canonical modules plus a resolved execution view. Runtime inspector/worker and compiler producer are independent real dependencies; compiler outputs retain separate PEs. A selected closed nongeneric class profile runs on SourceVM, direct CIL and the actual CLR.",
+    "publicationOwnership": "All portable evaluator/model and CIL prerequisites are published, together with artifact-envelope helper3886 and combined tools consumer3951. Filesystem_providers completed worker3856, build-session3883 and deeper qualification3884, with current core success. Tests_workflows published composite runtime consumer3915 and owns subsequent runtime/worker/oracle layers. Root retains the protected Studio context/getter and application composition gate."
+  },
+  "commits": [
+    "7efce078",
+    "5fe73286",
+    "45207d13",
+    "edff7960",
+    "90ba5a79",
+    "5aa25192",
+    "d8ef12c3",
+    "13fb0a03",
+    "12c152cb",
+    "816e4385",
+    "a9e0ce97",
+    "407306e4",
+    "b06fbd23",
+    "8197f97a",
+    "34caf350",
+    "eecf9e1f",
+    "afd84797",
+    "c7d779f7",
+    "249d69a0",
+    "cf65d97b",
+    "3bf94159",
+    "246604288eb96a52a11b997233cee635f97f158e",
+    "49f64a30da04ae39814bba54929a8b0c91ec4bb5",
+    "ca396ad036db5d897054ef61f0830910c3f3dd8e"
+  ],
+  "remainingQualification": [
+    "Root owns the integrated compiler-worker, resource/satellite PE emission, real browser runtime launch and context chooser qualification.",
+    "Workspace_inventory owns native csc-args comparisons, publish profiles, central version editing/local-feed restore and RID graph integration.",
+    "The legacy solution reader is published in#3666; tests_workflows owns the final boundary/differential harness; its evidence uses a separately recorded SDK and must not be conflated with this SDK 10.0.401 run.",
+    "Native-only tasks, unresolved package/binary/analyzer assets, arbitrary CLR reflection, serialized resources, installed SDK workloads and native timestamp skipping remain explicit portable boundaries.",
+    "The global strict structure gate still has unrelated repository findings."
+  ],
+  "issues": [
+    {
+      "issue": 3068,
+      "workId": "SF-A23-T13",
+      "title": "Extract evaluateProject into evaluation modules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3068",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/index.js",
+        "packages/project-system/src/evaluation/context.js",
+        "packages/project-system/src/evaluation/expander.js",
+        "packages/project-system/src/evaluation/imports.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/items.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/project-system/src/project-system.js"
+      ],
+      "testedAcceptance": [
+        "ProjectSystem retains its public facade; evaluateProject delegates in three lines.",
+        "The existing project-system and project-msbuild-evaluation tests pass unchanged. New focused suites cover negative inputs and bounded execution."
+      ],
+      "evidence": [
+        "scope: tests/project-system.test.js; tests/project-msbuild-evaluation.test.js",
+        "contexts-initial: the same unchanged suites passed; the sole failure was the separately fixed TFM reducer vector."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3069,
+      "workId": "SF-A23-T14",
+      "title": "Scan property, item and metadata expressions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3069",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/expression-scanner.js",
+        "packages/project-system/src/evaluation/expander.js",
+        "packages/project-system/src/conditions.js"
+      ],
+      "testedAcceptance": [
+        "Adjacent references, nested quoted calls, property/item/metadata references and percent escapes share one scanner.",
+        "Malformed input produces located MSB4xxx diagnostics; expanded length and nested quoted expressions are bounded."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 adjacent/nested/escaped references, malformed members, excessive input and nesting.",
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 native string/static expressions."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3070,
+      "workId": "SF-A23-T15",
+      "title": "Implement string instance property functions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3070",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/functions-string.js",
+        "packages/project-system/src/evaluation/expander.js"
+      ],
+      "testedAcceptance": [
+        "Native differential vectors exercise the requested string members, Trim variants, comparison modes, Split with indexers and character indexing.",
+        "Unknown members and invalid ranges fail explicitly instead of expanding to an empty property."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 portable string members match installed native MSBuild.",
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 positive member table and B02 malformed/disallowed expression regressions."
+      ],
+      "remaining": [
+        "The allow-list covers ordinal/invariant comparisons. Process-culture overloads and Split overloads with a truncating count require native evaluation."
+      ],
+      "publishedProjections": [
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3071,
+      "workId": "SF-A23-T16",
+      "title": "Implement a bounded static .NET function allow-list",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3071",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/functions-static.js",
+        "packages/project-system/src/evaluation/errors.js"
+      ],
+      "testedAcceptance": [
+        "Static calls use explicit registered handlers for String, Path, Math, Version, Convert, Char, Guid, DateTime, Environment and Regex.",
+        "Workspace paths, explicit environment values and injected clock/GUID sources prevent hidden host reads.",
+        "Selected outputs match native MSBuild; unsafe Regex constructs and excessive lengths are rejected."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 15 combined static/intrinsic reference expressions.",
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 static table, virtual paths/environment/time and rejection boundaries."
+      ],
+      "remaining": [
+        "This is the registered portable subset, not all .NET overloads or formatting/culture behavior. DateTime formatting, numeric precision, Regex syntax and host-root paths remain bounded as documented in the feature boundary."
+      ],
+      "publishedProjections": [
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3072,
+      "workId": "SF-A23-T17",
+      "title": "Implement MSBuild intrinsic functions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3072",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/functions-msbuild.js",
+        "packages/project-system/src/evaluation/path-index.js",
+        "packages/project-system/src/tfm.js"
+      ],
+      "testedAcceptance": [
+        "Arithmetic, bitwise, escaping, path, version, TFM and feature-wave intrinsics use the shared bounded context.",
+        "A nested Directory.Build.props imports its parent through GetPathOfFileAbove and reproduces native import order."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 nested Directory.Build.props parent imports; static/intrinsic native table.",
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 intrinsic table and indexed lookups."
+      ],
+      "remaining": [
+        "OS, feature-wave and SDK version values are explicit portable inputs. Native host filesystem/environment discovery is not performed."
+      ],
+      "publishedProjections": [
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3073,
+      "workId": "SF-A23-T18",
+      "title": "Generalise ordered item evaluation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3073",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/items.js",
+        "packages/project-system/src/evaluation/item-expressions.js",
+        "packages/project-system/src/evaluation/item-metadata.js"
+      ],
+      "testedAcceptance": [
+        "Arbitrary item types share one ordered list with Include, Exclude, Update, Remove, KeepMetadata, RemoveMetadata, KeepDuplicates and MatchOnMetadata.",
+        "Thirty ordered item fixtures match native MSBuild, including the case behavior corrected by the oracle."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 30 ordered item-evaluation fixtures.",
+        "scope, closeout: tests/project-evaluation-items.test.js \u2014 custom identities, ordering, escaped separators, metadata filters and limits."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3074,
+      "workId": "SF-A23-T19",
+      "title": "Implement item references, transforms and functions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3074",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/item-expressions.js",
+        "packages/project-system/src/evaluation/expander.js"
+      ],
+      "testedAcceptance": [
+        "Item references, custom separators, transforms and the requested item functions preserve ordered identities and metadata.",
+        "Nested transforms produce derived source paths; a native fixture compares transformed paths and metadata."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-items.test.js \u2014 transforms generate new paths and preserve source metadata over nested transforms; item-function table.",
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 generic item transforms, metadata and operations."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3075,
+      "workId": "SF-A23-T20",
+      "title": "Compute well-known item metadata",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3075",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/item-metadata.js",
+        "packages/project-system/src/evaluation/items.js",
+        "packages/project-system/src/evaluation/path-index.js"
+      ],
+      "testedAcceptance": [
+        "FullPath, RootDir, Filename, Extension, RelativeDir, Directory, RecursiveDir, Identity and defining-project fields are computed from item provenance.",
+        "Qualified and unqualified metadata expand inside the current item; recursive glob metadata matches native vectors."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-items.test.js \u2014 imported definitions, recursive globs and previous/current metadata.",
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 generic metadata and 30 ordered native fixtures."
+      ],
+      "remaining": [
+        "File timestamps are not synthesized for records that do not supply them."
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3076,
+      "workId": "SF-A23-T21",
+      "title": "Provide reserved, global and environment properties",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3076",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/reserved-properties.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/context.js"
+      ],
+      "testedAcceptance": [
+        "Reserved properties cannot be replaced by project content; attempted replacement reports MSB4004.",
+        "TreatAsLocalProperty permits the named global override; environment inputs are explicit and project properties can replace ordinary environment values.",
+        "Solution per-project configuration/platform mappings override workspace defaults."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 reserved/environment/TreatAsLocalProperty precedence and per-project global mappings."
+      ],
+      "remaining": [
+        "Default MSBuild/SDK version strings describe the portable model. Callers can provide reference versions; the evaluator does not discover installed SDKs."
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3077,
+      "workId": "SF-A23-T22",
+      "title": "Model Microsoft.NET.Sdk default properties and items",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3077",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js",
+        "packages/project-system/src/evaluation/sdk/resolver.js",
+        "packages/project-system/src/tfm.js"
+      ],
+      "testedAcceptance": [
+        "Twenty-five SDK properties and default Compile/EmbeddedResource/None membership match native for the empty SDK fixture.",
+        "Configuration defines, framework symbols, independent default-item switches and exclusion patterns are covered."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 25 native properties and default item membership.",
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 default properties/globs/switches.",
+        "contexts-final: tests/project-evaluation-frameworks.test.js \u2014 framework/platform symbols and DisableImplicitFrameworkDefines."
+      ],
+      "remaining": [
+        "The bundled model is an evaluation model. Installed SDK workloads and full SDK build targets use the native adapter."
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3078,
+      "workId": "SF-A23-T23",
+      "title": "Resolve SDK declarations through a pluggable resolver",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3078",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/sdk/resolver.js",
+        "packages/project-system/src/evaluation/imports.js",
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js"
+      ],
+      "testedAcceptance": [
+        "Attribute, Sdk element and explicit Import Sdk forms use registered resolvers; explicit Microsoft.NET.Sdk imports match attribute-form defaults.",
+        "Unknown SDKs produce blocking SFP1004; caller resolvers receive name/version requests.",
+        "Web, Worker, Razor, MSTest, NoTargets and Traversal identity/default markers are registered."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 explicit SDK import equivalence, declarations, caller resolver and unknown SDK rejection."
+      ],
+      "remaining": [
+        "Web/Razor/Worker/MSTest toolchain execution and installed SDK version resolution remain native-only."
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3079,
+      "workId": "SF-A23-T24",
+      "title": "Generate implicit usings and assembly-info sources",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3079",
+      "status": "implemented",
+      "implementation": [
+        "packages/project-system/src/evaluation/sdk/generated-sources.js",
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js",
+        "packages/project-system/src/build-plan.js"
+      ],
+      "testedAcceptance": [
+        "Implicit SDK usings and Using Remove/static/alias metadata produce visible virtual GlobalUsings.g.cs.",
+        "AssemblyInfo.g.cs retains version/company/IVT source and carries structured assemblyAttributes so the host can emit real metadata.",
+        "Console and List compile and execute without user usings on SourceVM and CilVirtualMachine under Node.",
+        "Actual PE metadata carries supplied assembly attributes; the real CLR reads version/company and resource values in the CIL profile qualification."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 implicit global usings, assembly metadata escaping, execution on both JavaScript runtime engines.",
+        "CIL metadata#3766: existing11 cases pass in root Node22 current-main scope, including real CLR probe; standalone2cases pass Node26. Generated SDK source/options model files also pass root Node26 host scope8e294166."
+      ],
+      "remaining": [
+        "The real Studio/browser SDK compile-and-run workflow is owned and recorded by root integration. The public CIL metadata layer is now published and its actual emitted attributes are qualified separately."
+      ],
+      "integrationOwner": "root",
+      "integration": [
+        "apps/studio/workers/project-emission.js",
+        "packages/cil/src/emit/project-metadata.js"
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "cil-metadata",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3766",
+          "remoteHead": "c9c6e57230a42ec21f56ab1c9feea396503ef687",
+          "tree": "b683cfe5b36e6da1f4416b7caa4f8999a3e0b882"
+        }
+      ]
+    },
+    {
+      "issue": 3080,
+      "workId": "SF-A23-T25",
+      "title": "Complete Directory.Build and Directory.Packages imports",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3080",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/imports.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/central-packages.js",
+        "packages/project-system/src/evaluation/items.js"
+      ],
+      "testedAcceptance": [
+        "Directory.Build switch/override paths and ordered imports preserve provenance.",
+        "The native nested-parent-import fixture yields parent;child;project;targets.",
+        "Directory.Packages.props central versions and VersionOverride flow to PackageReference values."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 nested Directory.Build.props parent imports.",
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 import switches/override paths and central package versions.",
+        "closeout: tests/project-evaluation-central-packages.test.js \u2014 central/global reference policy and framework isolation."
+      ],
+      "remaining": [
+        "Restoring transitive packages and editing central version files are owned by the native NuGet service."
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3081,
+      "workId": "SF-A23-T26",
+      "title": "Propagate evaluated compiler options",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3081",
+      "status": "implemented",
+      "implementation": [
+        "packages/project-system/src/evaluation/compiler-options.js",
+        "packages/project-system/src/build-plan.js",
+        "packages/project-system/src/index.js",
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js",
+        "packages/project-system/src/evaluation/sdk/generated-sources.js",
+        "packages/project-system/src/evaluation/items.js",
+        "apps/studio/project-build.js"
+      ],
+      "testedAcceptance": [
+        "The compiler receives its actual preprocessorSymbols, nullableContext, allowUnsafe, language, warning-policy and overflow option names; inspection aliases remain available.",
+        "Debug/Release DEBUG differences affect executed compiler output on SourceVM and CilVirtualMachine.",
+        "Conflicting options for a source shared by source-combined callers are rejected.",
+        "Compiler defaults and complete implicit global-using membership are exercised through actual worker compilation."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 B04 Debug/Release execution.",
+        "scope: tests/release06-project-extensions.test.js; tests/project-runtime14.test.js \u2014 existing compiler option behavior.",
+        "logical-usings-final: tests/project-evaluation-sdk.test.js; tests/a23-project-build.test.js"
+      ],
+      "remaining": [
+        "Exact portable-to-native csc-args.js equality is being qualified by workspace_inventory. This file does not infer that acceptance from successful portable execution."
+      ],
+      "integrationOwner": "workspace_inventory",
+      "integration": [
+        "packages/msbuild/src/csc-args.js",
+        "packages/msbuild/src/project-context.js"
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "project-inputs",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3611",
+          "remoteHead": "d0a4f2c890984b1d8e7e9f5d941d5414784b5429",
+          "tree": "1a2af7ea28f74c28e21fb271e98d85afe6f30a8d"
+        }
+      ]
+    },
+    {
+      "issue": 3082,
+      "workId": "SF-A23-T27",
+      "title": "Plan independent project assemblies",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3082",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/build-plan.js",
+        "packages/project-system/src/build-contexts.js",
+        "packages/project-system/src/evaluation/compiler-options.js",
+        "packages/project-system/src/build-unit.js",
+        "apps/studio/project-build-runner.js",
+        "apps/studio/workers/project-plan-input.js",
+        "apps/studio/project-artifacts.js",
+        "packages/cil/src/project-assembly.js",
+        "packages/cil/src/load/project-graph-bindings.js",
+        "packages/cil/src/load/project-graph-linker.js",
+        "apps/studio/project-runtime-input.js"
+      ],
+      "testedAcceptance": [
+        "Dependency-ordered units retain separate sources/options/assembly identities and explicit reference metadata.",
+        "IVT is granted only by an explicit friend-assembly declaration; ReferenceOutputAssembly=false preserves build dependency ordering without a metadata-reference edge.",
+        "A diamond graph may compile the same library in two separate framework contexts.",
+        "Distinct context compilation executes a two-TFM diamond through the per-unit worker delegate; validated seed artifacts preserve prior dependency PEs.",
+        "Closed canonical project PEs preserve actual constructors, static fields, visibility, IVT and readonly boundaries across separate assemblies; the actual CLR and both JavaScript engines return42/42/44/null for the retained oracle."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-build.test.js \u2014 plan assembly isolation, explicit/no IVT, ReferenceOutputAssembly and cycle/source errors.",
+        "contexts-focused, contexts-final, closeout, hydration: tests/project-evaluation-contexts.test.js \u2014 nearest-compatible and diamond graphs.",
+        "lifecycle-initial, logical-usings-final: tests/a23-project-target-lifecycle.test.js; tests/a23-project-plan-artifacts.test.js; tests/a23-project-reference-visibility.test.js",
+        "Current-main Node22 scope4a49a23b:14/14 named assembly-loader/access-loader/native oracle cases; SDK10.0.401/MSBuild18.9.11.42413/CLR10.0.5/Linuxx64. See evaluator-publication.json and integration/upstream-qualification/node22-runtime-initial.",
+        "Current-main Node26 source843fc516e:6/6 graph and production compiler-worker composition assertions passed, including the precise PRJ0005 missing-definition regression. The earlier duplicate-token fixture failure remains retained separately.",
+        "Root Node26 source af15e96b: all three runtime artifact-envelope cases passed, including missing/non-byte/oversized entry admission with absent or duplicated dependencies; final shared scope 65/66 retains the unrelated Explorer failure."
+      ],
+      "remaining": [
+        "Closed runtime profile limits are explicit: unsigned ordinary SharpForge assemblies; general generic/virtual external dispatch, by-reference external signatures, arbitrary .NET/native implementations and netmodules are not claimed. Ambiguous same-full-identity TFM outputs failPRJ0004. Root owns final Studio/browser composition evidence."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        },
+        {
+          "name": "bytecode-references",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3719",
+          "remoteHead": "f954e57f1e14eee353c941bea5f9f00805ebb4b1",
+          "tree": "8dc768e4ad90261e1ef504e5d0a98b86e5ee1ae2"
+        },
+        {
+          "name": "cil-identity",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3722",
+          "remoteHead": "0445c0a13a7f9d2e338fda2e0d9b69780d500961",
+          "tree": "44e91b09717d62b6641b6e200356933ac7b2fab3"
+        },
+        {
+          "name": "cil-metadata",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3766",
+          "remoteHead": "c9c6e57230a42ec21f56ab1c9feea396503ef687",
+          "tree": "b683cfe5b36e6da1f4416b7caa4f8999a3e0b882"
+        },
+        {
+          "name": "cil-graph",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3837",
+          "remoteHead": "9c5273b53734d5646fa9a958f0a03668a0050f3a",
+          "tree": "573677d7c86a2077be4ba2f4d95c66cf1ae3a5dc"
+        },
+        {
+          "name": "cil-type-handles",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3846",
+          "remoteHead": "a5431950f395377e99eb0a0b22910cbf5dbe6ee0",
+          "tree": "f6b7657e6701e421b73f75b06cccc4e0e7df2eb7"
+        },
+        {
+          "name": "project-runtime-input",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3886",
+          "remoteHead": "98403f2cab6becebe5225d0a9c95fe9ee556ec26",
+          "tree": "bdee12db9610043ce85f5dff3a06cedfdd584e3c"
+        },
+        {
+          "name": "worker",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3856",
+          "remoteHead": "917c5bc8291d59f124ffc3c68abddd5366daa4a4",
+          "tree": "775eae1b4221063ddc8f8793497557f7903e31c9"
+        },
+        {
+          "name": "build-session",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3883",
+          "remoteHead": "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+          "tree": "9f14a9e52d6d02cbec28f37d5a3cd59c75e7524f"
+        },
+        {
+          "name": "build-qualification",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3884",
+          "remoteHead": "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+          "tree": "fab19d39d4ec7d6b83db5c1ae937c76150c2c64f"
+        },
+        {
+          "name": "tools-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3951",
+          "remoteHead": "486b19a5177de1be5da630460bcafa733ccf3e44",
+          "tree": "4a58af88487d5644d720d77aad7a23a09cdec351"
+        }
+      ]
+    },
+    {
+      "issue": 3083,
+      "workId": "SF-A23-T28",
+      "title": "Evaluate resources and manifest identities",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3083",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/resources.js",
+        "packages/project-system/src/resource-binary.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/project-system/src/index.js"
+      ],
+      "testedAcceptance": [
+        "Twelve resource-name fixtures match native CreateManifestResourceNames, covering namespace/folder, LogicalName, culture, DependentUpon and convention sources.",
+        "Portable strings and primitive payloads are read by the real CLR ResourceReader; native string resources are read back by the portable reader.",
+        "A real SDK-built fr satellite assembly reflects culture fr, parent version 2.3.4.5 and manifest App.Strings.fr.resources.",
+        "File references and dependent source names never interpret unopened records as empty; evaluationInputs discovers required paths."
+      ],
+      "evidence": [
+        "resources: tests/project-evaluation-build.test.js; tests/project-evaluation-native-parity.test.js \u2014 12 naming fixtures, CLR payload reader/writer.",
+        "satellite: tests/project-evaluation-native-parity.test.js \u2014 native satellite assembly retains culture-qualified resource name.",
+        "closeout, hydration: tests/project-evaluation-build.test.js; tests/project-evaluation-contexts.test.js \u2014 unopened inputs and repeated resource-input discovery.",
+        "CIL metadata#3766 actual resource/attribute/satellite rows and CLR reads passed root Node22; graph#3837 retains resource descriptors and original PE payload provenance, with positive standalone case passed in root Node26 worker/model scope35f70db6."
+      ],
+      "remaining": [
+        "Serialized/custom resource types and unsupported encodings are blocking native-only cases. Dependent source naming recognizes ordinary namespace/type declarations.",
+        "Root owns final Studio/browser resource and satellite build composition qualification; emitted PE metadata/resource primitives are published in#3766."
+      ],
+      "publishedProjections": [
+        {
+          "name": "resources",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3675",
+          "remoteHead": "a91e1db4e10736e24fdc912082eb8375dd48e760",
+          "tree": "cdeabd5925598d1f5079e2f3975478193f1f61f9"
+        },
+        {
+          "name": "cil-metadata",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3766",
+          "remoteHead": "c9c6e57230a42ec21f56ab1c9feea396503ef687",
+          "tree": "b683cfe5b36e6da1f4416b7caa4f8999a3e0b882"
+        },
+        {
+          "name": "cil-graph",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3837",
+          "remoteHead": "9c5273b53734d5646fa9a958f0a03668a0050f3a",
+          "tree": "573677d7c86a2077be4ba2f4d95c66cf1ae3a5dc"
+        }
+      ]
+    },
+    {
+      "issue": 3084,
+      "workId": "SF-A23-T29",
+      "title": "Compute output and publish file plans",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3084",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/output-layout.js",
+        "packages/project-system/src/build-plan.js",
+        "packages/project-system/src/build-contexts.js"
+      ],
+      "testedAcceptance": [
+        "The plan applies CopyToOutputDirectory/CopyToPublishDirectory, PreserveNewest/Never, Link, TargetPath and Pack metadata.",
+        "Referenced-project content follows the selected compatible framework; traversal and conflicting destinations fail."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-build.test.js \u2014 copied content/links/publish/referenced files and destination errors."
+      ],
+      "remaining": [
+        "This module computes a plan. Applying timestamp copy policies and writing native publish output belong to the executing host."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        }
+      ]
+    },
+    {
+      "issue": 3085,
+      "workId": "SF-A23-T30",
+      "title": "Read launchSettings profiles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3085",
+      "status": "implemented",
+      "implementation": [
+        "packages/project-system/src/launch-settings.js",
+        "packages/project-system/src/configuration-json.js",
+        "packages/project-system/src/index.js",
+        "packages/project-system/src/multi-target.js"
+      ],
+      "testedAcceptance": [
+        "Project/Executable profiles retain command arguments, working directory, environment, applicationUrl and dotnetRunMessages.",
+        "JSONC comments/trailing commas/BOM are supported with bounded parsing; invalid input carries SFJSON001 UTF-16 locations.",
+        "Selected profile and context identity reach runOptions; explicit args/environment overrides are tested."
+      ],
+      "evidence": [
+        "scope, resources, closeout: tests/project-evaluation-build.test.js \u2014 profile selection, invalid JSON location, shared JSONC bounds/strings.",
+        "contexts-final, closeout: tests/project-evaluation-contexts.test.js \u2014 launch/context identity and active selection."
+      ],
+      "remaining": [
+        "Both actual browser and native run-request consumers are external integration acceptance. Root and workspace_inventory own those callers."
+      ],
+      "integrationOwner": "root and workspace_inventory",
+      "integration": [
+        "apps/studio/project-build.js",
+        "packages/msbuild/src/engine.js"
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-config",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3600",
+          "remoteHead": "bac3d54addcfb15cc28008c6507105d0214bf3a1",
+          "tree": "a75c67fe97a835a5709d26bbc6dc3df3c4129cf7"
+        },
+        {
+          "name": "project-inputs",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3611",
+          "remoteHead": "d0a4f2c890984b1d8e7e9f5d941d5414784b5429",
+          "tree": "1a2af7ea28f74c28e21fb271e98d85afe6f30a8d"
+        }
+      ]
+    },
+    {
+      "issue": 3086,
+      "workId": "SF-A23-T31",
+      "title": "Support native publish profiles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3086",
+      "status": "implemented",
+      "implementation": [],
+      "testedAcceptance": [],
+      "evidence": [],
+      "remaining": [
+        "Implementation and native folder-publish acceptance were transferred to workspace_inventory; this agent does not claim its native publish run."
+      ],
+      "owner": "workspace_inventory",
+      "transferred": true,
+      "externalImplementation": [
+        "packages/msbuild/src/publish-profiles.js"
+      ],
+      "publishedProjections": [],
+      "publicationOwner": "workspace_inventory (native scope)"
+    },
+    {
+      "issue": 3087,
+      "workId": "SF-A23-T32",
+      "title": "Build target graphs and declare task policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3087",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/targets.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/project-system/src/evaluation/sdk/build-targets.js",
+        "apps/studio/project-targets.js"
+      ],
+      "testedAcceptance": [
+        "Targets retain dependencies, BeforeTargets/AfterTargets hooks, Inputs/Outputs, InitialTargets and DefaultTargets.",
+        "Portable task-only projects are accepted. Exec, Csc, UsingTask/custom tasks are blocked with a diagnostic naming the unsupported task.",
+        "BeforeCompile executes before the genuine compiler result and after-hooks execute only after successful output publication."
+      ],
+      "evidence": [
+        "scope, hydration: tests/project-evaluation-targets.test.js \u2014 graph declarations and per-task native-only policy.",
+        "lifecycle-initial, logical-usings-final: tests/project-evaluation-build-stages.test.js; tests/a23-project-target-lifecycle.test.js"
+      ],
+      "remaining": [
+        "Inputs/Outputs are retained for inspection. Native timestamp-based incremental skipping is not emulated."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        },
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3088,
+      "workId": "SF-A23-T33",
+      "title": "Execute bounded portable targets and batching",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3088",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/target-runner.js",
+        "packages/project-system/src/evaluation/target-batching.js",
+        "packages/project-system/src/evaluation/virtual-tasks.js",
+        "packages/project-system/src/evaluation/context.js",
+        "apps/studio/project-build-runner.js",
+        "apps/studio/project-targets.js"
+      ],
+      "testedAcceptance": [
+        "Task/target metadata batching, Condition, ContinueOnError, CallTarget and property/item outputs execute against copied virtual files.",
+        "Native WriteLinesToFile output and generated Compile membership match the portable fixture.",
+        "Step/depth/output/cancellation limits terminate work; failures roll back virtual mutations.",
+        "Unopened Copy/ReadLines/appendWrite inputs return top-level requiredFiles plus located diagnostic context; retry after hydration succeeds, and ContinueOnError cannot hide the prerequisite.",
+        "Dependency AfterBuild output is consumed by consumer BeforeCompile in one build, with native SDK comparison and atomic guarded lazy retries."
+      ],
+      "evidence": [
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 generated file target equals native.",
+        "scope, hydration: tests/project-evaluation-targets.test.js \u2014 batching, task semantics, budgets, rollback, escaped semicolons and lazy input retries.",
+        "contexts-final, closeout, hydration: tests/project-evaluation-contexts.test.js \u2014 targets update the exact selected framework only.",
+        "lifecycle-initial: tests/a23-project-target-native.test.js; logical-usings-final: tests/a23-project-build-order.test.js"
+      ],
+      "remaining": [
+        "Only registered virtual tasks run; no host writes, process execution, arbitrary task assemblies or native incremental scheduler are implied."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        }
+      ]
+    },
+    {
+      "issue": 3089,
+      "workId": "SF-A23-T34",
+      "title": "Index workspace paths",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3089",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/path-index.js",
+        "packages/project-system/src/evaluation/context.js",
+        "packages/project-system/src/index.js"
+      ],
+      "testedAcceptance": [
+        "One shared path index handles directory Exists and narrowed glob candidates, with case/exclusion policies.",
+        "A 100-project, 20,000-source fixture asserts 100 Exists calls, at most 500 directory steps and at most 20,000 glob candidates; conditions do not rescan every file.",
+        "Native item/SDK fixtures qualify the exercised glob membership."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 100 projects and indexed directory lookups.",
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 SDK/default and ordered-item glob vectors.",
+        "benchmark: packages/project-system/bench/path-index.js; evaluator/path-index-benchmark.json",
+        "Reproducibility artifact is published unchanged in draft #4008 on actual expression #3674; Node24.19.0 historical measurement, core passed run37174169555/job111353204690, no measurement rerun."
+      ],
+      "remaining": [
+        "Benchmark timings measure 100 directory lookups and exclude index construction. They are not total project-load, build or IDE speedup claims."
+      ],
+      "publishedProjections": [
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        },
+        {
+          "name": "path-index-benchmark",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/4008",
+          "remoteHead": "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+          "tree": "c51368ec001a41220d77782ffc2a936708f4181b"
+        }
+      ]
+    },
+    {
+      "issue": 3096,
+      "workId": "SF-A23-B01",
+      "title": "Tokenize conditions before expanding values",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3096",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/conditions.js",
+        "packages/project-system/src/evaluation/expander.js"
+      ],
+      "testedAcceptance": [
+        "Property values containing quotes, parentheses or operators remain data inside parsed condition tokens.",
+        "Adjacent empty references and Boolean short-circuit conditions do not corrupt parsing."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 B01 tokenizes before expansion, preserving injected quotes, operators and empty values."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3097,
+      "workId": "SF-A23-B02",
+      "title": "Reject unsupported instance property functions explicitly",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3097",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/expander.js",
+        "packages/project-system/src/evaluation/functions-string.js",
+        "packages/project-system/src/evaluation/functions-static.js"
+      ],
+      "testedAcceptance": [
+        "Implemented instance members return values; unknown/malformed members produce blocking diagnostics and do not create an empty result property."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 B02 malformed or disallowed expression table.",
+        "contexts-focused: tests/project-evaluation-native-parity.test.js \u2014 native string-member output."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3098,
+      "workId": "SF-A23-B03",
+      "title": "Recognize item and metadata references in conditions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3098",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/conditions.js",
+        "packages/project-system/src/evaluation/expander.js",
+        "packages/project-system/src/evaluation/item-expressions.js"
+      ],
+      "testedAcceptance": [
+        "Item/metadata conditions evaluate with the current item context and fail explicitly without one."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-expressions.test.js \u2014 B03 item and metadata conditions evaluate with context and fail explicitly without it.",
+        "closeout: tests/project-evaluation-items.test.js \u2014 per-item metadata conditions."
+      ],
+      "remaining": [],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "expressions",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3674",
+          "remoteHead": "2b32ac987175db8f7374d581e6c9c4a7a99a5609",
+          "tree": "8aec50108c1c313be87389f997bb13b15e32e1e6"
+        }
+      ]
+    },
+    {
+      "issue": 3099,
+      "workId": "SF-A23-B04",
+      "title": "Retain compiler-relevant evaluated properties",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3099",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/evaluation/compiler-options.js",
+        "packages/project-system/src/build-plan.js",
+        "apps/studio/project-build.js",
+        "apps/studio/folder-compilation.js"
+      ],
+      "testedAcceptance": [
+        "Defines, nullable, unsafe, warning policy and overflow settings are retained using compiler-facing option keys.",
+        "A Debug/Release regression compiles and executes different conditional branches on both JavaScript engines.",
+        "Actual build and analysis use the evaluated source/option sets; generated sources, target outputs and folder-only lazy membership are materialized at the correct stage."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 B04 evaluated Debug/Release symbols actually reach compiler preprocessing and execution.",
+        "scope: tests/release06-project-extensions.test.js; tests/project-runtime14.test.js.",
+        "lifecycle-initial, identity-guards, logical-usings-final: tests/a23-project-build.test.js; tests/a24-folder-compilation.test.js"
+      ],
+      "remaining": [
+        "This qualifies option propagation and engine execution under Node; the integrated Studio/browser run is recorded separately by root."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        },
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    },
+    {
+      "issue": 3100,
+      "workId": "SF-A23-B05",
+      "title": "Retain unsupported solution projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3100",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/project-loader.js",
+        "packages/project-system/src/solution-legacy.js"
+      ],
+      "testedAcceptance": [
+        "Non-C# solution entries remain visible as unloaded snapshots with an explicit native-toolchain reason.",
+        "Solution naming strips .sln and .slnx; portable build ordering retains only loadable C# projects.",
+        "The loader consumes all legacy solution.projects entries supplied by the transferred legacy parser."
+      ],
+      "evidence": [
+        "scope, closeout: tests/project-evaluation-build.test.js \u2014 B05 mixed slnx projects remain visible as explicit unloaded nodes.",
+        "external tests_workflows: tests/a23-10-solution-configurations.test.js \u2014 A23 B05 unsupported project types remain visible and unloaded, never in portable compilation projectPaths. Agent reported this passing in its completed batch."
+      ],
+      "remaining": [
+        "The legacy parser/configuration implementation and its detailed run artifacts are owned by tests_workflows; use that evidence for the .sln parser merge."
+      ],
+      "externalCommits": [
+        "6d09858d"
+      ],
+      "externalImplementation": [
+        "packages/project-system/src/legacy-solution.js"
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "solution-reader",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3666",
+          "remoteHead": "67e5bf9a70f1390b1f909572f1bd2c8fb6fe6228",
+          "tree": "4b505c6fb10634518b52826265512a1eb3a8af9f"
+        }
+      ]
+    },
+    {
+      "issue": 3125,
+      "workId": "SF-A23-T03.1",
+      "title": "Parse TFMs and reduce compatible frameworks",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3125",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/tfm.js",
+        "packages/project-system/src/evaluation/functions-msbuild.js",
+        "packages/project-system/src/evaluation/sdk/microsoft-net-sdk.js"
+      ],
+      "testedAcceptance": [
+        "Forty-seven monikers are compared to NuGet.Frameworks.ParseFolder from SDK 10.0.401.",
+        "All 2,209 ordered compatibility pairs and six nearest-framework vectors match NuGet's reference providers.",
+        "Unknown/malformed TFMs are explicit; framework/platform/_OR_GREATER symbols and DisableImplicitFrameworkDefines are tested."
+      ],
+      "evidence": [
+        "contexts-focused, contexts-final: tests/project-evaluation-frameworks.test.js \u2014 native NuGet parse/compatibility/reducer matrix, unsupported TFMs and defines."
+      ],
+      "remaining": [
+        "The versioned test table covers .NET Framework, netstandard, netcoreapp, modern net and listed platform suffixes. Xamarin/PCL and unrelated NuGet framework aliases are not claimed supported."
+      ],
+      "publishedProjections": [
+        {
+          "name": "framework-contexts",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3604",
+          "remoteHead": "7528e99af27073f44cbb2f1528de29732f1caede",
+          "tree": "40fd49584a914ae7af71a17145dbb9cd116be20f"
+        }
+      ]
+    },
+    {
+      "issue": 3126,
+      "workId": "SF-A23-T03.2",
+      "title": "Evaluate isolated per-framework contexts",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3126",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/multi-target.js",
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/project-loader.js",
+        "packages/project-system/src/evaluation/context.js",
+        "packages/project-system/src/build-unit.js",
+        "apps/studio/project-build-runner.js"
+      ],
+      "testedAcceptance": [
+        "TargetFrameworks creates independent inner property/item/source/resource/diagnostic snapshots.",
+        "TFM-conditioned Compile items differ between net8.0 and net10.0; selection re-evaluates configuration and runtime globals and evicts stale identities.",
+        "Framework-context count and invalid selections are bounded and explicit.",
+        "The same project in two selected TFM contexts keeps independent generated source outputs through actual interleaved worker compilation."
+      ],
+      "evidence": [
+        "contexts-focused, contexts-final, closeout, hydration: tests/project-evaluation-contexts.test.js \u2014 inner evaluation isolation, option changes and context-budget errors.",
+        "logical-usings-final: tests/a23-project-target-lifecycle.test.js"
+      ],
+      "remaining": [
+        "Native design-time contexts and the Studio context chooser use the shared public contract but have separate owner validation."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        },
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "framework-contexts",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3604",
+          "remoteHead": "7528e99af27073f44cbb2f1528de29732f1caede",
+          "tree": "40fd49584a914ae7af71a17145dbb9cd116be20f"
+        }
+      ]
+    },
+    {
+      "issue": 3127,
+      "workId": "SF-A23-T03.3",
+      "title": "Select active contexts and label artifacts",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3127",
+      "status": "validated",
+      "implementation": [
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/project-system/src/build-contexts.js",
+        "packages/project-system/src/build-plan.js",
+        "packages/project-system/src/evaluation/target-runner.js",
+        "apps/studio/project-artifacts.js",
+        "apps/studio/project-build.js"
+      ],
+      "testedAcceptance": [
+        "Inactive diagnostics retain TFM/RID/context labels and cannot block an unrelated selected build context.",
+        "ProjectReference resolves nearest compatible library TFMs independently of the explorer's active framework.",
+        "Generated documents, resource/launch artifacts, graph edges and exact-context target execution carry context IDs; diamond dependencies preserve both library contexts.",
+        "Per-context artifact invalidation responds to changes in exact dependency inputs while retaining unrelated valid dependency metadata."
+      ],
+      "evidence": [
+        "contexts-focused, contexts-final, closeout, hydration: tests/project-evaluation-contexts.test.js \u2014 inactive diagnostics, nearest dependency, diamond graph, selection replacement and exact-context targets.",
+        "lifecycle-corrections, identity-guards: tests/a23-project-artifact-cache.test.js"
+      ],
+      "remaining": [
+        "RID graph extraction/fallback diagnostics are owned by workspace_inventory under T03.4. Root qualifies context-keyed worker artifacts and UI selection."
+      ],
+      "publishedProjections": [
+        {
+          "name": "build-models",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3685",
+          "remoteHead": "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "tree": "46f343d24be6e8e5c1cf3fc8b5408d12b541f638"
+        },
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        },
+        {
+          "name": "framework-contexts",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3604",
+          "remoteHead": "7528e99af27073f44cbb2f1528de29732f1caede",
+          "tree": "40fd49584a914ae7af71a17145dbb9cd116be20f"
+        }
+      ]
+    },
+    {
+      "issue": 3128,
+      "workId": "SF-A23-T03.4",
+      "title": "Resolve runtime identifier graphs",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3128",
+      "status": "implemented",
+      "implementation": [],
+      "testedAcceptance": [],
+      "evidence": [],
+      "remaining": [
+        "Ownership is workspace_inventory, including the pinned portable graph, public project-system RID helpers and narrow tagContext fallback wiring. No RID parity claim is made by this evaluator handoff."
+      ],
+      "owner": "workspace_inventory",
+      "transferred": true,
+      "externalImplementation": [
+        "packages/project-system/src/rid.js",
+        "packages/msbuild/src/rid.js"
+      ],
+      "publishedProjections": [
+        {
+          "name": "framework-contexts",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3604",
+          "remoteHead": "7528e99af27073f44cbb2f1528de29732f1caede",
+          "tree": "40fd49584a914ae7af71a17145dbb9cd116be20f"
+        }
+      ]
+    },
+    {
+      "issue": 3148,
+      "workId": "SF-A23-T07.6",
+      "title": "Apply portable central package version policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3148",
+      "status": "implemented",
+      "implementation": [
+        "packages/project-system/src/evaluation/central-packages.js",
+        "packages/project-system/src/evaluation/items.js",
+        "packages/project-system/src/evaluation/imports.js"
+      ],
+      "testedAcceptance": [
+        "PackageReference VersionOverride and Directory.Packages.props PackageVersion values resolve in portable evaluation.",
+        "GlobalPackageReference promotion follows the installed NuGet.targets IncludeAssets/PrivateAssets metadata and respects its opt-out.",
+        "NU1008, NU1010 and NU1013 reject invalid central versions/overrides; values stay isolated by framework."
+      ],
+      "evidence": [
+        "closeout: tests/project-evaluation-central-packages.test.js \u2014 central versions, global promotion, invalid policy and context isolation.",
+        "scope, closeout: tests/project-evaluation-sdk.test.js \u2014 central versions imported from Directory.Packages.props."
+      ],
+      "remaining": [
+        "Central version editing, transitive-pinning restore behavior and an actual local-feed NuGet restore are owned/qualified by workspace_inventory. Portable evaluation does not fetch or resolve transitive package assets."
+      ],
+      "integrationOwner": "workspace_inventory",
+      "integration": [
+        "packages/msbuild/src/nuget/central-packages.js"
+      ],
+      "publishedProjections": [
+        {
+          "name": "evaluation-core",
+          "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3684",
+          "remoteHead": "678a73e77520d11a0c5376dfc6f07d45670cef53",
+          "tree": "73f53d05be802b480986064e301011fc20ea1b1f"
+        }
+      ]
+    }
+  ],
+  "applicationFollowup": {
+    "implementationHead": "3bf94159",
+    "toolchain": {
+      "node": "v22.23.3",
+      "platform": "Linux x64",
+      "referenceSdk": "10.0.401",
+      "referenceMsbuild": "18.9.11.42413"
+    },
+    "validation": [
+      {
+        "id": "lifecycle-initial",
+        "implementationHead": "249d69a0",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "tests/project-evaluation-build-stages.test.js",
+          "tests/project-evaluation-targets.test.js",
+          "tests/project-evaluation-contexts.test.js",
+          "tests/project-evaluation-build.test.js",
+          "tests/project-evaluation-sdk.test.js",
+          "tests/project-evaluation-frameworks.test.js",
+          "tests/a23-project-build.test.js",
+          "tests/a23-project-target-lifecycle.test.js",
+          "tests/a23-project-artifact-cache.test.js",
+          "tests/a23-project-build-order.test.js",
+          "tests/a23-project-plan-artifacts.test.js",
+          "tests/a23-project-reference-visibility.test.js",
+          "tests/a24-folder-compilation.test.js",
+          "tests/a23-project-target-native.test.js"
+        ],
+        "testSummary": {
+          "tests": 115,
+          "pass": 113,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "artifact": "evaluator/lifecycle-initial-node22.log",
+        "environment": {
+          "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "DOTNET_HOST_PATH": "/workspace/scratch/3e16369943fd/dotnet/dotnet"
+        },
+        "interpretation": "113/115 pass. Two new expectations encoded wrong cache/configuration and diagnostic assumptions; corrected in cf65d97b. The actual offline SDK target-order oracle passed in this run."
+      },
+      {
+        "id": "lifecycle-corrections",
+        "implementationHead": "cf65d97b",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "tests/a23-project-artifact-cache.test.js",
+          "tests/a23-project-target-lifecycle.test.js"
+        ],
+        "testSummary": {
+          "tests": 12,
+          "pass": 12,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "artifact": "evaluator/lifecycle-corrections-node22.log",
+        "interpretation": "12/12 pass. Run preceded the later new identity-guard test; cf65d97b contains the tested corrections plus later separately qualified changes."
+      },
+      {
+        "id": "identity-guards",
+        "implementationHead": "cf65d97b",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "tests/a23-project-target-lifecycle.test.js",
+          "tests/a23-project-build-order.test.js",
+          "tests/a23-project-artifact-cache.test.js",
+          "tests/a24-folder-compilation.test.js",
+          "tests/a23-project-build.test.js"
+        ],
+        "testSummary": {
+          "tests": 31,
+          "pass": 31,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "artifact": "evaluator/identity-guards-node22.log"
+      },
+      {
+        "id": "followup-alias-initial",
+        "implementationHead": "cf65d97b",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "tests/a23-project-target-lifecycle.test.js",
+          "tests/a23-project-build-order.test.js",
+          "tests/a23-project-artifact-cache.test.js",
+          "tests/a24-folder-compilation.test.js",
+          "tests/a23-project-build.test.js",
+          "tests/project-evaluation-sdk.test.js"
+        ],
+        "testSummary": {
+          "tests": 46,
+          "pass": 45,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "artifact": "evaluator/followup-alias-initial-node22.log",
+        "interpretation": "45/46 pass. New qualified Using test exposed semantic namespace identities incorrectly interpreted as file paths; 3bf94159 fixes that and default Using deduplication."
+      },
+      {
+        "id": "logical-usings-final",
+        "implementationHead": "3bf94159",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "tests/project-evaluation-sdk.test.js",
+          "tests/project-evaluation-items.test.js",
+          "tests/a23-project-target-lifecycle.test.js",
+          "tests/a23-project-build.test.js",
+          "tests/a23-project-build-order.test.js"
+        ],
+        "testSummary": {
+          "tests": 70,
+          "pass": 70,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "artifact": "evaluator/logical-usings-final-node22.log"
+      }
+    ],
+    "checks": [
+      {
+        "id": "check",
+        "implementationHead": "3bf94159",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "environment": {
+          "PATH": "Node 22.23.3 bin first, followed by inherited PATH"
+        },
+        "exitCode": 1,
+        "artifact": "evaluator/followup-check-node22.log",
+        "result": "2129 modules syntax-clean; nine inherited dynamic-import approvals stop check before later gates."
+      },
+      {
+        "id": "structure",
+        "implementationHead": "3bf94159",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check:structure"
+        ],
+        "environment": {
+          "PATH": "Node 22.23.3 bin first, followed by inherited PATH"
+        },
+        "exitCode": 0,
+        "artifact": "evaluator/followup-structure-node22.log",
+        "result": "Command exits 0 with 271 repository structure findings; no followup-owned source files listed. This is not a strict structure pass."
+      }
+    ],
+    "acceptance": [
+      "The standard Studio build delegate prepares, compiles and finalizes every dependency context before preparing its consumer. A dependency AfterBuild file feeds consumer BeforeCompile in the same request.",
+      "No after-targets run after a failed compiler result. AfterCompile and AfterBuild receive the genuine nonempty PE/PDB/satellite bytes for the exact context; failed target mutations are atomic.",
+      "Target outputs have context snapshots, including tombstones; the same project and same output source path in a two-TFM diamond retain distinct source text in both full-plan compatibility and real interleaved worker execution.",
+      "Atomic target hydration retries only requested bounded inputs and detects revision, disk, workspace-epoch, native-mode, startup or superseding-build changes. Targets can introduce new Compile items before compilation input enumeration.",
+      "Actual per-project PE results are reused through a bounded, validated worker seed-artifact contract. Editor analysis retains valid dependency metadata while source/options/resources/attributes/reference changes invalidate affected cached outputs.",
+      "Folder-only builds and analysis hydrate all 300 virtual file-system C# members without opening editors; dirty buffers override disk content and deletions remain absent.",
+      "SDK compiler default ordering preserves explicit DefineConstants replacement, appends configuration/framework symbols correctly, and includes native warning defaults. Global-using identifiers are namespace metadata, not file paths, and every implicit Using survives deduplication.",
+      "A real SDK 10.0.401 target-order fixture produced the same generated dependency/consumer source content and output 42 as SourceVM and CilVirtualMachine."
+    ],
+    "limits": [
+      "Actual Studio browser UI wiring is qualified separately by root and tests_workflows; these application helpers ran under Node.",
+      "The current recorded metadata-reference suite retains SF2200 for general external execution. A separately assigned closed SharpForge PE runtime-linking scope is now in progress and is not qualified by these logs.",
+      "Global-qualified using directives are a namespace-resolution compatibility improvement. Actual SDK 10.0.201 was observed by workspace_inventory to emit unqualified using directives; this evidence makes no exact emitted-spelling parity claim.",
+      "Overlapping test-run totals represent regression followups and must not be added as distinct coverage."
+    ]
+  },
+  "publicationManifest": "planning/evidence/project18/evaluator-publication.json",
+  "publicationSyncMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "preparedCompatibility": {
+    "canonicalSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "correctedSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+    "scope": [
+      "Descriptor-preserving ProjectSystem admission and Compile membership",
+      "Provider immutable-source save with exact physical baseline/hash checks",
+      "Documents-owned session/load/save/eviction lifecycle",
+      "Accepted save conflicts without redefining immutable byteLength",
+      "Recovery/startup read-only policy and asynchronous recovery adoption"
+    ],
+    "publications": [
+      4301,
+      4312,
+      4335,
+      4341,
+      4361,
+      4362
+    ],
+    "manifest": "planning/evidence/project18/evaluator-compatibility-publication.json",
+    "selectedEvidence": "planning/evidence/project18/evaluator-session-save-selected.json",
+    "qualification": "All 23 selected cases pass within the final 228-file, 1877/1877 Node22 scope. Initial Node26 save/conflict failures and the narrower correction scope are retained.",
+    "nativeParityClaimsAdded": false
+  },
+  "legacyFacadeCleanup": {
+    "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "paths": [
+      "packages/cil/src/analysis.js",
+      "packages/cil/src/analysis-input.js",
+      "packages/compiler/src/index.js",
+      "packages/compiler/src/public-api.js"
+    ],
+    "publications": [
+      3837,
+      4401
+    ],
+    "qualified": "382/382 Node26 cases plus ordered check/build/clean checkout in the root-owned 18-file completed scope.",
+    "projectionCorrection": "planning/evidence/project18/evaluator-compiler-projection-correction.json"
+  },
+  "editorOwnershipCorrection": {
+    "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "sourceCommits": [
+      "2e92957c8dc3d2dab505d5d125f506a360c6d817",
+      "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+      "e1f7a6d78bd0936f748991008c95081b13b79979",
+      "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+      "b2daf365e51d1c13f77c39a7336564f251b1694d",
+      "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+      "57af4c49e2ea1e292864c70809a89d954d7c681a",
+      "077d2b13a215144f905de5d5a43cfab9813f9bd4"
+    ],
+    "scope": [
+      "Retired editor views cannot republish their disposed model into Documents ownership.",
+      "Status UI samples current source/caret bounds before using strict Unicode and tab indices.",
+      "ExecutionCapture and RuntimeActivity preserve host timer receivers for default scheduling and cancellation.",
+      "Release13 edits exercise the actual hidden-input keymap and verify the resulting source exactly.",
+      "Release13 checks exact live Worker identities and public current owner bounds instead of historical creation totals."
+    ],
+    "tests": [
+      "tests/a24-editor-model-ownership.test.js",
+      "tests/a24-status-caret-ownership.test.js",
+      "tests/a19-execution-capture-timer-owner.test.js",
+      "tests/a19-runtime-activity-timer-owner.test.js",
+      "tests/browser_release13_test.py"
+    ],
+    "qualification": "Completed editor/status 43/43 and both-owner timer 34/34 Node26 scopes pass, with ordered check/build/clean checkout. Actual Release13 at 0bb2 passes all 16 checks with no page errors; only the browser fixture changed from qualified and built source 7d4. Exact histories remain in the linked evidence.",
+    "evidence": "planning/evidence/project18/evaluator-editor-runtime-corrections.json",
+    "publication": {
+      "pr": 4447,
+      "remote": "675e1f86ace7510a9d9744db3d88773a862d254c",
+      "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+      "base": "4d209fb03d43131fae53c0de3edc57627c239e50",
+      "requiredCore": {
+        "run": 37185578856,
+        "job": 111386673663,
+        "head": "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37185578856/job/111386673663",
+        "broadQualificationInferred": false
+      },
+      "manifest": "planning/evidence/project18/evaluator-editor-publication.json"
+    }
+  },
+  "aggregatePerformanceReview": {
+    "path": "planning/evidence/project18/evaluator-queue-performance-review.json",
+    "status": "Queue/source +11.528% median remains above the 5% review budget. No causal correction is established; no speedup or sign-off is claimed."
+  }
+}

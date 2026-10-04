@@ -1,0 +1,40 @@
+(node:6) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:21) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: one context retains independent compiler policy and explicit SDK warning defaults
+ok 1 - one context retains independent compiler policy and explicit SDK warning defaults
+  ---
+  duration_ms: 2.211853
+  type: 'test'
+  ...
+# Subtest: invalid compiler policy is diagnosed before constructing a compilation request
+ok 2 - invalid compiler policy is diagnosed before constructing a compilation request
+  ---
+  duration_ms: 0.597861
+  type: 'test'
+  ...
+# Subtest: launch profiles retain exact arguments, context and explicit environment precedence
+ok 3 - launch profiles retain exact arguments, context and explicit environment precedence
+  ---
+  duration_ms: 0.933507
+  type: 'test'
+  ...
+# Subtest: malformed and unsupported launch profiles remain explicit failures
+ok 4 - malformed and unsupported launch profiles remain explicit failures
+  ---
+  duration_ms: 0.624732
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 144.48715

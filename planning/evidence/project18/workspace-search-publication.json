@@ -1,0 +1,83 @@
+{
+  "name": "workspace-search",
+  "sourceOrigin": "843fc516e466e3571dfbe925eaa322ee1bf6cad3",
+  "qualificationSource": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+  "sourceHead": "91a1cba1a323d349f6e41c9302cd84620a91c370",
+  "sourceBase": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "sourceTree": "d0c76ed01df1264cba34dc079dcb5b484e08d0b5",
+  "branch": "codex/p18-workspace-search",
+  "baseBranch": "main",
+  "remoteCommit": "666ae106126846d2f4a90464570191cf22757a64",
+  "parents": [
+    "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a"
+  ],
+  "draft": true,
+  "stat": {
+    "files": 5,
+    "additions": 450,
+    "deletions": 1
+  },
+  "treeVerified": true,
+  "hostIntegrationGate": "Do not merge until root tools/core.js and actual Studio context/load getters integrate.",
+  "qualification": {
+    "node": "26.10.0",
+    "platform": "Linux x64",
+    "selectedPassed": 9,
+    "selectedFailed": 0,
+    "aggregate": {
+      "tests": 500,
+      "passed": 495,
+      "failed": 5
+    },
+    "receipt": "filesystem-host-qualification.json"
+  },
+  "pr": 3913,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/3913",
+  "parentVerified": true,
+  "branchVerified": true,
+  "prVerified": true,
+  "mergeableAtReadback": true,
+  "baseShaAtReadback": "0ebda80078bddd1d45f06b9ea1893cd452125c61",
+  "core": {
+    "runId": 37172993403,
+    "jobId": 111349624241,
+    "head": "666ae106126846d2f4a90464570191cf22757a64",
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172993403/job/111349624241",
+    "broadJobs": [
+      {
+        "name": "core-platforms",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "build",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "packages",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "native-il",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "native-msbuild",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "clr-wasm",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "ci-ok",
+        "conclusion": "skipped"
+      }
+    ],
+    "cancelledDuplicateRun": 37172990982
+  }
+}

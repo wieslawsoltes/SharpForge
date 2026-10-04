@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "owner": "workspace_inventory",
+  "scope": "Prepared Explorer source ownership, native Documents adoption, and the final native engine/docking facade extraction.",
+  "nativeEvidence": "native.json remains authoritative for the original native MSBuild scope and its platform qualification gaps.",
+  "source": {
+    "canonicalPorts": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "legacyComposition": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "originalExtraction": "905c0f3f4182f267c33110df765108d3eefd0653"
+  },
+  "counting": {
+    "originalNativeFeatureDrafts": 23,
+    "additionalPreparedPortFeatureDrafts": 3,
+    "additionalMechanicalCleanupDrafts": 1,
+    "additionalDependencyBranchesWithoutPR": 2,
+    "closedReferenceCorpus": "PR4181 is counted once by testing_workflows; delegated maintenance of older testing/runtime PRs adds no feature count."
+  },
+  "publications": [
+    {
+      "name": "explorer-prepared-journal",
+      "pr": 4340,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4340",
+      "branch": "codex/p18-explorer-prepared-journal",
+      "base_branch": "codex/p18-explorer-prepared-dependencies",
+      "remote": "53f06989dd0f30a40bbe676d5f2da69d37d4669e",
+      "source_head": "4e1c7dac94d10f08d1292e187535b0ceeff93b06",
+      "source_base": "8e008b601d39624c68552cb4fddde368ee484301",
+      "source_tree": "b133ee2c7884a939aed4397c6d4c542ea5bf3060",
+      "parents": [
+        "696223c7eab5974d9e19784b816abcb75a7cefd3"
+      ],
+      "product_source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "source_blobs": {
+        "apps/studio/explorer-records.js": "57b99edc58e1539ddf278368c97637bf493e8904",
+        "apps/studio/explorer-resource-errors.js": "9d8f944b566701805897e2ba7fa157c19944b015",
+        "apps/studio/explorer-resource-transaction.js": "e9eea4f79e59f10e84f591736ca5d3c39abee3f6",
+        "apps/studio/explorer/PREPARED_OPERATIONS.md": "3641db4d7d5ecc494d7c693009ee982362973cf9",
+        "apps/studio/explorer/command-table.js": "208aacb8d2779aea14c03649c7eb88086e9c3784",
+        "apps/studio/explorer/commands.js": "880a80e0402aa19e1cb88fa6ff0280378e6bdc71",
+        "apps/studio/explorer/menu.js": "b74ff51f160908caa79d7c179ac9be354c2f86f4",
+        "apps/studio/explorer/operation-history.js": "c253dc8e6ed4acbd50b42c75b628113cf1844c34",
+        "apps/studio/explorer/prepared-operations.js": "a1af320c0d75c09771c9f59b12156aef68fb7836",
+        "apps/studio/explorer/source-admission.js": "86c192c70230839e4646a3b69839e00fd6c865fb",
+        "tests/a24-explorer-prepared-journal.test.js": "8d96ee1c782736484aa00ea914f5ee5674cabc83",
+        "tests/a24-explorer-resource-errors.test.js": "d474aaa8a9ddec23525c81fb3a8d4ef296976bbc"
+      },
+      "required_check": {
+        "id": 111370686890,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180074138/job/111370686890"
+      },
+      "workflow_history": [
+        {
+          "id": 37180074138,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180074138",
+          "head_sha": "53f06989dd0f30a40bbe676d5f2da69d37d4669e"
+        },
+        {
+          "id": 37180070600,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180070600",
+          "head_sha": "53f06989dd0f30a40bbe676d5f2da69d37d4669e"
+        },
+        {
+          "id": 37180061911,
+          "name": "Project 16 completed scope qualification",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180061911",
+          "head_sha": "53f06989dd0f30a40bbe676d5f2da69d37d4669e"
+        }
+      ]
+    },
+    {
+      "name": "explorer-prepared-import",
+      "pr": 4342,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4342",
+      "branch": "codex/p18-explorer-prepared-import",
+      "base_branch": "codex/p18-explorer-prepared-journal",
+      "remote": "06ed476b97c5d401055d766b593cfe3c48902e33",
+      "source_head": "bda9d3a3709f3568183107c3ea7db9229baace87",
+      "source_base": "4e1c7dac94d10f08d1292e187535b0ceeff93b06",
+      "source_tree": "3c2baa755f67b45c8f6e432e8d9b504959881c35",
+      "parents": [
+        "53f06989dd0f30a40bbe676d5f2da69d37d4669e"
+      ],
+      "product_source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "source_blobs": {
+        "apps/studio/explorer/create.js": "ee965f87309b9274d16d84040dab131c5fc8ccdd",
+        "apps/studio/explorer/existing-items.js": "4dfe3d593819297c1c4c327835fb9898c6036837"
+      },
+      "required_check": {
+        "id": 111371043189,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180194275/job/111371043189"
+      },
+      "workflow_history": [
+        {
+          "id": 37180194275,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180194275",
+          "head_sha": "06ed476b97c5d401055d766b593cfe3c48902e33"
+        },
+        {
+          "id": 37180192359,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180192359",
+          "head_sha": "06ed476b97c5d401055d766b593cfe3c48902e33"
+        },
+        {
+          "id": 37180190964,
+          "name": "Project 16 completed scope qualification",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180190964",
+          "head_sha": "06ed476b97c5d401055d766b593cfe3c48902e33"
+        }
+      ]
+    },
+    {
+      "name": "native-document-ownership",
+      "pr": 4364,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4364",
+      "branch": "codex/p18-native-document-ownership",
+      "base_branch": "codex/p18-native-document-dependencies",
+      "remote": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+      "source_head": "410ca1eec2d1c46b89f3d903e1a467d0135f89ba",
+      "source_base": "b7af56a3aeb32bf942d8d0eaf5b75c96ecb6fa61",
+      "source_tree": "b4a303b03f2a4a060c6cf2e7e69844a4a4816795",
+      "parents": [
+        "84416ebe02f6ab5e59b67ac4370e72e2f78e1265"
+      ],
+      "product_source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "source_blobs": {
+        "apps/studio/native-build/README.md": "7b093b5ff446d68cdf5d471713d60c4c0edcc39c",
+        "apps/studio/native-build/document-records.js": "8180ed4cf2ef2bb5083dbd656192b2d241f636d4",
+        "apps/studio/native-build/document-replacement.js": "d79d379eb0034e8dd2417256a8d6eb63f0b4bf85",
+        "apps/studio/native-build/explorer-refresh.js": "be38f99646aee28c0b2956aa0445724a055e37c0",
+        "apps/studio/native-build/workspace-state.js": "d2485a1598922a9dcf78ae453c376fda78e2d497",
+        "tests/a23-native-document-ownership.test.js": "84cac2f181888c738beb32229143d3d73834dafc"
+      },
+      "documentation_union": {
+        "path": "apps/studio/native-build/README.md",
+        "canonical_blob": "eb321a514d3f7fdb37e85690f7563338851bc90a",
+        "published_parent_blob": "eeecea0fe79ef0cfe163551e5f769e68dfba379d",
+        "result_blob": "7b093b5ff446d68cdf5d471713d60c4c0edcc39c",
+        "retained_section": "Native operation ownership, plus existing projection integration note"
+      },
+      "required_check": {
+        "id": 111372669187,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180752596/job/111372669187"
+      },
+      "workflow_history": [
+        {
+          "id": 37180752596,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180752596",
+          "head_sha": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b"
+        },
+        {
+          "id": 37180750569,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180750569",
+          "head_sha": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b"
+        },
+        {
+          "id": 37180748886,
+          "name": "Project 16 completed scope qualification",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180748886",
+          "head_sha": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b"
+        }
+      ]
+    },
+    {
+      "name": "native-host-facades",
+      "kind": "maintenance follow-up",
+      "pr": 4378,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4378",
+      "branch": "codex/p18-native-host-facades",
+      "base_branch": "codex/p18-native-registration",
+      "remote": "30da8452fcf10107d742a12f3f5b3359b4765fc6",
+      "source_head": "556f44c7c8af52583db87991f030b77349e2b785",
+      "source_base": "c92984e79368d4f1d863a8e50a6e0906d3ba3b54",
+      "source_tree": "a2bce1cf8b1b39d720892657c235a0cdb072cd96",
+      "parents": [
+        "c92984e79368d4f1d863a8e50a6e0906d3ba3b54"
+      ],
+      "product_source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "source_blobs": {
+        "apps/studio/docking-workspace.js": "c9dac08ec5dabddb3395ef91f6e230b82693bff7",
+        "apps/studio/native-build/docking.js": "0044148a9516b5b8bf2b5c50f9a1bbe2e10fb02f",
+        "packages/msbuild/src/engine.js": "c8057e5af18285051dc797d9907aa7b9704c2028",
+        "packages/msbuild/src/native-engine.js": "4423dbc7f9a6c75cc3f23dad38b0804e38449c51"
+      },
+      "required_check": {
+        "id": 111374097290,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181237686/job/111374097290"
+      },
+      "workflow_history": [
+        {
+          "id": 37181237686,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181237686",
+          "head_sha": "30da8452fcf10107d742a12f3f5b3359b4765fc6"
+        },
+        {
+          "id": 37181235222,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181235222",
+          "head_sha": "30da8452fcf10107d742a12f3f5b3359b4765fc6"
+        },
+        {
+          "id": 37181233845,
+          "name": "Project 16 completed scope qualification",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181233845",
+          "head_sha": "30da8452fcf10107d742a12f3f5b3359b4765fc6"
+        }
+      ]
+    }
+  ],
+  "dependencyJoins": [
+    {
+      "name": "explorer-prepared-dependencies",
+      "branch": "codex/p18-explorer-prepared-dependencies",
+      "remote": "696223c7eab5974d9e19784b816abcb75a7cefd3",
+      "source_head": "8e008b601d39624c68552cb4fddde368ee484301",
+      "source_tree": "3cb06e960e318774641e019e28330e009e0addf7",
+      "parents": [
+        "cc9eed7e2430489688865b27da33a2dd031755b6",
+        "0f5515a30cd9aca987e088c55f5d7bbaa1e10e7c"
+      ]
+    },
+    {
+      "name": "native-document-dependencies",
+      "branch": "codex/p18-native-document-dependencies",
+      "remote": "84416ebe02f6ab5e59b67ac4370e72e2f78e1265",
+      "source_head": "b7af56a3aeb32bf942d8d0eaf5b75c96ecb6fa61",
+      "source_tree": "ddfb03022022cbc7c0874dbdbf3d2ea95afb0228",
+      "parents": [
+        "87af20b3951ee05be79357190e1babb74dff3e87",
+        "f1431852ba77cceee88dc3bf6409630a01c9571b",
+        "53f06989dd0f30a40bbe676d5f2da69d37d4669e"
+      ]
+    }
+  ],
+  "documentationHandoff": {
+    "path": "apps/studio/native-build/README.md",
+    "sourceCommit": "410ca1eec2d1c46b89f3d903e1a467d0135f89ba",
+    "sha256": "4da8f2a94b24be16cad63df866173e21cfef89da81206ac0d0819f1f5a1aa763",
+    "gitBlob": "7b093b5ff446d68cdf5d471713d60c4c0edcc39c",
+    "rule": "Exact two-source union: canonical Documents/refresh contract plus the actual native-controller parent operation ownership/cancellation/disposal section; root copies this document only."
+  },
+  "legacyReview": {
+    "actualPinnedMainGrowth": 0,
+    "strictInheritedFindings": 265,
+    "newOrWorsenedFindings": 0,
+    "baselineChanged": false,
+    "check": "passed in root completed legacy batch",
+    "build": "passed in root completed legacy batch",
+    "checkout": "clean in root completed legacy batch"
+  },
+  "limits": [
+    "The initial failed run and first affected replay are preserved; no failed or skipped platform cell is relabeled passing.",
+    "These projections triggered only their automatic core gates; no local tests, native SDK matrix, browser picker test or manual CI dispatch was repeated.",
+    "Original native Windows/macOS/arm64, reusable-worker and external-package qualification limits remain as recorded in native.json.",
+    "Protected Studio entry integration belongs to root and is separate from these exact source/helper projections."
+  ],
+  "qualificationEvidence": "native-prepared-qualification.json"
+}

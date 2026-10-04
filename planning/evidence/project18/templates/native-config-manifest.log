@@ -1,0 +1,17 @@
+TAP version 13
+# Subtest: Generated configuration files are consumed by their native SDK and Git commands
+ok 1 - Generated configuration files are consumed by their native SDK and Git commands
+  ---
+  duration_ms: 5656.597673
+  type: 'test'
+  ...
+# {"target":"native-dotnet","sdk":"10.0.401","commands":["dotnet","dotnet nuget","dotnet tool","dotnet sln","NativeMSBuild","dotnet run","git check-ignore","git check-attr"],"windowsManifest":"Requires Windows qualification"}
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6232.724101

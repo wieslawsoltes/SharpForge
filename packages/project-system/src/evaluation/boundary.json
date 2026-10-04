@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "engine": "portable-project-evaluator",
+  "reference": "Installed native MSBuild; version recorded by the differential harness",
+  "features": {
+    "property-expansion": {
+      "status": "supported",
+      "tests": [
+        "project-evaluation-expressions",
+        "project-evaluation-native-parity"
+      ]
+    },
+    "conditions": {
+      "status": "supported",
+      "tests": [
+        "project-msbuild-evaluation",
+        "project-evaluation-expressions"
+      ]
+    },
+    "string-property-functions": {
+      "status": "approximated",
+      "limitations": [
+        "Ordinal and invariant comparisons; process-locale overloads rejected",
+        "Split overloads with a truncating count rejected"
+      ]
+    },
+    "static-property-functions": {
+      "status": "approximated",
+      "limitations": [
+        "Only registered static members",
+        "No reflection, host files, registry or process environment",
+        "Explicit clock and GUID providers",
+        "Regex excludes backreferences, special groups and quantified groups",
+        "DateTime formatting limited to ISO and yyyy-MM-dd",
+        "Integer conversions limited to safe numeric precision"
+      ]
+    },
+    "msbuild-intrinsics": {
+      "status": "approximated",
+      "limitations": [
+        "Virtual-root path semantics",
+        "StableStringHash Legacy and 32-bit FNV modes",
+        "Explicit portable feature wave"
+      ]
+    },
+    "generic-items": {
+      "status": "supported",
+      "tests": [
+        "project-evaluation-items",
+        "project-evaluation-native-parity"
+      ]
+    },
+    "item-metadata": {
+      "status": "supported",
+      "limitations": [
+        "File timestamps are not synthesized"
+      ]
+    },
+    "sdk-models": {
+      "status": "approximated",
+      "limitations": [
+        "Bundled .NET SDK default property/item model",
+        "Web, Worker, Razor and MSTest identity/default markers; their build toolchains are not executed",
+        "Requested SDK versions recorded; installed SDK resolution is native-only"
+      ]
+    },
+    "local-imports": {
+      "status": "supported",
+      "tests": [
+        "project-msbuild-evaluation",
+        "project-evaluation-sdk"
+      ]
+    },
+    "compiler-options": {
+      "status": "supported",
+      "tests": [
+        "project-evaluation-sdk",
+        "release06-project-extensions",
+        "project-runtime14"
+      ]
+    },
+    "assembly-build-plan": {
+      "status": "supported",
+      "limitations": [
+        "Execution and metadata linking are supplied by the compilation host"
+      ]
+    },
+    "resources": {
+      "status": "approximated",
+      "limitations": [
+        "Strings, numeric primitives, Boolean, Char, byte payloads and virtual file references",
+        "Serialized objects, BinaryFormatter, arbitrary resource types and custom encodings require native tools",
+        "Dependent-source naming recognizes ordinary namespace/type declarations"
+      ]
+    },
+    "output-layout": {
+      "status": "supported",
+      "tests": [
+        "project-evaluation-build"
+      ]
+    },
+    "launch-settings": {
+      "status": "supported",
+      "limitations": [
+        "Project and Executable profiles; host execution remains permission-controlled"
+      ]
+    },
+    "target-graph": {
+      "status": "supported",
+      "tests": [
+        "project-evaluation-targets"
+      ]
+    },
+    "portable-tasks": {
+      "status": "approximated",
+      "limitations": [
+        "Registered virtual tasks only",
+        "No native Csc, Exec, custom task assemblies or host file writes",
+        "Inputs/Outputs are retained; native timestamp-based incremental target skipping is not emulated",
+        "Task outputs and generated files are committed to virtual state only on success"
+      ]
+    },
+    "path-index": {
+      "status": "supported",
+      "tests": [
+        "project-evaluation-expressions"
+      ]
+    },
+    "native-task-execution": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1004",
+      "fixtures": [
+        "native-exec",
+        "native-csc"
+      ],
+      "reason": "Exec and native compiler tasks execute only in a trusted native host."
+    },
+    "external-task-assembly": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1004",
+      "fixtures": [
+        "custom-using-task"
+      ],
+      "reason": "Loading arbitrary MSBuild task assemblies requires native MSBuild."
+    },
+    "unregistered-sdk": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1004",
+      "fixtures": [
+        "unknown-sdk"
+      ],
+      "reason": "SDKs outside the registered portable SDK models require native resolution."
+    },
+    "binary-reference-linking": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1101",
+      "fixtures": [
+        "binary-reference"
+      ],
+      "reason": "Binary references are retained for inspection; source compilation cannot link arbitrary CLR assemblies."
+    },
+    "nuget-restore-linking": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1102",
+      "fixtures": [
+        "package-reference"
+      ],
+      "reason": "NuGet restore and linking package assemblies require native tools."
+    },
+    "analyzer-execution": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1103",
+      "fixtures": [
+        "analyzer"
+      ],
+      "reason": "Roslyn analyzer assemblies are not executed in the portable evaluator."
+    },
+    "serialized-resources": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1501",
+      "fixtures": [
+        "serialized-resx"
+      ],
+      "reason": "Serialized/custom resource objects require the native resource toolchain."
+    },
+    "host-property-functions": {
+      "status": "native-only",
+      "diagnosticCode": "MSB4185",
+      "fixtures": [
+        "host-file-function"
+      ],
+      "reason": "Property functions cannot access host files, registry, processes or arbitrary reflection."
+    },
+    "foreign-language-compilation": {
+      "status": "native-only",
+      "diagnosticCode": "SFP1403",
+      "fixtures": [
+        "foreign-language-build"
+      ],
+      "reason": "Foreign project records are inspectable but a portable compilation request is blocked."
+    }
+  },
+  "schema": {
+    "statuses": [
+      "supported",
+      "approximated",
+      "native-only"
+    ],
+    "nativeOnlyRequires": [
+      "diagnosticCode",
+      "fixtures"
+    ],
+    "fixtureCorpus": "tests/msbuild-differential/corpus.js"
+  }
+}

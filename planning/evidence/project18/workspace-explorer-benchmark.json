@@ -1,0 +1,24 @@
+{
+  "node": "v24.19.0",
+  "platform": "linux",
+  "architecture": "x64",
+  "reference": "2706a82",
+  "files": 10000,
+  "warmSamples": 20,
+  "before": {
+    "coldMs": 126.94394300000002,
+    "medianMs": 109.77378599999997,
+    "p95Ms": 149.80993599999988,
+    "p99Ms": 164.510401,
+    "observedHeapDeltaBytes": 32696328,
+    "nodes": 10206
+  },
+  "after": {
+    "coldMs": 137.14394200000015,
+    "medianMs": 86.9639930000003,
+    "p95Ms": 131.49452599999995,
+    "p99Ms": 136.19797400000016,
+    "observedHeapDeltaBytes": 69643880,
+    "nodes": 10231
+  }
+}

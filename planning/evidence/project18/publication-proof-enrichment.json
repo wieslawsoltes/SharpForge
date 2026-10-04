@@ -1,0 +1,25 @@
+{
+  "rows": 159,
+  "completeRows": 159,
+  "incompletePRs": [],
+  "failures": [
+    {
+      "pr": 3837,
+      "kind": "historical-or-stale-parent-field",
+      "recorded": [
+        "bc888b66d2838bc69cce5e93b0f01a38d10f68ca",
+        "c9c6e57230a42ec21f56ab1c9feea396503ef687"
+      ],
+      "actual": [
+        "9c5273b53734d5646fa9a958f0a03668a0050f3a"
+      ],
+      "local": "3e8315ff7b095faf0139c73fcb97233198cdc43a",
+      "receipt": {
+        "path": "/workspace/scratch/3e16369943fd/p18-evaluator-publication/published/cil-graph.json",
+        "sha256": "23e6308c895fbf1c48a40782b37897680c51e1db9104cf9d76ea8d5179edd0d5",
+        "pointer": "$"
+      },
+      "interpretation": "Actual remote commit parents are authoritative; local source parent identities are preserved separately."
+    }
+  ]
+}

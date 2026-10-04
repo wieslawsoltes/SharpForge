@@ -1,0 +1,87 @@
+TAP version 13
+# Verbatim selected subtest blocks; original TAP numbering retained.
+# Complete source log SHA256: 0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da
+# Subtest: direct and toolbar navigation share queued lazy admission and preserve view locations
+ok 1395 - direct and toolbar navigation share queued lazy admission and preserve view locations
+  ---
+  duration_ms: 4.837543
+  type: 'test'
+  ...
+# Subtest: failed and unavailable admission leave the history index intact and release the navigation queue
+ok 1396 - failed and unavailable admission leave the history index intact and release the navigation queue
+  ---
+  duration_ms: 2.250292
+  type: 'test'
+  ...
+# Subtest: clearing a workspace cancels in-flight source preparation before history or tabs can be adopted
+ok 1397 - clearing a workspace cancels in-flight source preparation before history or tabs can be adopted
+  ---
+  duration_ms: 0.777062
+  type: 'test'
+  ...
+# Subtest: a new foreground location during lazy preparation is preserved instead of replaying an obsolete target
+ok 1398 - a new foreground location during lazy preparation is preserved instead of replaying an obsolete target
+  ---
+  duration_ms: 0.648287
+  type: 'test'
+  ...
+# Subtest: clearing after preparation fences a delayed document open before tab admission and focus
+ok 1399 - clearing after preparation fences a delayed document open before tab admission and focus
+  ---
+  duration_ms: 0.89571
+  type: 'test'
+  ...
+# Subtest: foreground history supersedes a replay waiting for a document
+ok 1400 - foreground history supersedes a replay waiting for a document
+  ---
+  duration_ms: 1.548424
+  type: 'test'
+  ...
+# Subtest: a later queued tab request supersedes navigation without an intervening history update
+ok 1401 - a later queued tab request supersedes navigation without an intervening history update
+  ---
+  duration_ms: 0.615518
+  type: 'test'
+  ...
+# Subtest: the admission token still fences a newer request during the promise handoff
+ok 1402 - the admission token still fences a newer request during the promise handoff
+  ---
+  duration_ms: 0.742029
+  type: 'test'
+  ...
+# Subtest: activation away and back still supersedes an older delayed navigation
+ok 1403 - activation away and back still supersedes an older delayed navigation
+  ---
+  duration_ms: 0.648657
+  type: 'test'
+  ...
+# Subtest: disposing preparation while its tab request is queued prevents the document open itself
+ok 1404 - disposing preparation while its tab request is queued prevents the document open itself
+  ---
+  duration_ms: 0.63731
+  type: 'test'
+  ...
+# Subtest: an old cancelled replay cannot release a newer replay owner
+ok 1405 - an old cancelled replay cannot release a newer replay owner
+  ---
+  duration_ms: 0.704993
+  type: 'test'
+  ...
+# Subtest: Studio ZIP selection streams bounded slices and retains settings on the original load ticket
+ok 1424 - Studio ZIP selection streams bounded slices and retains settings on the original load ticket
+  ---
+  duration_ms: 9.695515
+  type: 'test'
+  ...
+# Subtest: ZIP cancellation and source changes during preparation cannot adopt a workspace
+ok 1425 - ZIP cancellation and source changes during preparation cannot adopt a workspace
+  ---
+  duration_ms: 6.477762
+  type: 'test'
+  ...
+# Subtest: Studio rejects oversized ZIP input before any read or document adoption
+ok 1426 - Studio rejects oversized ZIP input before any read or document adoption
+  ---
+  duration_ms: 0.645083
+  type: 'test'
+  ...

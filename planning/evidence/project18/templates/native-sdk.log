@@ -1,0 +1,36 @@
+✔ Native template builds and executes where applicable: console (3630.918785ms)
+ℹ {"template":"console","target":"native-dotnet","sdk":"10.0.401","build":"NativeMSBuild","platform":"linux"}
+✔ Native template builds and executes where applicable: console-async (3551.583745ms)
+ℹ {"template":"console-async","target":"native-dotnet","sdk":"10.0.401","build":"NativeMSBuild","platform":"linux"}
+✔ Native template builds and executes where applicable: class-library (3870.919064ms)
+ℹ {"template":"class-library","target":"native-dotnet","sdk":"10.0.401","build":"NativeMSBuild","platform":"linux"}
+✔ Native template builds and executes where applicable: empty-project (2927.28602ms)
+ℹ {"template":"empty-project","target":"native-dotnet","sdk":"10.0.401","build":"NativeMSBuild","platform":"linux"}
+✔ Native template builds and executes where applicable: test-console (3670.034089ms)
+ℹ {"template":"test-console","target":"native-dotnet","sdk":"10.0.401","build":"NativeMSBuild","platform":"linux"}
+✔ Native template builds and executes where applicable: console-library-solution (5436.427088ms)
+ℹ {"template":"console-library-solution","target":"native-dotnet","sdk":"10.0.401","build":"NativeMSBuild","platform":"linux"}
+✔ All package-free core C# items compile together in a native console with file-scoped namespaces (3487.145375ms)
+ℹ {"target":"native-dotnet","templates":["interface","record","struct","enum","delegate","exception","attribute","extension-methods","top-level-program"],"build":"NativeMSBuild","platform":"linux"}
+✔ Generated configuration files are consumed by their native SDK and Git commands (4686.799029ms)
+ℹ {"target":"native-dotnet","sdk":"10.0.401","commands":["dotnet","dotnet nuget","dotnet tool","dotnet sln","NativeMSBuild","dotnet run","git check-ignore","git check-attr"],"windowsManifest":"Requires Windows qualification"}
+✔ SDK console and classlib configurations expose actual typed defaults and bindings (256.767444ms)
+ℹ {"reference":"Microsoft .NET SDK","version":"10.0.401","packageName":"microsoft.dotnet.common.projecttemplates.10.0.10.0.401.nupkg","targets":["console","classlib"]}
+✔ SDK template byte parity and NativeMSBuild: ConsoleDefault (4499.674153ms)
+ℹ {"reference":"dotnet new","sdk":"10.0.401","scenario":"ConsoleDefault","byteIdentical":true,"build":"NativeMSBuild","platform":"linux"}
+✔ SDK template byte parity and NativeMSBuild: ConsoleMain (4906.770163ms)
+ℹ {"reference":"dotnet new","sdk":"10.0.401","scenario":"ConsoleMain","byteIdentical":true,"build":"NativeMSBuild","platform":"linux"}
+✔ SDK template byte parity and NativeMSBuild: ConsoleOldLanguage (4752.961859ms)
+ℹ {"reference":"dotnet new","sdk":"10.0.401","scenario":"ConsoleOldLanguage","byteIdentical":true,"build":"NativeMSBuild","platform":"linux"}
+✔ SDK template byte parity and NativeMSBuild: LibraryDefault (3270.817709ms)
+ℹ {"reference":"dotnet new","sdk":"10.0.401","scenario":"LibraryDefault","byteIdentical":true,"build":"NativeMSBuild","platform":"linux"}
+✔ SDK template byte parity and NativeMSBuild: Console-Hyphen (4315.805708ms)
+ℹ {"reference":"dotnet new","sdk":"10.0.401","scenario":"Console-Hyphen","byteIdentical":true,"build":"NativeMSBuild","platform":"linux"}
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31395.787107

@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "scope": "Exact parent-run qualification history for native-prepared-source.json",
+  "runs": [
+    {
+      "name": "node26_initial",
+      "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "platform": "Linux x64",
+      "exitCode": 1,
+      "testFileCount": 227,
+      "summary": {
+        "tests": 1875,
+        "pass": 1809,
+        "fail": 66,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 218257.732019
+      },
+      "tap": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+      "tapSha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da",
+      "fullCommandReceipt": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/final-qualification.json",
+      "commandReceiptSha256": "953cd3dac0a8e90a4f6a2ec1c1f71a47bb2a4156982d03ce551fd534da1a69e0",
+      "argvPrefix": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap"
+      ],
+      "argvSha256": "cd622183dab8368b6da67acd08d707702d59a09a4cda05046f3c941c8f37a31a"
+    },
+    {
+      "name": "node26_size_correction",
+      "sourceCommit": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "platform": "Linux x64",
+      "exitCode": 1,
+      "testFileCount": 38,
+      "summary": {
+        "tests": 260,
+        "pass": 259,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 44778.565724
+      },
+      "tap": "/tmp/p18-final-qualification-logs/correction-7b087e0f/node26-correction-1.tap",
+      "tapSha256": "7c374995c2c6cea3dd359c65d5525a2753eb1ed2ab106359ad7f4bce1b00ef65",
+      "fullCommandReceipt": "/tmp/p18-final-qualification-logs/correction-7b087e0f/final-qualification.json",
+      "commandReceiptSha256": "6522b975df4483fb0b1f77518ba6338816a062d7280d05d0dd963de7e7ab0b5d",
+      "argvPrefix": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap"
+      ],
+      "argvSha256": "f2acce81dfb0e9af1941582b320267e47f144f62aa6ae0a4b6a5bf01fca1642b",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a19-document-disk-save.test.js",
+        "tests/a19-document-operation-state.test.js",
+        "tests/a19-document-snapshot-save.test.js",
+        "tests/a19-documents-state.test.js",
+        "tests/a19-explorer-resource-transaction.test.js",
+        "tests/a19-explorer-snapshots.test.js",
+        "tests/a19-prepared-documents.test.js",
+        "tests/a19-studio-diagnostic-producers.test.js",
+        "tests/a19-studio-save-ownership.test.js",
+        "tests/a19-studio-workspace-inputs.test.js",
+        "tests/a20-prepared-source-paths.test.js",
+        "tests/a20-prepared-source-workspace.test.js",
+        "tests/a20-studio-source-import.test.js",
+        "tests/a24-editor-lifecycle.test.js",
+        "tests/a24-explorer-history.test.js",
+        "tests/a24-explorer-operations.test.js",
+        "tests/a24-explorer-prepared-journal.test.js",
+        "tests/a24-peer-buffer-resolution.test.js",
+        "tests/a24-prepared-journal.test.js",
+        "tests/a24-prepared-persistence.test.js",
+        "tests/a24-prepared-recovery.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-recovery-bootstrap.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/a24-studio-save-composition.test.js",
+        "tests/a24-studio-session-composition.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-workbench-feature-callbacks.test.js",
+        "tests/a24-workbench-project-composition.test.js",
+        "tests/a24-workbench-workspace-ports.test.js",
+        "tests/a24-workspace-import-regression.test.js",
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-workspace-session.test.js",
+        "tests/project-core-contract.test.js",
+        "tests/project-evaluation-build-stages.test.js",
+        "tests/project-evaluation-contexts.test.js",
+        "tests/project-resource-contract.test.js"
+      ]
+    },
+    {
+      "name": "node26_resource_correction",
+      "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "platform": "Linux x64",
+      "exitCode": 0,
+      "testFileCount": 8,
+      "summary": {
+        "tests": 52,
+        "pass": 52,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 17652.805843
+      },
+      "tap": "/tmp/p18-final-qualification-logs/correction-5269d397/node26-correction-2.tap",
+      "tapSha256": "c00c272855ec6af0a56e4e0967db7014dca9f9b13110fa12a8baa7937bfc22ad",
+      "fullCommandReceipt": "/tmp/p18-final-qualification-logs/correction-5269d397/final-qualification.json",
+      "commandReceiptSha256": "58d447d8a80ca39a2498a96338a2a3bd715ba14ecaf56a2c7605a1eb21b1acc8",
+      "argvPrefix": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap"
+      ],
+      "argvSha256": "2eac1d0f5e5656487768970521d7870f987139c5b8ab6f9a00327b17f1f14302",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-explorer-resource-transaction.test.js",
+        "tests/a19-explorer-snapshots.test.js",
+        "tests/a24-explorer-history.test.js",
+        "tests/a24-explorer-operations.test.js",
+        "tests/a24-explorer-prepared-journal.test.js",
+        "tests/a24-explorer-resource-errors.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-type-rename.test.js"
+      ]
+    },
+    {
+      "name": "node22_complete",
+      "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "toolchain": {
+        "node": "v22.23.3",
+        "npm": "10.9.9"
+      },
+      "platform": "Linux x64",
+      "exitCode": 0,
+      "testFileCount": 228,
+      "summary": {
+        "tests": 1877,
+        "pass": 1877,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 241274.666862
+      },
+      "tap": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+      "tapSha256": "826227b2a62d971fc68a371e20f79c7514e37964b0b4fca74841a0c3bd25750a",
+      "fullCommandReceipt": "/tmp/p18-final-qualification-logs/node22-5269d397/final-qualification.json",
+      "commandReceiptSha256": "6eb427fd263afdb741f4697a05994c171d0ebf20a8a5a50eef78ad55601bcee1",
+      "argvPrefix": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap"
+      ],
+      "argvSha256": "7b3a0576e01e38266e6595e25c9a5b548b7531665cb106ac352f4f0c08ab49c8"
+    },
+    {
+      "name": "node26_legacy",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "platform": "Linux x64",
+      "exitCode": 0,
+      "testFileCount": 18,
+      "summary": {
+        "tests": 382,
+        "pass": 382,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 12154.829763
+      },
+      "tap": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+      "tapSha256": "3359169188362cd0c11cbcd15fbe9278ce3e8780bf108d73b622b7c64c2f4ca4",
+      "fullCommandReceipt": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/final-qualification.json",
+      "commandReceiptSha256": "09c66cfb0602aeffabf8096fcabfe76b190b5f83ea7e36bc5fd3adee6d15bf96",
+      "argvPrefix": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap"
+      ],
+      "argvSha256": "1ef3590218d623a4b314009cf9dd97afb49499c1f0f7de8fda802ae1f3cf4571",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/a20-disk-save-cancellation.test.js",
+        "tests/a20-large-file-disk.test.js",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-metadata-inspection.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a24-explorer-xml-regression.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/cil.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/msbuild-native.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/project-system.test.js"
+      ]
+    }
+  ]
+}

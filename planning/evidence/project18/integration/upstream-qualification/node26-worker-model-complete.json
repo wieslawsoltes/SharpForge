@@ -1,0 +1,56 @@
+{
+  "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+  "node": "v26.10.0",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a23-worker-emission-cache.test.js",
+    "tests/a23-project-plan-artifacts.test.js",
+    "tests/a23-project-build.test.js",
+    "tests/a23-project-build-order.test.js",
+    "tests/a23-project-target-lifecycle.test.js",
+    "tests/a23-project-artifact-cache.test.js",
+    "tests/a23-project-target-native.test.js",
+    "tests/a24-folder-compilation.test.js",
+    "tests/a23-cil-project-profile.test.js",
+    "tests/a23-cil-project-graph-contract.test.js",
+    "tests/a23-test-symbol-contract.test.js",
+    "tests/a23-test-runtime-contract.test.js",
+    "tests/a23-native-workspace-state.test.js",
+    "tests/a23-native-context-ui-model.test.js",
+    "tests/a23-native-reference-metadata.test.js",
+    "tests/a23-native-profile-ui-model.test.js",
+    "tests/a23-source-emission-model.test.js",
+    "tests/a23-project-reference-emission.test.js",
+    "tests/a23-project-reference-binding.test.js",
+    "tests/a23-member-definitions.test.js",
+    "tests/a23-upstream-emission-composition.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T02:30:54.996103+00:00",
+  "log": "node26-worker-model-complete.tap",
+  "diskPreflight": {
+    "actualFreeBytes": 664993792,
+    "minimumFreeBytes": 536870912
+  },
+  "exitCode": 1,
+  "completedAt": "2026-10-04T02:31:13.528581+00:00",
+  "summary": {
+    "tests": 96,
+    "suites": 0,
+    "pass": 95,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

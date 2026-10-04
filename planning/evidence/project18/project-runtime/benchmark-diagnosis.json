@@ -1,0 +1,193 @@
+{
+  "format": "SharpForge.ProjectRuntimePerformanceDiagnosis/1",
+  "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+  "baselineCommit": "2e700ad86970548dc8f476598b36cdae610093a1",
+  "timingBoundary": "The unchanged benchmark compiles each workload before its VM loop. Each VM constructor also finishes before performance.now(); the measured region is vm.run().",
+  "metadataInspection": {
+    "runtimeExecuted": false,
+    "node": "v22.23.3",
+    "argvTemplate": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "planning/evidence/project18/project-runtime/inspect-benchmark.mjs",
+      "<worktree>"
+    ],
+    "baselineArtifact": "benchmark-shape-baseline.json",
+    "finalArtifact": "benchmark-shape-final.json",
+    "comparisons": [
+      {
+        "workload": "dictionary",
+        "sourceInstructionsIdentical": true,
+        "cilInstructionsIdentical": true,
+        "propertyRows": [
+          0,
+          0
+        ],
+        "methodSemanticsRows": [
+          0,
+          0
+        ],
+        "finalExternalReferences": false,
+        "finalQualifiedSourceTypes": 0,
+        "peBytes": [
+          5632,
+          6144
+        ],
+        "debugBytes": [
+          3363,
+          3535
+        ]
+      },
+      {
+        "workload": "list",
+        "sourceInstructionsIdentical": true,
+        "cilInstructionsIdentical": true,
+        "propertyRows": [
+          0,
+          0
+        ],
+        "methodSemanticsRows": [
+          0,
+          0
+        ],
+        "finalExternalReferences": false,
+        "finalQualifiedSourceTypes": 0,
+        "peBytes": [
+          6144,
+          6656
+        ],
+        "debugBytes": [
+          3771,
+          3943
+        ]
+      },
+      {
+        "workload": "queue",
+        "sourceInstructionsIdentical": true,
+        "cilInstructionsIdentical": true,
+        "propertyRows": [
+          0,
+          0
+        ],
+        "methodSemanticsRows": [
+          0,
+          0
+        ],
+        "finalExternalReferences": false,
+        "finalQualifiedSourceTypes": 0,
+        "peBytes": [
+          5120,
+          5120
+        ],
+        "debugBytes": [
+          2754,
+          2926
+        ]
+      },
+      {
+        "workload": "builder",
+        "sourceInstructionsIdentical": true,
+        "cilInstructionsIdentical": true,
+        "propertyRows": [
+          0,
+          0
+        ],
+        "methodSemanticsRows": [
+          0,
+          0
+        ],
+        "finalExternalReferences": false,
+        "finalQualifiedSourceTypes": 0,
+        "peBytes": [
+          4096,
+          4608
+        ],
+        "debugBytes": [
+          2024,
+          2196
+        ]
+      }
+    ],
+    "comparisonLevel": "Raw source instruction vectors and decoded CIL opcode/operand sequences; method names, owners and local/handler counts. This does not claim whole-PE or complete metadata/signature identity.",
+    "executedArgv": [
+      [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "/workspace/scratch/3e16369943fd/p18-runtime-benchmark-shape.mjs",
+        "/workspace/scratch/3e16369943fd/p18-runtime-baseline"
+      ],
+      [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "/workspace/scratch/3e16369943fd/p18-runtime-benchmark-shape.mjs",
+        "/workspace/scratch/3e16369943fd/p18-tests"
+      ]
+    ]
+  },
+  "perPairMediansForBudgetRows": [
+    {
+      "workload": "dictionary",
+      "engine": "source",
+      "pair": 1,
+      "baselineMedianMs": 33.06734549999999,
+      "finalMedianMs": 32.929034,
+      "medianChangePercent": -0.41827215916072635
+    },
+    {
+      "workload": "dictionary",
+      "engine": "source",
+      "pair": 2,
+      "baselineMedianMs": 28.040296000000012,
+      "finalMedianMs": 29.409110500000054,
+      "medianChangePercent": 4.881597897540169
+    },
+    {
+      "workload": "list",
+      "engine": "source",
+      "pair": 1,
+      "baselineMedianMs": 29.7190260000001,
+      "finalMedianMs": 35.50822549999998,
+      "medianChangePercent": 19.479775346607454
+    },
+    {
+      "workload": "list",
+      "engine": "source",
+      "pair": 2,
+      "baselineMedianMs": 31.430780000000027,
+      "finalMedianMs": 29.014790500000004,
+      "medianChangePercent": -7.686699152868693
+    },
+    {
+      "workload": "builder",
+      "engine": "cil",
+      "pair": 1,
+      "baselineMedianMs": 45.573262500000055,
+      "finalMedianMs": 69.49536200000011,
+      "medianChangePercent": 52.49152285290093
+    },
+    {
+      "workload": "builder",
+      "engine": "cil",
+      "pair": 2,
+      "baselineMedianMs": 49.00934949999987,
+      "finalMedianMs": 59.32309200000009,
+      "medianChangePercent": 21.044438673890674
+    }
+  ],
+  "staticFindings": [
+    "The source and direct-CIL dispatcher files, direct call/intrinsic handlers and ordinary AssemblyInspector are unchanged from the baseline.",
+    "The standalone benchmark instantiates neither loadProjectAssembly/createProjectAssemblyInspector nor Studio worker/debugger navigation helpers.",
+    "All four source method streams and CIL instruction operands and local/handler counts are identical between the inspected trees; no new property tables, external references or qualified source types are present.",
+    "Canonical member-profile metadata adds 172 bytes to each #SF stream. PE alignment adds 512 bytes to dictionary/list/builder; the 4096-byte builder PE becomes 4608 bytes (+12.5%). Emission and constructor parsing/verification are outside the timed interval.",
+    "MethodTableRegistry adds two identity fields during table materialization and passes its nullable registered-name index to normalization. The trie is allocated only for assembly-qualified definitions. Existing tables, descriptor indexes and instruction dispatch caches remain; no per-instruction graph map or closure is introduced."
+  ],
+  "conclusion": "No newly executed graph/property/debug-provenance preparation was found in the timed standalone workloads. Source dictionary/list per-pair directions are inconsistent; CIL StringBuilder is slower in both pairs. These facts do not establish that infrastructure explains the regression. Causality among normalization/object-layout effects and shared-process resource pressure remains unresolved; no speculative runtime change was made.",
+  "remainingReview": [
+    "Three pooled-median rows exceed the 5% contribution budget. Preserve the raw/per-pair results for a quiet-machine causal profile and explicit PR performance review.",
+    "The small builder fixture PE exceeds 10% byte growth because required canonical member-profile metadata crosses a 512-byte PE alignment boundary; this is not a measured Studio bundle-size change.",
+    "The third alternating pair is incomplete: the final process never launched after the disk preflight failed. No completed benchmark was repeated."
+  ]
+}

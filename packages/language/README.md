@@ -2,6 +2,12 @@
 
 Reusable diagnostics, completion, navigation, rename, symbols and classification.
 
+When a workspace supplies `compilationOptions.references`, each `LanguageService` owns a cached compiler metadata query session.
+Completion and hover use accessible imported members, and language diagnostics come from semantic binding independently of executable
+lowering. Imported definitions have no editable source location. Replacing references discards the decoded session; source revisions and
+compilation-option changes invalidate source binding while retaining those assemblies. Native context callers must supply the exact generated
+and user documents, options and reference bytes for the selected context before querying the service.
+
 Version 0.9.0 · MIT · ES modules.
 
 This package is part of SharpForge, an executable C# subset toolchain. It is not full C#/CLR/Visual Studio conformance. The source release includes architecture, API examples, compatibility boundaries and tests.
@@ -16,6 +22,13 @@ Install its declared sibling packages together. npm publication is not part of t
 
 This package participates in Portable PDB symbols, cooperative async/logical-thread execution, managed Hot Reload, explicit evaluation, guarded instruction relocation and the code-first WinUI web profile. See the source distribution `docs/advanced-debugging-winui.md` for exact semantic limits; no native CLR/WinRT or full Visual Studio compatibility is implied.
 
+## Semantic type rename
+
+`LanguageService.prepareTypeRename(uri, offset, newName, options)` returns a preview with `available`, versioned `edits`
+and complete source `documents` snapshots. Pass `{name:'Original'}` with a null offset to select a declaration by file
+and name. No files change during preparation. `rename()` also supports type declarations through this guarded preview.
+An unavailable preview includes a stable diagnostic and visible reason; it never returns a partial type rename.
+See `packages/compiler/TYPE_RENAME.md` for the exact binding coverage, budgets and remaining reference-source limits.
 ## Editor provider additions
 
 `LanguageService.inlayHints(uri, {start = 0, end = source.length} = {})` returns

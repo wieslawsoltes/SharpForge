@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "status": "read-only-exact-final-child-and-parent-closure-no-main-refresh",
+  "observedAt": "2026-10-04T07:26:26.671Z",
+  "records": [
+    {
+      "requestUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+      "body": {
+        "sha": "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+        "node_id": "C_kwDOU59Ms9oAKDBhMjIwNTk1NGZmMjAwMWE4YWE5NGEzZGJkNGViMmFhOTg0NDZjYjE",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:54:17Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:54:17Z"
+        },
+        "tree": {
+          "sha": "1467000d4c60f676129fc3f0caef8f49a2f5128d",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/1467000d4c60f676129fc3f0caef8f49a2f5128d"
+        },
+        "message": "SF-A24-T09: join actual wizard commits with prepared workspace services\n\nCompiler owner preserves the complete entry and documentation union.\nNative owner retains the existing client facade/API and first-parent\nread/binary cancellation in its extracted class. No new services are added.\n\nSource-Worktree-Commit: 6c112386a6498d46eeb662c32c9e3b1204f081ce\nSource-Tree: 1467000d4c60f676129fc3f0caef8f49a2f5128d",
+        "parents": [
+          {
+            "sha": "31d0e087a99481c861ecb5e94d254979b26aadb0",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/31d0e087a99481c861ecb5e94d254979b26aadb0",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/31d0e087a99481c861ecb5e94d254979b26aadb0"
+          },
+          {
+            "sha": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/3f9058fc9b6322f94ef6655ce0eeae89029e7042"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      }
+    },
+    {
+      "requestUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/02bdce19441b36240faf5fafdaef6149619d1dce",
+      "body": {
+        "sha": "02bdce19441b36240faf5fafdaef6149619d1dce",
+        "node_id": "C_kwDOU59Ms9oAKDAyYmRjZTE5NDQxYjM2MjQwZmFmNWZhZmRhZWY2MTQ5NjE5ZDFkY2U",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/02bdce19441b36240faf5fafdaef6149619d1dce",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/02bdce19441b36240faf5fafdaef6149619d1dce",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:51:52Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:51:52Z"
+        },
+        "tree": {
+          "sha": "6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19"
+        },
+        "message": "SF-A24-T08: shrink legacy designer chrome through its mode module\n\nForward the exact qualified e9f8a8cd extraction onto the existing XAML\nreopen draft. Preserve all mode/source/docking behavior, with no baseline\nallowance changes. Original isolated source is 464088607.\n\nThe complete legacy batch passed 382 Node26 cases and check/build/clean\ncheckout. The real browser mode case remains separately pending.\n\nSource-Worktree-Commit: f1976ff963026d2a3b5562177f03fa87cc3b3901\nSource-Tree: 6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19",
+        "parents": [
+          {
+            "sha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9501520383fa99d873157ab6f6efbf55354ebcbf",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/9501520383fa99d873157ab6f6efbf55354ebcbf"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      }
+    },
+    {
+      "requestUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/675e1f86ace7510a9d9744db3d88773a862d254c",
+      "body": {
+        "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "node_id": "C_kwDOU59Ms9oAKDY3NWUxZjg2YWNlNzUxMGE5ZDk3NDRkYjNkODg3NzNhODYyZDI1NGM",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/675e1f86ace7510a9d9744db3d88773a862d254c",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/675e1f86ace7510a9d9744db3d88773a862d254c",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T07:21:48Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T07:21:48Z"
+        },
+        "tree": {
+          "sha": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/ca549b38d09f29c0810d29bb0712e0cdca3cb6b0"
+        },
+        "message": "SF-A24-T10: qualify live designer and application worker ownership\n\nSource-Worktree-Commit: e42773833954c386c8df3579d373c6d6b6189aeb\nSource-Tree: ca549b38d09f29c0810d29bb0712e0cdca3cb6b0\nCanonical-Final-Source: 0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "parents": [
+          {
+            "sha": "4b584525854f767579c3e8463adc4c0972bc5119",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b584525854f767579c3e8463adc4c0972bc5119",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/4b584525854f767579c3e8463adc4c0972bc5119"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      }
+    }
+  ]
+}

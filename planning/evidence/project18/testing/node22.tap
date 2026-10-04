@@ -1,0 +1,864 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:12) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: released framework and bytecode IDs are unchanged
+ok 1 - released framework and bytecode IDs are unchanged
+  ---
+  duration_ms: 98.785813
+  type: 'test'
+  ...
+# Subtest: golden checker reports the first changed id and accepts appends
+ok 2 - golden checker reports the first changed id and accepts appends
+  ---
+  duration_ms: 152.173388
+  type: 'test'
+  ...
+# Subtest: reserved contributions have the same IDs in either load order
+ok 3 - reserved contributions have the same IDs in either load order
+  ---
+  duration_ms: 1.172478
+  type: 'test'
+  ...
+# Subtest: legacy contribution modules validate as a single transaction
+ok 4 - legacy contribution modules validate as a single transaction
+  ---
+  duration_ms: 16.342552
+  type: 'test'
+  ...
+# Subtest: duplicate type rolls back the entire contribution
+ok 5 - duplicate type rolls back the entire contribution
+  ---
+  duration_ms: 0.438912
+  type: 'test'
+  ...
+# Subtest: duplicate member rolls back the entire contribution
+ok 6 - duplicate member rolls back the entire contribution
+  ---
+  duration_ms: 0.183647
+  type: 'test'
+  ...
+# Subtest: unknown owner rolls back the entire contribution
+ok 7 - unknown owner rolls back the entire contribution
+  ---
+  duration_ms: 0.254864
+  type: 'test'
+  ...
+# Subtest: unknown parameter rolls back the entire contribution
+ok 8 - unknown parameter rolls back the entire contribution
+  ---
+  duration_ms: 0.193402
+  type: 'test'
+  ...
+# Subtest: block overflow rolls back the entire contribution
+ok 9 - block overflow rolls back the entire contribution
+  ---
+  duration_ms: 0.33156
+  type: 'test'
+  ...
+# Subtest: malformed member rolls back the entire contribution
+ok 10 - malformed member rolls back the entire contribution
+  ---
+  duration_ms: 0.406052
+  type: 'test'
+  ...
+# Subtest: cancellation rolls back and separate registries do not leak state
+ok 11 - cancellation rolls back and separate registries do not leak state
+  ---
+  duration_ms: 0.321906
+  type: 'test'
+  ...
+# Subtest: overlapping, negative, duplicate and exhausted reservations reject
+ok 12 - overlapping, negative, duplicate and exhausted reservations reject
+  ---
+  duration_ms: 0.449698
+  type: 'test'
+  ...
+# Subtest: builtin contributions append atomically and never shift framework offsets
+ok 13 - builtin contributions append atomically and never shift framework offsets
+  ---
+  duration_ms: 82.344167
+  type: 'test'
+  ...
+# Subtest: implementation regression gate detects either engine losing a handler
+ok 14 - implementation regression gate detects either engine losing a handler
+  ---
+  duration_ms: 0.438482
+  type: 'test'
+  ...
+# Subtest: every real source/CIL dispatch result meets the committed reachability baseline
+ok 15 - every real source/CIL dispatch result meets the committed reachability baseline
+  ---
+  duration_ms: 3968.830691
+  type: 'test'
+  ...
+# Subtest: released contribution order is pinned while new area order remains independent
+ok 16 - released contribution order is pinned while new area order remains independent
+  ---
+  duration_ms: 3.752731
+  type: 'test'
+  ...
+# (node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: BCL contributions extend contracts and dispatch through one family registration
+ok 17 - BCL contributions extend contracts and dispatch through one family registration
+  ---
+  duration_ms: 1.844012
+  type: 'test'
+  ...
+# Subtest: BCL dispatch reuses resolved types and preserves standalone owner lookup
+ok 18 - BCL dispatch reuses resolved types and preserves standalone owner lookup
+  ---
+  duration_ms: 0.236998
+  type: 'test'
+  ...
+# Subtest: BCL registry rejects duplicate ownership and malformed contributions
+ok 19 - BCL registry rejects duplicate ownership and malformed contributions
+  ---
+  duration_ms: 0.536189
+  type: 'test'
+  ...
+# Subtest: BCL registration participates in framework rollback and cancellation
+ok 20 - BCL registration participates in framework rollback and cancellation
+  ---
+  duration_ms: 3.617318
+  type: 'test'
+  ...
+# Subtest: released BCL groups keep module order and independent registries cannot leak
+ok 21 - released BCL groups keep module order and independent registries cannot leak
+  ---
+  duration_ms: 0.374976
+  type: 'test'
+  ...
+# Subtest: BCL registry rejects async contracts and malformed invocation results
+ok 22 - BCL registry rejects async contracts and malformed invocation results
+  ---
+  duration_ms: 0.346583
+  type: 'test'
+  ...
+# (node:14) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T09.4 real external write before-read preserves disk bytes and returns both hashes
+ok 23 - A23 T09.4 real external write before-read preserves disk bytes and returns both hashes
+  ---
+  duration_ms: 39.906478
+  type: 'test'
+  ...
+# Subtest: A23 T09.4 real external write before-save preserves disk bytes and returns both hashes
+ok 24 - A23 T09.4 real external write before-save preserves disk bytes and returns both hashes
+  ---
+  duration_ms: 48.498461
+  type: 'test'
+  ...
+# (node:16) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T09.1 fifty unusual documents round-trip with exact BOM, quotes, comments and spans
+ok 25 - A23 T09.1 fifty unusual documents round-trip with exact BOM, quotes, comments and spans
+  ---
+  duration_ms: 7.572695
+  type: 'test'
+  ...
+# Subtest: A23 T09.1 rejects malformed, external entities, bounds, stale and overlapping edits
+ok 26 - A23 T09.1 rejects malformed, external entities, bounds, stale and overlapping edits
+  ---
+  duration_ms: 1.582788
+  type: 'test'
+  ...
+# Subtest: A23 T09.2 conditioned property changes exactly its value span and removes empty last group
+ok 27 - A23 T09.2 conditioned property changes exactly its value span and removes empty last group
+  ---
+  duration_ms: 2.244216
+  type: 'test'
+  ...
+# Subtest: A23 T09.3 coalesces packages, updates quoted metadata, preserves comments and toggles glob exclusion
+ok 28 - A23 T09.3 coalesces packages, updates quoted metadata, preserves comments and toggles glob exclusion
+  ---
+  duration_ms: 7.577182
+  type: 'test'
+  ...
+# Subtest: A23 T09.4 conflicts expose the three versions and hashes without a partial write
+ok 29 - A23 T09.4 conflicts expose the three versions and hashes without a partial write
+  ---
+  duration_ms: 1.097656
+  type: 'test'
+  ...
+# (node:21) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T10.1 default inference and last matching configuration rules map each project independently
+ok 30 - A23 T10.1 default inference and last matching configuration rules map each project independently
+  ---
+  duration_ms: 9.400182
+  type: 'test'
+  ...
+# Subtest: A23 T10.3 default solution infers Debug/Release and CLR vs VC platform rules
+ok 31 - A23 T10.3 default solution infers Debug/Release and CLR vs VC platform rules
+  ---
+  duration_ms: 0.385802
+  type: 'test'
+  ...
+# Subtest: A23 T10.1 custom type rules support inheritance and IsBuildable without overriding later project rules
+ok 32 - A23 T10.1 custom type rules support inheritance and IsBuildable without overriding later project rules
+  ---
+  duration_ms: 10.893716
+  type: 'test'
+  ...
+# Subtest: A23 T10.4 project requests and configuration-manager selection retain mapped globals
+ok 33 - A23 T10.4 project requests and configuration-manager selection retain mapped globals
+  ---
+  duration_ms: 0.929703
+  type: 'test'
+  ...
+# Subtest: A23 T10.4 saved solution context maps native project requests once, with cancellation and unknown-project errors
+ok 34 - A23 T10.4 saved solution context maps native project requests once, with cancellation and unknown-project errors
+  ---
+  duration_ms: 1.220742
+  type: 'test'
+  ...
+# Subtest: A23 T10.2/T10.5 legacy writer preserves GUIDs, folders, dependencies, unsupported projects and Build.0 selection
+ok 35 - A23 T10.2/T10.5 legacy writer preserves GUIDs, folders, dependencies, unsupported projects and Build.0 selection
+  ---
+  duration_ms: 10.774315
+  type: 'test'
+  ...
+# Subtest: A23 B05 unsupported project types remain visible and unloaded, never in portable compilation projectPaths
+ok 36 - A23 B05 unsupported project types remain visible and unloaded, never in portable compilation projectPaths
+  ---
+  duration_ms: 17.017965
+  type: 'test'
+  ...
+# Subtest: A23 T10 rejects malformed mappings, duplicate identities, limits and cancellation
+ok 37 - A23 T10 rejects malformed mappings, duplicate identities, limits and cancellation
+  ---
+  duration_ms: 0.588608
+  type: 'test'
+  ...
+# (node:29) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T11 host seam collects actual report files and exposes only retained session artifacts
+ok 38 - A23 T11 host seam collects actual report files and exposes only retained session artifacts
+  ---
+  duration_ms: 90.672339
+  type: 'test'
+  ...
+# Subtest: A23 T11 nonblocking service sessions cancel the host and leave unexecuted tests not-run
+ok 39 - A23 T11 nonblocking service sessions cancel the host and leave unexecuted tests not-run
+  ---
+  duration_ms: 23.983865
+  type: 'test'
+  ...
+# Subtest: A23 T11 adapters reject untrusted requests and never turn a missing TRX into passing tests
+ok 40 - A23 T11 adapters reject untrusted requests and never turn a missing TRX into passing tests
+  ---
+  duration_ms: 14.659718
+  type: 'test'
+  ...
+# (node:43) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T11 TRX parses actual per-test outcomes, durations, output and attachment records
+ok 41 - A23 T11 TRX parses actual per-test outcomes, durations, output and attachment records
+  ---
+  duration_ms: 5.993964
+  type: 'test'
+  ...
+# Subtest: A23 T11 TRX rejects malformed documents, excessive results and unknown outcome success assumptions
+ok 42 - A23 T11 TRX rejects malformed documents, excessive results and unknown outcome success assumptions
+  ---
+  duration_ms: 1.462437
+  type: 'test'
+  ...
+# Subtest: A23 T11 filter arguments stay atomic and MTP has explicit TRX capability requirements
+ok 43 - A23 T11 filter arguments stay atomic and MTP has explicit TRX capability requirements
+  ---
+  duration_ms: 3.733282
+  type: 'test'
+  ...
+# Subtest: A23 T11 cancellation leaves remaining tests not-run, bounds progress and reports debugger PID
+ok 44 - A23 T11 cancellation leaves remaining tests not-run, bounds progress and reports debugger PID
+  ---
+  duration_ms: 1.343126
+  type: 'test'
+  ...
+# Subtest: A23 T11 Cobertura retains covered/uncovered lines, branch counts and diagnostics for outside-workspace files
+ok 45 - A23 T11 Cobertura retains covered/uncovered lines, branch counts and diagnostics for outside-workspace files
+  ---
+  duration_ms: 1.164617
+  type: 'test'
+  ...
+# (node:72) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T12 differential identifies individual property/item differences and preserves ordered item semantics
+ok 46 - A23 T12 differential identifies individual property/item differences and preserves ordered item semantics
+  ---
+  duration_ms: 11.547922
+  type: 'test'
+  ...
+# Subtest: A23 T12 never qualifies missing native runs and rejects unblocked native-only features
+ok 47 - A23 T12 never qualifies missing native runs and rejects unblocked native-only features
+  ---
+  duration_ms: 11.69856
+  type: 'test'
+  ...
+# Subtest: A23 T12 supported discrepancies fail while approximated differences remain fully reported
+ok 48 - A23 T12 supported discrepancies fail while approximated differences remain fully reported
+  ---
+  duration_ms: 0.810603
+  type: 'test'
+  ...
+# Subtest: A23 T12 every declared native-only feature has fixtures with its exact blocking diagnostic
+ok 49 - A23 T12 every declared native-only feature has fixtures with its exact blocking diagnostic
+  ---
+  duration_ms: 52.07098
+  type: 'test'
+  ...
+# (node:78) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+ok 50 - A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+  ---
+  duration_ms: 2.053328
+  type: 'test'
+  ...
+# Subtest: A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+ok 51 - A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+  ---
+  duration_ms: 1.055703
+  type: 'test'
+  ...
+# (node:83) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 source reads explicit environment and isolated dictionary snapshots
+ok 52 - A23 T29 source reads explicit environment and isolated dictionary snapshots
+  ---
+  duration_ms: 312.863803
+  type: 'test'
+  ...
+# Subtest: A23 T29 source snapshots once per session and never inherits host environment
+ok 53 - A23 T29 source snapshots once per session and never inherits host environment
+  ---
+  duration_ms: 36.21163
+  type: 'test'
+  ...
+# Subtest: A23 T29 source rejects malformed options and null names with managed faults
+ok 54 - A23 T29 source rejects malformed options and null names with managed faults
+  ---
+  duration_ms: 80.053089
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil reads explicit environment and isolated dictionary snapshots
+ok 55 - A23 T29 cil reads explicit environment and isolated dictionary snapshots
+  ---
+  duration_ms: 122.034814
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil snapshots once per session and never inherits host environment
+ok 56 - A23 T29 cil snapshots once per session and never inherits host environment
+  ---
+  duration_ms: 66.96718
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil rejects malformed options and null names with managed faults
+ok 57 - A23 T29 cil rejects malformed options and null names with managed faults
+  ---
+  duration_ms: 80.373379
+  type: 'test'
+  ...
+# Subtest: A23 T29 environment contracts use the A07 extension block without renumbering released contracts
+ok 58 - A23 T29 environment contracts use the A07 extension block without renumbering released contracts
+  ---
+  duration_ms: 0.533775
+  type: 'test'
+  ...
+# (node:93) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T30 source launch args preserve static initialization and async Main completion
+ok 59 - A23 T30 source launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 123.611107
+  type: 'test'
+  ...
+# Subtest: A23 T30 cil launch args preserve static initialization and async Main completion
+ok 60 - A23 T30 cil launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 38.928694
+  type: 'test'
+  ...
+# Subtest: A23 T30 source-from-cil launch args preserve static initialization and async Main completion
+ok 61 - A23 T30 source-from-cil launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 45.3762
+  type: 'test'
+  ...
+# Subtest: A23 T30 rejects malformed argv and preserves parameterless Main
+ok 62 - A23 T30 rejects malformed argv and preserves parameterless Main
+  ---
+  duration_ms: 2.249794
+  type: 'test'
+  ...
+# (node:104) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T35 native and portable TestCase identities agree after source metadata enrichment
+ok 63 - A23 T35 native and portable TestCase identities agree after source metadata enrichment
+  ---
+  duration_ms: 2.170214
+  type: 'test'
+  ...
+# Subtest: A23 T35 rejects duplicate identities, malformed records, invalid durations and incomplete adapters
+ok 64 - A23 T35 rejects duplicate identities, malformed records, invalid durations and incomplete adapters
+  ---
+  duration_ms: 0.522929
+  type: 'test'
+  ...
+# (node:120) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T36 source discovery expands xUnit rows with parameter names, traits, source lines and skip reasons
+ok 65 - A23 T36 source discovery expands xUnit rows with parameter names, traits, source lines and skip reasons
+  ---
+  duration_ms: 192.633622
+  type: 'test'
+  ...
+# Subtest: A23 T37 NUnit parameterized fixtures preserve names, lifecycle stages and explicit status
+ok 66 - A23 T37 NUnit parameterized fixtures preserve names, lifecycle stages and explicit status
+  ---
+  duration_ms: 10.823938
+  type: 'test'
+  ...
+# Subtest: A23 T38 MSTest expands display names, Timeout and initialize/cleanup metadata
+ok 67 - A23 T38 MSTest expands display names, Timeout and initialize/cleanup metadata
+  ---
+  duration_ms: 21.432941
+  type: 'test'
+  ...
+# Subtest: A23 T36–38 unresolved data is explicitly not-runnable and malformed/cancelled sources are rejected
+ok 68 - A23 T36–38 unresolved data is explicitly not-runnable and malformed/cancelled sources are rejected
+  ---
+  duration_ms: 19.387866
+  type: 'test'
+  ...
+# (node:126) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T36 source constant ClassData remains executable without compiling discovery-only iterator declarations
+ok 69 - A23 T36 source constant ClassData remains executable without compiling discovery-only iterator declarations
+  ---
+  duration_ms: 1614.625296
+  type: 'test'
+  ...
+# Subtest: A23 T36 cil constant ClassData remains executable without compiling discovery-only iterator declarations
+ok 70 - A23 T36 cil constant ClassData remains executable without compiling discovery-only iterator declarations
+  ---
+  duration_ms: 482.279706
+  type: 'test'
+  ...
+# Subtest: A23 T36 providers used by executable code or declaring state remain in the managed source
+ok 71 - A23 T36 providers used by executable code or declaring state remain in the managed source
+  ---
+  duration_ms: 5.413917
+  type: 'test'
+  ...
+# (node:128) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T39 source invocation sessions preserve in-session state and isolate independent heaps
+ok 72 - A23 T39 source invocation sessions preserve in-session state and isolate independent heaps
+  ---
+  duration_ms: 205.252652
+  type: 'test'
+  ...
+# Subtest: A23 T39 source rejects invalid arguments and enforces instruction limits
+ok 73 - A23 T39 source rejects invalid arguments and enforces instruction limits
+  ---
+  duration_ms: 53.684448
+  type: 'test'
+  ...
+# Subtest: A23 T39 cil invocation sessions preserve in-session state and isolate independent heaps
+ok 74 - A23 T39 cil invocation sessions preserve in-session state and isolate independent heaps
+  ---
+  duration_ms: 138.629101
+  type: 'test'
+  ...
+# Subtest: A23 T39 cil rejects invalid arguments and enforces instruction limits
+ok 75 - A23 T39 cil rejects invalid arguments and enforces instruction limits
+  ---
+  duration_ms: 32.584494
+  type: 'test'
+  ...
+# (node:142) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T39 source collection fixtures are shared between classes and isolated between runs
+ok 76 - A23 T39 source collection fixtures are shared between classes and isolated between runs
+  ---
+  duration_ms: 1933.493943
+  type: 'test'
+  ...
+# Subtest: A23 T36 source computed member providers run in a bounded isolated managed session
+ok 77 - A23 T36 source computed member providers run in a bounded isolated managed session
+  ---
+  duration_ms: 293.755518
+  type: 'test'
+  ...
+# Subtest: A23 T39 source fatal budgets stop the run without claiming remaining tests passed
+ok 78 - A23 T39 source fatal budgets stop the run without claiming remaining tests passed
+  ---
+  duration_ms: 99.71482
+  type: 'test'
+  ...
+# Subtest: A23 T36 source computed jagged providers retain row values through managed execution
+ok 79 - A23 T36 source computed jagged providers retain row values through managed execution
+  ---
+  duration_ms: 260.266977
+  type: 'test'
+  ...
+# Subtest: A23 T39 cil collection fixtures are shared between classes and isolated between runs
+ok 80 - A23 T39 cil collection fixtures are shared between classes and isolated between runs
+  ---
+  duration_ms: 593.284512
+  type: 'test'
+  ...
+# Subtest: A23 T36 cil computed member providers run in a bounded isolated managed session
+ok 81 - A23 T36 cil computed member providers run in a bounded isolated managed session
+  ---
+  duration_ms: 319.322608
+  type: 'test'
+  ...
+# Subtest: A23 T39 cil fatal budgets stop the run without claiming remaining tests passed
+ok 82 - A23 T39 cil fatal budgets stop the run without claiming remaining tests passed
+  ---
+  duration_ms: 104.215168
+  type: 'test'
+  ...
+# Subtest: A23 T36 cil computed jagged providers retain row values through managed execution
+ok 83 - A23 T36 cil computed jagged providers retain row values through managed execution
+  ---
+  duration_ms: 186.121519
+  type: 'test'
+  ...
+# (node:152) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T39 source executes three frameworks with real assertions, per-test instances and one-time fixtures
+ok 84 - A23 T39 source executes three frameworks with real assertions, per-test instances and one-time fixtures
+  ---
+  duration_ms: 1687.219072
+  type: 'test'
+  ...
+# Subtest: A23 T39 cil executes three frameworks with real assertions, per-test instances and one-time fixtures
+ok 85 - A23 T39 cil executes three frameworks with real assertions, per-test instances and one-time fixtures
+  ---
+  duration_ms: 420.72635
+  type: 'test'
+  ...
+# Subtest: A23 T39 unsupported APIs are not-runnable while supported neighboring tests execute
+ok 86 - A23 T39 unsupported APIs are not-runnable while supported neighboring tests execute
+  ---
+  duration_ms: 215.441519
+  type: 'test'
+  ...
+# Subtest: A23 T39 disposed adapters reject work and cancellation reports remaining tests not-run
+ok 87 - A23 T39 disposed adapters reject work and cancellation reports remaining tests not-run
+  ---
+  duration_ms: 15.745061
+  type: 'test'
+  ...
+# (node:164) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T35–39 source executes the exact shared native framework fixture sources
+ok 88 - A23 T35–39 source executes the exact shared native framework fixture sources
+  ---
+  duration_ms: 2172.827227
+  type: 'test'
+  ...
+# Subtest: A23 T35–39 cil executes the exact shared native framework fixture sources
+ok 89 - A23 T35–39 cil executes the exact shared native framework fixture sources
+  ---
+  duration_ms: 813.939725
+  type: 'test'
+  ...
+# (node:172) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T09.5 one thousand seeded edit and undo pairs recover identical source bytes
+ok 90 - A23 T09.5 one thousand seeded edit and undo pairs recover identical source bytes
+  ---
+  duration_ms: 185.633042
+  type: 'test'
+  ...
+# (node:180) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 08 preview mutation batches preflight before replacing workspace buffers
+ok 91 - 08 preview mutation batches preflight before replacing workspace buffers
+  ---
+  duration_ms: 2.45905
+  type: 'test'
+  ...
+# Subtest: 08 preview rename/copy/delete undo restores data and editor metadata
+ok 92 - 08 preview rename/copy/delete undo restores data and editor metadata
+  ---
+  duration_ms: 0.600225
+  type: 'test'
+  ...
+# Subtest: 08 preview undo refuses subsequent user edits
+ok 93 - 08 preview undo refuses subsequent user edits
+  ---
+  duration_ms: 0.39776
+  type: 'test'
+  ...
+# Subtest: 08 pending file command cannot cross a workspace switch
+ok 94 - 08 pending file command cannot cross a workspace switch
+  ---
+  duration_ms: 0.173973
+  type: 'test'
+  ...
+# Subtest: 08 planning a project change detects concurrent project source changes
+ok 95 - 08 planning a project change detects concurrent project source changes
+  ---
+  duration_ms: 0.289557
+  type: 'test'
+  ...
+# Subtest: 08 native planning reads unsaved project buffers, not an old disk snapshot
+ok 96 - 08 native planning reads unsaved project buffers, not an old disk snapshot
+  ---
+  duration_ms: 0.187093
+  type: 'test'
+  ...
+# Subtest: 08 cross-project source copy explicitly includes files with defaults disabled
+ok 97 - 08 cross-project source copy explicitly includes files with defaults disabled
+  ---
+  duration_ms: 11.811027
+  type: 'test'
+  ...
+# Subtest: 08 readonly explorer rejects file mutations before prompting
+ok 98 - 08 readonly explorer rejects file mutations before prompting
+  ---
+  duration_ms: 1.148432
+  type: 'test'
+  ...
+# Subtest: 08 overlapping explorer dialogs cannot start a second mutation
+ok 99 - 08 overlapping explorer dialogs cannot start a second mutation
+  ---
+  duration_ms: 0.433454
+  type: 'test'
+  ...
+# Subtest: 08 solution project removal preserves comment and neighboring configuration
+ok 100 - 08 solution project removal preserves comment and neighboring configuration
+  ---
+  duration_ms: 4.357754
+  type: 'test'
+  ...
+# Subtest: 08 solution removal also removes literal dependency on the removed member
+ok 101 - 08 solution removal also removes literal dependency on the removed member
+  ---
+  duration_ms: 0.340984
+  type: 'test'
+  ...
+# Subtest: 08 package reference authoring escapes metadata and does not invent relative package IDs
+ok 102 - 08 package reference authoring escapes metadata and does not invent relative package IDs
+  ---
+  duration_ms: 0.496509
+  type: 'test'
+  ...
+# Subtest: 08 path rewrites leave commented-out references and CDATA byte-identical
+ok 103 - 08 path rewrites leave commented-out references and CDATA byte-identical
+  ---
+  duration_ms: 0.406453
+  type: 'test'
+  ...
+# Subtest: 08 adding compile membership removes default match before explicit include
+ok 104 - 08 adding compile membership removes default match before explicit include
+  ---
+  duration_ms: 1.313071
+  type: 'test'
+  ...
+# Subtest: 08 Visual Studio modifier-only keys do not eat an active keyboard chord
+ok 105 - 08 Visual Studio modifier-only keys do not eat an active keyboard chord
+  ---
+  duration_ms: 0.313072
+  type: 'test'
+  ...
+# Subtest: 08 editor declares Visual Studio default and five distinct profiles without a DOM
+ok 106 - 08 editor declares Visual Studio default and five distinct profiles without a DOM
+  ---
+  duration_ms: 0.581587
+  type: 'test'
+  ...
+# Subtest: 08 native XML write undo restores original encoding and byte hash
+ok 107 - 08 native XML write undo restores original encoding and byte hash
+  ---
+  duration_ms: 146.117789
+  type: 'test'
+  ...
+# Subtest: 08 native XML syntax validation precedes every batch mutation
+ok 108 - 08 native XML syntax validation precedes every batch mutation
+  ---
+  duration_ms: 3.786221
+  type: 'test'
+  ...
+# Subtest: 08 native overlapping parent/child operations fail preflight instead of breaking undo
+ok 109 - 08 native overlapping parent/child operations fail preflight instead of breaking undo
+  ---
+  duration_ms: 14.794017
+  type: 'test'
+  ...
+# Subtest: 08 native XML write followed by undo rejects later disk edits
+ok 110 - 08 native XML write followed by undo rejects later disk edits
+  ---
+  duration_ms: 141.138076
+  type: 'test'
+  ...
+# Subtest: 08 actual loopback explorer APIs enforce auth/origin and preserve binary bytes
+ok 111 - 08 actual loopback explorer APIs enforce auth/origin and preserve binary bytes
+  ---
+  duration_ms: 328.197481
+  type: 'test'
+  ...
+# (node:188) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 08 tree state validation leaves old tree untouched
+ok 112 - 08 tree state validation leaves old tree untouched
+  ---
+  duration_ms: 9.666933
+  type: 'test'
+  ...
+# Subtest: 08 tree selection, expansion, filter ancestors and state recovery
+ok 113 - 08 tree selection, expansion, filter ancestors and state recovery
+  ---
+  duration_ms: 1.620254
+  type: 'test'
+  ...
+# Subtest: 08 tree move cycle/invalid insertion is rejected before mutation
+ok 114 - 08 tree move cycle/invalid insertion is rejected before mutation
+  ---
+  duration_ms: 3.633321
+  type: 'test'
+  ...
+# Subtest: 08 tree large hierarchy stays data-only until view requests rows
+ok 115 - 08 tree large hierarchy stays data-only until view requests rows
+  ---
+  duration_ms: 340.613325
+  type: 'test'
+  ...
+# Subtest: 08 command registry checks enablement again at execution
+ok 116 - 08 command registry checks enablement again at execution
+  ---
+  duration_ms: 1.297087
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "../a.cs"
+ok 117 - 08 invalid portable item path "../a.cs"
+  ---
+  duration_ms: 0.447995
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "/a.cs"
+ok 118 - 08 invalid portable item path "/a.cs"
+  ---
+  duration_ms: 0.289477
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "C:/a.cs"
+ok 119 - 08 invalid portable item path "C:/a.cs"
+  ---
+  duration_ms: 0.140632
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "a/../b.cs"
+ok 120 - 08 invalid portable item path "a/../b.cs"
+  ---
+  duration_ms: 0.407835
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "NUL.cs"
+ok 121 - 08 invalid portable item path "NUL.cs"
+  ---
+  duration_ms: 0.923494
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "file?.cs"
+ok 122 - 08 invalid portable item path "file?.cs"
+  ---
+  duration_ms: 6.70186
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path ".git/config"
+ok 123 - 08 invalid portable item path ".git/config"
+  ---
+  duration_ms: 0.303108
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "A./B.cs"
+ok 124 - 08 invalid portable item path "A./B.cs"
+  ---
+  duration_ms: 0.143326
+  type: 'test'
+  ...
+# Subtest: 08 invalid portable item path "a\\u0000.cs"
+ok 125 - 08 invalid portable item path "a\\u0000.cs"
+  ---
+  duration_ms: 0.148684
+  type: 'test'
+  ...
+# Subtest: 08 solution tree preserves linked appearances and dependency groups
+ok 126 - 08 solution tree preserves linked appearances and dependency groups
+  ---
+  duration_ms: 14.708258
+  type: 'test'
+  ...
+# Subtest: 08 project membership source edits preserve comments, imports and exact build order
+ok 127 - 08 project membership source edits preserve comments, imports and exact build order
+  ---
+  duration_ms: 5.850345
+  type: 'test'
+  ...
+# Subtest: 08 solution XML creation works for self-closing roots and prevents duplicate membership
+ok 128 - 08 solution XML creation works for self-closing roots and prevents duplicate membership
+  ---
+  duration_ms: 0.882091
+  type: 'test'
+  ...
+# Subtest: 08 literal reference rename leaves conditional glob expressions unchanged
+ok 129 - 08 literal reference rename leaves conditional glob expressions unchanged
+  ---
+  duration_ms: 0.65627
+  type: 'test'
+  ...
+# Subtest: 08 native create/move/copy/delete are undoable with checked disk identities
+ok 130 - 08 native create/move/copy/delete are undoable with checked disk identities
+  ---
+  duration_ms: 246.376389
+  type: 'test'
+  ...
+# Subtest: 08 native stale hashes, collisions and self-containment are rejected
+ok 131 - 08 native stale hashes, collisions and self-containment are rejected
+  ---
+  duration_ms: 27.32528
+  type: 'test'
+  ...
+# Subtest: 08 native directory quarantine/restore preserves nested files and empty folders
+ok 132 - 08 native directory quarantine/restore preserves nested files and empty folders
+  ---
+  duration_ms: 48.833935
+  type: 'test'
+  ...
+# Subtest: 08 native undo refuses to erase subsequent user edits
+ok 133 - 08 native undo refuses to erase subsequent user edits
+  ---
+  duration_ms: 37.6401
+  type: 'test'
+  ...
+# Subtest: 08 native operations refuse symlinked children and parent paths
+ok 134 - 08 native operations refuse symlinked children and parent paths
+  ---
+  duration_ms: 6.234755
+  type: 'test'
+  ...
+# Subtest: 08 native scan provides real hierarchy, empty folders and binary entries
+ok 135 - 08 native scan provides real hierarchy, empty folders and binary entries
+  ---
+  duration_ms: 22.361041
+  type: 'test'
+  ...
+1..135
+# tests 135
+# suites 0
+# pass 135
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5295.846926

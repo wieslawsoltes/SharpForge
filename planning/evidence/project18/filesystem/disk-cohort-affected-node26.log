@@ -1,0 +1,18 @@
+✔ A00 T06 contributed stylesheet bytes and worker order retain the original build exactly (24.639739ms)
+✔ A00 T20 contributed per-tool CSS preserves every baseline byte and both sorted and ordered rules (38.223114ms)
+✔ 0.4 CLI solution run (511.295418ms)
+✔ 0.4 CLI linked sources (518.881961ms)
+✔ 0.4 CLI release configuration (502.9588ms)
+✔ 0.4 CLI library invocation (503.477175ms)
+✔ 0.4 CLI unsupported package blocks build (419.874088ms)
+✔ 0.4 CLI project information (453.090483ms)
+✔ CLI ZIP/extraction preserve an existing manifest, binaries and empty folders (1525.985748ms)
+✔ CLI writePlan validates duplicate/case/traversing destinations before creating output directory (2.065216ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5537.552869

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+  "reason": "Final npm check identified two stale reviewed fixture fingerprints and a computed-import analysis helper.",
+  "browserFixtureReviews": [
+    {
+      "path": "tests/support/a24-browser-ui.js",
+      "count": 4,
+      "beforeSha256": "5bdf69c0e3136d987910f7c816f32f3c7d181f628a03f654badf49f73b6030d8",
+      "afterSha256": "362f70790e2de6266b667fd3d9baee8369522ec185f33bdf1f6ec4f29970c6f8",
+      "review": "All imports use fixed same-origin literal paths. Provider API aliases select the additive API; no imports, capabilities or operation counts were added."
+    },
+    {
+      "path": "tests/support/a24-integrity-components.js",
+      "count": 9,
+      "beforeSha256": "4936e1cc4fcb0b12473542868de988286772bc2ccef3b4e39be35a229fed2957",
+      "afterSha256": "a2921105830fd2a64df311330c34ad211f389133f1a862d5712b99113cad5da6",
+      "review": "All imports use fixed same-origin literal paths. Provider API aliases select the additive API; no imports, capabilities or operation counts were added."
+    }
+  ],
+  "helper": {
+    "path": "planning/evidence/project18/project-runtime/inspect-benchmark.mjs",
+    "previousSha256": "4d0579cb8dd77085ce8164e701263807a133b91fb7a0f308faeee7387e0b40ee",
+    "newSha256": "4a0ff7d119927301a42a90631e9bd8617c0e45c8c8b5f20cc2f210181dde5bfa",
+    "change": "Use static public compiler/CIL imports and require benchmark bytes from the same checkout. The analysis helper cannot load code from an arbitrary argv-selected worktree. Historical executedArgv and output evidence are unchanged. To inspect an older checkout, copy this helper to the same relative path there and use that checkout's workspace installation.",
+    "dynamicImportsRemoved": 2
+  },
+  "allowlistNewEntries": 0,
+  "testsRerun": false,
+  "requiredGatePending": "npm run check"
+}

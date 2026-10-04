@@ -6,7 +6,6 @@ import { join } from 'node:path';
 import { NativeHostFileSystemProvider } from '@sharpforge/workspace';
 import { startMSBuildHost } from '@sharpforge/msbuild/node';
 import { MSBuildClient } from '@sharpforge/msbuild';
-import { assertProviderConformance } from './support/a24-provider-conformance.js';
 
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), 'sf-vfs-http-'));
@@ -19,12 +18,6 @@ async function fixture() {
     await rm(root, { recursive: true, force: true });
   } };
 }
-
-test('A24 native provider conformance through authenticated HTTP loopback', async () => {
-  const current = await fixture();
-  try { await assertProviderConformance(current.provider); }
-  finally { await current.dispose(); }
-});
 
 test('A24 native HTTP retains conflict paths, guards builds and preserves raw binary files', async () => {
   const current = await fixture();

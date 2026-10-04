@@ -1,0 +1,2002 @@
+{
+  "schemaVersion": 4,
+  "status": "Proposed entry and lock metadata patches remain prepared, unapplied and unexecuted. Actual canonical Release13 is qualified; other browser and protected-entry gates remain separate.",
+  "protectedBase": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "adapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "generatedAt": "2026-10-04T05:20:13.486224+00:00",
+  "files": [
+    {
+      "path": "apps/studio/studio.js",
+      "patch": "studio-entry.patch",
+      "oldSha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+      "newSha256": "6f37a3e450a5ab39bb10143156502f993b5c0a80bb844f8b6823e9a7589d196b",
+      "oldBytes": 104693,
+      "newBytes": 91407,
+      "oldLines": 748,
+      "newLines": 748
+    },
+    {
+      "path": "package-lock.json",
+      "patch": "package-lock.patch",
+      "oldSha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "newSha256": "414607317febd749fd43dfdfa8551e2ac63876644cf4786dbb77d6d5c92b11c9",
+      "workspaceDependencyChanges": [
+        {
+          "package": "packages/designer",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/framework": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/text": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/framework": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/text": "0.14.0",
+            "@sharpforge/project-system": "0.14.0"
+          }
+        },
+        {
+          "package": "packages/language",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/bytecode": "0.14.0",
+            "@sharpforge/framework": "0.14.0",
+            "@sharpforge/syntax": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/bytecode": "0.14.0",
+            "@sharpforge/framework": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/compiler": "0.14.0"
+          }
+        },
+        {
+          "package": "packages/msbuild",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/network": "0.14.0",
+            "@sharpforge/project-system": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/network": "0.14.0",
+            "@sharpforge/project-system": "0.14.0",
+            "@sharpforge/compiler": "0.14.0",
+            "@sharpforge/runtime": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/archive": "0.14.0"
+          }
+        },
+        {
+          "package": "packages/project-system",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/archive": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/archive": "0.14.0",
+            "@sharpforge/workspace": "0.14.0"
+          }
+        },
+        {
+          "package": "packages/workspace",
+          "field": "dependencies",
+          "before": {
+            "@sharpforge/compiler": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/text": "0.14.0"
+          },
+          "after": {
+            "@sharpforge/compiler": "0.14.0",
+            "@sharpforge/syntax": "0.14.0",
+            "@sharpforge/text": "0.14.0",
+            "@sharpforge/archive": "0.14.0"
+          }
+        }
+      ],
+      "addedInternalDeclarations": 8
+    }
+  ],
+  "textChecks": [
+    {
+      "patch": "studio-entry.patch",
+      "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+      "applyCheckExitCode": 0,
+      "applied": false,
+      "executed": false
+    },
+    {
+      "patch": "package-lock.patch",
+      "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985",
+      "applyCheckExitCode": 0,
+      "applied": false,
+      "executed": false
+    }
+  ],
+  "protectedLeases": [
+    {
+      "key": "studio",
+      "ref": "refs/heads/agent-locks/studio",
+      "commit": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.10",
+        "issue": 2081,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "e1c09939-b609-421f-9eab-a361232d7203",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/src/service.js",
+          "packages/git/src/worker/**",
+          "apps/studio/git-worker.js"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    },
+    {
+      "key": "package-json",
+      "ref": "refs/heads/agent-locks/package-json",
+      "commit": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.1",
+        "issue": 2072,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/package.json",
+          "packages/git/src/errors.js",
+          "packages/git/src/index.js",
+          "packages/git/build.contrib.json"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    }
+  ],
+  "leaseObservation": "Fresh remote tips and exact claims confirmed at 2026-10-04T07:27:15.109531+00:00; both remain owned by codex-p19-core through 2026-10-04T20:04:09.592Z. See protected-lease-readback.json. No ownership mutation.",
+  "constraint": "planning/contracts/locks.json protects apps/studio/studio.js and root package manifests. The earlier lease records below are historical observations, not a refreshed ownership decision. The root will re-read and reconcile ownership before applying any prepared patch. This metadata refresh acquired, replaced and released no lease.",
+  "composition": [
+    "Workspace session, document and provider lifetime with save/recovery ownership",
+    "Lazy Explorer source hydration and navigation",
+    "Project build/runtime dependency and worker composition",
+    "Native build, project context, profiles, tests and designer/XAML host adapters",
+    "Search renderer explorerContext and loadWorkspaceRecord getters",
+    "Streaming archive import/export and workspace wizard creation"
+  ],
+  "remainingComposition": "Apply the prepared patches only after the root reconciles protected ownership, then qualify that composed entry. The passing actual canonical Release13 result does not execute the proposal or close storage/corpus browser gaps.",
+  "qualification": {
+    "scope": "Canonical source and helper qualification only; the proposed entry remains unapplied and unexecuted.",
+    "fullCanonicalNode22": {
+      "name": "node22-final-scope",
+      "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a00-02-registry.test.js",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a00-20-styles.test.js",
+        "tests/a00-builtin-registry-array-compat.test.js",
+        "tests/a00-builtin-registry-sparse.test.js",
+        "tests/a03-03-assembly-definition.test.js",
+        "tests/a03-03-assembly-references.test.js",
+        "tests/a03-03-entry-stub.test.js",
+        "tests/a03-05-branch-relaxation.test.js",
+        "tests/a03-05-compact-instructions.test.js",
+        "tests/a03-08-prefix-constrained.test.js",
+        "tests/a05-02-generic-calls.test.js",
+        "tests/a05-02-generic-dispatch.test.js",
+        "tests/a05-02-interface-dispatch.test.js",
+        "tests/a05-02-virtual-slots.test.js",
+        "tests/a05-21-static-init.test.js",
+        "tests/a05-b03-dispatch.test.js",
+        "tests/a05-closed-field-owner.test.js",
+        "tests/a05-constrained-interface-calls.test.js",
+        "tests/a05-decode-plan.test.js",
+        "tests/a05-inline-cache.test.js",
+        "tests/a05-native-width-cil.test.js",
+        "tests/a05-native-width.test.js",
+        "tests/a05-scalar-field-loads.test.js",
+        "tests/a05-scalar-slot-loads.test.js",
+        "tests/a05-scalar-wire-emission.test.js",
+        "tests/a05-scalar-wire-validation.test.js",
+        "tests/a05-seams-cil-types.test.js",
+        "tests/a05-source-numeric-modes.test.js",
+        "tests/a05-statics.test.js",
+        "tests/a05-token-cache.test.js",
+        "tests/a05-tokens.test.js",
+        "tests/a05-type-casting.test.js",
+        "tests/a05-type-handle-admission.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-value-layout-sizeof.test.js",
+        "tests/a07-13-registry.test.js",
+        "tests/a07-20-inventory.test.js",
+        "tests/a07-ordinal-ignore-case.test.js",
+        "tests/a08-array-comparer.test.js",
+        "tests/a08-ordinal-comparer.test.js",
+        "tests/a19-03-document-tabs.test.js",
+        "tests/a19-04-docking-model.test.js",
+        "tests/a19-document-disk-save.test.js",
+        "tests/a19-document-operation-state.test.js",
+        "tests/a19-document-snapshot-save.test.js",
+        "tests/a19-documents-state.test.js",
+        "tests/a19-execution-occupancy.test.js",
+        "tests/a19-execution-worker.test.js",
+        "tests/a19-explorer-resource-transaction.test.js",
+        "tests/a19-explorer-snapshots.test.js",
+        "tests/a19-explorer-source-plans.test.js",
+        "tests/a19-native-background-tasks.test.js",
+        "tests/a19-native-task-integration.test.js",
+        "tests/a19-prepared-documents.test.js",
+        "tests/a19-runtime-arguments.test.js",
+        "tests/a19-runtime-environment.test.js",
+        "tests/a19-runtime-launch-options.test.js",
+        "tests/a19-runtime-settings-bridge.test.js",
+        "tests/a19-runtime-worker-launch.test.js",
+        "tests/a19-studio-diagnostic-producers.test.js",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-studio-navigation.test.js",
+        "tests/a19-studio-save-ownership.test.js",
+        "tests/a19-studio-workspace-inputs.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/a19-worker-client.test.js",
+        "tests/a19-workspace-loads.test.js",
+        "tests/a20-disk-save-cancellation.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a20-prepared-source-paths.test.js",
+        "tests/a20-prepared-source-workspace.test.js",
+        "tests/a20-save-encoding-roundtrip.test.js",
+        "tests/a20-save-normalization.test.js",
+        "tests/a20-save-preparation-flow.test.js",
+        "tests/a20-source-save-as.test.js",
+        "tests/a20-studio-source-import.test.js",
+        "tests/a23-11-native-adapter.test.js",
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-12-evaluation-differential.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-cil-project-graph-contract.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-compiler-worker-entry.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-native-central-boundaries.test.js",
+        "tests/a23-native-context-aliases.test.js",
+        "tests/a23-native-context-ui-model.test.js",
+        "tests/a23-native-designer-files.test.js",
+        "tests/a23-native-document-ownership.test.js",
+        "tests/a23-native-nuget-registration.test.js",
+        "tests/a23-native-profile-ui-model.test.js",
+        "tests/a23-native-publish-encoding.test.js",
+        "tests/a23-native-reference-metadata.test.js",
+        "tests/a23-native-tool-renderer.test.js",
+        "tests/a23-native-view-contracts.test.js",
+        "tests/a23-native-workspace-state.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-artifact-cache.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-build-order.test.js",
+        "tests/a23-project-build.test.js",
+        "tests/a23-project-debug-banner.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-property-access.test.js",
+        "tests/a23-project-reference-binding.test.js",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-project-reference-namespaces.test.js",
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-project-runtime-types.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-target-lifecycle.test.js",
+        "tests/a23-project-target-native.test.js",
+        "tests/a23-solution-configuration-contract.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-studio-native-contexts.test.js",
+        "tests/a23-studio-native-profiles.test.js",
+        "tests/a23-studio-test-explorer.test.js",
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-studio-tools-registration.test.js",
+        "tests/a23-test-explorer-controller.test.js",
+        "tests/a23-test-model-contract.test.js",
+        "tests/a23-test-runtime-contract.test.js",
+        "tests/a23-test-symbol-contract.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a23-worker-emission-cache.test.js",
+        "tests/a24-06-archive-large-metadata.test.js",
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-compression-backends.test.js",
+        "tests/a24-06-recursive-archives.test.js",
+        "tests/a24-09-destination.test.js",
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-archive-sink-ownership.test.js",
+        "tests/a24-diagnostic-source.test.js",
+        "tests/a24-disk-held-signal.test.js",
+        "tests/a24-disk-load-concurrency.test.js",
+        "tests/a24-disk-notifications.test.js",
+        "tests/a24-disk-scaling.test.js",
+        "tests/a24-disk-services.test.js",
+        "tests/a24-editor-lifecycle-foundation.test.js",
+        "tests/a24-editor-lifecycle.test.js",
+        "tests/a24-explorer-child-loader.test.js",
+        "tests/a24-explorer-hierarchy.test.js",
+        "tests/a24-explorer-history.test.js",
+        "tests/a24-explorer-operations.test.js",
+        "tests/a24-explorer-prepared-journal.test.js",
+        "tests/a24-explorer-resource-errors.test.js",
+        "tests/a24-explorer-reveal.test.js",
+        "tests/a24-explorer-state-restore.test.js",
+        "tests/a24-explorer-transfers.test.js",
+        "tests/a24-explorer-view-policy.test.js",
+        "tests/a24-folder-compilation.test.js",
+        "tests/a24-lazy-tree-identity.test.js",
+        "tests/a24-peer-buffer-resolution.test.js",
+        "tests/a24-prepared-journal.test.js",
+        "tests/a24-prepared-persistence.test.js",
+        "tests/a24-prepared-recovery.test.js",
+        "tests/a24-prepared-source-hashes.test.js",
+        "tests/a24-problems-navigation.test.js",
+        "tests/a24-project-panel.test.js",
+        "tests/a24-provider-source-save.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-recovery-bootstrap.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/a24-save-conflicts.test.js",
+        "tests/a24-studio-document-policy.test.js",
+        "tests/a24-studio-prepared-navigation.test.js",
+        "tests/a24-studio-save-composition.test.js",
+        "tests/a24-studio-session-composition.test.js",
+        "tests/a24-studio-startup-recovery.test.js",
+        "tests/a24-studio-streaming-ingress.test.js",
+        "tests/a24-template-engine-boundaries.test.js",
+        "tests/a24-template-package-atomicity.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-workbench-debug-provenance.test.js",
+        "tests/a24-workbench-feature-callbacks.test.js",
+        "tests/a24-workbench-project-composition.test.js",
+        "tests/a24-workbench-workspace-ports.test.js",
+        "tests/a24-workspace-disk-events.test.js",
+        "tests/a24-workspace-host-concurrency.test.js",
+        "tests/a24-workspace-import-regression.test.js",
+        "tests/a24-workspace-imports.test.js",
+        "tests/a24-workspace-navigation.test.js",
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-workspace-refactoring.test.js",
+        "tests/a24-workspace-search.test.js",
+        "tests/a24-workspace-session.test.js",
+        "tests/a24-workspace-transition.test.js",
+        "tests/a24-workspace-wizard-native.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/managed-il.test.js",
+        "tests/msbuild-solution.test.js",
+        "tests/project-core-contract.test.js",
+        "tests/project-evaluation-build-stages.test.js",
+        "tests/project-evaluation-build.test.js",
+        "tests/project-evaluation-central-packages.test.js",
+        "tests/project-evaluation-contexts.test.js",
+        "tests/project-evaluation-expressions.test.js",
+        "tests/project-evaluation-items.test.js",
+        "tests/project-evaluation-sdk.test.js",
+        "tests/project-evaluation-targets.test.js",
+        "tests/project-expression-contract.test.js",
+        "tests/project-resource-contract.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/release09-worker.test.js",
+        "tests/workspace-io.test.js",
+        "tests/workspace-roundtrip.test.js"
+      ],
+      "startedAt": "2026-10-04T05:29:09.968146+00:00",
+      "completedAt": "2026-10-04T05:33:11.447542+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 1877,
+        "suites": 0,
+        "pass": 1877,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+        "metadataSha256": "d1999a85e9f4acda1afae848e082dffd0f41ac9fc1e7ba0e04d4d9bb43180203",
+        "logPath": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "logSha256": "826227b2a62d971fc68a371e20f79c7514e37964b0b4fca74841a0c3bd25750a",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "legacyCleanupNode26": {
+      "name": "node26-legacy-final",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/a20-disk-save-cancellation.test.js",
+        "tests/a20-large-file-disk.test.js",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-metadata-inspection.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a24-explorer-xml-regression.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/cil.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/msbuild-native.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/project-system.test.js"
+      ],
+      "startedAt": "2026-10-04T05:47:00.489276+00:00",
+      "completedAt": "2026-10-04T05:47:12.798524+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 382,
+        "suites": 0,
+        "pass": 382,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+        "metadataSha256": "5c00b48926efb1065f0940a8d5c212a27d9f853e0c8d25d330b0fb74a395f72f",
+        "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+        "logSha256": "3359169188362cd0c11cbcd15fbe9278ce3e8780bf108d73b622b7c64c2f4ca4",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "legacyGates": [
+      {
+        "name": "check",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T05:47:12.825274+00:00",
+        "completedAt": "2026-10-04T05:47:16.790102+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.json",
+          "metadataSha256": "a5b1e34fa2ff82aa58026a1b749ce50e383fb04d3c0d4c828d3babe6d20259e1",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.log",
+          "logSha256": "9cc3000c0a5ae2c671a9b2f684ddaa6b706b6c10e3863f4eeb644b19aa72af5b",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T05:47:16.815244+00:00",
+        "completedAt": "2026-10-04T05:47:21.667480+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.json",
+          "metadataSha256": "3fce7ef85e1ea2db99ffdcdcca246eb5dace074f69c59d19440e79215be06a8d",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T05:47:21.697507+00:00",
+        "completedAt": "2026-10-04T05:47:21.849949+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.json",
+          "metadataSha256": "c00d67f539a8d526e132a635cefd5d27cc6ffda5a7cd382471f02a791976bbdc",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "structure",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/quality/check-structure.js",
+          "--strict"
+        ],
+        "startedAt": "2026-10-04T05:47:21.877147+00:00",
+        "completedAt": "2026-10-04T05:47:22.243345+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.json",
+          "metadataSha256": "44cad9571a3d8e96732a27336c8319879053cd8ca72d70baef53445e7ea7428f",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.log",
+          "logSha256": "9eaf4d9b828a801d696bbb674490e9a97f4991cff4517b8758cf03a1307dd1fb",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "legacyStructureInterpretation": "Strict structure exited 1 with 265 inherited violations, down from 268; zero new or worsened violations and all seven actual legacy growth cases removed. The baseline was not expanded.",
+    "editorOwnershipNode26": {
+      "name": "node26-editor-ownership",
+      "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a24-editor-model-ownership.test.js",
+        "tests/a19-document-models.test.js",
+        "tests/a19-prepared-documents.test.js",
+        "tests/a24-studio-document-policy.test.js",
+        "tests/a20-editor-integration-corrections.test.js"
+      ],
+      "startedAt": "2026-10-04T06:11:27.452852+00:00",
+      "completedAt": "2026-10-04T06:11:30.809759+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 40,
+        "suites": 0,
+        "pass": 40,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/node26-editor-ownership.json",
+        "metadataSha256": "c9cb09d63aea4f64eec0cfb81ae02ce6c89859ea0119e311592ab9596b1d60a5",
+        "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/node26-editor-ownership.tap",
+        "logSha256": "67ad009406da89d9b8bb1a2230d49dc7fd6370644122c2cf5b35289f10ebb2a9",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "editorOwnershipGates": [
+      {
+        "name": "check",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T06:11:30.837360+00:00",
+        "completedAt": "2026-10-04T06:11:35.457035+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/check.json",
+          "metadataSha256": "f735688980ac7d3b9933d698f9b1bb8bfc8aed1fd565d5e2fdbaa5b33724235b",
+          "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/check.log",
+          "logSha256": "6bd7a60c31519819e28b81ceae42740fdc868d9b14eda80f73e3035939592120",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T06:11:35.481970+00:00",
+        "completedAt": "2026-10-04T06:11:40.226787+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/build.json",
+          "metadataSha256": "2403e57df0423704b61621f737037274907d32bd1c54f7ec7b8b4c41c390f73b",
+          "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T06:11:40.259884+00:00",
+        "completedAt": "2026-10-04T06:11:40.406153+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/clean-checkout.json",
+          "metadataSha256": "703c40a8258387646b062310d9a9f3bc3114ce653d273788ea1a34264a1fb6b7",
+          "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "actualEntryBrowser": [
+      {
+        "name": "browser-release13",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T05:52:24.825060+00:00",
+        "completedAt": "2026-10-04T05:52:30.715516+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-release13.json",
+          "metadataSha256": "1c49c559ead079205ddf7ac090c10a754b95a393d4cc6096619ad15cfbe7a202",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-e9f8a8cd/browser-release13.log",
+          "logSha256": "20b5603d71b38fcb10c835679ca429d5f8601f1c02e99ff848226cceef2b6f7d",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [],
+        "status": "failed before completing the suite",
+        "diagnosis": "The initial actual-entry run failed during workspace.load before any designer check; later editor ownership corrections are recorded separately.",
+        "completedCheckCount": 0
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-362f1337",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T06:12:34.995667+00:00",
+        "completedAt": "2026-10-04T06:13:13.405873+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.json",
+          "metadataSha256": "2556cd8c1733570a9d42e8628f8b553212d88d5303ab9e209c78b3fd5fe0834a",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.log",
+          "logSha256": "feaaf1c20fafc8e4e5cbf3580c39f34d299367705a43f1f3909a4390d624565e",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Three checks passed. Root identified the obsolete textarea .fill fixture as the source-input failure; the follow-up fixture uses the virtual editor selection and keyboard path.",
+        "rerun": "pending the root-coordinated correction and qualification",
+        "completedCheckCount": 3
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-7d558dab",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T06:17:16.000584+00:00",
+        "completedAt": "2026-10-04T06:17:26.651269+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.json",
+          "metadataSha256": "27c4a1a6df96dd1894452cb05597a1812ce876d8784724c63d93a9fe527bb419",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.log",
+          "logSha256": "801d2f1ec433e7823406b7509e4efaffb219b4b69f6cb65d7d260d2b0e1de228",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte",
+          "real source editor input updates the design preview automatically",
+          "source undo and redo resynchronize the preview without replacing the editor"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Five checks passed, including actual source input and undo/redo. Shortening the document exposed a real stale status-column error: RangeError: Visual column offset outside document. The unlocked StatusPosition correction and regressions are being handled by its owner.",
+        "rerun": "pending the root-coordinated correction and qualification",
+        "completedCheckCount": 5
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-886fb139",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T06:37:30.663337+00:00",
+        "completedAt": "2026-10-04T06:38:16.020984+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-release13.json",
+          "metadataSha256": "6c5746f5e5fe2f2248d7a9444a12bf8f9dae968741ee18771ca63cdfe3f31847",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-886fb139/browser-release13.log",
+          "logSha256": "49369eab59bcb3e4d180ee987a6452e205e2241176811bc24e9dab1d3fd24489",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte",
+          "real source editor input updates the design preview automatically",
+          "source undo and redo resynchronize the preview without replacing the editor",
+          "incomplete C# keeps the last valid preview and recovers when corrected",
+          "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+          "concurrent source and designer edits are rejected without overwriting either side",
+          "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+          "device presets and Design/Split/C#/Preview views use the original editor and artboard"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Ten designer checks passed, including recovery from incomplete source, structural edits, concurrent-edit rejection, dynamic-expression preservation and mode changes. The retained event-handler/UI launch case then timed out waiting for sharpforge.getState().debug?.uiActive.",
+        "rerun": "pending the root-coordinated runtime event-capture correction and qualification",
+        "completedCheckCount": 10
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T06:53:49.606298+00:00",
+        "completedAt": "2026-10-04T06:54:35.695797+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-release13.json",
+          "metadataSha256": "090b9a5515c81e3161643a06f8a5343f225315e1410e104fa85b044e94d7522f",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/browser-release13.log",
+          "logSha256": "c2f1f0e830ed60212d623202f35d937f0ce94b062dd08f29793ae65dd65da393",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte",
+          "real source editor input updates the design preview automatically",
+          "source undo and redo resynchronize the preview without replacing the editor",
+          "incomplete C# keeps the last valid preview and recovers when corrected",
+          "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+          "concurrent source and designer edits are rejected without overwriting either side",
+          "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+          "device presets and Design/Split/C#/Preview views use the original editor and artboard"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Ten checks passed with no page errors after the ExecutionCapture fix. Launch still returned a worker TypeError before any app started; retained trace analysis localized a second timer receiver in RuntimeActivity.",
+        "completedCheckCount": 10
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T07:07:18.073299+00:00",
+        "completedAt": "2026-10-04T07:07:40.767233+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-release13.json",
+          "metadataSha256": "50d8c736578c0ab0281c2b64d8d0a80d652ec576c48851135f88671f4909c083",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-7d4c97d2/browser-release13.log",
+          "logSha256": "e755e5d20a43c92d627841ea7a60e9358768809deea166d71e914ccd727375cc",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte",
+          "real source editor input updates the design preview automatically",
+          "source undo and redo resynchronize the preview without replacing the editor",
+          "incomplete C# keeps the last valid preview and recovers when corrected",
+          "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+          "concurrent source and designer edits are rejected without overwriting either side",
+          "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+          "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+          "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+          "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+          "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+          "source VM real worker clock animates after Main and runs managed Completed handler",
+          "direct CIL real worker clock animates after Main and runs managed Completed handler"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Fifteen checks passed with no page errors, including UI event handlers and source/direct-CIL worker clocks. The final legacy assertion counted all workers ever created and required exactly two; the incoming workbench owns per-project/per-application worker lifetimes. The fixture-only correction checks live ownership, identity, disposal and churn.",
+        "completedCheckCount": 15
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T07:17:36.638015+00:00",
+        "completedAt": "2026-10-04T07:17:58.184298+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.json",
+          "metadataSha256": "b82b5a0b73d00b870c72e27fb86134dacc4e91f5b7cdbe1bdc455067593fc9e8",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/browser-release13.log",
+          "logSha256": "97255d7614ff8ffaca33acfe84263580d3c3c1bb84a58e709f0af8f12ef1dce0",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte",
+          "real source editor input updates the design preview automatically",
+          "source undo and redo resynchronize the preview without replacing the editor",
+          "incomplete C# keeps the last valid preview and recovers when corrected",
+          "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+          "concurrent source and designer edits are rejected without overwriting either side",
+          "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+          "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+          "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+          "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+          "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+          "source VM real worker clock animates after Main and runs managed Completed handler",
+          "direct CIL real worker clock animates after Main and runs managed Completed handler",
+          "all integration workflows finish without page errors or unowned and churned workers"
+        ],
+        "status": "passed",
+        "diagnosis": "All sixteen Release13 checks passed against built committed actual Studio over CSP HTTP and real workers. The final fixture checks live workbench worker owners and rejects unowned or churned workers; no proposed entry was applied or executed.",
+        "completedCheckCount": 16,
+        "suite": "Release13",
+        "complete": true,
+        "pageErrors": [],
+        "validationRecord": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results/browser-release13-validation.json",
+        "validationRecordSha256": "5c3fbdd1c79b5266463a312a515e169d78d6dcd3531542b4f65e2541bf117432",
+        "validation": {
+          "checks": [
+            {
+              "name": "connect an existing hand-written construction method without replacing source or workers",
+              "passed": true,
+              "milliseconds": 1271.65
+            },
+            {
+              "name": "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+              "passed": true,
+              "milliseconds": 283.48
+            },
+            {
+              "name": "designer property changes compile-check a minimal C# edit and preserve every other byte",
+              "passed": true,
+              "milliseconds": 540.34
+            },
+            {
+              "name": "real source editor input updates the design preview automatically",
+              "passed": true,
+              "milliseconds": 821.57
+            },
+            {
+              "name": "source undo and redo resynchronize the preview without replacing the editor",
+              "passed": true,
+              "milliseconds": 1150.31
+            },
+            {
+              "name": "incomplete C# keeps the last valid preview and recovers when corrected",
+              "passed": true,
+              "milliseconds": 1387.28
+            },
+            {
+              "name": "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+              "passed": true,
+              "milliseconds": 526.07
+            },
+            {
+              "name": "concurrent source and designer edits are rejected without overwriting either side",
+              "passed": true,
+              "milliseconds": 598.54
+            },
+            {
+              "name": "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+              "passed": true,
+              "milliseconds": 1526.72
+            },
+            {
+              "name": "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+              "passed": true,
+              "milliseconds": 1760.68
+            },
+            {
+              "name": "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+              "passed": true,
+              "milliseconds": 1110.78
+            },
+            {
+              "name": "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+              "passed": true,
+              "milliseconds": 55.2
+            },
+            {
+              "name": "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+              "passed": true,
+              "milliseconds": 167.41
+            },
+            {
+              "name": "source VM real worker clock animates after Main and runs managed Completed handler",
+              "passed": true,
+              "milliseconds": 1817.34
+            },
+            {
+              "name": "direct CIL real worker clock animates after Main and runs managed Completed handler",
+              "passed": true,
+              "milliseconds": 1875.09
+            },
+            {
+              "name": "all integration workflows finish without page errors or unowned and churned workers",
+              "passed": true,
+              "milliseconds": 2632.88
+            }
+          ],
+          "errors": [],
+          "workers": 10,
+          "liveWorkers": 1,
+          "workerOwners": {
+            "compilers": [
+              {
+                "id": "$workspace",
+                "name": "compiler:$workspace",
+                "generation": 1
+              }
+            ],
+            "applications": [],
+            "resources": {
+              "limit": 4,
+              "count": 0,
+              "live": 0
+            },
+            "valid": true,
+            "distinct": true
+          },
+          "workerHistory": [
+            {
+              "id": 1,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            },
+            {
+              "id": 2,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            },
+            {
+              "id": 3,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            },
+            {
+              "id": 4,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            },
+            {
+              "id": 5,
+              "url": "http://127.0.0.1:42073/runtime.worker.js"
+            },
+            {
+              "id": 6,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            },
+            {
+              "id": 7,
+              "url": "http://127.0.0.1:42073/runtime.worker.js"
+            },
+            {
+              "id": 8,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            },
+            {
+              "id": 9,
+              "url": "http://127.0.0.1:42073/runtime.worker.js"
+            },
+            {
+              "id": 10,
+              "url": "http://127.0.0.1:42073/compiler.worker.js"
+            }
+          ],
+          "harness": "CSP HTTP and real workers"
+        },
+        "buildSourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "buildEquivalence": "finalBuildBrowserEquivalence"
+      }
+    ],
+    "pending": [
+      "Application and runtime qualification of the proposed entry after the root reconciles protected ownership.",
+      "Storage handle persistence, Web Locks and final Explorer/corpus browser acceptance remain separate from the passing Release13 suite.",
+      "Windows-only native target execution and other unrun browser/platform cells remain unqualified."
+    ],
+    "historicalFailedScopes": [
+      {
+        "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "node": "26.10.0",
+        "tests": 1875,
+        "pass": 1809,
+        "fail": 66,
+        "note": "Initial synchronized run retained; later green evidence does not rewrite this result."
+      },
+      {
+        "sourceCommit": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "node": "26.10.0",
+        "tests": 260,
+        "pass": 259,
+        "fail": 1,
+        "note": "Affected replay retained; remaining native resource-staleness wrapper was corrected later."
+      }
+    ],
+    "ownedAndRelatedCases": [
+      {
+        "path": "tests/a24-workbench-project-composition.test.js",
+        "cases": 7,
+        "passed": 7,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      },
+      {
+        "path": "tests/a24-workbench-feature-callbacks.test.js",
+        "cases": 4,
+        "passed": 4,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      },
+      {
+        "path": "tests/a24-workbench-debug-provenance.test.js",
+        "cases": 4,
+        "passed": 4,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      },
+      {
+        "path": "tests/a24-workbench-workspace-ports.test.js",
+        "cases": 5,
+        "passed": 5,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      },
+      {
+        "path": "tests/a19-studio-diagnostic-producers.test.js",
+        "cases": 5,
+        "passed": 5,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "fd4b12f0fefccb262c056b7c66f9440ee2eae809425abb96fc285c0598994999",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      },
+      {
+        "path": "tests/a24-xaml-reopen.test.js",
+        "cases": 3,
+        "passed": 3,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "c659a708abee7bfc6b7c08293a23cc9197ca3c00c2b4ee6dabb2734d3057a277",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      },
+      {
+        "path": "tests/a23-project-runtime-input.test.js",
+        "cases": 3,
+        "passed": 3,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "sha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456",
+        "alsoMatchesAdapterSources": [
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+        ]
+      }
+    ],
+    "statusAndRetainedNode26": {
+      "name": "node26-final-status-and-retained",
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a24-09-wizard-provider.test.js",
+        "tests/a24-disk-scan.test.js",
+        "tests/a24-provider-files.test.js",
+        "tests/a24-reload-coordinator.test.js",
+        "tests/a24-save-locks.test.js",
+        "tests/a24-vfs-memory.test.js",
+        "tests/a24-vfs-native.test.js",
+        "tests/a24-workspace-reconcile.test.js",
+        "tests/a24-status-caret-ownership.test.js",
+        "tests/a19-shell-boundaries.test.js",
+        "tests/a24-editor-model-ownership.test.js"
+      ],
+      "startedAt": "2026-10-04T06:36:13.502944+00:00",
+      "completedAt": "2026-10-04T06:36:19.958226+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 43,
+        "suites": 0,
+        "pass": 43,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.json",
+        "metadataSha256": "1d98d52787b5d9c446ef8210227ad5385c12f221ba9786fdf72da63d061a8ec1",
+        "logPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/node26-final-status-and-retained.tap",
+        "logSha256": "34ff5a4b7e33c83883ee815a2ece3f93d26f55c47388a42f23269d61499e7595",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "statusAndRetainedGates": [
+      {
+        "name": "check",
+        "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T06:36:19.991600+00:00",
+        "completedAt": "2026-10-04T06:36:24.057256+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/check.json",
+          "metadataSha256": "5417d38548cb8f577e05406a891618d8fb86498ec4b54bd201a3b7a14839e61a",
+          "logPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/check.log",
+          "logSha256": "2d04264868582f5dd0aaa9436544f52153ca9e68a33475d5555cbb297c2406ef",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T06:36:24.078424+00:00",
+        "completedAt": "2026-10-04T06:36:28.526686+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/build.json",
+          "metadataSha256": "6b44311cdbf0269fa51196d28dc3a3fe94fa70108bd8c0d004b75cf5013f1024",
+          "logPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T06:36:28.550781+00:00",
+        "completedAt": "2026-10-04T06:36:28.675948+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/clean-checkout.json",
+          "metadataSha256": "1c2f2c8b6997b9146c3d3b3be6ef2cee1932189b0ebeb0257f698f2b640ece98",
+          "logPath": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "runtimeSessionProbe": {
+      "name": "browser-runtime-session-probe",
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/dev/shm/p18-final-prepared/run-final-browser.py",
+        "--source",
+        "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "--suite",
+        "runtime-session-probe",
+        "--output",
+        "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139",
+        "--inside-slot"
+      ],
+      "startedAt": "2026-10-04T06:46:46.062849+00:00",
+      "completedAt": "2026-10-04T06:46:52.121574+00:00",
+      "exitCode": 1,
+      "summary": null,
+      "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139/browser-runtime-session-probe.json",
+        "metadataSha256": "c19f0d2615be196096c2d878b841418004241810d87ed6ccc007c4475709ba87",
+        "logPath": "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139/browser-runtime-session-probe.log",
+        "logSha256": "dba0b852e283158346df0f378251efe859a3b9f649679755fc23c82bc751f131",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      },
+      "kind": "diagnostic-only browser probe of the actual canonical runtime session",
+      "status": "captured a runtime launch failure; not a passing runtime qualification",
+      "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+      "probeResultPath": "/tmp/p18-final-qualification-logs/runtime-session-probe-886fb139/results/runtime-session-probe.json",
+      "probeResultSha256": "6f7b1d118921a68653e6e9a81e6d7f76cda6b5e254eefc4a14ae1184cf581e01",
+      "fixture": "Unchanged SOURCE literal from tests/browser_release13_test.py",
+      "fixtureSha256": "eb302b2a89a51de02e83d31f17a030bd2545bab1a2b6d90ff9e1ad25f0400872",
+      "sourceSha256": "1c80e4f38dab455d49832ec1a3c3fb233f1109e50b5dda2e552dc63cd137e594",
+      "steps": [
+        {
+          "name": "stop",
+          "phase": "before"
+        },
+        {
+          "name": "stop",
+          "phase": "after",
+          "seconds": 0.014
+        },
+        {
+          "name": "disconnect-designer",
+          "phase": "before"
+        },
+        {
+          "name": "disconnect-designer",
+          "phase": "after",
+          "seconds": 0.06
+        },
+        {
+          "name": "load-source",
+          "phase": "before"
+        },
+        {
+          "name": "load-source",
+          "phase": "after",
+          "seconds": 0.671
+        },
+        {
+          "name": "build",
+          "phase": "before"
+        },
+        {
+          "name": "build",
+          "phase": "after",
+          "seconds": 0.042
+        },
+        {
+          "name": "run",
+          "phase": "before"
+        },
+        {
+          "name": "run",
+          "phase": "after",
+          "seconds": 0.655
+        }
+      ],
+      "runtimeReady": false,
+      "nestedError": {
+        "name": "TypeError",
+        "message": "Illegal invocation",
+        "stack": "TypeError: Illegal invocation\n    at ExecutionCapture.wake (http://127.0.0.1:48297/workbench/tools/execution-capture.js:65:23)\n    at Object.listener (http://127.0.0.1:48297/workbench/tools/execution-capture.js:54:74)\n    at WorkbenchEvents.emit (http://127.0.0.1:48297/workbench/state-events.js:39:23)\n    at SessionManager.receive (http://127.0.0.1:48297/workbench/session-manager.js:60:17)\n    at Object.listener (http://127.0.0.1:48297/workbench/session-manager.js:52:64)\n    at WorkbenchEvents.emit (http://127.0.0.1:48297/workbench/state-events.js:39:23)\n    at AppSession.emit (http://127.0.0.1:48297/workbench/app-session.js:78:17)\n    at AppSession.receive (http://127.0.0.1:48297/workbench/app-session.js:122:41)\n    at Object.onEvent (http://127.0.0.1:48297/workbench/app-session.js:56:42)\n    at WorkerClient.receive (http://127.0.0.1:48297/workbench/worker-client.js:63:29)"
+      },
+      "errorContainment": "AggregateError at AppSession/SessionManager event delivery contains the ExecutionCapture.wake TypeError.",
+      "pageErrors": [
+        "Workbench event listeners failed"
+      ],
+      "notQualified": [
+        "Complete Release13 suite",
+        "Explorer corpus",
+        "Proposed Studio entry",
+        "Other engines/platforms"
+      ],
+      "sourcePatchApplied": false,
+      "proposedEntryExecuted": false,
+      "browserVersion": "153.0.8010.12",
+      "relevantSource": {
+        "path": "apps/studio/workbench/tools/execution-capture.js",
+        "sha256": "03cf20ffe0c3f49fd07efbcb34e46105423d5b7eb68673421a3af81f717ba04e"
+      }
+    },
+    "recordInterpretation": "Historical observations, failures and pending-at-the-time descriptions remain intact. Later completed results are appended and scoped to their exact source and suite.",
+    "captureTimerNegativeControl": {
+      "name": "node26-capture-timer-negative",
+      "sourceCommit": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-execution-capture-timer-owner.test.js"
+      ],
+      "startedAt": "2026-10-04T06:52:27.814548+00:00",
+      "completedAt": "2026-10-04T06:52:28.078783+00:00",
+      "exitCode": 1,
+      "summary": {
+        "tests": 2,
+        "suites": 0,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/node26-capture-timer-negative.json",
+        "metadataSha256": "c4dcd36ebe3750fe3b5496d7b8f5e44769d11713b1931bc6a35a41756a5b0f26",
+        "logPath": "/tmp/p18-final-qualification-logs/capture-timer-negative-2ecaddeda/node26-capture-timer-negative.tap",
+        "logSha256": "35e4753934ff6b5d1378029297653c9873854cef5c8db488a4834c4f33f2b0be",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      },
+      "interpretation": "Both regression cases failed before the receiver fix; this expected red control is retained as failure evidence."
+    },
+    "captureTimerNode26": {
+      "name": "node26-capture-timer-final",
+      "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-execution-capture-timer-owner.test.js",
+        "tests/a19-execution-capture.test.js"
+      ],
+      "startedAt": "2026-10-04T06:52:45.355771+00:00",
+      "completedAt": "2026-10-04T06:52:45.752879+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 11,
+        "suites": 0,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.json",
+        "metadataSha256": "df6726d99678e25fb04927655cd523f48f0497f0fdf7a5aea8ae5a22d148ca5c",
+        "logPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap",
+        "logSha256": "923da70d2cba0f13fd8c3a6c73bd2f5a4ca0981ddde799405a87cfa4dbb6a9a9",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "captureTimerGates": [
+      {
+        "name": "check",
+        "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T06:52:45.782729+00:00",
+        "completedAt": "2026-10-04T06:52:50.635146+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/check.json",
+          "metadataSha256": "8e4ce1585fdc9c594b31dc0f68c2fdfb86bc9b4d21c89bcac8b1d5c3d8d6d99b",
+          "logPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/check.log",
+          "logSha256": "76d3a7acde398f764a5c884dd50829606b34660285656fee838be182585f48ec",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T06:52:50.659038+00:00",
+        "completedAt": "2026-10-04T06:52:55.258494+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/build.json",
+          "metadataSha256": "9930f16aacaf87ee6c81c9406fe5df4c10acdce3df23553af5bdcae692a8aee7",
+          "logPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T06:52:55.298817+00:00",
+        "completedAt": "2026-10-04T06:52:55.451525+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/clean-checkout.json",
+          "metadataSha256": "6d9b16cca57725950bb55b92239c5641039ef8b72e0e7ac1cd4de58eb35c7897",
+          "logPath": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "runtimeTimerNegativeControl": {
+      "name": "node26-runtime-timer-negative",
+      "sourceCommit": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-runtime-activity-timer-owner.test.js"
+      ],
+      "startedAt": "2026-10-04T07:05:37.470196+00:00",
+      "completedAt": "2026-10-04T07:05:39.807752+00:00",
+      "exitCode": 1,
+      "summary": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/node26-runtime-timer-negative.json",
+        "metadataSha256": "403fd9db4ab4d122c069e9d54bc6a19eb820ecca7d550190751799345bc41313",
+        "logPath": "/tmp/p18-final-qualification-logs/runtime-timer-negative-2db6a9ac/node26-runtime-timer-negative.tap",
+        "logSha256": "29c45b46d7482200e12717e55050bdcd46e22a9f336da682c0346f1479083a75",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      },
+      "interpretation": "All three worker timer regression cases failed before the receiver fix; this expected red control is retained as failure evidence."
+    },
+    "runtimeTimerNode26": {
+      "name": "node26-runtime-timer-final",
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-runtime-activity-timer-owner.test.js",
+        "tests/a19-execution-capture-timer-owner.test.js",
+        "tests/a19-execution-capture.test.js",
+        "tests/a19-execution-occupancy.test.js",
+        "tests/a19-runtime-worker-launch.test.js",
+        "tests/a19-execution-worker.test.js"
+      ],
+      "startedAt": "2026-10-04T07:06:23.257306+00:00",
+      "completedAt": "2026-10-04T07:06:37.049399+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.json",
+        "metadataSha256": "b5b1f8587dd8c86af3aed4dccf54c76d92f35d478014cfa415482215c041f16c",
+        "logPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap",
+        "logSha256": "bf7e8d658a8ac6315bc9f56d0b180d378c1d34550c97e7de2189ba277ef4a16a",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "runtimeTimerGates": [
+      {
+        "name": "check",
+        "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T07:06:37.078987+00:00",
+        "completedAt": "2026-10-04T07:06:41.614345+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/check.json",
+          "metadataSha256": "bca857d9008ed07b0c5e2c9f74103635346e9fbaab0a2a225e6183cf306b8e2d",
+          "logPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/check.log",
+          "logSha256": "448cca54e7330332f85569a39d4f20cd049e4d12c8ac5b8e28ee4df6a0bc8e03",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T07:06:41.638826+00:00",
+        "completedAt": "2026-10-04T07:06:45.482597+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/build.json",
+          "metadataSha256": "76424a6a38242172b0ebd80aee56d56de539d72768e37d913314f25d7105b5b1",
+          "logPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T07:06:45.504764+00:00",
+        "completedAt": "2026-10-04T07:06:45.631675+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/clean-checkout.json",
+          "metadataSha256": "85fe4c6ed08b18287b46888d7033c6de3324aa2f0cd2f7e1874e2e1af94d701a",
+          "logPath": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "finalBuildBrowserEquivalence": {
+      "buildSourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "browserSourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "browserSourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+      "changedPaths": [
+        "tests/browser_release13_test.py"
+      ],
+      "interpretation": "Only the browser qualification fixture changes; the previously successful build at7d4 is reused without rerunning product build or Node tests. The actual committed entry remains unchanged.",
+      "entrySha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+      "buildSourceTree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd",
+      "authoringRecord": "/workspace/scratch/3e16369943fd/p18-publication/final-browser-build-equivalence.json",
+      "authoringRecordSha256": "4c8bdb6a530e8a77d8ae49eb558808462a2fd7f6de3c7daeda1bb992d50543fa",
+      "verifiedByReadOnlyGitDiff": true
+    },
+    "actualEntryBrowserLatest": {
+      "suite": "Release13",
+      "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "tree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+      "complete": true,
+      "passedChecks": 16,
+      "pageErrors": [],
+      "exitCode": 0,
+      "buildSourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "buildSourceTree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd",
+      "doesNotQualify": [
+        "Proposed entry",
+        "Storage handle persistence",
+        "Web Locks",
+        "Final Explorer corpus flows",
+        "Other browser/platform targets"
+      ]
+    },
+    "runtimeWorkerLaunchTrace": {
+      "record": "/tmp/p18-final-qualification-logs/designer-release13-de9a5e8f/runtime-launch-return.json",
+      "sha256": "48a23969499a1133b4d1762b64c312a64d52f0ba96884d70f0eb00de6e5b29e8",
+      "data": {
+        "kind": "read-only-existing-trace-analysis",
+        "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+        "traceRelativePath": "results/browser_release13_test/trace.zip",
+        "traceSha256": "f9bab505086910492fd0679ed84f1d236a5deb667798ef46a81e08acbaf4236b",
+        "member": "trace.trace",
+        "callId": "call@457",
+        "rawRecords": [
+          {
+            "type": "before",
+            "callId": "call@457",
+            "startTime": 13864.189,
+            "class": "Frame",
+            "method": "evaluateExpression",
+            "params": {
+              "expression": "sharpforge.run()",
+              "arg": {
+                "value": {
+                  "v": "null"
+                },
+                "handles": []
+              }
+            }
+          },
+          {
+            "type": "after",
+            "callId": "call@457",
+            "endTime": 14695.813,
+            "result": {
+              "value": {
+                "o": [
+                  {
+                    "k": "id",
+                    "v": {
+                      "s": "launch:1"
+                    }
+                  },
+                  {
+                    "k": "started",
+                    "v": {
+                      "a": [],
+                      "id": 2
+                    }
+                  },
+                  {
+                    "k": "failed",
+                    "v": {
+                      "a": [
+                        {
+                          "o": [
+                            {
+                              "k": "projectId",
+                              "v": {
+                                "s": "$workspace"
+                              }
+                            },
+                            {
+                              "k": "error",
+                              "v": {
+                                "e": {
+                                  "n": "TypeError",
+                                  "m": "Illegal invocation",
+                                  "s": "TypeError: Illegal invocation\n    at workbenchError (http://127.0.0.1:56827/workbench/state-events.js:58:17)\n    at WorkerClient.receive (http://127.0.0.1:56827/workbench/worker-client.js:71:21)\n    at worker.onmessage (http://127.0.0.1:56827/workbench/worker-client.js:39:12)"
+                                }
+                              }
+                            }
+                          ],
+                          "id": 4
+                        }
+                      ],
+                      "id": 3
+                    }
+                  },
+                  {
+                    "k": "cancelled",
+                    "v": {
+                      "a": [],
+                      "id": 5
+                    }
+                  }
+                ],
+                "id": 1
+              }
+            }
+          }
+        ],
+        "decodedLaunchResult": {
+          "id": "launch:1",
+          "started": [],
+          "failed": [
+            {
+              "projectId": "$workspace",
+              "error": {
+                "name": "TypeError",
+                "message": "Illegal invocation",
+                "stack": "TypeError: Illegal invocation\n    at workbenchError (http://127.0.0.1:56827/workbench/state-events.js:58:17)\n    at WorkerClient.receive (http://127.0.0.1:56827/workbench/worker-client.js:71:21)\n    at worker.onmessage (http://127.0.0.1:56827/workbench/worker-client.js:39:12)"
+              }
+            }
+          ],
+          "cancelled": []
+        },
+        "inference": "The run call returned a worker TypeError before any app started. The current runtime launch emits its reset UI event and then RuntimeActivity.start stores and invokes an unbound host timer before loaded/state events."
+      },
+      "interpretation": "Historical read-only trace analysis; the later runtime timer regression and final browser outcome are distinct records."
+    },
+    "storageAndCorpusBoundaries": {
+      "separateFromRelease13": true,
+      "storageSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "storageRecord": "/tmp/p18-final-qualification-logs/storage-probe-e9f8a8cd/results/storage-boundary-probe.json",
+      "storageRecordSha256": "60d2b1b703a7abb376c8d8e482fd22d9e5b5143ce5847668d469bf5853792962",
+      "completedPrimitiveSteps": [
+        "production-http-csp",
+        "opfs-write-read",
+        "idb-open",
+        "idb-plain-put",
+        "idb-plain-get",
+        "idb-handle-put"
+      ],
+      "failedDuring": "IndexedDB filesystem-handle get",
+      "rootReportedProcessSignal": "SIGTRAP",
+      "notReached": [
+        "handle isSameEntry comparison",
+        "Web Locks probe"
+      ],
+      "notQualified": [
+        "Final Explorer/session corpus browser flows",
+        "Operating-system picker",
+        "Recent-handle restore",
+        "Other browser engines"
+      ],
+      "interpretation": "The storage process failure remains a distinct boundary. Release13 does not exercise or qualify these later operations; no crash cause is inferred."
+    }
+  },
+  "dependencyNote": "Five workspace dependency records need eight internal @sharpforge0.14.0 declarations. Canonical main lock bytes are retained in the actual source; no external dependency is introduced.",
+  "historicalPreparation": "historical-3ed2eb82 retains all three prior patch and metadata files byte-for-byte.",
+  "adapterTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "latestBrowserSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "reviewUpdatedAt": "2026-10-04T07:25:36.383796+00:00",
+  "generator": {
+    "path": "prepare-studio-entry.py",
+    "role": "Historical authoring source, retained unchanged for review.",
+    "portable": false,
+    "note": "Contains original authoring scratch paths and depends on captured inputs outside this subtree. Do not run it as a portable regenerator.",
+    "reviewableCandidate": "studio-entry.patch",
+    "executedDuringReview": false
+  },
+  "reviewHistory": [
+    {
+      "source": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "tree": "ca911994aa352381fde19f9dcf5bc9bbffbf447c",
+      "reviewUpdatedAt": "2026-10-04T06:27:27.395649+00:00",
+      "latestBrowserSource": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+      "fileSha256": {
+        "README.md": "0d4a84a320c0e345079d6182954514ba6296aabbed18aa6d5c5721882afb684b",
+        "prepared-integration.json": "1ff72830b7e09b0984d57fc10eec2aea962c4c59f18f72397974fd50abc63a5e",
+        "entry-metadata.json": "67976fae73c65bd6910c4a1f500e73b42d8480f7072f3e941947ee0b36cbabd8",
+        "entry-check.json": "b3c699fed824896b9bec2d49bc803f3d907a670391ae14ae11fdd378cc528976",
+        "entry-contract-review.json": "a85ac6eba7a72b910ca49a89af0266174685780f648d61631820e7b4352db796"
+      }
+    },
+    {
+      "source": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "tree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+      "reviewUpdatedAt": "2026-10-04T06:52:36.367634+00:00",
+      "latestBrowserSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "fileSha256": {
+        "README.md": "ec66251e9f1d7749a32c402812d346dab4f72ef9acb5e3f9581c830a2d903033",
+        "prepared-integration.json": "8d71d58ff4920c521e75d315530a8350e50628751299112d2f62866d27490237",
+        "entry-metadata.json": "e0d2779507d8d377aa7a6411d5958c3b211eae067539de3867d8ea08c1a24393",
+        "entry-check.json": "620082f7073771df0a5c4d0b1f293bf6318367da3f34078cd8fef0a9e92e2220",
+        "entry-contract-review.json": "4c23a95348af7df4ff7cf98fb2a4093b53030b97786ad25cf7c7454c1c613033"
+      }
+    }
+  ],
+  "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "productBuildTree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd",
+  "leaseObservationHistory": [
+    "Earlier exact ref/claim observations retained; must re-read before applying the prepared integration. No lease acquired, replaced or released."
+  ],
+  "finalProtectedReadback": {
+    "path": "protected-lease-readback.json",
+    "sha256": "b73827ff9b477e0cf68b0a2dde9bddca6ebc9efa59a8cbc57de3914b1c0ae28c",
+    "textChecksPassed": true,
+    "proposedEntryApplied": false,
+    "proposedEntryExecuted": false
+  }
+}

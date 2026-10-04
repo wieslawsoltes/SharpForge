@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "Legacy MSBuild actions remain present and connection starts no target",
+      "passed": true,
+      "milliseconds": 47.19971499980602
+    },
+    {
+      "name": "Untrusted profile discovery and selection are target-free visible controls",
+      "passed": true,
+      "milliseconds": 117.56036799852154
+    },
+    {
+      "name": "Context selector activates exact files, options and readonly generated sources",
+      "passed": true,
+      "milliseconds": 205.78094600023178
+    },
+    {
+      "name": "Launch button sends selected args, environment, directory and framework",
+      "passed": true,
+      "milliseconds": 79.67249100147455
+    },
+    {
+      "name": "Publish button explicitly executes selected profile through job lifecycle",
+      "passed": true,
+      "milliseconds": 72.77042799978517
+    },
+    {
+      "name": "Real portable source worker reports pass/fail/skip",
+      "passed": true,
+      "milliseconds": 1488.5337700015953
+    },
+    {
+      "name": "Real portable cil worker reports pass/fail/skip",
+      "passed": true,
+      "milliseconds": 310.52511099915137
+    },
+    {
+      "name": "Selected portable test runs in a fresh session and navigates to source",
+      "passed": true,
+      "milliseconds": 386.5838769997936
+    },
+    {
+      "name": "Native transport results expose source, artifacts and line/branch coverage",
+      "passed": true,
+      "milliseconds": 237.55214199991315
+    },
+    {
+      "name": "Native live PID handoff and cancellation leave remaining tests not-run",
+      "passed": true,
+      "milliseconds": 222.25085299942293
+    },
+    {
+      "name": "Portable tests created an actual separate worker",
+      "passed": true,
+      "milliseconds": 0.005709000106435269
+    },
+    {
+      "name": "No application or fixture JavaScript errors",
+      "passed": true,
+      "milliseconds": 6.553563998750178
+    }
+  ],
+  "errors": [],
+  "mode": "Actual Chromium, production CSP/module UI and real portable source/CIL worker; native transport fixture only"
+}

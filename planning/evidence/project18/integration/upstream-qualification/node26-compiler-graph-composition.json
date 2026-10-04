@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "843fc516e466e3571dfbe925eaa322ee1bf6cad3",
+  "node": "v26.10.0",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a23-cil-project-graph-contract.test.js",
+    "tests/a23-compiler-worker-entry.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T02:39:00.790552+00:00",
+  "log": "node26-compiler-graph-composition.tap",
+  "diskPreflight": {
+    "actualFreeBytes": 644468736,
+    "minimumFreeBytes": 536870912
+  },
+  "exitCode": 0,
+  "completedAt": "2026-10-04T02:39:04.046314+00:00",
+  "summary": {
+    "tests": 6,
+    "suites": 0,
+    "pass": 6,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

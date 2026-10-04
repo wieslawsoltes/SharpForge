@@ -1,0 +1,674 @@
+(node:61) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:76) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T11 host seam collects actual report files and exposes only retained session artifacts
+ok 1 - A23 T11 host seam collects actual report files and exposes only retained session artifacts
+  ---
+  duration_ms: 15.162152
+  type: 'test'
+  ...
+# Subtest: A23 T11 nonblocking service sessions cancel the host and leave unexecuted tests not-run
+ok 2 - A23 T11 nonblocking service sessions cancel the host and leave unexecuted tests not-run
+  ---
+  duration_ms: 7.258905
+  type: 'test'
+  ...
+# Subtest: A23 T11 adapters reject untrusted requests and never turn a missing TRX into passing tests
+ok 3 - A23 T11 adapters reject untrusted requests and never turn a missing TRX into passing tests
+  ---
+  duration_ms: 4.741782
+  type: 'test'
+  ...
+# Subtest: A23 T11 service discovery preserves HTTP source metadata and rejects oversized metadata before execution
+ok 4 - A23 T11 service discovery preserves HTTP source metadata and rejects oversized metadata before execution
+  ---
+  duration_ms: 5.136168
+  type: 'test'
+  ...
+# (node:88) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T11 TRX parses actual per-test outcomes, durations, output and attachment records
+ok 5 - A23 T11 TRX parses actual per-test outcomes, durations, output and attachment records
+  ---
+  duration_ms: 3.733963
+  type: 'test'
+  ...
+# Subtest: A23 T11 TRX rejects malformed documents, excessive results and unknown outcome success assumptions
+ok 6 - A23 T11 TRX rejects malformed documents, excessive results and unknown outcome success assumptions
+  ---
+  duration_ms: 0.84882
+  type: 'test'
+  ...
+# Subtest: A23 T11 filter arguments stay atomic and MTP has explicit TRX capability requirements
+ok 7 - A23 T11 filter arguments stay atomic and MTP has explicit TRX capability requirements
+  ---
+  duration_ms: 0.412102
+  type: 'test'
+  ...
+# Subtest: A23 T11 cancellation leaves remaining tests not-run, bounds progress and reports debugger PID
+ok 8 - A23 T11 cancellation leaves remaining tests not-run, bounds progress and reports debugger PID
+  ---
+  duration_ms: 0.889892
+  type: 'test'
+  ...
+# Subtest: A23 T11 Cobertura retains covered/uncovered lines, branch counts and diagnostics for outside-workspace files
+ok 9 - A23 T11 Cobertura retains covered/uncovered lines, branch counts and diagnostics for outside-workspace files
+  ---
+  duration_ms: 0.906016
+  type: 'test'
+  ...
+# (node:96) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T35 native and portable TestCase identities agree after source metadata enrichment
+ok 10 - A23 T35 native and portable TestCase identities agree after source metadata enrichment
+  ---
+  duration_ms: 3.035439
+  type: 'test'
+  ...
+# Subtest: A23 T35 rejects duplicate identities, malformed records, invalid durations and incomplete adapters
+ok 11 - A23 T35 rejects duplicate identities, malformed records, invalid durations and incomplete adapters
+  ---
+  duration_ms: 0.666435
+  type: 'test'
+  ...
+# (node:104) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T36 source constant ClassData remains executable without compiling discovery-only iterator declarations
+ok 12 - A23 T36 source constant ClassData remains executable without compiling discovery-only iterator declarations
+  ---
+  duration_ms: 578.471168
+  type: 'test'
+  ...
+# Subtest: A23 T36 cil constant ClassData remains executable without compiling discovery-only iterator declarations
+ok 13 - A23 T36 cil constant ClassData remains executable without compiling discovery-only iterator declarations
+  ---
+  duration_ms: 110.905644
+  type: 'test'
+  ...
+# Subtest: A23 T36 providers used by executable code or declaring state remain in the managed source
+ok 14 - A23 T36 providers used by executable code or declaring state remain in the managed source
+  ---
+  duration_ms: 3.73957
+  type: 'test'
+  ...
+# (node:112) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T39 source executes three frameworks with real assertions, per-test instances and one-time fixtures
+ok 15 - A23 T39 source executes three frameworks with real assertions, per-test instances and one-time fixtures
+  ---
+  duration_ms: 623.701505
+  type: 'test'
+  ...
+# Subtest: A23 T39 cil executes three frameworks with real assertions, per-test instances and one-time fixtures
+ok 16 - A23 T39 cil executes three frameworks with real assertions, per-test instances and one-time fixtures
+  ---
+  duration_ms: 145.695502
+  type: 'test'
+  ...
+# Subtest: A23 T39 unsupported APIs are not-runnable while supported neighboring tests execute
+ok 17 - A23 T39 unsupported APIs are not-runnable while supported neighboring tests execute
+  ---
+  duration_ms: 80.659928
+  type: 'test'
+  ...
+# Subtest: A23 T39 disposed adapters reject work and cancellation reports remaining tests not-run
+ok 18 - A23 T39 disposed adapters reject work and cancellation reports remaining tests not-run
+  ---
+  duration_ms: 4.268901
+  type: 'test'
+  ...
+# (node:120) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native connection is read-only and context hydration requires trust before any evaluation
+ok 19 - native connection is read-only and context hydration requires trust before any evaluation
+  ---
+  duration_ms: 3.594884
+  type: 'test'
+  ...
+# Subtest: active native context supplies exact source set, generated documents and metadata compiler options
+ok 20 - active native context supplies exact source set, generated documents and metadata compiler options
+  ---
+  duration_ms: 2.599312
+  type: 'test'
+  ...
+# Subtest: source read failure and cancellation never activate a partially hydrated native context
+ok 21 - source read failure and cancellation never activate a partially hydrated native context
+  ---
+  duration_ms: 0.945697
+  type: 'test'
+  ...
+# Subtest: native metadata validates identity, count, byte budgets, encoding, size and SHA-256
+ok 22 - native metadata validates identity, count, byte budgets, encoding, size and SHA-256
+  ---
+  duration_ms: 13.151714
+  type: 'test'
+  ...
+# Subtest: context application preserves edits made while reads are in flight and keeps generated source immutable
+ok 23 - context application preserves edits made while reads are in flight and keeps generated source immutable
+  ---
+  duration_ms: 0.471221
+  type: 'test'
+  ...
+# (node:132) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: launch and publish profiles are listed and selected without trust, target execution or saves
+ok 24 - launch and publish profiles are listed and selected without trust, target execution or saves
+  ---
+  duration_ms: 4.703627
+  type: 'test'
+  ...
+# Subtest: selected launch profile preserves quoted arguments, environment, URLs, cwd and active native context
+ok 25 - selected launch profile preserves quoted arguments, environment, URLs, cwd and active native context
+  ---
+  duration_ms: 2.997733
+  type: 'test'
+  ...
+# Subtest: explicit publish executes only the chosen profile and preserves build output monitoring
+ok 26 - explicit publish executes only the chosen profile and preserves build output monitoring
+  ---
+  duration_ms: 0.966529
+  type: 'test'
+  ...
+# Subtest: invalid JSON keeps a located profile diagnostic and prevents native launch
+ok 27 - invalid JSON keeps a located profile diagnostic and prevents native launch
+  ---
+  duration_ms: 0.714248
+  type: 'test'
+  ...
+# (node:140) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native client starts, streams and retains explicit TRX-derived results and artifacts
+ok 28 - native client starts, streams and retains explicit TRX-derived results and artifacts
+  ---
+  duration_ms: 5.028167
+  type: 'test'
+  ...
+# Subtest: native cancel issued as soon as session id is known preserves remaining not-run records
+ok 29 - native cancel issued as soon as session id is known preserves remaining not-run records
+  ---
+  duration_ms: 0.507645
+  type: 'test'
+  ...
+# Subtest: test explorer enforces discovery, source versions, selected ids and failure details
+ok 30 - test explorer enforces discovery, source versions, selected ids and failure details
+  ---
+  duration_ms: 2.562806
+  type: 'test'
+  ...
+# Subtest: native VSTest selection groups theory rows at the supported method filter boundary
+ok 31 - native VSTest selection groups theory rows at the supported method filter boundary
+  ---
+  duration_ms: 0.230577
+  type: 'test'
+  ...
+# Subtest: native Test Explorer forwards framework selection and server-side discovery records through real controller
+ok 32 - native Test Explorer forwards framework selection and server-side discovery records through real controller
+  ---
+  duration_ms: 2.625502
+  type: 'test'
+  ...
+# Subtest: structured asynchronous test input keeps hydrated source, compiler options and context revision together
+ok 33 - structured asynchronous test input keeps hydrated source, compiler options and context revision together
+  ---
+  duration_ms: 0.562679
+  type: 'test'
+  ...
+# Subtest: native discovery cannot run against a different project framework or property set
+ok 34 - native discovery cannot run against a different project framework or property set
+  ---
+  duration_ms: 1.344259
+  type: 'test'
+  ...
+# (node:148) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: portable worker protocol discovers and executes isolated source sessions
+ok 35 - portable worker protocol discovers and executes isolated source sessions
+  ---
+  duration_ms: 306.667886
+  type: 'test'
+  ...
+# Subtest: portable worker protocol discovers and executes isolated cil sessions
+ok 36 - portable worker protocol discovers and executes isolated cil sessions
+  ---
+  duration_ms: 189.636007
+  type: 'test'
+  ...
+# Subtest: portable worker cancellation propagates without losing the response channel
+ok 37 - portable worker cancellation propagates without losing the response channel
+  ---
+  duration_ms: 0.771233
+  type: 'test'
+  ...
+# Subtest: worker service rejects malformed, overlapping and oversized discovery requests
+ok 38 - worker service rejects malformed, overlapping and oversized discovery requests
+  ---
+  duration_ms: 0.481807
+  type: 'test'
+  ...
+# Subtest: portable discovery and execution preserve project constants while the harness owns its entry point
+ok 39 - portable discovery and execution preserve project constants while the harness owns its entry point
+  ---
+  duration_ms: 52.675589
+  type: 'test'
+  ...
+# (node:156) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Test Explorer has a unique dockable tool registration and build layout placement
+ok 40 - Test Explorer has a unique dockable tool registration and build layout placement
+  ---
+  duration_ms: 0.944114
+  type: 'test'
+  ...
+# Subtest: native automation preserves established methods and exposes controller context/profile/test operations
+ok 41 - native automation preserves established methods and exposes controller context/profile/test operations
+  ---
+  duration_ms: 5.269941
+  type: 'test'
+  ...
+# Subtest: legacy MSBuild facade shrinks and the original source selectors remain in extracted views
+ok 42 - legacy MSBuild facade shrinks and the original source selectors remain in extracted views
+  ---
+  duration_ms: 4.470496
+  type: 'test'
+  ...
+# (node:168) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: MSBuild contract supports build
+ok 43 - MSBuild contract supports build
+  ---
+  duration_ms: 2.003563
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports rebuild
+ok 44 - MSBuild contract supports rebuild
+  ---
+  duration_ms: 0.237338
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports clean
+ok 45 - MSBuild contract supports clean
+  ---
+  duration_ms: 0.119971
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports restore
+ok 46 - MSBuild contract supports restore
+  ---
+  duration_ms: 4.649714
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports pack
+ok 47 - MSBuild contract supports pack
+  ---
+  duration_ms: 0.230828
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports publish
+ok 48 - MSBuild contract supports publish
+  ---
+  duration_ms: 0.129665
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports test
+ok 49 - MSBuild contract supports test
+  ---
+  duration_ms: 0.186001
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports target
+ok 50 - MSBuild contract supports target
+  ---
+  duration_ms: 0.082384
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports evaluate
+ok 51 - MSBuild contract supports evaluate
+  ---
+  duration_ms: 0.317499
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports preprocess
+ok 52 - MSBuild contract supports preprocess
+  ---
+  duration_ms: 0.414936
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports targets
+ok 53 - MSBuild contract supports targets
+  ---
+  duration_ms: 0.224058
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "../outside.csproj"
+ok 54 - MSBuild rejects invalid workspace path "../outside.csproj"
+  ---
+  duration_ms: 0.355036
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "/tmp/X.csproj"
+ok 55 - MSBuild rejects invalid workspace path "/tmp/X.csproj"
+  ---
+  duration_ms: 0.1125
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "C:\\\\X.csproj"
+ok 56 - MSBuild rejects invalid workspace path "C:\\\\X.csproj"
+  ---
+  duration_ms: 0.082134
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a/../X.csproj"
+ok 57 - MSBuild rejects invalid workspace path "a/../X.csproj"
+  ---
+  duration_ms: 0.070787
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a//X.csproj"
+ok 58 - MSBuild rejects invalid workspace path "a//X.csproj"
+  ---
+  duration_ms: 0.060892
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a/./X.csproj"
+ok 59 - MSBuild rejects invalid workspace path "a/./X.csproj"
+  ---
+  duration_ms: 0.059069
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "-something.csproj"
+ok 60 - MSBuild rejects invalid workspace path "-something.csproj"
+  ---
+  duration_ms: 0.068984
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "https://x.csproj"
+ok 61 - MSBuild rejects invalid workspace path "https://x.csproj"
+  ---
+  duration_ms: 0.062324
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a\\u0000.csproj"
+ok 62 - MSBuild rejects invalid workspace path "a\\u0000.csproj"
+  ---
+  duration_ms: 0.075785
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path ""
+ok 63 - MSBuild rejects invalid workspace path ""
+  ---
+  duration_ms: 0.059891
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"action":"exec"}
+ok 64 - MSBuild request rejects {"action":"exec"}
+  ---
+  duration_ms: 0.110927
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"project":"input.cs"}
+ok 65 - MSBuild request rejects {"project":"input.cs"}
+  ---
+  duration_ms: 0.071578
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"properties":[]}
+ok 66 - MSBuild request rejects {"properties":[]}
+  ---
+  duration_ms: 0.106931
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":0}
+ok 67 - MSBuild request rejects {"maxNodes":0}
+  ---
+  duration_ms: 0.108915
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":65}
+ok 68 - MSBuild request rejects {"maxNodes":65}
+  ---
+  duration_ms: 0.078759
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":1.2}
+ok 69 - MSBuild request rejects {"maxNodes":1.2}
+  ---
+  duration_ms: 0.075805
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"verbosity":"verbose"}
+ok 70 - MSBuild request rejects {"verbosity":"verbose"}
+  ---
+  duration_ms: 0.094783
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"arguments":["not-a-switch"]}
+ok 71 - MSBuild request rejects {"arguments":["not-a-switch"]}
+  ---
+  duration_ms: 0.124117
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"arguments":["-p:X=a\\nb"]}
+ok 72 - MSBuild request rejects {"arguments":["-p:X=a\\nb"]}
+  ---
+  duration_ms: 0.062454
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"targets":["x;Build"]}
+ok 73 - MSBuild request rejects {"targets":["x;Build"]}
+  ---
+  duration_ms: 0.055644
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"propertyNames":["A,B"]}
+ok 74 - MSBuild request rejects {"propertyNames":["A,B"]}
+  ---
+  duration_ms: 0.050116
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"itemNames":["*"]}
+ok 75 - MSBuild request rejects {"itemNames":["*"]}
+  ---
+  duration_ms: 0.053971
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"trusted":"true"}
+ok 76 - MSBuild request rejects {"trusted":"true"}
+  ---
+  duration_ms: 0.074873
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"restore":1}
+ok 77 - MSBuild request rejects {"restore":1}
+  ---
+  duration_ms: 0.227113
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"action":"target"}
+ok 78 - MSBuild request rejects {"action":"target"}
+  ---
+  duration_ms: 0.080792
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"properties":{"A":"1","a":"2"}}
+ok 79 - MSBuild request rejects {"properties":{"A":"1","a":"2"}}
+  ---
+  duration_ms: 0.146642
+  type: 'test'
+  ...
+# Subtest: Global property parser preserves equals, spaces, Unicode, no shell interpretation
+ok 80 - Global property parser preserves equals, spaces, Unicode, no shell interpretation
+  ---
+  duration_ms: 1.415986
+  type: 'test'
+  ...
+# Subtest: Properties escape all MSBuild special characters without shell quoting
+ok 81 - Properties escape all MSBuild special characters without shell quoting
+  ---
+  duration_ms: 0.195115
+  type: 'test'
+  ...
+# Subtest: Node invocation preserves actual engine and project path; build flags global properties
+ok 82 - Node invocation preserves actual engine and project path; build flags global properties
+  ---
+  duration_ms: 0.398381
+  type: 'test'
+  ...
+# Subtest: MSBuild.exe engine omits dotnet subcommand and forwards advanced switches separately
+ok 83 - MSBuild.exe engine omits dotnet subcommand and forwards advanced switches separately
+  ---
+  duration_ms: 0.423909
+  type: 'test'
+  ...
+# Subtest: Evaluation emits JSON queries without targets, restore or graph execution by default
+ok 84 - Evaluation emits JSON queries without targets, restore or graph execution by default
+  ---
+  duration_ms: 0.375436
+  type: 'test'
+  ...
+# Subtest: Native build calls Build
+ok 85 - Native build calls Build
+  ---
+  duration_ms: 0.207073
+  type: 'test'
+  ...
+# Subtest: Native rebuild calls Rebuild
+ok 86 - Native rebuild calls Rebuild
+  ---
+  duration_ms: 0.13258
+  type: 'test'
+  ...
+# Subtest: Native restore calls Restore
+ok 87 - Native restore calls Restore
+  ---
+  duration_ms: 0.067852
+  type: 'test'
+  ...
+# Subtest: Native pack calls Pack
+ok 88 - Native pack calls Pack
+  ---
+  duration_ms: 0.056876
+  type: 'test'
+  ...
+# Subtest: Native publish calls Publish
+ok 89 - Native publish calls Publish
+  ---
+  duration_ms: 0.173402
+  type: 'test'
+  ...
+# Subtest: Native clean calls Clean
+ok 90 - Native clean calls Clean
+  ---
+  duration_ms: 0.084497
+  type: 'test'
+  ...
+# Subtest: Native test calls VSTest
+ok 91 - Native test calls VSTest
+  ---
+  duration_ms: 0.059439
+  type: 'test'
+  ...
+# Subtest: custom targets and requested target results are explicit
+ok 92 - custom targets and requested target results are explicit
+  ---
+  duration_ms: 0.129736
+  type: 'test'
+  ...
+# Subtest: preprocessed and target listing files use the owner-provided job directory
+ok 93 - preprocessed and target listing files use the owner-provided job directory
+  ---
+  duration_ms: 0.147293
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic 1>C:\\Code Dir\\App.cs(12,7): error CS1002: ; expected [C:\\Code Dir\\App.csproj]
+ok 94 - Parses diagnostic 1>C:\\Code Dir\\App.cs(12,7): error CS1002: ; expected [C:\\Code Dir\\App.csproj]
+  ---
+  duration_ms: 0.793757
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic /tmp/A.cs(3,4,3,8): warning CS0168: unused [/tmp/App.csproj]
+ok 95 - Parses diagnostic /tmp/A.cs(3,4,3,8): warning CS0168: unused [/tmp/App.csproj]
+  ---
+  duration_ms: 0.303017
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic MSBUILD : error MSB1001: Unknown switch.
+ok 96 - Parses diagnostic MSBUILD : error MSB1001: Unknown switch.
+  ---
+  duration_ms: 0.073511
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic App.csproj : error NU1101: Package unavailable
+ok 97 - Parses diagnostic App.csproj : error NU1101: Package unavailable
+  ---
+  duration_ms: 0.046831
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic CSC : warning CS2008: No source files specified.
+ok 98 - Parses diagnostic CSC : warning CS2008: No source files specified.
+  ---
+  duration_ms: 0.046179
+  type: 'test'
+  ...
+# Subtest: Non-diagnostic output is never promoted to an error
+ok 99 - Non-diagnostic output is never promoted to an error
+  ---
+  duration_ms: 0.19251
+  type: 'test'
+  ...
+# Subtest: MSBuild JSON parsing tolerates startup banner but rejects malformed/trailing logs
+ok 100 - MSBuild JSON parsing tolerates startup banner but rejects malformed/trailing logs
+  ---
+  duration_ms: 0.357209
+  type: 'test'
+  ...
+# Subtest: Browser client uses same-origin bearer requests; token is not persisted in request URL
+ok 101 - Browser client uses same-origin bearer requests; token is not persisted in request URL
+  ---
+  duration_ms: 0.459903
+  type: 'test'
+  ...
+# Subtest: Browser client strips only the fragment token and retains unrelated hash data
+ok 102 - Browser client strips only the fragment token and retains unrelated hash data
+  ---
+  duration_ms: 0.248124
+  type: 'test'
+  ...
+# Subtest: Browser client propagates disk conflicts and rejects foreign endpoint origins
+ok 103 - Browser client propagates disk conflicts and rejects foreign endpoint origins
+  ---
+  duration_ms: 0.412483
+  type: 'test'
+  ...
+# (node:176) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Native UI reconciles earlier writes after a multi-file save failure
+ok 104 - Native UI reconciles earlier writes after a multi-file save failure
+  ---
+  duration_ms: 3.862447
+  type: 'test'
+  ...
+# Subtest: Native UI preserves changes typed while a save is in flight
+ok 105 - Native UI preserves changes typed while a save is in flight
+  ---
+  duration_ms: 0.686926
+  type: 'test'
+  ...
+# Subtest: Native UI passes target result requests without shell parsing
+ok 106 - Native UI passes target result requests without shell parsing
+  ---
+  duration_ms: 0.618082
+  type: 'test'
+  ...
+1..106
+# tests 106
+# suites 0
+# pass 106
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7156.776085

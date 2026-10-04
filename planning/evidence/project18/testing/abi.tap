@@ -1,0 +1,124 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:12) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: released framework and bytecode IDs are unchanged
+ok 1 - released framework and bytecode IDs are unchanged
+  ---
+  duration_ms: 55.343679
+  type: 'test'
+  ...
+# Subtest: golden checker reports the first changed id and accepts appends
+ok 2 - golden checker reports the first changed id and accepts appends
+  ---
+  duration_ms: 98.60894
+  type: 'test'
+  ...
+# Subtest: reserved contributions have the same IDs in either load order
+ok 3 - reserved contributions have the same IDs in either load order
+  ---
+  duration_ms: 1.176173
+  type: 'test'
+  ...
+# Subtest: legacy contribution modules validate as a single transaction
+ok 4 - legacy contribution modules validate as a single transaction
+  ---
+  duration_ms: 16.729842
+  type: 'test'
+  ...
+# Subtest: duplicate type rolls back the entire contribution
+ok 5 - duplicate type rolls back the entire contribution
+  ---
+  duration_ms: 0.759606
+  type: 'test'
+  ...
+# Subtest: duplicate member rolls back the entire contribution
+ok 6 - duplicate member rolls back the entire contribution
+  ---
+  duration_ms: 0.223067
+  type: 'test'
+  ...
+# Subtest: unknown owner rolls back the entire contribution
+ok 7 - unknown owner rolls back the entire contribution
+  ---
+  duration_ms: 0.209066
+  type: 'test'
+  ...
+# Subtest: unknown parameter rolls back the entire contribution
+ok 8 - unknown parameter rolls back the entire contribution
+  ---
+  duration_ms: 0.192651
+  type: 'test'
+  ...
+# Subtest: block overflow rolls back the entire contribution
+ok 9 - block overflow rolls back the entire contribution
+  ---
+  duration_ms: 0.393413
+  type: 'test'
+  ...
+# Subtest: malformed member rolls back the entire contribution
+ok 10 - malformed member rolls back the entire contribution
+  ---
+  duration_ms: 0.428807
+  type: 'test'
+  ...
+# Subtest: cancellation rolls back and separate registries do not leak state
+ok 11 - cancellation rolls back and separate registries do not leak state
+  ---
+  duration_ms: 0.366182
+  type: 'test'
+  ...
+# Subtest: overlapping, negative, duplicate and exhausted reservations reject
+ok 12 - overlapping, negative, duplicate and exhausted reservations reject
+  ---
+  duration_ms: 0.31175
+  type: 'test'
+  ...
+# Subtest: builtin contributions append atomically and never shift framework offsets
+ok 13 - builtin contributions append atomically and never shift framework offsets
+  ---
+  duration_ms: 49.702931
+  type: 'test'
+  ...
+# Subtest: implementation regression gate detects either engine losing a handler
+ok 14 - implementation regression gate detects either engine losing a handler
+  ---
+  duration_ms: 0.317028
+  type: 'test'
+  ...
+# Subtest: every real source/CIL dispatch result meets the committed reachability baseline
+ok 15 - every real source/CIL dispatch result meets the committed reachability baseline
+  ---
+  duration_ms: 1541.887555
+  type: 'test'
+  ...
+# Subtest: released contribution order is pinned while new area order remains independent
+ok 16 - released contribution order is pinned while new area order remains independent
+  ---
+  duration_ms: 3.014657
+  type: 'test'
+  ...
+# (node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+ok 17 - A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+  ---
+  duration_ms: 1.024064
+  type: 'test'
+  ...
+# Subtest: A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+ok 18 - A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+  ---
+  duration_ms: 0.84867
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2212.166803

@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "checkout": "/dev/shm/p18-final-qualification",
+  "startedAt": "2026-10-04T07:17:36.635708+00:00",
+  "toolchain": {
+    "node": "v26.10.0",
+    "npm": "11.19.1"
+  },
+  "environment": {
+    "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+    "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36/results",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet",
+    "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+  },
+  "steps": [
+    {
+      "name": "browser-release13",
+      "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/dev/shm/p18-final-prepared/run-final-browser.py",
+        "--source",
+        "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "--suite",
+        "release13",
+        "--output",
+        "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36",
+        "--inside-slot"
+      ],
+      "startedAt": "2026-10-04T07:17:36.638015+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 1043357696,
+        "availableBytes": 1043357696,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8561016832",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 2867540\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "browser-release13.log",
+      "completedAt": "2026-10-04T07:17:58.184298+00:00",
+      "exitCode": 0,
+      "sourceAfter": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "resourceAfter": {
+        "actualFreeBytes": 1043357696,
+        "availableBytes": 1043357696,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7738220544",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 2879097\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    }
+  ],
+  "completedAt": "2026-10-04T07:17:58.231352+00:00",
+  "finalStatus": "",
+  "summary": {
+    "commands": 1,
+    "passed": 1,
+    "failed": 0
+  }
+}

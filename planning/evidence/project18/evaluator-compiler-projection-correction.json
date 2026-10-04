@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "scope": "Compiler facade publication-only dependency correction",
+  "canonicalSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "productChanged": false,
+  "failedCore": {
+    "run": 37181993533,
+    "job": 111376260519,
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181993533/job/111376260519",
+    "path": "planning/evidence/project18/evaluator-publication/core-4401-initial.log",
+    "sha256": "0499647deb1104765926c69dd195bdb2f45f6f4b7e6de3dac566bab1957a42ff",
+    "excerpt": [
+      "2026-10-04T06:10:02.6817328Z <anonymous_script>:366",
+      "2026-10-04T06:10:02.6818679Z ",
+      "2026-10-04T06:10:02.6818857Z ",
+      "2026-10-04T06:10:02.6819576Z SyntaxError: Expected double-quoted property name in JSON at position 17891 (line 366 column 1)",
+      "2026-10-04T06:10:02.6820263Z     at JSON.parse (<anonymous>)",
+      "2026-10-04T06:10:02.6820780Z     at checkImports (file:///home/runner/work/SharpForge/SharpForge/scripts/conformance/static/check-imports.js:54:19)",
+      "2026-10-04T06:10:02.6821402Z     at file:///home/runner/work/SharpForge/SharpForge/scripts/conformance/static/check-imports.js:71:18"
+    ]
+  },
+  "cause": "A greedy projection conflict-resolution expression consumed the remaining policy and registry test suffixes. Canonical source was complete.",
+  "forwardDependency": {
+    "name": "compiler-facade-dependencies-correction",
+    "worktree": "/tmp/p18-compiler-facade-dependencies",
+    "local": "bc031320c838c8f0493e86af1d419d6ca7679ba1",
+    "remoteParents": [
+      "1d57150f952cfb4d1227d85581991b352674f46b"
+    ],
+    "branch": "codex/p18-compiler-facade-dependencies",
+    "title": "SF-A23-T27: restore complete projected registry and trusted policy records",
+    "output": "/workspace/scratch/3e16369943fd/p18-evaluator-publication/compiler-facade-dependencies-correction.json",
+    "integrationOnly": true,
+    "resolutions": [
+      "Restore full inherited test suffix and full pinned-parent allowlist; retain existing prepareTypeRename registration.",
+      "Only the existing registry SHA256 changes relative to the complete actual pinned-parent policy; no new exception.",
+      "Retain failed required core run37181993533/job111376260519 and cancelled run37181991312."
+    ],
+    "localParents": [
+      "fad00fde7377232d2fcc6b97ceba54f2ddd3a06e"
+    ],
+    "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+    "baseTree": "261b70e38aa875673c4e2c698580126df6dc494d",
+    "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+    "commitMessage": "SF-A23-T27: restore complete projected registry and trusted policy records\n\nSource-Worktree-Commit: bc031320c838c8f0493e86af1d419d6ca7679ba1\nSource-Tree: 42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+    "remote": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+    "commitReadBack": {
+      "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+      "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+      "parents": [
+        "1d57150f952cfb4d1227d85581991b352674f46b"
+      ]
+    },
+    "refReadBack": {
+      "ref": "refs/heads/codex/p18-compiler-facade-dependencies",
+      "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+    },
+    "requiredCore": {
+      "run": 37182904926,
+      "job": 111378876897,
+      "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "status": "completed",
+      "conclusion": "success",
+      "broadQualificationInferred": false
+    },
+    "failureHistory": [
+      {
+        "run": 37181991312,
+        "conclusion": "cancelled"
+      },
+      {
+        "run": 37181993533,
+        "job": 111376260519,
+        "conclusion": "failure",
+        "reason": "Truncated projection-only policy/test suffix; restored forward without canonical product changes."
+      }
+    ],
+    "policyProof": "compiler-projection-policy-proof.json"
+  },
+  "forwardFeature": {
+    "name": "compiler-api-cleanup-correction",
+    "worktree": "/tmp/p18-compiler-api-cleanup",
+    "local": "d102ef46d32d0c4b0572af786005d9c1618452a0",
+    "remoteParents": [
+      "93447ed41e2e52331051448769fff7ac87f55d83",
+      "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+    ],
+    "branch": "codex/p18-compiler-api-cleanup",
+    "title": "SF-A23-T27: merge complete corrected compiler dependencies",
+    "output": "/workspace/scratch/3e16369943fd/p18-evaluator-publication/compiler-api-cleanup-correction.json",
+    "pr": 4401,
+    "resolutions": [
+      "Forward merge only; original compiler facade blobs remain byte-identical to qualified e9 source.",
+      "Restore complete inherited registry fixture and all current pinned-parent policy records; only its existing hash changes.",
+      "Required core failure and the cancelled predecessor remain explicit; no local test replay."
+    ],
+    "localParents": [
+      "b65d14d01febc5f2c541b9c60808444666ba4ce0",
+      "bc031320c838c8f0493e86af1d419d6ca7679ba1"
+    ],
+    "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+    "baseTree": "e81583a76a0f8abaf61f76ea09249a083bf9eedf",
+    "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+    "commitMessage": "SF-A23-T27: merge complete corrected compiler dependencies\n\nSource-Worktree-Commit: d102ef46d32d0c4b0572af786005d9c1618452a0\nSource-Tree: a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+    "remote": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+    "commitReadBack": {
+      "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+      "parents": [
+        "93447ed41e2e52331051448769fff7ac87f55d83",
+        "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+      ]
+    },
+    "refReadBack": {
+      "ref": "refs/heads/codex/p18-compiler-api-cleanup",
+      "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea"
+    },
+    "requiredCore": {
+      "run": 37182904926,
+      "job": 111378876897,
+      "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "status": "completed",
+      "conclusion": "success",
+      "broadQualificationInferred": false
+    },
+    "failureHistory": [
+      {
+        "run": 37181991312,
+        "conclusion": "cancelled"
+      },
+      {
+        "run": 37181993533,
+        "job": 111376260519,
+        "conclusion": "failure",
+        "reason": "Truncated projection-only policy/test suffix; restored forward without canonical product changes."
+      }
+    ],
+    "policyProof": "compiler-projection-policy-proof.json",
+    "prReadBack": {
+      "number": 4401,
+      "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "base": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+      "mergeable": null,
+      "mergeableState": "unknown"
+    },
+    "pullRequestReadBack": {
+      "number": 4401,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4401",
+      "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "base": "codex/p18-compiler-facade-dependencies",
+      "baseSha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+      "draft": true,
+      "mergeable": null,
+      "mergeableState": "unknown"
+    }
+  },
+  "entrySetProof": "planning/evidence/project18/evaluator-compiler-policy-proof.json",
+  "fix": "Restore the full pinned-parent files, preserve the existing prepareTypeRename registration, and update only the registry fixture hash. Preserve both prior commits and publish ordinary forward merges.",
+  "otherUsesReview": "Compiler entry was copied as an explicit 14-declaration union. README used line-only marker removal. Native/language/workspace resolutions came from their owning agents. The defective greedy replacement affected exactly the two restored files.",
+  "validation": "Corrected exact remote head cccd5dd3 required core37182904926/job111378876897 passed. No duplicate local suite was run."
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "beee98a553f73809d5db35cc970a7f7d58b54fca",
+  "workingSourceDigests": {
+    "apps/studio/workspace-navigation.js": "4dbe8c628cc85bba3c650af35160d3069607cba594c49e97fa8384a2e1942cce",
+    "apps/studio/workspace-documents.js": "eb3e094dbfde4eebeb2603bcee33f878c6dd4fcc396a0e34b33aaedef3c3e300",
+    "apps/studio/menus/source-documents.js": "2abcc4515c927894dad2f7d7c19d53622e14f277a2d8403cf9c73b6d84048a37",
+    "apps/studio/menus/context.js": "437c164e6cf1382846302e3b0c3899729877823d9907eca2809390790cffa9f1",
+    "tests/a24-workspace-navigation.test.js": "00e7ef9c80f36ead50a866d91492c89d2d5a41873e9046b5daa4cf0837148f5f",
+    "tests/a00-03-studio-registries.test.js": "33f0dd6cc156886c80e324a984a40042f27bf6ee5efe57210812f8a8d3e54aa9",
+    "planning/contracts/studio-automation.lock.json": "6e5bffdeaba1717dd98de64edcd5735fd590cfe4a61b8e7b2ed653b613861791"
+  },
+  "command": [
+    "node22",
+    "scripts/limited.js",
+    "node22",
+    "--test",
+    "tests/a24-workspace-navigation.test.js",
+    "tests/a00-03-studio-registries.test.js"
+  ],
+  "runtime": "Node22.23.3",
+  "summary": {
+    "tests": 23,
+    "passed": 23,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 0,
+    "durationMs": 1847.484886
+  },
+  "log": "planning/evidence/project18/integration/navigation-node22.log",
+  "logSha256": "4a73f488f76322a57f7872d8f7b88f2882dd97fd5cbb8217e74a5d07c2aa5295",
+  "scope": "Completed navigation and menu lifecycle modules plus additive registry assertion. Studio hooks remain a prepared patch; no application browser execution is implied."
+}

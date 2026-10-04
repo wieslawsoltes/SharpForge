@@ -54,7 +54,9 @@ export class StudioDiagnostics {
     const declared = state.projectSnapshot?.solution?.projectPaths ?? state.projectSystem?.solution?.projectPaths ?? [];
     const ids = [...new Set([...this.services.builds.list().map(service => service.id), ...declared])];
     const items = state.projectSnapshot?.diagnostics ?? state.projectSystem?.diagnostics ?? state.projectDiagnostics ?? [];
-    const input = [state.projectSystem, state.workspaceEpoch, items, items.length, ids.join('\0')];
+    const contexts = new Map(ids.map(id => [id, state.projectSystem?.getContext?.(id)?.id]));
+    const input = [state.projectSystem, state.workspaceEpoch, items, items.length, ids.join('\0'),
+      [...contexts.values()].join('\0')];
     if (this.inputs?.every((value, index) => value === input[index])) return;
     if (this.inputs && (this.inputs[0] !== input[0] || this.inputs[1] !== input[1])) this.signatures.clear();
     this.inputs = input;
@@ -65,7 +67,11 @@ export class StudioDiagnostics {
       const owners = explicit ? ids.includes(explicit) ? [explicit] : [] : ids.includes(uri) ? [uri] : this.owners(uri);
       const solutionPath = state.projectSnapshot?.solution?.path ?? state.projectSystem?.solution?.path;
       const projects = owners.length ? owners : !uri || uri === solutionPath ? ids : [];
-      for (const id of projects) loading.get(id)?.push(diagnostic(item, uri, null, 'warning'));
+      for (const id of projects) {
+        // Each project service compiles its selected context; another TFM must not duplicate or block its diagnostics.
+        if (item.contextId && contexts.get(id) && contexts.get(id) !== item.contextId) continue;
+        loading.get(id)?.push(diagnostic(item, uri, null, 'warning'));
+      }
     }
     for (const [id, values] of loading) {
       const signature = JSON.stringify(values);

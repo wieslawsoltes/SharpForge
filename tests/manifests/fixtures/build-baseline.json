@@ -15,6 +15,7 @@
     "apps/studio/styles/settings.css",
     "apps/studio/styles/editor-overlays.css",
     "apps/studio/styles/workbench-responsive.css",
+    "apps/studio/styles/explorer-disk-services.css",
     "apps/studio/styles/debugger.css",
     "packages/winui/src/style.css",
     "apps/studio/styles/debugger-advanced.css",
@@ -33,7 +34,8 @@
   ],
   "workers": [
     "compiler.worker.js",
-    "runtime.worker.js"
+    "runtime.worker.js",
+    "packages/workspace/src/vfs/opfs.worker.js"
   ],
-  "concatenationSha256": "a08627ef52a9333c94e73c9d5b8aff28f10e9c63bcdfc3604330027619b650ff"
+  "concatenationSha256": "7f038bb11187138d1aa064afde6e66862f76fed11958f6692f9f6e1919a1faee"
 }

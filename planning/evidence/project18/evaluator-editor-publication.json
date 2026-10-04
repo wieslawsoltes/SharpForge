@@ -1,0 +1,853 @@
+{
+  "name": "editor-view-retirement",
+  "branch": "codex/p18-editor-view-retirement",
+  "baseBranch": "codex/p18-studio-recovery-policy",
+  "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "local": "e42773833954c386c8df3579d373c6d6b6189aeb",
+  "remote": "675e1f86ace7510a9d9744db3d88773a862d254c",
+  "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+  "remoteBase": "4d209fb03d43131fae53c0de3edc57627c239e50",
+  "localBase": "70db33085e79cea3bd270070ff9fb2e9d6019ec9",
+  "remoteParents": [
+    "4b584525854f767579c3e8463adc4c0972bc5119"
+  ],
+  "sourceProofs": [
+    {
+      "path": "apps/studio/workbench/status-bar.js",
+      "implementationBlob": "87f08046bb5d792cca217be1f4b1f2d8f7f96cc3",
+      "projectionBlob": "87f08046bb5d792cca217be1f4b1f2d8f7f96cc3"
+    },
+    {
+      "path": "apps/studio/workbench/status-position.js",
+      "implementationBlob": "a58440b3da9ad188e9ab00fd5669f744aa040a3d",
+      "projectionBlob": "a58440b3da9ad188e9ab00fd5669f744aa040a3d"
+    },
+    {
+      "path": "packages/editor/README.md",
+      "implementationBlob": "20502fcb143327e302b9859b20b4e88cf73b2a47",
+      "projectionBlob": "20502fcb143327e302b9859b20b4e88cf73b2a47"
+    },
+    {
+      "path": "packages/editor/src/core/code-editor.js",
+      "implementationBlob": "60d3b3e8e5a7fb733c0bd320f161e52a3aee8e80",
+      "projectionBlob": "60d3b3e8e5a7fb733c0bd320f161e52a3aee8e80"
+    },
+    {
+      "path": "tests/a24-editor-model-ownership.test.js",
+      "implementationBlob": "dcff661b86ff9e483546d512b2cc61abb4be9a7b",
+      "projectionBlob": "dcff661b86ff9e483546d512b2cc61abb4be9a7b"
+    },
+    {
+      "path": "tests/a24-status-caret-ownership.test.js",
+      "implementationBlob": "84394aab6a5cc8f97543a2ebdac3fd6e39c69cdd",
+      "projectionBlob": "84394aab6a5cc8f97543a2ebdac3fd6e39c69cdd"
+    },
+    {
+      "path": "tests/browser_release13_test.py",
+      "implementationBlob": "0b84c00185f963a650051d2ea35f6d263b18637a",
+      "projectionBlob": "0b84c00185f963a650051d2ea35f6d263b18637a"
+    },
+    {
+      "path": "apps/studio/workbench/tools/execution-capture.js",
+      "implementationBlob": "9b82823767edef4bca73b3e67b5478836e35cca3",
+      "projectionBlob": "9b82823767edef4bca73b3e67b5478836e35cca3"
+    },
+    {
+      "path": "tests/a19-execution-capture-timer-owner.test.js",
+      "implementationBlob": "a21cb18211fd7a12bf8a284c77810764ca4c4415",
+      "projectionBlob": "a21cb18211fd7a12bf8a284c77810764ca4c4415"
+    },
+    {
+      "path": "apps/studio/workers/runtime-activity.js",
+      "implementationBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee",
+      "projectionBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee"
+    },
+    {
+      "path": "tests/a19-runtime-activity-timer-owner.test.js",
+      "implementationBlob": "f08e4cf0fff0f10b065676383fd4453c138eabbb",
+      "projectionBlob": "f08e4cf0fff0f10b065676383fd4453c138eabbb"
+    },
+    {
+      "path": "tests/a19-runtime-worker-client.js",
+      "implementationBlob": "2b197751cae145f57da9d91a405c335157af309e",
+      "projectionBlob": "2b197751cae145f57da9d91a405c335157af309e"
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-timer-host.js",
+      "implementationBlob": "cdda448ba2a136216588a70eb09b1f7eed56aa62",
+      "projectionBlob": "cdda448ba2a136216588a70eb09b1f7eed56aa62"
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-timer-node.js",
+      "implementationBlob": "3cc9791d4f4769b38f26a63228b19efa7fdd5d01",
+      "projectionBlob": "3cc9791d4f4769b38f26a63228b19efa7fdd5d01"
+    }
+  ],
+  "files": [
+    "apps/studio/workbench/status-bar.js",
+    "apps/studio/workbench/status-position.js",
+    "apps/studio/workbench/tools/execution-capture.js",
+    "apps/studio/workers/runtime-activity.js",
+    "packages/editor/README.md",
+    "packages/editor/src/core/code-editor.js",
+    "tests/a19-execution-capture-timer-owner.test.js",
+    "tests/a19-runtime-activity-timer-owner.test.js",
+    "tests/a19-runtime-worker-client.js",
+    "tests/a24-editor-model-ownership.test.js",
+    "tests/a24-status-caret-ownership.test.js",
+    "tests/browser_release13_test.py",
+    "tests/fixtures/a19/runtime-worker-timer-host.js",
+    "tests/fixtures/a19/runtime-worker-timer-node.js",
+    "tests/manifests/A24.json"
+  ],
+  "stats": "15 files changed, 721 insertions(+), 31 deletions(-)",
+  "commitChain": [
+    {
+      "index": 1,
+      "local": "2a0840291c281904e886ed81ecc15c6f00488331",
+      "tree": "5a24c6196605b7b537af8dc7f1c0fae70eddd13f",
+      "remote": "158d3879ae996ee8511b6cc70c5880683fdefad9",
+      "remoteParents": [
+        "4d209fb03d43131fae53c0de3edc57627c239e50"
+      ],
+      "localParents": [
+        "70db33085e79cea3bd270070ff9fb2e9d6019ec9"
+      ],
+      "readBack": {
+        "sha": "158d3879ae996ee8511b6cc70c5880683fdefad9",
+        "tree": "5a24c6196605b7b537af8dc7f1c0fae70eddd13f",
+        "parents": [
+          "4d209fb03d43131fae53c0de3edc57627c239e50"
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "local": "004986ec1c0bbac9b9dc99bbac4065091ee2e136",
+      "tree": "4a6e5fdbec36bbd9c217f54a2d319c8c503c6e10",
+      "remote": "f22fcf023de49638c657f19bb7dd9dca004c5fbb",
+      "remoteParents": [
+        "158d3879ae996ee8511b6cc70c5880683fdefad9"
+      ],
+      "localParents": [
+        "2a0840291c281904e886ed81ecc15c6f00488331"
+      ],
+      "readBack": {
+        "sha": "f22fcf023de49638c657f19bb7dd9dca004c5fbb",
+        "tree": "4a6e5fdbec36bbd9c217f54a2d319c8c503c6e10",
+        "parents": [
+          "158d3879ae996ee8511b6cc70c5880683fdefad9"
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "local": "eae64481787d65f384d44e970271dfa9b35d3016",
+      "tree": "50b544464eed32d6303fefe8e96f27f07530ac1e",
+      "remote": "315b4940d7238e618ee8b456f1c7b3340d742141",
+      "remoteParents": [
+        "f22fcf023de49638c657f19bb7dd9dca004c5fbb"
+      ],
+      "localParents": [
+        "004986ec1c0bbac9b9dc99bbac4065091ee2e136"
+      ],
+      "readBack": {
+        "sha": "315b4940d7238e618ee8b456f1c7b3340d742141",
+        "tree": "50b544464eed32d6303fefe8e96f27f07530ac1e",
+        "parents": [
+          "f22fcf023de49638c657f19bb7dd9dca004c5fbb"
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "local": "f2c2e8f24328d3ace05229bb2cd8dba9450c9337",
+      "tree": "5431605944a2bc7233990ca0e215ace89fc0ac72",
+      "remote": "8ef514a81db216c2756953bd0ef38eb3d5f9e629",
+      "remoteParents": [
+        "315b4940d7238e618ee8b456f1c7b3340d742141"
+      ],
+      "localParents": [
+        "eae64481787d65f384d44e970271dfa9b35d3016"
+      ],
+      "readBack": {
+        "sha": "8ef514a81db216c2756953bd0ef38eb3d5f9e629",
+        "tree": "5431605944a2bc7233990ca0e215ace89fc0ac72",
+        "parents": [
+          "315b4940d7238e618ee8b456f1c7b3340d742141"
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "local": "85d1b5e27d7bc2b30268e44544ed0ddabce60177",
+      "tree": "2e0baaef6d04165d591202060588aff96fdc934c",
+      "remote": "4b584525854f767579c3e8463adc4c0972bc5119",
+      "remoteParents": [
+        "8ef514a81db216c2756953bd0ef38eb3d5f9e629"
+      ],
+      "localParents": [
+        "f2c2e8f24328d3ace05229bb2cd8dba9450c9337"
+      ],
+      "readBack": {
+        "sha": "4b584525854f767579c3e8463adc4c0972bc5119",
+        "tree": "2e0baaef6d04165d591202060588aff96fdc934c",
+        "parents": [
+          "8ef514a81db216c2756953bd0ef38eb3d5f9e629"
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "local": "e42773833954c386c8df3579d373c6d6b6189aeb",
+      "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+      "remote": "675e1f86ace7510a9d9744db3d88773a862d254c",
+      "remoteParents": [
+        "4b584525854f767579c3e8463adc4c0972bc5119"
+      ],
+      "localParents": [
+        "85d1b5e27d7bc2b30268e44544ed0ddabce60177"
+      ],
+      "readBack": {
+        "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+        "parents": [
+          "4b584525854f767579c3e8463adc4c0972bc5119"
+        ]
+      }
+    }
+  ],
+  "validation": {
+    "source": "886fb139fc647f0532085b5a0866a498fa7fca52",
+    "tests": 43,
+    "pass": 43,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "node": "v26.10.0",
+    "checks": [
+      "check",
+      "build",
+      "clean-checkout"
+    ],
+    "browser": {
+      "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "complete": true,
+      "checks": 16,
+      "pass": 16,
+      "errors": [],
+      "exitCode": 0,
+      "historicalWorkerCreations": 10,
+      "finalLiveWorkers": 1,
+      "finalOwners": {
+        "compilers": [
+          {
+            "id": "$workspace",
+            "name": "compiler:$workspace",
+            "generation": 1
+          }
+        ],
+        "applications": [],
+        "resources": {
+          "limit": 4,
+          "count": 0,
+          "live": 0
+        },
+        "valid": true,
+        "distinct": true
+      },
+      "logRoot": "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36",
+      "metadata": {
+        "name": "browser-release13",
+        "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-0bb2ed36",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T07:17:36.638015+00:00",
+        "resourcePreflight": {
+          "actualFreeBytes": 1043357696,
+          "availableBytes": 1043357696,
+          "minimumFreeBytes": 536870912,
+          "memory.current": "8561016832",
+          "memory.max": "8589934592",
+          "memory.events": "low 0\nhigh 0\nmax 2867540\noom 5\noom_kill 3\noom_group_kill 0"
+        },
+        "log": "browser-release13.log",
+        "completedAt": "2026-10-04T07:17:58.184298+00:00",
+        "exitCode": 0,
+        "sourceAfter": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "resourceAfter": {
+          "actualFreeBytes": 1043357696,
+          "availableBytes": 1043357696,
+          "minimumFreeBytes": 536870912,
+          "memory.current": "7738220544",
+          "memory.max": "8589934592",
+          "memory.events": "low 0\nhigh 0\nmax 2879097\noom 5\noom_kill 3\noom_group_kill 0"
+        },
+        "checkoutStatusAfter": ""
+      },
+      "process": {
+        "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+        "suite": "release13",
+        "startedAt": "2026-10-04T07:17:36.732861+00:00",
+        "entry": "Built committed actual Studio; no proposed entry patch is applied or executed",
+        "outerSemaphoreDirectoryUnchanged": true,
+        "inMemory": false,
+        "securityFlagsAdded": [],
+        "environment": {
+          "TMPDIR": "/dev/shm/p18-browser-release13-u0f_qj4z",
+          "PYTHONPATH": "/workspace/scratch/3e16369943fd/python-deps",
+          "CHROMIUM_EXECUTABLE": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+          "SHARPFORGE_BROWSER_ENGINE": "chromium"
+        },
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/dev/shm/p18-final-qualification/tests/browser_release13_test.py"
+        ],
+        "timeoutSeconds": 180,
+        "completedAt": "2026-10-04T07:17:58.146017+00:00",
+        "exitCode": 0
+      },
+      "buildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "rebuildRequired": false
+    },
+    "logRoot": "/tmp/p18-final-qualification-logs/final-status-and-retained-886fb139",
+    "timerSource": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+    "timerNegativeSource": "2ecaddeda1c3f26b76f53b5039f54137782f5cd1",
+    "timerNegative": {
+      "tests": 2,
+      "fail": 2,
+      "reason": "Exact receiver-sensitive failure reproduced before the default wrapper correction."
+    },
+    "captureTimer": {
+      "source": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "checks": [
+        "check",
+        "build",
+        "clean-checkout"
+      ],
+      "logRoot": "/tmp/p18-final-qualification-logs/capture-timer-final-de9a5e8f"
+    },
+    "runtimeTimer": {
+      "source": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "tests": 34,
+      "pass": 34,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "checks": [
+        "check",
+        "build",
+        "clean-checkout"
+      ],
+      "logRoot": "/tmp/p18-final-qualification-logs/runtime-timer-final-7d4c97d2",
+      "negativeSource": "2db6a9ac38eddd5ed83f1a747a8a226266bab8e8",
+      "negative": {
+        "tests": 3,
+        "fail": 3,
+        "includes": [
+          "Actual source worker launch",
+          "Actual CIL worker launch",
+          "Sampling, pump and animation ownership"
+        ]
+      }
+    },
+    "interpretation": "Exact canonical-source qualification only; no standalone projection unit run inferred from required core."
+  },
+  "pullRequest": 4447,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/4447",
+  "draft": true,
+  "branchReadBack": {
+    "ref": "refs/heads/codex/p18-editor-view-retirement",
+    "node_id": "REF_kwDOU59Ms9oAK3JlZnMvaGVhZHMvY29kZXgvcDE4LWVkaXRvci12aWV3LXJldGlyZW1lbnQ",
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/codex/p18-editor-view-retirement",
+    "object": {
+      "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+      "type": "commit",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/675e1f86ace7510a9d9744db3d88773a862d254c"
+    }
+  },
+  "prReadBack": {
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4447",
+    "id": 4732647219,
+    "node_id": "PR_kwDOU59Ms88AAAABGhZ3Mw",
+    "html_url": "https://github.com/wieslawsoltes/SharpForge/pull/4447",
+    "diff_url": "https://github.com/wieslawsoltes/SharpForge/pull/4447.diff",
+    "patch_url": "https://github.com/wieslawsoltes/SharpForge/pull/4447.patch",
+    "issue_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/4447",
+    "number": 4447,
+    "state": "open",
+    "locked": false,
+    "title": "SF-A24-T10: preserve document and browser ownership across Studio updates",
+    "user": {
+      "login": "wieslawsoltes",
+      "id": 2297442,
+      "node_id": "MDQ6VXNlcjIyOTc0NDI=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wieslawsoltes",
+      "html_url": "https://github.com/wieslawsoltes",
+      "followers_url": "https://api.github.com/users/wieslawsoltes/followers",
+      "following_url": "https://api.github.com/users/wieslawsoltes/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wieslawsoltes/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wieslawsoltes/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wieslawsoltes/subscriptions",
+      "organizations_url": "https://api.github.com/users/wieslawsoltes/orgs",
+      "repos_url": "https://api.github.com/users/wieslawsoltes/repos",
+      "events_url": "https://api.github.com/users/wieslawsoltes/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wieslawsoltes/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "body": "Document replacement commits new model ownership before retiring old views. Saving an old view previously wrote its retired model back into the shared Documents map; cleanup then disposed that model and the read-only listener failed. This batch removes that redundant write. Constructor and explicit model switching remain the registration boundaries, while view save and disposal retain only view state.\n\nA synchronous document edit can notify the status bar before the editor publishes its new caret. The status region now samples a valid offset and line/character from the current source, discards a visual column paired with a stale position, and cancels invalid pending column work before accessing the strict text index. Text-model bounds, Unicode/tab columns and execution/read-only ownership remain intact.\n\nActual browser replay also identified two host receiver errors. ExecutionCapture called a stored browser timer as a capture method during UI event delivery. RuntimeActivity used the same pattern when starting worker profiling before publishing loaded/state events. Both owners now call the default timers through their owning global object. Injected scheduling functions, bounded polling, launch serial checks, and cancellation behavior remain unchanged.\n\n## Scope and dependencies\n\nThis complete correction batch for Project18 workspace/recovery (#340) is stacked on the actual document/recovery policy #4301. Its 15 changed files contain five product modules, editor ownership documentation, four focused Node suites, three worker fixture/helper paths, the existing Release13 input helper and focused A24 registration. A19 already covers the new timer suites with its existing wildcard. No protected Studio entry or DocumentLocks policy is changed.\n\nThe browser helper uses actual focus, select-all and keyboard text insertion, followed by an immediate exact-source assertion. Every original functional designer, undo, conflict and handler assertion is retained. The obsolete lifetime worker count is replaced with stricter current-owner and no-designer-churn assertions.\n\nThe new runtime fixture uses the actual production source and CIL workers, with a dedicated browser timer adapter that permits bare and host calls and rejects unrelated object receivers. The ordinary shared worker transport is unchanged; its connector only gains an optional bootstrap URL. Static import/export and blob proofs confirm that #4301 supplies all required APIs, including compileToIL, both VMs, RuntimeActivity, and the existing transport. No project-graph dependency is required by these single-assembly fixtures.\n\nAll six local commits are preserved in order, including the worker regression-only commit before its correction. The branch is created only after the complete final tree is present, requesting one feature core run.\n\n## Qualification of the canonical source\n\n- Corrected editor scope at 362f1337: 40/40 Node26 cases, plus check/build/clean checkout.\n- Completed source at 886fb139: 43/43 Node26 cases across 11 files, including all nine editor/status cases, existing A19 boundaries and 18 retained qualification cases. Ordered check/build/clean checkout pass, with no new/worsened structure violations or actual frozen-file growth.\n- Capture regression-only source 2ecaddeda reproduced both receiver failures. Corrected source de9a5e8f passed all 11 cases in its two-file scope and check/build/clean checkout.\n- Runtime worker regression-only source 2db6a9ac reproduced all three receiver failures, including actual source and CIL launch. Complete source 7d4c97d2 passes all 34 cases in the six-file timer scope, plus check/build/clean checkout. This covers all three worker timers, rearming, replacement, pause, stop, UI event delivery and capture disposal.\n- Actual Release13 at 7d4c97d2 passed all 15 functional checks with no page errors, including the retained C# handler and source/CIL animation clocks. Its final historical worker-count assertion was obsolete: workspace replacement deliberately retires compiler/session owners. The fixture now verifies unchanged live Worker objects and creation count through designer operations, one real worker per current owner, bounded session ownership, active debug identity, and one final workspace compiler with zero runtime sessions. The corrected actual Release13 at 0bb2ed36 passes all 16 checks with zero page errors and exit 0. It records 10 historical worker creations, exactly one live final compiler, and no remaining runtime sessions. The product/build tree is unchanged from qualified 7d4c97d2; the retained equivalence receipt shows only the Python fixture differs.\n\nThese are exact canonical-source results. The PR's required core is reported separately; no standalone PR unit run is inferred from core, and no duplicate local tests/build/browser run was performed for this publication.\n\nEarlier failures remain explicit: the original disposed-model browser error, the initial headless fixture omission (39/40 until setSelectionRange was supplied), the legacy fill helper's duplicated-source failure, the stale-offset RangeError after five browser checks, the capture AggregateError after ten checks, and the later worker launch error returned in the existing trace despite an empty page-error list.\n\n## Changes outside this workstream\n\nThe minimal A19 execution-capture and runtime-activity timer corrections are included because the actual Project18 browser integration exposed them. The root coordinator authorized both unlocked paths. They reuse existing scheduling owners and add no catch-all error suppression, timer abstraction, or protected worker-entry change. The dedicated regression models the receiver boundary without rejecting valid bare calls.\n\n## Review boundaries\n\nAll 14 product/document/test/helper blobs match corrected canonical source 0bb2ed36 exactly; the only delta from qualified product source 7d4c97d2 is the browser fixture. The only derived file is the A24 manifest, which adds each new A24 fixture once on this parent's actual selector set. This draft requests no issue closure, full-matrix label or main merge. Aggregate performance review and final repository integration remain root-owned review gates.\n\n\n## Source and publication proof\n\n- Product source: `0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760`\n- Local projection: `e42773833954c386c8df3579d373c6d6b6189aeb`\n- Exact projection tree: `ca549b38d09f29c0810d29bb0712e0cdca3cb6b0`\n- Local base: `70db33085e79cea3bd270070ff9fb2e9d6019ec9`\n- Scope: 15 files changed, 721 insertions(+), 31 deletions(-)\n\nOriginal implementation and merge history remain on the committed source worktree branches and `codex/p18-integration`; the exact source commits are preserved. This draft is an explicit review projection; its remote tree and ordered parent SHAs are read back and compared with the local projection. It requests no issue closure, full-matrix label, or main-branch merge.\n\n## Required check and remote readback\n\nRequired `core` passed on the exact published head [`675e1f86ace7510a9d9744db3d88773a862d254c`](https://github.com/wieslawsoltes/SharpForge/commit/675e1f86ace7510a9d9744db3d88773a862d254c): [run 37185578856 / job 111386673663](https://github.com/wieslawsoltes/SharpForge/actions/runs/37185578856/job/111386673663). The raw PR readback is draft and mergeable/clean against `4d209fb03d43131fae53c0de3edc57627c239e50`. All six remote commit trees and ordered parents match their local projections. The earlier automatically superseded PR run was cancelled; the create-event Project16 qualification was skipped. No full-matrix label or workflow dispatch was requested.\n",
+    "created_at": "2026-10-04T07:22:14Z",
+    "updated_at": "2026-10-04T07:22:18Z",
+    "closed_at": null,
+    "merged_at": null,
+    "merge_commit_sha": "6c91ad09e0d8c6de0c17ef48867483a4c29e2b4e",
+    "assignees": [],
+    "requested_reviewers": [],
+    "requested_teams": [],
+    "labels": [
+      {
+        "id": 12525232279,
+        "node_id": "LA_kwDOU59Ms88AAAAC6o_glw",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels/size/XL",
+        "name": "size/XL",
+        "color": "C32607",
+        "default": false,
+        "description": null,
+        "archived_at": null,
+        "archived_by": null
+      }
+    ],
+    "milestone": null,
+    "draft": true,
+    "commits_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4447/commits",
+    "review_comments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4447/comments",
+    "review_comment_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/comments{/number}",
+    "comments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/4447/comments",
+    "statuses_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/statuses/675e1f86ace7510a9d9744db3d88773a862d254c",
+    "head": {
+      "label": "wieslawsoltes:codex/p18-editor-view-retirement",
+      "ref": "codex/p18-editor-view-retirement",
+      "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+      "user": {
+        "login": "wieslawsoltes",
+        "id": 2297442,
+        "node_id": "MDQ6VXNlcjIyOTc0NDI=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/wieslawsoltes",
+        "html_url": "https://github.com/wieslawsoltes",
+        "followers_url": "https://api.github.com/users/wieslawsoltes/followers",
+        "following_url": "https://api.github.com/users/wieslawsoltes/following{/other_user}",
+        "gists_url": "https://api.github.com/users/wieslawsoltes/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/wieslawsoltes/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/wieslawsoltes/subscriptions",
+        "organizations_url": "https://api.github.com/users/wieslawsoltes/orgs",
+        "repos_url": "https://api.github.com/users/wieslawsoltes/repos",
+        "events_url": "https://api.github.com/users/wieslawsoltes/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/wieslawsoltes/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "repo": {
+        "id": 1402948787,
+        "node_id": "R_kgDOU59Msw",
+        "name": "SharpForge",
+        "full_name": "wieslawsoltes/SharpForge",
+        "private": false,
+        "owner": {
+          "login": "wieslawsoltes",
+          "id": 2297442,
+          "node_id": "MDQ6VXNlcjIyOTc0NDI=",
+          "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/wieslawsoltes",
+          "html_url": "https://github.com/wieslawsoltes",
+          "followers_url": "https://api.github.com/users/wieslawsoltes/followers",
+          "following_url": "https://api.github.com/users/wieslawsoltes/following{/other_user}",
+          "gists_url": "https://api.github.com/users/wieslawsoltes/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/wieslawsoltes/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/wieslawsoltes/subscriptions",
+          "organizations_url": "https://api.github.com/users/wieslawsoltes/orgs",
+          "repos_url": "https://api.github.com/users/wieslawsoltes/repos",
+          "events_url": "https://api.github.com/users/wieslawsoltes/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/wieslawsoltes/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "html_url": "https://github.com/wieslawsoltes/SharpForge",
+        "description": "C# subset compiler written in JavaScript with ECMA-335 IL/PE output, a managed runtime, debugger and browser IDE (SharpForge Studio).",
+        "fork": false,
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge",
+        "forks_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/forks",
+        "keys_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/keys{/key_id}",
+        "collaborators_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/collaborators{/collaborator}",
+        "teams_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/teams",
+        "hooks_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/hooks",
+        "issue_events_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/events{/number}",
+        "events_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/events",
+        "assignees_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/assignees{/user}",
+        "branches_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/branches{/branch}",
+        "tags_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/tags",
+        "blobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/blobs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/tags{/sha}",
+        "git_refs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs{/sha}",
+        "trees_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees{/sha}",
+        "statuses_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/statuses/{sha}",
+        "languages_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/languages",
+        "stargazers_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/stargazers",
+        "contributors_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/contributors",
+        "subscribers_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/subscribers",
+        "subscription_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/subscription",
+        "commits_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/commits{/sha}",
+        "git_commits_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits{/sha}",
+        "comments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/comments{/number}",
+        "issue_comment_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/comments{/number}",
+        "contents_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/{+path}",
+        "compare_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/compare/{base}...{head}",
+        "merges_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/merges",
+        "archive_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/{archive_format}{/ref}",
+        "downloads_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/downloads",
+        "issues_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues{/number}",
+        "pulls_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls{/number}",
+        "milestones_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/milestones{/number}",
+        "notifications_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/notifications{?since,all,participating}",
+        "labels_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels{/name}",
+        "releases_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/releases{/id}",
+        "deployments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/deployments",
+        "created_at": "2026-10-03T09:25:18Z",
+        "updated_at": "2026-10-04T07:23:50Z",
+        "pushed_at": "2026-10-04T07:23:46Z",
+        "git_url": "git://github.com/wieslawsoltes/SharpForge.git",
+        "ssh_url": "git@github.com:wieslawsoltes/SharpForge.git",
+        "clone_url": "https://github.com/wieslawsoltes/SharpForge.git",
+        "svn_url": "https://github.com/wieslawsoltes/SharpForge",
+        "homepage": "https://wieslawsoltes.github.io/SharpForge/",
+        "size": 70086,
+        "stargazers_count": 8,
+        "watchers_count": 8,
+        "language": "JavaScript",
+        "has_issues": true,
+        "has_projects": true,
+        "has_downloads": false,
+        "has_wiki": false,
+        "has_pages": true,
+        "has_discussions": false,
+        "forks_count": 0,
+        "mirror_url": null,
+        "archived": false,
+        "disabled": false,
+        "open_issues_count": 3494,
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "allow_forking": true,
+        "is_template": false,
+        "web_commit_signoff_required": false,
+        "has_pull_requests": true,
+        "pull_request_creation_policy": "all",
+        "topics": [
+          "browser-ide",
+          "cil",
+          "compiler",
+          "csharp",
+          "dap",
+          "debugger",
+          "dotnet",
+          "ecma-335",
+          "hot-reload",
+          "ide",
+          "il",
+          "javascript",
+          "lsp",
+          "managed-runtime",
+          "msbuild",
+          "visual-designer",
+          "webassembly"
+        ],
+        "visibility": "public",
+        "forks": 0,
+        "open_issues": 3494,
+        "watchers": 8,
+        "default_branch": "main"
+      }
+    },
+    "base": {
+      "label": "wieslawsoltes:codex/p18-studio-recovery-policy",
+      "ref": "codex/p18-studio-recovery-policy",
+      "sha": "4d209fb03d43131fae53c0de3edc57627c239e50",
+      "user": {
+        "login": "wieslawsoltes",
+        "id": 2297442,
+        "node_id": "MDQ6VXNlcjIyOTc0NDI=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/wieslawsoltes",
+        "html_url": "https://github.com/wieslawsoltes",
+        "followers_url": "https://api.github.com/users/wieslawsoltes/followers",
+        "following_url": "https://api.github.com/users/wieslawsoltes/following{/other_user}",
+        "gists_url": "https://api.github.com/users/wieslawsoltes/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/wieslawsoltes/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/wieslawsoltes/subscriptions",
+        "organizations_url": "https://api.github.com/users/wieslawsoltes/orgs",
+        "repos_url": "https://api.github.com/users/wieslawsoltes/repos",
+        "events_url": "https://api.github.com/users/wieslawsoltes/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/wieslawsoltes/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "repo": {
+        "id": 1402948787,
+        "node_id": "R_kgDOU59Msw",
+        "name": "SharpForge",
+        "full_name": "wieslawsoltes/SharpForge",
+        "private": false,
+        "owner": {
+          "login": "wieslawsoltes",
+          "id": 2297442,
+          "node_id": "MDQ6VXNlcjIyOTc0NDI=",
+          "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/wieslawsoltes",
+          "html_url": "https://github.com/wieslawsoltes",
+          "followers_url": "https://api.github.com/users/wieslawsoltes/followers",
+          "following_url": "https://api.github.com/users/wieslawsoltes/following{/other_user}",
+          "gists_url": "https://api.github.com/users/wieslawsoltes/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/wieslawsoltes/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/wieslawsoltes/subscriptions",
+          "organizations_url": "https://api.github.com/users/wieslawsoltes/orgs",
+          "repos_url": "https://api.github.com/users/wieslawsoltes/repos",
+          "events_url": "https://api.github.com/users/wieslawsoltes/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/wieslawsoltes/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "html_url": "https://github.com/wieslawsoltes/SharpForge",
+        "description": "C# subset compiler written in JavaScript with ECMA-335 IL/PE output, a managed runtime, debugger and browser IDE (SharpForge Studio).",
+        "fork": false,
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge",
+        "forks_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/forks",
+        "keys_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/keys{/key_id}",
+        "collaborators_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/collaborators{/collaborator}",
+        "teams_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/teams",
+        "hooks_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/hooks",
+        "issue_events_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/events{/number}",
+        "events_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/events",
+        "assignees_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/assignees{/user}",
+        "branches_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/branches{/branch}",
+        "tags_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/tags",
+        "blobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/blobs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/tags{/sha}",
+        "git_refs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs{/sha}",
+        "trees_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees{/sha}",
+        "statuses_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/statuses/{sha}",
+        "languages_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/languages",
+        "stargazers_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/stargazers",
+        "contributors_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/contributors",
+        "subscribers_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/subscribers",
+        "subscription_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/subscription",
+        "commits_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/commits{/sha}",
+        "git_commits_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits{/sha}",
+        "comments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/comments{/number}",
+        "issue_comment_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/comments{/number}",
+        "contents_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/{+path}",
+        "compare_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/compare/{base}...{head}",
+        "merges_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/merges",
+        "archive_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/{archive_format}{/ref}",
+        "downloads_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/downloads",
+        "issues_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues{/number}",
+        "pulls_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls{/number}",
+        "milestones_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/milestones{/number}",
+        "notifications_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/notifications{?since,all,participating}",
+        "labels_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels{/name}",
+        "releases_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/releases{/id}",
+        "deployments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/deployments",
+        "created_at": "2026-10-03T09:25:18Z",
+        "updated_at": "2026-10-04T07:23:50Z",
+        "pushed_at": "2026-10-04T07:23:46Z",
+        "git_url": "git://github.com/wieslawsoltes/SharpForge.git",
+        "ssh_url": "git@github.com:wieslawsoltes/SharpForge.git",
+        "clone_url": "https://github.com/wieslawsoltes/SharpForge.git",
+        "svn_url": "https://github.com/wieslawsoltes/SharpForge",
+        "homepage": "https://wieslawsoltes.github.io/SharpForge/",
+        "size": 70086,
+        "stargazers_count": 8,
+        "watchers_count": 8,
+        "language": "JavaScript",
+        "has_issues": true,
+        "has_projects": true,
+        "has_downloads": false,
+        "has_wiki": false,
+        "has_pages": true,
+        "has_discussions": false,
+        "forks_count": 0,
+        "mirror_url": null,
+        "archived": false,
+        "disabled": false,
+        "open_issues_count": 3494,
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "allow_forking": true,
+        "is_template": false,
+        "web_commit_signoff_required": false,
+        "has_pull_requests": true,
+        "pull_request_creation_policy": "all",
+        "topics": [
+          "browser-ide",
+          "cil",
+          "compiler",
+          "csharp",
+          "dap",
+          "debugger",
+          "dotnet",
+          "ecma-335",
+          "hot-reload",
+          "ide",
+          "il",
+          "javascript",
+          "lsp",
+          "managed-runtime",
+          "msbuild",
+          "visual-designer",
+          "webassembly"
+        ],
+        "visibility": "public",
+        "forks": 0,
+        "open_issues": 3494,
+        "watchers": 8,
+        "default_branch": "main"
+      }
+    },
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4447"
+      },
+      "html": {
+        "href": "https://github.com/wieslawsoltes/SharpForge/pull/4447"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/4447"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/4447/comments"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4447/comments"
+      },
+      "review_comment": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/comments{/number}"
+      },
+      "commits": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4447/commits"
+      },
+      "statuses": {
+        "href": "https://api.github.com/repos/wieslawsoltes/SharpForge/statuses/675e1f86ace7510a9d9744db3d88773a862d254c"
+      }
+    },
+    "author_association": "OWNER",
+    "auto_merge": null,
+    "assignee": null,
+    "active_lock_reason": null,
+    "merged": false,
+    "mergeable": true,
+    "rebaseable": true,
+    "mergeable_state": "clean",
+    "merged_by": null,
+    "comments": 0,
+    "review_comments": 0,
+    "maintainer_can_modify": false,
+    "commits": 6,
+    "additions": 721,
+    "deletions": 31,
+    "changed_files": 15
+  },
+  "baseReadBack": {
+    "ref": "refs/heads/codex/p18-studio-recovery-policy",
+    "node_id": "REF_kwDOU59Ms9oAK3JlZnMvaGVhZHMvY29kZXgvcDE4LXN0dWRpby1yZWNvdmVyeS1wb2xpY3k",
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/codex/p18-studio-recovery-policy",
+    "object": {
+      "sha": "4d209fb03d43131fae53c0de3edc57627c239e50",
+      "type": "commit",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4d209fb03d43131fae53c0de3edc57627c239e50"
+    }
+  },
+  "requiredCore": {
+    "run": 37185578856,
+    "job": 111386673663,
+    "head": "675e1f86ace7510a9d9744db3d88773a862d254c",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37185578856/job/111386673663",
+    "broadQualificationInferred": false
+  },
+  "unitQualificationOnProjection": false,
+  "requiredCoreHistory": [
+    {
+      "run": 37185575995,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "meaning": "Automatically superseded; not a failed required core."
+    },
+    {
+      "run": 37185578856,
+      "job": 111386673663,
+      "head": "675e1f86ace7510a9d9744db3d88773a862d254c",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37185578856/job/111386673663",
+      "broadQualificationInferred": false
+    }
+  ],
+  "excludedWorkflowEvents": [
+    {
+      "run": 37185574430,
+      "event": "create",
+      "path": ".github/workflows/project16-qualification.yml",
+      "conclusion": "skipped"
+    }
+  ],
+  "body": "Document replacement commits new model ownership before retiring old views. Saving an old view previously wrote its retired model back into the shared Documents map; cleanup then disposed that model and the read-only listener failed. This batch removes that redundant write. Constructor and explicit model switching remain the registration boundaries, while view save and disposal retain only view state.\n\nA synchronous document edit can notify the status bar before the editor publishes its new caret. The status region now samples a valid offset and line/character from the current source, discards a visual column paired with a stale position, and cancels invalid pending column work before accessing the strict text index. Text-model bounds, Unicode/tab columns and execution/read-only ownership remain intact.\n\nActual browser replay also identified two host receiver errors. ExecutionCapture called a stored browser timer as a capture method during UI event delivery. RuntimeActivity used the same pattern when starting worker profiling before publishing loaded/state events. Both owners now call the default timers through their owning global object. Injected scheduling functions, bounded polling, launch serial checks, and cancellation behavior remain unchanged.\n\n## Scope and dependencies\n\nThis complete correction batch for Project18 workspace/recovery (#340) is stacked on the actual document/recovery policy #4301. Its 15 changed files contain five product modules, editor ownership documentation, four focused Node suites, three worker fixture/helper paths, the existing Release13 input helper and focused A24 registration. A19 already covers the new timer suites with its existing wildcard. No protected Studio entry or DocumentLocks policy is changed.\n\nThe browser helper uses actual focus, select-all and keyboard text insertion, followed by an immediate exact-source assertion. Every original functional designer, undo, conflict and handler assertion is retained. The obsolete lifetime worker count is replaced with stricter current-owner and no-designer-churn assertions.\n\nThe new runtime fixture uses the actual production source and CIL workers, with a dedicated browser timer adapter that permits bare and host calls and rejects unrelated object receivers. The ordinary shared worker transport is unchanged; its connector only gains an optional bootstrap URL. Static import/export and blob proofs confirm that #4301 supplies all required APIs, including compileToIL, both VMs, RuntimeActivity, and the existing transport. No project-graph dependency is required by these single-assembly fixtures.\n\nAll six local commits are preserved in order, including the worker regression-only commit before its correction. The branch is created only after the complete final tree is present, requesting one feature core run.\n\n## Qualification of the canonical source\n\n- Corrected editor scope at 362f1337: 40/40 Node26 cases, plus check/build/clean checkout.\n- Completed source at 886fb139: 43/43 Node26 cases across 11 files, including all nine editor/status cases, existing A19 boundaries and 18 retained qualification cases. Ordered check/build/clean checkout pass, with no new/worsened structure violations or actual frozen-file growth.\n- Capture regression-only source 2ecaddeda reproduced both receiver failures. Corrected source de9a5e8f passed all 11 cases in its two-file scope and check/build/clean checkout.\n- Runtime worker regression-only source 2db6a9ac reproduced all three receiver failures, including actual source and CIL launch. Complete source 7d4c97d2 passes all 34 cases in the six-file timer scope, plus check/build/clean checkout. This covers all three worker timers, rearming, replacement, pause, stop, UI event delivery and capture disposal.\n- Actual Release13 at 7d4c97d2 passed all 15 functional checks with no page errors, including the retained C# handler and source/CIL animation clocks. Its final historical worker-count assertion was obsolete: workspace replacement deliberately retires compiler/session owners. The fixture now verifies unchanged live Worker objects and creation count through designer operations, one real worker per current owner, bounded session ownership, active debug identity, and one final workspace compiler with zero runtime sessions. The corrected actual Release13 at 0bb2ed36 passes all 16 checks with zero page errors and exit 0. It records 10 historical worker creations, exactly one live final compiler, and no remaining runtime sessions. The product/build tree is unchanged from qualified 7d4c97d2; the retained equivalence receipt shows only the Python fixture differs.\n\nThese are exact canonical-source results. The PR's required core is reported separately; no standalone PR unit run is inferred from core, and no duplicate local tests/build/browser run was performed for this publication.\n\nEarlier failures remain explicit: the original disposed-model browser error, the initial headless fixture omission (39/40 until setSelectionRange was supplied), the legacy fill helper's duplicated-source failure, the stale-offset RangeError after five browser checks, the capture AggregateError after ten checks, and the later worker launch error returned in the existing trace despite an empty page-error list.\n\n## Changes outside this workstream\n\nThe minimal A19 execution-capture and runtime-activity timer corrections are included because the actual Project18 browser integration exposed them. The root coordinator authorized both unlocked paths. They reuse existing scheduling owners and add no catch-all error suppression, timer abstraction, or protected worker-entry change. The dedicated regression models the receiver boundary without rejecting valid bare calls.\n\n## Review boundaries\n\nAll 14 product/document/test/helper blobs match corrected canonical source 0bb2ed36 exactly; the only delta from qualified product source 7d4c97d2 is the browser fixture. The only derived file is the A24 manifest, which adds each new A24 fixture once on this parent's actual selector set. This draft requests no issue closure, full-matrix label or main merge. Aggregate performance review and final repository integration remain root-owned review gates.\n\n\n## Source and publication proof\n\n- Product source: `0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760`\n- Local projection: `e42773833954c386c8df3579d373c6d6b6189aeb`\n- Exact projection tree: `ca549b38d09f29c0810d29bb0712e0cdca3cb6b0`\n- Local base: `70db33085e79cea3bd270070ff9fb2e9d6019ec9`\n- Scope: 15 files changed, 721 insertions(+), 31 deletions(-)\n\nOriginal implementation and merge history remain on the committed source worktree branches and `codex/p18-integration`; the exact source commits are preserved. This draft is an explicit review projection; its remote tree and ordered parent SHAs are read back and compared with the local projection. It requests no issue closure, full-matrix label, or main-branch merge.\n\n## Required check and remote readback\n\nRequired `core` passed on the exact published head [`675e1f86ace7510a9d9744db3d88773a862d254c`](https://github.com/wieslawsoltes/SharpForge/commit/675e1f86ace7510a9d9744db3d88773a862d254c): [run 37185578856 / job 111386673663](https://github.com/wieslawsoltes/SharpForge/actions/runs/37185578856/job/111386673663). The raw PR readback is draft and mergeable/clean against `4d209fb03d43131fae53c0de3edc57627c239e50`. All six remote commit trees and ordered parents match their local projections. The earlier automatically superseded PR run was cancelled; the create-event Project16 qualification was skipped. No full-matrix label or workflow dispatch was requested.\n",
+  "readBack": {
+    "verified": true,
+    "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+    "parents": [
+      "4b584525854f767579c3e8463adc4c0972bc5119"
+    ],
+    "head": "675e1f86ace7510a9d9744db3d88773a862d254c",
+    "base": "4d209fb03d43131fae53c0de3edc57627c239e50"
+  },
+  "publicationKind": "draft-feature"
+}

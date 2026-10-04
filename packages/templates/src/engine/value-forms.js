@@ -33,15 +33,16 @@ const builtins = {
   snakeCase: value => value.replace(/([a-z0-9])([A-Z])/g, '$1_$2').replace(/[^A-Za-z0-9]+/g, '_').toLowerCase()
 };
 
+/** Apply declared own-property forms and builtins; unknown or unsupported names raise SFTPL011. */
 export function applyValueForm(value, name, forms = {}, stack = []) {
   value = String(value ?? '');
   if (value.length > 65536 || stack.length > 32 || stack.includes(name)) throw new TemplateError('SFTPL011', 'Template value form cycle or limit');
-  if (builtins[name]) return builtins[name](value);
-  const form = forms[name];
+  if (Object.hasOwn(builtins, name)) return builtins[name](value);
+  const form = Object.hasOwn(forms, name) ? forms[name] : null;
   if (!form) throw new TemplateError('SFTPL011', 'Unknown template value form: ' + name);
   const identifier = form.identifier ?? name;
   if (identifier === 'chain') return (form.steps ?? []).reduce((current, step) => applyValueForm(current, step, forms, [...stack, name]), value);
   if (identifier === 'replace') return value.replace(templateRegex(form.pattern), String(form.replacement ?? ''));
-  if (builtins[identifier]) return builtins[identifier](value);
+  if (Object.hasOwn(builtins, identifier)) return builtins[identifier](value);
   throw new TemplateError('SFTPL011', 'Unsupported template value form: ' + identifier);
 }

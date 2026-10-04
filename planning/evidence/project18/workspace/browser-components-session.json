@@ -1,0 +1,13 @@
+{
+  "suite": "browser_a24_integrity_components_test",
+  "passed": false,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell",
+  "mode": "http",
+  "seconds": 2.1595463690009638,
+  "diagnosticErrors": [
+    "Tracing.stop: Target page, context or browser has been closed"
+  ]
+}

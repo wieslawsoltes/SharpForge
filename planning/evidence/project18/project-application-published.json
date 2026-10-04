@@ -1,0 +1,471 @@
+[
+  {
+    "name": "worker-model-dependencies",
+    "sourceHead": "e3451d1a11b4e349726a6e341b80f77279243f1d",
+    "sourceBase": "12efd56093de65efa391475c4ef26f18ced1129f",
+    "sourceTree": "30a64c29e146a0b9a7081c4f4f7358b4a09611a3",
+    "sourceParents": [
+      "12efd56093de65efa391475c4ef26f18ced1129f",
+      "c007a84c3a9aafa1ac8595738bb613315cfa8b49"
+    ],
+    "branch": "codex/p18-project-worker-model-dependencies",
+    "remoteCommit": "05ad793483e0211b24914fa8188ac51914055570",
+    "parents": [
+      "960eeb25d9f7a87c521ef270d74435c37cf89795",
+      "ace447bdf5d12e3629d3399f3ae08f5428cc25ad"
+    ],
+    "mergeOnly": true,
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true
+  },
+  {
+    "name": "worker-dependencies",
+    "sourceHead": "1073385cc75a6407ef969ca7e282d644019b1319",
+    "sourceBase": "e3451d1a11b4e349726a6e341b80f77279243f1d",
+    "sourceTree": "65ffc8f397f4c016ab85d70c1545159af14209d2",
+    "sourceParents": [
+      "e3451d1a11b4e349726a6e341b80f77279243f1d",
+      "6aedf5742649318508775892055d946e30c25fe6"
+    ],
+    "branch": "codex/p18-project-worker-dependencies",
+    "remoteCommit": "12bebca5a38fc54a0ddf6a2c34ac365e57115486",
+    "parents": [
+      "05ad793483e0211b24914fa8188ac51914055570",
+      "177da71b74a9000a1d44088e553e4821039c426c"
+    ],
+    "mergeOnly": true,
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true
+  },
+  {
+    "name": "worker",
+    "sourceOrigin": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+    "forwardCorrection": "810bcea3b0d25c47c258a69301fafdb685f7be09",
+    "sourceBase": "1073385cc75a6407ef969ca7e282d644019b1319",
+    "sourceHead": "94b9dc4a55d57ea5f6c55f19f1ae1530471f5a30",
+    "sourceTree": "775eae1b4221063ddc8f8793497557f7903e31c9",
+    "branch": "codex/p18-project-worker",
+    "baseBranch": "codex/p18-project-worker-dependencies",
+    "remoteCommit": "917c5bc8291d59f124ffc3c68abddd5366daa4a4",
+    "parents": [
+      "12bebca5a38fc54a0ddf6a2c34ac365e57115486"
+    ],
+    "pr": 3856,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3856",
+    "draft": true,
+    "stat": {
+      "files": 8,
+      "additions": 479,
+      "deletions": 1
+    },
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true,
+    "prVerified": true,
+    "mergeableAtReadback": true,
+    "correctionQualification": {
+      "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+      "node": "v26.10.0",
+      "selectedPassed": 6,
+      "selectedFailed": 0,
+      "completeDelegatedScopePassed": 38,
+      "aggregate": {
+        "tests": 96,
+        "pass": 95,
+        "fail": 1,
+        "skipped": 0
+      },
+      "receipt": "project-application-node26-qualification.json"
+    },
+    "core": {
+      "runId": 37171324626,
+      "jobId": 111344692813,
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171324626/job/111344692813",
+      "head": "917c5bc8291d59f124ffc3c68abddd5366daa4a4",
+      "broadJobs": "skipped"
+    }
+  },
+  {
+    "name": "build-session-dependencies",
+    "sourceHead": "00a19c51d63bbb6e75e93bb42ffee53d41db7427",
+    "sourceBase": "94b9dc4a55d57ea5f6c55f19f1ae1530471f5a30",
+    "sourceTree": "08f5c8ef7fb446561cd7b2b52d70fbd9d81b4924",
+    "sourceParents": [
+      "94b9dc4a55d57ea5f6c55f19f1ae1530471f5a30",
+      "01673eca06ce38ef61116aa89b254df390c9d268"
+    ],
+    "branch": "codex/p18-project-build-session-dependencies",
+    "remoteCommit": "234805ea0313aec409bc831f1b8893e756144381",
+    "parents": [
+      "917c5bc8291d59f124ffc3c68abddd5366daa4a4",
+      "8184f4d43283244d4258da88344d89a80f09dfc0"
+    ],
+    "mergeOnly": true,
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true
+  },
+  {
+    "name": "build-state-dependencies",
+    "sourceHead": "2455b5311279aa6a2b15a5aa8c220f2f151d66f5",
+    "sourceBase": "00a19c51d63bbb6e75e93bb42ffee53d41db7427",
+    "sourceTree": "27d037551ae5dd529c71a740364051c32133def2",
+    "sourceParents": [
+      "00a19c51d63bbb6e75e93bb42ffee53d41db7427",
+      "35f4e20468196bd7c1c8cc977c016af290f72800"
+    ],
+    "branch": "codex/p18-project-build-state-dependencies",
+    "remoteCommit": "f8a209d274f7ec385c18eeed3fabbfbb256a8aaa",
+    "parents": [
+      "234805ea0313aec409bc831f1b8893e756144381",
+      "cc4f35d4f2391a7ca1da0678f05c9a827b118468"
+    ],
+    "mergeOnly": true,
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true
+  },
+  {
+    "name": "build-dependencies",
+    "sourceHead": "5b2bdf61ef06a4bee54c99eeb23c557472dae50d",
+    "sourceBase": "767e3656828ab450cad97ae6d59bdf229a65c84b",
+    "sourceTree": "6872a6a82ec5381d41d20b1066a7fc2d7fbd60a7",
+    "sourceParents": [
+      "767e3656828ab450cad97ae6d59bdf229a65c84b"
+    ],
+    "branch": "codex/p18-project-build-dependencies",
+    "remoteCommit": "5576ed9bf921509790c0be688b0283ed0243defd",
+    "parents": [
+      "f101a2244ad5ec1e1a4f1878c5b3ac8b2b6690f3"
+    ],
+    "mergeOnly": false,
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true,
+    "history": [
+      {
+        "name": "build-dependencies",
+        "sourceHead": "767e3656828ab450cad97ae6d59bdf229a65c84b",
+        "sourceBase": "2455b5311279aa6a2b15a5aa8c220f2f151d66f5",
+        "sourceTree": "849150535783be33fa51b604e77aab065644701d",
+        "sourceParents": [
+          "2455b5311279aa6a2b15a5aa8c220f2f151d66f5",
+          "de88859e2a2e842b317204fb118fa1293fbb4038"
+        ],
+        "branch": "codex/p18-project-build-dependencies",
+        "remoteCommit": "f101a2244ad5ec1e1a4f1878c5b3ac8b2b6690f3",
+        "parents": [
+          "f8a209d274f7ec385c18eeed3fabbfbb256a8aaa",
+          "bc888b66d2838bc69cce5e93b0f01a38d10f68ca"
+        ],
+        "mergeOnly": true,
+        "treeVerified": true,
+        "parentVerified": true,
+        "branchVerified": true
+      }
+    ],
+    "registrationCorrection": {
+      "removedRedundantSelectors": 15,
+      "effectiveTestSetUnchanged": true,
+      "sourceCommit": "5b2bdf61ef06a4bee54c99eeb23c557472dae50d"
+    },
+    "dependencyIntegrationOnly": true,
+    "qualification": {
+      "validatedThroughPrHeads": [
+        3883,
+        3884
+      ],
+      "requiredCore": "success",
+      "membershipProof": "project-application-selector-correction.json"
+    }
+  },
+  {
+    "name": "build-session",
+    "sourceOrigin": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+    "sourceHead": "dbc2746050938e9de824549b7c1ee9b64f97db6e",
+    "sourceBase": "5074cff46ffa58e78a803e904f9d08a3b66179e0",
+    "sourceTree": "9f14a9e52d6d02cbec28f37d5a3cd59c75e7524f",
+    "branch": "codex/p18-project-build-session",
+    "baseBranch": "codex/p18-project-build-dependencies",
+    "remoteCommit": "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+    "parents": [
+      "111439b3411bbfae7f1164e7972179929404803c",
+      "5576ed9bf921509790c0be688b0283ed0243defd"
+    ],
+    "pr": 3883,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3883",
+    "draft": true,
+    "stat": {
+      "files": 7,
+      "additions": 752,
+      "deletions": 0
+    },
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true,
+    "prVerified": true,
+    "mergeableAtReadback": null,
+    "qualification": {
+      "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+      "node": "v26.10.0",
+      "selectedPassed": 10,
+      "selectedFailed": 0,
+      "completeDelegatedScopePassed": 38,
+      "aggregate": {
+        "tests": 96,
+        "pass": 95,
+        "fail": 1,
+        "skipped": 0
+      },
+      "receipt": "project-application-node26-qualification.json"
+    },
+    "sourceParents": [
+      "5074cff46ffa58e78a803e904f9d08a3b66179e0",
+      "5b2bdf61ef06a4bee54c99eeb23c557472dae50d"
+    ],
+    "prSourceBase": "5b2bdf61ef06a4bee54c99eeb23c557472dae50d",
+    "history": [
+      {
+        "name": "build-session",
+        "sourceOrigin": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+        "sourceHead": "5074cff46ffa58e78a803e904f9d08a3b66179e0",
+        "sourceBase": "767e3656828ab450cad97ae6d59bdf229a65c84b",
+        "sourceTree": "69950760814bc84d1570dce1a67372236b6e1c79",
+        "branch": "codex/p18-project-build-session",
+        "baseBranch": "codex/p18-project-build-dependencies",
+        "remoteCommit": "111439b3411bbfae7f1164e7972179929404803c",
+        "parents": [
+          "f101a2244ad5ec1e1a4f1878c5b3ac8b2b6690f3"
+        ],
+        "pr": 3883,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3883",
+        "draft": true,
+        "stat": {
+          "files": 7,
+          "additions": 752,
+          "deletions": 0
+        },
+        "treeVerified": true,
+        "parentVerified": true,
+        "branchVerified": true,
+        "prVerified": true,
+        "mergeableAtReadback": null,
+        "qualification": {
+          "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+          "node": "v26.10.0",
+          "selectedPassed": 10,
+          "selectedFailed": 0,
+          "completeDelegatedScopePassed": 38,
+          "aggregate": {
+            "tests": 96,
+            "pass": 95,
+            "fail": 1,
+            "skipped": 0
+          },
+          "receipt": "project-application-node26-qualification.json"
+        },
+        "core": {
+          "head": "111439b3411bbfae7f1164e7972179929404803c",
+          "runId": 37171968572,
+          "jobId": 111346590515,
+          "conclusion": "failure",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171968572/job/111346590515",
+          "failure": "Duplicate test tests/a23-cil-project-graph-contract.test.js: A23, A23",
+          "correction": "Retain existing A23 wildcard; remove 15 exact covered selectors. Effective 39-file set unchanged."
+        }
+      }
+    ],
+    "registrationCorrection": {
+      "removedRedundantSelectors": 15,
+      "effectiveTestSetUnchanged": true,
+      "sourceCommit": "5b2bdf61ef06a4bee54c99eeb23c557472dae50d"
+    },
+    "core": {
+      "runId": 37172382155,
+      "jobId": 111347814041,
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172382155/job/111347814041",
+      "head": "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+      "broadJobs": [
+        {
+          "name": "core-platforms",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "build",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "packages",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-il",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-msbuild",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "clr-wasm",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "ci-ok",
+          "conclusion": "skipped"
+        }
+      ]
+    }
+  },
+  {
+    "name": "build-qualification",
+    "sourceOrigin": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+    "sourceHead": "bf320e219ae8f4733e1c1b86da0ccbcba81e67b0",
+    "sourceBase": "218d1fa2c46745f2ab9f0333e2b4238488af8ab3",
+    "sourceTree": "fab19d39d4ec7d6b83db5c1ae937c76150c2c64f",
+    "branch": "codex/p18-project-build-qualification",
+    "baseBranch": "codex/p18-project-build-session",
+    "remoteCommit": "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+    "parents": [
+      "480082c53a7e8cea41d8ac3f7553a60786f8c8fa",
+      "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d"
+    ],
+    "pr": 3884,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3884",
+    "draft": true,
+    "stat": {
+      "files": 7,
+      "additions": 534,
+      "deletions": 0
+    },
+    "treeVerified": true,
+    "parentVerified": true,
+    "branchVerified": true,
+    "prVerified": true,
+    "mergeableAtReadback": true,
+    "qualification": {
+      "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+      "node": "v26.10.0",
+      "selectedPassed": 22,
+      "selectedFailed": 0,
+      "completeDelegatedScopePassed": 38,
+      "aggregate": {
+        "tests": 96,
+        "pass": 95,
+        "fail": 1,
+        "skipped": 0
+      },
+      "receipt": "project-application-node26-qualification.json"
+    },
+    "sourceParents": [
+      "218d1fa2c46745f2ab9f0333e2b4238488af8ab3",
+      "dbc2746050938e9de824549b7c1ee9b64f97db6e"
+    ],
+    "prSourceBase": "dbc2746050938e9de824549b7c1ee9b64f97db6e",
+    "history": [
+      {
+        "name": "build-qualification",
+        "sourceOrigin": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+        "sourceHead": "218d1fa2c46745f2ab9f0333e2b4238488af8ab3",
+        "sourceBase": "5074cff46ffa58e78a803e904f9d08a3b66179e0",
+        "sourceTree": "065b1a88de3b8ab3c62ecbb6109bc01e8c354f47",
+        "branch": "codex/p18-project-build-qualification",
+        "baseBranch": "codex/p18-project-build-session",
+        "remoteCommit": "480082c53a7e8cea41d8ac3f7553a60786f8c8fa",
+        "parents": [
+          "111439b3411bbfae7f1164e7972179929404803c"
+        ],
+        "pr": 3884,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3884",
+        "draft": true,
+        "stat": {
+          "files": 7,
+          "additions": 534,
+          "deletions": 0
+        },
+        "treeVerified": true,
+        "parentVerified": true,
+        "branchVerified": true,
+        "prVerified": true,
+        "mergeableAtReadback": null,
+        "qualification": {
+          "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+          "node": "v26.10.0",
+          "selectedPassed": 22,
+          "selectedFailed": 0,
+          "completeDelegatedScopePassed": 38,
+          "aggregate": {
+            "tests": 96,
+            "pass": 95,
+            "fail": 1,
+            "skipped": 0
+          },
+          "receipt": "project-application-node26-qualification.json"
+        },
+        "core": {
+          "head": "480082c53a7e8cea41d8ac3f7553a60786f8c8fa",
+          "runId": 37171974764,
+          "jobId": 111346607862,
+          "conclusion": "failure",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171974764/job/111346607862",
+          "failure": "Duplicate test tests/a23-cil-project-graph-contract.test.js: A23, A23",
+          "correction": "Retain existing A23 wildcard; remove 15 exact covered selectors. Effective 39-file set unchanged."
+        }
+      }
+    ],
+    "registrationCorrection": {
+      "removedRedundantSelectors": 15,
+      "effectiveTestSetUnchanged": true,
+      "sourceCommit": "5b2bdf61ef06a4bee54c99eeb23c557472dae50d"
+    },
+    "core": {
+      "runId": 37172566094,
+      "jobId": 111348362336,
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172566094/job/111348362336",
+      "head": "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+      "broadJobs": [
+        {
+          "name": "core-platforms",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "packages",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "build",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-il",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "clr-wasm",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-msbuild",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "ci-ok",
+          "conclusion": "skipped"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-04T06:21:18.353700+00:00",
+  "scope": "Only clean owned completed source/projection worktrees; branch refs, commit objects, raw logs and publication receipts retained.",
+  "beforeFreeBytes": 1044877312,
+  "afterFreeBytes": 1044922368,
+  "observedFreeByteDelta": 45056,
+  "worktrees": [
+    {
+      "path": "/dev/shm/p18-xml-parser-shrink",
+      "status": "",
+      "branch": "codex/p18-xml-parser-shrink",
+      "head": "99716af5f23a984429fad26957b2fda06b6d8124",
+      "tree": "73519e994048e093bea69d0d5a34c2d5ed1906ec",
+      "removed": true,
+      "forceUsed": false,
+      "branchRetained": true,
+      "unknownFilesRemoved": false
+    },
+    {
+      "path": "/dev/shm/p18-xml-facade-cleanup",
+      "status": "",
+      "branch": "codex/p18-local-xml-facade-cleanup",
+      "head": "c587f6ba2cf5acd13c9c7016f3fe866101cc5112",
+      "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+      "removed": true,
+      "forceUsed": false,
+      "branchRetained": true,
+      "unknownFilesRemoved": false
+    },
+    {
+      "path": "/dev/shm/p18-disk-facade-cleanup",
+      "status": "",
+      "branch": "codex/p18-local-disk-facade-cleanup",
+      "head": "799d4f3b4d4475427da2b1d7503fa2b932e38f21",
+      "tree": "01d72c6cfe394f086ec5326b631612a252eeb3ca",
+      "removed": true,
+      "forceUsed": false,
+      "branchRetained": true,
+      "unknownFilesRemoved": false
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T06:39:47.231789+00:00",
+  "source": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "sourceTree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+  "comparisons": {
+    "pinned": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "e9": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "candidate": "886fb139fc647f0532085b5a0866a498fa7fca52"
+  },
+  "method": "Read-only Git blob measurements; the structure gate, tests and builds were not executed. LF split retains the trailing empty line; bytes use decoded UTF-8 and line lengths use UTF-16 code units. Roots/extensions/ignored paths match the unchanged structure checker.",
+  "baselineFile": {
+    "path": "scripts/quality/structure-baseline.json",
+    "identicalBytesAcrossThreeSources": true,
+    "sha256": "b3ff90df9502985e3df99ec38db2396e1ba8d0af8415c96fd91978b82ecc7572",
+    "entries": 159,
+    "blobs": {
+      "pinned": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7",
+      "e9": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7",
+      "candidate": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7"
+    }
+  },
+  "limits": {
+    "lines": 500,
+    "bytes": 40000,
+    "lineLength": 160
+  },
+  "counts": {
+    "sourceFiles": {
+      "pinned": 2079,
+      "e9": 2617,
+      "candidate": 2617
+    },
+    "problemRows": {
+      "pinned": 268,
+      "e9": 265,
+      "candidate": 265
+    },
+    "distinctProblemPaths": {
+      "pinned": 268,
+      "e9": 265,
+      "candidate": 265
+    },
+    "introducedVsPinned": 0,
+    "resolvedVsPinned": 3,
+    "worsenedExistingDimensionsVsPinned": 0,
+    "legacyGrowingVsActualPinned": 0,
+    "sourceFilesChangedSinceE9": 3
+  },
+  "problemRowsUnchangedFromE9": true,
+  "introduced": [],
+  "resolved": [
+    {
+      "path": "apps/studio/tools/definitions.js",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 5,
+        "bytes": 1494,
+        "lineLength": 1161
+      },
+      "kind": "not-in-baseline"
+    },
+    {
+      "path": "apps/studio/tools/msbuild-automation.js",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 5,
+        "bytes": 494,
+        "lineLength": 425
+      },
+      "kind": "not-in-baseline"
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/assembly-identity.js",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 114,
+        "bytes": 10809,
+        "lineLength": 319
+      },
+      "kind": "not-in-baseline"
+    }
+  ],
+  "worsenedExistingDimensions": [],
+  "legacyGrowthVsActualPinned": [],
+  "changedSourceDimensionsSinceE9": [
+    {
+      "path": "apps/studio/workbench/status-bar.js",
+      "pinned": {
+        "lines": 106,
+        "bytes": 6214,
+        "lineLength": 134
+      },
+      "e9": {
+        "lines": 106,
+        "bytes": 6214,
+        "lineLength": 134
+      },
+      "candidate": {
+        "lines": 121,
+        "bytes": 6962,
+        "lineLength": 134
+      },
+      "withinLimits": true,
+      "sourceBlob": "87f08046bb5d792cca217be1f4b1f2d8f7f96cc3"
+    },
+    {
+      "path": "apps/studio/workbench/status-position.js",
+      "pinned": {
+        "lines": 56,
+        "bytes": 2658,
+        "lineLength": 146
+      },
+      "e9": {
+        "lines": 56,
+        "bytes": 2658,
+        "lineLength": 146
+      },
+      "candidate": {
+        "lines": 62,
+        "bytes": 2917,
+        "lineLength": 146
+      },
+      "withinLimits": true,
+      "sourceBlob": "a58440b3da9ad188e9ab00fd5669f744aa040a3d"
+    },
+    {
+      "path": "packages/editor/src/core/code-editor.js",
+      "pinned": {
+        "lines": 391,
+        "bytes": 19936,
+        "lineLength": 150
+      },
+      "e9": {
+        "lines": 391,
+        "bytes": 19936,
+        "lineLength": 150
+      },
+      "candidate": {
+        "lines": 390,
+        "bytes": 19893,
+        "lineLength": 150
+      },
+      "withinLimits": true,
+      "sourceBlob": "60d3b3e8e5a7fb733c0bd320f161e52a3aee8e80"
+    }
+  ],
+  "elapsedSeconds": 0.469,
+  "interpretation": "No introduced or worsened structure finding is inferred only when the explicit lists are empty. Existing problem rows remain failures of strict structure; this dimensional proof does not turn that gate green or qualify behavior.",
+  "legacyDefinition": "The159 files explicitly frozen by CONTRIBUTING and structure-baseline.json. All other already-over-budget paths are still compared in introduced/resolved/worsened problem rows.",
+  "checkerFile": {
+    "path": "scripts/quality/check-structure.js",
+    "blobs": {
+      "pinned": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44",
+      "e9": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44",
+      "candidate": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44"
+    },
+    "identicalAcrossThreeSources": true
+  }
+}

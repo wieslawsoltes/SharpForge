@@ -1,0 +1,897 @@
+{
+  "schemaVersion": 1,
+  "owner": "root",
+  "publicationDelegate": "filesystem_providers",
+  "recordedAt": "2026-10-04T05:24:05.561Z",
+  "canonicalSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+  "canonicalTree": "9bf41c0b3ba02032b2e9688b2e51add271cdebcf",
+  "dependency": {
+    "name": "prepared-ingress-dependencies",
+    "branch": "codex/p18-prepared-ingress-dependencies",
+    "sourceHead": "1a9b642abdcc416a8e7f09abe1dbbe2ddc6817d0",
+    "sourceTree": "9ad346b1cdc18659d1edbd74ea893887f6be5bf7",
+    "sourceParents": [
+      "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+      "a33fc34c185f42e0b63aadc36909d82740d30288"
+    ],
+    "treeBaseSource": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+    "treeBase": "501e9f33246f3a1478e8137867d57fd31a42670d",
+    "remoteParents": [
+      "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+      "a33fc34c185f42e0b63aadc36909d82740d30288"
+    ],
+    "paths": [
+      "apps/studio/project-wizard/destination.js",
+      "packages/archive/README.md",
+      "packages/archive/examples/streaming.mjs",
+      "packages/archive/src/deflate-compress.js",
+      "packages/archive/src/deflate-dynamic.js",
+      "packages/archive/src/deflate-platform.js",
+      "packages/archive/src/deflate-stream.js",
+      "packages/archive/src/index.js",
+      "packages/archive/src/path-policy.js",
+      "packages/archive/src/text-encoding.js",
+      "packages/archive/src/zip-budgets.js",
+      "packages/archive/src/zip-content-policy.js",
+      "packages/archive/src/zip-crc.js",
+      "packages/archive/src/zip-directory.js",
+      "packages/archive/src/zip-headers.js",
+      "packages/archive/src/zip-metadata.js",
+      "packages/archive/src/zip-reader.js",
+      "packages/archive/src/zip-stream-reader.js",
+      "packages/archive/src/zip-stream-writer.js",
+      "packages/archive/src/zip-writer.js",
+      "packages/archive/src/zip64.js",
+      "packages/project-system/examples/archive-benchmark.mjs",
+      "packages/project-system/src/archive-stream.js",
+      "packages/project-system/src/archive.js",
+      "packages/project-system/src/destination-mode.js",
+      "packages/project-system/src/destination-preflight.js",
+      "packages/project-system/src/destination-rollback.js",
+      "packages/project-system/src/destination-writer.js",
+      "packages/project-system/src/index.js",
+      "packages/project-system/src/paths-normalize.js",
+      "packages/project-system/src/paths.js",
+      "scripts/conformance/static/allowlist.json",
+      "tests/a24-06-archive-large-metadata.test.js",
+      "tests/a24-06-archives.test.js",
+      "tests/a24-06-compression-backends.test.js",
+      "tests/a24-06-recursive-archives.test.js",
+      "tests/a24-09-destination.test.js",
+      "tests/a24-archive-sink-ownership.test.js",
+      "tests/a24-path-encoding.test.js",
+      "tests/fixtures/archive/QUINE-LICENSE",
+      "tests/fixtures/archive/README.md",
+      "tests/fixtures/archive/quine.json",
+      "tests/helpers/a24-directory.js"
+    ],
+    "stats": "43 files changed, 2771 insertions(+), 128 deletions(-)",
+    "newBlobs": [
+      {
+        "path": "packages/project-system/src/archive.js",
+        "sha": "b1f66047df3ad8f469caf3320795a54cd6967f65"
+      },
+      {
+        "path": "packages/project-system/src/index.js",
+        "sha": "8a0b4e6202915008d4b317f6cb1822708a61ed8f"
+      },
+      {
+        "path": "scripts/conformance/static/allowlist.json",
+        "sha": "8bed1ee266c785395240c968a1d396e3baf2ccd6"
+      }
+    ],
+    "manualResolutions": [
+      {
+        "path": "packages/project-system/src/archive.js",
+        "owner": "templates_archives",
+        "blob": "b1f66047df3ad8f469caf3320795a54cd6967f65",
+        "preserved": "Published main source/settings extraction, archive mode/mtime and destination writer/preflight/rollback."
+      }
+    ],
+    "remoteCommit": "6512d51c7f411ab9cb1427e186a68e724ec27aab",
+    "treeVerified": true,
+    "recordedAt": "2026-10-04T05:07:02.397Z",
+    "commitReadback": {
+      "sha": "6512d51c7f411ab9cb1427e186a68e724ec27aab",
+      "tree": "9ad346b1cdc18659d1edbd74ea893887f6be5bf7",
+      "parents": [
+        "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+        "a33fc34c185f42e0b63aadc36909d82740d30288"
+      ],
+      "url": "https://github.com/wieslawsoltes/SharpForge/commit/6512d51c7f411ab9cb1427e186a68e724ec27aab"
+    },
+    "refReadback": {
+      "ref": "refs/heads/codex/p18-prepared-ingress-dependencies",
+      "sha": "6512d51c7f411ab9cb1427e186a68e724ec27aab"
+    }
+  },
+  "feature": {
+    "name": "prepared-ingress",
+    "branch": "codex/p18-prepared-ingress",
+    "sourceHead": "1d8629e6d6cea2214a705fd341e17533b4121697",
+    "sourceTree": "47d537acec467e27e523f32a9bbdd410aa3062ab",
+    "sourceParents": [
+      "1a9b642abdcc416a8e7f09abe1dbbe2ddc6817d0"
+    ],
+    "treeBaseSource": "1a9b642abdcc416a8e7f09abe1dbbe2ddc6817d0",
+    "treeBase": "9ad346b1cdc18659d1edbd74ea893887f6be5bf7",
+    "remoteParents": [
+      "6512d51c7f411ab9cb1427e186a68e724ec27aab"
+    ],
+    "paths": [
+      "apps/studio/workbench/PREPARED_INGRESS.md",
+      "apps/studio/workbench/navigation/index.js",
+      "apps/studio/workbench/studio-file-import.js",
+      "apps/studio/workbench/studio-navigation.js",
+      "apps/studio/workbench/tabs/index.js",
+      "apps/studio/workspace-navigation.js",
+      "tests/a24-studio-prepared-navigation.test.js",
+      "tests/a24-studio-streaming-ingress.test.js"
+    ],
+    "stats": "8 files changed, 590 insertions(+), 47 deletions(-)",
+    "newBlobs": [
+      {
+        "path": "apps/studio/workbench/PREPARED_INGRESS.md",
+        "sha": "7bda36d871b0a201f3258665e52e9dd591bb8e44"
+      },
+      {
+        "path": "apps/studio/workbench/navigation/index.js",
+        "sha": "4c6c8373d8febdd9c67d646fa0b9cc036cca4a88"
+      },
+      {
+        "path": "apps/studio/workbench/studio-file-import.js",
+        "sha": "02348d1fbfd7cd8222dfab68c30ad0eb3fff8c7a"
+      },
+      {
+        "path": "apps/studio/workbench/studio-navigation.js",
+        "sha": "66b3eb7889db1717efc393c82cd1cf76e70fe659"
+      },
+      {
+        "path": "apps/studio/workbench/tabs/index.js",
+        "sha": "00cb47eb1286810b9c54e4c01521f0ba8077ec02"
+      },
+      {
+        "path": "apps/studio/workspace-navigation.js",
+        "sha": "25024de2317c2014269814e153b5df42cb491d9e"
+      },
+      {
+        "path": "tests/a24-studio-prepared-navigation.test.js",
+        "sha": "c364186d683757c6d92029ce7a82591574babd5c"
+      },
+      {
+        "path": "tests/a24-studio-streaming-ingress.test.js",
+        "sha": "5306ff64c29cdd000029c5a35bfbe7adf0960258"
+      }
+    ],
+    "canonicalSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "canonicalTree": "9bf41c0b3ba02032b2e9688b2e51add271cdebcf",
+    "frozenFiles": [
+      {
+        "path": "apps/studio/workspace-navigation.js",
+        "sha256": "b725bc7f284224dc6282783892cf9db329eb0705163c00a857f0391253dfeb0d",
+        "bytes": 4514,
+        "lines": 105,
+        "maxLine": 131,
+        "gitBlob": "25024de2317c2014269814e153b5df42cb491d9e"
+      },
+      {
+        "path": "apps/studio/workbench/navigation/index.js",
+        "sha256": "50f73347bdb27bbfb26509319f927b68e4ea01dbe50d0cd58c7b5f5db56362af",
+        "bytes": 5913,
+        "lines": 134,
+        "maxLine": 137,
+        "gitBlob": "4c6c8373d8febdd9c67d646fa0b9cc036cca4a88"
+      },
+      {
+        "path": "apps/studio/workbench/studio-navigation.js",
+        "sha256": "177dd6baee2ad80787581c9e10b02b50c75783fdc43be5522d27a733ae45df41",
+        "bytes": 3759,
+        "lines": 81,
+        "maxLine": 130,
+        "gitBlob": "66b3eb7889db1717efc393c82cd1cf76e70fe659"
+      },
+      {
+        "path": "apps/studio/workbench/tabs/index.js",
+        "sha256": "86f51d5b73771fed37b38f923284b27c3bd47e3a95bcb43d82880946d0ca8176",
+        "bytes": 13229,
+        "lines": 305,
+        "maxLine": 143,
+        "gitBlob": "00cb47eb1286810b9c54e4c01521f0ba8077ec02"
+      },
+      {
+        "path": "apps/studio/workbench/studio-file-import.js",
+        "sha256": "b539d811621369434254b7d6853e78f954ab137cbee549df7cc2694cc9d353d6",
+        "bytes": 4844,
+        "lines": 93,
+        "maxLine": 123,
+        "gitBlob": "02348d1fbfd7cd8222dfab68c30ad0eb3fff8c7a"
+      },
+      {
+        "path": "apps/studio/workbench/PREPARED_INGRESS.md",
+        "sha256": "a93b1846f3b4d86c4dc5b1c65527055fa11ae4cab39f1ea2c59e56a00558d152",
+        "bytes": 2633,
+        "lines": 40,
+        "maxLine": 87,
+        "gitBlob": "7bda36d871b0a201f3258665e52e9dd591bb8e44"
+      },
+      {
+        "path": "tests/a24-studio-streaming-ingress.test.js",
+        "sha256": "e83e96511997f3950bc2bf16a51e674fa3945ab488a79064ad5d88c4c6648f90",
+        "bytes": 3489,
+        "lines": 85,
+        "maxLine": 125,
+        "gitBlob": "5306ff64c29cdd000029c5a35bfbe7adf0960258"
+      },
+      {
+        "path": "tests/a24-studio-prepared-navigation.test.js",
+        "sha256": "b1cfae7f37b968b63e183118339571604bf6e763544b3cb6bf1d785f20a7334a",
+        "bytes": 10963,
+        "lines": 281,
+        "maxLine": 123,
+        "gitBlob": "c364186d683757c6d92029ce7a82591574babd5c"
+      }
+    ],
+    "manifestCoverage": "Existing tests/a24-*.test.js selector covers both new focused files.",
+    "remoteCommit": "fe8d8b0e995ee508d171ac7abef02c0054d45fa7",
+    "treeVerified": true,
+    "recordedAt": "2026-10-04T05:07:05.316Z",
+    "commitReadback": {
+      "sha": "fe8d8b0e995ee508d171ac7abef02c0054d45fa7",
+      "tree": "47d537acec467e27e523f32a9bbdd410aa3062ab",
+      "parents": [
+        "6512d51c7f411ab9cb1427e186a68e724ec27aab"
+      ],
+      "url": "https://github.com/wieslawsoltes/SharpForge/commit/fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+    },
+    "refReadback": {
+      "ref": "refs/heads/codex/p18-prepared-ingress",
+      "sha": "fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+    },
+    "pullRequest": {
+      "number": 4306,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4306",
+      "head": "fe8d8b0e995ee508d171ac7abef02c0054d45fa7",
+      "branch": "codex/p18-prepared-ingress",
+      "base": "codex/p18-prepared-ingress-dependencies",
+      "baseSha": "6512d51c7f411ab9cb1427e186a68e724ec27aab",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "mergeableState": "clean"
+    }
+  },
+  "requiredChecks": {
+    "head": "fe8d8b0e995ee508d171ac7abef02c0054d45fa7",
+    "runId": 37178989852,
+    "jobId": 111367509747,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178989852/job/111367509747",
+    "jobs": [
+      {
+        "id": 111367509747,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111367563234,
+        "name": "core-platforms",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367563496,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367563921,
+        "name": "packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367564157,
+        "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367564655,
+        "name": "native-msbuild",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367564716,
+        "name": "native-il",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367565066,
+        "name": "clr-wasm",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 111367565686,
+        "name": "ci-ok",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "cancelledDuplicateRuns": [
+      37178988051
+    ],
+    "interpretation": "Required core verifies contracts, static checks, production build, and clean checkout; skipped unit/browser/native/platform jobs are not platform passes."
+  },
+  "restrictions": {
+    "localTests": false,
+    "localBuild": false,
+    "newBenchmark": false,
+    "manualDispatch": false,
+    "mainRefresh": false,
+    "forceUpdate": false,
+    "protectedStudioEntryChanged": false
+  },
+  "qualification": {
+    "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "toolchain": {
+      "node": "v26.10.0",
+      "npm": "11.19.1"
+    },
+    "startedAt": "2026-10-04T05:02:43.661944+00:00",
+    "completedAt": "2026-10-04T05:06:22.052473+00:00",
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "tests/a00-02-registry.test.js",
+      "tests/a00-03-studio-registries.test.js",
+      "tests/a00-20-styles.test.js",
+      "tests/a00-builtin-registry-array-compat.test.js",
+      "tests/a00-builtin-registry-sparse.test.js",
+      "tests/a03-03-assembly-definition.test.js",
+      "tests/a03-03-assembly-references.test.js",
+      "tests/a03-03-entry-stub.test.js",
+      "tests/a03-05-branch-relaxation.test.js",
+      "tests/a03-05-compact-instructions.test.js",
+      "tests/a03-08-prefix-constrained.test.js",
+      "tests/a05-02-generic-calls.test.js",
+      "tests/a05-02-generic-dispatch.test.js",
+      "tests/a05-02-interface-dispatch.test.js",
+      "tests/a05-02-virtual-slots.test.js",
+      "tests/a05-21-static-init.test.js",
+      "tests/a05-b03-dispatch.test.js",
+      "tests/a05-closed-field-owner.test.js",
+      "tests/a05-constrained-interface-calls.test.js",
+      "tests/a05-decode-plan.test.js",
+      "tests/a05-inline-cache.test.js",
+      "tests/a05-native-width-cil.test.js",
+      "tests/a05-native-width.test.js",
+      "tests/a05-scalar-field-loads.test.js",
+      "tests/a05-scalar-slot-loads.test.js",
+      "tests/a05-scalar-wire-emission.test.js",
+      "tests/a05-scalar-wire-validation.test.js",
+      "tests/a05-seams-cil-types.test.js",
+      "tests/a05-source-numeric-modes.test.js",
+      "tests/a05-statics.test.js",
+      "tests/a05-token-cache.test.js",
+      "tests/a05-tokens.test.js",
+      "tests/a05-type-casting.test.js",
+      "tests/a05-type-handle-admission.test.js",
+      "tests/a05-type-tables.test.js",
+      "tests/a05-value-layout-sizeof.test.js",
+      "tests/a07-13-registry.test.js",
+      "tests/a07-20-inventory.test.js",
+      "tests/a07-ordinal-ignore-case.test.js",
+      "tests/a08-array-comparer.test.js",
+      "tests/a08-ordinal-comparer.test.js",
+      "tests/a19-03-document-tabs.test.js",
+      "tests/a19-04-docking-model.test.js",
+      "tests/a19-document-disk-save.test.js",
+      "tests/a19-document-operation-state.test.js",
+      "tests/a19-document-snapshot-save.test.js",
+      "tests/a19-documents-state.test.js",
+      "tests/a19-execution-occupancy.test.js",
+      "tests/a19-execution-worker.test.js",
+      "tests/a19-explorer-resource-transaction.test.js",
+      "tests/a19-explorer-snapshots.test.js",
+      "tests/a19-explorer-source-plans.test.js",
+      "tests/a19-native-background-tasks.test.js",
+      "tests/a19-native-task-integration.test.js",
+      "tests/a19-prepared-documents.test.js",
+      "tests/a19-runtime-arguments.test.js",
+      "tests/a19-runtime-environment.test.js",
+      "tests/a19-runtime-launch-options.test.js",
+      "tests/a19-runtime-settings-bridge.test.js",
+      "tests/a19-runtime-worker-launch.test.js",
+      "tests/a19-studio-diagnostic-producers.test.js",
+      "tests/a19-studio-docking-sync.test.js",
+      "tests/a19-studio-navigation.test.js",
+      "tests/a19-studio-save-ownership.test.js",
+      "tests/a19-studio-workspace-inputs.test.js",
+      "tests/a19-window-layouts-navigation.test.js",
+      "tests/a19-worker-client.test.js",
+      "tests/a19-workspace-loads.test.js",
+      "tests/a20-disk-save-cancellation.test.js",
+      "tests/a20-editor-language-worker.test.js",
+      "tests/a20-prepared-source-paths.test.js",
+      "tests/a20-prepared-source-workspace.test.js",
+      "tests/a20-save-encoding-roundtrip.test.js",
+      "tests/a20-save-normalization.test.js",
+      "tests/a20-save-preparation-flow.test.js",
+      "tests/a20-source-save-as.test.js",
+      "tests/a20-studio-source-import.test.js",
+      "tests/a23-11-native-adapter.test.js",
+      "tests/a23-11-native-testing.test.js",
+      "tests/a23-12-evaluation-differential.test.js",
+      "tests/a23-29-abi-extensions.test.js",
+      "tests/a23-29-managed-environment.test.js",
+      "tests/a23-30-launch-arguments.test.js",
+      "tests/a23-35-test-model.test.js",
+      "tests/a23-36-38-portable-discovery.test.js",
+      "tests/a23-36-provider-projection.test.js",
+      "tests/a23-39-managed-invocation.test.js",
+      "tests/a23-39-portable-fixtures.test.js",
+      "tests/a23-39-portable-runner.test.js",
+      "tests/a23-39-shared-framework-fixtures.test.js",
+      "tests/a23-assembly-access.test.js",
+      "tests/a23-cil-project-graph-contract.test.js",
+      "tests/a23-cil-project-profile.test.js",
+      "tests/a23-compiler-worker-entry.test.js",
+      "tests/a23-member-definitions.test.js",
+      "tests/a23-native-central-boundaries.test.js",
+      "tests/a23-native-context-aliases.test.js",
+      "tests/a23-native-context-ui-model.test.js",
+      "tests/a23-native-designer-files.test.js",
+      "tests/a23-native-document-ownership.test.js",
+      "tests/a23-native-nuget-registration.test.js",
+      "tests/a23-native-profile-ui-model.test.js",
+      "tests/a23-native-publish-encoding.test.js",
+      "tests/a23-native-reference-metadata.test.js",
+      "tests/a23-native-tool-renderer.test.js",
+      "tests/a23-native-view-contracts.test.js",
+      "tests/a23-native-workspace-state.test.js",
+      "tests/a23-project-access-loader.test.js",
+      "tests/a23-project-artifact-cache.test.js",
+      "tests/a23-project-assembly-loader.test.js",
+      "tests/a23-project-assembly-native.test.js",
+      "tests/a23-project-build-order.test.js",
+      "tests/a23-project-build.test.js",
+      "tests/a23-project-debug-banner.test.js",
+      "tests/a23-project-debug-editor.test.js",
+      "tests/a23-project-debug-sources.test.js",
+      "tests/a23-project-emission.test.js",
+      "tests/a23-project-plan-artifacts.test.js",
+      "tests/a23-project-property-access.test.js",
+      "tests/a23-project-reference-binding.test.js",
+      "tests/a23-project-reference-bytecode.test.js",
+      "tests/a23-project-reference-emission.test.js",
+      "tests/a23-project-reference-namespaces.test.js",
+      "tests/a23-project-reference-visibility.test.js",
+      "tests/a23-project-runtime-input.test.js",
+      "tests/a23-project-runtime-types.test.js",
+      "tests/a23-project-runtime-worker.test.js",
+      "tests/a23-project-runtime.test.js",
+      "tests/a23-project-stack-provenance.test.js",
+      "tests/a23-project-static-initialization.test.js",
+      "tests/a23-project-target-lifecycle.test.js",
+      "tests/a23-project-target-native.test.js",
+      "tests/a23-solution-configuration-contract.test.js",
+      "tests/a23-source-emission-model.test.js",
+      "tests/a23-source-member-definitions.test.js",
+      "tests/a23-studio-native-contexts.test.js",
+      "tests/a23-studio-native-profiles.test.js",
+      "tests/a23-studio-test-explorer.test.js",
+      "tests/a23-studio-test-worker.test.js",
+      "tests/a23-studio-tools-registration.test.js",
+      "tests/a23-test-explorer-controller.test.js",
+      "tests/a23-test-model-contract.test.js",
+      "tests/a23-test-runtime-contract.test.js",
+      "tests/a23-test-symbol-contract.test.js",
+      "tests/a23-upstream-emission-composition.test.js",
+      "tests/a23-worker-emission-cache.test.js",
+      "tests/a24-06-archive-large-metadata.test.js",
+      "tests/a24-06-archives.test.js",
+      "tests/a24-06-compression-backends.test.js",
+      "tests/a24-06-recursive-archives.test.js",
+      "tests/a24-09-destination.test.js",
+      "tests/a24-20-template-engine.test.js",
+      "tests/a24-archive-sink-ownership.test.js",
+      "tests/a24-diagnostic-source.test.js",
+      "tests/a24-disk-held-signal.test.js",
+      "tests/a24-disk-load-concurrency.test.js",
+      "tests/a24-disk-notifications.test.js",
+      "tests/a24-disk-scaling.test.js",
+      "tests/a24-disk-services.test.js",
+      "tests/a24-editor-lifecycle-foundation.test.js",
+      "tests/a24-editor-lifecycle.test.js",
+      "tests/a24-explorer-child-loader.test.js",
+      "tests/a24-explorer-hierarchy.test.js",
+      "tests/a24-explorer-history.test.js",
+      "tests/a24-explorer-operations.test.js",
+      "tests/a24-explorer-prepared-journal.test.js",
+      "tests/a24-explorer-reveal.test.js",
+      "tests/a24-explorer-state-restore.test.js",
+      "tests/a24-explorer-transfers.test.js",
+      "tests/a24-explorer-view-policy.test.js",
+      "tests/a24-folder-compilation.test.js",
+      "tests/a24-lazy-tree-identity.test.js",
+      "tests/a24-peer-buffer-resolution.test.js",
+      "tests/a24-prepared-journal.test.js",
+      "tests/a24-prepared-persistence.test.js",
+      "tests/a24-prepared-recovery.test.js",
+      "tests/a24-prepared-source-hashes.test.js",
+      "tests/a24-problems-navigation.test.js",
+      "tests/a24-project-panel.test.js",
+      "tests/a24-provider-source-save.test.js",
+      "tests/a24-provider-transactions.test.js",
+      "tests/a24-recovery-bootstrap.test.js",
+      "tests/a24-recovery-lazy.test.js",
+      "tests/a24-save-conflicts.test.js",
+      "tests/a24-studio-document-policy.test.js",
+      "tests/a24-studio-prepared-navigation.test.js",
+      "tests/a24-studio-save-composition.test.js",
+      "tests/a24-studio-session-composition.test.js",
+      "tests/a24-studio-startup-recovery.test.js",
+      "tests/a24-studio-streaming-ingress.test.js",
+      "tests/a24-template-engine-boundaries.test.js",
+      "tests/a24-template-package-atomicity.test.js",
+      "tests/a24-type-rename.test.js",
+      "tests/a24-workbench-debug-provenance.test.js",
+      "tests/a24-workbench-feature-callbacks.test.js",
+      "tests/a24-workbench-project-composition.test.js",
+      "tests/a24-workbench-workspace-ports.test.js",
+      "tests/a24-workspace-disk-events.test.js",
+      "tests/a24-workspace-host-concurrency.test.js",
+      "tests/a24-workspace-import-regression.test.js",
+      "tests/a24-workspace-imports.test.js",
+      "tests/a24-workspace-navigation.test.js",
+      "tests/a24-workspace-recovery.test.js",
+      "tests/a24-workspace-refactoring.test.js",
+      "tests/a24-workspace-search.test.js",
+      "tests/a24-workspace-session.test.js",
+      "tests/a24-workspace-transition.test.js",
+      "tests/a24-workspace-wizard-native.test.js",
+      "tests/a24-xaml-reopen.test.js",
+      "tests/a24-xml-text-policy.test.js",
+      "tests/managed-il.test.js",
+      "tests/msbuild-solution.test.js",
+      "tests/project-core-contract.test.js",
+      "tests/project-evaluation-build-stages.test.js",
+      "tests/project-evaluation-build.test.js",
+      "tests/project-evaluation-central-packages.test.js",
+      "tests/project-evaluation-contexts.test.js",
+      "tests/project-evaluation-expressions.test.js",
+      "tests/project-evaluation-items.test.js",
+      "tests/project-evaluation-sdk.test.js",
+      "tests/project-evaluation-targets.test.js",
+      "tests/project-expression-contract.test.js",
+      "tests/project-resource-contract.test.js",
+      "tests/project-solution-reader.test.js",
+      "tests/release09-worker.test.js",
+      "tests/workspace-io.test.js",
+      "tests/workspace-roundtrip.test.js"
+    ],
+    "testFiles": [
+      "tests/a24-studio-prepared-navigation.test.js",
+      "tests/a24-studio-streaming-ingress.test.js"
+    ],
+    "scopedSummary": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "cases": [
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "direct and toolbar navigation share queued lazy admission and preserve view locations",
+        "tapNumber": 1395,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "failed and unavailable admission leave the history index intact and release the navigation queue",
+        "tapNumber": 1396,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "clearing a workspace cancels in-flight source preparation before history or tabs can be adopted",
+        "tapNumber": 1397,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "a new foreground location during lazy preparation is preserved instead of replaying an obsolete target",
+        "tapNumber": 1398,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "clearing after preparation fences a delayed document open before tab admission and focus",
+        "tapNumber": 1399,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "foreground history supersedes a replay waiting for a document",
+        "tapNumber": 1400,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "a later queued tab request supersedes navigation without an intervening history update",
+        "tapNumber": 1401,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "the admission token still fences a newer request during the promise handoff",
+        "tapNumber": 1402,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "activation away and back still supersedes an older delayed navigation",
+        "tapNumber": 1403,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "disposing preparation while its tab request is queued prevents the document open itself",
+        "tapNumber": 1404,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "an old cancelled replay cannot release a newer replay owner",
+        "tapNumber": 1405,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-streaming-ingress.test.js",
+        "name": "Studio ZIP selection streams bounded slices and retains settings on the original load ticket",
+        "tapNumber": 1424,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-streaming-ingress.test.js",
+        "name": "ZIP cancellation and source changes during preparation cannot adopt a workspace",
+        "tapNumber": 1425,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-streaming-ingress.test.js",
+        "name": "Studio rejects oversized ZIP input before any read or document adoption",
+        "tapNumber": 1426,
+        "status": "passed"
+      }
+    ],
+    "aggregate": {
+      "testFileCount": 227,
+      "summary": {
+        "tests": 1875,
+        "suites": 0,
+        "pass": 1809,
+        "fail": 66,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "qualificationIncomplete": true,
+      "interpretation": "All 66 failures were outside the two ingress files. This is a scoped pass within a failed aggregate run, not overall acceptance."
+    },
+    "sourceUnchangedAtCorrection": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+    "artifacts": [
+      {
+        "path": "planning/evidence/project18/prepared-ingress/final-qualification.json",
+        "originalPath": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/final-qualification.json",
+        "sha256": "953cd3dac0a8e90a4f6a2ec1c1f71a47bb2a4156982d03ce551fd534da1a69e0",
+        "copy": "verbatim"
+      },
+      {
+        "path": "planning/evidence/project18/prepared-ingress/node26-synchronized-scope.json",
+        "originalPath": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.json",
+        "sha256": "2bd561f475577b4457f6381dd770c71cff01c4fcbf6a6ba25bf395190c6084a6",
+        "copy": "verbatim"
+      },
+      {
+        "path": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+        "sha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da",
+        "retention": "Original full TAP remains unchanged; root owns its tracked aggregate archive."
+      },
+      {
+        "path": "planning/evidence/project18/prepared-ingress/node26-ingress-scoped.tap",
+        "sha256": "d334d1c18d60a05602d5d8154505772b89f3f43f8894044551b0969eeb226668",
+        "selection": "Verbatim 14 subtest blocks selected from original TAP; not a separate test invocation."
+      }
+    ]
+  },
+  "limits": [
+    "This publication contains eight exact canonical source files and excludes the protected Studio entry and root manifest composition.",
+    "Node tests use deterministic public controller and Blob fixtures; no additional browser, native-picker, OS/architecture or performance acceptance is inferred.",
+    "The 227-file qualification failed overall; its 66 failures are preserved and will be corrected in separate source/replay evidence."
+  ],
+  "priorReview": {
+    "concreteDefectsResolved": [
+      "Delayed documents.open needed a live replay fence through final activation.",
+      "A later queued open or B-to-C-to-B foreground transition needed the same admission token across the promise handoff."
+    ],
+    "assertionCount": 14,
+    "noSharedSourceEditsByPublisher": true
+  },
+  "completedWorktreeCleanup": {
+    "worktree": "/dev/shm/p18-prepared-ingress",
+    "branch": "codex/p18-local-prepared-ingress",
+    "head": "1d8629e6d6cea2214a705fd341e17533b4121697",
+    "tree": "47d537acec467e27e523f32a9bbdd410aa3062ab",
+    "cleanBeforeRemoval": true,
+    "branchRetained": true,
+    "force": false,
+    "removedAt": "2026-10-04T05:27:43.781419+00:00"
+  },
+  "finalNode22Qualification": {
+    "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "node": "v22.23.3",
+    "scopedSummary": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "cases": [
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "direct and toolbar navigation share queued lazy admission and preserve view locations",
+        "tapNumber": 1397,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "failed and unavailable admission leave the history index intact and release the navigation queue",
+        "tapNumber": 1398,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "clearing a workspace cancels in-flight source preparation before history or tabs can be adopted",
+        "tapNumber": 1399,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "a new foreground location during lazy preparation is preserved instead of replaying an obsolete target",
+        "tapNumber": 1400,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "clearing after preparation fences a delayed document open before tab admission and focus",
+        "tapNumber": 1401,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "foreground history supersedes a replay waiting for a document",
+        "tapNumber": 1402,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "a later queued tab request supersedes navigation without an intervening history update",
+        "tapNumber": 1403,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "the admission token still fences a newer request during the promise handoff",
+        "tapNumber": 1404,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "activation away and back still supersedes an older delayed navigation",
+        "tapNumber": 1405,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "disposing preparation while its tab request is queued prevents the document open itself",
+        "tapNumber": 1406,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-prepared-navigation.test.js",
+        "name": "an old cancelled replay cannot release a newer replay owner",
+        "tapNumber": 1407,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-streaming-ingress.test.js",
+        "name": "Studio ZIP selection streams bounded slices and retains settings on the original load ticket",
+        "tapNumber": 1426,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-streaming-ingress.test.js",
+        "name": "ZIP cancellation and source changes during preparation cannot adopt a workspace",
+        "tapNumber": 1427,
+        "status": "passed"
+      },
+      {
+        "file": "tests/a24-studio-streaming-ingress.test.js",
+        "name": "Studio rejects oversized ZIP input before any read or document adoption",
+        "tapNumber": 1428,
+        "status": "passed"
+      }
+    ],
+    "sourceProofs": [
+      {
+        "path": "apps/studio/workbench/PREPARED_INGRESS.md",
+        "blob": "7bda36d871b0a201f3258665e52e9dd591bb8e44",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "apps/studio/workbench/navigation/index.js",
+        "blob": "4c6c8373d8febdd9c67d646fa0b9cc036cca4a88",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "apps/studio/workbench/studio-file-import.js",
+        "blob": "02348d1fbfd7cd8222dfab68c30ad0eb3fff8c7a",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "apps/studio/workbench/studio-navigation.js",
+        "blob": "66b3eb7889db1717efc393c82cd1cf76e70fe659",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "apps/studio/workbench/tabs/index.js",
+        "blob": "00cb47eb1286810b9c54e4c01521f0ba8077ec02",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "apps/studio/workspace-navigation.js",
+        "blob": "25024de2317c2014269814e153b5df42cb491d9e",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "tests/a24-studio-prepared-navigation.test.js",
+        "blob": "c364186d683757c6d92029ce7a82591574babd5c",
+        "matchesQualifiedPriorSource": true
+      },
+      {
+        "path": "tests/a24-studio-streaming-ingress.test.js",
+        "blob": "5306ff64c29cdd000029c5a35bfbe7adf0960258",
+        "matchesQualifiedPriorSource": true
+      }
+    ],
+    "aggregate": {
+      "tests": 1877,
+      "suites": 0,
+      "pass": 1877,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "evidence": "planning/evidence/project18/canonical-port-qualification.json",
+    "scopedTap": "planning/evidence/project18/canonical-port-qualification/node22-ingress-scoped.tap",
+    "scopedTapSha256": "740931453e9f446e6c764ceb37f8120d5a9c77bca2b161ce70224fd2b46b03dd",
+    "interpretation": "Existing root completed scope only; no publisher rerun. Prior failed scopes remain retained."
+  }
+}

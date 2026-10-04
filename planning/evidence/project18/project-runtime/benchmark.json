@@ -1,0 +1,542 @@
+{
+  "format": "SharpForge.ProjectRuntimeBenchmark/1",
+  "status": "partial-environment",
+  "node": "v22.23.3",
+  "machine": {
+    "system": "Linux",
+    "release": "6.18.44",
+    "architecture": "x86_64"
+  },
+  "plannedPairs": 3,
+  "completedPairs": [
+    1,
+    2
+  ],
+  "warmSamplesPerWorkloadAndTree": 8,
+  "p95Method": "nearest rank",
+  "method": "Unchanged existing benchmark-release14.js; one cold and four warm runs per workload/engine per process. Only the two complete alternating baseline/final pairs are compared; all processes were serial through limited.js.",
+  "environmentBlock": "The last final-tree process was never launched. Its immediate preflight found less than512MiB actual free; repeated authorized obsolete-vendor cleanup recovered only344,489,984bytes. No additional benchmark attempt was made.",
+  "unpairedCaptures": [
+    "benchmark-baseline-3.json"
+  ],
+  "caveat": "Shared machine under resource pressure; eight warm samples per row give a coarse p95 equal to the largest sample. These compare complete upstream/integrated trees, not an isolated commit or graph-loading time. allocatedBytes is the managed heap counter, not JavaScript allocation.",
+  "runs": [
+    {
+      "label": "baseline",
+      "pair": 1,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "sourceCommit": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "startedAt": "2026-10-04T00:31:42.081666+00:00",
+      "diskPreflightFreeBytes": 1343709184,
+      "loadAverage": [
+        3.109375,
+        1.99169921875,
+        1.56396484375
+      ],
+      "log": "benchmark-baseline-1.json",
+      "stderr": "benchmark-baseline-1.stderr.txt",
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:31:46.218303+00:00"
+    },
+    {
+      "label": "final",
+      "pair": 1,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "startedAt": "2026-10-04T00:31:46.221697+00:00",
+      "diskPreflightFreeBytes": 1343664128,
+      "loadAverage": [
+        3.26123046875,
+        2.0419921875,
+        1.58251953125
+      ],
+      "log": "benchmark-final-1.json",
+      "stderr": "benchmark-final-1.stderr.txt",
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:31:50.314076+00:00"
+    },
+    {
+      "label": "final",
+      "pair": 2,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "startedAt": "2026-10-04T00:31:50.317168+00:00",
+      "diskPreflightFreeBytes": 834080768,
+      "loadAverage": [
+        3.240234375,
+        2.05810546875,
+        1.59033203125
+      ],
+      "log": "benchmark-final-2.json",
+      "stderr": "benchmark-final-2.stderr.txt",
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:31:54.409496+00:00"
+    },
+    {
+      "label": "baseline",
+      "pair": 2,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "sourceCommit": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "startedAt": "2026-10-04T00:31:54.412223+00:00",
+      "diskPreflightFreeBytes": 742391808,
+      "loadAverage": [
+        3.30126953125,
+        2.0908203125,
+        1.603515625
+      ],
+      "log": "benchmark-baseline-2.json",
+      "stderr": "benchmark-baseline-2.stderr.txt",
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:31:58.394689+00:00"
+    },
+    {
+      "label": "baseline",
+      "pair": 3,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-release14.js"
+      ],
+      "sourceCommit": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+      "startedAt": "2026-10-04T00:31:58.397506+00:00",
+      "diskPreflightFreeBytes": 557826048,
+      "loadAverage": [
+        3.4375,
+        2.13916015625,
+        1.6220703125
+      ],
+      "log": "benchmark-baseline-3.json",
+      "stderr": "benchmark-baseline-3.stderr.txt",
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:32:02.286679+00:00"
+    }
+  ],
+  "comparisons": [
+    {
+      "workload": "dictionary",
+      "engine": "source",
+      "baseline": {
+        "warmSamplesMs": [
+          33.70443599999999,
+          33.93813899999998,
+          25.101488000000018,
+          32.43025499999999,
+          36.18776300000002,
+          27.951502000000005,
+          28.12909000000002,
+          20.733888000000093
+        ],
+        "coldSamplesMs": [
+          77.03327300000001,
+          78.93227200000001
+        ],
+        "allocatedBytes": [
+          197344,
+          197344
+        ],
+        "medianMs": 30.279672500000004,
+        "p95Ms": 36.18776300000002
+      },
+      "final": {
+        "warmSamplesMs": [
+          32.362303999999995,
+          33.25929699999995,
+          32.598771000000056,
+          34.48884099999998,
+          40.979850000000056,
+          30.059792000000016,
+          28.758429000000092,
+          20.45995400000004
+        ],
+        "coldSamplesMs": [
+          75.84819299999992,
+          93.29538300000002
+        ],
+        "allocatedBytes": [
+          197344,
+          197344
+        ],
+        "medianMs": 32.480537500000025,
+        "p95Ms": 40.979850000000056
+      },
+      "medianChangePercent": 7.268457081231716,
+      "p95ChangePercent": 13.242285796997265
+    },
+    {
+      "workload": "dictionary",
+      "engine": "cil",
+      "baseline": {
+        "warmSamplesMs": [
+          153.96300999999994,
+          112.15409199999999,
+          92.728521,
+          92.3581079999999,
+          89.7710689999999,
+          88.268102,
+          84.78609099999994,
+          82.31917199999998
+        ],
+        "coldSamplesMs": [
+          171.85835699999984,
+          142.13469600000008
+        ],
+        "allocatedBytes": [
+          197344,
+          197344
+        ],
+        "medianMs": 91.0645884999999,
+        "p95Ms": 153.96300999999994
+      },
+      "final": {
+        "warmSamplesMs": [
+          113.12797299999988,
+          94.39832699999988,
+          93.3006620000001,
+          80.456052,
+          97.56793700000014,
+          99.44183199999998,
+          84.43131599999992,
+          82.25092799999993
+        ],
+        "coldSamplesMs": [
+          152.96269600000005,
+          165.17337399999997
+        ],
+        "allocatedBytes": [
+          197344,
+          197344
+        ],
+        "medianMs": 93.84949449999999,
+        "p95Ms": 113.12797299999988
+      },
+      "medianChangePercent": 3.058165688631087,
+      "p95ChangePercent": -26.522628389767178
+    },
+    {
+      "workload": "list",
+      "engine": "source",
+      "baseline": {
+        "warmSamplesMs": [
+          28.954852000000074,
+          28.59120999999982,
+          31.417398999999932,
+          30.483200000000124,
+          29.89718700000003,
+          29.417833999999857,
+          38.89598799999999,
+          32.96437300000002
+        ],
+        "coldSamplesMs": [
+          65.46478100000013,
+          67.05968099999996
+        ],
+        "allocatedBytes": [
+          131504,
+          131504
+        ],
+        "medianMs": 30.190193500000078,
+        "p95Ms": 38.89598799999999
+      },
+      "final": {
+        "warmSamplesMs": [
+          34.55048399999987,
+          36.98234100000013,
+          30.619726000000128,
+          36.46596700000009,
+          29.436321000000135,
+          28.593259999999873,
+          27.996601000000055,
+          34.41425800000002
+        ],
+        "coldSamplesMs": [
+          72.73130199999991,
+          57.02842200000009
+        ],
+        "allocatedBytes": [
+          131504,
+          131504
+        ],
+        "medianMs": 32.51699200000007,
+        "p95Ms": 36.98234100000013
+      },
+      "medianChangePercent": 7.707133443844905,
+      "p95ChangePercent": -4.919908449169242
+    },
+    {
+      "workload": "list",
+      "engine": "cil",
+      "baseline": {
+        "warmSamplesMs": [
+          235.35015999999996,
+          239.47560199999998,
+          247.50393899999972,
+          232.22805199999993,
+          242.2836319999999,
+          241.56013999999982,
+          271.67227100000036,
+          283.76057200000014
+        ],
+        "coldSamplesMs": [
+          257.90726300000006,
+          258.13264200000003
+        ],
+        "allocatedBytes": [
+          131504,
+          131504
+        ],
+        "medianMs": 241.92188599999986,
+        "p95Ms": 283.76057200000014
+      },
+      "final": {
+        "warmSamplesMs": [
+          238.3698119999999,
+          238.21949500000028,
+          240.39251300000024,
+          238.99921099999983,
+          258.92019300000015,
+          259.5455259999999,
+          252.68506100000013,
+          240.9768140000001
+        ],
+        "coldSamplesMs": [
+          259.2336700000001,
+          310.94517900000005
+        ],
+        "allocatedBytes": [
+          131504,
+          131504
+        ],
+        "medianMs": 240.68466350000017,
+        "p95Ms": 259.5455259999999
+      },
+      "medianChangePercent": -0.5114140437875392,
+      "p95ChangePercent": -8.533618969445921
+    },
+    {
+      "workload": "queue",
+      "engine": "source",
+      "baseline": {
+        "warmSamplesMs": [
+          24.581551000000218,
+          26.48905599999989,
+          26.73200399999996,
+          17.897069999999985,
+          17.409133999999995,
+          18.124623000000156,
+          16.217356999999993,
+          15.82456400000001
+        ],
+        "coldSamplesMs": [
+          61.257658999999876,
+          54.243523000000096
+        ],
+        "allocatedBytes": [
+          65952,
+          65952
+        ],
+        "medianMs": 18.01084650000007,
+        "p95Ms": 26.73200399999996
+      },
+      "final": {
+        "warmSamplesMs": [
+          16.322895000000244,
+          17.005816000000323,
+          21.875510000000304,
+          15.461826000000201,
+          17.265867999999955,
+          14.501439000000119,
+          14.89994999999999,
+          13.959250999999767
+        ],
+        "coldSamplesMs": [
+          57.073399999999765,
+          51.76527400000032
+        ],
+        "allocatedBytes": [
+          65952,
+          65952
+        ],
+        "medianMs": 15.892360500000223,
+        "p95Ms": 21.875510000000304
+      },
+      "medianChangePercent": -11.762278913430524,
+      "p95ChangePercent": -18.167339792406377
+    },
+    {
+      "workload": "queue",
+      "engine": "cil",
+      "baseline": {
+        "warmSamplesMs": [
+          107.79702300000008,
+          100.9517209999999,
+          107.41883400000006,
+          106.76740100000006,
+          166.04891399999997,
+          106.37949900000012,
+          98.19472500000029,
+          99.22759300000007
+        ],
+        "coldSamplesMs": [
+          104.57674699999961,
+          136.23173300000008
+        ],
+        "allocatedBytes": [
+          65952,
+          65952
+        ],
+        "medianMs": 106.5734500000001,
+        "p95Ms": 166.04891399999997
+      },
+      "final": {
+        "warmSamplesMs": [
+          105.21075299999984,
+          99.33395000000019,
+          101.3144870000001,
+          101.28789599999982,
+          110.19314600000007,
+          101.16014399999995,
+          105.28846399999975,
+          103.72343000000001
+        ],
+        "coldSamplesMs": [
+          118.86594500000001,
+          100.59326899999996
+        ],
+        "allocatedBytes": [
+          65952,
+          65952
+        ],
+        "medianMs": 102.51895850000005,
+        "p95Ms": 110.19314600000007
+      },
+      "medianChangePercent": -3.804410479345499,
+      "p95ChangePercent": -33.63814110822785
+    },
+    {
+      "workload": "builder",
+      "engine": "source",
+      "baseline": {
+        "warmSamplesMs": [
+          36.966837999999825,
+          14.583862999999837,
+          15.193673000000217,
+          13.450984999999946,
+          34.5818519999998,
+          15.16947700000037,
+          14.156227999999828,
+          13.365785999999844
+        ],
+        "coldSamplesMs": [
+          31.074362000000292,
+          36.701338000000305
+        ],
+        "allocatedBytes": [
+          177996,
+          177996
+        ],
+        "medianMs": 14.876670000000104,
+        "p95Ms": 36.966837999999825
+      },
+      "final": {
+        "warmSamplesMs": [
+          30.949232999999822,
+          16.236023999999816,
+          15.225351000000046,
+          15.267503000000033,
+          26.381515000000036,
+          15.112519999999677,
+          14.794361000000208,
+          15.514086000000134
+        ],
+        "coldSamplesMs": [
+          38.895396000000346,
+          37.24780099999998
+        ],
+        "allocatedBytes": [
+          177996,
+          177996
+        ],
+        "medianMs": 15.390794500000084,
+        "p95Ms": 30.949232999999822
+      },
+      "medianChangePercent": 3.455911168292203,
+      "p95ChangePercent": -16.27838713173151
+    },
+    {
+      "workload": "builder",
+      "engine": "cil",
+      "baseline": {
+        "warmSamplesMs": [
+          45.461299000000054,
+          49.0069739999999,
+          45.68522600000006,
+          44.70685999999978,
+          48.84235699999999,
+          49.17634199999975,
+          56.577282000000196,
+          48.77307299999984
+        ],
+        "coldSamplesMs": [
+          59.510805000000346,
+          54.877919999999904
+        ],
+        "allocatedBytes": [
+          177996,
+          177996
+        ],
+        "medianMs": 48.80771499999992,
+        "p95Ms": 56.577282000000196
+      },
+      "final": {
+        "warmSamplesMs": [
+          47.599441999999726,
+          72.89094299999988,
+          69.70162299999993,
+          69.2891010000003,
+          55.275908999999956,
+          51.170568,
+          63.37027500000022,
+          64.666921
+        ],
+        "coldSamplesMs": [
+          65.31295500000033,
+          53.990479999999934
+        ],
+        "allocatedBytes": [
+          177996,
+          177996
+        ],
+        "medianMs": 64.01859800000011,
+        "p95Ms": 72.89094299999988
+      },
+      "medianChangePercent": 31.1649152188342,
+      "p95ChangePercent": 28.834296069577235
+    }
+  ]
+}

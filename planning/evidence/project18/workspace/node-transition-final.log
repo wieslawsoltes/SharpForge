@@ -1,0 +1,18 @@
+✔ historical versions retain explicit lazy membership and overlay newer editor text without fabricating bytes (14.289938ms)
+✔ lazy metadata is bounded and malformed, aliased or cancelled records never become empty source (102.918998ms)
+✔ OPFS quota fallback preserves lazy membership and enumerates only omitted loaded binary contents (7.286553ms)
+✔ the explorer checkpoints unopened membership and unsaved paths along with loaded bytes (3.97064ms)
+✔ legacy bootstrap restores loaded editors read-only while preserving unloaded project and manifest records (6.443652ms)
+✔ corrupt and future legacy snapshots block default replacement and are retained verbatim (0.611262ms)
+✔ a granted recent handle restores open-document selection and replaces read-only metadata with real bytes (5.591756ms)
+✔ a later workspace load wins when an earlier load is still awaiting runtime stop (3.699281ms)
+✔ an edit while runtime stop is pending prevents stale workspace replacement (0.571002ms)
+✔ cancellation during runtime stop never publishes the prepared model or saves over recovery (0.348956ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1164.169426

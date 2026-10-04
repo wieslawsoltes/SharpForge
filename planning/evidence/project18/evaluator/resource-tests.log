@@ -1,0 +1,48 @@
+✔ build plan keeps project assemblies, sources, references and internal visibility isolated (11.9073ms)
+✔ build plan does not grant internal visibility without an explicit friend assembly (1.566262ms)
+✔ ReferenceOutputAssembly=false retains build order but is excluded from metadata references (1.121812ms)
+✔ build plans reject project cycles and unavailable sources (1.647215ms)
+✔ string and primitive resx values round-trip through the .resources binary reader (11.168545ms)
+✔ unsupported or invalid resources are rejected (0.244559ms)
+✔ unsupported or invalid resources are rejected (0.255466ms)
+✔ unsupported or invalid resources are rejected (0.228044ms)
+✔ unsupported or invalid resources are rejected (1.848628ms)
+✔ unsupported or invalid resources are rejected (3.546079ms)
+✔ manifest resource identity Strings.resx{} (1.250266ms)
+✔ manifest resource identity folder/Strings.resx{} (0.732595ms)
+✔ manifest resource identity Strings.fr.resx{} (0.627086ms)
+✔ manifest resource identity Strings.pl-PL.resx{} (0.667928ms)
+✔ manifest resource identity Strings.resx{"LogicalName":"Exact.Name"} (0.650321ms)
+✔ manifest resource identity Strings.resx{"ManifestResourceName":"Override.Name"} (0.87532ms)
+✔ manifest resource identity Strings.resx{"Link":"linked/Strings.resx"} (0.422938ms)
+✔ manifest resource identity Strings.fr.resx{"WithCulture":"false"} (0.448647ms)
+✔ manifest resource identity Payload.txt{} (0.429478ms)
+✔ manifest resource identity Payload.bin{"LogicalName":"bytes"} (0.389307ms)
+✔ manifest resource identity Name.resx{"DependentUpon":"Types.cs"} (0.628478ms)
+✔ manifest resource identity Name.fr.resx{"DependentUpon":"Types.cs"} (0.538552ms)
+✔ resx file references resolve only within the supplied virtual workspace (0.712574ms)
+✔ output layout includes copied content, links, publish policy and referenced project files (1.323306ms)
+✔ output layout rejects traversal and conflicting destinations (0.854459ms)
+✔ launch settings accept comments/trailing commas and select the requested run context (1.509397ms)
+✔ invalid launch settings are located diagnostics and unknown profiles are rejected (0.599425ms)
+✔ shared JSONC parser preserves Unicode, comments, strings, trailing commas and safe object keys (0.696401ms)
+✔ B05 mixed slnx projects remain visible as explicit unloaded nodes (0.713697ms)
+✔ lazy file records participate in evaluation but must hydrate before compilation (2.255681ms)
+✔ resource file references and dependent source naming reject unhydrated records (0.499062ms)
+✔ portable string members match the installed native MSBuild expression evaluator (165.688595ms)
+✔ portable static functions and intrinsic arithmetic match native MSBuild (200.659632ms)
+✔ portable SDK defaults match 25 native properties and default item membership (492.038974ms)
+✔ portable generic item transforms, metadata and operations match native MSBuild (287.531392ms)
+✔ 30 ordered item-evaluation fixtures match native MSBuild (291.223206ms)
+✔ portable generated file target matches native WriteLinesToFile and Compile membership (285.924403ms)
+✔ 12 resource identities match native CreateManifestResourceNames including culture and dependent sources (466.921653ms)
+✔ portable resources are readable by the native CLR and native string resources round-trip (642.757829ms)
+✔ native satellite assembly retains the culture-qualified manifest resource name (3127.362759ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6178.694682

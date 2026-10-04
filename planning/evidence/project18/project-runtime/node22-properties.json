@@ -1,0 +1,48 @@
+{
+  "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+  "node": "v22.23.3",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a23-source-member-definitions.test.js",
+    "tests/a23-member-definitions.test.js",
+    "tests/a23-project-access-loader.test.js",
+    "tests/a23-project-property-access.test.js",
+    "tests/a23-project-assembly-loader.test.js",
+    "tests/a23-project-assembly-native.test.js",
+    "tests/a23-project-runtime.test.js",
+    "tests/a23-project-static-initialization.test.js",
+    "tests/a23-project-runtime-worker.test.js",
+    "tests/a23-project-stack-provenance.test.js",
+    "tests/a23-project-debug-banner.test.js",
+    "tests/a23-project-debug-sources.test.js",
+    "tests/a23-project-debug-editor.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T00:28:55.403304+00:00",
+  "log": "node22-properties.tap",
+  "diskPreflight": {
+    "actualFreeBytes": 1051529216,
+    "minimumFreeBytes": 536870912
+  },
+  "exitCode": 0,
+  "completedAt": "2026-10-04T00:29:12.935610+00:00",
+  "summary": {
+    "tests": 68,
+    "suites": 0,
+    "pass": 68,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

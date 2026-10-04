@@ -1,0 +1,32 @@
+{
+  "format": "SharpForge.NativeDiagnosticOracle/1",
+  "sdk": "10.0.201",
+  "runtime": "10.0.12",
+  "node": "v22.23.3",
+  "platform": "linux",
+  "architecture": "x64",
+  "compiler": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.201/Roslyn/bincore/csc.dll",
+  "referencePack": "/workspace/scratch/3e16369943fd/dotnet/packs/Microsoft.NETCore.App.Ref/10.0.12/ref/net10.0",
+  "sources": {
+    "Boundary.cs": "public class Api { public readonly int Value = 2; public static readonly int Shared = 40; public int Property { get; private set; } }",
+    "Consumer.cs": "public class Consumer { public static void M() { new Api().Value = 3; Api.Shared = 3; new Api().Property = 3; } }"
+  },
+  "compileArguments": [
+    "-nologo",
+    "-target:library",
+    "-reference:<each installed reference-pack assembly>",
+    "-reference:Boundary.dll",
+    "-out:Consumer.dll",
+    "Consumer.cs"
+  ],
+  "exitCode": 1,
+  "diagnostics": [
+    "<fixture>/Consumer.cs(1,50): error CS0191: A readonly field cannot be assigned to (except in a constructor or init-only setter of the type in which the field is defined or a variable initializer)",
+    "<fixture>/Consumer.cs(1,71): error CS0198: A static readonly field cannot be assigned to (except in a static constructor or a variable initializer)",
+    "<fixture>/Consumer.cs(1,87): error CS0200: Property or indexer 'Api.Property' cannot be assigned to -- it is read only"
+  ],
+  "observations": [
+    "Instance readonly writes produce CS0191; static readonly writes produce CS0198.",
+    "The initial probe correctly observed both readonly codes but its unrelated private-setter CS0272 expectation failed: Roslyn emitted CS0200 for the separate PE. The SharpForge all-member import profile exposes the inaccessible private setter and reports CS0272; both reject the assignment."
+  ]
+}

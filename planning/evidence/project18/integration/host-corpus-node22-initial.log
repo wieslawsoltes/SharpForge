@@ -1,0 +1,1247 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: two independent tools start and a failed third batch restores the container
+ok 1 - two independent tools start and a failed third batch restores the container
+  ---
+  duration_ms: 2.275612
+  type: 'test'
+  ...
+# Subtest: container preflights duplicates, reports disposal errors and rolls back cancellation
+ok 2 - container preflights duplicates, reports disposal errors and rolls back cancellation
+  ---
+  duration_ms: 0.698003
+  type: 'test'
+  ...
+# Subtest: commands preserve handler behavior and reject duplicate registrations
+ok 3 - commands preserve handler behavior and reject duplicate registrations
+  ---
+  duration_ms: 2.629847
+  type: 'test'
+  ...
+# Subtest: tools append menu items without global state or editing Studio
+ok 4 - tools append menu items without global state or editing Studio
+  ---
+  duration_ms: 1.021821
+  type: 'test'
+  ...
+# Subtest: each mount has independent state and DOM, and failed render cleans up
+ok 5 - each mount has independent state and DOM, and failed render cleans up
+  ---
+  duration_ms: 0.473233
+  type: 'test'
+  ...
+# Subtest: automation contributions preserve the complete pre-extraction key surface
+not ok 6 - automation contributions preserve the complete pre-extraction key surface
+  ---
+  duration_ms: 15.296069
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a00-03-studio-registries.test.js:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        'advanceUIAnimations',
+        'applyAssemblyChanges',
+        'applyHotReload',
+        'applyRefactoring',
+    ...
+        'native.connect',
+    +   'native.contexts',
+    +   'native.contexts.getState',
+    +   'native.contexts.load',
+    +   'native.contexts.select',
+    +   'native.contexts.selectProject',
+        'native.getState',
+        'native.open',
+    +   'native.profiles',
+    +   'native.profiles.getState',
+    +   'native.profiles.publish',
+    +   'native.profiles.refresh',
+    +   'native.profiles.run',
+    +   'native.profiles.selectLaunch',
+    +   'native.profiles.selectPublish',
+        'native.run',
+        'native.save',
+    +   'native.testing',
+    +   'native.testing.cancel',
+    +   'native.testing.configure',
+    +   'native.testing.discover',
+    +   'native.testing.getState',
+    +   'native.testing.openSource',
+    +   'native.testing.run',
+    +   'native.testing.select',
+    +   'native.testing.selectAll',
+        'openFile',
+        'openItemWizard',
+        'openProjectWizard',
+        'openTool',
+        'openWorkspaceZip',
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'advanceUIAnimations'
+    1: 'applyAssemblyChanges'
+    2: 'applyHotReload'
+    3: 'applyRefactoring'
+    4: 'assembleIL'
+    5: 'autoHidePanel'
+    6: 'beginHotReload'
+    7: 'breakOnWrite'
+    8: 'build'
+    9: 'cancelHotReload'
+    10: 'configureDebug'
+    11: 'configureExtensions'
+    12: 'configureRuntime'
+    13: 'debug'
+    14: 'designer'
+    15: 'designer.action'
+    16: 'designer.add'
+    17: 'designer.apply'
+    18: 'designer.attach'
+    19: 'designer.clear'
+    20: 'designer.connect'
+    21: 'designer.disconnect'
+    22: 'designer.get'
+    23: 'designer.load'
+    24: 'designer.move'
+    25: 'designer.open'
+    26: 'designer.readSource'
+    27: 'designer.reference'
+    28: 'designer.remove'
+    29: 'designer.select'
+    30: 'designer.set'
+    31: 'designer.setAutoSync'
+    32: 'designer.setView'
+    33: 'designer.style'
+    34: 'designer.template'
+    35: 'designer.tracks'
+    36: 'designer.undo'
+    37: 'designer.writeSource'
+    38: 'dispatchUIEvent'
+    39: 'dockPanel'
+    40: 'editBreakpoint'
+    41: 'evaluate'
+    42: 'evaluateFunction'
+    43: 'execute'
+    44: 'explorerCommand'
+    45: 'exportWorkspaceZip'
+    46: 'floatPanel'
+    47: 'freezeThread'
+    48: 'getAssembly'
+    49: 'getBreakpoints'
+    50: 'getDebugSettings'
+    51: 'getEditorState'
+    52: 'getExplorer'
+    53: 'getGeneratedSources'
+    54: 'getKeymap'
+    55: 'getLayout'
+    56: 'getNavigation'
+    57: 'getParallelStacks'
+    58: 'getPdb'
+    59: 'getRuntimeInfo'
+    60: 'getRuntimeSettings'
+    61: 'getState'
+    62: 'getTemplates'
+    63: 'getThreads'
+    64: 'getUIMetrics'
+    65: 'getUIScene'
+    66: 'getWorkspace'
+    67: 'immediate'
+    68: 'importAssembly'
+    69: 'importFiles'
+    70: 'inspectAssembly'
+    71: 'invokeAssembly'
+    72: 'loadDiskRecords'
+    73: 'loadPdb'
+    74: 'loadSample'
+    75: 'native'
+    76: 'native.attach'
+    77: 'native.cancel'
+    78: 'native.configure'
+    79: 'native.connect'
+    80: 'native.getState'
+    81: 'native.open'
+    82: 'native.run'
+    83: 'native.save'
+    84: 'openFile'
+    85: 'openItemWizard'
+    86: 'openProjectWizard'
+    87: 'openTool'
+    88: 'openWorkspaceZip'
+    89: 'popoutPanel'
+    90: 'restoreLayout'
+    91: 'returnPopout'
+    92: 'run'
+    93: 'saveToDisk'
+    94: 'saveWorkspaceFolder'
+    95: 'selectDebugFrame'
+    96: 'selectThread'
+    97: 'setBreakpoints'
+    98: 'setFunctionBreakpoints'
+    99: 'setKeymap'
+    100: 'setNextStatement'
+    101: 'setStartupProject'
+    102: 'setUIAnimationMode'
+    103: 'setUIRenderer'
+    104: 'showNextStatement'
+    105: 'step'
+    106: 'toggleBreakpoint'
+    107: 'uiSettled'
+    108: 'version'
+  actual:
+    0: 'advanceUIAnimations'
+    1: 'applyAssemblyChanges'
+    2: 'applyHotReload'
+    3: 'applyRefactoring'
+    4: 'assembleIL'
+    5: 'autoHidePanel'
+    6: 'beginHotReload'
+    7: 'breakOnWrite'
+    8: 'build'
+    9: 'cancelHotReload'
+    10: 'configureDebug'
+    11: 'configureExtensions'
+    12: 'configureRuntime'
+    13: 'debug'
+    14: 'designer'
+    15: 'designer.action'
+    16: 'designer.add'
+    17: 'designer.apply'
+    18: 'designer.attach'
+    19: 'designer.clear'
+    20: 'designer.connect'
+    21: 'designer.disconnect'
+    22: 'designer.get'
+    23: 'designer.load'
+    24: 'designer.move'
+    25: 'designer.open'
+    26: 'designer.readSource'
+    27: 'designer.reference'
+    28: 'designer.remove'
+    29: 'designer.select'
+    30: 'designer.set'
+    31: 'designer.setAutoSync'
+    32: 'designer.setView'
+    33: 'designer.style'
+    34: 'designer.template'
+    35: 'designer.tracks'
+    36: 'designer.undo'
+    37: 'designer.writeSource'
+    38: 'dispatchUIEvent'
+    39: 'dockPanel'
+    40: 'editBreakpoint'
+    41: 'evaluate'
+    42: 'evaluateFunction'
+    43: 'execute'
+    44: 'explorerCommand'
+    45: 'exportWorkspaceZip'
+    46: 'floatPanel'
+    47: 'freezeThread'
+    48: 'getAssembly'
+    49: 'getBreakpoints'
+    50: 'getDebugSettings'
+    51: 'getEditorState'
+    52: 'getExplorer'
+    53: 'getGeneratedSources'
+    54: 'getKeymap'
+    55: 'getLayout'
+    56: 'getNavigation'
+    57: 'getParallelStacks'
+    58: 'getPdb'
+    59: 'getRuntimeInfo'
+    60: 'getRuntimeSettings'
+    61: 'getState'
+    62: 'getTemplates'
+    63: 'getThreads'
+    64: 'getUIMetrics'
+    65: 'getUIScene'
+    66: 'getWorkspace'
+    67: 'immediate'
+    68: 'importAssembly'
+    69: 'importFiles'
+    70: 'inspectAssembly'
+    71: 'invokeAssembly'
+    72: 'loadDiskRecords'
+    73: 'loadPdb'
+    74: 'loadSample'
+    75: 'native'
+    76: 'native.attach'
+    77: 'native.cancel'
+    78: 'native.configure'
+    79: 'native.connect'
+    80: 'native.contexts'
+    81: 'native.contexts.getState'
+    82: 'native.contexts.load'
+    83: 'native.contexts.select'
+    84: 'native.contexts.selectProject'
+    85: 'native.getState'
+    86: 'native.open'
+    87: 'native.profiles'
+    88: 'native.profiles.getState'
+    89: 'native.profiles.publish'
+    90: 'native.profiles.refresh'
+    91: 'native.profiles.run'
+    92: 'native.profiles.selectLaunch'
+    93: 'native.profiles.selectPublish'
+    94: 'native.run'
+    95: 'native.save'
+    96: 'native.testing'
+    97: 'native.testing.cancel'
+    98: 'native.testing.configure'
+    99: 'native.testing.discover'
+    100: 'native.testing.getState'
+    101: 'native.testing.openSource'
+    102: 'native.testing.run'
+    103: 'native.testing.select'
+    104: 'native.testing.selectAll'
+    105: 'openFile'
+    106: 'openItemWizard'
+    107: 'openProjectWizard'
+    108: 'openTool'
+    109: 'openWorkspaceZip'
+    110: 'popoutPanel'
+    111: 'restoreLayout'
+    112: 'returnPopout'
+    113: 'run'
+    114: 'saveToDisk'
+    115: 'saveWorkspaceFolder'
+    116: 'selectDebugFrame'
+    117: 'selectThread'
+    118: 'setBreakpoints'
+    119: 'setFunctionBreakpoints'
+    120: 'setKeymap'
+    121: 'setNextStatement'
+    122: 'setStartupProject'
+    123: 'setUIAnimationMode'
+    124: 'setUIRenderer'
+    125: 'showNextStatement'
+    126: 'step'
+    127: 'toggleBreakpoint'
+    128: 'uiSettled'
+    129: 'version'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a00-03-studio-registries.test.js:20:527)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: automation duplicate batches roll back and namespaces dispose cleanly
+ok 7 - automation duplicate batches roll back and namespaces dispose cleanly
+  ---
+  duration_ms: 0.870754
+  type: 'test'
+  ...
+# Subtest: storage preserves v1 payloads, versions and quota failures
+ok 8 - storage preserves v1 payloads, versions and quota failures
+  ---
+  duration_ms: 0.554467
+  type: 'test'
+  ...
+# Subtest: every worker message has a handler seam and unknown messages fail structurally
+ok 9 - every worker message has a handler seam and unknown messages fail structurally
+  ---
+  duration_ms: 0.896763
+  type: 'test'
+  ...
+# Subtest: Studio has no command branches, direct persistence or inline automation literal
+ok 10 - Studio has no command branches, direct persistence or inline automation literal
+  ---
+  duration_ms: 25.602668
+  type: 'test'
+  ...
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real compiler and runtime workers dispatch known requests and return structured unknown errors
+ok 11 - real compiler and runtime workers dispatch known requests and return structured unknown errors
+  ---
+  duration_ms: 1203.17933
+  type: 'test'
+  ...
+# (node:34) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A00 T20 contributed per-tool CSS preserves every baseline byte and both sorted and ordered rules
+ok 12 - A00 T20 contributed per-tool CSS preserves every baseline byte and both sorted and ordered rules
+  ---
+  duration_ms: 60.332001
+  type: 'test'
+  ...
+# Subtest: A00 T20 sorted equality alone cannot hide reversed overrides, missing or changed rules
+ok 13 - A00 T20 sorted equality alone cannot hide reversed overrides, missing or changed rules
+  ---
+  duration_ms: 0.580986
+  type: 'test'
+  ...
+# Subtest: A00 T20 CSS rule boundaries preserve nested media, quoted punctuation, escaped selectors, functions and at-rules
+ok 14 - A00 T20 CSS rule boundaries preserve nested media, quoted punctuation, escaped selectors, functions and at-rules
+  ---
+  duration_ms: 0.531581
+  type: 'test'
+  ...
+# Subtest: A00 T20 contribution separators preserve fragment boundaries and reject non-formatting insertion
+ok 15 - A00 T20 contribution separators preserve fragment boundaries and reject non-formatting insertion
+  ---
+  duration_ms: 14.341239
+  type: 'test'
+  ...
+# (node:46) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A24 delayed read rejects concurrent delete without publishing stale disk state
+ok 16 - A24 delayed read rejects concurrent delete without publishing stale disk state
+  ---
+  duration_ms: 10.05208
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent rename without publishing stale disk state
+ok 17 - A24 delayed read rejects concurrent rename without publishing stale disk state
+  ---
+  duration_ms: 1.546653
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent rename away and back without publishing stale disk state
+ok 18 - A24 delayed read rejects concurrent rename away and back without publishing stale disk state
+  ---
+  duration_ms: 1.837321
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent refresh without publishing stale disk state
+ok 19 - A24 delayed read rejects concurrent refresh without publishing stale disk state
+  ---
+  duration_ms: 2.879112
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent replacement without publishing stale disk state
+ok 20 - A24 delayed read rejects concurrent replacement without publishing stale disk state
+  ---
+  duration_ms: 3.267628
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent newer load without publishing stale disk state
+ok 21 - A24 delayed read rejects concurrent newer load without publishing stale disk state
+  ---
+  duration_ms: 1.915128
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent delete without publishing stale disk state
+ok 22 - A24 delayed handle rejects concurrent delete without publishing stale disk state
+  ---
+  duration_ms: 1.132718
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent rename without publishing stale disk state
+ok 23 - A24 delayed handle rejects concurrent rename without publishing stale disk state
+  ---
+  duration_ms: 1.192889
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent rename away and back without publishing stale disk state
+ok 24 - A24 delayed handle rejects concurrent rename away and back without publishing stale disk state
+  ---
+  duration_ms: 1.567505
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent refresh without publishing stale disk state
+ok 25 - A24 delayed handle rejects concurrent refresh without publishing stale disk state
+  ---
+  duration_ms: 1.49201
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent replacement without publishing stale disk state
+ok 26 - A24 delayed handle rejects concurrent replacement without publishing stale disk state
+  ---
+  duration_ms: 2.210684
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent newer load without publishing stale disk state
+ok 27 - A24 delayed handle rejects concurrent newer load without publishing stale disk state
+  ---
+  duration_ms: 1.649859
+  type: 'test'
+  ...
+# Subtest: A24 a load publishes bytes, hash and acquired handle together using the canonical path
+ok 28 - A24 a load publishes bytes, hash and acquired handle together using the canonical path
+  ---
+  duration_ms: 1.444249
+  type: 'test'
+  ...
+# Subtest: A24 changes to another entry do not invalidate a pending load
+ok 29 - A24 changes to another entry do not invalidate a pending load
+  ---
+  duration_ms: 3.821503
+  type: 'test'
+  ...
+# Subtest: A24 a changed baseline without record replacement invalidates a pending load
+ok 30 - A24 a changed baseline without record replacement invalidates a pending load
+  ---
+  duration_ms: 1.344357
+  type: 'test'
+  ...
+# Subtest: A24 failed file-handle acquisition preserves existing record, baseline and handle on reload
+ok 31 - A24 failed file-handle acquisition preserves existing record, baseline and handle on reload
+  ---
+  duration_ms: 3.460098
+  type: 'test'
+  ...
+# Subtest: A24 cancellation during read acquisition leaves disk state unchanged
+ok 32 - A24 cancellation during read acquisition leaves disk state unchanged
+  ---
+  duration_ms: 0.712705
+  type: 'test'
+  ...
+# Subtest: A24 cancellation during handle acquisition leaves disk state unchanged
+ok 33 - A24 cancellation during handle acquisition leaves disk state unchanged
+  ---
+  duration_ms: 0.618152
+  type: 'test'
+  ...
+# Subtest: A24 already-cancelled loading does not perform provider I/O
+ok 34 - A24 already-cancelled loading does not perform provider I/O
+  ---
+  duration_ms: 0.890383
+  type: 'test'
+  ...
+# Subtest: A24 admission rechecks the byte budget after asynchronous handle acquisition
+ok 35 - A24 admission rechecks the byte budget after asynchronous handle acquisition
+  ---
+  duration_ms: 4.033533
+  type: 'test'
+  ...
+# Subtest: A24 a refreshed catalog cannot be repopulated by an unindexed pending read
+ok 36 - A24 a refreshed catalog cannot be repopulated by an unindexed pending read
+  ---
+  duration_ms: 0.721207
+  type: 'test'
+  ...
+# (node:58) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: closing a clean source releases editor, host records, disk bytes and compiler syntax, then reads current physical bytes
+ok 37 - closing a clean source releases editor, host records, disk bytes and compiler syntax, then reads current physical bytes
+  ---
+  duration_ms: 18.885537
+  type: 'test'
+  ...
+# Subtest: closing project source preserves evaluated membership and keeps only lazy source metadata in the project system
+ok 38 - closing project source preserves evaluated membership and keeps only lazy source metadata in the project system
+  ---
+  duration_ms: 16.859637
+  type: 'test'
+  ...
+# Subtest: 5000 metadata files keep at most one opened buffer and no closed editor or disk contents across repeated opens
+ok 39 - 5000 metadata files keep at most one opened buffer and no closed editor or disk contents across repeated opens
+  ---
+  duration_ms: 617.401908
+  type: 'test'
+  ...
+# Subtest: dirty, generated, read-only recovery, unresolved-conflict, unbacked and open documents retain their contents
+ok 40 - dirty, generated, read-only recovery, unresolved-conflict, unbacked and open documents retain their contents
+  ---
+  duration_ms: 6.489697
+  type: 'test'
+  ...
+# Subtest: unmarked edits fail exact-byte baseline comparison and remain recoverable
+ok 41 - unmarked edits fail exact-byte baseline comparison and remain recoverable
+  ---
+  duration_ms: 2.617998
+  type: 'test'
+  ...
+# Subtest: read-only and generated source flags survive workspace load, context snapshots and transactional commits
+ok 42 - read-only and generated source flags survive workspace load, context snapshots and transactional commits
+  ---
+  duration_ms: 2.356474
+  type: 'test'
+  ...
+# Subtest: reopening or editing during the close digest prevents stale eviction
+ok 43 - reopening or editing during the close digest prevents stale eviction
+  ---
+  duration_ms: 3.797337
+  type: 'test'
+  ...
+# Subtest: close cancels a delayed lazy read before disk or host publication; a later open wins
+ok 44 - close cancels a delayed lazy read before disk or host publication; a later open wins
+  ---
+  duration_ms: 2.49923
+  type: 'test'
+  ...
+# Subtest: workspace replacement, membership change and abort reject a delayed load without advancing physical baselines
+ok 45 - workspace replacement, membership change and abort reject a delayed load without advancing physical baselines
+  ---
+  duration_ms: 2.22146
+  type: 'test'
+  ...
+# Subtest: disk admission callbacks are synchronous and a rejected callback cannot publish bytes, hashes or handles
+ok 46 - disk admission callbacks are synchronous and a rejected callback cannot publish bytes, hashes or handles
+  ---
+  duration_ms: 4.09723
+  type: 'test'
+  ...
+# Subtest: exhausted versions and pre-aborted closes retain the last usable bytes
+ok 47 - exhausted versions and pre-aborted closes retain the last usable bytes
+  ---
+  duration_ms: 1.037104
+  type: 'test'
+  ...
+# Subtest: versioned worker eviction rejects malformed batches atomically and never removes a newer reopened document
+ok 48 - versioned worker eviction rejects malformed batches atomically and never removes a newer reopened document
+  ---
+  duration_ms: 1.149974
+  type: 'test'
+  ...
+# Subtest: worker synchronization preserves no-op requests, removes absent documents, and accepts only newer source versions
+ok 49 - worker synchronization preserves no-op requests, removes absent documents, and accepts only newer source versions
+  ---
+  duration_ms: 0.206892
+  type: 'test'
+  ...
+# Subtest: closed editor views release both docking content maps, while visible splits and popouts stay intact
+ok 50 - closed editor views release both docking content maps, while visible splits and popouts stay intact
+  ---
+  duration_ms: 0.163927
+  type: 'test'
+  ...
+# Subtest: Explorer drops closed source bodies and merge baselines, retaining a numeric revision watermark and rejecting stale queue contents
+ok 51 - Explorer drops closed source bodies and merge baselines, retaining a numeric revision watermark and rejecting stale queue contents
+  ---
+  duration_ms: 1.464719
+  type: 'test'
+  ...
+# (node:70) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the application rejects a lazy read after same-workspace delete
+not ok 52 - the application rejects a lazy read after same-workspace delete
+  ---
+  duration_ms: 17.220111
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:49:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Workspace changed while reading B.cs/. Input:
+    
+    'FileSystemError: Workspace changed while loading or closing a document: B.cs'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Workspace changed while loading or closing a document: B.cs'
+  stack: |-
+    assertCurrent (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:32:44)
+    guard (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:81:27)
+    Object.loadRecord (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:83:7)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: the application rejects a lazy read after same-workspace rename
+not ok 53 - the application rejects a lazy read after same-workspace rename
+  ---
+  duration_ms: 3.435912
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:49:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Workspace changed while reading B.cs/. Input:
+    
+    'FileSystemError: Workspace changed while loading or closing a document: B.cs'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Workspace changed while loading or closing a document: B.cs'
+  stack: |-
+    assertCurrent (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:32:44)
+    guard (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:81:27)
+    Object.loadRecord (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:83:7)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the application rejects a lazy read after same-workspace metadata
+not ok 54 - the application rejects a lazy read after same-workspace metadata
+  ---
+  duration_ms: 3.149129
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:49:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Workspace changed while reading B.cs/. Input:
+    
+    'FileSystemError: Workspace changed while loading or closing a document: B.cs'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Workspace changed while loading or closing a document: B.cs'
+  stack: |-
+    assertCurrent (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:32:44)
+    guard (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:81:27)
+    Object.loadRecord (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:83:7)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the application rejects a lazy read after same-workspace disk
+not ok 55 - the application rejects a lazy read after same-workspace disk
+  ---
+  duration_ms: 2.444928
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:49:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Workspace changed while reading B.cs/. Input:
+    
+    'FileSystemError: Workspace changed while loading or closing a document: B.cs'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Workspace changed while loading or closing a document: B.cs'
+  stack: |-
+    assertCurrent (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:32:44)
+    guard (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:81:27)
+    Object.loadRecord (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:83:7)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the application rejects a lazy read after same-workspace edit
+not ok 56 - the application rejects a lazy read after same-workspace edit
+  ---
+  duration_ms: 7.561825
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:49:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Workspace changed while reading B.cs/. Input:
+    
+    'FileSystemError: Workspace changed while loading or closing a document: B.cs'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Workspace changed while loading or closing a document: B.cs'
+  stack: |-
+    assertCurrent (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:32:44)
+    guard (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:81:27)
+    Object.loadRecord (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-editor-lifecycle.js:83:7)
+    async waitForActual (node:assert:644:5)
+    async Function.rejects (node:assert:767:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-host-concurrency.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a current lazy read publishes its bytes without opening another source editor or tab
+ok 57 - a current lazy read publishes its bytes without opening another source editor or tab
+  ---
+  duration_ms: 3.092714
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=false
+ok 58 - one accepted project watcher change commits and evaluates exactly once, dirty=false
+  ---
+  duration_ms: 11.858164
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=true
+ok 59 - one accepted project watcher change commits and evaluates exactly once, dirty=true
+  ---
+  duration_ms: 4.637885
+  type: 'test'
+  ...
+# Subtest: project watcher creation and deletion still update membership when no editor is open
+ok 60 - project watcher creation and deletion still update membership when no editor is open
+  ---
+  duration_ms: 5.776161
+  type: 'test'
+  ...
+# (node:82) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: B01 import advances every URI watermark and rejects edits prepared before import
+ok 61 - B01 import advances every URI watermark and rejects edits prepared before import
+  ---
+  duration_ms: 0.929402
+  type: 'test'
+  ...
+# Subtest: B01 removal and a later import retain the URI version watermark
+ok 62 - B01 removal and a later import retain the URI version watermark
+  ---
+  duration_ms: 0.198238
+  type: 'test'
+  ...
+# Subtest: B01 malformed duplicate or oversized imports preserve all current buffers and revisions
+ok 63 - B01 malformed duplicate or oversized imports preserve all current buffers and revisions
+  ---
+  duration_ms: 1.211107
+  type: 'test'
+  ...
+# Subtest: workspace document admission uses a byte budget and retains explicit count limits
+ok 64 - workspace document admission uses a byte budget and retains explicit count limits
+  ---
+  duration_ms: 0.529889
+  type: 'test'
+  ...
+# (node:90) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the ordinary file picker imports more than 100 source files plus exact binary and UTF-16 content
+ok 65 - the ordinary file picker imports more than 100 source files plus exact binary and UTF-16 content
+  ---
+  duration_ms: 15.032081
+  type: 'test'
+  ...
+# Subtest: legacy JSON source projects use workspace budgets and reject malformed replacements without retiring the old model
+ok 66 - legacy JSON source projects use workspace budgets and reject malformed replacements without retiring the old model
+  ---
+  duration_ms: 2.745981
+  type: 'test'
+  ...
+# Subtest: file-picker import retains the skipped-name report for Explorer and rejects oversized membership before reading
+ok 67 - file-picker import retains the skipped-name report for Explorer and rejects oversized membership before reading
+  ---
+  duration_ms: 0.796301
+  type: 'test'
+  ...
+# Subtest: an imported native inspection and a v1 byte bundle use their existing explicit host contracts
+ok 68 - an imported native inspection and a v1 byte bundle use their existing explicit host contracts
+  ---
+  duration_ms: 0.413353
+  type: 'test'
+  ...
+# (node:98) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: every historical recovery version migrates bytes, document versions and Unicode spelling without authority
+ok 69 - every historical recovery version migrates bytes, document versions and Unicode spelling without authority
+  ---
+  duration_ms: 14.881364
+  type: 'test'
+  ...
+# Subtest: corrupt checkpoints are quarantined while newer schemas are preserved intact
+ok 70 - corrupt checkpoints are quarantined while newer schemas are preserved intact
+  ---
+  duration_ms: 1.542476
+  type: 'test'
+  ...
+# Subtest: OPFS checkpoint commit failure retains the last committed generation
+ok 71 - OPFS checkpoint commit failure retains the last committed generation
+  ---
+  duration_ms: 3.26891
+  type: 'test'
+  ...
+# Subtest: OPFS load falls back to the prior checksum-verified generation after corruption
+ok 72 - OPFS load falls back to the prior checksum-verified generation after corruption
+  ---
+  duration_ms: 2.334531
+  type: 'test'
+  ...
+# Subtest: quota exhaustion explicitly lists omitted binaries and preserves text recovery
+ok 73 - quota exhaustion explicitly lists omitted binaries and preserves text recovery
+  ---
+  duration_ms: 4.473567
+  type: 'test'
+  ...
+# (node:110) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+ok 74 - validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+  ---
+  duration_ms: 53.45497
+  type: 'test'
+  ...
+# Subtest: validation may hydrate a closed lazy input without treating it as an empty or missing document
+ok 75 - validation may hydrate a closed lazy input without treating it as an empty or missing document
+  ---
+  duration_ms: 3.583574
+  type: 'test'
+  ...
+# Subtest: refactoring stale preserves every buffer and does not admit closed editors
+ok 76 - refactoring stale preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.741558
+  type: 'test'
+  ...
+# Subtest: refactoring validation-error preserves every buffer and does not admit closed editors
+ok 77 - refactoring validation-error preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.361385
+  type: 'test'
+  ...
+# Subtest: refactoring revision preserves every buffer and does not admit closed editors
+ok 78 - refactoring revision preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 4.304803
+  type: 'test'
+  ...
+# Subtest: refactoring snapshot preserves every buffer and does not admit closed editors
+ok 79 - refactoring snapshot preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 5.82756
+  type: 'test'
+  ...
+# Subtest: refactoring generated preserves every buffer and does not admit closed editors
+ok 80 - refactoring generated preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.297118
+  type: 'test'
+  ...
+# Subtest: refactoring read-only preserves every buffer and does not admit closed editors
+ok 81 - refactoring read-only preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.241515
+  type: 'test'
+  ...
+# Subtest: source admission rejects oversized or excessive combined buffers before changing application membership
+ok 82 - source admission rejects oversized or excessive combined buffers before changing application membership
+  ---
+  duration_ms: 0.850273
+  type: 'test'
+  ...
+# Subtest: path navigation uses complete workspace metadata without requiring a materialized Explorer page
+ok 83 - path navigation uses complete workspace metadata without requiring a materialized Explorer page
+  ---
+  duration_ms: 0.990975
+  type: 'test'
+  ...
+# Subtest: test failures navigate from one-based lines and columns or LSP ranges to the failing source span
+ok 84 - test failures navigate from one-based lines and columns or LSP ranges to the failing source span
+  ---
+  duration_ms: 0.365622
+  type: 'test'
+  ...
+# (node:118) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+ok 85 - opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+  ---
+  duration_ms: 13.830699
+  type: 'test'
+  ...
+# Subtest: workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+ok 86 - workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+  ---
+  duration_ms: 2.632881
+  type: 'test'
+  ...
+# Subtest: resource naming and file references hydrate before the selected project snapshot becomes visible
+ok 87 - resource naming and file references hydrate before the selected project snapshot becomes visible
+  ---
+  duration_ms: 20.835073
+  type: 'test'
+  ...
+# Subtest: a committed structural edit remaps editor state and retains only explicitly unsaved paths
+ok 88 - a committed structural edit remaps editor state and retains only explicitly unsaved paths
+  ---
+  duration_ms: 0.96149
+  type: 'test'
+  ...
+# Subtest: Save to Disk preserves encodings and saves source, project XML, and binary changes together
+ok 89 - Save to Disk preserves encodings and saves source, project XML, and binary changes together
+  ---
+  duration_ms: 11.695229
+  type: 'test'
+  ...
+# Subtest: external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+ok 90 - external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+  ---
+  duration_ms: 3.577856
+  type: 'test'
+  ...
+# Subtest: metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+ok 91 - metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+  ---
+  duration_ms: 3.629985
+  type: 'test'
+  ...
+# Subtest: permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+ok 92 - permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+  ---
+  duration_ms: 1.129784
+  type: 'test'
+  ...
+# Subtest: metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+ok 93 - metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+  ---
+  duration_ms: 6.357788
+  type: 'test'
+  ...
+# Subtest: a stale rescan leaves the original project model and disk baselines unchanged
+ok 94 - a stale rescan leaves the original project model and disk baselines unchanged
+  ---
+  duration_ms: 4.362099
+  type: 'test'
+  ...
+# Subtest: streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+ok 95 - streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+  ---
+  duration_ms: 7.868658
+  type: 'test'
+  ...
+# Subtest: JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+ok 96 - JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+  ---
+  duration_ms: 0.656
+  type: 'test'
+  ...
+# Subtest: the registered JSON export command returns asynchronous hydration failures to its caller
+ok 97 - the registered JSON export command returns asynchronous hydration failures to its caller
+  ---
+  duration_ms: 1.143205
+  type: 'test'
+  ...
+# Subtest: wizard application keeps the chosen physical folder attached and retains binary item records
+ok 98 - wizard application keeps the chosen physical folder attached and retains binary item records
+  ---
+  duration_ms: 2.159958
+  type: 'test'
+  ...
+# (node:130) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a later workspace load wins when an earlier load is still awaiting runtime stop
+ok 99 - a later workspace load wins when an earlier load is still awaiting runtime stop
+  ---
+  duration_ms: 3.88503
+  type: 'test'
+  ...
+# Subtest: an edit while runtime stop is pending prevents stale workspace replacement
+ok 100 - an edit while runtime stop is pending prevents stale workspace replacement
+  ---
+  duration_ms: 0.66274
+  type: 'test'
+  ...
+# Subtest: cancellation during runtime stop never publishes the prepared model or saves over recovery
+ok 101 - cancellation during runtime stop never publishes the prepared model or saves over recovery
+  ---
+  duration_ms: 0.321355
+  type: 'test'
+  ...
+# (node:138) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+ok 102 - empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 34.69856
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+ok 103 - empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 7.264907
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+ok 104 - empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 5.701358
+  type: 'test'
+  ...
+# Subtest: empty-folder writer rejects preexisting contents without opening a write stream
+ok 105 - empty-folder writer rejects preexisting contents without opening a write stream
+  ---
+  duration_ms: 0.73616
+  type: 'test'
+  ...
+# Subtest: empty-folder writer resolves denied permission before any mutation
+ok 106 - empty-folder writer resolves denied permission before any mutation
+  ---
+  duration_ms: 0.190056
+  type: 'test'
+  ...
+# Subtest: empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+ok 107 - empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+  ---
+  duration_ms: 0.676891
+  type: 'test'
+  ...
+# Subtest: aborted empty-folder save creates no files
+ok 108 - aborted empty-folder save creates no files
+  ---
+  duration_ms: 0.203707
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A.txt / a.txt
+ok 109 - empty-folder writer validates complete path plan before mutation A.txt / a.txt
+  ---
+  duration_ms: 0.243237
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+ok 110 - empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+  ---
+  duration_ms: 0.337149
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation é.txt / é.txt
+ok 111 - empty-folder writer validates complete path plan before mutation é.txt / é.txt
+  ---
+  duration_ms: 0.387384
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation a / a/b
+ok 112 - empty-folder writer validates complete path plan before mutation a / a/b
+  ---
+  duration_ms: 0.162525
+  type: 'test'
+  ...
+# Subtest: directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+ok 113 - directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+  ---
+  duration_ms: 2.37337
+  type: 'test'
+  ...
+# Subtest: folder manifests reject ambiguity and preserve the original records on failure
+ok 114 - folder manifests reject ambiguity and preserve the original records on failure
+  ---
+  duration_ms: 0.201574
+  type: 'test'
+  ...
+# Subtest: FileList repository prefix is normalized only by a validated workspace manifest
+ok 115 - FileList repository prefix is normalized only by a validated workspace manifest
+  ---
+  duration_ms: 0.900428
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16le and detects external edits before any writing
+ok 116 - disk source save preserves utf-16le and detects external edits before any writing
+  ---
+  duration_ms: 3.399647
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16be and detects external edits before any writing
+ok 117 - disk source save preserves utf-16be and detects external edits before any writing
+  ---
+  duration_ms: 1.556418
+  type: 'test'
+  ...
+# Subtest: disk source save rechecks after permissions and never overwrites a prompt-time change
+ok 118 - disk source save rechecks after permissions and never overwrites a prompt-time change
+  ---
+  duration_ms: 0.72971
+  type: 'test'
+  ...
+# Subtest: native disk creation rejects case-shadow files and parents before applying any batch entry
+ok 119 - native disk creation rejects case-shadow files and parents before applying any batch entry
+  ---
+  duration_ms: 5.700087
+  type: 'test'
+  ...
+# Subtest: native new destination parents use portable case identity within the same batch
+ok 120 - native new destination parents use portable case identity within the same batch
+  ---
+  duration_ms: 1.04784
+  type: 'test'
+  ...
+# Subtest: CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+ok 121 - CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+  ---
+  duration_ms: 1817.241634
+  type: 'test'
+  ...
+# Subtest: CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+ok 122 - CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+  ---
+  duration_ms: 4.64832
+  type: 'test'
+  ...
+# (node:186) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: workspace corpus mixed-encoding-solution: ZIP re-export retains bytes, membership and empty directories
+ok 123 - workspace corpus mixed-encoding-solution: ZIP re-export retains bytes, membership and empty directories
+  ---
+  duration_ms: 16.283738
+  type: 'test'
+  ...
+# Subtest: workspace corpus mixed-encoding-solution: native HTTP bytes match the ZIP import
+ok 124 - workspace corpus mixed-encoding-solution: native HTTP bytes match the ZIP import
+  ---
+  duration_ms: 140.203014
+  type: 'test'
+  ...
+# Subtest: workspace corpus legacy-solution: ZIP re-export retains bytes, membership and empty directories
+ok 125 - workspace corpus legacy-solution: ZIP re-export retains bytes, membership and empty directories
+  ---
+  duration_ms: 2.629605
+  type: 'test'
+  ...
+# Subtest: workspace corpus legacy-solution: native HTTP bytes match the ZIP import
+ok 126 - workspace corpus legacy-solution: native HTTP bytes match the ZIP import
+  ---
+  duration_ms: 41.592872
+  type: 'test'
+  ...
+# Subtest: workspace corpus folder-only: ZIP re-export retains bytes, membership and empty directories
+ok 127 - workspace corpus folder-only: ZIP re-export retains bytes, membership and empty directories
+  ---
+  duration_ms: 1.490208
+  type: 'test'
+  ...
+# Subtest: workspace corpus folder-only: native HTTP bytes match the ZIP import
+ok 128 - workspace corpus folder-only: native HTTP bytes match the ZIP import
+  ---
+  duration_ms: 41.311103
+  type: 'test'
+  ...
+# Subtest: workspace corpus rejects malformed archives and traversing output before producing records
+ok 129 - workspace corpus rejects malformed archives and traversing output before producing records
+  ---
+  duration_ms: 1.726314
+  type: 'test'
+  ...
+# Subtest: native corpus saves unchanged UTF-16 text without changing BOM or byte order
+ok 130 - native corpus saves unchanged UTF-16 text without changing BOM or byte order
+  ---
+  duration_ms: 62.699479
+  type: 'test'
+  ...
+1..130
+# tests 130
+# suites 0
+# pass 124
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10380.690188

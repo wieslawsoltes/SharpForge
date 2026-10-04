@@ -1,0 +1,230 @@
+{
+  "node": "v22.23.3",
+  "runtimeExecuted": false,
+  "results": [
+    {
+      "name": "dictionary",
+      "sourceMethods": [
+        {
+          "name": "<Main>",
+          "owner": null,
+          "instructions": 71,
+          "codeHash": "7976bf6aa431359be6851cf149bb4af5e9ce1741c880fc1a0f7ee90f5c28f081",
+          "locals": 6
+        },
+        {
+          "name": "<startup>",
+          "owner": null,
+          "instructions": 2,
+          "codeHash": "8c7c2da3932e6897450cf577127f59d5ce80af35ca0d1387e13a102642ec635b",
+          "locals": 0
+        }
+      ],
+      "cilMethods": [
+        {
+          "name": "<Main>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 223,
+          "instructions": 88,
+          "instructionHash": "9374a53f29233c8eca180e6a3b35aa16bc80e7af1ccd7d3306bab836b47a1612",
+          "localCount": 6,
+          "handlerCount": 0
+        },
+        {
+          "name": "<startup>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 8,
+          "instructions": 4,
+          "instructionHash": "95992ad9ee9536b9e744a8fd4b94314d2ab40ea79892fdbc0a897fe5845b354d",
+          "localCount": 0,
+          "handlerCount": 0
+        },
+        {
+          "name": "<assert>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 20,
+          "instructions": 6,
+          "instructionHash": "13d9dd9d2c28eb4e49dca3edca846700bf47c29c1d1201f2a3df9ea7bcced059",
+          "localCount": 0,
+          "handlerCount": 0
+        }
+      ],
+      "sourceMethodsHash": "b756acad3d8be628c2adb8673e1d0bf9a38689e9d84fa1d277c9f336122622da",
+      "cilMethodsHash": "6d0daa2ec1ca34310c584bf2fa4c67cc5b0b2ac5fe025c3ae4195810861a4d72",
+      "propertyRows": 0,
+      "methodSemanticsRows": 0,
+      "hasExternalReferences": false,
+      "qualifiedSourceTypes": 0,
+      "peBytes": 6144,
+      "debugBytes": 3535
+    },
+    {
+      "name": "list",
+      "sourceMethods": [
+        {
+          "name": "<Main>",
+          "owner": null,
+          "instructions": 92,
+          "codeHash": "c237b26a2c2f128fe5af44f772b106170595e133b34d6ddca2ac0b098c1d39e7",
+          "locals": 9
+        },
+        {
+          "name": "<startup>",
+          "owner": null,
+          "instructions": 2,
+          "codeHash": "8c7c2da3932e6897450cf577127f59d5ce80af35ca0d1387e13a102642ec635b",
+          "locals": 0
+        }
+      ],
+      "cilMethods": [
+        {
+          "name": "<Main>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 290,
+          "instructions": 114,
+          "instructionHash": "8e54095b17b3ebe2c0f0ff32c0909a0ee1565fdc802b0a1cf2612c61a11c6b2f",
+          "localCount": 9,
+          "handlerCount": 0
+        },
+        {
+          "name": "<startup>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 8,
+          "instructions": 4,
+          "instructionHash": "95992ad9ee9536b9e744a8fd4b94314d2ab40ea79892fdbc0a897fe5845b354d",
+          "localCount": 0,
+          "handlerCount": 0
+        },
+        {
+          "name": "<assert>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 20,
+          "instructions": 6,
+          "instructionHash": "0cf3d3aa2b1a893b41f9e56e373bf562b527335fde0bde782d2e715da9102754",
+          "localCount": 0,
+          "handlerCount": 0
+        }
+      ],
+      "sourceMethodsHash": "77c0ba8258ab94a5a8d3c9eb6c2df97f0f44e528f4b81fea084cc6c0278671bd",
+      "cilMethodsHash": "3a37fb6abd170aea371a1911b12bcf780ed4c8cdc5c57d04f9d63090423aaf92",
+      "propertyRows": 0,
+      "methodSemanticsRows": 0,
+      "hasExternalReferences": false,
+      "qualifiedSourceTypes": 0,
+      "peBytes": 6656,
+      "debugBytes": 3943
+    },
+    {
+      "name": "queue",
+      "sourceMethods": [
+        {
+          "name": "<Main>",
+          "owner": null,
+          "instructions": 55,
+          "codeHash": "a96a7ecdfe1ba486ed4f802005dc690676f3d608528c8d6246f33bc54f4100b7",
+          "locals": 4
+        },
+        {
+          "name": "<startup>",
+          "owner": null,
+          "instructions": 2,
+          "codeHash": "8c7c2da3932e6897450cf577127f59d5ce80af35ca0d1387e13a102642ec635b",
+          "locals": 0
+        }
+      ],
+      "cilMethods": [
+        {
+          "name": "<Main>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 173,
+          "instructions": 67,
+          "instructionHash": "df57645bf44f57d044e0a266694f09866b07287a0fa7ae9fdabdbdb1324f3001",
+          "localCount": 4,
+          "handlerCount": 0
+        },
+        {
+          "name": "<startup>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 8,
+          "instructions": 4,
+          "instructionHash": "95992ad9ee9536b9e744a8fd4b94314d2ab40ea79892fdbc0a897fe5845b354d",
+          "localCount": 0,
+          "handlerCount": 0
+        },
+        {
+          "name": "<assert>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 20,
+          "instructions": 6,
+          "instructionHash": "0cf3d3aa2b1a893b41f9e56e373bf562b527335fde0bde782d2e715da9102754",
+          "localCount": 0,
+          "handlerCount": 0
+        }
+      ],
+      "sourceMethodsHash": "1ae2c93cd8b03f17afc24ae349273cfb4339224ce7e9f78cd523db0ccac98327",
+      "cilMethodsHash": "d9d0ae5ab4b026799c74ec87ac654c809b7d01f2ab9396d5fda9cb68068a1b9f",
+      "propertyRows": 0,
+      "methodSemanticsRows": 0,
+      "hasExternalReferences": false,
+      "qualifiedSourceTypes": 0,
+      "peBytes": 5120,
+      "debugBytes": 2926
+    },
+    {
+      "name": "builder",
+      "sourceMethods": [
+        {
+          "name": "<Main>",
+          "owner": null,
+          "instructions": 38,
+          "codeHash": "9e5e3d1ec910936f99e9759701969732e5a762b37811b4328ac3c0e8b365dba9",
+          "locals": 3
+        },
+        {
+          "name": "<startup>",
+          "owner": null,
+          "instructions": 2,
+          "codeHash": "8c7c2da3932e6897450cf577127f59d5ce80af35ca0d1387e13a102642ec635b",
+          "locals": 0
+        }
+      ],
+      "cilMethods": [
+        {
+          "name": "<Main>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 117,
+          "instructions": 46,
+          "instructionHash": "4d3f51496876025d379dec881fc43c1a1af95e4514750f0c91b69075194339e1",
+          "localCount": 3,
+          "handlerCount": 0
+        },
+        {
+          "name": "<startup>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 8,
+          "instructions": 4,
+          "instructionHash": "95992ad9ee9536b9e744a8fd4b94314d2ab40ea79892fdbc0a897fe5845b354d",
+          "localCount": 0,
+          "handlerCount": 0
+        },
+        {
+          "name": "<assert>",
+          "owner": "SharpForge.<>Program",
+          "codeSize": 20,
+          "instructions": 6,
+          "instructionHash": "13d9dd9d2c28eb4e49dca3edca846700bf47c29c1d1201f2a3df9ea7bcced059",
+          "localCount": 0,
+          "handlerCount": 0
+        }
+      ],
+      "sourceMethodsHash": "7402f53b31e18edbc5293fbff883a3a84c4d3ed7f5e43e2fded396c53d4a74ac",
+      "cilMethodsHash": "10b32d89c862399c83f2470a074cdcf6524ec045df0c121920aa45357f73b5ff",
+      "propertyRows": 0,
+      "methodSemanticsRows": 0,
+      "hasExternalReferences": false,
+      "qualifiedSourceTypes": 0,
+      "peBytes": 4608,
+      "debugBytes": 2196
+    }
+  ]
+}

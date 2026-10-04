@@ -89,3 +89,40 @@ The behavior follows the single-string process lookup contract documented by
 [Microsoft](https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-10.0).
 The focused source, emitted CIL, independent CIL and production-worker tests are
 `tests/a19-runtime-*.test.js`; they do not claim native CLR execution parity.
+
+## Isolated invocation and launch context
+
+`ManagedInvocationSession(artifact, {backend: 'source' | 'cil', ...runtimeOptions})`
+owns a separate VM, heap, static state and scheduler. `invoke(name, {arguments,
+signal})` invokes a static method after initialization and returns its converted
+value, stdout, fault, duration and source location. Calls within a session are
+sequential; `dispose()` cancels work. A cancelled or fatally faulted session cannot
+be reused. This is a bounded execution API, not unrestricted CLR reflection.
+
+`withSourceLaunchArguments(image, stringArray)` returns a new source image with
+arguments bound into the compiler-generated startup method, including both the
+legacy empty-array bootstrap and the current forwarded string-array parameter. Static initialization
+and async Main completion remain in the startup. It accepts source images decoded
+by `loadAssembly` and can run before CIL emission. The original image is unchanged;
+unrecognized argument bootstrap patterns throw. Parameters are limited to 4096
+strings and 131072 UTF-16 units, without NUL characters. Prefer the `programArguments` runtime option described above for new hosts; this
+overlay API remains available for immutable source-image preparation. Direct CIL
+custom-method launches retain their existing `arguments` option.
+
+The additional `System.Environment.GetEnvironmentVariables()` and
+`System.Environment.CurrentDirectory` contracts read the same per-session environment
+snapshot and the explicit `workingDirectory` option (`currentDirectory` alias).
+Legacy `environmentVariables` input is accepted only when canonical `environment`
+is absent. No operating-system environment or current directory is inherited or mutated. The deterministic defaults are an empty environment and
+`/`. Variable lookup uses ordinal case-sensitive names. `GetEnvironmentVariables`
+returns a separate mutable managed `IDictionary`; modifying it affects only that
+dictionary. See the BCL core README for exact bounds and collection support.
+
+## Separate project assemblies
+
+`createProjectAssemblyInspector(assembly, {dependencies})` verifies an explicit
+canonical SharpForge PE dependency graph and supplies one execution view to the
+existing direct CIL VM. The source VM consumes `loadProjectAssembly(...).image`
+from `@sharpforge/cil`. Both keep independent per-session state and preserve
+assembly-qualified types and source maps. See [PROJECT-ASSEMBLIES.md](PROJECT-ASSEMBLIES.md)
+for the API, admission rules, limits and update boundaries.

@@ -1,0 +1,526 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: build server shutdown invokes the SDK command and reports an unsuccessful shutdown explicitly
+ok 1 - build server shutdown invokes the SDK command and reports an unsuccessful shutdown explicitly
+  ---
+  duration_ms: 56.789051
+  type: 'test'
+  ...
+# Subtest: actual reusable builds record first/repeat timings and close their live MSBuild/compiler workers
+not ok 2 - actual reusable builds record first/repeat timings and close their live MSBuild/compiler workers
+  ---
+  duration_ms: 569.521012
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-native/tests/a23-native-reuse.test.js:45:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    An internal failure occurred while running MSBuild.
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    MSBUILD : error MSB1025: An internal failure occurred while running MSBuild.
+    
+    System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    Unhandled exception. System.Net.Sockets.SocketException (13): Permission denied
+    
+       at System.Net.Sockets.Socket..ctor(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount, Boolean isFirstPipeInstance)
+    
+       at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount, PipeOptions pipeOptions)
+    
+       at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+    
+       at System.IO.Pipes.NamedPipeServerStream..ctor(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize)
+    
+       at Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.InternalConstruct(String pipeName)
+    
+       at Microsoft.Build.Execution.OutOfProcNode.Run(Boolean enableReuse, Boolean lowPriority, Exception& shutdownException)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.StartLocalNode(CommandLineSwitches commandLineSwitches, Boolean lowpriority)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.ProcessCommandLineSwitches(CommandLineSwitches switchesFromAutoResponseFile, CommandLineSwitches switchesNotFromAutoResponseFile, String& projectFile, String[]& targets, String& toolsVersion, Dictionary`2& globalProperties, ILogger[]& loggers, LoggerVerbosity& verbosity, LoggerVerbosity& originalVerbosity, List`1& distributedLoggerRecords, Int32& cpuCount, Boolean& multiThreaded, Boolean& enableNodeReuse, TextWriter& preprocessWriter, TextWriter& targetsWriter, Boolean& detailedSummary, ISet`1& warningsAsErrors, ISet`1& warningsNotAsErrors, ISet`1& warningsAsMessages, Boolean& enableRestore, Boolean& interactive, ProfilerLogger& profilerLogger, Boolean& enableProfiler, Dictionary`2& restoreProperties, ProjectIsolationMode& isolateProjects, GraphBuildOptions& graphBuild, String[]& inputResultsCaches, String& outputResultsCache, Boolean& lowPriority, Boolean& question, Boolean& isTaskInputLoggingRequired, Boolean& isBuildCheckEnabled, String[]& getProperty, String[]& getItem, String[]& getTargetResult, String& getResultOutputFile, Boolean recursing, String commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Execute(String[] commandLine)
+    
+       at Microsoft.Build.CommandLine.MSBuildApp.Main(String[] args)
+    
+    + actual - expected
+    
+    + 'failed'
+    - 'succeeded'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'succeeded'
+  actual: 'failed'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-native/tests/a23-native-reuse.test.js:73:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1188.520608

@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "name": "xml-facade-cleanup",
+  "base": "a925a35802f44b7d158f6e57d35938075913d27a",
+  "baseBranch": "codex/p18-foundation-paths",
+  "branch": "codex/p18-project-edits",
+  "pr": 3553,
+  "files": [
+    "packages/project-system/src/xml.js",
+    "packages/project-system/src/xml-parser.js"
+  ],
+  "message": "SF-A23-T09: extract readable XML parsing behind the frozen facade\n\nCarry the exact completed source correction; preserve public exports and\nbehavior. Root completed the 18-file Node26 cleanup scope (382/382) and\ncheck/build/clean-checkout. No projection tests or main refresh.\n\nCanonical-Source: e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40\nLocal-Projection: c587f6ba2cf5acd13c9c7016f3fe866101cc5112",
+  "repository_full_name": "wieslawsoltes/SharpForge",
+  "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "worktree": "/dev/shm/p18-xml-facade-cleanup",
+  "localBranch": "codex/p18-local-xml-facade-cleanup",
+  "local": "c587f6ba2cf5acd13c9c7016f3fe866101cc5112",
+  "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+  "baseTree": "7e5bd74f5f3ff041ee829c075ddeb648899079ac",
+  "sourceProofs": [
+    {
+      "path": "packages/project-system/src/xml.js",
+      "blob": "ac400bd2259bc50e45f6a805c459b035c8c96187",
+      "sha256": "726f2b65d0109184248f63d4c8a47016f1b39da1e386e488daac71d788d553b7",
+      "matchesCanonical": true
+    },
+    {
+      "path": "packages/project-system/src/xml-parser.js",
+      "blob": "ed8bb7d4da6b2c012f4053eeeeb068808a508931",
+      "sha256": "75bd6a7259e8b029a8a3df65d9753c39e4fc2c992518e34bf31a85c8477dba37",
+      "matchesCanonical": true
+    }
+  ],
+  "stats": "2 files changed, 184 insertions(+), 41 deletions(-)",
+  "remote": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+  "treeVerified": true,
+  "recordedAt": "2026-10-04T05:52:25.280Z",
+  "core": {
+    "runId": 37181146470,
+    "jobId": 111373827859,
+    "conclusion": "success",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181146470/job/111373827859"
+  },
+  "jobs": [
+    {
+      "id": 111373827859,
+      "name": "core",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111373887895,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373888020,
+      "name": "packages",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373888179,
+      "name": "core-platforms",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373888334,
+      "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373888661,
+      "name": "native-il",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373888994,
+      "name": "native-msbuild",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373889312,
+      "name": "clr-wasm",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 111373889531,
+      "name": "ci-ok",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "commitReadback": {
+    "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+    "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+    "parents": [
+      "a925a35802f44b7d158f6e57d35938075913d27a"
+    ]
+  },
+  "refReadback": {
+    "ref": "refs/heads/codex/p18-project-edits",
+    "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e"
+  },
+  "pullRequest": {
+    "number": 3553,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3553",
+    "head": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+    "base": "codex/p18-foundation-paths",
+    "baseSha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+    "draft": true,
+    "mergeable": true,
+    "mergeableState": "clean"
+  },
+  "restrictions": {
+    "localTests": false,
+    "localBuild": false,
+    "mainRefresh": false,
+    "forceUpdate": false,
+    "descendantRefresh": false,
+    "publicContractChanged": false
+  },
+  "publicationKind": "maintenance of existing draft",
+  "cancelledDuplicateRuns": [],
+  "qualification": {
+    "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "tests": 382,
+    "pass": 382,
+    "fail": 0,
+    "skip": 0,
+    "cancel": 0,
+    "node": "v26.10.0",
+    "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+    "tap": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+    "gates": "check/build/clean-checkout passed; strict historical265 legacy count preserved",
+    "publisherRepeatedValidation": false
+  },
+  "retainedQualificationEvidence": "planning/evidence/project18/legacy-cleanup-qualification.json",
+  "retainedQualificationEvidenceSha256": "f1bfff6df4f29b58998d3f9e1f098894fa0eccaed612e19ac1b65802310c56a5"
+}

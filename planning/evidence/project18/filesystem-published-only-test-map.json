@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T06:17:55.369436+00:00",
+  "canonicalSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "examinedFiles": 22,
+  "method": "Read-only published-tree versus canonical Git source inspection, including manual comparison of unmatched test titles and exact conformance statement-sequence check. No tests, source edits, branch changes or remote calls.",
+  "interpretation": "Most publication-only filesystem suites split the original larger canonical suites. Additional direct public API and boundary assertions listed below must not be described as duplicates or silently dropped from an aggregate tree. Their published scope qualification remains evidence, not a claim they ran in the later canonical 228-file cohort.",
+  "recommendation": "Preserve the existing published-only files with additional coverage and the shared provider helper in an additive qualification union, or explicitly retain their qualified publication refs if canonical source intentionally omits the split files. Do not copy duplicate suites and count them as new acceptance coverage.",
+  "files": [
+    {
+      "path": "tests/a24-disk-scan.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "8ee5e1347bfa2066fb6801c12ead9629dbd3ba80",
+      "canonicalReplacementPaths": [
+        "tests/a24-disk-scaling.test.js"
+      ],
+      "classification": "mixed-duplicate-and-additional-qualified-coverage",
+      "additionalCoverage": [
+        "Last case: maxFiles=2 skips the third entry and WorkspaceImportReport(maxEntries=1) rejects the second report entry. First three cases exercise the scanner directly, with corresponding directory-scaling behavior retained in canonical tests."
+      ],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-disk-session.test.js",
+      "publishedTree": "ae3ddf5aca8311a153dd0e8b1b947861ed63fc92",
+      "publishedBlob": "69112cce6ed72cb97ab13caef027dbd9fa781175",
+      "canonicalReplacementPaths": [
+        "tests/a24-workspace-session.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-document-publication.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "1e78d604055daecd8bd58a1a3c288bb1e0e873ff",
+      "canonicalReplacementPaths": [
+        "tests/a24-cache-publication.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-document-store.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "73f09c8c9fb2c307de46b0a34f5cd42fbf7383fe",
+      "canonicalReplacementPaths": [
+        "tests/a24-lazy-search.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-explorer-paging.test.js",
+      "publishedTree": "ab0e62e4043d21be7654201917fdad15777439b2",
+      "publishedBlob": "470b5661e2047185df94d0fdf8c5dd4e7fc2b5c0",
+      "canonicalReplacementPaths": [
+        "tests/a24-lazy-search.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-disk-admission.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "78be8590f001775d7d8e4709821e6c8ae069fce5",
+      "canonicalReplacementPaths": [
+        "tests/a24-disk-load-concurrency.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-disk-guard.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "365e70f863c80545cb050440df8cab6e28338dce",
+      "canonicalReplacementPaths": [
+        "tests/a24-editor-lifecycle.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-disk-held-signal.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "855e099785cdba2e64bfaf2f00a72828def5c24a",
+      "canonicalReplacementPaths": [
+        "tests/a24-disk-held-signal.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-disk-mutations.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "eaa457a474f9ed85b88656c8120e9a784203974e",
+      "canonicalReplacementPaths": [
+        "tests/a24-disk-load-concurrency.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-disk-read.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "f9da18c26ee04c842e575967ef6f68590e7aa9f2",
+      "canonicalReplacementPaths": [
+        "tests/a24-disk-scaling.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-disk-writes.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "c245d305db0415266fe7c48ff34276648b953226",
+      "canonicalReplacementPaths": [
+        "tests/a24-disk-scaling.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-provider-files.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "4c459b1c3174803528a47254625145c879ade1e1",
+      "canonicalReplacementPaths": [],
+      "classification": "mixed-duplicate-and-additional-qualified-coverage",
+      "additionalCoverage": [
+        "All three direct public API cases are absent canonical: unknown-byte preservation plus rejection without reads; pre-abort and zero file-count boundary before reads; complete eager project auxiliary-input whitelist versus lazy C#/binary files. No canonical test invokes readProviderFiles."
+      ],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-reload-coordinator.test.js",
+      "publishedTree": "ab0e62e4043d21be7654201917fdad15777439b2",
+      "publishedBlob": "a69e212f7914a6b83bee625893d0d54c243a887c",
+      "canonicalReplacementPaths": [
+        "tests/a24-watch-reload.test.js"
+      ],
+      "classification": "mixed-duplicate-and-additional-qualified-coverage",
+      "additionalCoverage": [
+        "First case directly proves the host reevaluated acknowledgment reaches onReevaluate for both automatic and chosen XML reload.",
+        "Second case covers maxPending quota, compare/keep preserving dirty buffers, clearing the prompt and missing-path choice failure. The existing third case is retained in canonical watch-reload."
+      ],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-save-locks.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "5041c9428ca5b49eed6624b521e4b5f84067d03b",
+      "canonicalReplacementPaths": [
+        "tests/a24-workspace-coordination.test.js"
+      ],
+      "classification": "mixed-duplicate-and-additional-qualified-coverage",
+      "additionalCoverage": [
+        "First case directly verifies the shared workspace lock for a file save and the exclusive same workspace key for whole-workspace transactions. Existing two save/conflict/cancellation cases are retained in canonical workspace-coordination."
+      ],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-search-index.test.js",
+      "publishedTree": "ab0e62e4043d21be7654201917fdad15777439b2",
+      "publishedBlob": "a444611f3bd253e5f9d33347b6ddc70632bac69a",
+      "canonicalReplacementPaths": [
+        "tests/a24-lazy-search.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-search-publication.test.js",
+      "publishedTree": "ab0e62e4043d21be7654201917fdad15777439b2",
+      "publishedBlob": "d5d3f2e02af9300c7b067fe2fec42b7fdd89a864",
+      "canonicalReplacementPaths": [
+        "tests/a24-cache-publication.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-fsa.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "529a8bee4dd0342e63a2c2f7b02e1c1262baa68b",
+      "canonicalReplacementPaths": [
+        "tests/a24-vfs-conformance.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-memory.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "50aa5271666c1ace32fb8b5b74ac90d1aaf95ea5",
+      "canonicalReplacementPaths": [
+        "tests/a24-vfs-conformance.test.js",
+        "tests/language.test.js",
+        "tests/a24-workspace-import-regression.test.js"
+      ],
+      "classification": "mixed-duplicate-and-additional-qualified-coverage",
+      "additionalCoverage": [
+        "The bounded-write case adds maxEntries=2 recursive-directory quota rollback and an empty-root assertion absent the canonical conformance case.",
+        "The subscription test directly proves watch stops after signal cancellation and the base FileSystemProvider reports Unavailable.",
+        "The final Workspace public-facade import/update/export/import smoke overlaps legacy language/import tests but is an additional standalone facade contract case."
+      ],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-native.test.js",
+      "publishedTree": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "publishedBlob": "863bd31a0fa6883d67179d0cc69cc852f1cf9c3b",
+      "canonicalReplacementPaths": [
+        "tests/a24-vfs-conformance.test.js"
+      ],
+      "classification": "mixed-duplicate-and-additional-qualified-coverage",
+      "additionalCoverage": [
+        "The conformance case is the canonical authenticated-loopback matrix extraction. The second case adds direct client.binary('src/opaque.bin') to the existing provider conflict/build guard behavior. Native owner confirmed canonical conformance uses provider.readFile while a19-native-disk-observer uses client.binary only for a .dll with AbortSignal; this opaque-file assertion has no exact canonical replacement. This is a test omission, not an unimplemented raw-read capability."
+      ],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-overlay.test.js",
+      "publishedTree": "ea05a582a064ff24eed56ab0111c5e390e86e683",
+      "publishedBlob": "cf73f99fd9374bb7f10cd43c3d114555ab1fb6ad",
+      "canonicalReplacementPaths": [
+        "tests/a24-vfs-conformance.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/a24-vfs-watch.test.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "526e7c0e576f8c8fca2a471b20d464037ec13ebc",
+      "canonicalReplacementPaths": [
+        "tests/a24-watch-reload.test.js"
+      ],
+      "classification": "extracted-canonical-coverage",
+      "additionalCoverage": [],
+      "notes": [
+        "Named assertion scenarios were compared with canonical source; additive ProviderDiskWorkspace/public entry imports are deliberate projection differences."
+      ]
+    },
+    {
+      "path": "tests/support/a24-provider-conformance.js",
+      "publishedTree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "publishedBlob": "82d67fc0b100048740e6fe506949cccea8937bd5",
+      "canonicalReplacementPaths": [
+        "tests/a24-vfs-conformance.test.js"
+      ],
+      "classification": "exact-conformance-statement-extraction",
+      "additionalCoverage": [],
+      "notes": [
+        "All statements from the first stat assertion through the final disposed assertion occur in the canonical conformance loop in the same order after indentation-only normalization. The helper is required when retaining the projected VFS suite files."
+      ]
+    }
+  ],
+  "retentionFollowup": {
+    "candidateSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+    "rootScope": "18 unique cases in 8 files retained from published source, alongside editor/caret fixes.",
+    "status": "retained-and-qualified-in-completed-root-scope",
+    "preservedPaths": [
+      "tests/a24-09-wizard-provider.test.js",
+      "tests/a24-disk-scan.test.js",
+      "tests/a24-provider-files.test.js",
+      "tests/a24-reload-coordinator.test.js",
+      "tests/a24-save-locks.test.js",
+      "tests/a24-vfs-memory.test.js",
+      "tests/a24-vfs-native.test.js",
+      "tests/a24-workspace-reconcile.test.js"
+    ],
+    "interpretation": "The original e9-versus-publication classification remains historical. All18 preserved unique cases are in the completed43/43 Node26 affected scope. The combined retained test blobs are qualification compositions, not new product behavior or duplicated acceptance counts.",
+    "qualification": "planning/evidence/project18/final-status-retention-qualification.json"
+  }
+}

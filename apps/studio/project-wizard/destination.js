@@ -1,4 +1,4 @@
-import { preflightDestination, writeNewDirectory, readProviderDirectory } from '../../../packages/project-system/src/index.js';
+import { preflightDestination, writeNewDirectory, readProviderDirectory as readDirectory } from '@sharpforge/project-system';
 
 /** The picker is invoked only from the user's click; cancellation never advances the wizard. */
 export async function chooseWizardDirectory({ picker = globalThis.showDirectoryPicker, signal } = {}) {
@@ -28,7 +28,7 @@ export async function commitWizardDirectory(handle, plan, { signal, confirmOverw
   signal?.throwIfAborted();
   const writeResult = await writeNewDirectory(handle, plan, { signal, overwritePaths, mode: 'merge' });
   try {
-    const disk = await readProviderDirectory(handle, { signal, openedPaths: writeResult.written });
+    const disk = await readDirectory(handle, { signal, openedPaths: writeResult.written });
     return { cancelled: false, writeResult, disk, directoryHandle: handle };
   } catch (error) {
     error.writeResult = writeResult;

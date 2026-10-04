@@ -25,6 +25,10 @@ Press **Escape, then Tab** or **Escape, then Shift+Tab** to leave text input thr
 traversal. Ordinary Tab retains editor indentation or snippet navigation. Every view owns and disposes
 its listeners, asynchronous requests, layout caches, IME overlay and accessibility buffer.
 
+When an embedding document service supplies `session.models`, it owns model membership and replacement.
+Saving view state or disposing a view never registers its model again. Constructor and `setModel` registration
+remain explicit, so closing a view preserves an owned document while retiring it cannot resurrect a disposed model.
+
 Language services and workspace transactions are injected through explicit providers. Full Visual Studio,
 Vimscript, native Emacs/plugin compatibility and real screen-reader/IME qualification are not implied by
 browser fixtures. Read the versioned capability inventory and test/benchmark evidence for exact coverage.

@@ -1,0 +1,101 @@
+{
+  "checks": [
+    {
+      "name": "real OPFS sync worker read/write/rename/cancellation/quota",
+      "passed": true,
+      "backend": "opfs-sync-worker",
+      "size": 1048583,
+      "hash": "0cc2c7e23a08451a1ec483600a03ad90521419ec85801ed332e0f9584c8d3df1",
+      "quota": {
+        "usage": 1052337,
+        "quota": 2148535985,
+        "available": 2147483648,
+        "persistent": false
+      },
+      "names": [
+        "renamed.bin"
+      ]
+    },
+    {
+      "name": "real OPFS bytes persist across reload",
+      "passed": true
+    },
+    {
+      "name": "explorer disk services and 10000-file paged DOM",
+      "passed": true,
+      "services": [
+        "visible skipped paths",
+        "closed-file path and text search",
+        "clean reload",
+        "dirty compare and keep",
+        "own-save suppression",
+        "busy-transaction isolation",
+        "disposal"
+      ],
+      "backend": "Chromium DOM with memory provider; Web Locks",
+      "frameBudgetMs": 16,
+      "expandMedianMs": 1.200000001117587,
+      "expandP95Ms": 1.5,
+      "samples": [
+        {
+          "constructorMs": 0.2999999988824129,
+          "expandMs": 1.5,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.300000000745058,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0.09999999962747097,
+          "expandMs": 1.299999998882413,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.200000001117587,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0.09999999962747097,
+          "expandMs": 1.200000001117587,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.200000001117587,
+          "rows": 32
+        },
+        {
+          "constructorMs": 0,
+          "expandMs": 1.1000000014901161,
+          "rows": 32
+        }
+      ]
+    },
+    {
+      "name": "default 20000-file SolutionExplorer uses visible folder paging",
+      "passed": true,
+      "files": 20000,
+      "initialNodes": 1,
+      "initialRenderMs": 0.8000000007450581,
+      "expandMs": 2.900000000372529,
+      "nodesAfterPage": 104,
+      "renderedRows": 32,
+      "actualComponent": "SolutionExplorer",
+      "fallback": "visible paged Folder view",
+      "savedPreference": "solution",
+      "coverage": [
+        "default large project",
+        "toolbar explanation",
+        "bounded page",
+        "load more",
+        "smaller-scope restoration",
+        "disposal"
+      ]
+    }
+  ],
+  "engine": "153.0.8010.12",
+  "qualification": "Chromium OPFS, memory-provider UI and Web Locks; native picker permission UI not exercised"
+}

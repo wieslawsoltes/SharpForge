@@ -1,0 +1,18 @@
+✔ A24 provider conformance: memory (8.990387ms)
+✔ A24 provider conformance: FSA mock (16.68536ms)
+✔ A24 provider conformance: OPFS async mock (5.748579ms)
+✔ A24 provider conformance: native linux service (12.731302ms)
+✔ A24 provider conformance: native linux authenticated HTTP loopback (86.848414ms)
+✔ A24 memory identity and bounded writes preserve contents on conflict/quota failure (0.991707ms)
+✔ A24 native HTTP conflicts retain provider codes and paths and guard directory creation during builds (25.888918ms)
+✔ A24 FSA permissions and atomic writable failure preserve original bytes (0.746176ms)
+✔ A24 overlay keeps dirty buffers consistent and generated URIs read-only (3.450858ms)
+✔ A24 FSA fallback directory rename rolls back when external files appear during copying (2.082783ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 658.725138

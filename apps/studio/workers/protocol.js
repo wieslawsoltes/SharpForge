@@ -6,6 +6,7 @@ export const workerMethods=Object.freeze({
   "compiler": [
     "analyze",
     "build",
+    "releaseDocuments",
     "inspectAssembly",
     "methodIL",
     "decompileMethod",

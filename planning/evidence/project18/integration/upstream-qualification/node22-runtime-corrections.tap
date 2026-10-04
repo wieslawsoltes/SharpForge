@@ -1,0 +1,500 @@
+(node:12) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:27) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: generic signatures normalize aliases without changing opaque metadata identifiers
+ok 1 - generic signatures normalize aliases without changing opaque metadata identifiers
+  ---
+  duration_ms: 1.06122
+  type: 'test'
+  ...
+# Subtest: closed method cache uses canonical handles and shares the original instruction body
+ok 2 - closed method cache uses canonical handles and shares the original instruction body
+  ---
+  duration_ms: 21.334432
+  type: 'test'
+  ...
+# Subtest: generic cache limits and malformed contexts are rejected without changing existing methods
+ok 3 - generic cache limits and malformed contexts are rejected without changing existing methods
+  ---
+  duration_ms: 5.310749
+  type: 'test'
+  ...
+# Subtest: nested generic class fields and constructors retain their closed owner
+ok 4 - nested generic class fields and constructors retain their closed owner
+  ---
+  duration_ms: 8.698887
+  type: 'test'
+  ...
+# Subtest: default(T), initobj, typeof(T), generic arrays and box T use the current frame
+ok 5 - default(T), initobj, typeof(T), generic arrays and box T use the current frame
+  ---
+  duration_ms: 6.255453
+  type: 'test'
+  ...
+# Subtest: generic type context and generic method context are substituted independently
+ok 6 - generic type context and generic method context are substituted independently
+  ---
+  duration_ms: 3.999201
+  type: 'test'
+  ...
+# Subtest: snapshot retains a suspended concrete frame while derived instantiation caches are discarded
+ok 7 - snapshot retains a suspended concrete frame while derived instantiation caches are discarded
+  ---
+  duration_ms: 2.648825
+  type: 'test'
+  ...
+# Subtest: generic reference constraints reject a value argument before entering its method body
+ok 8 - generic reference constraints reject a value argument before entering its method body
+  ---
+  duration_ms: 2.286538
+  type: 'test'
+  ...
+# Subtest: malformed generic variables and missing MethodSpec are verification diagnostics
+ok 9 - malformed generic variables and missing MethodSpec are verification diagnostics
+  ---
+  duration_ms: 2.139366
+  type: 'test'
+  ...
+# (node:35) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: generic virtual overrides execute with the selected declaring type and method arguments
+ok 10 - generic virtual overrides execute with the selected declaring type and method arguments
+  ---
+  duration_ms: 29.454721
+  type: 'test'
+  ...
+# Subtest: explicit implementations of two closed interfaces with the same MethodDef stay distinct
+ok 11 - explicit implementations of two closed interfaces with the same MethodDef stay distinct
+  ---
+  duration_ms: 8.222069
+  type: 'test'
+  ...
+# Subtest: closed static fields and initialization are independent even inside a generic caller
+ok 12 - closed static fields and initialization are independent even inside a generic caller
+  ---
+  duration_ms: 5.372711
+  type: 'test'
+  ...
+# Subtest: inherited generic fields use the declaring base context, including nested array substitutions
+ok 13 - inherited generic fields use the declaring base context, including nested array substitutions
+  ---
+  duration_ms: 5.19229
+  type: 'test'
+  ...
+# Subtest: aggregate generic values and external generic methods keep explicit unsupported diagnostics
+ok 14 - aggregate generic values and external generic methods keep explicit unsupported diagnostics
+  ---
+  duration_ms: 1.845904
+  type: 'test'
+  ...
+# Subtest: closed generic Decimal default and initobj retain the scalar storage contract
+ok 15 - closed generic Decimal default and initobj retain the scalar storage contract
+  ---
+  duration_ms: 1.626523
+  type: 'test'
+  ...
+# (node:43) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: closed field references accept exact and derived receivers with stable warm metadata
+ok 16 - closed field references accept exact and derived receivers with stable warm metadata
+  ---
+  duration_ms: 22.451857
+  type: 'test'
+  ...
+# Subtest: ldfld rejects another closed owner before reading, writing or creating an address
+ok 17 - ldfld rejects another closed owner before reading, writing or creating an address
+  ---
+  duration_ms: 5.35817
+  type: 'test'
+  ...
+# Subtest: stfld rejects another closed owner before reading, writing or creating an address
+ok 18 - stfld rejects another closed owner before reading, writing or creating an address
+  ---
+  duration_ms: 2.809817
+  type: 'test'
+  ...
+# Subtest: ldflda rejects another closed owner before reading, writing or creating an address
+ok 19 - ldflda rejects another closed owner before reading, writing or creating an address
+  ---
+  duration_ms: 2.064483
+  type: 'test'
+  ...
+# Subtest: restored field caches retain closed-owner rejection and valid derived access
+ok 20 - restored field caches retain closed-owner rejection and valid derived access
+  ---
+  duration_ms: 3.392646
+  type: 'test'
+  ...
+# (node:51) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: present but falsy scalar tags are rejected in constants and static initializers
+ok 21 - present but falsy scalar tags are rejected in constants and static initializers
+  ---
+  duration_ms: 2.205806
+  type: 'test'
+  ...
+# Subtest: source load adapters do not return malformed scalar wire records as guest objects
+ok 22 - source load adapters do not return malformed scalar wire records as guest objects
+  ---
+  duration_ms: 1.201141
+  type: 'test'
+  ...
+# Subtest: ordinary constants and valid scalar records retain their load behavior
+ok 23 - ordinary constants and valid scalar records retain their load behavior
+  ---
+  duration_ms: 0.478902
+  type: 'test'
+  ...
+# (node:59) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 CIL type membership is indexed before execution
+ok 24 - A05 CIL type membership is indexed before execution
+  ---
+  duration_ms: 11.825283
+  type: 'test'
+  ...
+# Subtest: A05 CIL layouts preserve inherited field offsets and reject foreign fields
+ok 25 - A05 CIL layouts preserve inherited field offsets and reject foreign fields
+  ---
+  duration_ms: 4.339634
+  type: 'test'
+  ...
+# Subtest: A05 CIL metadata replacement rebuilds the derived indexes
+ok 26 - A05 CIL metadata replacement rebuilds the derived indexes
+  ---
+  duration_ms: 87.367417
+  type: 'test'
+  ...
+# Subtest: A05 CIL call and static initialization adapters retain frame and depth contracts
+ok 27 - A05 CIL call and static initialization adapters retain frame and depth contracts
+  ---
+  duration_ms: 15.962291
+  type: 'test'
+  ...
+# (node:67) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 T26 closed generic types have distinct static slots and independent initializers
+ok 28 - A05 T26 closed generic types have distinct static slots and independent initializers
+  ---
+  duration_ms: 25.496889
+  type: 'test'
+  ...
+# Subtest: A05 T26 generic field signatures substitute the declaring type arguments
+ok 29 - A05 T26 generic field signatures substitute the declaring type arguments
+  ---
+  duration_ms: 2.853052
+  type: 'test'
+  ...
+# Subtest: A05 T26 ldsflda retains its closed generic identity
+ok 30 - A05 T26 ldsflda retains its closed generic identity
+  ---
+  duration_ms: 3.921323
+  type: 'test'
+  ...
+# Subtest: A05 T26 ThreadStatic defaults and writes are isolated by scheduler context
+ok 31 - A05 T26 ThreadStatic defaults and writes are isolated by scheduler context
+  ---
+  duration_ms: 2.776958
+  type: 'test'
+  ...
+# Subtest: A05 T26 ThreadStatic addresses preserve their original context across switches
+ok 32 - A05 T26 ThreadStatic addresses preserve their original context across switches
+  ---
+  duration_ms: 1.845753
+  type: 'test'
+  ...
+# Subtest: A05 T26 closed generic static references remain rooted and restore with snapshots
+ok 33 - A05 T26 closed generic static references remain rooted and restore with snapshots
+  ---
+  duration_ms: 4.584132
+  type: 'test'
+  ...
+# Subtest: A05 T26 volatile field and indirect accesses execute in instruction order
+ok 34 - A05 T26 volatile field and indirect accesses execute in instruction order
+  ---
+  duration_ms: 2.190203
+  type: 'test'
+  ...
+# Subtest: A05 T26 verifier rejects malformed volatile prefixes and branches that split prefixes
+ok 35 - A05 T26 verifier rejects malformed volatile prefixes and branches that split prefixes
+  ---
+  duration_ms: 2.43357
+  type: 'test'
+  ...
+# Subtest: A05 T26 interleaved cooperative workers retain independent ThreadStatic values
+ok 36 - A05 T26 interleaved cooperative workers retain independent ThreadStatic values
+  ---
+  duration_ms: 6.029092
+  type: 'test'
+  ...
+# (node:75) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: field-heavy execution resolves no metadata tokens after its first loop iterations
+ok 37 - field-heavy execution resolves no metadata tokens after its first loop iterations
+  ---
+  duration_ms: 39.569339
+  type: 'test'
+  ...
+# Subtest: metadata descriptors are immutable and verification membership tracks replaced reports
+ok 38 - metadata descriptors are immutable and verification membership tracks replaced reports
+  ---
+  duration_ms: 2.931521
+  type: 'test'
+  ...
+# Subtest: closed field owners never share substituted signatures or thread-static slot identities
+ok 39 - closed field owners never share substituted signatures or thread-static slot identities
+  ---
+  duration_ms: 4.272984
+  type: 'test'
+  ...
+# Subtest: warm fields validate null, wrong, collected and foreign receivers on every access
+ok 40 - warm fields validate null, wrong, collected and foreign receivers on every access
+  ---
+  duration_ms: 3.533639
+  type: 'test'
+  ...
+# Subtest: metadata string caching never retains weak intern handles or aliases strings from another VM
+ok 41 - metadata string caching never retains weak intern handles or aliases strings from another VM
+  ---
+  duration_ms: 2.721725
+  type: 'test'
+  ...
+# Subtest: restore rebuilds field metadata while preserving live storage and rejecting invalid restore atomically
+ok 42 - restore rebuilds field metadata while preserving live storage and rejecting invalid restore atomically
+  ---
+  duration_ms: 2.83161
+  type: 'test'
+  ...
+# Subtest: inspector replacement, explicit unload and stop isolate identical tokens and drop metadata caches
+ok 43 - inspector replacement, explicit unload and stop isolate identical tokens and drop metadata caches
+  ---
+  duration_ms: 2.740132
+  type: 'test'
+  ...
+# Subtest: committed debugger Hot Reload replaces metadata caches; rejected changes retain their identity
+ok 44 - committed debugger Hot Reload replaces metadata caches; rejected changes retain their identity
+  ---
+  duration_ms: 115.005154
+  type: 'test'
+  ...
+# (node:83) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: tokens source: GetType identity, names, and primitive static types
+ok 45 - tokens source: GetType identity, names, and primitive static types
+  ---
+  duration_ms: 118.232281
+  type: 'test'
+  ...
+# Subtest: tokens source: cached Type roots, snapshot replay, and stop
+ok 46 - tokens source: cached Type roots, snapshot replay, and stop
+  ---
+  duration_ms: 10.532561
+  type: 'test'
+  ...
+# Subtest: tokens source: null GetType faults
+ok 47 - tokens source: null GetType faults
+  ---
+  duration_ms: 5.43173
+  type: 'test'
+  ...
+# Subtest: tokens reload: GetType identity, names, and primitive static types
+ok 48 - tokens reload: GetType identity, names, and primitive static types
+  ---
+  duration_ms: 16.835935
+  type: 'test'
+  ...
+# Subtest: tokens reload: cached Type roots, snapshot replay, and stop
+ok 49 - tokens reload: cached Type roots, snapshot replay, and stop
+  ---
+  duration_ms: 6.225838
+  type: 'test'
+  ...
+# Subtest: tokens reload: null GetType faults
+ok 50 - tokens reload: null GetType faults
+  ---
+  duration_ms: 5.348955
+  type: 'test'
+  ...
+# Subtest: tokens cil: GetType identity, names, and primitive static types
+ok 51 - tokens cil: GetType identity, names, and primitive static types
+  ---
+  duration_ms: 25.20942
+  type: 'test'
+  ...
+# Subtest: tokens cil: cached Type roots, snapshot replay, and stop
+ok 52 - tokens cil: cached Type roots, snapshot replay, and stop
+  ---
+  duration_ms: 5.974999
+  type: 'test'
+  ...
+# Subtest: tokens cil: null GetType faults
+ok 53 - tokens cil: null GetType faults
+  ---
+  duration_ms: 6.14827
+  type: 'test'
+  ...
+# Subtest: tokens: aliases, closed/open generics, and array identity share stable tables
+ok 54 - tokens: aliases, closed/open generics, and array identity share stable tables
+  ---
+  duration_ms: 1.806594
+  type: 'test'
+  ...
+# Subtest: tokens: inherited object headers report actual type and boxed enum remains distinct
+ok 55 - tokens: inherited object headers report actual type and boxed enum remains distinct
+  ---
+  duration_ms: 0.487275
+  type: 'test'
+  ...
+# Subtest: tokens: default handle, null comparisons, wrong kind, foreign and forged handles
+ok 56 - tokens: default handle, null comparisons, wrong kind, foreign and forged handles
+  ---
+  duration_ms: 0.668338
+  type: 'test'
+  ...
+# Subtest: tokens: snapshots taken before the lazy Type cache discard subsequent entries
+ok 57 - tokens: snapshots taken before the lazy Type cache discard subsequent entries
+  ---
+  duration_ms: 3.506157
+  type: 'test'
+  ...
+# Subtest: tokens: ldtoken supports TypeDef/Ref/Spec and method/field definitions and references
+ok 58 - tokens: ldtoken supports TypeDef/Ref/Spec and method/field definitions and references
+  ---
+  duration_ms: 4.228156
+  type: 'test'
+  ...
+# Subtest: tokens CIL: typeof primitive, open generic and closed generic handles execute
+ok 59 - tokens CIL: typeof primitive, open generic and closed generic handles execute
+  ---
+  duration_ms: 3.678456
+  type: 'test'
+  ...
+# Subtest: strings: String(char[]) copies UTF-16 units, remains non-interned, and rejects invalid arrays
+ok 60 - strings: String(char[]) copies UTF-16 units, remains non-interned, and rejects invalid arrays
+  ---
+  duration_ms: 1.052237
+  type: 'test'
+  ...
+# Subtest: strings CIL: String(char[]) constructor produces a fresh managed string
+ok 61 - strings CIL: String(char[]) constructor produces a fresh managed string
+  ---
+  duration_ms: 2.007037
+  type: 'test'
+  ...
+# (node:91) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: ldtoken admits open TypeDef and TypeRef identities without instantiating storage
+ok 62 - ldtoken admits open TypeDef and TypeRef identities without instantiating storage
+  ---
+  duration_ms: 24.537588
+  type: 'test'
+  ...
+# Subtest: ldtoken still validates constructed TypeSpec arity and declaring variable bounds
+ok 63 - ldtoken still validates constructed TypeSpec arity and declaring variable bounds
+  ---
+  duration_ms: 4.638013
+  type: 'test'
+  ...
+# Subtest: open generic local and allocation storage remain rejected after type-handle admission
+ok 64 - open generic local and allocation storage remain rejected after type-handle admission
+  ---
+  duration_ms: 1.616347
+  type: 'test'
+  ...
+# (node:99) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 portable context reference aliases retain case-insensitive evaluated metadata
+ok 65 - A23 portable context reference aliases retain case-insensitive evaluated metadata
+  ---
+  duration_ms: 2.695966
+  type: 'test'
+  ...
+# (node:107) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 external instructions append stable opcode IDs without changing existing bytecode
+ok 66 - A23 external instructions append stable opcode IDs without changing existing bytecode
+  ---
+  duration_ms: 1.678681
+  type: 'test'
+  ...
+# Subtest: A23 explicit assembly keys preserve full versions, identity flags and escaped names
+ok 67 - A23 explicit assembly keys preserve full versions, identity flags and escaped names
+  ---
+  duration_ms: 0.721188
+  type: 'test'
+  ...
+# Subtest: A23 well-formed unlinked project references verify and survive bytecode serialization
+ok 68 - A23 well-formed unlinked project references verify and survive bytecode serialization
+  ---
+  duration_ms: 1.6054
+  type: 'test'
+  ...
+# Subtest: A23 external call, allocation, field and static-store stack effects retain expression results
+ok 69 - A23 external call, allocation, field and static-store stack effects retain expression results
+  ---
+  duration_ms: 0.859666
+  type: 'test'
+  ...
+# Subtest: A23 external operands reject missing profiles, incorrect arity, access modes and stack underflow
+ok 70 - A23 external operands reject missing profiles, incorrect arity, access modes and stack underflow
+  ---
+  duration_ms: 0.719695
+  type: 'test'
+  ...
+# Subtest: A23 descriptor validation rejects malformed identities, tokens, signatures and duplicate definitions
+ok 71 - A23 descriptor validation rejects malformed identities, tokens, signatures and duplicate definitions
+  ---
+  duration_ms: 1.08063
+  type: 'test'
+  ...
+# Subtest: A23 external descriptor limits bound sparse tables, metadata text and error collection
+ok 72 - A23 external descriptor limits bound sparse tables, metadata text and error collection
+  ---
+  duration_ms: 20.446489
+  type: 'test'
+  ...
+# (node:115) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: ProjectSystem evaluates each framework with isolated properties, items, generated data and stable selection IDs
+ok 73 - ProjectSystem evaluates each framework with isolated properties, items, generated data and stable selection IDs
+  ---
+  duration_ms: 18.073501
+  type: 'test'
+  ...
+# Subtest: metadata-only Compile records are accepted but never compiled as fabricated empty text
+ok 74 - metadata-only Compile records are accepted but never compiled as fabricated empty text
+  ---
+  duration_ms: 1.19327
+  type: 'test'
+  ...
+# Subtest: resource hydration inputs propagate through the public session without changing source membership
+ok 75 - resource hydration inputs propagate through the public session without changing source membership
+  ---
+  duration_ms: 1.046047
+  type: 'test'
+  ...
+# Subtest: B05 classic solution loading keeps unsupported project placeholders outside portable compilation
+ok 76 - B05 classic solution loading keeps unsupported project placeholders outside portable compilation
+  ---
+  duration_ms: 1.276114
+  type: 'test'
+  ...
+# Subtest: context limits, cancellation and invalid selection produce explicit failures
+ok 77 - context limits, cancellation and invalid selection produce explicit failures
+  ---
+  duration_ms: 1.439781
+  type: 'test'
+  ...
+1..77
+# tests 77
+# suites 0
+# pass 77
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7863.459433

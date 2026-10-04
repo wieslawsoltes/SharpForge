@@ -1,0 +1,55 @@
+{
+  "name": "node26-final-status-and-retained",
+  "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a24-09-wizard-provider.test.js",
+    "tests/a24-disk-scan.test.js",
+    "tests/a24-provider-files.test.js",
+    "tests/a24-reload-coordinator.test.js",
+    "tests/a24-save-locks.test.js",
+    "tests/a24-vfs-memory.test.js",
+    "tests/a24-vfs-native.test.js",
+    "tests/a24-workspace-reconcile.test.js",
+    "tests/a24-status-caret-ownership.test.js",
+    "tests/a19-shell-boundaries.test.js",
+    "tests/a24-editor-model-ownership.test.js"
+  ],
+  "startedAt": "2026-10-04T06:36:13.502944+00:00",
+  "resourcePreflight": {
+    "actualFreeBytes": 1044307968,
+    "availableBytes": 1044307968,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8564060160",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 2415944\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "log": "node26-final-status-and-retained.tap",
+  "completedAt": "2026-10-04T06:36:19.958226+00:00",
+  "exitCode": 0,
+  "sourceAfter": "886fb139fc647f0532085b5a0866a498fa7fca52",
+  "resourceAfter": {
+    "actualFreeBytes": 1044307968,
+    "availableBytes": 1044307968,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8453537792",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 2416141\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "checkoutStatusAfter": "",
+  "summary": {
+    "tests": 43,
+    "suites": 0,
+    "pass": 43,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "qualificationIncomplete": false
+}

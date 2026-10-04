@@ -1,0 +1,32 @@
+{
+  "name": "clean-checkout",
+  "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "scripts/conformance/clean-checkout.js"
+  ],
+  "startedAt": "2026-10-04T05:47:21.697507+00:00",
+  "resourcePreflight": {
+    "actualFreeBytes": 1046044672,
+    "availableBytes": 1046044672,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8237694976",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "log": "clean-checkout.log",
+  "completedAt": "2026-10-04T05:47:21.849949+00:00",
+  "exitCode": 0,
+  "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "resourceAfter": {
+    "actualFreeBytes": 1046044672,
+    "availableBytes": 1046044672,
+    "minimumFreeBytes": 536870912,
+    "memory.current": "8248922112",
+    "memory.max": "8589934592",
+    "memory.events": "low 0\nhigh 0\nmax 1291408\noom 5\noom_kill 3\noom_group_kill 0"
+  },
+  "checkoutStatusAfter": ""
+}

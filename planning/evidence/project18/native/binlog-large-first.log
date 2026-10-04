@@ -1,0 +1,23 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual 200 MiB binary log replays and pages within the reader memory budget
+ok 1 - actual 200 MiB binary log replays and pages within the reader memory budget
+  ---
+  duration_ms: 23286.163056
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","node":"v22.23.3","platform":"linux","architecture":"x64","inputBytes":259938900,"events":1204,"spoolBytes":720109981,"readerVersion":"15.1.0.0","helperPeakRss":512356352,"nodePeakRss":152739840,"replayAndPageMs":14449.114837000001}
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23748.908668

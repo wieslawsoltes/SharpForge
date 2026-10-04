@@ -4,10 +4,11 @@ import { BuildAnalysis } from './build-analysis.js';
 
 /** A compiler worker, artifact cache and cancellation domain belong to exactly one project. */
 export class BuildService {
-  constructor(project, { workerFactory, compilerUrl, snapshot, output, diagnostics, onError } = {}) {
+  constructor(project, { workerFactory, compilerUrl, snapshot, requestCompiler, output, diagnostics, onError } = {}) {
     this.id = requireIdentifier(project.id ?? project.path, 'Project id');
     this.project = { ...project, id: this.id };
     this.snapshotProvider = snapshot;
+    this.requestCompiler = requestCompiler;
     this.output = output;
     this.diagnostics = diagnostics;
     this.events = new WorkbenchEvents();
@@ -60,8 +61,10 @@ export class BuildService {
   async request(method, params = {}, options = {}) {
     if (this.disposed) throw workbenchError('BUILD_DISPOSED', 'Build service is disposed');
     const revision = this.revision;
-    const snapshot = this.snapshot();
-    const result = await this.worker.request(method, { ...snapshot, ...params, revision }, options);
+    const request = (name, input, requestOptions = options) => this.worker.request(name, input, requestOptions);
+    const result = this.requestCompiler
+      ? await this.requestCompiler({ projectId: this.id, method, params, options, revision, request })
+      : await request(method, { ...this.snapshot(), ...params, revision });
     if (revision !== this.revision) throw workbenchError('BUILD_STALE', `Project '${this.id}' changed while '${method}' was running`);
     return result;
   }

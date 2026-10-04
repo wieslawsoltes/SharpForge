@@ -3,10 +3,10 @@ import { readFile, readdir, realpath, lstat, writeFile, rename, unlink, mkdir } 
 import { resolve, relative, dirname, sep, extname } from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { parseXml, ProjectSystem } from '@sharpforge/project-system';
+import { isWorkspaceTextPath } from '@sharpforge/archive';
 import {inspectWorkspaceItem,mutateWorkspace,undoWorkspaceMutation} from './file-operations.js';
 import { workspacePath } from './contract.js';
 export { hashBytes } from './workspace-io.js';
-const editable=/(?:\.(?:cs|fs|vb|csproj|fsproj|vbproj|proj|slnx|sln|props|targets|pubxml|json|config|xml|resx|resw|css|html|js|mjs|ts|svg|yml|yaml|csv|editorconfig|txt|md|ruleset|runsettings|rsp)|(?:^|\/)\.editorconfig)$/i;
 const projectPattern=/\.(?:[a-z]*proj|slnx|sln)$/i;
 const ignored=new Set(['.git','.vs','node_modules','.sharpforge','.packages','bin','obj']);
 export class NativeWorkspace {
@@ -33,11 +33,11 @@ export class NativeWorkspace {
   let hierarchy=null;try{const system=new ProjectSystem(records,{maxFiles:this.maxFiles}),entry=solutions.find(p=>p.endsWith('.slnx'))??solutions.find(p=>p.endsWith('.sln'))??projects.find(p=>p.endsWith('.csproj'));if(entry){hierarchy=system.load(entry);hierarchy.inspectionOnly=true;}}catch{}
   return {name:this.root.split(sep).at(-1),root:this.root,files,folders,projects,solutions,hierarchy};
  }
- async read(input){const file=await this.path(input);if(!editable.test(input)&&!projectPattern.test(input))throw new Error('File type is not editable');return readNativeText(this,file,input);}
+ async read(input){const file=await this.path(input);if(!isWorkspaceTextPath(input)&&!projectPattern.test(input))throw new Error('File type is not editable');return readNativeText(this,file,input);}
  async save(changes){
   if(!Array.isArray(changes)||!changes.length||changes.length>256)throw new Error('Save requires 1–256 changes');
   const seen=new Set(),pending=[];let total=0;
-  for(const c of changes){const path=workspacePath(c.path);if(seen.has(path))throw new Error('Duplicate save path');seen.add(path);if(!editable.test(path))throw new Error('File type is not editable');if(typeof c.text!=='string'||Buffer.byteLength(c.text)>this.maxTextBytes||(total+=Buffer.byteLength(c.text))>32*1024*1024)throw new Error('Save text limit exceeded');
+  for(const c of changes){const path=workspacePath(c.path);if(seen.has(path))throw new Error('Duplicate save path');seen.add(path);if(!isWorkspaceTextPath(path)&&!projectPattern.test(path))throw new Error('File type is not editable');if(typeof c.text!=='string'||Buffer.byteLength(c.text)>this.maxTextBytes||(total+=Buffer.byteLength(c.text))>32*1024*1024)throw new Error('Save text limit exceeded');
    if(c.expectedHash!==null&&(typeof c.expectedHash!=='string'||!/^([a-f0-9]{64})$/.test(c.expectedHash)))throw new Error('Save requires the previous SHA-256 hash (or null for new files)');
    if(/\.(?:[a-z]*proj|slnx|props|targets|pubxml|xml|resx|ruleset|runsettings)$/i.test(path))parseXml(c.text,{maxLength:this.maxTextBytes,maxNodes:100000});
    const file=await this.path(path,{create:c.expectedHash===null});let current=null;try{current=await this.read(path);}catch(e){if(!(e.code==='ENOENT'&&c.expectedHash===null))throw e;}

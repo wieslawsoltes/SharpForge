@@ -14,7 +14,7 @@ test('A00 T20 contributed CSS matches the reviewed stylesheet snapshot and both 
  assert.deepEqual(cssFingerprint(css),expected);
  const actualFiles=(await readdir(join(buildRoot,'apps/studio/styles'))).filter(name=>name.endsWith('.css')).map(name=>'apps/studio/styles/'+name).sort();
  const declaredFiles=styles.filter(entry=>entry.source.startsWith('apps/studio/styles/')).map(entry=>entry.source).sort();
- assert.deepEqual(declaredFiles,actualFiles);assert.equal(actualFiles.length,25);
+ assert.deepEqual(declaredFiles,actualFiles);assert.equal(actualFiles.length,26);
  for(const source of actualFiles)assert(cssRules(await readFile(join(buildRoot,source),'utf8')).length>0,source);
  assert.equal((await readdir(join(buildRoot,'apps/studio'))).some(name=>/^release\d+\.css$/.test(name)),false);
  assert.equal(new Set(styles.map(entry=>entry.order)).size,styles.length);

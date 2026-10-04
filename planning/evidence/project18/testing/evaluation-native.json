@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "tool": "native dotnet msbuild",
+    "version": "18.3.0.15422",
+    "sdk": "10.0.201",
+    "platform": "linux",
+    "node": "v22.23.3",
+    "nativeQualification": true
+  },
+  "qualification": "native-executed",
+  "cases": [
+    {
+      "id": "property-order",
+      "feature": "property-expansion",
+      "status": "match",
+      "equal": true,
+      "differences": [],
+      "diagnostics": [],
+      "native": {
+        "command": [
+          "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "msbuild",
+          "property-order/Test.csproj",
+          "-nologo",
+          "-verbosity:quiet",
+          "-p:Configuration=Debug",
+          "-getProperty:MSBuildProjectName,Value,Other"
+        ],
+        "version": "18.3.0.15422"
+      }
+    },
+    {
+      "id": "conditioned-properties",
+      "feature": "conditions",
+      "status": "match",
+      "equal": true,
+      "differences": [],
+      "diagnostics": [],
+      "native": {
+        "command": [
+          "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "msbuild",
+          "conditioned-properties/Test.csproj",
+          "-nologo",
+          "-verbosity:quiet",
+          "-p:Configuration=Debug",
+          "-getProperty:MSBuildProjectName,Value"
+        ],
+        "version": "18.3.0.15422"
+      }
+    },
+    {
+      "id": "literal-include-update-remove",
+      "feature": "generic-items",
+      "status": "match",
+      "equal": true,
+      "differences": [],
+      "diagnostics": [],
+      "native": {
+        "command": [
+          "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "msbuild",
+          "literal-include-update-remove/Test.csproj",
+          "-nologo",
+          "-verbosity:quiet",
+          "-p:Configuration=Debug",
+          "-getProperty:MSBuildProjectName,Value",
+          "-getItem:Content"
+        ],
+        "version": "18.3.0.15422"
+      }
+    },
+    {
+      "id": "import-order",
+      "feature": "local-imports",
+      "status": "match",
+      "equal": true,
+      "differences": [],
+      "diagnostics": [],
+      "native": {
+        "command": [
+          "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "msbuild",
+          "import-order/Test.csproj",
+          "-nologo",
+          "-verbosity:quiet",
+          "-p:Configuration=Debug",
+          "-getProperty:MSBuildProjectName,Value"
+        ],
+        "version": "18.3.0.15422"
+      }
+    },
+    {
+      "id": "property-function",
+      "feature": "string-property-functions",
+      "status": "match",
+      "equal": true,
+      "differences": [],
+      "diagnostics": [],
+      "native": {
+        "command": [
+          "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+          "msbuild",
+          "property-function/Test.csproj",
+          "-nologo",
+          "-verbosity:quiet",
+          "-p:Configuration=Debug",
+          "-getProperty:MSBuildProjectName,Value"
+        ],
+        "version": "18.3.0.15422"
+      }
+    },
+    {
+      "id": "native-exec",
+      "feature": "native-task-execution",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "native-csc",
+      "feature": "native-task-execution",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "custom-using-task",
+      "feature": "external-task-assembly",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "unknown-sdk",
+      "feature": "unregistered-sdk",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "binary-reference",
+      "feature": "binary-reference-linking",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "package-reference",
+      "feature": "nuget-restore-linking",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "analyzer",
+      "feature": "analyzer-execution",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "serialized-resx",
+      "feature": "serialized-resources",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "host-file-function",
+      "feature": "host-property-functions",
+      "status": "boundary-enforced",
+      "differences": []
+    },
+    {
+      "id": "foreign-language-build",
+      "feature": "foreign-language-compilation",
+      "status": "boundary-enforced",
+      "differences": []
+    }
+  ],
+  "success": true,
+  "divergenceCount": 0
+}

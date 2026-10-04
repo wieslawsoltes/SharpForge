@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "e8f1502379a2635d4cf448c86ad552298404ef53",
+  "lastProductChange": "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+  "node": "v26.10.0",
+  "npmCheck": "passed",
+  "productionBuild": "passed",
+  "cleanCheckout": "passed",
+  "scopedCorrection": {
+    "sourceCommit": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+    "tests": 66,
+    "passed": 65,
+    "failed": 1,
+    "skipped": 0
+  },
+  "explorerCorrection": {
+    "sourceCommit": "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+    "tests": 30,
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0
+  },
+  "structure": {
+    "strictExitCode": 1,
+    "problemFiles": 265,
+    "newOrWorsenedAgainstPinnedUpstream": 0,
+    "comparison": "structure-comparison.json",
+    "baselineChanged": false
+  },
+  "browser": "one real-component attempt running in clean built checkout",
+  "pendingFinalMainComposition": {
+    "upstream": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "reason": "Preserve released built-in assignments and resolve actual overlapping source conflicts",
+    "priorReviewBase": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a"
+  },
+  "note": "Evidence applies only to these exact source revisions. Later upstream composition requires affected qualification; no all-platform or all-acceptance claim."
+}

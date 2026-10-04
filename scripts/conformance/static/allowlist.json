@@ -177,11 +177,39 @@
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
+      "path": "packages/msbuild/src/testing/portable/managed-runtime.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65",
+      "reason": "Portable test execution lazily imports only the fixed compiler and runtime entry points. Managed test source executes in its bounded VM session, never as JavaScript."
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/runtime-data.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff",
+      "reason": "Computed test data lazily imports only the fixed compiler and runtime entry points, then runs generated managed harness code in a bounded isolated session."
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+      "reason": "Source test discovery lazily imports the fixed syntax package to inspect source trees without executing user source."
+    },
+    {
       "path": "packages/network/smoke.mjs",
       "operation": "dynamic-import",
       "count": 2,
       "sha256": "4602f97649e4c810fd84ddc944466235c43fc715245f43b103404c071ea5816e",
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/project-system/examples/archive-benchmark.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dcc153e0bcfba418d32f0bb1050824e5d302fa7ab9d6562db4ec3458ed873f99",
+      "reason": "Developer benchmark imports archive source from an explicitly selected trusted Git revision into a temporary module; it is not part of the browser product."
     },
     {
       "path": "packages/project-system/smoke.mjs",
@@ -210,6 +238,13 @@
       "count": 2,
       "sha256": "2c207cdf518e86df8c5f469180521d3176ab2eb08ca45d0d092e065f6993a8d1",
       "reason": "Benchmark explicitly loads a trusted selected checkout and legacy oracle; benchmark paths are executable host input."
+    },
+    {
+      "path": "packages/templates/build-catalog.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "a22161e95bcfb0da7d30ced7c905da2a1701f93b69bcc15eaedce9d4bcd6dd8e",
+      "reason": "Build-only catalog generation imports bounded ordinary *.template.js modules from the trusted repository template directories. Imported nupkg contents are data and are never JavaScript modules."
     },
     {
       "path": "packages/templates/smoke.mjs",
@@ -289,11 +324,25 @@
       "reason": "Metadata benchmark loads the operator-selected trusted CIL module or fixed workspace entry point; CLI module overrides execute host code."
     },
     {
+      "path": "scripts/benchmark-a24-integrity.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "ebaf398685912ff32b48b3fb57843af597227bb2462f45aa2d64373ffefa69c9",
+      "reason": "Developer benchmark compares the current public explorer API with an explicitly selected trusted Git revision in a temporary module, outside the browser product."
+    },
+    {
       "path": "scripts/benchmarks/a05-call-offsets.mjs",
       "operation": "dynamic-import",
       "count": 1,
       "sha256": "cedea79fa062454c4cc41d7b60c34aa6640897d98b03e39b7faa271082cddb06",
       "reason": "Benchmark explicitly loads the runtime from a trusted baseline checkout selected by the operator."
+    },
+    {
+      "path": "scripts/build-generators.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "21cd45465304d223d749cf379611860e2f3c2490b30453a017c1afedca4208bc",
+      "reason": "Build tooling imports trusted repository contribution modules after root-relative source/target validation. Generated outputs are bounded and only declared destinations are written."
     },
     {
       "path": "scripts/build-managed-examples.js",
@@ -362,7 +411,7 @@
       "path": "tests/a00-03-studio-registries.test.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "c1c22e5ec5da0369328205132c4f89717795de18ea955f90d058e415a8562568",
+      "sha256": "e1b9c004151d332439c367ae3de460bd1f6095d2edaba1a8347504dec8dc468a",
       "reason": "Registry test enumerates trusted checked-in Studio automation modules and imports the fixed Node worker module."
     },
     {
@@ -371,6 +420,13 @@
       "count": 3,
       "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/a24-07-catalog-discovery.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "526141fde2176d335aaa7808bb9c8f302e93579bb4d590d65278ea68019b8bcf",
+      "reason": "The deterministic catalog fixture imports its own generated index from a test-owned temporary directory; it uses no user-selected module source."
     },
     {
       "path": "tests/benchmarks/cil-pe.mjs",
@@ -436,6 +492,34 @@
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
     },
     {
+      "path": "tests/support/a23-native-ui.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "f554c85f517cd1ac7ab90c8d8a8ad0af323da97d9d65d5e8edbf9991468051b2",
+      "reason": "Browser qualification loads three fixed same-origin native-tool and context modules. Native transport is an explicit fixture and no user-selected JavaScript is imported."
+    },
+    {
+      "path": "tests/support/a24-browser-ui.js",
+      "operation": "dynamic-import",
+      "count": 4,
+      "sha256": "362f70790e2de6266b667fd3d9baee8369522ec185f33bdf1f6ec4f29970c6f8",
+      "reason": "Browser qualification loads four fixed same-origin Explorer, workspace, project-system and controls modules to exercise disk services and bounded DOM paging."
+    },
+    {
+      "path": "tests/support/a24-integrity-components.js",
+      "operation": "dynamic-import",
+      "count": 9,
+      "sha256": "a2921105830fd2a64df311330c34ad211f389133f1a862d5712b99113cad5da6",
+      "reason": "Browser qualification loads nine fixed same-origin workspace and Explorer modules. Its isolated sessions exercise real OPFS, Web Locks and cross-window recovery without user-selected modules."
+    },
+    {
+      "path": "tests/support/a24-large-explorer.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "c8dba0b13dbba415a62292473cae17c9ed4e52740e55943d67bc2978f7d93379",
+      "reason": "Browser qualification loads two fixed same-origin Explorer and storage modules to inspect paged rendering, preference restoration and disposal."
+    },
+    {
       "path": "tests/support/engine-parity-fixtures.js",
       "operation": "dynamic-import",
       "count": 3,
@@ -443,39 +527,18 @@
       "reason": "Parity fixture registry loads explicitly selected trusted fixture modules; fixture paths are host code, not managed input."
     },
     {
+      "path": "tests/support/runtime-project-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "4161af84e673e3d284522f96d56318fc9417b1bc31938462c6b4a28428071a97",
+      "reason": "Node test transport installs self.postMessage then loads only the fixed checked-in production runtime worker; no user-selected executable input."
+    },
+    {
       "path": "tests/workspace-io.test.js",
       "operation": "dynamic-import",
       "count": 3,
       "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    },
-    {
-      "path": "packages/templates/build-catalog.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "a22161e95bcfb0da7d30ced7c905da2a1701f93b69bcc15eaedce9d4bcd6dd8e",
-      "reason": "Build-only catalog generation imports bounded ordinary *.template.js modules from the trusted repository template directories. Imported nupkg contents are data and are never JavaScript modules."
-    },
-    {
-      "path": "scripts/build-generators.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "21cd45465304d223d749cf379611860e2f3c2490b30453a017c1afedca4208bc",
-      "reason": "Build tooling imports trusted repository contribution modules after root-relative source/target validation. Generated outputs are bounded and only declared destinations are written."
-    },
-    {
-      "path": "tests/a24-07-catalog-discovery.test.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "526141fde2176d335aaa7808bb9c8f302e93579bb4d590d65278ea68019b8bcf",
-      "reason": "The deterministic catalog fixture imports its own generated index from a test-owned temporary directory; it uses no user-selected module source."
-    },
-    {
-      "path": "packages/project-system/examples/archive-benchmark.mjs",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "dcc153e0bcfba418d32f0bb1050824e5d302fa7ab9d6562db4ec3458ed873f99",
-      "reason": "Developer benchmark imports archive source from an explicitly selected trusted Git revision into a temporary module; it is not part of the browser product."
     }
   ]
 }

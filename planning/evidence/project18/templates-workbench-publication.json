@@ -1,0 +1,2151 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-04T06:36:09.635496+00:00",
+  "scope": "Final pinned-main workbench composition ports and maintenance of existing XML/designer drafts.",
+  "owner": "templates_archives",
+  "previousEvidenceCommit": "ec8a74da71ba568566aa547045fb2b73d1dd746e",
+  "canonicalSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+  "canonicalTree": "ca911994aa352381fde19f9dcf5bc9bbffbf447c",
+  "deltaCounts": {
+    "featureDrafts": 4,
+    "uniqueDependencyBranches": 7,
+    "maintainedExistingDrafts": 2
+  },
+  "combinedCounts": {
+    "featureDrafts": 25,
+    "uniqueDependencyBranches": 15,
+    "originalAssignedLeafIssues": 24
+  },
+  "featureDrafts": [
+    {
+      "name": "workbench-project-build",
+      "branch": "codex/p18-workbench-project-build",
+      "local": "172fa9e6c9f2ecb9d9779d2f5500a1ab08b62f4c",
+      "sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+      "tree": "405a475104c176cf8abcbd1a2a0e3a53a3156174",
+      "commitReadBack": {
+        "tree": "405a475104c176cf8abcbd1a2a0e3a53a3156174",
+        "parents": [
+          "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [
+        {
+          "name": "workbench-project-build",
+          "branch": "codex/p18-workbench-project-build",
+          "local": "96fea5fe6e2c94e9fa550ad53ed9619b2756dbc4",
+          "sha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+          "tree": "138fea83ca2e0135cb89d99f40ff0933c59ade99",
+          "commitReadBack": {
+            "tree": "138fea83ca2e0135cb89d99f40ff0933c59ade99",
+            "parents": [
+              "f7c2fafa10c66b45ff69039433e382c9ad13a1d2"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "previousPublications": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-project-build-published.json",
+          "pr": 4326,
+          "url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+          "baseBranch": "codex/p18-workbench-build-dependencies",
+          "pullRequestReadBack": {
+            "head": "codex/p18-workbench-project-build",
+            "headSha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+            "base": "codex/p18-workbench-build-dependencies",
+            "baseSha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+            "draft": true
+          },
+          "coreFailure": {
+            "run": 37179732776,
+            "job": 111369687734,
+            "reason": "Unpublished canonical project-runtime-input.js dependency",
+            "log": "workbench-project-build-core-failure.log"
+          }
+        }
+      ],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-build-envelope-published.json",
+      "pr": 4326,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+      "baseBranch": "codex/p18-workbench-build-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-project-build",
+        "headSha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "base": "codex/p18-workbench-build-dependencies",
+        "baseSha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4326,
+        "sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "runId": 37180074437,
+        "jobId": null,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180074437",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "workbench-feature-callbacks",
+      "branch": "codex/p18-workbench-feature-callbacks",
+      "local": "53e0db2af8019c6b20bb6bf2aea68e4895ec0cf8",
+      "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+      "tree": "deba072cecf59906fd73f90c73e2c78966d46d15",
+      "commitReadBack": {
+        "tree": "deba072cecf59906fd73f90c73e2c78966d46d15",
+        "parents": [
+          "531ec7392892ced7eb4b98ecbb3d687fa0521792"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-feature-callbacks-published.json",
+      "pr": 4328,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4328",
+      "baseBranch": "codex/p18-workbench-feature-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-feature-callbacks",
+        "headSha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "base": "codex/p18-workbench-feature-dependencies",
+        "baseSha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4328,
+        "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "runId": 37179804887,
+        "jobId": null,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179804887",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "workbench-debug-provenance",
+      "branch": "codex/p18-workbench-debug-provenance",
+      "local": "288c272278f7644daccfc14e06a8002361f004a0",
+      "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+      "tree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "commitReadBack": {
+        "tree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+        "parents": [
+          "0f040d05dde3ea4f97306c943fa4e09236c2dd02"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-debug-provenance-published.json",
+      "pr": 4363,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4363",
+      "baseBranch": "codex/p18-workbench-debug-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-debug-provenance",
+        "headSha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "base": "codex/p18-workbench-debug-dependencies",
+        "baseSha": "0f040d05dde3ea4f97306c943fa4e09236c2dd02",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4363,
+        "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "runId": 37180741251,
+        "jobId": 111372640564,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180741251",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "workbench-workspace-ports",
+      "branch": "codex/p18-workbench-workspace-ports",
+      "local": "440f218c269724b4dc271d4a00793fc9fddab522",
+      "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+      "tree": "2aeb66b2acf05d6581b480d43eb2623c4401c222",
+      "commitReadBack": {
+        "tree": "2aeb66b2acf05d6581b480d43eb2623c4401c222",
+        "parents": [
+          "1e410e82601e9659235a9ad8dd116e85ebd39e4c"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "81848433ff4de7d92af3d874c3ffb084efb3c571"
+      ],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-ports-published.json",
+      "pr": 4407,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4407",
+      "baseBranch": "codex/p18-workbench-workspace-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-workspace-ports",
+        "headSha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "base": "codex/p18-workbench-workspace-dependencies",
+        "baseSha": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4407,
+        "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "runId": 37182178812,
+        "jobId": 111376788666,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182178812",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    }
+  ],
+  "dependencyBranches": [
+    {
+      "name": "workbench-build-dependencies",
+      "branch": "codex/p18-workbench-build-dependencies",
+      "local": "67ee826f13156a8d0c89773a3eb82b30f981402c",
+      "sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+      "tree": "17ef4bbf7d67712393f571656802ec738e95bc72",
+      "commitReadBack": {
+        "tree": "17ef4bbf7d67712393f571656802ec738e95bc72",
+        "parents": [
+          "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+          "05d4c991a132643ce05248c7f42f3b2b0f168c70"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-build-dependencies-published.json",
+      "dependencies": [
+        "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+        "05d4c991a132643ce05248c7f42f3b2b0f168c70"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-feature-dependencies",
+      "branch": "codex/p18-workbench-feature-dependencies",
+      "local": "f411ba6a56d4e8686244bcab2b428b6091da2392",
+      "sha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+      "tree": "785128d186e5a1d34f7598294173328b929d960f",
+      "commitReadBack": {
+        "tree": "785128d186e5a1d34f7598294173328b929d960f",
+        "parents": [
+          "87af20b3951ee05be79357190e1babb74dff3e87",
+          "9501520383fa99d873157ab6f6efbf55354ebcbf"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-feature-dependencies-published.json",
+      "dependencies": [
+        "87af20b3951ee05be79357190e1babb74dff3e87",
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-debug-source-dependencies",
+      "branch": "codex/p18-workbench-debug-source-dependencies",
+      "local": "fa196357b99dc48ac1dcceba383128f5377d9db0",
+      "sha": "d4a43a2384059d08bbb155e6def37c2757a93a26",
+      "tree": "583bac677c5064496c2a7ac0c6280d73c9cd9730",
+      "commitReadBack": {
+        "tree": "583bac677c5064496c2a7ac0c6280d73c9cd9730",
+        "parents": [
+          "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+          "ba923c523a013b8415013b98239176a10dd879d4"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-debug-source-dependencies-published.json",
+      "dependencies": [
+        "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "ba923c523a013b8415013b98239176a10dd879d4"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-debug-dependencies",
+      "branch": "codex/p18-workbench-debug-dependencies",
+      "local": "a7c1a76111b6722776d3719f54308d1b90f150d7",
+      "sha": "0f040d05dde3ea4f97306c943fa4e09236c2dd02",
+      "tree": "834bd174b3de8663ec0c16d32dbe7e4f3c5f4e4f",
+      "commitReadBack": {
+        "tree": "834bd174b3de8663ec0c16d32dbe7e4f3c5f4e4f",
+        "parents": [
+          "d4a43a2384059d08bbb155e6def37c2757a93a26",
+          "4d209fb03d43131fae53c0de3edc57627c239e50"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-debug-dependencies-published.json",
+      "dependencies": [
+        "d4a43a2384059d08bbb155e6def37c2757a93a26",
+        "4d209fb03d43131fae53c0de3edc57627c239e50"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-workspace-ingress-dependencies",
+      "branch": "codex/p18-workbench-workspace-ingress-dependencies",
+      "local": "3e7d0840a11991131b4beb06043a7d66a835350e",
+      "sha": "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+      "tree": "ad53c0f8681ce50468456578390a9f1544c7bc90",
+      "commitReadBack": {
+        "tree": "ad53c0f8681ce50468456578390a9f1544c7bc90",
+        "parents": [
+          "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+          "fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-ingress-dependencies-published.json",
+      "dependencies": [
+        "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-workspace-designer-dependencies",
+      "branch": "codex/p18-workbench-workspace-designer-dependencies",
+      "local": "bb27f3551abead53717d5c683ff17dcd30e63cf0",
+      "sha": "31d0e087a99481c861ecb5e94d254979b26aadb0",
+      "tree": "c3149e2a361a5b7a30f4f3e478a9d908c2359922",
+      "commitReadBack": {
+        "tree": "c3149e2a361a5b7a30f4f3e478a9d908c2359922",
+        "parents": [
+          "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+          "9501520383fa99d873157ab6f6efbf55354ebcbf"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-designer-dependencies-published.json",
+      "dependencies": [
+        "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-workspace-archive-export-forward",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "local": "afdff8b25c7f94a31f6c8dafdee4b82276bbcde3",
+      "sha": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+      "tree": "8a9c94ebf2e7a12e6aa0c6ed2dc1913e4dca5c48",
+      "commitReadBack": {
+        "tree": "8a9c94ebf2e7a12e6aa0c6ed2dc1913e4dca5c48",
+        "parents": [
+          "990ad2f63a25a19c8cfbefeacd761a11c84b11d2"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [
+        {
+          "name": "workbench-workspace-dependencies",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "6c112386a6498d46eeb662c32c9e3b1204f081ce",
+          "sha": "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+          "tree": "1467000d4c60f676129fc3f0caef8f49a2f5128d",
+          "commitReadBack": {
+            "tree": "1467000d4c60f676129fc3f0caef8f49a2f5128d",
+            "parents": [
+              "31d0e087a99481c861ecb5e94d254979b26aadb0",
+              "3f9058fc9b6322f94ef6655ce0eeae89029e7042"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-dependencies-published.json",
+          "dependencies": [
+            "31d0e087a99481c861ecb5e94d254979b26aadb0",
+            "3f9058fc9b6322f94ef6655ce0eeae89029e7042"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-cleanup-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "a8a8c65f85fc42e2db369d865b49cc2a17dd5327",
+          "sha": "00f5d9eee9a30655db5e90544b4a508b83229789",
+          "tree": "07243b265698e36d5fbfa038562dc03c2468202c",
+          "commitReadBack": {
+            "tree": "07243b265698e36d5fbfa038562dc03c2468202c",
+            "parents": [
+              "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+              "02bdce19441b36240faf5fafdaef6149619d1dce"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-cleanup-forward-published.json",
+          "dependencies": [
+            "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+            "02bdce19441b36240faf5fafdaef6149619d1dce"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-persistence-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "fe2a0abde562746496412bbc76b6273129b9c2d4",
+          "sha": "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+          "tree": "895f1715022c61e6aa0b80fd825c2dd2321a77ac",
+          "commitReadBack": {
+            "tree": "895f1715022c61e6aa0b80fd825c2dd2321a77ac",
+            "parents": [
+              "00f5d9eee9a30655db5e90544b4a508b83229789",
+              "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-persistence-forward-published.json",
+          "dependencies": [
+            "00f5d9eee9a30655db5e90544b4a508b83229789",
+            "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-bootstrap-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "175baf4c8e3a40695b64af57a40b9ea5cea5a010",
+          "sha": "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+          "tree": "5e0a0a1764d336d63832b0889fe86c35993b3592",
+          "commitReadBack": {
+            "tree": "5e0a0a1764d336d63832b0889fe86c35993b3592",
+            "parents": [
+              "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+              "e6b10a82e6b77a1e1ea6da103e261710cab30a2b"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-bootstrap-forward-published.json",
+          "dependencies": [
+            "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+            "e6b10a82e6b77a1e1ea6da103e261710cab30a2b"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-disk-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "6277a7477106451add1661c097a330a1f4fbea8c",
+          "sha": "990ad2f63a25a19c8cfbefeacd761a11c84b11d2",
+          "tree": "0acc2ee9a256ab2ed6d17c164c5d972b1a86d138",
+          "commitReadBack": {
+            "tree": "0acc2ee9a256ab2ed6d17c164c5d972b1a86d138",
+            "parents": [
+              "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+              "ae3ddf5aca8311a153dd0e8b1b947861ed63fc92"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-disk-forward-published.json",
+          "dependencies": [
+            "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+            "ae3ddf5aca8311a153dd0e8b1b947861ed63fc92"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        }
+      ],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-archive-export-forward-published.json",
+      "dependencies": [
+        "990ad2f63a25a19c8cfbefeacd761a11c84b11d2"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    }
+  ],
+  "maintenance": [
+    {
+      "pr": 3792,
+      "receipts": [
+        "designer-main-sync-published.json",
+        "designer-chrome-cleanup-published.json"
+      ],
+      "latestHead": "02bdce19441b36240faf5fafdaef6149619d1dce"
+    },
+    {
+      "pr": 3553,
+      "owner": "filesystem_providers",
+      "receipts": [
+        "xml-facade-cleanup-published.json"
+      ],
+      "latestHead": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e"
+    }
+  ],
+  "receipts": {
+    "workbench-build-envelope-published.json": {
+      "schemaVersion": 1,
+      "scope": "workbench-build-envelope",
+      "source": "172fa9e6c9f2ecb9d9779d2f5500a1ab08b62f4c",
+      "canonicalSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "branch": "codex/p18-workbench-project-build",
+      "remote": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+      "tree": "405a475104c176cf8abcbd1a2a0e3a53a3156174",
+      "parents": [
+        "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/project-runtime-input.js",
+          "blob": "aa9832567a35b0a2e29b6e42ec87dedf7842a82f",
+          "sha256": "dd0b989d355d94e85ca2a9769491fb702ca66aa5b226f2edc575e6fb40a30447"
+        },
+        {
+          "path": "tests/a23-project-runtime-input.test.js",
+          "blob": "8ba37e9366d020931ec127cddfcf85ce18a480aa",
+          "sha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456"
+        }
+      ],
+      "proof": {
+        "sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "node_id": "C_kwDOU59Ms9oAKDY4NjNhMTBjYmYwN2Q1ZDJhNDEyYWZlM2I4ZjIzMWRlOWYyNjA5MDI",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:30:04Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:30:04Z"
+        },
+        "tree": {
+          "sha": "405a475104c176cf8abcbd1a2a0e3a53a3156174",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/405a475104c176cf8abcbd1a2a0e3a53a3156174"
+        },
+        "message": "SF-A24-T10: include the canonical project launch envelope adapter\n\nResolve the observed #4326 core link failure by including the root-owned\nprojectRuntimeDependencies module and its three existing positive/negative/\nboundary cases, with owner approval. Preserve exact canonical source bytes.\n\nThe adapter consumes the already-published public bytecode reference limits.\nAll direct relative and package imports in the projected build scope were\nreviewed against the staged tree; no additional missing prerequisite was found.\nNo product behavior changed and no local test/build was repeated.\n\nSource-Worktree-Commit: 172fa9e6c9f2ecb9d9779d2f5500a1ab08b62f4c\nSource-Tree: 405a475104c176cf8abcbd1a2a0e3a53a3156174",
+        "parents": [
+          {
+            "sha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/d139d6dfbbe5c0922c5087d38a3ddd31217eff6a"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "pullRequest": {
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+        "number": 4326,
+        "state": "open",
+        "merged": false,
+        "mergeable": false,
+        "draft": true,
+        "body": "## Problem and changes\n\nIncoming workbench services own per-project workers, cancellation, queued builds and application launch. Project18's structured project compiler must run through those owners so background graph compilation retains the selected project, produces real dependency envelopes, and rejects stale results.\n\nThis complete eleven-file batch adds the optional raw-worker compiler contribution and its StudioProjectCompiler adapter, composes StudioProjects/StudioExecution, invalidates reverse dependencies and scopes loading diagnostics to each project's active target framework. Explicit workbench arguments/environment retain precedence over project defaults. The existing graph runner still owns target order and artifact reuse; no separate graph evaluator or worker protocol is introduced.\n\nSeven project-composition cases exercise the raw worker port, cancellation and revision fencing, a real two-project compilation with emitted dependency envelopes, reverse invalidation, launch precedence and the native execution boundary. The five existing diagnostic-producer cases retain all original warning/error/isolation assertions. Their obsolete unsupported-multi-TFM warning trigger is replaced by a real duplicate-import warning; context identity is asserted explicitly.\n\n## Actual dependencies\n\nBase `codex/p18-workbench-build-dependencies`, head `f7c2fafa10c66b45ff69039433e382c9ad13a1d2`, exact tree `17ef4bbf7d67712393f571656802ec738e95bc72`, is a pure dependency join of:\n\n| Published parent | Purpose |\n| --- | --- |\n| #3883 `eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d` | Structured project build/session contracts |\n| #3956 `05d4c991a132643ce05248c7f42f3b2b0f168c70` | Verified compiler/runtime graph envelope and pinned-main workbench |\n\nAfter both prerequisite stacks land, retarget to main or the remaining dependency. Keep merge commits so dependents retain ancestry. The join contains only the owner-reviewed archive/API/selector unions needed to combine those actual parents.\n\n## Qualification\n\nAll **7/7** new project-composition cases and **5/5** diagnostic-producer cases passed in the scheduled Node26.10.0 replay at corrected source `7b087e0f0e3105c71ec86e39554358766b45d3bf`. The enclosing 38-file run is **259 passed / 260 total, one failed**, with the remaining failure in the native resource-staleness wrapper. The initial canonical source `bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e` retains its full **1809/1875 passed, 66 failed** evidence; it is not relabelled as green.\n\nCommands use `node scripts/limited.js`; exact logs/argv are retained by root in the synchronized and correction qualification captures, with per-file attribution in `workbench-port-qualification.json`. No local tests, build, benchmark or full CI dispatch was repeated for this projection. Automatic required core is pending. This is source-qualified workbench component evidence; protected Studio entry execution, browser/Windows targets and full-tree qualification remain explicit separate boundaries. No performance improvement is claimed.\n\n## Source provenance\n\nAll eight product/fixture blobs match corrected canonical `7b087e0f0e3105c71ec86e39554358766b45d3bf` exactly; the contract file documents the public composition contract. Preserved local projection `96fea5fe6e2c94e9fa550ad53ed9619b2756dbc4`; published `d139d6dfbbe5c0922c5087d38a3ddd31217eff6a`; exact local/remote tree `138fea83ca2e0135cb89d99f40ff0933c59ade99`. Git Data API readback proves the full tree and parent. No protected Studio entry or root manifest feature edit is included.\n\n\n## Observed core correction\n\nThe first required core run `37179732776` rejected the projected scope because `apps/studio/project-runtime-input.js` had not been published with its canonical consumer. That failure log is preserved. Forward commit `6863a10cbf07d5d2a412afe3b8f231de9f260902` includes the exact 30-line canonical envelope adapter and its three existing positive/negative/boundary cases, plus its public contract documentation. The adapter is unchanged from `7b087e0f0e3105c71ec86e39554358766b45d3bf` and final source `5269d3970f10fee404ef23e5fe3d07cb61d8750c`; it rejects incomplete/oversized PE envelopes before worker transport and consumes the already-published public bytecode reference limits.\n\nAll three envelope cases passed in the initial completed canonical Node26 scope. The projected build scope's 38 direct relative/package imports were reviewed against the staged tree; no other missing direct prerequisite remains. The current exact tree is `405a475104c176cf8abcbd1a2a0e3a53a3156174`, preserved local correction `172fa9e6c9f2ecb9d9779d2f5500a1ab08b62f4c`, first parent `d139d6dfbbe5c0922c5087d38a3ddd31217eff6a`. The required automatic core check will re-evaluate this complete forward correction. No local test/build was repeated and the earlier aggregate failures remain part of the evidence.\n",
+        "title": "SF-A24-T10: compose project graph builds with workbench ownership",
+        "base": "codex/p18-workbench-build-dependencies",
+        "base_sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "head": "codex/p18-workbench-project-build",
+        "head_sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "head_repo_id": 1402948787,
+        "head_repo_full_name": "wieslawsoltes/SharpForge",
+        "merge_commit_sha": "dc7b4a73966c0b89cee9331a6ebb56077beb3a85",
+        "user": {
+          "login": "wieslawsoltes",
+          "name": "wieslawsoltes",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+          "id": 2297442
+        },
+        "requested_reviewers": null,
+        "requested_team_reviewers": null,
+        "diff": null,
+        "comments": null,
+        "created_at": "2026-10-04T05:23:06Z",
+        "updated_at": "2026-10-04T05:30:07Z",
+        "closed_at": null,
+        "merged_at": null,
+        "commits": 2,
+        "changed_files": 11,
+        "additions": 414,
+        "deletions": 11,
+        "display_url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+        "display_title": "SF-A24-T10: compose project graph builds with workbench ownership"
+      },
+      "firstFailure": {
+        "run": 37179732776,
+        "job": 111369687734,
+        "reason": "Unpublished canonical project-runtime-input.js dependency",
+        "log": "workbench-project-build-core-failure.log"
+      },
+      "directImportReview": "workbench-build-import-review.json",
+      "qualification": {
+        "envelopeCases": {
+          "passed": 3,
+          "total": 3,
+          "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e"
+        },
+        "localTestsRun": false
+      },
+      "core": {
+        "status": "completed",
+        "conclusion": "success",
+        "run": 37180074437,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180074437"
+      },
+      "finalNode22": {
+        "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "version": "22.23.3",
+        "summary": {
+          "tests": 1877,
+          "pass": 1877,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "metadata": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+        "attribution": "workbench-port-qualification.json",
+        "featureBlobsUnchanged": true
+      }
+    },
+    "workbench-feature-callbacks-published.json": {
+      "schemaVersion": 1,
+      "scope": "workbench-feature-callbacks",
+      "source": "53e0db2af8019c6b20bb6bf2aea68e4895ec0cf8",
+      "canonicalSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "branch": "codex/p18-workbench-feature-callbacks",
+      "baseBranch": "codex/p18-workbench-feature-dependencies",
+      "remote": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+      "tree": "deba072cecf59906fd73f90c73e2c78966d46d15",
+      "parents": [
+        "531ec7392892ced7eb4b98ecbb3d687fa0521792"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/workbench/lazy-features/designer-configuration.js",
+          "blob": "3cdfd60fc8d695d2651c50167a718ef4aff5d4af",
+          "sha256": "7207ba24f512ee6eeacb051d77df29734f13dc15dd66430b0916a89759e0e544"
+        },
+        {
+          "path": "apps/studio/workbench/lazy-features/native-configuration.js",
+          "blob": "0cf9fa7a08a23240fa783f219e0626b33d7ea074",
+          "sha256": "85988fb0848bb1459ad902ea01aa4e99860492172ac5f1b2cbb511eb96677a7d"
+        },
+        {
+          "path": "apps/studio/workbench/lazy-features/facades.js",
+          "blob": "d3d4729e812dff2030cee68e88ff16ecea1a2a41",
+          "sha256": "ae2d613c3d320cb5442af1c4c0854c2dad94760be3277805a2c95d6d541ad616"
+        },
+        {
+          "path": "tests/a24-workbench-feature-callbacks.test.js",
+          "blob": "519471ffc7cbdb0b645db0aede2f8b1d0af96ff4",
+          "sha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2"
+        }
+      ],
+      "proof": {
+        "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "node_id": "C_kwDOU59Ms9oAKGU3NmQzYjAwMGQxNjQyMTdiZmM4MDBkNWZhOWFlMDA3MTVkODY5ZmY",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:24:38Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:24:38Z"
+        },
+        "tree": {
+          "sha": "deba072cecf59906fd73f90c73e2c78966d46d15",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/deba072cecf59906fd73f90c73e2c78966d46d15"
+        },
+        "message": "SF-A24-T08: compose lazy designer and native feature callbacks\n\nForward markup/source diagnostics and native project/test ports through\nthe existing lazy activation configuration and passive native facade.\nPreserve job ownership, generated-source metadata and read-only admission.\n\nProduct and four focused cases are exact from canonical 7b087e0f0e3105c71ec86e39554358766b45d3bf.\nActual protected Studio integration remains a text-only proposal.\nNo projection tests or build were run.\n\nSource-Worktree-Commit: 53e0db2af8019c6b20bb6bf2aea68e4895ec0cf8\nSource-Tree: deba072cecf59906fd73f90c73e2c78966d46d15",
+        "parents": [
+          {
+            "sha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/531ec7392892ced7eb4b98ecbb3d687fa0521792",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/531ec7392892ced7eb4b98ecbb3d687fa0521792"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "pullRequest": {
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4328",
+        "number": 4328,
+        "state": "open",
+        "merged": false,
+        "mergeable": false,
+        "draft": true,
+        "body": "## Purpose and complete changes\n\nLazy workbench activation must receive the same explicit services as the direct designer/native controllers. This five-file batch forwards markup source edits with their existing diagnostics, selected native context and test ports, generated-source metadata/read-only state and passive native model access.\n\nThe incoming C# designer callbacks, captured job ownership and failure callback remain in place. Native contexts/profiles/tests can be inspected without triggering activation; run/publish invoke the feature only for explicit operations. The batch consists of three source modules, four focused public-contract cases and concise host-contract documentation.\n\n## Actual dependency DAG\n\nBase `codex/p18-workbench-feature-dependencies` at `531ec7392892ced7eb4b98ecbb3d687fa0521792`, exact tree `785128d186e5a1d34f7598294173328b929d960f`, is a pure join of:\n\n| Parent | Required contract |\n| --- | --- |\n| #3973 `87af20b3951ee05be79357190e1babb74dff3e87` | Complete native controller/model ports |\n| #3792 `9501520383fa99d873157ab6f6efbf55354ebcbf` | XAML source sync with pinned-main diagnostic and ownership behavior |\n\nThe join retains owner-approved native Node, Workspace and VFS export unions plus the complete A23 selector set. No new unpublished feature behavior is placed in that base. After both prerequisite stacks land, retarget this draft to main or the remaining dependency; preserve merge history.\n\n## Qualification and scope\n\nAll **4/4** focused cases passed with Node26.10.0 at corrected canonical source `7b087e0f0e3105c71ec86e39554358766b45d3bf` in root's 38-file replay. The enclosing result is **259 passed / 260 total, one failed** in an independent native resource-staleness wrapper. The initial 227-file source remains recorded as **1809/1875 passed, 66 failed**. These results are source-qualified component evidence, not a green full-tree or full-Studio claim.\n\nThe assertions cover both designer source callback families and diagnostic identity, native test/cancellation callback forwarding, captured job-failure ownership, generated source version/metadata/readonly admission, and passive facade reads versus explicit run/publish. Exact logs and argv remain in root's synchronized/correction captures; per-file attribution is retained in `workbench-port-qualification.json`.\n\nNo local test/build or full-CI dispatch was repeated. The required automatic core check is pending. Actual protected Studio entry wiring and browser/Windows execution are separate qualification boundaries. No new runtime dependency or performance claim is introduced.\n\n## Source proof\n\nThe four product/fixture blobs match `7b087e0f0e3105c71ec86e39554358766b45d3bf` exactly. Preserved local projection `53e0db2af8019c6b20bb6bf2aea68e4895ec0cf8`; published commit `e76d3b000d164217bfc800d5fa9ae00715d869ff`; exact local/remote tree `deba072cecf59906fd73f90c73e2c78966d46d15`. Git Data API tree and commit readback prove the full tree and its actual parent. The protected Studio entry and root manifests carry no new feature edits here.\n",
+        "title": "SF-A24-T08: forward lazy designer and native workbench services",
+        "base": "codex/p18-workbench-feature-dependencies",
+        "base_sha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+        "head": "codex/p18-workbench-feature-callbacks",
+        "head_sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "head_repo_id": 1402948787,
+        "head_repo_full_name": "wieslawsoltes/SharpForge",
+        "merge_commit_sha": null,
+        "user": {
+          "login": "wieslawsoltes",
+          "name": "wieslawsoltes",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+          "id": 2297442
+        },
+        "requested_reviewers": null,
+        "requested_team_reviewers": null,
+        "diff": null,
+        "comments": null,
+        "created_at": "2026-10-04T05:24:39Z",
+        "updated_at": "2026-10-04T05:24:39Z",
+        "closed_at": null,
+        "merged_at": null,
+        "commits": 1,
+        "changed_files": 5,
+        "additions": 105,
+        "deletions": 1,
+        "display_url": "https://github.com/wieslawsoltes/SharpForge/pull/4328",
+        "display_title": "SF-A24-T08: forward lazy designer and native workbench services"
+      },
+      "qualification": {
+        "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "cases": {
+          "passed": 4,
+          "total": 4
+        },
+        "aggregate": {
+          "passed": 259,
+          "total": 260,
+          "failed": 1
+        },
+        "initialAggregate": {
+          "passed": 1809,
+          "total": 1875,
+          "failed": 66
+        },
+        "localTestsRun": false
+      },
+      "core": {
+        "status": "completed",
+        "conclusion": "success",
+        "run": 37179804887,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179804887"
+      },
+      "finalNode22": {
+        "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "version": "22.23.3",
+        "summary": {
+          "tests": 1877,
+          "pass": 1877,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "metadata": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+        "attribution": "workbench-port-qualification.json",
+        "featureBlobsUnchanged": true
+      }
+    },
+    "workbench-debug-provenance-published.json": {
+      "name": "workbench-debug-provenance",
+      "kind": "feature",
+      "pr": 4363,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4363",
+      "branch": "codex/p18-workbench-debug-provenance",
+      "baseBranch": "codex/p18-workbench-debug-dependencies",
+      "source": "288c272278f7644daccfc14e06a8002361f004a0",
+      "canonicalSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "alsoMatchesSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "remote": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+      "tree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "parents": [
+        "0f040d05dde3ea4f97306c943fa4e09236c2dd02"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/debug-editor-decorations.js",
+          "blob": "876eab90d6f31f58cb70be6c8e20d01bfd755b4d",
+          "sha256": "c6773b468cb5698a8ec2ea633902a655287b801fa7a8efa6cf26be6055bf1ad9"
+        },
+        {
+          "path": "apps/studio/debug-source-breakpoints.js",
+          "blob": "4f1bc7565bde4e1cb41d6cfe7a001331ede0e903",
+          "sha256": "713c28df138d5b4aa04dc2e99e29277ed277c2496370b36383be8ed1c3642835"
+        },
+        {
+          "path": "apps/studio/workbench/app-session.js",
+          "blob": "92784f8d56d877fce08c33290cf87801d9c77cc2",
+          "sha256": "6b6dea31ae89a3670a7eefaff8cb828ae2eb8406af50625e4a4009ad53b58149"
+        },
+        {
+          "path": "apps/studio/workbench/session-breakpoints.js",
+          "blob": "4e8af10838df401e6df89ef0dc80af40e3376415",
+          "sha256": "66056e5cd3d94f57bd184154a5fbb1140bb1ece2c71aa8faf044705ed3918961"
+        },
+        {
+          "path": "apps/studio/workbench/launch-orchestrator.js",
+          "blob": "a4ca62cef3fc843fcc88d054ad4d3e1cfc066502",
+          "sha256": "f8ad3c503fc3b7135746c40885a2463ca96d472628e6de7cb789f4f704d65493"
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "blob": "a5a7c9724ce365c4b11d16d0bd65ba2cfea813a6",
+          "sha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e"
+        }
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "prHead": true,
+        "prBase": true,
+        "draft": true
+      },
+      "qualification": {
+        "directCases": 4,
+        "node26": "4/4 at bb2b8d84; whole cohort1809/1875",
+        "node22": "1877/1877 at5269d397, exact feature files unchanged",
+        "core": {
+          "run": 37180741251,
+          "job": 111372640564,
+          "conclusion": "success",
+          "fullMatrixSkipped": true
+        }
+      },
+      "protectedEntry": "Untouched and unexecuted",
+      "finalNode22": {
+        "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "version": "22.23.3",
+        "summary": {
+          "tests": 1877,
+          "pass": 1877,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "metadata": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+        "attribution": "workbench-port-qualification.json",
+        "featureBlobsUnchanged": true
+      },
+      "core": {
+        "run": 37180741251,
+        "job": 111372640564,
+        "conclusion": "success",
+        "fullMatrixSkipped": true,
+        "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "status": "completed",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180741251"
+      }
+    },
+    "workbench-workspace-ports-published.json": {
+      "schemaVersion": 1,
+      "name": "workbench-workspace-ports",
+      "kind": "feature",
+      "pr": 4407,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4407",
+      "branch": "codex/p18-workbench-workspace-ports",
+      "baseBranch": "codex/p18-workbench-workspace-dependencies",
+      "source": "440f218c269724b4dc271d4a00793fc9fddab522",
+      "originalFeatureSource": "81848433ff4de7d92af3d874c3ffb084efb3c571",
+      "canonicalSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "alsoMatchesSources": [
+        "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+      ],
+      "remote": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+      "tree": "2aeb66b2acf05d6581b480d43eb2623c4401c222",
+      "parents": [
+        "1e410e82601e9659235a9ad8dd116e85ebd39e4c"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/workbench/studio-workspace-ports.js",
+          "blob": "32598df214ce0c338f3d9dbe0fd73c326ccb7b7d",
+          "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b"
+        },
+        {
+          "path": "tests/a24-workbench-workspace-ports.test.js",
+          "blob": "b0e4dd94ff57a1008f60ecde77174ddd697b0ce3",
+          "sha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5"
+        }
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "prHead": true,
+        "prBase": true,
+        "draft": true
+      },
+      "qualification": {
+        "node26": "5/5 corrected workspace-port cases at7b; entire replay259/260",
+        "node22": "5/5 own cases; full1877/1877 at5269",
+        "initialFailure": "4/5 original bb2 fixture; invalid private disposal assertion replaced by public behavior and all metadata/source assertions retained",
+        "namedImports": {
+          "hostModules": 36,
+          "namedImports": 91,
+          "missing": 0,
+          "report": "workbench-workspace-named-import-review.json"
+        },
+        "core": {
+          "run": 37182178812,
+          "job": 111376788666,
+          "conclusion": "success",
+          "fullMatrixSkipped": true
+        }
+      },
+      "protectedEntry": "Untouched/unexecuted",
+      "core": {
+        "run": 37182178812,
+        "job": 111376788666,
+        "conclusion": "success",
+        "fullMatrixSkipped": true,
+        "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "status": "completed",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182178812"
+      },
+      "pullRequestReadBack": {
+        "pr": 4407,
+        "head": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "base": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+        "headBranch": "codex/p18-workbench-workspace-ports",
+        "baseBranch": "codex/p18-workbench-workspace-dependencies",
+        "draft": true,
+        "updatedAt": "2026-10-04T06:29:50Z"
+      },
+      "metadataReadback": "workbench-workspace-ports-metadata-readback.json"
+    },
+    "workbench-build-dependencies-published.json": {
+      "schemaVersion": 1,
+      "name": "workbench-build-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-build-dependencies",
+      "source": "67ee826f13156a8d0c89773a3eb82b30f981402c",
+      "remote": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+      "tree": "17ef4bbf7d67712393f571656802ec738e95bc72",
+      "parents": [
+        "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+        "05d4c991a132643ce05248c7f42f3b2b0f168c70"
+      ],
+      "proof": {
+        "sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "node_id": "C_kwDOU59Ms9oAKGY3YzJmYWZhMTBjNjZiNDVmZjY5MDM5NDMzZTM4MmM5YWQxM2ExZDI",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:20:08Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:20:08Z"
+        },
+        "tree": {
+          "sha": "17ef4bbf7d67712393f571656802ec738e95bc72",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/17ef4bbf7d67712393f571656802ec738e95bc72"
+        },
+        "message": "SF-A23-T27/T33: join published project build and runtime worker prerequisites\n\nJoin the actual published project-build-session and runtime-graph-worker\nheads for the incoming workbench orchestration contribution. The runtime\nworker parent already contains pinned upstream 1db2e1d; no main refresh is\nperformed and this join adds no feature implementation.\n\nPreserve upstream prepared-record prefix/extraction helpers together with\nthe published modular destination writer and its preflight/rollback exports.\nKeep archive mode/mtime metadata and bounded session settings. Retain the\nincoming prepared-record README section and a single A23 wildcard registration;\nthe effective test selector set is unchanged.\n\nPublished-parent-1: eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d\nPublished-parent-2: 05d4c991a132643ce05248c7f42f3b2b0f168c70\nRelated-PRs: 3883, 3956\nQualification: dependency composition only; no tests or builds run\n\nSource-Worktree-Commit: 67ee826f13156a8d0c89773a3eb82b30f981402c\nSource-Tree: 17ef4bbf7d67712393f571656802ec738e95bc72",
+        "parents": [
+          {
+            "sha": "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d"
+          },
+          {
+            "sha": "05d4c991a132643ce05248c7f42f3b2b0f168c70",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/05d4c991a132643ce05248c7f42f3b2b0f168c70",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/05d4c991a132643ce05248c7f42f3b2b0f168c70"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "refProof": {
+        "ref": "refs/heads/codex/p18-workbench-build-dependencies",
+        "node_id": "REF_kwDOU59Ms9oAMXJlZnMvaGVhZHMvY29kZXgvcDE4LXdvcmtiZW5jaC1idWlsZC1kZXBlbmRlbmNpZXM",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/codex/p18-workbench-build-dependencies",
+        "object": {
+          "sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+          "type": "commit",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f7c2fafa10c66b45ff69039433e382c9ad13a1d2"
+        }
+      },
+      "featureChanges": false,
+      "localTestsRun": false
+    },
+    "workbench-feature-dependencies-published.json": {
+      "schemaVersion": 1,
+      "name": "workbench-feature-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-feature-dependencies",
+      "source": "f411ba6a56d4e8686244bcab2b428b6091da2392",
+      "remote": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+      "tree": "785128d186e5a1d34f7598294173328b929d960f",
+      "parents": [
+        "87af20b3951ee05be79357190e1babb74dff3e87",
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "proof": {
+        "sha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+        "node_id": "C_kwDOU59Ms9oAKDUzMWVjNzM5Mjg5MmNlZDdlYjRiOThlY2JiM2Q2ODdmYTA1MjE3OTI",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/531ec7392892ced7eb4b98ecbb3d687fa0521792",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/531ec7392892ced7eb4b98ecbb3d687fa0521792",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:23:44Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:23:44Z"
+        },
+        "tree": {
+          "sha": "785128d186e5a1d34f7598294173328b929d960f",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/785128d186e5a1d34f7598294173328b929d960f"
+        },
+        "message": "SF-A24-T08: join published native and XAML workbench prerequisites\n\nJoin native-controller87af20b3 and forward-synced XAML95015203.\nPreserve both actual parent trees with owner-reviewed native Node exports,\nWorkspace class/facade and VFS export unions, plus the complete A23 selector set.\nNo new feature implementation or unpublished canonical-source helpers are added.\nNo tests or build were run for this dependency composition.\n\nSource-Worktree-Commit: f411ba6a56d4e8686244bcab2b428b6091da2392\nSource-Tree: 785128d186e5a1d34f7598294173328b929d960f",
+        "parents": [
+          {
+            "sha": "87af20b3951ee05be79357190e1babb74dff3e87",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/87af20b3951ee05be79357190e1babb74dff3e87",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/87af20b3951ee05be79357190e1babb74dff3e87"
+          },
+          {
+            "sha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9501520383fa99d873157ab6f6efbf55354ebcbf",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/9501520383fa99d873157ab6f6efbf55354ebcbf"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "refProof": {
+        "ref": "refs/heads/codex/p18-workbench-feature-dependencies",
+        "node_id": "REF_kwDOU59Ms9oAM3JlZnMvaGVhZHMvY29kZXgvcDE4LXdvcmtiZW5jaC1mZWF0dXJlLWRlcGVuZGVuY2llcw",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/codex/p18-workbench-feature-dependencies",
+        "object": {
+          "sha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+          "type": "commit",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/531ec7392892ced7eb4b98ecbb3d687fa0521792"
+        }
+      },
+      "featureChanges": false,
+      "localTestsRun": false
+    },
+    "workbench-debug-source-dependencies-published.json": {
+      "name": "workbench-debug-source-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-debug-source-dependencies",
+      "source": "fa196357b99dc48ac1dcceba383128f5377d9db0",
+      "remote": "d4a43a2384059d08bbb155e6def37c2757a93a26",
+      "tree": "583bac677c5064496c2a7ac0c6280d73c9cd9730",
+      "parents": [
+        "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "ba923c523a013b8415013b98239176a10dd879d4"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true
+      },
+      "resolution": "A23 selector union preserves each actual inherited test exactly once.",
+      "qualification": "Dependency-only join; no source execution or local tests."
+    },
+    "workbench-debug-dependencies-published.json": {
+      "name": "workbench-debug-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-debug-dependencies",
+      "source": "a7c1a76111b6722776d3719f54308d1b90f150d7",
+      "remote": "0f040d05dde3ea4f97306c943fa4e09236c2dd02",
+      "tree": "834bd174b3de8663ec0c16d32dbe7e4f3c5f4e4f",
+      "parents": [
+        "d4a43a2384059d08bbb155e6def37c2757a93a26",
+        "4d209fb03d43131fae53c0de3edc57627c239e50"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true
+      },
+      "resolution": "A24 wildcard already covers the incoming startup recovery fixture; retained single wildcard with all other inherited selectors.",
+      "qualification": "Dependency-only join; no tests or source execution."
+    },
+    "workbench-workspace-ingress-dependencies-published.json": {
+      "name": "workbench-workspace-ingress-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-workspace-ingress-dependencies",
+      "source": "3e7d0840a11991131b4beb06043a7d66a835350e",
+      "remote": "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+      "tree": "ad53c0f8681ce50468456578390a9f1544c7bc90",
+      "parents": [
+        "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true
+      },
+      "resolution": "Archive facade parent variants have identical behavior; session parent formatting and every ZIP/destination/settings contract retained.",
+      "qualification": "Dependency join only; no local tests."
+    },
+    "workbench-workspace-designer-dependencies-published.json": {
+      "name": "workbench-workspace-designer-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-workspace-designer-dependencies",
+      "source": "bb27f3551abead53717d5c683ff17dcd30e63cf0",
+      "remote": "31d0e087a99481c861ecb5e94d254979b26aadb0",
+      "tree": "c3149e2a361a5b7a30f4f3e478a9d908c2359922",
+      "parents": [
+        "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true
+      },
+      "resolution": "Retain exact prepared Workspace class/export superset and source-preserving ProjectSystem delegates; preserve current published XAML semantic merge.",
+      "qualification": "Dependency join only; no local tests."
+    },
+    "workbench-workspace-dependencies-published.json": {
+      "name": "workbench-workspace-dependencies",
+      "kind": "dependency-join",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "source": "6c112386a6498d46eeb662c32c9e3b1204f081ce",
+      "remote": "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+      "tree": "1467000d4c60f676129fc3f0caef8f49a2f5128d",
+      "parents": [
+        "31d0e087a99481c861ecb5e94d254979b26aadb0",
+        "3f9058fc9b6322f94ef6655ce0eeae89029e7042"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true
+      },
+      "resolutions": [
+        {
+          "owner": "portable_evaluator",
+          "paths": [
+            "packages/compiler/README.md",
+            "packages/compiler/src/index.js"
+          ],
+          "choice": "Pure export/documentation union preserving reference/assembly compile, semantic model/type rename and metadata inspection."
+        },
+        {
+          "owner": "workspace_inventory",
+          "paths": [
+            "packages/msbuild/src/client.js",
+            "packages/msbuild/src/msbuild-client.js"
+          ],
+          "choice": "Keep native facade and inherited service/error APIs; preserve first-parent read/binary signal forwarding."
+        }
+      ],
+      "qualification": "Dependency join only; no local tests."
+    },
+    "workbench-workspace-cleanup-forward-published.json": {
+      "name": "workbench-workspace-cleanup-forward",
+      "kind": "dependency-forward",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "source": "a8a8c65f85fc42e2db369d865b49cc2a17dd5327",
+      "remote": "00f5d9eee9a30655db5e90544b4a508b83229789",
+      "tree": "07243b265698e36d5fbfa038562dc03c2468202c",
+      "parents": [
+        "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+        "02bdce19441b36240faf5fafdaef6149619d1dce"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true,
+        "forwardOnly": true
+      },
+      "resolution": "Clean actual-parent forward incorporates published #3792 chrome extraction; exactly its two existing source changes.",
+      "qualification": "Upstream cleanup382/382 at e9; dependency join runs no local tests."
+    },
+    "workbench-workspace-persistence-forward-published.json": {
+      "name": "workbench-workspace-persistence-forward",
+      "kind": "dependency-forward",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "source": "fe2a0abde562746496412bbc76b6273129b9c2d4",
+      "remote": "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+      "tree": "895f1715022c61e6aa0b80fd825c2dd2321a77ac",
+      "parents": [
+        "00f5d9eee9a30655db5e90544b4a508b83229789",
+        "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true,
+        "forwardOnly": true
+      },
+      "resolution": "Preserve both README sections; workspace owner verified equal public export sets and class behavior, retaining incoming ordering/comment.",
+      "qualification": "Actual published persistence dependency; no local tests."
+    },
+    "workbench-workspace-bootstrap-forward-published.json": {
+      "name": "workbench-workspace-bootstrap-forward",
+      "kind": "dependency-forward",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "source": "175baf4c8e3a40695b64af57a40b9ea5cea5a010",
+      "remote": "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+      "tree": "5e0a0a1764d336d63832b0889fe86c35993b3592",
+      "parents": [
+        "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+        "e6b10a82e6b77a1e1ea6da103e261710cab30a2b"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true,
+        "forwardOnly": true
+      },
+      "resolution": "Clean merge of actual #3629 recovery bootstrap and unchanged host wrapper.",
+      "qualification": "Actual published dependency; no local tests."
+    },
+    "workbench-workspace-disk-forward-published.json": {
+      "name": "workbench-workspace-disk-forward",
+      "kind": "dependency-forward",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "source": "6277a7477106451add1661c097a330a1f4fbea8c",
+      "remote": "990ad2f63a25a19c8cfbefeacd761a11c84b11d2",
+      "tree": "0acc2ee9a256ab2ed6d17c164c5d972b1a86d138",
+      "parents": [
+        "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+        "ae3ddf5aca8311a153dd0e8b1b947861ed63fc92"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true,
+        "forwardOnly": true
+      },
+      "resolution": "Workspace owner retains the first-parent complete public export superset; actual #3835 event host joined unchanged.",
+      "qualification": "Actual published dependency; no local tests."
+    },
+    "workbench-workspace-archive-export-forward-published.json": {
+      "name": "workbench-workspace-archive-export-forward",
+      "kind": "dependency-export-correction",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "source": "afdff8b25c7f94a31f6c8dafdee4b82276bbcde3",
+      "remote": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+      "tree": "8a9c94ebf2e7a12e6aa0c6ed2dc1913e4dca5c48",
+      "parents": [
+        "990ad2f63a25a19c8cfbefeacd761a11c84b11d2"
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "ref": true,
+        "forwardOnly": true
+      },
+      "resolution": "Restore archive-stream public star export present in actual #3788/#4306 ancestors and canonical e9. Remove redundant explicit archive bindings; facade1488→1447B,25→24lines. Original archive producer is unchanged.",
+      "qualification": "Existing public API fixtures source-qualified at root; no local runs. Named-import proof recorded with consumer."
+    },
+    "designer-main-sync-published.json": {
+      "schemaVersion": 1,
+      "scope": "designer-main-compatibility",
+      "source": "7f0b9a85f5ea1ff68d4f941272ba43a0a0c71c9d",
+      "canonicalSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+      "branch": "codex/p18-xaml-reopen",
+      "remote": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+      "tree": "2410a8db974f3b5de6b96f99e5bc64265ac4922d",
+      "parents": [
+        "aead2cc90a24b7780753d490a548826a9756dd39",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/designer-source-sync.js",
+          "blob": "3303d6fd74d5f36bd7b78c0815d6f44fe5b4d273",
+          "sha256": "ee8afca291547fa446c2e7f0d1dc9a9712259e895b8d4cae5f8e5b1daa0544a8"
+        },
+        {
+          "path": "apps/studio/designer/source-sync.js",
+          "blob": "6f280da36b1f9e4248ec91ca645bb6d28388fe18",
+          "sha256": "cceb5cb00f1512c99dcdea8331afa417f72c6d8bf1d4e5f1c52f91a65ec8dce7"
+        }
+      ],
+      "manualResolutions": [
+        "apps/studio/designer-source-sync.js",
+        "apps/studio/designer/source-sync.js",
+        "packages/project-system/README.md",
+        "packages/project-system/src/archive.js",
+        "packages/project-system/src/disk.js",
+        "packages/project-system/src/disk-api.js",
+        "packages/workspace/src/index.js",
+        "packages/workspace/src/workspace.js"
+      ],
+      "proof": {
+        "sha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+        "node_id": "C_kwDOU59Ms9oAKDk1MDE1MjAzODNmYTk5ZDg3MzE1N2FiNmY2ZWZiZjU1MzU0ZWJjYmY",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9501520383fa99d873157ab6f6efbf55354ebcbf",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/9501520383fa99d873157ab6f6efbf55354ebcbf",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:12:44Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:12:44Z"
+        },
+        "tree": {
+          "sha": "2410a8db974f3b5de6b96f99e5bc64265ac4922d",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/2410a8db974f3b5de6b96f99e5bc64265ac4922d"
+        },
+        "message": "SF-A24-T08: preserve XAML source ownership across the workbench merge\n\nMerge pinned main 1db2e1d5 into the published XAML reopen feature.\nRetain the modular facade and port diagnostic producers, stale chooser, timer\nand post-await guards into the canonical XAML/C# source synchronization module.\n\nArchive, disk and Workspace conflicts retain owner-approved public API unions.\nNo protected Studio entry edits beyond the unchanged incoming main blob.\nQualification: pending consolidated canonical-source scope; no local tests run.\nCanonical-Implementation: bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e\n\nSource-Worktree-Commit: 7f0b9a85f5ea1ff68d4f941272ba43a0a0c71c9d\nSource-Tree: 2410a8db974f3b5de6b96f99e5bc64265ac4922d",
+        "parents": [
+          {
+            "sha": "aead2cc90a24b7780753d490a548826a9756dd39",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/aead2cc90a24b7780753d490a548826a9756dd39",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/aead2cc90a24b7780753d490a548826a9756dd39"
+          },
+          {
+            "sha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "pullRequest": {
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+        "number": 3792,
+        "state": "open",
+        "merged": false,
+        "mergeable": true,
+        "draft": true,
+        "body": "## Problem and changes\n\nA generated project must retain editable XAML after ZIP or folder reopening, then survive a designer edit, another export, and a second connection. This focused regression exercises the existing public archive, provider, template, and designer services through all three transports: ordinary ZIP, Blob ZIP64, and a selected folder.\n\nThe generated packaged-project fixture preserves UTF-16BE, BOM and CRLF for XAML/manifests, leaves code-behind unchanged, and keeps PNG assets byte-identical. A real `DesignDocument` and `DesignerSourceSync` apply a TextBlock edit through the source-preserving markup service before the second round trip.\n\n## Dependency DAG\n\nThe original feature was one new 94-line test; the reviewed pinned-main compatibility update below preserves that feature and adds its required source-sync composition. Its base `codex/p18-xaml-reopen-dependencies` is a **pure dependency join**, with no additional implementation changes:\n\n| Ordered parent | Published SHA | Purpose |\n| --- | --- | --- |\n| `codex/p18-wizard-dependencies` | `065212895ef9152c5daa3adf17d57fc619a2c961` | Existing archive/destinations, template catalog, designer markup, and provider disk foundations (#3565, #3574, #3578, #3652 and their stacks) |\n| `codex/p18-xml-text-policy` | `6ff88b293117bf7e0b636a7a7b8877deb08fe604` | Shared editable XAML/manifest policy, #3781 |\n\nThe join's remote SHA is `fd39e656de9e3a4651b8823cb30e866dc71ed2f2`, exact tree `ccda700b7cbabeadcc04f71aab35df7208fdd8cd`, preserved source `cc1717ed9d488cca7e59e67200953bd5131da4fa`. It carries both published parents so this draft's diff does not duplicate the prerequisite implementations. After both prerequisite stacks land, retarget this draft to `main` (or the remaining dependency until then); merge commits preserve dependent history.\n\nRelated work: #3214, #3218.\n\n## Qualification and boundaries\n\nAll **three** cases in `tests/a24-xaml-reopen.test.js` passed with Node **26.10.0**, Linux, in the complete scheduled host cohort at integration source `8e2941662234e607018f39a3f6d2cadddb2730a0`. The command used `node scripts/limited.js node --test --test-concurrency=1 --test-reporter=tap` with the complete host file list.\n\nThe enclosing run reported **495 passed / 500 total**; its five failures are outside this file and are being corrected in the host integration scope. Full argv, environment, timings and results are retained in `planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json` and its adjacent TAP log. No additional broad tests were repeated for publication. Automatic PR `core` remains pending.\n\nThis is public-service component qualification. The protected full-Studio entry wiring and actual Windows App SDK builds/runtime remain separately qualified boundaries; generating a Windows project here does not claim a Windows build.\n\n## Source preservation\n\n| Record | SHA |\n| --- | --- |\n| Integration source | `ed72d97ce22bcc361da5b6d0f0176d3c46728687` |\n| Preserved local projection | `1180bc3c790df35f1b38fb9450347e8e5a85acdf` |\n| Published projection | `aead2cc90a24b7780753d490a548826a9756dd39` |\n| Exact local and remote tree | `00f83a1989715f34b0a725ce3d0f51e98c21fa9f` |\n\nThe regression file is copied byte-for-byte from the integration source. Git Data API tree creation and commit readback verified the entire feature tree and the join's ordered parents.\n\n## Pinned-main compatibility update\n\nThis branch now has a normal forward merge preserving the previously published head `aead2cc90a24b7780753d490a548826a9756dd39` as its first parent and pinned main `1db2e1d540a78403b7aaddcf472311fcde1a81ef` as its second parent. No newer main was fetched. The existing stack remains intact.\n\nThe two designer source files exactly match canonical composed source `bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e`:\n\n- `apps/studio/designer-source-sync.js` retains the modular public facade.\n- `apps/studio/designer/source-sync.js` combines XAML and closed-record source editing with incoming diagnostic publication/clearing, stale chooser and timer guards, and post-await source ownership checks.\n\nThe other manual resolutions are owner-reviewed public API unions: descriptor-preserving archive extraction and settings, ZIP modes/timestamps and modular destination APIs; incoming source-aware default disk APIs alongside the additive provider APIs; and the extracted Workspace facade with incoming `sourceModel(options)`. Auto-merged upstream code retains its incoming behavior. The protected Studio entry is the exact pinned-main blob; its prepared P18 wiring remains a separate, unexecuted text proposal.\n\nThe original three XAML reopen cases and incoming designer ownership cases are included in the canonical completed-scope qualification. The enclosing current run at `bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e` reports **1809 passed / 1875 total, 66 failed**. The project-context diagnostic adapter and other affected corrections are being replayed by their owners; this update does not claim whole-tree qualification or full-Studio/browser/Windows execution. No local test or build was repeated for this projection. The automatic required core check is pending for the new head.\n\n| Compatibility provenance | SHA |\n| --- | --- |\n| Preserved local merge | `7f0b9a85f5ea1ff68d4f941272ba43a0a0c71c9d` |\n| Published forward merge | `9501520383fa99d873157ab6f6efbf55354ebcbf` |\n| Exact local and remote tree | `2410a8db974f3b5de6b96f99e5bc64265ac4922d` |\n\nThe Git Data API tree and commit readback verified the entire tree and both ordered parents. This is a compatibility update to the existing feature, with its semantic resolution stated explicitly; no feature is hidden in a new dependency-only branch.\n",
+        "title": "SF-A24-T08.1: cover generated XAML reopening through ZIP and folders",
+        "base": "codex/p18-xaml-reopen-dependencies",
+        "base_sha": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+        "head": "codex/p18-xaml-reopen",
+        "head_sha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+        "head_repo_id": 1402948787,
+        "head_repo_full_name": "wieslawsoltes/SharpForge",
+        "merge_commit_sha": "037d055fc670f0edef1cc22157b0da1446580a4e",
+        "user": {
+          "login": "wieslawsoltes",
+          "name": "wieslawsoltes",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+          "id": 2297442
+        },
+        "requested_reviewers": null,
+        "requested_team_reviewers": null,
+        "diff": null,
+        "comments": null,
+        "created_at": "2026-10-04T02:12:28Z",
+        "updated_at": "2026-10-04T05:14:09Z",
+        "closed_at": null,
+        "merged_at": null,
+        "commits": 1556,
+        "changed_files": 3012,
+        "additions": 300776,
+        "deletions": 5126,
+        "display_url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+        "display_title": "SF-A24-T08.1: cover generated XAML reopening through ZIP and folders"
+      },
+      "qualification": {
+        "canonicalInitial": {
+          "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+          "total": 1875,
+          "passed": 1809,
+          "failed": 66
+        },
+        "correctedSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "status": "Owner reports affected diagnostic and workspace-port replay passed; final per-file attribution pending",
+        "localTestsRun": false,
+        "protectedEntryExecuted": false
+      },
+      "core": {
+        "status": "completed",
+        "conclusion": "success",
+        "run": 37179275513,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179275513"
+      }
+    },
+    "designer-chrome-cleanup-published.json": {
+      "name": "designer-chrome-cleanup",
+      "kind": "forward-correction",
+      "pr": 3792,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+      "branch": "codex/p18-xaml-reopen",
+      "baseBranch": "codex/p18-xaml-reopen-dependencies",
+      "base": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+      "source": "f1976ff963026d2a3b5562177f03fa87cc3b3901",
+      "originalSource": "464088607c034a5d8159e981a42f2731f54dfeca",
+      "canonicalSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "remote": "02bdce19441b36240faf5fafdaef6149619d1dce",
+      "tree": "6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19",
+      "parents": [
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/designer-chrome.js",
+          "blob": "fac86794d0c7095c91efb3c44f16f80c6babb9f4",
+          "sha256": "88147d352a9968496c471b2b665ba4dcf7a5c34d7b9749964303301bc6b291d4"
+        },
+        {
+          "path": "apps/studio/designer/chrome-mode.js",
+          "blob": "0d84b02bab6ce9008dc72a118125713d9717a4e7",
+          "sha256": "c36c984a04cdb9fce0da827cbbe0c6c841f224722795aa1a73c4aa73f6b32750"
+        }
+      ],
+      "proof": {
+        "tree": true,
+        "orderedParents": true,
+        "prHead": true,
+        "prBase": true,
+        "draft": true,
+        "forwardOnly": true
+      },
+      "qualification": {
+        "node26": "382/382 complete legacy batch at e9f8a8cd",
+        "check": "passed",
+        "build": "passed",
+        "cleanCheckout": "passed",
+        "strictStructure": "265 inherited violations remain; zero new/worsened; legacy growth7→0",
+        "browser": "Actual canonical Release13:3 checks then obsolete fill fixture at362f;5 checks then real stale status-column error at7d; complete replay pending. Proposed entry unexecuted.",
+        "core": {
+          "run": 37181105732,
+          "job": 111373699623,
+          "conclusion": "success"
+        }
+      },
+      "core": {
+        "run": 37181105732,
+        "job": 111373699623,
+        "conclusion": "success",
+        "sha": "02bdce19441b36240faf5fafdaef6149619d1dce",
+        "status": "completed",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181105732"
+      },
+      "pullRequestReadBack": {
+        "pr": 3792,
+        "head": "02bdce19441b36240faf5fafdaef6149619d1dce",
+        "base": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+        "headBranch": "codex/p18-xaml-reopen",
+        "baseBranch": "codex/p18-xaml-reopen-dependencies",
+        "draft": true,
+        "updatedAt": "2026-10-04T06:29:47Z"
+      },
+      "metadataReadback": "designer-chrome-cleanup-metadata-readback.json"
+    },
+    "workbench-project-build-published.json": {
+      "schemaVersion": 1,
+      "scope": "workbench-project-build",
+      "source": "96fea5fe6e2c94e9fa550ad53ed9619b2756dbc4",
+      "canonicalSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "branch": "codex/p18-workbench-project-build",
+      "baseBranch": "codex/p18-workbench-build-dependencies",
+      "remote": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+      "tree": "138fea83ca2e0135cb89d99f40ff0933c59ade99",
+      "parents": [
+        "f7c2fafa10c66b45ff69039433e382c9ad13a1d2"
+      ],
+      "canonicalFiles": [
+        {
+          "path": "apps/studio/workbench/build.js",
+          "blob": "e48d8b3bb9938558f83eb11c99890dc9f4309721",
+          "sha256": "0d0bc372116a6b8c627f786de2f0a6a7020361a0405a95ef027cfb7ff76f78b9"
+        },
+        {
+          "path": "apps/studio/workbench/sessions.js",
+          "blob": "0029803ece2f98d2a088f601888a4dafae9bb69b",
+          "sha256": "3c5964f1178c99e38a79cc6cf50fd0dc2477109e76d394f974ae6bbdb1df29fd"
+        },
+        {
+          "path": "apps/studio/workbench/studio-project-compiler.js",
+          "blob": "e3483b6dd1a3fba1c920a5b6b44d23e8e06b5e0c",
+          "sha256": "fca69eaef8389bde5ff2c4147062e0156574cbc4c93b1444f24442d3b8e91a12"
+        },
+        {
+          "path": "apps/studio/workbench/studio-projects.js",
+          "blob": "e788b0a9efbbfc7569914a126d4d800e10ee6cf0",
+          "sha256": "1d87623ab2329a87bd82bb9f66dfa62e7091ab5e900ed7465abf9c007cf1fc6b"
+        },
+        {
+          "path": "apps/studio/workbench/studio-execution.js",
+          "blob": "590d11d42d001c30b855298accbf7fd7d6e6dda8",
+          "sha256": "79d86d8d76da645f1af422827551c3e2bc587c02daa2b27d5f64fe4b3f0cd6b7"
+        },
+        {
+          "path": "apps/studio/workbench/studio-diagnostics.js",
+          "blob": "0e73a50cc864140cd5931880693290920ff20021",
+          "sha256": "7f631721c2348da14f6b3de0d5b91b6d0ae0deb687fcab0db0bd81290f1aa682"
+        },
+        {
+          "path": "tests/a24-workbench-project-composition.test.js",
+          "blob": "77aadf3c1941eb7c460938c7193b0cced51db52c",
+          "sha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863"
+        },
+        {
+          "path": "tests/a19-studio-diagnostic-producers.test.js",
+          "blob": "c5243fa44c0de666ea237e07d8419af837161f56",
+          "sha256": "fd4b12f0fefccb262c056b7c66f9440ee2eae809425abb96fc285c0598994999"
+        }
+      ],
+      "proof": {
+        "sha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+        "node_id": "C_kwDOU59Ms9oAKGQxMzlkNmRmYmJlNWMwOTIyYzUwODdkMzhhM2RkZDMxMjE3ZWZmNmE",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+        "author": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:23:04Z"
+        },
+        "committer": {
+          "name": "Wiesław Šoltés",
+          "email": "wieslawsoltes@users.noreply.github.com",
+          "date": "2026-10-04T05:23:04Z"
+        },
+        "tree": {
+          "sha": "138fea83ca2e0135cb89d99f40ff0933c59ade99",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/138fea83ca2e0135cb89d99f40ff0933c59ade99"
+        },
+        "message": "SF-A24-T10: compose project graph builds with workbench request ownership\n\nRetain per-project BuildService generations and incoming queue/orchestrator\nownership while using the published structured project/compiler graph port.\nPin background project selection, serialize shared target output preparation,\ninvalidate reverse dependencies and scope loader diagnostics to the active TFM.\n\nKeep all source/fixture bytes exact from corrected canonical source 7b087e0f0e3105c71ec86e39554358766b45d3bf.\nOriginal unsupported-multi-TFM warning fixture now uses a real duplicate import;\nall prior warning, producer isolation and loader error assertions remain.\nRoot owns the completed-scope replay; no projection tests or build were run.\n\nSource-Worktree-Commit: 96fea5fe6e2c94e9fa550ad53ed9619b2756dbc4\nSource-Tree: 138fea83ca2e0135cb89d99f40ff0933c59ade99",
+        "parents": [
+          {
+            "sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+            "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/f7c2fafa10c66b45ff69039433e382c9ad13a1d2"
+          }
+        ],
+        "verification": {
+          "verified": false,
+          "reason": "unsigned",
+          "signature": null,
+          "payload": null,
+          "verified_at": null
+        }
+      },
+      "pullRequest": {
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+        "number": 4326,
+        "state": "open",
+        "merged": false,
+        "mergeable": false,
+        "draft": true,
+        "body": "## Problem and changes\n\nIncoming workbench services own per-project workers, cancellation, queued builds and application launch. Project18's structured project compiler must run through those owners so background graph compilation retains the selected project, produces real dependency envelopes, and rejects stale results.\n\nThis complete nine-file batch adds the optional raw-worker compiler contribution and its StudioProjectCompiler adapter, composes StudioProjects/StudioExecution, invalidates reverse dependencies and scopes loading diagnostics to each project's active target framework. Explicit workbench arguments/environment retain precedence over project defaults. The existing graph runner still owns target order and artifact reuse; no separate graph evaluator or worker protocol is introduced.\n\nSeven project-composition cases exercise the raw worker port, cancellation and revision fencing, a real two-project compilation with emitted dependency envelopes, reverse invalidation, launch precedence and the native execution boundary. The five existing diagnostic-producer cases retain all original warning/error/isolation assertions. Their obsolete unsupported-multi-TFM warning trigger is replaced by a real duplicate-import warning; context identity is asserted explicitly.\n\n## Actual dependencies\n\nBase `codex/p18-workbench-build-dependencies`, head `f7c2fafa10c66b45ff69039433e382c9ad13a1d2`, exact tree `17ef4bbf7d67712393f571656802ec738e95bc72`, is a pure dependency join of:\n\n| Published parent | Purpose |\n| --- | --- |\n| #3883 `eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d` | Structured project build/session contracts |\n| #3956 `05d4c991a132643ce05248c7f42f3b2b0f168c70` | Verified compiler/runtime graph envelope and pinned-main workbench |\n\nAfter both prerequisite stacks land, retarget to main or the remaining dependency. Keep merge commits so dependents retain ancestry. The join contains only the owner-reviewed archive/API/selector unions needed to combine those actual parents.\n\n## Qualification\n\nAll **7/7** new project-composition cases and **5/5** diagnostic-producer cases passed in the scheduled Node26.10.0 replay at corrected source `7b087e0f0e3105c71ec86e39554358766b45d3bf`. The enclosing 38-file run is **259 passed / 260 total, one failed**, with the remaining failure in the native resource-staleness wrapper. The initial canonical source `bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e` retains its full **1809/1875 passed, 66 failed** evidence; it is not relabelled as green.\n\nCommands use `node scripts/limited.js`; exact logs/argv are retained by root in the synchronized and correction qualification captures, with per-file attribution in `workbench-port-qualification.json`. No local tests, build, benchmark or full CI dispatch was repeated for this projection. Automatic required core is pending. This is source-qualified workbench component evidence; protected Studio entry execution, browser/Windows targets and full-tree qualification remain explicit separate boundaries. No performance improvement is claimed.\n\n## Source provenance\n\nAll eight product/fixture blobs match corrected canonical `7b087e0f0e3105c71ec86e39554358766b45d3bf` exactly; the ninth file documents the public composition contract. Preserved local projection `96fea5fe6e2c94e9fa550ad53ed9619b2756dbc4`; published `d139d6dfbbe5c0922c5087d38a3ddd31217eff6a`; exact local/remote tree `138fea83ca2e0135cb89d99f40ff0933c59ade99`. Git Data API readback proves the full tree and parent. No protected Studio entry or root manifest feature edit is included.\n",
+        "title": "SF-A24-T10: compose project graph builds with workbench ownership",
+        "base": "codex/p18-workbench-build-dependencies",
+        "base_sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "head": "codex/p18-workbench-project-build",
+        "head_sha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+        "head_repo_id": 1402948787,
+        "head_repo_full_name": "wieslawsoltes/SharpForge",
+        "merge_commit_sha": null,
+        "user": {
+          "login": "wieslawsoltes",
+          "name": "wieslawsoltes",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+          "id": 2297442
+        },
+        "requested_reviewers": null,
+        "requested_team_reviewers": null,
+        "diff": null,
+        "comments": null,
+        "created_at": "2026-10-04T05:23:06Z",
+        "updated_at": "2026-10-04T05:23:06Z",
+        "closed_at": null,
+        "merged_at": null,
+        "commits": 1,
+        "changed_files": 9,
+        "additions": 331,
+        "deletions": 11,
+        "display_url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+        "display_title": "SF-A24-T10: compose project graph builds with workbench ownership"
+      },
+      "qualification": {
+        "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "newProjectCases": {
+          "passed": 7,
+          "total": 7
+        },
+        "diagnosticCases": {
+          "passed": 5,
+          "total": 5
+        },
+        "aggregate": {
+          "passed": 259,
+          "total": 260,
+          "failed": 1
+        },
+        "initialAggregate": {
+          "passed": 1809,
+          "total": 1875,
+          "failed": 66
+        },
+        "localTestsRun": false
+      },
+      "core": {
+        "status": "pending"
+      }
+    },
+    "xml-facade-cleanup-published.json": {
+      "schemaVersion": 1,
+      "name": "xml-facade-cleanup",
+      "base": "a925a35802f44b7d158f6e57d35938075913d27a",
+      "baseBranch": "codex/p18-foundation-paths",
+      "branch": "codex/p18-project-edits",
+      "pr": 3553,
+      "files": [
+        "packages/project-system/src/xml.js",
+        "packages/project-system/src/xml-parser.js"
+      ],
+      "message": "SF-A23-T09: extract readable XML parsing behind the frozen facade\n\nCarry the exact completed source correction; preserve public exports and\nbehavior. Root completed the 18-file Node26 cleanup scope (382/382) and\ncheck/build/clean-checkout. No projection tests or main refresh.\n\nCanonical-Source: e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40\nLocal-Projection: c587f6ba2cf5acd13c9c7016f3fe866101cc5112",
+      "repository_full_name": "wieslawsoltes/SharpForge",
+      "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "worktree": "/dev/shm/p18-xml-facade-cleanup",
+      "localBranch": "codex/p18-local-xml-facade-cleanup",
+      "local": "c587f6ba2cf5acd13c9c7016f3fe866101cc5112",
+      "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+      "baseTree": "7e5bd74f5f3ff041ee829c075ddeb648899079ac",
+      "sourceProofs": [
+        {
+          "path": "packages/project-system/src/xml.js",
+          "blob": "ac400bd2259bc50e45f6a805c459b035c8c96187",
+          "sha256": "726f2b65d0109184248f63d4c8a47016f1b39da1e386e488daac71d788d553b7",
+          "matchesCanonical": true
+        },
+        {
+          "path": "packages/project-system/src/xml-parser.js",
+          "blob": "ed8bb7d4da6b2c012f4053eeeeb068808a508931",
+          "sha256": "75bd6a7259e8b029a8a3df65d9753c39e4fc2c992518e34bf31a85c8477dba37",
+          "matchesCanonical": true
+        }
+      ],
+      "stats": "2 files changed, 184 insertions(+), 41 deletions(-)",
+      "remote": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+      "treeVerified": true,
+      "recordedAt": "2026-10-04T05:52:25.280Z",
+      "core": {
+        "runId": 37181146470,
+        "jobId": 111373827859,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181146470/job/111373827859"
+      },
+      "jobs": [
+        {
+          "id": 111373827859,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111373887895,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373888020,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373888179,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373888334,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373888661,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373888994,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373889312,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111373889531,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "commitReadback": {
+        "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+        "parents": [
+          "a925a35802f44b7d158f6e57d35938075913d27a"
+        ]
+      },
+      "refReadback": {
+        "ref": "refs/heads/codex/p18-project-edits",
+        "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e"
+      },
+      "pullRequest": {
+        "number": 3553,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3553",
+        "head": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "base": "codex/p18-foundation-paths",
+        "baseSha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+        "draft": true,
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "restrictions": {
+        "localTests": false,
+        "localBuild": false,
+        "mainRefresh": false,
+        "forceUpdate": false,
+        "descendantRefresh": false,
+        "publicContractChanged": false
+      },
+      "publicationKind": "maintenance of existing draft",
+      "cancelledDuplicateRuns": [],
+      "qualification": {
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "tests": 382,
+        "pass": 382,
+        "fail": 0,
+        "skip": 0,
+        "cancel": 0,
+        "node": "v26.10.0",
+        "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+        "tap": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+        "gates": "check/build/clean-checkout passed; strict historical265 legacy count preserved",
+        "publisherRepeatedValidation": false
+      },
+      "parents": [
+        "a925a35802f44b7d158f6e57d35938075913d27a"
+      ]
+    }
+  },
+  "receiptInterpretation": "Original receipt snapshots retain their publication-time text and pending states. Normalized latest feature/core records above are the current exact-head observations.",
+  "canonicalFiles": {
+    "schemaVersion": 1,
+    "owner": "templates_archives",
+    "canonicalSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "canonicalTree": "c5cb8401b9d26fde41be02c0383aa8cfeef642f9",
+    "files": [
+      {
+        "path": "apps/studio/debug-editor-decorations.js",
+        "sha256": "c6773b468cb5698a8ec2ea633902a655287b801fa7a8efa6cf26be6055bf1ad9",
+        "bytes": 2080,
+        "blob": "876eab90d6f31f58cb70be6c8e20d01bfd755b4d"
+      },
+      {
+        "path": "apps/studio/debug-source-breakpoints.js",
+        "sha256": "713c28df138d5b4aa04dc2e99e29277ed277c2496370b36383be8ed1c3642835",
+        "bytes": 2697,
+        "blob": "4f1bc7565bde4e1cb41d6cfe7a001331ede0e903"
+      },
+      {
+        "path": "apps/studio/designer-source-sync.js",
+        "sha256": "ee8afca291547fa446c2e7f0d1dc9a9712259e895b8d4cae5f8e5b1daa0544a8",
+        "bytes": 64,
+        "blob": "3303d6fd74d5f36bd7b78c0815d6f44fe5b4d273"
+      },
+      {
+        "path": "apps/studio/designer/source-sync.js",
+        "sha256": "cceb5cb00f1512c99dcdea8331afa417f72c6d8bf1d4e5f1c52f91a65ec8dce7",
+        "bytes": 11033,
+        "blob": "6f280da36b1f9e4248ec91ca645bb6d28388fe18"
+      },
+      {
+        "path": "apps/studio/workbench/app-session.js",
+        "sha256": "6b6dea31ae89a3670a7eefaff8cb828ae2eb8406af50625e4a4009ad53b58149",
+        "bytes": 13109,
+        "blob": "92784f8d56d877fce08c33290cf87801d9c77cc2"
+      },
+      {
+        "path": "apps/studio/workbench/build.js",
+        "sha256": "0d0bc372116a6b8c627f786de2f0a6a7020361a0405a95ef027cfb7ff76f78b9",
+        "bytes": 8980,
+        "blob": "e48d8b3bb9938558f83eb11c99890dc9f4309721"
+      },
+      {
+        "path": "apps/studio/workbench/launch-orchestrator.js",
+        "sha256": "f8ad3c503fc3b7135746c40885a2463ca96d472628e6de7cb789f4f704d65493",
+        "bytes": 7110,
+        "blob": "a4ca62cef3fc843fcc88d054ad4d3e1cfc066502"
+      },
+      {
+        "path": "apps/studio/workbench/session-breakpoints.js",
+        "sha256": "66056e5cd3d94f57bd184154a5fbb1140bb1ece2c71aa8faf044705ed3918961",
+        "bytes": 3853,
+        "blob": "4e8af10838df401e6df89ef0dc80af40e3376415"
+      },
+      {
+        "path": "apps/studio/workbench/sessions.js",
+        "sha256": "3c5964f1178c99e38a79cc6cf50fd0dc2477109e76d394f974ae6bbdb1df29fd",
+        "bytes": 5972,
+        "blob": "0029803ece2f98d2a088f601888a4dafae9bb69b"
+      },
+      {
+        "path": "apps/studio/workbench/studio-execution.js",
+        "sha256": "79d86d8d76da645f1af422827551c3e2bc587c02daa2b27d5f64fe4b3f0cd6b7",
+        "bytes": 7088,
+        "blob": "590d11d42d001c30b855298accbf7fd7d6e6dda8"
+      },
+      {
+        "path": "apps/studio/workbench/studio-projects.js",
+        "sha256": "1d87623ab2329a87bd82bb9f66dfa62e7091ab5e900ed7465abf9c007cf1fc6b",
+        "bytes": 8466,
+        "blob": "e788b0a9efbbfc7569914a126d4d800e10ee6cf0"
+      },
+      {
+        "path": "apps/studio/workbench/studio-project-compiler.js",
+        "sha256": "fca69eaef8389bde5ff2c4147062e0156574cbc4c93b1444f24442d3b8e91a12",
+        "bytes": 3209,
+        "blob": "e3483b6dd1a3fba1c920a5b6b44d23e8e06b5e0c"
+      },
+      {
+        "path": "apps/studio/workbench/studio-workspace-ports.js",
+        "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b",
+        "bytes": 12840,
+        "blob": "32598df214ce0c338f3d9dbe0fd73c326ccb7b7d"
+      },
+      {
+        "path": "apps/studio/workbench/lazy-features/designer-configuration.js",
+        "sha256": "7207ba24f512ee6eeacb051d77df29734f13dc15dd66430b0916a89759e0e544",
+        "bytes": 3388,
+        "blob": "3cdfd60fc8d695d2651c50167a718ef4aff5d4af"
+      },
+      {
+        "path": "apps/studio/workbench/lazy-features/native-configuration.js",
+        "sha256": "85988fb0848bb1459ad902ea01aa4e99860492172ac5f1b2cbb511eb96677a7d",
+        "bytes": 5380,
+        "blob": "0cf9fa7a08a23240fa783f219e0626b33d7ea074"
+      },
+      {
+        "path": "apps/studio/workbench/lazy-features/facades.js",
+        "sha256": "ae2d613c3d320cb5442af1c4c0854c2dad94760be3277805a2c95d6d541ad616",
+        "bytes": 3995,
+        "blob": "d3d4729e812dff2030cee68e88ff16ecea1a2a41"
+      },
+      {
+        "path": "tests/a24-workbench-project-composition.test.js",
+        "sha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863",
+        "bytes": 9512,
+        "blob": "77aadf3c1941eb7c460938c7193b0cced51db52c"
+      },
+      {
+        "path": "tests/a24-workbench-feature-callbacks.test.js",
+        "sha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2",
+        "bytes": 4311,
+        "blob": "519471ffc7cbdb0b645db0aede2f8b1d0af96ff4"
+      },
+      {
+        "path": "tests/a24-workbench-debug-provenance.test.js",
+        "sha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e",
+        "bytes": 4729,
+        "blob": "a5a7c9724ce365c4b11d16d0bd65ba2cfea813a6"
+      },
+      {
+        "path": "tests/a24-workbench-workspace-ports.test.js",
+        "sha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5",
+        "bytes": 6777,
+        "blob": "b0e4dd94ff57a1008f60ecde77174ddd697b0ce3"
+      },
+      {
+        "path": "apps/studio/workbench/studio-diagnostics.js",
+        "sha256": "7f631721c2348da14f6b3de0d5b91b6d0ae0deb687fcab0db0bd81290f1aa682",
+        "bytes": 7984,
+        "blob": "0e73a50cc864140cd5931880693290920ff20021"
+      },
+      {
+        "path": "tests/a19-studio-diagnostic-producers.test.js",
+        "sha256": "fd4b12f0fefccb262c056b7c66f9440ee2eae809425abb96fc285c0598994999",
+        "bytes": 10232,
+        "blob": "c5243fa44c0de666ea237e07d8419af837161f56"
+      },
+      {
+        "path": "apps/studio/project-runtime-input.js",
+        "sha256": "dd0b989d355d94e85ca2a9769491fb702ca66aa5b226f2edc575e6fb40a30447",
+        "bytes": 1530,
+        "blob": "aa9832567a35b0a2e29b6e42ec87dedf7842a82f"
+      },
+      {
+        "path": "tests/a23-project-runtime-input.test.js",
+        "sha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456",
+        "bytes": 2974,
+        "blob": "8ba37e9366d020931ec127cddfcf85ce18a480aa"
+      },
+      {
+        "path": "apps/studio/designer-chrome.js",
+        "sha256": "88147d352a9968496c471b2b665ba4dcf7a5c34d7b9749964303301bc6b291d4",
+        "bytes": 10516,
+        "blob": "fac86794d0c7095c91efb3c44f16f80c6babb9f4"
+      },
+      {
+        "path": "apps/studio/designer/chrome-mode.js",
+        "sha256": "c36c984a04cdb9fce0da827cbbe0c6c841f224722795aa1a73c4aa73f6b32750",
+        "bytes": 1637,
+        "blob": "0d84b02bab6ce9008dc72a118125713d9717a4e7"
+      }
+    ],
+    "applicationEntryIncluded": false,
+    "sourceExecutedHere": false,
+    "frozen": true,
+    "qualification": "Root owns full and affected qualification; see workbench-port-qualification.json and legacy-e9f8a8cd logs.",
+    "alsoMatchesSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+    "alsoMatchesTree": "ca911994aa352381fde19f9dcf5bc9bbffbf447c"
+  },
+  "publishedOnlyLineage": {
+    "winuiHost": {
+      "sourceCommit": "bf66147a23be16c2d8dd6c70c5f60c525913604f",
+      "publishedCommit": "5eb781ee877ef1bdad778f05558c8a6ee30a1cbb",
+      "pr": 3567,
+      "canonical": "tests/a24-08-windows-qualification.test.js",
+      "bodyExact": true,
+      "bodySha256": "09e398611613ba4c7b7ae3b7c3dbdb9242d106ea5e267771f772e122ee3a9e3d",
+      "uniqueCases": 0,
+      "boundary": "Same source-shape/parse case; no Windows execution implied"
+    },
+    "wizardProvider": {
+      "sourceOriginal": "411b74a23b778ded56f9fa0d12ad408668fed55f",
+      "sourceReplay": "5c9690dc7912f66afdb517136e39b34014c06f9f",
+      "qualifiedSource": "6273f66739b7b90a7bcc8799b7ac5634b6d56153",
+      "publishedCommit": "776131fc13f141b84d4915cbfe69ca9d15c51e3c",
+      "pr": 3655,
+      "uniqueCases": 4,
+      "canonicalCounterpart": null,
+      "qualification": "wizard-qualification.json:35/35 Node26 complete wizard/provider/destination/workspace-io cohort; production build passed"
+    },
+    "docs": [
+      {
+        "path": "packages/templates/docs/catalog.md",
+        "source": "bf66147a23be16c2d8dd6c70c5f60c525913604f",
+        "pr": 3567,
+        "role": "Publication-authored public catalog contract, template_projections.py lines88 onward; no source behavior."
+      },
+      {
+        "path": "apps/studio/project-wizard/README.md",
+        "source": "411b74a23b778ded56f9fa0d12ad408668fed55f",
+        "replay": "5c9690dc7912f66afdb517136e39b34014c06f9f",
+        "pr": 3655,
+        "role": "Publication-authored phase/provider attachment contract and qualification boundary; no source behavior."
+      }
+    ]
+  },
+  "preparedEntryReviewHandoff": {
+    "schemaVersion": 1,
+    "bundle": "/dev/shm/p18-final-prepared/review-evidence",
+    "adapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+    "adapterTree": "ca911994aa352381fde19f9dcf5bc9bbffbf447c",
+    "latestBrowserSource": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+    "updatedAt": "2026-10-04T06:27:27.395649+00:00",
+    "changed": [
+      {
+        "path": "README.md",
+        "beforeSha256": "555677f2de10f3f3ed06eef295f5902b1a303229e08518f4a65058a7763d2957",
+        "sha256": "0d4a84a320c0e345079d6182954514ba6296aabbed18aa6d5c5721882afb684b",
+        "bytes": 11214
+      },
+      {
+        "path": "prepared-integration.json",
+        "beforeSha256": "4c8458d31edeff10524741f6266dbecaa224fe5ad73f51d37df5392c718db389",
+        "sha256": "1ff72830b7e09b0984d57fc10eec2aea962c4c59f18f72397974fd50abc63a5e",
+        "bytes": 40383
+      },
+      {
+        "path": "entry-metadata.json",
+        "beforeSha256": "a6a6796071298b7716fd0c642fa151aaae99c29ce6c8fda8a61d7594ed3da1c3",
+        "sha256": "67976fae73c65bd6910c4a1f500e73b42d8480f7072f3e941947ee0b36cbabd8",
+        "bytes": 1219
+      },
+      {
+        "path": "entry-check.json",
+        "beforeSha256": "2bca0a807a941de38d520256e5f793797defa46716c7152acc1334a80059eaa4",
+        "sha256": "b3c699fed824896b9bec2d49bc803f3d907a670391ae14ae11fdd378cc528976",
+        "bytes": 2230
+      },
+      {
+        "path": "entry-contract-review.json",
+        "beforeSha256": "0b690faca87917b34cb3054ec07adec89bc94e3093be090e80de246965f25aaf",
+        "sha256": "a85ac6eba7a72b910ca49a89af0266174685780f648d61631820e7b4352db796",
+        "bytes": 7518
+      }
+    ],
+    "preserved": [
+      {
+        "path": "entry-transformations.json",
+        "sha256": "86073d8eb55c085da694ccabb359af98a79e9b43ef675afea291572aae1c18be"
+      },
+      {
+        "path": "prepare-studio-entry.py",
+        "sha256": "16b9bba5e1d3092844642f1e2921dfe1d0c5ab54a31d9277807a54ec6cb869f5"
+      },
+      {
+        "path": "package-lock.patch",
+        "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985"
+      },
+      {
+        "path": "studio-entry.patch",
+        "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3"
+      },
+      {
+        "path": "historical-3ed2eb82/package-lock.patch",
+        "sha256": "db9e338af2cccee5b614b2cdc5461d1a3f31dfc478833bd8699365c63153da0a"
+      },
+      {
+        "path": "historical-3ed2eb82/studio-entry.patch",
+        "sha256": "d0a290e7d0a256588cea5b4f101a8302843267cb0e1c2bcdf87f8d7095111814"
+      },
+      {
+        "path": "historical-3ed2eb82/prepared-integration.json",
+        "sha256": "b238dfa67a8124a389245983001cd77ee78b3bcc3b107ee025ab31e974cdb069"
+      }
+    ],
+    "localLinksResolve": [
+      "studio-entry.patch",
+      "package-lock.patch",
+      "entry-transformations.json",
+      "entry-metadata.json",
+      "entry-check.json",
+      "entry-contract-review.json",
+      "prepared-integration.json",
+      "prepare-studio-entry.py",
+      "historical-3ed2eb82/prepared-integration.json",
+      "historical-3ed2eb82/studio-entry.patch",
+      "historical-3ed2eb82/package-lock.patch"
+    ],
+    "candidateSha256": "6f37a3e450a5ab39bb10143156502f993b5c0a80bb844f8b6823e9a7589d196b",
+    "transformations": 82,
+    "candidateExecuted": false,
+    "protectedEntryWritten": false,
+    "testsRunDuringRefresh": false,
+    "staging": "Five files prepared in the review-evidence subtree; no root Git index or commit changed."
+  },
+  "metadataReadbacks": {
+    "4407": {
+      "pr": 4407,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4407",
+      "head": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+      "base": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+      "headBranch": "codex/p18-workbench-workspace-ports",
+      "baseBranch": "codex/p18-workbench-workspace-dependencies",
+      "draft": true,
+      "updatedAt": "2026-10-04T06:29:50Z",
+      "body": "## Why this batch is needed\n\nProject 18's workspace/archive/wizard services must enter through the incoming workbench's document and workspace owners. This standalone composition module makes that boundary explicit before the protected Studio entry is applied.\n\n## Changes\n\n- Lazily compose the existing workspace session with Documents, workbench context, provider saves, release and save-conflict callbacks.\n- Admit closed C# sources once, retaining immutable source/model/encoding descriptors without reading the compatibility text getter; reject cancellation or a changed workspace before adoption.\n- Route recovery, legacy/streaming ZIP export, strict empty-folder saves, project/solution entry actions and existing-project import to their existing owners.\n- Preserve picker/sink ownership, the current disk provider and read-only wizard rejection before mutation.\n\nThe batch contains **3 files / 479 added lines**, including public host-contract documentation and five existing focused cases. Product/test bytes exactly match corrected source `7b087e0f`, final `5269d397` and legacy-cleanup source `e9f8a8cd`. This projection leaves the protected `studio.js` entry unchanged. Its proposed P18 wiring remains unapplied and unexecuted; the root's separate actual-entry browser runs are recorded independently.\n\n## Actual dependency stack\n\nBase `codex/p18-workbench-workspace-dependencies` at `1e410e82601e9659235a9ad8dd116e85ebd39e4c` joins actual published #4361 (prepared session/save), #4306 (prepared ingress), #3910 (wizard), #3792 (current XAML/chrome), #4360 (prepared persistence/interchange), #3629 (recovery bootstrap) and #3835 (disk event host).\n\nThe dependency joins preserve actual parents and owner-reviewed public API/documentation unions. The final union restores the streaming package star export already present in #3788 and #4306, which the automatic merge with the extracted project facade had dropped; removing redundant explicit archive bindings makes that facade shrink. No producer code was copied or changed.\n\nAfter those foundations land, retarget this draft to main or the remaining dependency. The helper's consumer wiring remains a separate protected-entry integration.\n\n## Qualification and source correction\n\n- The five focused workspace-port cases passed the corrected root Node 26 replay at `7b087e0f`.\n- Final root Node 22.23.3 scope at `5269d397`: **1,877/1,877 passed**, including all five cases, with zero failures/skips/cancellations.\n- The initial broad Node 26 run remains recorded as **1,809/1,875**, and the later replay as **259/260**. The original workspace-port result was 4/5: the failing assertion read an unexposed disposal field. Its corrected case verifies the public live-model and owner-disposal behavior while retaining all source, identity, encoding and lazy-getter assertions.\n- Static source inspection followed **36 host modules and 91 named imports** against their actual public export closures, with zero missing names. No repository JavaScript, tests or builds were executed for this projection.\n- Required `core` passed on this exact draft: [run 37182178812](https://github.com/wieslawsoltes/SharpForge/actions/runs/37182178812), job 111376788666. Module qualification does not claim protected-entry or full browser flow qualification.\n\n## Provenance\n\nOriginal prepared feature: `81848433ff4de7d92af3d874c3ffb084efb3c571` (retained locally).\nComplete projection source: `440f218c269724b4dc271d4a00793fc9fddab522`.\nExact published tree: `2aeb66b2acf05d6581b480d43eb2623c4401c222`.\nThe Git Data API tree and ordered parent were verified before branch creation; receipts retain every dependency-forward and source-to-published mapping."
+    },
+    "3792": {
+      "pr": 3792,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+      "head": "02bdce19441b36240faf5fafdaef6149619d1dce",
+      "base": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+      "headBranch": "codex/p18-xaml-reopen",
+      "baseBranch": "codex/p18-xaml-reopen-dependencies",
+      "draft": true,
+      "updatedAt": "2026-10-04T06:29:47Z",
+      "body": "## Current qualification\n\nRequired `core` passed for current head `02bdce19441b36240faf5fafdaef6149619d1dce`: [run 37181105732](https://github.com/wieslawsoltes/SharpForge/actions/runs/37181105732), job 111373699623. The canonical full Node 22.23.3 scope at `5269d397` passed **1,877/1,877**; the exact legacy cleanup at `e9f8a8cd` passed **382/382** Node 26 cases and check/build/clean-checkout.\n\nThe actual canonical Release13 browser run at `362f1337` passed three checks before an obsolete textarea `.fill` fixture failed to replace the virtual editor document. With the keyboard/selection fixture at `7d558dab`, five checks passed, including designer modes, minimal source edits, real source input and undo/redo. Shortening the document then exposed a real stale status-column `RangeError`; its owner is correcting that defect before the root's next full replay. Neither run completed the full suite. The private proposed Studio entry remains unapplied and unexecuted; these browser observations are from the actual canonical entry. Windows-only native target execution remains unqualified here.\n\nThe earlier source-qualified results and failed aggregates below are preserved as historical records.\n\n## Problem and changes\n\nA generated project must retain editable XAML after ZIP or folder reopening, then survive a designer edit, another export, and a second connection. This focused regression exercises the existing public archive, provider, template, and designer services through all three transports: ordinary ZIP, Blob ZIP64, and a selected folder.\n\nThe generated packaged-project fixture preserves UTF-16BE, BOM and CRLF for XAML/manifests, leaves code-behind unchanged, and keeps PNG assets byte-identical. A real `DesignDocument` and `DesignerSourceSync` apply a TextBlock edit through the source-preserving markup service before the second round trip.\n\n## Dependency DAG\n\nThe original feature was one new 94-line test; the reviewed pinned-main compatibility update below preserves that feature and adds its required source-sync composition. Its base `codex/p18-xaml-reopen-dependencies` is a **pure dependency join**, with no additional implementation changes:\n\n| Ordered parent | Published SHA | Purpose |\n| --- | --- | --- |\n| `codex/p18-wizard-dependencies` | `065212895ef9152c5daa3adf17d57fc619a2c961` | Existing archive/destinations, template catalog, designer markup, and provider disk foundations (#3565, #3574, #3578, #3652 and their stacks) |\n| `codex/p18-xml-text-policy` | `6ff88b293117bf7e0b636a7a7b8877deb08fe604` | Shared editable XAML/manifest policy, #3781 |\n\nThe join's remote SHA is `fd39e656de9e3a4651b8823cb30e866dc71ed2f2`, exact tree `ccda700b7cbabeadcc04f71aab35df7208fdd8cd`, preserved source `cc1717ed9d488cca7e59e67200953bd5131da4fa`. It carries both published parents so this draft's diff does not duplicate the prerequisite implementations. After both prerequisite stacks land, retarget this draft to `main` (or the remaining dependency until then); merge commits preserve dependent history.\n\nRelated work: #3214, #3218.\n\n## Qualification and boundaries\n\nAll **three** cases in `tests/a24-xaml-reopen.test.js` passed with Node **26.10.0**, Linux, in the complete scheduled host cohort at integration source `8e2941662234e607018f39a3f6d2cadddb2730a0`. The command used `node scripts/limited.js node --test --test-concurrency=1 --test-reporter=tap` with the complete host file list.\n\nThe enclosing run reported **495 passed / 500 total**; its five failures are outside this file and are being corrected in the host integration scope. Full argv, environment, timings and results are retained in `planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json` and its adjacent TAP log. No additional broad tests were repeated for publication. Automatic PR `core` was pending when this original qualification record was written; the current exact-head result is above.\n\nThis is public-service component qualification. The protected full-Studio entry wiring and actual Windows App SDK builds/runtime remain separately qualified boundaries; generating a Windows project here does not claim a Windows build.\n\n## Source preservation\n\n| Record | SHA |\n| --- | --- |\n| Integration source | `ed72d97ce22bcc361da5b6d0f0176d3c46728687` |\n| Preserved local projection | `1180bc3c790df35f1b38fb9450347e8e5a85acdf` |\n| Published projection | `aead2cc90a24b7780753d490a548826a9756dd39` |\n| Exact local and remote tree | `00f83a1989715f34b0a725ce3d0f51e98c21fa9f` |\n\nThe regression file is copied byte-for-byte from the integration source. Git Data API tree creation and commit readback verified the entire feature tree and the join's ordered parents.\n\n## Pinned-main compatibility update\n\nThis branch now has a normal forward merge preserving the previously published head `aead2cc90a24b7780753d490a548826a9756dd39` as its first parent and pinned main `1db2e1d540a78403b7aaddcf472311fcde1a81ef` as its second parent. No newer main was fetched. The existing stack remains intact.\n\nThe two designer source files exactly match canonical composed source `bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e`:\n\n- `apps/studio/designer-source-sync.js` retains the modular public facade.\n- `apps/studio/designer/source-sync.js` combines XAML and closed-record source editing with incoming diagnostic publication/clearing, stale chooser and timer guards, and post-await source ownership checks.\n\nThe other manual resolutions are owner-reviewed public API unions: descriptor-preserving archive extraction and settings, ZIP modes/timestamps and modular destination APIs; incoming source-aware default disk APIs alongside the additive provider APIs; and the extracted Workspace facade with incoming `sourceModel(options)`. Auto-merged upstream code retains its incoming behavior. The protected Studio entry is the exact pinned-main blob; its prepared P18 wiring remains a separate, unexecuted text proposal.\n\nThe original three XAML reopen cases and incoming designer ownership cases are included in the canonical completed-scope qualification. The enclosing current run at `bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e` reports **1809 passed / 1875 total, 66 failed**. The project-context diagnostic adapter and other affected corrections are being replayed by their owners; this update does not claim whole-tree qualification or full-Studio/browser/Windows execution. No local test or build was repeated for this projection. The compatibility head's required core passed in run 37179275513; the later cleanup head's result is recorded above.\n\n| Compatibility provenance | SHA |\n| --- | --- |\n| Preserved local merge | `7f0b9a85f5ea1ff68d4f941272ba43a0a0c71c9d` |\n| Published forward merge | `9501520383fa99d873157ab6f6efbf55354ebcbf` |\n| Exact local and remote tree | `2410a8db974f3b5de6b96f99e5bc64265ac4922d` |\n\nThe Git Data API tree and commit readback verified the entire tree and both ordered parents. This is a compatibility update to the existing feature, with its semantic resolution stated explicitly; no feature is hidden in a new dependency-only branch.\n\n\n## Qualified legacy chrome extraction\n\nThis forward commit keeps the existing draft's complete history and moves the mode transition body into `designer/chrome-mode.js`. C# and XAML editor opening, split docking, preview resizing and sync rendering retain their existing order. The legacy file now decreases from the pinned main's 37 to 35 lines, 11,771 to 10,516 bytes and maximum line length 1,845 to 1,384. The new helper is 43 lines with a 108-character maximum. No baseline allowance or fingerprint exception is added.\n\nThe two source blobs exactly match canonical `e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40`; original source commit `464088607c034a5d8159e981a42f2731f54dfeca` remains preserved. Projection source is `f1976ff963026d2a3b5562177f03fa87cc3b3901`, published commit `02bdce19441b36240faf5fafdaef6149619d1dce`, tree `6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19`, sole actual parent `9501520383fa99d873157ab6f6efbf55354ebcbf`.\n\nThe root's complete 18-file legacy correction scope passed **382/382** Node 26 cases, with check, build and clean-checkout gates passing at `e9f8a8cd`. Strict structure inspection still reports 265 existing violations (down from 268); it remains nonzero, with zero new/worsened violations and all seven actual legacy growth findings removed. Earlier source-qualified results and failure aggregates above remain retained.\n\nThe later actual Release13 attempts and remaining replay boundary are recorded above. No private Studio candidate was executed. Required `core` passed for this exact forward head in run 37181105732 / job 111373699623."
+    }
+  },
+  "qualification": "templates-workbench-qualification.json",
+  "archiveExportUnion": {
+    "producerPR": 3788,
+    "producerHead": "a33fc34c185f42e0b63aadc36909d82740d30288",
+    "ingressPR": 4306,
+    "ingressHead": "fe8d8b0e995ee508d171ac7abef02c0054d45fa7",
+    "finding": "Both actual producer parents already exported archive-stream. Automatic integration with the extracted facade dropped the inherited star export.",
+    "correctionHead": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+    "correction": "Restore the inherited export in the dependent union and remove redundant explicit archive bindings; no producer feature update or source behavior change."
+  },
+  "boundaries": {
+    "publishedDraftsOnly": true,
+    "mainMerged": false,
+    "forceUpdated": false,
+    "protectedEntryWrittenOrExecuted": false,
+    "localTestsRepeated": false,
+    "allAssignedModuleScopePublished": true,
+    "pending": "Protected entry application/execution, current canonical browser completion and unavailable native target qualification are root-owned or platform-specific boundaries."
+  }
+}

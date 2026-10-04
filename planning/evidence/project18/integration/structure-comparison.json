@@ -1,0 +1,3986 @@
+{
+  "schemaVersion": 1,
+  "baseline": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "head": "e8f1502379a2635d4cf448c86ad552298404ef53",
+  "officialStructureProblems": 265,
+  "filesWithProblems": 265,
+  "newOrWorsened": [],
+  "allComparisons": [
+    {
+      "path": "apps/studio/automation-api.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 2168,
+        "lineLength": 341
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 2168,
+        "lineLength": 341
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/commands/core.js",
+      "baseline": {
+        "lines": 100,
+        "bytes": 16936,
+        "lineLength": 2081
+      },
+      "integrated": {
+        "lines": 100,
+        "bytes": 16868,
+        "lineLength": 2081
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "apps/studio/dialogs/about.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 9843,
+        "lineLength": 4588
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 9843,
+        "lineLength": 4588
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/icons.js",
+      "baseline": {
+        "lines": 6,
+        "bytes": 2250,
+        "lineLength": 1917
+      },
+      "integrated": {
+        "lines": 6,
+        "bytes": 2250,
+        "lineLength": 1917
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/menus/context.js",
+      "baseline": {
+        "lines": 40,
+        "bytes": 10673,
+        "lineLength": 2461
+      },
+      "integrated": {
+        "lines": 41,
+        "bytes": 10617,
+        "lineLength": 2461
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "apps/studio/menus/core.js",
+      "baseline": {
+        "lines": 8,
+        "bytes": 4651,
+        "lineLength": 3948
+      },
+      "integrated": {
+        "lines": 8,
+        "bytes": 4651,
+        "lineLength": 3948
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/menus/registry.js",
+      "baseline": {
+        "lines": 10,
+        "bytes": 1132,
+        "lineLength": 426
+      },
+      "integrated": {
+        "lines": 10,
+        "bytes": 1132,
+        "lineLength": 426
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/runtime.worker.js",
+      "baseline": {
+        "lines": 104,
+        "bytes": 13996,
+        "lineLength": 391
+      },
+      "integrated": {
+        "lines": 100,
+        "bytes": 13502,
+        "lineLength": 367
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "apps/studio/samples-designer.js",
+      "baseline": {
+        "lines": 89,
+        "bytes": 17591,
+        "lineLength": 5182
+      },
+      "integrated": {
+        "lines": 89,
+        "bytes": 17591,
+        "lineLength": 5182
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/services/registry.js",
+      "baseline": {
+        "lines": 16,
+        "bytes": 2105,
+        "lineLength": 596
+      },
+      "integrated": {
+        "lines": 16,
+        "bytes": 2105,
+        "lineLength": 596
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/settings/storage.js",
+      "baseline": {
+        "lines": 14,
+        "bytes": 2017,
+        "lineLength": 333
+      },
+      "integrated": {
+        "lines": 14,
+        "bytes": 2017,
+        "lineLength": 333
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/debugger-advanced.css",
+      "baseline": {
+        "lines": 2,
+        "bytes": 978,
+        "lineLength": 888
+      },
+      "integrated": {
+        "lines": 2,
+        "bytes": 978,
+        "lineLength": 888
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/debugger-parallel.css",
+      "baseline": {
+        "lines": 1,
+        "bytes": 883,
+        "lineLength": 883
+      },
+      "integrated": {
+        "lines": 1,
+        "bytes": 883,
+        "lineLength": 883
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/debugger-responsive.css",
+      "baseline": {
+        "lines": 2,
+        "bytes": 185,
+        "lineLength": 184
+      },
+      "integrated": {
+        "lines": 2,
+        "bytes": 185,
+        "lineLength": 184
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/docking.css",
+      "baseline": {
+        "lines": 2,
+        "bytes": 482,
+        "lineLength": 481
+      },
+      "integrated": {
+        "lines": 2,
+        "bytes": 482,
+        "lineLength": 481
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/editor-overlays.css",
+      "baseline": {
+        "lines": 2,
+        "bytes": 274,
+        "lineLength": 273
+      },
+      "integrated": {
+        "lines": 2,
+        "bytes": 274,
+        "lineLength": 273
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/explorer-dialogs.css",
+      "baseline": {
+        "lines": 1,
+        "bytes": 236,
+        "lineLength": 236
+      },
+      "integrated": {
+        "lines": 1,
+        "bytes": 236,
+        "lineLength": 236
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/styles/workbench-responsive.css",
+      "baseline": {
+        "lines": 2,
+        "bytes": 174,
+        "lineLength": 173
+      },
+      "integrated": {
+        "lines": 2,
+        "bytes": 174,
+        "lineLength": 173
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/tools/core.js",
+      "baseline": {
+        "lines": 95,
+        "bytes": 29150,
+        "lineLength": 1952
+      },
+      "integrated": {
+        "lines": 93,
+        "bytes": 23350,
+        "lineLength": 1930
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "apps/studio/tools/debugger-automation.js",
+      "baseline": {
+        "lines": 28,
+        "bytes": 1828,
+        "lineLength": 187
+      },
+      "integrated": {
+        "lines": 28,
+        "bytes": 1828,
+        "lineLength": 187
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/tools/docking-automation.js",
+      "baseline": {
+        "lines": 12,
+        "bytes": 1065,
+        "lineLength": 593
+      },
+      "integrated": {
+        "lines": 12,
+        "bytes": 1065,
+        "lineLength": 593
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/tools/registry.js",
+      "baseline": {
+        "lines": 10,
+        "bytes": 1513,
+        "lineLength": 682
+      },
+      "integrated": {
+        "lines": 10,
+        "bytes": 1513,
+        "lineLength": 682
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/tools/workspace-automation.js",
+      "baseline": {
+        "lines": 46,
+        "bytes": 2973,
+        "lineLength": 324
+      },
+      "integrated": {
+        "lines": 46,
+        "bytes": 2973,
+        "lineLength": 324
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "apps/studio/workers/protocol.js",
+      "baseline": {
+        "lines": 95,
+        "bytes": 3219,
+        "lineLength": 546
+      },
+      "integrated": {
+        "lines": 97,
+        "bytes": 3268,
+        "lineLength": 546
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/bytecode/src/builtins.js",
+      "baseline": {
+        "lines": 27,
+        "bytes": 2541,
+        "lineLength": 292
+      },
+      "integrated": {
+        "lines": 27,
+        "bytes": 2541,
+        "lineLength": 292
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/bytecode/src/runtime-builtins.js",
+      "baseline": {
+        "lines": 2,
+        "bytes": 511,
+        "lineLength": 510
+      },
+      "integrated": {
+        "lines": 2,
+        "bytes": 511,
+        "lineLength": 510
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/cil/src/execution-profile.js",
+      "baseline": {
+        "lines": 124,
+        "bytes": 13318,
+        "lineLength": 583
+      },
+      "integrated": {
+        "lines": 104,
+        "bytes": 11116,
+        "lineLength": 583
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/cil/src/field-profile.js",
+      "baseline": {
+        "lines": 33,
+        "bytes": 2496,
+        "lineLength": 220
+      },
+      "integrated": {
+        "lines": 33,
+        "bytes": 2496,
+        "lineLength": 220
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/cil/src/intrinsic-profile.js",
+      "baseline": {
+        "lines": 106,
+        "bytes": 8723,
+        "lineLength": 299
+      },
+      "integrated": {
+        "lines": 106,
+        "bytes": 8723,
+        "lineLength": 299
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/scripts/generate-bound-nodes.js",
+      "baseline": {
+        "lines": 88,
+        "bytes": 7169,
+        "lineLength": 345
+      },
+      "integrated": {
+        "lines": 88,
+        "bytes": 7169,
+        "lineLength": 345
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/scripts/generate-diagnostic-codes.js",
+      "baseline": {
+        "lines": 22,
+        "bytes": 2342,
+        "lineLength": 379
+      },
+      "integrated": {
+        "lines": 22,
+        "bytes": 2342,
+        "lineLength": 379
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/smoke.mjs",
+      "baseline": {
+        "lines": 44,
+        "bytes": 3176,
+        "lineLength": 230
+      },
+      "integrated": {
+        "lines": 44,
+        "bytes": 3176,
+        "lineLength": 230
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/accessibility.js",
+      "baseline": {
+        "lines": 136,
+        "bytes": 9628,
+        "lineLength": 235
+      },
+      "integrated": {
+        "lines": 136,
+        "bytes": 9628,
+        "lineLength": 235
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/anonymous-methods.js",
+      "baseline": {
+        "lines": 83,
+        "bytes": 5091,
+        "lineLength": 163
+      },
+      "integrated": {
+        "lines": 83,
+        "bytes": 5091,
+        "lineLength": 163
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/binder.js",
+      "baseline": {
+        "lines": 133,
+        "bytes": 11749,
+        "lineLength": 305
+      },
+      "integrated": {
+        "lines": 133,
+        "bytes": 11749,
+        "lineLength": 305
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/body/calls.js",
+      "baseline": {
+        "lines": 435,
+        "bytes": 24071,
+        "lineLength": 163
+      },
+      "integrated": {
+        "lines": 435,
+        "bytes": 24071,
+        "lineLength": 163
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/body/lambdas.js",
+      "baseline": {
+        "lines": 318,
+        "bytes": 15969,
+        "lineLength": 183
+      },
+      "integrated": {
+        "lines": 318,
+        "bytes": 15969,
+        "lineLength": 183
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/csharp11.js",
+      "baseline": {
+        "lines": 216,
+        "bytes": 12395,
+        "lineLength": 168
+      },
+      "integrated": {
+        "lines": 216,
+        "bytes": 12395,
+        "lineLength": 168
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/entry-point.js",
+      "baseline": {
+        "lines": 53,
+        "bytes": 4472,
+        "lineLength": 293
+      },
+      "integrated": {
+        "lines": 53,
+        "bytes": 4472,
+        "lineLength": 293
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/expressions.js",
+      "baseline": {
+        "lines": 274,
+        "bytes": 35384,
+        "lineLength": 796
+      },
+      "integrated": {
+        "lines": 274,
+        "bytes": 35384,
+        "lineLength": 796
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/extension-indexers.js",
+      "baseline": {
+        "lines": 184,
+        "bytes": 10921,
+        "lineLength": 162
+      },
+      "integrated": {
+        "lines": 184,
+        "bytes": 10921,
+        "lineLength": 162
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/field-keyword.js",
+      "baseline": {
+        "lines": 82,
+        "bytes": 4579,
+        "lineLength": 164
+      },
+      "integrated": {
+        "lines": 82,
+        "bytes": 4579,
+        "lineLength": 164
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/function-pointers.js",
+      "baseline": {
+        "lines": 208,
+        "bytes": 12340,
+        "lineLength": 171
+      },
+      "integrated": {
+        "lines": 208,
+        "bytes": 12340,
+        "lineLength": 171
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/lookup.js",
+      "baseline": {
+        "lines": 92,
+        "bytes": 9074,
+        "lineLength": 361
+      },
+      "integrated": {
+        "lines": 92,
+        "bytes": 9074,
+        "lineLength": 361
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/members/initializers.js",
+      "baseline": {
+        "lines": 256,
+        "bytes": 14153,
+        "lineLength": 161
+      },
+      "integrated": {
+        "lines": 256,
+        "bytes": 14153,
+        "lineLength": 161
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/method-context.js",
+      "baseline": {
+        "lines": 119,
+        "bytes": 13551,
+        "lineLength": 481
+      },
+      "integrated": {
+        "lines": 119,
+        "bytes": 13551,
+        "lineLength": 481
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/operators.js",
+      "baseline": {
+        "lines": 25,
+        "bytes": 2255,
+        "lineLength": 345
+      },
+      "integrated": {
+        "lines": 25,
+        "bytes": 2255,
+        "lineLength": 345
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/preview-features.js",
+      "baseline": {
+        "lines": 149,
+        "bytes": 8128,
+        "lineLength": 170
+      },
+      "integrated": {
+        "lines": 149,
+        "bytes": 8128,
+        "lineLength": 170
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/ref-kinds.js",
+      "baseline": {
+        "lines": 239,
+        "bytes": 13066,
+        "lineLength": 175
+      },
+      "integrated": {
+        "lines": 239,
+        "bytes": 13066,
+        "lineLength": 175
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/ref-locals.js",
+      "baseline": {
+        "lines": 136,
+        "bytes": 7515,
+        "lineLength": 180
+      },
+      "integrated": {
+        "lines": 136,
+        "bytes": 7515,
+        "lineLength": 180
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/special-members.js",
+      "baseline": {
+        "lines": 79,
+        "bytes": 4627,
+        "lineLength": 167
+      },
+      "integrated": {
+        "lines": 79,
+        "bytes": 4627,
+        "lineLength": 167
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/statements.js",
+      "baseline": {
+        "lines": 151,
+        "bytes": 16075,
+        "lineLength": 546
+      },
+      "integrated": {
+        "lines": 151,
+        "bytes": 16075,
+        "lineLength": 546
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/type-binder.js",
+      "baseline": {
+        "lines": 440,
+        "bytes": 21177,
+        "lineLength": 162
+      },
+      "integrated": {
+        "lines": 440,
+        "bytes": 21177,
+        "lineLength": 162
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/type-modifiers.js",
+      "baseline": {
+        "lines": 199,
+        "bytes": 10980,
+        "lineLength": 162
+      },
+      "integrated": {
+        "lines": 199,
+        "bytes": 10980,
+        "lineLength": 162
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/using-check.js",
+      "baseline": {
+        "lines": 111,
+        "bytes": 5827,
+        "lineLength": 264
+      },
+      "integrated": {
+        "lines": 111,
+        "bytes": 5827,
+        "lineLength": 264
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/binder/usings.js",
+      "baseline": {
+        "lines": 101,
+        "bytes": 7911,
+        "lineLength": 246
+      },
+      "integrated": {
+        "lines": 101,
+        "bytes": 7911,
+        "lineLength": 246
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/bound/dump.js",
+      "baseline": {
+        "lines": 35,
+        "bytes": 1992,
+        "lineLength": 200
+      },
+      "integrated": {
+        "lines": 35,
+        "bytes": 1992,
+        "lineLength": 200
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/bound/nodes.js",
+      "baseline": {
+        "lines": 473,
+        "bytes": 57860,
+        "lineLength": 5294
+      },
+      "integrated": {
+        "lines": 473,
+        "bytes": 57860,
+        "lineLength": 5294
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/bound/rewriter.js",
+      "baseline": {
+        "lines": 74,
+        "bytes": 7618,
+        "lineLength": 253
+      },
+      "integrated": {
+        "lines": 74,
+        "bytes": 7618,
+        "lineLength": 253
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/codegen/ir-emitter.js",
+      "baseline": {
+        "lines": 230,
+        "bytes": 25339,
+        "lineLength": 380
+      },
+      "integrated": {
+        "lines": 230,
+        "bytes": 25339,
+        "lineLength": 380
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/compilation.js",
+      "baseline": {
+        "lines": 241,
+        "bytes": 30556,
+        "lineLength": 684
+      },
+      "integrated": {
+        "lines": 241,
+        "bytes": 30556,
+        "lineLength": 684
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/compile.js",
+      "baseline": {
+        "lines": 22,
+        "bytes": 1460,
+        "lineLength": 446
+      },
+      "integrated": {
+        "lines": 23,
+        "bytes": 1556,
+        "lineLength": 446
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/compiler/src/constants/constant-value.js",
+      "baseline": {
+        "lines": 280,
+        "bytes": 20667,
+        "lineLength": 247
+      },
+      "integrated": {
+        "lines": 280,
+        "bytes": 20667,
+        "lineLength": 247
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/constants/fold.js",
+      "baseline": {
+        "lines": 290,
+        "bytes": 19408,
+        "lineLength": 233
+      },
+      "integrated": {
+        "lines": 290,
+        "bytes": 19408,
+        "lineLength": 233
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/diagnostics/codes.js",
+      "baseline": {
+        "lines": 80,
+        "bytes": 6280,
+        "lineLength": 238
+      },
+      "integrated": {
+        "lines": 80,
+        "bytes": 6280,
+        "lineLength": 238
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/diagnostics/roslyn-codes.js",
+      "baseline": {
+        "lines": 895,
+        "bytes": 120908,
+        "lineLength": 312
+      },
+      "integrated": {
+        "lines": 895,
+        "bytes": 120908,
+        "lineLength": 312
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/diagnostics/suppression.js",
+      "baseline": {
+        "lines": 225,
+        "bytes": 15458,
+        "lineLength": 319
+      },
+      "integrated": {
+        "lines": 225,
+        "bytes": 15458,
+        "lineLength": 319
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/flow/cfg.js",
+      "baseline": {
+        "lines": 159,
+        "bytes": 16714,
+        "lineLength": 380
+      },
+      "integrated": {
+        "lines": 159,
+        "bytes": 16714,
+        "lineLength": 380
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/flow/definite-assignment.js",
+      "baseline": {
+        "lines": 93,
+        "bytes": 6559,
+        "lineLength": 284
+      },
+      "integrated": {
+        "lines": 93,
+        "bytes": 6559,
+        "lineLength": 284
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/flow/escape/checks.js",
+      "baseline": {
+        "lines": 170,
+        "bytes": 9806,
+        "lineLength": 178
+      },
+      "integrated": {
+        "lines": 170,
+        "bytes": 9806,
+        "lineLength": 178
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/flow/method-flow.js",
+      "baseline": {
+        "lines": 21,
+        "bytes": 1660,
+        "lineLength": 236
+      },
+      "integrated": {
+        "lines": 21,
+        "bytes": 1660,
+        "lineLength": 236
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/flow/reachability.js",
+      "baseline": {
+        "lines": 64,
+        "bytes": 3980,
+        "lineLength": 263
+      },
+      "integrated": {
+        "lines": 64,
+        "bytes": 3980,
+        "lineLength": 263
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/flow/region-analysis.js",
+      "baseline": {
+        "lines": 78,
+        "bytes": 6743,
+        "lineLength": 343
+      },
+      "integrated": {
+        "lines": 78,
+        "bytes": 6743,
+        "lineLength": 343
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/lowering/generated-names.js",
+      "baseline": {
+        "lines": 59,
+        "bytes": 5316,
+        "lineLength": 652
+      },
+      "integrated": {
+        "lines": 59,
+        "bytes": 5316,
+        "lineLength": 652
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/lowering/local-rewriter.js",
+      "baseline": {
+        "lines": 57,
+        "bytes": 4703,
+        "lineLength": 280
+      },
+      "integrated": {
+        "lines": 57,
+        "bytes": 4703,
+        "lineLength": 280
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/attributes.js",
+      "baseline": {
+        "lines": 218,
+        "bytes": 19149,
+        "lineLength": 415
+      },
+      "integrated": {
+        "lines": 211,
+        "bytes": 18635,
+        "lineLength": 415
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/compilation-references.js",
+      "baseline": {
+        "lines": 97,
+        "bytes": 4586,
+        "lineLength": 169
+      },
+      "integrated": {
+        "lines": 98,
+        "bytes": 4721,
+        "lineLength": 169
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/pe-metadata.js",
+      "baseline": {
+        "lines": 119,
+        "bytes": 12873,
+        "lineLength": 417
+      },
+      "integrated": {
+        "lines": 119,
+        "bytes": 12873,
+        "lineLength": 417
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/pe-symbols.js",
+      "baseline": {
+        "lines": 323,
+        "bytes": 37746,
+        "lineLength": 1036
+      },
+      "integrated": {
+        "lines": 318,
+        "bytes": 36119,
+        "lineLength": 1036
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/reference-manager.js",
+      "baseline": {
+        "lines": 186,
+        "bytes": 16107,
+        "lineLength": 471
+      },
+      "integrated": {
+        "lines": 186,
+        "bytes": 16107,
+        "lineLength": 471
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/method-compiler.js",
+      "baseline": {
+        "lines": 174,
+        "bytes": 22334,
+        "lineLength": 969
+      },
+      "integrated": {
+        "lines": 174,
+        "bytes": 22334,
+        "lineLength": 969
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/method-pipeline.js",
+      "baseline": {
+        "lines": 50,
+        "bytes": 3319,
+        "lineLength": 261
+      },
+      "integrated": {
+        "lines": 50,
+        "bytes": 3319,
+        "lineLength": 261
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/options.js",
+      "baseline": {
+        "lines": 215,
+        "bytes": 16069,
+        "lineLength": 419
+      },
+      "integrated": {
+        "lines": 215,
+        "bytes": 16069,
+        "lineLength": 419
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/overload/operators.js",
+      "baseline": {
+        "lines": 397,
+        "bytes": 19146,
+        "lineLength": 163
+      },
+      "integrated": {
+        "lines": 397,
+        "bytes": 19146,
+        "lineLength": 163
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/semantic/constants.js",
+      "baseline": {
+        "lines": 121,
+        "bytes": 5559,
+        "lineLength": 166
+      },
+      "integrated": {
+        "lines": 121,
+        "bytes": 5559,
+        "lineLength": 166
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/semantic/execution-model.js",
+      "baseline": {
+        "lines": 145,
+        "bytes": 13319,
+        "lineLength": 334
+      },
+      "integrated": {
+        "lines": 145,
+        "bytes": 13319,
+        "lineLength": 334
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/awaiter-types.js",
+      "baseline": {
+        "lines": 82,
+        "bytes": 4818,
+        "lineLength": 161
+      },
+      "integrated": {
+        "lines": 82,
+        "bytes": 4818,
+        "lineLength": 161
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/compilation-symbols.js",
+      "baseline": {
+        "lines": 58,
+        "bytes": 6259,
+        "lineLength": 391
+      },
+      "integrated": {
+        "lines": 58,
+        "bytes": 6259,
+        "lineLength": 391
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/legacy-types.js",
+      "baseline": {
+        "lines": 34,
+        "bytes": 2395,
+        "lineLength": 212
+      },
+      "integrated": {
+        "lines": 34,
+        "bytes": 2395,
+        "lineLength": 212
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/members.js",
+      "baseline": {
+        "lines": 160,
+        "bytes": 21229,
+        "lineLength": 692
+      },
+      "integrated": {
+        "lines": 160,
+        "bytes": 21229,
+        "lineLength": 692
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/namespaces.js",
+      "baseline": {
+        "lines": 58,
+        "bytes": 5783,
+        "lineLength": 297
+      },
+      "integrated": {
+        "lines": 58,
+        "bytes": 5783,
+        "lineLength": 297
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/registry-bridge.js",
+      "baseline": {
+        "lines": 128,
+        "bytes": 15262,
+        "lineLength": 520
+      },
+      "integrated": {
+        "lines": 128,
+        "bytes": 15262,
+        "lineLength": 520
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/source/declaration-table.js",
+      "baseline": {
+        "lines": 236,
+        "bytes": 22544,
+        "lineLength": 348
+      },
+      "integrated": {
+        "lines": 236,
+        "bytes": 22544,
+        "lineLength": 348
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/source/extension-block-checks.js",
+      "baseline": {
+        "lines": 131,
+        "bytes": 7916,
+        "lineLength": 164
+      },
+      "integrated": {
+        "lines": 131,
+        "bytes": 7916,
+        "lineLength": 164
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/source/partial-constructors-events.js",
+      "baseline": {
+        "lines": 102,
+        "bytes": 5163,
+        "lineLength": 169
+      },
+      "integrated": {
+        "lines": 102,
+        "bytes": 5163,
+        "lineLength": 169
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/special-types.js",
+      "baseline": {
+        "lines": 96,
+        "bytes": 14399,
+        "lineLength": 548
+      },
+      "integrated": {
+        "lines": 96,
+        "bytes": 14399,
+        "lineLength": 548
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/types.js",
+      "baseline": {
+        "lines": 266,
+        "bytes": 27316,
+        "lineLength": 623
+      },
+      "integrated": {
+        "lines": 266,
+        "bytes": 27316,
+        "lineLength": 623
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/symbols/well-known-members.js",
+      "baseline": {
+        "lines": 72,
+        "bytes": 8740,
+        "lineLength": 360
+      },
+      "integrated": {
+        "lines": 72,
+        "bytes": 8740,
+        "lineLength": 360
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/src/type-utils.js",
+      "baseline": {
+        "lines": 17,
+        "bytes": 2222,
+        "lineLength": 507
+      },
+      "integrated": {
+        "lines": 17,
+        "bytes": 2222,
+        "lineLength": 507
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/accessibility/generate-roslyn-accessibility.js",
+      "baseline": {
+        "lines": 172,
+        "bytes": 22159,
+        "lineLength": 373
+      },
+      "integrated": {
+        "lines": 172,
+        "bytes": 22159,
+        "lineLength": 373
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/bound/fixtures.js",
+      "baseline": {
+        "lines": 43,
+        "bytes": 5631,
+        "lineLength": 277
+      },
+      "integrated": {
+        "lines": 43,
+        "bytes": 5631,
+        "lineLength": 277
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/bound/update-snapshots.js",
+      "baseline": {
+        "lines": 11,
+        "bytes": 743,
+        "lineLength": 229
+      },
+      "integrated": {
+        "lines": 11,
+        "bytes": 743,
+        "lineLength": 229
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/constants/expressions.js",
+      "baseline": {
+        "lines": 92,
+        "bytes": 19223,
+        "lineLength": 1756
+      },
+      "integrated": {
+        "lines": 92,
+        "bytes": 19223,
+        "lineLength": 1756
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/constants/generate.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 1310,
+        "lineLength": 209
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 1310,
+        "lineLength": 209
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/differential/harness.js",
+      "baseline": {
+        "lines": 137,
+        "bytes": 9628,
+        "lineLength": 228
+      },
+      "integrated": {
+        "lines": 137,
+        "bytes": 9628,
+        "lineLength": 228
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/differential/run.test.js",
+      "baseline": {
+        "lines": 99,
+        "bytes": 7740,
+        "lineLength": 235
+      },
+      "integrated": {
+        "lines": 99,
+        "bytes": 7740,
+        "lineLength": 235
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/differential/tools/pin.mjs",
+      "baseline": {
+        "lines": 60,
+        "bytes": 5014,
+        "lineLength": 307
+      },
+      "integrated": {
+        "lines": 60,
+        "bytes": 5014,
+        "lineLength": 307
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compiler/test/suppression/fixtures.js",
+      "baseline": {
+        "lines": 122,
+        "bytes": 9960,
+        "lineLength": 570
+      },
+      "integrated": {
+        "lines": 122,
+        "bytes": 9960,
+        "lineLength": 570
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/compute/smoke.mjs",
+      "baseline": {
+        "lines": 17,
+        "bytes": 990,
+        "lineLength": 277
+      },
+      "integrated": {
+        "lines": 17,
+        "bytes": 990,
+        "lineLength": 277
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/debugger/smoke.mjs",
+      "baseline": {
+        "lines": 75,
+        "bytes": 3960,
+        "lineLength": 537
+      },
+      "integrated": {
+        "lines": 75,
+        "bytes": 3960,
+        "lineLength": 537
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/designer/smoke.mjs",
+      "baseline": {
+        "lines": 31,
+        "bytes": 2168,
+        "lineLength": 509
+      },
+      "integrated": {
+        "lines": 31,
+        "bytes": 2168,
+        "lineLength": 509
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/extensions/smoke.mjs",
+      "baseline": {
+        "lines": 26,
+        "bytes": 1808,
+        "lineLength": 282
+      },
+      "integrated": {
+        "lines": 26,
+        "bytes": 1808,
+        "lineLength": 282
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/framework/src/contributions/core-controls-12.js",
+      "baseline": {
+        "lines": 52,
+        "bytes": 5274,
+        "lineLength": 295
+      },
+      "integrated": {
+        "lines": 52,
+        "bytes": 5274,
+        "lineLength": 295
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/framework/src/contributions/core-controls.js",
+      "baseline": {
+        "lines": 49,
+        "bytes": 6587,
+        "lineLength": 407
+      },
+      "integrated": {
+        "lines": 49,
+        "bytes": 6587,
+        "lineLength": 407
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/framework/src/contributions/core-system.js",
+      "baseline": {
+        "lines": 23,
+        "bytes": 2189,
+        "lineLength": 413
+      },
+      "integrated": {
+        "lines": 23,
+        "bytes": 2189,
+        "lineLength": 413
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/framework/src/contributions/core-xaml.js",
+      "baseline": {
+        "lines": 43,
+        "bytes": 4103,
+        "lineLength": 436
+      },
+      "integrated": {
+        "lines": 43,
+        "bytes": 4103,
+        "lineLength": 436
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/framework/src/registry-validation.js",
+      "baseline": {
+        "lines": 17,
+        "bytes": 1302,
+        "lineLength": 246
+      },
+      "integrated": {
+        "lines": 17,
+        "bytes": 1302,
+        "lineLength": 246
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/framework/src/registry.js",
+      "baseline": {
+        "lines": 121,
+        "bytes": 8646,
+        "lineLength": 319
+      },
+      "integrated": {
+        "lines": 121,
+        "bytes": 8646,
+        "lineLength": 319
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/network/smoke.mjs",
+      "baseline": {
+        "lines": 21,
+        "bytes": 1786,
+        "lineLength": 695
+      },
+      "integrated": {
+        "lines": 21,
+        "bytes": 1786,
+        "lineLength": 695
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/protocol/smoke.mjs",
+      "baseline": {
+        "lines": 42,
+        "bytes": 2375,
+        "lineLength": 258
+      },
+      "integrated": {
+        "lines": 42,
+        "bytes": 2375,
+        "lineLength": 258
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/smoke.mjs",
+      "baseline": {
+        "lines": 38,
+        "bytes": 2208,
+        "lineLength": 216
+      },
+      "integrated": {
+        "lines": 38,
+        "bytes": 2208,
+        "lineLength": 216
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/calls.js",
+      "baseline": {
+        "lines": 88,
+        "bytes": 5843,
+        "lineLength": 181
+      },
+      "integrated": {
+        "lines": 88,
+        "bytes": 5843,
+        "lineLength": 181
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/casting.js",
+      "baseline": {
+        "lines": 82,
+        "bytes": 5110,
+        "lineLength": 259
+      },
+      "integrated": {
+        "lines": 82,
+        "bytes": 5110,
+        "lineLength": 259
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/eh.js",
+      "baseline": {
+        "lines": 70,
+        "bytes": 4600,
+        "lineLength": 227
+      },
+      "integrated": {
+        "lines": 70,
+        "bytes": 4600,
+        "lineLength": 227
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/enums.js",
+      "baseline": {
+        "lines": 82,
+        "bytes": 5472,
+        "lineLength": 208
+      },
+      "integrated": {
+        "lines": 82,
+        "bytes": 5472,
+        "lineLength": 208
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/array.js",
+      "baseline": {
+        "lines": 28,
+        "bytes": 2236,
+        "lineLength": 384
+      },
+      "integrated": {
+        "lines": 28,
+        "bytes": 2236,
+        "lineLength": 384
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/branch.js",
+      "baseline": {
+        "lines": 26,
+        "bytes": 1404,
+        "lineLength": 195
+      },
+      "integrated": {
+        "lines": 26,
+        "bytes": 1404,
+        "lineLength": 195
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/indirect.js",
+      "baseline": {
+        "lines": 28,
+        "bytes": 2038,
+        "lineLength": 212
+      },
+      "integrated": {
+        "lines": 28,
+        "bytes": 2038,
+        "lineLength": 212
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/object-model.js",
+      "baseline": {
+        "lines": 47,
+        "bytes": 3084,
+        "lineLength": 194
+      },
+      "integrated": {
+        "lines": 47,
+        "bytes": 3084,
+        "lineLength": 194
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/intrinsics.js",
+      "baseline": {
+        "lines": 144,
+        "bytes": 8448,
+        "lineLength": 193
+      },
+      "integrated": {
+        "lines": 144,
+        "bytes": 8448,
+        "lineLength": 193
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/method-table.js",
+      "baseline": {
+        "lines": 194,
+        "bytes": 16476,
+        "lineLength": 404
+      },
+      "integrated": {
+        "lines": 178,
+        "bytes": 14617,
+        "lineLength": 356
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/runtime/src/execution/numeric-ops.js",
+      "baseline": {
+        "lines": 153,
+        "bytes": 9346,
+        "lineLength": 438
+      },
+      "integrated": {
+        "lines": 153,
+        "bytes": 9346,
+        "lineLength": 438
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/source-eh.js",
+      "baseline": {
+        "lines": 138,
+        "bytes": 5549,
+        "lineLength": 164
+      },
+      "integrated": {
+        "lines": 138,
+        "bytes": 5549,
+        "lineLength": 164
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/static-init.js",
+      "baseline": {
+        "lines": 91,
+        "bytes": 4804,
+        "lineLength": 231
+      },
+      "integrated": {
+        "lines": 91,
+        "bytes": 4804,
+        "lineLength": 231
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "packages/runtime/src/execution/tokens.js",
+      "baseline": {
+        "lines": 133,
+        "bytes": 7838,
+        "lineLength": 222
+      },
+      "integrated": {
+        "lines": 98,
+        "bytes": 5339,
+        "lineLength": 161
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/runtime/src/execution/type-system.js",
+      "baseline": {
+        "lines": 73,
+        "bytes": 4566,
+        "lineLength": 220
+      },
+      "integrated": {
+        "lines": 74,
+        "bytes": 4635,
+        "lineLength": 220
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": false
+    },
+    {
+      "path": "packages/winui/smoke.mjs",
+      "baseline": {
+        "lines": 29,
+        "bytes": 1910,
+        "lineLength": 445
+      },
+      "integrated": {
+        "lines": 29,
+        "bytes": 1910,
+        "lineLength": 445
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/benchmark-compute14.js",
+      "baseline": {
+        "lines": 16,
+        "bytes": 2218,
+        "lineLength": 570
+      },
+      "integrated": {
+        "lines": 16,
+        "bytes": 2218,
+        "lineLength": 570
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/benchmark-release14.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 1752,
+        "lineLength": 460
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 1752,
+        "lineLength": 460
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/benchmark.js",
+      "baseline": {
+        "lines": 28,
+        "bytes": 4385,
+        "lineLength": 479
+      },
+      "integrated": {
+        "lines": 28,
+        "bytes": 4385,
+        "lineLength": 479
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/benchmarks/a05-call-offsets.mjs",
+      "baseline": {
+        "lines": 46,
+        "bytes": 2693,
+        "lineLength": 237
+      },
+      "integrated": {
+        "lines": 46,
+        "bytes": 2693,
+        "lineLength": 237
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/browser-report.js",
+      "baseline": {
+        "lines": 59,
+        "bytes": 5317,
+        "lineLength": 272
+      },
+      "integrated": {
+        "lines": 59,
+        "bytes": 5317,
+        "lineLength": 272
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/ci-planning/impact.js",
+      "baseline": {
+        "lines": 102,
+        "bytes": 5662,
+        "lineLength": 171
+      },
+      "integrated": {
+        "lines": 102,
+        "bytes": 5662,
+        "lineLength": 171
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/coverage.js",
+      "baseline": {
+        "lines": 82,
+        "bytes": 6098,
+        "lineLength": 213
+      },
+      "integrated": {
+        "lines": 82,
+        "bytes": 6098,
+        "lineLength": 213
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/benchmark.js",
+      "baseline": {
+        "lines": 7,
+        "bytes": 1715,
+        "lineLength": 772
+      },
+      "integrated": {
+        "lines": 7,
+        "bytes": 1715,
+        "lineLength": 772
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/classify.js",
+      "baseline": {
+        "lines": 43,
+        "bytes": 5935,
+        "lineLength": 350
+      },
+      "integrated": {
+        "lines": 43,
+        "bytes": 5935,
+        "lineLength": 350
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/engines/clr.js",
+      "baseline": {
+        "lines": 46,
+        "bytes": 4341,
+        "lineLength": 510
+      },
+      "integrated": {
+        "lines": 46,
+        "bytes": 4341,
+        "lineLength": 510
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/engines/rust.js",
+      "baseline": {
+        "lines": 30,
+        "bytes": 3549,
+        "lineLength": 736
+      },
+      "integrated": {
+        "lines": 30,
+        "bytes": 3549,
+        "lineLength": 736
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/engines/vm.js",
+      "baseline": {
+        "lines": 28,
+        "bytes": 4015,
+        "lineLength": 607
+      },
+      "integrated": {
+        "lines": 28,
+        "bytes": 4015,
+        "lineLength": 607
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/fixtures.js",
+      "baseline": {
+        "lines": 35,
+        "bytes": 3309,
+        "lineLength": 275
+      },
+      "integrated": {
+        "lines": 35,
+        "bytes": 3309,
+        "lineLength": 275
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/gc-trace.js",
+      "baseline": {
+        "lines": 40,
+        "bytes": 2703,
+        "lineLength": 213
+      },
+      "integrated": {
+        "lines": 40,
+        "bytes": 2703,
+        "lineLength": 213
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/gc/compare.js",
+      "baseline": {
+        "lines": 47,
+        "bytes": 3900,
+        "lineLength": 186
+      },
+      "integrated": {
+        "lines": 47,
+        "bytes": 3900,
+        "lineLength": 186
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/gc/js-collector.js",
+      "baseline": {
+        "lines": 42,
+        "bytes": 2879,
+        "lineLength": 207
+      },
+      "integrated": {
+        "lines": 42,
+        "bytes": 2879,
+        "lineLength": 207
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/host/console.js",
+      "baseline": {
+        "lines": 29,
+        "bytes": 1759,
+        "lineLength": 280
+      },
+      "integrated": {
+        "lines": 29,
+        "bytes": 1759,
+        "lineLength": 280
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/process.js",
+      "baseline": {
+        "lines": 20,
+        "bytes": 2491,
+        "lineLength": 507
+      },
+      "integrated": {
+        "lines": 20,
+        "bytes": 2491,
+        "lineLength": 507
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/reduce.js",
+      "baseline": {
+        "lines": 42,
+        "bytes": 4663,
+        "lineLength": 765
+      },
+      "integrated": {
+        "lines": 42,
+        "bytes": 4663,
+        "lineLength": 765
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/result.js",
+      "baseline": {
+        "lines": 7,
+        "bytes": 762,
+        "lineLength": 201
+      },
+      "integrated": {
+        "lines": 7,
+        "bytes": 762,
+        "lineLength": 201
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/diff/run.js",
+      "baseline": {
+        "lines": 47,
+        "bytes": 9163,
+        "lineLength": 1135
+      },
+      "integrated": {
+        "lines": 47,
+        "bytes": 9163,
+        "lineLength": 1135
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/env-report.js",
+      "baseline": {
+        "lines": 40,
+        "bytes": 2578,
+        "lineLength": 307
+      },
+      "integrated": {
+        "lines": 40,
+        "bytes": 2578,
+        "lineLength": 307
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/gc/stress.js",
+      "baseline": {
+        "lines": 72,
+        "bytes": 4767,
+        "lineLength": 169
+      },
+      "integrated": {
+        "lines": 72,
+        "bytes": 4767,
+        "lineLength": 169
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/baseline.js",
+      "baseline": {
+        "lines": 30,
+        "bytes": 2257,
+        "lineLength": 284
+      },
+      "integrated": {
+        "lines": 30,
+        "bytes": 2257,
+        "lineLength": 284
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/bcl-api-diff.js",
+      "baseline": {
+        "lines": 43,
+        "bytes": 3350,
+        "lineLength": 207
+      },
+      "integrated": {
+        "lines": 43,
+        "bytes": 3350,
+        "lineLength": 207
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/benchmark.js",
+      "baseline": {
+        "lines": 13,
+        "bytes": 1143,
+        "lineLength": 248
+      },
+      "integrated": {
+        "lines": 13,
+        "bytes": 1143,
+        "lineLength": 248
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/common.js",
+      "baseline": {
+        "lines": 45,
+        "bytes": 2737,
+        "lineLength": 450
+      },
+      "integrated": {
+        "lines": 45,
+        "bytes": 2737,
+        "lineLength": 450
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/csharp.js",
+      "baseline": {
+        "lines": 34,
+        "bytes": 2685,
+        "lineLength": 304
+      },
+      "integrated": {
+        "lines": 34,
+        "bytes": 2685,
+        "lineLength": 304
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/denominator.js",
+      "baseline": {
+        "lines": 29,
+        "bytes": 3357,
+        "lineLength": 328
+      },
+      "integrated": {
+        "lines": 29,
+        "bytes": 3357,
+        "lineLength": 328
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/diagnostics.js",
+      "baseline": {
+        "lines": 25,
+        "bytes": 1888,
+        "lineLength": 181
+      },
+      "integrated": {
+        "lines": 25,
+        "bytes": 1888,
+        "lineLength": 181
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/ecma335.js",
+      "baseline": {
+        "lines": 52,
+        "bytes": 5105,
+        "lineLength": 318
+      },
+      "integrated": {
+        "lines": 52,
+        "bytes": 5105,
+        "lineLength": 318
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/gap-ids.js",
+      "baseline": {
+        "lines": 47,
+        "bytes": 2994,
+        "lineLength": 342
+      },
+      "integrated": {
+        "lines": 47,
+        "bytes": 2994,
+        "lineLength": 342
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/generate.js",
+      "baseline": {
+        "lines": 99,
+        "bytes": 9110,
+        "lineLength": 782
+      },
+      "integrated": {
+        "lines": 99,
+        "bytes": 9110,
+        "lineLength": 782
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/ide.js",
+      "baseline": {
+        "lines": 63,
+        "bytes": 7421,
+        "lineLength": 582
+      },
+      "integrated": {
+        "lines": 63,
+        "bytes": 7421,
+        "lineLength": 582
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/native-metadata.js",
+      "baseline": {
+        "lines": 54,
+        "bytes": 3636,
+        "lineLength": 229
+      },
+      "integrated": {
+        "lines": 54,
+        "bytes": 3636,
+        "lineLength": 229
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/reference-language.js",
+      "baseline": {
+        "lines": 31,
+        "bytes": 2499,
+        "lineLength": 342
+      },
+      "integrated": {
+        "lines": 31,
+        "bytes": 2499,
+        "lineLength": 342
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/runtime-gc.js",
+      "baseline": {
+        "lines": 15,
+        "bytes": 1135,
+        "lineLength": 206
+      },
+      "integrated": {
+        "lines": 15,
+        "bytes": 1135,
+        "lineLength": 206
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/inventory/runtime-runner.js",
+      "baseline": {
+        "lines": 28,
+        "bytes": 2297,
+        "lineLength": 202
+      },
+      "integrated": {
+        "lines": 28,
+        "bytes": 2297,
+        "lineLength": 202
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/clr-run.js",
+      "baseline": {
+        "lines": 35,
+        "bytes": 1837,
+        "lineLength": 229
+      },
+      "integrated": {
+        "lines": 35,
+        "bytes": 1837,
+        "lineLength": 229
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/fixtures.js",
+      "baseline": {
+        "lines": 32,
+        "bytes": 2548,
+        "lineLength": 268
+      },
+      "integrated": {
+        "lines": 32,
+        "bytes": 2548,
+        "lineLength": 268
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/process.js",
+      "baseline": {
+        "lines": 50,
+        "bytes": 2383,
+        "lineLength": 245
+      },
+      "integrated": {
+        "lines": 50,
+        "bytes": 2383,
+        "lineLength": 245
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/qualify.js",
+      "baseline": {
+        "lines": 157,
+        "bytes": 10471,
+        "lineLength": 274
+      },
+      "integrated": {
+        "lines": 157,
+        "bytes": 10471,
+        "lineLength": 274
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/roslyn-compile.js",
+      "baseline": {
+        "lines": 51,
+        "bytes": 3306,
+        "lineLength": 631
+      },
+      "integrated": {
+        "lines": 51,
+        "bytes": 3306,
+        "lineLength": 631
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/store.js",
+      "baseline": {
+        "lines": 107,
+        "bytes": 6673,
+        "lineLength": 240
+      },
+      "integrated": {
+        "lines": 107,
+        "bytes": 6673,
+        "lineLength": 240
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/toolchain.js",
+      "baseline": {
+        "lines": 76,
+        "bytes": 5436,
+        "lineLength": 335
+      },
+      "integrated": {
+        "lines": 76,
+        "bytes": 5436,
+        "lineLength": 335
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/oracle/winui-run.js",
+      "baseline": {
+        "lines": 59,
+        "bytes": 4327,
+        "lineLength": 281
+      },
+      "integrated": {
+        "lines": 59,
+        "bytes": 4327,
+        "lineLength": 281
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/ab.js",
+      "baseline": {
+        "lines": 52,
+        "bytes": 5003,
+        "lineLength": 858
+      },
+      "integrated": {
+        "lines": 52,
+        "bytes": 5003,
+        "lineLength": 858
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/alloc.js",
+      "baseline": {
+        "lines": 20,
+        "bytes": 2276,
+        "lineLength": 441
+      },
+      "integrated": {
+        "lines": 20,
+        "bytes": 2276,
+        "lineLength": 441
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/compare.js",
+      "baseline": {
+        "lines": 33,
+        "bytes": 3599,
+        "lineLength": 465
+      },
+      "integrated": {
+        "lines": 33,
+        "bytes": 3599,
+        "lineLength": 465
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/controls.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 1866,
+        "lineLength": 400
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 1866,
+        "lineLength": 400
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/core.js",
+      "baseline": {
+        "lines": 44,
+        "bytes": 5096,
+        "lineLength": 375
+      },
+      "integrated": {
+        "lines": 44,
+        "bytes": 5096,
+        "lineLength": 375
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/legacy.js",
+      "baseline": {
+        "lines": 18,
+        "bytes": 1568,
+        "lineLength": 198
+      },
+      "integrated": {
+        "lines": 18,
+        "bytes": 1568,
+        "lineLength": 198
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/measure.js",
+      "baseline": {
+        "lines": 27,
+        "bytes": 2383,
+        "lineLength": 297
+      },
+      "integrated": {
+        "lines": 27,
+        "bytes": 2383,
+        "lineLength": 297
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/normalize-browser.js",
+      "baseline": {
+        "lines": 14,
+        "bytes": 1693,
+        "lineLength": 281
+      },
+      "integrated": {
+        "lines": 14,
+        "bytes": 1693,
+        "lineLength": 281
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/normalize.js",
+      "baseline": {
+        "lines": 23,
+        "bytes": 2757,
+        "lineLength": 298
+      },
+      "integrated": {
+        "lines": 23,
+        "bytes": 2757,
+        "lineLength": 298
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/process.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 1850,
+        "lineLength": 284
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 1850,
+        "lineLength": 284
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/registry.js",
+      "baseline": {
+        "lines": 13,
+        "bytes": 1402,
+        "lineLength": 325
+      },
+      "integrated": {
+        "lines": 13,
+        "bytes": 1402,
+        "lineLength": 325
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/size-budget.js",
+      "baseline": {
+        "lines": 24,
+        "bytes": 3221,
+        "lineLength": 366
+      },
+      "integrated": {
+        "lines": 24,
+        "bytes": 3221,
+        "lineLength": 366
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/summary.js",
+      "baseline": {
+        "lines": 5,
+        "bytes": 310,
+        "lineLength": 187
+      },
+      "integrated": {
+        "lines": 5,
+        "bytes": 310,
+        "lineLength": 187
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/update-baseline.js",
+      "baseline": {
+        "lines": 26,
+        "bytes": 2511,
+        "lineLength": 257
+      },
+      "integrated": {
+        "lines": 26,
+        "bytes": 2511,
+        "lineLength": 257
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/perf/workloads.js",
+      "baseline": {
+        "lines": 34,
+        "bytes": 3086,
+        "lineLength": 372
+      },
+      "integrated": {
+        "lines": 34,
+        "bytes": 3086,
+        "lineLength": 372
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/protocol/messages.js",
+      "baseline": {
+        "lines": 42,
+        "bytes": 3614,
+        "lineLength": 207
+      },
+      "integrated": {
+        "lines": 42,
+        "bytes": 3614,
+        "lineLength": 207
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/protocol/probe.js",
+      "baseline": {
+        "lines": 30,
+        "bytes": 2068,
+        "lineLength": 170
+      },
+      "integrated": {
+        "lines": 30,
+        "bytes": 2068,
+        "lineLength": 170
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/protocol/record.js",
+      "baseline": {
+        "lines": 44,
+        "bytes": 3687,
+        "lineLength": 210
+      },
+      "integrated": {
+        "lines": 44,
+        "bytes": 3687,
+        "lineLength": 210
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/protocol/replay.js",
+      "baseline": {
+        "lines": 76,
+        "bytes": 5924,
+        "lineLength": 184
+      },
+      "integrated": {
+        "lines": 76,
+        "bytes": 5924,
+        "lineLength": 184
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/protocol/schema.js",
+      "baseline": {
+        "lines": 88,
+        "bytes": 6827,
+        "lineLength": 281
+      },
+      "integrated": {
+        "lines": 88,
+        "bytes": 6827,
+        "lineLength": 281
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/protocol/session.js",
+      "baseline": {
+        "lines": 15,
+        "bytes": 1225,
+        "lineLength": 189
+      },
+      "integrated": {
+        "lines": 15,
+        "bytes": 1225,
+        "lineLength": 189
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/record-skips.js",
+      "baseline": {
+        "lines": 8,
+        "bytes": 668,
+        "lineLength": 176
+      },
+      "integrated": {
+        "lines": 8,
+        "bytes": 668,
+        "lineLength": 176
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/conformance/serve-modes.js",
+      "baseline": {
+        "lines": 47,
+        "bytes": 3735,
+        "lineLength": 242
+      },
+      "integrated": {
+        "lines": 47,
+        "bytes": 3735,
+        "lineLength": 242
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/abi/benchmark.js",
+      "baseline": {
+        "lines": 4,
+        "bytes": 1475,
+        "lineLength": 1095
+      },
+      "integrated": {
+        "lines": 4,
+        "bytes": 1475,
+        "lineLength": 1095
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/abi/check-versions.js",
+      "baseline": {
+        "lines": 22,
+        "bytes": 1933,
+        "lineLength": 375
+      },
+      "integrated": {
+        "lines": 22,
+        "bytes": 1933,
+        "lineLength": 375
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/abi/example.js",
+      "baseline": {
+        "lines": 4,
+        "bytes": 317,
+        "lineLength": 209
+      },
+      "integrated": {
+        "lines": 4,
+        "bytes": 317,
+        "lineLength": 209
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/abi/gen-value-fixtures.js",
+      "baseline": {
+        "lines": 8,
+        "bytes": 1175,
+        "lineLength": 650
+      },
+      "integrated": {
+        "lines": 8,
+        "bytes": 1175,
+        "lineLength": 650
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/abi/value-codec.js",
+      "baseline": {
+        "lines": 89,
+        "bytes": 10291,
+        "lineLength": 407
+      },
+      "integrated": {
+        "lines": 89,
+        "bytes": 10291,
+        "lineLength": 407
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/audit.js",
+      "baseline": {
+        "lines": 27,
+        "bytes": 2103,
+        "lineLength": 285
+      },
+      "integrated": {
+        "lines": 27,
+        "bytes": 2103,
+        "lineLength": 285
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/benchmark-registries.js",
+      "baseline": {
+        "lines": 14,
+        "bytes": 2769,
+        "lineLength": 600
+      },
+      "integrated": {
+        "lines": 14,
+        "bytes": 2769,
+        "lineLength": 600
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/bootstrap-project.js",
+      "baseline": {
+        "lines": 41,
+        "bytes": 3233,
+        "lineLength": 292
+      },
+      "integrated": {
+        "lines": 41,
+        "bytes": 3233,
+        "lineLength": 292
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/capture-evidence.js",
+      "baseline": {
+        "lines": 31,
+        "bytes": 2142,
+        "lineLength": 206
+      },
+      "integrated": {
+        "lines": 31,
+        "bytes": 2142,
+        "lineLength": 206
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/check-contract-change.js",
+      "baseline": {
+        "lines": 113,
+        "bytes": 6771,
+        "lineLength": 272
+      },
+      "integrated": {
+        "lines": 113,
+        "bytes": 6771,
+        "lineLength": 272
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/check-contract-implementations.js",
+      "baseline": {
+        "lines": 60,
+        "bytes": 5746,
+        "lineLength": 521
+      },
+      "integrated": {
+        "lines": 60,
+        "bytes": 5746,
+        "lineLength": 521
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/check-ownership.js",
+      "baseline": {
+        "lines": 22,
+        "bytes": 1866,
+        "lineLength": 397
+      },
+      "integrated": {
+        "lines": 22,
+        "bytes": 1866,
+        "lineLength": 397
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/check-path-collisions.js",
+      "baseline": {
+        "lines": 20,
+        "bytes": 1576,
+        "lineLength": 253
+      },
+      "integrated": {
+        "lines": 20,
+        "bytes": 1576,
+        "lineLength": 253
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/check-root-providers.js",
+      "baseline": {
+        "lines": 6,
+        "bytes": 1376,
+        "lineLength": 642
+      },
+      "integrated": {
+        "lines": 6,
+        "bytes": 1376,
+        "lineLength": 642
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/check-test-manifests.js",
+      "baseline": {
+        "lines": 10,
+        "bytes": 605,
+        "lineLength": 206
+      },
+      "integrated": {
+        "lines": 10,
+        "bytes": 605,
+        "lineLength": 206
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/css-rules.js",
+      "baseline": {
+        "lines": 38,
+        "bytes": 1962,
+        "lineLength": 185
+      },
+      "integrated": {
+        "lines": 38,
+        "bytes": 1962,
+        "lineLength": 185
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/dag.js",
+      "baseline": {
+        "lines": 6,
+        "bytes": 369,
+        "lineLength": 200
+      },
+      "integrated": {
+        "lines": 6,
+        "bytes": 369,
+        "lineLength": 200
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/gen-codeowners.js",
+      "baseline": {
+        "lines": 13,
+        "bytes": 1103,
+        "lineLength": 383
+      },
+      "integrated": {
+        "lines": 13,
+        "bytes": 1103,
+        "lineLength": 383
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/gen-ownership.js",
+      "baseline": {
+        "lines": 22,
+        "bytes": 1630,
+        "lineLength": 216
+      },
+      "integrated": {
+        "lines": 22,
+        "bytes": 1630,
+        "lineLength": 216
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/gen-schema-fixtures.js",
+      "baseline": {
+        "lines": 12,
+        "bytes": 3990,
+        "lineLength": 1232
+      },
+      "integrated": {
+        "lines": 12,
+        "bytes": 3990,
+        "lineLength": 1232
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/golden-output.js",
+      "baseline": {
+        "lines": 83,
+        "bytes": 5588,
+        "lineLength": 192
+      },
+      "integrated": {
+        "lines": 83,
+        "bytes": 5588,
+        "lineLength": 192
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/handoff.js",
+      "baseline": {
+        "lines": 39,
+        "bytes": 3234,
+        "lineLength": 325
+      },
+      "integrated": {
+        "lines": 39,
+        "bytes": 3234,
+        "lineLength": 325
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/impacted-tests.js",
+      "baseline": {
+        "lines": 32,
+        "bytes": 2308,
+        "lineLength": 175
+      },
+      "integrated": {
+        "lines": 32,
+        "bytes": 2308,
+        "lineLength": 175
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/inventory-values.js",
+      "baseline": {
+        "lines": 23,
+        "bytes": 5132,
+        "lineLength": 3702
+      },
+      "integrated": {
+        "lines": 23,
+        "bytes": 5132,
+        "lineLength": 3702
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/claim-cli.js",
+      "baseline": {
+        "lines": 20,
+        "bytes": 2038,
+        "lineLength": 368
+      },
+      "integrated": {
+        "lines": 20,
+        "bytes": 2038,
+        "lineLength": 368
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/claims.js",
+      "baseline": {
+        "lines": 172,
+        "bytes": 12461,
+        "lineLength": 291
+      },
+      "integrated": {
+        "lines": 172,
+        "bytes": 12461,
+        "lineLength": 291
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/deps-parse.js",
+      "baseline": {
+        "lines": 53,
+        "bytes": 2632,
+        "lineLength": 172
+      },
+      "integrated": {
+        "lines": 53,
+        "bytes": 2632,
+        "lineLength": 172
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/evidence.js",
+      "baseline": {
+        "lines": 94,
+        "bytes": 6867,
+        "lineLength": 229
+      },
+      "integrated": {
+        "lines": 94,
+        "bytes": 6867,
+        "lineLength": 229
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/gh-retry.js",
+      "baseline": {
+        "lines": 59,
+        "bytes": 4261,
+        "lineLength": 212
+      },
+      "integrated": {
+        "lines": 59,
+        "bytes": 4261,
+        "lineLength": 212
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/github-project.js",
+      "baseline": {
+        "lines": 99,
+        "bytes": 7539,
+        "lineLength": 643
+      },
+      "integrated": {
+        "lines": 99,
+        "bytes": 7539,
+        "lineLength": 643
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/io.js",
+      "baseline": {
+        "lines": 10,
+        "bytes": 850,
+        "lineLength": 211
+      },
+      "integrated": {
+        "lines": 10,
+        "bytes": 850,
+        "lineLength": 211
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lib/paths.js",
+      "baseline": {
+        "lines": 27,
+        "bytes": 1256,
+        "lineLength": 223
+      },
+      "integrated": {
+        "lines": 27,
+        "bytes": 1256,
+        "lineLength": 223
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/lint-backlog.js",
+      "baseline": {
+        "lines": 19,
+        "bytes": 1407,
+        "lineLength": 207
+      },
+      "integrated": {
+        "lines": 19,
+        "bytes": 1407,
+        "lineLength": 207
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/readiness.js",
+      "baseline": {
+        "lines": 9,
+        "bytes": 625,
+        "lineLength": 193
+      },
+      "integrated": {
+        "lines": 9,
+        "bytes": 625,
+        "lineLength": 193
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/ready.js",
+      "baseline": {
+        "lines": 53,
+        "bytes": 3512,
+        "lineLength": 299
+      },
+      "integrated": {
+        "lines": 53,
+        "bytes": 3512,
+        "lineLength": 299
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/resume.js",
+      "baseline": {
+        "lines": 41,
+        "bytes": 2976,
+        "lineLength": 259
+      },
+      "integrated": {
+        "lines": 41,
+        "bytes": 2976,
+        "lineLength": 259
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/rollup-invalidation.js",
+      "baseline": {
+        "lines": 39,
+        "bytes": 2519,
+        "lineLength": 171
+      },
+      "integrated": {
+        "lines": 39,
+        "bytes": 2519,
+        "lineLength": 171
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/rollup-publish.js",
+      "baseline": {
+        "lines": 49,
+        "bytes": 3801,
+        "lineLength": 464
+      },
+      "integrated": {
+        "lines": 49,
+        "bytes": 3801,
+        "lineLength": 464
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/rollup.js",
+      "baseline": {
+        "lines": 66,
+        "bytes": 5852,
+        "lineLength": 417
+      },
+      "integrated": {
+        "lines": 66,
+        "bytes": 5852,
+        "lineLength": 417
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/run-safepoint-fixtures.js",
+      "baseline": {
+        "lines": 61,
+        "bytes": 5150,
+        "lineLength": 337
+      },
+      "integrated": {
+        "lines": 61,
+        "bytes": 5150,
+        "lineLength": 337
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/run-tests.js",
+      "baseline": {
+        "lines": 55,
+        "bytes": 3096,
+        "lineLength": 226
+      },
+      "integrated": {
+        "lines": 55,
+        "bytes": 3096,
+        "lineLength": 226
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/adapters.js",
+      "baseline": {
+        "lines": 86,
+        "bytes": 12524,
+        "lineLength": 855
+      },
+      "integrated": {
+        "lines": 86,
+        "bytes": 12524,
+        "lineLength": 855
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/benchmark-lowering.js",
+      "baseline": {
+        "lines": 22,
+        "bytes": 2285,
+        "lineLength": 389
+      },
+      "integrated": {
+        "lines": 22,
+        "bytes": 2285,
+        "lineLength": 389
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/example-coverage.js",
+      "baseline": {
+        "lines": 7,
+        "bytes": 1893,
+        "lineLength": 1101
+      },
+      "integrated": {
+        "lines": 7,
+        "bytes": 1893,
+        "lineLength": 1101
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/lower-method-body.js",
+      "baseline": {
+        "lines": 171,
+        "bytes": 27310,
+        "lineLength": 855
+      },
+      "integrated": {
+        "lines": 171,
+        "bytes": 27310,
+        "lineLength": 855
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/qualify-rust.js",
+      "baseline": {
+        "lines": 5,
+        "bytes": 2393,
+        "lineLength": 1965
+      },
+      "integrated": {
+        "lines": 5,
+        "bytes": 2393,
+        "lineLength": 1965
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/rust/src/main.rs",
+      "baseline": {
+        "lines": 24,
+        "bytes": 4505,
+        "lineLength": 764
+      },
+      "integrated": {
+        "lines": 24,
+        "bytes": 4505,
+        "lineLength": 764
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/schema/validate.js",
+      "baseline": {
+        "lines": 25,
+        "bytes": 4012,
+        "lineLength": 506
+      },
+      "integrated": {
+        "lines": 25,
+        "bytes": 4012,
+        "lineLength": 506
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/snapshot-backlog.js",
+      "baseline": {
+        "lines": 36,
+        "bytes": 3617,
+        "lineLength": 787
+      },
+      "integrated": {
+        "lines": 36,
+        "bytes": 3617,
+        "lineLength": 787
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/snapshot-contract-ids.js",
+      "baseline": {
+        "lines": 23,
+        "bytes": 2502,
+        "lineLength": 510
+      },
+      "integrated": {
+        "lines": 23,
+        "bytes": 2502,
+        "lineLength": 510
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/sync-ready.js",
+      "baseline": {
+        "lines": 24,
+        "bytes": 1614,
+        "lineLength": 286
+      },
+      "integrated": {
+        "lines": 24,
+        "bytes": 1614,
+        "lineLength": 286
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/testing/fake-github.js",
+      "baseline": {
+        "lines": 92,
+        "bytes": 7038,
+        "lineLength": 388
+      },
+      "integrated": {
+        "lines": 92,
+        "bytes": 7038,
+        "lineLength": 388
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/planning/validate-dag.js",
+      "baseline": {
+        "lines": 37,
+        "bytes": 2206,
+        "lineLength": 204
+      },
+      "integrated": {
+        "lines": 37,
+        "bytes": 2206,
+        "lineLength": 204
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/run.js",
+      "baseline": {
+        "lines": 88,
+        "bytes": 5247,
+        "lineLength": 232
+      },
+      "integrated": {
+        "lines": 88,
+        "bytes": 5247,
+        "lineLength": 232
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/validate-a05-dispatch.js",
+      "baseline": {
+        "lines": 69,
+        "bytes": 5456,
+        "lineLength": 344
+      },
+      "integrated": {
+        "lines": 69,
+        "bytes": 5456,
+        "lineLength": 344
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/validate-a05-faults.mjs",
+      "baseline": {
+        "lines": 23,
+        "bytes": 1479,
+        "lineLength": 211
+      },
+      "integrated": {
+        "lines": 23,
+        "bytes": 1479,
+        "lineLength": 211
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/validate-a05-numeric-dotnet.js",
+      "baseline": {
+        "lines": 46,
+        "bytes": 3305,
+        "lineLength": 192
+      },
+      "integrated": {
+        "lines": 46,
+        "bytes": 3305,
+        "lineLength": 192
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/validate-a05-static-init.js",
+      "baseline": {
+        "lines": 68,
+        "bytes": 5432,
+        "lineLength": 349
+      },
+      "integrated": {
+        "lines": 68,
+        "bytes": 5432,
+        "lineLength": 349
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    },
+    {
+      "path": "scripts/validate-a05-type-system.js",
+      "baseline": {
+        "lines": 146,
+        "bytes": 10876,
+        "lineLength": 449
+      },
+      "integrated": {
+        "lines": 146,
+        "bytes": 10876,
+        "lineLength": 449
+      },
+      "newOrWorsenedOverBudget": [],
+      "sameBlob": true
+    }
+  ],
+  "note": "Read-only metrics computed from exact Git blobs using the official limits and UTF-16 line length. The baseline policy is unchanged; inherited violations are not counted as passing strict structure."
+}

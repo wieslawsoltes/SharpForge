@@ -1,7 +1,12 @@
 {
   "schemaVersion": 1,
-  "styles": [],
-  "workers": [],
+  "styles": [{"source": "apps/studio/styles/explorer-disk-services.css", "order": 4020}],
+  "workers": [
+    {
+      "entry": "packages/workspace/src/vfs/opfs.worker.js",
+      "order": 20
+    }
+  ],
   "assets": [
     {
       "source": "packages/workspace",

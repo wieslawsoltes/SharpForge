@@ -49,9 +49,9 @@ export class MSBuildClient {
   }
 
   workspace() { return this.request('/workspace'); }
-  read(path, {signal} = {}) { return this.request('/file?path=' + encodeURIComponent(path), {signal}); }
+  read(path, { signal } = {}) { return this.request('/file?path=' + encodeURIComponent(path), { signal }); }
   inspectItem(path) { return this.request('/item?path=' + encodeURIComponent(path)); }
-  binary(path, {signal} = {}) { return this.request('/binary?path=' + encodeURIComponent(path), {binary: true, signal}); }
+  binary(path, { signal } = {}) { return this.request('/binary?path=' + encodeURIComponent(path), { binary: true, signal }); }
   mutate(operations) { return this.request('/mutations', { method: 'POST', body: { operations } }); }
   undoMutation(token) { return this.request('/undo-mutation', { method: 'POST', body: { token } }); }
   save(changes) { return this.request('/files', { method: 'POST', body: { changes } }); }
@@ -73,15 +73,21 @@ export class MSBuildClient {
   }
 
   projectContext(request, options) { return this.service('project', 'context', request, options); }
+  runProject(request, options) { return this.service('project', 'run', request, options); }
   projectContexts(request, options) { return this.service('project', 'contexts', request, options); }
   projectMetadata(request, options) { return this.service('project', 'metadata', request, options); }
-
-  runProject(request, options) { return this.service('project', 'run', request, options); }
-  publishProfiles(request, options) { return this.service('publish', 'profiles', request, options); }
-  publishProfile(request, options) { return this.service('publish', 'execute', request, options); }
-
+  buildGraph(request, options) { return this.service('build', 'graph', request, options); }
+  buildAffected(request, options) { return this.service('build', 'affected', request, options); }
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
+  packageOperation(operation, request, options) { return this.service('nuget', operation, request, options); }
+  publishProfiles(request, options) { return this.service('publish', 'profiles', request, options); }
+  publishProfile(request, options) { return this.service('publish', 'execute', request, options); }
+
+  binlog(id, options = {}) {
+    return this.request('/jobs/' + encodeURIComponent(id) + '/binlog?' + new URLSearchParams(options));
+  }
+
   disconnect() { this.token = ''; }
 }

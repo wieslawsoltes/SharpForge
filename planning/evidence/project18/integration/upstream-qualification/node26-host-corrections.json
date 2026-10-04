@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "node": "v26.10.0",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a24-peer-buffer-resolution.test.js",
+    "tests/a24-project-panel.test.js",
+    "tests/a24-workspace-wizard-native.test.js",
+    "tests/a24-template-package-atomicity.test.js",
+    "tests/a24-20-template-engine.test.js",
+    "tests/a24-save-conflicts.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T02:12:14.264704+00:00",
+  "log": "node26-host-corrections.tap",
+  "diskPreflight": {
+    "actualFreeBytes": 859361280,
+    "minimumFreeBytes": 536870912
+  },
+  "exitCode": 0,
+  "completedAt": "2026-10-04T02:12:19.781031+00:00",
+  "summary": {
+    "tests": 39,
+    "suites": 0,
+    "pass": 39,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

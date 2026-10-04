@@ -1,0 +1,18 @@
+✔ A24 File System Access mock satisfies the complete provider contract (13.344745ms)
+✔ A24 FSA permissions and atomic writable failure preserve original bytes (0.975452ms)
+✔ A24 FSA fallback directory rename rolls back when external files appear during copying (2.619291ms)
+✔ A24 polling prioritizes open files and bounds each interval over a 20000-file inventory (890.629012ms)
+✔ A24 coalescer recognizes atomic replace and suppresses only matching own-save byte hashes (1.232278ms)
+✔ A24 FileSystemObserver chooses bounded fallback when unavailable and disposes observer subscriptions (0.415577ms)
+✔ A24 polling identifies a uniquely hashed file rename (1.933326ms)
+✔ A24 own-save acknowledgement suppresses a previously queued matching hash without hiding another writer (0.277979ms)
+✔ A24 saturated watcher budget 1 visits every priority and background file (21.575273ms)
+✔ A24 saturated watcher budget 3 visits every priority and background file (6.928749ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2182.925836

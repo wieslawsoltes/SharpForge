@@ -1,0 +1,14 @@
+✔ explorer sends divergent revisions without waiting for recovery and preserves the other buffer (10.189388ms)
+✔ explorer serializes overlapping checkpoints and saves metadata-only changes with binary bytes (8.140488ms)
+✔ unbound workspaces with the same display name never establish an editing channel (1.484439ms)
+✔ cross-window UTF-16 conflict verifies physical encoding and emits the actual persisted hash (1.373301ms)
+✔ the explorer checkpoints unopened membership and unsaved paths along with loaded bytes (4.172083ms)
+✔ Explorer drops closed source bodies and merge baselines, retaining a numeric revision watermark and rejecting stale queue contents (0.933688ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 529.971258

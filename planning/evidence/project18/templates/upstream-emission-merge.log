@@ -1,0 +1,502 @@
+TAP version 13
+# Subtest: A03 explicit definition version/culture survive canonical execution on anycpu
+ok 1 - A03 explicit definition version/culture survive canonical execution on anycpu
+  ---
+  duration_ms: 90.702814
+  type: 'test'
+  ...
+# Subtest: A03 explicit definition version/culture survive canonical execution on x86
+ok 2 - A03 explicit definition version/culture survive canonical execution on x86
+  ---
+  duration_ms: 9.640397
+  type: 'test'
+  ...
+# Subtest: A03 explicit definition version/culture survive canonical execution on x64
+ok 3 - A03 explicit definition version/culture survive canonical execution on x64
+  ---
+  duration_ms: 8.460958
+  type: 'test'
+  ...
+# Subtest: A03 explicit definition version/culture survive canonical execution on arm64
+ok 4 - A03 explicit definition version/culture survive canonical execution on arm64
+  ---
+  duration_ms: 7.917589
+  type: 'test'
+  ...
+# Subtest: A03 low-level definition identity preserves defaults and owns numeric version arrays
+ok 5 - A03 low-level definition identity preserves defaults and owns numeric version arrays
+  ---
+  duration_ms: 0.874369
+  type: 'test'
+  ...
+# Subtest: A03 invalid version and culture options produce explicit diagnostics without wildcard expansion
+ok 6 - A03 invalid version and culture options produce explicit diagnostics without wildcard expansion
+  ---
+  duration_ms: 7.342872
+  type: 'test'
+  ...
+# Subtest: A03 AssemblyName reads the same emitted definition identities as the metadata reader
+ok 7 - A03 AssemblyName reads the same emitted definition identities as the metadata reader
+  ---
+  duration_ms: 6.274441
+  type: 'test'
+  ...
+# Subtest: A03 definition identity composes with public signing and both resource directories
+ok 8 - A03 definition identity composes with public signing and both resource directories
+  ---
+  duration_ms: 5.085428
+  type: 'test'
+  ...
+# Subtest: A03 net9 input identities replace fixed versions and survive both JS engines
+ok 9 - A03 net9 input identities replace fixed versions and survive both JS engines
+  ---
+  duration_ms: 81.555453
+  type: 'test'
+  ...
+# Subtest: A03 net10 input identities replace fixed versions and survive both JS engines
+ok 10 - A03 net10 input identities replace fixed versions and survive both JS engines
+  ---
+  duration_ms: 7.542894
+  type: 'test'
+  ...
+# Subtest: A03 reference identities are copied, case-insensitively interned and preserve version/culture/token
+ok 11 - A03 reference identities are copied, case-insensitively interned and preserve version/culture/token
+  ---
+  duration_ms: 0.490689
+  type: 'test'
+  ...
+# Subtest: A03 default reference profiles keep their historical versions and empty custom-key heap handle
+ok 12 - A03 default reference profiles keep their historical versions and empty custom-key heap handle
+  ---
+  duration_ms: 0.361605
+  type: 'test'
+  ...
+# Subtest: A03 invalid, duplicate, excessive and missing reference identities are explicit diagnostics
+ok 13 - A03 invalid, duplicate, excessive and missing reference identities are explicit diagnostics
+  ---
+  duration_ms: 6.642536
+  type: 'test'
+  ...
+# Subtest: A03 real net9/net10 reference-pack identities are confirmed by native GetReferencedAssemblies
+ok 14 - A03 real net9/net10 reference-pack identities are confirmed by native GetReferencedAssemblies
+  ---
+  duration_ms: 0.513394
+  type: 'test'
+  ...
+# Subtest: A03 canonical reference count is rejected before visiting invalid shared rows
+ok 15 - A03 canonical reference count is rejected before visiting invalid shared rows
+  ---
+  duration_ms: 1.832684
+  type: 'test'
+  ...
+# Subtest: A03 canonical reference key is bounded before copying or reading its invalid name
+ok 16 - A03 canonical reference key is bounded before copying or reading its invalid name
+  ---
+  duration_ms: 0.711924
+  type: 'test'
+  ...
+# Subtest: A03 SHA-256 identifiers use SRM content GUID and high-bit timestamp layout
+ok 17 - A03 SHA-256 identifiers use SRM content GUID and high-bit timestamp layout
+  ---
+  duration_ms: 1.944692
+  type: 'test'
+  ...
+# Subtest: A03 anycpu deterministic images and attached PDB checksums reproduce exactly
+ok 18 - A03 anycpu deterministic images and attached PDB checksums reproduce exactly
+  ---
+  duration_ms: 84.302276
+  type: 'test'
+  ...
+# Subtest: A03 x86 deterministic images and attached PDB checksums reproduce exactly
+ok 19 - A03 x86 deterministic images and attached PDB checksums reproduce exactly
+  ---
+  duration_ms: 9.831975
+  type: 'test'
+  ...
+# Subtest: A03 x64 deterministic images and attached PDB checksums reproduce exactly
+ok 20 - A03 x64 deterministic images and attached PDB checksums reproduce exactly
+  ---
+  duration_ms: 8.749363
+  type: 'test'
+  ...
+# Subtest: A03 arm64 deterministic images and attached PDB checksums reproduce exactly
+ok 21 - A03 arm64 deterministic images and attached PDB checksums reproduce exactly
+  ---
+  duration_ms: 7.346758
+  type: 'test'
+  ...
+# Subtest: A03 changing one IL byte changes MVID and deterministic timestamp
+ok 22 - A03 changing one IL byte changes MVID and deterministic timestamp
+  ---
+  duration_ms: 2.375382
+  type: 'test'
+  ...
+# Subtest: A03 checksum ignores its old field and supports odd-length overlay data
+ok 23 - A03 checksum ignores its old field and supports odd-length overlay data
+  ---
+  duration_ms: 2.341601
+  type: 'test'
+  ...
+# Subtest: A03 symbol reattachment recomputes checksum and detects checksum tampering
+ok 24 - A03 symbol reattachment recomputes checksum and detects checksum tampering
+  ---
+  duration_ms: 7.042429
+  type: 'test'
+  ...
+# Subtest: A03 deterministic finalization owns its Buffer copy without mutating an offset subarray
+ok 25 - A03 deterministic finalization owns its Buffer copy without mutating an offset subarray
+  ---
+  duration_ms: 1.30644
+  type: 'test'
+  ...
+# Subtest: A03 checksum excludes its four bytes even with an odd PE header offset
+ok 26 - A03 checksum excludes its four bytes even with an odd PE header offset
+  ---
+  duration_ms: 1.225037
+  type: 'test'
+  ...
+# Subtest: A03 deterministic identity matches native System.Reflection.Metadata BlobContentId
+ok 27 - A03 deterministic identity matches native System.Reflection.Metadata BlobContentId
+  ---
+  duration_ms: 0.816521
+  type: 'test'
+  ...
+# Subtest: A03 managed resources preserve bytes, flags, eight-byte offsets and inspector sizes
+ok 28 - A03 managed resources preserve bytes, flags, eight-byte offsets and inspector sizes
+  ---
+  duration_ms: 86.571026
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on anycpu
+ok 29 - A03 resources retain both JavaScript execution engines on anycpu
+  ---
+  duration_ms: 17.658626
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on x86
+ok 30 - A03 resources retain both JavaScript execution engines on x86
+  ---
+  duration_ms: 7.641823
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on x64
+ok 31 - A03 resources retain both JavaScript execution engines on x64
+  ---
+  duration_ms: 6.929449
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on arm64
+ok 32 - A03 resources retain both JavaScript execution engines on arm64
+  ---
+  duration_ms: 5.909881
+  type: 'test'
+  ...
+# Subtest: A03 resource emission rejects invalid names, duplicates, visibility, payloads and excessive count
+ok 33 - A03 resource emission rejects invalid names, duplicates, visibility, payloads and excessive count
+  ---
+  duration_ms: 9.98145
+  type: 'test'
+  ...
+# Subtest: A03 resource reading bounds the length prefix, blob and directory before returning bytes
+ok 34 - A03 resource reading bounds the length prefix, blob and directory before returning bytes
+  ---
+  duration_ms: 2.31509
+  type: 'test'
+  ...
+# Subtest: A03 reader describes external resources without dereferencing their offsets
+ok 35 - A03 reader describes external resources without dereferencing their offsets
+  ---
+  duration_ms: 0.59723
+  type: 'test'
+  ...
+# Subtest: A03 low-level resource ranges cannot overlap metadata or exceed their section
+ok 36 - A03 low-level resource ranges cannot overlap metadata or exceed their section
+  ---
+  duration_ms: 0.621247
+  type: 'test'
+  ...
+# Subtest: A03 Buffer and offset-subarray resource reads and canonical loads never mutate caller storage
+ok 37 - A03 Buffer and offset-subarray resource reads and canonical loads never mutate caller storage
+  ---
+  duration_ms: 6.230906
+  type: 'test'
+  ...
+# Subtest: A03 low-level PE emission copies Buffer slices before writing the CLI header
+ok 38 - A03 low-level PE emission copies Buffer slices before writing the CLI header
+  ---
+  duration_ms: 0.722049
+  type: 'test'
+  ...
+# Subtest: A03 compiler scaffold visibility changes only for netmodules, preserving assembly defaults
+ok 39 - A03 compiler scaffold visibility changes only for netmodules, preserving assembly defaults
+  ---
+  duration_ms: 92.334307
+  type: 'test'
+  ...
+# Subtest: A03 two modules produce native File hashes, ModuleRef tokens and public exports deterministically
+ok 40 - A03 two modules produce native File hashes, ModuleRef tokens and public exports deterministically
+  ---
+  duration_ms: 14.035994
+  type: 'test'
+  ...
+# Subtest: A03 nested public types retain enclosing ExportedType tokens and hide inaccessible enclosing types
+ok 41 - A03 nested public types retain enclosing ExportedType tokens and hide inaccessible enclosing types
+  ---
+  duration_ms: 1.67166
+  type: 'test'
+  ...
+# Subtest: A03 linked hash inspection owns Buffer subarray copies and does not mutate inputs
+ok 42 - A03 linked hash inspection owns Buffer subarray copies and does not mutate inputs
+  ---
+  duration_ms: 5.406702
+  type: 'test'
+  ...
+# Subtest: A03 linking rejects duplicate files and public types without mutating a builder
+ok 43 - A03 linking rejects duplicate files and public types without mutating a builder
+  ---
+  duration_ms: 5.033199
+  type: 'test'
+  ...
+# Subtest: A03 module input count, aggregate bytes, assembly images and containing manifests are bounded
+ok 44 - A03 module input count, aggregate bytes, assembly images and containing manifests are bounded
+  ---
+  duration_ms: 3.949846
+  type: 'test'
+  ...
+# Subtest: A03 exports and nesting are bounded before manifest mutation
+ok 45 - A03 exports and nesting are bounded before manifest mutation
+  ---
+  duration_ms: 51.936562
+  type: 'test'
+  ...
+# Subtest: A03 native SRM confirms two module files, SHA256 hashes and exported TypeDef hints
+ok 46 - A03 native SRM confirms two module files, SHA256 hashes and exported TypeDef hints
+  ---
+  duration_ms: 0.907087
+  type: 'test'
+  ...
+# Subtest: A03 module inspection preflights manifest counts, hash lengths and exported-type cycles
+ok 47 - A03 module inspection preflights manifest counts, hash lengths and exported-type cycles
+  ---
+  duration_ms: 1.210355
+  type: 'test'
+  ...
+# Subtest: A03 anycpu netmodule has Module metadata, no Assembly manifest and no entry point
+ok 48 - A03 anycpu netmodule has Module metadata, no Assembly manifest and no entry point
+  ---
+  duration_ms: 74.190338
+  type: 'test'
+  ...
+# Subtest: A03 x86 netmodule has Module metadata, no Assembly manifest and no entry point
+ok 49 - A03 x86 netmodule has Module metadata, no Assembly manifest and no entry point
+  ---
+  duration_ms: 6.57913
+  type: 'test'
+  ...
+# Subtest: A03 x64 netmodule has Module metadata, no Assembly manifest and no entry point
+ok 50 - A03 x64 netmodule has Module metadata, no Assembly manifest and no entry point
+  ---
+  duration_ms: 8.768591
+  type: 'test'
+  ...
+# Subtest: A03 arm64 netmodule has Module metadata, no Assembly manifest and no entry point
+ok 51 - A03 arm64 netmodule has Module metadata, no Assembly manifest and no entry point
+  ---
+  duration_ms: 6.191957
+  type: 'test'
+  ...
+# Subtest: A03 module alias, explicit file name, no-symbol and desktop metadata paths preserve module semantics
+ok 52 - A03 module alias, explicit file name, no-symbol and desktop metadata paths preserve module semantics
+  ---
+  duration_ms: 2.10906
+  type: 'test'
+  ...
+# Subtest: A03 module-only output rejects assembly identity, signing and invalid file names
+ok 53 - A03 module-only output rejects assembly identity, signing and invalid file names
+  ---
+  duration_ms: 3.115147
+  type: 'test'
+  ...
+# Subtest: A03 native SRM identifies emitted module-only files without Assembly definitions
+ok 54 - A03 native SRM identifies emitted module-only files without Assembly definitions
+  ---
+  duration_ms: 0.584902
+  type: 'test'
+  ...
+# Subtest: A03 publicSign anycpu preserves public identity, zero reservation and both JS engines
+ok 55 - A03 publicSign anycpu preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 109.831573
+  type: 'test'
+  ...
+# Subtest: A03 publicSign x86 preserves public identity, zero reservation and both JS engines
+ok 56 - A03 publicSign x86 preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 12.925003
+  type: 'test'
+  ...
+# Subtest: A03 publicSign x64 preserves public identity, zero reservation and both JS engines
+ok 57 - A03 publicSign x64 preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 9.040545
+  type: 'test'
+  ...
+# Subtest: A03 publicSign arm64 preserves public identity, zero reservation and both JS engines
+ok 58 - A03 publicSign arm64 preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 7.288022
+  type: 'test'
+  ...
+# Subtest: A03 delaySign anycpu preserves public identity, zero reservation and both JS engines
+ok 59 - A03 delaySign anycpu preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 8.378757
+  type: 'test'
+  ...
+# Subtest: A03 delaySign x86 preserves public identity, zero reservation and both JS engines
+ok 60 - A03 delaySign x86 preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 5.98742
+  type: 'test'
+  ...
+# Subtest: A03 delaySign x64 preserves public identity, zero reservation and both JS engines
+ok 61 - A03 delaySign x64 preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 6.189816
+  type: 'test'
+  ...
+# Subtest: A03 delaySign arm64 preserves public identity, zero reservation and both JS engines
+ok 62 - A03 delaySign arm64 preserves public identity, zero reservation and both JS engines
+  ---
+  duration_ms: 6.752504
+  type: 'test'
+  ...
+# Subtest: A03 public-sign diagnostics reject unsupported signing and malformed key inputs
+ok 63 - A03 public-sign diagnostics reject unsupported signing and malformed key inputs
+  ---
+  duration_ms: 7.259319
+  type: 'test'
+  ...
+# Subtest: A03 public-key Buffer subarrays are read-only and reservations coexist with embedded resources
+ok 64 - A03 public-key Buffer subarrays are read-only and reservations coexist with embedded resources
+  ---
+  duration_ms: 3.522542
+  type: 'test'
+  ...
+# Subtest: A03 low-level strong-name reservation rejects metadata overlap, nonzero bytes and invalid ranges
+ok 65 - A03 low-level strong-name reservation rejects metadata overlap, nonzero bytes and invalid ranges
+  ---
+  duration_ms: 0.881329
+  type: 'test'
+  ...
+# Subtest: A03 emitted public/delay-sign identities match native AssemblyName and PEReader observations
+ok 66 - A03 emitted public/delay-sign identities match native AssemblyName and PEReader observations
+  ---
+  duration_ms: 0.434295
+  type: 'test'
+  ...
+# Subtest: A03 Win32 version, manifest and icon resources form an ordered native tree
+ok 67 - A03 Win32 version, manifest and icon resources form an ordered native tree
+  ---
+  duration_ms: 76.883496
+  type: 'test'
+  ...
+# Subtest: A03 anycpu Win32 sections coexist with PDB attachment and executable thunks
+ok 68 - A03 anycpu Win32 sections coexist with PDB attachment and executable thunks
+  ---
+  duration_ms: 11.927229
+  type: 'test'
+  ...
+# Subtest: A03 x64 Win32 sections coexist with PDB attachment and executable thunks
+ok 69 - A03 x64 Win32 sections coexist with PDB attachment and executable thunks
+  ---
+  duration_ms: 5.869793
+  type: 'test'
+  ...
+# Subtest: A03 named resource directories sort before numeric identifiers and replay byte-identically
+ok 70 - A03 named resource directories sort before numeric identifiers and replay byte-identically
+  ---
+  duration_ms: 4.48202
+  type: 'test'
+  ...
+# Subtest: A03 malformed versions, icons, duplicate keys and unexpected options are explicit
+ok 71 - A03 malformed versions, icons, duplicate keys and unexpected options are explicit
+  ---
+  duration_ms: 1.246039
+  type: 'test'
+  ...
+# Subtest: A03 resource tree readers bound all offsets and reject cycles or excess depth
+ok 72 - A03 resource tree readers bound all offsets and reject cycles or excess depth
+  ---
+  duration_ms: 2.111334
+  type: 'test'
+  ...
+# Subtest: A03 Win32 resource copies own Buffer payloads from offset subarrays
+ok 73 - A03 Win32 resource copies own Buffer payloads from offset subarrays
+  ---
+  duration_ms: 4.726639
+  type: 'test'
+  ...
+# Subtest: A03 fresh Win32 payloads match independent LLVM resource tree and byte observations
+ok 74 - A03 fresh Win32 payloads match independent LLVM resource tree and byte observations
+  ---
+  duration_ms: 5.64214
+  type: 'test'
+  ...
+# Subtest: project emission writes assembly identity, string attributes, visibility and exact CLI resource bytes
+ok 75 - project emission writes assembly identity, string attributes, visibility and exact CLI resource bytes
+  ---
+  duration_ms: 69.634913
+  type: 'test'
+  ...
+# Subtest: project metadata rejects duplicate, unsupported, nondeterministic and oversized inputs
+ok 76 - project metadata rejects duplicate, unsupported, nondeterministic and oversized inputs
+  ---
+  duration_ms: 2.867505
+  type: 'test'
+  ...
+# Subtest: satellite resource assemblies carry an explicit culture in Assembly metadata
+ok 77 - satellite resource assemblies carry an explicit culture in Assembly metadata
+  ---
+  duration_ms: 3.380018
+  type: 'test'
+  ...
+# Subtest: the installed CLR reads project attributes and resources from the emitted PE
+ok 78 - the installed CLR reads project attributes and resources from the emitted PE
+  ---
+  duration_ms: 3011.383651
+  type: 'test'
+  ...
+# Subtest: Upstream identity and public signing compose with project attributes, resources and canonical execution
+ok 79 - Upstream identity and public signing compose with project attributes, resources and canonical execution
+  ---
+  duration_ms: 92.823627
+  type: 'test'
+  ...
+# Subtest: Canonical culture comes from actual Assembly metadata, including invariant and neutral values
+ok 80 - Canonical culture comes from actual Assembly metadata, including invariant and neutral values
+  ---
+  duration_ms: 12.894447
+  type: 'test'
+  ...
+# Subtest: Project type definitions preserve upstream internal netmodule scaffolding and public exports
+ok 81 - Project type definitions preserve upstream internal netmodule scaffolding and public exports
+  ---
+  duration_ms: 5.78908
+  type: 'test'
+  ...
+# Subtest: Conflicting version sources and assembly attributes on netmodules produce explicit diagnostics
+ok 82 - Conflicting version sources and assembly attributes on netmodules produce explicit diagnostics
+  ---
+  duration_ms: 1.844502
+  type: 'test'
+  ...
+1..82
+# tests 82
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9408.148606

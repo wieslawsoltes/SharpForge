@@ -1,0 +1,965 @@
+TAP version 13
+# Subtest: ZIP64 lists a synthetic 5 GiB stored entry with bounded tail/directory reads
+ok 1 - ZIP64 lists a synthetic 5 GiB stored entry with bounded tail/directory reads
+  ---
+  duration_ms: 5.101216
+  type: 'test'
+  ...
+# Subtest: ZIP64 saturated fields must have the exact required extra metadata
+ok 2 - ZIP64 saturated fields must have the exact required extra metadata
+  ---
+  duration_ms: 0.459123
+  type: 'test'
+  ...
+# Subtest: ZIP64: 70000 entries round-trip and reference Python zipfile accepts every entry
+ok 3 - ZIP64: 70000 entries round-trip and reference Python zipfile accepts every entry
+  ---
+  duration_ms: 2002.330346
+  type: 'test'
+  ...
+# Subtest: ZIP64: small forced archives, safe-integer metadata and corrupted locator rejection
+ok 4 - ZIP64: small forced archives, safe-integer metadata and corrupted locator rejection
+  ---
+  duration_ms: 5.432095
+  type: 'test'
+  ...
+# Subtest: DEFLATE: dynamic and fixed output matches the platform reference and compresses text
+ok 5 - DEFLATE: dynamic and fixed output matches the platform reference and compresses text
+  ---
+  duration_ms: 28.645354
+  type: 'test'
+  ...
+# Subtest: ZIP streams: backpressure, CRC descriptors and portable fixed compression round-trip
+ok 6 - ZIP streams: backpressure, CRC descriptors and portable fixed compression round-trip
+  ---
+  duration_ms: 195.429651
+  type: 'test'
+  ...
+# Subtest: ZIP streams: cancellation aborts the sink and closing an archive cancels active readers
+ok 7 - ZIP streams: cancellation aborts the sink and closing an archive cancels active readers
+  ---
+  duration_ms: 1.88935
+  type: 'test'
+  ...
+# Subtest: ZIP metadata: preservation retains UTC seconds and executable mode, deterministic default ignores them
+ok 8 - ZIP metadata: preservation retains UTC seconds and executable mode, deterministic default ignores them
+  ---
+  duration_ms: 0.774438
+  type: 'test'
+  ...
+# Subtest: ZIP malformed corpus: CRC, ratios, paths, overlaps, truncation and count budgets reject before returning records
+ok 9 - ZIP malformed corpus: CRC, ratios, paths, overlaps, truncation and count budgets reject before returning records
+  ---
+  duration_ms: 4.821384
+  type: 'test'
+  ...
+# Subtest: CRC32 slicing keeps byte-wise reference parity across short tails and chunk boundaries
+ok 10 - CRC32 slicing keeps byte-wise reference parity across short tails and chunk boundaries
+  ---
+  duration_ms: 4.496194
+  type: 'test'
+  ...
+# Subtest: Malformed ZIP path encodings and traversal expose stable archive diagnostics
+ok 11 - Malformed ZIP path encodings and traversal expose stable archive diagnostics
+  ---
+  duration_ms: 0.6692
+  type: 'test'
+  ...
+# Subtest: Template catalog has native distinctions and deterministic SDK test project packages
+ok 12 - Template catalog has native distinctions and deterministic SDK test project packages
+  ---
+  duration_ms: 6.192272
+  type: 'test'
+  ...
+# Subtest: Windows App SDK template catalog creates manifests, XAML and correctly dimensioned PNGs
+ok 13 - Windows App SDK template catalog creates manifests, XAML and correctly dimensioned PNGs
+  ---
+  duration_ms: 44.249915
+  type: 'test'
+  ...
+# Subtest: Template options create top-level code, nullable metadata, namespace style and classic solution
+ok 14 - Template options create top-level code, nullable metadata, namespace style and classic solution
+  ---
+  duration_ms: 14.13245
+  type: 'test'
+  ...
+# Subtest: Configuration files and core C\# items preserve options and strict path validation
+ok 15 - Configuration files and core C\# items preserve options and strict path validation
+  ---
+  duration_ms: 5.83344
+  type: 'test'
+  ...
+# Subtest: Native XAML page: code-behind and DependentUpon agree
+ok 16 - Native XAML page: code-behind and DependentUpon agree
+  ---
+  duration_ms: 5.900972
+  type: 'test'
+  ...
+# Subtest: Native XAML window: code-behind and DependentUpon agree
+ok 17 - Native XAML window: code-behind and DependentUpon agree
+  ---
+  duration_ms: 1.05361
+  type: 'test'
+  ...
+# Subtest: Native XAML user-control: code-behind and DependentUpon agree
+ok 18 - Native XAML user-control: code-behind and DependentUpon agree
+  ---
+  duration_ms: 0.819296
+  type: 'test'
+  ...
+# Subtest: Native XAML content-dialog: code-behind and DependentUpon agree
+ok 19 - Native XAML content-dialog: code-behind and DependentUpon agree
+  ---
+  duration_ms: 0.670882
+  type: 'test'
+  ...
+# Subtest: Native templated controls merge Generic.xaml without duplicate resource keys
+ok 20 - Native templated controls merge Generic.xaml without duplicate resource keys
+  ---
+  duration_ms: 1.973126
+  type: 'test'
+  ...
+# Subtest: Portable generated storyboard runs on source and direct CIL engines
+ok 21 - Portable generated storyboard runs on source and direct CIL engines
+  ---
+  duration_ms: 123.555999
+  type: 'test'
+  ...
+# Subtest: Native MVVM shell wires observable settings, RelayCommand and two navigation pages
+ok 22 - Native MVVM shell wires observable settings, RelayCommand and two navigation pages
+  ---
+  duration_ms: 0.999238
+  type: 'test'
+  ...
+# Subtest: Destination preflight checks collisions and exact overwrite confirmation before writes
+ok 23 - Destination preflight checks collisions and exact overwrite confirmation before writes
+  ---
+  duration_ms: 17.10256
+  type: 'test'
+  ...
+# Subtest: Destination denial, quota limits, parent type and case collisions never create directories
+ok 24 - Destination denial, quota limits, parent type and case collisions never create directories
+  ---
+  duration_ms: 3.868527
+  type: 'test'
+  ...
+# Subtest: Destination rollback removes created files/directories and restores overwritten binary bytes
+ok 25 - Destination rollback removes created files/directories and restores overwritten binary bytes
+  ---
+  duration_ms: 1.457949
+  type: 'test'
+  ...
+# Subtest: Destination rollback failures list precise leftover paths
+ok 26 - Destination rollback failures list precise leftover paths
+  ---
+  duration_ms: 1.51844
+  type: 'test'
+  ...
+# Subtest: Destination picker cancellation leaves no selected handle; declined overwrite performs no write
+ok 27 - Destination picker cancellation leaves no selected handle; declined overwrite performs no write
+  ---
+  duration_ms: 0.946688
+  type: 'test'
+  ...
+# Subtest: Destination cancellation after the first file rolls everything back
+ok 28 - Destination cancellation after the first file rolls everything back
+  ---
+  duration_ms: 7.553045
+  type: 'test'
+  ...
+# Subtest: Destination expected-text precondition respects UTF-16 encodings before confirmed overwrite
+ok 29 - Destination expected-text precondition respects UTF-16 encodings before confirmed overwrite
+  ---
+  duration_ms: 1.80966
+  type: 'test'
+  ...
+# Subtest: Destination preflight rejects ambiguous existing aliases and bounds plan metadata
+ok 30 - Destination preflight rejects ambiguous existing aliases and bounds plan metadata
+  ---
+  duration_ms: 3.310204
+  type: 'test'
+  ...
+# Subtest: template.json: typed defaults, symbols, forms, computed dependencies and deterministic generated values
+ok 31 - template.json: typed defaults, symbols, forms, computed dependencies and deterministic generated values
+  ---
+  duration_ms: 3.217824
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {}
+ok 32 - Template instantiation applies option combination {}
+  ---
+  duration_ms: 11.394299
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {"UseProgramMain":true,"Framework":"net9.0"}
+ok 33 - Template instantiation applies option combination {"UseProgramMain":true,"Framework":"net9.0"}
+  ---
+  duration_ms: 1.113029
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {"Nullable":false,"Framework":"net8.0"}
+ok 34 - Template instantiation applies option combination {"Nullable":false,"Framework":"net8.0"}
+  ---
+  duration_ms: 1.644481
+  type: 'test'
+  ...
+# Subtest: Template conditional comments retain CRLF for XML and JSON branches and reject unmatched controls
+ok 35 - Template conditional comments retain CRLF for XML and JSON branches and reject unmatched controls
+  ---
+  duration_ms: 1.335915
+  type: 'test'
+  ...
+# Subtest: Template package installation is catalog-local, validates every template and exposes only manual post-actions
+ok 36 - Template package installation is catalog-local, validates every template and exposes only manual post-actions
+  ---
+  duration_ms: 11.734452
+  type: 'test'
+  ...
+# Subtest: SDK aliases, host bindings, boolean-string conditions and MSBuild template attributes are evaluated before replacement
+ok 37 - SDK aliases, host bindings, boolean-string conditions and MSBuild template attributes are evaluated before replacement
+  ---
+  duration_ms: 1.460844
+  type: 'test'
+  ...
+# Subtest: Template regex generators reject backtracking patterns and preserve explicit name parameters
+ok 38 - Template regex generators reject backtracking patterns and preserve explicit name parameters
+  ---
+  duration_ms: 0.733386
+  type: 'test'
+  ...
+# Subtest: packaged console example matches the wizard and its disk/ZIP bytes
+ok 39 - packaged console example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 60.80619
+  type: 'test'
+  ...
+# Subtest: packaged console-async example matches the wizard and its disk/ZIP bytes
+ok 40 - packaged console-async example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 24.180443
+  type: 'test'
+  ...
+# Subtest: packaged class-library example matches the wizard and its disk/ZIP bytes
+ok 41 - packaged class-library example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 4.326237
+  type: 'test'
+  ...
+# Subtest: packaged empty-project example matches the wizard and its disk/ZIP bytes
+ok 42 - packaged empty-project example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 2.728086
+  type: 'test'
+  ...
+# Subtest: packaged winui-blank example matches the wizard and its disk/ZIP bytes
+ok 43 - packaged winui-blank example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 3.903189
+  type: 'test'
+  ...
+# Subtest: packaged winui-navigation example matches the wizard and its disk/ZIP bytes
+ok 44 - packaged winui-navigation example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 4.0572
+  type: 'test'
+  ...
+# Subtest: packaged winui-controls-library example matches the wizard and its disk/ZIP bytes
+ok 45 - packaged winui-controls-library example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 16.132327
+  type: 'test'
+  ...
+# Subtest: packaged test-console example matches the wizard and its disk/ZIP bytes
+ok 46 - packaged test-console example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 2.758982
+  type: 'test'
+  ...
+# Subtest: packaged blank-solution example matches the wizard and its disk/ZIP bytes
+ok 47 - packaged blank-solution example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 6.673943
+  type: 'test'
+  ...
+# Subtest: packaged console-library-solution example matches the wizard and its disk/ZIP bytes
+ok 48 - packaged console-library-solution example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 17.424465
+  type: 'test'
+  ...
+# Subtest: packaged winui-library-solution example matches the wizard and its disk/ZIP bytes
+ok 49 - packaged winui-library-solution example matches the wizard and its disk/ZIP bytes
+  ---
+  duration_ms: 4.133251
+  type: 'test'
+  ...
+# Subtest: packaged item gallery contains and compiles all 19 actual item templates
+ok 50 - packaged item gallery contains and compiles all 19 actual item templates
+  ---
+  duration_ms: 220.445885
+  type: 'test'
+  ...
+# Subtest: Every declared browser project template compiles and executes on source and direct CIL engines
+ok 51 - Every declared browser project template compiles and executes on source and direct CIL engines
+  ---
+  duration_ms: 418.140053
+  type: 'test'
+  ...
+# {"target":"browser-managed","observations":[{"template":"console","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"console-async","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"class-library","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"empty-project","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-blank","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-navigation","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-controls-library","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"test-console","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"blank-solution","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"console-library-solution","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"},{"template":"winui-library-solution","target":"browser-managed","status":"passed","engine":"source VM and direct CIL","evidence":"tests/template-qualification.test.js; empty project/solution validated structurally"}]}
+# Subtest: Qualification rejects a missing, skipped, duplicate or wrong-target observation
+ok 52 - Qualification rejects a missing, skipped, duplicate or wrong-target observation
+  ---
+  duration_ms: 1.304808
+  type: 'test'
+  ...
+# Subtest: template console: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 53 - template console: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 86.666418
+  type: 'test'
+  ...
+# Subtest: template console: actual source execution
+ok 54 - template console: actual source execution
+  ---
+  duration_ms: 21.018683
+  type: 'test'
+  ...
+# Subtest: template console: actual canonical execution
+ok 55 - template console: actual canonical execution
+  ---
+  duration_ms: 23.357411
+  type: 'test'
+  ...
+# Subtest: template console: actual cil execution
+ok 56 - template console: actual cil execution
+  ---
+  duration_ms: 19.836284
+  type: 'test'
+  ...
+# Subtest: template console: actual reassembled execution
+ok 57 - template console: actual reassembled execution
+  ---
+  duration_ms: 17.027157
+  type: 'test'
+  ...
+# Subtest: template console-async: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 58 - template console-async: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 22.10368
+  type: 'test'
+  ...
+# Subtest: template console-async: actual source execution
+ok 59 - template console-async: actual source execution
+  ---
+  duration_ms: 14.1928
+  type: 'test'
+  ...
+# Subtest: template console-async: actual canonical execution
+ok 60 - template console-async: actual canonical execution
+  ---
+  duration_ms: 14.45105
+  type: 'test'
+  ...
+# Subtest: template console-async: actual cil execution
+ok 61 - template console-async: actual cil execution
+  ---
+  duration_ms: 29.616379
+  type: 'test'
+  ...
+# Subtest: template console-async: actual reassembled execution
+ok 62 - template console-async: actual reassembled execution
+  ---
+  duration_ms: 23.08109
+  type: 'test'
+  ...
+# Subtest: template class-library: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 63 - template class-library: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 11.218945
+  type: 'test'
+  ...
+# Subtest: template class-library: actual source execution
+ok 64 - template class-library: actual source execution
+  ---
+  duration_ms: 14.282176
+  type: 'test'
+  ...
+# Subtest: template class-library: actual canonical execution
+ok 65 - template class-library: actual canonical execution
+  ---
+  duration_ms: 9.728096
+  type: 'test'
+  ...
+# Subtest: template class-library: actual cil execution
+ok 66 - template class-library: actual cil execution
+  ---
+  duration_ms: 9.628726
+  type: 'test'
+  ...
+# Subtest: template class-library: actual reassembled execution
+ok 67 - template class-library: actual reassembled execution
+  ---
+  duration_ms: 13.63894
+  type: 'test'
+  ...
+# Subtest: template empty-project: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 68 - template empty-project: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 1.83642
+  type: 'test'
+  ...
+# Subtest: template winui-blank: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 69 - template winui-blank: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 34.412139
+  type: 'test'
+  ...
+# Subtest: template winui-blank: actual source execution
+ok 70 - template winui-blank: actual source execution
+  ---
+  duration_ms: 35.70872
+  type: 'test'
+  ...
+# Subtest: template winui-blank: actual canonical execution
+ok 71 - template winui-blank: actual canonical execution
+  ---
+  duration_ms: 54.379926
+  type: 'test'
+  ...
+# Subtest: template winui-blank: actual cil execution
+ok 72 - template winui-blank: actual cil execution
+  ---
+  duration_ms: 32.772129
+  type: 'test'
+  ...
+# Subtest: template winui-blank: actual reassembled execution
+ok 73 - template winui-blank: actual reassembled execution
+  ---
+  duration_ms: 30.719063
+  type: 'test'
+  ...
+# Subtest: template winui-navigation: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 74 - template winui-navigation: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 31.381532
+  type: 'test'
+  ...
+# Subtest: template winui-navigation: actual source execution
+ok 75 - template winui-navigation: actual source execution
+  ---
+  duration_ms: 39.431055
+  type: 'test'
+  ...
+# Subtest: template winui-navigation: actual canonical execution
+ok 76 - template winui-navigation: actual canonical execution
+  ---
+  duration_ms: 29.242895
+  type: 'test'
+  ...
+# Subtest: template winui-navigation: actual cil execution
+ok 77 - template winui-navigation: actual cil execution
+  ---
+  duration_ms: 30.898242
+  type: 'test'
+  ...
+# Subtest: template winui-navigation: actual reassembled execution
+ok 78 - template winui-navigation: actual reassembled execution
+  ---
+  duration_ms: 33.54155
+  type: 'test'
+  ...
+# Subtest: template winui-controls-library: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 79 - template winui-controls-library: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 20.017427
+  type: 'test'
+  ...
+# Subtest: template winui-controls-library: actual source execution
+ok 80 - template winui-controls-library: actual source execution
+  ---
+  duration_ms: 17.398628
+  type: 'test'
+  ...
+# Subtest: template winui-controls-library: actual canonical execution
+ok 81 - template winui-controls-library: actual canonical execution
+  ---
+  duration_ms: 17.576746
+  type: 'test'
+  ...
+# Subtest: template winui-controls-library: actual cil execution
+ok 82 - template winui-controls-library: actual cil execution
+  ---
+  duration_ms: 12.687139
+  type: 'test'
+  ...
+# Subtest: template winui-controls-library: actual reassembled execution
+ok 83 - template winui-controls-library: actual reassembled execution
+  ---
+  duration_ms: 17.591447
+  type: 'test'
+  ...
+# Subtest: template test-console: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 84 - template test-console: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 7.492503
+  type: 'test'
+  ...
+# Subtest: template test-console: actual source execution
+ok 85 - template test-console: actual source execution
+  ---
+  duration_ms: 5.274187
+  type: 'test'
+  ...
+# Subtest: template test-console: actual canonical execution
+ok 86 - template test-console: actual canonical execution
+  ---
+  duration_ms: 4.056029
+  type: 'test'
+  ...
+# Subtest: template test-console: actual cil execution
+ok 87 - template test-console: actual cil execution
+  ---
+  duration_ms: 4.446798
+  type: 'test'
+  ...
+# Subtest: template test-console: actual reassembled execution
+ok 88 - template test-console: actual reassembled execution
+  ---
+  duration_ms: 5.767671
+  type: 'test'
+  ...
+# Subtest: template blank-solution: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 89 - template blank-solution: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 0.867809
+  type: 'test'
+  ...
+# Subtest: template console-library-solution: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 90 - template console-library-solution: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 11.990189
+  type: 'test'
+  ...
+# Subtest: template console-library-solution: actual source execution
+ok 91 - template console-library-solution: actual source execution
+  ---
+  duration_ms: 3.286228
+  type: 'test'
+  ...
+# Subtest: template console-library-solution: actual canonical execution
+ok 92 - template console-library-solution: actual canonical execution
+  ---
+  duration_ms: 3.846212
+  type: 'test'
+  ...
+# Subtest: template console-library-solution: actual cil execution
+ok 93 - template console-library-solution: actual cil execution
+  ---
+  duration_ms: 3.632029
+  type: 'test'
+  ...
+# Subtest: template console-library-solution: actual reassembled execution
+ok 94 - template console-library-solution: actual reassembled execution
+  ---
+  duration_ms: 4.649674
+  type: 'test'
+  ...
+# Subtest: template winui-library-solution: deterministic validated project XML, ZIP roundtrip and startup compilation
+ok 95 - template winui-library-solution: deterministic validated project XML, ZIP roundtrip and startup compilation
+  ---
+  duration_ms: 13.880139
+  type: 'test'
+  ...
+# Subtest: template winui-library-solution: actual source execution
+ok 96 - template winui-library-solution: actual source execution
+  ---
+  duration_ms: 13.380445
+  type: 'test'
+  ...
+# Subtest: template winui-library-solution: actual canonical execution
+ok 97 - template winui-library-solution: actual canonical execution
+  ---
+  duration_ms: 15.514865
+  type: 'test'
+  ...
+# Subtest: template winui-library-solution: actual cil execution
+ok 98 - template winui-library-solution: actual cil execution
+  ---
+  duration_ms: 21.945326
+  type: 'test'
+  ...
+# Subtest: template winui-library-solution: actual reassembled execution
+ok 99 - template winui-library-solution: actual reassembled execution
+  ---
+  duration_ms: 21.117372
+  type: 'test'
+  ...
+# Subtest: item class: legal unique files, project membership and compilation
+ok 100 - item class: legal unique files, project membership and compilation
+  ---
+  duration_ms: 5.86009
+  type: 'test'
+  ...
+# Subtest: item partial-class: legal unique files, project membership and compilation
+ok 101 - item partial-class: legal unique files, project membership and compilation
+  ---
+  duration_ms: 8.601817
+  type: 'test'
+  ...
+# Subtest: item static-class: legal unique files, project membership and compilation
+ok 102 - item static-class: legal unique files, project membership and compilation
+  ---
+  duration_ms: 3.299507
+  type: 'test'
+  ...
+# Subtest: item disposable-class: legal unique files, project membership and compilation
+ok 103 - item disposable-class: legal unique files, project membership and compilation
+  ---
+  duration_ms: 5.021235
+  type: 'test'
+  ...
+# Subtest: item view-model: legal unique files, project membership and compilation
+ok 104 - item view-model: legal unique files, project membership and compilation
+  ---
+  duration_ms: 5.140926
+  type: 'test'
+  ...
+# Subtest: item winui-page: legal unique files, project membership and compilation
+ok 105 - item winui-page: legal unique files, project membership and compilation
+  ---
+  duration_ms: 5.954863
+  type: 'test'
+  ...
+# Subtest: item winui-counter-page: legal unique files, project membership and compilation
+ok 106 - item winui-counter-page: legal unique files, project membership and compilation
+  ---
+  duration_ms: 7.343709
+  type: 'test'
+  ...
+# Subtest: item winui-grid-page: legal unique files, project membership and compilation
+ok 107 - item winui-grid-page: legal unique files, project membership and compilation
+  ---
+  duration_ms: 13.81408
+  type: 'test'
+  ...
+# Subtest: item winui-settings-page: legal unique files, project membership and compilation
+ok 108 - item winui-settings-page: legal unique files, project membership and compilation
+  ---
+  duration_ms: 8.813536
+  type: 'test'
+  ...
+# Subtest: item winui-user-control: legal unique files, project membership and compilation
+ok 109 - item winui-user-control: legal unique files, project membership and compilation
+  ---
+  duration_ms: 8.198869
+  type: 'test'
+  ...
+# Subtest: item winui-custom-control: legal unique files, project membership and compilation
+ok 110 - item winui-custom-control: legal unique files, project membership and compilation
+  ---
+  duration_ms: 6.1185
+  type: 'test'
+  ...
+# Subtest: item winui-window: legal unique files, project membership and compilation
+ok 111 - item winui-window: legal unique files, project membership and compilation
+  ---
+  duration_ms: 5.556562
+  type: 'test'
+  ...
+# Subtest: item winui-flyout: legal unique files, project membership and compilation
+ok 112 - item winui-flyout: legal unique files, project membership and compilation
+  ---
+  duration_ms: 5.842825
+  type: 'test'
+  ...
+# Subtest: item winui-resources: legal unique files, project membership and compilation
+ok 113 - item winui-resources: legal unique files, project membership and compilation
+  ---
+  duration_ms: 4.171322
+  type: 'test'
+  ...
+# Subtest: item text: legal unique files, project membership and compilation
+ok 114 - item text: legal unique files, project membership and compilation
+  ---
+  duration_ms: 2.692061
+  type: 'test'
+  ...
+# Subtest: item json: legal unique files, project membership and compilation
+ok 115 - item json: legal unique files, project membership and compilation
+  ---
+  duration_ms: 2.51866
+  type: 'test'
+  ...
+# Subtest: item editorconfig: legal unique files, project membership and compilation
+ok 116 - item editorconfig: legal unique files, project membership and compilation
+  ---
+  duration_ms: 2.41247
+  type: 'test'
+  ...
+# Subtest: item build-props: legal unique files, project membership and compilation
+ok 117 - item build-props: legal unique files, project membership and compilation
+  ---
+  duration_ms: 2.339209
+  type: 'test'
+  ...
+# Subtest: item build-targets: legal unique files, project membership and compilation
+ok 118 - item build-targets: legal unique files, project membership and compilation
+  ---
+  duration_ms: 2.43959
+  type: 'test'
+  ...
+# Subtest: templates: namespace and reserved-path validation has no injection or silent renaming
+ok 119 - templates: namespace and reserved-path validation has no injection or silent renaming
+  ---
+  duration_ms: 1.334604
+  type: 'test'
+  ...
+# Subtest: create plan: case-insensitive destination collisions, parent files and multiple item outputs preflight
+ok 120 - create plan: case-insensitive destination collisions, parent files and multiple item outputs preflight
+  ---
+  duration_ms: 0.528577
+  type: 'test'
+  ...
+# Subtest: add project keeps unrelated XML, configuration and named folder
+ok 121 - add project keeps unrelated XML, configuration and named folder
+  ---
+  duration_ms: 1.41203
+  type: 'test'
+  ...
+# Subtest: same-directory and project-only templates are genuinely different layouts
+ok 122 - same-directory and project-only templates are genuinely different layouts
+  ---
+  duration_ms: 3.266067
+  type: 'test'
+  ...
+# Subtest: blank solution displays zero projects, not a synthetic loose project
+ok 123 - blank solution displays zero projects, not a synthetic loose project
+  ---
+  duration_ms: 1.320842
+  type: 'test'
+  ...
+# Subtest: ZIP CRC known vector and deterministic empty/archive output
+ok 124 - ZIP CRC known vector and deterministic empty/archive output
+  ---
+  duration_ms: 0.370268
+  type: 'test'
+  ...
+# Subtest: standard Python reader validates SharpForge ZIP CRCs, Unicode assets and explicit empty folders
+ok 125 - standard Python reader validates SharpForge ZIP CRCs, Unicode assets and explicit empty folders
+  ---
+  duration_ms: 31.579831
+  type: 'test'
+  ...
+# Subtest: external Python DEFLATE ZIP imports without runtime dependencies
+ok 126 - external Python DEFLATE ZIP imports without runtime dependencies
+  ---
+  duration_ms: 34.501573
+  type: 'test'
+  ...
+# Subtest: external Python DEFLATE ZIP with data descriptors imports without runtime dependencies
+ok 127 - external Python DEFLATE ZIP with data descriptors imports without runtime dependencies
+  ---
+  duration_ms: 30.465474
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "../escape"
+ok 128 - ZIP rejects unsafe path "../escape"
+  ---
+  duration_ms: 0.248826
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "/etc/passwd"
+ok 129 - ZIP rejects unsafe path "/etc/passwd"
+  ---
+  duration_ms: 0.100852
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "C:/x"
+ok 130 - ZIP rejects unsafe path "C:/x"
+  ---
+  duration_ms: 0.061293
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "a/../../b"
+ok 131 - ZIP rejects unsafe path "a/../../b"
+  ---
+  duration_ms: 0.055643
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "a//b"
+ok 132 - ZIP rejects unsafe path "a//b"
+  ---
+  duration_ms: 0.043315
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "a/./b"
+ok 133 - ZIP rejects unsafe path "a/./b"
+  ---
+  duration_ms: 0.042545
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "foo\\u0000.cs"
+ok 134 - ZIP rejects unsafe path "foo\\u0000.cs"
+  ---
+  duration_ms: 0.048914
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "NUL.cs"
+ok 135 - ZIP rejects unsafe path "NUL.cs"
+  ---
+  duration_ms: 0.04627
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "a./b"
+ok 136 - ZIP rejects unsafe path "a./b"
+  ---
+  duration_ms: 0.05305
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "a/b "
+ok 137 - ZIP rejects unsafe path "a/b "
+  ---
+  duration_ms: 0.048884
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "CON/a"
+ok 138 - ZIP rejects unsafe path "CON/a"
+  ---
+  duration_ms: 0.050416
+  type: 'test'
+  ...
+# Subtest: ZIP rejects unsafe path "a:b"
+ok 139 - ZIP rejects unsafe path "a:b"
+  ---
+  duration_ms: 0.035844
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed crc before returning records
+ok 140 - ZIP rejects malformed crc before returning records
+  ---
+  duration_ms: 0.370719
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed data before returning records
+ok 141 - ZIP rejects malformed data before returning records
+  ---
+  duration_ms: 0.136366
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed local-name before returning records
+ok 142 - ZIP rejects malformed local-name before returning records
+  ---
+  duration_ms: 0.237478
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed truncation before returning records
+ok 143 - ZIP rejects malformed truncation before returning records
+  ---
+  duration_ms: 0.109275
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed encryption before returning records
+ok 144 - ZIP rejects malformed encryption before returning records
+  ---
+  duration_ms: 0.083306
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed zip64 before returning records
+ok 145 - ZIP rejects malformed zip64 before returning records
+  ---
+  duration_ms: 0.141253
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed symlink before returning records
+ok 146 - ZIP rejects malformed symlink before returning records
+  ---
+  duration_ms: 0.100051
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed count before returning records
+ok 147 - ZIP rejects malformed count before returning records
+  ---
+  duration_ms: 0.112039
+  type: 'test'
+  ...
+# Subtest: ZIP rejects malformed overlap before returning records
+ok 148 - ZIP rejects malformed overlap before returning records
+  ---
+  duration_ms: 0.177378
+  type: 'test'
+  ...
+# Subtest: ZIP rejects case and Unicode collisions and file-as-parent conflicts
+ok 149 - ZIP rejects case and Unicode collisions and file-as-parent conflicts
+  ---
+  duration_ms: 0.269416
+  type: 'test'
+  ...
+# Subtest: ZIP validates expansion/file/count limits, not only compressed input size
+ok 150 - ZIP validates expansion/file/count limits, not only compressed input size
+  ---
+  duration_ms: 0.27167
+  type: 'test'
+  ...
+# Subtest: workspace retains utf-8 BOM/CRLF, assets and debugger metadata across ZIP roundtrips
+ok 151 - workspace retains utf-8 BOM/CRLF, assets and debugger metadata across ZIP roundtrips
+  ---
+  duration_ms: 1.045838
+  type: 'test'
+  ...
+# Subtest: workspace retains utf-16le BOM/CRLF, assets and debugger metadata across ZIP roundtrips
+ok 152 - workspace retains utf-16le BOM/CRLF, assets and debugger metadata across ZIP roundtrips
+  ---
+  duration_ms: 0.541978
+  type: 'test'
+  ...
+# Subtest: workspace retains utf-16be BOM/CRLF, assets and debugger metadata across ZIP roundtrips
+ok 153 - workspace retains utf-16be BOM/CRLF, assets and debugger metadata across ZIP roundtrips
+  ---
+  duration_ms: 0.469488
+  type: 'test'
+  ...
+# Subtest: manifest allows only data, validates stale entries and never restores execution trust
+ok 154 - manifest allows only data, validates stale entries and never restores execution trust
+  ---
+  duration_ms: 0.252221
+  type: 'test'
+  ...
+# Subtest: folder FileList preserves unknown assets and .pdb instead of silently dropping them
+ok 155 - folder FileList preserves unknown assets and .pdb instead of silently dropping them
+  ---
+  duration_ms: 1.203605
+  type: 'test'
+  ...
+# Subtest: legacy SLN parses project hierarchy and converts explicitly without mutating original data
+ok 156 - legacy SLN parses project hierarchy and converts explicitly without mutating original data
+  ---
+  duration_ms: 1.55121
+  type: 'test'
+  ...
+# Subtest: solution folder edits retain comments and per-project configuration when reparenting
+ok 157 - solution folder edits retain comments and per-project configuration when reparenting
+  ---
+  duration_ms: 0.877033
+  type: 'test'
+  ...
+# Subtest: native create-only binary mutation is byte exact and undo removes created asset; scan includes unknown files
+ok 158 - native create-only binary mutation is byte exact and undo removes created asset; scan includes unknown files
+  ---
+  duration_ms: 62.490977
+  type: 'test'
+  ...
+# Subtest: CLI create-only project plan never overwrites existing files and is actually runnable
+ok 159 - CLI create-only project plan never overwrites existing files and is actually runnable
+  ---
+  duration_ms: 648.922436
+  type: 'test'
+  ...
+1..159
+# tests 159
+# suites 0
+# pass 159
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2746.988623

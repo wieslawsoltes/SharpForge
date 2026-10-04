@@ -1,0 +1,678 @@
+(node:17) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:32) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 metadata inspection preserves real assembly identities and dependency counts
+ok 1 - A23 metadata inspection preserves real assembly identities and dependency counts
+  ---
+  duration_ms: 11.282121
+  type: 'test'
+  ...
+# Subtest: A23 metadata inspection respects byte views and leaves caller bytes unchanged
+ok 2 - A23 metadata inspection respects byte views and leaves caller bytes unchanged
+  ---
+  duration_ms: 9.707048
+  type: 'test'
+  ...
+# Subtest: A23 metadata inspection rejects wrong types and malformed images explicitly
+ok 3 - A23 metadata inspection rejects wrong types and malformed images explicitly
+  ---
+  duration_ms: 0.575547
+  type: 'test'
+  ...
+# Subtest: A23 metadata inspection admits the exact byte budget and rejects the next byte
+ok 4 - A23 metadata inspection admits the exact byte budget and rejects the next byte
+  ---
+  duration_ms: 0.731452
+  type: 'test'
+  ...
+# (node:40) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 native HTTP service contributions preserve requests, diagnostics and disposal
+ok 5 - A23 native HTTP service contributions preserve requests, diagnostics and disposal
+  ---
+  duration_ms: 48.962727
+  type: 'test'
+  ...
+# Subtest: A23 VFS service contribution cannot bypass the native workspace write guard
+ok 6 - A23 VFS service contribution cannot bypass the native workspace write guard
+  ---
+  duration_ms: 14.008752
+  type: 'test'
+  ...
+# Subtest: A23 native text reads honor admitted publish and custom project extensions through the shared codec
+ok 7 - A23 native text reads honor admitted publish and custom project extensions through the shared codec
+  ---
+  duration_ms: 14.845427
+  type: 'test'
+  ...
+# (node:52) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A24 provider conformance: memory
+ok 8 - A24 provider conformance: memory
+  ---
+  duration_ms: 11.799071
+  type: 'test'
+  ...
+# Subtest: A24 provider conformance: FSA mock
+ok 9 - A24 provider conformance: FSA mock
+  ---
+  duration_ms: 12.847382
+  type: 'test'
+  ...
+# Subtest: A24 provider conformance: OPFS async mock
+ok 10 - A24 provider conformance: OPFS async mock
+  ---
+  duration_ms: 6.209848
+  type: 'test'
+  ...
+# Subtest: A24 provider conformance: native linux service
+ok 11 - A24 provider conformance: native linux service
+  ---
+  duration_ms: 14.601845
+  type: 'test'
+  ...
+# Subtest: A24 provider conformance: native linux authenticated HTTP loopback
+ok 12 - A24 provider conformance: native linux authenticated HTTP loopback
+  ---
+  duration_ms: 77.91518
+  type: 'test'
+  ...
+# Subtest: A24 memory identity and bounded writes preserve contents on conflict/quota failure
+ok 13 - A24 memory identity and bounded writes preserve contents on conflict/quota failure
+  ---
+  duration_ms: 2.631586
+  type: 'test'
+  ...
+# Subtest: A24 native HTTP conflicts retain provider codes and paths and guard directory creation during builds
+ok 14 - A24 native HTTP conflicts retain provider codes and paths and guard directory creation during builds
+  ---
+  duration_ms: 20.730591
+  type: 'test'
+  ...
+# Subtest: A24 FSA permissions and atomic writable failure preserve original bytes
+ok 15 - A24 FSA permissions and atomic writable failure preserve original bytes
+  ---
+  duration_ms: 1.063703
+  type: 'test'
+  ...
+# Subtest: A24 overlay keeps dirty buffers consistent and generated URIs read-only
+ok 16 - A24 overlay keeps dirty buffers consistent and generated URIs read-only
+  ---
+  duration_ms: 4.324677
+  type: 'test'
+  ...
+# Subtest: A24 FSA fallback directory rename rolls back when external files appear during copying
+ok 17 - A24 FSA fallback directory rename rolls back when external files appear during copying
+  ---
+  duration_ms: 2.732197
+  type: 'test'
+  ...
+# (node:64) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: MSBuild contract supports build
+ok 18 - MSBuild contract supports build
+  ---
+  duration_ms: 1.932923
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports rebuild
+ok 19 - MSBuild contract supports rebuild
+  ---
+  duration_ms: 0.500895
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports clean
+ok 20 - MSBuild contract supports clean
+  ---
+  duration_ms: 0.108053
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports restore
+ok 21 - MSBuild contract supports restore
+  ---
+  duration_ms: 0.230167
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports pack
+ok 22 - MSBuild contract supports pack
+  ---
+  duration_ms: 0.15917
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports publish
+ok 23 - MSBuild contract supports publish
+  ---
+  duration_ms: 0.084608
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports test
+ok 24 - MSBuild contract supports test
+  ---
+  duration_ms: 0.133381
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports target
+ok 25 - MSBuild contract supports target
+  ---
+  duration_ms: 0.106671
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports evaluate
+ok 26 - MSBuild contract supports evaluate
+  ---
+  duration_ms: 0.330919
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports preprocess
+ok 27 - MSBuild contract supports preprocess
+  ---
+  duration_ms: 0.288114
+  type: 'test'
+  ...
+# Subtest: MSBuild contract supports targets
+ok 28 - MSBuild contract supports targets
+  ---
+  duration_ms: 0.140843
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "../outside.csproj"
+ok 29 - MSBuild rejects invalid workspace path "../outside.csproj"
+  ---
+  duration_ms: 0.214664
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "/tmp/X.csproj"
+ok 30 - MSBuild rejects invalid workspace path "/tmp/X.csproj"
+  ---
+  duration_ms: 0.057346
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "C:\\\\X.csproj"
+ok 31 - MSBuild rejects invalid workspace path "C:\\\\X.csproj"
+  ---
+  duration_ms: 0.047441
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a/../X.csproj"
+ok 32 - MSBuild rejects invalid workspace path "a/../X.csproj"
+  ---
+  duration_ms: 0.043866
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a//X.csproj"
+ok 33 - MSBuild rejects invalid workspace path "a//X.csproj"
+  ---
+  duration_ms: 0.039179
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a/./X.csproj"
+ok 34 - MSBuild rejects invalid workspace path "a/./X.csproj"
+  ---
+  duration_ms: 0.038028
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "-something.csproj"
+ok 35 - MSBuild rejects invalid workspace path "-something.csproj"
+  ---
+  duration_ms: 0.038518
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "https://x.csproj"
+ok 36 - MSBuild rejects invalid workspace path "https://x.csproj"
+  ---
+  duration_ms: 0.036615
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path "a\\u0000.csproj"
+ok 37 - MSBuild rejects invalid workspace path "a\\u0000.csproj"
+  ---
+  duration_ms: 0.043646
+  type: 'test'
+  ...
+# Subtest: MSBuild rejects invalid workspace path ""
+ok 38 - MSBuild rejects invalid workspace path ""
+  ---
+  duration_ms: 0.03941
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"action":"exec"}
+ok 39 - MSBuild request rejects {"action":"exec"}
+  ---
+  duration_ms: 0.104116
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"project":"input.cs"}
+ok 40 - MSBuild request rejects {"project":"input.cs"}
+  ---
+  duration_ms: 0.057477
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"properties":[]}
+ok 41 - MSBuild request rejects {"properties":[]}
+  ---
+  duration_ms: 0.04673
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":0}
+ok 42 - MSBuild request rejects {"maxNodes":0}
+  ---
+  duration_ms: 0.069235
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":65}
+ok 43 - MSBuild request rejects {"maxNodes":65}
+  ---
+  duration_ms: 0.054152
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"maxNodes":1.2}
+ok 44 - MSBuild request rejects {"maxNodes":1.2}
+  ---
+  duration_ms: 0.050216
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"verbosity":"verbose"}
+ok 45 - MSBuild request rejects {"verbosity":"verbose"}
+  ---
+  duration_ms: 0.062735
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"arguments":["not-a-switch"]}
+ok 46 - MSBuild request rejects {"arguments":["not-a-switch"]}
+  ---
+  duration_ms: 0.100852
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"arguments":["-p:X=a\\nb"]}
+ok 47 - MSBuild request rejects {"arguments":["-p:X=a\\nb"]}
+  ---
+  duration_ms: 0.060602
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"targets":["x;Build"]}
+ok 48 - MSBuild request rejects {"targets":["x;Build"]}
+  ---
+  duration_ms: 0.067702
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"propertyNames":["A,B"]}
+ok 49 - MSBuild request rejects {"propertyNames":["A,B"]}
+  ---
+  duration_ms: 0.05267
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"itemNames":["*"]}
+ok 50 - MSBuild request rejects {"itemNames":["*"]}
+  ---
+  duration_ms: 0.053861
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"trusted":"true"}
+ok 51 - MSBuild request rejects {"trusted":"true"}
+  ---
+  duration_ms: 0.077987
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"restore":1}
+ok 52 - MSBuild request rejects {"restore":1}
+  ---
+  duration_ms: 0.196366
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"action":"target"}
+ok 53 - MSBuild request rejects {"action":"target"}
+  ---
+  duration_ms: 0.076715
+  type: 'test'
+  ...
+# Subtest: MSBuild request rejects {"properties":{"A":"1","a":"2"}}
+ok 54 - MSBuild request rejects {"properties":{"A":"1","a":"2"}}
+  ---
+  duration_ms: 0.131267
+  type: 'test'
+  ...
+# Subtest: Global property parser preserves equals, spaces, Unicode, no shell interpretation
+ok 55 - Global property parser preserves equals, spaces, Unicode, no shell interpretation
+  ---
+  duration_ms: 1.286008
+  type: 'test'
+  ...
+# Subtest: Properties escape all MSBuild special characters without shell quoting
+ok 56 - Properties escape all MSBuild special characters without shell quoting
+  ---
+  duration_ms: 0.156897
+  type: 'test'
+  ...
+# Subtest: Node invocation preserves actual engine and project path; build flags global properties
+ok 57 - Node invocation preserves actual engine and project path; build flags global properties
+  ---
+  duration_ms: 0.440093
+  type: 'test'
+  ...
+# Subtest: MSBuild.exe engine omits dotnet subcommand and forwards advanced switches separately
+ok 58 - MSBuild.exe engine omits dotnet subcommand and forwards advanced switches separately
+  ---
+  duration_ms: 0.369797
+  type: 'test'
+  ...
+# Subtest: Evaluation emits JSON queries without targets, restore or graph execution by default
+ok 59 - Evaluation emits JSON queries without targets, restore or graph execution by default
+  ---
+  duration_ms: 0.150837
+  type: 'test'
+  ...
+# Subtest: Native build calls Build
+ok 60 - Native build calls Build
+  ---
+  duration_ms: 0.134593
+  type: 'test'
+  ...
+# Subtest: Native rebuild calls Rebuild
+ok 61 - Native rebuild calls Rebuild
+  ---
+  duration_ms: 0.131539
+  type: 'test'
+  ...
+# Subtest: Native restore calls Restore
+ok 62 - Native restore calls Restore
+  ---
+  duration_ms: 0.06687
+  type: 'test'
+  ...
+# Subtest: Native pack calls Pack
+ok 63 - Native pack calls Pack
+  ---
+  duration_ms: 0.057226
+  type: 'test'
+  ...
+# Subtest: Native publish calls Publish
+ok 64 - Native publish calls Publish
+  ---
+  duration_ms: 0.129586
+  type: 'test'
+  ...
+# Subtest: Native clean calls Clean
+ok 65 - Native clean calls Clean
+  ---
+  duration_ms: 0.078178
+  type: 'test'
+  ...
+# Subtest: Native test calls VSTest
+ok 66 - Native test calls VSTest
+  ---
+  duration_ms: 0.055243
+  type: 'test'
+  ...
+# Subtest: custom targets and requested target results are explicit
+ok 67 - custom targets and requested target results are explicit
+  ---
+  duration_ms: 0.135555
+  type: 'test'
+  ...
+# Subtest: preprocessed and target listing files use the owner-provided job directory
+ok 68 - preprocessed and target listing files use the owner-provided job directory
+  ---
+  duration_ms: 0.135154
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic 1>C:\\Code Dir\\App.cs(12,7): error CS1002: ; expected [C:\\Code Dir\\App.csproj]
+ok 69 - Parses diagnostic 1>C:\\Code Dir\\App.cs(12,7): error CS1002: ; expected [C:\\Code Dir\\App.csproj]
+  ---
+  duration_ms: 0.633965
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic /tmp/A.cs(3,4,3,8): warning CS0168: unused [/tmp/App.csproj]
+ok 70 - Parses diagnostic /tmp/A.cs(3,4,3,8): warning CS0168: unused [/tmp/App.csproj]
+  ---
+  duration_ms: 0.28551
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic MSBUILD : error MSB1001: Unknown switch.
+ok 71 - Parses diagnostic MSBUILD : error MSB1001: Unknown switch.
+  ---
+  duration_ms: 0.074583
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic App.csproj : error NU1101: Package unavailable
+ok 72 - Parses diagnostic App.csproj : error NU1101: Package unavailable
+  ---
+  duration_ms: 0.084267
+  type: 'test'
+  ...
+# Subtest: Parses diagnostic CSC : warning CS2008: No source files specified.
+ok 73 - Parses diagnostic CSC : warning CS2008: No source files specified.
+  ---
+  duration_ms: 0.045589
+  type: 'test'
+  ...
+# Subtest: Non-diagnostic output is never promoted to an error
+ok 74 - Non-diagnostic output is never promoted to an error
+  ---
+  duration_ms: 0.17281
+  type: 'test'
+  ...
+# Subtest: MSBuild JSON parsing tolerates startup banner but rejects malformed/trailing logs
+ok 75 - MSBuild JSON parsing tolerates startup banner but rejects malformed/trailing logs
+  ---
+  duration_ms: 0.349777
+  type: 'test'
+  ...
+# Subtest: Browser client uses same-origin bearer requests; token is not persisted in request URL
+ok 76 - Browser client uses same-origin bearer requests; token is not persisted in request URL
+  ---
+  duration_ms: 0.466302
+  type: 'test'
+  ...
+# Subtest: Browser client strips only the fragment token and retains unrelated hash data
+ok 77 - Browser client strips only the fragment token and retains unrelated hash data
+  ---
+  duration_ms: 0.239461
+  type: 'test'
+  ...
+# Subtest: Browser client propagates disk conflicts and rejects foreign endpoint origins
+ok 78 - Browser client propagates disk conflicts and rejects foreign endpoint origins
+  ---
+  duration_ms: 0.401605
+  type: 'test'
+  ...
+# (node:72) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Workspace scan lists build/source files, not outputs or ignored folders
+ok 79 - Workspace scan lists build/source files, not outputs or ignored folders
+  ---
+  duration_ms: 34.376846
+  type: 'test'
+  ...
+# Subtest: Native read returns content and SHA-256; existing saves use actual disk data
+ok 80 - Native read returns content and SHA-256; existing saves use actual disk data
+  ---
+  duration_ms: 7.527124
+  type: 'test'
+  ...
+# Subtest: Preflight checks all files before write on a multi-file conflict
+ok 81 - Preflight checks all files before write on a multi-file conflict
+  ---
+  duration_ms: 6.904094
+  type: 'test'
+  ...
+# Subtest: Missing hash, duplicate paths, invalid XML and invalid file types fail without writes
+ok 82 - Missing hash, duplicate paths, invalid XML and invalid file types fail without writes
+  ---
+  duration_ms: 4.57819
+  type: 'test'
+  ...
+# Subtest: Create project files is exclusive and does not overwrite existing files
+ok 83 - Create project files is exclusive and does not overwrite existing files
+  ---
+  duration_ms: 4.142513
+  type: 'test'
+  ...
+# Subtest: Workspace APIs reject traversal and reserved paths
+ok 84 - Workspace APIs reject traversal and reserved paths
+  ---
+  duration_ms: 3.154264
+  type: 'test'
+  ...
+# Subtest: Symlink files and ancestor folders are never followed by API reads/saves
+ok 85 - Symlink files and ancestor folders are never followed by API reads/saves
+  ---
+  duration_ms: 6.216678
+  type: 'test'
+  ...
+# Subtest: Native operations require host and request trust, including evaluation
+ok 86 - Native operations require host and request trust, including evaluation
+  ---
+  duration_ms: 3.393844
+  type: 'test'
+  ...
+# Subtest: Real child-process transport collects UTF-8 logs, diagnostics and artifacts (simulated engine)
+ok 87 - Real child-process transport collects UTF-8 logs, diagnostics and artifacts (simulated engine)
+  ---
+  duration_ms: 63.493927
+  type: 'test'
+  ...
+# Subtest: Evaluation result and inspection files are exposed with actual invocation (simulator)
+ok 88 - Evaluation result and inspection files are exposed with actual invocation (simulator)
+  ---
+  duration_ms: 113.063494
+  type: 'test'
+  ...
+# Subtest: Nonzero exit is failure even when output is otherwise valid
+ok 89 - Nonzero exit is failure even when output is otherwise valid
+  ---
+  duration_ms: 31.388502
+  type: 'test'
+  ...
+# Subtest: Missing native executable is explicit; never substitutes the browser compiler
+ok 90 - Missing native executable is explicit; never substitutes the browser compiler
+  ---
+  duration_ms: 9.672687
+  type: 'test'
+  ...
+# Subtest: Cancellation terminates an actual long-running child while a queued operation completes
+ok 91 - Cancellation terminates an actual long-running child while a queued operation completes
+  ---
+  duration_ms: 116.898979
+  type: 'test'
+  ...
+# Subtest: Output limits cancel noisy child instead of unbounded capture
+ok 92 - Output limits cancel noisy child instead of unbounded capture
+  ---
+  duration_ms: 37.664952
+  type: 'test'
+  ...
+# Subtest: Timeout cancels jobs and host shutdown prevents future launches
+ok 93 - Timeout cancels jobs and host shutdown prevents future launches
+  ---
+  duration_ms: 110.184269
+  type: 'test'
+  ...
+# Subtest: Completed job retention is bounded and cursors do not repeat logs
+ok 94 - Completed job retention is bounded and cursors do not repeat logs
+  ---
+  duration_ms: 77.435156
+  type: 'test'
+  ...
+# Subtest: Loopback HTTP host authenticates APIs, enforces same-origin and does not leak token
+ok 95 - Loopback HTTP host authenticates APIs, enforces same-origin and does not leak token
+  ---
+  duration_ms: 80.874439
+  type: 'test'
+  ...
+# Subtest: HTTP job start/poll/artifact and JSON file writes use real API routes (simulated engine)
+ok 96 - HTTP job start/poll/artifact and JSON file writes use real API routes (simulated engine)
+  ---
+  duration_ms: 66.383371
+  type: 'test'
+  ...
+# Subtest: HTTP rejects non-JSON mutations, untrusted operations, invalid cursors and saves during a build
+ok 97 - HTTP rejects non-JSON mutations, untrusted operations, invalid cursors and saves during a build
+  ---
+  duration_ms: 19.382139
+  type: 'test'
+  ...
+# Subtest: Native saves preserve utf-8-bom bytes and SHA-256
+ok 98 - Native saves preserve utf-8-bom bytes and SHA-256
+  ---
+  duration_ms: 5.358325
+  type: 'test'
+  ...
+# Subtest: Native saves preserve utf-16le bytes and SHA-256
+ok 99 - Native saves preserve utf-16le bytes and SHA-256
+  ---
+  duration_ms: 4.019597
+  type: 'test'
+  ...
+# Subtest: Native saves preserve utf-16be bytes and SHA-256
+ok 100 - Native saves preserve utf-16be bytes and SHA-256
+  ---
+  duration_ms: 4.542516
+  type: 'test'
+  ...
+# Subtest: Native MSBuild response files must be workspace files before process creation
+ok 101 - Native MSBuild response files must be workspace files before process creation
+  ---
+  duration_ms: 41.417416
+  type: 'test'
+  ...
+# Subtest: Terminal status is not visible before output discovery completes
+ok 102 - Terminal status is not visible before output discovery completes
+  ---
+  duration_ms: 42.256991
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves project basename diagnostic
+ok 103 - Native diagnostic resolves project basename diagnostic
+  ---
+  duration_ms: 3.033932
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves project-relative compiler filename
+ok 104 - Native diagnostic resolves project-relative compiler filename
+  ---
+  duration_ms: 2.109609
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves project-relative generated file
+ok 105 - Native diagnostic resolves project-relative generated file
+  ---
+  duration_ms: 2.094797
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves workspace-prefixed filename
+ok 106 - Native diagnostic resolves workspace-prefixed filename
+  ---
+  duration_ms: 2.064131
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves linked source in sibling directory
+ok 107 - Native diagnostic resolves linked source in sibling directory
+  ---
+  duration_ms: 2.257542
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves target-framework project suffix
+ok 108 - Native diagnostic resolves target-framework project suffix
+  ---
+  duration_ms: 2.000405
+  type: 'test'
+  ...
+# Subtest: Native diagnostic resolves external linked source remains not navigable
+ok 109 - Native diagnostic resolves external linked source remains not navigable
+  ---
+  duration_ms: 2.026644
+  type: 'test'
+  ...
+1..109
+# tests 109
+# suites 0
+# pass 109
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4022.63398

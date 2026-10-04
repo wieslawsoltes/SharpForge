@@ -1,0 +1,9 @@
+{
+  "reason": "Sixth final-tree benchmark process was not launched because actual free blocks fell below512MiB",
+  "completedSuccessfulProcesses": 5,
+  "remainingProcess": {
+    "label": "final",
+    "pair": 3
+  },
+  "capturedAt": "2026-10-04T00:33:27.832598+00:00"
+}

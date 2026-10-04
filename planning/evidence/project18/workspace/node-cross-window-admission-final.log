@@ -1,0 +1,34 @@
+✔ cross-window adoption keeps both sessions dirty until an explicit physical save (26.555454ms)
+✔ a peer buffer resolution prevents older file undo from overwriting it (14.480666ms)
+✔ a peer buffer resolution prevents older file redo from overwriting it (7.31043ms)
+✔ cross-window application verifies exact local and selected bytes before changing a buffer (2.272718ms)
+✔ read-only, generated, missing, malformed and oversized peer resolutions are rejected (2.421453ms)
+✔ an asynchronous edit invalidates peer application before the session commit (2.033969ms)
+✔ an asynchronous replace invalidates peer application before the session commit (1.526032ms)
+✔ an asynchronous bytes invalidates peer application before the session commit (1.858894ms)
+✔ coordinator snapshots local admission before an awaited remote read mutates the same object (1.289456ms)
+✔ a newer notification invalidates an older remote checkpoint before conflict application (0.95489ms)
+✔ a remote notification during async application remains visible (newer remote) (1.003654ms)
+✔ a remote notification during async application remains visible (mine) (0.615659ms)
+✔ a document admits one resolution at a time and cancellation reads no remote checkpoint (0.842831ms)
+✔ coordinator and session preserve UTF-16 mixed endings and binary bytes through an unsaved adoption (7.030427ms)
+✔ explorer sends divergent revisions without waiting for recovery and preserves the other buffer (13.591486ms)
+✔ explorer serializes overlapping checkpoints and saves metadata-only changes with binary bytes (6.320325ms)
+✔ unbound workspaces with the same display name never establish an editing channel (0.969804ms)
+✔ recent identity registration uses isSameEntry and serializes simultaneous first opens (1.042903ms)
+✔ cross-window UTF-16 conflict verifies physical encoding and emits the actual persisted hash (1.426072ms)
+✔ missing symbol ids use source interval ownership and malformed owner cycles stay renderable (0.923874ms)
+✔ batch path rewrites rebase original relative paths once across several moves (1.429317ms)
+✔ revision channels mark peer buffers stale without modifying them and discard duplicate envelopes (5.793981ms)
+✔ two windows saving one baseline yield one commit and one conflict (2.79061ms)
+✔ save ownership rejects unavailable APIs and cancellation without writing (1.08016ms)
+✔ cross-window conflicts require a choice and merge disjoint edits with a new shared revision (3.09534ms)
+✔ cross-window resolution rejects local or remote edits made after the conflict was presented (1.330878ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1391.603871

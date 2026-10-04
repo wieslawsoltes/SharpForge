@@ -1,0 +1,127 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+(node:26) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "areas": 30,
+  "nodeFiles": 510,
+  "browserScripts": 27,
+  "unassigned": 0,
+  "duplicate": 0
+}
+(node:50) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Checked 2129 JavaScript modules; 0 syntax errors.
+(node:70) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "passed": false,
+  "inspected": 2125,
+  "modules": 2125,
+  "errors": [
+    {
+      "path": "packages/msbuild/src/testing/portable/managed-runtime.js",
+      "operation": "dynamic-import",
+      "sha256": "53c0f0b32c41eff6b3d405a821bcdc233c6131de0c1a696fba652a81a78aea1b",
+      "count": 2,
+      "lines": [
+        7,
+        8
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/runtime-data.js",
+      "operation": "dynamic-import",
+      "sha256": "7cbf0c4b71d802187edd9707acb3afe910cc4ca76e8d041605ae635378776138",
+      "count": 2,
+      "lines": [
+        36,
+        43
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+      "operation": "dynamic-import",
+      "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+      "count": 1,
+      "lines": [
+        124
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "packages/project-system/examples/archive-benchmark.mjs",
+      "operation": "dynamic-import",
+      "sha256": "dcc153e0bcfba418d32f0bb1050824e5d302fa7ab9d6562db4ec3458ed873f99",
+      "count": 1,
+      "lines": [
+        34
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "packages/workspace/src/vfs/fsa.js",
+      "operation": "dynamic-import",
+      "sha256": "14d80f2e335390dd109041820f61c362cb7e8214adc3e70904f13c951ffb86aa",
+      "count": 1,
+      "lines": [
+        247
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "scripts/benchmark-a24-integrity.js",
+      "operation": "dynamic-import",
+      "sha256": "24bdeba232a89dc616313a351335d799943616ff9f70119ad6fc2aed7de3518a",
+      "count": 1,
+      "lines": [
+        18
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "tests/a23-native-policy.test.js",
+      "operation": "dynamic-import",
+      "sha256": "e4eef9974561b6a54b4a79f7602932b045481d0c034e160dfac9410632b06808",
+      "count": 1,
+      "lines": [
+        80
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "tests/support/a24-browser-ui.js",
+      "operation": "dynamic-import",
+      "sha256": "5bdf69c0e3136d987910f7c816f32f3c7d181f628a03f654badf49f73b6030d8",
+      "count": 4,
+      "lines": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "tests/support/a24-large-explorer.js",
+      "operation": "dynamic-import",
+      "sha256": "c8dba0b13dbba415a62292473cae17c9ed4e52740e55943d67bc2978f7d93379",
+      "count": 2,
+      "lines": [
+        2,
+        3
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "name": "document-navigation",
+  "branch": "codex/p18-document-navigation",
+  "baseBranch": "main",
+  "source": "746a0ee6002b4cfbfe154457c24a85ddd48ab927",
+  "sourceBase": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "tree": "501e9f33246f3a1478e8137867d57fd31a42670d",
+  "baseTree": "f1e22cde86ba87205730730aeadc877fedc8dda0",
+  "paths": [
+    "apps/studio/WORKSPACE-NAVIGATION.md",
+    "apps/studio/workspace-navigation.js",
+    "apps/studio/menus/source-documents.js",
+    "apps/studio/menus/context.js",
+    "tests/a24-workspace-navigation.test.js",
+    "tests/manifests/A24.json"
+  ],
+  "originalSource": "76a30d395f25842582a829195c22a104edb61c90",
+  "stats": "6 files changed, 236 insertions(+), 2 deletions(-)",
+  "sha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+  "pr": 3622,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/3622",
+  "draft": true,
+  "readback": {
+    "head": "codex/p18-document-navigation",
+    "headSha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+    "base": "main",
+    "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "draft": true,
+    "mergeable": null,
+    "mergeableState": "unknown",
+    "bodyVerified": true
+  },
+  "gitFetchProof": {
+    "sha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+    "tree": "501e9f33246f3a1478e8137867d57fd31a42670d",
+    "parents": [
+      "57a93baa5d4df1308f92ca503995efac43e0f374",
+      "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+    ]
+  },
+  "mergeTreeProof": {
+    "main": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "exitCode": 0,
+    "tree": "501e9f33246f3a1478e8137867d57fd31a42670d",
+    "note": "Actual forward merge committed; no handwritten resolution. All six navigation blobs preserved, every other path exactly matches pinned main."
+  },
+  "workflowRuns": [
+    {
+      "id": 37174798519,
+      "name": "Validate SharpForge",
+      "event": "pull_request",
+      "headSha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+      "path": ".github/workflows/ci.yml",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "qualificationNote": "All five navigation cases passed in the completed Node26.10.0 host cohort at8e294166 (500 tests/495passed/5unrelated failures), after earlier Node22 23/23 cohort. Current required core passed run37174798519/job111355093288. No new local tests/builds. Final application composition qualification remains root-owned and separate.",
+  "schemaVersion": 1,
+  "sourceParents": [
+    "5c3d21616a33577330a3696ced3d2d9087446964",
+    "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+  ],
+  "historicalPublications": [
+    {
+      "name": "document-navigation",
+      "branch": "codex/p18-document-navigation",
+      "baseBranch": "main",
+      "source": "5c3d21616a33577330a3696ced3d2d9087446964",
+      "sourceBase": "2e700ad86970548dc8f476598b36cdae610093a1",
+      "tree": "e99ec71257ed3ee05ff84c67506ae82ba64e1c9a",
+      "baseTree": "7e4cf4424f707c70647605ad39935cdacfee9f3d",
+      "paths": [
+        "apps/studio/WORKSPACE-NAVIGATION.md",
+        "apps/studio/workspace-navigation.js",
+        "apps/studio/menus/source-documents.js",
+        "apps/studio/menus/context.js",
+        "tests/a24-workspace-navigation.test.js",
+        "tests/manifests/A24.json"
+      ],
+      "originalSource": "76a30d395f25842582a829195c22a104edb61c90",
+      "stats": "6 files changed, 236 insertions(+), 2 deletions(-)",
+      "sha": "57a93baa5d4df1308f92ca503995efac43e0f374",
+      "pr": 3622,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3622",
+      "draft": true,
+      "readback": {
+        "head": "codex/p18-document-navigation",
+        "headSha": "57a93baa5d4df1308f92ca503995efac43e0f374",
+        "base": "main",
+        "baseSha": "3d2b18d46b869da2667bbe3bdde27c81dcb82d72",
+        "reportedMergeable": false
+      },
+      "gitFetchProof": {
+        "sha": "57a93baa5d4df1308f92ca503995efac43e0f374",
+        "tree": "e99ec71257ed3ee05ff84c67506ae82ba64e1c9a",
+        "parents": [
+          "2e700ad86970548dc8f476598b36cdae610093a1"
+        ]
+      },
+      "mergeTreeProof": {
+        "main": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+        "exitCode": 0,
+        "tree": "276c3d094f4cf233c6172187361e9340cd541e94",
+        "note": "No changed projection path overlaps the newer main; no branch refresh or additional CI requested."
+      },
+      "workflowRuns": [
+        {
+          "id": 37165776806,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "success",
+          "run_number": 1436,
+          "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165776806/jobs",
+          "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165776806/logs",
+          "workflow_id": 373818434
+        },
+        {
+          "id": 37165774874,
+          "name": "Validate SharpForge",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "run_number": 1435,
+          "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165774874/jobs",
+          "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165774874/logs",
+          "workflow_id": 373818434
+        }
+      ],
+      "qualificationNote": "Node22 integration23/23 included all five unchanged history/menu cases; final host replay queued. Required core successful. No full browser-entry qualification."
+    }
+  ],
+  "forwardSyncs": [
+    {
+      "name": "document-navigation-forward-sync",
+      "sourceHead": "746a0ee6002b4cfbfe154457c24a85ddd48ab927",
+      "sourceBase": "5c3d21616a33577330a3696ced3d2d9087446964",
+      "sourceParents": [
+        "5c3d21616a33577330a3696ced3d2d9087446964",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "sourceTree": "501e9f33246f3a1478e8137867d57fd31a42670d",
+      "remoteParents": [
+        "57a93baa5d4df1308f92ca503995efac43e0f374",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "remotePreviousTree": "e99ec71257ed3ee05ff84c67506ae82ba64e1c9a",
+      "treeSynthesisBase": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "treeSynthesisBaseTree": "f1e22cde86ba87205730730aeadc877fedc8dda0",
+      "branch": "codex/p18-document-navigation",
+      "baseBranch": "main",
+      "pr": 3622,
+      "paths": [
+        "apps/studio/WORKSPACE-NAVIGATION.md",
+        "apps/studio/menus/context.js",
+        "apps/studio/menus/source-documents.js",
+        "apps/studio/workspace-navigation.js",
+        "tests/a24-workspace-navigation.test.js",
+        "tests/manifests/A24.json"
+      ],
+      "navigationBlobsUnchanged": true,
+      "upstreamOutsideNavigationUnchanged": true,
+      "manualResolutions": [],
+      "statsRelativePinnedMain": "6 files changed, 236 insertions(+), 2 deletions(-)",
+      "remoteCommit": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+      "treeVerified": true,
+      "qualification": {
+        "navigationCasesPassed": 5,
+        "node": "v26.10.0",
+        "source": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "fullHostAggregate": {
+          "tests": 500,
+          "passed": 495,
+          "failed": 5
+        },
+        "freshFunctionalValidation": "not run",
+        "finalCompositionQualification": "pending root",
+        "requiredCore": {
+          "runId": 37174798519,
+          "jobId": 111355093288,
+          "head": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37174798519/job/111355093288"
+        },
+        "jobs": [
+          {
+            "id": 111355093288,
+            "name": "core",
+            "conclusion": "success"
+          },
+          {
+            "id": 111355167332,
+            "name": "core-platforms",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355167982,
+            "name": "packages",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355168035,
+            "name": "build",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355168609,
+            "name": "native-il",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355168620,
+            "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355168856,
+            "name": "native-msbuild",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355169070,
+            "name": "clr-wasm",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111355169258,
+            "name": "ci-ok",
+            "conclusion": "skipped"
+          }
+        ],
+        "localTestsOrBuildsRun": false,
+        "evidence": [
+          "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.tap",
+          "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json"
+        ]
+      },
+      "schemaVersion": 1,
+      "recordedAt": "2026-10-04T03:47:12.893Z",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3622",
+      "readback": {
+        "head": "codex/p18-document-navigation",
+        "headSha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+        "base": "main",
+        "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+        "draft": true,
+        "mergeable": null,
+        "mergeableState": "unknown",
+        "bodyVerified": true
+      },
+      "gitFetchProof": {
+        "sha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+        "tree": "501e9f33246f3a1478e8137867d57fd31a42670d",
+        "parents": [
+          "57a93baa5d4df1308f92ca503995efac43e0f374",
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ]
+      },
+      "branchRefVerified": true,
+      "workflowRuns": [
+        {
+          "id": 37174798519,
+          "name": "Validate SharpForge",
+          "event": "pull_request",
+          "headSha": "1f9d2c21e6801e7b15aa8c68a0493ec63810a274",
+          "path": ".github/workflows/ci.yml",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

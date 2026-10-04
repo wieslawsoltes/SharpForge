@@ -1,0 +1,30 @@
+✔ inner evaluations isolate framework-conditioned sources, properties, items and generated documents (12.116295ms)
+✔ inactive context diagnostics are labeled and cannot block the selected build context (7.12056ms)
+✔ active context changes re-evaluate configuration/runtime and invalidate stale identities (4.00484ms)
+✔ ProjectReference selects nearest compatible framework independently of the explorer active context (3.549173ms)
+✔ diamond dependencies retain two independently compiled contexts of the same library (2.970385ms)
+✔ portable targets update only the requested framework context and preserve the selected context (5.482669ms)
+✔ context graphs reject incompatible references and context-budget overflow explicitly (0.843092ms)
+✔ shared native/portable selection removes obsolete contexts on replacement (0.479223ms)
+✔ selected contexts expose metadata-only paths before hydration and preserve available assembly bytes (0.776681ms)
+✔ resource input discovery expands after resx hydration and never loads unrelated compile files (1.939495ms)
+✔ 47 TFM parsing rows, all compatibility pairs and nearest assets match native NuGet.Frameworks (1204.522301ms)
+✔ unsupported frameworks are explicit and do not become compatible fallback assets (0.237809ms)
+✔ portable string members match the installed native MSBuild expression evaluator (219.339465ms)
+✔ portable static functions and intrinsic arithmetic match native MSBuild (254.272967ms)
+✔ nested Directory.Build.props parent imports and GetPathOfFileAbove match native MSBuild (558.32266ms)
+✔ portable SDK defaults match 25 native properties and default item membership (499.875254ms)
+✔ portable generic item transforms, metadata and operations match native MSBuild (257.371927ms)
+✔ 30 ordered item-evaluation fixtures match native MSBuild (249.104472ms)
+✔ portable generated file target matches native WriteLinesToFile and Compile membership (291.718908ms)
+✔ 12 resource identities match native CreateManifestResourceNames including culture and dependent sources (699.155376ms)
+✔ portable resources are readable by the native CLR and native string resources round-trip (972.849726ms)
+✔ native satellite assembly retains the culture-qualified manifest resource name (3783.084333ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8086.365756

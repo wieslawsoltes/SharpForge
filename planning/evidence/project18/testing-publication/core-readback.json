@@ -1,0 +1,332 @@
+{
+  "recordedAt": "2026-10-04 04:55:00 UTC",
+  "interpretation": "The required core job passed for each exact head. Skipped unit/native/browser/platform work is not counted as qualification. Step profiles are exact deduplicated job readbacks.",
+  "stepProfiles": [
+    [
+      {
+        "name": "Set up job",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+        "conclusion": "success"
+      },
+      {
+        "name": "Review contract changes and seam lock against the PR snapshot",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run npm run check",
+        "conclusion": "success"
+      },
+      {
+        "name": "Plan affected areas with conservative fallback",
+        "conclusion": "success"
+      },
+      {
+        "name": "Reject expired test quarantines",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run npm test",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Run npm run build",
+        "conclusion": "success"
+      },
+      {
+        "name": "Require a clean checkout",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Full qualification Python infrastructure regressions",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Run ./.github/actions/qualification-evidence",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Record provenance for the existing PR preview build",
+        "conclusion": "success"
+      },
+      {
+        "name": "Upload PR preview without a second build or deployment",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "conclusion": "success"
+      },
+      {
+        "name": "Complete job",
+        "conclusion": "success"
+      }
+    ]
+  ],
+  "checks": [
+    {
+      "pr": 3676,
+      "head": "c7449d06738db5a2b322dbfeba544f321c09af2e",
+      "runId": 37174198369,
+      "jobId": 111353291984,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3680,
+      "head": "d4f4df7a485a877c78dc0b27fa1080d6fc473a33",
+      "runId": 37174287609,
+      "jobId": 111353553378,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3703,
+      "head": "81e9ae2e0c6d424d5a45c29c5779f80eee6878c2",
+      "runId": 37168809359,
+      "jobId": 111337340538,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3717,
+      "head": "0dfdc76c253dace9d2c0870a25c11b1900cef2c8",
+      "runId": 37169006131,
+      "jobId": 111337938534,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3737,
+      "head": "100fa0b9ff7734e7c34853b1e5fa8698e87b8b66",
+      "runId": 37169446168,
+      "jobId": 111339221144,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3767,
+      "head": "d8a62ba5cff1d70960f3fec886542d8d75870fab",
+      "runId": 37175129815,
+      "jobId": 111356071729,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3789,
+      "head": "edce4592e010dba4eb6559b76e0e69be4de85953",
+      "runId": 37174647315,
+      "jobId": 111354637707,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3816,
+      "head": "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+      "runId": 37173976082,
+      "jobId": 111352613877,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3828,
+      "head": "18a93a256fb77b01846a002bc7c83dc11ff3c1ee",
+      "runId": 37177309280,
+      "jobId": 111362513325,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3841,
+      "head": "4db66c018c4c9db3ee8070dab668602c2e148660",
+      "runId": 37177310577,
+      "jobId": 111362517281,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3845,
+      "head": "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+      "runId": 37177312402,
+      "jobId": 111362522595,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3872,
+      "head": "0cc07293309772f32dac8d5dd09bdb5c6a798e0d",
+      "runId": 37176884222,
+      "jobId": 111361247820,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3880,
+      "head": "d49d58ed476dee5f0427528de00ebb260a29a2a8",
+      "runId": 37173981062,
+      "jobId": 111352629362,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3903,
+      "head": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+      "runId": 37175318708,
+      "jobId": 111356628229,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3908,
+      "head": "224da54ab1f5f3d53be6c83fda3b1dceee5921dd",
+      "runId": 37175360031,
+      "jobId": 111356747106,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3915,
+      "head": "03432c9ab0d6108adb29b31f5e78ce7d76947538",
+      "runId": 37176476761,
+      "jobId": 111360011917,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3922,
+      "head": "cbd0ed9f978770b594a49004414e109dda95b16b",
+      "runId": 37176886108,
+      "jobId": 111361254038,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3956,
+      "head": "05d4c991a132643ce05248c7f42f3b2b0f168c70",
+      "runId": 37177478200,
+      "jobId": 111363019499,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3973,
+      "head": "87af20b3951ee05be79357190e1babb74dff3e87",
+      "runId": 37177754316,
+      "jobId": 111363845120,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 3991,
+      "head": "c92984e79368d4f1d863a8e50a6e0906d3ba3b54",
+      "runId": 37178301056,
+      "jobId": 111365462027,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 4129,
+      "head": "cde580cba3b5183098e63190ed8d6af835c992be",
+      "runId": 37175610173,
+      "jobId": 111357479762,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 4193,
+      "head": "75fd6dc0eb76d8d5137109a419f13238903be89d",
+      "runId": 37176551737,
+      "jobId": 111360240823,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    },
+    {
+      "pr": 4181,
+      "head": "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+      "runId": 37176518258,
+      "jobId": 111360136578,
+      "status": "completed",
+      "conclusion": "success",
+      "stepProfile": 0,
+      "skippedJobProfile": 0
+    }
+  ],
+  "rawCapture": {
+    "path": "p18-testing-publication/testing-final-ci.json",
+    "sha256": "231d25f7462c14b8af81a1346012037c14d8e6a291d673ba603b7791f1265a4e"
+  },
+  "skippedJobProfiles": [
+    [
+      "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+      "build",
+      "ci-ok",
+      "clr-wasm",
+      "core-platforms",
+      "native-il",
+      "native-msbuild",
+      "packages"
+    ]
+  ]
+}

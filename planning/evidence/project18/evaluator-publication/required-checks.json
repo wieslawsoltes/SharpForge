@@ -1,0 +1,1794 @@
+{
+  "evaluation-config": {
+    "workflowRuns": [
+      {
+        "id": 37164505273,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1370,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164505273/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164505273/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37164501541,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1369,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164501541/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164501541/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111324566905,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111324640533,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324641033,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324641259,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324641304,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324642076,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324642329,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324642495,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324642726,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164505273,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "framework-contexts": {
+    "workflowRuns": [
+      {
+        "id": 37164551587,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1379,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164551587/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164551587/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37164549236,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1377,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164549236/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37164549236/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111324711520,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111324765934,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324766460,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324766537,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324766963,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324766980,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324767282,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324767624,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111324768028,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37164551587,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "project-inputs": {
+    "workflowRuns": [
+      {
+        "id": 37165119726,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1404,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165119726/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165119726/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37165117340,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1403,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165117340/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37165117340/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111326363102,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111326411289,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326411429,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326412155,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326412889,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326413114,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326413258,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326413933,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111326414028,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37165119726,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "solution-reader": {
+    "workflowRuns": [
+      {
+        "id": 37167444616,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1538,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167444616/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167444616/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37167441861,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1537,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167441861/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167441861/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111333252216,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111333324824,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333324889,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333325009,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333325617,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333326019,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333326127,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333326284,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111333326638,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167444616,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "expressions": {
+    "workflowRuns": [
+      {
+        "id": 37167785211,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1555,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167785211/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167785211/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37167781712,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1554,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167781712/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167781712/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111334284737,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111334351402,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334351770,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334352092,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334352178,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334352737,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334352744,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334353133,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334353211,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167785211,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "resources": {
+    "workflowRuns": [
+      {
+        "id": 37167793459,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1557,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167793459/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167793459/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37167790808,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1556,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167790808/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167790808/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111334306452,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111334359441,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334359947,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334359957,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334360725,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334361043,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334361162,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334361221,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111334361774,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37167793459,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "evaluation-core": {
+    "workflowRuns": [
+      {
+        "id": 37168253254,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1579,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168253254/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168253254/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37168249432,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1578,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168249432/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168249432/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111335675486,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111335742213,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335742215,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335742688,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335742782,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335743057,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335743746,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335743967,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335744602,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168253254,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  },
+  "build-models": {
+    "workflowRuns": [
+      {
+        "id": 37168257926,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 1582,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168257926/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168257926/logs",
+        "workflow_id": 373818434
+      },
+      {
+        "id": 37168254806,
+        "name": "Validate SharpForge",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "run_number": 1581,
+        "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168254806/jobs",
+        "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37168254806/logs",
+        "workflow_id": 373818434
+      }
+    ],
+    "jobs": {
+      "jobs": [
+        {
+          "id": 111335691250,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Review contract changes and seam lock against the PR snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Plan affected areas with conservative fallback",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Reject expired test quarantines",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run npm test",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Run npm run build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Require a clean checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Full qualification Python infrastructure regressions",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Run ./.github/actions/qualification-evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Record provenance for the existing PR preview build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Upload PR preview without a second build or deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 111335747728,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335748009,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335748468,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335748858,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335748997,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335749501,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335749834,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 111335750308,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 37168257926,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  }
+}

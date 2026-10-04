@@ -1,0 +1,298 @@
+TAP version 13
+# Subtest: One template module registers and generates through an explicit catalog without changing the built-in registry
+ok 1 - One template module registers and generates through an explicit catalog without changing the built-in registry
+  ---
+  duration_ms: 2.534192
+  type: 'test'
+  ...
+# Subtest: Template catalog has native distinctions and deterministic SDK test project packages
+ok 2 - Template catalog has native distinctions and deterministic SDK test project packages
+  ---
+  duration_ms: 3.375951
+  type: 'test'
+  ...
+# Subtest: Windows App SDK template catalog creates manifests, XAML and correctly dimensioned PNGs
+ok 3 - Windows App SDK template catalog creates manifests, XAML and correctly dimensioned PNGs
+  ---
+  duration_ms: 26.689573
+  type: 'test'
+  ...
+# Subtest: Template options create top-level code, nullable metadata, namespace style and classic solution
+ok 4 - Template options create top-level code, nullable metadata, namespace style and classic solution
+  ---
+  duration_ms: 7.024514
+  type: 'test'
+  ...
+# Subtest: Configuration files and core C\# items preserve options and strict path validation
+ok 5 - Configuration files and core C\# items preserve options and strict path validation
+  ---
+  duration_ms: 1.557709
+  type: 'test'
+  ...
+# Subtest: Generated XAML page loads, preserves its source, and projects to source/CIL runtime scenes
+ok 6 - Generated XAML page loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 115.577098
+  type: 'test'
+  ...
+# Subtest: Generated XAML window loads, preserves its source, and projects to source/CIL runtime scenes
+ok 7 - Generated XAML window loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 23.101957
+  type: 'test'
+  ...
+# Subtest: Generated XAML user-control loads, preserves its source, and projects to source/CIL runtime scenes
+ok 8 - Generated XAML user-control loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 15.856746
+  type: 'test'
+  ...
+# Subtest: Generated XAML content-dialog loads, preserves its source, and projects to source/CIL runtime scenes
+ok 9 - Generated XAML content-dialog loads, preserves its source, and projects to source/CIL runtime scenes
+  ---
+  duration_ms: 15.587729
+  type: 'test'
+  ...
+# Subtest: XAML scalar spans preserve BOM, CRLF, quotes, comments and unrelated event attributes
+ok 10 - XAML scalar spans preserve BOM, CRLF, quotes, comments and unrelated event attributes
+  ---
+  duration_ms: 7.012636
+  type: 'test'
+  ...
+# Subtest: XAML Grid tracks, property containers, literal text and attached properties round-trip
+ok 11 - XAML Grid tracks, property containers, literal text and attached properties round-trip
+  ---
+  duration_ms: 4.15723
+  type: 'test'
+  ...
+# Subtest: XAML structural edits retain metadata/comments and identities; Name changes remain synchronized
+ok 12 - XAML structural edits retain metadata/comments and identities; Name changes remain synchronized
+  ---
+  duration_ms: 7.968358
+  type: 'test'
+  ...
+# Subtest: XAML Window identity metadata survives structural edits and inherited-object names stay ordinary identities
+ok 13 - XAML Window identity metadata survives structural edits and inherited-object names stay ordinary identities
+  ---
+  duration_ms: 2.405648
+  type: 'test'
+  ...
+# Subtest: XAML malformed inputs, unsupported APIs, namespaces, bindings and budgets produce stable diagnostics
+ok 14 - XAML malformed inputs, unsupported APIs, namespaces, bindings and budgets produce stable diagnostics
+  ---
+  duration_ms: 1.812544
+  type: 'test'
+  ...
+# Subtest: XAML optimistic sessions reject stale edits and malformed reads without replacing their baseline
+ok 15 - XAML optimistic sessions reject stale edits and malformed reads without replacing their baseline
+  ---
+  duration_ms: 3.819811
+  type: 'test'
+  ...
+# Subtest: XAML source-format services commit exact workspace records and leave code-behind unchanged
+ok 16 - XAML source-format services commit exact workspace records and leave code-behind unchanged
+  ---
+  duration_ms: 16.580417
+  type: 'test'
+  ...
+# Subtest: XAML source-format services refuse conflicts, stale editor versions and host validation races
+ok 17 - XAML source-format services refuse conflicts, stale editor versions and host validation races
+  ---
+  duration_ms: 3.599779
+  type: 'test'
+  ...
+# Subtest: The legacy destination default rejects unrelated contents; merge must be explicit
+ok 18 - The legacy destination default rejects unrelated contents; merge must be explicit
+  ---
+  duration_ms: 10.001274
+  type: 'test'
+  ...
+# Subtest: The legacy destination default keeps completed files and partial-failure metadata even when removal is available
+ok 19 - The legacy destination default keeps completed files and partial-failure metadata even when removal is available
+  ---
+  duration_ms: 0.998966
+  type: 'test'
+  ...
+# Subtest: Destination preflight checks collisions and exact overwrite confirmation before writes
+ok 20 - Destination preflight checks collisions and exact overwrite confirmation before writes
+  ---
+  duration_ms: 2.303214
+  type: 'test'
+  ...
+# Subtest: Destination denial, quota limits, parent type and case collisions never create directories
+ok 21 - Destination denial, quota limits, parent type and case collisions never create directories
+  ---
+  duration_ms: 0.681337
+  type: 'test'
+  ...
+# Subtest: Destination rollback removes created files/directories and restores overwritten binary bytes
+ok 22 - Destination rollback removes created files/directories and restores overwritten binary bytes
+  ---
+  duration_ms: 1.049192
+  type: 'test'
+  ...
+# Subtest: Destination rollback failures list precise leftover paths
+ok 23 - Destination rollback failures list precise leftover paths
+  ---
+  duration_ms: 0.535418
+  type: 'test'
+  ...
+# Subtest: Destination picker cancellation leaves no selected handle; declined overwrite performs no write
+ok 24 - Destination picker cancellation leaves no selected handle; declined overwrite performs no write
+  ---
+  duration_ms: 0.655458
+  type: 'test'
+  ...
+# Subtest: Destination cancellation after the first file rolls everything back
+ok 25 - Destination cancellation after the first file rolls everything back
+  ---
+  duration_ms: 0.557141
+  type: 'test'
+  ...
+# Subtest: Destination expected-text precondition respects UTF-16 encodings before confirmed overwrite
+ok 26 - Destination expected-text precondition respects UTF-16 encodings before confirmed overwrite
+  ---
+  duration_ms: 1.402696
+  type: 'test'
+  ...
+# Subtest: Destination preflight rejects ambiguous existing aliases and bounds plan metadata
+ok 27 - Destination preflight rejects ambiguous existing aliases and bounds plan metadata
+  ---
+  duration_ms: 0.542118
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+ok 28 - empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 34.903837
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+ok 29 - empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 5.669941
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+ok 30 - empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 4.652867
+  type: 'test'
+  ...
+# Subtest: empty-folder writer rejects preexisting contents without opening a write stream
+ok 31 - empty-folder writer rejects preexisting contents without opening a write stream
+  ---
+  duration_ms: 0.68276
+  type: 'test'
+  ...
+# Subtest: empty-folder writer resolves denied permission before any mutation
+ok 32 - empty-folder writer resolves denied permission before any mutation
+  ---
+  duration_ms: 0.300504
+  type: 'test'
+  ...
+# Subtest: empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+ok 33 - empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+  ---
+  duration_ms: 0.618453
+  type: 'test'
+  ...
+# Subtest: aborted empty-folder save creates no files
+ok 34 - aborted empty-folder save creates no files
+  ---
+  duration_ms: 0.250058
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A.txt / a.txt
+ok 35 - empty-folder writer validates complete path plan before mutation A.txt / a.txt
+  ---
+  duration_ms: 0.193692
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+ok 36 - empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+  ---
+  duration_ms: 0.178199
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation é.txt / é.txt
+ok 37 - empty-folder writer validates complete path plan before mutation é.txt / é.txt
+  ---
+  duration_ms: 0.280913
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation a / a/b
+ok 38 - empty-folder writer validates complete path plan before mutation a / a/b
+  ---
+  duration_ms: 0.136556
+  type: 'test'
+  ...
+# Subtest: directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+ok 39 - directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+  ---
+  duration_ms: 2.628654
+  type: 'test'
+  ...
+# Subtest: folder manifests reject ambiguity and preserve the original records on failure
+ok 40 - folder manifests reject ambiguity and preserve the original records on failure
+  ---
+  duration_ms: 0.463649
+  type: 'test'
+  ...
+# Subtest: FileList repository prefix is normalized only by a validated workspace manifest
+ok 41 - FileList repository prefix is normalized only by a validated workspace manifest
+  ---
+  duration_ms: 0.998355
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16le and detects external edits before any writing
+ok 42 - disk source save preserves utf-16le and detects external edits before any writing
+  ---
+  duration_ms: 3.044522
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16be and detects external edits before any writing
+ok 43 - disk source save preserves utf-16be and detects external edits before any writing
+  ---
+  duration_ms: 2.912392
+  type: 'test'
+  ...
+# Subtest: disk source save rechecks after permissions and never overwrites a prompt-time change
+ok 44 - disk source save rechecks after permissions and never overwrites a prompt-time change
+  ---
+  duration_ms: 1.241933
+  type: 'test'
+  ...
+# Subtest: native disk creation rejects case-shadow files and parents before applying any batch entry
+ok 45 - native disk creation rejects case-shadow files and parents before applying any batch entry
+  ---
+  duration_ms: 5.593255
+  type: 'test'
+  ...
+# Subtest: native new destination parents use portable case identity within the same batch
+ok 46 - native new destination parents use portable case identity within the same batch
+  ---
+  duration_ms: 1.212308
+  type: 'test'
+  ...
+# Subtest: CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+ok 47 - CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+  ---
+  duration_ms: 1526.081454
+  type: 'test'
+  ...
+# Subtest: CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+ok 48 - CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+  ---
+  duration_ms: 1.632663
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4271.899908

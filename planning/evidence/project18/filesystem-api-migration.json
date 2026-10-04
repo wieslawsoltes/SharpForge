@@ -1,0 +1,54 @@
+{
+  "publicationSource": "9d8296445dc474224ae348b76a3e6a359b908d35",
+  "contract": {
+    "DiskWorkspace": "ProviderDiskWorkspace",
+    "readDirectory": "readProviderDirectory",
+    "readBrowserFiles": "readProviderFiles"
+  },
+  "implementationFiles": [
+    "packages/project-system/src/disk.js",
+    "packages/project-system/src/disk-api.js",
+    "packages/project-system/src/disk-workspace.js",
+    "packages/project-system/src/provider-disk-workspace.js",
+    "packages/project-system/src/provider-disk-open.js"
+  ],
+  "updatedHosts": [
+    "apps/studio/project-wizard/destination.js",
+    "apps/studio/workspace-disk-events.js",
+    "apps/studio/workspace-imports.js",
+    "apps/studio/workspace-session.js",
+    "apps/studio/workspace-wizard.js"
+  ],
+  "updatedFixtures": [
+    "tests/a24-cross-window-session.test.js",
+    "tests/a24-disk-held-signal.test.js",
+    "tests/a24-disk-load-concurrency.test.js",
+    "tests/a24-disk-scaling.test.js",
+    "tests/a24-editor-lifecycle.test.js",
+    "tests/a24-folder-compilation.test.js",
+    "tests/a24-provider-transactions.test.js",
+    "tests/a24-save-conflicts.test.js",
+    "tests/support/workspace-application.js",
+    "tests/support/a24-browser-ui.js",
+    "tests/support/a24-integrity-components.js",
+    "tests/browser_a24_integrity_test.py",
+    "tests/browser_explorer_corpus_test.py"
+  ],
+  "protectedPending": [
+    {
+      "path": "apps/studio/studio.js",
+      "action": "With the approved host-hook patch, use ProviderDiskWorkspace as DiskWorkspace, readProviderDirectory as readDirectory and readProviderFiles as readBrowserFiles in its project-system import. Current protected entry remains on the unchanged legacy APIs until that patch is applied."
+    }
+  ],
+  "legacyFixturesUnchanged": [
+    "tests/project-system.test.js",
+    "tests/release04.test.js",
+    "tests/templates-archive.test.js",
+    "tests/workspace-io.test.js"
+  ],
+  "qualification": "Completed Node26 disk/save/search/view cohort and affected corrections passed, followed by repository checks and production build; filesystem-disk-qualification.json retains exact initial failures and repairs.",
+  "sourceNote": "Legacy defaults restored; provider behavior is selected explicitly. Only the protected Studio import remains pending.",
+  "implementationAncestor": "8dcf635adf25b06c71c34b05eda85ff6b66c554f",
+  "publishedCommit": "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3",
+  "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/3652"
+}

@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "method": "GitHub Git Data API forward commits with exact local-tree equality before ref creation",
+  "qualification": "filesystem-disk-qualification.json",
+  "implementationSource": "53f375875617147bc68f2e96384a60d366b52ff0",
+  "entries": [
+    {
+      "name": "disk-admission",
+      "source": "4464c6a346aaecbef669223e5305f3729db73e60",
+      "sourceBase": "cd506abf7d2b209e0de40807b4c94999c6004430",
+      "sha": "4702f42e547a9d842e72b44c1286af2b36688ed4",
+      "tree": "c7c5ec216f523308ea94baeb35ef953fb714e7f2",
+      "branch": "codex/p18-foundation-disk-admission",
+      "baseBranch": "codex/p18-foundation-disk-scan",
+      "pr": 3650,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3650",
+      "stats": "13 files changed, 702 insertions(+), 3 deletions(-)",
+      "parents": [
+        "4f8072952b21ff80416cba9938d062d51403deb8"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "draft": true,
+      "changedFiles": 13,
+      "additions": 702,
+      "deletions": 3
+    },
+    {
+      "name": "disk-write-dependencies",
+      "kind": "dependency-join",
+      "source": "de721b890b7e4aa93b9cf73d015ca4c32575bd4e",
+      "sourceBase": "4464c6a346aaecbef669223e5305f3729db73e60",
+      "sha": "59a5cebe47afcf6017c7d3714b71df2d9ce98a44",
+      "tree": "f96c764f2a96b22ccb09ffbe868d90a7bc5f1efa",
+      "branch": "codex/p18-disk-write-dependencies",
+      "parents": [
+        "4702f42e547a9d842e72b44c1286af2b36688ed4",
+        "24e16f029ac07cca18733051f8df03807b7b44ab"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "refMatches": true,
+      "pr": null
+    },
+    {
+      "name": "disk-writes",
+      "source": "9d8296445dc474224ae348b76a3e6a359b908d35",
+      "sourceBase": "de721b890b7e4aa93b9cf73d015ca4c32575bd4e",
+      "implementationAncestor": "8dcf635adf25b06c71c34b05eda85ff6b66c554f",
+      "sha": "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3",
+      "tree": "c930dc560ab7c784844d10dfa7b77dfdd0ea8d72",
+      "branch": "codex/p18-foundation-disk-writes",
+      "baseBranch": "codex/p18-disk-write-dependencies",
+      "pr": 3652,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3652",
+      "stats": "8 files changed, 556 insertions(+), 3 deletions(-)",
+      "parents": [
+        "59a5cebe47afcf6017c7d3714b71df2d9ce98a44"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "draft": true,
+      "changedFiles": 8,
+      "additions": 556,
+      "deletions": 3
+    },
+    {
+      "name": "search-versions",
+      "source": "7668b45e3e9d8838de2874f6ac27baa8079c0d17",
+      "sourceBase": "1366fdc62acabb1d798dbbce5f1438c37bf79263",
+      "sha": "4f601b394b87ba95bd8e7292e95d714bedab0873",
+      "tree": "05f2e31792f21d1029830c9e20feac8e6f60dcd3",
+      "branch": "codex/p18-foundation-search-versions",
+      "baseBranch": "codex/p18-foundation-search",
+      "pr": 3657,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3657",
+      "stats": "3 files changed, 133 insertions(+), 4 deletions(-)",
+      "parents": [
+        "e39b407476bc378dd17c98da2545370e947ecedc"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "draft": true,
+      "changedFiles": 3,
+      "additions": 133,
+      "deletions": 4
+    },
+    {
+      "name": "disk-notifications",
+      "source": "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b",
+      "sourceBase": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "sha": "46efd631e414ce6645675ba02fdc9f5ba781dbc3",
+      "tree": "90832cf6362a12a7f0ac57d6377986f27a350729",
+      "branch": "codex/p18-disk-notifications",
+      "baseBranch": "main",
+      "pr": 3661,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3661",
+      "stats": "11 files changed, 330 insertions(+), 14 deletions(-)",
+      "parents": [
+        "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "draft": true,
+      "changedFiles": 11,
+      "additions": 330,
+      "deletions": 14,
+      "upstreamSync": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "historicalQualification": "c6a0d8e51d2fe55a66548fdcebac5a9f6cb1214b"
+    },
+    {
+      "name": "disk-services-dependencies",
+      "kind": "dependency-join",
+      "source": "c0ff0eaedb12d80bc4eb1a0f720a7c7bf1976244",
+      "sourceBase": "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b",
+      "sourceParents": [
+        "da7d637049d522de1022bd4ed63855bf3c68cab1",
+        "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b"
+      ],
+      "sha": "f267b1fa1b89944d95010b3fd281d3028a13133e",
+      "tree": "58547a428696a78d0bf944392021db97f17def4e",
+      "branch": "codex/p18-disk-services-dependencies",
+      "parents": [
+        "46efd631e414ce6645675ba02fdc9f5ba781dbc3",
+        "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3",
+        "ca666cd96ea832b17cb69900da627dbae1e9ed64",
+        "4f601b394b87ba95bd8e7292e95d714bedab0873"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "refMatches": true,
+      "pr": null,
+      "upstreamSync": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a"
+    },
+    {
+      "name": "disk-services",
+      "source": "0a40917f213801078e38a8c540c47d985e36a05a",
+      "sourceBase": "c0ff0eaedb12d80bc4eb1a0f720a7c7bf1976244",
+      "sha": "e3a115e174cf451c3b3ee10f32af9693a0ab2bc6",
+      "tree": "ab3fe94a5cdea0cd5cd7ab81d23a0d5e8903ccca",
+      "branch": "codex/p18-disk-services",
+      "baseBranch": "codex/p18-disk-services-dependencies",
+      "pr": 3662,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3662",
+      "stats": "4 files changed, 543 insertions(+)",
+      "parents": [
+        "f267b1fa1b89944d95010b3fd281d3028a13133e"
+      ],
+      "treeMatches": true,
+      "parentMatches": true,
+      "draft": true,
+      "changedFiles": 4,
+      "additions": 543,
+      "deletions": 0,
+      "upstreamSync": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "historicalQualification": "c6a0d8e51d2fe55a66548fdcebac5a9f6cb1214b"
+    }
+  ],
+  "sourceBranches": [
+    {
+      "name": "disk-admission",
+      "branch": "codex/p18-foundation-disk-admission",
+      "base_branch": "codex/p18-foundation-disk-scan",
+      "remote_parent": "4f8072952b21ff80416cba9938d062d51403deb8",
+      "issues": [
+        3174,
+        3195,
+        3196
+      ],
+      "title": "SF-A24-T05.1 T05.2: add explicit provider disk admission and snapshot lifetimes",
+      "source_head": "4464c6a346aaecbef669223e5305f3729db73e60",
+      "source_base": "cd506abf7d2b209e0de40807b4c94999c6004430",
+      "source_tree": "c7c5ec216f523308ea94baeb35ef953fb714e7f2",
+      "source_base_tree": "2a51b52beaae147a912958cfd25e57969fd3eff0",
+      "source_parents": [
+        "cd506abf7d2b209e0de40807b4c94999c6004430"
+      ],
+      "stats": "13 files changed, 702 insertions(+), 3 deletions(-)",
+      "files": [
+        "packages/project-system/PROVIDER-DISK.md",
+        "packages/project-system/src/disk-api.js",
+        "packages/project-system/src/disk-baseline.js",
+        "packages/project-system/src/disk-handle-map.js",
+        "packages/project-system/src/disk-inputs.js",
+        "packages/project-system/src/disk.js",
+        "packages/project-system/src/provider-disk-open.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "tests/a24-provider-disk-admission.test.js",
+        "tests/a24-provider-disk-guard.test.js",
+        "tests/a24-provider-disk-read.test.js",
+        "tests/a24-provider-files.test.js",
+        "tests/support/a24-delayed-provider.js"
+      ]
+    },
+    {
+      "name": "disk-write-dependencies",
+      "branch": "codex/p18-disk-write-dependencies",
+      "parent_names": [
+        "disk-admission",
+        "identity"
+      ],
+      "kind": "dependency-join",
+      "title": "Join provider disk admission and physical save identity prerequisites",
+      "source_head": "de721b890b7e4aa93b9cf73d015ca4c32575bd4e",
+      "source_base": "4464c6a346aaecbef669223e5305f3729db73e60",
+      "source_tree": "f96c764f2a96b22ccb09ffbe868d90a7bc5f1efa",
+      "source_base_tree": "c7c5ec216f523308ea94baeb35ef953fb714e7f2",
+      "source_parents": [
+        "4464c6a346aaecbef669223e5305f3729db73e60",
+        "2dfc37845c3333dbef8e55fe2aebae956e34a949"
+      ],
+      "stats": "9 files changed, 494 insertions(+)",
+      "files": [
+        "packages/workspace/HANDLE-IDENTITY.md",
+        "packages/workspace/SAVE-LOCKS.md",
+        "packages/workspace/src/coordination/locks.js",
+        "packages/workspace/src/index.js",
+        "packages/workspace/src/recovery/handles.js",
+        "packages/workspace/src/recovery/sanitize.js",
+        "tests/a24-handle-identity.test.js",
+        "tests/a24-save-locks.test.js",
+        "tests/support/a24-handle-database.js"
+      ]
+    },
+    {
+      "name": "disk-writes",
+      "branch": "codex/p18-foundation-disk-writes",
+      "base_branch": "codex/p18-disk-write-dependencies",
+      "parent_names": [
+        "disk-write-dependencies"
+      ],
+      "issues": [
+        3174,
+        3175,
+        3226
+      ],
+      "title": "SF-A24-T01.3 T01.4: save exact provider bytes under physical workspace ownership",
+      "source_head": "9d8296445dc474224ae348b76a3e6a359b908d35",
+      "source_base": "de721b890b7e4aa93b9cf73d015ca4c32575bd4e",
+      "source_tree": "c930dc560ab7c784844d10dfa7b77dfdd0ea8d72",
+      "source_base_tree": "f96c764f2a96b22ccb09ffbe868d90a7bc5f1efa",
+      "source_parents": [
+        "8dcf635adf25b06c71c34b05eda85ff6b66c554f"
+      ],
+      "stats": "8 files changed, 556 insertions(+), 3 deletions(-)",
+      "files": [
+        "packages/project-system/PROVIDER-DISK.md",
+        "packages/project-system/src/disk-operations.js",
+        "packages/project-system/src/disk-save.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "tests/a24-provider-api-compatibility.test.js",
+        "tests/a24-provider-disk-held-signal.test.js",
+        "tests/a24-provider-disk-mutations.test.js",
+        "tests/a24-provider-disk-writes.test.js"
+      ]
+    },
+    {
+      "name": "search-versions",
+      "branch": "codex/p18-foundation-search-versions",
+      "base_branch": "codex/p18-foundation-search",
+      "remote_parent": "e39b407476bc378dd17c98da2545370e947ecedc",
+      "issues": [
+        3199
+      ],
+      "title": "SF-A24-T05.5: bind streamed search results to their captured document revision",
+      "source_head": "7668b45e3e9d8838de2874f6ac27baa8079c0d17",
+      "source_base": "1366fdc62acabb1d798dbbce5f1438c37bf79263",
+      "source_tree": "05f2e31792f21d1029830c9e20feac8e6f60dcd3",
+      "source_base_tree": "26ee089219220f3a9f9a8a300059bf5525fa1404",
+      "source_parents": [
+        "7e1346c4b642e02358327f3a2c99f585d8756511"
+      ],
+      "stats": "3 files changed, 133 insertions(+), 4 deletions(-)",
+      "files": [
+        "packages/workspace/SEARCH.md",
+        "packages/workspace/src/search-index.js",
+        "tests/a24-search-result-versions.test.js"
+      ]
+    },
+    {
+      "name": "disk-notifications",
+      "branch": "codex/p18-disk-notifications",
+      "base_branch": "main",
+      "remote_parent": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "issues": [
+        3194,
+        3198,
+        3199
+      ],
+      "synced_main": true,
+      "title": "SF-A24-T04.3 T05.4: render bounded disk change choices and import reports",
+      "source_head": "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b",
+      "source_base": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "source_tree": "90832cf6362a12a7f0ac57d6377986f27a350729",
+      "source_base_tree": "36f8afc5d9bd7065d550e60a9a4de3af35999142",
+      "source_parents": [
+        "18910c39ba003c3c45d5dc9e8eec8a661dd33bb3",
+        "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a"
+      ],
+      "stats": "11 files changed, 330 insertions(+), 14 deletions(-)",
+      "files": [
+        "apps/studio/explorer/DISK-NOTIFICATIONS.md",
+        "apps/studio/explorer/disk-services-view.js",
+        "apps/studio/styles/explorer-disk-services.css",
+        "packages/workspace/build.contrib.json",
+        "planning/contracts/fixtures/css/studio-baseline.json",
+        "tests/a00-06-registration.test.js",
+        "tests/a00-20-styles.test.js",
+        "tests/a24-disk-notifications.test.js",
+        "tests/manifests/A24.json",
+        "tests/manifests/fixtures/build-baseline.json",
+        "tests/support/a24-disk-dom.js"
+      ]
+    },
+    {
+      "name": "disk-services-dependencies",
+      "branch": "codex/p18-disk-services-dependencies",
+      "parent_names": [
+        "disk-notifications",
+        "disk-writes",
+        "reload",
+        "search-versions"
+      ],
+      "parent_sources": [
+        "05ae73f5",
+        "9d829644",
+        "b766fbd6",
+        "7668b45e"
+      ],
+      "kind": "dependency-join",
+      "title": "Join disk writes, reload, search revision and notification prerequisites",
+      "source_head": "c0ff0eaedb12d80bc4eb1a0f720a7c7bf1976244",
+      "source_base": "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b",
+      "source_tree": "58547a428696a78d0bf944392021db97f17def4e",
+      "source_base_tree": "90832cf6362a12a7f0ac57d6377986f27a350729",
+      "source_parents": [
+        "da7d637049d522de1022bd4ed63855bf3c68cab1",
+        "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b"
+      ],
+      "stats": "68 files changed, 4867 insertions(+), 78 deletions(-)",
+      "files": [
+        "package-lock.json",
+        "packages/archive/README.md",
+        "packages/archive/src/index.js",
+        "packages/archive/src/path-policy.js",
+        "packages/archive/src/text-encoding.js",
+        "packages/project-system/PROVIDER-DISK.md",
+        "packages/project-system/README.md",
+        "packages/project-system/src/disk-api.js",
+        "packages/project-system/src/disk-baseline.js",
+        "packages/project-system/src/disk-handle-map.js",
+        "packages/project-system/src/disk-inputs.js",
+        "packages/project-system/src/disk-operations.js",
+        "packages/project-system/src/disk-save.js",
+        "packages/project-system/src/disk-scan.js",
+        "packages/project-system/src/disk-workspace.js",
+        "packages/project-system/src/disk.js",
+        "packages/project-system/src/import-report.js",
+        "packages/project-system/src/paths-normalize.js",
+        "packages/project-system/src/paths.js",
+        "packages/project-system/src/provider-disk-open.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "packages/workspace/HANDLE-IDENTITY.md",
+        "packages/workspace/README.md",
+        "packages/workspace/RELOAD.md",
+        "packages/workspace/SAVE-LOCKS.md",
+        "packages/workspace/SEARCH.md",
+        "packages/workspace/package.json",
+        "packages/workspace/src/content-hash.js",
+        "packages/workspace/src/coordination/locks.js",
+        "packages/workspace/src/index.js",
+        "packages/workspace/src/recovery/handles.js",
+        "packages/workspace/src/recovery/sanitize.js",
+        "packages/workspace/src/reload.js",
+        "packages/workspace/src/search-index.js",
+        "packages/workspace/src/vfs/fsa-rename.js",
+        "packages/workspace/src/vfs/fsa.js",
+        "packages/workspace/src/vfs/index.js",
+        "packages/workspace/src/vfs/memory.js",
+        "packages/workspace/src/vfs/provider.js",
+        "packages/workspace/src/watch-coalesce.js",
+        "packages/workspace/src/watch.js",
+        "packages/workspace/src/workspace.js",
+        "tests/a24-disk-scan.test.js",
+        "tests/a24-handle-identity.test.js",
+        "tests/a24-path-encoding.test.js",
+        "tests/a24-provider-api-compatibility.test.js",
+        "tests/a24-provider-disk-admission.test.js",
+        "tests/a24-provider-disk-guard.test.js",
+        "tests/a24-provider-disk-held-signal.test.js",
+        "tests/a24-provider-disk-mutations.test.js",
+        "tests/a24-provider-disk-read.test.js",
+        "tests/a24-provider-disk-writes.test.js",
+        "tests/a24-provider-files.test.js",
+        "tests/a24-reload-coordinator.test.js",
+        "tests/a24-save-locks.test.js",
+        "tests/a24-search-index.test.js",
+        "tests/a24-search-lifecycle.test.js",
+        "tests/a24-search-publication.test.js",
+        "tests/a24-search-result-versions.test.js",
+        "tests/a24-vfs-fsa.test.js",
+        "tests/a24-vfs-memory.test.js",
+        "tests/a24-vfs-watch.test.js",
+        "tests/a24-watch-fairness.test.js",
+        "tests/manifests/A24.json",
+        "tests/support/a24-delayed-provider.js",
+        "tests/support/a24-fsa.js",
+        "tests/support/a24-handle-database.js",
+        "tests/support/a24-provider-conformance.js"
+      ]
+    },
+    {
+      "name": "disk-services",
+      "branch": "codex/p18-disk-services",
+      "base_branch": "codex/p18-disk-services-dependencies",
+      "synced_main": true,
+      "parent_names": [
+        "disk-services-dependencies"
+      ],
+      "issues": [
+        3190,
+        3191,
+        3194,
+        3198,
+        3199
+      ],
+      "title": "SF-A24-T04 T05: coordinate Explorer disk events, search and import feedback",
+      "source_head": "0a40917f213801078e38a8c540c47d985e36a05a",
+      "source_base": "c0ff0eaedb12d80bc4eb1a0f720a7c7bf1976244",
+      "source_tree": "ab3fe94a5cdea0cd5cd7ab81d23a0d5e8903ccca",
+      "source_base_tree": "58547a428696a78d0bf944392021db97f17def4e",
+      "source_parents": [
+        "6bf63a134c8afad6029439f2401035de5fbf28f2",
+        "c0ff0eaedb12d80bc4eb1a0f720a7c7bf1976244"
+      ],
+      "stats": "4 files changed, 543 insertions(+)",
+      "files": [
+        "apps/studio/explorer/DISK-SERVICES.md",
+        "apps/studio/explorer/disk-services.js",
+        "tests/a24-disk-services.test.js",
+        "tests/support/a24-disk-services.js"
+      ]
+    }
+  ]
+}

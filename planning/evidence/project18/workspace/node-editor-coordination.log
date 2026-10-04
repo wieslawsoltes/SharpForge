@@ -1,0 +1,27 @@
+✔ cross-window adoption keeps both sessions dirty until an explicit physical save (22.13918ms)
+✔ a peer buffer resolution prevents older file undo from overwriting it (13.670837ms)
+✔ a peer buffer resolution prevents older file redo from overwriting it (12.622136ms)
+✔ cross-window application verifies exact local and selected bytes before changing a buffer (2.282112ms)
+✔ read-only, generated, missing, malformed and oversized peer resolutions are rejected (1.948239ms)
+✔ an asynchronous edit invalidates peer application before the session commit (1.966096ms)
+✔ an asynchronous replace invalidates peer application before the session commit (1.488845ms)
+✔ an asynchronous bytes invalidates peer application before the session commit (1.886385ms)
+✔ coordinator snapshots local admission before an awaited remote read mutates the same object (1.334723ms)
+✔ a newer notification invalidates an older remote checkpoint before conflict application (0.989692ms)
+✔ a remote notification during async application remains visible (newer remote) (0.929812ms)
+✔ a remote notification during async application remains visible (mine) (0.585433ms)
+✔ a document admits one resolution at a time and cancellation reads no remote checkpoint (0.797853ms)
+✔ coordinator and session preserve UTF-16 mixed endings and binary bytes through an unsaved adoption (6.507454ms)
+✔ revision channels mark peer buffers stale without modifying them and discard duplicate envelopes (9.120245ms)
+✔ two windows saving one baseline yield one commit and one conflict (1.878874ms)
+✔ save ownership rejects unavailable APIs and cancellation without writing (1.170125ms)
+✔ cross-window conflicts require a choice and merge disjoint edits with a new shared revision (2.706842ms)
+✔ cross-window resolution rejects local or remote edits made after the conflict was presented (1.005236ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1027.973253

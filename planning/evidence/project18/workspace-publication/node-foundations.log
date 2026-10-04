@@ -1,0 +1,24 @@
+✔ revision channels mark peer buffers stale without modifying them and discard duplicate envelopes (7.846895ms)
+✔ cross-window conflicts require a choice and merge disjoint edits with a new shared revision (3.705178ms)
+✔ cross-window resolution rejects local or remote edits made after the conflict was presented (1.510078ms)
+✔ coordinator snapshots local admission before an awaited remote read mutates the same object (1.461715ms)
+✔ a newer notification invalidates an older remote checkpoint before conflict application (1.284027ms)
+✔ a remote notification during async application remains visible (newer remote) (1.309354ms)
+✔ a remote notification during async application remains visible (mine) (0.838515ms)
+✔ a document admits one resolution at a time and cancellation reads no remote checkpoint (1.1475ms)
+✔ three-way text merge preserves disjoint edits and reports overlapping edits with all versions (1.264898ms)
+✔ merge size, work budget and cancellation preserve explicit outcomes (0.801689ms)
+✔ binary conflicts require a choice and adopted contents do not alias the input (0.677632ms)
+✔ workspace transaction validates the complete plan before committing one memory state (13.306769ms)
+✔ a third disk mutation failure reports exact completed operations and preserves all unsaved memory (2.259587ms)
+✔ collision, stale hash and cancellation reject a plan before any disk mutation (1.863ms)
+✔ history undo/redo restores binary bytes and refuses to overwrite a newer buffer (5.862842ms)
+✔ history capacity bounds retained snapshots while preserving the latest valid inverse (4.563973ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1248.637881

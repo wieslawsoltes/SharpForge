@@ -1,0 +1,102 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: launch environments carry only explicit application variables plus allowed tool-discovery inheritance
+ok 1 - launch environments carry only explicit application variables plus allowed tool-discovery inheritance
+  ---
+  duration_ms: 2.403265
+  type: 'test'
+  ...
+# Subtest: saved and explicit launch profiles resolve arguments, URLs and granted working directories without shell interpolation
+ok 2 - saved and explicit launch profiles resolve arguments, URLs and granted working directories without shell interpolation
+  ---
+  duration_ms: 20.296722
+  type: 'test'
+  ...
+# Subtest: actual native launches apply selected and explicit profile data through authenticated HTTP
+ok 3 - actual native launches apply selected and explicit profile data through authenticated HTTP
+  ---
+  duration_ms: 4479.564482
+  type: 'test'
+  ...
+# (node:121) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native environment retains tool discovery but excludes host secrets and startup hooks
+ok 4 - native environment retains tool discovery but excludes host secrets and startup hooks
+  ---
+  duration_ms: 1.18668
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"OutputPath":"../../x"}
+ok 5 - native output boundary rejects {"OutputPath":"../../x"}
+  ---
+  duration_ms: 0.771283
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"PublishDir":"/tmp/output"}
+ok 6 - native output boundary rejects {"PublishDir":"/tmp/output"}
+  ---
+  duration_ms: 0.237087
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"BaseIntermediateOutputPath":"C:\\\\temp"}
+ok 7 - native output boundary rejects {"BaseIntermediateOutputPath":"C:\\\\temp"}
+  ---
+  duration_ms: 0.118669
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"ArtifactsPath":"$(OtherPath)"}
+ok 8 - native output boundary rejects {"ArtifactsPath":"$(OtherPath)"}
+  ---
+  duration_ms: 0.240212
+  type: 'test'
+  ...
+# Subtest: native output boundary rejects {"OutputPath":"%2e%2e/x"}
+ok 9 - native output boundary rejects {"OutputPath":"%2e%2e/x"}
+  ---
+  duration_ms: 0.110657
+  type: 'test'
+  ...
+# Subtest: logger/response switch policy is explicit and rejects nested traversal
+ok 10 - logger/response switch policy is explicit and rejects nested traversal
+  ---
+  duration_ms: 2.326739
+  type: 'test'
+  ...
+# Subtest: trust is stored per canonical root and revocation survives reopening the store
+ok 11 - trust is stored per canonical root and revocation survives reopening the store
+  ---
+  duration_ms: 14.234367
+  type: 'test'
+  ...
+# Subtest: native tool transport scrubs actual child environment and captures unicode lines
+ok 12 - native tool transport scrubs actual child environment and captures unicode lines
+  ---
+  duration_ms: 29.77885
+  type: 'test'
+  ...
+# Subtest: native process timeout is distinct from successful completion
+ok 13 - native process timeout is distinct from successful completion
+  ---
+  duration_ms: 104.257523
+  type: 'test'
+  ...
+# Subtest: cancellation terminates children and grandchildren in the actual process tree
+ok 14 - cancellation terminates children and grandchildren in the actual process tree
+  ---
+  duration_ms: 148.029695
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5469.632825

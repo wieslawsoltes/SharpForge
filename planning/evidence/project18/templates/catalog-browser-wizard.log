@@ -1,0 +1,6 @@
+PASS Cancelling the real wizard picker flow keeps the wizard open and creation disabled
+PASS Native test and Windows templates display their actual prerequisites
+PASS Wizard options create a runnable top-level project and classic solution in the chosen layout
+PASS Actual OPFS files honor overwrite preflight, restore byte-exactly on failure, and return attachable disk records
+PASS Chromium Blob, ReadableStream and WritableStream ZIP64 compression round-trip exact bytes
+PASS No page JavaScript errors

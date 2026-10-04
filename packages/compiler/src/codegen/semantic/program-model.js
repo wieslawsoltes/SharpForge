@@ -108,6 +108,7 @@ export class ProgramModel {
         id: t.id,
         name: t.name,
         fields: t.fields.map(f => ({ name: f.name, type: f.type, index: f.index, ...(f.backing ? { backing: true } : {}) })),
+        ...(t.properties.length ? { properties: t.properties.map(property => ({ ...property })) } : {}),
         initializer: t.initializer,
       })),
       statics: this.statics.map(f => ({ name: `${f.owner.name}.${f.name}`, type: f.type, value: defaultValue(f.type) })),

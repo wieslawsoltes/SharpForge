@@ -10,11 +10,17 @@ export class StatusPosition {
   }
 
   column(source, position, {offset, tabSize = 4, visualColumn} = {}) {
+    const length = source?.length ?? source?.buffer?.length;
+    if (!Number.isSafeInteger(offset) || offset < 0 || !Number.isSafeInteger(position?.character) ||
+      position.character < 0 || offset < position.character || Number.isSafeInteger(length) && offset > length) {
+      this.dispose();
+      return null;
+    }
     const current = this.work;
     const same = current?.source === source && current?.version === source?.version && current?.offset === offset && current?.tabSize === tabSize;
     if (!same) { current?.controller.abort(); this.work = null; }
     if (Number.isFinite(visualColumn) && visualColumn >= 0) return visualColumn;
-    if (!source || !Number.isSafeInteger(offset) || offset < position.character) return null;
+    if (!source) return null;
     if (same) return current.column;
     const cached = source.cachedVisualColumnAtOffset?.(offset, {tabSize});
     if (Number.isFinite(cached)) return cached;

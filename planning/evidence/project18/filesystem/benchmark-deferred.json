@@ -1,0 +1,119 @@
+{
+  "backend": "Node JavaScript, metadata-only provider",
+  "platform": "linux",
+  "node": "v24.19.0",
+  "files": 20000,
+  "deferIndex": true,
+  "timings": {
+    "registerMs": {
+      "median": 3.981757000000016,
+      "p95": 13.956395000000043
+    },
+    "treeMs": {
+      "median": 0.1401020000000699,
+      "p95": 0.38678399999997737
+    },
+    "prepareMs": {
+      "median": 51.284343000000035,
+      "p95": 71.78409199999999
+    },
+    "expandMs": {
+      "median": 1.5085959999998977,
+      "p95": 2.9356690000000185
+    },
+    "indexMs": {
+      "median": 280.37960999999996,
+      "p95": 296.992293
+    },
+    "firstPathMs": {
+      "median": 2.8051839999998265,
+      "p95": 7.276888999999983
+    }
+  },
+  "samples": [
+    {
+      "registerMs": 13.956395000000043,
+      "treeMs": 0.38678399999997737,
+      "prepareMs": 71.78409199999999,
+      "expandMs": 2.9356690000000185,
+      "indexMs": 296.992293,
+      "firstPathMs": 7.276888999999983,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    },
+    {
+      "registerMs": 5.218301999999994,
+      "treeMs": 0.2831469999999854,
+      "prepareMs": 69.84359399999994,
+      "expandMs": 2.3968560000000707,
+      "indexMs": 291.71862699999986,
+      "firstPathMs": 3.870890000000145,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    },
+    {
+      "registerMs": 5.030369000000064,
+      "treeMs": 0.1401020000000699,
+      "prepareMs": 42.39029399999981,
+      "expandMs": 1.842019000000164,
+      "indexMs": 280.37960999999996,
+      "firstPathMs": 2.7603540000000066,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    },
+    {
+      "registerMs": 3.981757000000016,
+      "treeMs": 0.13021699999990233,
+      "prepareMs": 43.977530000000115,
+      "expandMs": 1.5085959999998977,
+      "indexMs": 286.1057680000001,
+      "firstPathMs": 2.819684000000052,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    },
+    {
+      "registerMs": 3.592049000000088,
+      "treeMs": 0.1493559999998979,
+      "prepareMs": 51.284343000000035,
+      "expandMs": 1.0813809999999648,
+      "indexMs": 254.16328700000008,
+      "firstPathMs": 2.4441780000001927,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    },
+    {
+      "registerMs": 3.6827659999999014,
+      "treeMs": 0.10999600000013743,
+      "prepareMs": 61.98423099999991,
+      "expandMs": 1.1575360000001638,
+      "indexMs": 254.85464199999979,
+      "firstPathMs": 2.039017999999942,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    },
+    {
+      "registerMs": 2.9969939999996313,
+      "treeMs": 0.12783300000000963,
+      "prepareMs": 29.964702000000216,
+      "expandMs": 1.173811999999998,
+      "indexMs": 270.9734760000001,
+      "firstPathMs": 2.8051839999998265,
+      "rows": 100,
+      "loadedBytes": 0,
+      "indexedBytes": 8427912,
+      "firstPath": "src/Program19999.cs"
+    }
+  ]
+}

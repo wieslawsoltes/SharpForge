@@ -1,0 +1,40 @@
+(node:68) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:76) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:83) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: B05 mixed classic solutions retain native-only projects with names, reasons and original IDs
+ok 1 - B05 mixed classic solutions retain native-only projects with names, reasons and original IDs
+  ---
+  duration_ms: 3.383991
+  type: 'test'
+  ...
+# Subtest: solution folders, items, dependency IDs and configuration sections retain data
+ok 2 - solution folders, items, dependency IDs and configuration sections retain data
+  ---
+  duration_ms: 0.717652
+  type: 'test'
+  ...
+# Subtest: conversion retains mixed project membership and warns that configuration mappings stay in the original
+ok 3 - conversion retains mixed project membership and warns that configuration mappings stay in the original
+  ---
+  duration_ms: 0.919116
+  type: 'test'
+  ...
+# Subtest: invalid identity graphs, unsafe paths and incomplete sections fail without partial models
+ok 4 - invalid identity graphs, unsafe paths and incomplete sections fail without partial models
+  ---
+  duration_ms: 0.613756
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 117.462476

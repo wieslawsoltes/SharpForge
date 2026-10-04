@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "batches": [
+    {
+      "name": "workspace-search-fencing",
+      "sourceCommit": "2894f9ab09fd7b94efe6355080c7515f9dde9ca3",
+      "paths": [
+        "apps/studio/tools/core.js",
+        "apps/studio/tools/workspace-search.js",
+        "apps/studio/tools/search-panel.js",
+        "apps/studio/tools/SEARCH.md",
+        "tests/a24-workspace-search.test.js"
+      ],
+      "baseRequirement": "Actual root application integration draft providing explorerContext() and forwarding loadWorkspaceRecord(path, options); no protected entry duplication.",
+      "testsPending": [],
+      "qualified": true,
+      "blobs": {
+        "apps/studio/tools/core.js": "2310ac03edb6e4e94c3a3a71af42bedafbba1898",
+        "apps/studio/tools/workspace-search.js": "5d79321e788f6667ee0edc3182969f703762836c",
+        "apps/studio/tools/search-panel.js": "8d6e1987d6ca4beecc92f24d3ae34f3a5548212c",
+        "apps/studio/tools/SEARCH.md": "f0e5f21c8f14ba2b911bc333a04c52784f5b72c7",
+        "tests/a24-workspace-search.test.js": "1ef7d1221e653f0f93f8cf5be6880c794567a9a1"
+      },
+      "publicationState": "Standalone controller/panel published as draft3913 with required core success. Actual root tools/core composition and protected Studio context/load getters remain the explicit coordinated merge gate.",
+      "testsPassed": [
+        "tests/a24-workspace-search.test.js"
+      ],
+      "qualification": {
+        "scope": "Focused Node helper/file cases passed; protected application entry remains pending.",
+        "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "node": "v26.10.0",
+        "passed": 9,
+        "failed": 0,
+        "evidence": "planning/evidence/project18/filesystem-host-qualification.json"
+      },
+      "companionPublication": {
+        "pr": 3913,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3913",
+        "branch": "codex/p18-workspace-search",
+        "sourceHead": "91a1cba1a323d349f6e41c9302cd84620a91c370",
+        "remoteCommit": "666ae106126846d2f4a90464570191cf22757a64",
+        "tree": "d0c76ed01df1264cba34dc079dcb5b484e08d0b5",
+        "base": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+        "paths": [
+          "apps/studio/tools/SEARCH.md",
+          "apps/studio/tools/search-panel.js",
+          "apps/studio/tools/workspace-search.js",
+          "tests/a24-workspace-search.test.js",
+          "tests/manifests/A24.json"
+        ],
+        "core": {
+          "runId": 37172993403,
+          "jobId": 111349624241,
+          "head": "666ae106126846d2f4a90464570191cf22757a64",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172993403/job/111349624241",
+          "broadJobs": [
+            {
+              "name": "core-platforms",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "build",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "packages",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "native-il",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "native-msbuild",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "clr-wasm",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "ci-ok",
+              "conclusion": "skipped"
+            }
+          ],
+          "cancelledDuplicateRun": 37172990982
+        },
+        "receipt": "planning/evidence/project18/workspace-search-publication.json"
+      }
+    },
+    {
+      "name": "workspace-reload-version",
+      "sourceCommit": "afa41b92f31fd89f4a6d7b415edf3bb1392a00b6",
+      "paths": [
+        "apps/studio/workspace-disk-events.js",
+        "tests/a24-workspace-disk-events.test.js"
+      ],
+      "baseRequirement": "Actual root workspace application/session draft containing workspace-disk-events and support/workspace-application; ProviderDiskWorkspace foundation already published.",
+      "testsPending": [],
+      "qualified": true,
+      "blobs": {
+        "apps/studio/workspace-disk-events.js": "6728b0e2680e1bd5303015ab262d1246368daedc",
+        "tests/a24-workspace-disk-events.test.js": "b92690a7fa112b08845bac7002628375f9762205"
+      },
+      "publicationState": "Focused scope qualified. Await the actual published root application dependency; do not duplicate protected host wiring.",
+      "testsPassed": [
+        "tests/a24-workspace-disk-events.test.js"
+      ],
+      "qualification": {
+        "scope": "Focused Node helper/file cases passed; protected application entry remains pending.",
+        "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "node": "v26.10.0",
+        "passed": 2,
+        "failed": 0,
+        "evidence": "planning/evidence/project18/filesystem-host-qualification.json"
+      }
+    }
+  ]
+}

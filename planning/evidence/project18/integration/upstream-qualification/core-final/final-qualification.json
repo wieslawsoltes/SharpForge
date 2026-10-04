@@ -1,0 +1,85 @@
+{
+  "sourceCommit": "e8f1502379a2635d4cf448c86ad552298404ef53",
+  "checkout": "/dev/shm/p18-final-qualification",
+  "startedAt": "2026-10-04T03:25:46.485533+00:00",
+  "toolchain": {
+    "node": "v26.10.0",
+    "npm": "11.19.1"
+  },
+  "environment": {
+    "nodeBin": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+    "SHARPFORGE_RESULTS_DIR": "/tmp/p18-final-qualification-logs/core-final/results",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "768",
+    "networkPolicy": "npm ci is offline; dependency lifecycle scripts disabled"
+  },
+  "steps": [
+    {
+      "name": "check",
+      "sourceCommit": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-10-04T03:25:46.488147+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 2879451136,
+        "availableBytes": 2879451136,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7582523392",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "check.log",
+      "completedAt": "2026-10-04T03:25:50.330003+00:00",
+      "exitCode": 0,
+      "sourceAfter": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "resourceAfter": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7684304896",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "name": "structure",
+      "sourceCommit": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/quality/check-structure.js",
+        "--strict"
+      ],
+      "startedAt": "2026-10-04T03:25:50.351941+00:00",
+      "resourcePreflight": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7686066176",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "log": "structure.log",
+      "completedAt": "2026-10-04T03:25:50.700066+00:00",
+      "exitCode": 1,
+      "sourceAfter": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "resourceAfter": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7689424896",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    }
+  ]
+}

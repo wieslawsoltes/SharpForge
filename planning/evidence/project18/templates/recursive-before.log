@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: The pinned ZIP quine contains its exact original bytes according to reference Python zipfile
+ok 1 - The pinned ZIP quine contains its exact original bytes according to reference Python zipfile
+  ---
+  duration_ms: 29.586118
+  type: 'test'
+  ...
+# Subtest: A real ZIP quine is rejected by synchronous and bounded streaming extraction
+not ok 2 - A real ZIP quine is rejected by synchronous and bounded streaming extraction
+  ---
+  duration_ms: 3.388151
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-templates/tests/a24-06-recursive-archives.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-templates/tests/a24-06-recursive-archives.test.js:22:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: Strict nested archive policy rejects a nested bomb without inflating its inner contents
+not ok 3 - Strict nested archive policy rejects a nested bomb without inflating its inner contents
+  ---
+  duration_ms: 28.855456
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-templates/tests/a24-06-recursive-archives.test.js:37:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-templates/tests/a24-06-recursive-archives.test.js:41:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Equal archive and payload sizes do not reject ordinary content or require whole-archive streaming copies
+ok 4 - Equal archive and payload sizes do not reject ordinary content or require whole-archive streaming copies
+  ---
+  duration_ms: 6.867669
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 2
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 167.050306

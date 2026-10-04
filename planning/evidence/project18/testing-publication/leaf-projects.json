@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "originalEvidence": "planning/evidence/project18/testing.json at 1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+  "interpretation": "All 23 assigned leaf/bug records have published implementation. Historical qualification remains distinct from pending final pinned-main composition and native/platform gaps. No issue is closed by this publication evidence.",
+  "issues": [
+    {
+      "issue": 3155,
+      "workId": "SF-A23-T09.1",
+      "title": "[SF-A23-T09.1] Make the XML parser lossless with a concrete syntax tree",
+      "implementation": [
+        "packages/project-system/src/xml-cst.js",
+        "packages/project-system/src/xml.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3553
+      ]
+    },
+    {
+      "issue": 3156,
+      "workId": "SF-A23-T09.2",
+      "title": "[SF-A23-T09.2] Implement source-preserving property edits",
+      "implementation": [
+        "packages/project-system/src/project-edit/properties.js",
+        "packages/project-system/src/project-edit/tree.js",
+        "packages/msbuild/src/project-edits/index.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3553
+      ]
+    },
+    {
+      "issue": 3157,
+      "workId": "SF-A23-T09.3",
+      "title": "[SF-A23-T09.3] Implement source-preserving item and metadata edits",
+      "implementation": [
+        "packages/project-system/src/project-edit/items.js",
+        "packages/project-system/src/project-edit/membership.js",
+        "packages/msbuild/src/project-edits/index.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js",
+        "tests/release08-commands.test.js",
+        "tests/release08-explorer.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3553
+      ]
+    },
+    {
+      "issue": 3158,
+      "workId": "SF-A23-T09.4",
+      "title": "[SF-A23-T09.4] Detect external-write conflicts for project file edits",
+      "implementation": [
+        "packages/msbuild/src/project-edits/conflicts.js"
+      ],
+      "tests": [
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-09-native-conflicts.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3553
+      ]
+    },
+    {
+      "issue": 3159,
+      "workId": "SF-A23-T09.5",
+      "title": "[SF-A23-T09.5] Fuzz round-trip project edits on unusual XML",
+      "implementation": [
+        "tests/project-edits-roundtrip.test.js"
+      ],
+      "tests": [
+        "tests/project-edits-roundtrip.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3553
+      ]
+    },
+    {
+      "issue": 3160,
+      "workId": "SF-A23-T10.1",
+      "title": "[SF-A23-T10.1] Parse .slnx configuration and per-project mapping rules",
+      "implementation": [
+        "packages/msbuild/src/solution-configurations.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3703,
+        4193
+      ]
+    },
+    {
+      "issue": 3161,
+      "workId": "SF-A23-T10.2",
+      "title": "[SF-A23-T10.2] Parse legacy .sln configuration sections",
+      "implementation": [
+        "packages/msbuild/src/sln-configurations.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3703,
+        4193
+      ]
+    },
+    {
+      "issue": 3162,
+      "workId": "SF-A23-T10.3",
+      "title": "[SF-A23-T10.3] Apply default mapping inference rules",
+      "implementation": [
+        "packages/msbuild/src/solution-defaults.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3703,
+        4193
+      ]
+    },
+    {
+      "issue": 3163,
+      "workId": "SF-A23-T10.4",
+      "title": "[SF-A23-T10.4] Apply solution mapping to build, deploy and portable evaluation",
+      "implementation": [
+        "packages/msbuild/src/solution-selection.js",
+        "packages/project-system/src/evaluation/properties.js",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/msbuild/src/build-service.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "remainingAcceptance": [
+        "Saved-solution mapping through an actual authenticated build-service route has not been separately captured; helper and direct mapped native build evidence is retained above."
+      ],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3703,
+        3685,
+        3751,
+        4193
+      ]
+    },
+    {
+      "issue": 3164,
+      "workId": "SF-A23-T10.5",
+      "title": "[SF-A23-T10.5] Serialise classic .sln files",
+      "implementation": [
+        "packages/msbuild/src/sln-writer.js"
+      ],
+      "tests": [
+        "tests/a23-10-solution-configurations.test.js",
+        "tests/msbuild-differential/solutions.mjs"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-solutions"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        3703,
+        4193
+      ]
+    },
+    {
+      "issue": 3165,
+      "workId": "SF-A23-T11.1",
+      "title": "[SF-A23-T11.1] Discover tests through the native test host",
+      "implementation": [
+        "packages/msbuild/src/testing/discovery.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Pinned xUnit/NUnit/MSTest native adapter acquisition timed out in the shared restore;actual native names,TRX outcomes,testhost debugging and collector output must still be qualified.",
+        "Windows/macOS native test hosts andactual browser runtime are not qualified by these Node results."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3676,
+        3737,
+        4193
+      ]
+    },
+    {
+      "issue": 3166,
+      "workId": "SF-A23-T11.2",
+      "title": "[SF-A23-T11.2] Run filtered tests and parse TRX results",
+      "implementation": [
+        "packages/msbuild/src/testing/run.js",
+        "packages/msbuild/src/testing/trx.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Pinned xUnit/NUnit/MSTest native adapter acquisition timed out in the shared restore;actual native names,TRX outcomes,testhost debugging and collector output must still be qualified.",
+        "Windows/macOS native test hosts andactual browser runtime are not qualified by these Node results."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3717,
+        3737,
+        4193
+      ]
+    },
+    {
+      "issue": 3167,
+      "workId": "SF-A23-T11.3",
+      "title": "[SF-A23-T11.3] Map tests to source locations",
+      "implementation": [
+        "packages/msbuild/src/testing/source-map.js",
+        "packages/msbuild/src/testing/portable/source-symbols.js",
+        "packages/runtime/src/invocation-session.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "framework-shared"
+      ],
+      "remainingAcceptance": [
+        "Actual native fixture source maps and native PDB/stack reports remain unqualified until native test packages are available."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3717,
+        3789,
+        3680,
+        4193
+      ]
+    },
+    {
+      "issue": 3168,
+      "workId": "SF-A23-T11.4",
+      "title": "[SF-A23-T11.4] Support test cancellation, live progress and debugging handoff",
+      "implementation": [
+        "packages/msbuild/src/testing/session.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-11-native-adapter.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Actual long-running native testhost cancellation and live debugger attach require the unacquired native framework fixtures;host seam tests use an injected process adapter."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3737,
+        3903,
+        3908,
+        3973,
+        3991
+      ]
+    },
+    {
+      "issue": 3169,
+      "workId": "SF-A23-T11.5",
+      "title": "[SF-A23-T11.5] Parse code coverage reports",
+      "implementation": [
+        "packages/msbuild/src/testing/coverage.js",
+        "packages/msbuild/src/testing/native-adapter.js"
+      ],
+      "tests": [
+        "tests/a23-11-native-testing.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-framework-restore"
+      ],
+      "remainingAcceptance": [
+        "Actual coverlet collector output for the pinned native framework fixtures remains unqualified."
+      ],
+      "historicalQualificationStatus": "implemented-unqualified",
+      "implementationPublished": true,
+      "pullRequests": [
+        3717,
+        3737,
+        4193
+      ]
+    },
+    {
+      "issue": 3170,
+      "workId": "SF-A23-T12.1",
+      "title": "[SF-A23-T12.1] Build differential harness comparing portable and native evaluation",
+      "implementation": [
+        "packages/msbuild/src/evaluation-differential.js",
+        "tests/msbuild-differential/corpus.js",
+        "tests/msbuild-differential/portable.js",
+        "tests/msbuild-differential/run.mjs"
+      ],
+      "tests": [
+        "tests/a23-12-evaluation-differential.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-evaluation"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        4129
+      ],
+      "reportingCorrection": "c31afe2 preserves the four original assertions and counts actual completed native comparisons; supplying an unused native callback cannot claim native execution or success."
+    },
+    {
+      "issue": 3171,
+      "workId": "SF-A23-T12.2",
+      "title": "[SF-A23-T12.2] Maintain machine-readable portable feature boundary",
+      "implementation": [
+        "packages/project-system/src/evaluation/boundary.json",
+        "packages/msbuild/src/evaluation-differential.js",
+        "tests/msbuild-differential/corpus.js"
+      ],
+      "tests": [
+        "tests/a23-12-evaluation-differential.test.js"
+      ],
+      "validation": [
+        "node22",
+        "node26",
+        "native-evaluation"
+      ],
+      "remainingAcceptance": [],
+      "historicalQualificationStatus": "validated",
+      "implementationPublished": true,
+      "pullRequests": [
+        4129
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1588 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "A23 T01\u2013T08 native work (T03.1\u20133 delegated), T30 native integration and T31 publish profiles",
+  "agent": "workspace_inventory",
+  "branch": "codex/p18-native",
+  "generatedAt": "2026-10-04T03:40:18.688058+00:00",
+  "implementationHead": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+  "interpretation": "Implementation status does not assert unavailable platform qualification. Each issue lists exact tested behavior and remaining acceptance evidence. Overlapping runs are not additive. The native scope completed its Linux Node22/Node26 qualification with one confirmed host IPC restriction; the additional closed project-assembly execution scope is coordinated and validated separately with CIL/runtime owners.",
+  "toolchain": {
+    "platform": "Linux x64",
+    "nodes": {
+      "node22": "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+      "node26": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node"
+    },
+    "dotnet": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "installedSdks": [
+      "8.0.425",
+      "10.0.201",
+      "10.0.401"
+    ],
+    "primaryQualifiedSdk": "10.0.201",
+    "primaryQualifiedMsbuild": "18.3.0.15422",
+    "unavailablePlatforms": [
+      "Windows",
+      "macOS",
+      "arm64"
+    ],
+    "engineLimits": "Native process/backend and JavaScript semantic paths are exercised. The supplied canonical nongeneric SharpForge project-assembly profile completed coordinated SourceVM, direct CIL, worker and actual CLR correctness qualification. Arbitrary external assemblies and unsupported generic/virtual/abstract/byref/native profiles retain explicit rejection. No Rust/Wasm or unavailable native-platform pass is claimed. Coordinated runtime performance and final Studio composition evidence are owned by project-runtime/qualification.json and the root integration records.",
+    "sdkInventoryMeaning": "installedSdks records installation at the original qualification time, not current workspace availability."
+  },
+  "validation": [
+    {
+      "id": "matrix-node22",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet DOTNET_ROOT=/workspace/scratch/3e16369943fd/dotnet SHARPFORGE_QUALIFY_SDKS=8.0.425,10.0.201 /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node packages/msbuild/qualification/run.js /tmp/native-report.json",
+      "result": "SDK10.0.201 action and solution cells passed; SDK8.0.425 cells failed before MSBuild due host CLI Process.GetStat. Windows/msbuild.exe unavailable.",
+      "artifact": "native/qualification-node22-sdk8-sdk10.json",
+      "sourceCommit": "7b48e5b51f9bace019dfcfffb83b392b6a455369",
+      "historical": true
+    },
+    {
+      "id": "matrix-node26",
+      "command": "SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet DOTNET_ROOT=/workspace/scratch/3e16369943fd/dotnet SHARPFORGE_QUALIFY_SDKS=8.0.425,10.0.201 /workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node packages/msbuild/qualification/run.js /tmp/native-report.json",
+      "result": "SDK10.0.201 action and solution cells passed; SDK8.0.425 cells failed before MSBuild due host CLI Process.GetStat. Windows/msbuild.exe unavailable.",
+      "artifact": "native/qualification-node26-sdk8-sdk10.json",
+      "sourceCommit": "7b48e5b51f9bace019dfcfffb83b392b6a455369",
+      "historical": true
+    },
+    {
+      "id": "metadata",
+      "command": "Pinned Node22 via scripts/limited.js: metadata/visibility/strict-reference/language tests listed in native/metadata-first.log",
+      "result": "93/94 first pass; native empty Nullable mapping fixed by c45fa3cb; the focused actual SDK metadata retry passed2/2.",
+      "artifact": "native/metadata-fix.log"
+    },
+    {
+      "id": "launch-project",
+      "command": "Pinned Node22 via scripts/limited.js: tests/a23-native-launch.test.js tests/a23-native-policy.test.js",
+      "result": "14/14 pass before granted Executable support; the new executable cases are included in final validation.",
+      "artifact": "native/launch-first.log"
+    },
+    {
+      "id": "binlog-large",
+      "command": "SHARPFORGE_LARGE_BINLOG=1 SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet SHARPFORGE_NATIVE_SDK=10.0.201 /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node scripts/limited.js node --test --test-concurrency=1 tests/a23-native-binlog-large.test.js",
+      "result": "1/1 pass; exact physical size, RSS and elapsed values are recorded in the log. Final page/model guards are included in the full rerun.",
+      "artifact": "native/binlog-large-first.log"
+    },
+    {
+      "id": "historical-node22-initial",
+      "result": "296/298 pass; two assertions expected global:: but actual SDK10.0.201 emits valid unqualified global using. Corrected in the followup; no product failure was hidden.",
+      "artifact": "native/complete-node22-initial.log",
+      "sourceCommit": "4f237a43",
+      "historical": true
+    },
+    {
+      "id": "final-node26",
+      "result": "296 substantive tests passed. TAP reports297/297 because it adds an empty filtered-file placeholder for a23-native-binlog-large.test.js. Two explicit filters omit the confirmed host-denied worker case and the large-log case that passed before interruption. Exclusions are not passing qualifications; native binlog proof is recorded separately. 100057.992ms.",
+      "artifact": "native/complete-node26.log",
+      "command": "env PATH=/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin:/workspace/scratch/3e16369943fd/dotnet:$PATH DOTNET_ROOT=/workspace/scratch/3e16369943fd/dotnet SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet SHARPFORGE_NATIVE_SDK=10.0.201 SHARPFORGE_LARGE_BINLOG=1 SHARPFORGE_CSC_CORPUS=/workspace/scratch/3e16369943fd/native-csc-node26.json SHARPFORGE_REUSE_REPORT=/workspace/scratch/3e16369943fd/native-reuse-node26.json /workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node scripts/limited.js node --test --test-concurrency=1 --test-reporter=tap --test-skip-pattern='^actual reusable builds record first/repeat timings and close their live MSBuild/compiler workers$|^actual 200 MiB binary log replays and pages within the reader memory budget$' tests/a23-native-*.test.js tests/msbuild-*.test.js tests/a23-assembly-identity-sharing.test.js tests/compiler-reference-manager.test.js tests/compiler-metadata-import.test.js tests/compiler-metadata-attributes.test.js tests/language.test.js tests/language-ide-extensions.test.js",
+      "sourceCommit": "be23e8b8",
+      "substantivePassed": 296,
+      "tapPassed": 297,
+      "failed": 0,
+      "tapSkipped": 0,
+      "excluded": [
+        "actual reusable builds record first/repeat timings and close their live MSBuild/compiler workers",
+        "actual 200 MiB binary log replays and pages within the reader memory budget"
+      ]
+    },
+    {
+      "id": "final-node22",
+      "result": "297/298 substantive tests passed, one failed, zero skipped; 122559.356ms. The only failure is the host-denied native worker socket case, retained below. Actual Csc corpus, source/options/metadata parity, launch profiles, native ExplorerWorkshop and large binlog cases passed.",
+      "artifact": "native/complete-node22.log",
+      "command": "env PATH=/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin:/workspace/scratch/3e16369943fd/dotnet:$PATH DOTNET_ROOT=/workspace/scratch/3e16369943fd/dotnet SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet SHARPFORGE_NATIVE_SDK=10.0.201 SHARPFORGE_LARGE_BINLOG=1 SHARPFORGE_CSC_CORPUS=/workspace/scratch/3e16369943fd/native-csc-node22.json SHARPFORGE_REUSE_REPORT=/workspace/scratch/3e16369943fd/native-reuse-node22.json /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node scripts/limited.js node --test --test-concurrency=1 tests/a23-native-*.test.js tests/msbuild-*.test.js tests/a23-assembly-identity-sharing.test.js tests/compiler-reference-manager.test.js tests/compiler-metadata-import.test.js tests/compiler-metadata-attributes.test.js tests/language.test.js tests/language-ide-extensions.test.js",
+      "sourceCommit": "57500bac",
+      "tests": 298,
+      "passed": 297,
+      "failed": 1,
+      "skipped": 0
+    },
+    {
+      "id": "node26-large-before-interruption",
+      "command": "env PATH=/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin:/workspace/scratch/3e16369943fd/dotnet:$PATH DOTNET_ROOT=/workspace/scratch/3e16369943fd/dotnet SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet SHARPFORGE_NATIVE_SDK=10.0.201 SHARPFORGE_LARGE_BINLOG=1 SHARPFORGE_CSC_CORPUS=/workspace/scratch/3e16369943fd/native-csc-node26.json SHARPFORGE_REUSE_REPORT=/workspace/scratch/3e16369943fd/native-reuse-node26.json /workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node scripts/limited.js node --test --test-concurrency=1 tests/a23-native-*.test.js tests/msbuild-*.test.js tests/a23-assembly-identity-sharing.test.js tests/compiler-reference-manager.test.js tests/compiler-metadata-import.test.js tests/compiler-metadata-attributes.test.js tests/language.test.js tests/language-ide-extensions.test.js",
+      "sourceCommit": "be23e8b8",
+      "result": "Large-log case passed before the run was interrupted to apply the already-diagnosed IPC exclusion. Other completed cases overlap the final run and are not additive. Exit130 is an intentional interruption, not a complete suite pass.",
+      "artifact": "native/node26-binlog-interrupted.log"
+    },
+    {
+      "id": "reuse-host-failure",
+      "command": "env PATH=/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin:/workspace/scratch/3e16369943fd/dotnet:$PATH DOTNET_ROOT=/workspace/scratch/3e16369943fd/dotnet SHARPFORGE_DOTNET=/workspace/scratch/3e16369943fd/dotnet/dotnet SHARPFORGE_NATIVE_SDK=10.0.201 SHARPFORGE_LARGE_BINLOG=1 SHARPFORGE_REUSE_REPORT=/workspace/scratch/3e16369943fd/native-reuse-node22.json /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node scripts/limited.js node --test --test-concurrency=1 tests/a23-native-reuse.test.js",
+      "sourceCommit": "be23e8b8",
+      "result": "Shutdown-invocation/error test passes; real multi-node Restore fails MSB1025 before measured builds. .NET NamedPipeServerStream cannot create an AF_UNIX socket: System.Net.Sockets.SocketException13 Permission denied. No speedup or live reusable-worker cleanup result is claimed; Node26 does not repeat this known host restriction.",
+      "artifact": "native/reuse-node22-host-failure.log"
+    },
+    {
+      "id": "completed-native-extraction",
+      "sourceCommit": "f9a1555ff63f4815aede4262432237a2e937b79c",
+      "command": "env -u SHARPFORGE_DOTNET -u DOTNET_ROOT -u DOTNET_HOST_PATH /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node scripts/limited.js /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node --test tests/msbuild-contract.test.js tests/msbuild-native.test.js tests/a24-vfs-conformance.test.js tests/a23-native-http-contributions.test.js tests/a23-metadata-inspection.test.js",
+      "result": {
+        "tests": 109,
+        "passed": 109,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMilliseconds": 4022.63398,
+        "exitCode": 0
+      },
+      "artifact": "native/native-extraction-node22.tap",
+      "evidence": "native-extraction.json",
+      "interpretation": "Completed mechanical HTTP/workspace/service extraction and public metadata inspection; actual loopback and temp-file conformance, no SDK invocation or repeated native matrix."
+    },
+    {
+      "id": "coordinated-project-runtime-node22-properties",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-property-access.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-project-debug-banner.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-debug-editor.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "result": {
+        "tests": 68,
+        "suites": 0,
+        "pass": 68,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifact": "project-runtime/node22-properties.tap",
+      "logSha256": "3216ac3b0e6db93e406592244ce25e016ac6b02447967c42759a683b3ebce486",
+      "evidence": "project-runtime/qualification.json",
+      "interpretation": "Earlier complete corrected 409-test scope had 408 passes and one diagnostic assertion failure; the final complete affected 13-file correction passes 68/68 at the final source. No claim of a new full Node 22 rerun."
+    },
+    {
+      "id": "coordinated-project-runtime-node26-final",
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-project-reference-namespaces.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-runtime-types.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-artifact-cache.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-type-casting.test.js",
+        "tests/a05-tokens.test.js",
+        "tests/a05-statics.test.js",
+        "tests/a05-21-static-init.test.js",
+        "tests/a05-decode-plan.test.js",
+        "tests/a05-02-virtual-slots.test.js",
+        "tests/a05-b03-dispatch.test.js",
+        "tests/a05-seams-cil-types.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/release09-worker.test.js",
+        "tests/a03-03-assembly-definition.test.js",
+        "tests/a03-03-assembly-references.test.js",
+        "tests/a03-03-entry-stub.test.js",
+        "tests/managed-il.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-project-debug-banner.test.js",
+        "tests/a23-project-property-access.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "result": {
+        "tests": 415,
+        "suites": 0,
+        "pass": 415,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifact": "project-runtime/node26-final.tap",
+      "logSha256": "471a571a52d5cc07f19e17fac0623202c93b9046a4c2384b5752f44f00196394",
+      "evidence": "project-runtime/qualification.json",
+      "interpretation": "Final complete 48-file scope passes 415/415 with no skips, failures or cancellations."
+    }
+  ],
+  "qualificationGaps": [
+    "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+    "SDK 8.0.425 was installed during the original matrix, but its CLI repeatedly crashed in Process.GetStat/get_StartTime before MSBuild started; both pinned Node matrix cells retain that failure.",
+    "No preview SDK was available during the recorded native matrix.",
+    "Six recorded SDK diagnostic output versions and ten popular-package asset vectors are not available; public NuGet endpoints repeatedly fail in proxy CONNECT before TLS.",
+    "Actual reusable MSBuild/compiler worker timing and cleanup are unavailable on this host: .NET named-pipe socket construction is denied with SocketException13/MSB1025. The failing Node22 log is retained; Node26 excludes that already-diagnosed capability without reporting a pass."
+  ],
+  "crossWorkstreamContributions": [
+    {
+      "workId": "SF-A23-T10.4",
+      "commit": "2e1510d5",
+      "details": "NativeBuildService resolves solution project configuration/platform before context keys and scheduling; tests_workflows owns the mapping helper and native oracle."
+    },
+    {
+      "workId": "SF-A23-T27",
+      "commit": "5174cbe9",
+      "details": "Explicit primitive identity and source type/member metadata preserve separate-assembly namespaces, public/internal/private access, IVT, readonly fields and accessor visibility. ExplorerWorkshop declares its shared Counter API public and enables native SDK implicit usings. Closed supplied SharpForge PE descriptors and external operation lowering preserve dependency AssemblyRef identities without copying dependency TypeDefs. Coordinated CIL/runtime/worker correctness qualification is complete: final affected Node22 correction 68/68 and full Node26 scope 415/415. Native ExplorerWorkshop separately passed SDK10.0.201 on both pinned Nodes (42\\n42\\n and negative CS0122). Arbitrary external CLR execution remains outside this bounded profile.",
+      "commits": [
+        "5174cbe9",
+        "c4ce898d",
+        "1b8f078d",
+        "607c58be",
+        "57500bac"
+      ],
+      "evidence": [
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-native-explorer-boundary.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-assembly-identity-sharing.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-project-property-access.test.js",
+        "project-runtime/qualification.json",
+        "project-reference-readonly-diagnostics.json"
+      ],
+      "integratedSourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "coordinatedSourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "diagnosticBoundary": "The real Roslyn separate-PE probe reports CS0191 for instance readonly assignment, CS0198 for static readonly assignment and CS0200 for its hidden private setter. The explicit all-member SharpForge import profile reports CS0272 for that inaccessible setter. Both reject the write; exact private-setter diagnostic-code parity is not claimed.",
+      "runtimeBoundary": [
+        "The supplied canonical nongeneric SharpForge class profile is qualified; arbitrary CLR assembly loading, external generic/virtual/abstract/by-reference/native behavior is not provided.",
+        "Source initialization preserves the original managed fault object; direct CIL preserves its existing TypeInitializationException wrapper. Once-only effects and failure propagation are qualified, not identical exception object types.",
+        "Private setter access is rejected by this all-member metadata profile with CS0272. The separate-PE Roslyn probe uses CS0200 because it hides the private setter; exact diagnostic-code parity is not claimed.",
+        "Pinned native xUnit/NUnit/MSTest/coverlet packages remain unavailable after the one previously retained 50-second restore timeout; no new restore or full framework parity claim.",
+        "No Windows/macOS/Rust/Wasm qualification is claimed.",
+        "Protected apps/studio/studio.js remains unapplied here; root owns the reviewed callback patch and final browser/application qualification.",
+        "Performance review remains pending for three measured rows above 5%, the incomplete third benchmark pair and the small aligned PE-size increase. The measurements are not dismissed as noise."
+      ]
+    },
+    {
+      "workId": "SF-A24",
+      "commit": "25f12726",
+      "details": "Native VFS write guards include createDirectory and preserve Conflict/path; filesystem_providers owns full authenticated HTTP conformance evidence."
+    }
+  ],
+  "issues": [
+    {
+      "issue": 3115,
+      "workId": "SF-A23-T01.1",
+      "title": "Define SDK and platform qualification matrix manifest and runner",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3115",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/qualification/matrix.json",
+        "packages/msbuild/qualification/run.js",
+        "packages/msbuild/qualification/fixtures.js"
+      ],
+      "testedAcceptance": [
+        "JSON reports identify exact SDK pins, Node versions, platform, actions, invocations, outputs and failed/absent cells."
+      ],
+      "evidence": [
+        "matrix-node22",
+        "matrix-node26"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+        "SDK 8.0.425 is installed but its CLI repeatedly crashes in Process.GetStat/get_StartTime before MSBuild starts; both pinned Node matrix cells retain that failure.",
+        "No preview SDK was installed."
+      ]
+    },
+    {
+      "issue": 3116,
+      "workId": "SF-A23-T01.2",
+      "title": "Qualify restore, build, pack and publish outputs per platform",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3116",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/qualification/fixtures.js",
+        "packages/msbuild/qualification/verify-outputs.js",
+        "packages/msbuild/qualification/run.js"
+      ],
+      "testedAcceptance": [
+        "Actual Linux SDK 10.0.201 restore/build/pack/publish fixtures produce asserted output files and SFQA1001 negative diagnostics under both pinned Nodes."
+      ],
+      "evidence": [
+        "matrix-node22",
+        "matrix-node26"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+        "SDK 8.0.425 is installed but its CLI repeatedly crashes in Process.GetStat/get_StartTime before MSBuild starts; both pinned Node matrix cells retain that failure."
+      ]
+    },
+    {
+      "issue": 3117,
+      "workId": "SF-A23-T01.3",
+      "title": "Qualify .slnx and legacy .sln builds including graph build",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3117",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/qualification/solutions.js",
+        "packages/msbuild/qualification/run.js"
+      ],
+      "testedAcceptance": [
+        "Both .slnx and .sln fixtures build with and without graph build; artifacts include the application and referenced library."
+      ],
+      "evidence": [
+        "matrix-node22",
+        "matrix-node26"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+        "SDK 8.0.425 is installed but its CLI repeatedly crashes in Process.GetStat/get_StartTime before MSBuild starts; both pinned Node matrix cells retain that failure."
+      ]
+    },
+    {
+      "issue": 3118,
+      "workId": "SF-A23-T01.4",
+      "title": "Qualify Windows msbuild.exe engine and process handling",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3118",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/qualification/windows.js",
+        "packages/msbuild/qualification/process-tree.js",
+        "packages/msbuild/qualification/long-paths.js"
+      ],
+      "testedAcceptance": [
+        "Windows runner and taskkill /T with forced escalation are implemented; simulator-policy assertions do not count as a Windows native run."
+      ],
+      "evidence": [
+        "tests/a23-native-policy.test.js"
+      ],
+      "remaining": [
+        "Windows msbuild.exe discovery, long-path/cancel/diagnostic qualification remains unrun because Windows is unavailable."
+      ]
+    },
+    {
+      "issue": 3119,
+      "workId": "SF-A23-T02.1",
+      "title": "Implement design-time build request and target set",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3119",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/design-time.js",
+        "packages/msbuild/src/project-context.js"
+      ],
+      "testedAcceptance": [
+        "Actual design-time Compile request returns Compile, resolved ReferencePath, compiler options and generated inputs with SkipCompilerExecution; no output DLL exists before build."
+      ],
+      "evidence": [
+        "tests/a23-native-integration.test.js",
+        "tests/a23-native-contexts.test.js"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    },
+    {
+      "issue": 3120,
+      "workId": "SF-A23-T02.2",
+      "title": "Parse csc command-line arguments into compilation options",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3120",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/csc-args.js",
+        "packages/msbuild/src/project-context.js"
+      ],
+      "testedAcceptance": [
+        "Ten authored compiler command-line vectors preserve defines, aliases, nullability, safety, warning policies, analyzer/additional/editorconfig inputs and unknown switches; actual SDK design-time CscCommandLineArgs is consumed.",
+        "Absolute Unix source paths are distinguished from compiler switches; aggregate argument and response-file text limits are explicit.",
+        "Ten distinct real SDK10.0.201 Csc command lines matched independently specified option objects on Node22.23.3 and Node26.10.0; exact raw commands, expected objects and parsed output are retained in compressed JSON corpora."
+      ],
+      "evidence": [
+        "tests/a23-native-contexts.test.js",
+        "tests/a23-native-metadata.test.js",
+        "tests/a23-native-csc-corpus.test.js",
+        "native/csc-node22.json.gz",
+        "native/csc-node26.json.gz",
+        "final-node22",
+        "final-node26"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3121,
+      "workId": "SF-A23-T02.3",
+      "title": "Cache project contexts keyed by evaluation inputs",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3121",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/design-time-cache.js",
+        "packages/msbuild/src/design-time-inputs.js",
+        "packages/msbuild/src/design-time.js"
+      ],
+      "testedAcceptance": [
+        "Repeated unchanged design-time requests reuse the same cached context without another process; import changes and newly admitted globbed source files invalidate affected contexts."
+      ],
+      "evidence": [
+        "tests/a23-native-contexts.test.js",
+        "tests/a23-native-integration.test.js"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    },
+    {
+      "issue": 3122,
+      "workId": "SF-A23-T02.4",
+      "title": "Expose project context API for the IDE semantic model",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3122",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/project-context.js",
+        "packages/msbuild/src/context-input.js",
+        "packages/msbuild/src/services.js",
+        "packages/msbuild/src/client.js"
+      ],
+      "testedAcceptance": [
+        "Native and portable contexts share identity and active selection; hydrated source sets and canonical options are compared using the actual SDK.",
+        "Completed pinned Node22 and Node26 batches pass the actual native/portable canonical option and hydrated source-set comparisons, including generated implicit usings."
+      ],
+      "evidence": [
+        "tests/a23-native-context-parity.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3123,
+      "workId": "SF-A23-T02.5",
+      "title": "Surface SDK-generated sources in contexts",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3123",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/design-time-generated.js",
+        "packages/msbuild/src/workspace-context.js",
+        "packages/msbuild/src/native-metadata.js",
+        "packages/compiler/src/metadata-language.js",
+        "packages/compiler/src/metadata-language-index.js",
+        "packages/language/src/metadata-session.js",
+        "packages/language/src/completions.js"
+      ],
+      "testedAcceptance": [
+        "Generated sources retain stable paths/read-only flags; authenticated context-scoped metadata reads hydrate the IDE using bounded validated PE bytes.",
+        "Actual SDK System.Linq.Enumerable completion, hover and semantic diagnostics work independently of runtime lowering; execution outside the runtime profile remains SF2200."
+      ],
+      "evidence": [
+        "tests/a23-native-metadata.test.js",
+        "tests/a23-project-reference-visibility.test.js"
+      ],
+      "remaining": [
+        "Final native test explicitly uses SDK implicit global usings without a user using directive; final result is recorded separately.",
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    },
+    {
+      "issue": 3125,
+      "workId": "SF-A23-T03.1",
+      "title": "Parse target framework monikers and compute compatibility",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3125",
+      "status": "delegated",
+      "implementation": [
+        "packages/project-system/src/tfm.js",
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/msbuild/src/project-context.js"
+      ],
+      "testedAcceptance": [
+        "Transferred to portable_evaluator: public shared TFM/context selection contracts are reused by native contexts. The owning evaluator manifest contains the 47-TFM NuGet oracle and context-selection evidence."
+      ],
+      "evidence": [
+        "evaluator.json",
+        "tests/project-evaluation-frameworks.test.js",
+        "tests/project-evaluation-contexts.test.js"
+      ],
+      "remaining": [
+        "Ownership and full acceptance qualification are recorded in evaluator.json."
+      ]
+    },
+    {
+      "issue": 3126,
+      "workId": "SF-A23-T03.2",
+      "title": "Evaluate one project context per target framework",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3126",
+      "status": "delegated",
+      "implementation": [
+        "packages/project-system/src/tfm.js",
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/msbuild/src/project-context.js"
+      ],
+      "testedAcceptance": [
+        "Transferred to portable_evaluator: public shared TFM/context selection contracts are reused by native contexts. The owning evaluator manifest contains the 47-TFM NuGet oracle and context-selection evidence."
+      ],
+      "evidence": [
+        "evaluator.json",
+        "tests/project-evaluation-frameworks.test.js",
+        "tests/project-evaluation-contexts.test.js"
+      ],
+      "remaining": [
+        "Ownership and full acceptance qualification are recorded in evaluator.json."
+      ]
+    },
+    {
+      "issue": 3127,
+      "workId": "SF-A23-T03.3",
+      "title": "Add active-context selection and per-context diagnostics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3127",
+      "status": "delegated",
+      "implementation": [
+        "packages/project-system/src/tfm.js",
+        "packages/project-system/src/context-selection.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/msbuild/src/project-context.js"
+      ],
+      "testedAcceptance": [
+        "Transferred to portable_evaluator: public shared TFM/context selection contracts are reused by native contexts. The owning evaluator manifest contains the 47-TFM NuGet oracle and context-selection evidence."
+      ],
+      "evidence": [
+        "evaluator.json",
+        "tests/project-evaluation-frameworks.test.js",
+        "tests/project-evaluation-contexts.test.js"
+      ],
+      "remaining": [
+        "Ownership and full acceptance qualification are recorded in evaluator.json."
+      ]
+    },
+    {
+      "issue": 3128,
+      "workId": "SF-A23-T03.4",
+      "title": "Resolve runtime identifier graphs",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3128",
+      "status": "implemented",
+      "implementation": [
+        "packages/project-system/src/rid.js",
+        "packages/project-system/src/portable-rid-graph.js",
+        "packages/project-system/src/multi-target.js",
+        "packages/msbuild/src/rid.js"
+      ],
+      "testedAcceptance": [
+        "All 85 portable RID fallback expansions match the installed SDK NuGet.RuntimeModel oracle; win-x64 expands through win, any and base.",
+        "Unknown IDs, invalid graphs and cycles produce diagnostics; 20,000-node graph traversal is iterative and bounded; portable contexts expose selected/available RID chains."
+      ],
+      "evidence": [
+        "tests/a23-native-rid.test.js",
+        "tests/a23-native-contexts.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3129,
+      "workId": "SF-A23-T04.1",
+      "title": "Implement binary log reader",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3129",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/binlog/reader.js",
+        "packages/msbuild/binlog-reader/Program.cs"
+      ],
+      "testedAcceptance": [
+        "Official Microsoft.Build.BinaryLogReplayEventSource reads real SDK 10.0.201 and 10.0.401 logs and reports recoverable forward-compatibility errors."
+      ],
+      "evidence": [
+        "tests/a23-native-integration.test.js",
+        "tests/a23-native-binlog-large.test.js"
+      ],
+      "remaining": [
+        "Implementation uses the installed SDK reader rather than duplicating the binary schema with @sharpforge/archive; native SDK availability is required.",
+        "An unknown future-version binary record fixture has not been produced; forward-compatible behavior is delegated to the official reader.",
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    },
+    {
+      "issue": 3130,
+      "workId": "SF-A23-T04.2",
+      "title": "Build structured build-event tree and timing summary",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3130",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/binlog/model.js"
+      ],
+      "testedAcceptance": [
+        "Bounded project/target/task structural tree preserves parent context, timestamps, diagnostics counts and top-N duration tables.",
+        "Parallel durations are explicitly overlapping wall-clock intervals; their arithmetic sum is not mislabeled as total build duration."
+      ],
+      "evidence": [
+        "tests/a23-native-binlog.test.js",
+        "tests/a23-native-integration.test.js"
+      ],
+      "remaining": [
+        "Message bodies remain in the paged event spool with context identity rather than being retained as unbounded tree nodes."
+      ]
+    },
+    {
+      "issue": 3131,
+      "workId": "SF-A23-T04.3",
+      "title": "Serve bounded paged binlog queries from the host",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3131",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/binlog/query.js",
+        "packages/msbuild/src/binlog/model.js",
+        "packages/msbuild/src/binlog/reader.js",
+        "packages/msbuild/src/server.js"
+      ],
+      "testedAcceptance": [
+        "Physical binary logs259939322B (Node22) and259937699B (Node26) produced1204 events and720109981B spools, then replayed/paged within both independent512MiB process RSS budgets.",
+        "Node22 helper492503040B/Node153452544B; replay/page13330.587ms. Node26 helper484974592B/Node236830720B; replay/page11989.706ms. FixtureSDK10.0.201; reader helperSDK10.0.401, file18.9.11.42413.",
+        "Record-byte limits preserve continuation cursors; structural storage, string lengths, query scans and records have explicit admission limits."
+      ],
+      "evidence": [
+        "tests/a23-native-binlog-large.test.js",
+        "tests/a23-native-binlog.test.js",
+        "binlog-large",
+        "final-node22",
+        "node26-large-before-interruption"
+      ],
+      "remaining": [
+        "The 512 MiB helper and 512 MiB Node budgets are independent; the conservative sum is checked against 1 GiB. This is a synthetic memory/paging qualification, not a workload speed benchmark.",
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    },
+    {
+      "issue": 3132,
+      "workId": "SF-A23-T04.4",
+      "title": "Extend text diagnostic parser for MSBuild, NuGet and multi-line forms",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3132",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/diagnostics.js",
+        "packages/msbuild/src/contract.js"
+      ],
+      "testedAcceptance": [
+        "Terminal ANSI/OSC framing, subcategories, MSB/NU/NETSDK codes, continuation lines, help links and summary duplicate suppression are handled; uncoded errors remain visible."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "tests/msbuild-contract.test.js"
+      ],
+      "remaining": [
+        "A recorded six-SDK diagnostic corpus is not available. Actual installed SDK output and authored cross-format fixtures are qualified; six-version parity is not claimed."
+      ]
+    },
+    {
+      "issue": 3133,
+      "workId": "SF-A23-T04.5",
+      "title": "Ingest SARIF error logs from the compiler",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3133",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/sarif.js",
+        "packages/msbuild/src/engine.js"
+      ],
+      "testedAcceptance": [
+        "SARIF 2.1 results preserve rule help URIs, suppression state and related locations and join job diagnostics; native requests provide compiler ErrorLog output."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "tests/msbuild-contract.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3134,
+      "workId": "SF-A23-T05.1",
+      "title": "Replace single-job 409 with a queued build scheduler",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3134",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/scheduler.js",
+        "packages/msbuild/src/engine.js",
+        "packages/msbuild/src/native-tool.js"
+      ],
+      "testedAcceptance": [
+        "Overlapping builds queue and complete in order; higher-priority user jobs precede design-time work; stale queued contexts coalesce; queued/running cancellation is explicit."
+      ],
+      "evidence": [
+        "tests/a23-native-contexts.test.js",
+        "tests/msbuild-native.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3135,
+      "workId": "SF-A23-T05.2",
+      "title": "Implement fast up-to-date check",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3135",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/up-to-date.js",
+        "packages/msbuild/src/build-service.js"
+      ],
+      "testedAcceptance": [
+        "An unchanged successful baseline skips a native process with an explanation; input/output/global property changes invalidate it."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "tests/a23-native-integration.test.js"
+      ],
+      "remaining": [
+        "The optimization is opt-in and requires the caller to provide complete input/output sets; arbitrary side-effecting targets must continue through native MSBuild."
+      ]
+    },
+    {
+      "issue": 3136,
+      "workId": "SF-A23-T05.3",
+      "title": "Use static graph to build only affected projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3136",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/project-graph.js",
+        "packages/msbuild/src/native-project-graph.js",
+        "packages/msbuild/src/services.js"
+      ],
+      "testedAcceptance": [
+        "Authoritative design-time project edges drive affected builds; changing the leaf builds only the leaf, while a library change builds it before its dependents with BuildProjectReferences=false."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "tests/a23-native-integration.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3137,
+      "workId": "SF-A23-T05.4",
+      "title": "Add build server and node-reuse policy",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3137",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/engine.js",
+        "packages/msbuild/src/invocation.js",
+        "packages/msbuild/src/contract.js",
+        "packages/msbuild/src/build-server.js"
+      ],
+      "testedAcceptance": [
+        "Node reuse and compiler server participation are explicit opt-ins; default invocations disable reuse, and host close invokes build-server shutdown after reuse.",
+        "Exact SDK build-server shutdown invocation and explicit nonzero-error propagation passed on both pinned Nodes; ordinary build invocation tests retain opt-in switches."
+      ],
+      "evidence": [
+        "tests/msbuild-contract.test.js",
+        "tests/a23-native-reuse.test.js",
+        "reuse-host-failure"
+      ],
+      "remaining": [
+        "Actual reusable MSBuild/compiler worker timing and cleanup are unavailable on this host: .NET named-pipe socket construction is denied with SocketException13/MSB1025. The failing Node22 log is retained; Node26 excludes that already-diagnosed capability without reporting a pass.",
+        "Windows, macOS and arm64 process cleanup qualification is unavailable."
+      ]
+    },
+    {
+      "issue": 3138,
+      "workId": "SF-A23-T06.1",
+      "title": "Audit and test process-tree termination",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3138",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/process.js",
+        "packages/msbuild/qualification/process-tree.js"
+      ],
+      "testedAcceptance": [
+        "Actual Linux child/grandchild simulator termination is asserted after cancellation; timeout/output-limit reasons are distinct; detached group termination escalates.",
+        "Executable profile cancellation and timeout reuse the same native process policy."
+      ],
+      "evidence": [
+        "tests/a23-native-policy.test.js",
+        "tests/msbuild-native.test.js",
+        "tests/a23-native-launch.test.js"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    },
+    {
+      "issue": 3140,
+      "workId": "SF-A23-T06.2",
+      "title": "Persist per-workspace trust decisions on the host",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3140",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/trust.js",
+        "packages/msbuild/src/engine.js",
+        "packages/msbuild/src/services.js"
+      ],
+      "testedAcceptance": [
+        "Persistent host-owned trust uses canonical workspace identity; requests that evaluate code require both host and explicit per-request trust, including metadata-triggered design time and launches."
+      ],
+      "evidence": [
+        "tests/a23-native-policy.test.js",
+        "tests/msbuild-native.test.js",
+        "tests/a23-native-metadata.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3141,
+      "workId": "SF-A23-T06.3",
+      "title": "Scrub child environment and block output-path escapes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3141",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/environment.js",
+        "packages/msbuild/src/argument-policy.js",
+        "packages/msbuild/src/process.js"
+      ],
+      "testedAcceptance": [
+        "An actual child process cannot see unrequested host secret/startup-hook variables; traversal/absolute/unresolved output properties are rejected.",
+        "Launch profiles may explicitly supply bounded application variables after workspace trust; this does not broaden implicit host inheritance."
+      ],
+      "evidence": [
+        "tests/a23-native-policy.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/a23-native-launch.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3142,
+      "workId": "SF-A23-T06.4",
+      "title": "Validate response files and additional switches",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3142",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/argument-policy.js",
+        "packages/msbuild/src/invocation.js"
+      ],
+      "testedAcceptance": [
+        "Response files are recursively bounded, cycles and root escapes are rejected, and logger/toolset/output switches require explicit elevated host and request trust."
+      ],
+      "evidence": [
+        "tests/a23-native-policy.test.js",
+        "tests/msbuild-native.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3143,
+      "workId": "SF-A23-T07.1",
+      "title": "Parse NuGet.Config hierarchy without exposing credentials",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3143",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/config.js",
+        "packages/msbuild/src/nuget/config-node.js"
+      ],
+      "testedAcceptance": [
+        "Actual local-feed NuGet.Config effective sources match dotnet nuget list source; clear/remove/disabled/mapping/relative-path precedence is preserved and credential values are redacted."
+      ],
+      "evidence": [
+        "tests/a23-native-nuget.test.js",
+        "tests/a23-native-package-workflow.test.js"
+      ],
+      "remaining": [
+        "User/machine-level config files are accepted through explicit host inheritedFiles rather than silently reading files outside the workspace."
+      ]
+    },
+    {
+      "issue": 3144,
+      "workId": "SF-A23-T07.2",
+      "title": "Implement NuGet version and version-range semantics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3144",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/versioning.js"
+      ],
+      "testedAcceptance": [
+        "29 parse vectors, 11 ordering vectors and 22 ranges across 11 candidates match the installed NuGet.Versioning assembly; invalid bounds and prerelease cases are rejected."
+      ],
+      "evidence": [
+        "tests/a23-native-nuget-reference.test.js",
+        "tests/a23-native-nuget.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3145,
+      "workId": "SF-A23-T07.3",
+      "title": "Implement NuGet V3 feed client",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3145",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/v3-client.js",
+        "packages/msbuild/src/services.js"
+      ],
+      "testedAcceptance": [
+        "Recorded local V3 protocol fixtures cover service index, search, version lists, nuspec, origins, redirects, host-only authentication and bounded cache/response limits."
+      ],
+      "evidence": [
+        "tests/a23-native-nuget.test.js"
+      ],
+      "remaining": [
+        "Live nuget.org endpoints cannot be reached through the environment proxy; the transcript records bounded IPv4/v2/v3/forced-proxy diagnostics without repeated restore."
+      ]
+    },
+    {
+      "issue": 3146,
+      "workId": "SF-A23-T07.4",
+      "title": "Read project.assets.json and build the transitive graph",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3146",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/assets.js",
+        "packages/msbuild/src/nuget/operations.js"
+      ],
+      "testedAcceptance": [
+        "Actual local package assets and dotnet list package agree; direct/transitive framework/RID identities are retained and NU1605 diagnostics are surfaced."
+      ],
+      "evidence": [
+        "tests/a23-native-nuget.test.js",
+        "tests/a23-native-package-workflow.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3147,
+      "workId": "SF-A23-T07.5",
+      "title": "Support packages.lock.json and locked-mode restore",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3147",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/lock-file.js",
+        "packages/msbuild/src/nuget/operations.js"
+      ],
+      "testedAcceptance": [
+        "Lock-file reads preserve original bytes; actual locked restore detects deliberate package drift with NU1004."
+      ],
+      "evidence": [
+        "tests/a23-native-nuget.test.js",
+        "tests/a23-native-package-workflow.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3148,
+      "workId": "SF-A23-T07.6",
+      "title": "Support central package management (Directory.Packages.props)",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3148",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/central-packages.js",
+        "packages/msbuild/src/nuget/operations.js",
+        "packages/project-system/src/evaluation/central-packages.js"
+      ],
+      "testedAcceptance": [
+        "Actual central package edits target Directory.Packages.props, restore succeeds and portable evaluated PackageReference resolves the central version.",
+        "Portable GlobalPackageReference and NU1008/NU1010/NU1013 policy followups are owned and qualified by portable_evaluator."
+      ],
+      "evidence": [
+        "tests/a23-native-package-workflow.test.js",
+        "evaluator.json"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3149,
+      "workId": "SF-A23-T07.7",
+      "title": "Add package add/update/remove and vulnerability services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3149",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/operations.js",
+        "packages/msbuild/src/nuget/v3-client.js",
+        "packages/project-system/src/project-edit/index.js"
+      ],
+      "testedAcceptance": [
+        "Actual local-feed add/update/remove/consolidation operations minimally edit version/item spans and trigger restore; failed restore retains explicit edits.",
+        "Vulnerability protocol records retain advisory URLs; credentials stay host-side."
+      ],
+      "evidence": [
+        "tests/a23-native-package-workflow.test.js",
+        "tests/a23-native-nuget.test.js"
+      ],
+      "remaining": [
+        "Multi-project edits are explicitly not atomic; conflicts and completed operations are returned. Live public advisory service qualification is blocked by endpoint reachability."
+      ]
+    },
+    {
+      "issue": 3150,
+      "workId": "SF-A23-T07.8",
+      "title": "Read nupkg contents and select assets per target framework",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3150",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/nuget/package-reader.js",
+        "packages/msbuild/src/nuget/assets.js"
+      ],
+      "testedAcceptance": [
+        "Package reader independently selects ref compile, lib/runtime/RID assets, analyzers/build/content groups and rejects malformed archives; actual locally packed NuGet assets agree with restore output."
+      ],
+      "evidence": [
+        "tests/a23-native-nuget.test.js",
+        "tests/a23-native-package-workflow.test.js"
+      ],
+      "remaining": [
+        "The requested ten popular-package corpus is blocked by public NuGet reachability and an empty package cache; one real local package plus authored selection fixtures is qualified."
+      ]
+    },
+    {
+      "issue": 3151,
+      "workId": "SF-A23-T08.1",
+      "title": "Discover installed SDKs, runtimes and MSBuild instances",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3151",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/sdk-discovery.js",
+        "packages/msbuild/src/services.js",
+        "packages/msbuild/qualification/windows.js"
+      ],
+      "testedAcceptance": [
+        "Actual inventory lists installed SDKs 8.0.425, 10.0.201 and 10.0.401 with paths, installed runtimes and host RID; absent executables return an actionable result."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "matrix-node22",
+        "matrix-node26"
+      ],
+      "remaining": [
+        "Visual Studio/msbuild.exe instance discovery is implemented but Windows is unavailable."
+      ]
+    },
+    {
+      "issue": 3152,
+      "workId": "SF-A23-T08.2",
+      "title": "Resolve global.json with roll-forward semantics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3152",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/global-json.js",
+        "packages/project-system/src/configuration-json.js"
+      ],
+      "testedAcceptance": [
+        "Twelve actual dotnet --version policy cases cover all nine roll-forward policy families with installed SDK sets; comments are accepted and trailing commas rejected like the CLI."
+      ],
+      "evidence": [
+        "tests/a23-native-sdk-reference.test.js",
+        "tests/a23-native-projects.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3154,
+      "workId": "SF-A23-T08.3",
+      "title": "Report workloads and explain unavailable targets",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3154",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/workloads.js",
+        "packages/msbuild/src/services.js",
+        "packages/msbuild/src/engine.js"
+      ],
+      "testedAcceptance": [
+        "Literal Android and other workload target requirements are preflighted; NETSDK1147 explains the missing workload before starting a build. No workload installation occurs implicitly."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "tests/a23-native-policy.test.js"
+      ],
+      "remaining": [
+        "Platform workload installations themselves are not present and are not claimed qualified."
+      ]
+    },
+    {
+      "issue": 3085,
+      "workId": "SF-A23-T30",
+      "title": "Read launchSettings.json launch profiles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3085",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/launch.js",
+        "packages/msbuild/src/launch-options.js",
+        "packages/msbuild/src/native-tool.js",
+        "packages/msbuild/src/environment.js",
+        "packages/msbuild/src/http-error.js"
+      ],
+      "testedAcceptance": [
+        "Selected saved or explicit profiles supply arguments, Unicode environment, application URLs, launch profile name and granted working directory to native execution.",
+        "Executable profiles select only an existing regular non-symlink program inside the granted workspace and share queue/trust/timeout/cancel policy.",
+        "Located JSON diagnostics survive HTTP transport; malformed arguments/environment and outside-root executable paths fail explicitly.",
+        "Saved Project and granted-workspace Executable launch cases passed both pinned Node/Linux batches, including arguments, environment, working directory, timeout/cancellation and outside-root rejection."
+      ],
+      "evidence": [
+        "tests/a23-native-launch.test.js"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing.",
+        "Native Project and granted Executable profiles are implemented. IISExpress and other command kinds require their platform-specific adapter."
+      ]
+    },
+    {
+      "issue": 3086,
+      "workId": "SF-A23-T31",
+      "title": "Support publish profiles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3086",
+      "status": "implemented",
+      "implementation": [
+        "packages/msbuild/src/publish-profiles.js",
+        "packages/msbuild/src/services.js"
+      ],
+      "testedAcceptance": [
+        "Profile discovery is data-only and preserves unsupported conditional declarations; actual native folder publish produces the selected profile PublishDir content."
+      ],
+      "evidence": [
+        "tests/a23-native-projects.test.js",
+        "tests/a23-native-integration.test.js"
+      ],
+      "remaining": [
+        "Windows, macOS and arm64 native execution are not available in this workspace; their cells are not reported passing."
+      ]
+    }
+  ],
+  "compilerCommandCorpora": [
+    {
+      "node": "v22.23.3",
+      "sdk": "10.0.201",
+      "commands": 10,
+      "artifact": "native/csc-node22.json.gz",
+      "compression": "gzip",
+      "uncompressedBytes": 683863,
+      "sha256": "d1194f7eb4b6f85dfc4409defe6d733968efd6e6da386a33687ba1cda6caa580"
+    },
+    {
+      "node": "v26.10.0",
+      "sdk": "10.0.201",
+      "commands": 10,
+      "artifact": "native/csc-node26.json.gz",
+      "compression": "gzip",
+      "uncompressedBytes": 683863,
+      "sha256": "e67a8ad44394418f99114e984c7dbb82832449f0c1ef2a2355a290d023be0551"
+    }
+  ],
+  "largeBinlogMeasurements": [
+    {
+      "node": "v22.23.3",
+      "platform": "linux",
+      "architecture": "x64",
+      "inputBytes": 259939322,
+      "events": 1204,
+      "spoolBytes": 720109981,
+      "readerVersion": "15.1.0.0",
+      "readerFileVersion": "18.9.11.42413",
+      "readerProductVersion": "18.9.11+e34a38d2ae1fc26406a317517196e55c68ff83ab",
+      "helperPeakRss": 492503040,
+      "nodePeakRss": 153452544,
+      "replayAndPageMs": 13330.587068,
+      "fixtureSdk": "10.0.201",
+      "readerHelperSdk": "10.0.401",
+      "qualification": "Physical compressed input over200MiB; independent512MiB helper/Node RSS budgets, conservative aggregate below1GiB."
+    },
+    {
+      "node": "v26.10.0",
+      "platform": "linux",
+      "architecture": "x64",
+      "inputBytes": 259937699,
+      "events": 1204,
+      "spoolBytes": 720109981,
+      "readerVersion": "15.1.0.0",
+      "readerFileVersion": "18.9.11.42413",
+      "readerProductVersion": "18.9.11+e34a38d2ae1fc26406a317517196e55c68ff83ab",
+      "helperPeakRss": 484974592,
+      "nodePeakRss": 236830720,
+      "replayAndPageMs": 11989.705555,
+      "fixtureSdk": "10.0.201",
+      "readerHelperSdk": "10.0.401",
+      "qualification": "Physical compressed input over200MiB; independent512MiB helper/Node RSS budgets, conservative aggregate below1GiB."
+    }
+  ],
+  "historicalNativeQualificationHead": "be23e8b8",
+  "nativeSourceHead": "9e6d45c368e78e21dbee7e0fcc7ca3a5adc036e6",
+  "sourceInterpretation": "implementationHead identifies the complete integrated product composition used to project the public feature batches. Each validation entry retains the actual source commit exercised; no test is attributed to a later commit merely because its implementation was merged.",
+  "relatedEvidence": {
+    "nativeExtraction": "native-extraction.json",
+    "closedProjectRuntime": "project-runtime/qualification.json",
+    "readonlyDiagnosticOracle": "project-reference-readonly-diagnostics.json",
+    "nativeStudio": "native-studio.json",
+    "publication": "native-publication.json",
+    "finalIntegration": "Root-owned final integration qualification; separate from the native SDK matrix."
+  },
+  "publication": {
+    "recordedAt": "2026-10-04T03:40:18.688058+00:00",
+    "receipt": "native-publication.json",
+    "featurePullRequests": 23,
+    "mergeOnlyDependencyJoins": 12,
+    "requiredCore": "Successful on each of the 23 exact published feature heads in the receipt. Skipped full-platform jobs and cancelled superseded runs are preserved and are not passes.",
+    "sourceHistory": "Original implementation commits and all dependency merge parents remain intact; no force update, rebase, squash, or main merge was used to publish native feature projections.",
+    "localValidation": "Completed scope evidence was reused per batch. Newly split public fixtures preserve assertions; projection-specific syntax/static checks and actual core results are recorded separately. No full native matrix was rerun for PR publication.",
+    "features": [
+      {
+        "name": "native-process",
+        "pr": 3571,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3571",
+        "branch": "codex/p18-native-process",
+        "sourceCommit": "6816712d61c11e5ef72c662860b6774563ddc76f",
+        "remoteCommit": "212237c6ba56b7433b109755bc4e2c9631f9114e",
+        "tree": "2fbf4d8d5bea2d5718b6928ecc26011cc40a52ad",
+        "core": {
+          "name": "core",
+          "id": 111321860723,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163577401/job/111321860723"
+        }
+      },
+      {
+        "name": "native-command-lines",
+        "pr": 3584,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3584",
+        "branch": "codex/p18-native-command-lines",
+        "sourceCommit": "6963f3505dff763604b38d2e302b1642aab5cd60",
+        "remoteCommit": "d44526bb5b795d13665e108589f1d8ded55c24fb",
+        "tree": "3855c68cab8f53b3fb8133ba9ceb0f9d6c1c8b9a",
+        "core": {
+          "name": "core",
+          "id": 111322547356,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163815803/job/111322547356"
+        }
+      },
+      {
+        "name": "native-engine",
+        "pr": 3602,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3602",
+        "branch": "codex/p18-native-engine",
+        "sourceCommit": "31c8dcba865ab8aec0e2c7d9e9c0bb32bcde650e",
+        "remoteCommit": "089b1eba6926a22df7cad392b89be41cb01638e5",
+        "tree": "1791920947477cfda03c4b34aec69a6687f6d1cc",
+        "core": {
+          "name": "core",
+          "id": 111324660356,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164537461/job/111324660356"
+        }
+      },
+      {
+        "name": "native-sdk",
+        "pr": 3618,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3618",
+        "branch": "codex/p18-native-sdk",
+        "sourceCommit": "dd452e4932bbdb482ee74a02711463365559f8a2",
+        "remoteCommit": "5ec909c40834b08484270dba88248f2e8dbcc968",
+        "tree": "00e061dde1ddd3a7fad349f6ce0a9186158d5b30",
+        "core": {
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37165598719/job/111327740600",
+          "head": "5ec909c40834b08484270dba88248f2e8dbcc968"
+        }
+      },
+      {
+        "name": "metadata-inspection",
+        "pr": 3627,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3627",
+        "branch": "codex/p18-metadata-inspection",
+        "sourceCommit": "0dc61bcc5366715bb6f9ea5e833916e6eedaaa10",
+        "remoteCommit": "a8d73af071603edace0e81ca74c9ab3911212b06",
+        "tree": "67d88fd18fde52130a207705cf66c890b1b71bed",
+        "core": {
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166028593/job/111328979858",
+          "head": "a8d73af071603edace0e81ca74c9ab3911212b06"
+        }
+      },
+      {
+        "name": "native-transport",
+        "pr": 3638,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3638",
+        "branch": "codex/p18-native-transport",
+        "sourceCommit": "cbc2fc1ea5866330b42e9f0a809aa069491f8f47",
+        "remoteCommit": "79dc1c551c4b8013be028c0e42d0ac220d7b7886",
+        "tree": "dba1fc4cb6becf0c9bb47879a2a6870bbb04e211",
+        "core": {
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37166515506/job/111330428933",
+          "head": "79dc1c551c4b8013be028c0e42d0ac220d7b7886"
+        }
+      },
+      {
+        "name": "native-vfs",
+        "pr": 3658,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3658",
+        "branch": "codex/p18-native-vfs",
+        "sourceCommit": "2c370bb864005893c2bded0038525b63168692e8",
+        "remoteCommit": "e73da53546997cbdda062547d7c2d46c524a00f7",
+        "tree": "99f6df3a857e972721a363919390ad007517d42d",
+        "core": {
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167052270/job/111332046851",
+          "head": "e73da53546997cbdda062547d7c2d46c524a00f7"
+        }
+      },
+      {
+        "name": "native-context-model",
+        "pr": 3664,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3664",
+        "branch": "codex/p18-native-context-model",
+        "sourceCommit": "71d9457ca35cd721bfc3b218ef9d251463dcaa5d",
+        "remoteCommit": "516c151ce4ac463a91fbe9aefbbdf73eb49d0ff2",
+        "tree": "5287d6b087c826bc5c886880c5fc391e5646c7cf",
+        "core": {
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167558104/job/111333593837",
+          "head": "516c151ce4ac463a91fbe9aefbbdf73eb49d0ff2"
+        }
+      },
+      {
+        "name": "native-context-service",
+        "pr": 3683,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3683",
+        "branch": "codex/p18-native-context-service",
+        "sourceCommit": "b94165de5d9052dbc53d0dacd8f004d86e97a25c",
+        "remoteCommit": "50567b43b1358697beb4b02c12a9e59e361978fd",
+        "tree": "2a1c88ac482fc84be448f6e08fdf5bd9d8b1223c",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168183762/job/111335473589"
+        }
+      },
+      {
+        "name": "native-profiles",
+        "pr": 3696,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3696",
+        "branch": "codex/p18-native-profiles",
+        "sourceCommit": "ed5e8d4558d08b2b5a8fcf8f2957bcb99fee79ee",
+        "remoteCommit": "e6fbb6658d7617ab9c9da6429dd0c41b876475ba",
+        "tree": "6098a2ce09ab0daeb5d557534cbea160caf7f706",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168465347/job/111336316584"
+        }
+      },
+      {
+        "name": "nuget-models",
+        "pr": 3706,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3706",
+        "branch": "codex/p18-nuget-models",
+        "sourceCommit": "d08cc70c4d74d50833b2e13827069d0ef63cedc8",
+        "remoteCommit": "1ce51c3e2c292e3bc041d5d3b0d1963e2c15dc6f",
+        "tree": "7d9f8c720b002cb79c05897a869ad64312dfe1f6",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37168896020/job/111337605830"
+        }
+      },
+      {
+        "name": "nuget-v3",
+        "pr": 3720,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3720",
+        "branch": "codex/p18-nuget-v3",
+        "sourceCommit": "9237284f164252607af1edee48447a5b2016f5a5",
+        "remoteCommit": "5a8aff2218f2ae4add864c524ec823498f24b346",
+        "tree": "d703ec1f1c2db3779ce3acf777346793de0ffc85",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169103323/job/111338228243"
+        }
+      },
+      {
+        "name": "native-build",
+        "pr": 3751,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3751",
+        "branch": "codex/p18-native-build",
+        "sourceCommit": "373876da11298c438435021b99ce82297d7e79a2",
+        "remoteCommit": "f0272cb2427fa95448d385d6076e81bc85781671",
+        "tree": "9dddc398ab9bd02e4cbdad945d22f7a38b4f8b91",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169611199/job/111339707572"
+        }
+      },
+      {
+        "name": "package-archives",
+        "pr": 3785,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3785",
+        "branch": "codex/p18-package-archives",
+        "sourceCommit": "23c5de2f1db67cc10740bcdd4aee643b121b1738",
+        "remoteCommit": "de6c01f990899f6e98cbbc36c4d93659d87e3cc9",
+        "tree": "79b945f4767889d7cb399993c301fc3d7e9d6b69",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170186060/job/111341412631"
+        }
+      },
+      {
+        "name": "source-metadata",
+        "pr": 3812,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3812",
+        "branch": "codex/p18-source-metadata",
+        "sourceCommit": "313f580b8881a6c35306e6fc2e1723b9dc59eb2f",
+        "remoteCommit": "5fc97e4c1ebeb9a4fc0cdf502ca5f7bb50200a0c",
+        "tree": "d0e20ca2bff3b3ec779c2e5c0e732f8ed1dea966",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170654136/job/111342767346"
+        }
+      },
+      {
+        "name": "project-reference-lowering",
+        "pr": 3824,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3824",
+        "branch": "codex/p18-project-reference-lowering",
+        "sourceCommit": "12efd56093de65efa391475c4ef26f18ced1129f",
+        "remoteCommit": "960eeb25d9f7a87c521ef270d74435c37cf89795",
+        "tree": "ff2743f02242fd37c616c5b71319d49cac928ce7",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170766109/job/111343097595"
+        }
+      },
+      {
+        "name": "native-nuget",
+        "pr": 3847,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3847",
+        "branch": "codex/p18-native-nuget",
+        "sourceCommit": "bab1503f784c8baac1c813e441405652501a9953",
+        "remoteCommit": "f67050b7b81caa782384849082e342bb3a78cbb6",
+        "tree": "b11672d9beed763dc15ded97e4ecc815deac9ba3",
+        "core": {
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171131428/job/111344145237"
+        }
+      },
+      {
+        "name": "native-binlog",
+        "pr": 3860,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3860",
+        "branch": "codex/p18-native-binlog",
+        "sourceCommit": "b3cd1850f951867c813904f6278b67ecf8899a1d",
+        "remoteCommit": "3b6f0a9a58e31b26b8c3b39632955e061908a96e",
+        "tree": "921117d1fed85cb00aea5417e05e5f1e9de3082a",
+        "core": {
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171478957/job/111345134811",
+          "id": 111345134811
+        }
+      },
+      {
+        "name": "native-workspace-text",
+        "pr": 3875,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3875",
+        "branch": "codex/p18-native-workspace-text",
+        "sourceCommit": "1123e68a63e38fd488616b859d521dc1e4041058",
+        "remoteCommit": "de4dbdb3ae5a5fee8e63a02e5ec3f901fab2fca7",
+        "tree": "cbabd568f17a802d55ebc6950a87f792e3d83be3",
+        "core": {
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171715663/job/111345830115",
+          "id": 111345830115
+        }
+      },
+      {
+        "name": "metadata-language",
+        "pr": 3900,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3900",
+        "branch": "codex/p18-metadata-language",
+        "sourceCommit": "254c81377edec64b42a9acdf74c84d76271cc09f",
+        "remoteCommit": "13e09038c3ff4cb535b46153df3f309cf7b3d499",
+        "tree": "de301c4975697a57407f0d20f802d1436f03d9ef",
+        "core": {
+          "name": "core",
+          "id": 111348270674,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172533639/job/111348270674"
+        }
+      },
+      {
+        "name": "native-qualification",
+        "pr": 3912,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3912",
+        "branch": "codex/p18-native-qualification",
+        "sourceCommit": "c61a49e5c45b5f5fa7474d0f9e9173cead4325b2",
+        "remoteCommit": "f4b672c15b2527f98de5a53ddc01288c7d215236",
+        "tree": "6a90b9f5ee2ab885eef7b897e69343b0c12f5819",
+        "core": {
+          "name": "core",
+          "id": 111349587405,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172980712/job/111349587405"
+        }
+      },
+      {
+        "name": "native-context-corpus",
+        "pr": 3949,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3949",
+        "branch": "codex/p18-native-context-corpus",
+        "sourceCommit": "3f9b5490b98062156a852ac5d8e3ecbecea0dc45",
+        "remoteCommit": "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+        "tree": "87c896b168576714a17030edb39a8fa4ef68b763",
+        "core": {
+          "name": "core",
+          "id": 111351130056,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173480204/job/111351130056"
+        }
+      },
+      {
+        "name": "native-package-corpus",
+        "pr": 3969,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3969",
+        "branch": "codex/p18-native-package-corpus",
+        "sourceCommit": "81e5659925a1e6c9a31a936f620a7528413ec9f8",
+        "remoteCommit": "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+        "tree": "484b9d02cfdcac897c8a5925608b29ce0d67fbd7",
+        "core": {
+          "id": 111351885161,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173726552/job/111351885161"
+        }
+      }
+    ]
+  }
+}

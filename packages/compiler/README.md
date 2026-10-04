@@ -2,6 +2,19 @@
 
 Cross-file binding and supported semantic checks with managed bytecode emission.
 
+## Metadata language queries
+
+`MetadataLanguageModel(files, {references, ...compilationOptions})` decodes explicit PE references and offers
+`resolveType(uri, name, offset)`, `members(uri, receiver, {position, receiverStart, prefix})`, `types(uri, prefix, offset)`,
+`symbolAt(uri, offset)` and `analyze()`. Offsets use UTF-16 code units. Results are data-only symbols and normal semantic
+diagnostics. `update(files, options)` retains decoded assemblies while invalidating source binding; reference changes require a new model.
+Queries do not claim executable runtime support. Invalid metadata reports `CS0009`; source, reference and bound-node budgets reject
+oversized inputs explicitly. `inspectMetadataReference(bytes)` validates a PE/CLI image and returns its assembly identity without executing it.
+
+A reference may explicitly select `runtimeProfile: 'sharpforge'` when its producer is the SharpForge project compiler. This connects
+that assembly's primitive signatures to the consuming compilation's closed runtime type identities. External/native references keep strict
+assembly resolution by default; the flag does not enable arbitrary external assemblies or cross-assembly execution.
+
 Version 0.9.0 · MIT · ES modules.
 
 This package is part of SharpForge, an executable C# subset toolchain. It is not full C#/CLR/Visual Studio conformance. The source release includes architecture, API examples, compatibility boundaries and tests.
@@ -33,14 +46,3 @@ revision and must be treated as read-only. The model never emits or changes
 program code. `Workspace.sourceModel()` in `@sharpforge/workspace` handles source
 and option invalidation for callers. See `docs/editor-language-providers.md` in
 the source distribution for the provider/transaction contracts and evidence.
-
-## Inspecting explicit metadata references
-
-`inspectMetadataReference(bytes)` accepts a `Uint8Array` containing one managed PE/CLI image, up to 64 MiB (67,108,864 bytes).
-It reuses the compiler's metadata importer and returns `{name, identity, references}`: the simple assembly name, full display identity
-and number of referenced assembly identities. It does not execute code or resolve dependencies. Inspection validates the PE/CLI metadata
-needed for that summary; it does not claim to verify method bodies or establish executable runtime compatibility.
-
-Invalid input types and oversized arrays throw `RangeError`; malformed images preserve the metadata reader's explicit error. The function
-reads only the supplied byte view and does not modify it. The native SDK metadata service uses this public seam after its own trust,
-workspace, file-count and byte-budget checks.

@@ -1,0 +1,94 @@
+[
+  {
+    "label": "baseline",
+    "pair": 1,
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "scripts/benchmark-release14.js"
+    ],
+    "sourceCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+    "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+    "startedAt": "2026-10-04T02:20:27.944484+00:00",
+    "diskPreflightFreeBytes": 748371968,
+    "loadAverage": [
+      1.8798828125,
+      1.69775390625,
+      1.70166015625
+    ],
+    "log": "benchmark-baseline-1.json",
+    "stderr": "benchmark-baseline-1.stderr.txt",
+    "exitCode": 0,
+    "completedAt": "2026-10-04T02:20:33.341647+00:00"
+  },
+  {
+    "label": "final",
+    "pair": 1,
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "scripts/benchmark-release14.js"
+    ],
+    "sourceCommit": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+    "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+    "startedAt": "2026-10-04T02:20:33.344302+00:00",
+    "diskPreflightFreeBytes": 748220416,
+    "loadAverage": [
+      2.4501953125,
+      1.8193359375,
+      1.7412109375
+    ],
+    "log": "benchmark-final-1.json",
+    "stderr": "benchmark-final-1.stderr.txt",
+    "exitCode": 0,
+    "completedAt": "2026-10-04T02:20:38.895284+00:00"
+  },
+  {
+    "label": "final",
+    "pair": 2,
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "scripts/benchmark-release14.js"
+    ],
+    "sourceCommit": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+    "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+    "startedAt": "2026-10-04T02:20:40.761079+00:00",
+    "diskPreflightFreeBytes": 746799104,
+    "loadAverage": [
+      2.57470703125,
+      1.85595703125,
+      1.75341796875
+    ],
+    "log": "benchmark-final-2.json",
+    "stderr": "benchmark-final-2.stderr.txt",
+    "exitCode": 0,
+    "completedAt": "2026-10-04T02:20:46.720428+00:00"
+  },
+  {
+    "label": "baseline",
+    "pair": 2,
+    "argv": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "scripts/benchmark-release14.js"
+    ],
+    "sourceCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+    "scriptSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+    "startedAt": "2026-10-04T02:20:46.724697+00:00",
+    "diskPreflightFreeBytes": 746758144,
+    "loadAverage": [
+      2.5283203125,
+      1.8583984375,
+      1.7548828125
+    ],
+    "log": "benchmark-baseline-2.json",
+    "stderr": "benchmark-baseline-2.stderr.txt",
+    "exitCode": 0,
+    "completedAt": "2026-10-04T02:20:52.265857+00:00"
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "baseCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "baseSha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+  "candidateSha256": "6f37a3e450a5ab39bb10143156502f993b5c0a80bb844f8b6823e9a7589d196b",
+  "baseBytes": 104693,
+  "candidateBytes": 91407,
+  "baseLines": 748,
+  "candidateLines": 748,
+  "transformations": 82,
+  "javascriptExecuted": false,
+  "repositoryEntryWritten": false,
+  "canonicalHelperSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "qualification": "Actual canonical Release13 at0bb2 passed16/16 with errors[] and exit0. Product Node34/34 plus check/build/clean passed at7d4; only the browser fixture differs. Historical failures/negative controls remain recorded. The proposal is unexecuted; storage/corpus/platform gates are separate.",
+  "canonicalHelperTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "reviewUpdatedAt": "2026-10-04T07:25:36.383796+00:00",
+  "executionBoundary": "javascriptExecuted and repositoryEntryWritten describe preparation of the proposed entry only.",
+  "proposedEntryApplied": false,
+  "proposedEntryExecuted": false,
+  "actualCanonicalEntryBuilt": true,
+  "actualCanonicalEntryBrowserTested": true,
+  "actualCanonicalEntryBrowserComplete": true,
+  "latestActualBrowserSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "candidateArtifact": "studio-entry.patch",
+  "reviewHistory": [
+    {
+      "canonicalHelperSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "canonicalHelperTree": "ca911994aa352381fde19f9dcf5bc9bbffbf447c",
+      "reviewUpdatedAt": "2026-10-04T06:27:27.395649+00:00",
+      "qualification": "See prepared-integration.json: canonical Node22 1877/1877; legacy Node26 382/382; editor Node26 40/40 and gates; actual browser incomplete."
+    },
+    {
+      "canonicalHelperSource": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "canonicalHelperTree": "607518e2e32f37f3b595b4ebaeef02efc51f1d0d",
+      "reviewUpdatedAt": "2026-10-04T06:52:36.367634+00:00",
+      "qualification": "See prepared-integration.json: prior canonical1877/1877, legacy382/382 and editor40/40 retained; status/retained43/43 and check/build/clean passed at886fb139. Actual browser10checks then UI launch failure; diagnostic probe captured nested ExecutionCapture.wake Illegal invocation. Complete replay pending."
+    }
+  ],
+  "latestActualBrowserCompletedChecks": 16,
+  "runtimeProbeQualified": false,
+  "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "productBuildTree": "96cfc9d9dc5b1ddacdf4ce79a96bbfaf4e98cbdd",
+  "actualCanonicalEntryBrowserScope": "Release13 only",
+  "actualCanonicalEntryBrowserErrors": [],
+  "otherBrowserAcceptanceComplete": false
+}

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/project-configuration-contract.test.js",
+    "tests/project-context-contract.test.js"
+  ],
+  "cwd": "p18-publish-framework-contexts",
+  "testedHead": "c9c17b91a9964c74fec3043e4b5a65248d69e886",
+  "toolChunk": "176333",
+  "node": "22.23.3",
+  "platform": "Linux x64",
+  "tests": 8,
+  "passed": 8,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0,
+  "exitCode": 0,
+  "durationMs": 266.286956,
+  "scope": "Only the new pure public contract tests; no SDK/compiler/browser build was run."
+}

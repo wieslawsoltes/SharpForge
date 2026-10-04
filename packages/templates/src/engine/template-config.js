@@ -28,14 +28,38 @@ function jsonSource(source) {
 
 const isObject = value => value && typeof value === 'object' && !Array.isArray(value);
 
-/** Parse the data-only .NET template configuration; malformed and unsupported symbol kinds are explicit. */
+function checkUtf8Size(source, maxBytes) {
+  let bytes = 0;
+  for (let index = 0; index < source.length; index++) {
+    const code = source.charCodeAt(index);
+    if (code < 0x80) bytes++;
+    else if (code < 0x800) bytes += 2;
+    else if (code >= 0xd800 && code <= 0xdbff &&
+        source.charCodeAt(index + 1) >= 0xdc00 && source.charCodeAt(index + 1) <= 0xdfff) {
+      bytes += 4;
+      index++;
+    } else bytes += 3;
+    if (bytes > maxBytes) throw new TemplateError('SFTPL012', 'Template config size limit exceeded');
+  }
+}
+
+/** Parse data-only template JSON within maxBytes UTF-8 bytes, including any input BOM; errors use SFTPL012. */
 export function parseTemplateConfig(input, { maxBytes = 4 * 1024 * 1024 } = {}) {
-  if (input instanceof Uint8Array) input = new TextDecoder('utf-8', { fatal: true }).decode(input);
-  if (typeof input === 'string' && input.length > maxBytes) throw new TemplateError('SFTPL012', 'Template config size limit exceeded');
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 1) throw new TemplateError('SFTPL012', 'Invalid template config byte limit');
+  if (input instanceof Uint8Array && input.byteLength > maxBytes) {
+    throw new TemplateError('SFTPL012', 'Template config size limit exceeded');
+  }
+  if (typeof input === 'string') checkUtf8Size(input, maxBytes);
   let value;
-  try { value = typeof input === 'string' ? JSON.parse(jsonSource(input)) : structuredClone(input); }
+  let serialized;
+  try {
+    if (input instanceof Uint8Array) input = new TextDecoder('utf-8', { fatal: true }).decode(input);
+    value = typeof input === 'string' ? JSON.parse(jsonSource(input)) : structuredClone(input);
+    if (isObject(value)) serialized = JSON.stringify(value);
+  }
   catch (cause) { throw new TemplateError('SFTPL012', 'Invalid template.json: ' + cause.message, { cause }); }
-  if (!isObject(value) || JSON.stringify(value).length > maxBytes) throw new TemplateError('SFTPL012', 'Template config size or shape is invalid');
+  if (!isObject(value)) throw new TemplateError('SFTPL012', 'Template config size or shape is invalid');
+  checkUtf8Size(serialized, maxBytes);
   for (const key of ['customOperations', 'specialCustomOperations']) {
     if (value[key] !== undefined) throw new TemplateError('SFTPL012', 'Unsupported template operation configuration: ' + key);
   }

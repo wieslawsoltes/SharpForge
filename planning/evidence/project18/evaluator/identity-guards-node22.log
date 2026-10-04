@@ -1,0 +1,210 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+ok 1 - successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+  ---
+  duration_ms: 81.854822
+  type: 'test'
+  ...
+# Subtest: startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+ok 2 - startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+  ---
+  duration_ms: 57.387606
+  type: 'test'
+  ...
+# Subtest: a later failed dependency build clears previously emitted cache entries
+ok 3 - a later failed dependency build clears previously emitted cache entries
+  ---
+  duration_ms: 16.432163
+  type: 'test'
+  ...
+# Subtest: external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+ok 4 - external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+  ---
+  duration_ms: 11.427442
+  type: 'test'
+  ...
+# (node:28) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: dependency after-build outputs feed consumer preparation before its separate worker compilation
+ok 5 - dependency after-build outputs feed consumer preparation before its separate worker compilation
+  ---
+  duration_ms: 110.929949
+  type: 'test'
+  ...
+# Subtest: failed dependency compilation or after targets prevent consumer preparation and lazy reads
+ok 6 - failed dependency compilation or after targets prevent consumer preparation and lazy reads
+  ---
+  duration_ms: 13.721072
+  type: 'test'
+  ...
+# Subtest: buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+ok 7 - buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+  ---
+  duration_ms: 1.856842
+  type: 'test'
+  ...
+# Subtest: cancellation while a dependency compiles runs no after hooks or consumer requests
+ok 8 - cancellation while a dependency compiles runs no after hooks or consumer requests
+  ---
+  duration_ms: 5.471505
+  type: 'test'
+  ...
+# (node:36) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+ok 9 - application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+  ---
+  duration_ms: 12.243963
+  type: 'test'
+  ...
+# Subtest: generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+ok 10 - generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+  ---
+  duration_ms: 73.691584
+  type: 'test'
+  ...
+# Subtest: dependency units keep separate source sets and suppress non-output references
+ok 11 - dependency units keep separate source sets and suppress non-output references
+  ---
+  duration_ms: 0.7557
+  type: 'test'
+  ...
+# Subtest: failed dependencies block consumers and do not publish a partial startup assembly
+ok 12 - failed dependencies block consumers and do not publish a partial startup assembly
+  ---
+  duration_ms: 0.335125
+  type: 'test'
+  ...
+# Subtest: a project built for two target contexts produces distinct dependency artifacts
+ok 13 - a project built for two target contexts produces distinct dependency artifacts
+  ---
+  duration_ms: 0.777734
+  type: 'test'
+  ...
+# Subtest: standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+ok 14 - standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+  ---
+  duration_ms: 4.896638
+  type: 'test'
+  ...
+# Subtest: application file search delegates options to the streaming disk index without compiling the workspace
+ok 15 - application file search delegates options to the streaming disk index without compiling the workspace
+  ---
+  duration_ms: 0.262927
+  type: 'test'
+  ...
+# Subtest: culture resources produce satellite assemblies instead of disappearing from successful builds
+ok 16 - culture resources produce satellite assemblies instead of disappearing from successful builds
+  ---
+  duration_ms: 7.989745
+  type: 'test'
+  ...
+# Subtest: launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+ok 17 - launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+  ---
+  duration_ms: 1.925174
+  type: 'test'
+  ...
+# Subtest: lazy export and cancelled or stale hydration never substitute empty file contents
+ok 18 - lazy export and cancelled or stale hydration never substitute empty file contents
+  ---
+  duration_ms: 1.721577
+  type: 'test'
+  ...
+# (node:44) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+ok 19 - application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+  ---
+  duration_ms: 79.649544
+  type: 'test'
+  ...
+# Subtest: failed compilation never publishes an output assembly or executes after targets
+ok 20 - failed compilation never publishes an output assembly or executes after targets
+  ---
+  duration_ms: 14.362439
+  type: 'test'
+  ...
+# Subtest: the same generated source path stays isolated in a two-framework diamond build and on rebuild
+ok 21 - the same generated source path stays isolated in a two-framework diamond build and on rebuild
+  ---
+  duration_ms: 68.122122
+  type: 'test'
+  ...
+# Subtest: lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+ok 22 - lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+  ---
+  duration_ms: 6.054335
+  type: 'test'
+  ...
+# Subtest: after-target errors fail the build and do not publish the phase partial writes
+ok 23 - after-target errors fail the build and do not publish the phase partial writes
+  ---
+  duration_ms: 4.05034
+  type: 'test'
+  ...
+# Subtest: cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+ok 24 - cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+  ---
+  duration_ms: 18.994969
+  type: 'test'
+  ...
+# Subtest: native-only property and task diagnostics survive target preparation without publishing partial writes
+ok 25 - native-only property and task diagnostics survive target preparation without publishing partial writes
+  ---
+  duration_ms: 2.772423
+  type: 'test'
+  ...
+# Subtest: native semantic requests use the explicitly selected native context and skip portable targets
+ok 26 - native semantic requests use the explicitly selected native context and skip portable targets
+  ---
+  duration_ms: 0.376939
+  type: 'test'
+  ...
+# Subtest: disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration
+ok 27 - disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration
+  ---
+  duration_ms: 2.209514
+  type: 'test'
+  ...
+# (node:52) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a real 300-file folder builds and analyzes all closed C\# sources while keeping one editor buffer
+ok 28 - a real 300-file folder builds and analyzes all closed C\# sources while keeping one editor buffer
+  ---
+  duration_ms: 387.762415
+  type: 'test'
+  ...
+# Subtest: folder membership remains authoritative after a virtual deletion even when disk still has the original file
+ok 29 - folder membership remains authoritative after a virtual deletion even when disk still has the original file
+  ---
+  duration_ms: 1.340702
+  type: 'test'
+  ...
+# Subtest: folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text
+ok 30 - folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text
+  ---
+  duration_ms: 7.137339
+  type: 'test'
+  ...
+# Subtest: cancelled and replaced folder hydrations retain the original unopened membership
+ok 31 - cancelled and replaced folder hydrations retain the original unopened membership
+  ---
+  duration_ms: 0.733257
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3513.41788

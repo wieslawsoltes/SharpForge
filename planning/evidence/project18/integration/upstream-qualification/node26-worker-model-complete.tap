@@ -1,0 +1,625 @@
+TAP version 13
+# Subtest: public project graph resolves real PE tokens and retains independent modules and source provenance
+ok 1 - public project graph resolves real PE tokens and retains independent modules and source provenance
+  ---
+  duration_ms: 118.568067
+  type: 'test'
+  ...
+# Subtest: public project graph rejects missing content, forged hashes and incorrect target method definitions
+not ok 2 - public project graph rejects missing content, forged hashes and incorrect target method definitions
+  ---
+  duration_ms: 57.506188
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a23-cil-project-graph-contract.test.js:70:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + Comparison {}
+    - Comparison {
+    -   code: 'PRJ0005'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'PRJ0005'
+  actual:
+  error: 'Invalid compiler image: Project references: duplicate methods definition token'
+  stack: |-
+    validateInput (file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/analysis.js:38:95)
+    prepareEmission (file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/emit/emission-context.js:13:3)
+    emitAssemblyDetailed (file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/emitter.js:24:113)
+    emitAssembly (file:///workspace/scratch/3e16369943fd/p18-integration/packages/cil/src/emitter.js:22:57)
+    assert.throws.code (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a23-cil-project-graph-contract.test.js:79:43)
+    getActual (node:assert:580:5)
+    strict.throws (node:assert:728:24)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a23-cil-project-graph-contract.test.js:79:10)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a23-cil-project-graph-contract.test.js:79:10)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: public project graph accepts a library entry and bounded identical inputs, and observes cancellation
+ok 3 - public project graph accepts a library entry and bounded identical inputs, and observes cancellation
+  ---
+  duration_ms: 6.416494
+  type: 'test'
+  ...
+# Subtest: public CIL emission writes scoped references and round-trips all six external operations without a compiler consumer
+ok 4 - public CIL emission writes scoped references and round-trips all six external operations without a compiler consumer
+  ---
+  duration_ms: 80.803863
+  type: 'test'
+  ...
+# Subtest: public CIL emission rejects invalid external field modes and descriptor tokens before producing bytes
+ok 5 - public CIL emission rejects invalid external field modes and descriptor tokens before producing bytes
+  ---
+  duration_ms: 10.627062
+  type: 'test'
+  ...
+# Subtest: explicit member metadata preserves all six access kinds, ctor visibility and readonly flags in canonical PEs
+ok 6 - explicit member metadata preserves all six access kinds, ctor visibility and readonly flags in canonical PEs
+  ---
+  duration_ms: 100.212464
+  type: 'test'
+  ...
+# {"fixture":"Api with six method/field access kinds","legacyBytes":4608,"memberMetadataBytes":5632}
+# Subtest: member projection rejects missing, duplicate, unknown or out-of-range identities before emission
+ok 7 - member projection rejects missing, duplicate, unknown or out-of-range identities before emission
+  ---
+  duration_ms: 10.225947
+  type: 'test'
+  ...
+# Subtest: omitted member metadata retains the previous canonical public-member profile
+ok 8 - omitted member metadata retains the previous canonical public-member profile
+  ---
+  duration_ms: 12.258991
+  type: 'test'
+  ...
+# Subtest: native context model hydrates exact ordinary/generated sources and metadata before selection
+ok 9 - native context model hydrates exact ordinary/generated sources and metadata before selection
+  ---
+  duration_ms: 3.439115
+  type: 'test'
+  ...
+# Subtest: failed source reads and cancellation preserve the last complete native model selection
+ok 10 - failed source reads and cancellation preserve the last complete native model selection
+  ---
+  duration_ms: 0.903292
+  type: 'test'
+  ...
+# Subtest: changing projects while a context read is held prevents the old generation from activating
+ok 11 - changing projects while a context read is held prevents the old generation from activating
+  ---
+  duration_ms: 0.929831
+  type: 'test'
+  ...
+# Subtest: native context requests preserve explicit advanced argv and reject non-vector input
+ok 12 - native context requests preserve explicit advanced argv and reject non-vector input
+  ---
+  duration_ms: 0.400614
+  type: 'test'
+  ...
+# Subtest: profile model inspects launch/publish choices with explicit read-only operation options
+ok 13 - profile model inspects launch/publish choices with explicit read-only operation options
+  ---
+  duration_ms: 3.042347
+  type: 'test'
+  ...
+# Subtest: profile model builds exact launch argv/environment/context requests without executing them
+ok 14 - profile model builds exact launch argv/environment/context requests without executing them
+  ---
+  duration_ms: 2.365707
+  type: 'test'
+  ...
+# Subtest: profile model builds only a selected publish request and rejects unknown or stale selections
+ok 15 - profile model builds only a selected publish request and rejects unknown or stale selections
+  ---
+  duration_ms: 0.645193
+  type: 'test'
+  ...
+# Subtest: invalid launch JSON preserves its located diagnostic and rejects a launch request
+ok 16 - invalid launch JSON preserves its located diagnostic and rejects a launch request
+  ---
+  duration_ms: 0.582348
+  type: 'test'
+  ...
+# Subtest: cancelled reads and oversized publish lists retain the last complete profile snapshot
+ok 17 - cancelled reads and oversized publish lists retain the last complete profile snapshot
+  ---
+  duration_ms: 1.06775
+  type: 'test'
+  ...
+# Subtest: native metadata validates identity, count, byte budgets, encoding, size and SHA-256
+ok 18 - native metadata validates identity, count, byte budgets, encoding, size and SHA-256
+  ---
+  duration_ms: 13.802078
+  type: 'test'
+  ...
+# Subtest: context application preserves edits made while reads are in flight and keeps generated source immutable
+ok 19 - context application preserves edits made while reads are in flight and keeps generated source immutable
+  ---
+  duration_ms: 1.614684
+  type: 'test'
+  ...
+# Subtest: semantic requests retain the selected context, reference bytes and auxiliary files without selecting every open document
+ok 20 - semantic requests retain the selected context, reference bytes and auxiliary files without selecting every open document
+  ---
+  duration_ms: 0.989522
+  type: 'test'
+  ...
+# Subtest: context changes retire obsolete generated documents and invalidate executable state while preserving ordinary open files
+ok 21 - context changes retire obsolete generated documents and invalidate executable state while preserving ordinary open files
+  ---
+  duration_ms: 0.388956
+  type: 'test'
+  ...
+# Subtest: document editability combines application, generated and individual readonly state
+ok 22 - document editability combines application, generated and individual readonly state
+  ---
+  duration_ms: 0.220603
+  type: 'test'
+  ...
+# Subtest: context hooks stop execution before applying and rendering a complete context
+ok 23 - context hooks stop execution before applying and rendering a complete context
+  ---
+  duration_ms: 0.55688
+  type: 'test'
+  ...
+# Subtest: cancellation while stopping execution cannot activate or render a new context
+ok 24 - cancellation while stopping execution cannot activate or render a new context
+  ---
+  duration_ms: 0.461736
+  type: 'test'
+  ...
+# Subtest: portable test input callbacks retain their complete project preparation and cancellation options
+ok 25 - portable test input callbacks retain their complete project preparation and cancellation options
+  ---
+  duration_ms: 0.25853
+  type: 'test'
+  ...
+# Subtest: successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+ok 26 - successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+  ---
+  duration_ms: 94.588205
+  type: 'test'
+  ...
+# Subtest: startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+ok 27 - startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+  ---
+  duration_ms: 53.334649
+  type: 'test'
+  ...
+# Subtest: a later failed dependency build clears previously emitted cache entries
+ok 28 - a later failed dependency build clears previously emitted cache entries
+  ---
+  duration_ms: 15.983157
+  type: 'test'
+  ...
+# Subtest: external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+ok 29 - external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+  ---
+  duration_ms: 9.22965
+  type: 'test'
+  ...
+# Subtest: dependency after-build outputs feed consumer preparation before its separate worker compilation
+ok 30 - dependency after-build outputs feed consumer preparation before its separate worker compilation
+  ---
+  duration_ms: 129.804713
+  type: 'test'
+  ...
+# Subtest: failed dependency compilation or after targets prevent consumer preparation and lazy reads
+ok 31 - failed dependency compilation or after targets prevent consumer preparation and lazy reads
+  ---
+  duration_ms: 13.568727
+  type: 'test'
+  ...
+# Subtest: buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+ok 32 - buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+  ---
+  duration_ms: 2.008348
+  type: 'test'
+  ...
+# Subtest: cancellation while a dependency compiles runs no after hooks or consumer requests
+ok 33 - cancellation while a dependency compiles runs no after hooks or consumer requests
+  ---
+  duration_ms: 5.00736
+  type: 'test'
+  ...
+# Subtest: application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+ok 34 - application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+  ---
+  duration_ms: 17.11956
+  type: 'test'
+  ...
+# Subtest: generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+ok 35 - generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+  ---
+  duration_ms: 94.781616
+  type: 'test'
+  ...
+# Subtest: dependency units keep separate source sets and suppress non-output references
+ok 36 - dependency units keep separate source sets and suppress non-output references
+  ---
+  duration_ms: 0.67631
+  type: 'test'
+  ...
+# Subtest: failed dependencies block consumers and do not publish a partial startup assembly
+ok 37 - failed dependencies block consumers and do not publish a partial startup assembly
+  ---
+  duration_ms: 0.25905
+  type: 'test'
+  ...
+# Subtest: a project built for two target contexts produces distinct dependency artifacts
+ok 38 - a project built for two target contexts produces distinct dependency artifacts
+  ---
+  duration_ms: 0.572373
+  type: 'test'
+  ...
+# Subtest: standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+ok 39 - standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+  ---
+  duration_ms: 5.337988
+  type: 'test'
+  ...
+# Subtest: application file search delegates options to the streaming disk index without compiling the workspace
+ok 40 - application file search delegates options to the streaming disk index without compiling the workspace
+  ---
+  duration_ms: 0.282827
+  type: 'test'
+  ...
+# Subtest: culture resources produce satellite assemblies instead of disappearing from successful builds
+ok 41 - culture resources produce satellite assemblies instead of disappearing from successful builds
+  ---
+  duration_ms: 8.5568
+  type: 'test'
+  ...
+# Subtest: launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+ok 42 - launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+  ---
+  duration_ms: 2.240127
+  type: 'test'
+  ...
+# Subtest: lazy export and cancelled or stale hydration never substitute empty file contents
+ok 43 - lazy export and cancelled or stale hydration never substitute empty file contents
+  ---
+  duration_ms: 1.538038
+  type: 'test'
+  ...
+# Subtest: a later worker build accepts a real previous artifact and resolves its separately emitted dependency
+ok 44 - a later worker build accepts a real previous artifact and resolves its separately emitted dependency
+  ---
+  duration_ms: 123.992876
+  type: 'test'
+  ...
+# Subtest: seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts
+ok 45 - seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts
+  ---
+  duration_ms: 1.112217
+  type: 'test'
+  ...
+# Subtest: seed artifact count and byte budgets are explicit before compilation begins
+ok 46 - seed artifact count and byte budgets are explicit before compilation begins
+  ---
+  duration_ms: 1.265047
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal method with CS0122
+ok 47 - separate project assembly rejects internal method with CS0122
+  ---
+  duration_ms: 141.028875
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private method with CS0122
+ok 48 - separate project assembly rejects private method with CS0122
+  ---
+  duration_ms: 18.132737
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal field with CS0122
+ok 49 - separate project assembly rejects internal field with CS0122
+  ---
+  duration_ms: 21.2182
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private field with CS0122
+ok 50 - separate project assembly rejects private field with CS0122
+  ---
+  duration_ms: 18.725161
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal constructor with CS0122
+ok 51 - separate project assembly rejects internal constructor with CS0122
+  ---
+  duration_ms: 10.813313
+  type: 'test'
+  ...
+# Subtest: friend assembly access permits internal methods, fields and constructors while retaining private rejection
+ok 52 - friend assembly access permits internal methods, fields and constructors while retaining private rejection
+  ---
+  duration_ms: 30.078277
+  type: 'test'
+  ...
+# Subtest: readonly fields reject external writes and private setters remain inaccessible
+ok 53 - readonly fields reject external writes and private setters remain inaccessible
+  ---
+  duration_ms: 16.920099
+  type: 'test'
+  ...
+# Subtest: synthesized parameterless constructors retain public access when instance initialization creates an image body
+ok 54 - synthesized parameterless constructors retain public access when instance initialization creates an image body
+  ---
+  duration_ms: 14.594733
+  type: 'test'
+  ...
+# Subtest: project reference lowering keeps external identities out of local definitions and retains native member tokens
+ok 55 - project reference lowering keeps external identities out of local definitions and retains native member tokens
+  ---
+  duration_ms: 127.760907
+  type: 'test'
+  ...
+# Subtest: emitted project consumers contain AssemblyRef and MemberRef rows with no copied dependency definitions
+ok 56 - emitted project consumers contain AssemblyRef and MemberRef rows with no copied dependency definitions
+  ---
+  duration_ms: 24.604254
+  type: 'test'
+  ...
+# Subtest: an intermediate library with project references remains a library without an invented entry point
+ok 57 - an intermediate library with project references remains a library without an invented entry point
+  ---
+  duration_ms: 29.843444
+  type: 'test'
+  ...
+# Subtest: extern aliases keep identical dependency type names distinct through assembly-qualified image types
+ok 58 - extern aliases keep identical dependency type names distinct through assembly-qualified image types
+  ---
+  duration_ms: 30.965124
+  type: 'test'
+  ...
+# Subtest: a runtime-profile marker never admits a PE without canonical SharpForge method verification
+ok 59 - a runtime-profile marker never admits a PE without canonical SharpForge method verification
+  ---
+  duration_ms: 19.269992
+  type: 'test'
+  ...
+# Subtest: supplied project-reference count is bounded even when identities would coalesce
+ok 60 - supplied project-reference count is bounded even when identities would coalesce
+  ---
+  duration_ms: 77.388348
+  type: 'test'
+  ...
+# Subtest: application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+ok 61 - application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+  ---
+  duration_ms: 93.51656
+  type: 'test'
+  ...
+# Subtest: failed compilation never publishes an output assembly or executes after targets
+ok 62 - failed compilation never publishes an output assembly or executes after targets
+  ---
+  duration_ms: 15.314549
+  type: 'test'
+  ...
+# Subtest: the same generated source path stays isolated in a two-framework diamond build and on rebuild
+ok 63 - the same generated source path stays isolated in a two-framework diamond build and on rebuild
+  ---
+  duration_ms: 77.00154
+  type: 'test'
+  ...
+# Subtest: lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+ok 64 - lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+  ---
+  duration_ms: 6.256052
+  type: 'test'
+  ...
+# Subtest: after-target errors fail the build and do not publish the phase partial writes
+ok 65 - after-target errors fail the build and do not publish the phase partial writes
+  ---
+  duration_ms: 4.664383
+  type: 'test'
+  ...
+# Subtest: cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+ok 66 - cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+  ---
+  duration_ms: 16.778416
+  type: 'test'
+  ...
+# Subtest: native-only property and task diagnostics survive target preparation without publishing partial writes
+ok 67 - native-only property and task diagnostics survive target preparation without publishing partial writes
+  ---
+  duration_ms: 2.901203
+  type: 'test'
+  ...
+# Subtest: native semantic requests use the explicitly selected native context and skip portable targets
+ok 68 - native semantic requests use the explicitly selected native context and skip portable targets
+  ---
+  duration_ms: 0.438962
+  type: 'test'
+  ...
+# Subtest: disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration
+ok 69 - disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration
+  ---
+  duration_ms: 2.379187
+  type: 'test'
+  ...
+# Subtest: dependency-generated consumer source and execution match an actual offline SDK build
+ok 70 - dependency-generated consumer source and execution match an actual offline SDK build
+  ---
+  duration_ms: 4695.356117
+  type: 'test'
+  ...
+# {"sdk":"10.0.401","msbuild":"18.9.11.42413","framework":"net10.0","platform":"linux","architecture":"x64","sourceFilesEqual":true,"nativeOutput":"42","portableEngines":["SourceVM","CilVirtualMachine"]}
+# Subtest: source member definitions cover every image slot with exact access and private generated backing storage
+ok 71 - source member definitions cover every image slot with exact access and private generated backing storage
+  ---
+  duration_ms: 60.685541
+  type: 'test'
+  ...
+# Subtest: source member metadata disambiguates overloads and partial classes by source location
+ok 72 - source member metadata disambiguates overloads and partial classes by source location
+  ---
+  duration_ms: 4.314987
+  type: 'test'
+  ...
+# Subtest: compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+ok 73 - compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+  ---
+  duration_ms: 41.29224
+  type: 'test'
+  ...
+# Subtest: source declaration metadata matches semantic full names and legacy simple names without splitting generated names
+ok 74 - source declaration metadata matches semantic full names and legacy simple names without splitting generated names
+  ---
+  duration_ms: 1.866664
+  type: 'test'
+  ...
+# Subtest: source declaration metadata rejects malformed and excessive input explicitly
+ok 75 - source declaration metadata rejects malformed and excessive input explicitly
+  ---
+  duration_ms: 0.72914
+  type: 'test'
+  ...
+# Subtest: prepared source test runtimes execute real managed assertions and isolate static state between factory calls
+ok 76 - prepared source test runtimes execute real managed assertions and isolate static state between factory calls
+  ---
+  duration_ms: 331.904158
+  type: 'test'
+  ...
+# Subtest: prepared source runtimes retain missing-API diagnostics while compiling a supported neighbor
+ok 77 - prepared source runtimes retain missing-API diagnostics while compiling a supported neighbor
+  ---
+  duration_ms: 80.043688
+  type: 'test'
+  ...
+# Subtest: prepared cil test runtimes execute real managed assertions and isolate static state between factory calls
+ok 78 - prepared cil test runtimes execute real managed assertions and isolate static state between factory calls
+  ---
+  duration_ms: 175.520857
+  type: 'test'
+  ...
+# Subtest: prepared cil runtimes retain missing-API diagnostics while compiling a supported neighbor
+ok 79 - prepared cil runtimes retain missing-API diagnostics while compiling a supported neighbor
+  ---
+  duration_ms: 103.66544
+  type: 'test'
+  ...
+# Subtest: managed test preparation rejects unsupported backends and observes cancellation before compilation
+ok 80 - managed test preparation rejects unsupported backends and observes cancellation before compilation
+  ---
+  duration_ms: 1.463818
+  type: 'test'
+  ...
+# Subtest: A23 T35 declaration records retain attributes, data constants and exact source coordinates
+ok 81 - A23 T35 declaration records retain attributes, data constants and exact source coordinates
+  ---
+  duration_ms: 10.420332
+  type: 'test'
+  ...
+# Subtest: A23 T35 compiler-owned trees and prepared records avoid reparsing and retain projection provenance
+ok 82 - A23 T35 compiler-owned trees and prepared records avoid reparsing and retain projection provenance
+  ---
+  duration_ms: 4.19868
+  type: 'test'
+  ...
+# Subtest: A23 T35 source discovery respects configured preprocessor symbols
+ok 83 - A23 T35 source discovery respects configured preprocessor symbols
+  ---
+  duration_ms: 3.164892
+  type: 'test'
+  ...
+# Subtest: A23 T35 semantic attribute hooks resolve aliases and preserve unresolved values explicitly
+ok 84 - A23 T35 semantic attribute hooks resolve aliases and preserve unresolved values explicitly
+  ---
+  duration_ms: 1.18014
+  type: 'test'
+  ...
+# Subtest: A23 T35 malformed syntax reports diagnostics and collection, method and source limits reject
+ok 85 - A23 T35 malformed syntax reports diagnostics and collection, method and source limits reject
+  ---
+  duration_ms: 2.922477
+  type: 'test'
+  ...
+# Subtest: Upstream identity and public signing compose with project attributes, resources and canonical execution
+ok 86 - Upstream identity and public signing compose with project attributes, resources and canonical execution
+  ---
+  duration_ms: 93.134622
+  type: 'test'
+  ...
+# Subtest: Canonical culture comes from actual Assembly metadata, including invariant and neutral values
+ok 87 - Canonical culture comes from actual Assembly metadata, including invariant and neutral values
+  ---
+  duration_ms: 13.907378
+  type: 'test'
+  ...
+# Subtest: Project type definitions preserve upstream internal netmodule scaffolding and public exports
+ok 88 - Project type definitions preserve upstream internal netmodule scaffolding and public exports
+  ---
+  duration_ms: 5.720785
+  type: 'test'
+  ...
+# Subtest: Conflicting version sources and assembly attributes on netmodules produce explicit diagnostics
+ok 89 - Conflicting version sources and assembly attributes on netmodules produce explicit diagnostics
+  ---
+  duration_ms: 1.597729
+  type: 'test'
+  ...
+# Subtest: worker emission reuses equivalent newly derived metadata and invalidates after a source access change
+ok 90 - worker emission reuses equivalent newly derived metadata and invalidates after a source access change
+  ---
+  duration_ms: 74.38149
+  type: 'test'
+  ...
+# Subtest: assembly cache distinguishes image, name, options, metadata and reference bytes without byte serialization
+ok 91 - assembly cache distinguishes image, name, options, metadata and reference bytes without byte serialization
+  ---
+  duration_ms: 0.516038
+  type: 'test'
+  ...
+# Subtest: cache budgets, unsupported option objects and per-image names bound optional reuse
+ok 92 - cache budgets, unsupported option objects and per-image names bound optional reuse
+  ---
+  duration_ms: 0.47125
+  type: 'test'
+  ...
+# Subtest: a real 300-file folder builds and analyzes all closed C\# sources while keeping one editor buffer
+ok 93 - a real 300-file folder builds and analyzes all closed C\# sources while keeping one editor buffer
+  ---
+  duration_ms: 327.678608
+  type: 'test'
+  ...
+# Subtest: folder membership remains authoritative after a virtual deletion even when disk still has the original file
+ok 94 - folder membership remains authoritative after a virtual deletion even when disk still has the original file
+  ---
+  duration_ms: 1.098436
+  type: 'test'
+  ...
+# Subtest: folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text
+ok 95 - folder hydration refuses missing, binary, oversized or excessive inputs without fabricating empty text
+  ---
+  duration_ms: 19.435421
+  type: 'test'
+  ...
+# Subtest: cancelled and replaced folder hydrations retain the original unopened membership
+ok 96 - cancelled and replaced folder hydrations retain the original unopened membership
+  ---
+  duration_ms: 1.067109
+  type: 'test'
+  ...
+1..96
+# tests 96
+# suites 0
+# pass 95
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18292.172125

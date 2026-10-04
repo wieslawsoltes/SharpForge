@@ -1,0 +1,1688 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:12) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: released framework and bytecode IDs are unchanged
+ok 1 - released framework and bytecode IDs are unchanged
+  ---
+  duration_ms: 86.870433
+  type: 'test'
+  ...
+# Subtest: golden checker reports the first changed id and accepts appends
+ok 2 - golden checker reports the first changed id and accepts appends
+  ---
+  duration_ms: 185.166036
+  type: 'test'
+  ...
+# Subtest: reserved contributions have the same IDs in either load order
+ok 3 - reserved contributions have the same IDs in either load order
+  ---
+  duration_ms: 1.375034
+  type: 'test'
+  ...
+# Subtest: legacy contribution modules validate as a single transaction
+ok 4 - legacy contribution modules validate as a single transaction
+  ---
+  duration_ms: 23.363836
+  type: 'test'
+  ...
+# Subtest: duplicate type rolls back the entire contribution
+ok 5 - duplicate type rolls back the entire contribution
+  ---
+  duration_ms: 0.674697
+  type: 'test'
+  ...
+# Subtest: duplicate member rolls back the entire contribution
+ok 6 - duplicate member rolls back the entire contribution
+  ---
+  duration_ms: 0.279171
+  type: 'test'
+  ...
+# Subtest: unknown owner rolls back the entire contribution
+ok 7 - unknown owner rolls back the entire contribution
+  ---
+  duration_ms: 0.288105
+  type: 'test'
+  ...
+# Subtest: unknown parameter rolls back the entire contribution
+ok 8 - unknown parameter rolls back the entire contribution
+  ---
+  duration_ms: 0.313212
+  type: 'test'
+  ...
+# Subtest: block overflow rolls back the entire contribution
+ok 9 - block overflow rolls back the entire contribution
+  ---
+  duration_ms: 0.587846
+  type: 'test'
+  ...
+# Subtest: malformed member rolls back the entire contribution
+ok 10 - malformed member rolls back the entire contribution
+  ---
+  duration_ms: 0.594998
+  type: 'test'
+  ...
+# Subtest: cancellation rolls back and separate registries do not leak state
+ok 11 - cancellation rolls back and separate registries do not leak state
+  ---
+  duration_ms: 0.509569
+  type: 'test'
+  ...
+# Subtest: overlapping, negative, duplicate and exhausted reservations reject
+ok 12 - overlapping, negative, duplicate and exhausted reservations reject
+  ---
+  duration_ms: 0.396909
+  type: 'test'
+  ...
+# Subtest: builtin contributions append atomically and never shift framework offsets
+ok 13 - builtin contributions append atomically and never shift framework offsets
+  ---
+  duration_ms: 76.531891
+  type: 'test'
+  ...
+# Subtest: implementation regression gate detects either engine losing a handler
+ok 14 - implementation regression gate detects either engine losing a handler
+  ---
+  duration_ms: 0.270638
+  type: 'test'
+  ...
+# Subtest: every real source/CIL dispatch result meets the committed reachability baseline
+ok 15 - every real source/CIL dispatch result meets the committed reachability baseline
+  ---
+  duration_ms: 2305.382498
+  type: 'test'
+  ...
+# Subtest: released contribution order is pinned while new area order remains independent
+ok 16 - released contribution order is pinned while new area order remains independent
+  ---
+  duration_ms: 3.662694
+  type: 'test'
+  ...
+# (node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A03 managed resources preserve bytes, flags, eight-byte offsets and inspector sizes
+ok 17 - A03 managed resources preserve bytes, flags, eight-byte offsets and inspector sizes
+  ---
+  duration_ms: 88.736077
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on anycpu
+ok 18 - A03 resources retain both JavaScript execution engines on anycpu
+  ---
+  duration_ms: 21.778135
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on x86
+ok 19 - A03 resources retain both JavaScript execution engines on x86
+  ---
+  duration_ms: 12.089272
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on x64
+ok 20 - A03 resources retain both JavaScript execution engines on x64
+  ---
+  duration_ms: 21.717163
+  type: 'test'
+  ...
+# Subtest: A03 resources retain both JavaScript execution engines on arm64
+ok 21 - A03 resources retain both JavaScript execution engines on arm64
+  ---
+  duration_ms: 9.223
+  type: 'test'
+  ...
+# Subtest: A03 resource emission rejects invalid names, duplicates, visibility, payloads and excessive count
+ok 22 - A03 resource emission rejects invalid names, duplicates, visibility, payloads and excessive count
+  ---
+  duration_ms: 5.05917
+  type: 'test'
+  ...
+# Subtest: A03 resource reading bounds the length prefix, blob and directory before returning bytes
+ok 23 - A03 resource reading bounds the length prefix, blob and directory before returning bytes
+  ---
+  duration_ms: 3.303212
+  type: 'test'
+  ...
+# Subtest: A03 reader describes external resources without dereferencing their offsets
+ok 24 - A03 reader describes external resources without dereferencing their offsets
+  ---
+  duration_ms: 0.628738
+  type: 'test'
+  ...
+# Subtest: A03 low-level resource ranges cannot overlap metadata or exceed their section
+ok 25 - A03 low-level resource ranges cannot overlap metadata or exceed their section
+  ---
+  duration_ms: 0.656711
+  type: 'test'
+  ...
+# Subtest: A03 Buffer and offset-subarray resource reads and canonical loads never mutate caller storage
+ok 26 - A03 Buffer and offset-subarray resource reads and canonical loads never mutate caller storage
+  ---
+  duration_ms: 7.802608
+  type: 'test'
+  ...
+# Subtest: A03 low-level PE emission copies Buffer slices before writing the CLI header
+ok 27 - A03 low-level PE emission copies Buffer slices before writing the CLI header
+  ---
+  duration_ms: 10.597352
+  type: 'test'
+  ...
+# (node:14) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A03 Win32 version, manifest and icon resources form an ordered native tree
+ok 28 - A03 Win32 version, manifest and icon resources form an ordered native tree
+  ---
+  duration_ms: 99.001288
+  type: 'test'
+  ...
+# Subtest: A03 anycpu Win32 sections coexist with PDB attachment and executable thunks
+ok 29 - A03 anycpu Win32 sections coexist with PDB attachment and executable thunks
+  ---
+  duration_ms: 18.018239
+  type: 'test'
+  ...
+# Subtest: A03 x64 Win32 sections coexist with PDB attachment and executable thunks
+ok 30 - A03 x64 Win32 sections coexist with PDB attachment and executable thunks
+  ---
+  duration_ms: 9.745547
+  type: 'test'
+  ...
+# Subtest: A03 named resource directories sort before numeric identifiers and replay byte-identically
+ok 31 - A03 named resource directories sort before numeric identifiers and replay byte-identically
+  ---
+  duration_ms: 6.868939
+  type: 'test'
+  ...
+# Subtest: A03 malformed versions, icons, duplicate keys and unexpected options are explicit
+ok 32 - A03 malformed versions, icons, duplicate keys and unexpected options are explicit
+  ---
+  duration_ms: 1.362255
+  type: 'test'
+  ...
+# Subtest: A03 resource tree readers bound all offsets and reject cycles or excess depth
+ok 33 - A03 resource tree readers bound all offsets and reject cycles or excess depth
+  ---
+  duration_ms: 3.927393
+  type: 'test'
+  ...
+# Subtest: A03 Win32 resource copies own Buffer payloads from offset subarrays
+ok 34 - A03 Win32 resource copies own Buffer payloads from offset subarrays
+  ---
+  duration_ms: 9.023418
+  type: 'test'
+  ...
+# Subtest: A03 fresh Win32 payloads match independent LLVM resource tree and byte observations
+ok 35 - A03 fresh Win32 payloads match independent LLVM resource tree and byte observations
+  ---
+  duration_ms: 4.958949
+  type: 'test'
+  ...
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: B06 source: AppendFormat supports expanded, explicit and empty params arrays
+ok 36 - B06 source: AppendFormat supports expanded, explicit and empty params arrays
+  ---
+  duration_ms: 170.650916
+  type: 'test'
+  ...
+# Subtest: B06 source: AppendFormat parsing and partial writes match the pinned native corpus
+ok 37 - B06 source: AppendFormat parsing and partial writes match the pinned native corpus
+  ---
+  duration_ms: 24.559389
+  type: 'test'
+  ...
+# Subtest: B06 source: params formatting preserves boxed integer types and argument evaluation order
+ok 38 - B06 source: params formatting preserves boxed integer types and argument evaluation order
+  ---
+  duration_ms: 18.102511
+  type: 'test'
+  ...
+# Subtest: B06 cil: AppendFormat supports expanded, explicit and empty params arrays
+ok 39 - B06 cil: AppendFormat supports expanded, explicit and empty params arrays
+  ---
+  duration_ms: 46.274829
+  type: 'test'
+  ...
+# Subtest: B06 cil: AppendFormat parsing and partial writes match the pinned native corpus
+ok 40 - B06 cil: AppendFormat parsing and partial writes match the pinned native corpus
+  ---
+  duration_ms: 10.698525
+  type: 'test'
+  ...
+# Subtest: B06 cil: params formatting preserves boxed integer types and argument evaluation order
+ok 41 - B06 cil: params formatting preserves boxed integer types and argument evaluation order
+  ---
+  duration_ms: 23.394121
+  type: 'test'
+  ...
+# Subtest: B06 params overload uses reserved A07 ID while released StringBuilder IDs remain intact
+ok 42 - B06 params overload uses reserved A07 ID while released StringBuilder IDs remain intact
+  ---
+  duration_ms: 1.469937
+  type: 'test'
+  ...
+# Subtest: B06 module extension hooks register separately and reject malformed or async hooks
+ok 43 - B06 module extension hooks register separately and reject malformed or async hooks
+  ---
+  duration_ms: 1.348704
+  type: 'test'
+  ...
+# Subtest: B06 composite parser follows pinned .NET whitespace and brace grammar
+ok 44 - B06 composite parser follows pinned .NET whitespace and brace grammar
+  ---
+  duration_ms: 9.895054
+  type: 'test'
+  ...
+# Subtest: B06 native corpus pins its source and exact .NET toolchain
+ok 45 - B06 native corpus pins its source and exact .NET toolchain
+  ---
+  duration_ms: 5.843192
+  type: 'test'
+  ...
+# (node:26) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: SF-A07-B06 reserved BCL contracts preserve every released builtin ID and signature
+ok 46 - SF-A07-B06 reserved BCL contracts preserve every released builtin ID and signature
+  ---
+  duration_ms: 33.251222
+  type: 'test'
+  ...
+# (node:32) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+ok 47 - A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+  ---
+  duration_ms: 1.319229
+  type: 'test'
+  ...
+# Subtest: A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+ok 48 - A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+  ---
+  duration_ms: 1.083885
+  type: 'test'
+  ...
+# (node:38) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 source reads explicit environment and isolated dictionary snapshots
+ok 49 - A23 T29 source reads explicit environment and isolated dictionary snapshots
+  ---
+  duration_ms: 165.866409
+  type: 'test'
+  ...
+# Subtest: A23 T29 source snapshots once per session and never inherits host environment
+ok 50 - A23 T29 source snapshots once per session and never inherits host environment
+  ---
+  duration_ms: 15.25059
+  type: 'test'
+  ...
+# Subtest: A23 T29 source rejects malformed options and null names with managed faults
+ok 51 - A23 T29 source rejects malformed options and null names with managed faults
+  ---
+  duration_ms: 35.471526
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil reads explicit environment and isolated dictionary snapshots
+ok 52 - A23 T29 cil reads explicit environment and isolated dictionary snapshots
+  ---
+  duration_ms: 50.865913
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil snapshots once per session and never inherits host environment
+ok 53 - A23 T29 cil snapshots once per session and never inherits host environment
+  ---
+  duration_ms: 13.677107
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil rejects malformed options and null names with managed faults
+ok 54 - A23 T29 cil rejects malformed options and null names with managed faults
+  ---
+  duration_ms: 24.721754
+  type: 'test'
+  ...
+# Subtest: A23 T29 environment contracts use the A07 extension block without renumbering released contracts
+ok 55 - A23 T29 environment contracts use the A07 extension block without renumbering released contracts
+  ---
+  duration_ms: 1.258469
+  type: 'test'
+  ...
+# (node:68) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T30 source launch args preserve static initialization and async Main completion
+ok 56 - A23 T30 source launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 102.131178
+  type: 'test'
+  ...
+# Subtest: A23 T30 cil launch args preserve static initialization and async Main completion
+ok 57 - A23 T30 cil launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 44.533613
+  type: 'test'
+  ...
+# Subtest: A23 T30 source-from-cil launch args preserve static initialization and async Main completion
+ok 58 - A23 T30 source-from-cil launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 37.432022
+  type: 'test'
+  ...
+# Subtest: A23 T30 rejects malformed argv and preserves parameterless Main
+ok 59 - A23 T30 rejects malformed argv and preserves parameterless Main
+  ---
+  duration_ms: 2.737518
+  type: 'test'
+  ...
+# (node:75) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+ok 60 - application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+  ---
+  duration_ms: 14.341279
+  type: 'test'
+  ...
+# Subtest: generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+ok 61 - generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+  ---
+  duration_ms: 98.887791
+  type: 'test'
+  ...
+# Subtest: dependency units keep separate source sets and suppress non-output references
+ok 62 - dependency units keep separate source sets and suppress non-output references
+  ---
+  duration_ms: 1.002892
+  type: 'test'
+  ...
+# Subtest: failed dependencies block consumers and do not publish a partial startup assembly
+ok 63 - failed dependencies block consumers and do not publish a partial startup assembly
+  ---
+  duration_ms: 0.580766
+  type: 'test'
+  ...
+# Subtest: a project built for two target contexts produces distinct dependency artifacts
+ok 64 - a project built for two target contexts produces distinct dependency artifacts
+  ---
+  duration_ms: 0.645454
+  type: 'test'
+  ...
+# Subtest: standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+ok 65 - standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+  ---
+  duration_ms: 4.967361
+  type: 'test'
+  ...
+# Subtest: application file search delegates options to the streaming disk index without compiling the workspace
+ok 66 - application file search delegates options to the streaming disk index without compiling the workspace
+  ---
+  duration_ms: 0.289967
+  type: 'test'
+  ...
+# Subtest: culture resources produce satellite assemblies instead of disappearing from successful builds
+ok 67 - culture resources produce satellite assemblies instead of disappearing from successful builds
+  ---
+  duration_ms: 13.947305
+  type: 'test'
+  ...
+# Subtest: launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+ok 68 - launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+  ---
+  duration_ms: 2.249642
+  type: 'test'
+  ...
+# Subtest: lazy export and cancelled or stale hydration never substitute empty file contents
+ok 69 - lazy export and cancelled or stale hydration never substitute empty file contents
+  ---
+  duration_ms: 2.627001
+  type: 'test'
+  ...
+# (node:92) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: project emission writes assembly identity, string attributes, visibility and exact CLI resource bytes
+ok 70 - project emission writes assembly identity, string attributes, visibility and exact CLI resource bytes
+  ---
+  duration_ms: 88.153317
+  type: 'test'
+  ...
+# Subtest: project metadata rejects duplicate, unsupported, nondeterministic and oversized inputs
+ok 71 - project metadata rejects duplicate, unsupported, nondeterministic and oversized inputs
+  ---
+  duration_ms: 4.44256
+  type: 'test'
+  ...
+# Subtest: satellite resource assemblies carry an explicit culture in Assembly metadata
+ok 72 - satellite resource assemblies carry an explicit culture in Assembly metadata
+  ---
+  duration_ms: 5.69559
+  type: 'test'
+  ...
+# Subtest: the installed CLR reads project attributes and resources from the emitted PE
+ok 73 - the installed CLR reads project attributes and resources from the emitted PE
+  ---
+  duration_ms: 3807.37799
+  type: 'test'
+  ...
+# (node:99) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+ok 74 - opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+  ---
+  duration_ms: 15.101065
+  type: 'test'
+  ...
+# Subtest: workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+ok 75 - workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+  ---
+  duration_ms: 15.831787
+  type: 'test'
+  ...
+# Subtest: resource naming and file references hydrate before the selected project snapshot becomes visible
+ok 76 - resource naming and file references hydrate before the selected project snapshot becomes visible
+  ---
+  duration_ms: 23.911191
+  type: 'test'
+  ...
+# Subtest: a committed structural edit remaps editor state and retains only explicitly unsaved paths
+ok 77 - a committed structural edit remaps editor state and retains only explicitly unsaved paths
+  ---
+  duration_ms: 2.455363
+  type: 'test'
+  ...
+# Subtest: Save to Disk preserves encodings and saves source, project XML, and binary changes together
+ok 78 - Save to Disk preserves encodings and saves source, project XML, and binary changes together
+  ---
+  duration_ms: 24.655394
+  type: 'test'
+  ...
+# Subtest: external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+ok 79 - external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+  ---
+  duration_ms: 3.391415
+  type: 'test'
+  ...
+# Subtest: metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+ok 80 - metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+  ---
+  duration_ms: 9.106624
+  type: 'test'
+  ...
+# Subtest: permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+ok 81 - permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+  ---
+  duration_ms: 1.276976
+  type: 'test'
+  ...
+# Subtest: streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+ok 82 - streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+  ---
+  duration_ms: 11.765274
+  type: 'test'
+  ...
+# Subtest: JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+ok 83 - JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+  ---
+  duration_ms: 1.253921
+  type: 'test'
+  ...
+# Subtest: wizard application keeps the chosen physical folder attached and retains binary item records
+ok 84 - wizard application keeps the chosen physical folder attached and retains binary item records
+  ---
+  duration_ms: 3.11651
+  type: 'test'
+  ...
+# (node:108) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: CIL execution: hello
+ok 85 - CIL execution: hello
+  ---
+  duration_ms: 70.451501
+  type: 'test'
+  ...
+# Subtest: CIL execution: precedence
+ok 86 - CIL execution: precedence
+  ---
+  duration_ms: 8.463495
+  type: 'test'
+  ...
+# Subtest: CIL execution: Int32 wrap
+ok 87 - CIL execution: Int32 wrap
+  ---
+  duration_ms: 7.911782
+  type: 'test'
+  ...
+# Subtest: CIL execution: Int32 multiplication
+ok 88 - CIL execution: Int32 multiplication
+  ---
+  duration_ms: 4.988454
+  type: 'test'
+  ...
+# Subtest: CIL execution: integer division
+ok 89 - CIL execution: integer division
+  ---
+  duration_ms: 6.643841
+  type: 'test'
+  ...
+# Subtest: CIL execution: floating division
+ok 90 - CIL execution: floating division
+  ---
+  duration_ms: 4.483191
+  type: 'test'
+  ...
+# Subtest: CIL execution: minimum int
+ok 91 - CIL execution: minimum int
+  ---
+  duration_ms: 3.697576
+  type: 'test'
+  ...
+# Subtest: CIL execution: bitwise
+ok 92 - CIL execution: bitwise
+  ---
+  duration_ms: 5.507686
+  type: 'test'
+  ...
+# Subtest: CIL execution: boolean
+ok 93 - CIL execution: boolean
+  ---
+  duration_ms: 4.578105
+  type: 'test'
+  ...
+# Subtest: CIL execution: short circuit
+ok 94 - CIL execution: short circuit
+  ---
+  duration_ms: 7.110494
+  type: 'test'
+  ...
+# Subtest: CIL execution: if else
+ok 95 - CIL execution: if else
+  ---
+  duration_ms: 20.827972
+  type: 'test'
+  ...
+# Subtest: CIL execution: for
+ok 96 - CIL execution: for
+  ---
+  duration_ms: 9.557874
+  type: 'test'
+  ...
+# Subtest: CIL execution: while continue break
+ok 97 - CIL execution: while continue break
+  ---
+  duration_ms: 8.325546
+  type: 'test'
+  ...
+# Subtest: CIL execution: do while
+ok 98 - CIL execution: do while
+  ---
+  duration_ms: 4.517133
+  type: 'test'
+  ...
+# Subtest: CIL execution: for continue
+ok 99 - CIL execution: for continue
+  ---
+  duration_ms: 3.770556
+  type: 'test'
+  ...
+# Subtest: CIL execution: ternary
+ok 100 - CIL execution: ternary
+  ---
+  duration_ms: 4.558525
+  type: 'test'
+  ...
+# Subtest: CIL execution: coalescing
+ok 101 - CIL execution: coalescing
+  ---
+  duration_ms: 3.171514
+  type: 'test'
+  ...
+# Subtest: CIL execution: array foreach
+ok 102 - CIL execution: array foreach
+  ---
+  duration_ms: 9.284132
+  type: 'test'
+  ...
+# Subtest: CIL execution: implicit array
+ok 103 - CIL execution: implicit array
+  ---
+  duration_ms: 4.440607
+  type: 'test'
+  ...
+# Subtest: CIL execution: default array
+ok 104 - CIL execution: default array
+  ---
+  duration_ms: 6.997894
+  type: 'test'
+  ...
+# Subtest: CIL execution: array assignment receiver evaluated once
+ok 105 - CIL execution: array assignment receiver evaluated once
+  ---
+  duration_ms: 10.049045
+  type: 'test'
+  ...
+# Subtest: CIL execution: postfix
+ok 106 - CIL execution: postfix
+  ---
+  duration_ms: 4.978028
+  type: 'test'
+  ...
+# Subtest: CIL execution: prefix
+ok 107 - CIL execution: prefix
+  ---
+  duration_ms: 3.709054
+  type: 'test'
+  ...
+# Subtest: CIL execution: method calls
+ok 108 - CIL execution: method calls
+  ---
+  duration_ms: 13.263033
+  type: 'test'
+  ...
+# Subtest: CIL execution: recursion
+ok 109 - CIL execution: recursion
+  ---
+  duration_ms: 6.861278
+  type: 'test'
+  ...
+# Subtest: CIL execution: expression body
+ok 110 - CIL execution: expression body
+  ---
+  duration_ms: 8.801234
+  type: 'test'
+  ...
+# Subtest: CIL execution: overloads
+ok 111 - CIL execution: overloads
+  ---
+  duration_ms: 5.328145
+  type: 'test'
+  ...
+# Subtest: CIL execution: objects constructor fields
+ok 112 - CIL execution: objects constructor fields
+  ---
+  duration_ms: 11.298139
+  type: 'test'
+  ...
+# Subtest: CIL execution: object initializer
+ok 113 - CIL execution: object initializer
+  ---
+  duration_ms: 6.53096
+  type: 'test'
+  ...
+# Subtest: CIL execution: static initializer dependency
+ok 114 - CIL execution: static initializer dependency
+  ---
+  duration_ms: 5.596781
+  type: 'test'
+  ...
+# Subtest: CIL execution: string value equality
+ok 115 - CIL execution: string value equality
+  ---
+  duration_ms: 4.845688
+  type: 'test'
+  ...
+# Subtest: CIL execution: object identity
+ok 116 - CIL execution: object identity
+  ---
+  duration_ms: 4.839699
+  type: 'test'
+  ...
+# Subtest: CIL execution: string library
+ok 117 - CIL execution: string library
+  ---
+  duration_ms: 8.534742
+  type: 'test'
+  ...
+# Subtest: CIL execution: length
+ok 118 - CIL execution: length
+  ---
+  duration_ms: 4.552316
+  type: 'test'
+  ...
+# Subtest: CIL execution: numeric parse
+ok 119 - CIL execution: numeric parse
+  ---
+  duration_ms: 4.949134
+  type: 'test'
+  ...
+# Subtest: CIL execution: round-to-even conversion
+ok 120 - CIL execution: round-to-even conversion
+  ---
+  duration_ms: 3.909876
+  type: 'test'
+  ...
+# Subtest: CIL execution: array sort
+ok 121 - CIL execution: array sort
+  ---
+  duration_ms: 7.61202
+  type: 'test'
+  ...
+# Subtest: CIL execution: caught division
+ok 122 - CIL execution: caught division
+  ---
+  duration_ms: 10.002725
+  type: 'test'
+  ...
+# Subtest: CIL execution: throw exception
+ok 123 - CIL execution: throw exception
+  ---
+  duration_ms: 9.60067
+  type: 'test'
+  ...
+# Subtest: CIL execution: cross-frame catch
+ok 124 - CIL execution: cross-frame catch
+  ---
+  duration_ms: 6.056494
+  type: 'test'
+  ...
+# Subtest: CIL execution: rethrow
+ok 125 - CIL execution: rethrow
+  ---
+  duration_ms: 6.334073
+  type: 'test'
+  ...
+# Subtest: CIL execution: Main args
+ok 126 - CIL execution: Main args
+  ---
+  duration_ms: 5.418733
+  type: 'test'
+  ...
+# Subtest: CIL execution: definite assignment both branches
+ok 127 - CIL execution: definite assignment both branches
+  ---
+  duration_ms: 3.823907
+  type: 'test'
+  ...
+# Subtest: CIL sample: particles
+ok 128 - CIL sample: particles
+  ---
+  duration_ms: 24.404395
+  type: 'test'
+  ...
+# Subtest: CIL sample: gc
+ok 129 - CIL sample: gc
+  ---
+  duration_ms: 11.370118
+  type: 'test'
+  ...
+# Subtest: CIL sample: recursion
+ok 130 - CIL sample: recursion
+  ---
+  duration_ms: 14.831088
+  type: 'test'
+  ...
+# Subtest: CIL sample: exceptions
+ok 131 - CIL sample: exceptions
+  ---
+  duration_ms: 8.489173
+  type: 'test'
+  ...
+# Subtest: CIL sample: arrays
+ok 132 - CIL sample: arrays
+  ---
+  duration_ms: 16.262426
+  type: 'test'
+  ...
+# Subtest: CIL sample: partial
+ok 133 - CIL sample: partial
+  ---
+  duration_ms: 7.698881
+  type: 'test'
+  ...
+# Subtest: CIL sample: switch
+ok 134 - CIL sample: switch
+  ---
+  duration_ms: 10.002475
+  type: 'test'
+  ...
+# Subtest: CIL sample: conversions
+ok 135 - CIL sample: conversions
+  ---
+  duration_ms: 5.759185
+  type: 'test'
+  ...
+# Subtest: CIL sample: null-assignment
+ok 136 - CIL sample: null-assignment
+  ---
+  duration_ms: 8.273638
+  type: 'test'
+  ...
+# Subtest: CIL sample: call-hierarchy
+ok 137 - CIL sample: call-hierarchy
+  ---
+  duration_ms: 4.407877
+  type: 'test'
+  ...
+# Subtest: CIL sample: guarded-calls
+ok 138 - CIL sample: guarded-calls
+  ---
+  duration_ms: 6.609208
+  type: 'test'
+  ...
+# Subtest: CIL sample: short-circuit
+ok 139 - CIL sample: short-circuit
+  ---
+  duration_ms: 7.875938
+  type: 'test'
+  ...
+# Subtest: CIL sample: nameof
+ok 140 - CIL sample: nameof
+  ---
+  duration_ms: 5.312112
+  type: 'test'
+  ...
+# Subtest: CIL sample: properties
+ok 141 - CIL sample: properties
+  ---
+  duration_ms: 16.350359
+  type: 'test'
+  ...
+# Subtest: CIL sample: readonly-properties
+ok 142 - CIL sample: readonly-properties
+  ---
+  duration_ms: 8.689164
+  type: 'test'
+  ...
+# Subtest: CIL sample: finally
+ok 143 - CIL sample: finally
+  ---
+  duration_ms: 4.676683
+  type: 'test'
+  ...
+# Subtest: CIL sample: finally-loop
+ok 144 - CIL sample: finally-loop
+  ---
+  duration_ms: 5.034072
+  type: 'test'
+  ...
+# Subtest: CIL sample: structural-refactoring
+ok 145 - CIL sample: structural-refactoring
+  ---
+  duration_ms: 6.857883
+  type: 'test'
+  ...
+# Subtest: CIL sample: safe-watches
+ok 146 - CIL sample: safe-watches
+  ---
+  duration_ms: 5.389938
+  type: 'test'
+  ...
+# Subtest: CIL sample: analyzer-tasks
+ok 147 - CIL sample: analyzer-tasks
+  ---
+  duration_ms: 3.794443
+  type: 'test'
+  ...
+# Subtest: CIL sample: checked-arithmetic
+ok 148 - CIL sample: checked-arithmetic
+  ---
+  duration_ms: 8.855926
+  type: 'test'
+  ...
+# Subtest: CIL sample: using-resources
+ok 149 - CIL sample: using-resources
+  ---
+  duration_ms: 11.856822
+  type: 'test'
+  ...
+# Subtest: CIL sample: using-failure
+ok 150 - CIL sample: using-failure
+  ---
+  duration_ms: 15.460647
+  type: 'test'
+  ...
+# Subtest: CIL sample: constant-patterns
+ok 151 - CIL sample: constant-patterns
+  ---
+  duration_ms: 11.392011
+  type: 'test'
+  ...
+# Subtest: CIL sample: refactor-safe06
+ok 152 - CIL sample: refactor-safe06
+  ---
+  duration_ms: 10.15139
+  type: 'test'
+  ...
+# Subtest: CIL sample: immutable-schema
+ok 153 - CIL sample: immutable-schema
+  ---
+  duration_ms: 8.738409
+  type: 'test'
+  ...
+# Subtest: CIL sample: unreachable-analyzer
+ok 154 - CIL sample: unreachable-analyzer
+  ---
+  duration_ms: 4.089508
+  type: 'test'
+  ...
+# Subtest: CIL sample: reversible-storage
+ok 155 - CIL sample: reversible-storage
+  ---
+  duration_ms: 6.361033
+  type: 'test'
+  ...
+# Subtest: CIL sample: breakpoint-workbench
+ok 156 - CIL sample: breakpoint-workbench
+  ---
+  duration_ms: 5.389348
+  type: 'test'
+  ...
+# Subtest: CIL sample: editor-keymaps
+ok 157 - CIL sample: editor-keymaps
+  ---
+  duration_ms: 2.985122
+  type: 'test'
+  ...
+# Subtest: CIL sample: explorer-members
+ok 158 - CIL sample: explorer-members
+  ---
+  duration_ms: 7.160739
+  type: 'test'
+  ...
+# Subtest: CIL sample: debug-exact
+ok 159 - CIL sample: debug-exact
+  ---
+  duration_ms: 3.566448
+  type: 'test'
+  ...
+# Subtest: CIL sample: debug-callsite
+ok 160 - CIL sample: debug-callsite
+  ---
+  duration_ms: 4.122107
+  type: 'test'
+  ...
+# Subtest: CIL sample: debug-conditions
+ok 161 - CIL sample: debug-conditions
+  ---
+  duration_ms: 3.035639
+  type: 'test'
+  ...
+# Subtest: CIL sample: debug-function
+ok 162 - CIL sample: debug-function
+  ---
+  duration_ms: 9.060174
+  type: 'test'
+  ...
+# Subtest: CIL sample: debug-exception
+ok 163 - CIL sample: debug-exception
+  ---
+  duration_ms: 5.289858
+  type: 'test'
+  ...
+# Subtest: CIL sample: async-stacks
+ok 164 - CIL sample: async-stacks
+  ---
+  duration_ms: 21.294765
+  type: 'test'
+  ...
+# Subtest: CIL sample: logical-threads
+ok 165 - CIL sample: logical-threads
+  ---
+  duration_ms: 9.124211
+  type: 'test'
+  ...
+# Subtest: CIL sample: hot-reload
+ok 166 - CIL sample: hot-reload
+  ---
+  duration_ms: 4.005952
+  type: 'test'
+  ...
+# Subtest: CIL sample: set-next
+ok 167 - CIL sample: set-next
+  ---
+  duration_ms: 2.185476
+  type: 'test'
+  ...
+# Subtest: CIL sample: function-evaluation
+ok 168 - CIL sample: function-evaluation
+  ---
+  duration_ms: 4.93943
+  type: 'test'
+  ...
+# Subtest: CIL sample: portable-symbols
+ok 169 - CIL sample: portable-symbols
+  ---
+  duration_ms: 4.110599
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-counter
+ok 170 - CIL sample: winui-counter
+  ---
+  duration_ms: 27.415196
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-controls
+ok 171 - CIL sample: winui-controls
+  ---
+  duration_ms: 30.060846
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-graphics
+ok 172 - CIL sample: winui-graphics
+  ---
+  duration_ms: 34.845562
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-async
+ok 173 - CIL sample: winui-async
+  ---
+  duration_ms: 18.013908
+  type: 'test'
+  ...
+# Subtest: CIL sample: designer-canvas
+ok 174 - CIL sample: designer-canvas
+  ---
+  duration_ms: 51.14873
+  type: 'test'
+  ...
+# Subtest: CIL sample: designer-grid
+ok 175 - CIL sample: designer-grid
+  ---
+  duration_ms: 40.883659
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-shared-styles
+ok 176 - CIL sample: winui-shared-styles
+  ---
+  duration_ms: 25.989556
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-expanded-controls
+ok 177 - CIL sample: winui-expanded-controls
+  ---
+  duration_ms: 32.867578
+  type: 'test'
+  ...
+# Subtest: CIL sample: edit-continue-structure
+ok 178 - CIL sample: edit-continue-structure
+  ---
+  duration_ms: 6.474314
+  type: 'test'
+  ...
+# Subtest: CIL sample: designer-csharp-sync
+ok 179 - CIL sample: designer-csharp-sync
+  ---
+  duration_ms: 169.888255
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-storyboards
+ok 180 - CIL sample: winui-storyboards
+  ---
+  duration_ms: 41.407257
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-wrap-panels
+ok 181 - CIL sample: winui-wrap-panels
+  ---
+  duration_ms: 24.028719
+  type: 'test'
+  ...
+# Subtest: CIL sample: animation-style-precedence
+ok 182 - CIL sample: animation-style-precedence
+  ---
+  duration_ms: 13.156141
+  type: 'test'
+  ...
+# Subtest: CIL sample: bcl-collections
+ok 183 - CIL sample: bcl-collections
+  ---
+  duration_ms: 14.330603
+  type: 'test'
+  ...
+# Subtest: CIL sample: bcl-dictionary
+ok 184 - CIL sample: bcl-dictionary
+  ---
+  duration_ms: 9.127706
+  type: 'test'
+  ...
+# Subtest: CIL sample: bcl-stringbuilder
+ok 185 - CIL sample: bcl-stringbuilder
+  ---
+  duration_ms: 6.977903
+  type: 'test'
+  ...
+# Subtest: CIL sample: csharp-interpolation
+ok 186 - CIL sample: csharp-interpolation
+  ---
+  duration_ms: 5.071058
+  type: 'test'
+  ...
+# Subtest: CIL sample: csharp-modern-properties
+ok 187 - CIL sample: csharp-modern-properties
+  ---
+  duration_ms: 7.026547
+  type: 'test'
+  ...
+# Subtest: CIL sample: csharp-preview-collections
+ok 188 - CIL sample: csharp-preview-collections
+  ---
+  duration_ms: 30.661041
+  type: 'test'
+  ...
+# Subtest: CIL sample: bcl-json-document
+ok 189 - CIL sample: bcl-json-document
+  ---
+  duration_ms: 20.330321
+  type: 'test'
+  ...
+# Subtest: CIL sample: bcl-array-random
+ok 190 - CIL sample: bcl-array-random
+  ---
+  duration_ms: 10.76827
+  type: 'test'
+  ...
+# Subtest: CIL sample: simd-vector-math
+ok 191 - CIL sample: simd-vector-math
+  ---
+  duration_ms: 12.684851
+  type: 'test'
+  ...
+# (node:108) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:108) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:108) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:108) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: CIL sample: parallel-compute
+ok 192 - CIL sample: parallel-compute
+  ---
+  duration_ms: 154.128096
+  type: 'test'
+  ...
+# Subtest: CIL sample: network-http-client
+ok 193 - CIL sample: network-http-client
+  ---
+  duration_ms: 33.60804
+  type: 'test'
+  ...
+# Subtest: CIL sample: winui-compute-monitor
+ok 194 - CIL sample: winui-compute-monitor
+  ---
+  duration_ms: 19.065012
+  type: 'test'
+  ...
+# Subtest: CIL: emitted bytes contain real PE/CLI headers and real opcodes
+ok 195 - CIL: emitted bytes contain real PE/CLI headers and real opcodes
+  ---
+  duration_ms: 6.613214
+  type: 'test'
+  ...
+# Subtest: CIL: deterministic full artifact
+ok 196 - CIL: deterministic full artifact
+  ---
+  duration_ms: 6.168783
+  type: 'test'
+  ...
+# Subtest: CIL: code is decoded from IL, not from embedded source
+ok 197 - CIL: code is decoded from IL, not from embedded source
+  ---
+  duration_ms: 1.862839
+  type: 'test'
+  ...
+# Subtest: CIL: int Main entry signature and result are preserved
+ok 198 - CIL: int Main entry signature and result are preserved
+  ---
+  duration_ms: 1.959916
+  type: 'test'
+  ...
+# Subtest: CIL: typed literal 7.0 remains ldc.r8 instead of ldc.i4
+ok 199 - CIL: typed literal 7.0 remains ldc.r8 instead of ldc.i4
+  ---
+  duration_ms: 2.033897
+  type: 'test'
+  ...
+# Subtest: CIL regression: mixed numeric conditional
+ok 200 - CIL regression: mixed numeric conditional
+  ---
+  duration_ms: 2.381752
+  type: 'test'
+  ...
+# Subtest: CIL regression: typed assignment expression
+ok 201 - CIL regression: typed assignment expression
+  ---
+  duration_ms: 1.95001
+  type: 'test'
+  ...
+# Subtest: CIL regression: double method arguments
+ok 202 - CIL regression: double method arguments
+  ---
+  duration_ms: 4.822964
+  type: 'test'
+  ...
+# Subtest: CIL regression: return in protected region
+ok 203 - CIL regression: return in protected region
+  ---
+  duration_ms: 5.725264
+  type: 'test'
+  ...
+# Subtest: CIL regression: void return in catch
+ok 204 - CIL regression: void return in catch
+  ---
+  duration_ms: 2.973194
+  type: 'test'
+  ...
+# Subtest: CIL regression: break crossing protected region
+ok 205 - CIL regression: break crossing protected region
+  ---
+  duration_ms: 2.74559
+  type: 'test'
+  ...
+# Subtest: CIL regression: continue crossing protected region
+ok 206 - CIL regression: continue crossing protected region
+  ---
+  duration_ms: 2.829808
+  type: 'test'
+  ...
+# Subtest: CIL regression: empty string and Unicode
+ok 207 - CIL regression: empty string and Unicode
+  ---
+  duration_ms: 2.144444
+  type: 'test'
+  ...
+# Subtest: CIL regression: all boolean operations
+ok 208 - CIL regression: all boolean operations
+  ---
+  duration_ms: 2.202141
+  type: 'test'
+  ...
+# Subtest: CIL regression: string mixed concat
+ok 209 - CIL regression: string mixed concat
+  ---
+  duration_ms: 2.039306
+  type: 'test'
+  ...
+# Subtest: CIL regression: floating NaN comparisons
+ok 210 - CIL regression: floating NaN comparisons
+  ---
+  duration_ms: 2.113458
+  type: 'test'
+  ...
+# Subtest: CIL: emit native-only assembly without debug stream
+ok 211 - CIL: emit native-only assembly without debug stream
+  ---
+  duration_ms: 1.714576
+  type: 'test'
+  ...
+# Subtest: CIL: source-free profile is still executable and debuggable
+ok 212 - CIL: source-free profile is still executable and debuggable
+  ---
+  duration_ms: 1.594044
+  type: 'test'
+  ...
+# Subtest: CIL: CLR-compatible constructor wrappers and raw allocator have distinct signatures
+ok 213 - CIL: CLR-compatible constructor wrappers and raw allocator have distinct signatures
+  ---
+  duration_ms: 2.900374
+  type: 'test'
+  ...
+# Subtest: CIL: catch regions carry real CLI exception metadata
+ok 214 - CIL: catch regions carry real CLI exception metadata
+  ---
+  duration_ms: 1.666233
+  type: 'test'
+  ...
+# Subtest: CIL: source stepping, watches and reverse snapshots survive IL predecoding
+ok 215 - CIL: source stepping, watches and reverse snapshots survive IL predecoding
+  ---
+  duration_ms: 5.948942
+  type: 'test'
+  ...
+# Subtest: CIL: invalid headers and every truncated prefix are rejected
+ok 216 - CIL: invalid headers and every truncated prefix are rejected
+  ---
+  duration_ms: 1.265418
+  type: 'test'
+  ...
+# Subtest: CIL: modified CIL instruction is rejected before execution
+ok 217 - CIL: modified CIL instruction is rejected before execution
+  ---
+  duration_ms: 1.603128
+  type: 'test'
+  ...
+# Subtest: CIL: unsupported opcode is rejected, not silently interpreted
+ok 218 - CIL: unsupported opcode is rejected, not silently interpreted
+  ---
+  duration_ms: 1.267872
+  type: 'test'
+  ...
+# Subtest: CIL: compressed unsigned integer boundaries roundtrip
+ok 219 - CIL: compressed unsigned integer boundaries roundtrip
+  ---
+  duration_ms: 0.183156
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: entry point
+ok 220 - CIL/CLR semantic fixture: entry point
+  ---
+  duration_ms: 8.471831
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: integer precedence
+ok 221 - CIL/CLR semantic fixture: integer precedence
+  ---
+  duration_ms: 5.156477
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: signed less-or-equal
+ok 222 - CIL/CLR semantic fixture: signed less-or-equal
+  ---
+  duration_ms: 7.018214
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: signed greater-or-equal
+ok 223 - CIL/CLR semantic fixture: signed greater-or-equal
+  ---
+  duration_ms: 5.308476
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: signed strict comparisons
+ok 224 - CIL/CLR semantic fixture: signed strict comparisons
+  ---
+  duration_ms: 3.868053
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 wrap
+ok 225 - CIL/CLR semantic fixture: Int32 wrap
+  ---
+  duration_ms: 4.798086
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 multiply
+ok 226 - CIL/CLR semantic fixture: Int32 multiply
+  ---
+  duration_ms: 10.982138
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 division
+ok 227 - CIL/CLR semantic fixture: Int32 division
+  ---
+  duration_ms: 4.052262
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: double literal division
+ok 228 - CIL/CLR semantic fixture: double literal division
+  ---
+  duration_ms: 3.386046
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: numeric conditional
+ok 229 - CIL/CLR semantic fixture: numeric conditional
+  ---
+  duration_ms: 4.291152
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: typed assignment
+ok 230 - CIL/CLR semantic fixture: typed assignment
+  ---
+  duration_ms: 3.959792
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: for loop
+ok 231 - CIL/CLR semantic fixture: for loop
+  ---
+  duration_ms: 4.686738
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: continue and break
+ok 232 - CIL/CLR semantic fixture: continue and break
+  ---
+  duration_ms: 5.949873
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: do while
+ok 233 - CIL/CLR semantic fixture: do while
+  ---
+  duration_ms: 4.482751
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: boolean bitwise
+ok 234 - CIL/CLR semantic fixture: boolean bitwise
+  ---
+  duration_ms: 3.297894
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: short circuit
+ok 235 - CIL/CLR semantic fixture: short circuit
+  ---
+  duration_ms: 4.44277
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: null coalescing
+ok 236 - CIL/CLR semantic fixture: null coalescing
+  ---
+  duration_ms: 7.079346
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: array foreach
+ok 237 - CIL/CLR semantic fixture: array foreach
+  ---
+  duration_ms: 4.946791
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: bool array default
+ok 238 - CIL/CLR semantic fixture: bool array default
+  ---
+  duration_ms: 8.840753
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: array assignment receiver
+ok 239 - CIL/CLR semantic fixture: array assignment receiver
+  ---
+  duration_ms: 7.370796
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: prefix and postfix
+ok 240 - CIL/CLR semantic fixture: prefix and postfix
+  ---
+  duration_ms: 3.322591
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: recursion
+ok 241 - CIL/CLR semantic fixture: recursion
+  ---
+  duration_ms: 4.902102
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: overloads
+ok 242 - CIL/CLR semantic fixture: overloads
+  ---
+  duration_ms: 3.048988
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: object constructor
+ok 243 - CIL/CLR semantic fixture: object constructor
+  ---
+  duration_ms: 4.498885
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: object initializer
+ok 244 - CIL/CLR semantic fixture: object initializer
+  ---
+  duration_ms: 7.879122
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: static initializer
+ok 245 - CIL/CLR semantic fixture: static initializer
+  ---
+  duration_ms: 3.840903
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: object identity
+ok 246 - CIL/CLR semantic fixture: object identity
+  ---
+  duration_ms: 3.813491
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: UTF16 string length
+ok 247 - CIL/CLR semantic fixture: UTF16 string length
+  ---
+  duration_ms: 6.719204
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: double method arguments
+ok 248 - CIL/CLR semantic fixture: double method arguments
+  ---
+  duration_ms: 3.294789
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: try return
+ok 249 - CIL/CLR semantic fixture: try return
+  ---
+  duration_ms: 2.851841
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: caught division
+ok 250 - CIL/CLR semantic fixture: caught division
+  ---
+  duration_ms: 6.885494
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: cross-frame exception
+ok 251 - CIL/CLR semantic fixture: cross-frame exception
+  ---
+  duration_ms: 4.559327
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: throw exception
+ok 252 - CIL/CLR semantic fixture: throw exception
+  ---
+  duration_ms: 3.343763
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: rethrow
+ok 253 - CIL/CLR semantic fixture: rethrow
+  ---
+  duration_ms: 3.126395
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: return in catch
+ok 254 - CIL/CLR semantic fixture: return in catch
+  ---
+  duration_ms: 3.111493
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: break leaves try
+ok 255 - CIL/CLR semantic fixture: break leaves try
+  ---
+  duration_ms: 3.517875
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: continue leaves try
+ok 256 - CIL/CLR semantic fixture: continue leaves try
+  ---
+  duration_ms: 4.667379
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: NaN comparisons
+ok 257 - CIL/CLR semantic fixture: NaN comparisons
+  ---
+  duration_ms: 4.598836
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: shift count masking
+ok 258 - CIL/CLR semantic fixture: shift count masking
+  ---
+  duration_ms: 3.557095
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 division overflow
+ok 259 - CIL/CLR semantic fixture: Int32 division overflow
+  ---
+  duration_ms: 4.705487
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: typed field assignment
+ok 260 - CIL/CLR semantic fixture: typed field assignment
+  ---
+  duration_ms: 5.994891
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: typed array assignment
+ok 261 - CIL/CLR semantic fixture: typed array assignment
+  ---
+  duration_ms: 6.539583
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: nested object fields
+ok 262 - CIL/CLR semantic fixture: nested object fields
+  ---
+  duration_ms: 11.441004
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: array of references
+ok 263 - CIL/CLR semantic fixture: array of references
+  ---
+  duration_ms: 7.073487
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Main string args
+ok 264 - CIL/CLR semantic fixture: Main string args
+  ---
+  duration_ms: 6.454415
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: definite assignment
+ok 265 - CIL/CLR semantic fixture: definite assignment
+  ---
+  duration_ms: 4.434016
+  type: 'test'
+  ...
+# Subtest: CIL API: errors block binary emission
+ok 266 - CIL API: errors block binary emission
+  ---
+  duration_ms: 5.252131
+  type: 'test'
+  ...
+# Subtest: CIL API: backend errors become diagnostics
+ok 267 - CIL API: backend errors become diagnostics
+  ---
+  duration_ms: 1.304357
+  type: 'test'
+  ...
+# Subtest: CIL API: ArrayBuffer executes directly
+ok 268 - CIL API: ArrayBuffer executes directly
+  ---
+  duration_ms: 3.196711
+  type: 'test'
+  ...
+# Subtest: CIL API: direct debugger construction accepts DLL bytes
+ok 269 - CIL API: direct debugger construction accepts DLL bytes
+  ---
+  duration_ms: 4.065191
+  type: 'test'
+  ...
+# Subtest: CIL inspection: standard opcodes and metadata names
+ok 270 - CIL inspection: standard opcodes and metadata names
+  ---
+  duration_ms: 4.659577
+  type: 'test'
+  ...
+# Subtest: CIL runtime configuration: explicit host policy
+ok 271 - CIL runtime configuration: explicit host policy
+  ---
+  duration_ms: 0.308385
+  type: 'test'
+  ...
+# Subtest: CIL front end remains light: ordinary compile does not emit an assembly
+ok 272 - CIL front end remains light: ordinary compile does not emit an assembly
+  ---
+  duration_ms: 0.644181
+  type: 'test'
+  ...
+# Subtest: Workspace cache includes assembly-related compilation options
+ok 273 - Workspace cache includes assembly-related compilation options
+  ---
+  duration_ms: 1.920186
+  type: 'test'
+  ...
+# Subtest: CIL metadata: genuine four-byte string and blob heap indexes
+ok 274 - CIL metadata: genuine four-byte string and blob heap indexes
+  ---
+  duration_ms: 3.933112
+  type: 'test'
+  ...
+1..274
+# tests 274
+# suites 0
+# pass 274
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5298.298205

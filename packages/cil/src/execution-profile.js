@@ -1,6 +1,7 @@
 import {SizeOfProfile} from './sizeof-profile.js';
 import {ExecutionPrefixProfile} from './execution-prefix-profile.js';
 import {recordVerifiedStacks, verifiedStackEntry} from './verified-stack.js';
+import {verifyExecutionToken} from './token-profile.js';
 import {resolveExecutionField} from './field-profile.js';
 import {supportedDelegateCall} from './delegate-profile.js';
 import {resolveExecutionMethod} from './call-profile.js';
@@ -9,14 +10,8 @@ import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
-// Broad decoding is deliberately separate from this managed execution allowlist.
-const simple = new Set(('constrained. volatile. ldtoken ldftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
-const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
-const indexed = /^(ldarg|ldarga|starg|ldloc|ldloca|stloc)(\.[0-3s])?$/;
-const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
-const branches = /^(br|brtrue|brfalse|leave)(\.s)?$|^(beq|bge|bgt|ble|blt|bne)(\.un)?(\.s)?$/;
-const conversions = /^conv\.(ovf\.)?(i1|u1|i2|u2|i4|u4|i8|u8|i|u|r4|r8|r)(\.un)?$/;
-export function isExecutableOpcode(name){return simple.has(name)||arithmetic.test(name)||indexed.test(name)||numeric.test(name)||branches.test(name)||conversions.test(name)||/^(ldelem|stelem|ldind|stind)\.(i1|u1|i2|u2|i4|u4|i8|i|r4|r8|ref)$/.test(name);}
+import {isExecutableOpcode, indexedInstructions, stackEffect} from './opcode-profile.js';
+export {isExecutableOpcode, stackEffect};
 export {primitiveSizes} from './memory-type-profile.js';
 export {systemType} from './intrinsic-profile.js';
 import {intrinsicDefinition} from './intrinsic-profile.js';
@@ -27,21 +22,6 @@ export function selectMethod(inspector,selection,args){
   if(/^0x[0-9a-f]+$/i.test(selection))return Number(selection);
   const matches=[...inspector.methods.values()].filter(m=>(m.owner+'::'+m.name===selection||m.owner+'.'+m.name===selection||m.name===selection)&&(args===undefined||inspector.signature(m.token).parameters.length===args.length));
   if(matches.length!==1)throw new CilError(matches.length?'Ambiguous method; use its MethodDef token':'Selected method not found');return matches[0].token;
-}
-export function stackEffect(inspector,m,i){
-  const n=i.name;
-  if(n==='constrained.'||n==='volatile.'||n==='nop'||n==='break'||n==='endfinally'||n==='rethrow'||/^br(\.s)?$/.test(n)||/^leave/.test(n))return [0,0];
-  if(n==='ldtoken'||n==='ldftn'||n==='sizeof'||n==='ldnull'||n==='ldstr'||numeric.test(n)||/^ld(arg|loc)/.test(n)||n==='ldsfld'||n==='ldsflda')return [0,1];
-  if(/^st(arg|loc)/.test(n)||n==='pop'||n==='stsfld'||n==='throw'||n==='switch'||/^br(true|false)/.test(n)||n==='initobj')return [1,0];
-  if(n==='dup')return [1,2];
-  if(n==='ret')return [m.signature.returnType==='void'?0:1,0];
-  if(n==='call'||n==='callvirt'||n==='newobj'){const d=inspector.resolveToken(i.operand);return [d.signature.parameters.length+(n!=='newobj'&&!d.signature.isStatic?1:0),n==='newobj'||d.signature.returnType!=='void'?1:0];}
-  if(n==='cpobj'||n==='stfld'||n==='stobj'||n.startsWith('stind.'))return [2,0];
-  if(n==='stelem'||n.startsWith('stelem.'))return [3,0];
-  if(n==='ldelema'||n==='ldelem'||n.startsWith('ldelem.'))return [2,1];
-  if(/^b(eq|ge|gt|le|lt|ne)/.test(n))return [2,0];
-  if(arithmetic.test(n)&&!['neg','not'].includes(n))return [2,1];
-  return [1,1];
 }
 /** Whole reachable-method stack-height verification plus explicit unsupported-operation diagnostics.
  * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
@@ -73,8 +53,8 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(i.name==='sizeof')sizes.verify(m,i,context,issue);
       if(['cpobj','unbox'].includes(i.name))verifyPrimitiveStorageOperand(inspector,m,i,issue);
       if(['newarr','ldelema','ldelem','stelem','box','unbox.any','ldobj','stobj','initobj','castclass','isinst'].includes(i.name)){try{verifyGenericType(inspector,inspector.metadata.typeName(i.operand),context);}catch(error){issue(m,i,'IL_TYPE',error.message);}}
-      if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(token.kind==='type')verifyGenericType(inspector,token.name,context);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
-      if(indexed.test(i.name)){
+      if(i.name==='ldtoken'){try{verifyExecutionToken(inspector,i.operand,context);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(indexedInstructions.test(i.name)){
         const index=i.operand??Number(i.name.split('.').at(-1)),limit=i.name.includes('arg')?m.signature.parameters.length+(m.signature.isStatic?0:1):m.locals.length;
         if(!Number.isInteger(index)||index<0||index>=limit)issue(m,i,'IL_SLOT','Invalid argument/local slot');
       }

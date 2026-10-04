@@ -1,0 +1,3115 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "Archive, template catalog/engine, XAML designer services, destination and wizard scopes; shared XML/project-edit prerequisite. Follow-ups also publish the delegated native context/profile models and native views; protected Studio entry integration remains with root.",
+  "source": {
+    "branch": "codex/p18-templates",
+    "head": "daab1b3385a5851cdf0ad8e7e03236be10ea74dc",
+    "manifest": "templates.json"
+  },
+  "publicationRules": {
+    "draftOnly": true,
+    "forceUpdates": false,
+    "mainMerges": false,
+    "closingKeywords": false,
+    "protectedStudioEdits": false,
+    "rootManifestEdits": "None in own feature projections; dependencies retain their already published manifest content."
+  },
+  "pullRequests": [
+    {
+      "name": "project-edits",
+      "branch": "codex/p18-project-edits",
+      "local": "c587f6ba2cf5acd13c9c7016f3fe866101cc5112",
+      "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+      "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+      "commitReadBack": {
+        "tree": "9ed6749f583192fd6ad471a7ccd412dcf46d225d",
+        "parents": [
+          "a925a35802f44b7d158f6e57d35938075913d27a"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "8c1e1b3041c6619bedbbfa6fe89afea3dc194fe9",
+        "fe53b23bbf4cebd59d80a1fbb52a7eb94539838b",
+        "00fe4dcdb3ba3429006b1ba9c5a4bca8eb739a32",
+        "0a3c1b86320fdcdb1ffc9a43f42195ba2b816c59"
+      ],
+      "previousPublications": [
+        {
+          "name": "project-edits",
+          "branch": "codex/p18-project-edits",
+          "local": "bde7c63f550830ac2de37fe2481c5c7b02433417",
+          "sha": "a925a35802f44b7d158f6e57d35938075913d27a",
+          "tree": "7e5bd74f5f3ff041ee829c075ddeb648899079ac",
+          "commitReadBack": {
+            "tree": "7e5bd74f5f3ff041ee829c075ddeb648899079ac",
+            "parents": [
+              "821eacc2618cc816708f88a454ecdb3161aa6959"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [
+            "8c1e1b3041c6619bedbbfa6fe89afea3dc194fe9",
+            "fe53b23bbf4cebd59d80a1fbb52a7eb94539838b",
+            "00fe4dcdb3ba3429006b1ba9c5a4bca8eb739a32",
+            "0a3c1b86320fdcdb1ffc9a43f42195ba2b816c59"
+          ],
+          "previousPublications": [],
+          "pr": 3553,
+          "url": "https://github.com/wieslawsoltes/SharpForge/pull/3553",
+          "baseBranch": "codex/p18-foundation-paths",
+          "pullRequestReadBack": {
+            "head": "codex/p18-project-edits",
+            "headSha": "a925a35802f44b7d158f6e57d35938075913d27a",
+            "base": "codex/p18-foundation-paths",
+            "baseSha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+            "draft": true,
+            "changedFiles": 18
+          },
+          "automaticCore": {
+            "name": "project-edits",
+            "pr": 3553,
+            "sha": "a925a35802f44b7d158f6e57d35938075913d27a",
+            "runId": 37163263465,
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163263465",
+            "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+          }
+        }
+      ],
+      "receipt": "templates-workbench-publication.json#receipts/xml-facade-cleanup-published.json",
+      "pr": 3553,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3553",
+      "baseBranch": "codex/p18-foundation-paths",
+      "pullRequestReadBack": {
+        "head": "codex/p18-project-edits",
+        "headSha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "base": "codex/p18-foundation-paths",
+        "baseSha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 3553,
+        "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "runId": 37181146470,
+        "jobId": 111373827859,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181146470/job/111373827859",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "archive-codecs",
+      "branch": "codex/p18-archive-codecs",
+      "local": "b8f5b1de0e55b3fb5e97a56765d0fc4642fef7e0",
+      "sha": "966d216258dff507561967bfe6ddbba9646402bc",
+      "tree": "ba898a9afa6315edeab0735ae2f498f80b4e8c45",
+      "commitReadBack": {
+        "tree": "ba898a9afa6315edeab0735ae2f498f80b4e8c45",
+        "parents": [
+          "821eacc2618cc816708f88a454ecdb3161aa6959"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "d7aadc3da0b1038c1c3f55b99f4b20f44f7ffd04",
+        "f900e1be55f79f8f8cc1521ad8759212df7f4347",
+        "e4bf3959b2a18835ac073fc4d4f2c7d57194a070"
+      ],
+      "previousPublications": [],
+      "pr": 3560,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3560",
+      "baseBranch": "codex/p18-foundation-paths",
+      "pullRequestReadBack": {
+        "head": "codex/p18-archive-codecs",
+        "headSha": "966d216258dff507561967bfe6ddbba9646402bc",
+        "base": "codex/p18-foundation-paths",
+        "baseSha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+        "draft": true,
+        "changedFiles": 20
+      },
+      "automaticCore": {
+        "name": "archive-codecs",
+        "pr": 3560,
+        "sha": "966d216258dff507561967bfe6ddbba9646402bc",
+        "runId": 37163415584,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163415584",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "archive-content-policy",
+      "branch": "codex/p18-archive-content-policy",
+      "local": "f6a5d9d506856d18b49ca69f7b338e799259d9d6",
+      "sha": "7110c0ed2eecbf15aef423dbbfce1c4f60fc9055",
+      "tree": "0f51aa12741c857e98997d7952475d81b8f1b45b",
+      "commitReadBack": {
+        "tree": "0f51aa12741c857e98997d7952475d81b8f1b45b",
+        "parents": [
+          "966d216258dff507561967bfe6ddbba9646402bc"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "4b0c8a7e0f67a0ea898ba46f1be076023a56c9ba"
+      ],
+      "previousPublications": [],
+      "pr": 3564,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3564",
+      "baseBranch": "codex/p18-archive-codecs",
+      "pullRequestReadBack": {
+        "head": "codex/p18-archive-content-policy",
+        "headSha": "7110c0ed2eecbf15aef423dbbfce1c4f60fc9055",
+        "base": "codex/p18-archive-codecs",
+        "baseSha": "966d216258dff507561967bfe6ddbba9646402bc",
+        "draft": true,
+        "changedFiles": 9
+      },
+      "automaticCore": {
+        "name": "archive-content-policy",
+        "pr": 3564,
+        "sha": "7110c0ed2eecbf15aef423dbbfce1c4f60fc9055",
+        "runId": 37163487681,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163487681",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "template-destinations",
+      "branch": "codex/p18-template-destinations",
+      "local": "83b9592f30246782cf782563ee5e3c0c8c8ac997",
+      "sha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+      "tree": "3be4e1548ec1b77bf4de855995b055b0d8bee74e",
+      "commitReadBack": {
+        "tree": "3be4e1548ec1b77bf4de855995b055b0d8bee74e",
+        "parents": [
+          "4f2f2b6f713b9711114c6504c42de12fc9d321ec"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "b890fce7662557985cd66bab9e82fb83e987c592",
+        "e5a94692d4efbc55018da8f58f5da2dc98d51dbb",
+        "30cafd2937b128671b5da605cc6ec4eed54937db",
+        "1684ebb1be5432126f14ff65206a8f35b52aca40"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "f6151e2a745a5e4202ec8dd70fdde87c3707babf",
+          "previousSha": "4f2f2b6f713b9711114c6504c42de12fc9d321ec",
+          "previousTree": "6330e25044d5b996c7e194e0cbfef169a172dc34",
+          "local": "83b9592f30246782cf782563ee5e3c0c8c8ac997",
+          "sha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+          "tree": "3be4e1548ec1b77bf4de855995b055b0d8bee74e",
+          "reason": "Project only exact benchmark review from root de261897; preserve measured source and command.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "83b9592f30246782cf782563ee5e3c0c8c8ac997",
+              "sha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2"
+            }
+          ]
+        }
+      ],
+      "pr": 3565,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3565",
+      "baseBranch": "codex/p18-archive-content-policy",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-destinations",
+        "headSha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+        "base": "codex/p18-archive-content-policy",
+        "baseSha": "7110c0ed2eecbf15aef423dbbfce1c4f60fc9055",
+        "draft": true,
+        "changedFiles": 12
+      },
+      "automaticCore": {
+        "name": "template-destinations",
+        "pr": 3565,
+        "sha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+        "runId": 37164678562,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164678562",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "template-catalog",
+      "branch": "codex/p18-template-catalog",
+      "local": "bf66147a23be16c2d8dd6c70c5f60c525913604f",
+      "sha": "5eb781ee877ef1bdad778f05558c8a6ee30a1cbb",
+      "tree": "11f7fbe68536b777f25d0068714c2d83c01151c9",
+      "commitReadBack": {
+        "tree": "11f7fbe68536b777f25d0068714c2d83c01151c9",
+        "parents": [
+          "778677df58bad76132c73a939275e7d1e70893a8"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "0ebb475da1721e8ad52723b4c0f1e306d900c095",
+        "cd0ca0808008aab489f3e701777ac888c93b8460",
+        "b79c9f85c81ba153292103af10c8b4024985cbe7",
+        "e222b4cd6420dd177b4e90649751a44d85aa60cf",
+        "f6cf31b591e3d02eeb06ab1a9a86315b0c2898ee"
+      ],
+      "previousPublications": [],
+      "pr": 3567,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3567",
+      "baseBranch": "codex/p18-template-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-catalog",
+        "headSha": "5eb781ee877ef1bdad778f05558c8a6ee30a1cbb",
+        "base": "codex/p18-template-dependencies",
+        "baseSha": "778677df58bad76132c73a939275e7d1e70893a8",
+        "draft": true,
+        "changedFiles": 28
+      },
+      "automaticCore": {
+        "name": "template-catalog",
+        "pr": 3567,
+        "sha": "5eb781ee877ef1bdad778f05558c8a6ee30a1cbb",
+        "runId": 37163503311,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163503311",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "template-xaml-items",
+      "branch": "codex/p18-template-xaml-items",
+      "local": "70449d2c83a6322600611865435813831e06eb55",
+      "sha": "a06002732e4ad2c350a323e86395e06ca193026e",
+      "tree": "9247c50ddb8b3cbda815b9d6ea519090af9ea581",
+      "commitReadBack": {
+        "tree": "9247c50ddb8b3cbda815b9d6ea519090af9ea581",
+        "parents": [
+          "d6354d7bc8d82321fdc93ce9e2df33d7bfd19c06"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "2422d999453ff6760b75c92b07503d55d28d0336",
+        "d0a5b227af147fa27eb37f0cbb3e727863a68012",
+        "f6cf31b591e3d02eeb06ab1a9a86315b0c2898ee"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "ea91fc164db251e11ff96bb6f54cb6fd7f8292d9",
+          "previousSha": "d6354d7bc8d82321fdc93ce9e2df33d7bfd19c06",
+          "previousTree": "c919a719bb9aac0a35e94e138c6337d400215479",
+          "local": "70449d2c83a6322600611865435813831e06eb55",
+          "sha": "a06002732e4ad2c350a323e86395e06ca193026e",
+          "tree": "9247c50ddb8b3cbda815b9d6ea519090af9ea581",
+          "reason": "Register existing complete template target qualification in A24; omitted only by projection.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            }
+          ]
+        }
+      ],
+      "pr": 3574,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3574",
+      "baseBranch": "codex/p18-template-catalog",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-xaml-items",
+        "headSha": "a06002732e4ad2c350a323e86395e06ca193026e",
+        "base": "codex/p18-template-catalog",
+        "baseSha": "5eb781ee877ef1bdad778f05558c8a6ee30a1cbb",
+        "draft": true,
+        "changedFiles": 11
+      },
+      "automaticCore": {
+        "name": "template-xaml-items",
+        "pr": 3574,
+        "sha": "a06002732e4ad2c350a323e86395e06ca193026e",
+        "runId": 37164665818,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164665818",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "template-engine",
+      "branch": "codex/p18-template-engine",
+      "local": "e1412f65df1e6b8b8983b937749bd0986faf4ce2",
+      "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb",
+      "tree": "5504ea97a14b2cd3548f42e53f5ce99f79150b32",
+      "commitReadBack": {
+        "tree": "5504ea97a14b2cd3548f42e53f5ce99f79150b32",
+        "parents": [
+          "eaf8adc6f6549a6d7b7a633ed36f542bc2b940b1",
+          "a06002732e4ad2c350a323e86395e06ca193026e"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "d1466499dae531f3d7a89efad9d4d34ffe5363c5"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "1eb6cfcec0228ecc932ec6435d966c2840499574",
+          "previousSha": "eaf8adc6f6549a6d7b7a633ed36f542bc2b940b1",
+          "previousTree": "6cac5623678e840d1b5b1b392a33e1c3a64f8069",
+          "local": "e1412f65df1e6b8b8983b937749bd0986faf4ce2",
+          "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb",
+          "tree": "5504ea97a14b2cd3548f42e53f5ce99f79150b32",
+          "reason": "Forward merge corrected XAML-items prerequisite; no feature changes.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            },
+            {
+              "local": "e1412f65df1e6b8b8983b937749bd0986faf4ce2",
+              "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb"
+            }
+          ]
+        }
+      ],
+      "pr": 3575,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3575",
+      "baseBranch": "codex/p18-template-xaml-items",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-engine",
+        "headSha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb",
+        "base": "codex/p18-template-xaml-items",
+        "baseSha": "a06002732e4ad2c350a323e86395e06ca193026e",
+        "draft": true,
+        "changedFiles": 12
+      },
+      "automaticCore": {
+        "name": "template-engine",
+        "pr": 3575,
+        "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb",
+        "runId": 37164667225,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164667225",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "designer-xaml",
+      "branch": "codex/p18-designer-xaml",
+      "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+      "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c",
+      "tree": "ae17135bab519493ce156f68fb5487dd7cd59a08",
+      "commitReadBack": {
+        "tree": "ae17135bab519493ce156f68fb5487dd7cd59a08",
+        "parents": [
+          "cf6fe4954d1a74ec6a8f1c6efee88e8afe229bae",
+          "a06002732e4ad2c350a323e86395e06ca193026e"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "fcee184448d4b43f0a0ad778fefa3af9fd23cb43",
+        "c75cad552b37981fc6c5ab47a5d2d12fc9e2baff"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "9c5e21f10099a6081f6b36c426aaecc4ceae1fa4",
+          "previousSha": "cf6fe4954d1a74ec6a8f1c6efee88e8afe229bae",
+          "previousTree": "7a76a6bc5d4addff574b2b300ef508c3b3d43bbe",
+          "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+          "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c",
+          "tree": "ae17135bab519493ce156f68fb5487dd7cd59a08",
+          "reason": "Forward merge corrected XAML-items prerequisite; no feature changes.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            },
+            {
+              "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+              "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c"
+            }
+          ]
+        }
+      ],
+      "pr": 3576,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3576",
+      "baseBranch": "codex/p18-template-xaml-items",
+      "pullRequestReadBack": {
+        "head": "codex/p18-designer-xaml",
+        "headSha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c",
+        "base": "codex/p18-template-xaml-items",
+        "baseSha": "a06002732e4ad2c350a323e86395e06ca193026e",
+        "draft": true,
+        "changedFiles": 10
+      },
+      "automaticCore": {
+        "name": "designer-xaml",
+        "pr": 3576,
+        "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c",
+        "runId": 37164669029,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164669029",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "designer-xaml-services",
+      "branch": "codex/p18-designer-xaml-services",
+      "local": "c58795a604dbcfd3a339ca094e73cbec7c6bd5e2",
+      "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8",
+      "tree": "1954e6f9454bb472181a8b2ec8d2f1f01ac8f1c9",
+      "commitReadBack": {
+        "tree": "1954e6f9454bb472181a8b2ec8d2f1f01ac8f1c9",
+        "parents": [
+          "a5b10d0f4d4c9c62eb44eacd5cf0a0e8fc7af557",
+          "78a15556ef08e86185fa4ad020a8387f3bc28d4c"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "c276ad3488e23306795b62bf64da32815017ce7b"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "ff134a749b19facd68a1c7a5f65b7658ee464eff",
+          "previousSha": "a5b10d0f4d4c9c62eb44eacd5cf0a0e8fc7af557",
+          "previousTree": "0fa7bd4801011b7356f0efe07b8e3feecef55a69",
+          "local": "c58795a604dbcfd3a339ca094e73cbec7c6bd5e2",
+          "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8",
+          "tree": "1954e6f9454bb472181a8b2ec8d2f1f01ac8f1c9",
+          "reason": "Forward merge corrected designer prerequisite; no feature changes.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            },
+            {
+              "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+              "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c"
+            },
+            {
+              "local": "c58795a604dbcfd3a339ca094e73cbec7c6bd5e2",
+              "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8"
+            }
+          ]
+        }
+      ],
+      "pr": 3578,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3578",
+      "baseBranch": "codex/p18-designer-xaml",
+      "pullRequestReadBack": {
+        "head": "codex/p18-designer-xaml-services",
+        "headSha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8",
+        "base": "codex/p18-designer-xaml",
+        "baseSha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c",
+        "draft": true,
+        "changedFiles": 9
+      },
+      "automaticCore": {
+        "name": "designer-xaml-services",
+        "pr": 3578,
+        "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8",
+        "runId": 37164670904,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164670904",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "template-discovery",
+      "branch": "codex/p18-template-discovery",
+      "local": "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+      "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+      "tree": "59e24d6ecaa1ba94581cb81d09c562d05a4e54f1",
+      "commitReadBack": {
+        "tree": "59e24d6ecaa1ba94581cb81d09c562d05a4e54f1",
+        "parents": [
+          "27694a31d5c8b05edf395272189b2438f02224d5"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "0483ca817ec11cc3e8dfaecedfe2542ae8824988"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "0816800be05357ce9df0f05567361cd322d0df4f",
+          "previousSha": "fa1adf6f2fa1e3374ad14a8aafe28742d547cc73",
+          "previousTree": "e270aa3be8bb29a4eeebdb98ea42d581d400fe71",
+          "local": "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+          "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+          "tree": "59e24d6ecaa1ba94581cb81d09c562d05a4e54f1",
+          "reason": "Forward merge prerequisite and project only the three exact existing import reviews from root de261897.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            },
+            {
+              "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+              "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c"
+            },
+            {
+              "local": "c58795a604dbcfd3a339ca094e73cbec7c6bd5e2",
+              "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8"
+            },
+            {
+              "local": "e1412f65df1e6b8b8983b937749bd0986faf4ce2",
+              "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb"
+            },
+            {
+              "local": "00e8fdb22edab59dae10ca6c3fb79af7142fbe70",
+              "sha": "46fbf68bcebd087bbed24d76d513f7874361ab61"
+            },
+            {
+              "local": "7831d2ff6c76d9625cdaaa2710af451e9be78f38",
+              "sha": "27694a31d5c8b05edf395272189b2438f02224d5"
+            },
+            {
+              "local": "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+              "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179"
+            }
+          ]
+        }
+      ],
+      "pr": 3579,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3579",
+      "baseBranch": "codex/p18-catalog-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-discovery",
+        "headSha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+        "base": "codex/p18-catalog-dependencies",
+        "baseSha": "46fbf68bcebd087bbed24d76d513f7874361ab61",
+        "draft": true,
+        "changedFiles": 95
+      },
+      "automaticCore": {
+        "name": "template-discovery",
+        "pr": 3579,
+        "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+        "runId": 37164673622,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164673622",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "template-windows-qualification",
+      "branch": "codex/p18-template-windows-qualification",
+      "local": "4afbb3cfa8a9f6d110d76678c3a60a31d6dacacd",
+      "sha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+      "tree": "1a327e35faf232c05f95765437f1876507aff8b3",
+      "commitReadBack": {
+        "tree": "1a327e35faf232c05f95765437f1876507aff8b3",
+        "parents": [
+          "cdf0c31552b76e7d188427170889ed533fc2cff6",
+          "8b9bfe24556d43a45113e16578910d5d5e91a179"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "f6cf31b591e3d02eeb06ab1a9a86315b0c2898ee",
+        "daab1b3385a5851cdf0ad8e7e03236be10ea74dc"
+      ],
+      "previousPublications": [
+        {
+          "previousLocal": "9ad1a81e9e473ede5a7409814ea5d22ec1c6d935",
+          "previousSha": "cdf0c31552b76e7d188427170889ed533fc2cff6",
+          "previousTree": "adcec8705860b3ca02f07287007d1481a7678bca",
+          "local": "4afbb3cfa8a9f6d110d76678c3a60a31d6dacacd",
+          "sha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+          "tree": "1a327e35faf232c05f95765437f1876507aff8b3",
+          "reason": "Forward merge corrected discovery prerequisite; no Windows execution claims.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            },
+            {
+              "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+              "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c"
+            },
+            {
+              "local": "c58795a604dbcfd3a339ca094e73cbec7c6bd5e2",
+              "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8"
+            },
+            {
+              "local": "e1412f65df1e6b8b8983b937749bd0986faf4ce2",
+              "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb"
+            },
+            {
+              "local": "00e8fdb22edab59dae10ca6c3fb79af7142fbe70",
+              "sha": "46fbf68bcebd087bbed24d76d513f7874361ab61"
+            },
+            {
+              "local": "7831d2ff6c76d9625cdaaa2710af451e9be78f38",
+              "sha": "27694a31d5c8b05edf395272189b2438f02224d5"
+            },
+            {
+              "local": "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+              "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179"
+            },
+            {
+              "local": "4afbb3cfa8a9f6d110d76678c3a60a31d6dacacd",
+              "sha": "3c12c550114c102e6f277cabe525eef0d99413b3"
+            }
+          ]
+        }
+      ],
+      "pr": 3580,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3580",
+      "baseBranch": "codex/p18-template-discovery",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-windows-qualification",
+        "headSha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+        "base": "codex/p18-template-discovery",
+        "baseSha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+        "draft": true,
+        "changedFiles": 3
+      },
+      "automaticCore": {
+        "name": "template-windows-qualification",
+        "pr": 3580,
+        "sha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+        "runId": 37164675750,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37164675750",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested."
+      }
+    },
+    {
+      "name": "project-wizard",
+      "branch": "codex/p18-project-wizard",
+      "local": "6273f66739b7b90a7bcc8799b7ac5634b6d56153",
+      "sha": "776131fc13f141b84d4915cbfe69ca9d15c51e3c",
+      "tree": "1954d89c48e70d7dc6c06b4a8b5e178ca331fb80",
+      "commitReadBack": {
+        "tree": "1954d89c48e70d7dc6c06b4a8b5e178ca331fb80",
+        "parents": [
+          "a6329734fc3ce4bf022ea8b907f56a6905be9dee"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "pr": 3655,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3655",
+      "baseBranch": "codex/p18-wizard-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-project-wizard",
+        "headSha": "776131fc13f141b84d4915cbfe69ca9d15c51e3c",
+        "base": "codex/p18-wizard-dependencies",
+        "baseSha": "065212895ef9152c5daa3adf17d57fc619a2c961",
+        "draft": true,
+        "changedFiles": 9
+      },
+      "automaticCore": {
+        "name": "project-wizard",
+        "pr": 3655,
+        "sha": "776131fc13f141b84d4915cbfe69ca9d15c51e3c",
+        "runId": 37167036607,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37167036607",
+        "qualification": "Automatic fast core only; no broad/native/Windows run requested.",
+        "observedRuns": [
+          {
+            "id": 37167036607,
+            "name": "Validate SharpForge",
+            "status": "completed",
+            "conclusion": "success",
+            "run_number": 1506,
+            "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167036607/jobs",
+            "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167036607/logs",
+            "workflow_id": 373818434
+          },
+          {
+            "id": 37167033872,
+            "name": "Validate SharpForge",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "run_number": 1504,
+            "jobs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167033872/jobs",
+            "logs_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37167033872/logs",
+            "workflow_id": 373818434
+          }
+        ]
+      },
+      "originalCommits": [
+        "2f63a71ce0fb9db93e99c7d96144c266b042244a",
+        "c75cad552b37981fc6c5ab47a5d2d12fc9e2baff",
+        "e5a94692d4efbc55018da8f58f5da2dc98d51dbb",
+        "30cafd2937b128671b5da605cc6ec4eed54937db",
+        "daab1b3385a5851cdf0ad8e7e03236be10ea74dc"
+      ],
+      "previousPublications": []
+    },
+    {
+      "name": "xml-text-policy",
+      "branch": "codex/p18-xml-text-policy",
+      "local": "145f85e68beb5c8ba9b51bfbdeb807391bf2e293",
+      "sha": "6ff88b293117bf7e0b636a7a7b8877deb08fe604",
+      "tree": "91e96a8630215da136496e995043eb4111bfafe9",
+      "commitReadBack": {
+        "tree": "91e96a8630215da136496e995043eb4111bfafe9",
+        "parents": [
+          "821eacc2618cc816708f88a454ecdb3161aa6959"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "ed72d97ce22bcc361da5b6d0f0176d3c46728687"
+      ],
+      "previousPublications": [],
+      "files": [
+        "packages/archive/README.md",
+        "packages/archive/src/text-encoding.js",
+        "tests/a24-xml-text-policy.test.js"
+      ],
+      "pr": 3781,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3781",
+      "baseBranch": "codex/p18-foundation-paths",
+      "pullRequestReadBack": {
+        "head": "codex/p18-xml-text-policy",
+        "headSha": "6ff88b293117bf7e0b636a7a7b8877deb08fe604",
+        "base": "codex/p18-foundation-paths",
+        "baseSha": "821eacc2618cc816708f88a454ecdb3161aa6959",
+        "draft": true,
+        "changedFiles": 3
+      },
+      "automaticCore": {
+        "name": "xml-text-policy",
+        "pr": 3781,
+        "sha": "6ff88b293117bf7e0b636a7a7b8877deb08fe604",
+        "runId": 37170162368,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170162368",
+        "supersededRuns": [
+          {
+            "id": 37170159800,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "node": "26.10.0",
+        "platform": "Linux",
+        "host": {
+          "tests": 500,
+          "passed": 495,
+          "failed": 5
+        },
+        "scopes": {
+          "xmlTextPolicy": 1,
+          "archiveSinkOwnership": 5,
+          "xamlReopen": 3
+        },
+        "allPublishedScopeCasesPassed": true,
+        "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json",
+        "broadRerun": false,
+        "boundaries": [
+          "Full protected Studio entry not executed",
+          "Windows App SDK build and runtime not qualified"
+        ],
+        "scopedCases": 1,
+        "scopedFailures": 0
+      }
+    },
+    {
+      "name": "archive-sink-ownership",
+      "branch": "codex/p18-archive-sink-ownership",
+      "local": "b17495bb6fabab7e5a4ae548e8f20a7efb631948",
+      "sha": "a33fc34c185f42e0b63aadc36909d82740d30288",
+      "tree": "ec8ed1943db99abb64dad09302f13fec1470337f",
+      "commitReadBack": {
+        "tree": "ec8ed1943db99abb64dad09302f13fec1470337f",
+        "parents": [
+          "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "ed72d97ce22bcc361da5b6d0f0176d3c46728687"
+      ],
+      "previousPublications": [],
+      "files": [
+        "packages/archive/README.md",
+        "packages/archive/src/zip-stream-writer.js",
+        "packages/project-system/src/archive-stream.js",
+        "tests/a24-archive-sink-ownership.test.js"
+      ],
+      "pr": 3788,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3788",
+      "baseBranch": "codex/p18-template-destinations",
+      "pullRequestReadBack": {
+        "head": "codex/p18-archive-sink-ownership",
+        "headSha": "a33fc34c185f42e0b63aadc36909d82740d30288",
+        "base": "codex/p18-template-destinations",
+        "baseSha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+        "draft": true,
+        "changedFiles": 4
+      },
+      "automaticCore": {
+        "name": "archive-sink-ownership",
+        "pr": 3788,
+        "sha": "a33fc34c185f42e0b63aadc36909d82740d30288",
+        "runId": 37170224245,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170224245",
+        "supersededRuns": [
+          {
+            "id": 37170221362,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "node": "26.10.0",
+        "platform": "Linux",
+        "host": {
+          "tests": 500,
+          "passed": 495,
+          "failed": 5
+        },
+        "scopes": {
+          "xmlTextPolicy": 1,
+          "archiveSinkOwnership": 5,
+          "xamlReopen": 3
+        },
+        "allPublishedScopeCasesPassed": true,
+        "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json",
+        "broadRerun": false,
+        "boundaries": [
+          "Full protected Studio entry not executed",
+          "Windows App SDK build and runtime not qualified"
+        ],
+        "scopedCases": 5,
+        "scopedFailures": 0
+      }
+    },
+    {
+      "name": "xaml-reopen",
+      "branch": "codex/p18-xaml-reopen",
+      "local": "f1976ff963026d2a3b5562177f03fa87cc3b3901",
+      "sha": "02bdce19441b36240faf5fafdaef6149619d1dce",
+      "tree": "6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19",
+      "commitReadBack": {
+        "tree": "6c3a91f149a1e6b0ace0d9a770d08f5a77e46d19",
+        "parents": [
+          "9501520383fa99d873157ab6f6efbf55354ebcbf"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "ed72d97ce22bcc361da5b6d0f0176d3c46728687",
+        "464088607c034a5d8159e981a42f2731f54dfeca"
+      ],
+      "previousPublications": [
+        {
+          "name": "xaml-reopen",
+          "branch": "codex/p18-xaml-reopen",
+          "local": "1180bc3c790df35f1b38fb9450347e8e5a85acdf",
+          "sha": "aead2cc90a24b7780753d490a548826a9756dd39",
+          "tree": "00f83a1989715f34b0a725ce3d0f51e98c21fa9f",
+          "commitReadBack": {
+            "tree": "00f83a1989715f34b0a725ce3d0f51e98c21fa9f",
+            "parents": [
+              "fd39e656de9e3a4651b8823cb30e866dc71ed2f2"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [
+            "ed72d97ce22bcc361da5b6d0f0176d3c46728687"
+          ],
+          "previousPublications": [],
+          "files": [
+            "tests/a24-xaml-reopen.test.js"
+          ],
+          "pr": 3792,
+          "url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+          "baseBranch": "codex/p18-xaml-reopen-dependencies",
+          "pullRequestReadBack": {
+            "head": "codex/p18-xaml-reopen",
+            "headSha": "aead2cc90a24b7780753d490a548826a9756dd39",
+            "base": "codex/p18-xaml-reopen-dependencies",
+            "baseSha": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+            "draft": true,
+            "changedFiles": 1
+          },
+          "automaticCore": {
+            "name": "xaml-reopen",
+            "pr": 3792,
+            "sha": "aead2cc90a24b7780753d490a548826a9756dd39",
+            "runId": 37170342213,
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170342213",
+            "supersededRuns": [
+              {
+                "id": 37170340339,
+                "status": "completed",
+                "conclusion": "cancelled"
+              }
+            ],
+            "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+          },
+          "qualification": {
+            "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+            "node": "26.10.0",
+            "platform": "Linux",
+            "host": {
+              "tests": 500,
+              "passed": 495,
+              "failed": 5
+            },
+            "scopes": {
+              "xmlTextPolicy": 1,
+              "archiveSinkOwnership": 5,
+              "xamlReopen": 3
+            },
+            "allPublishedScopeCasesPassed": true,
+            "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.json",
+            "broadRerun": false,
+            "boundaries": [
+              "Full protected Studio entry not executed",
+              "Windows App SDK build and runtime not qualified"
+            ],
+            "scopedCases": 3,
+            "scopedFailures": 0
+          }
+        },
+        {
+          "name": "xaml-reopen",
+          "branch": "codex/p18-xaml-reopen",
+          "local": "7f0b9a85f5ea1ff68d4f941272ba43a0a0c71c9d",
+          "sha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+          "tree": "2410a8db974f3b5de6b96f99e5bc64265ac4922d",
+          "commitReadBack": {
+            "tree": "2410a8db974f3b5de6b96f99e5bc64265ac4922d",
+            "parents": [
+              "aead2cc90a24b7780753d490a548826a9756dd39",
+              "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "previousPublications": [],
+          "receipt": "templates-workbench-publication.json#receipts/designer-main-sync-published.json",
+          "pr": 3792,
+          "url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+          "baseBranch": "codex/p18-xaml-reopen-dependencies",
+          "pullRequestReadBack": {
+            "head": "codex/p18-xaml-reopen",
+            "headSha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+            "base": "codex/p18-xaml-reopen-dependencies",
+            "baseSha": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+            "draft": true
+          },
+          "automaticCore": {
+            "pr": 3792,
+            "sha": "9501520383fa99d873157ab6f6efbf55354ebcbf",
+            "runId": 37179275513,
+            "jobId": null,
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179275513",
+            "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+          }
+        }
+      ],
+      "receipt": "templates-workbench-publication.json#receipts/designer-chrome-cleanup-published.json",
+      "pr": 3792,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3792",
+      "baseBranch": "codex/p18-xaml-reopen-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-xaml-reopen",
+        "headSha": "02bdce19441b36240faf5fafdaef6149619d1dce",
+        "base": "codex/p18-xaml-reopen-dependencies",
+        "baseSha": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 3792,
+        "sha": "02bdce19441b36240faf5fafdaef6149619d1dce",
+        "runId": 37181105732,
+        "jobId": 111373699623,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37181105732",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "template-package-atomicity",
+      "branch": "codex/p18-template-package-atomicity",
+      "local": "a895219004eecee286b7a3751bd73fa9afb683a8",
+      "sha": "8aa4c7740791767d3d2832fa82187a0c42e28bc4",
+      "tree": "ed036746bbed6d5bf5c3c5fc96357e824f0c9f65",
+      "commitReadBack": {
+        "tree": "ed036746bbed6d5bf5c3c5fc96357e824f0c9f65",
+        "parents": [
+          "01fe9aba66ee5338244d622ab9531ec5ab8f21eb"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "3f27179225cfc6fab8b13b919bf8bb695831efa1"
+      ],
+      "previousPublications": [],
+      "files": [
+        "packages/templates/src/engine/packages.js",
+        "tests/a24-template-package-atomicity.test.js"
+      ],
+      "pr": 3802,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3802",
+      "baseBranch": "codex/p18-template-engine",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-package-atomicity",
+        "headSha": "8aa4c7740791767d3d2832fa82187a0c42e28bc4",
+        "base": "codex/p18-template-engine",
+        "baseSha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb",
+        "draft": true,
+        "changedFiles": 2
+      },
+      "automaticCore": {
+        "name": "template-package-atomicity",
+        "pr": 3802,
+        "sha": "8aa4c7740791767d3d2832fa82187a0c42e28bc4",
+        "runId": 37170614731,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170614731",
+        "supersededRuns": [
+          {
+            "id": 37170612837,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+        "node": "26.10.0",
+        "wholeCohort": {
+          "tests": 39,
+          "passed": 39,
+          "failed": 0
+        },
+        "atomicity": 3,
+        "existingEngine": 8,
+        "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-host-corrections.json"
+      },
+      "provenanceCorrection": "The unpublished projection message said ten existing engine cases; exact TAP has eight. The published message and PR use eight."
+    },
+    {
+      "name": "native-context-ui-model",
+      "branch": "codex/p18-native-context-ui-model",
+      "local": "2bde6a53d0b63e98e2d8e5b341de4c2d1073921e",
+      "sha": "a141c56a80419445be6b28cd26c956eb518b9ba5",
+      "tree": "f3ba0c748ede78801c8c1af69fe34d2c95c6caec",
+      "commitReadBack": {
+        "tree": "f3ba0c748ede78801c8c1af69fe34d2c95c6caec",
+        "parents": [
+          "9a5d296b29cbad379e1954d6b5fa153d11620fe2"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+        "c207fe57c3763da3c7381013596518d7752597fd"
+      ],
+      "previousPublications": [],
+      "files": [
+        "apps/studio/NATIVE-MODELS.md",
+        "apps/studio/native-build/metadata.js",
+        "apps/studio/native-build/project-context.js",
+        "apps/studio/native-build/settings.js",
+        "tests/a23-native-context-ui-model.test.js",
+        "tests/a23-native-reference-metadata.test.js",
+        "tests/support/a23-native-ui-model.js",
+        "tests/manifests/A23.json"
+      ],
+      "pr": 3864,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3864",
+      "baseBranch": "codex/p18-native-context-service",
+      "pullRequestReadBack": {
+        "head": "codex/p18-native-context-ui-model",
+        "headSha": "a141c56a80419445be6b28cd26c956eb518b9ba5",
+        "base": "codex/p18-native-context-service",
+        "baseSha": "50567b43b1358697beb4b02c12a9e59e361978fd",
+        "draft": true,
+        "changedFiles": 8
+      },
+      "automaticCore": {
+        "name": "native-context-ui-model",
+        "pr": 3864,
+        "sha": "a141c56a80419445be6b28cd26c956eb518b9ba5",
+        "runId": 37171581274,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171581274",
+        "supersededRuns": [
+          {
+            "id": 37171579158,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+        "node": "26.10.0",
+        "directModelCases": 10,
+        "directModelPassed": 10,
+        "fullCohort": {
+          "tests": 96,
+          "passed": 95,
+          "failed": 1
+        },
+        "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-worker-model-complete.json",
+        "scopedCases": 5,
+        "scopedFailures": 0,
+        "boundary": "Direct model/metadata/profile fixtures; no controller, browser entry or native process run."
+      },
+      "sourceProjectionCommits": [
+        {
+          "local": "eaa4eeb5ad85f85abf32f81b591cfc88a5f7bff3",
+          "sha": "9a5d296b29cbad379e1954d6b5fa153d11620fe2",
+          "tree": "09ae65a2cf4411ba259c52286d7e88c6feb1e30c",
+          "commitReadBack": {
+            "tree": "09ae65a2cf4411ba259c52286d7e88c6feb1e30c",
+            "parents": [
+              "50567b43b1358697beb4b02c12a9e59e361978fd"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          }
+        },
+        {
+          "local": "2bde6a53d0b63e98e2d8e5b341de4c2d1073921e",
+          "sha": "a141c56a80419445be6b28cd26c956eb518b9ba5",
+          "tree": "f3ba0c748ede78801c8c1af69fe34d2c95c6caec",
+          "commitReadBack": {
+            "tree": "f3ba0c748ede78801c8c1af69fe34d2c95c6caec",
+            "parents": [
+              "9a5d296b29cbad379e1954d6b5fa153d11620fe2"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "native-profile-ui-model",
+      "branch": "codex/p18-native-profile-ui-model",
+      "local": "a1f236d9114765657a21e21eb5aff60cea40e795",
+      "sha": "24b89cd63562c6e1be0c76849341aa47ecbc6d91",
+      "tree": "a6b2d01c006599b36e33a860cf5fccba8c92b2a9",
+      "commitReadBack": {
+        "tree": "a6b2d01c006599b36e33a860cf5fccba8c92b2a9",
+        "parents": [
+          "acf2aa43c049e323daea1ac7db133124d30bb609"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+        "c207fe57c3763da3c7381013596518d7752597fd"
+      ],
+      "previousPublications": [],
+      "files": [
+        "apps/studio/NATIVE-MODELS.md",
+        "apps/studio/native-build/profiles.js",
+        "tests/a23-native-profile-ui-model.test.js",
+        "tests/manifests/A23.json"
+      ],
+      "pr": 3870,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3870",
+      "baseBranch": "codex/p18-native-profile-ui-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-native-profile-ui-model",
+        "headSha": "24b89cd63562c6e1be0c76849341aa47ecbc6d91",
+        "base": "codex/p18-native-profile-ui-dependencies",
+        "baseSha": "b9091843b8d2056cd48a2df77f17d29c6d6a08a7",
+        "draft": true,
+        "changedFiles": 4
+      },
+      "automaticCore": {
+        "name": "native-profile-ui-model",
+        "pr": 3870,
+        "sha": "24b89cd63562c6e1be0c76849341aa47ecbc6d91",
+        "runId": 37171668986,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171668986",
+        "supersededRuns": [
+          {
+            "id": 37171666522,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+        "node": "26.10.0",
+        "directModelCases": 10,
+        "directModelPassed": 10,
+        "fullCohort": {
+          "tests": 96,
+          "passed": 95,
+          "failed": 1
+        },
+        "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-worker-model-complete.json",
+        "scopedCases": 5,
+        "scopedFailures": 0,
+        "boundary": "Direct model/metadata/profile fixtures; no controller, browser entry or native process run."
+      },
+      "sourceProjectionCommits": [
+        {
+          "local": "84f6e74a6654138126fda888ae021101bb9be7bc",
+          "sha": "acf2aa43c049e323daea1ac7db133124d30bb609",
+          "tree": "e5cb4078bab6e369cb6b49cba33c18aa7661e568",
+          "commitReadBack": {
+            "tree": "e5cb4078bab6e369cb6b49cba33c18aa7661e568",
+            "parents": [
+              "b9091843b8d2056cd48a2df77f17d29c6d6a08a7"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          }
+        },
+        {
+          "local": "a1f236d9114765657a21e21eb5aff60cea40e795",
+          "sha": "24b89cd63562c6e1be0c76849341aa47ecbc6d91",
+          "tree": "a6b2d01c006599b36e33a860cf5fccba8c92b2a9",
+          "commitReadBack": {
+            "tree": "a6b2d01c006599b36e33a860cf5fccba8c92b2a9",
+            "parents": [
+              "acf2aa43c049e323daea1ac7db133124d30bb609"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          }
+        }
+      ],
+      "retainedEarlierSource": "c207fe57c3763da3c7381013596518d7752597fd",
+      "trackingCorrection": "The preserved projection commit messages use the original generic SF-A23-T07 label. The authoritative PR is mapped to #3085 (SF-A23-T30) and #3086 (SF-A23-T31); history was not rewritten."
+    },
+    {
+      "name": "workspace-wizard-helper",
+      "branch": "codex/p18-workspace-wizard-helper",
+      "local": "9a5b2fb7eee1ab0a16c317ba5609a12822f863a2",
+      "sha": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+      "tree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+      "commitReadBack": {
+        "tree": "5d7d0ad610208637e03eda25bb4e25327dbe3fb5",
+        "parents": [
+          "3100a0e9cececa73a862e7ef0d99e1b0c2539a2a"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "ed72d97ce22bcc361da5b6d0f0176d3c46728687",
+        "3f27179225cfc6fab8b13b919bf8bb695831efa1"
+      ],
+      "previousPublications": [],
+      "files": [
+        "apps/studio/workspace-wizard.js",
+        "tests/a24-workspace-wizard-native.test.js"
+      ],
+      "pr": 3910,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3910",
+      "baseBranch": "codex/p18-workspace-wizard-helper-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workspace-wizard-helper",
+        "headSha": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+        "base": "codex/p18-workspace-wizard-helper-dependencies",
+        "baseSha": "3100a0e9cececa73a862e7ef0d99e1b0c2539a2a",
+        "draft": true,
+        "changedFiles": 2
+      },
+      "automaticCore": {
+        "name": "workspace-wizard-helper",
+        "pr": 3910,
+        "sha": "3f9058fc9b6322f94ef6655ce0eeae89029e7042",
+        "runId": 37172903698,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172903698",
+        "supersededRuns": [
+          {
+            "id": 37172901632,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "head": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+        "node": "26.10.0",
+        "scopedCases": 4,
+        "totalCases": 39,
+        "passed": 39,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "planning/evidence/project18/integration/upstream-qualification/node26-host-corrections.json",
+        "boundary": "Helper/API fixture only; protected Studio entry, browser integration and Windows execution not claimed."
+      }
+    },
+    {
+      "name": "native-views",
+      "branch": "codex/p18-native-views",
+      "local": "baabfb7e19ffe8f64b84fb191a76c75c83ea7ce1",
+      "sha": "87b34f25e8fe7f1926749287ab6beb9f8463be16",
+      "tree": "73d09a4940d3d2bf341eebce9e66c2a175872f0e",
+      "commitReadBack": {
+        "tree": "73d09a4940d3d2bf341eebce9e66c2a175872f0e",
+        "parents": [
+          "24b89cd63562c6e1be0c76849341aa47ecbc6d91"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "c1a662d18d31e202a6b420bce1e9177b0b1a50ba"
+      ],
+      "previousPublications": [],
+      "files": [
+        "apps/studio/NATIVE-VIEWS.md",
+        "apps/studio/native-build/build-view.js",
+        "apps/studio/native-build/context-view.js",
+        "apps/studio/native-build/inspector-view.js",
+        "apps/studio/native-build/source-view.js",
+        "tests/a23-native-view-contracts.test.js",
+        "tests/manifests/A23.json",
+        "tests/support/a23-native-view-host.js"
+      ],
+      "pr": 3950,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3950",
+      "baseBranch": "codex/p18-native-profile-ui-model",
+      "pullRequestReadBack": {
+        "head": "codex/p18-native-views",
+        "headSha": "87b34f25e8fe7f1926749287ab6beb9f8463be16",
+        "base": "codex/p18-native-profile-ui-model",
+        "baseSha": "24b89cd63562c6e1be0c76849341aa47ecbc6d91",
+        "draft": true,
+        "changedFiles": 8
+      },
+      "automaticCore": {
+        "name": "native-views",
+        "pr": 3950,
+        "sha": "87b34f25e8fe7f1926749287ab6beb9f8463be16",
+        "runId": 37173486749,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173486749",
+        "supersededRuns": [
+          {
+            "id": 37173484324,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+        "node": "26.10.0",
+        "wholeCohort": {
+          "total": 66,
+          "passed": 65,
+          "failed": 1,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "evidence": [
+          "planning/evidence/project18/integration/upstream-qualification/node26-final-corrections.json",
+          "planning/evidence/project18/integration/upstream-qualification/node26-final-corrections.tap"
+        ],
+        "originalEvidenceDirectory": "/tmp/p18-final-qualification-logs",
+        "unrelatedFailure": "Explorer duplicate-ID error expectation; not in the native view or template engine files.",
+        "testsRunInProjection": false,
+        "status": "scoped-passed",
+        "newCases": 8,
+        "passed": 8,
+        "failed": 0
+      }
+    },
+    {
+      "name": "template-engine-bounds",
+      "branch": "codex/p18-template-engine-bounds",
+      "local": "eb1e4b377ecd838f693ae6f47171a7e4d520df1b",
+      "sha": "734500d5545796c89ae8cb059e3d927cb2da04af",
+      "tree": "6f78af7c9767728160960ab2d51da817eed0074c",
+      "commitReadBack": {
+        "tree": "6f78af7c9767728160960ab2d51da817eed0074c",
+        "parents": [
+          "8aa4c7740791767d3d2832fa82187a0c42e28bc4"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "eb1e4b377ecd838f693ae6f47171a7e4d520df1b"
+      ],
+      "previousPublications": [],
+      "files": [
+        "packages/templates/src/engine/template-config.js",
+        "packages/templates/src/engine/value-forms.js",
+        "tests/a24-template-engine-boundaries.test.js"
+      ],
+      "pr": 3957,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3957",
+      "baseBranch": "codex/p18-template-package-atomicity",
+      "pullRequestReadBack": {
+        "head": "codex/p18-template-engine-bounds",
+        "headSha": "734500d5545796c89ae8cb059e3d927cb2da04af",
+        "base": "codex/p18-template-package-atomicity",
+        "baseSha": "8aa4c7740791767d3d2832fa82187a0c42e28bc4",
+        "draft": true,
+        "changedFiles": 3
+      },
+      "automaticCore": {
+        "name": "template-engine-bounds",
+        "pr": 3957,
+        "sha": "734500d5545796c89ae8cb059e3d927cb2da04af",
+        "runId": 37173549744,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173549744",
+        "supersededRuns": [
+          {
+            "id": 37173547173,
+            "status": "completed",
+            "conclusion": "cancelled"
+          }
+        ],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": {
+        "sourceCommit": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+        "node": "26.10.0",
+        "wholeCohort": {
+          "total": 66,
+          "passed": 65,
+          "failed": 1,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "evidence": [
+          "planning/evidence/project18/integration/upstream-qualification/node26-final-corrections.json",
+          "planning/evidence/project18/integration/upstream-qualification/node26-final-corrections.tap"
+        ],
+        "originalEvidenceDirectory": "/tmp/p18-final-qualification-logs",
+        "unrelatedFailure": "Explorer duplicate-ID error expectation; not in the native view or template engine files.",
+        "testsRunInProjection": false,
+        "status": "scoped-passed",
+        "newCases": 5,
+        "passed": 5,
+        "failed": 0
+      }
+    },
+    {
+      "name": "workbench-project-build",
+      "branch": "codex/p18-workbench-project-build",
+      "local": "172fa9e6c9f2ecb9d9779d2f5500a1ab08b62f4c",
+      "sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+      "tree": "405a475104c176cf8abcbd1a2a0e3a53a3156174",
+      "commitReadBack": {
+        "tree": "405a475104c176cf8abcbd1a2a0e3a53a3156174",
+        "parents": [
+          "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [
+        {
+          "name": "workbench-project-build",
+          "branch": "codex/p18-workbench-project-build",
+          "local": "96fea5fe6e2c94e9fa550ad53ed9619b2756dbc4",
+          "sha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+          "tree": "138fea83ca2e0135cb89d99f40ff0933c59ade99",
+          "commitReadBack": {
+            "tree": "138fea83ca2e0135cb89d99f40ff0933c59ade99",
+            "parents": [
+              "f7c2fafa10c66b45ff69039433e382c9ad13a1d2"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "previousPublications": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-project-build-published.json",
+          "pr": 4326,
+          "url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+          "baseBranch": "codex/p18-workbench-build-dependencies",
+          "pullRequestReadBack": {
+            "head": "codex/p18-workbench-project-build",
+            "headSha": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+            "base": "codex/p18-workbench-build-dependencies",
+            "baseSha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+            "draft": true
+          },
+          "coreFailure": {
+            "run": 37179732776,
+            "job": 111369687734,
+            "reason": "Unpublished canonical project-runtime-input.js dependency",
+            "log": "workbench-project-build-core-failure.log"
+          }
+        }
+      ],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-build-envelope-published.json",
+      "pr": 4326,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4326",
+      "baseBranch": "codex/p18-workbench-build-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-project-build",
+        "headSha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "base": "codex/p18-workbench-build-dependencies",
+        "baseSha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4326,
+        "sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "runId": 37180074437,
+        "jobId": null,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180074437",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "workbench-feature-callbacks",
+      "branch": "codex/p18-workbench-feature-callbacks",
+      "local": "53e0db2af8019c6b20bb6bf2aea68e4895ec0cf8",
+      "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+      "tree": "deba072cecf59906fd73f90c73e2c78966d46d15",
+      "commitReadBack": {
+        "tree": "deba072cecf59906fd73f90c73e2c78966d46d15",
+        "parents": [
+          "531ec7392892ced7eb4b98ecbb3d687fa0521792"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-feature-callbacks-published.json",
+      "pr": 4328,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4328",
+      "baseBranch": "codex/p18-workbench-feature-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-feature-callbacks",
+        "headSha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "base": "codex/p18-workbench-feature-dependencies",
+        "baseSha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4328,
+        "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "runId": 37179804887,
+        "jobId": null,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179804887",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "workbench-debug-provenance",
+      "branch": "codex/p18-workbench-debug-provenance",
+      "local": "288c272278f7644daccfc14e06a8002361f004a0",
+      "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+      "tree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+      "commitReadBack": {
+        "tree": "074e0510409a2665858fa9d5f2871fdf5e1b8926",
+        "parents": [
+          "0f040d05dde3ea4f97306c943fa4e09236c2dd02"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-debug-provenance-published.json",
+      "pr": 4363,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4363",
+      "baseBranch": "codex/p18-workbench-debug-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-debug-provenance",
+        "headSha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "base": "codex/p18-workbench-debug-dependencies",
+        "baseSha": "0f040d05dde3ea4f97306c943fa4e09236c2dd02",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4363,
+        "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "runId": 37180741251,
+        "jobId": 111372640564,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180741251",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    },
+    {
+      "name": "workbench-workspace-ports",
+      "branch": "codex/p18-workbench-workspace-ports",
+      "local": "440f218c269724b4dc271d4a00793fc9fddab522",
+      "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+      "tree": "2aeb66b2acf05d6581b480d43eb2623c4401c222",
+      "commitReadBack": {
+        "tree": "2aeb66b2acf05d6581b480d43eb2623c4401c222",
+        "parents": [
+          "1e410e82601e9659235a9ad8dd116e85ebd39e4c"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [
+        "81848433ff4de7d92af3d874c3ffb084efb3c571"
+      ],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-ports-published.json",
+      "pr": 4407,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4407",
+      "baseBranch": "codex/p18-workbench-workspace-dependencies",
+      "pullRequestReadBack": {
+        "head": "codex/p18-workbench-workspace-ports",
+        "headSha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "base": "codex/p18-workbench-workspace-dependencies",
+        "baseSha": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+        "draft": true
+      },
+      "automaticCore": {
+        "pr": 4407,
+        "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "runId": 37182178812,
+        "jobId": 111376788666,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182178812",
+        "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+      }
+    }
+  ],
+  "integrationOnlyBranches": [
+    {
+      "name": "catalog-dependencies",
+      "branch": "codex/p18-catalog-dependencies",
+      "local": "00e8fdb22edab59dae10ca6c3fb79af7142fbe70",
+      "sha": "46fbf68bcebd087bbed24d76d513f7874361ab61",
+      "tree": "6fa82f0a6ceffa7bacb664b8660eda7281de9a57",
+      "commitReadBack": {
+        "tree": "6fa82f0a6ceffa7bacb664b8660eda7281de9a57",
+        "parents": [
+          "87773b0dfc7e5c2809e3101e67f80e2aed75fbb0",
+          "01fe9aba66ee5338244d622ab9531ec5ab8f21eb",
+          "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [
+        {
+          "previousLocal": "c3f6413abee7d15a43f05065721031d701a83458",
+          "previousSha": "87773b0dfc7e5c2809e3101e67f80e2aed75fbb0",
+          "previousTree": "423b7391d8603354d56e446935f840bdc142c48d",
+          "local": "00e8fdb22edab59dae10ca6c3fb79af7142fbe70",
+          "sha": "46fbf68bcebd087bbed24d76d513f7874361ab61",
+          "tree": "6fa82f0a6ceffa7bacb664b8660eda7281de9a57",
+          "reason": "Integration-only forward merge of both corrected engine and designer prerequisite heads.",
+          "reviewProvenance": "de261897",
+          "commits": [
+            {
+              "local": "70449d2c83a6322600611865435813831e06eb55",
+              "sha": "a06002732e4ad2c350a323e86395e06ca193026e"
+            },
+            {
+              "local": "1036e40f40fb40508520da90c4080ca8bcd0c344",
+              "sha": "78a15556ef08e86185fa4ad020a8387f3bc28d4c"
+            },
+            {
+              "local": "c58795a604dbcfd3a339ca094e73cbec7c6bd5e2",
+              "sha": "a11d2109d07df1ecf595f4e44205bb9a8f7d60f8"
+            },
+            {
+              "local": "e1412f65df1e6b8b8983b937749bd0986faf4ce2",
+              "sha": "01fe9aba66ee5338244d622ab9531ec5ab8f21eb"
+            },
+            {
+              "local": "00e8fdb22edab59dae10ca6c3fb79af7142fbe70",
+              "sha": "46fbf68bcebd087bbed24d76d513f7874361ab61"
+            }
+          ]
+        }
+      ],
+      "dependencies": [
+        "codex/p18-template-engine",
+        "codex/p18-designer-xaml-services"
+      ],
+      "qualification": "Integration-only branch; preserves ordered dependency parents. No feature PR or target qualification claim.",
+      "retargeting": "Retarget dependent drafts after all prerequisite feature PRs land."
+    },
+    {
+      "name": "template-dependencies",
+      "branch": "codex/p18-template-dependencies",
+      "local": "c561535166d954095410a9928e9fdc5463079294",
+      "sha": "778677df58bad76132c73a939275e7d1e70893a8",
+      "tree": "ec3dfe836c72a1d7190bc1d809c66db257edc0d8",
+      "commitReadBack": {
+        "tree": "ec3dfe836c72a1d7190bc1d809c66db257edc0d8",
+        "parents": [
+          "7110c0ed2eecbf15aef423dbbfce1c4f60fc9055",
+          "a925a35802f44b7d158f6e57d35938075913d27a"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "dependencies": [
+        "codex/p18-archive-content-policy",
+        "codex/p18-project-edits"
+      ],
+      "qualification": "Integration-only branch; preserves ordered dependency parents. No feature PR or target qualification claim.",
+      "retargeting": "Retarget dependent drafts after all prerequisite feature PRs land."
+    },
+    {
+      "name": "wizard-dependencies",
+      "branch": "codex/p18-wizard-dependencies",
+      "local": "d6a2788ae76389e2fe0f1e059c876c560d9c7643",
+      "sha": "065212895ef9152c5daa3adf17d57fc619a2c961",
+      "tree": "1422880c8b5dbb71afcd1d54785a16cbe32433aa",
+      "commitReadBack": {
+        "tree": "1422880c8b5dbb71afcd1d54785a16cbe32433aa",
+        "parents": [
+          "123e6d9cd681f4a749084a85ea96519fa7e972d2",
+          "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "dependencies": [
+        "codex/p18-template-discovery",
+        "codex/p18-template-destinations",
+        "codex/p18-foundation-disk-writes"
+      ],
+      "qualification": "Integration-only branch; preserves ordered mapped parents. The composed product was qualified by the final wizard focused cohort/build.",
+      "retargeting": "Retarget the dependent draft after all three prerequisite feature PRs land.",
+      "intermediateCommits": [
+        {
+          "name": "wizard-destinations-join",
+          "local": "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+          "tree": "f3405a2164a8e216842a5f8de0e92284113b352d",
+          "sha": "123e6d9cd681f4a749084a85ea96519fa7e972d2",
+          "localParents": [
+            "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+            "83b9592f30246782cf782563ee5e3c0c8c8ac997"
+          ],
+          "commitReadBack": {
+            "tree": "f3405a2164a8e216842a5f8de0e92284113b352d",
+            "parents": [
+              "8b9bfe24556d43a45113e16578910d5d5e91a179",
+              "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "xaml-reopen-dependencies",
+      "branch": "codex/p18-xaml-reopen-dependencies",
+      "local": "cc1717ed9d488cca7e59e67200953bd5131da4fa",
+      "sha": "fd39e656de9e3a4651b8823cb30e866dc71ed2f2",
+      "tree": "ccda700b7cbabeadcc04f71aab35df7208fdd8cd",
+      "commitReadBack": {
+        "tree": "ccda700b7cbabeadcc04f71aab35df7208fdd8cd",
+        "parents": [
+          "065212895ef9152c5daa3adf17d57fc619a2c961",
+          "6ff88b293117bf7e0b636a7a7b8877deb08fe604"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "qualification": "Dependency-only forward merge; no feature PR or platform qualification claim.",
+      "retargeting": "Retarget dependent drafts to main or the remaining dependency after all prerequisite feature PRs land.",
+      "dependencies": [
+        "codex/p18-wizard-dependencies",
+        "codex/p18-xml-text-policy"
+      ]
+    },
+    {
+      "name": "native-profile-ui-dependencies",
+      "branch": "codex/p18-native-profile-ui-dependencies",
+      "local": "4b60c9600fcdf95e01c1ffb10891c9d4afbe4795",
+      "sha": "b9091843b8d2056cd48a2df77f17d29c6d6a08a7",
+      "tree": "f7be9c45f3f73592902016ce6b46673fae1af176",
+      "commitReadBack": {
+        "tree": "f7be9c45f3f73592902016ce6b46673fae1af176",
+        "parents": [
+          "a141c56a80419445be6b28cd26c956eb518b9ba5",
+          "e6fbb6658d7617ab9c9da6429dd0c41b876475ba"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "qualification": "Dependency-only forward merge; no feature PR or platform qualification claim.",
+      "retargeting": "Retarget dependent drafts to main or the remaining dependency after all prerequisite feature PRs land.",
+      "dependencies": [
+        "codex/p18-native-context-ui-model",
+        "codex/p18-native-profiles"
+      ]
+    },
+    {
+      "name": "wizard-session-model-dependencies",
+      "branch": "codex/p18-wizard-session-model-dependencies",
+      "local": "b168e0127c253cd6d2dd2f75d7b4848f04656c89",
+      "sha": "b7e514dcae12822ba20ef6dbb2b4625b7dd48d27",
+      "tree": "459d1abc252a8922a524f668876397dcbf3dcaf6",
+      "commitReadBack": {
+        "tree": "459d1abc252a8922a524f668876397dcbf3dcaf6",
+        "parents": [
+          "24b89cd63562c6e1be0c76849341aa47ecbc6d91",
+          "8184f4d43283244d4258da88344d89a80f09dfc0"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "qualification": "Dependency-only forward merge; no feature PR or platform qualification claim.",
+      "retargeting": "Retarget dependent drafts to main or the remaining dependency after all prerequisite feature PRs land.",
+      "dependencyPRs": [
+        3870,
+        3780
+      ],
+      "resolutions": {
+        "firstJoin": "Preserved session workspace lifecycle with native provider/export unions reviewed by filesystem, workspace and native owners. Archive uses the complete modular ZIP implementation and retains codec documentation. A23 inventories are unioned. The final resolution differs from reviewed source15cba393 only by the three direct-model test registrations.",
+        "creationJoin": "Retains complete individual-module template catalog, explicit provider directory reopen API and later native template regression evidence. Native/workspace facade exports retain the inspected supersets. Static allowlist keeps exact reviewed catalog entries; A23 lists are unioned.",
+        "policyJoin": "Clean automatic merge; exactly the shared policy three-file delta, no additional feature edits."
+      }
+    },
+    {
+      "name": "workspace-wizard-creation-dependencies",
+      "branch": "codex/p18-workspace-wizard-creation-dependencies",
+      "local": "fb432430105d0a90486c34404fb2f14e0b558b1e",
+      "sha": "7670df85ff7cc6e5c823dff1ef563c19663abd95",
+      "tree": "30ada68db186e4d41fe9e931755ece2c856e866f",
+      "commitReadBack": {
+        "tree": "30ada68db186e4d41fe9e931755ece2c856e866f",
+        "parents": [
+          "b7e514dcae12822ba20ef6dbb2b4625b7dd48d27",
+          "776131fc13f141b84d4915cbfe69ca9d15c51e3c"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "qualification": "Dependency-only forward merge; no feature PR or platform qualification claim.",
+      "retargeting": "Retarget dependent drafts to main or the remaining dependency after all prerequisite feature PRs land.",
+      "dependencyPRs": [
+        3655
+      ],
+      "resolutions": {
+        "firstJoin": "Preserved session workspace lifecycle with native provider/export unions reviewed by filesystem, workspace and native owners. Archive uses the complete modular ZIP implementation and retains codec documentation. A23 inventories are unioned. The final resolution differs from reviewed source15cba393 only by the three direct-model test registrations.",
+        "creationJoin": "Retains complete individual-module template catalog, explicit provider directory reopen API and later native template regression evidence. Native/workspace facade exports retain the inspected supersets. Static allowlist keeps exact reviewed catalog entries; A23 lists are unioned.",
+        "policyJoin": "Clean automatic merge; exactly the shared policy three-file delta, no additional feature edits."
+      }
+    },
+    {
+      "name": "workspace-wizard-helper-dependencies",
+      "branch": "codex/p18-workspace-wizard-helper-dependencies",
+      "local": "b749c7147b3b8a67f756848215e0f233ba67ca84",
+      "sha": "3100a0e9cececa73a862e7ef0d99e1b0c2539a2a",
+      "tree": "df68cf15f9d025d2af2ee16beaa72aeb96b43c6b",
+      "commitReadBack": {
+        "tree": "df68cf15f9d025d2af2ee16beaa72aeb96b43c6b",
+        "parents": [
+          "7670df85ff7cc6e5c823dff1ef563c19663abd95",
+          "6ff88b293117bf7e0b636a7a7b8877deb08fe604"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "qualification": "Dependency-only forward merge; no feature PR or platform qualification claim.",
+      "retargeting": "Retarget dependent drafts to main or the remaining dependency after all prerequisite feature PRs land.",
+      "dependencyPRs": [
+        3781
+      ],
+      "resolutions": {
+        "firstJoin": "Preserved session workspace lifecycle with native provider/export unions reviewed by filesystem, workspace and native owners. Archive uses the complete modular ZIP implementation and retains codec documentation. A23 inventories are unioned. The final resolution differs from reviewed source15cba393 only by the three direct-model test registrations.",
+        "creationJoin": "Retains complete individual-module template catalog, explicit provider directory reopen API and later native template regression evidence. Native/workspace facade exports retain the inspected supersets. Static allowlist keeps exact reviewed catalog entries; A23 lists are unioned.",
+        "policyJoin": "Clean automatic merge; exactly the shared policy three-file delta, no additional feature edits."
+      }
+    },
+    {
+      "name": "workbench-build-dependencies",
+      "branch": "codex/p18-workbench-build-dependencies",
+      "local": "67ee826f13156a8d0c89773a3eb82b30f981402c",
+      "sha": "f7c2fafa10c66b45ff69039433e382c9ad13a1d2",
+      "tree": "17ef4bbf7d67712393f571656802ec738e95bc72",
+      "commitReadBack": {
+        "tree": "17ef4bbf7d67712393f571656802ec738e95bc72",
+        "parents": [
+          "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+          "05d4c991a132643ce05248c7f42f3b2b0f168c70"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-build-dependencies-published.json",
+      "dependencies": [
+        "eabf6b88a91b262b54f8b8c28efb95ef5fbf4c1d",
+        "05d4c991a132643ce05248c7f42f3b2b0f168c70"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-feature-dependencies",
+      "branch": "codex/p18-workbench-feature-dependencies",
+      "local": "f411ba6a56d4e8686244bcab2b428b6091da2392",
+      "sha": "531ec7392892ced7eb4b98ecbb3d687fa0521792",
+      "tree": "785128d186e5a1d34f7598294173328b929d960f",
+      "commitReadBack": {
+        "tree": "785128d186e5a1d34f7598294173328b929d960f",
+        "parents": [
+          "87af20b3951ee05be79357190e1babb74dff3e87",
+          "9501520383fa99d873157ab6f6efbf55354ebcbf"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-feature-dependencies-published.json",
+      "dependencies": [
+        "87af20b3951ee05be79357190e1babb74dff3e87",
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-debug-source-dependencies",
+      "branch": "codex/p18-workbench-debug-source-dependencies",
+      "local": "fa196357b99dc48ac1dcceba383128f5377d9db0",
+      "sha": "d4a43a2384059d08bbb155e6def37c2757a93a26",
+      "tree": "583bac677c5064496c2a7ac0c6280d73c9cd9730",
+      "commitReadBack": {
+        "tree": "583bac677c5064496c2a7ac0c6280d73c9cd9730",
+        "parents": [
+          "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+          "ba923c523a013b8415013b98239176a10dd879d4"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-debug-source-dependencies-published.json",
+      "dependencies": [
+        "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+        "ba923c523a013b8415013b98239176a10dd879d4"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-debug-dependencies",
+      "branch": "codex/p18-workbench-debug-dependencies",
+      "local": "a7c1a76111b6722776d3719f54308d1b90f150d7",
+      "sha": "0f040d05dde3ea4f97306c943fa4e09236c2dd02",
+      "tree": "834bd174b3de8663ec0c16d32dbe7e4f3c5f4e4f",
+      "commitReadBack": {
+        "tree": "834bd174b3de8663ec0c16d32dbe7e4f3c5f4e4f",
+        "parents": [
+          "d4a43a2384059d08bbb155e6def37c2757a93a26",
+          "4d209fb03d43131fae53c0de3edc57627c239e50"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-debug-dependencies-published.json",
+      "dependencies": [
+        "d4a43a2384059d08bbb155e6def37c2757a93a26",
+        "4d209fb03d43131fae53c0de3edc57627c239e50"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-workspace-ingress-dependencies",
+      "branch": "codex/p18-workbench-workspace-ingress-dependencies",
+      "local": "3e7d0840a11991131b4beb06043a7d66a835350e",
+      "sha": "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+      "tree": "ad53c0f8681ce50468456578390a9f1544c7bc90",
+      "commitReadBack": {
+        "tree": "ad53c0f8681ce50468456578390a9f1544c7bc90",
+        "parents": [
+          "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+          "fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-ingress-dependencies-published.json",
+      "dependencies": [
+        "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "fe8d8b0e995ee508d171ac7abef02c0054d45fa7"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-workspace-designer-dependencies",
+      "branch": "codex/p18-workbench-workspace-designer-dependencies",
+      "local": "bb27f3551abead53717d5c683ff17dcd30e63cf0",
+      "sha": "31d0e087a99481c861ecb5e94d254979b26aadb0",
+      "tree": "c3149e2a361a5b7a30f4f3e478a9d908c2359922",
+      "commitReadBack": {
+        "tree": "c3149e2a361a5b7a30f4f3e478a9d908c2359922",
+        "parents": [
+          "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+          "9501520383fa99d873157ab6f6efbf55354ebcbf"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-designer-dependencies-published.json",
+      "dependencies": [
+        "2ef7febe6f4d5042f3b8d8f4f049d9c77c053d49",
+        "9501520383fa99d873157ab6f6efbf55354ebcbf"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    },
+    {
+      "name": "workbench-workspace-archive-export-forward",
+      "branch": "codex/p18-workbench-workspace-dependencies",
+      "local": "afdff8b25c7f94a31f6c8dafdee4b82276bbcde3",
+      "sha": "1e410e82601e9659235a9ad8dd116e85ebd39e4c",
+      "tree": "8a9c94ebf2e7a12e6aa0c6ed2dc1913e4dca5c48",
+      "commitReadBack": {
+        "tree": "8a9c94ebf2e7a12e6aa0c6ed2dc1913e4dca5c48",
+        "parents": [
+          "990ad2f63a25a19c8cfbefeacd761a11c84b11d2"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "originalCommits": [],
+      "previousPublications": [
+        {
+          "name": "workbench-workspace-dependencies",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "6c112386a6498d46eeb662c32c9e3b1204f081ce",
+          "sha": "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+          "tree": "1467000d4c60f676129fc3f0caef8f49a2f5128d",
+          "commitReadBack": {
+            "tree": "1467000d4c60f676129fc3f0caef8f49a2f5128d",
+            "parents": [
+              "31d0e087a99481c861ecb5e94d254979b26aadb0",
+              "3f9058fc9b6322f94ef6655ce0eeae89029e7042"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-dependencies-published.json",
+          "dependencies": [
+            "31d0e087a99481c861ecb5e94d254979b26aadb0",
+            "3f9058fc9b6322f94ef6655ce0eeae89029e7042"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-cleanup-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "a8a8c65f85fc42e2db369d865b49cc2a17dd5327",
+          "sha": "00f5d9eee9a30655db5e90544b4a508b83229789",
+          "tree": "07243b265698e36d5fbfa038562dc03c2468202c",
+          "commitReadBack": {
+            "tree": "07243b265698e36d5fbfa038562dc03c2468202c",
+            "parents": [
+              "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+              "02bdce19441b36240faf5fafdaef6149619d1dce"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-cleanup-forward-published.json",
+          "dependencies": [
+            "0a2205954ff2001a8aa94a3dbd4eb2aa98446cb1",
+            "02bdce19441b36240faf5fafdaef6149619d1dce"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-persistence-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "fe2a0abde562746496412bbc76b6273129b9c2d4",
+          "sha": "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+          "tree": "895f1715022c61e6aa0b80fd825c2dd2321a77ac",
+          "commitReadBack": {
+            "tree": "895f1715022c61e6aa0b80fd825c2dd2321a77ac",
+            "parents": [
+              "00f5d9eee9a30655db5e90544b4a508b83229789",
+              "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-persistence-forward-published.json",
+          "dependencies": [
+            "00f5d9eee9a30655db5e90544b4a508b83229789",
+            "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-bootstrap-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "175baf4c8e3a40695b64af57a40b9ea5cea5a010",
+          "sha": "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+          "tree": "5e0a0a1764d336d63832b0889fe86c35993b3592",
+          "commitReadBack": {
+            "tree": "5e0a0a1764d336d63832b0889fe86c35993b3592",
+            "parents": [
+              "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+              "e6b10a82e6b77a1e1ea6da103e261710cab30a2b"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-bootstrap-forward-published.json",
+          "dependencies": [
+            "926509b8e2544d7e6d0f79492c467c0ff658df3b",
+            "e6b10a82e6b77a1e1ea6da103e261710cab30a2b"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        },
+        {
+          "name": "workbench-workspace-disk-forward",
+          "branch": "codex/p18-workbench-workspace-dependencies",
+          "local": "6277a7477106451add1661c097a330a1f4fbea8c",
+          "sha": "990ad2f63a25a19c8cfbefeacd761a11c84b11d2",
+          "tree": "0acc2ee9a256ab2ed6d17c164c5d972b1a86d138",
+          "commitReadBack": {
+            "tree": "0acc2ee9a256ab2ed6d17c164c5d972b1a86d138",
+            "parents": [
+              "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+              "ae3ddf5aca8311a153dd0e8b1b947861ed63fc92"
+            ],
+            "treeMatches": true,
+            "parentMatches": true
+          },
+          "originalCommits": [],
+          "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-disk-forward-published.json",
+          "dependencies": [
+            "3b40999e3da1cfdd04386e0ddfaa531f1a226b02",
+            "ae3ddf5aca8311a153dd0e8b1b947861ed63fc92"
+          ],
+          "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+          "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+        }
+      ],
+      "receipt": "templates-workbench-publication.json#receipts/workbench-workspace-archive-export-forward-published.json",
+      "dependencies": [
+        "990ad2f63a25a19c8cfbefeacd761a11c84b11d2"
+      ],
+      "qualification": "Actual-parent tree/ref/ordered-parent readback; the dependent feature owns its core gate.",
+      "retargeting": "After prerequisites land, retarget dependent drafts to main or the remaining dependency. Preserve merge ancestry."
+    }
+  ],
+  "issues": [
+    {
+      "number": 3108,
+      "workId": "SF-A24-T20",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3575,
+        3957
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3109,
+      "workId": "SF-A24-T21",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3575,
+        3957
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3110,
+      "workId": "SF-A24-T22",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3575,
+        3802,
+        3957
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3200,
+      "workId": "SF-A24-T06.1",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3201,
+      "workId": "SF-A24-T06.2",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3202,
+      "workId": "SF-A24-T06.3",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560,
+        3565
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3203,
+      "workId": "SF-A24-T06.4",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560,
+        3565
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3204,
+      "workId": "SF-A24-T06.5",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560,
+        3788
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3205,
+      "workId": "SF-A24-T06.6",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560,
+        3565
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3206,
+      "workId": "SF-A24-T06.7",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3560,
+        3564
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3207,
+      "workId": "SF-A24-T07.1",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3579,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3208,
+      "workId": "SF-A24-T07.2",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3209,
+      "workId": "SF-A24-T07.3",
+      "sourceStatus": "blocked",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3210,
+      "workId": "SF-A24-T07.4",
+      "sourceStatus": "blocked",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3580,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3211,
+      "workId": "SF-A24-T07.5",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3212,
+      "workId": "SF-A24-T07.6",
+      "sourceStatus": "implemented",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3213,
+      "workId": "SF-A24-T07.7",
+      "sourceStatus": "implemented",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3567,
+        3574,
+        3580,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3214,
+      "workId": "SF-A24-T08.1",
+      "sourceStatus": "implemented",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3574,
+        3576,
+        3578,
+        3580,
+        3781,
+        3792
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3215,
+      "workId": "SF-A24-T08.2",
+      "sourceStatus": "blocked",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3574,
+        3580,
+        3781,
+        3792
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3216,
+      "workId": "SF-A24-T08.3",
+      "sourceStatus": "implemented",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3574,
+        3580,
+        3781,
+        3792
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3217,
+      "workId": "SF-A24-T08.4",
+      "sourceStatus": "blocked",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3574,
+        3580,
+        3781,
+        3792
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3218,
+      "workId": "SF-A24-T09.1",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3565,
+        3655,
+        3781,
+        3910,
+        3780
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3219,
+      "workId": "SF-A24-T09.2",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3565,
+        3655
+      ],
+      "wizardProjectionPending": false
+    },
+    {
+      "number": 3220,
+      "workId": "SF-A24-T09.3",
+      "sourceStatus": "validated",
+      "sourceEvidence": "templates.json",
+      "relatedDrafts": [
+        3565,
+        3655
+      ],
+      "wizardProjectionPending": false
+    }
+  ],
+  "qualification": {
+    "sourceScopes": "Detailed portable, SDK and browser evidence plus platform gaps are retained in templates.json.",
+    "projectionCohort": {
+      "uniqueTests": 221,
+      "passedAfterSparseFixtureCorrection": 216,
+      "skippedWindows": 5,
+      "initialRun": {
+        "passed": 204,
+        "failedMissingSparseExamples": 12,
+        "skipped": 5
+      },
+      "fixtureCorrection": "Added unchanged examples to sparse checkout; 12/12 rerun passed. No assertion or implementation change.",
+      "build": "Passed after adding unchanged docs/examples directories to sparse checkout."
+    },
+    "checkRepairs": {
+      "head": "9f660a455cee7323424a2ebf9277df1f539e8af9",
+      "gates": [
+        {
+          "command": "node scripts/planning/check-test-manifests.js",
+          "result": "passed",
+          "areas": 30,
+          "nodeFiles": 451,
+          "browserScripts": 24,
+          "unassigned": 0,
+          "duplicate": 0
+        },
+        {
+          "command": "node scripts/conformance/static/check-imports.js",
+          "result": "passed",
+          "inspected": 1908,
+          "modules": 1908,
+          "errors": []
+        }
+      ],
+      "scope": "Only affected static gates after complete manifest/import-review corrections; no tests/builds rerun."
+    },
+    "automaticCore": "All twenty-one current owned feature draft heads and both delegated maintenance heads passed automatic fast core. No broad CI dispatch or manual rerun requested.",
+    "limits": [
+      "Windows App SDK builds, default-style rendering, x:Bind and native navigation remain unqualified on this Linux host.",
+      "Actual locked Studio XAML callback composition is owned by root; callback tests are not reported as that full-application pass.",
+      "The final wizard projection browser run is held by root after environment browser-launch failures. Its original source suite passed6/6; operating-system picker automation and current Studio provider attachment remain separate host qualification."
+    ],
+    "wizardProjection": {
+      "local": "6273f66739b7b90a7bcc8799b7ac5634b6d56153",
+      "tree": "1954d89c48e70d7dc6c06b4a8b5e178ca331fb80",
+      "node": "26.10.0",
+      "completedUtc": "2026-10-04T01:03:02.879219+00:00",
+      "focusedNode": {
+        "command": "node scripts/limited.js node --test tests/a24-09-wizard-provider.test.js tests/a24-09-destination.test.js tests/workspace-io.test.js",
+        "tests": 35,
+        "passed": 35,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 3036.336876,
+        "log": "wizard-focused-node26.log"
+      },
+      "build": {
+        "command": "node scripts/limited.js node scripts/build.js",
+        "exitCode": 0,
+        "log": "wizard-build-node26.log"
+      },
+      "workingTreeClean": true,
+      "browser": {
+        "status": "held",
+        "reason": "Root coordinates browser launch recovery and actual protected Studio host composition; prior source suite6/6 remains separate evidence."
+      }
+    },
+    "followupCohorts": [
+      {
+        "name": "shared text, sink ownership and XAML reopen",
+        "source": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "ownPassed": 9,
+        "ownFailed": 0,
+        "full": {
+          "tests": 500,
+          "passed": 495,
+          "failed": 5
+        },
+        "evidence": "integration/upstream-qualification/node26-host-complete.json"
+      },
+      {
+        "name": "package atomicity and native wizard helper",
+        "source": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+        "ownPassed": 7,
+        "ownFailed": 0,
+        "full": {
+          "tests": 39,
+          "passed": 39,
+          "failed": 0
+        },
+        "existingEnginePassed": 8,
+        "evidence": "integration/upstream-qualification/node26-host-corrections.json"
+      },
+      {
+        "name": "native context, metadata and profile model ports",
+        "source": "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+        "ownPassed": 10,
+        "ownFailed": 0,
+        "full": {
+          "tests": 96,
+          "passed": 95,
+          "failed": 1
+        },
+        "evidence": "integration/upstream-qualification/node26-worker-model-complete.json"
+      },
+      {
+        "name": "native views and template engine boundaries",
+        "source": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+        "ownPassed": 13,
+        "ownFailed": 0,
+        "full": {
+          "tests": 66,
+          "passed": 65,
+          "failed": 1
+        },
+        "evidence": "integration/upstream-qualification/node26-final-corrections.json"
+      }
+    ],
+    "completedWorkbenchComposition": {
+      "record": "templates-workbench-qualification.json",
+      "qualifiedOwnAndRelatedCases": 31,
+      "fullNode22": "1877/1877 at5269d397; all four new fixtures and related cases passed.",
+      "legacyNode26": "382/382 and check/build/clean at e9f8a8cd; strict inherited count remains265.",
+      "editorNode26": "40/40 and check/build/clean at362f1337.",
+      "browser": "Actual canonical3checks at362f and5checks at7d before recorded failures; complete replay pending. Proposed entry never executed."
+    }
+  },
+  "wizardPublication": {
+    "pr": 3655,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/3655",
+    "local": "6273f66739b7b90a7bcc8799b7ac5634b6d56153",
+    "tree": "1954d89c48e70d7dc6c06b4a8b5e178ca331fb80",
+    "sha": "776131fc13f141b84d4915cbfe69ca9d15c51e3c",
+    "base": "d6a2788ae76389e2fe0f1e059c876c560d9c7643",
+    "baseBranch": "codex/p18-wizard-dependencies",
+    "featureCommits": [
+      "5c9690dc7912f66afdb517136e39b34014c06f9f",
+      "6273f66739b7b90a7bcc8799b7ac5634b6d56153"
+    ],
+    "projectionReplay": [
+      {
+        "source": "411b74a23b778ded56f9fa0d12ad408668fed55f",
+        "local": "5c9690dc7912f66afdb517136e39b34014c06f9f",
+        "method": "git cherry-pick -x; original branch retained"
+      },
+      {
+        "source": "501b0501ac22a1f5971fffe547d01829afa411ee",
+        "local": "6273f66739b7b90a7bcc8799b7ac5634b6d56153",
+        "method": "git cherry-pick -x; original branch retained"
+      }
+    ],
+    "dependencies": [
+      {
+        "branch": "codex/p18-template-discovery",
+        "local": "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+        "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+        "pr": 3579
+      },
+      {
+        "branch": "codex/p18-template-destinations",
+        "local": "83b9592f30246782cf782563ee5e3c0c8c8ac997",
+        "sha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+        "pr": 3565
+      },
+      {
+        "branch": "codex/p18-foundation-disk-writes",
+        "local": "9d8296445dc474224ae348b76a3e6a359b908d35",
+        "sha": "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3",
+        "pr": 3652,
+        "status": "published; owner qualification and exact tree readback passed",
+        "sourceBase": "de721b890b7e4aa93b9cf73d015ca4c32575bd4e",
+        "publicationMode": "Owner publishes this complete tree as one forward commit; 8dcf635a remains source provenance only.",
+        "tree": "c930dc560ab7c784844d10dfa7b77dfdd0ea8d72"
+      }
+    ],
+    "joins": [
+      {
+        "local": "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+        "tree": "f3405a2164a8e216842a5f8de0e92284113b352d",
+        "parents": [
+          "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+          "83b9592f30246782cf782563ee5e3c0c8c8ac997"
+        ],
+        "conflictResolution": "Union exact import reviews; preserve modular archive exports and both archive documentation sections."
+      },
+      {
+        "local": "d6a2788ae76389e2fe0f1e059c876c560d9c7643",
+        "tree": "1422880c8b5dbb71afcd1d54785a16cbe32433aa",
+        "parents": [
+          "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+          "9d8296445dc474224ae348b76a3e6a359b908d35"
+        ],
+        "conflictResolution": "Reuse reviewed modular ZIP64 exports and combined archive/encoding documentation; exact tree delta from preserved 743d3868 is the owner's 30-line compatibility test addition."
+      }
+    ],
+    "preservedCandidates": [
+      {
+        "local": "501b0501ac22a1f5971fffe547d01829afa411ee",
+        "tree": "bf895ca67e9d9bf84107ab7494e458ab607c9ae4",
+        "base": "743d3868be99edc4f79c9811c749f49804f815b5",
+        "featureCommits": [
+          "411b74a23b778ded56f9fa0d12ad408668fed55f",
+          "501b0501ac22a1f5971fffe547d01829afa411ee"
+        ],
+        "dependencies": [
+          {
+            "branch": "codex/p18-template-discovery",
+            "local": "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+            "sha": "8b9bfe24556d43a45113e16578910d5d5e91a179",
+            "pr": 3579
+          },
+          {
+            "branch": "codex/p18-template-destinations",
+            "local": "83b9592f30246782cf782563ee5e3c0c8c8ac997",
+            "sha": "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2",
+            "pr": 3565
+          },
+          {
+            "branch": "codex/p18-foundation-disk-writes",
+            "local": "9d8296445dc474224ae348b76a3e6a359b908d35",
+            "sha": null,
+            "pr": null,
+            "status": "owner qualification/publication pending",
+            "sourceBase": "de721b890b7e4aa93b9cf73d015ca4c32575bd4e",
+            "publicationMode": "Owner publishes this complete tree as one forward commit; 8dcf635a remains source provenance only."
+          }
+        ],
+        "joins": [
+          {
+            "local": "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+            "tree": "f3405a2164a8e216842a5f8de0e92284113b352d",
+            "parents": [
+              "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+              "83b9592f30246782cf782563ee5e3c0c8c8ac997"
+            ],
+            "conflictResolution": "Union exact import reviews; preserve modular archive exports and both archive documentation sections."
+          },
+          {
+            "local": "743d3868be99edc4f79c9811c749f49804f815b5",
+            "tree": "a3491bf63875a01b5d62e80aff2b7f5682529528",
+            "parents": [
+              "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+              "8dcf635adf25b06c71c34b05eda85ff6b66c554f"
+            ],
+            "conflictResolution": "Union exact import reviews; preserve modular archive exports and both archive documentation sections."
+          }
+        ]
+      }
+    ],
+    "comparisonToPreservedCandidate": {
+      "local": "501b0501ac22a1f5971fffe547d01829afa411ee",
+      "changedFiles": [
+        "tests/a24-provider-api-compatibility.test.js"
+      ],
+      "insertions": 30,
+      "deletions": 0,
+      "productContentIdentical": true
+    },
+    "publishedCommits": [
+      {
+        "name": "wizard-destinations-join",
+        "local": "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+        "tree": "f3405a2164a8e216842a5f8de0e92284113b352d",
+        "sha": "123e6d9cd681f4a749084a85ea96519fa7e972d2",
+        "localParents": [
+          "b50a73726fe81d1aae0511d59e2ca249a79969f0",
+          "83b9592f30246782cf782563ee5e3c0c8c8ac997"
+        ],
+        "commitReadBack": {
+          "tree": "f3405a2164a8e216842a5f8de0e92284113b352d",
+          "parents": [
+            "8b9bfe24556d43a45113e16578910d5d5e91a179",
+            "c9cdf30969536c4b8f3e3a19ed8c665e0949d3b2"
+          ],
+          "treeMatches": true,
+          "parentMatches": true
+        }
+      },
+      {
+        "name": "wizard-dependencies",
+        "local": "d6a2788ae76389e2fe0f1e059c876c560d9c7643",
+        "tree": "1422880c8b5dbb71afcd1d54785a16cbe32433aa",
+        "sha": "065212895ef9152c5daa3adf17d57fc619a2c961",
+        "localParents": [
+          "9eb0965d3827209cfeb1fb249ad2eb94447a152b",
+          "9d8296445dc474224ae348b76a3e6a359b908d35"
+        ],
+        "commitReadBack": {
+          "tree": "1422880c8b5dbb71afcd1d54785a16cbe32433aa",
+          "parents": [
+            "123e6d9cd681f4a749084a85ea96519fa7e972d2",
+            "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3"
+          ],
+          "treeMatches": true,
+          "parentMatches": true
+        }
+      },
+      {
+        "name": "project-wizard-controls",
+        "local": "5c9690dc7912f66afdb517136e39b34014c06f9f",
+        "tree": "7fbabb8816dd1c8b82aea46cfa7bc5679b676898",
+        "sha": "a6329734fc3ce4bf022ea8b907f56a6905be9dee",
+        "localParents": [
+          "d6a2788ae76389e2fe0f1e059c876c560d9c7643"
+        ],
+        "commitReadBack": {
+          "tree": "7fbabb8816dd1c8b82aea46cfa7bc5679b676898",
+          "parents": [
+            "065212895ef9152c5daa3adf17d57fc619a2c961"
+          ],
+          "treeMatches": true,
+          "parentMatches": true
+        }
+      },
+      {
+        "name": "project-wizard",
+        "local": "6273f66739b7b90a7bcc8799b7ac5634b6d56153",
+        "tree": "1954d89c48e70d7dc6c06b4a8b5e178ca331fb80",
+        "sha": "776131fc13f141b84d4915cbfe69ca9d15c51e3c",
+        "localParents": [
+          "5c9690dc7912f66afdb517136e39b34014c06f9f"
+        ],
+        "commitReadBack": {
+          "tree": "1954d89c48e70d7dc6c06b4a8b5e178ca331fb80",
+          "parents": [
+            "a6329734fc3ce4bf022ea8b907f56a6905be9dee"
+          ],
+          "treeMatches": true,
+          "parentMatches": true
+        }
+      }
+    ],
+    "adaptation": "Explicit additive readProviderDirectory and openedPaths for all written files. Legacy APIs unchanged.",
+    "filesystemPrerequisiteReadBack": {
+      "pr": 3652,
+      "branch": "codex/p18-foundation-disk-writes",
+      "sha": "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3",
+      "tree": "c930dc560ab7c784844d10dfa7b77dfdd0ea8d72",
+      "parents": [
+        "59a5cebe47afcf6017c7d3714b71df2d9ce98a44"
+      ],
+      "draft": true,
+      "base": "codex/p18-disk-write-dependencies",
+      "baseSha": "59a5cebe47afcf6017c7d3714b71df2d9ce98a44"
+    },
+    "preservedBranches": [
+      "codex/p18-local-wizard-dependencies",
+      "codex/p18-local-project-wizard",
+      "codex/p18-local-wizard-dependencies-final",
+      "codex/p18-local-project-wizard-final"
+    ],
+    "hostHelper": {
+      "pr": 3910,
+      "source": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+      "casesPassed": 4,
+      "nativeModels": [
+        3864,
+        3870
+      ],
+      "sharedTextPolicy": 3781,
+      "boundary": "Explicit host fixture; no protected Studio entry or Windows execution."
+    }
+  },
+  "delegatedMaintenance": [
+    {
+      "name": "native-workspace-state",
+      "maintenanceOnly": true,
+      "originalPublicationOwner": "tests_workflows",
+      "pr": 3816,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3816",
+      "branch": "codex/p18-native-workspace-state",
+      "originalLocal": "35f4e20468196bd7c1c8cc977c016af290f72800",
+      "local": "126ce9d559b7e3c4fe1ad29e8c2095014c67fa07",
+      "sha": "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+      "tree": "4c6dbd4821d636ea3f542e384de82161db6e07d8",
+      "commitReadBack": {
+        "tree": "4c6dbd4821d636ea3f542e384de82161db6e07d8",
+        "parents": [
+          "cc4f35d4f2391a7ca1da0678f05c9a827b118468",
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "publishedParents": [
+        "cc4f35d4f2391a7ca1da0678f05c9a827b118468",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "sourceParents": [
+        "35f4e20468196bd7c1c8cc977c016af290f72800",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "pullRequestReadBack": {
+        "head": "codex/p18-native-workspace-state",
+        "headSha": "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+        "base": "main",
+        "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+        "draft": true,
+        "mergeable": true
+      },
+      "featureBytesUnchanged": true,
+      "manualResolutions": [],
+      "automaticCore": {
+        "name": "native-workspace-state",
+        "pr": 3816,
+        "sha": "61f194b65d440fb225c8c8abd7e64d98109f5df7",
+        "runId": 37173976082,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173976082",
+        "supersededRuns": [],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": "No additional functional run; product, focused test and documentation bytes are unchanged. Prior exact scope evidence remains attached to the feature."
+    },
+    {
+      "name": "native-tool-renderer",
+      "maintenanceOnly": true,
+      "originalPublicationOwner": "tests_workflows",
+      "pr": 3880,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3880",
+      "branch": "codex/p18-native-tool-renderer",
+      "originalLocal": "a379683d41deb63cf71e019aa790de8b386f0807",
+      "local": "0501a437cf3452a530ed27339e6bc6f4039fa52c",
+      "sha": "d49d58ed476dee5f0427528de00ebb260a29a2a8",
+      "tree": "f2f46ce56c97e601524c2a508db9b418a9f0998d",
+      "commitReadBack": {
+        "tree": "f2f46ce56c97e601524c2a508db9b418a9f0998d",
+        "parents": [
+          "b0990a62dcefc9c52110bad0628dfa9d0d3c5236",
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ],
+        "treeMatches": true,
+        "parentMatches": true
+      },
+      "publishedParents": [
+        "b0990a62dcefc9c52110bad0628dfa9d0d3c5236",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "sourceParents": [
+        "a379683d41deb63cf71e019aa790de8b386f0807",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "pullRequestReadBack": {
+        "head": "codex/p18-native-tool-renderer",
+        "headSha": "d49d58ed476dee5f0427528de00ebb260a29a2a8",
+        "base": "main",
+        "baseSha": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+        "draft": true,
+        "mergeable": true
+      },
+      "featureBytesUnchanged": true,
+      "manualResolutions": [],
+      "automaticCore": {
+        "name": "native-tool-renderer",
+        "pr": 3880,
+        "sha": "d49d58ed476dee5f0427528de00ebb260a29a2a8",
+        "runId": 37173981062,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37173981062",
+        "supersededRuns": [],
+        "qualification": "Automatic fast core only; no repeated broad/native/Windows dispatch."
+      },
+      "qualification": "No additional functional run; product, focused test and documentation bytes are unchanged. Prior exact scope evidence remains attached to the feature."
+    }
+  ],
+  "followupSource": {
+    "implementationCommits": [
+      "ed72d97ce22bcc361da5b6d0f0176d3c46728687",
+      "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+      "35f70db63f3b6a222cf7a514bfb852945e1e6d1f",
+      "af15e96b59ac41dda59ea4757d0d5de70f0f5b12"
+    ],
+    "sourceHistoryPreserved": true,
+    "counts": {
+      "uniqueFeatureDraftPRs": 21,
+      "dependencyOnlyBranches": 8,
+      "delegatedMaintenancePRs": 2
+    },
+    "allOwnAutomaticCore": "success",
+    "protectedEntryChangesIncluded": false,
+    "rootPackageManifestChangesIncluded": false
+  },
+  "supportingNativeUI": {
+    "publicationTransferredFrom": "tests_workflows",
+    "relatedIssues": [
+      3122,
+      3123,
+      3127,
+      3085,
+      3086
+    ],
+    "relatedDrafts": [
+      3864,
+      3870,
+      3950
+    ],
+    "scope": "Explicit native context/metadata/profile models and build/context/source/inspector views. The controller/TestExplorer and protected Studio entry remain in their owning stacks.",
+    "qualification": "Direct model cases 10/10 at 35f70db6 and direct view cases 8/8 at af15e96b. Their full cohorts were 95/96 and 65/66; unrelated failures remain recorded."
+  },
+  "workbenchPublication": {
+    "manifest": "templates-workbench-publication.json",
+    "qualification": "templates-workbench-qualification.json",
+    "canonicalSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+    "featureDraftsAdded": 4,
+    "dependencyBranchesAdded": 7,
+    "totalFeatureDrafts": 25,
+    "totalDependencyBranches": 15,
+    "allLatestFeatureCore": "success",
+    "latestWorkspacePortsCore": {
+      "pr": 4407,
+      "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+      "runId": 37182178812,
+      "jobId": 111376788666,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182178812",
+      "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+    },
+    "updatedAt": "2026-10-04T06:36:09.635496+00:00"
+  }
+}

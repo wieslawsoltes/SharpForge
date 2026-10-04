@@ -1,0 +1,190 @@
+TAP version 13
+# Subtest: late expansion cannot publish into a replacement workspace node with the same stable ID
+ok 1 - late expansion cannot publish into a replacement workspace node with the same stable ID
+  ---
+  duration_ms: 1.569527
+  type: 'test'
+  ...
+# Subtest: duplicate expansions share one loader across TreeModel recloning and admit its children once
+ok 2 - duplicate expansions share one loader across TreeModel recloning and admit its children once
+  ---
+  duration_ms: 0.331931
+  type: 'test'
+  ...
+# Subtest: duplicate load-more requests are coalesced and a retired parent cannot receive a page
+ok 3 - duplicate load-more requests are coalesced and a retired parent cannot receive a page
+  ---
+  duration_ms: 1.780089
+  type: 'test'
+  ...
+# Subtest: invalid duplicate pages leave the prior tree intact and aborted expansions publish no children
+ok 4 - invalid duplicate pages leave the prior tree intact and aborted expansions publish no children
+  ---
+  duration_ms: 1.14069
+  type: 'test'
+  ...
+# Subtest: a rejected retired loader is ignored while a current loader error remains visible
+ok 5 - a rejected retired loader is ignored while a current loader error remains visible
+  ---
+  duration_ms: 0.449007
+  type: 'test'
+  ...
+# Subtest: A24 evaluated Using items and empty Folder metadata do not become physical explorer paths
+ok 6 - A24 evaluated Using items and empty Folder metadata do not become physical explorer paths
+  ---
+  duration_ms: 18.056624
+  type: 'test'
+  ...
+# Subtest: A24 dependency identities survive display reorder and expose every target framework subtree
+ok 7 - A24 dependency identities survive display reorder and expose every target framework subtree
+  ---
+  duration_ms: 1.445729
+  type: 'test'
+  ...
+# Subtest: A24 default and DependentUpon nesting preserve node ids when the option is toggled
+ok 8 - A24 default and DependentUpon nesting preserve node ids when the option is toggled
+  ---
+  duration_ms: 3.520648
+  type: 'test'
+  ...
+# Subtest: A24 generated source and imports belong to their project and unsupported projects remain visible
+ok 9 - A24 generated source and imports belong to their project and unsupported projects remain visible
+  ---
+  duration_ms: 0.546524
+  type: 'test'
+  ...
+# Subtest: A24 symbols materialize on expansion and include nested types, events and constructors
+ok 10 - A24 symbols materialize on expansion and include nested types, events and constructors
+  ---
+  duration_ms: 0.660756
+  type: 'test'
+  ...
+# Subtest: A24 rename maps selection, expansion and focused identity without following display order
+ok 11 - A24 rename maps selection, expansion and focused identity without following display order
+  ---
+  duration_ms: 0.622698
+  type: 'test'
+  ...
+# Subtest: direct reveal resolves a far page of a 21,000-file directory without admitting preceding siblings
+ok 12 - direct reveal resolves a far page of a 21,000-file directory without admitting preceding siblings
+  ---
+  duration_ms: 56.197206
+  type: 'test'
+  ...
+# Subtest: ancestor resolution follows provider case identity and preserves original Unicode path spelling
+ok 13 - ancestor resolution follows provider case identity and preserves original Unicode path spelling
+  ---
+  duration_ms: 2.401331
+  type: 'test'
+  ...
+# Subtest: revealed pages coexist with ordinary pagination and preserve previously expanded descendants
+ok 14 - revealed pages coexist with ordinary pagination and preserve previously expanded descendants
+  ---
+  duration_ms: 5.929881
+  type: 'test'
+  ...
+# Subtest: delayed reveal cannot select or populate a replacement tree with identical workspace and node IDs
+ok 15 - delayed reveal cannot select or populate a replacement tree with identical workspace and node IDs
+  ---
+  duration_ms: 0.678934
+  type: 'test'
+  ...
+# Subtest: in-place source revision changes and disposal cancel delayed reveal before any staged page is published
+ok 16 - in-place source revision changes and disposal cancel delayed reveal before any staged page is published
+  ---
+  duration_ms: 0.727436
+  type: 'test'
+  ...
+# Subtest: invalid later ancestor pages leave the entire live tree unchanged
+ok 17 - invalid later ancestor pages leave the entire live tree unchanged
+  ---
+  duration_ms: 0.413824
+  type: 'test'
+  ...
+# Subtest: actual lazy view refresh retains a nonactive far-page selection, focus, expansion and scroll
+ok 18 - actual lazy view refresh retains a nonactive far-page selection, focus, expansion and scroll
+  ---
+  duration_ms: 18.265568
+  type: 'test'
+  ...
+# Subtest: scoping retains the full admitted cache and paging inside the scope survives Home
+ok 19 - scoping retains the full admitted cache and paging inside the scope survives Home
+  ---
+  duration_ms: 2.459988
+  type: 'test'
+  ...
+# Subtest: transaction mappings restore a renamed scoped folder and focused file under their current IDs
+ok 20 - transaction mappings restore a renamed scoped folder and focused file under their current IDs
+  ---
+  duration_ms: 1.264887
+  type: 'test'
+  ...
+# Subtest: serialized lazy state restores through stable IDs without retaining the prior node objects
+ok 21 - serialized lazy state restores through stable IDs without retaining the prior node objects
+  ---
+  duration_ms: 0.748538
+  type: 'test'
+  ...
+# Subtest: delayed state restoration discards workspace replacements, edits, user selection, scrolling and cancellation
+ok 22 - delayed state restoration discards workspace replacements, edits, user selection, scrolling and cancellation
+  ---
+  duration_ms: 1.835047
+  type: 'test'
+  ...
+# Subtest: same-ID disk replacement rebuilds the actual view without retaining the previous physical entries
+ok 23 - same-ID disk replacement rebuilds the actual view without retaining the previous physical entries
+  ---
+  duration_ms: 0.540215
+  type: 'test'
+  ...
+# Subtest: invalid current pages never publish a partial restoration into the visible tree or full cache
+ok 24 - invalid current pages never publish a partial restoration into the visible tree or full cache
+  ---
+  duration_ms: 0.767898
+  type: 'test'
+  ...
+# Subtest: A24 large default solution views choose visible paging without traversing file records
+ok 25 - A24 large default solution views choose visible paging without traversing file records
+  ---
+  duration_ms: 0.828609
+  type: 'test'
+  ...
+# Subtest: A24 folder paging preserves the eager boundary and the requested view for smaller workspaces
+ok 26 - A24 folder paging preserves the eager boundary and the requested view for smaller workspaces
+  ---
+  duration_ms: 0.889852
+  type: 'test'
+  ...
+# Subtest: A24 linked project appearances, generated files and imports also trigger bounded views
+ok 27 - A24 linked project appearances, generated files and imports also trigger bounded views
+  ---
+  duration_ms: 0.209005
+  type: 'test'
+  ...
+# Subtest: lazy folder construction rejects case aliases without replacing an existing directory identity
+ok 28 - lazy folder construction rejects case aliases without replacing an existing directory identity
+  ---
+  duration_ms: 1.978392
+  type: 'test'
+  ...
+# Subtest: lazy folder construction refuses to shadow a file with a new parent directory
+ok 29 - lazy folder construction refuses to shadow a file with a new parent directory
+  ---
+  duration_ms: 0.379452
+  type: 'test'
+  ...
+# Subtest: lazy paging keeps distinct case-sensitive directories and normalizes Unicode file identity
+ok 30 - lazy paging keeps distinct case-sensitive directories and normalizes Unicode file identity
+  ---
+  duration_ms: 1.608696
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2570.525407

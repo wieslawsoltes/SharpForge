@@ -5,6 +5,7 @@ import {formattingModule} from './formatting/index.js';
 import {arrayModule} from './system/array.js';
 import {randomModule} from './system/random.js';
 import {environmentModule} from './system/environment.js';
+import {environmentDictionaryModule} from './system/environment-dictionary-module.js';
 import {stringComparerModule} from './system/string-comparer.js';
 
 /** Released registration groups are ordered ABI slots, not discovery order. */
@@ -16,5 +17,6 @@ export const bclModules = Object.freeze([
   {...randomModule, group: 'runtime14'},
   {...environmentModule, group: 'extensions'},
   {...stringComparerModule, group: 'extensions'},
-  objectComparerModule
+  objectComparerModule,
+  {...environmentDictionaryModule, group: 'extensions'}
 ].map(module => Object.freeze(module)));

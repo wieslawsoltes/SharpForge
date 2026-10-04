@@ -1,0 +1,90 @@
+TAP version 13
+# Selected verbatim blocks; original numbering retained.
+# Subtest: direct and toolbar navigation share queued lazy admission and preserve view locations
+ok 1397 - direct and toolbar navigation share queued lazy admission and preserve view locations
+  ---
+  duration_ms: 4.818704
+  type: 'test'
+  ...
+# Subtest: failed and unavailable admission leave the history index intact and release the navigation queue
+ok 1398 - failed and unavailable admission leave the history index intact and release the navigation queue
+  ---
+  duration_ms: 2.566099
+  type: 'test'
+  ...
+# Subtest: clearing a workspace cancels in-flight source preparation before history or tabs can be adopted
+ok 1399 - clearing a workspace cancels in-flight source preparation before history or tabs can be adopted
+  ---
+  duration_ms: 1.00844
+  type: 'test'
+  ...
+# Subtest: a new foreground location during lazy preparation is preserved instead of replaying an obsolete target
+ok 1400 - a new foreground location during lazy preparation is preserved instead of replaying an obsolete target
+  ---
+  duration_ms: 0.580405
+  type: 'test'
+  ...
+# Subtest: clearing after preparation fences a delayed document open before tab admission and focus
+ok 1401 - clearing after preparation fences a delayed document open before tab admission and focus
+  ---
+  duration_ms: 1.657949
+  type: 'test'
+  ...
+# Subtest: foreground history supersedes a replay waiting for a document
+ok 1402 - foreground history supersedes a replay waiting for a document
+  ---
+  duration_ms: 0.794287
+  type: 'test'
+  ...
+# Subtest: a later queued tab request supersedes navigation without an intervening history update
+ok 1403 - a later queued tab request supersedes navigation without an intervening history update
+  ---
+  duration_ms: 0.825074
+  type: 'test'
+  ...
+# Subtest: the admission token still fences a newer request during the promise handoff
+ok 1404 - the admission token still fences a newer request during the promise handoff
+  ---
+  duration_ms: 0.872735
+  type: 'test'
+  ...
+# Subtest: activation away and back still supersedes an older delayed navigation
+ok 1405 - activation away and back still supersedes an older delayed navigation
+  ---
+  duration_ms: 0.816581
+  type: 'test'
+  ...
+# Subtest: disposing preparation while its tab request is queued prevents the document open itself
+ok 1406 - disposing preparation while its tab request is queued prevents the document open itself
+  ---
+  duration_ms: 0.748388
+  type: 'test'
+  ...
+# Subtest: an old cancelled replay cannot release a newer replay owner
+ok 1407 - an old cancelled replay cannot release a newer replay owner
+  ---
+  duration_ms: 0.702569
+  type: 'test'
+  ...
+# (node:2088) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Studio ZIP selection streams bounded slices and retains settings on the original load ticket
+ok 1426 - Studio ZIP selection streams bounded slices and retains settings on the original load ticket
+  ---
+  duration_ms: 12.65709
+  type: 'test'
+  ...
+# Subtest: ZIP cancellation and source changes during preparation cannot adopt a workspace
+ok 1427 - ZIP cancellation and source changes during preparation cannot adopt a workspace
+  ---
+  duration_ms: 3.516682
+  type: 'test'
+  ...
+# Subtest: Studio rejects oversized ZIP input before any read or document adoption
+ok 1428 - Studio rejects oversized ZIP input before any read or document adoption
+  ---
+  duration_ms: 0.422477
+  type: 'test'
+  ...
+# (node:2128) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)

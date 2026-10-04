@@ -1,0 +1,10 @@
+{
+  "authorizedBy": "Root coordinator; same three obsolete paths, resuming only the pending benchmark process",
+  "at": "2026-10-04T00:33:27.832768+00:00",
+  "beforeFreeBytes": 343003136,
+  "removed": [
+    "/workspace/scratch/3e16369943fd/browser-vendor/chrome-linux64",
+    "/workspace/scratch/3e16369943fd/dotnet/sdk/8.0.425"
+  ],
+  "afterFreeBytes": 344489984
+}

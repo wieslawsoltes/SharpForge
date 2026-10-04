@@ -15,8 +15,13 @@ export function canonicalEmissionOptions(pe, debug) {
     return { name: resource.name, bytes: resource.bytes, visibility: resource.flags === 1 ? 'public' : 'private' };
   });
   const entries = readWin32Resources(pe, { includeBytes: true });
+  // Project descriptors reconstruct these exact scoped rows; the ordinary registry keys framework references by simple name.
+  const projectReferences = new Set(debug.referenceTokens?.assemblies ?? []);
+  const assemblyReferences = readAssemblyReferenceIdentities(pe.metadata)
+    .filter((reference, index) => !projectReferences.has(0x23000001 + index));
   return { ...debug.peOptions, ...assemblyDefinitionOptions(pe.metadata), ...canonicalStrongNameOptions(pe),
-    name: debug.name, framework: debug.framework, assemblyReferences: readAssemblyReferenceIdentities(pe.metadata),
+    name: debug.name, framework: debug.framework, assemblyReferences,
     embedSources: debug.sources.every(source => typeof source.text === 'string'), managedResources,
+    projectStaticInitializers: debug.projectInitialization === 1,
     ...(pe.directories.resource.size ? { win32Resources: { entries } } : {}) };
 }

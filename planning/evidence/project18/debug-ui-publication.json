@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "owner": "filesystem_providers (delegated by tests_workflows)",
+  "qualification": {
+    "source": "4a49a23b773b62088057d83e3e6ac6e573390578",
+    "node": "22.23.3",
+    "commandPrefix": "node scripts/limited.js node --test --test-concurrency=1 --test-reporter=tap",
+    "argvEvidence": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.json",
+    "logEvidence": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap",
+    "aggregate": {
+      "tests": 794,
+      "pass": 788,
+      "fail": 6,
+      "skipped": 0
+    },
+    "projectedPassed": 15,
+    "newCorrectionPending": 0,
+    "newCorrectionPassed": 1,
+    "followupEvidence": "planning/evidence/project18/filesystem-host-qualification.json"
+  },
+  "testSplit": {
+    "sourceFile": "tests/a23-project-debug-sources.test.js",
+    "sourceCommit": "4a49a23b773b62088057d83e3e6ac6e573390578",
+    "unitA": {
+      "cases": 5,
+      "sourceLines": [
+        "17-68",
+        "85-101"
+      ]
+    },
+    "unitB": {
+      "case": "frame navigation, source breakpoint bindings and current-source choice use the selected context",
+      "sourceLines": "69-84"
+    },
+    "deferredWorker": {
+      "case": "worker source publication retains graph provenance without transferring metadata tables",
+      "sourceLines": "102-108",
+      "tapCase": 575,
+      "owner": "tests_workflows"
+    },
+    "assertionBodiesUnchanged": true,
+    "fullOriginalPreservedInIntegration": true
+  },
+  "pullRequests": [
+    {
+      "name": "source-model",
+      "sourceOrigin": "4a49a23b773b62088057d83e3e6ac6e573390578",
+      "sourceBase": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+      "sourceHead": "8d84bb39aa175dfc77f923b58231df5b463fdf51",
+      "sourceTree": "822da6c7d78a682597685eb0659261c8dc2245c6",
+      "sourceBaseTree": "36f8afc5d9bd7065d550e60a9a4de3af35999142",
+      "branch": "codex/p18-debug-source-model",
+      "baseBranch": "main",
+      "remoteCommit": "2c02741ed7de50bb4b08d8bb688c375a8e084e3b",
+      "parents": [
+        "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a"
+      ],
+      "pr": 3742,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3742",
+      "stat": "4 files changed, 219 insertions(+), 1 deletion(-)",
+      "treeVerified": true,
+      "parentVerified": true,
+      "prVerified": true,
+      "coreReadback": {
+        "name": "source-model",
+        "head": "2c02741ed7de50bb4b08d8bb688c375a8e084e3b",
+        "run": 37169411785,
+        "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169411785",
+        "runAttempt": 1,
+        "coreJob": 111339123283,
+        "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169411785/job/111339123283",
+        "conclusion": "success",
+        "completedAt": "2026-10-04T01:54:48Z",
+        "skippedJobs": [
+          "core-platforms",
+          "build",
+          "packages",
+          "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "native-il",
+          "native-msbuild",
+          "clr-wasm",
+          "ci-ok"
+        ]
+      }
+    },
+    {
+      "name": "editor",
+      "sourceOrigin": "4a49a23b773b62088057d83e3e6ac6e573390578",
+      "sourceBase": "8d84bb39aa175dfc77f923b58231df5b463fdf51",
+      "sourceHead": "e75f4793a5f4899c14b956b0cd43fb87f8d15eb1",
+      "sourceTree": "aae767dadcf2232da47118e9ef977f9936060574",
+      "sourceBaseTree": "822da6c7d78a682597685eb0659261c8dc2245c6",
+      "branch": "codex/p18-debug-editor",
+      "baseBranch": "codex/p18-debug-source-model",
+      "remoteCommit": "ba923c523a013b8415013b98239176a10dd879d4",
+      "parents": [
+        "2c02741ed7de50bb4b08d8bb688c375a8e084e3b"
+      ],
+      "pr": 3745,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3745",
+      "stat": "10 files changed, 460 insertions(+), 13 deletions(-)",
+      "treeVerified": true,
+      "parentVerified": true,
+      "prVerified": true,
+      "coreReadback": {
+        "name": "editor",
+        "head": "ba923c523a013b8415013b98239176a10dd879d4",
+        "run": 37169464761,
+        "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169464761",
+        "runAttempt": 1,
+        "coreJob": 111339278955,
+        "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37169464761/job/111339278955",
+        "conclusion": "success",
+        "completedAt": "2026-10-04T01:55:56Z",
+        "skippedJobs": [
+          "build",
+          "core-platforms",
+          "packages",
+          "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "native-il",
+          "native-msbuild",
+          "clr-wasm",
+          "ci-ok"
+        ]
+      },
+      "correctionQualification": {
+        "sourceCommit": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+        "node": "v26.10.0",
+        "testFile": "tests/a23-project-debug-editor.test.js",
+        "passed": 7,
+        "failed": 0,
+        "newCaseTapId": 62,
+        "evidence": "planning/evidence/project18/filesystem-host-qualification.json"
+      }
+    }
+  ],
+  "worktreeCleanup": {
+    "path": "/workspace/scratch/3e16369943fd/p18-publish-debug-ui",
+    "sourceBranches": {
+      "codex/p18-local-debug-source-model": "8d84bb39aa175dfc77f923b58231df5b463fdf51",
+      "codex/p18-local-debug-editor": "e75f4793a5f4899c14b956b0cd43fb87f8d15eb1"
+    },
+    "statusBefore": "clean",
+    "removedWithoutForce": true,
+    "proof": "p18-publication/debug-ui-published.json",
+    "freeBefore": 203636736,
+    "freeAfter": 205033472,
+    "freeDelta": 1396736,
+    "notes": "Only this newly completed own sparse projection checkout was removed. Source refs, payloads and readback proofs retained."
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "interpretation": "These failed attempts remain part of provenance. Each current head has a separately verified successful required core. Cancelled automatic duplicate workflow runs are retained in the current publication records.",
+  "publicationFailures": [
+    {
+      "pr": 3903,
+      "head": "067970cf82f8e26c56445ac110f835b9a6292688",
+      "runId": 37172612626,
+      "jobId": 111349283011,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "testing-policy-maintenance.json"
+    },
+    {
+      "pr": 3908,
+      "head": "fd38a35378b6688d343f1f09c4157e21882e9856",
+      "runId": 37172797289,
+      "jobId": 111349052691,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "testing-policy-maintenance.json"
+    },
+    {
+      "pr": 3973,
+      "head": "702d96146b26da2a079431c414cd9d0e8f890d1e",
+      "runId": 37173810639,
+      "jobId": 111352133220,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "testing-policy-maintenance.json"
+    },
+    {
+      "pr": 3991,
+      "head": "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+      "runId": 37173988508,
+      "jobId": 111352656631,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "testing-policy-maintenance.json"
+    },
+    {
+      "pr": 3828,
+      "head": "cb84720c45f5e6827089ef4208dad467e1964336",
+      "runId": 37170858557,
+      "jobId": 111343362399,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "portable-policy-maintenance.json"
+    },
+    {
+      "pr": 3841,
+      "head": "691027333e7d85c98f287e75dedc371ba9b58937",
+      "runId": 37170973518,
+      "jobId": 111343693809,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "portable-policy-maintenance.json"
+    },
+    {
+      "pr": 3845,
+      "head": "132417dc29ef7ba01a2d1c41b361436e9682b021",
+      "runId": 37171049428,
+      "jobId": 111343910143,
+      "reason": "Missing already-reviewed fixed lazy-import metadata in the projected dependency.",
+      "correction": "Copy exact pre-existing approved records; all product/test bytes unchanged.",
+      "receipt": "portable-policy-maintenance.json"
+    },
+    {
+      "pr": 3872,
+      "failures": [
+        {
+          "head": "9e38085257dd83c5406e3380400b83b24100441a",
+          "diagnostic": "Duplicate test tests/a05-type-handle-admission.test.js: A05, A05",
+          "run": 37172916725,
+          "job": 111349397319
+        }
+      ],
+      "reason": "An inherited explicit A05 selector duplicated a test already covered by the A05 wildcard.",
+      "correction": "Remove only the redundant selector; preserve every source and test assertion, then merge the actual corrected dependency.",
+      "receipt": "runtime-types-test-selection-published.json"
+    },
+    {
+      "pr": 3922,
+      "failures": [
+        {
+          "head": "d39c77a5b2a27554432d3bf731ead78497e7dad8",
+          "diagnostic": "Duplicate test tests/a05-type-handle-admission.test.js: A05, A05",
+          "run": 37173140575,
+          "job": 111350059973
+        }
+      ],
+      "reason": "An inherited explicit A05 selector duplicated a test already covered by the A05 wildcard.",
+      "correction": "Remove only the redundant selector; preserve every source and test assertion, then merge the actual corrected dependency.",
+      "receipt": "project-debug-test-selection-published.json"
+    },
+    {
+      "pr": 4181,
+      "failures": [
+        {
+          "head": "7433bf740a71b3c6e33e371b196c8d7173569646",
+          "job": 111359379384,
+          "diagnostic": "Duplicate test tests/a05-type-handle-admission.test.js: A05, A05",
+          "inheritedFrom": "474d19cf0f92179a90ca4342830c5ab9872a67ad",
+          "resolution": "Corrected on runtime parent 03432c9ab0d6108adb29b31f5e78ce7d76947538 and merged into corpus d7cf835910f2223fd3afe0745e4b5509e1cc11b3"
+        }
+      ],
+      "reason": "An inherited explicit A05 selector duplicated a test already covered by the A05 wildcard.",
+      "correction": "Remove only the redundant selector; preserve every source and test assertion, then merge the actual corrected dependency.",
+      "receipt": "project-reference-corpus-published.json"
+    },
+    {
+      "pr": 3956,
+      "runId": 37173546899,
+      "jobId": 111351330018,
+      "reason": "Inherited duplicate A05 selector; final actual runtime/type-handle dependency corrected ownership.",
+      "correction": "Preserve all original runtime fixtures and forward actual dependencies."
+    },
+    {
+      "pr": 3767,
+      "runId": 37174309971,
+      "jobId": 111353623246,
+      "reason": "New upstream launch fixture needed the already published ManagedInvocationSession dependency.",
+      "correction": "Retain fixture and merge/retarget to the actual invocation prerequisite."
+    },
+    {
+      "pr": 3789,
+      "runId": 37174311996,
+      "jobId": 111353629229,
+      "reason": "Pinned-main static policy required the existing source-symbols lazy syntax import review record.",
+      "correction": "Copy the identical previously reviewed record; no source or assertion changes."
+    }
+  ],
+  "functionalFailures": {
+    "initialIntegratedScope": {
+      "head": "4a49a23b773b62088057d83e3e6ac6e573390578",
+      "files": 79,
+      "tests": 794,
+      "passed": 788,
+      "failed": 6,
+      "skipped": 0,
+      "evidence": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap"
+    },
+    "affectedCorrection": {
+      "head": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+      "files": 12,
+      "tests": 77,
+      "passed": 77,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-corrections.json"
+    },
+    "propertyCorrection": "The intermediate CS0131 failure was fixed by retaining property/accessor metadata; original private setter CS0272 assertions remain. Complete affected Node22 scope passed68/68 before Node26 graph415/415.",
+    "nativeRestore": {
+      "timeoutSeconds": 50,
+      "exitCode": 124,
+      "cache": "empty",
+      "log": "Determining projects to restore...",
+      "diagnosticCause": "Not established; no network-cause claim or retry."
+    }
+  }
+}

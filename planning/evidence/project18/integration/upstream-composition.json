@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "scope": "Project18 integration with already-landed compiler, runtime and Studio contribution scopes",
+  "sourceParent": "61658d556504183f72e0659716ea873bd97432e8",
+  "upstreamParent": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "reason": "Read-only merge-tree identified24 real content conflicts; pinning this upstream avoids repeated main refreshes.",
+  "resolution": {
+    "bcl": "Keep all released upstream ABI IDs. GetEnvironmentVariable stays524289; append GetEnvironmentVariables524298 and CurrentDirectory524299 after comparer contracts. New dictionary family registration preserves dispatch ownership. Regenerate the exact BCL inventory.",
+    "bytecode": "Retain sparse builtin registry array semantics and every existing numeric slot; combine appended unsigned-shift binary operator with external reference opcodes30\u201335 and verifier.",
+    "compiler": "Keep canonical Project18 member/property visibility, strict external TypeRef resolution and shared IVT metadata while preserving upstream scalar, diagnostic ID and metadata architecture.",
+    "cil": "Preserve external\u2192scalar\u2192legacy instruction emission, canonical graph properties and debug mapping. Extract composition helper so frozen emitter shrinks to130lines.",
+    "runtime": "Keep shared graph identity/provenance with upstream native-width, Decimal, framework methods, profiler and token caches. Combine compiler-owned string-array startup with legacy argv overlay. Preserve canonical launch validation and aliases.",
+    "archive": "Keep bounded workspace settings/startup serializer plus modular archive policies, ZIP64, metadata and destination rollback.",
+    "docking": "Delegate to upstream shared DocumentTabs/layout workspace while retaining Test Explorer activation and Build preset behavior.",
+    "css": "Regenerate exact combined contribution fingerprint and build fixture, preserving all assertions."
+  },
+  "validation": "Pending completed combined scope qualification. Earlier logs remain historical and do not qualify this merge.",
+  "protectedApplicationWiring": "Studio entry and root package-lock changes remain prepared but unapplied under live external locks."
+}

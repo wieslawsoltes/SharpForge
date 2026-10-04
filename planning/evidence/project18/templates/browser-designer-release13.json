@@ -1,0 +1,87 @@
+{
+  "checks": [
+    {
+      "name": "connect an existing hand-written construction method without replacing source or workers",
+      "passed": true,
+      "milliseconds": 435.94
+    },
+    {
+      "name": "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+      "passed": true,
+      "milliseconds": 279.36
+    },
+    {
+      "name": "designer property changes compile-check a minimal C# edit and preserve every other byte",
+      "passed": true,
+      "milliseconds": 515.26
+    },
+    {
+      "name": "real source editor input updates the design preview automatically",
+      "passed": true,
+      "milliseconds": 662.91
+    },
+    {
+      "name": "source undo and redo resynchronize the preview without replacing the editor",
+      "passed": true,
+      "milliseconds": 1131.72
+    },
+    {
+      "name": "incomplete C# keeps the last valid preview and recovers when corrected",
+      "passed": true,
+      "milliseconds": 1133.99
+    },
+    {
+      "name": "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+      "passed": true,
+      "milliseconds": 290.23
+    },
+    {
+      "name": "concurrent source and designer edits are rejected without overwriting either side",
+      "passed": true,
+      "milliseconds": 283.87
+    },
+    {
+      "name": "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+      "passed": true,
+      "milliseconds": 497.62
+    },
+    {
+      "name": "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+      "passed": true,
+      "milliseconds": 655.33
+    },
+    {
+      "name": "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+      "passed": true,
+      "milliseconds": 293.76
+    },
+    {
+      "name": "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+      "passed": true,
+      "milliseconds": 32.55
+    },
+    {
+      "name": "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+      "passed": true,
+      "milliseconds": 128.89
+    },
+    {
+      "name": "source VM real worker clock animates after Main and runs managed Completed handler",
+      "passed": true,
+      "milliseconds": 542.53
+    },
+    {
+      "name": "direct CIL real worker clock animates after Main and runs managed Completed handler",
+      "passed": true,
+      "milliseconds": 525.45
+    },
+    {
+      "name": "all integration workflows finish without page errors and retain two real workers",
+      "passed": true,
+      "milliseconds": 1466.84
+    }
+  ],
+  "errors": [],
+  "workers": 2,
+  "harness": "CSP HTTP and real workers"
+}

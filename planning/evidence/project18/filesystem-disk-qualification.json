@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "Additive provider disk admission/write APIs, search revision guards, disk notification view and Explorer controller",
+  "date": "2026-10-04",
+  "implementationSource": "53f375875617147bc68f2e96384a60d366b52ff0",
+  "initialComposition": "bc274adbee2eac55ea06c7451a13df89c8434a89",
+  "qualifiedComposition": "c6a0d8e51d2fe55a66548fdcebac5a9f6cb1214b",
+  "qualifiedTree": "06bc33d218afc000f074aff59bf691561ce54214",
+  "equivalentQualifiedProjection": "6bf63a134c8afad6029439f2401035de5fbf28f2",
+  "worktree": "/workspace/scratch/3e16369943fd/p18-publish-disk-qualification",
+  "environment": {
+    "node": "v26.10.0",
+    "platform": "Linux x64",
+    "nodeDirectory": "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin",
+    "execution": "repository scripts/limited.js, serial shared qualification slot",
+    "browser": "No browser attempt in this cohort; earlier explicitly recorded Chromium/OPFS evidence is unchanged."
+  },
+  "runs": [
+    {
+      "id": "node26",
+      "command": "node scripts/limited.js node --test tests/a24-provider-disk-read.test.js tests/a24-provider-disk-admission.test.js tests/a24-provider-disk-guard.test.js tests/a24-provider-files.test.js tests/a24-provider-disk-writes.test.js tests/a24-provider-disk-mutations.test.js tests/a24-provider-disk-held-signal.test.js tests/a24-provider-api-compatibility.test.js tests/a24-search-index.test.js tests/a24-search-publication.test.js tests/a24-search-lifecycle.test.js tests/a24-search-result-versions.test.js tests/a24-reload-coordinator.test.js tests/a24-save-locks.test.js tests/a24-handle-identity.test.js tests/a24-disk-notifications.test.js tests/a24-disk-services.test.js tests/project-system.test.js tests/release04.test.js tests/templates-archive.test.js tests/workspace-io.test.js tests/a00-06-registration.test.js tests/a00-20-styles.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-cross-window-session.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-editor-lifecycle.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-folder-compilation.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-provider-transactions.test.js /workspace/scratch/3e16369943fd/p18-vfs/tests/a24-save-conflicts.test.js",
+      "artifact": "filesystem/disk-cohort-node26.log",
+      "sha256": "e3157433ada1b247282a04d1b0eea5ea61992c525d02e6bbf6a14e5813d2d492",
+      "bytes": 45730,
+      "exitCode": 1,
+      "tests": 326,
+      "suites": 0,
+      "pass": 314,
+      "fail": 12,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 41176.349283
+    },
+    {
+      "id": "affected-node26",
+      "command": "node scripts/limited.js node --test --test-name-pattern 'contributed stylesheet bytes|contributed per-tool CSS|0.4 CLI|CLI ZIP/extraction|CLI writePlan' tests/a00-06-registration.test.js tests/a00-20-styles.test.js tests/release04.test.js tests/workspace-io.test.js",
+      "artifact": "filesystem/disk-cohort-affected-node26.log",
+      "sha256": "0260698df44b97bb147b6523076117354393e83f798fe0740f87f356a03b84ec",
+      "bytes": 831,
+      "exitCode": 0,
+      "tests": 10,
+      "suites": 0,
+      "pass": 10,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 5537.552869
+    },
+    {
+      "id": "archive-compat-node26",
+      "command": "node scripts/limited.js node --test tests/templates-archive.test.js",
+      "artifact": "filesystem/disk-cohort-archive-compat-node26.log",
+      "sha256": "d80c520139f2660fac202d7a1a47543f7de53fe580ff8ee1cdf6ee9a3e864216",
+      "bytes": 8896,
+      "exitCode": 0,
+      "tests": 107,
+      "suites": 0,
+      "pass": 107,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 2155.202145
+    },
+    {
+      "id": "manifest-node26",
+      "command": "node scripts/limited.js node --test --test-name-pattern 'discovery assigns files once' tests/a00-06-registration.test.js",
+      "artifact": "filesystem/disk-cohort-manifest-node26.log",
+      "sha256": "a0c32e1d772879e964805cdc0f36f3e84eacad9c89cfca12df22dcbfbf1ce305",
+      "bytes": 218,
+      "exitCode": 0,
+      "tests": 1,
+      "suites": 0,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 177.733339
+    },
+    {
+      "id": "check-node26",
+      "command": "node scripts/limited.js npm run check",
+      "artifact": "filesystem/disk-cohort-check-node26.log",
+      "sha256": "3d1b830d6588828a817998a84a13aa6cf4cf327613c4e580161293bec57bbd31",
+      "bytes": 432,
+      "exitCode": 0
+    },
+    {
+      "id": "build-node26",
+      "command": "node scripts/limited.js npm run build",
+      "artifact": "filesystem/disk-cohort-build-node26.log",
+      "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+      "bytes": 257,
+      "exitCode": 0
+    }
+  ],
+  "outcome": {
+    "newScopeAssertionsPassedInitially": true,
+    "initialPasses": 314,
+    "initialFailures": 12,
+    "initialFailureClassification": [
+      "Eleven failures were missing sparse-checkout CLI/docs paths: ten named CLI/CSS cases and one archive module that did not load.",
+      "One inherited A20 registration assertion rejected four already-registered text suites."
+    ],
+    "corrections": [
+      "Added only apps/cli and docs to the qualification sparse checkout; repeated only the affected ten cases (10/10).",
+      "Ran the previously unloaded, unchanged templates-archive module (107/107).",
+      "Copied exact tests/a00-06-registration.test.js from root 1797151b221a66cbe3b5e126a54bf804259b7b83; the focused case passed 1/1.",
+      "The assertion still requires the known four text suites, unique assignment, nested suites, the editor predicate and rejection of unknown areas."
+    ],
+    "remainingTestFailures": 0,
+    "check": {
+      "modules": 1986,
+      "syntaxErrors": 0,
+      "dynamicCodeInspections": 1982,
+      "dynamicCodeFindings": 0,
+      "nodeTestFiles": 510,
+      "browserScripts": 23,
+      "unassignedTests": 0,
+      "duplicateTests": 0
+    },
+    "build": "passed; dependency-free browser application",
+    "newBroadReruns": 0
+  },
+  "upstreamSynchronizationAfterQualification": {
+    "main": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+    "reason": "Read-only merge-tree demonstrated a real CSS fixture conflict on the standalone notifications branch.",
+    "notificationSource": "05ae73f5b7be4ecae9ff0205aeb2291919c9c47b",
+    "dependencySource": "c0ff0eaedb12d80bc4eb1a0f720a7c7bf1976244",
+    "controllerSource": "0a40917f213801078e38a8c540c47d985e36a05a",
+    "method": "Forward merges preserving source ancestors; concatenate merged ordered contribution bytes and apply existing cssFingerprint.",
+    "fixtures": [
+      "planning/contracts/fixtures/css/studio-baseline.json",
+      "tests/manifests/fixtures/build-baseline.json"
+    ],
+    "styles": 42,
+    "studioStyles": 26,
+    "bytes": 215582,
+    "rules": 1647,
+    "sha256": "7f038bb11187138d1aa064afde6e66862f76fed11958f6692f9f6e1919a1faee",
+    "orderedRulesSha256": "08d6f7ff910851a724495b5ca2f6f50656bc8c22898df8da77662e0698bdb563",
+    "sortedRulesSha256": "99691a79bf62fd688601b6facca5a77f5cfa1cfe60076ae71a1dfe3a7d76a922",
+    "otherResolution": "Preserved both independent disk-inventory and upstream startup-metadata README sections.",
+    "scopeCode": "Filesystem/controller implementation and focused tests retain their qualified byte contents.",
+    "qualification": "Historical cohort is retained; no new full upstream qualification is claimed. Parent owns the assembled integration checks/build."
+  },
+  "limits": [
+    "Legacy DiskWorkspace/readDirectory/readBrowserFiles retain prior behavior; ProviderDiskWorkspace/readProviderDirectory/readProviderFiles are explicit additive APIs.",
+    "Browser saves require host-owned physical identity and save locks. No hidden permissions or identity registry setup was added.",
+    "Physical multi-file writes report partial completion; durable journal recovery is the dependent workspace adapter scope.",
+    "Protected Studio alias/callback integration and final browser/platform qualification remain parent integration work.",
+    "No browser retry, workflow dispatch, full-ci label or main merge was requested by this agent."
+  ]
+}

@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "Closed separate SharpForge PE runtime/worker/debug-source integration forA23 T27, preserving the earlier testing/native Studio scope",
+  "agent": "tests_workflows",
+  "branch": "codex/p18-tests",
+  "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+  "recordedAt": "2026-10-04T00:44:58.635709+00:00",
+  "status": "Scoped correctness validated; performance qualification and protected Studio application remain explicit review obligations",
+  "priorScopeEvidence": {
+    "testing": "../testing.json",
+    "nativeStudio": "../native-studio.json",
+    "projectionInventory": "../testing-projections.json"
+  },
+  "entryPoints": {
+    "sourceGraph": "@sharpforge/cil.loadProjectAssembly(assembly,{dependencies})",
+    "directCilGraph": "@sharpforge/runtime.createProjectAssemblyInspector(assembly,{dependencies,signal,assemblyLimits})",
+    "worker": "apps/studio/workers/runtime-launch.js",
+    "sourceNavigation": "apps/studio/debug-sources.js",
+    "stackProvenance": "packages/debugger/src/stack-trace.js"
+  },
+  "qualificationSummary": {
+    "node22": "Earlier complete corrected 409-test scope had 408 passes and one diagnostic assertion failure; the final complete affected 13-file correction passes 68/68 at the final source. No claim of a new full Node 22 rerun.",
+    "node26": "Final complete 48-file scope passes 415/415 with no skips, failures or cancellations.",
+    "nativeOracle": {
+      "sdk": "10.0.401",
+      "msbuild": "18.9.11.42413",
+      "runtime": "10.0.5",
+      "framework": "net10.0",
+      "platform": "Linux x64",
+      "engines": [
+        "Roslyn SDK build executed on CLR",
+        "Separate SharpForge PEs executed on CLR",
+        "JavaScript SourceVM",
+        "JavaScript CilVirtualMachine"
+      ],
+      "output": "42\n42\n44\nnull\n"
+    },
+    "readonlyOracle": {
+      "sdk": "10.0.201",
+      "runtime": "10.0.12",
+      "platform": "Linux x64",
+      "details": "../project-reference-readonly-diagnostics.json"
+    },
+    "benchmark": "benchmark.json",
+    "benchmarkDiagnosis": "benchmark-diagnosis.json"
+  },
+  "runs": [
+    {
+      "sourceCommit": "a4e10cf8ea7017597566c7beff8bd693b0c5e026",
+      "node": "v22.23.3",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-project-reference-namespaces.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-runtime-types.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-artifact-cache.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-type-casting.test.js",
+        "tests/a05-tokens.test.js",
+        "tests/a05-statics.test.js",
+        "tests/a05-21-static-init.test.js",
+        "tests/a05-decode-plan.test.js",
+        "tests/a05-02-virtual-slots.test.js",
+        "tests/a05-b03-dispatch.test.js",
+        "tests/a05-seams-cil-types.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/release09-worker.test.js",
+        "tests/a03-03-assembly-definition.test.js",
+        "tests/a03-03-assembly-references.test.js",
+        "tests/a03-03-entry-stub.test.js",
+        "tests/managed-il.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "startedAt": "2026-10-03T23:54:39.633193+00:00",
+      "log": "node22-initial.tap",
+      "exitCode": 1,
+      "completedAt": "2026-10-03T23:55:23.312333+00:00",
+      "summary": {
+        "tests": 372,
+        "suites": 0,
+        "pass": 362,
+        "fail": 10,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "id": "node22-initial",
+      "artifact": "node22-initial.tap",
+      "logSha256": "65b3f5b93f45fe9df766f1e7e4ce981311aaa8adefa6eb3b755c4c2f9f4e4b36"
+    },
+    {
+      "sourceCommit": "8431e2288ccf7c98af0bb3258bf051d8009bd309",
+      "node": "v22.23.3",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-project-reference-namespaces.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-runtime-types.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-artifact-cache.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-type-casting.test.js",
+        "tests/a05-tokens.test.js",
+        "tests/a05-statics.test.js",
+        "tests/a05-21-static-init.test.js",
+        "tests/a05-decode-plan.test.js",
+        "tests/a05-02-virtual-slots.test.js",
+        "tests/a05-b03-dispatch.test.js",
+        "tests/a05-seams-cil-types.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/release09-worker.test.js",
+        "tests/a03-03-assembly-definition.test.js",
+        "tests/a03-03-assembly-references.test.js",
+        "tests/a03-03-entry-stub.test.js",
+        "tests/managed-il.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/a23-studio-test-worker.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "startedAt": "2026-10-04T00:07:16.511448+00:00",
+      "log": "node22-corrected.tap",
+      "exitCode": 1,
+      "completedAt": "2026-10-04T00:08:10.645115+00:00",
+      "summary": {
+        "tests": 409,
+        "suites": 0,
+        "pass": 408,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "id": "node22-corrected",
+      "artifact": "node22-corrected.tap",
+      "logSha256": "9724beb5e939e8c6d8538cbdbeebbe082843a66bd59044cd13557bd23c73bd85"
+    },
+    {
+      "sourceCommit": "043643b35bd97ad4bb137ac6dd704a6025f51129",
+      "node": "v22.23.3",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-source-member-definitions.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "startedAt": "2026-10-04T00:18:24.637408+00:00",
+      "log": "node22-readonly.tap",
+      "diskPreflight": {
+        "actualFreeBytes": 672628736,
+        "minimumFreeBytes": 536870912
+      },
+      "exitCode": 1,
+      "completedAt": "2026-10-04T00:18:26.389666+00:00",
+      "summary": {
+        "tests": 12,
+        "suites": 0,
+        "pass": 11,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "id": "node22-readonly",
+      "artifact": "node22-readonly.tap",
+      "logSha256": "8a2e7e824ee25fa5175e39cc02bac7c106e588cd637f2da2274e983b2f290b5e"
+    },
+    {
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "node": "v22.23.3",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-property-access.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-project-debug-banner.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-debug-editor.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "startedAt": "2026-10-04T00:28:55.403304+00:00",
+      "log": "node22-properties.tap",
+      "diskPreflight": {
+        "actualFreeBytes": 1051529216,
+        "minimumFreeBytes": 536870912
+      },
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:29:12.935610+00:00",
+      "summary": {
+        "tests": 68,
+        "suites": 0,
+        "pass": 68,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "id": "node22-properties",
+      "artifact": "node22-properties.tap",
+      "logSha256": "3216ac3b0e6db93e406592244ce25e016ac6b02447967c42759a683b3ebce486"
+    },
+    {
+      "sourceCommit": "b7271de11951bf58eeb2a6f2159d3c607cfd1c46",
+      "node": "v26.10.0",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-project-reference-namespaces.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-runtime-types.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-artifact-cache.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-type-casting.test.js",
+        "tests/a05-tokens.test.js",
+        "tests/a05-statics.test.js",
+        "tests/a05-21-static-init.test.js",
+        "tests/a05-decode-plan.test.js",
+        "tests/a05-02-virtual-slots.test.js",
+        "tests/a05-b03-dispatch.test.js",
+        "tests/a05-seams-cil-types.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/release09-worker.test.js",
+        "tests/a03-03-assembly-definition.test.js",
+        "tests/a03-03-assembly-references.test.js",
+        "tests/a03-03-entry-stub.test.js",
+        "tests/managed-il.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-project-debug-banner.test.js",
+        "tests/a23-project-property-access.test.js"
+      ],
+      "environment": {
+        "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "SHARPFORGE_NATIVE_SDK": "10.0.201",
+        "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+      },
+      "startedAt": "2026-10-04T00:29:13.000094+00:00",
+      "log": "node26-final.tap",
+      "diskPreflight": {
+        "actualFreeBytes": 713977856,
+        "minimumFreeBytes": 536870912
+      },
+      "exitCode": 0,
+      "completedAt": "2026-10-04T00:30:04.616438+00:00",
+      "summary": {
+        "tests": 415,
+        "suites": 0,
+        "pass": 415,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "id": "node26-final",
+      "artifact": "node26-final.tap",
+      "logSha256": "471a571a52d5cc07f19e17fac0623202c93b9046a4c2384b5752f44f00196394"
+    }
+  ],
+  "retainedFailureCorrections": [
+    {
+      "capture": "node22-initial",
+      "result": "362/372pass;10fail;0skip",
+      "corrections": [
+        {
+          "commit": "7c98c8a5",
+          "owner": "portable_evaluator",
+          "change": "Preserve actual .cctor initialization, failure caching, local initialization triggers and aligned IL token/offset/source provenance maps."
+        },
+        {
+          "commit": "6cccf50e",
+          "owner": "workspace_inventory",
+          "change": "Preserve implicit public constructor access when semantic initialization materializes its body."
+        }
+      ]
+    },
+    {
+      "capture": "node22-corrected",
+      "result": "408/409pass;1fail;0skip",
+      "corrections": [
+        {
+          "commit": "3787ff22",
+          "owner": "workspace_inventory",
+          "change": "Use SDK-confirmed CS0198 for static readonly assignment; instance remains CS0191. No assignment rejection was removed."
+        }
+      ]
+    },
+    {
+      "capture": "node22-readonly",
+      "result": "11/12pass;1fail;0skip",
+      "corrections": [
+        {
+          "commit": "7e1384ea",
+          "owner": "workspace_inventory",
+          "change": "Restore semantic property associations and emit only referenced external accessors."
+        },
+        {
+          "commit": "b6b12360",
+          "owner": "portable_evaluator",
+          "change": "Preserve all six accessor access modes and reconstruct canonical property metadata. Retain the CS0272 private-setter assertion."
+        }
+      ]
+    }
+  ],
+  "decisions": [
+    "Closed dependencies are explicit owned byte snapshots, verified against full assembly identity, SHA256 and canonical SharpForge profiles before runtime effects.",
+    "The composite CIL inspector maps validated original modules into bounded disjoint token ranges and uses the existing dispatcher, heap and static-initialization semantics.",
+    "Type names remain opaque registered identities; original metadata names and assembly keys are separate fields.",
+    "The graph loader is the sole source-URI collision authority. Editor navigation requires exact source text and context; unmatched embedded source stays read-only.",
+    "Both debugger stacks retain local originalMethodToken and assembly/source/project/context provenance. Synthetic source adapters have no invented physical token.",
+    "A failed replacement launch preserves the live session/cache; graph HotReload and external PDB replacement require a complete relaunch."
+  ],
+  "limits": [
+    "The supplied canonical nongeneric SharpForge class profile is qualified; arbitrary CLR assembly loading, external generic/virtual/abstract/by-reference/native behavior is not provided.",
+    "Source initialization preserves the original managed fault object; direct CIL preserves its existing TypeInitializationException wrapper. Once-only effects and failure propagation are qualified, not identical exception object types.",
+    "Private setter access is rejected by this all-member metadata profile with CS0272. The separate-PE Roslyn probe uses CS0200 because it hides the private setter; exact diagnostic-code parity is not claimed.",
+    "Pinned native xUnit/NUnit/MSTest/coverlet packages remain unavailable after the one previously retained 50-second restore timeout; no new restore or full framework parity claim.",
+    "No Windows/macOS/Rust/Wasm qualification is claimed.",
+    "Protected apps/studio/studio.js remains unapplied here; root owns the reviewed callback patch and final browser/application qualification.",
+    "Performance review remains pending for three measured rows above 5%, the incomplete third benchmark pair and the small aligned PE-size increase. The measurements are not dismissed as noise."
+  ],
+  "protectedStudioPatch": {
+    "helper": "/workspace/scratch/3e16369943fd/p18-studio-runtime-patch.py",
+    "sha256": "c7e0f0ea3dec63990d80794b381e796f31632fd74f50a53181ed0aaadc39e1ee",
+    "documentation": "studio-hooks.md",
+    "executedCopiedStudio": false,
+    "lockedFilesEdited": false
+  },
+  "resourcePolicy": {
+    "serialWrapper": "scripts/limited.js",
+    "testConcurrency": 1,
+    "minimumFreeBytes": 536870912,
+    "cleanupEvidence": [
+      "resource-cleanup.json",
+      "benchmark-resource-cleanup.json",
+      "benchmark-resume-cleanup.json"
+    ],
+    "benchmarkStop": "benchmark-preflight-stop.json",
+    "newNativeRestoreAttempts": 0,
+    "additionalBrowserRuns": 0
+  }
+}

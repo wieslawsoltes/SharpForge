@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/3e16369943fd/p18-workspace/tests/browser_a24_integrity_components_test.py", line 145, in <module>
+    main()
+  File "/workspace/scratch/3e16369943fd/p18-workspace/tests/browser_a24_integrity_components_test.py", line 33, in main
+    first_setup = first.evaluate(setup, {'folderName': folder_name, 'initialize': True})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/3e16369943fd/python-deps/playwright/sync_api/_generated.py", line 9413, in evaluate
+    self._sync(
+  File "/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_page.py", line 474, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_frame.py", line 346, in evaluate
+    await self._channel.send(
+  File "/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/3e16369943fd/python-deps/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Page.evaluate: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-kWFIiy --remote-debugging-pipe --no-startup-window
+<launched> pid=26
+[pid=26][err] [1004/015528.817934:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to open socket: Operation not permitted
+[pid=26][err] [1004/015528.821827:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=26][err] [1004/015528.821857:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to open socket: Operation not permitted
+[pid=26][err] [1004/015528.821872:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to open socket: Operation not permitted
+[pid=26][err] [1004/015528.821900:ERROR:net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1)
+[pid=26][err] [1004/015528.823116:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+[pid=26][err] [1004/015528.823881:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 44: No such file or directory (2)
+[pid=26][err] [1004/015528.834941:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+[pid=26][err] [1004/015528.835077:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=26][err] [1004/015528.835180:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=26][err] [1004/015528.836996:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1660] drmGetDevices2() has not found any devices
+[pid=26][err] [1004/015528.838764:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+[pid=26][err] [1004/015528.839008:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=26][err] [1004/015528.860076:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 76: No such file or directory (2)

@@ -1,0 +1,1643 @@
+{
+  "version": 1,
+  "recordedAt": "2026-10-03T20:56:14.315Z",
+  "node": "v22.23.3",
+  "architecture": "x64",
+  "source": {
+    "commit": "7b48e5b51f9bace019dfcfffb83b392b6a455369",
+    "dirty": true
+  },
+  "inventory": {
+    "available": true,
+    "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "sdks": [
+      {
+        "version": "8.0.425",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/8.0.425",
+        "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+        "preview": false
+      },
+      {
+        "version": "10.0.201",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.201",
+        "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+        "preview": false
+      },
+      {
+        "version": "10.0.401",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.401",
+        "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+        "preview": false
+      }
+    ],
+    "runtimes": [
+      {
+        "name": "Microsoft.AspNetCore.App",
+        "version": "8.0.31",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App",
+        "preview": false
+      },
+      {
+        "name": "Microsoft.AspNetCore.App",
+        "version": "10.0.5",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App",
+        "preview": false
+      },
+      {
+        "name": "Microsoft.AspNetCore.App",
+        "version": "10.0.12",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App",
+        "preview": false
+      },
+      {
+        "name": "Microsoft.NETCore.App",
+        "version": "8.0.31",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App",
+        "preview": false
+      },
+      {
+        "name": "Microsoft.NETCore.App",
+        "version": "10.0.5",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App",
+        "preview": false
+      },
+      {
+        "name": "Microsoft.NETCore.App",
+        "version": "10.0.12",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App",
+        "preview": false
+      }
+    ],
+    "info": {
+      "raw": ".NET SDK:\n Version:           10.0.401\n Commit:            e34a38d2ae\n Workload version:  10.0.400-manifests.63b36e85\n MSBuild version:   18.9.11+e34a38d2a\n\nRuntime Environment:\n OS Name:     ubuntu\n OS Version:  24.04\n OS Platform: Linux\n RID:         linux-x64\n Base Path:   /workspace/scratch/3e16369943fd/dotnet/sdk/10.0.401/\n\n.NET workloads installed:\nThere are no installed workloads to display.\nConfigured to use workload sets when installing new manifests.\nNo workload sets are installed. Run \"dotnet workload restore\" to install a workload set.\n\nHost:\n  Version:      10.0.12\n  Architecture: x64\n  Commit:       95017c711e\n\n.NET SDKs installed:\n  8.0.425 [/workspace/scratch/3e16369943fd/dotnet/sdk]\n  10.0.201 [/workspace/scratch/3e16369943fd/dotnet/sdk]\n  10.0.401 [/workspace/scratch/3e16369943fd/dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 8.0.31 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.5 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.12 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 8.0.31 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.5 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.12 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_CLI_TELEMETRY_OPTOUT              [1]\n  DOTNET_CLI_UI_LANGUAGE                   [en]\n  DOTNET_NOLOGO                            [1]\n  DOTNET_ROOT                              [/workspace/scratch/3e16369943fd/dotnet]\n\nglobal.json file:\n  Not found\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download\n",
+      "msbuildVersion": "18.9.11+e34a38d2a",
+      "os": "ubuntu",
+      "osVersion": "24.04",
+      "platform": "Linux",
+      "rid": "linux-x64",
+      "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.401/",
+      "architecture": "x64"
+    },
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "cells": [
+    {
+      "platform": "win32",
+      "selection": "8.0.425",
+      "status": "skipped",
+      "reason": "Operating system unavailable"
+    },
+    {
+      "platform": "win32",
+      "selection": "10.0.201",
+      "status": "skipped",
+      "reason": "Operating system unavailable"
+    },
+    {
+      "platform": "linux",
+      "selection": "8.0.425",
+      "sdk": {
+        "version": "8.0.425",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/8.0.425",
+        "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+        "preview": false
+      },
+      "engine": "dotnet",
+      "root": "/tmp/sharpforge-msbuild-qualification-YFiycB",
+      "selectedEnvironment": {
+        "available": false,
+        "sdks": [],
+        "runtimes": [],
+        "error": "dotnet discovery failed: Unhandled exception. System.ComponentModel.Win32Exception (2): Unable to retrieve the specified information about the process or thread.  It may have exited or may be privileged.\n   at System.Diagnostics.Process.GetStat()\n   at System.Diagnostics.Process.get_StartTimeCore()\n   at System.Diagnostics.Process.get_StartTime()\n   at Microsoft.DotNet.Cli.Program.Main(String[] args)\n"
+      },
+      "capability": {
+        "available": false,
+        "version": "",
+        "error": "Unhandled exception. System.ComponentModel.Win32Exception (2): Unable to retrieve the specified information about the process or thread.  It may have exited or may be privileged.\n   at System.Diagnostics.Process.GetStat()\n   at System.Diagnostics.Process.get_StartTimeCore()\n   at System.Diagnostics.Process.get_StartTime()\n   at Microsoft.DotNet.Cli.Program.Main(String[] args)\n"
+      },
+      "actions": [
+        {
+          "action": "restore",
+          "status": "failed",
+          "durationMs": 186.53684700000002,
+          "error": "Native action failed; Expected SFQA1001 native failure diagnostic",
+          "verifiedOutputs": [],
+          "diagnostics": [],
+          "failureDiagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/fb6782ff-c25d-4d58-b55a-a8a59b48a61d/output.log",
+              "size": 379,
+              "kind": "log"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Restore",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-YFiycB/.sharpforge/msbuild/fb6782ff-c25d-4d58-b55a-a8a59b48a61d/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Restore",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        },
+        {
+          "action": "build",
+          "status": "failed",
+          "durationMs": 169.36024199999997,
+          "error": "Native action failed; Expected SFQA1001 native failure diagnostic",
+          "verifiedOutputs": [],
+          "diagnostics": [],
+          "failureDiagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/aeba58a2-3135-4bdb-b5b9-77121af06fad/output.log",
+              "size": 379,
+              "kind": "log"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Build",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-YFiycB/.sharpforge/msbuild/aeba58a2-3135-4bdb-b5b9-77121af06fad/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        },
+        {
+          "action": "pack",
+          "status": "failed",
+          "durationMs": 172.79005599999994,
+          "error": "Native action failed; Expected SFQA1001 native failure diagnostic",
+          "verifiedOutputs": [],
+          "diagnostics": [],
+          "failureDiagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/51bcbaf0-98d5-45c0-a861-0b6b2510a3c8/output.log",
+              "size": 379,
+              "kind": "log"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Pack",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-YFiycB/.sharpforge/msbuild/51bcbaf0-98d5-45c0-a861-0b6b2510a3c8/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Pack",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        },
+        {
+          "action": "publish",
+          "status": "failed",
+          "durationMs": 4791.0176839999995,
+          "error": "Expected SFQA1001 native failure diagnostic",
+          "verifiedOutputs": [
+            "App/bin/Debug/net8.0/publish/App.dll",
+            "App/bin/Debug/net8.0/publish/App.runtimeconfig.json",
+            "App/bin/Debug/net8.0/publish/App.deps.json"
+          ],
+          "diagnostics": [],
+          "failureDiagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/98bc5aaa-17eb-4c5f-81ad-f6d38651e786/output.log",
+              "size": 473,
+              "kind": "log"
+            },
+            {
+              "path": ".sharpforge/msbuild/98bc5aaa-17eb-4c5f-81ad-f6d38651e786/build.binlog",
+              "size": 165969,
+              "kind": "binlog"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.deps.json",
+              "size": 728,
+              "modified": "2026-10-03T20:55:55.448Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:55:55.380Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.pdb",
+              "size": 10540,
+              "modified": "2026-10-03T20:55:55.372Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.runtimeconfig.json",
+              "size": 257,
+              "modified": "2026-10-03T20:55:55.492Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:55:53.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/Library.pdb",
+              "size": 10288,
+              "modified": "2026-10-03T20:55:53.640Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.deps.json",
+              "size": 728,
+              "modified": "2026-10-03T20:55:55.448Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:55:55.380Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.pdb",
+              "size": 10540,
+              "modified": "2026-10-03T20:55:55.372Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.runtimeconfig.json",
+              "size": 257,
+              "modified": "2026-10-03T20:55:55.492Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:55:53.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/Library.pdb",
+              "size": 10288,
+              "modified": "2026-10-03T20:55:53.640Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Publish",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-YFiycB/.sharpforge/msbuild/98bc5aaa-17eb-4c5f-81ad-f6d38651e786/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Publish",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        }
+      ],
+      "solutions": [
+        {
+          "format": "slnx",
+          "graphBuild": false,
+          "status": "failed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/6157e9a0-1073-4e55-a9af-76bb7040e457/output.log",
+              "size": 379,
+              "kind": "log"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Fixture.slnx",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        },
+        {
+          "format": "slnx",
+          "graphBuild": true,
+          "status": "failed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/be7bfdd4-3715-451e-8423-a50c2c0fd6b6/output.log",
+              "size": 379,
+              "kind": "log"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Fixture.slnx",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-graphBuild",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        },
+        {
+          "format": "sln",
+          "graphBuild": false,
+          "status": "failed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/d853de9c-8cc6-447e-b77a-137d59a3338e/output.log",
+              "size": 379,
+              "kind": "log"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Fixture.sln",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        },
+        {
+          "format": "sln",
+          "graphBuild": true,
+          "status": "passed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/07b943e6-e570-4a07-85b6-e1712c1c8160/output.log",
+              "size": 313,
+              "kind": "log"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.deps.json",
+              "size": 728,
+              "modified": "2026-10-03T20:55:55.448Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:55:55.380Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.pdb",
+              "size": 10540,
+              "modified": "2026-10-03T20:55:55.372Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/App.runtimeconfig.json",
+              "size": 257,
+              "modified": "2026-10-03T20:55:55.492Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:55:53.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/Library.pdb",
+              "size": 10288,
+              "modified": "2026-10-03T20:55:53.640Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.deps.json",
+              "size": 728,
+              "modified": "2026-10-03T20:55:55.448Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:55:55.380Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.pdb",
+              "size": 10540,
+              "modified": "2026-10-03T20:55:55.372Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/App.runtimeconfig.json",
+              "size": 257,
+              "modified": "2026-10-03T20:55:55.492Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:55:53.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net8.0/publish/Library.pdb",
+              "size": 10288,
+              "modified": "2026-10-03T20:55:53.640Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net8.0/Library.deps.json",
+              "size": 391,
+              "modified": "2026-10-03T20:55:53.696Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net8.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:55:53.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net8.0/Library.pdb",
+              "size": 10288,
+              "modified": "2026-10-03T20:55:53.640Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-YFiycB/Fixture.sln",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-graphBuild",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        }
+      ],
+      "standalone": {
+        "status": "skipped",
+        "reason": "Windows runner unavailable",
+        "engine": "msbuild"
+      },
+      "status": "failed"
+    },
+    {
+      "platform": "linux",
+      "selection": "10.0.201",
+      "sdk": {
+        "version": "10.0.201",
+        "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.201",
+        "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+        "preview": false
+      },
+      "engine": "dotnet",
+      "root": "/tmp/sharpforge-msbuild-qualification-sFYgpH",
+      "selectedEnvironment": {
+        "available": true,
+        "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "sdks": [
+          {
+            "version": "8.0.425",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/8.0.425",
+            "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+            "preview": false
+          },
+          {
+            "version": "10.0.201",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.201",
+            "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+            "preview": false
+          },
+          {
+            "version": "10.0.401",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.401",
+            "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk",
+            "preview": false
+          }
+        ],
+        "runtimes": [
+          {
+            "name": "Microsoft.AspNetCore.App",
+            "version": "8.0.31",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App",
+            "preview": false
+          },
+          {
+            "name": "Microsoft.AspNetCore.App",
+            "version": "10.0.5",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App",
+            "preview": false
+          },
+          {
+            "name": "Microsoft.AspNetCore.App",
+            "version": "10.0.12",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App",
+            "preview": false
+          },
+          {
+            "name": "Microsoft.NETCore.App",
+            "version": "8.0.31",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App",
+            "preview": false
+          },
+          {
+            "name": "Microsoft.NETCore.App",
+            "version": "10.0.5",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App",
+            "preview": false
+          },
+          {
+            "name": "Microsoft.NETCore.App",
+            "version": "10.0.12",
+            "path": "/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App",
+            "preview": false
+          }
+        ],
+        "info": {
+          "raw": ".NET SDK:\n Version:           10.0.201\n Commit:            4d3023de60\n Workload version:  10.0.200-manifests.63b36e85\n MSBuild version:   18.3.0-release-26153-122+4d3023de6\n\nRuntime Environment:\n OS Name:     ubuntu\n OS Version:  24.04\n OS Platform: Linux\n RID:         linux-x64\n Base Path:   /workspace/scratch/3e16369943fd/dotnet/sdk/10.0.201/\n\n.NET workloads installed:\nThere are no installed workloads to display.\nConfigured to use workload sets when installing new manifests.\nNo workload sets are installed. Run \"dotnet workload restore\" to install a workload set.\n\nHost:\n  Version:      10.0.12\n  Architecture: x64\n  Commit:       95017c711e\n\n.NET SDKs installed:\n  8.0.425 [/workspace/scratch/3e16369943fd/dotnet/sdk]\n  10.0.201 [/workspace/scratch/3e16369943fd/dotnet/sdk]\n  10.0.401 [/workspace/scratch/3e16369943fd/dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 8.0.31 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.5 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.12 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 8.0.31 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.5 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.12 [/workspace/scratch/3e16369943fd/dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_CLI_TELEMETRY_OPTOUT              [1]\n  DOTNET_CLI_UI_LANGUAGE                   [en]\n  DOTNET_NOLOGO                            [1]\n  DOTNET_ROOT                              [/workspace/scratch/3e16369943fd/dotnet]\n\nglobal.json file:\n  /tmp/sharpforge-msbuild-qualification-sFYgpH/global.json\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download\n",
+          "msbuildVersion": "18.3.0-release-26153-122+4d3023de6",
+          "os": "ubuntu",
+          "osVersion": "24.04",
+          "platform": "Linux",
+          "rid": "linux-x64",
+          "basePath": "/workspace/scratch/3e16369943fd/dotnet/sdk/10.0.201/",
+          "architecture": "x64"
+        },
+        "platform": "linux",
+        "architecture": "x64"
+      },
+      "capability": {
+        "available": true,
+        "version": "18.3.0.15422"
+      },
+      "actions": [
+        {
+          "action": "restore",
+          "status": "passed",
+          "durationMs": 1614.9092180000007,
+          "error": null,
+          "verifiedOutputs": [
+            "App/obj/project.assets.json"
+          ],
+          "diagnostics": [],
+          "failureDiagnostics": [
+            {
+              "severity": "error",
+              "code": "SFQA1001",
+              "message": "Expected qualification failure",
+              "file": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "line": 1,
+              "column": 224,
+              "endLine": null,
+              "endColumn": null,
+              "project": null,
+              "raw": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj(1,224): error SFQA1001: Expected qualification failure",
+              "workspacePath": "Failure/Failure.csproj"
+            }
+          ],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/db65245d-f8ae-4737-8761-5716dac1d3b9/output.log",
+              "size": 212,
+              "kind": "log"
+            },
+            {
+              "path": ".sharpforge/msbuild/db65245d-f8ae-4737-8761-5716dac1d3b9/build.binlog",
+              "size": 88377,
+              "kind": "binlog"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Restore",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-sFYgpH/.sharpforge/msbuild/db65245d-f8ae-4737-8761-5716dac1d3b9/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Restore",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        },
+        {
+          "action": "build",
+          "status": "passed",
+          "durationMs": 6048.915779999999,
+          "error": null,
+          "verifiedOutputs": [
+            "App/bin/Debug/net10.0/App.dll",
+            "App/bin/Debug/net10.0/App.pdb"
+          ],
+          "diagnostics": [],
+          "failureDiagnostics": [
+            {
+              "severity": "error",
+              "code": "SFQA1001",
+              "message": "Expected qualification failure",
+              "file": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "line": 1,
+              "column": 224,
+              "endLine": null,
+              "endColumn": null,
+              "project": null,
+              "raw": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj(1,224): error SFQA1001: Expected qualification failure",
+              "workspacePath": "Failure/Failure.csproj"
+            }
+          ],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/9ebb33f8-8466-47c0-a558-aadb86a91f9c/output.log",
+              "size": 260,
+              "kind": "log"
+            },
+            {
+              "path": ".sharpforge/msbuild/9ebb33f8-8466-47c0-a558-aadb86a91f9c/build.binlog",
+              "size": 180718,
+              "kind": "binlog"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Build",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-sFYgpH/.sharpforge/msbuild/9ebb33f8-8466-47c0-a558-aadb86a91f9c/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        },
+        {
+          "action": "pack",
+          "status": "passed",
+          "durationMs": 2272.682611,
+          "error": null,
+          "verifiedOutputs": [
+            "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg"
+          ],
+          "diagnostics": [],
+          "failureDiagnostics": [
+            {
+              "severity": "error",
+              "code": "SFQA1001",
+              "message": "Expected qualification failure",
+              "file": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "line": 1,
+              "column": 224,
+              "endLine": null,
+              "endColumn": null,
+              "project": null,
+              "raw": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj(1,224): error SFQA1001: Expected qualification failure",
+              "workspacePath": "Failure/Failure.csproj"
+            }
+          ],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/b7948f4a-f2cb-4a45-8f5b-87a9050ec49d/output.log",
+              "size": 559,
+              "kind": "log"
+            },
+            {
+              "path": ".sharpforge/msbuild/b7948f4a-f2cb-4a45-8f5b-87a9050ec49d/build.binlog",
+              "size": 205327,
+              "kind": "binlog"
+            },
+            {
+              "path": "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg",
+              "size": 3985,
+              "modified": "2026-10-03T20:56:06.896Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Pack",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-sFYgpH/.sharpforge/msbuild/b7948f4a-f2cb-4a45-8f5b-87a9050ec49d/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Pack",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        },
+        {
+          "action": "publish",
+          "status": "passed",
+          "durationMs": 1859.927854999998,
+          "error": null,
+          "verifiedOutputs": [
+            "App/bin/Debug/net10.0/publish/App.dll",
+            "App/bin/Debug/net10.0/publish/App.runtimeconfig.json",
+            "App/bin/Debug/net10.0/publish/App.deps.json"
+          ],
+          "diagnostics": [],
+          "failureDiagnostics": [
+            {
+              "severity": "error",
+              "code": "SFQA1001",
+              "message": "Expected qualification failure",
+              "file": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "line": 1,
+              "column": 224,
+              "endLine": null,
+              "endColumn": null,
+              "project": null,
+              "raw": "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj(1,224): error SFQA1001: Expected qualification failure",
+              "workspacePath": "Failure/Failure.csproj"
+            }
+          ],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/30a12e4b-21be-4a9c-a1d9-7fd346e32895/output.log",
+              "size": 345,
+              "kind": "log"
+            },
+            {
+              "path": ".sharpforge/msbuild/30a12e4b-21be-4a9c-a1d9-7fd346e32895/build.binlog",
+              "size": 175419,
+              "kind": "binlog"
+            },
+            {
+              "path": "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg",
+              "size": 3985,
+              "modified": "2026-10-03T20:56:06.896Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/App/App.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Publish",
+              "-binaryLogger:/tmp/sharpforge-msbuild-qualification-sFYgpH/.sharpforge/msbuild/30a12e4b-21be-4a9c-a1d9-7fd346e32895/build.binlog;ProjectImports=None",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "failureInvocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Failure/Failure.csproj",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-t:Publish",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          }
+        }
+      ],
+      "solutions": [
+        {
+          "format": "slnx",
+          "graphBuild": false,
+          "status": "passed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/6f6912ad-43a5-471f-a7d1-6e060d76a088/output.log",
+              "size": 260,
+              "kind": "log"
+            },
+            {
+              "path": "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg",
+              "size": 3985,
+              "modified": "2026-10-03T20:56:06.896Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.deps.json",
+              "size": 393,
+              "modified": "2026-10-03T20:56:02.684Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Fixture.slnx",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        },
+        {
+          "format": "slnx",
+          "graphBuild": true,
+          "status": "passed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/ba89bb5b-d314-4bf1-8100-5816ce785b72/output.log",
+              "size": 349,
+              "kind": "log"
+            },
+            {
+              "path": "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg",
+              "size": 3985,
+              "modified": "2026-10-03T20:56:06.896Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.deps.json",
+              "size": 393,
+              "modified": "2026-10-03T20:56:02.684Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Fixture.slnx",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-graphBuild",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        },
+        {
+          "format": "sln",
+          "graphBuild": false,
+          "status": "passed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/f7284f1a-2ee0-4fdc-b584-7520d8a27cea/output.log",
+              "size": 260,
+              "kind": "log"
+            },
+            {
+              "path": "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg",
+              "size": 3985,
+              "modified": "2026-10-03T20:56:06.896Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.deps.json",
+              "size": 393,
+              "modified": "2026-10-03T20:56:02.684Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Fixture.sln",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        },
+        {
+          "format": "sln",
+          "graphBuild": true,
+          "status": "passed",
+          "diagnostics": [],
+          "artifacts": [
+            {
+              "path": ".sharpforge/msbuild/d65c5699-e2b5-4da4-8039-06b8734918b6/output.log",
+              "size": 350,
+              "kind": "log"
+            },
+            {
+              "path": "App/bin/Debug/SharpForge.Qualification.1.0.0.nupkg",
+              "size": 3985,
+              "modified": "2026-10-03T20:56:06.896Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.deps.json",
+              "size": 732,
+              "modified": "2026-10-03T20:56:04.776Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.dll",
+              "size": 4608,
+              "modified": "2026-10-03T20:56:04.704Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.pdb",
+              "size": 10828,
+              "modified": "2026-10-03T20:56:04.692Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/App.runtimeconfig.json",
+              "size": 259,
+              "modified": "2026-10-03T20:56:04.808Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "App/bin/Debug/net10.0/publish/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.deps.json",
+              "size": 393,
+              "modified": "2026-10-03T20:56:02.684Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.dll",
+              "size": 4096,
+              "modified": "2026-10-03T20:56:02.648Z",
+              "kind": "output"
+            },
+            {
+              "path": "Library/bin/Debug/net10.0/Library.pdb",
+              "size": 10576,
+              "modified": "2026-10-03T20:56:02.636Z",
+              "kind": "output"
+            }
+          ],
+          "invocation": {
+            "executable": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+            "arguments": [
+              "msbuild",
+              "/tmp/sharpforge-msbuild-qualification-sFYgpH/Fixture.sln",
+              "-nologo",
+              "-v:minimal",
+              "-m:1",
+              "-graphBuild",
+              "-restore",
+              "-t:Build",
+              "-p:UseSharedCompilation=false",
+              "-nodeReuse:false"
+            ]
+          },
+          "error": null
+        }
+      ],
+      "standalone": {
+        "status": "skipped",
+        "reason": "Windows runner unavailable",
+        "engine": "msbuild"
+      },
+      "status": "passed"
+    },
+    {
+      "platform": "darwin",
+      "selection": "8.0.425",
+      "status": "skipped",
+      "reason": "Operating system unavailable"
+    },
+    {
+      "platform": "darwin",
+      "selection": "10.0.201",
+      "status": "skipped",
+      "reason": "Operating system unavailable"
+    }
+  ],
+  "windows": [
+    {
+      "capability": "standalone-msbuild",
+      "status": "skipped",
+      "reason": "Windows runner unavailable"
+    },
+    {
+      "capability": "cancel-grandchildren",
+      "status": "skipped",
+      "reason": "Windows runner unavailable"
+    },
+    {
+      "capability": "long-paths",
+      "status": "skipped",
+      "reason": "Windows runner unavailable"
+    },
+    {
+      "capability": "backslash-diagnostics",
+      "status": "skipped",
+      "reason": "Windows runner unavailable"
+    }
+  ],
+  "native": true,
+  "measurements": "Action timings include positive and negative fixtures; no comparative speedup or allocation claim"
+}

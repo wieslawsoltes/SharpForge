@@ -1,14 +1,14 @@
+import {readCanonicalProperties} from './load/properties.js';
+import {readProjectReferenceProfile, decodeProjectReferenceSpan} from './load/project-reference-profile.js';
+import {verifyCanonicalProfile} from './load/canonical-profile.js';
 import {decodeScalarSpan,profileOpcodes} from './scalar-loading.js';
-import { canonicalEmissionOptions } from './pe/canonical-options.js';
 import { decodeObjectBuiltin } from './object-builtin-mapping.js';
-import { canonicalWithSymbols } from './pe/canonical-symbols.js';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
 import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, numericAliases, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
 import { CilError, text } from './binary.js';
 import { token, decodeCoded, readSignature, cliSystemName } from './metadata.js';
 import { readPE } from './pe.js';
 import { decodeInstructions } from './opcodes.js';
-import { emitAssembly } from './emitter.js';
 import { defaultValue } from './analysis.js';
 const shortTypes={...numericAliases,'System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
 const arithmetic={'add.ovf':'+','sub.ovf':'-','mul.ovf':'*',add:'+',sub:'-',mul:'*',div:'/',rem:'%',and:'&',or:'|',xor:'^',shl:'<<',shr:'>>'};
@@ -21,10 +21,11 @@ function constant(i,metadata){if(i.name==='ldnull')return null;if(i.name==='ldst
  * exception tables and assembly references, before any runtime instruction is exposed.
  */
 export function loadAssembly(bytes,options={}) {
-  const started=performance.now(),pe=readPE(bytes,options),metadata=pe.metadata,debugBytes=metadata.streams.get('#SF');if(!debugBytes)throw new CilError('This browser runtime requires SharpForge CIL profile/debug metadata; arbitrary .NET assembly execution is not supported');
+  const started=performance.now(),pe=readPE(bytes,options),debugBytes=pe.metadata.streams.get('#SF');let metadata=pe.metadata;if(!debugBytes)throw new CilError('This browser runtime requires SharpForge CIL profile/debug metadata; arbitrary .NET assembly execution is not supported');
   let debug;try{debug=JSON.parse(text(debugBytes));}catch{throw new CilError('Invalid SharpForge CIL metadata');}
   if(debug?.format!=='SharpForge.CIL'||debug.version!==1||!Array.isArray(debug.methods)||!Array.isArray(debug.types)||!Array.isArray(debug.statics)||!Array.isArray(debug.sequencePoints)||!Array.isArray(debug.sources))throw new CilError('Unsupported SharpForge CIL profile');
   if(debug.methods.length>100_000||debug.types.length>100_000||debug.sequencePoints.length>1_000_000)throw new CilError('Profile metadata limit exceeded');
+  const projectReferences = readProjectReferenceProfile(metadata, debug); metadata = projectReferences.metadata;
   const typeOwners=new Map(),fieldOwners=new Map();const td=metadata.rows[2]??[];
   td.forEach((row,index)=>{const t=token(2,index+1);for(let f=row[4];f<(td[index+1]?.[4]??(metadata.counts[4]??0)+1);f++)fieldOwners.set(token(4,f),t);for(let m=row[5];m<(td[index+1]?.[5]??(metadata.counts[6]??0)+1);m++)typeOwners.set(token(6,m),t);});
   const typeByToken=new Map(),fieldByToken=new Map(),methodByToken=new Map();
@@ -35,33 +36,27 @@ export function loadAssembly(bytes,options={}) {
     const pr=metadata.rows[8]??[],parameters=sig.parameters.map((type,index)=>({name:metadata.string(pr[row[5]+index-1]?.[2]??0),type}));const ownerToken=typeOwners.get(info.token),owner=typeByToken.get(ownerToken)?.name??null;
     if(info.sourceRange){const r=info.sourceRange,source=debug.sources.find(s=>s.uri===r.uri);if(!source||!Number.isSafeInteger(r.start)||!Number.isSafeInteger(r.end)||r.start<0||r.end<r.start||typeof source.text==='string'&&r.end>source.text.length)throw new CilError('Invalid method source range');}
     const method={...(info.asyncRole?{asyncRole:info.asyncRole,asyncOrigin:info.asyncOrigin}:{}),...(info.sourceRange?{sourceRange:info.sourceRange}:{}),...(info.accessor?{accessor:info.accessor}:{}),id,name:info.name,qualifiedName:info.qualifiedName,owner,isStatic:sig.isStatic,returnType:sig.returnType,...(typeByToken.get(ownerToken)?.interfaces?.includes('System.IDisposable')&&info.name==='Dispose'&&sig.parameters.length===0&&!sig.isStatic&&row[2]===0x1e6?{implementsDispose:true}:{}),parameters,locals,code:null,handlers:[]};methodByToken.set(info.token,method);bodies.set(id,body);const decoded=decodeInstructions(body.code);for(const i of decoded)if(!profileOpcodes.has(i.name))throw new CilError(`Unsupported CIL opcode ${i.name} in canonical profile`,i.offset);instructions.set(id,decoded);return method;});
-  const propertyMaps=metadata.rows[21]??[],propertyRows=metadata.rows[23]??[],semantics=metadata.rows[24]??[];
-  propertyMaps.forEach((map,index)=>{const owner=typeByToken.get(token(2,map[0]));if(!owner)return;owner.properties=[];
-    const end=propertyMaps[index+1]?.[1]??propertyRows.length+1;
-    for(let rowId=map[1];rowId<end;rowId++){const row=propertyRows[rowId-1];if(!row)throw new CilError('Invalid property map');const signature=readSignature(metadata.blob(row[2]),metadata);if(signature.kind!=='property'||signature.parameters.length)throw new CilError('Unsupported property signature');
-      const pt=token(23,rowId),name=metadata.string(row[1]),accessors=semantics.filter(s=>decodeCoded('HasSemantics',s[2])===pt),property={name,type:signature.returnType,isStatic:signature.isStatic,access:'private',get:null,set:null,backing:null};
-      for(const a of accessors){const method=methodByToken.get(token(6,a[1])),kind=a[0]===2?'get':a[0]===1?'set':null;if(!method||!kind||method.owner!==owner.name)throw new CilError('Invalid property accessor');const flags=metadata.row(token(6,a[1]))[2],access=({1:'private',3:'internal',4:'protected',6:'public'})[flags&7];if(!access||!(flags&0x800))throw new CilError('Invalid accessor flags');method.accessor={property:name,kind,access};property[kind]=method.id;if(property.access==='private'||access==='public')property.access=access;}
-      const backingName=`<${name}>k__BackingField`;if(owner.fields.some(f=>f.name===backingName&&f.backing)||statics.some(f=>f.name===owner.name+'.'+backingName&&f.backing))property.backing=backingName;owner.properties.push(property);
-    }
-  });
+  readCanonicalProperties(metadata,{typeByToken,methodByToken,statics});
   const library=debug.outputKind==='library',entry=methodByToken.get(pe.entryPoint);if(library?pe.entryPoint!==0||debug.entry!==null:!entry||entry.id!==debug.entry)throw new CilError('Entry point does not match profile');
-  const image={formatVersion:FORMAT_VERSION,name:debug.name,...(library?{outputKind:'library'}:{}),entryPoint:library?null:entry.id,constants:[],sequencePoints:debug.sequencePoints,sources:debug.sources,types,statics,methods};const constants=new Map(),intern=value=>{const key=JSON.stringify([typeof value,value]);if(constants.has(key))return constants.get(key);const id=image.constants.length;constants.set(key,id);image.constants.push(value);return id;};
+  const image={formatVersion:FORMAT_VERSION,name:debug.name,...(projectReferences.profile?{externalReferences:projectReferences.profile}:{}),...(library?{outputKind:'library'}:{}),entryPoint:library?null:entry.id,constants:[],sequencePoints:debug.sequencePoints,sources:debug.sources,types,statics,methods};const constants=new Map(),intern=value=>{const key=JSON.stringify([typeof value,value]);if(constants.has(key))return constants.get(key);const id=image.constants.length;constants.set(key,id);image.constants.push(value);return id;};
   let totalInstructions=0;
   const resolveCall=t=>{if(t>>>24===6){const row=metadata.row(t);return {token:t,owner:metadata.typeName(typeOwners.get(t)),name:metadata.string(row[3]),sig:readSignature(metadata.blob(row[4]),metadata)};}if(t>>>24!==10)throw new CilError('Unsupported method token');const row=metadata.row(t);return {token:t,owner:metadata.typeName(decodeCoded('MemberRefParent',row[0])),name:metadata.string(row[1]),sig:readSignature(metadata.blob(row[2]),metadata)};};
   for(const method of methods){const info=debug.methods[method.id],body=bodies.get(method.id),all=instructions.get(method.id),byOffset=new Map(all.map(i=>[i.offset,i])),startToPc=new Map();let previousEnd=0;
     for(let pc=0;pc<info.spans.length;pc++){const span=info.spans[pc];if(!Array.isArray(span)||span.length!==2||!span.every(Number.isInteger)||span[0]<previousEnd||span[1]<=0||span[0]+span[1]>body.code.length||!byOffset.has(span[0])||span[0]+span[1]!==body.code.length&&!byOffset.has(span[0]+span[1]))throw new CilError('Invalid instruction-boundary map');previousEnd=span[0]+span[1];startToPc.set(span[0],pc);}totalInstructions+=info.spans.length;if(totalInstructions>1_000_000)throw new CilError('Instruction limit exceeded');
     const sequenceByPc=new Map();for(const p of image.sequencePoints.filter(p=>p.methodId===method.id)){if(p.id<0||p.id>=image.sequencePoints.length||image.sequencePoints[p.id]!==p||info.spans[p.offset]?.[0]!==p.ilOffset||p.methodToken!==info.token)throw new CilError('Invalid sequence point');sequenceByPc.set(p.offset,p.id);}
     const code=new Int32Array(info.spans.length*3);
-    for(let pc=0;pc<info.spans.length;pc++){const [offset,size]=info.spans[pc],span=[];for(let at=offset;at<offset+size;){const i=byOffset.get(at);if(!i)throw new CilError('Missing CIL instruction');span.push(i);at+=i.size;}const decoded=decodeSpan(span,{metadata,method,methodByToken,typeByToken,typeOwners,fieldByToken,staticByToken,startToPc,resolveCall,intern,sequence:sequenceByPc.get(pc)});code.set(decoded,pc*3);}
+    for(let pc=0;pc<info.spans.length;pc++){const [offset,size]=info.spans[pc],span=[];for(let at=offset;at<offset+size;){const i=byOffset.get(at);if(!i)throw new CilError('Missing CIL instruction');span.push(i);at+=i.size;}const decoded=decodeSpan(span,{metadata,projectReferences,method,methodByToken,typeByToken,typeOwners,fieldByToken,staticByToken,startToPc,resolveCall,intern,sequence:sequenceByPc.get(pc)});code.set(decoded,pc*3);}
     method.code=code;
     for(const h of body.handlers){if(h.flags===2){const start=startToPc.get(h.start),end=info.spans.findIndex(s=>s[0]+s[1]===h.end),target=startToPc.get(h.target),handlerEnd=startToPc.get(h.handlerEnd)??info.spans.findIndex(s=>s[0]+s[1]===h.handlerEnd)+1;if(start===undefined||end<0||target===undefined||handlerEnd<=target)throw new CilError('Unsupported finally-region encoding');method.handlers.push({kind:'finally',start,end,target,handlerEnd});continue;}const prefix=byOffset.get(h.target),slot=prefix?nativeLocal(prefix,'stloc'):null,target=prefix?startToPc.get(h.target+prefix.size):undefined,start=startToPc.get(h.start),end=info.spans.findIndex(s=>s[0]+s[1]===h.end);if(slot===null||slot<0||slot>=method.locals.length||target===undefined||start===undefined||end<0||metadata.typeName(h.catchType)!=='System.Exception')throw new CilError('Unsupported catch-region encoding');method.handlers.push({start,end,target,slot,type:'Exception'});}
   }
   const errors=verifyImage(image);if(errors.length)throw new CilError('Decoded CIL verification failed: '+errors.join('; '));
-  const decodedAt=performance.now();const canonical=emitAssembly(image,canonicalEmissionOptions(pe,debug));if(!canonicalWithSymbols(canonical,pe))throw new CilError('Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected');
+  const decodedAt = performance.now();
+  verifyCanonicalProfile(image, pe, debug);
   image.il={format:'ECMA-335',profile:'SharpForge.CIL/1',assemblyBytes:pe.bytes.length,decodeMs:decodedAt-started,verificationMs:performance.now()-decodedAt,loadMs:performance.now()-started,methodTokens:debug.methods.map(m=>m.token),offsets:debug.methods.map(m=>m.spans.map(s=>s[0]))};
   return image;
 }
 function decodeSpan(span,c) {
+  const project = decodeProjectReferenceSpan(span, c.projectReferences); if (project) return project;
   const scalar=decodeScalarSpan(span,c);if(scalar)return scalar;
   const emit=(op,a=0,b=0)=>[op,a,b],names=span.map(i=>i.name),call=span.find(i=>['call','callvirt','newobj'].includes(i.name));
   if(names.includes('ldftn')){const functionToken=span.find(i=>i.name==='ldftn').operand,method=c.methodByToken.get(functionToken),constructor=c.resolveCall(call.operand);if(!method||frameworkType(constructor.owner)?.kind!=='delegate')throw new CilError('Invalid delegate construction');return emit(Op.DELEGATE,method.id,c.intern(constructor.owner));}

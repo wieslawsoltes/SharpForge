@@ -1,0 +1,1658 @@
+{
+  "format": "SharpForge.DictionaryCpuProfile/1",
+  "node": "v22.23.3",
+  "backend": "cil",
+  "sourceCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "moduleEntries": {
+    "compiler": "/workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/compiler/src/index.js",
+    "runtime": "/workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/index.js"
+  },
+  "referenceBenchmarkSha256": "a8728b6506d942f9d293c695de5b16f4ee6b6ac6159beb956f599ecde8363c51",
+  "samplingIntervalMicroseconds": 100,
+  "warmupRuns": 1,
+  "profiledRuns": 4,
+  "correctness": {
+    "passed": true
+  },
+  "runs": [
+    {
+      "file": "dictionary-cil-1.cpuprofile",
+      "instrumentedElapsedMs": 161.72522800000002,
+      "samples": 848,
+      "profileMicroseconds": 233503,
+      "hostMemoryBefore": {
+        "rss": 134037504,
+        "heapTotal": 75198464,
+        "heapUsed": 40833616,
+        "external": 3586474,
+        "arrayBuffers": 109758
+      },
+      "hostMemoryAfter": {
+        "rss": 140705792,
+        "heapTotal": 78082048,
+        "heapUsed": 46643600,
+        "external": 3785983,
+        "arrayBuffers": 178155
+      },
+      "managedHeap": {
+        "allocatedBytes": 197376,
+        "hostStrongHandles": 0,
+        "hostWeakHandles": 0,
+        "rootsScanned": 4116,
+        "edgesScanned": 10252,
+        "markedObjects": 4,
+        "maxPauseMs": 0.5454420000000937,
+        "markMs": 0.4783509999999751,
+        "sweepMs": 0.0018430000000080327,
+        "liveBytes": 114944,
+        "liveObjects": 5,
+        "allocations": 24,
+        "collections": 4,
+        "freedObjects": 19,
+        "freedBytes": 82432,
+        "lastPauseMs": 0.48052400000005946,
+        "totalPauseMs": 1.707553000000189,
+        "peakBytes": 114944
+      }
+    },
+    {
+      "file": "dictionary-cil-2.cpuprofile",
+      "instrumentedElapsedMs": 150.3345300000001,
+      "samples": 831,
+      "profileMicroseconds": 216843,
+      "hostMemoryBefore": {
+        "rss": 140836864,
+        "heapTotal": 78082048,
+        "heapUsed": 47471048,
+        "external": 3785983,
+        "arrayBuffers": 178155
+      },
+      "hostMemoryAfter": {
+        "rss": 142184448,
+        "heapTotal": 78868480,
+        "heapUsed": 50223160,
+        "external": 3784390,
+        "arrayBuffers": 176562
+      },
+      "managedHeap": {
+        "allocatedBytes": 197376,
+        "hostStrongHandles": 0,
+        "hostWeakHandles": 0,
+        "rootsScanned": 4116,
+        "edgesScanned": 10252,
+        "markedObjects": 4,
+        "maxPauseMs": 0.6633609999998953,
+        "markMs": 0.41945300000020325,
+        "sweepMs": 0.0027039999999942665,
+        "liveBytes": 114944,
+        "liveObjects": 5,
+        "allocations": 24,
+        "collections": 4,
+        "freedObjects": 19,
+        "freedBytes": 82432,
+        "lastPauseMs": 0.4224980000001324,
+        "totalPauseMs": 1.906116000000111,
+        "peakBytes": 114944
+      }
+    },
+    {
+      "file": "dictionary-cil-3.cpuprofile",
+      "instrumentedElapsedMs": 144.83107500000006,
+      "samples": 785,
+      "profileMicroseconds": 208994,
+      "hostMemoryBefore": {
+        "rss": 142184448,
+        "heapTotal": 78868480,
+        "heapUsed": 51041608,
+        "external": 3784390,
+        "arrayBuffers": 176562
+      },
+      "hostMemoryAfter": {
+        "rss": 143282176,
+        "heapTotal": 79392768,
+        "heapUsed": 52569688,
+        "external": 3780714,
+        "arrayBuffers": 172886
+      },
+      "managedHeap": {
+        "allocatedBytes": 197376,
+        "hostStrongHandles": 0,
+        "hostWeakHandles": 0,
+        "rootsScanned": 4116,
+        "edgesScanned": 10252,
+        "markedObjects": 4,
+        "maxPauseMs": 0.5120919999999387,
+        "markMs": 0.41981299999997646,
+        "sweepMs": 0.0019730000001345616,
+        "liveBytes": 114944,
+        "liveObjects": 5,
+        "allocations": 24,
+        "collections": 4,
+        "freedObjects": 19,
+        "freedBytes": 82432,
+        "lastPauseMs": 0.4220359999999346,
+        "totalPauseMs": 1.5095859999998993,
+        "peakBytes": 114944
+      }
+    },
+    {
+      "file": "dictionary-cil-4.cpuprofile",
+      "instrumentedElapsedMs": 181.4200699999999,
+      "samples": 981,
+      "profileMicroseconds": 249835,
+      "hostMemoryBefore": {
+        "rss": 143544320,
+        "heapTotal": 79654912,
+        "heapUsed": 53406968,
+        "external": 3780714,
+        "arrayBuffers": 172886
+      },
+      "hostMemoryAfter": {
+        "rss": 144150528,
+        "heapTotal": 80965632,
+        "heapUsed": 54129392,
+        "external": 3786453,
+        "arrayBuffers": 178625
+      },
+      "managedHeap": {
+        "allocatedBytes": 197376,
+        "hostStrongHandles": 0,
+        "hostWeakHandles": 0,
+        "rootsScanned": 4116,
+        "edgesScanned": 10252,
+        "markedObjects": 4,
+        "maxPauseMs": 0.5545159999999214,
+        "markMs": 0.32972700000004806,
+        "sweepMs": 0.000450999999884516,
+        "liveBytes": 114944,
+        "liveObjects": 5,
+        "allocations": 24,
+        "collections": 4,
+        "freedObjects": 19,
+        "freedBytes": 82432,
+        "lastPauseMs": 0.3303280000000086,
+        "totalPauseMs": 1.3461299999999028,
+        "peakBytes": 114944
+      }
+    }
+  ],
+  "caveat": "Instrumented CPU samples isolate vm.run after compilation and VM construction. These timings are not benchmark replacements. Sampling/profiler overhead, JIT, GC and shared-machine load remain observable confounders.",
+  "functions": [
+    {
+      "url": "node:inspector",
+      "functionName": "post",
+      "line": 118,
+      "selfSamples": 6,
+      "selfMicroseconds": 293657,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 294611
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-pool.js",
+      "functionName": "flush",
+      "line": 78,
+      "selfSamples": 405,
+      "selfMicroseconds": 71150,
+      "inclusiveSamples": 405,
+      "inclusiveMicroseconds": 71150
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "runtimeTypeName",
+      "line": 23,
+      "selfSamples": 231,
+      "selfMicroseconds": 41068,
+      "inclusiveSamples": 276,
+      "inclusiveMicroseconds": 49568
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/cil-slice.js",
+      "functionName": "runCilSlice",
+      "line": 19,
+      "selfSamples": 167,
+      "selfMicroseconds": 33688,
+      "inclusiveSamples": 3301,
+      "inclusiveMicroseconds": 591242
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "step",
+      "line": 94,
+      "selfSamples": 176,
+      "selfMicroseconds": 30705,
+      "inclusiveSamples": 2818,
+      "inclusiveMicroseconds": 500893
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/generic-signatures.js",
+      "functionName": "normalizeCallType",
+      "line": 28,
+      "selfSamples": 171,
+      "selfMicroseconds": 29836,
+      "inclusiveSamples": 204,
+      "inclusiveMicroseconds": 36191
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/framework/src/registry.js",
+      "functionName": "canonicalType",
+      "line": 26,
+      "selfSamples": 153,
+      "selfMicroseconds": 26746,
+      "inclusiveSamples": 153,
+      "inclusiveMicroseconds": 26746
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/intrinsic-profile.js",
+      "functionName": "intrinsicDefinition",
+      "line": 96,
+      "selfSamples": 131,
+      "selfMicroseconds": 24567,
+      "inclusiveSamples": 319,
+      "inclusiveMicroseconds": 57127
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/cil-step.js",
+      "functionName": "executeCilStep",
+      "line": 9,
+      "selfSamples": 108,
+      "selfMicroseconds": 18981,
+      "inclusiveSamples": 2642,
+      "inclusiveMicroseconds": 470188
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/generic-signatures.js",
+      "functionName": "substituteTypeArguments",
+      "line": 14,
+      "selfSamples": 99,
+      "selfMicroseconds": 17547,
+      "inclusiveSamples": 99,
+      "inclusiveMicroseconds": 17547
+    },
+    {
+      "url": "",
+      "functionName": "(garbage collector)",
+      "line": 0,
+      "selfSamples": 98,
+      "selfMicroseconds": 17389,
+      "inclusiveSamples": 98,
+      "inclusiveMicroseconds": 17389
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "get",
+      "line": 110,
+      "selfSamples": 100,
+      "selfMicroseconds": 17330,
+      "inclusiveSamples": 379,
+      "inclusiveMicroseconds": 67401
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-pool.js",
+      "functionName": "flushFramePool",
+      "line": 128,
+      "selfSamples": 86,
+      "selfMicroseconds": 17136,
+      "inclusiveSamples": 471,
+      "inclusiveMicroseconds": 84729
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 23,
+      "selfSamples": 92,
+      "selfMicroseconds": 16067,
+      "inclusiveSamples": 617,
+      "inclusiveMicroseconds": 113467
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/enums.js",
+      "functionName": "enumInfo",
+      "line": 27,
+      "selfSamples": 52,
+      "selfMicroseconds": 15100,
+      "inclusiveSamples": 54,
+      "inclusiveMicroseconds": 15447
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/code-version.js",
+      "functionName": "executionCodeState",
+      "line": 26,
+      "selfSamples": 83,
+      "selfMicroseconds": 14334,
+      "inclusiveSamples": 83,
+      "inclusiveMicroseconds": 14334
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bytecode/src/numeric/conversions.js",
+      "functionName": "convert",
+      "line": 87,
+      "selfSamples": 81,
+      "selfMicroseconds": 14236,
+      "inclusiveSamples": 104,
+      "inclusiveMicroseconds": 18165
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/dictionary.js",
+      "functionName": "dictionary",
+      "line": 23,
+      "selfSamples": 72,
+      "selfMicroseconds": 12889,
+      "inclusiveSamples": 222,
+      "inclusiveMicroseconds": 39311
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/intrinsic-profile.js",
+      "functionName": "signatureKey",
+      "line": 7,
+      "selfSamples": 69,
+      "selfMicroseconds": 12027,
+      "inclusiveSamples": 69,
+      "inclusiveMicroseconds": 12027
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/numeric-ops.js",
+      "functionName": "storage",
+      "line": 131,
+      "selfSamples": 49,
+      "selfMicroseconds": 8603,
+      "inclusiveSamples": 97,
+      "inclusiveMicroseconds": 16872
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/generic-calls.js",
+      "functionName": "resolveCallType",
+      "line": 7,
+      "selfSamples": 44,
+      "selfMicroseconds": 7506,
+      "inclusiveSamples": 371,
+      "inclusiveMicroseconds": 65456
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/calls.js",
+      "functionName": "invoke",
+      "line": 38,
+      "selfSamples": 41,
+      "selfMicroseconds": 6960,
+      "inclusiveSamples": 1279,
+      "inclusiveMicroseconds": 225260
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "withRoots",
+      "line": 15,
+      "selfSamples": 36,
+      "selfMicroseconds": 6370,
+      "inclusiveSamples": 541,
+      "inclusiveMicroseconds": 94577
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/generic-signatures.js",
+      "functionName": "genericTypeParts",
+      "line": 2,
+      "selfSamples": 33,
+      "selfMicroseconds": 6355,
+      "inclusiveSamples": 33,
+      "inclusiveMicroseconds": 6355
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "invoke",
+      "line": 90,
+      "selfSamples": 34,
+      "selfMicroseconds": 6349,
+      "inclusiveSamples": 1319,
+      "inclusiveMicroseconds": 232641
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/numeric-ops.js",
+      "functionName": "binary",
+      "line": 62,
+      "selfSamples": 32,
+      "selfMicroseconds": 5855,
+      "inclusiveSamples": 46,
+      "inclusiveMicroseconds": 8332
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-stack.js",
+      "functionName": "pushStackValue",
+      "line": 67,
+      "selfSamples": 33,
+      "selfMicroseconds": 5709,
+      "inclusiveSamples": 52,
+      "inclusiveMicroseconds": 9157
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/managed-address.js",
+      "functionName": "dereferenceManagedAddress",
+      "line": 6,
+      "selfSamples": 33,
+      "selfMicroseconds": 5684,
+      "inclusiveSamples": 221,
+      "inclusiveMicroseconds": 45529
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "address",
+      "line": 79,
+      "selfSamples": 29,
+      "selfMicroseconds": 5015,
+      "inclusiveSamples": 29,
+      "inclusiveMicroseconds": 5015
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/generic-signatures.js",
+      "functionName": "substituteCallType",
+      "line": 39,
+      "selfSamples": 28,
+      "selfMicroseconds": 4934,
+      "inclusiveSamples": 329,
+      "inclusiveMicroseconds": 58325
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/arith.js",
+      "functionName": "",
+      "line": 7,
+      "selfSamples": 29,
+      "selfMicroseconds": 4599,
+      "inclusiveSamples": 79,
+      "inclusiveMicroseconds": 13597
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/profiler.js",
+      "functionName": "executionProfiler",
+      "line": 176,
+      "selfSamples": 25,
+      "selfMicroseconds": 4593,
+      "inclusiveSamples": 25,
+      "inclusiveMicroseconds": 4593
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bytecode/src/numeric/conversions.js",
+      "functionName": "integerSource",
+      "line": 80,
+      "selfSamples": 23,
+      "selfMicroseconds": 3929,
+      "inclusiveSamples": 23,
+      "inclusiveMicroseconds": 3929
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-stack.js",
+      "functionName": "stackValueLimit",
+      "line": 8,
+      "selfSamples": 22,
+      "selfMicroseconds": 3776,
+      "inclusiveSamples": 22,
+      "inclusiveMicroseconds": 3776
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/intrinsics.js",
+      "functionName": "invokeIntrinsic",
+      "line": 139,
+      "selfSamples": 22,
+      "selfMicroseconds": 3585,
+      "inclusiveSamples": 508,
+      "inclusiveMicroseconds": 89219
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/type-system.js",
+      "functionName": "table",
+      "line": 44,
+      "selfSamples": 20,
+      "selfMicroseconds": 3289,
+      "inclusiveSamples": 517,
+      "inclusiveMicroseconds": 91308
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-stack.js",
+      "functionName": "beginFrameInstruction",
+      "line": 36,
+      "selfSamples": 17,
+      "selfMicroseconds": 3020,
+      "inclusiveSamples": 36,
+      "inclusiveMicroseconds": 6220
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/scheduler.js",
+      "functionName": "afterInstruction",
+      "line": 134,
+      "selfSamples": 17,
+      "selfMicroseconds": 2919,
+      "inclusiveSamples": 17,
+      "inclusiveMicroseconds": 2919
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "dereference",
+      "line": 80,
+      "selfSamples": 16,
+      "selfMicroseconds": 2868,
+      "inclusiveSamples": 246,
+      "inclusiveMicroseconds": 49910
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "get",
+      "line": 20,
+      "selfSamples": 17,
+      "selfMicroseconds": 2835,
+      "inclusiveSamples": 26,
+      "inclusiveMicroseconds": 4250
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 12,
+      "selfSamples": 17,
+      "selfMicroseconds": 2823,
+      "inclusiveSamples": 21,
+      "inclusiveMicroseconds": 3510
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/arith.js",
+      "functionName": "",
+      "line": 14,
+      "selfSamples": 16,
+      "selfMicroseconds": 2610,
+      "inclusiveSamples": 70,
+      "inclusiveMicroseconds": 12222
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-closed.js",
+      "functionName": "invoke",
+      "line": 116,
+      "selfSamples": 15,
+      "selfMicroseconds": 2573,
+      "inclusiveSamples": 263,
+      "inclusiveMicroseconds": 45871
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "runSlice",
+      "line": 95,
+      "selfSamples": 15,
+      "selfMicroseconds": 2531,
+      "inclusiveSamples": 3333,
+      "inclusiveMicroseconds": 596685
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 9,
+      "selfSamples": 14,
+      "selfMicroseconds": 2527,
+      "inclusiveSamples": 33,
+      "inclusiveMicroseconds": 6042
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/indexed-storage.js",
+      "functionName": "insertIndexed",
+      "line": 28,
+      "selfSamples": 14,
+      "selfMicroseconds": 2489,
+      "inclusiveSamples": 122,
+      "inclusiveMicroseconds": 21545
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bytecode/src/numeric/uint32.js",
+      "functionName": "uint32Binary",
+      "line": 5,
+      "selfSamples": 14,
+      "selfMicroseconds": 2477,
+      "inclusiveSamples": 14,
+      "inclusiveMicroseconds": 2477
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/arith.js",
+      "functionName": "",
+      "line": 11,
+      "selfSamples": 14,
+      "selfMicroseconds": 2410,
+      "inclusiveSamples": 27,
+      "inclusiveMicroseconds": 4616
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/indexed-storage.js",
+      "functionName": "reserveIndexed",
+      "line": 7,
+      "selfSamples": 13,
+      "selfMicroseconds": 2403,
+      "inclusiveSamples": 79,
+      "inclusiveMicroseconds": 13913
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "collect",
+      "line": 50,
+      "selfSamples": 12,
+      "selfMicroseconds": 2108,
+      "inclusiveSamples": 27,
+      "inclusiveMicroseconds": 4737
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/bcl-adapter.js",
+      "functionName": "invokeCore",
+      "line": 27,
+      "selfSamples": 12,
+      "selfMicroseconds": 2095,
+      "inclusiveSamples": 283,
+      "inclusiveMicroseconds": 49377
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/numeric-ops.js",
+      "functionName": "compare",
+      "line": 25,
+      "selfSamples": 12,
+      "selfMicroseconds": 2027,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 2027
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/calls.js",
+      "functionName": "",
+      "line": 52,
+      "selfSamples": 12,
+      "selfMicroseconds": 1947,
+      "inclusiveSamples": 534,
+      "inclusiveMicroseconds": 93367
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "reserve",
+      "line": 20,
+      "selfSamples": 10,
+      "selfMicroseconds": 1774,
+      "inclusiveSamples": 37,
+      "inclusiveMicroseconds": 6511
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "storage",
+      "line": 61,
+      "selfSamples": 10,
+      "selfMicroseconds": 1702,
+      "inclusiveSamples": 412,
+      "inclusiveMicroseconds": 78488
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "data",
+      "line": 12,
+      "selfSamples": 10,
+      "selfMicroseconds": 1698,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 2041
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "",
+      "line": 112,
+      "selfSamples": 8,
+      "selfMicroseconds": 1581,
+      "inclusiveSamples": 301,
+      "inclusiveMicroseconds": 52560
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "set",
+      "line": 21,
+      "selfSamples": 9,
+      "selfMicroseconds": 1551,
+      "inclusiveSamples": 11,
+      "inclusiveMicroseconds": 1886
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-closed.js",
+      "functionName": "invokeMember",
+      "line": 70,
+      "selfSamples": 9,
+      "selfMicroseconds": 1533,
+      "inclusiveSamples": 231,
+      "inclusiveMicroseconds": 40849
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 10,
+      "selfSamples": 9,
+      "selfMicroseconds": 1500,
+      "inclusiveSamples": 9,
+      "inclusiveMicroseconds": 1500
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/storage.js",
+      "functionName": "storageValue",
+      "line": 20,
+      "selfSamples": 8,
+      "selfMicroseconds": 1417,
+      "inclusiveSamples": 400,
+      "inclusiveMicroseconds": 76472
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "propertyIndex",
+      "line": 16,
+      "selfSamples": 9,
+      "selfMicroseconds": 1415,
+      "inclusiveSamples": 9,
+      "inclusiveMicroseconds": 1415
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-core/src/registry.js",
+      "functionName": "invoke",
+      "line": 42,
+      "selfSamples": 8,
+      "selfMicroseconds": 1411,
+      "inclusiveSamples": 271,
+      "inclusiveMicroseconds": 47282
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/dictionary.js",
+      "functionName": "set",
+      "line": 7,
+      "selfSamples": 8,
+      "selfMicroseconds": 1408,
+      "inclusiveSamples": 130,
+      "inclusiveMicroseconds": 22953
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "",
+      "line": 28,
+      "selfSamples": 8,
+      "selfMicroseconds": 1390,
+      "inclusiveSamples": 8,
+      "inclusiveMicroseconds": 1390
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/branch.js",
+      "functionName": "",
+      "line": 12,
+      "selfSamples": 8,
+      "selfMicroseconds": 1384,
+      "inclusiveSamples": 8,
+      "inclusiveMicroseconds": 1384
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/cil-values.js",
+      "functionName": "cilNumericContext",
+      "line": 20,
+      "selfSamples": 8,
+      "selfMicroseconds": 1336,
+      "inclusiveSamples": 8,
+      "inclusiveMicroseconds": 1336
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "indexMap",
+      "line": 102,
+      "selfSamples": 7,
+      "selfMicroseconds": 1335,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 2110
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "splitTypeArguments",
+      "line": 12,
+      "selfSamples": 7,
+      "selfMicroseconds": 1249,
+      "inclusiveSamples": 7,
+      "inclusiveMicroseconds": 1249
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-core/src/host.js",
+      "functionName": "bclScalar",
+      "line": 26,
+      "selfSamples": 7,
+      "selfMicroseconds": 1208,
+      "inclusiveSamples": 8,
+      "inclusiveMicroseconds": 1438
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/call.js",
+      "functionName": "",
+      "line": 8,
+      "selfSamples": 7,
+      "selfMicroseconds": 1180,
+      "inclusiveSamples": 1326,
+      "inclusiveMicroseconds": 233821
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "",
+      "line": 40,
+      "selfSamples": 4,
+      "selfMicroseconds": 1042,
+      "inclusiveSamples": 74,
+      "inclusiveMicroseconds": 13638
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/object-equality.js",
+      "functionName": "keyOf",
+      "line": 17,
+      "selfSamples": 6,
+      "selfMicroseconds": 1042,
+      "inclusiveSamples": 6,
+      "inclusiveMicroseconds": 1042
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 6,
+      "selfSamples": 6,
+      "selfMicroseconds": 1027,
+      "inclusiveSamples": 6,
+      "inclusiveMicroseconds": 1027
+    },
+    {
+      "url": "",
+      "functionName": "dispatch",
+      "line": 0,
+      "selfSamples": 6,
+      "selfMicroseconds": 954,
+      "inclusiveSamples": 6,
+      "inclusiveMicroseconds": 954
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "invoke",
+      "line": 112,
+      "selfSamples": 6,
+      "selfMicroseconds": 944,
+      "inclusiveSamples": 334,
+      "inclusiveMicroseconds": 58360
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/slot-storage.js",
+      "functionName": "guardFor",
+      "line": 6,
+      "selfSamples": 7,
+      "selfMicroseconds": 914,
+      "inclusiveSamples": 7,
+      "inclusiveMicroseconds": 914
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/generic-calls.js",
+      "functionName": "callDescriptor",
+      "line": 18,
+      "selfSamples": 5,
+      "selfMicroseconds": 842,
+      "inclusiveSamples": 18,
+      "inclusiveMicroseconds": 3223
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/bcl-adapter.js",
+      "functionName": "invokeBclPlatform",
+      "line": 46,
+      "selfSamples": 5,
+      "selfMicroseconds": 739,
+      "inclusiveSamples": 292,
+      "inclusiveMicroseconds": 50815
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "roots",
+      "line": 45,
+      "selfSamples": 4,
+      "selfMicroseconds": 717,
+      "inclusiveSamples": 7,
+      "inclusiveMicroseconds": 1239
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "intrinsic",
+      "line": 89,
+      "selfSamples": 4,
+      "selfMicroseconds": 686,
+      "inclusiveSamples": 512,
+      "inclusiveMicroseconds": 89905
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/load-store.js",
+      "functionName": "",
+      "line": 7,
+      "selfSamples": 4,
+      "selfMicroseconds": 664,
+      "inclusiveSamples": 6,
+      "inclusiveMicroseconds": 1015
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/slot-storage.js",
+      "functionName": "loadSlot",
+      "line": 23,
+      "selfSamples": 4,
+      "selfMicroseconds": 610,
+      "inclusiveSamples": 236,
+      "inclusiveMicroseconds": 40183
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "writeArray",
+      "line": 51,
+      "selfSamples": 3,
+      "selfMicroseconds": 520,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 795
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/framework/src/registry.js",
+      "functionName": "frameworkType",
+      "line": 40,
+      "selfSamples": 3,
+      "selfMicroseconds": 520,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 520
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "reserve",
+      "line": 25,
+      "selfSamples": 3,
+      "selfMicroseconds": 517,
+      "inclusiveSamples": 40,
+      "inclusiveMicroseconds": 6901
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/decode-plan.js",
+      "functionName": "createPlan",
+      "line": 41,
+      "selfSamples": 2,
+      "selfMicroseconds": 471,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 774
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "get",
+      "line": 45,
+      "selfSamples": 2,
+      "selfMicroseconds": 452,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 452
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "",
+      "line": 31,
+      "selfSamples": 2,
+      "selfMicroseconds": 444,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 444
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "signature",
+      "line": 85,
+      "selfSamples": 1,
+      "selfMicroseconds": 386,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 913
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/token-cache.js",
+      "functionName": "immutableMetadata",
+      "line": 13,
+      "selfSamples": 2,
+      "selfMicroseconds": 385,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 553
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "pop",
+      "line": 71,
+      "selfSamples": 3,
+      "selfMicroseconds": 379,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 379
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "get top",
+      "line": 52,
+      "selfSamples": 2,
+      "selfMicroseconds": 360,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 360
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "rememberIndex",
+      "line": 68,
+      "selfSamples": 2,
+      "selfMicroseconds": 358,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 542
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-core/src/host.js",
+      "functionName": "makeArray",
+      "line": 82,
+      "selfSamples": 2,
+      "selfMicroseconds": 356,
+      "inclusiveSamples": 50,
+      "inclusiveMicroseconds": 8756
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "type",
+      "line": 22,
+      "selfSamples": 2,
+      "selfMicroseconds": 355,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 355
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/inspector.js",
+      "functionName": "resolveToken",
+      "line": 33,
+      "selfSamples": 2,
+      "selfMicroseconds": 343,
+      "inclusiveSamples": 9,
+      "inclusiveMicroseconds": 1784
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "allocate",
+      "line": 25,
+      "selfSamples": 2,
+      "selfMicroseconds": 342,
+      "inclusiveSamples": 48,
+      "inclusiveMicroseconds": 8400
+    },
+    {
+      "url": "",
+      "functionName": "now",
+      "line": 0,
+      "selfSamples": 2,
+      "selfMicroseconds": 327,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 327
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-offsets.js",
+      "functionName": "methodOffsetAllocations",
+      "line": 12,
+      "selfSamples": 1,
+      "selfMicroseconds": 303,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 303
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/branch.js",
+      "functionName": "",
+      "line": 13,
+      "selfSamples": 2,
+      "selfMicroseconds": 289,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 289
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/handlers/call.js",
+      "functionName": "",
+      "line": 12,
+      "selfSamples": 2,
+      "selfMicroseconds": 255,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 402
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "value",
+      "line": 66,
+      "selfSamples": 1,
+      "selfMicroseconds": 230,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 230
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "convert",
+      "line": 87,
+      "selfSamples": 1,
+      "selfMicroseconds": 212,
+      "inclusiveSamples": 48,
+      "inclusiveMicroseconds": 8585
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "push",
+      "line": 70,
+      "selfSamples": 1,
+      "selfMicroseconds": 210,
+      "inclusiveSamples": 49,
+      "inclusiveMicroseconds": 8677
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "version",
+      "line": 17,
+      "selfSamples": 2,
+      "selfMicroseconds": 188,
+      "inclusiveSamples": 7,
+      "inclusiveMicroseconds": 1130
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "record",
+      "line": 15,
+      "selfSamples": 2,
+      "selfMicroseconds": 186,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 186
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "builtin",
+      "line": 54,
+      "selfSamples": 1,
+      "selfMicroseconds": 186,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 186
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "list",
+      "line": 18,
+      "selfSamples": 1,
+      "selfMicroseconds": 183,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 352
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "make",
+      "line": 31,
+      "selfSamples": 1,
+      "selfMicroseconds": 182,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 626
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/intrinsics.js",
+      "functionName": "",
+      "line": 130,
+      "selfSamples": 1,
+      "selfMicroseconds": 178,
+      "inclusiveSamples": 330,
+      "inclusiveMicroseconds": 57810
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/framework/src/animation-clock.js",
+      "functionName": "roots",
+      "line": 30,
+      "selfSamples": 1,
+      "selfMicroseconds": 177,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 177
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "method",
+      "line": 57,
+      "selfSamples": 1,
+      "selfMicroseconds": 175,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 527
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata.js",
+      "functionName": "blob",
+      "line": 60,
+      "selfSamples": 1,
+      "selfMicroseconds": 175,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 175
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/platform.js",
+      "functionName": "roots",
+      "line": 14,
+      "selfSamples": 1,
+      "selfMicroseconds": 174,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 351
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bytecode/src/exception-types.js",
+      "functionName": "exceptionTypeName",
+      "line": 62,
+      "selfSamples": 1,
+      "selfMicroseconds": 173,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 173
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "format",
+      "line": 67,
+      "selfSamples": 1,
+      "selfMicroseconds": 172,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 172
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/strings.js",
+      "functionName": "pool",
+      "line": 33,
+      "selfSamples": 1,
+      "selfMicroseconds": 171,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 171
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "notifyWrite",
+      "line": 78,
+      "selfSamples": 1,
+      "selfMicroseconds": 171,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 171
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-closed.js",
+      "functionName": "construct",
+      "line": 20,
+      "selfSamples": 1,
+      "selfMicroseconds": 169,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 795
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/token-cache.js",
+      "functionName": "",
+      "line": 16,
+      "selfSamples": 1,
+      "selfMicroseconds": 168,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 168
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/inspector.js",
+      "functionName": "signature",
+      "line": 32,
+      "selfSamples": 1,
+      "selfMicroseconds": 167,
+      "inclusiveSamples": 6,
+      "inclusiveMicroseconds": 1255
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-pool.js",
+      "functionName": "arguments",
+      "line": 98,
+      "selfSamples": 1,
+      "selfMicroseconds": 167,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 167
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "run",
+      "line": 97,
+      "selfSamples": 1,
+      "selfMicroseconds": 165,
+      "inclusiveSamples": 3334,
+      "inclusiveMicroseconds": 596850
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "substitute",
+      "line": 93,
+      "selfSamples": 1,
+      "selfMicroseconds": 163,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 163
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "binary",
+      "line": 86,
+      "selfSamples": 1,
+      "selfMicroseconds": 160,
+      "inclusiveSamples": 46,
+      "inclusiveMicroseconds": 8329
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/heap-allocation.js",
+      "functionName": "replaceHeapData",
+      "line": 13,
+      "selfSamples": 1,
+      "selfMicroseconds": 160,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 160
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "",
+      "line": 168,
+      "selfSamples": 1,
+      "selfMicroseconds": 154,
+      "inclusiveSamples": 6,
+      "inclusiveMicroseconds": 1019
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/frame-pool.js",
+      "functionName": "acquire",
+      "line": 30,
+      "selfSamples": 1,
+      "selfMicroseconds": 152,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 152
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/native-int.js",
+      "functionName": "isNativeStorageType",
+      "line": 19,
+      "selfSamples": 1,
+      "selfMicroseconds": 147,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 147
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/generic-calls.js",
+      "functionName": "callCache",
+      "line": 13,
+      "selfSamples": 1,
+      "selfMicroseconds": 44,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 44
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "slotType",
+      "line": 62,
+      "selfSamples": 1,
+      "selfMicroseconds": 28,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 28
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "count",
+      "line": 8,
+      "selfSamples": 1,
+      "selfMicroseconds": 22,
+      "inclusiveSamples": 9,
+      "inclusiveMicroseconds": 1070
+    },
+    {
+      "url": "",
+      "functionName": "(program)",
+      "line": 0,
+      "selfSamples": 1,
+      "selfMicroseconds": 12,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 12
+    },
+    {
+      "url": "",
+      "functionName": "(root)",
+      "line": 0,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 3445,
+      "inclusiveMicroseconds": 908862
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-testing-publication/profile-runtime-dictionary.mjs",
+      "functionName": "",
+      "line": 0,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 3346,
+      "inclusiveMicroseconds": 891461
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-testing-publication/profile-runtime-dictionary.mjs",
+      "functionName": "post",
+      "line": 37,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 294611
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-testing-publication/profile-runtime-dictionary.mjs",
+      "functionName": "",
+      "line": 37,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 294611
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/token-cache.js",
+      "functionName": "cachedMetadataToken",
+      "line": 21,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 12,
+      "inclusiveMicroseconds": 2337
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata.js",
+      "functionName": "typeName",
+      "line": 62,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 186
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/type-names.js",
+      "functionName": "read",
+      "line": 29,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 186
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signature-members.js",
+      "functionName": "readTypeSignature",
+      "line": 49,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 186
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "decodeTypeSignature",
+      "line": 111,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 186
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/method-table.js",
+      "functionName": "",
+      "line": 136,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 163
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-closed.js",
+      "functionName": "",
+      "line": 120,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 575
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "write",
+      "line": 47,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 626
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "compare",
+      "line": 85,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 11,
+      "inclusiveMicroseconds": 1858
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "get profiler",
+      "line": 54,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 25,
+      "inclusiveMicroseconds": 4593
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/decode-plan.js",
+      "functionName": "getDecodePlan",
+      "line": 80,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 35,
+      "inclusiveMicroseconds": 6256
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signature-members.js",
+      "functionName": "readSignature",
+      "line": 45,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 913
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "decodeSignature",
+      "line": 103,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 913
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/cil/src/metadata/signatures.js",
+      "functionName": "",
+      "line": 69,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 169
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/cil-vm.js",
+      "functionName": "call",
+      "line": 72,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 615
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/calls.js",
+      "functionName": "call",
+      "line": 17,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 615
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/call-frames.js",
+      "functionName": "cilCallFrame",
+      "line": 8,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 3,
+      "inclusiveMicroseconds": 499
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/storage.js",
+      "functionName": "storageDefault",
+      "line": 15,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 347
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/enums.js",
+      "functionName": "readEnumInfo",
+      "line": 33,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 347
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/strings.js",
+      "functionName": "stringRoots",
+      "line": 37,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 171
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "change",
+      "line": 21,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 4,
+      "inclusiveMicroseconds": 702
+    },
+    {
+      "url": "node:internal/perf/performance",
+      "functionName": "now",
+      "line": 137,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 2,
+      "inclusiveMicroseconds": 327
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/generics.js",
+      "functionName": "instantiatedMethod",
+      "line": 95,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 116
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/bcl-collections/src/legacy-storage.js",
+      "functionName": "",
+      "line": 33,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 160
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/heap.js",
+      "functionName": "replaceData",
+      "line": 35,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 160
+    },
+    {
+      "url": "file:///workspace/scratch/3e16369943fd/p18-runtime-baseline/packages/runtime/src/execution/intrinsics.js",
+      "functionName": "console",
+      "line": 47,
+      "selfSamples": 0,
+      "selfMicroseconds": 0,
+      "inclusiveSamples": 1,
+      "inclusiveMicroseconds": 172
+    }
+  ]
+}

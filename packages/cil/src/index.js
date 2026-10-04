@@ -17,10 +17,16 @@ export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './
 export {normalizeCallType, substituteCallType, instantiateSignature, callSignatureKey,
   resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
 export { sha256 } from './binary/hash.js';
-export { win32VersionFromAssembly } from './pe/version-attributes.js';
-export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
+export {loadProjectAssembly, projectReferenceDiagnostics} from './project-assembly.js';
 export { linkAssemblyModules } from './pe/module-linker.js';
 export { readAssemblyModules } from './pe/module-reader.js';
+export {
+  AssemblyIdentity, AssemblyIdentityParts, IdentityComparison, compareAssemblyIdentity,
+  referenceMatchesDefinition, compareVersions, publicKeyToken, sha1,
+} from './assembly-identity.js';
+export { grantsInternalsAccess } from './assembly-access.js';
+export { win32VersionFromAssembly } from './pe/version-attributes.js';
+export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
 export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
 export { buildExceptionRegionTree, exceptionRegionDiagnosticCatalog } from './eh-regions.js';
 export { validateExceptionInstructionPlacement, exceptionPlacementDiagnosticCatalog } from './eh-control-flow.js';

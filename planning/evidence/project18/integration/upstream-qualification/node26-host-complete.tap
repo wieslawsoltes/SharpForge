@@ -1,0 +1,3097 @@
+TAP version 13
+# Subtest: two independent tools start and a failed third batch restores the container
+ok 1 - two independent tools start and a failed third batch restores the container
+  ---
+  duration_ms: 1.794555
+  type: 'test'
+  ...
+# Subtest: container preflights duplicates, reports disposal errors and rolls back cancellation
+ok 2 - container preflights duplicates, reports disposal errors and rolls back cancellation
+  ---
+  duration_ms: 0.39173
+  type: 'test'
+  ...
+# Subtest: commands preserve handler behavior and reject duplicate registrations
+ok 3 - commands preserve handler behavior and reject duplicate registrations
+  ---
+  duration_ms: 2.027907
+  type: 'test'
+  ...
+# Subtest: tools append menu items without global state or editing Studio
+ok 4 - tools append menu items without global state or editing Studio
+  ---
+  duration_ms: 0.697501
+  type: 'test'
+  ...
+# Subtest: each mount has independent state and DOM, and failed render cleans up
+ok 5 - each mount has independent state and DOM, and failed render cleans up
+  ---
+  duration_ms: 0.455798
+  type: 'test'
+  ...
+# Subtest: automation contributions preserve the complete pre-extraction key surface
+ok 6 - automation contributions preserve the complete pre-extraction key surface
+  ---
+  duration_ms: 9.834776
+  type: 'test'
+  ...
+# Subtest: automation duplicate batches roll back and namespaces dispose cleanly
+ok 7 - automation duplicate batches roll back and namespaces dispose cleanly
+  ---
+  duration_ms: 0.573054
+  type: 'test'
+  ...
+# Subtest: storage preserves v1 payloads, versions and quota failures
+ok 8 - storage preserves v1 payloads, versions and quota failures
+  ---
+  duration_ms: 0.526564
+  type: 'test'
+  ...
+# Subtest: every worker message has a handler seam and unknown messages fail structurally
+ok 9 - every worker message has a handler seam and unknown messages fail structurally
+  ---
+  duration_ms: 0.768909
+  type: 'test'
+  ...
+# Subtest: Studio has no command branches, direct persistence or inline automation literal
+ok 10 - Studio has no command branches, direct persistence or inline automation literal
+  ---
+  duration_ms: 5.229534
+  type: 'test'
+  ...
+# Subtest: real compiler and runtime workers dispatch known requests and return structured unknown errors
+ok 11 - real compiler and runtime workers dispatch known requests and return structured unknown errors
+  ---
+  duration_ms: 1003.973939
+  type: 'test'
+  ...
+# Subtest: A00 T20 contributed CSS matches the reviewed stylesheet snapshot and both sorted and ordered rules
+ok 12 - A00 T20 contributed CSS matches the reviewed stylesheet snapshot and both sorted and ordered rules
+  ---
+  duration_ms: 52.186385
+  type: 'test'
+  ...
+# Subtest: A00 T20 sorted equality alone cannot hide reversed overrides, missing or changed rules
+ok 13 - A00 T20 sorted equality alone cannot hide reversed overrides, missing or changed rules
+  ---
+  duration_ms: 0.559023
+  type: 'test'
+  ...
+# Subtest: A00 T20 CSS rule boundaries preserve nested media, quoted punctuation, escaped selectors, functions and at-rules
+ok 14 - A00 T20 CSS rule boundaries preserve nested media, quoted punctuation, escaped selectors, functions and at-rules
+  ---
+  duration_ms: 0.608737
+  type: 'test'
+  ...
+# Subtest: A00 T20 contribution separators preserve fragment boundaries and reject non-formatting insertion
+ok 15 - A00 T20 contribution separators preserve fragment boundaries and reject non-formatting insertion
+  ---
+  duration_ms: 9.447012
+  type: 'test'
+  ...
+# Subtest: five concurrent preview navigations leave one preview; edit promotes and retains it
+ok 16 - five concurrent preview navigations leave one preview; edit promotes and retains it
+  ---
+  duration_ms: 5.198267
+  type: 'test'
+  ...
+# Subtest: document edits redraw tab chrome only when dirty or preview metadata changes across shared views
+ok 17 - document edits redraw tab chrome only when dirty or preview metadata changes across shared views
+  ---
+  duration_ms: 0.836591
+  type: 'test'
+  ...
+# Subtest: pinned tabs survive close others and pin state roundtrips
+ok 18 - pinned tabs survive close others and pin state roundtrips
+  ---
+  duration_ms: 1.42601
+  type: 'test'
+  ...
+# Subtest: Cancel in a batch aborts the complete close without saving or closing any earlier tab
+ok 19 - Cancel in a batch aborts the complete close without saving or closing any earlier tab
+  ---
+  duration_ms: 1.645892
+  type: 'test'
+  ...
+# Subtest: save failure, edited-during-prompt and explicit discard obey atomic close contracts
+ok 20 - save failure, edited-during-prompt and explicit discard obey atomic close contracts
+  ---
+  duration_ms: 1.796799
+  type: 'test'
+  ...
+# Subtest: closing a shared secondary view does not discard or prompt for the remaining buffer
+ok 21 - closing a shared secondary view does not discard or prompt for the remaining buffer
+  ---
+  duration_ms: 0.980939
+  type: 'test'
+  ...
+# Subtest: reopen restores the original caret and scroll; thirty tabs remain in the overflow model
+ok 22 - reopen restores the original caret and scroll; thirty tabs remain in the overflow model
+  ---
+  duration_ms: 5.470757
+  type: 'test'
+  ...
+# Subtest: context command enablement follows pinning, groups, side and host capabilities
+ok 23 - context command enablement follows pinning, groups, side and host capabilities
+  ---
+  duration_ms: 0.746896
+  type: 'test'
+  ...
+# Subtest: disposing during dirty confirmation cancels without discarding buffers
+ok 24 - disposing during dirty confirmation cancels without discarding buffers
+  ---
+  duration_ms: 0.344359
+  type: 'test'
+  ...
+# Subtest: v1 migrates without changing panel identities and v2 roundtrips metadata
+ok 25 - v1 migrates without changing panel identities and v2 roundtrips metadata
+  ---
+  duration_ms: 2.729425
+  type: 'test'
+  ...
+# Subtest: unknown and duplicate persisted panels are dropped and reported without substitution
+ok 26 - unknown and duplicate persisted panels are dropped and reported without substitution
+  ---
+  duration_ms: 0.494746
+  type: 'test'
+  ...
+# Subtest: corrupt layouts recover valid closed identities and reject future versions in strict restore
+ok 27 - corrupt layouts recover valid closed identities and reject future versions in strict restore
+  ---
+  duration_ms: 0.627126
+  type: 'test'
+  ...
+# Subtest: all four auto-hide edges pin back to the exact previous tab group and index
+ok 28 - all four auto-hide edges pin back to the exact previous tab group and index
+  ---
+  duration_ms: 0.985406
+  type: 'test'
+  ...
+# Subtest: Auto Hide All restores a removed tool group against its original document anchor
+ok 29 - Auto Hide All restores a removed tool group against its original document anchor
+  ---
+  duration_ms: 0.689399
+  type: 'test'
+  ...
+# Subtest: a floating tab group docks as one undoable operation retaining both tabs
+ok 30 - a floating tab group docks as one undoable operation retaining both tabs
+  ---
+  duration_ms: 0.812645
+  type: 'test'
+  ...
+# Subtest: nested floating splits retain topology on edge re-dock and flatten only on center
+ok 31 - nested floating splits retain topology on edge re-dock and flatten only on center
+  ---
+  duration_ms: 0.4046
+  type: 'test'
+  ...
+# Subtest: nested transaction failures and cancelled pointer transactions leave no partial history
+ok 32 - nested transaction failures and cancelled pointer transactions leave no partial history
+  ---
+  duration_ms: 0.576329
+  type: 'test'
+  ...
+# Subtest: monitor shrink clamps geometry and corrupt floating coordinates never escape viewport
+ok 33 - monitor shrink clamps geometry and corrupt floating coordinates never escape viewport
+  ---
+  duration_ms: 0.808619
+  type: 'test'
+  ...
+# Subtest: nine explicit guide targets hit their own centers and execute the specified topology
+ok 34 - nine explicit guide targets hit their own centers and execute the specified topology
+  ---
+  duration_ms: 1.097085
+  type: 'test'
+  ...
+# Subtest: pin and preview partition is deterministic and pin metadata survives tab moves
+ok 35 - pin and preview partition is deterministic and pin metadata survives tab moves
+  ---
+  duration_ms: 1.040048
+  type: 'test'
+  ...
+# Subtest: background app registration preserves every visible group and global activation in one transaction
+ok 36 - background app registration preserves every visible group and global activation in one transaction
+  ---
+  duration_ms: 0.492412
+  type: 'test'
+  ...
+# Subtest: background reopening auto-hidden tools and existing floating tabs cannot steal activation
+ok 37 - background reopening auto-hidden tools and existing floating tabs cannot steal activation
+  ---
+  duration_ms: 0.435396
+  type: 'test'
+  ...
+# Subtest: initial document sync activates the selected primary view and opens other tabs in the background
+ok 38 - initial document sync activates the selected primary view and opens other tabs in the background
+  ---
+  duration_ms: 2.20897
+  type: 'test'
+  ...
+# Subtest: dirty document sync preserves its active secondary view and a different URI explicitly changes it
+ok 39 - dirty document sync preserves its active secondary view and a different URI explicitly changes it
+  ---
+  duration_ms: 1.585521
+  type: 'test'
+  ...
+# Subtest: background document sync preserves selected application or tool without changing group selection
+ok 40 - background document sync preserves selected application or tool without changing group selection
+  ---
+  duration_ms: 0.46401
+  type: 'test'
+  ...
+# Subtest: removing the active document returns to a surviving source and unregisters its secondary views
+ok 41 - removing the active document returns to a surviving source and unregisters its secondary views
+  ---
+  duration_ms: 1.464678
+  type: 'test'
+  ...
+# Subtest: initial restore keeps the persisted secondary document selection
+ok 42 - initial restore keeps the persisted secondary document selection
+  ---
+  duration_ms: 1.547813
+  type: 'test'
+  ...
+# Subtest: saved tool layout applies across document sets without closing or reopening documents
+ok 43 - saved tool layout applies across document sets without closing or reopening documents
+  ---
+  duration_ms: 3.085963
+  type: 'test'
+  ...
+# Subtest: saved layouts support legacy payloads, stable slots, rename, delete and rejected persistence
+ok 44 - saved layouts support legacy payloads, stable slots, rename, delete and rejected persistence
+  ---
+  duration_ms: 1.189213
+  type: 'test'
+  ...
+# Subtest: reset requires an explicit positive choice
+ok 45 - reset requires an explicit positive choice
+  ---
+  duration_ms: 0.273883
+  type: 'test'
+  ...
+# Subtest: navigation retains group, view and popout identities and rejects malformed locations
+ok 46 - navigation retains group, view and popout identities and rejects malformed locations
+  ---
+  duration_ms: 0.38499
+  type: 'test'
+  ...
+# Subtest: navigation returns moved tab to its original existing document group
+ok 47 - navigation returns moved tab to its original existing document group
+  ---
+  duration_ms: 1.790449
+  type: 'test'
+  ...
+# Subtest: tool factories create independent instances and restore exact identities
+ok 48 - tool factories create independent instances and restore exact identities
+  ---
+  duration_ms: 0.782449
+  type: 'test'
+  ...
+# Subtest: Window command descriptors include layout slots and keyboard-only management
+ok 49 - Window command descriptors include layout slots and keyboard-only management
+  ---
+  duration_ms: 0.335476
+  type: 'test'
+  ...
+# Subtest: public CIL emission writes scoped references and round-trips all six external operations without a compiler consumer
+ok 50 - public CIL emission writes scoped references and round-trips all six external operations without a compiler consumer
+  ---
+  duration_ms: 90.4012
+  type: 'test'
+  ...
+# Subtest: public CIL emission rejects invalid external field modes and descriptor tokens before producing bytes
+ok 51 - public CIL emission rejects invalid external field modes and descriptor tokens before producing bytes
+  ---
+  duration_ms: 9.360964
+  type: 'test'
+  ...
+# Subtest: A23 literal central-package inspection rejects constructs requiring evaluation
+ok 52 - A23 literal central-package inspection rejects constructs requiring evaluation
+  ---
+  duration_ms: 2.220888
+  type: 'test'
+  ...
+# Subtest: A23 native HTTP XAML and manifest saves preserve UTF-16 bytes and reject binary content
+ok 53 - A23 native HTTP XAML and manifest saves preserve UTF-16 bytes and reject binary content
+  ---
+  duration_ms: 108.875246
+  type: 'test'
+  ...
+# Subtest: A23 native NuGet registration resolves paged metadata through the configured host feed
+ok 54 - A23 native NuGet registration resolves paged metadata through the configured host feed
+  ---
+  duration_ms: 52.317246
+  type: 'test'
+  ...
+# Subtest: A23 native HTTP profile discovery uses bounded shared text decoding
+ok 55 - A23 native HTTP profile discovery uses bounded shared text decoding
+  ---
+  duration_ms: 54.951858
+  type: 'test'
+  ...
+# Subtest: editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity
+ok 56 - editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity
+  ---
+  duration_ms: 2.008198
+  type: 'test'
+  ...
+# Subtest: edited source withholds execution and selected-frame painting and unbound muted requests stay visible
+ok 57 - edited source withholds execution and selected-frame painting and unbound muted requests stay visible
+  ---
+  duration_ms: 1.002011
+  type: 'test'
+  ...
+# Subtest: toggling a moved binding removes its original workspace anchor without creating a qualified anchor key
+ok 58 - toggling a moved binding removes its original workspace anchor without creating a qualified anchor key
+  ---
+  duration_ms: 0.707256
+  type: 'test'
+  ...
+# Subtest: editing a moved binding preserves its requested line and selected document mapping
+ok 59 - editing a moved binding preserves its requested line and selected document mapping
+  ---
+  duration_ms: 0.482257
+  type: 'test'
+  ...
+# Subtest: late breakpoint replies cannot replace a newer request or another runtime session
+ok 60 - late breakpoint replies cannot replace a newer request or another runtime session
+  ---
+  duration_ms: 0.379662
+  type: 'test'
+  ...
+# Subtest: cancelled edits and unavailable runtime bindings preserve persisted requests
+ok 61 - cancelled edits and unavailable runtime bindings preserve persisted requests
+  ---
+  duration_ms: 0.4576
+  type: 'test'
+  ...
+# Subtest: late breakpoint failures cannot report into a newer request or session while current errors remain visible
+ok 62 - late breakpoint failures cannot report into a newer request or session while current errors remain visible
+  ---
+  duration_ms: 0.448266
+  type: 'test'
+  ...
+# Subtest: A23 T10.1 default inference and last matching configuration rules map each project independently
+ok 63 - A23 T10.1 default inference and last matching configuration rules map each project independently
+  ---
+  duration_ms: 3.859949
+  type: 'test'
+  ...
+# Subtest: A23 T10.3 default solution infers Debug/Release and CLR vs VC platform rules
+ok 64 - A23 T10.3 default solution infers Debug/Release and CLR vs VC platform rules
+  ---
+  duration_ms: 0.362317
+  type: 'test'
+  ...
+# Subtest: A23 T10.1 custom type rules support inheritance and IsBuildable without overriding later project rules
+ok 65 - A23 T10.1 custom type rules support inheritance and IsBuildable without overriding later project rules
+  ---
+  duration_ms: 0.381115
+  type: 'test'
+  ...
+# Subtest: A23 T10.4 project requests and configuration-manager selection retain mapped globals
+ok 66 - A23 T10.4 project requests and configuration-manager selection retain mapped globals
+  ---
+  duration_ms: 0.79584
+  type: 'test'
+  ...
+# Subtest: A23 T10.4 saved solution context maps native project requests once, with cancellation and unknown-project errors
+ok 67 - A23 T10.4 saved solution context maps native project requests once, with cancellation and unknown-project errors
+  ---
+  duration_ms: 1.305819
+  type: 'test'
+  ...
+# Subtest: A23 T10.2/T10.5 legacy writer preserves GUIDs, folders, dependencies, unsupported projects and Build.0 selection
+ok 68 - A23 T10.2/T10.5 legacy writer preserves GUIDs, folders, dependencies, unsupported projects and Build.0 selection
+  ---
+  duration_ms: 7.850135
+  type: 'test'
+  ...
+# Subtest: A23 T10 legacy serialization retains unsupported project records and their reader diagnostics
+ok 69 - A23 T10 legacy serialization retains unsupported project records and their reader diagnostics
+  ---
+  duration_ms: 0.914329
+  type: 'test'
+  ...
+# Subtest: A23 T10 rejects malformed mappings, duplicate identities, limits and cancellation
+ok 70 - A23 T10 rejects malformed mappings, duplicate identities, limits and cancellation
+  ---
+  duration_ms: 0.459653
+  type: 'test'
+  ...
+# Subtest: A23 T10 bounds configuration products before allocating their cross product
+ok 71 - A23 T10 bounds configuration products before allocating their cross product
+  ---
+  duration_ms: 9.748077
+  type: 'test'
+  ...
+# Subtest: ZIP64 lists a synthetic 5 GiB stored entry with bounded tail/directory reads
+ok 72 - ZIP64 lists a synthetic 5 GiB stored entry with bounded tail/directory reads
+  ---
+  duration_ms: 5.637019
+  type: 'test'
+  ...
+# Subtest: ZIP64 saturated fields must have the exact required extra metadata
+ok 73 - ZIP64 saturated fields must have the exact required extra metadata
+  ---
+  duration_ms: 0.475698
+  type: 'test'
+  ...
+# Subtest: ZIP64: 70000 entries round-trip and reference Python zipfile accepts every entry
+ok 74 - ZIP64: 70000 entries round-trip and reference Python zipfile accepts every entry
+  ---
+  duration_ms: 1411.079586
+  type: 'test'
+  ...
+# Subtest: ZIP64: small forced archives, safe-integer metadata and corrupted locator rejection
+ok 75 - ZIP64: small forced archives, safe-integer metadata and corrupted locator rejection
+  ---
+  duration_ms: 4.723837
+  type: 'test'
+  ...
+# Subtest: DEFLATE: dynamic and fixed output matches the platform reference and compresses text
+ok 76 - DEFLATE: dynamic and fixed output matches the platform reference and compresses text
+  ---
+  duration_ms: 25.806297
+  type: 'test'
+  ...
+# Subtest: ZIP streams: backpressure, CRC descriptors and portable fixed compression round-trip
+ok 77 - ZIP streams: backpressure, CRC descriptors and portable fixed compression round-trip
+  ---
+  duration_ms: 158.721187
+  type: 'test'
+  ...
+# Subtest: ZIP streams: cancellation aborts the sink and closing an archive cancels active readers
+ok 78 - ZIP streams: cancellation aborts the sink and closing an archive cancels active readers
+  ---
+  duration_ms: 1.72478
+  type: 'test'
+  ...
+# Subtest: ZIP metadata: preservation retains UTC seconds and executable mode, deterministic default ignores them
+ok 79 - ZIP metadata: preservation retains UTC seconds and executable mode, deterministic default ignores them
+  ---
+  duration_ms: 0.775479
+  type: 'test'
+  ...
+# Subtest: ZIP malformed corpus: CRC, ratios, paths, overlaps, truncation and count budgets reject before returning records
+ok 80 - ZIP malformed corpus: CRC, ratios, paths, overlaps, truncation and count budgets reject before returning records
+  ---
+  duration_ms: 2.882366
+  type: 'test'
+  ...
+# Subtest: CRC32 slicing keeps byte-wise reference parity across short tails and chunk boundaries
+ok 81 - CRC32 slicing keeps byte-wise reference parity across short tails and chunk boundaries
+  ---
+  duration_ms: 3.039803
+  type: 'test'
+  ...
+# Subtest: Malformed ZIP path encodings and traversal expose stable archive diagnostics
+ok 82 - Malformed ZIP path encodings and traversal expose stable archive diagnostics
+  ---
+  duration_ms: 0.474806
+  type: 'test'
+  ...
+# Subtest: Every DEFLATE backend enforces its input budget before starting compression
+ok 83 - Every DEFLATE backend enforces its input budget before starting compression
+  ---
+  duration_ms: 1.63819
+  type: 'test'
+  ...
+# Subtest: Platform and portable compressors report actual backends and match zlib bytes
+ok 84 - Platform and portable compressors report actual backends and match zlib bytes
+  ---
+  duration_ms: 21.140963
+  type: 'test'
+  ...
+# {"requested":"portable","actual":"portable","runtime":"v26.10.0"}
+# {"requested":"auto","actual":"CompressionStream","runtime":"v26.10.0"}
+# Subtest: Aborting an active platform compression cancels the stream
+ok 85 - Aborting an active platform compression cancels the stream
+  ---
+  duration_ms: 3.29684
+  type: 'test'
+  ...
+# Subtest: The pinned ZIP quine contains its exact original bytes according to reference Python zipfile
+ok 86 - The pinned ZIP quine contains its exact original bytes according to reference Python zipfile
+  ---
+  duration_ms: 28.678047
+  type: 'test'
+  ...
+# Subtest: A real ZIP quine is rejected by synchronous and bounded streaming extraction
+ok 87 - A real ZIP quine is rejected by synchronous and bounded streaming extraction
+  ---
+  duration_ms: 7.584785
+  type: 'test'
+  ...
+# Subtest: Strict nested archive policy rejects a nested bomb without inflating its inner contents
+ok 88 - Strict nested archive policy rejects a nested bomb without inflating its inner contents
+  ---
+  duration_ms: 28.749119
+  type: 'test'
+  ...
+# Subtest: Equal archive and payload sizes do not reject ordinary content or require whole-archive streaming copies
+ok 89 - Equal archive and payload sizes do not reject ordinary content or require whole-archive streaming copies
+  ---
+  duration_ms: 2.303453
+  type: 'test'
+  ...
+# Subtest: The legacy destination default rejects unrelated contents; merge must be explicit
+ok 90 - The legacy destination default rejects unrelated contents; merge must be explicit
+  ---
+  duration_ms: 10.272517
+  type: 'test'
+  ...
+# Subtest: The legacy destination default keeps completed files and partial-failure metadata even when removal is available
+ok 91 - The legacy destination default keeps completed files and partial-failure metadata even when removal is available
+  ---
+  duration_ms: 0.98865
+  type: 'test'
+  ...
+# Subtest: Destination preflight checks collisions and exact overwrite confirmation before writes
+ok 92 - Destination preflight checks collisions and exact overwrite confirmation before writes
+  ---
+  duration_ms: 2.444906
+  type: 'test'
+  ...
+# Subtest: Destination denial, quota limits, parent type and case collisions never create directories
+ok 93 - Destination denial, quota limits, parent type and case collisions never create directories
+  ---
+  duration_ms: 0.827558
+  type: 'test'
+  ...
+# Subtest: Destination rollback removes created files/directories and restores overwritten binary bytes
+ok 94 - Destination rollback removes created files/directories and restores overwritten binary bytes
+  ---
+  duration_ms: 0.92836
+  type: 'test'
+  ...
+# Subtest: Destination rollback failures list precise leftover paths
+ok 95 - Destination rollback failures list precise leftover paths
+  ---
+  duration_ms: 0.708498
+  type: 'test'
+  ...
+# Subtest: Destination picker cancellation leaves no selected handle; declined overwrite performs no write
+ok 96 - Destination picker cancellation leaves no selected handle; declined overwrite performs no write
+  ---
+  duration_ms: 0.777843
+  type: 'test'
+  ...
+# Subtest: Destination cancellation after the first file rolls everything back
+ok 97 - Destination cancellation after the first file rolls everything back
+  ---
+  duration_ms: 0.502107
+  type: 'test'
+  ...
+# Subtest: Destination expected-text precondition respects UTF-16 encodings before confirmed overwrite
+ok 98 - Destination expected-text precondition respects UTF-16 encodings before confirmed overwrite
+  ---
+  duration_ms: 1.545741
+  type: 'test'
+  ...
+# Subtest: Destination preflight rejects ambiguous existing aliases and bounds plan metadata
+ok 99 - Destination preflight rejects ambiguous existing aliases and bounds plan metadata
+  ---
+  duration_ms: 0.646324
+  type: 'test'
+  ...
+# Subtest: ZIP preflight aborts and releases an accepted stream for malformed names and invalid options
+ok 100 - ZIP preflight aborts and releases an accepted stream for malformed names and invalid options
+  ---
+  duration_ms: 6.645549
+  type: 'test'
+  ...
+# Subtest: workspace manifest validation aborts and releases its accepted stream before any ZIP bytes
+ok 101 - workspace manifest validation aborts and releases its accepted stream before any ZIP bytes
+  ---
+  duration_ms: 0.833236
+  type: 'test'
+  ...
+# Subtest: ZIP and workspace export leave a stream locked by another writer under that writer ownership
+ok 102 - ZIP and workspace export leave a stream locked by another writer under that writer ownership
+  ---
+  duration_ms: 1.479731
+  type: 'test'
+  ...
+# Subtest: accepted writer adapters release once and preserve the validation error when abort also fails
+ok 103 - accepted writer adapters release once and preserve the validation error when abort also fails
+  ---
+  duration_ms: 0.642068
+  type: 'test'
+  ...
+# Subtest: ZIP and workspace writers preserve backpressure, close once and release their successful destination
+ok 104 - ZIP and workspace writers preserve backpressure, close once and release their successful destination
+  ---
+  duration_ms: 9.061981
+  type: 'test'
+  ...
+# Subtest: line and range diagnostics load exact source contents before converting offsets
+ok 105 - line and range diagnostics load exact source contents before converting offsets
+  ---
+  duration_ms: 2.098754
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed workspaceEpoch after lazy source I/O
+ok 106 - diagnostic navigation rejects a changed workspaceEpoch after lazy source I/O
+  ---
+  duration_ms: 0.521406
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed disk after lazy source I/O
+ok 107 - diagnostic navigation rejects a changed disk after lazy source I/O
+  ---
+  duration_ms: 0.128724
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed projectSystem after lazy source I/O
+ok 108 - diagnostic navigation rejects a changed projectSystem after lazy source I/O
+  ---
+  duration_ms: 0.17911
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed revision after lazy source I/O
+ok 109 - diagnostic navigation rejects a changed revision after lazy source I/O
+  ---
+  duration_ms: 0.139841
+  type: 'test'
+  ...
+# Subtest: diagnostic navigation rejects a changed nativeMode after lazy source I/O
+ok 110 - diagnostic navigation rejects a changed nativeMode after lazy source I/O
+  ---
+  duration_ms: 0.095974
+  type: 'test'
+  ...
+# Subtest: unavailable source contents reject line navigation instead of silently selecting offset zero
+ok 111 - unavailable source contents reject line navigation instead of silently selecting offset zero
+  ---
+  duration_ms: 0.268325
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent delete without publishing stale disk state
+ok 112 - A24 delayed read rejects concurrent delete without publishing stale disk state
+  ---
+  duration_ms: 11.795665
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent rename without publishing stale disk state
+ok 113 - A24 delayed read rejects concurrent rename without publishing stale disk state
+  ---
+  duration_ms: 1.44565
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent rename away and back without publishing stale disk state
+ok 114 - A24 delayed read rejects concurrent rename away and back without publishing stale disk state
+  ---
+  duration_ms: 1.288162
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent refresh without publishing stale disk state
+ok 115 - A24 delayed read rejects concurrent refresh without publishing stale disk state
+  ---
+  duration_ms: 1.033749
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent replacement without publishing stale disk state
+ok 116 - A24 delayed read rejects concurrent replacement without publishing stale disk state
+  ---
+  duration_ms: 2.900143
+  type: 'test'
+  ...
+# Subtest: A24 delayed read rejects concurrent newer load without publishing stale disk state
+ok 117 - A24 delayed read rejects concurrent newer load without publishing stale disk state
+  ---
+  duration_ms: 1.213329
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent delete without publishing stale disk state
+ok 118 - A24 delayed handle rejects concurrent delete without publishing stale disk state
+  ---
+  duration_ms: 0.78945
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent rename without publishing stale disk state
+ok 119 - A24 delayed handle rejects concurrent rename without publishing stale disk state
+  ---
+  duration_ms: 0.841358
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent rename away and back without publishing stale disk state
+ok 120 - A24 delayed handle rejects concurrent rename away and back without publishing stale disk state
+  ---
+  duration_ms: 1.792934
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent refresh without publishing stale disk state
+ok 121 - A24 delayed handle rejects concurrent refresh without publishing stale disk state
+  ---
+  duration_ms: 0.720326
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent replacement without publishing stale disk state
+ok 122 - A24 delayed handle rejects concurrent replacement without publishing stale disk state
+  ---
+  duration_ms: 1.15415
+  type: 'test'
+  ...
+# Subtest: A24 delayed handle rejects concurrent newer load without publishing stale disk state
+ok 123 - A24 delayed handle rejects concurrent newer load without publishing stale disk state
+  ---
+  duration_ms: 0.739335
+  type: 'test'
+  ...
+# Subtest: A24 a load publishes bytes, hash and acquired handle together using the canonical path
+ok 124 - A24 a load publishes bytes, hash and acquired handle together using the canonical path
+  ---
+  duration_ms: 0.836811
+  type: 'test'
+  ...
+# Subtest: A24 changes to another entry do not invalidate a pending load
+ok 125 - A24 changes to another entry do not invalidate a pending load
+  ---
+  duration_ms: 1.165507
+  type: 'test'
+  ...
+# Subtest: A24 a changed baseline without record replacement invalidates a pending load
+ok 126 - A24 a changed baseline without record replacement invalidates a pending load
+  ---
+  duration_ms: 0.811884
+  type: 'test'
+  ...
+# Subtest: A24 failed file-handle acquisition preserves existing record, baseline and handle on reload
+ok 127 - A24 failed file-handle acquisition preserves existing record, baseline and handle on reload
+  ---
+  duration_ms: 0.793546
+  type: 'test'
+  ...
+# Subtest: A24 cancellation during read acquisition leaves disk state unchanged
+ok 128 - A24 cancellation during read acquisition leaves disk state unchanged
+  ---
+  duration_ms: 0.782099
+  type: 'test'
+  ...
+# Subtest: A24 cancellation during handle acquisition leaves disk state unchanged
+ok 129 - A24 cancellation during handle acquisition leaves disk state unchanged
+  ---
+  duration_ms: 1.323255
+  type: 'test'
+  ...
+# Subtest: A24 already-cancelled loading does not perform provider I/O
+ok 130 - A24 already-cancelled loading does not perform provider I/O
+  ---
+  duration_ms: 0.540655
+  type: 'test'
+  ...
+# Subtest: A24 admission rechecks the byte budget after asynchronous handle acquisition
+ok 131 - A24 admission rechecks the byte budget after asynchronous handle acquisition
+  ---
+  duration_ms: 0.80921
+  type: 'test'
+  ...
+# Subtest: A24 a refreshed catalog cannot be repopulated by an unindexed pending read
+ok 132 - A24 a refreshed catalog cannot be repopulated by an unindexed pending read
+  ---
+  duration_ms: 0.553925
+  type: 'test'
+  ...
+# Subtest: clean closed buffers release editor, disk bytes and compiler syntax, then reopen current bytes with a newer version
+ok 133 - clean closed buffers release editor, disk bytes and compiler syntax, then reopen current bytes with a newer version
+  ---
+  duration_ms: 14.022073
+  type: 'test'
+  ...
+# Subtest: dirty, generated, read-only, conflicted, unbacked, busy and visible records retain the last usable source
+ok 134 - dirty, generated, read-only, conflicted, unbacked, busy and visible records retain the last usable source
+  ---
+  duration_ms: 3.969646
+  type: 'test'
+  ...
+# Subtest: edits, reopened tabs and workspace replacement during a close digest cannot evict newer state
+ok 135 - edits, reopened tabs and workspace replacement during a close digest cannot evict newer state
+  ---
+  duration_ms: 1.747084
+  type: 'test'
+  ...
+# Subtest: closing a delayed lazy read cancels its admission; a newer open publishes the current provider bytes
+ok 136 - closing a delayed lazy read cancels its admission; a newer open publishes the current provider bytes
+  ---
+  duration_ms: 1.592261
+  type: 'test'
+  ...
+# Subtest: membership changes during handle resolution and disposed reads cannot publish bytes or baselines
+ok 137 - membership changes during handle resolution and disposed reads cannot publish bytes or baselines
+  ---
+  duration_ms: 1.33963
+  type: 'test'
+  ...
+# Subtest: unmarked edits, exhausted versions and pre-aborted closes retain source contents
+ok 138 - unmarked edits, exhausted versions and pre-aborted closes retain source contents
+  ---
+  duration_ms: 2.448522
+  type: 'test'
+  ...
+# Subtest: worker eviction validates the complete bounded batch and ignores stale close versions after reopening
+ok 139 - worker eviction validates the complete bounded batch and ignores stale close versions after reopening
+  ---
+  duration_ms: 1.004975
+  type: 'test'
+  ...
+# Subtest: closed views clear both docking caches while visible split and detached views remain open
+ok 140 - closed views clear both docking caches while visible split and detached views remain open
+  ---
+  duration_ms: 0.187493
+  type: 'test'
+  ...
+# Subtest: closing a clean source releases editor, host records, disk bytes and compiler syntax, then reads current physical bytes
+ok 141 - closing a clean source releases editor, host records, disk bytes and compiler syntax, then reads current physical bytes
+  ---
+  duration_ms: 16.990979
+  type: 'test'
+  ...
+# Subtest: closing project source preserves evaluated membership and keeps only lazy source metadata in the project system
+ok 142 - closing project source preserves evaluated membership and keeps only lazy source metadata in the project system
+  ---
+  duration_ms: 9.005528
+  type: 'test'
+  ...
+# Subtest: 5000 metadata files keep at most one opened buffer and no closed editor or disk contents across repeated opens
+ok 143 - 5000 metadata files keep at most one opened buffer and no closed editor or disk contents across repeated opens
+  ---
+  duration_ms: 431.863114
+  type: 'test'
+  ...
+# Subtest: dirty, generated, read-only recovery, unresolved-conflict, unbacked and open documents retain their contents
+ok 144 - dirty, generated, read-only recovery, unresolved-conflict, unbacked and open documents retain their contents
+  ---
+  duration_ms: 9.174508
+  type: 'test'
+  ...
+# Subtest: unmarked edits fail exact-byte baseline comparison and remain recoverable
+ok 145 - unmarked edits fail exact-byte baseline comparison and remain recoverable
+  ---
+  duration_ms: 1.400682
+  type: 'test'
+  ...
+# Subtest: read-only and generated source flags survive workspace load, context snapshots and transactional commits
+ok 146 - read-only and generated source flags survive workspace load, context snapshots and transactional commits
+  ---
+  duration_ms: 3.091071
+  type: 'test'
+  ...
+# Subtest: reopening or editing during the close digest prevents stale eviction
+ok 147 - reopening or editing during the close digest prevents stale eviction
+  ---
+  duration_ms: 4.928271
+  type: 'test'
+  ...
+# Subtest: close cancels a delayed lazy read before disk or host publication; a later open wins
+ok 148 - close cancels a delayed lazy read before disk or host publication; a later open wins
+  ---
+  duration_ms: 2.253157
+  type: 'test'
+  ...
+# Subtest: workspace replacement, membership change and abort reject a delayed load without advancing physical baselines
+ok 149 - workspace replacement, membership change and abort reject a delayed load without advancing physical baselines
+  ---
+  duration_ms: 2.319958
+  type: 'test'
+  ...
+# Subtest: disk admission callbacks are synchronous and a rejected callback cannot publish bytes, hashes or handles
+ok 150 - disk admission callbacks are synchronous and a rejected callback cannot publish bytes, hashes or handles
+  ---
+  duration_ms: 2.595553
+  type: 'test'
+  ...
+# Subtest: exhausted versions and pre-aborted closes retain the last usable bytes
+ok 151 - exhausted versions and pre-aborted closes retain the last usable bytes
+  ---
+  duration_ms: 1.256164
+  type: 'test'
+  ...
+# Subtest: versioned worker eviction rejects malformed batches atomically and never removes a newer reopened document
+ok 152 - versioned worker eviction rejects malformed batches atomically and never removes a newer reopened document
+  ---
+  duration_ms: 1.039738
+  type: 'test'
+  ...
+# Subtest: worker synchronization preserves no-op requests, removes absent documents, and accepts only newer source versions
+ok 153 - worker synchronization preserves no-op requests, removes absent documents, and accepts only newer source versions
+  ---
+  duration_ms: 0.17908
+  type: 'test'
+  ...
+# Subtest: closed editor views release both docking content maps, while visible splits and popouts stay intact
+ok 154 - closed editor views release both docking content maps, while visible splits and popouts stay intact
+  ---
+  duration_ms: 0.164889
+  type: 'test'
+  ...
+# Subtest: Explorer drops closed source bodies and merge baselines, retaining a numeric revision watermark and rejecting stale queue contents
+ok 155 - Explorer drops closed source bodies and merge baselines, retaining a numeric revision watermark and rejecting stale queue contents
+  ---
+  duration_ms: 2.335241
+  type: 'test'
+  ...
+# Subtest: late expansion cannot publish into a replacement workspace node with the same stable ID
+ok 156 - late expansion cannot publish into a replacement workspace node with the same stable ID
+  ---
+  duration_ms: 1.448193
+  type: 'test'
+  ...
+# Subtest: duplicate expansions share one loader across TreeModel recloning and admit its children once
+ok 157 - duplicate expansions share one loader across TreeModel recloning and admit its children once
+  ---
+  duration_ms: 0.432372
+  type: 'test'
+  ...
+# Subtest: duplicate load-more requests are coalesced and a retired parent cannot receive a page
+ok 158 - duplicate load-more requests are coalesced and a retired parent cannot receive a page
+  ---
+  duration_ms: 1.112247
+  type: 'test'
+  ...
+# Subtest: invalid duplicate pages leave the prior tree intact and aborted expansions publish no children
+ok 159 - invalid duplicate pages leave the prior tree intact and aborted expansions publish no children
+  ---
+  duration_ms: 0.902951
+  type: 'test'
+  ...
+# Subtest: a rejected retired loader is ignored while a current loader error remains visible
+ok 160 - a rejected retired loader is ignored while a current loader error remains visible
+  ---
+  duration_ms: 0.299542
+  type: 'test'
+  ...
+# Subtest: Explorer history normalizes binary operations and validates complete XML batches before publishing buffers
+ok 161 - Explorer history normalizes binary operations and validates complete XML batches before publishing buffers
+  ---
+  duration_ms: 15.151435
+  type: 'test'
+  ...
+# Subtest: Explorer history persists physical changes and supplies precise dirty and completed-path metadata to the host
+ok 162 - Explorer history persists physical changes and supplies precise dirty and completed-path metadata to the host
+  ---
+  duration_ms: 25.141689
+  type: 'test'
+  ...
+# Subtest: Explorer history rejects retired identity and changed project read sets before preparing an operation
+ok 163 - Explorer history rejects retired identity and changed project read sets before preparing an operation
+  ---
+  duration_ms: 0.410569
+  type: 'test'
+  ...
+# Subtest: native history preserves quarantine tokens on failure and forwards exact binary and expected-hash mutation contracts
+ok 164 - native history preserves quarantine tokens on failure and forwards exact binary and expected-hash mutation contracts
+  ---
+  duration_ms: 0.64985
+  type: 'test'
+  ...
+# Subtest: A24 same-folder copy assigns portable collision names and redo retains binary bytes
+ok 165 - A24 same-folder copy assigns portable collision names and redo retains binary bytes
+  ---
+  duration_ms: 24.939854
+  type: 'test'
+  ...
+# Subtest: A24 project rename updates solution and dependent references in a single undoable transaction
+ok 166 - A24 project rename updates solution and dependent references in a single undoable transaction
+  ---
+  duration_ms: 7.706519
+  type: 'test'
+  ...
+# Subtest: A24 linked-file workflow changes project metadata without copying bytes
+ok 167 - A24 linked-file workflow changes project metadata without copying bytes
+  ---
+  duration_ms: 10.649998
+  type: 'test'
+  ...
+# Subtest: A24 invalid batch items require explicit partial confirmation and are reported
+ok 168 - A24 invalid batch items require explicit partial confirmation and are reported
+  ---
+  duration_ms: 2.352086
+  type: 'test'
+  ...
+# Subtest: A24 unsafe project folder moves reject before commit
+ok 169 - A24 unsafe project folder moves reject before commit
+  ---
+  duration_ms: 0.669299
+  type: 'test'
+  ...
+# Subtest: A24 external drop imports exact bytes through the shared history
+ok 170 - A24 external drop imports exact bytes through the shared history
+  ---
+  duration_ms: 3.327277
+  type: 'test'
+  ...
+# Subtest: direct reveal resolves a far page of a 21,000-file directory without admitting preceding siblings
+ok 171 - direct reveal resolves a far page of a 21,000-file directory without admitting preceding siblings
+  ---
+  duration_ms: 59.531832
+  type: 'test'
+  ...
+# Subtest: ancestor resolution follows provider case identity and preserves original Unicode path spelling
+ok 172 - ancestor resolution follows provider case identity and preserves original Unicode path spelling
+  ---
+  duration_ms: 2.505708
+  type: 'test'
+  ...
+# Subtest: revealed pages coexist with ordinary pagination and preserve previously expanded descendants
+ok 173 - revealed pages coexist with ordinary pagination and preserve previously expanded descendants
+  ---
+  duration_ms: 7.78586
+  type: 'test'
+  ...
+# Subtest: delayed reveal cannot select or populate a replacement tree with identical workspace and node IDs
+ok 174 - delayed reveal cannot select or populate a replacement tree with identical workspace and node IDs
+  ---
+  duration_ms: 0.723581
+  type: 'test'
+  ...
+# Subtest: in-place source revision changes and disposal cancel delayed reveal before any staged page is published
+ok 175 - in-place source revision changes and disposal cancel delayed reveal before any staged page is published
+  ---
+  duration_ms: 2.154348
+  type: 'test'
+  ...
+# Subtest: invalid later ancestor pages leave the entire live tree unchanged
+ok 176 - invalid later ancestor pages leave the entire live tree unchanged
+  ---
+  duration_ms: 1.078587
+  type: 'test'
+  ...
+# Subtest: copy naming uses portable identity while preserving spelling, suffixes and directory locations
+ok 177 - copy naming uses portable identity while preserving spelling, suffixes and directory locations
+  ---
+  duration_ms: 0.864413
+  type: 'test'
+  ...
+# Subtest: clipboard commands retain a workspace identity and clear a cut only after successful admission
+ok 178 - clipboard commands retain a workspace identity and clear a cut only after successful admission
+  ---
+  duration_ms: 1.340281
+  type: 'test'
+  ...
+# Subtest: move admission reports invalid members and requires explicit confirmation before returning a partial batch
+ok 179 - move admission reports invalid members and requires explicit confirmation before returning a partial batch
+  ---
+  duration_ms: 1.141731
+  type: 'test'
+  ...
+# Subtest: modifier link drops resolve current model nodes and dispose unregisters the exact listeners
+ok 180 - modifier link drops resolve current model nodes and dispose unregisters the exact listeners
+  ---
+  duration_ms: 0.498903
+  type: 'test'
+  ...
+# Subtest: drop transport rejects stale, foreign, oversized and non-container targets without dispatch
+ok 181 - drop transport rejects stale, foreign, oversized and non-container targets without dispatch
+  ---
+  duration_ms: 0.432643
+  type: 'test'
+  ...
+# Subtest: OS files retain their byte-reading handles while empty directory drops produce an explicit error
+ok 182 - OS files retain their byte-reading handles while empty directory drops produce an explicit error
+  ---
+  duration_ms: 0.216316
+  type: 'test'
+  ...
+# Subtest: peer resolution commits the reviewed version as dirty while preserving unrelated buffers and physical baselines
+ok 183 - peer resolution commits the reviewed version as dirty while preserving unrelated buffers and physical baselines
+  ---
+  duration_ms: 7.276401
+  type: 'test'
+  ...
+# Subtest: selected text, binary and encoding metadata reproduce the exact reviewed bytes
+ok 184 - selected text, binary and encoding metadata reproduce the exact reviewed bytes
+  ---
+  duration_ms: 2.822546
+  type: 'test'
+  ...
+# Subtest: unreviewed hashes, contents, budgets and cancelled requests never commit a peer buffer
+not ok 185 - unreviewed hashes, contents, budgets and cancelled requests never commit a peer buffer
+  ---
+  duration_ms: 2.071794
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-peer-buffer-resolution.test.js:50:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /hash|bytes|content/i. Input:
+    
+    'Error: SFW1424: Local document changed after the conflict was presented'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'SFW1424: Local document changed after the conflict was presented'
+  stack: |-
+    failure (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-conflicts.js:10:17)
+    applyWorkspaceConflictResolution (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/workspace-conflicts.js:76:58)
+    async waitForActual (node:assert:615:5)
+    async strict.rejects (node:assert:738:25)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-peer-buffer-resolution.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-peer-buffer-resolution.test.js:54:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: in-place context, version, protection and byte changes during hashing invalidate the captured local snapshot
+ok 186 - in-place context, version, protection and byte changes during hashing invalidate the captured local snapshot
+  ---
+  duration_ms: 3.64743
+  type: 'test'
+  ...
+# Subtest: protected, unloaded, missing and exhausted-version records retain their existing contents
+ok 187 - protected, unloaded, missing and exhausted-version records retain their existing contents
+  ---
+  duration_ms: 1.616773
+  type: 'test'
+  ...
+# Subtest: reviewed peer edits prevent obsolete file undo and redo from overwriting a newer buffer
+ok 188 - reviewed peer edits prevent obsolete file undo and redo from overwriting a newer buffer
+  ---
+  duration_ms: 13.682179
+  type: 'test'
+  ...
+# Subtest: Problems dispatch loads an unopened source before selecting the diagnostic line and column
+ok 189 - Problems dispatch loads an unopened source before selecting the diagnostic line and column
+  ---
+  duration_ms: 2.532147
+  type: 'test'
+  ...
+# Subtest: Problems dispatch reports a lazy navigation race without selecting a stale source range
+ok 190 - Problems dispatch reports a lazy navigation race without selecting a stale source range
+  ---
+  duration_ms: 0.435967
+  type: 'test'
+  ...
+# Subtest: Problems dispatch reports synchronous editor failures through the same visible error boundary
+ok 191 - Problems dispatch reports synchronous editor failures through the same visible error boundary
+  ---
+  duration_ms: 0.2515
+  type: 'test'
+  ...
+# Subtest: Project renderer describes separate artifacts, retains legacy solution choices, and escapes evaluated source
+ok 192 - Project renderer describes separate artifacts, retains legacy solution choices, and escapes evaluated source
+  ---
+  duration_ms: 17.300042
+  type: 'test'
+  ...
+# Subtest: Project choices preserve custom configurations and report synchronous or asynchronous host failures
+ok 193 - Project choices preserve custom configurations and report synchronous or asynchronous host failures
+  ---
+  duration_ms: 3.460567
+  type: 'test'
+  ...
+# Subtest: failed configuration evaluation retains the published model and restores the displayed choice
+ok 194 - failed configuration evaluation retains the published model and restores the displayed choice
+  ---
+  duration_ms: 2.527691
+  type: 'test'
+  ...
+# Subtest: Retired Project controls cannot replace the current workspace or mutate its configuration
+ok 195 - Retired Project controls cannot replace the current workspace or mutate its configuration
+  ---
+  duration_ms: 5.160029
+  type: 'test'
+  ...
+# Subtest: Read-only recovery and unsupported projects expose their limits without enabled save or build actions
+not ok 196 - Read-only recovery and unsupported projects expose their limits without enabled save or build actions
+  ---
+  duration_ms: 1.849068
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-project-panel.test.js:104:1'
+  failureType: 'testCodeFailure'
+  error: "Missing text file 'Unsupported.vcxproj'. Open its containing folder to grant access to sibling files."
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ProjectSystem.text (file:///workspace/scratch/3e16369943fd/p18-integration/packages/project-system/src/project-system.js:55:13)
+    projectDetails (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/tools/project-panel.js:44:104)
+    renderProjectPanel (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/tools/project-panel.js:90:39)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-project-panel.test.js:120:3)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: Empty and native Project panels retain their own opening and trusted-host flows
+ok 197 - Empty and native Project panels retain their own opening and trusted-host flows
+  ---
+  duration_ms: 1.308834
+  type: 'test'
+  ...
+# Subtest: provider journal persists directory rename and undo while preserving unrelated unsaved buffers
+ok 198 - provider journal persists directory rename and undo while preserving unrelated unsaved buffers
+  ---
+  duration_ms: 43.759312
+  type: 'test'
+  ...
+# Subtest: provider journal writes no files when any destination collides or any baseline is stale
+ok 199 - provider journal writes no files when any destination collides or any baseline is stale
+  ---
+  duration_ms: 5.844081
+  type: 'test'
+  ...
+# Subtest: provider journal reports each completed physical mutation after a third close failure
+ok 200 - provider journal reports each completed physical mutation after a third close failure
+  ---
+  duration_ms: 8.002545
+  type: 'test'
+  ...
+# Subtest: provider journal materializes an unloaded binary only when affected and undo restores exact bytes
+ok 201 - provider journal materializes an unloaded binary only when affected and undo restores exact bytes
+  ---
+  duration_ms: 8.621278
+  type: 'test'
+  ...
+# Subtest: provider journal rejects hidden directory entries and disposed ownership before any effect
+ok 202 - provider journal rejects hidden directory entries and disposed ownership before any effect
+  ---
+  duration_ms: 4.026711
+  type: 'test'
+  ...
+# Subtest: provider journal preserves document watermarks through rename, disk cache release and reopen
+ok 203 - provider journal preserves document watermarks through rename, disk cache release and reopen
+  ---
+  duration_ms: 10.006336
+  type: 'test'
+  ...
+# Subtest: provider journal rejects version exhaustion during complete preflight before writing any item
+ok 204 - provider journal rejects version exhaustion during complete preflight before writing any item
+  ---
+  duration_ms: 4.440495
+  type: 'test'
+  ...
+# Subtest: legacy bootstrap sends bounded lazy membership and protected editor state to the read-only load boundary
+ok 205 - legacy bootstrap sends bounded lazy membership and protected editor state to the read-only load boundary
+  ---
+  duration_ms: 3.038821
+  type: 'test'
+  ...
+# Subtest: corrupt, future and oversized recovery blocks default replacement while keeping the original record
+ok 206 - corrupt, future and oversized recovery blocks default replacement while keeping the original record
+  ---
+  duration_ms: 0.346302
+  type: 'test'
+  ...
+# Subtest: a rejected host load retains recovery and surfaces a diagnostic without starting fallback work
+ok 207 - a rejected host load retains recovery and surfaces a diagnostic without starting fallback work
+  ---
+  duration_ms: 0.394404
+  type: 'test'
+  ...
+# Subtest: missing recovery is inert, cancellation propagates, and corrupt optional settings remain visible
+ok 208 - missing recovery is inert, cancellation propagates, and corrupt optional settings remain visible
+  ---
+  duration_ms: 0.96843
+  type: 'test'
+  ...
+# Subtest: A24 type rename binds declarations, constructors, annotations, static access and creation across files
+ok 209 - A24 type rename binds declarations, constructors, annotations, static access and creation across files
+  ---
+  duration_ms: 115.295135
+  type: 'test'
+  ...
+# Subtest: A24 same-spelled types, value members, comments and strings are not changed by textual coincidence
+ok 210 - A24 same-spelled types, value members, comments and strings are not changed by textual coincidence
+  ---
+  duration_ms: 16.890813
+  type: 'test'
+  ...
+# Subtest: A24 type rename rejects name capture, unsupported reference sources, invalid names and limits visibly
+ok 211 - A24 type rename rejects name capture, unsupported reference sources, invalid names and limits visibly
+  ---
+  duration_ms: 19.34912
+  type: 'test'
+  ...
+# Subtest: A24 semantic preview handles generic and nested type identities or reports an explicit complete-binding boundary
+ok 212 - A24 semantic preview handles generic and nested type identities or reports an explicit complete-binding boundary
+  ---
+  duration_ms: 8.079484
+  type: 'test'
+  ...
+# Subtest: A24 public language and worker preview preserve versions and reject generated/unloaded inputs
+ok 213 - A24 public language and worker preview preserve versions and reject generated/unloaded inputs
+  ---
+  duration_ms: 14.598616
+  type: 'test'
+  ...
+# Subtest: A24 accepted type/file/project rename is one undo entry and decline preserves type spelling
+ok 214 - A24 accepted type/file/project rename is one undo entry and decline preserves type spelling
+  ---
+  duration_ms: 43.006057
+  type: 'test'
+  ...
+# Subtest: A24 changing any semantic input while the confirmation is open rejects the whole rename
+ok 215 - A24 changing any semantic input while the confirmation is open rejects the whole rename
+  ---
+  duration_ms: 3.340577
+  type: 'test'
+  ...
+# Subtest: A24 host refuses separate project contexts and native semantic gaps without invoking a worker
+ok 216 - A24 host refuses separate project contexts and native semantic gaps without invoking a worker
+  ---
+  duration_ms: 0.240152
+  type: 'test'
+  ...
+# Subtest: A24 type rename refuses an edit extending one character past the reviewed document
+ok 217 - A24 type rename refuses an edit extending one character past the reviewed document
+  ---
+  duration_ms: 0.665694
+  type: 'test'
+  ...
+# Subtest: versionless imported text reloads at version zero independently of the workspace revision
+ok 218 - versionless imported text reloads at version zero independently of the workspace revision
+  ---
+  duration_ms: 15.125
+  type: 'test'
+  ...
+# Subtest: version-zero fallback still rejects stale workspace revisions and identity changes during reload preparation
+ok 219 - version-zero fallback still rejects stale workspace revisions and identity changes during reload preparation
+  ---
+  duration_ms: 6.288784
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace delete
+ok 220 - the application rejects a lazy read after same-workspace delete
+  ---
+  duration_ms: 16.97538
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace rename
+ok 221 - the application rejects a lazy read after same-workspace rename
+  ---
+  duration_ms: 3.128168
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace metadata
+ok 222 - the application rejects a lazy read after same-workspace metadata
+  ---
+  duration_ms: 2.322362
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace disk
+ok 223 - the application rejects a lazy read after same-workspace disk
+  ---
+  duration_ms: 1.924833
+  type: 'test'
+  ...
+# Subtest: the application rejects a lazy read after same-workspace edit
+ok 224 - the application rejects a lazy read after same-workspace edit
+  ---
+  duration_ms: 2.162942
+  type: 'test'
+  ...
+# Subtest: a current lazy read publishes its bytes without opening another source editor or tab
+ok 225 - a current lazy read publishes its bytes without opening another source editor or tab
+  ---
+  duration_ms: 2.125546
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=false
+ok 226 - one accepted project watcher change commits and evaluates exactly once, dirty=false
+  ---
+  duration_ms: 12.26042
+  type: 'test'
+  ...
+# Subtest: one accepted project watcher change commits and evaluates exactly once, dirty=true
+ok 227 - one accepted project watcher change commits and evaluates exactly once, dirty=true
+  ---
+  duration_ms: 3.962005
+  type: 'test'
+  ...
+# Subtest: project watcher creation and deletion still update membership when no editor is open
+ok 228 - project watcher creation and deletion still update membership when no editor is open
+  ---
+  duration_ms: 5.564983
+  type: 'test'
+  ...
+# Subtest: B01 import advances every URI watermark and rejects edits prepared before import
+ok 229 - B01 import advances every URI watermark and rejects edits prepared before import
+  ---
+  duration_ms: 1.137736
+  type: 'test'
+  ...
+# Subtest: B01 removal and a later import retain the URI version watermark
+ok 230 - B01 removal and a later import retain the URI version watermark
+  ---
+  duration_ms: 0.306001
+  type: 'test'
+  ...
+# Subtest: B01 malformed duplicate or oversized imports preserve all current buffers and revisions
+ok 231 - B01 malformed duplicate or oversized imports preserve all current buffers and revisions
+  ---
+  duration_ms: 0.940048
+  type: 'test'
+  ...
+# Subtest: workspace document admission uses a byte budget and retains explicit count limits
+ok 232 - workspace document admission uses a byte budget and retains explicit count limits
+  ---
+  duration_ms: 0.747297
+  type: 'test'
+  ...
+# Subtest: the ordinary file picker imports more than 100 source files plus exact binary and UTF-16 content
+ok 233 - the ordinary file picker imports more than 100 source files plus exact binary and UTF-16 content
+  ---
+  duration_ms: 12.172327
+  type: 'test'
+  ...
+# Subtest: legacy JSON source projects use workspace budgets and reject malformed replacements without retiring the old model
+ok 234 - legacy JSON source projects use workspace budgets and reject malformed replacements without retiring the old model
+  ---
+  duration_ms: 3.439397
+  type: 'test'
+  ...
+# Subtest: file-picker import retains the skipped-name report for Explorer and rejects oversized membership before reading
+ok 235 - file-picker import retains the skipped-name report for Explorer and rejects oversized membership before reading
+  ---
+  duration_ms: 0.853157
+  type: 'test'
+  ...
+# Subtest: an imported native inspection and a v1 byte bundle use their existing explicit host contracts
+ok 236 - an imported native inspection and a v1 byte bundle use their existing explicit host contracts
+  ---
+  duration_ms: 0.426213
+  type: 'test'
+  ...
+# Subtest: Back/Forward preserves unloaded members and serializes lazy reads without recording duplicate history
+ok 237 - Back/Forward preserves unloaded members and serializes lazy reads without recording duplicate history
+  ---
+  duration_ms: 2.936739
+  type: 'test'
+  ...
+# Subtest: failed lazy navigation preserves history and clears replay before the next request
+ok 238 - failed lazy navigation preserves history and clears replay before the next request
+  ---
+  duration_ms: 0.752004
+  type: 'test'
+  ...
+# Subtest: workspace replacement invalidates queued history requests and reset releases their queue capacity
+ok 239 - workspace replacement invalidates queued history requests and reset releases their queue capacity
+  ---
+  duration_ms: 0.349537
+  type: 'test'
+  ...
+# Subtest: history changed during a guarded open is never advanced using an obsolete snapshot
+ok 240 - history changed during a guarded open is never advanced using an obsolete snapshot
+  ---
+  duration_ms: 0.402517
+  type: 'test'
+  ...
+# Subtest: Close Other Documents awaits each normal close hook before focusing the retained document
+ok 241 - Close Other Documents awaits each normal close hook before focusing the retained document
+  ---
+  duration_ms: 0.771954
+  type: 'test'
+  ...
+# Subtest: every historical recovery version migrates bytes, document versions and Unicode spelling without authority
+ok 242 - every historical recovery version migrates bytes, document versions and Unicode spelling without authority
+  ---
+  duration_ms: 14.662282
+  type: 'test'
+  ...
+# Subtest: corrupt checkpoints are quarantined while newer schemas are preserved intact
+ok 243 - corrupt checkpoints are quarantined while newer schemas are preserved intact
+  ---
+  duration_ms: 2.177413
+  type: 'test'
+  ...
+# Subtest: OPFS checkpoint commit failure retains the last committed generation
+ok 244 - OPFS checkpoint commit failure retains the last committed generation
+  ---
+  duration_ms: 3.565848
+  type: 'test'
+  ...
+# Subtest: OPFS load falls back to the prior checksum-verified generation after corruption
+ok 245 - OPFS load falls back to the prior checksum-verified generation after corruption
+  ---
+  duration_ms: 2.345518
+  type: 'test'
+  ...
+# Subtest: quota exhaustion explicitly lists omitted binaries and preserves text recovery
+ok 246 - quota exhaustion explicitly lists omitted binaries and preserves text recovery
+  ---
+  duration_ms: 7.002269
+  type: 'test'
+  ...
+# Subtest: validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+ok 247 - validated multi-file replacement includes unopened sources without opening tabs or writing physical files
+  ---
+  duration_ms: 72.372389
+  type: 'test'
+  ...
+# Subtest: validation may hydrate a closed lazy input without treating it as an empty or missing document
+ok 248 - validation may hydrate a closed lazy input without treating it as an empty or missing document
+  ---
+  duration_ms: 3.936436
+  type: 'test'
+  ...
+# Subtest: refactoring stale preserves every buffer and does not admit closed editors
+ok 249 - refactoring stale preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.844654
+  type: 'test'
+  ...
+# Subtest: refactoring validation-error preserves every buffer and does not admit closed editors
+ok 250 - refactoring validation-error preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.456339
+  type: 'test'
+  ...
+# Subtest: refactoring revision preserves every buffer and does not admit closed editors
+ok 251 - refactoring revision preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 3.570494
+  type: 'test'
+  ...
+# Subtest: refactoring snapshot preserves every buffer and does not admit closed editors
+ok 252 - refactoring snapshot preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 2.325527
+  type: 'test'
+  ...
+# Subtest: refactoring generated preserves every buffer and does not admit closed editors
+ok 253 - refactoring generated preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.305992
+  type: 'test'
+  ...
+# Subtest: refactoring read-only preserves every buffer and does not admit closed editors
+ok 254 - refactoring read-only preserves every buffer and does not admit closed editors
+  ---
+  duration_ms: 0.244779
+  type: 'test'
+  ...
+# Subtest: source admission rejects oversized or excessive combined buffers before changing application membership
+ok 255 - source admission rejects oversized or excessive combined buffers before changing application membership
+  ---
+  duration_ms: 0.769701
+  type: 'test'
+  ...
+# Subtest: path navigation uses complete workspace metadata without requiring a materialized Explorer page
+ok 256 - path navigation uses complete workspace metadata without requiring a materialized Explorer page
+  ---
+  duration_ms: 1.067309
+  type: 'test'
+  ...
+# Subtest: test failures navigate from one-based lines and columns or LSP ranges to the failing source span
+ok 257 - test failures navigate from one-based lines and columns or LSP ranges to the failing source span
+  ---
+  duration_ms: 0.425171
+  type: 'test'
+  ...
+# Subtest: a superseded search cannot replace newer results with either a late success or failure
+ok 258 - a superseded search cannot replace newer results with either a late success or failure
+  ---
+  duration_ms: 2.224375
+  type: 'test'
+  ...
+# Subtest: workspace identity, disk replacement and revision changes fence successful and failed search completions
+ok 259 - workspace identity, disk replacement and revision changes fence successful and failed search completions
+  ---
+  duration_ms: 1.124206
+  type: 'test'
+  ...
+# Subtest: loaded matches require their captured version, membership and exact literal span before opening
+ok 260 - loaded matches require their captured version, membership and exact literal span before opening
+  ---
+  duration_ms: 2.945201
+  type: 'test'
+  ...
+# Subtest: legacy results without a version bind to the captured document watermark
+ok 261 - legacy results without a version bind to the captured document watermark
+  ---
+  duration_ms: 0.66335
+  type: 'test'
+  ...
+# Subtest: guarded lazy admission may advance the version and repeated navigation uses that admitted watermark
+ok 262 - guarded lazy admission may advance the version and repeated navigation uses that admitted watermark
+  ---
+  duration_ms: 0.629249
+  type: 'test'
+  ...
+# Subtest: new lazy bytes must still contain the searched text at its reported UTF-16 offset
+ok 263 - new lazy bytes must still contain the searched text at its reported UTF-16 offset
+  ---
+  duration_ms: 0.372151
+  type: 'test'
+  ...
+# Subtest: workspace replacement, edits, cancellation and a newer query prevent navigation after lazy I/O
+ok 264 - workspace replacement, edits, cancellation and a newer query prevent navigation after lazy I/O
+  ---
+  duration_ms: 1.009162
+  type: 'test'
+  ...
+# Subtest: case-insensitive and whole-word navigation uses Unicode boundaries without losing UTF-16 offsets
+ok 265 - case-insensitive and whole-word navigation uses Unicode boundaries without losing UTF-16 offsets
+  ---
+  duration_ms: 3.426288
+  type: 'test'
+  ...
+# Subtest: retained result buttons and replacement intents are invalidated on workspace observation and disposal
+ok 266 - retained result buttons and replacement intents are invalidated on workspace observation and disposal
+  ---
+  duration_ms: 0.597572
+  type: 'test'
+  ...
+# Subtest: opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+ok 267 - opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+  ---
+  duration_ms: 15.23794
+  type: 'test'
+  ...
+# Subtest: workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+ok 268 - workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+  ---
+  duration_ms: 3.722654
+  type: 'test'
+  ...
+# Subtest: resource naming and file references hydrate before the selected project snapshot becomes visible
+ok 269 - resource naming and file references hydrate before the selected project snapshot becomes visible
+  ---
+  duration_ms: 25.925448
+  type: 'test'
+  ...
+# Subtest: a committed structural edit remaps editor state and retains only explicitly unsaved paths
+ok 270 - a committed structural edit remaps editor state and retains only explicitly unsaved paths
+  ---
+  duration_ms: 1.588686
+  type: 'test'
+  ...
+# Subtest: Save to Disk preserves encodings and saves source, project XML, and binary changes together
+ok 271 - Save to Disk preserves encodings and saves source, project XML, and binary changes together
+  ---
+  duration_ms: 14.829034
+  type: 'test'
+  ...
+# Subtest: external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+ok 272 - external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+  ---
+  duration_ms: 4.654829
+  type: 'test'
+  ...
+# Subtest: metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+ok 273 - metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+  ---
+  duration_ms: 4.025278
+  type: 'test'
+  ...
+# Subtest: permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+ok 274 - permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+  ---
+  duration_ms: 1.428814
+  type: 'test'
+  ...
+# Subtest: metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+ok 275 - metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+  ---
+  duration_ms: 7.301919
+  type: 'test'
+  ...
+# Subtest: a stale rescan leaves the original project model and disk baselines unchanged
+ok 276 - a stale rescan leaves the original project model and disk baselines unchanged
+  ---
+  duration_ms: 5.181071
+  type: 'test'
+  ...
+# Subtest: streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+ok 277 - streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+  ---
+  duration_ms: 10.278977
+  type: 'test'
+  ...
+# Subtest: JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+ok 278 - JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+  ---
+  duration_ms: 0.886417
+  type: 'test'
+  ...
+# Subtest: the registered JSON export command returns asynchronous hydration failures to its caller
+ok 279 - the registered JSON export command returns asynchronous hydration failures to its caller
+  ---
+  duration_ms: 1.644209
+  type: 'test'
+  ...
+# Subtest: wizard application keeps the chosen physical folder attached and retains binary item records
+ok 280 - wizard application keeps the chosen physical folder attached and retains binary item records
+  ---
+  duration_ms: 2.656575
+  type: 'test'
+  ...
+# Subtest: a later workspace load wins when an earlier load is still awaiting runtime stop
+ok 281 - a later workspace load wins when an earlier load is still awaiting runtime stop
+  ---
+  duration_ms: 4.606986
+  type: 'test'
+  ...
+# Subtest: an edit while runtime stop is pending prevents stale workspace replacement
+ok 282 - an edit while runtime stop is pending prevents stale workspace replacement
+  ---
+  duration_ms: 0.861339
+  type: 'test'
+  ...
+# Subtest: cancellation during runtime stop never publishes the prepared model or saves over recovery
+ok 283 - cancellation during runtime stop never publishes the prepared model or saves over recovery
+  ---
+  duration_ms: 0.521186
+  type: 'test'
+  ...
+# Subtest: native wizard availability uses the host operating system and does not infer it from build platform
+ok 284 - native wizard availability uses the host operating system and does not infer it from build platform
+  ---
+  duration_ms: 1.826964
+  type: 'test'
+  ...
+# Subtest: native wizard selects the newly refreshed project for startup, evaluation and launch after a successful mutation
+not ok 285 - native wizard selects the newly refreshed project for startup, evaluation and launch after a successful mutation
+  ---
+  duration_ms: 0.569659
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:61:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'length')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    NativeProjectContexts.snapshot (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/native-build/project-context.js:117:101)
+    selection (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:41:34)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:63:18)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: a failed native wizard mutation preserves every startup selection and active compilation
+not ok 286 - a failed native wizard mutation preserves every startup selection and active compilation
+  ---
+  duration_ms: 0.330438
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:85:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'length')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    NativeProjectContexts.snapshot (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/native-build/project-context.js:117:101)
+    selection (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:41:34)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:87:18)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: a refreshed workspace that lacks the new startup project preserves the previous native selection
+not ok 287 - a refreshed workspace that lacks the new startup project preserves the previous native selection
+  ---
+  duration_ms: 0.413353
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:96:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'length')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    NativeProjectContexts.snapshot (file:///workspace/scratch/3e16369943fd/p18-integration/apps/studio/native-build/project-context.js:117:101)
+    selection (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:41:34)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-wizard-native.test.js:98:18)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: Generated XAML reconnects to the designer after ZIP reopening and another export
+ok 288 - Generated XAML reconnects to the designer after ZIP reopening and another export
+  ---
+  duration_ms: 68.256882
+  type: 'test'
+  ...
+# Subtest: Generated XAML reconnects to the designer after Blob ZIP reopening and another export
+ok 289 - Generated XAML reconnects to the designer after Blob ZIP reopening and another export
+  ---
+  duration_ms: 51.548988
+  type: 'test'
+  ...
+# Subtest: Generated XAML reconnects to the designer after selected folder reopening and another export
+ok 290 - Generated XAML reconnects to the designer after selected folder reopening and another export
+  ---
+  duration_ms: 48.650798
+  type: 'test'
+  ...
+# Subtest: XAML, manifests and publish profiles preserve encoding and binary rejection with exact extension matching
+ok 291 - XAML, manifests and publish profiles preserve encoding and binary rejection with exact extension matching
+  ---
+  duration_ms: 4.044847
+  type: 'test'
+  ...
+# Subtest: SLNX structure retains folders, configuration and project build/deploy rules
+ok 292 - SLNX structure retains folders, configuration and project build/deploy rules
+  ---
+  duration_ms: 3.073447
+  type: 'test'
+  ...
+# Subtest: SLNX inspector rejects missing paths and invalid XML instead of guessing
+ok 293 - SLNX inspector rejects missing paths and invalid XML instead of guessing
+  ---
+  duration_ms: 0.539824
+  type: 'test'
+  ...
+# Subtest: SLNX creation uses relative paths at Workspace.slnx
+ok 294 - SLNX creation uses relative paths at Workspace.slnx
+  ---
+  duration_ms: 1.269785
+  type: 'test'
+  ...
+# Subtest: SLNX creation uses relative paths at solutions/Workspace.slnx
+ok 295 - SLNX creation uses relative paths at solutions/Workspace.slnx
+  ---
+  duration_ms: 0.402167
+  type: 'test'
+  ...
+# Subtest: SLNX creation uses relative paths at App/Workspace.slnx
+ok 296 - SLNX creation uses relative paths at App/Workspace.slnx
+  ---
+  duration_ms: 0.358611
+  type: 'test'
+  ...
+# Subtest: SDK target stages run every before hook and pause before after hooks until actual output bytes arrive
+ok 297 - SDK target stages run every before hook and pause before after hooks until actual output bytes arrive
+  ---
+  duration_ms: 15.930183
+  type: 'test'
+  ...
+# Subtest: framework contexts retain distinct target-generated bytes at the same path and rebuild from initial items
+ok 298 - framework contexts retain distinct target-generated bytes at the same path and rebuild from initial items
+  ---
+  duration_ms: 10.98375
+  type: 'test'
+  ...
+# Subtest: post-compile input hydration failure is atomic and retries retain the same pending build phase
+ok 299 - post-compile input hydration failure is atomic and retries retain the same pending build phase
+  ---
+  duration_ms: 2.972425
+  type: 'test'
+  ...
+# Subtest: SDK compiler defaults preserve props replacement and apply configuration and compiler-time defaults
+ok 300 - SDK compiler defaults preserve props replacement and apply configuration and compiler-time defaults
+  ---
+  duration_ms: 1.934679
+  type: 'test'
+  ...
+# Subtest: public metadata lookup prefers exact spelling and never resolves inherited object members
+ok 301 - public metadata lookup prefers exact spelling and never resolves inherited object members
+  ---
+  duration_ms: 0.183247
+  type: 'test'
+  ...
+# Subtest: build plan keeps project assemblies, sources, references and internal visibility isolated
+ok 302 - build plan keeps project assemblies, sources, references and internal visibility isolated
+  ---
+  duration_ms: 12.449181
+  type: 'test'
+  ...
+# Subtest: build plan does not grant internal visibility without an explicit friend assembly
+ok 303 - build plan does not grant internal visibility without an explicit friend assembly
+  ---
+  duration_ms: 1.709799
+  type: 'test'
+  ...
+# Subtest: ReferenceOutputAssembly=false retains build order but is excluded from metadata references
+ok 304 - ReferenceOutputAssembly=false retains build order but is excluded from metadata references
+  ---
+  duration_ms: 1.082714
+  type: 'test'
+  ...
+# Subtest: build plans reject project cycles and unavailable sources
+ok 305 - build plans reject project cycles and unavailable sources
+  ---
+  duration_ms: 1.693635
+  type: 'test'
+  ...
+# Subtest: string and primitive resx values round-trip through the .resources binary reader
+ok 306 - string and primitive resx values round-trip through the .resources binary reader
+  ---
+  duration_ms: 9.252088
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 307 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.189706
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 308 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.16564
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 309 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.135004
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 310 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.126281
+  type: 'test'
+  ...
+# Subtest: unsupported or invalid resources are rejected
+ok 311 - unsupported or invalid resources are rejected
+  ---
+  duration_ms: 0.175264
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{}
+ok 312 - manifest resource identity Strings.resx{}
+  ---
+  duration_ms: 1.021311
+  type: 'test'
+  ...
+# Subtest: manifest resource identity folder/Strings.resx{}
+ok 313 - manifest resource identity folder/Strings.resx{}
+  ---
+  duration_ms: 0.581037
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.fr.resx{}
+ok 314 - manifest resource identity Strings.fr.resx{}
+  ---
+  duration_ms: 0.381425
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.pl-PL.resx{}
+ok 315 - manifest resource identity Strings.pl-PL.resx{}
+  ---
+  duration_ms: 0.393643
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{"LogicalName":"Exact.Name"}
+ok 316 - manifest resource identity Strings.resx{"LogicalName":"Exact.Name"}
+  ---
+  duration_ms: 0.42436
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{"ManifestResourceName":"Override.Name"}
+ok 317 - manifest resource identity Strings.resx{"ManifestResourceName":"Override.Name"}
+  ---
+  duration_ms: 0.303728
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.resx{"Link":"linked/Strings.resx"}
+ok 318 - manifest resource identity Strings.resx{"Link":"linked/Strings.resx"}
+  ---
+  duration_ms: 0.353723
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Strings.fr.resx{"WithCulture":"false"}
+ok 319 - manifest resource identity Strings.fr.resx{"WithCulture":"false"}
+  ---
+  duration_ms: 0.248004
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Payload.txt{}
+ok 320 - manifest resource identity Payload.txt{}
+  ---
+  duration_ms: 0.229296
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Payload.bin{"LogicalName":"bytes"}
+ok 321 - manifest resource identity Payload.bin{"LogicalName":"bytes"}
+  ---
+  duration_ms: 0.33813
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Name.resx{"DependentUpon":"Types.cs"}
+ok 322 - manifest resource identity Name.resx{"DependentUpon":"Types.cs"}
+  ---
+  duration_ms: 0.705264
+  type: 'test'
+  ...
+# Subtest: manifest resource identity Name.fr.resx{"DependentUpon":"Types.cs"}
+ok 323 - manifest resource identity Name.fr.resx{"DependentUpon":"Types.cs"}
+  ---
+  duration_ms: 3.802467
+  type: 'test'
+  ...
+# Subtest: resx file references resolve only within the supplied virtual workspace
+ok 324 - resx file references resolve only within the supplied virtual workspace
+  ---
+  duration_ms: 0.599855
+  type: 'test'
+  ...
+# Subtest: output layout includes copied content, links, publish policy and referenced project files
+ok 325 - output layout includes copied content, links, publish policy and referenced project files
+  ---
+  duration_ms: 0.755871
+  type: 'test'
+  ...
+# Subtest: output layout rejects traversal and conflicting destinations
+ok 326 - output layout rejects traversal and conflicting destinations
+  ---
+  duration_ms: 0.760577
+  type: 'test'
+  ...
+# Subtest: launch settings accept comments/trailing commas and select the requested run context
+ok 327 - launch settings accept comments/trailing commas and select the requested run context
+  ---
+  duration_ms: 1.289826
+  type: 'test'
+  ...
+# Subtest: invalid launch settings are located diagnostics and unknown profiles are rejected
+ok 328 - invalid launch settings are located diagnostics and unknown profiles are rejected
+  ---
+  duration_ms: 0.464831
+  type: 'test'
+  ...
+# Subtest: shared JSONC parser preserves Unicode, comments, strings, trailing commas and safe object keys
+ok 329 - shared JSONC parser preserves Unicode, comments, strings, trailing commas and safe object keys
+  ---
+  duration_ms: 0.533855
+  type: 'test'
+  ...
+# Subtest: B05 mixed slnx projects remain visible as explicit unloaded nodes
+ok 330 - B05 mixed slnx projects remain visible as explicit unloaded nodes
+  ---
+  duration_ms: 1.089534
+  type: 'test'
+  ...
+# Subtest: lazy file records participate in evaluation but must hydrate before compilation
+ok 331 - lazy file records participate in evaluation but must hydrate before compilation
+  ---
+  duration_ms: 1.19292
+  type: 'test'
+  ...
+# Subtest: resource file references and dependent source naming reject unhydrated records
+ok 332 - resource file references and dependent source naming reject unhydrated records
+  ---
+  duration_ms: 0.507686
+  type: 'test'
+  ...
+# Subtest: central versions and explicit overrides preserve package metadata
+ok 333 - central versions and explicit overrides preserve package metadata
+  ---
+  duration_ms: 7.528628
+  type: 'test'
+  ...
+# Subtest: global package references follow installed NuGet.targets asset and version promotion
+ok 334 - global package references follow installed NuGet.targets asset and version promotion
+  ---
+  duration_ms: 1.202304
+  type: 'test'
+  ...
+# Subtest: central references report NU1008, NU1010 and NU1013 rather than accepting invalid version policy
+ok 335 - central references report NU1008, NU1010 and NU1013 rather than accepting invalid version policy
+  ---
+  duration_ms: 1.381955
+  type: 'test'
+  ...
+# Subtest: central package values remain isolated across framework contexts
+ok 336 - central package values remain isolated across framework contexts
+  ---
+  duration_ms: 2.525971
+  type: 'test'
+  ...
+# Subtest: inner evaluations isolate framework-conditioned sources, properties, items and generated documents
+ok 337 - inner evaluations isolate framework-conditioned sources, properties, items and generated documents
+  ---
+  duration_ms: 16.662998
+  type: 'test'
+  ...
+# Subtest: inactive context diagnostics are labeled and cannot block the selected build context
+ok 338 - inactive context diagnostics are labeled and cannot block the selected build context
+  ---
+  duration_ms: 8.109004
+  type: 'test'
+  ...
+# Subtest: active context changes re-evaluate configuration/runtime and invalidate stale identities
+ok 339 - active context changes re-evaluate configuration/runtime and invalidate stale identities
+  ---
+  duration_ms: 10.570747
+  type: 'test'
+  ...
+# Subtest: ProjectReference selects nearest compatible framework independently of the explorer active context
+ok 340 - ProjectReference selects nearest compatible framework independently of the explorer active context
+  ---
+  duration_ms: 3.514111
+  type: 'test'
+  ...
+# Subtest: diamond dependencies retain two independently compiled contexts of the same library
+ok 341 - diamond dependencies retain two independently compiled contexts of the same library
+  ---
+  duration_ms: 1.547344
+  type: 'test'
+  ...
+# Subtest: portable targets update only the requested framework context and preserve the selected context
+ok 342 - portable targets update only the requested framework context and preserve the selected context
+  ---
+  duration_ms: 3.57941
+  type: 'test'
+  ...
+# Subtest: context graphs reject incompatible references and context-budget overflow explicitly
+ok 343 - context graphs reject incompatible references and context-budget overflow explicitly
+  ---
+  duration_ms: 1.171227
+  type: 'test'
+  ...
+# Subtest: shared native/portable selection removes obsolete contexts on replacement
+ok 344 - shared native/portable selection removes obsolete contexts on replacement
+  ---
+  duration_ms: 0.25821
+  type: 'test'
+  ...
+# Subtest: selected contexts expose metadata-only paths before hydration and preserve available assembly bytes
+ok 345 - selected contexts expose metadata-only paths before hydration and preserve available assembly bytes
+  ---
+  duration_ms: 0.77582
+  type: 'test'
+  ...
+# Subtest: resource input discovery expands after resx hydration and never loads unrelated compile files
+ok 346 - resource input discovery expands after resx hydration and never loads unrelated compile files
+  ---
+  duration_ms: 2.098145
+  type: 'test'
+  ...
+# Subtest: B01 tokenizes before expansion, preserving injected quotes, operators and empty values
+ok 347 - B01 tokenizes before expansion, preserving injected quotes, operators and empty values
+  ---
+  duration_ms: 2.93138
+  type: 'test'
+  ...
+# Subtest: scanner handles adjacent references, nested static/string calls and encoded references
+ok 348 - scanner handles adjacent references, nested static/string calls and encoded references
+  ---
+  duration_ms: 0.712213
+  type: 'test'
+  ...
+# Subtest: string property member Length
+ok 349 - string property member Length
+  ---
+  duration_ms: 0.141974
+  type: 'test'
+  ...
+# Subtest: string property member Substring(1)
+ok 350 - string property member Substring(1)
+  ---
+  duration_ms: 0.274925
+  type: 'test'
+  ...
+# Subtest: string property member Substring(1,2)
+ok 351 - string property member Substring(1,2)
+  ---
+  duration_ms: 0.29162
+  type: 'test'
+  ...
+# Subtest: string property member Replace('a','X')
+ok 352 - string property member Replace('a','X')
+  ---
+  duration_ms: 0.214543
+  type: 'test'
+  ...
+# Subtest: string property member ToUpper()
+ok 353 - string property member ToUpper()
+  ---
+  duration_ms: 0.141053
+  type: 'test'
+  ...
+# Subtest: string property member ToUpperInvariant()
+ok 354 - string property member ToUpperInvariant()
+  ---
+  duration_ms: 0.077818
+  type: 'test'
+  ...
+# Subtest: string property member ToLower()
+ok 355 - string property member ToLower()
+  ---
+  duration_ms: 0.118128
+  type: 'test'
+  ...
+# Subtest: string property member ToLowerInvariant()
+ok 356 - string property member ToLowerInvariant()
+  ---
+  duration_ms: 0.15207
+  type: 'test'
+  ...
+# Subtest: string property member Contains('bab')
+ok 357 - string property member Contains('bab')
+  ---
+  duration_ms: 0.251699
+  type: 'test'
+  ...
+# Subtest: string property member StartsWith('AB', 'OrdinalIgnoreCase')
+ok 358 - string property member StartsWith('AB', 'OrdinalIgnoreCase')
+  ---
+  duration_ms: 0.151859
+  type: 'test'
+  ...
+# Subtest: string property member EndsWith('BA', 'OrdinalIgnoreCase')
+ok 359 - string property member EndsWith('BA', 'OrdinalIgnoreCase')
+  ---
+  duration_ms: 0.109886
+  type: 'test'
+  ...
+# Subtest: string property member IndexOf('ba')
+ok 360 - string property member IndexOf('ba')
+  ---
+  duration_ms: 0.109155
+  type: 'test'
+  ...
+# Subtest: string property member LastIndexOf('ba')
+ok 361 - string property member LastIndexOf('ba')
+  ---
+  duration_ms: 0.114683
+  type: 'test'
+  ...
+# Subtest: string property member Split('b')[1]
+ok 362 - string property member Split('b')[1]
+  ---
+  duration_ms: 0.248565
+  type: 'test'
+  ...
+# Subtest: string property member PadLeft(7,'0')
+ok 363 - string property member PadLeft(7,'0')
+  ---
+  duration_ms: 0.099951
+  type: 'test'
+  ...
+# Subtest: string property member PadRight(7,'0')
+ok 364 - string property member PadRight(7,'0')
+  ---
+  duration_ms: 0.133
+  type: 'test'
+  ...
+# Subtest: string property member Equals('ABABA', 'OrdinalIgnoreCase')
+ok 365 - string property member Equals('ABABA', 'OrdinalIgnoreCase')
+  ---
+  duration_ms: 0.127582
+  type: 'test'
+  ...
+# Subtest: string property member [2]
+ok 366 - string property member [2]
+  ---
+  duration_ms: 0.080492
+  type: 'test'
+  ...
+# Subtest: string property member Trim('a')
+ok 367 - string property member Trim('a')
+  ---
+  duration_ms: 0.081903
+  type: 'test'
+  ...
+# Subtest: string property member TrimStart('a')
+ok 368 - string property member TrimStart('a')
+  ---
+  duration_ms: 0.069815
+  type: 'test'
+  ...
+# Subtest: string property member TrimEnd('a')
+ok 369 - string property member TrimEnd('a')
+  ---
+  duration_ms: 0.05984
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $(A.BadMember)
+ok 370 - B02 malformed or disallowed expression is diagnostic: $(A.BadMember)
+  ---
+  duration_ms: 4.533845
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $(A.Replace('', 'x'))
+ok 371 - B02 malformed or disallowed expression is diagnostic: $(A.Replace('', 'x'))
+  ---
+  duration_ms: 0.564221
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $(A.Substring(-1))
+ok 372 - B02 malformed or disallowed expression is diagnostic: $(A.Substring(-1))
+  ---
+  duration_ms: 0.593715
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $(A[100])
+ok 373 - B02 malformed or disallowed expression is diagnostic: $(A[100])
+  ---
+  duration_ms: 0.55005
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $(Unterminated
+ok 374 - B02 malformed or disallowed expression is diagnostic: $(Unterminated
+  ---
+  duration_ms: 0.406803
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $([System.String]::Copy('missing))
+ok 375 - B02 malformed or disallowed expression is diagnostic: $([System.String]::Copy('missing))
+  ---
+  duration_ms: 0.505302
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $([System.IO.File]::ReadAllText(x))
+ok 376 - B02 malformed or disallowed expression is diagnostic: $([System.IO.File]::ReadAllText(x))
+  ---
+  duration_ms: 0.462347
+  type: 'test'
+  ...
+# Subtest: B02 malformed or disallowed expression is diagnostic: $([System.Text.RegularExpressions.Regex]::IsM
+ok 377 - B02 malformed or disallowed expression is diagnostic: $([System.Text.RegularExpressions.Regex]::IsM
+  ---
+  duration_ms: 0.707947
+  type: 'test'
+  ...
+# Subtest: B03 item and metadata conditions evaluate with context and fail explicitly without it
+ok 378 - B03 item and metadata conditions evaluate with context and fail explicitly without it
+  ---
+  duration_ms: 2.411196
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.String]::Concat('a','b'))
+ok 379 - allow-listed static function $([System.String]::Concat('a','b'))
+  ---
+  duration_ms: 0.110406
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.String]::Format('{0}-{1}','a','b'))
+ok 380 - allow-listed static function $([System.String]::Format('{0}-{1}','a','b'))
+  ---
+  duration_ms: 0.231359
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.String]::IsNullOrWhiteSpace('  '))
+ok 381 - allow-listed static function $([System.String]::IsNullOrWhiteSpace('  '))
+  ---
+  duration_ms: 0.080181
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Math]::Round(2.5))
+ok 382 - allow-listed static function $([System.Math]::Round(2.5))
+  ---
+  duration_ms: 0.163476
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Math]::Round(3.5))
+ok 383 - allow-listed static function $([System.Math]::Round(3.5))
+  ---
+  duration_ms: 0.088814
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Math]::Max(2,8))
+ok 384 - allow-listed static function $([System.Math]::Max(2,8))
+  ---
+  duration_ms: 0.110407
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Version]::Parse('1.2.3').Major)
+ok 385 - allow-listed static function $([System.Version]::Parse('1.2.3').Major)
+  ---
+  duration_ms: 0.292161
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Convert]::ToInt32('FF',16))
+ok 386 - allow-listed static function $([System.Convert]::ToInt32('FF',16))
+  ---
+  duration_ms: 0.138599
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Char]::IsDigit('4'))
+ok 387 - allow-listed static function $([System.Char]::IsDigit('4'))
+  ---
+  duration_ms: 0.270218
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Guid]::Empty)
+ok 388 - allow-listed static function $([System.Guid]::Empty)
+  ---
+  duration_ms: 0.110216
+  type: 'test'
+  ...
+# Subtest: allow-listed static function $([System.Text.RegularExpressions.Regex]::Replace('abc123','[0-9]+','x'))
+ok 389 - allow-listed static function $([System.Text.RegularExpressions.Regex]::Replace('abc123','[0-9]+','x'))
+  ---
+  duration_ms: 0.217248
+  type: 'test'
+  ...
+# Subtest: static path/environment/time calls use only the explicit virtual context
+ok 390 - static path/environment/time calls use only the explicit virtual context
+  ---
+  duration_ms: 1.378038
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic Add(2,3)
+ok 391 - MSBuild intrinsic Add(2,3)
+  ---
+  duration_ms: 0.115494
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic Subtract(8,3)
+ok 392 - MSBuild intrinsic Subtract(8,3)
+  ---
+  duration_ms: 0.064728
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic Multiply(2,3)
+ok 393 - MSBuild intrinsic Multiply(2,3)
+  ---
+  duration_ms: 2.48728
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic Divide(8,2)
+ok 394 - MSBuild intrinsic Divide(8,2)
+  ---
+  duration_ms: 0.103806
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic Modulo(8,3)
+ok 395 - MSBuild intrinsic Modulo(8,3)
+  ---
+  duration_ms: 0.064087
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic BitwiseOr(1,2)
+ok 396 - MSBuild intrinsic BitwiseOr(1,2)
+  ---
+  duration_ms: 0.054553
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic BitwiseAnd(3,2)
+ok 397 - MSBuild intrinsic BitwiseAnd(3,2)
+  ---
+  duration_ms: 0.050045
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic BitwiseXor(3,2)
+ok 398 - MSBuild intrinsic BitwiseXor(3,2)
+  ---
+  duration_ms: 0.056065
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic BitwiseNot(0)
+ok 399 - MSBuild intrinsic BitwiseNot(0)
+  ---
+  duration_ms: 0.096716
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic ValueOrDefault('', 'fallback')
+ok 400 - MSBuild intrinsic ValueOrDefault('', 'fallback')
+  ---
+  duration_ms: 0.107242
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic EnsureTrailingSlash('src')
+ok 401 - MSBuild intrinsic EnsureTrailingSlash('src')
+  ---
+  duration_ms: 0.162105
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic VersionGreaterThan('v2.0-preview','1.9.9')
+ok 402 - MSBuild intrinsic VersionGreaterThan('v2.0-preview','1.9.9')
+  ---
+  duration_ms: 0.288004
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic VersionEquals('1.0','1.0.0.0')
+ok 403 - MSBuild intrinsic VersionEquals('1.0','1.0.0.0')
+  ---
+  duration_ms: 0.079439
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic VersionLessThanOrEquals('1.0', '2.0')
+ok 404 - MSBuild intrinsic VersionLessThanOrEquals('1.0', '2.0')
+  ---
+  duration_ms: 0.060761
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic GetTargetFrameworkIdentifier('net8.0')
+ok 405 - MSBuild intrinsic GetTargetFrameworkIdentifier('net8.0')
+  ---
+  duration_ms: 0.299662
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic GetTargetFrameworkVersion('net48')
+ok 406 - MSBuild intrinsic GetTargetFrameworkVersion('net48')
+  ---
+  duration_ms: 0.156346
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic GetTargetPlatformIdentifier('net8.0-windows10.0.19041')
+ok 407 - MSBuild intrinsic GetTargetPlatformIdentifier('net8.0-windows10.0.19041')
+  ---
+  duration_ms: 0.076465
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic IsTargetFrameworkCompatible('net8.0','netstandard2.1')
+ok 408 - MSBuild intrinsic IsTargetFrameworkCompatible('net8.0','netstandard2.1')
+  ---
+  duration_ms: 0.140522
+  type: 'test'
+  ...
+# Subtest: MSBuild intrinsic AreFeaturesEnabled('17.0')
+ok 409 - MSBuild intrinsic AreFeaturesEnabled('17.0')
+  ---
+  duration_ms: 0.067923
+  type: 'test'
+  ...
+# Subtest: indexed Exists performs bounded directory lookup across 20000 workspace files
+ok 410 - indexed Exists performs bounded directory lookup across 20000 workspace files
+  ---
+  duration_ms: 55.903457
+  type: 'test'
+  ...
+# Subtest: 100 evaluated projects share a path trie over 20000 source files
+ok 411 - 100 evaluated projects share a path trie over 20000 source files
+  ---
+  duration_ms: 131.383386
+  type: 'test'
+  ...
+# Subtest: TFM parsing and nearest compatible framework selection is deterministic
+ok 412 - TFM parsing and nearest compatible framework selection is deterministic
+  ---
+  duration_ms: 0.348846
+  type: 'test'
+  ...
+# Subtest: expression and condition budgets reject excessive input and nesting
+ok 413 - expression and condition budgets reject excessive input and nesting
+  ---
+  duration_ms: 0.560495
+  type: 'test'
+  ...
+# Subtest: generic custom items preserve source order, default metadata, update and removal
+ok 414 - generic custom items preserve source order, default metadata, update and removal
+  ---
+  duration_ms: 7.135999
+  type: 'test'
+  ...
+# Subtest: escaped separators remain literal item identities
+ok 415 - escaped separators remain literal item identities
+  ---
+  duration_ms: 0.90191
+  type: 'test'
+  ...
+# Subtest: Include Exclude Update Remove obey declaration order for absent and future items
+ok 416 - Include Exclude Update Remove obey declaration order for absent and future items
+  ---
+  duration_ms: 1.096844
+  type: 'test'
+  ...
+# Subtest: KeepDuplicates compares identity and custom metadata
+ok 417 - KeepDuplicates compares identity and custom metadata
+  ---
+  duration_ms: 0.680186
+  type: 'test'
+  ...
+# Subtest: KeepMetadata and RemoveMetadata filter copied custom metadata
+ok 418 - KeepMetadata and RemoveMetadata filter copied custom metadata
+  ---
+  duration_ms: 0.714126
+  type: 'test'
+  ...
+# Subtest: MatchOnMetadata removes matching copied items with explicit comparison modes
+ok 419 - MatchOnMetadata removes matching copied items with explicit comparison modes
+  ---
+  duration_ms: 0.986527
+  type: 'test'
+  ...
+# Subtest: item metadata expansion observes previous metadata and the current item
+ok 420 - item metadata expansion observes previous metadata and the current item
+  ---
+  duration_ms: 0.659004
+  type: 'test'
+  ...
+# Subtest: well-known metadata describes imported definitions relative to the project
+ok 421 - well-known metadata describes imported definitions relative to the project
+  ---
+  duration_ms: 1.589777
+  type: 'test'
+  ...
+# Subtest: transforms generate new paths and preserve source metadata over nested transforms
+ok 422 - transforms generate new paths and preserve source metadata over nested transforms
+  ---
+  duration_ms: 1.629783
+  type: 'test'
+  ...
+# Subtest: item expression function @(X, '|')
+ok 423 - item expression function @(X, '|')
+  ---
+  duration_ms: 0.700476
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Count())
+ok 424 - item expression function @(X->Count())
+  ---
+  duration_ms: 0.560044
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Distinct())
+ok 425 - item expression function @(X->Distinct())
+  ---
+  duration_ms: 0.527315
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->DistinctWithCase())
+ok 426 - item expression function @(X->DistinctWithCase())
+  ---
+  duration_ms: 0.4107
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Reverse())
+ok 427 - item expression function @(X->Reverse())
+  ---
+  duration_ms: 0.461526
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->AnyHaveMetadataValue('M','YES'))
+ok 428 - item expression function @(X->AnyHaveMetadataValue('M','YES'))
+  ---
+  duration_ms: 0.378791
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->HasMetadata('M'))
+ok 429 - item expression function @(X->HasMetadata('M'))
+  ---
+  duration_ms: 0.461636
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->WithMetadataValue('M','yes'))
+ok 430 - item expression function @(X->WithMetadataValue('M','yes'))
+  ---
+  duration_ms: 0.338631
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->WithoutMetadataValue('M','yes'))
+ok 431 - item expression function @(X->WithoutMetadataValue('M','yes'))
+  ---
+  duration_ms: 0.354705
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Metadata('M'))
+ok 432 - item expression function @(X->Metadata('M'))
+  ---
+  duration_ms: 0.346302
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->ClearMetadata()->HasMetadata('M'))
+ok 433 - item expression function @(X->ClearMetadata()->HasMetadata('M'))
+  ---
+  duration_ms: 0.392952
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->ToUpper())
+ok 434 - item expression function @(X->ToUpper())
+  ---
+  duration_ms: 0.441305
+  type: 'test'
+  ...
+# Subtest: Exists item function keeps only granted workspace files
+ok 435 - Exists item function keeps only granted workspace files
+  ---
+  duration_ms: 0.41087
+  type: 'test'
+  ...
+# Subtest: item conditions see final properties and per-item metadata
+ok 436 - item conditions see final properties and per-item metadata
+  ---
+  duration_ms: 4.868069
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X/>
+ok 437 - invalid item operation is diagnosed: <X/>
+  ---
+  duration_ms: 0.519694
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a" Remove="b"/>
+ok 438 - invalid item operation is diagnosed: <X Include="a" Remove="b"/>
+  ---
+  duration_ms: 0.198409
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a" KeepMetadata="A" RemoveMetadata="B"/>
+ok 439 - invalid item operation is diagnosed: <X Include="a" KeepMetadata="A" RemoveMetadata="B"/>
+  ---
+  duration_ms: 0.188193
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a" KeepDuplicates="perhaps"/>
+ok 440 - invalid item operation is diagnosed: <X Include="a" KeepDuplicates="perhaps"/>
+  ---
+  duration_ms: 0.1728
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Remove="a" MatchOnMetadata="M"/>
+ok 441 - invalid item operation is diagnosed: <X Remove="a" MatchOnMetadata="M"/>
+  ---
+  duration_ms: 0.16563
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a"/><X Remove="@(X)" MatchOnMetadata="M" MatchOnMetadataOptions="Random"/>
+ok 442 - invalid item operation is diagnosed: <X Include="a"/><X Remove="@(X)" MatchOnMetadata="M" MatchOnMetadataOptions="Random"/>
+  ---
+  duration_ms: 0.24582
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="@(X->UnknownMethod())"/>
+ok 443 - invalid item operation is diagnosed: <X Include="@(X->UnknownMethod())"/>
+  ---
+  duration_ms: 0.224147
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="../../escape"/>
+ok 444 - invalid item operation is diagnosed: <X Include="../../escape"/>
+  ---
+  duration_ms: 0.188705
+  type: 'test'
+  ...
+# Subtest: item expansion and cancellation budgets stop evaluation
+ok 445 - item expansion and cancellation budgets stop evaluation
+  ---
+  duration_ms: 0.551342
+  type: 'test'
+  ...
+# Subtest: reserved, environment and TreatAsLocalProperty values have distinct precedence
+ok 446 - reserved, environment and TreatAsLocalProperty values have distinct precedence
+  ---
+  duration_ms: 6.296153
+  type: 'test'
+  ...
+# Subtest: per-project global mappings override solution defaults
+ok 447 - per-project global mappings override solution defaults
+  ---
+  duration_ms: 0.409717
+  type: 'test'
+  ...
+# Subtest: SDK default properties cover configuration, framework, compilation and output layout
+ok 448 - SDK default properties cover configuration, framework, compilation and output layout
+  ---
+  duration_ms: 3.1504
+  type: 'test'
+  ...
+# Subtest: SDK default Compile, EmbeddedResource and None globs are disjoint and respect exclusions
+ok 449 - SDK default Compile, EmbeddedResource and None globs are disjoint and respect exclusions
+  ---
+  duration_ms: 1.990651
+  type: 'test'
+  ...
+# Subtest: SDK default items can be disabled independently
+ok 450 - SDK default items can be disabled independently
+  ---
+  duration_ms: 1.073098
+  type: 'test'
+  ...
+# Subtest: explicit SDK imports evaluate the same key defaults as the SDK attribute
+ok 451 - explicit SDK imports evaluate the same key defaults as the SDK attribute
+  ---
+  duration_ms: 1.712883
+  type: 'test'
+  ...
+# Subtest: SDK declarations and caller resolvers are explicit and unknown SDKs block evaluation
+ok 452 - SDK declarations and caller resolvers are explicit and unknown SDKs block evaluation
+  ---
+  duration_ms: 5.764601
+  type: 'test'
+  ...
+# Subtest: Directory.Build import switches, overrides and label provenance are retained
+ok 453 - Directory.Build import switches, overrides and label provenance are retained
+  ---
+  duration_ms: 1.051005
+  type: 'test'
+  ...
+# Subtest: GetPathOfFileAbove composes nested Directory.Build.props with its parent
+ok 454 - GetPathOfFileAbove composes nested Directory.Build.props with its parent
+  ---
+  duration_ms: 0.918445
+  type: 'test'
+  ...
+# Subtest: central package versions and explicit overrides flow into PackageReference metadata
+ok 455 - central package versions and explicit overrides flow into PackageReference metadata
+  ---
+  duration_ms: 1.258868
+  type: 'test'
+  ...
+# Subtest: implicit global usings honor Using Remove, aliases and static metadata
+ok 456 - implicit global usings honor Using Remove, aliases and static metadata
+  ---
+  duration_ms: 1.670729
+  type: 'test'
+  ...
+# Subtest: global using qualification preserves predefined alias types and avoids duplicate global prefixes
+ok 457 - global using qualification preserves predefined alias types and avoids duplicate global prefixes
+  ---
+  duration_ms: 1.115662
+  type: 'test'
+  ...
+# Subtest: assembly info sources include versions, company and friend assemblies with escaping
+ok 458 - assembly info sources include versions, company and friend assemblies with escaping
+  ---
+  duration_ms: 0.884944
+  type: 'test'
+  ...
+# Subtest: portable target graph retains dependencies, hooks, incremental declarations and initial/default targets
+ok 459 - portable target graph retains dependencies, hooks, incremental declarations and initial/default targets
+  ---
+  duration_ms: 8.779618
+  type: 'test'
+  ...
+# Subtest: target policy blocks each native-only task by name while allowing portable tasks
+ok 460 - target policy blocks each native-only task by name while allowing portable tasks
+  ---
+  duration_ms: 2.50079
+  type: 'test'
+  ...
+# Subtest: target execution writes generated source, adds Compile and makes it available to the build plan
+ok 461 - target execution writes generated source, adds Compile and makes it available to the build plan
+  ---
+  duration_ms: 6.178345
+  type: 'test'
+  ...
+# Subtest: portable tasks honor Condition and do not mutate a workspace when apply=false
+ok 462 - portable tasks honor Condition and do not mutate a workspace when apply=false
+  ---
+  duration_ms: 1.278273
+  type: 'test'
+  ...
+# Subtest: Copy outputs, in-target properties/items, read lines and directory existence work together
+ok 463 - Copy outputs, in-target properties/items, read lines and directory existence work together
+  ---
+  duration_ms: 2.057582
+  type: 'test'
+  ...
+# Subtest: task metadata batching groups values and exposes each item bucket
+ok 464 - task metadata batching groups values and exposes each item bucket
+  ---
+  duration_ms: 1.448044
+  type: 'test'
+  ...
+# Subtest: target batching writes one output per metadata bucket
+ok 465 - target batching writes one output per metadata bucket
+  ---
+  duration_ms: 1.173048
+  type: 'test'
+  ...
+# Subtest: ContinueOnError obeys warning/continuation semantics and default failure rolls back virtual changes
+ok 466 - ContinueOnError obeys warning/continuation semantics and default failure rolls back virtual changes
+  ---
+  duration_ms: 1.568695
+  type: 'test'
+  ...
+# Subtest: CallTarget executes a target at most once and rejects recursive invocation
+ok 467 - CallTarget executes a target at most once and rejects recursive invocation
+  ---
+  duration_ms: 7.062138
+  type: 'test'
+  ...
+# Subtest: Delete and RemoveDir update virtual existence without host file access
+ok 468 - Delete and RemoveDir update virtual existence without host file access
+  ---
+  duration_ms: 1.298368
+  type: 'test'
+  ...
+# Subtest: portable target execution enforces steps, output bytes and cancellation
+ok 469 - portable target execution enforces steps, output bytes and cancellation
+  ---
+  duration_ms: 1.046578
+  type: 'test'
+  ...
+# Subtest: portable file tasks preserve escaped semicolons in path lists
+ok 470 - portable file tasks preserve escaped semicolons in path lists
+  ---
+  duration_ms: 0.512492
+  type: 'test'
+  ...
+# Subtest: lazy task inputs are an atomic hydration request and can be retried after materialization
+ok 471 - lazy task inputs are an atomic hydration request and can be retried after materialization
+  ---
+  duration_ms: 2.188971
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+ok 472 - empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 21.025681
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+ok 473 - empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 3.483011
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+ok 474 - empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 2.26165
+  type: 'test'
+  ...
+# Subtest: empty-folder writer rejects preexisting contents without opening a write stream
+ok 475 - empty-folder writer rejects preexisting contents without opening a write stream
+  ---
+  duration_ms: 0.829019
+  type: 'test'
+  ...
+# Subtest: empty-folder writer resolves denied permission before any mutation
+ok 476 - empty-folder writer resolves denied permission before any mutation
+  ---
+  duration_ms: 0.269166
+  type: 'test'
+  ...
+# Subtest: empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+ok 477 - empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+  ---
+  duration_ms: 0.879917
+  type: 'test'
+  ...
+# Subtest: aborted empty-folder save creates no files
+ok 478 - aborted empty-folder save creates no files
+  ---
+  duration_ms: 0.192761
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A.txt / a.txt
+ok 479 - empty-folder writer validates complete path plan before mutation A.txt / a.txt
+  ---
+  duration_ms: 0.221684
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+ok 480 - empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+  ---
+  duration_ms: 0.202155
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation é.txt / é.txt
+ok 481 - empty-folder writer validates complete path plan before mutation é.txt / é.txt
+  ---
+  duration_ms: 0.360493
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation a / a/b
+ok 482 - empty-folder writer validates complete path plan before mutation a / a/b
+  ---
+  duration_ms: 0.176075
+  type: 'test'
+  ...
+# Subtest: directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+ok 483 - directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+  ---
+  duration_ms: 0.306462
+  type: 'test'
+  ...
+# Subtest: folder manifests reject ambiguity and preserve the original records on failure
+ok 484 - folder manifests reject ambiguity and preserve the original records on failure
+  ---
+  duration_ms: 0.154273
+  type: 'test'
+  ...
+# Subtest: FileList repository prefix is normalized only by a validated workspace manifest
+ok 485 - FileList repository prefix is normalized only by a validated workspace manifest
+  ---
+  duration_ms: 0.777282
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16le and detects external edits before any writing
+ok 486 - disk source save preserves utf-16le and detects external edits before any writing
+  ---
+  duration_ms: 0.744332
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16be and detects external edits before any writing
+ok 487 - disk source save preserves utf-16be and detects external edits before any writing
+  ---
+  duration_ms: 0.217137
+  type: 'test'
+  ...
+# Subtest: disk source save rechecks after permissions and never overwrites a prompt-time change
+ok 488 - disk source save rechecks after permissions and never overwrites a prompt-time change
+  ---
+  duration_ms: 0.241253
+  type: 'test'
+  ...
+# Subtest: native disk creation rejects case-shadow files and parents before applying any batch entry
+ok 489 - native disk creation rejects case-shadow files and parents before applying any batch entry
+  ---
+  duration_ms: 10.08807
+  type: 'test'
+  ...
+# Subtest: native new destination parents use portable case identity within the same batch
+ok 490 - native new destination parents use portable case identity within the same batch
+  ---
+  duration_ms: 1.061641
+  type: 'test'
+  ...
+# Subtest: CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+ok 491 - CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+  ---
+  duration_ms: 1983.445697
+  type: 'test'
+  ...
+# Subtest: CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+ok 492 - CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+  ---
+  duration_ms: 3.096119
+  type: 'test'
+  ...
+# Subtest: workspace corpus mixed-encoding-solution: ZIP re-export retains bytes, membership and empty directories
+ok 493 - workspace corpus mixed-encoding-solution: ZIP re-export retains bytes, membership and empty directories
+  ---
+  duration_ms: 15.370878
+  type: 'test'
+  ...
+# Subtest: workspace corpus mixed-encoding-solution: native HTTP bytes match the ZIP import
+ok 494 - workspace corpus mixed-encoding-solution: native HTTP bytes match the ZIP import
+  ---
+  duration_ms: 123.235282
+  type: 'test'
+  ...
+# Subtest: workspace corpus legacy-solution: ZIP re-export retains bytes, membership and empty directories
+ok 495 - workspace corpus legacy-solution: ZIP re-export retains bytes, membership and empty directories
+  ---
+  duration_ms: 2.638078
+  type: 'test'
+  ...
+# Subtest: workspace corpus legacy-solution: native HTTP bytes match the ZIP import
+ok 496 - workspace corpus legacy-solution: native HTTP bytes match the ZIP import
+  ---
+  duration_ms: 43.992109
+  type: 'test'
+  ...
+# Subtest: workspace corpus folder-only: ZIP re-export retains bytes, membership and empty directories
+ok 497 - workspace corpus folder-only: ZIP re-export retains bytes, membership and empty directories
+  ---
+  duration_ms: 1.284236
+  type: 'test'
+  ...
+# Subtest: workspace corpus folder-only: native HTTP bytes match the ZIP import
+ok 498 - workspace corpus folder-only: native HTTP bytes match the ZIP import
+  ---
+  duration_ms: 29.824862
+  type: 'test'
+  ...
+# Subtest: workspace corpus rejects malformed archives and traversing output before producing records
+ok 499 - workspace corpus rejects malformed archives and traversing output before producing records
+  ---
+  duration_ms: 3.032753
+  type: 'test'
+  ...
+# Subtest: native corpus saves unchanged UTF-16 text without changing BOM or byte order
+ok 500 - native corpus saves unchanged UTF-16 text without changing BOM or byte order
+  ---
+  duration_ms: 37.150098
+  type: 'test'
+  ...
+1..500
+# tests 500
+# suites 0
+# pass 495
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34518.304002

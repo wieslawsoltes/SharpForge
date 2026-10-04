@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "843fc516e466e3571dfbe925eaa322ee1bf6cad3",
+  "pr": 3888,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/3888",
+  "branch": "codex/p18-compiler-worker-entry",
+  "baseBranch": "codex/p18-compiler-worker-dependencies",
+  "head": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+  "base": "91b7221559502a31c3f66b634db57d4be7e105f0",
+  "draft": true,
+  "tree": "4af3d2fdebb4c56e8ca227de9cdb2edc576a93ad",
+  "commits": [
+    {
+      "local": "543ac631c6e4a0c3042e6045d2ed43da24f4ea87",
+      "remote": "2c8bbec11b2d36e1e525c45952f715868a94189d",
+      "tree": "4eac6aea6b9210ef6cc328eb76e2863059c251d8",
+      "parents": [
+        "917c5bc8291d59f124ffc3c68abddd5366daa4a4",
+        "bc888b66d2838bc69cce5e93b0f01a38d10f68ca"
+      ],
+      "feature": false
+    },
+    {
+      "local": "e64e8d7980b7a9af3f0ca9c967a4ade286c524ff",
+      "remote": "086e0e5c95d46d565d68b0c642fbd915a00c3a7a",
+      "tree": "86163b1835f1d5770cc2068ee5cdb81e1b612e5d",
+      "parents": [
+        "2c8bbec11b2d36e1e525c45952f715868a94189d",
+        "f3ac57b9c5713494fc8cb0b4323420c82b16cc64"
+      ],
+      "feature": false
+    },
+    {
+      "local": "9765f1e670a95de8e1403f7f4a2ec5a7aedb6c8d",
+      "remote": "91b7221559502a31c3f66b634db57d4be7e105f0",
+      "tree": "9abc845b67c77a39dd6d19b3cc73b68cfa7110e1",
+      "parents": [
+        "086e0e5c95d46d565d68b0c642fbd915a00c3a7a",
+        "185bfbab5fa66ca7274b6b1fe61f4ae823b07cf9"
+      ],
+      "feature": false
+    },
+    {
+      "local": "c1321391406d3696c7152197da745a8fac4017c0",
+      "remote": "e7c3a6e70c4276999d807d9e7c8fa61d9a8c2dd6",
+      "tree": "b29ce93f92e7cd7186ba1edd838ed032df362d00",
+      "parents": [
+        "91b7221559502a31c3f66b634db57d4be7e105f0"
+      ],
+      "feature": true
+    },
+    {
+      "local": "2b75eda3bb24f6cfdd6702b5a9b5ba8379118ae0",
+      "remote": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+      "tree": "4af3d2fdebb4c56e8ca227de9cdb2edc576a93ad",
+      "parents": [
+        "e7c3a6e70c4276999d807d9e7c8fa61d9a8c2dd6"
+      ],
+      "feature": true,
+      "reason": "Static worker transport bootstrap and reviewed inherited registry fingerprint"
+    }
+  ],
+  "verification": {
+    "apiTreeMatches": true,
+    "prReadback": true,
+    "gitParentReadback": true,
+    "currentHeadPrReadback": true,
+    "currentHeadGitTreeAndParentReadback": true
+  },
+  "constraints": [
+    "Studio host composition is prepared under another agent's live studio lease; not applied.",
+    "Required core and browser qualification are distinct from the completed Node scope."
+  ],
+  "initialHead": "e7c3a6e70c4276999d807d9e7c8fa61d9a8c2dd6",
+  "qualifications": [
+    {
+      "node": "v26.10.0",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "log": "planning/evidence/project18/integration/upstream-qualification/node26-compiler-graph-composition.tap"
+    },
+    {
+      "node": "v26.10.0",
+      "sourceCommit": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+      "file": "tests/a23-compiler-worker-entry.test.js",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "containingCohort": {
+        "tests": 66,
+        "passed": 65,
+        "failed": 1,
+        "reason": "Unrelated Explorer duplicate-ID rejection; corrected and replayed separately"
+      },
+      "log": "planning/evidence/project18/integration/upstream-qualification/node26-final-corrections.tap"
+    }
+  ],
+  "requiredCore": {
+    "head": "a2df24f3d1179c00e9fd5e82eadc28ceb5dbcfdf",
+    "run": 37173004374,
+    "job": 111349651682,
+    "conclusion": "success",
+    "initialFailure": {
+      "head": "e7c3a6e70c4276999d807d9e7c8fa61d9a8c2dd6",
+      "run": 37172088857,
+      "job": 111346944888,
+      "reason": "Inherited registry fingerprint and transport dynamic import"
+    },
+    "otherJobs": "skipped"
+  }
+}

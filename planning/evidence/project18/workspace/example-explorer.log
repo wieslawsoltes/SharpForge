@@ -1,0 +1,257 @@
+{
+  "projects": 2,
+  "hierarchy": [
+    {
+      "kind": "solution",
+      "label": "Solution 'Demo' (2 projects)",
+      "path": "Demo.slnx",
+      "children": [
+        {
+          "kind": "solution-folder",
+          "label": "Apps",
+          "children": [
+            {
+              "kind": "project",
+              "label": "App",
+              "path": "App/App.csproj",
+              "children": [
+                {
+                  "kind": "dependencies",
+                  "label": "Dependencies",
+                  "children": [
+                    {
+                      "kind": "target-framework",
+                      "label": "net9.0",
+                      "children": [
+                        {
+                          "kind": "dependency-group",
+                          "label": "Analyzers"
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Assemblies"
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Frameworks",
+                          "children": [
+                            {
+                              "kind": "framework",
+                              "label": "net9.0"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Packages"
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Projects",
+                          "children": [
+                            {
+                              "kind": "project-reference",
+                              "label": "Library.csproj",
+                              "path": "Library/Library.csproj"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "target-framework",
+                      "label": "net10.0",
+                      "children": [
+                        {
+                          "kind": "dependency-group",
+                          "label": "Analyzers"
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Assemblies"
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Frameworks",
+                          "children": [
+                            {
+                              "kind": "framework",
+                              "label": "net10.0"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Packages"
+                        },
+                        {
+                          "kind": "dependency-group",
+                          "label": "Projects",
+                          "children": [
+                            {
+                              "kind": "project-reference",
+                              "label": "Library.csproj",
+                              "path": "Library/Library.csproj"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "folder",
+                  "label": "Empty",
+                  "path": "App/Empty"
+                },
+                {
+                  "kind": "folder",
+                  "label": "Links",
+                  "path": "App/Links",
+                  "children": [
+                    {
+                      "kind": "source",
+                      "label": "Shared.cs",
+                      "path": "Shared/Shared.cs",
+                      "linked": true
+                    }
+                  ]
+                },
+                {
+                  "kind": "project-file",
+                  "label": "App.csproj",
+                  "path": "App/App.csproj"
+                },
+                {
+                  "kind": "generated-group",
+                  "label": "Generated Sources",
+                  "children": [
+                    {
+                      "kind": "generator",
+                      "label": "Generated",
+                      "children": [
+                        {
+                          "kind": "generated",
+                          "label": "App.AssemblyInfo.g.cs",
+                          "path": "App/obj/Debug/net10.0/App.AssemblyInfo.g.cs"
+                        },
+                        {
+                          "kind": "generated",
+                          "label": "Settings.g.cs",
+                          "path": "App/Generated/Settings.g.cs"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "imports",
+                  "label": "Imports",
+                  "children": [
+                    {
+                      "kind": "import",
+                      "label": "App.csproj",
+                      "path": "App/App.csproj"
+                    }
+                  ]
+                },
+                {
+                  "kind": "file",
+                  "label": "View.xaml",
+                  "path": "App/View.xaml",
+                  "children": [
+                    {
+                      "kind": "source",
+                      "label": "View.xaml.cs",
+                      "path": "App/View.xaml.cs",
+                      "nested": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "project",
+          "label": "Library",
+          "path": "Library/Library.csproj",
+          "children": [
+            {
+              "kind": "dependencies",
+              "label": "Dependencies",
+              "children": [
+                {
+                  "kind": "dependency-group",
+                  "label": "Analyzers"
+                },
+                {
+                  "kind": "dependency-group",
+                  "label": "Assemblies"
+                },
+                {
+                  "kind": "dependency-group",
+                  "label": "Frameworks",
+                  "children": [
+                    {
+                      "kind": "framework",
+                      "label": "net10.0"
+                    }
+                  ]
+                },
+                {
+                  "kind": "dependency-group",
+                  "label": "Packages"
+                },
+                {
+                  "kind": "dependency-group",
+                  "label": "Projects"
+                }
+              ]
+            },
+            {
+              "kind": "generated-group",
+              "label": "Generated Sources",
+              "children": [
+                {
+                  "kind": "generator",
+                  "label": "Generated",
+                  "children": [
+                    {
+                      "kind": "generated",
+                      "label": "Library.AssemblyInfo.g.cs",
+                      "path": "Library/obj/Debug/net10.0/Library.AssemblyInfo.g.cs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "imports",
+              "label": "Imports",
+              "children": [
+                {
+                  "kind": "import",
+                  "label": "Library.csproj",
+                  "path": "Library/Library.csproj"
+                }
+              ]
+            },
+            {
+              "kind": "project-file",
+              "label": "Library.csproj",
+              "path": "Library/Library.csproj"
+            },
+            {
+              "kind": "source",
+              "label": "Service.cs",
+              "path": "Library/Service.cs"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "projectReferenceRenamed": true,
+  "undoRestoredOriginalXml": true
+}

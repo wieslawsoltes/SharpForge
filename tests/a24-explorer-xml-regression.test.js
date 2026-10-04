@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {rewriteProjectPath, parseXml} from '@sharpforge/project-system';
+import {rewriteProjectPath, parseXml} from '../packages/project-system/src/index.js';
 
 for (const entity of ['a&amp;b', 'a&#38;b', 'a&#x26;b']) {
   test('B02 rename compares entity-decoded paths: ' + entity, () => {

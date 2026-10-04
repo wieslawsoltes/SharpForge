@@ -1,0 +1,47 @@
+{
+  "sourceCommit": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+  "node": "v22.23.3",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-seams-cil-types.test.js",
+    "tests/a05-token-cache.test.js",
+    "tests/a05-closed-field-owner.test.js",
+    "tests/a05-statics.test.js",
+    "tests/a05-tokens.test.js",
+    "tests/a05-type-handle-admission.test.js",
+    "tests/a05-02-generic-calls.test.js",
+    "tests/a05-02-generic-dispatch.test.js",
+    "tests/project-core-contract.test.js",
+    "tests/a23-native-context-aliases.test.js",
+    "tests/a23-project-reference-bytecode.test.js",
+    "tests/a05-scalar-wire-validation.test.js"
+  ],
+  "environment": {
+    "SF_NATIVE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_DOTNET": "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+    "SHARPFORGE_NATIVE_SDK": "10.0.201",
+    "DOTNET_ROOT": "/workspace/scratch/3e16369943fd/dotnet"
+  },
+  "startedAt": "2026-10-04T01:49:43.290816+00:00",
+  "log": "node22-runtime-corrections.tap",
+  "diskPreflight": {
+    "actualFreeBytes": 643293184,
+    "minimumFreeBytes": 536870912
+  },
+  "exitCode": 0,
+  "completedAt": "2026-10-04T01:49:51.305571+00:00",
+  "summary": {
+    "tests": 77,
+    "suites": 0,
+    "pass": 77,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

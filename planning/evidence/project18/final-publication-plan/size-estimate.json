@@ -1,0 +1,66 @@
+{
+  "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+  "excludedBase": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "history": {
+    "commit": {
+      "count": 471,
+      "uncompressedBytes": 136061,
+      "existingObjectStorageBytes": 99054
+    },
+    "tree": {
+      "count": 2825,
+      "uncompressedBytes": 12214183,
+      "existingObjectStorageBytes": 7357156
+    },
+    "blob": {
+      "count": 2136,
+      "uncompressedBytes": 16400407,
+      "existingObjectStorageBytes": 5037417
+    }
+  },
+  "historyTotal": {
+    "count": 5432,
+    "uncompressedBytes": 28750651,
+    "existingObjectStorageBytes": 12493627
+  },
+  "trackedProject18Evidence": {
+    "files": 286,
+    "bytes": 4592657,
+    "largest": [
+      {
+        "path": "planning/evidence/project18/workspace-publication.json",
+        "bytes": 228713
+      },
+      {
+        "path": "planning/evidence/project18/evaluator-publication.json",
+        "bytes": 223273
+      },
+      {
+        "path": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap",
+        "bytes": 204624
+      },
+      {
+        "path": "planning/evidence/project18/coverage.json",
+        "bytes": 127847
+      },
+      {
+        "path": "planning/evidence/project18/integration/studio-entry.patch",
+        "bytes": 124088
+      },
+      {
+        "path": "planning/evidence/project18/integration/upstream-qualification/node26-host-complete.tap",
+        "bytes": 121439
+      },
+      {
+        "path": "planning/evidence/project18/project-runtime/node22-corrected.tap",
+        "bytes": 104609
+      },
+      {
+        "path": "planning/evidence/project18/project-runtime/node22-initial.tap",
+        "bytes": 102022
+      }
+    ]
+  },
+  "elapsedSeconds": 1.132,
+  "interpretation": "Read-only Git object metadata, without packing, compression or file-content scans. Existing storage is a planning estimate, not a measured bundle size."
+}

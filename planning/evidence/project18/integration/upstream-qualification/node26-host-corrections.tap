@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: template.json: typed defaults, symbols, forms, computed dependencies and deterministic generated values
+ok 1 - template.json: typed defaults, symbols, forms, computed dependencies and deterministic generated values
+  ---
+  duration_ms: 3.054464
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {}
+ok 2 - Template instantiation applies option combination {}
+  ---
+  duration_ms: 13.276372
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {"UseProgramMain":true,"Framework":"net9.0"}
+ok 3 - Template instantiation applies option combination {"UseProgramMain":true,"Framework":"net9.0"}
+  ---
+  duration_ms: 1.142252
+  type: 'test'
+  ...
+# Subtest: Template instantiation applies option combination {"Nullable":false,"Framework":"net8.0"}
+ok 4 - Template instantiation applies option combination {"Nullable":false,"Framework":"net8.0"}
+  ---
+  duration_ms: 2.391885
+  type: 'test'
+  ...
+# Subtest: Template conditional comments retain CRLF for XML and JSON branches and reject unmatched controls
+ok 5 - Template conditional comments retain CRLF for XML and JSON branches and reject unmatched controls
+  ---
+  duration_ms: 1.358808
+  type: 'test'
+  ...
+# Subtest: Template package installation is catalog-local, validates every template and exposes only manual post-actions
+ok 6 - Template package installation is catalog-local, validates every template and exposes only manual post-actions
+  ---
+  duration_ms: 12.80421
+  type: 'test'
+  ...
+# Subtest: SDK aliases, host bindings, boolean-string conditions and MSBuild template attributes are evaluated before replacement
+ok 7 - SDK aliases, host bindings, boolean-string conditions and MSBuild template attributes are evaluated before replacement
+  ---
+  duration_ms: 1.788846
+  type: 'test'
+  ...
+# Subtest: Template regex generators reject backtracking patterns and preserve explicit name parameters
+ok 8 - Template regex generators reject backtracking patterns and preserve explicit name parameters
+  ---
+  duration_ms: 0.436167
+  type: 'test'
+  ...
+# Subtest: peer resolution commits the reviewed version as dirty while preserving unrelated buffers and physical baselines
+ok 9 - peer resolution commits the reviewed version as dirty while preserving unrelated buffers and physical baselines
+  ---
+  duration_ms: 9.747572
+  type: 'test'
+  ...
+# Subtest: selected text, binary and encoding metadata reproduce the exact reviewed bytes
+ok 10 - selected text, binary and encoding metadata reproduce the exact reviewed bytes
+  ---
+  duration_ms: 13.211123
+  type: 'test'
+  ...
+# Subtest: unreviewed hashes, contents, budgets and cancelled requests never commit a peer buffer
+ok 11 - unreviewed hashes, contents, budgets and cancelled requests never commit a peer buffer
+  ---
+  duration_ms: 3.636282
+  type: 'test'
+  ...
+# Subtest: in-place context, version, protection and byte changes during hashing invalidate the captured local snapshot
+ok 12 - in-place context, version, protection and byte changes during hashing invalidate the captured local snapshot
+  ---
+  duration_ms: 6.552838
+  type: 'test'
+  ...
+# Subtest: protected, unloaded, missing and exhausted-version records retain their existing contents
+ok 13 - protected, unloaded, missing and exhausted-version records retain their existing contents
+  ---
+  duration_ms: 4.645733
+  type: 'test'
+  ...
+# Subtest: reviewed peer edits prevent obsolete file undo and redo from overwriting a newer buffer
+ok 14 - reviewed peer edits prevent obsolete file undo and redo from overwriting a newer buffer
+  ---
+  duration_ms: 28.653345
+  type: 'test'
+  ...
+# Subtest: Project renderer describes separate artifacts, retains legacy solution choices, and escapes evaluated source
+ok 15 - Project renderer describes separate artifacts, retains legacy solution choices, and escapes evaluated source
+  ---
+  duration_ms: 13.520039
+  type: 'test'
+  ...
+# Subtest: Project choices preserve custom configurations and report synchronous or asynchronous host failures
+ok 16 - Project choices preserve custom configurations and report synchronous or asynchronous host failures
+  ---
+  duration_ms: 3.439425
+  type: 'test'
+  ...
+# Subtest: failed configuration evaluation retains the published model and restores the displayed choice
+ok 17 - failed configuration evaluation retains the published model and restores the displayed choice
+  ---
+  duration_ms: 1.659251
+  type: 'test'
+  ...
+# Subtest: Retired Project controls cannot replace the current workspace or mutate its configuration
+ok 18 - Retired Project controls cannot replace the current workspace or mutate its configuration
+  ---
+  duration_ms: 4.396837
+  type: 'test'
+  ...
+# Subtest: Read-only recovery and unsupported projects expose their limits without enabled save or build actions
+ok 19 - Read-only recovery and unsupported projects expose their limits without enabled save or build actions
+  ---
+  duration_ms: 1.842687
+  type: 'test'
+  ...
+# Subtest: real unloaded solution projects remain inspectable with absent, lazy or available source records
+ok 20 - real unloaded solution projects remain inspectable with absent, lazy or available source records
+  ---
+  duration_ms: 7.055535
+  type: 'test'
+  ...
+# Subtest: loaded projects still report an inconsistent missing source instead of displaying an unloaded fallback
+ok 21 - loaded projects still report an inconsistent missing source instead of displaying an unloaded fallback
+  ---
+  duration_ms: 1.272698
+  type: 'test'
+  ...
+# Subtest: Empty and native Project panels retain their own opening and trusted-host flows
+ok 22 - Empty and native Project panels retain their own opening and trusted-host flows
+  ---
+  duration_ms: 0.876271
+  type: 'test'
+  ...
+# Subtest: Save to Disk applies each explicit text resolution and advances exact physical baselines
+ok 23 - Save to Disk applies each explicit text resolution and advances exact physical baselines
+  ---
+  duration_ms: 76.307395
+  type: 'test'
+  ...
+# Subtest: binary and externally deleted files retain explicit complete-version choices
+ok 24 - binary and externally deleted files retain explicit complete-version choices
+  ---
+  duration_ms: 9.914815
+  type: 'test'
+  ...
+# Subtest: all choices precede any write and cancellation retains the complete pending batch
+ok 25 - all choices precede any write and cancellation retains the complete pending batch
+  ---
+  duration_ms: 7.581308
+  type: 'test'
+  ...
+# Subtest: stale editor choices, overlapping edits and invalid limits fail without replacing either version
+ok 26 - stale editor choices, overlapping edits and invalid limits fail without replacing either version
+  ---
+  duration_ms: 3.935071
+  type: 'test'
+  ...
+# Subtest: edits made during a merged write remain dirty and require a new decision against the changed disk
+ok 27 - edits made during a merged write remain dirty and require a new decision against the changed disk
+  ---
+  duration_ms: 20.340149
+  type: 'test'
+  ...
+# Subtest: partial I/O receipts enumerate completed files and a retry clears only persisted current buffers
+ok 28 - partial I/O receipts enumerate completed files and a retry clears only persisted current buffers
+  ---
+  duration_ms: 28.59789
+  type: 'test'
+  ...
+# Subtest: save reentry, cancellation during a dialog and switched folder identity preserve current state
+ok 29 - save reentry, cancellation during a dialog and switched folder identity preserve current state
+  ---
+  duration_ms: 10.688691
+  type: 'test'
+  ...
+# Subtest: save prompt escapes file contents and describes unavailable text merges
+ok 30 - save prompt escapes file contents and describes unavailable text merges
+  ---
+  duration_ms: 0.694357
+  type: 'test'
+  ...
+# Subtest: identity is checked across persistence setup even when the physical disk object is reused
+ok 31 - identity is checked across persistence setup even when the physical disk object is reused
+  ---
+  duration_ms: 4.860386
+  type: 'test'
+  ...
+# Subtest: an editor version changed during asynchronous dirty hashing is re-read before dirty state is cleared
+ok 32 - an editor version changed during asynchronous dirty hashing is re-read before dirty state is cleared
+  ---
+  duration_ms: 4.338991
+  type: 'test'
+  ...
+# Subtest: a later invalid package identity leaves the caller catalog completely unchanged
+ok 33 - a later invalid package identity leaves the caller catalog completely unchanged
+  ---
+  duration_ms: 5.443155
+  type: 'test'
+  ...
+# Subtest: a later identity collision also preserves the original catalog and its record identities
+ok 34 - a later identity collision also preserves the original catalog and its record identities
+  ---
+  duration_ms: 0.719755
+  type: 'test'
+  ...
+# Subtest: a validated package installs every template into the same catalog and exposes manual actions
+ok 35 - a validated package installs every template into the same catalog and exposes manual actions
+  ---
+  duration_ms: 0.954719
+  type: 'test'
+  ...
+# Subtest: native wizard availability uses the host operating system and does not infer it from build platform
+ok 36 - native wizard availability uses the host operating system and does not infer it from build platform
+  ---
+  duration_ms: 2.066906
+  type: 'test'
+  ...
+# Subtest: native wizard selects the newly refreshed project for startup, evaluation and launch after a successful mutation
+ok 37 - native wizard selects the newly refreshed project for startup, evaluation and launch after a successful mutation
+  ---
+  duration_ms: 2.952621
+  type: 'test'
+  ...
+# Subtest: a failed native wizard mutation preserves every startup selection and active compilation
+ok 38 - a failed native wizard mutation preserves every startup selection and active compilation
+  ---
+  duration_ms: 0.91582
+  type: 'test'
+  ...
+# Subtest: a refreshed workspace that lacks the new startup project preserves the previous native selection
+ok 39 - a refreshed workspace that lacks the new startup project preserves the previous native selection
+  ---
+  duration_ms: 0.57102
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5168.948603

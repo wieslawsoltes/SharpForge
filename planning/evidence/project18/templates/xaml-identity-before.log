@@ -1,0 +1,30 @@
+✖ XAML Window identity metadata survives structural edits and inherited-object names stay ordinary identities (8.012695ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 534.684921
+
+✖ failing tests:
+
+test at tests/a24-08-xaml-designer.test.js:92:1
+✖ XAML Window identity metadata survives structural edits and inherited-object names stay ordinary identities (8.012695ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(Object.hasOwn(analysis.bindings, '__proto__'))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-templates/tests/a24-08-xaml-designer.test.js:96:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

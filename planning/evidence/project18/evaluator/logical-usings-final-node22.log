@@ -1,0 +1,444 @@
+(node:60) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:75) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: dependency after-build outputs feed consumer preparation before its separate worker compilation
+ok 1 - dependency after-build outputs feed consumer preparation before its separate worker compilation
+  ---
+  duration_ms: 110.378229
+  type: 'test'
+  ...
+# Subtest: failed dependency compilation or after targets prevent consumer preparation and lazy reads
+ok 2 - failed dependency compilation or after targets prevent consumer preparation and lazy reads
+  ---
+  duration_ms: 13.646391
+  type: 'test'
+  ...
+# Subtest: buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+ok 3 - buildUnit materializes only one prepared context and refuses unloaded or unknown requested contexts
+  ---
+  duration_ms: 1.842567
+  type: 'test'
+  ...
+# Subtest: cancellation while a dependency compiles runs no after hooks or consumer requests
+ok 4 - cancellation while a dependency compiles runs no after hooks or consumer requests
+  ---
+  duration_ms: 5.434693
+  type: 'test'
+  ...
+# (node:83) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+ok 5 - application compiler requests hydrate lazy inputs, retain generated usings and use current editor buffers
+  ---
+  duration_ms: 11.790313
+  type: 'test'
+  ...
+# Subtest: generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+ok 6 - generated AssemblyInfo becomes genuine metadata while the SDK project builds through the worker handler
+  ---
+  duration_ms: 74.856402
+  type: 'test'
+  ...
+# Subtest: dependency units keep separate source sets and suppress non-output references
+ok 7 - dependency units keep separate source sets and suppress non-output references
+  ---
+  duration_ms: 0.697822
+  type: 'test'
+  ...
+# Subtest: failed dependencies block consumers and do not publish a partial startup assembly
+ok 8 - failed dependencies block consumers and do not publish a partial startup assembly
+  ---
+  duration_ms: 0.27847
+  type: 'test'
+  ...
+# Subtest: a project built for two target contexts produces distinct dependency artifacts
+ok 9 - a project built for two target contexts produces distinct dependency artifacts
+  ---
+  duration_ms: 0.865244
+  type: 'test'
+  ...
+# Subtest: standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+ok 10 - standalone worker builds handle a cold artifact cache and retain the subsequent cached assembly
+  ---
+  duration_ms: 4.435616
+  type: 'test'
+  ...
+# Subtest: application file search delegates options to the streaming disk index without compiling the workspace
+ok 11 - application file search delegates options to the streaming disk index without compiling the workspace
+  ---
+  duration_ms: 0.262676
+  type: 'test'
+  ...
+# Subtest: culture resources produce satellite assemblies instead of disappearing from successful builds
+ok 12 - culture resources produce satellite assemblies instead of disappearing from successful builds
+  ---
+  duration_ms: 8.33192
+  type: 'test'
+  ...
+# Subtest: launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+ok 13 - launch profiles carry explicit browser arguments and environment; executable profiles require native execution
+  ---
+  duration_ms: 1.891972
+  type: 'test'
+  ...
+# Subtest: lazy export and cancelled or stale hydration never substitute empty file contents
+ok 14 - lazy export and cancelled or stale hydration never substitute empty file contents
+  ---
+  duration_ms: 1.588654
+  type: 'test'
+  ...
+# (node:91) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+ok 15 - application build runs all preparation hooks and finalizes genuine compiler bytes after the worker returns
+  ---
+  duration_ms: 87.580864
+  type: 'test'
+  ...
+# Subtest: failed compilation never publishes an output assembly or executes after targets
+ok 16 - failed compilation never publishes an output assembly or executes after targets
+  ---
+  duration_ms: 15.836843
+  type: 'test'
+  ...
+# Subtest: the same generated source path stays isolated in a two-framework diamond build and on rebuild
+ok 17 - the same generated source path stays isolated in a two-framework diamond build and on rebuild
+  ---
+  duration_ms: 63.63728
+  type: 'test'
+  ...
+# Subtest: lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+ok 18 - lazy pre-compile and after-compile target inputs hydrate and retry atomically in the requested context
+  ---
+  duration_ms: 6.01681
+  type: 'test'
+  ...
+# Subtest: after-target errors fail the build and do not publish the phase partial writes
+ok 19 - after-target errors fail the build and do not publish the phase partial writes
+  ---
+  duration_ms: 3.980861
+  type: 'test'
+  ...
+# Subtest: cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+ok 20 - cancelled, stale, superseded and malformed worker results cannot execute post-compilation targets
+  ---
+  duration_ms: 15.243359
+  type: 'test'
+  ...
+# Subtest: native-only property and task diagnostics survive target preparation without publishing partial writes
+ok 21 - native-only property and task diagnostics survive target preparation without publishing partial writes
+  ---
+  duration_ms: 2.654852
+  type: 'test'
+  ...
+# Subtest: native semantic requests use the explicitly selected native context and skip portable targets
+ok 22 - native semantic requests use the explicitly selected native context and skip portable targets
+  ---
+  duration_ms: 0.340483
+  type: 'test'
+  ...
+# Subtest: disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration
+ok 23 - disk, epoch, startup and native-mode changes cannot publish an awaited project source hydration
+  ---
+  duration_ms: 2.444245
+  type: 'test'
+  ...
+# (node:99) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: generic custom items preserve source order, default metadata, update and removal
+ok 24 - generic custom items preserve source order, default metadata, update and removal
+  ---
+  duration_ms: 6.718047
+  type: 'test'
+  ...
+# Subtest: escaped separators remain literal item identities
+ok 25 - escaped separators remain literal item identities
+  ---
+  duration_ms: 0.643811
+  type: 'test'
+  ...
+# Subtest: Include Exclude Update Remove obey declaration order for absent and future items
+ok 26 - Include Exclude Update Remove obey declaration order for absent and future items
+  ---
+  duration_ms: 0.982381
+  type: 'test'
+  ...
+# Subtest: KeepDuplicates compares identity and custom metadata
+ok 27 - KeepDuplicates compares identity and custom metadata
+  ---
+  duration_ms: 0.746375
+  type: 'test'
+  ...
+# Subtest: KeepMetadata and RemoveMetadata filter copied custom metadata
+ok 28 - KeepMetadata and RemoveMetadata filter copied custom metadata
+  ---
+  duration_ms: 0.702579
+  type: 'test'
+  ...
+# Subtest: MatchOnMetadata removes matching copied items with explicit comparison modes
+ok 29 - MatchOnMetadata removes matching copied items with explicit comparison modes
+  ---
+  duration_ms: 0.970653
+  type: 'test'
+  ...
+# Subtest: item metadata expansion observes previous metadata and the current item
+ok 30 - item metadata expansion observes previous metadata and the current item
+  ---
+  duration_ms: 0.714867
+  type: 'test'
+  ...
+# Subtest: well-known metadata describes imported definitions relative to the project
+ok 31 - well-known metadata describes imported definitions relative to the project
+  ---
+  duration_ms: 1.431387
+  type: 'test'
+  ...
+# Subtest: transforms generate new paths and preserve source metadata over nested transforms
+ok 32 - transforms generate new paths and preserve source metadata over nested transforms
+  ---
+  duration_ms: 1.177214
+  type: 'test'
+  ...
+# Subtest: item expression function @(X, '|')
+ok 33 - item expression function @(X, '|')
+  ---
+  duration_ms: 0.805384
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Count())
+ok 34 - item expression function @(X->Count())
+  ---
+  duration_ms: 0.602147
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Distinct())
+ok 35 - item expression function @(X->Distinct())
+  ---
+  duration_ms: 0.4182
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->DistinctWithCase())
+ok 36 - item expression function @(X->DistinctWithCase())
+  ---
+  duration_ms: 0.395366
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Reverse())
+ok 37 - item expression function @(X->Reverse())
+  ---
+  duration_ms: 0.317599
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->AnyHaveMetadataValue('M','YES'))
+ok 38 - item expression function @(X->AnyHaveMetadataValue('M','YES'))
+  ---
+  duration_ms: 0.36512
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->HasMetadata('M'))
+ok 39 - item expression function @(X->HasMetadata('M'))
+  ---
+  duration_ms: 0.357269
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->WithMetadataValue('M','yes'))
+ok 40 - item expression function @(X->WithMetadataValue('M','yes'))
+  ---
+  duration_ms: 0.347363
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->WithoutMetadataValue('M','yes'))
+ok 41 - item expression function @(X->WithoutMetadataValue('M','yes'))
+  ---
+  duration_ms: 0.427975
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->Metadata('M'))
+ok 42 - item expression function @(X->Metadata('M'))
+  ---
+  duration_ms: 0.43115
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->ClearMetadata()->HasMetadata('M'))
+ok 43 - item expression function @(X->ClearMetadata()->HasMetadata('M'))
+  ---
+  duration_ms: 0.457309
+  type: 'test'
+  ...
+# Subtest: item expression function @(X->ToUpper())
+ok 44 - item expression function @(X->ToUpper())
+  ---
+  duration_ms: 0.400334
+  type: 'test'
+  ...
+# Subtest: Exists item function keeps only granted workspace files
+ok 45 - Exists item function keeps only granted workspace files
+  ---
+  duration_ms: 0.377249
+  type: 'test'
+  ...
+# Subtest: item conditions see final properties and per-item metadata
+ok 46 - item conditions see final properties and per-item metadata
+  ---
+  duration_ms: 1.077624
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X/>
+ok 47 - invalid item operation is diagnosed: <X/>
+  ---
+  duration_ms: 0.45758
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a" Remove="b"/>
+ok 48 - invalid item operation is diagnosed: <X Include="a" Remove="b"/>
+  ---
+  duration_ms: 0.225771
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a" KeepMetadata="A" RemoveMetadata="B"/>
+ok 49 - invalid item operation is diagnosed: <X Include="a" KeepMetadata="A" RemoveMetadata="B"/>
+  ---
+  duration_ms: 0.29208
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a" KeepDuplicates="perhaps"/>
+ok 50 - invalid item operation is diagnosed: <X Include="a" KeepDuplicates="perhaps"/>
+  ---
+  duration_ms: 0.217698
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Remove="a" MatchOnMetadata="M"/>
+ok 51 - invalid item operation is diagnosed: <X Remove="a" MatchOnMetadata="M"/>
+  ---
+  duration_ms: 0.213682
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="a"/><X Remove="@(X)" MatchOnMetadata="M" MatchOnMetadataOptions="Random"/>
+ok 52 - invalid item operation is diagnosed: <X Include="a"/><X Remove="@(X)" MatchOnMetadata="M" MatchOnMetadataOptions="Random"/>
+  ---
+  duration_ms: 0.260382
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="@(X->UnknownMethod())"/>
+ok 53 - invalid item operation is diagnosed: <X Include="@(X->UnknownMethod())"/>
+  ---
+  duration_ms: 0.321375
+  type: 'test'
+  ...
+# Subtest: invalid item operation is diagnosed: <X Include="../../escape"/>
+ok 54 - invalid item operation is diagnosed: <X Include="../../escape"/>
+  ---
+  duration_ms: 0.37833
+  type: 'test'
+  ...
+# Subtest: item expansion and cancellation budgets stop evaluation
+ok 55 - item expansion and cancellation budgets stop evaluation
+  ---
+  duration_ms: 0.615618
+  type: 'test'
+  ...
+# (node:107) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: reserved, environment and TreatAsLocalProperty values have distinct precedence
+ok 56 - reserved, environment and TreatAsLocalProperty values have distinct precedence
+  ---
+  duration_ms: 6.470518
+  type: 'test'
+  ...
+# Subtest: per-project global mappings override solution defaults
+ok 57 - per-project global mappings override solution defaults
+  ---
+  duration_ms: 0.432301
+  type: 'test'
+  ...
+# Subtest: SDK default properties cover configuration, framework, compilation and output layout
+ok 58 - SDK default properties cover configuration, framework, compilation and output layout
+  ---
+  duration_ms: 3.386146
+  type: 'test'
+  ...
+# Subtest: SDK default Compile, EmbeddedResource and None globs are disjoint and respect exclusions
+ok 59 - SDK default Compile, EmbeddedResource and None globs are disjoint and respect exclusions
+  ---
+  duration_ms: 2.084594
+  type: 'test'
+  ...
+# Subtest: SDK default items can be disabled independently
+ok 60 - SDK default items can be disabled independently
+  ---
+  duration_ms: 1.07445
+  type: 'test'
+  ...
+# Subtest: explicit SDK imports evaluate the same key defaults as the SDK attribute
+ok 61 - explicit SDK imports evaluate the same key defaults as the SDK attribute
+  ---
+  duration_ms: 1.985714
+  type: 'test'
+  ...
+# Subtest: SDK declarations and caller resolvers are explicit and unknown SDKs block evaluation
+ok 62 - SDK declarations and caller resolvers are explicit and unknown SDKs block evaluation
+  ---
+  duration_ms: 3.128688
+  type: 'test'
+  ...
+# Subtest: Directory.Build import switches, overrides and label provenance are retained
+ok 63 - Directory.Build import switches, overrides and label provenance are retained
+  ---
+  duration_ms: 0.993118
+  type: 'test'
+  ...
+# Subtest: GetPathOfFileAbove composes nested Directory.Build.props with its parent
+ok 64 - GetPathOfFileAbove composes nested Directory.Build.props with its parent
+  ---
+  duration_ms: 0.913688
+  type: 'test'
+  ...
+# Subtest: central package versions and explicit overrides flow into PackageReference metadata
+ok 65 - central package versions and explicit overrides flow into PackageReference metadata
+  ---
+  duration_ms: 1.5583
+  type: 'test'
+  ...
+# Subtest: implicit global usings honor Using Remove, aliases and static metadata
+ok 66 - implicit global usings honor Using Remove, aliases and static metadata
+  ---
+  duration_ms: 1.257607
+  type: 'test'
+  ...
+# Subtest: global using qualification preserves predefined alias types and avoids duplicate global prefixes
+ok 67 - global using qualification preserves predefined alias types and avoids duplicate global prefixes
+  ---
+  duration_ms: 1.063684
+  type: 'test'
+  ...
+# Subtest: assembly info sources include versions, company and friend assemblies with escaping
+ok 68 - assembly info sources include versions, company and friend assemblies with escaping
+  ---
+  duration_ms: 0.764012
+  type: 'test'
+  ...
+# Subtest: B04 evaluated Debug/Release symbols actually reach compiler preprocessing and execution
+ok 69 - B04 evaluated Debug/Release symbols actually reach compiler preprocessing and execution
+  ---
+  duration_ms: 79.392297
+  type: 'test'
+  ...
+# Subtest: implicit usings compile Console and List without user using declarations on both browser engines
+ok 70 - implicit usings compile Console and List without user using declarations on both browser engines
+  ---
+  duration_ms: 18.889103
+  type: 'test'
+  ...
+1..70
+# tests 70
+# suites 0
+# pass 70
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2949.071488

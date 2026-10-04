@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "kind": "Static actual-parent import and export proof; no tests executed",
+  "actualParent": "4d209fb03d43131fae53c0de3edc57627c239e50",
+  "localParent": "70db33085e79cea3bd270070ff9fb2e9d6019ec9",
+  "localProjection": "e42773833954c386c8df3579d373c6d6b6189aeb",
+  "tree": "ca549b38d09f29c0810d29bb0712e0cdca3cb6b0",
+  "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "imports": [
+    {
+      "from": "tests/a19-runtime-activity-timer-owner.test.js",
+      "import": "node:test",
+      "kind": "Node built-in"
+    },
+    {
+      "from": "tests/a19-runtime-activity-timer-owner.test.js",
+      "import": "node:assert/strict",
+      "kind": "Node built-in"
+    },
+    {
+      "from": "tests/a19-runtime-activity-timer-owner.test.js",
+      "import": "../apps/studio/workers/runtime-activity.js",
+      "kind": "relative",
+      "path": "apps/studio/workers/runtime-activity.js",
+      "projectionBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee",
+      "parentBlob": "53326a06f77d0592898630cb852d241b7a20022c",
+      "suppliedBy": "child"
+    },
+    {
+      "from": "tests/a19-runtime-activity-timer-owner.test.js",
+      "import": "./a19-runtime-programs.js",
+      "kind": "relative",
+      "path": "tests/a19-runtime-programs.js",
+      "projectionBlob": "48463f4d02a996c2d26e5a943ce670dd305d43a9",
+      "parentBlob": "48463f4d02a996c2d26e5a943ce670dd305d43a9",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "tests/a19-runtime-activity-timer-owner.test.js",
+      "import": "./a19-runtime-worker-client.js",
+      "kind": "relative",
+      "path": "tests/a19-runtime-worker-client.js",
+      "projectionBlob": "2b197751cae145f57da9d91a405c335157af309e",
+      "parentBlob": "5f4c8f7a2c5d994f234f5c7ec588de83b867617b",
+      "suppliedBy": "child"
+    },
+    {
+      "from": "tests/a19-runtime-worker-client.js",
+      "import": "node:worker_threads",
+      "kind": "Node built-in"
+    },
+    {
+      "from": "tests/fixtures/a19/runtime-worker-timer-host.js",
+      "import": "node:timers",
+      "kind": "Node built-in"
+    },
+    {
+      "from": "tests/fixtures/a19/runtime-worker-timer-node.js",
+      "import": "./runtime-worker-timer-host.js",
+      "kind": "relative",
+      "path": "tests/fixtures/a19/runtime-worker-timer-host.js",
+      "projectionBlob": "cdda448ba2a136216588a70eb09b1f7eed56aa62",
+      "parentBlob": null,
+      "suppliedBy": "child"
+    },
+    {
+      "from": "tests/fixtures/a19/runtime-worker-timer-node.js",
+      "import": "./runtime-worker-node-transport.js",
+      "kind": "relative",
+      "path": "tests/fixtures/a19/runtime-worker-node-transport.js",
+      "projectionBlob": "a91b9c5fc337225b09ee96f64d2333288963aaa8",
+      "parentBlob": "a91b9c5fc337225b09ee96f64d2333288963aaa8",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "tests/fixtures/a19/runtime-worker-timer-node.js",
+      "import": "../../../apps/studio/runtime.worker.js",
+      "kind": "relative",
+      "path": "apps/studio/runtime.worker.js",
+      "projectionBlob": "03a602b41e4f6897aca268feeb5f843e711456f5",
+      "parentBlob": "03a602b41e4f6897aca268feeb5f843e711456f5",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "tests/a19-runtime-programs.js",
+      "import": "node:assert/strict",
+      "kind": "Node built-in"
+    },
+    {
+      "from": "tests/a19-runtime-programs.js",
+      "import": "@sharpforge/compiler",
+      "kind": "public package entry",
+      "path": "packages/compiler/src/index.js",
+      "projectionBlob": "862264a8ab2d786659216b046cbcfa1f11fae4c6",
+      "parentBlob": "862264a8ab2d786659216b046cbcfa1f11fae4c6",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "tests/a19-runtime-programs.js",
+      "import": "@sharpforge/runtime",
+      "kind": "public package entry",
+      "path": "packages/runtime/src/index.js",
+      "projectionBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "parentBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "tests/fixtures/a19/runtime-worker-node-transport.js",
+      "import": "node:worker_threads",
+      "kind": "Node built-in"
+    },
+    {
+      "from": "apps/studio/workers/runtime-activity.js",
+      "import": "./execution-occupancy.js",
+      "kind": "relative",
+      "path": "apps/studio/workers/execution-occupancy.js",
+      "projectionBlob": "04d62c292a59761e6ee96e9a068ef30861921ddc",
+      "parentBlob": "04d62c292a59761e6ee96e9a068ef30861921ddc",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "apps/studio/runtime.worker.js",
+      "import": "./workers/protocol.js",
+      "kind": "relative",
+      "path": "apps/studio/workers/protocol.js",
+      "projectionBlob": "526383720beab5b194917572d234ad934bb53466",
+      "parentBlob": "526383720beab5b194917572d234ad934bb53466",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "apps/studio/runtime.worker.js",
+      "import": "@sharpforge/runtime",
+      "kind": "public package entry",
+      "path": "packages/runtime/src/index.js",
+      "projectionBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "parentBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "apps/studio/runtime.worker.js",
+      "import": "@sharpforge/cil",
+      "kind": "public package entry",
+      "path": "packages/cil/src/index.js",
+      "projectionBlob": "daa88e0f694e2c9f95fa59c57cdab2507d5b2037",
+      "parentBlob": "daa88e0f694e2c9f95fa59c57cdab2507d5b2037",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "apps/studio/runtime.worker.js",
+      "import": "./workers/runtime-launch.js",
+      "kind": "relative",
+      "path": "apps/studio/workers/runtime-launch.js",
+      "projectionBlob": "94e9c21593f04d21d21e41c6ef40009890de6882",
+      "parentBlob": "94e9c21593f04d21d21e41c6ef40009890de6882",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "apps/studio/runtime.worker.js",
+      "import": "./workers/runtime-activity.js",
+      "kind": "relative",
+      "path": "apps/studio/workers/runtime-activity.js",
+      "projectionBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee",
+      "parentBlob": "53326a06f77d0592898630cb852d241b7a20022c",
+      "suppliedBy": "child"
+    },
+    {
+      "from": "apps/studio/workers/runtime-launch.js",
+      "import": "@sharpforge/debugger",
+      "kind": "public package entry",
+      "path": "packages/debugger/src/index.js",
+      "projectionBlob": "725cca7a7282a7767b17c7c2dd807113125d71a8",
+      "parentBlob": "725cca7a7282a7767b17c7c2dd807113125d71a8",
+      "suppliedBy": "actual parent"
+    },
+    {
+      "from": "apps/studio/workers/runtime-launch.js",
+      "import": "@sharpforge/runtime",
+      "kind": "public package entry",
+      "path": "packages/runtime/src/index.js",
+      "projectionBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "parentBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "suppliedBy": "actual parent"
+    }
+  ],
+  "publicExports": [
+    {
+      "name": "compileToIL",
+      "entry": "packages/compiler/src/index.js",
+      "entryBlob": "862264a8ab2d786659216b046cbcfa1f11fae4c6",
+      "implementation": "packages/compiler/src/compile.js",
+      "implementationBlob": "154b19722ea0434ed0850ab107ddc4d745a05c1c"
+    },
+    {
+      "name": "VirtualMachine",
+      "entry": "packages/runtime/src/index.js",
+      "entryBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "implementation": "packages/runtime/src/vm.js",
+      "implementationBlob": "a3554a8841621918c61a1225f749bd97aa14e6a4"
+    },
+    {
+      "name": "CilVirtualMachine",
+      "entry": "packages/runtime/src/index.js",
+      "entryBlob": "3b1df15f661e9f57dc6ae8bcdb626735405393d5",
+      "implementation": "packages/runtime/src/cil-vm.js",
+      "implementationBlob": "47ac86a28774abe6970a231e2d540d31bc4aa52e"
+    }
+  ],
+  "unchangedParentHelpers": [
+    {
+      "path": "tests/a19-runtime-programs.js",
+      "parentBlob": "48463f4d02a996c2d26e5a943ce670dd305d43a9",
+      "sourceBlob": "48463f4d02a996c2d26e5a943ce670dd305d43a9"
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-node-transport.js",
+      "parentBlob": "a91b9c5fc337225b09ee96f64d2333288963aaa8",
+      "sourceBlob": "a91b9c5fc337225b09ee96f64d2333288963aaa8"
+    },
+    {
+      "path": "tests/fixtures/a19/runtime-worker-node.js",
+      "parentBlob": "eee1905beb9d238bfefd37927742105ff39a1d43",
+      "sourceBlob": "eee1905beb9d238bfefd37927742105ff39a1d43"
+    },
+    {
+      "path": "tests/manifests/A19.json",
+      "parentBlob": "1295d61bdd43b9e42d8b42bb3249852a8127c980",
+      "sourceBlob": "1295d61bdd43b9e42d8b42bb3249852a8127c980"
+    }
+  ],
+  "runtimeGraphParentNeeded": false,
+  "qualificationBoundary": "Canonical-source Node/browser evidence is not a standalone PR test run."
+}

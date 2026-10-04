@@ -1,0 +1,695 @@
+(node:6) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:21) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: condition syntax is fixed before quote, operator and empty property expansion
+ok 1 - condition syntax is fixed before quote, operator and empty property expansion
+  ---
+  duration_ms: 2.722443
+  type: 'test'
+  ...
+# Subtest: expression scanning preserves adjacent, nested and encoded references without reparsing values
+ok 2 - expression scanning preserves adjacent, nested and encoded references without reparsing values
+  ---
+  duration_ms: 0.744242
+  type: 'test'
+  ...
+# Subtest: public expression string member Length
+ok 3 - public expression string member Length
+  ---
+  duration_ms: 0.147973
+  type: 'test'
+  ...
+# Subtest: public expression string member Substring(1)
+ok 4 - public expression string member Substring(1)
+  ---
+  duration_ms: 0.213061
+  type: 'test'
+  ...
+# Subtest: public expression string member Substring(1,2)
+ok 5 - public expression string member Substring(1,2)
+  ---
+  duration_ms: 0.238199
+  type: 'test'
+  ...
+# Subtest: public expression string member Replace('a','X')
+ok 6 - public expression string member Replace('a','X')
+  ---
+  duration_ms: 0.146251
+  type: 'test'
+  ...
+# Subtest: public expression string member ToUpper()
+ok 7 - public expression string member ToUpper()
+  ---
+  duration_ms: 0.14557
+  type: 'test'
+  ...
+# Subtest: public expression string member ToUpperInvariant()
+ok 8 - public expression string member ToUpperInvariant()
+  ---
+  duration_ms: 0.080661
+  type: 'test'
+  ...
+# Subtest: public expression string member ToLower()
+ok 9 - public expression string member ToLower()
+  ---
+  duration_ms: 0.31859
+  type: 'test'
+  ...
+# Subtest: public expression string member ToLowerInvariant()
+ok 10 - public expression string member ToLowerInvariant()
+  ---
+  duration_ms: 0.348836
+  type: 'test'
+  ...
+# Subtest: public expression string member Contains('bab')
+ok 11 - public expression string member Contains('bab')
+  ---
+  duration_ms: 0.224188
+  type: 'test'
+  ...
+# Subtest: public expression string member StartsWith('AB','OrdinalIgnoreCase')
+ok 12 - public expression string member StartsWith('AB','OrdinalIgnoreCase')
+  ---
+  duration_ms: 0.16561
+  type: 'test'
+  ...
+# Subtest: public expression string member EndsWith('BA','OrdinalIgnoreCase')
+ok 13 - public expression string member EndsWith('BA','OrdinalIgnoreCase')
+  ---
+  duration_ms: 0.127232
+  type: 'test'
+  ...
+# Subtest: public expression string member IndexOf('ba')
+ok 14 - public expression string member IndexOf('ba')
+  ---
+  duration_ms: 0.164197
+  type: 'test'
+  ...
+# Subtest: public expression string member LastIndexOf('ba')
+ok 15 - public expression string member LastIndexOf('ba')
+  ---
+  duration_ms: 0.149916
+  type: 'test'
+  ...
+# Subtest: public expression string member Split('b')[1]
+ok 16 - public expression string member Split('b')[1]
+  ---
+  duration_ms: 0.362777
+  type: 'test'
+  ...
+# Subtest: public expression string member PadLeft(7,'0')
+ok 17 - public expression string member PadLeft(7,'0')
+  ---
+  duration_ms: 0.115144
+  type: 'test'
+  ...
+# Subtest: public expression string member PadRight(7,'0')
+ok 18 - public expression string member PadRight(7,'0')
+  ---
+  duration_ms: 0.104988
+  type: 'test'
+  ...
+# Subtest: public expression string member Equals('ABABA','OrdinalIgnoreCase')
+ok 19 - public expression string member Equals('ABABA','OrdinalIgnoreCase')
+  ---
+  duration_ms: 0.174312
+  type: 'test'
+  ...
+# Subtest: public expression string member [2]
+ok 20 - public expression string member [2]
+  ---
+  duration_ms: 0.120792
+  type: 'test'
+  ...
+# Subtest: public expression string member Trim('a')
+ok 21 - public expression string member Trim('a')
+  ---
+  duration_ms: 0.097107
+  type: 'test'
+  ...
+# Subtest: public expression string member TrimStart('a')
+ok 22 - public expression string member TrimStart('a')
+  ---
+  duration_ms: 0.089555
+  type: 'test'
+  ...
+# Subtest: public expression string member TrimEnd('a')
+ok 23 - public expression string member TrimEnd('a')
+  ---
+  duration_ms: 0.079971
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.String]::Concat('a','b'))
+ok 24 - public allow-listed property function $([System.String]::Concat('a','b'))
+  ---
+  duration_ms: 0.093471
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.String]::Format('{0}-{1}','a','b'))
+ok 25 - public allow-listed property function $([System.String]::Format('{0}-{1}','a','b'))
+  ---
+  duration_ms: 0.207533
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.String]::IsNullOrWhiteSpace('  '))
+ok 26 - public allow-listed property function $([System.String]::IsNullOrWhiteSpace('  '))
+  ---
+  duration_ms: 0.092449
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Math]::Round(2.5))
+ok 27 - public allow-listed property function $([System.Math]::Round(2.5))
+  ---
+  duration_ms: 0.18558
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Math]::Round(3.5))
+ok 28 - public allow-listed property function $([System.Math]::Round(3.5))
+  ---
+  duration_ms: 0.09322
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Math]::Max(2,8))
+ok 29 - public allow-listed property function $([System.Math]::Max(2,8))
+  ---
+  duration_ms: 0.095314
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Version]::Parse('1.2.3').Major)
+ok 30 - public allow-listed property function $([System.Version]::Parse('1.2.3').Major)
+  ---
+  duration_ms: 0.228764
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Convert]::ToInt32('FF',16))
+ok 31 - public allow-listed property function $([System.Convert]::ToInt32('FF',16))
+  ---
+  duration_ms: 0.142985
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Char]::IsDigit('4'))
+ok 32 - public allow-listed property function $([System.Char]::IsDigit('4'))
+  ---
+  duration_ms: 0.226722
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Guid]::Empty)
+ok 33 - public allow-listed property function $([System.Guid]::Empty)
+  ---
+  duration_ms: 0.084548
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([System.Text.RegularExpressions.Regex]::Replace('abc123','[0-9]+','x'))
+ok 34 - public allow-listed property function $([System.Text.RegularExpressions.Regex]::Replace('abc123','[0-9]+','x'))
+  ---
+  duration_ms: 0.24562
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([MSBuild]::Add(2,3))
+ok 35 - public allow-listed property function $([MSBuild]::Add(2,3))
+  ---
+  duration_ms: 0.162785
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([MSBuild]::BitwiseOr(1,2))
+ok 36 - public allow-listed property function $([MSBuild]::BitwiseOr(1,2))
+  ---
+  duration_ms: 0.098067
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([MSBuild]::VersionGreaterThan('v2.0-preview','1.9.9'))
+ok 37 - public allow-listed property function $([MSBuild]::VersionGreaterThan('v2.0-preview','1.9.9'))
+  ---
+  duration_ms: 0.289486
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([MSBuild]::GetTargetFrameworkIdentifier('net8.0'))
+ok 38 - public allow-listed property function $([MSBuild]::GetTargetFrameworkIdentifier('net8.0'))
+  ---
+  duration_ms: 0.432111
+  type: 'test'
+  ...
+# Subtest: public allow-listed property function $([MSBuild]::IsTargetFrameworkCompatible('net8.0','netstandard2.1'))
+ok 39 - public allow-listed property function $([MSBuild]::IsTargetFrameworkCompatible('net8.0','netstandard2.1'))
+  ---
+  duration_ms: 0.240282
+  type: 'test'
+  ...
+# Subtest: unknown members, disallowed effects and invalid ranges remain located diagnostics
+ok 40 - unknown members, disallowed effects and invalid ranges remain located diagnostics
+  ---
+  duration_ms: 0.658172
+  type: 'test'
+  ...
+# Subtest: virtual paths, environment and clock come only from the explicit context
+not ok 41 - virtual paths, environment and clock come only from the explicit context
+  ---
+  duration_ms: 3.664393
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-publish-expressions/tests/project-expression-contract.test.js:74:1'
+  failureType: 'testCodeFailure'
+  error: 'Empty workspace path'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    normalizePath (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/paths.js:8:26)
+    Object.resolvePath (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/tests/project-expression-contract.test.js:78:43)
+    findAbove (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/evaluation/functions-msbuild.js:7:27)
+    getpathoffileabove (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/evaluation/functions-msbuild.js:97:42)
+    invokeMSBuildFunction (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/evaluation/functions-msbuild.js:122:17)
+    property (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/evaluation/expander.js:30:55)
+    evaluateReference (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/evaluation/expander.js:53:40)
+    expandExpression (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/packages/project-system/src/evaluation/expander.js:79:21)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-publish-expressions/tests/project-expression-contract.test.js:84:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+  ...
+# Subtest: item transforms preserve per-item metadata and reject absent contexts
+ok 42 - item transforms preserve per-item metadata and reject absent contexts
+  ---
+  duration_ms: 0.890653
+  type: 'test'
+  ...
+# Subtest: indexed path membership, mutation and prefix globs remain bounded
+ok 43 - indexed path membership, mutation and prefix globs remain bounded
+  ---
+  duration_ms: 46.795925
+  type: 'test'
+  ...
+# Subtest: expression and condition text, nesting and expanded output budgets are enforced
+ok 44 - expression and condition text, nesting and expanded output budgets are enforced
+  ---
+  duration_ms: 0.427815
+  type: 'test'
+  ...
+# (node:29) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: data-only condition: '10' > '2'
+ok 45 - data-only condition: '10' > '2'
+  ---
+  duration_ms: 1.541103
+  type: 'test'
+  ...
+# Subtest: data-only condition: '-3' < '2'
+ok 46 - data-only condition: '-3' < '2'
+  ---
+  duration_ms: 0.189806
+  type: 'test'
+  ...
+# Subtest: data-only condition: '0x10' >= '16'
+ok 47 - data-only condition: '0x10' >= '16'
+  ---
+  duration_ms: 0.165669
+  type: 'test'
+  ...
+# Subtest: data-only condition: '17.10.0.0' > '17.9.0.0'
+ok 48 - data-only condition: '17.10.0.0' > '17.9.0.0'
+  ---
+  duration_ms: 0.260362
+  type: 'test'
+  ...
+# Subtest: data-only condition: '1.0.0.0' == '1.0'
+ok 49 - data-only condition: '1.0.0.0' == '1.0'
+  ---
+  duration_ms: 0.171629
+  type: 'test'
+  ...
+# Subtest: data-only condition: 'Debug' == 'debug'
+ok 50 - data-only condition: 'Debug' == 'debug'
+  ---
+  duration_ms: 0.085078
+  type: 'test'
+  ...
+# Subtest: data-only condition: true Or false And false
+ok 51 - data-only condition: true Or false And false
+  ---
+  duration_ms: 0.241223
+  type: 'test'
+  ...
+# Subtest: data-only condition: (true Or false) And false
+ok 52 - data-only condition: (true Or false) And false
+  ---
+  duration_ms: 0.148003
+  type: 'test'
+  ...
+# Subtest: data-only condition: !false
+ok 53 - data-only condition: !false
+  ---
+  duration_ms: 0.347534
+  type: 'test'
+  ...
+# Subtest: data-only condition: HasTrailingSlash('a\\')
+ok 54 - data-only condition: HasTrailingSlash('a\\')
+  ---
+  duration_ms: 0.315655
+  type: 'test'
+  ...
+# Subtest: data-only condition: '2' <= '1'
+ok 55 - data-only condition: '2' <= '1'
+  ---
+  duration_ms: 0.133201
+  type: 'test'
+  ...
+# Subtest: data-only condition refuses 'cat' < 'dog'
+ok 56 - data-only condition refuses 'cat' < 'dog'
+  ---
+  duration_ms: 0.282135
+  type: 'test'
+  ...
+# Subtest: data-only condition refuses $([System.IO.File]::ReadAllText('x'
+ok 57 - data-only condition refuses $([System.IO.File]::ReadAllText('x'
+  ---
+  duration_ms: 0.487425
+  type: 'test'
+  ...
+# Subtest: data-only condition refuses true junk
+ok 58 - data-only condition refuses true junk
+  ---
+  duration_ms: 0.109795
+  type: 'test'
+  ...
+# Subtest: data-only condition refuses 'unterminated
+ok 59 - data-only condition refuses 'unterminated
+  ---
+  duration_ms: 0.061292
+  type: 'test'
+  ...
+# Subtest: data-only condition refuses (((((((((((((((((((((((((((((((((((
+ok 60 - data-only condition refuses (((((((((((((((((((((((((((((((((((
+  ---
+  duration_ms: 0.148965
+  type: 'test'
+  ...
+# Subtest: imports apply in order and retain import origins
+ok 61 - imports apply in order and retain import origins
+  ---
+  duration_ms: 3.685084
+  type: 'test'
+  ...
+# Subtest: nested imports resolve from imported file, Compile items from project directory
+ok 62 - nested imports resolve from imported file, Compile items from project directory
+  ---
+  duration_ms: 0.423929
+  type: 'test'
+  ...
+# Subtest: intrinsic directories work for root and nested imports, items, and Exists
+ok 63 - intrinsic directories work for root and nested imports, items, and Exists
+  ---
+  duration_ms: 1.07473
+  type: 'test'
+  ...
+# Subtest: wildcard imports use sorted order and unmatched wildcard is empty
+ok 64 - wildcard imports use sorted order and unmatched wildcard is empty
+  ---
+  duration_ms: 0.389577
+  type: 'test'
+  ...
+# Subtest: missing unconditional import is diagnostic; false conditioned missing import is skipped
+ok 65 - missing unconditional import is diagnostic; false conditioned missing import is skipped
+  ---
+  duration_ms: 0.241103
+  type: 'test'
+  ...
+# Subtest: duplicate and cyclic imports have bounded evaluation with a warning
+ok 66 - duplicate and cyclic imports have bounded evaluation with a warning
+  ---
+  duration_ms: 0.542347
+  type: 'test'
+  ...
+# Subtest: Choose executes only first matched branch and supports nested choices
+ok 67 - Choose executes only first matched branch and supports nested choices
+  ---
+  duration_ms: 0.333132
+  type: 'test'
+  ...
+# Subtest: Choose Otherwise applies when no When matched
+ok 68 - Choose Otherwise applies when no When matched
+  ---
+  duration_ms: 0.426082
+  type: 'test'
+  ...
+# Subtest: item group conditions see final properties and item definitions are defaults
+ok 69 - item group conditions see final properties and item definitions are defaults
+  ---
+  duration_ms: 0.615237
+  type: 'test'
+  ...
+# Subtest: explicit metadata overrides definitions and is expanded
+ok 70 - explicit metadata overrides definitions and is expanded
+  ---
+  duration_ms: 0.333472
+  type: 'test'
+  ...
+# Subtest: global properties cannot be overwritten by project or imported properties
+ok 71 - global properties cannot be overwritten by project or imported properties
+  ---
+  duration_ms: 0.213402
+  type: 'test'
+  ...
+# Subtest: targets, tasks, packages and property functions remain explicit native requirements
+ok 72 - targets, tasks, packages and property functions remain explicit native requirements
+  ---
+  duration_ms: 0.292932
+  type: 'test'
+  ...
+# Subtest: inherited props are before project and inherited targets are after
+ok 73 - inherited props are before project and inherited targets are after
+  ---
+  duration_ms: 0.210858
+  type: 'test'
+  ...
+# (node:37) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: XML parses quoted >, namespaces, numeric entities, comments and CDATA
+ok 74 - XML parses quoted >, namespaces, numeric entities, comments and CDATA
+  ---
+  duration_ms: 1.355413
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <!DOCTYPE x><x/>
+ok 75 - reject malformed or unsafe XML <!DOCTYPE x><x/>
+  ---
+  duration_ms: 0.303527
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <!ENTITY x "hi"><x/>
+ok 76 - reject malformed or unsafe XML <!ENTITY x "hi"><x/>
+  ---
+  duration_ms: 0.083486
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>&evil;</x>
+ok 77 - reject malformed or unsafe XML <x>&evil;</x>
+  ---
+  duration_ms: 0.176466
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>&oops</x>
+ok 78 - reject malformed or unsafe XML <x>&oops</x>
+  ---
+  duration_ms: 0.106921
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x a="1" a="2"/>
+ok 79 - reject malformed or unsafe XML <x a="1" a="2"/>
+  ---
+  duration_ms: 0.083326
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x></y>
+ok 80 - reject malformed or unsafe XML <x></y>
+  ---
+  duration_ms: 0.12641
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x/><y/>
+ok 81 - reject malformed or unsafe XML <x/><y/>
+  ---
+  duration_ms: 0.069545
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>
+ok 82 - reject malformed or unsafe XML <x>
+  ---
+  duration_ms: 0.31167
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x a="<"/>
+ok 83 - reject malformed or unsafe XML <x a="<"/>
+  ---
+  duration_ms: 0.29209
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>&\#0;</x>
+ok 84 - reject malformed or unsafe XML <x>&\#0;</x>
+  ---
+  duration_ms: 0.138368
+  type: 'test'
+  ...
+# Subtest: XML structural limits
+ok 85 - XML structural limits
+  ---
+  duration_ms: 0.159631
+  type: 'test'
+  ...
+# Subtest: workspace paths normalize separators and internal parents
+ok 86 - workspace paths normalize separators and internal parents
+  ---
+  duration_ms: 0.322176
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "../../out"
+ok 87 - reject unsafe workspace path "../../out"
+  ---
+  duration_ms: 0.146721
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "/tmp/x"
+ok 88 - reject unsafe workspace path "/tmp/x"
+  ---
+  duration_ms: 0.060301
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "C:\\\\x"
+ok 89 - reject unsafe workspace path "C:\\\\x"
+  ---
+  duration_ms: 0.05281
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "https://example/a"
+ok 90 - reject unsafe workspace path "https://example/a"
+  ---
+  duration_ms: 0.053991
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path ".."
+ok 91 - reject unsafe workspace path ".."
+  ---
+  duration_ms: 0.048493
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "\\u0000"
+ok 92 - reject unsafe workspace path "\\u0000"
+  ---
+  duration_ms: 0.040831
+  type: 'test'
+  ...
+# Subtest: glob matches zero or multiple directories, not partial filenames
+ok 93 - glob matches zero or multiple directories, not partial filenames
+  ---
+  duration_ms: 0.337889
+  type: 'test'
+  ...
+# Subtest: condition grammar implements comparison, boolean precedence and Exists
+ok 94 - condition grammar implements comparison, boolean precedence and Exists
+  ---
+  duration_ms: 1.534843
+  type: 'test'
+  ...
+# Subtest: SDK globs exclude bin obj hidden and files outside project
+ok 95 - SDK globs exclude bin obj hidden and files outside project
+  ---
+  duration_ms: 2.518737
+  type: 'test'
+  ...
+# Subtest: Compile include exclude remove update links and disabled defaults
+ok 96 - Compile include exclude remove update links and disabled defaults
+  ---
+  duration_ms: 0.959786
+  type: 'test'
+  ...
+# Subtest: duplicate implicit/explicit compile is a build error
+ok 97 - duplicate implicit/explicit compile is a build error
+  ---
+  duration_ms: 0.343038
+  type: 'test'
+  ...
+# Subtest: conditions use configuration globals and inherited properties
+ok 98 - conditions use configuration globals and inherited properties
+  ---
+  duration_ms: 0.71665
+  type: 'test'
+  ...
+# Subtest: SLNX folders preserve solution-relative paths and references in dependency order
+ok 99 - SLNX folders preserve solution-relative paths and references in dependency order
+  ---
+  duration_ms: 0.765343
+  type: 'test'
+  ...
+# Subtest: missing sibling project diagnostics explain folder granting
+ok 100 - missing sibling project diagnostics explain folder granting
+  ---
+  duration_ms: 0.387534
+  type: 'test'
+  ...
+# Subtest: project cycles are diagnosed and traversal terminates
+ok 101 - project cycles are diagnosed and traversal terminates
+  ---
+  duration_ms: 0.223918
+  type: 'test'
+  ...
+# Subtest: missing compile files and external root traversal are errors
+ok 102 - missing compile files and external root traversal are errors
+  ---
+  duration_ms: 0.349296
+  type: 'test'
+  ...
+# Subtest: packages binaries analyzers and target execution are explicitly blocked
+ok 103 - packages binaries analyzers and target execution are explicitly blocked
+  ---
+  duration_ms: 0.336857
+  type: 'test'
+  ...
+# Subtest: unsupported condition is not treated as true
+ok 104 - unsupported condition is not treated as true
+  ---
+  duration_ms: 0.22537
+  type: 'test'
+  ...
+# Subtest: create csproj and slnx round trip quoted names
+ok 105 - create csproj and slnx round trip quoted names
+  ---
+  duration_ms: 0.346192
+  type: 'test'
+  ...
+# Subtest: file input reads binary and preserves directory paths
+ok 106 - file input reads binary and preserves directory paths
+  ---
+  duration_ms: 1.785371
+  type: 'test'
+  ...
+# Subtest: disk save checks every baseline before any write
+ok 107 - disk save checks every baseline before any write
+  ---
+  duration_ms: 0.72319
+  type: 'test'
+  ...
+# Subtest: disk save writes explicit changes and updates baseline
+ok 108 - disk save writes explicit changes and updates baseline
+  ---
+  duration_ms: 1.271387
+  type: 'test'
+  ...
+# Subtest: disk save partial I/O failure reports already-written files
+ok 109 - disk save partial I/O failure reports already-written files
+  ---
+  duration_ms: 0.598272
+  type: 'test'
+  ...
+# Subtest: directory traversal retains handles and skips .git
+ok 110 - directory traversal retains handles and skips .git
+  ---
+  duration_ms: 0.475587
+  type: 'test'
+  ...
+1..110
+# tests 110
+# suites 0
+# pass 109
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 523.116273

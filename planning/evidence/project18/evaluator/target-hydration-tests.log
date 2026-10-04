@@ -1,0 +1,31 @@
+✔ inner evaluations isolate framework-conditioned sources, properties, items and generated documents (8.805317ms)
+✔ inactive context diagnostics are labeled and cannot block the selected build context (7.293845ms)
+✔ active context changes re-evaluate configuration/runtime and invalidate stale identities (3.907821ms)
+✔ ProjectReference selects nearest compatible framework independently of the explorer active context (2.486665ms)
+✔ diamond dependencies retain two independently compiled contexts of the same library (1.914661ms)
+✔ portable targets update only the requested framework context and preserve the selected context (3.835582ms)
+✔ context graphs reject incompatible references and context-budget overflow explicitly (0.817945ms)
+✔ shared native/portable selection removes obsolete contexts on replacement (0.234894ms)
+✔ selected contexts expose metadata-only paths before hydration and preserve available assembly bytes (0.699546ms)
+✔ resource input discovery expands after resx hydration and never loads unrelated compile files (2.062414ms)
+✔ portable target graph retains dependencies, hooks, incremental declarations and initial/default targets (7.027412ms)
+✔ target policy blocks each native-only task by name while allowing portable tasks (1.817704ms)
+✔ target execution writes generated source, adds Compile and makes it available to the build plan (3.788911ms)
+✔ portable tasks honor Condition and do not mutate a workspace when apply=false (0.970947ms)
+✔ Copy outputs, in-target properties/items, read lines and directory existence work together (3.087913ms)
+✔ task metadata batching groups values and exposes each item bucket (1.496921ms)
+✔ target batching writes one output per metadata bucket (1.067863ms)
+✔ ContinueOnError obeys warning/continuation semantics and default failure rolls back virtual changes (1.390971ms)
+✔ CallTarget executes a target at most once and rejects recursive invocation (1.001072ms)
+✔ Delete and RemoveDir update virtual existence without host file access (0.887821ms)
+✔ portable target execution enforces steps, output bytes and cancellation (1.17252ms)
+✔ portable file tasks preserve escaped semicolons in path lists (0.526805ms)
+✔ lazy task inputs are an atomic hydration request and can be retried after materialization (1.817936ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.782807

@@ -1,0 +1,1911 @@
+{
+  "schemaVersion": 1,
+  "agent": "portable_evaluator",
+  "generatedAt": "2026-10-04T06:43:39.726256+00:00",
+  "canonicalSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+  "correctedSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+  "publications": [
+    {
+      "name": "studio-recovery-policy",
+      "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+      "branch": "codex/p18-studio-recovery-policy",
+      "baseBranch": "main",
+      "base": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "remoteParent": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "title": "SF-A24-T10: preserve recovery and execution ownership through Studio startup",
+      "issues": [
+        340,
+        3221
+      ],
+      "exactSourcePaths": [
+        "apps/studio/workbench/document-locks.js",
+        "apps/studio/workbench/state.js",
+        "apps/studio/workbench/studio-built-in-workspace.js",
+        "apps/studio/workbench/studio-composition.js",
+        "apps/studio/workbench/studio-workspace-startup.js",
+        "tests/a24-studio-startup-recovery.test.js"
+      ],
+      "validation": {
+        "status": "pending",
+        "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "scope": "root consolidated 227-file final compatibility run; no independent execution"
+      },
+      "local": "70db33085e79cea3bd270070ff9fb2e9d6019ec9",
+      "tree": "d0f825d714fe148fab29e0d8606ac1feaa8b32d2",
+      "baseTree": "f1e22cde86ba87205730730aeadc877fedc8dda0",
+      "stats": "7 files changed, 129 insertions(+), 16 deletions(-)",
+      "files": [
+        "apps/studio/workbench/document-locks.js",
+        "apps/studio/workbench/state.js",
+        "apps/studio/workbench/studio-built-in-workspace.js",
+        "apps/studio/workbench/studio-composition.js",
+        "apps/studio/workbench/studio-workspace-startup.js",
+        "tests/a24-studio-startup-recovery.test.js",
+        "tests/manifests/A24.json"
+      ],
+      "sourceProofs": [
+        {
+          "path": "apps/studio/workbench/document-locks.js",
+          "implementationBlob": "e1fbf35bbfc3c80d502534bca1c156cb5399439d",
+          "projectionBlob": "e1fbf35bbfc3c80d502534bca1c156cb5399439d"
+        },
+        {
+          "path": "apps/studio/workbench/state.js",
+          "implementationBlob": "6fde82437123588670b2c6196a5843e352b899e9",
+          "projectionBlob": "6fde82437123588670b2c6196a5843e352b899e9"
+        },
+        {
+          "path": "apps/studio/workbench/studio-built-in-workspace.js",
+          "implementationBlob": "6313d543ccaf1e6e7bf6757cfee4f81301674f75",
+          "projectionBlob": "6313d543ccaf1e6e7bf6757cfee4f81301674f75"
+        },
+        {
+          "path": "apps/studio/workbench/studio-composition.js",
+          "implementationBlob": "1be377c3bb86b63ef62e737879518c9a319f2a1b",
+          "projectionBlob": "1be377c3bb86b63ef62e737879518c9a319f2a1b"
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-startup.js",
+          "implementationBlob": "365a70e610355eac25b8c3d60bae84ceb6eb8b45",
+          "projectionBlob": "365a70e610355eac25b8c3d60bae84ceb6eb8b45"
+        },
+        {
+          "path": "tests/a24-studio-startup-recovery.test.js",
+          "implementationBlob": "05f7b3283814696353494407551e823b94a155ba",
+          "projectionBlob": "05f7b3283814696353494407551e823b94a155ba"
+        }
+      ],
+      "remote": "4d209fb03d43131fae53c0de3edc57627c239e50",
+      "pr": {
+        "number": 4301,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4301",
+        "draft": true,
+        "head": "4d209fb03d43131fae53c0de3edc57627c239e50",
+        "base": "main",
+        "baseSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "commitReadBack": {
+        "sha": "4d209fb03d43131fae53c0de3edc57627c239e50",
+        "tree": "d0f825d714fe148fab29e0d8606ac1feaa8b32d2",
+        "parents": [
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ],
+        "verified": true
+      },
+      "refReadBack": {
+        "ref": "refs/heads/codex/p18-studio-recovery-policy",
+        "sha": "4d209fb03d43131fae53c0de3edc57627c239e50",
+        "verified": true
+      },
+      "selectedValidation": {
+        "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "node": "v26.10.0",
+        "file": "tests/a24-studio-startup-recovery.test.js",
+        "cases": [
+          "ok 1420 - asynchronous recovery finishes adoption before startup and never races a fallback sample",
+          "ok 1421 - a failed recovery result cannot replace a workspace opened while it was pending",
+          "ok 1422 - recovery rejection is observed and reported without starting a sample or launch",
+          "ok 1423 - synchronous recovery keeps immediate sample admission and observes its completion before startup"
+        ],
+        "summary": {
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0
+        },
+        "overallSummary": {
+          "tests": 1875,
+          "suites": 0,
+          "pass": 1809,
+          "fail": 66,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+        "logSha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da",
+        "metadata": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.json"
+      },
+      "requiredChecks": {
+        "workflowRuns": [
+          {
+            "id": 37178858290,
+            "name": "Validate SharpForge",
+            "status": "completed",
+            "conclusion": "success",
+            "path": ".github/workflows/ci.yml"
+          },
+          {
+            "id": 37178854710,
+            "name": "Validate SharpForge",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "path": ".github/workflows/ci.yml"
+          }
+        ],
+        "jobs": [
+          {
+            "id": 111367122040,
+            "name": "core",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111367225292,
+            "name": "core-platforms",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367225607,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367226090,
+            "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367226228,
+            "name": "packages",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367226413,
+            "name": "native-il",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367226726,
+            "name": "native-msbuild",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367227165,
+            "name": "clr-wasm",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "id": 111367227846,
+            "name": "ci-ok",
+            "status": "completed",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "core": {
+        "run": 37178858290,
+        "job": 111367122040,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178858290/job/111367122040"
+      },
+      "workflowHistory": [
+        {
+          "id": 37178858290,
+          "status": "completed",
+          "conclusion": "success",
+          "head": "4d209fb03d43131fae53c0de3edc57627c239e50",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178858290"
+        },
+        {
+          "id": 37178854710,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "head": "4d209fb03d43131fae53c0de3edc57627c239e50",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178854710"
+        }
+      ],
+      "finalQualification": {
+        "source": "5269d397",
+        "node": "v22.23.3",
+        "tests": 1877,
+        "passed": 1877,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "ownedCases": 23,
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "selectedReceipt": "planning/evidence/project18/evaluator-session-save-selected.json",
+        "interpretation": "The final shared complete scope passed. Historical initial and narrow correction evidence remains retained; no publication-local test run."
+      },
+      "pullRequestReadBack": {
+        "number": 4301,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4301",
+        "draft": true,
+        "head": "4d209fb03d43131fae53c0de3edc57627c239e50",
+        "base": "main",
+        "baseSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "publicationKind": "draft-feature",
+      "initialPendingTests": [
+        "tests/a24-studio-document-policy.test.js"
+      ],
+      "pendingTests": []
+    },
+    {
+      "name": "document-state-capture",
+      "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+      "branch": "codex/p18-document-state-capture",
+      "baseBranch": "main",
+      "base": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "remoteParent": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "title": "SF-A24-T10: expose immutable document state capture for session adapters",
+      "issues": [
+        340,
+        3221
+      ],
+      "exactSourcePaths": [],
+      "derivedSourceProofs": [
+        {
+          "path": "apps/studio/workspace-source-records.js",
+          "sourceBlob": "8bc0fe36e44154c843351cf7380bb8e1faa29325",
+          "kind": "exact complete function and JSDoc suffix",
+          "function": "workspaceDocumentStates",
+          "sha256": "9840acb279d8dc597b288a1cb14813e146506b03af047f5b2cefd897b7ad7395"
+        }
+      ],
+      "pendingTests": [],
+      "validation": {
+        "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "node": "v26.10.0",
+        "selectedFile": "tests/a24-studio-session-composition.test.js",
+        "aggregate": {
+          "tests": 1875,
+          "passed": 1809,
+          "failed": 66,
+          "skipped": 0
+        },
+        "status": "six selected cases passed; dependent application correction scope pending",
+        "selectedCases": [
+          "ok 1414 - the service-backed session loads one active source from a 300-file lazy folder without opening the other models",
+          "ok 1415 - model-free recovery adopts immutable source and baseline identity without reading its text getter",
+          "ok 1416 - Explorer disk receipts preserve dirty sibling roots and adopt the explicit disk snapshot",
+          "ok 1417 - a disk replacement during lazy preflight cannot publish a record or replace current documents",
+          "ok 1418 - post-adoption failures stay committed and never dispose the transferred source",
+          "ok 1419 - edited prepared source cannot reuse stale byte-length metadata or original byte storage"
+        ],
+        "selectedSummary": {
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0
+        },
+        "log": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+        "logSha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da"
+      },
+      "local": "9838125b1d2c88fabe00518faa1536fca2246b8e",
+      "tree": "4c8180327832bc874b86d67b6bde49fd4c1f4142",
+      "baseTree": "f1e22cde86ba87205730730aeadc877fedc8dda0",
+      "stats": "2 files changed, 30 insertions(+)",
+      "files": [
+        "apps/studio/WORKSPACE-DOCUMENT-STATES.md",
+        "apps/studio/workspace-source-records.js"
+      ],
+      "sourceProofs": [],
+      "remote": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+      "pr": {
+        "number": 4312,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4312",
+        "draft": true,
+        "head": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+        "base": "main",
+        "baseSha": "78b398989ecb2b5e4021040588e0a911d0723608",
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "commitReadBack": {
+        "sha": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+        "tree": "4c8180327832bc874b86d67b6bde49fd4c1f4142",
+        "parents": [
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ],
+        "verified": true
+      },
+      "refReadBack": {
+        "sha": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+        "ref": "refs/heads/codex/p18-document-state-capture",
+        "verified": true
+      },
+      "core": {
+        "run": 37179281223,
+        "job": 111368371982,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179281223/job/111368371982"
+      },
+      "workflowHistory": [
+        {
+          "id": 37179281223,
+          "status": "completed",
+          "conclusion": "success",
+          "head": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179281223"
+        },
+        {
+          "id": 37179279055,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "head": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179279055"
+        }
+      ],
+      "finalQualification": {
+        "source": "5269d397",
+        "node": "v22.23.3",
+        "tests": 1877,
+        "passed": 1877,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "ownedCases": 23,
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "selectedReceipt": "planning/evidence/project18/evaluator-session-save-selected.json",
+        "interpretation": "The final shared complete scope passed. Historical initial and narrow correction evidence remains retained; no publication-local test run."
+      },
+      "pullRequestReadBack": {
+        "number": 4312,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4312",
+        "draft": true,
+        "head": "f1431852ba77cceee88dc3bf6409630a01c9571b",
+        "base": "main",
+        "baseSha": "78b398989ecb2b5e4021040588e0a911d0723608",
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "publicationKind": "draft-feature"
+    },
+    {
+      "name": "prepared-project",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "branch": "codex/p18-prepared-project",
+      "baseBranch": "codex/p18-prepared-project-dependencies",
+      "base": "c21b0b94fd7ae9a6b36274efdfcbeb1d95f36ba3",
+      "remoteParent": "bb0cb5e6164b8f2d223b296ea93662bb92587d1b",
+      "title": "SF-A23-T13: preserve immutable source records through project evaluation",
+      "issues": [
+        3068,
+        3098
+      ],
+      "exactSourcePaths": [
+        "packages/project-system/src/project-system.js",
+        "packages/project-system/src/evaluation/result.js"
+      ],
+      "pendingTests": [],
+      "validation": {
+        "status": "affected public discovery cases passed in root corrected38-file replay; final aggregate receipt pending",
+        "sourceCommit": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "node": "v26.10.0",
+        "files": [
+          "tests/a20-prepared-source-workspace.test.js",
+          "tests/a20-prepared-source-paths.test.js"
+        ],
+        "initialAggregate": {
+          "tests": 1875,
+          "passed": 1809,
+          "failed": 66,
+          "skipped": 0
+        }
+      },
+      "local": "ae63bf4c5d6179c05048c052180b2395178e270c",
+      "tree": "d04d02879c3908d8072bd2f8725d030c5fc9de03",
+      "baseTree": "46b5dbe475f66a380ec9c5df02358c80e9c17351",
+      "stats": "4 files changed, 50 insertions(+), 10 deletions(-)",
+      "files": [
+        "packages/project-system/PREPARED_PROJECTS.md",
+        "packages/project-system/README.md",
+        "packages/project-system/src/evaluation/result.js",
+        "packages/project-system/src/project-system.js"
+      ],
+      "sourceProofs": [
+        {
+          "path": "packages/project-system/src/project-system.js",
+          "implementationBlob": "acc29ccc908c09a56882dd11aca883718b7c7fd5",
+          "projectionBlob": "acc29ccc908c09a56882dd11aca883718b7c7fd5"
+        },
+        {
+          "path": "packages/project-system/src/evaluation/result.js",
+          "implementationBlob": "e77598607c1ea02f4498f57ebcc72657cc1e1c44",
+          "projectionBlob": "e77598607c1ea02f4498f57ebcc72657cc1e1c44"
+        }
+      ],
+      "remote": "044ea4484c13e8d4914306186698127b4cc720eb",
+      "pr": {
+        "number": 4335,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4335",
+        "draft": true,
+        "head": "044ea4484c13e8d4914306186698127b4cc720eb",
+        "base": "codex/p18-prepared-project-dependencies",
+        "baseSha": "bb0cb5e6164b8f2d223b296ea93662bb92587d1b",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "commitReadBack": {
+        "tree": "d04d02879c3908d8072bd2f8725d030c5fc9de03",
+        "parents": [
+          "bb0cb5e6164b8f2d223b296ea93662bb92587d1b"
+        ],
+        "verified": true
+      },
+      "refReadBack": {
+        "sha": "044ea4484c13e8d4914306186698127b4cc720eb",
+        "verified": true
+      },
+      "core": {
+        "run": 37179952561,
+        "job": 111370322207,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179952561/job/111370322207"
+      },
+      "workflowHistory": [
+        {
+          "id": 37179952561,
+          "status": "completed",
+          "conclusion": "success",
+          "head": "044ea4484c13e8d4914306186698127b4cc720eb",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179952561"
+        },
+        {
+          "id": 37179950751,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "head": "044ea4484c13e8d4914306186698127b4cc720eb",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179950751"
+        }
+      ],
+      "finalQualification": {
+        "source": "5269d397",
+        "node": "v22.23.3",
+        "tests": 1877,
+        "passed": 1877,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "ownedCases": 23,
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "selectedReceipt": "planning/evidence/project18/evaluator-session-save-selected.json",
+        "interpretation": "The final shared complete scope passed. Historical initial and narrow correction evidence remains retained; no publication-local test run."
+      },
+      "pullRequestReadBack": {
+        "number": 4335,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4335",
+        "draft": true,
+        "head": "044ea4484c13e8d4914306186698127b4cc720eb",
+        "base": "codex/p18-prepared-project-dependencies",
+        "baseSha": "bb0cb5e6164b8f2d223b296ea93662bb92587d1b",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "publicationKind": "draft-feature"
+    },
+    {
+      "name": "provider-source-saves",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "branch": "codex/p18-provider-source-saves",
+      "baseBranch": "codex/p18-provider-source-dependencies",
+      "base": "96e488aa2ac4e7844c79c867432346704548ab13",
+      "remoteParent": "e2c4007d4eaf24af971146335e9bff7030870a07",
+      "title": "SF-A24-T08: save captured source snapshots through provider policy",
+      "issues": [
+        340,
+        3221
+      ],
+      "exactSourcePaths": [
+        "packages/project-system/src/disk-save.js",
+        "packages/project-system/src/disk-save-records.js",
+        "packages/project-system/src/disk-baseline.js",
+        "packages/project-system/src/provider-disk-workspace.js"
+      ],
+      "pendingTests": [],
+      "validation": {
+        "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "node": "v26.10.0",
+        "status": "two original provider-source cases passed within completed initial integration scope; higher session correction passed at7b",
+        "selectedFile": "tests/a24-provider-source-save.test.js",
+        "selectedSummary": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "aggregate": {
+          "tests": 1875,
+          "passed": 1809,
+          "failed": 66,
+          "skipped": 0
+        }
+      },
+      "local": "732674d989fb0bf7c5a7e647a8b482a716a20ebc",
+      "tree": "e8f94cc1ad98aad31425fe024852bca70f634e7b",
+      "baseTree": "e654ca06f12749f738fefc6642a01752f84f83ad",
+      "stats": "5 files changed, 126 insertions(+), 24 deletions(-)",
+      "files": [
+        "packages/project-system/PROVIDER-SOURCE-SAVES.md",
+        "packages/project-system/src/disk-baseline.js",
+        "packages/project-system/src/disk-save-records.js",
+        "packages/project-system/src/disk-save.js",
+        "packages/project-system/src/provider-disk-workspace.js"
+      ],
+      "sourceProofs": [
+        {
+          "path": "packages/project-system/src/disk-save.js",
+          "implementationBlob": "1addde0523bef6243b4a054789f8b08e8dfea96e",
+          "projectionBlob": "1addde0523bef6243b4a054789f8b08e8dfea96e"
+        },
+        {
+          "path": "packages/project-system/src/disk-save-records.js",
+          "implementationBlob": "3776ff2186588d79dcc6ca57f3d457b6278eb153",
+          "projectionBlob": "3776ff2186588d79dcc6ca57f3d457b6278eb153"
+        },
+        {
+          "path": "packages/project-system/src/disk-baseline.js",
+          "implementationBlob": "24a0e5ef94289c8375bfa741d407f8b11b297c58",
+          "projectionBlob": "24a0e5ef94289c8375bfa741d407f8b11b297c58"
+        },
+        {
+          "path": "packages/project-system/src/provider-disk-workspace.js",
+          "implementationBlob": "3aacd16f69946c973199ceb40b121d0f7299c49c",
+          "projectionBlob": "3aacd16f69946c973199ceb40b121d0f7299c49c"
+        }
+      ],
+      "remote": "90185d880fafccead5df8e1129aa358a020646b8",
+      "pr": {
+        "number": 4341,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4341",
+        "draft": true,
+        "head": "90185d880fafccead5df8e1129aa358a020646b8",
+        "base": "codex/p18-provider-source-dependencies",
+        "baseSha": "e2c4007d4eaf24af971146335e9bff7030870a07",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "commitReadBack": {
+        "tree": "e8f94cc1ad98aad31425fe024852bca70f634e7b",
+        "parents": [
+          "e2c4007d4eaf24af971146335e9bff7030870a07"
+        ],
+        "verified": true
+      },
+      "refReadBack": {
+        "sha": "90185d880fafccead5df8e1129aa358a020646b8",
+        "verified": true
+      },
+      "core": {
+        "run": 37180124370,
+        "job": 111370834962,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180124370/job/111370834962"
+      },
+      "workflowHistory": [
+        {
+          "id": 37180124370,
+          "status": "completed",
+          "conclusion": "success",
+          "head": "90185d880fafccead5df8e1129aa358a020646b8",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180124370"
+        },
+        {
+          "id": 37180122111,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "head": "90185d880fafccead5df8e1129aa358a020646b8",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180122111"
+        }
+      ],
+      "finalQualification": {
+        "source": "5269d397",
+        "node": "v22.23.3",
+        "tests": 1877,
+        "passed": 1877,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "ownedCases": 23,
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "selectedReceipt": "planning/evidence/project18/evaluator-session-save-selected.json",
+        "interpretation": "The final shared complete scope passed. Historical initial and narrow correction evidence remains retained; no publication-local test run."
+      },
+      "pullRequestReadBack": {
+        "number": 4341,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4341",
+        "draft": true,
+        "head": "90185d880fafccead5df8e1129aa358a020646b8",
+        "base": "codex/p18-provider-source-dependencies",
+        "baseSha": "e2c4007d4eaf24af971146335e9bff7030870a07",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "publicationKind": "draft-feature"
+    },
+    {
+      "name": "studio-prepared-session",
+      "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "branch": "codex/p18-studio-prepared-session",
+      "baseBranch": "codex/p18-studio-session-dependencies",
+      "base": "518d831f140f10b9766fec968b8c3bf0571d0798",
+      "remoteParent": "1c05b3eb77745a04eb0470f570469d5e3c67b6f7",
+      "title": "SF-A24-T10: compose immutable document ownership with workspace saves",
+      "issues": [
+        340,
+        3221
+      ],
+      "exactSourcePaths": [
+        "apps/studio/workspace-session.js",
+        "apps/studio/workspace-save.js",
+        "apps/studio/workspace-save-scope.js",
+        "apps/studio/workspace-editor-lifecycle.js",
+        "apps/studio/workspace-document-eviction.js",
+        "apps/studio/workspace-source-records.js",
+        "apps/studio/workbench/studio-workspace-loader.js",
+        "apps/studio/workbench/studio-workspace-preparation.js",
+        "apps/studio/workbench/studio-explorer-workspace.js",
+        "apps/studio/workbench/studio-save.js",
+        "apps/studio/workbench/studio-save-operation.js",
+        "apps/studio/workbench/workspace-limits.js",
+        "apps/studio/workbench/workspace-loads.js"
+      ],
+      "pendingTests": [],
+      "validation": {
+        "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "node": "v22.23.3",
+        "status": "all23 owned new cases passed in final228-file shared scope",
+        "aggregate": {
+          "tests": 1877,
+          "passed": 1877,
+          "failed": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "selectedFiles": [
+          "tests/a24-studio-session-composition.test.js",
+          "tests/a24-studio-save-composition.test.js",
+          "tests/a24-provider-source-save.test.js",
+          "tests/a24-studio-document-policy.test.js",
+          "tests/a24-studio-startup-recovery.test.js"
+        ],
+        "selectedSummary": {
+          "passed": 23,
+          "failed": 0,
+          "skipped": 0
+        },
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "initialAggregate": {
+          "tests": 1875,
+          "passed": 1809,
+          "failed": 66,
+          "skipped": 0
+        },
+        "correctionAggregate": {
+          "tests": 260,
+          "passed": 259,
+          "failed": 1,
+          "skipped": 0
+        }
+      },
+      "local": "d6639c706f830e7806e18170aaa188aee0721784",
+      "tree": "9cf248e1ed99fe4a3284b54b51cd1da53b26ec27",
+      "baseTree": "109a6b333a1e80ea365970d64acaf328f6618696",
+      "stats": "14 files changed, 701 insertions(+), 186 deletions(-)",
+      "files": [
+        "apps/studio/PREPARED_WORKSPACE_SESSION.md",
+        "apps/studio/workbench/studio-explorer-workspace.js",
+        "apps/studio/workbench/studio-save-operation.js",
+        "apps/studio/workbench/studio-save.js",
+        "apps/studio/workbench/studio-workspace-loader.js",
+        "apps/studio/workbench/studio-workspace-preparation.js",
+        "apps/studio/workbench/workspace-limits.js",
+        "apps/studio/workbench/workspace-loads.js",
+        "apps/studio/workspace-document-eviction.js",
+        "apps/studio/workspace-editor-lifecycle.js",
+        "apps/studio/workspace-save-scope.js",
+        "apps/studio/workspace-save.js",
+        "apps/studio/workspace-session.js",
+        "apps/studio/workspace-source-records.js"
+      ],
+      "sourceProofs": [
+        {
+          "path": "apps/studio/workspace-session.js",
+          "implementationBlob": "347f9103a7e2e33b7f9d676bef3369aa9a943ebd",
+          "projectionBlob": "347f9103a7e2e33b7f9d676bef3369aa9a943ebd"
+        },
+        {
+          "path": "apps/studio/workspace-save.js",
+          "implementationBlob": "1bc2986c87f325b11888aabd6b171a6d969cce54",
+          "projectionBlob": "1bc2986c87f325b11888aabd6b171a6d969cce54"
+        },
+        {
+          "path": "apps/studio/workspace-save-scope.js",
+          "implementationBlob": "3827f1bd2ab66965955f57c5ed41095cab05142c",
+          "projectionBlob": "3827f1bd2ab66965955f57c5ed41095cab05142c"
+        },
+        {
+          "path": "apps/studio/workspace-editor-lifecycle.js",
+          "implementationBlob": "26e7a944f6f8daf4fff41fe52e3751369e2312ad",
+          "projectionBlob": "26e7a944f6f8daf4fff41fe52e3751369e2312ad"
+        },
+        {
+          "path": "apps/studio/workspace-document-eviction.js",
+          "implementationBlob": "4affe8c5ac95d8014ea49eddee7cdb5a13f0ca15",
+          "projectionBlob": "4affe8c5ac95d8014ea49eddee7cdb5a13f0ca15"
+        },
+        {
+          "path": "apps/studio/workspace-source-records.js",
+          "implementationBlob": "8bc0fe36e44154c843351cf7380bb8e1faa29325",
+          "projectionBlob": "8bc0fe36e44154c843351cf7380bb8e1faa29325"
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-loader.js",
+          "implementationBlob": "9dc1dfecce723fa2affd48b21c0b9e5c749a35cd",
+          "projectionBlob": "9dc1dfecce723fa2affd48b21c0b9e5c749a35cd"
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-preparation.js",
+          "implementationBlob": "bc1b9487b09f9468517b29a563866c34ba6abb91",
+          "projectionBlob": "bc1b9487b09f9468517b29a563866c34ba6abb91"
+        },
+        {
+          "path": "apps/studio/workbench/studio-explorer-workspace.js",
+          "implementationBlob": "0c1b68f9de6d3a6decb76ee20f21799211ddba47",
+          "projectionBlob": "0c1b68f9de6d3a6decb76ee20f21799211ddba47"
+        },
+        {
+          "path": "apps/studio/workbench/studio-save.js",
+          "implementationBlob": "c399d3e02028123a7c5ecbeaf6c0489804049e72",
+          "projectionBlob": "c399d3e02028123a7c5ecbeaf6c0489804049e72"
+        },
+        {
+          "path": "apps/studio/workbench/studio-save-operation.js",
+          "implementationBlob": "622a8e3044b5ee4fc9deabffb3f5735238ea3a39",
+          "projectionBlob": "622a8e3044b5ee4fc9deabffb3f5735238ea3a39"
+        },
+        {
+          "path": "apps/studio/workbench/workspace-limits.js",
+          "implementationBlob": "4c7ac1fbbf959780ecc0ed3019b8750329d8ef8f",
+          "projectionBlob": "4c7ac1fbbf959780ecc0ed3019b8750329d8ef8f"
+        },
+        {
+          "path": "apps/studio/workbench/workspace-loads.js",
+          "implementationBlob": "e81564d5cf5dd05835d0eda8368a65fd368fab50",
+          "projectionBlob": "e81564d5cf5dd05835d0eda8368a65fd368fab50"
+        }
+      ],
+      "remote": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+      "pr": {
+        "number": 4361,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4361",
+        "draft": true,
+        "head": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "base": "codex/p18-studio-session-dependencies",
+        "baseSha": "1c05b3eb77745a04eb0470f570469d5e3c67b6f7",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "commitReadBack": {
+        "tree": "9cf248e1ed99fe4a3284b54b51cd1da53b26ec27",
+        "parents": [
+          "1c05b3eb77745a04eb0470f570469d5e3c67b6f7"
+        ],
+        "verified": true
+      },
+      "refReadBack": {
+        "sha": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "verified": true
+      },
+      "core": {
+        "run": 37180649424,
+        "job": 111372374391,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180649424/job/111372374391"
+      },
+      "workflowHistory": [
+        {
+          "id": 37180649424,
+          "status": "completed",
+          "conclusion": "success",
+          "head": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180649424"
+        },
+        {
+          "id": 37180646806,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "head": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180646806"
+        }
+      ],
+      "finalQualification": {
+        "source": "5269d397",
+        "node": "v22.23.3",
+        "tests": 1877,
+        "passed": 1877,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "ownedCases": 23,
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "selectedReceipt": "planning/evidence/project18/evaluator-session-save-selected.json",
+        "interpretation": "The final shared complete scope passed. Historical initial and narrow correction evidence remains retained; no publication-local test run."
+      },
+      "pullRequestReadBack": {
+        "number": 4361,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4361",
+        "draft": true,
+        "head": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "base": "codex/p18-studio-session-dependencies",
+        "baseSha": "1c05b3eb77745a04eb0470f570469d5e3c67b6f7",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "publicationKind": "draft-feature"
+    },
+    {
+      "name": "studio-session-qualification",
+      "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "branch": "codex/p18-studio-session-qualification",
+      "baseBranch": "codex/p18-studio-prepared-session",
+      "base": "d6639c706f830e7806e18170aaa188aee0721784",
+      "remoteParent": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+      "title": "SF-A24-T10: retain complete prepared session and save qualification",
+      "issues": [
+        340,
+        3221
+      ],
+      "exactSourcePaths": [
+        "tests/support/a24-studio-workspace-fixture.js",
+        "tests/a24-studio-session-composition.test.js",
+        "tests/a24-studio-save-composition.test.js",
+        "tests/a24-provider-source-save.test.js",
+        "tests/a24-studio-document-policy.test.js"
+      ],
+      "pendingTests": [],
+      "validation": {
+        "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "node": "v22.23.3",
+        "status": "19 retained cases passed in final shared scope; original fixture/assertions unchanged",
+        "aggregate": {
+          "tests": 1877,
+          "passed": 1877,
+          "failed": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "selectedFiles": [
+          "tests/a24-studio-session-composition.test.js",
+          "tests/a24-studio-save-composition.test.js",
+          "tests/a24-provider-source-save.test.js",
+          "tests/a24-studio-document-policy.test.js"
+        ],
+        "selectedSummary": {
+          "passed": 19,
+          "failed": 0,
+          "skipped": 0
+        },
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap"
+      },
+      "local": "3242211d6b9a36318d1b4a496d4b0aa6a29ced0a",
+      "tree": "2eebacfd83af33df63c9420be094a64864ba7479",
+      "baseTree": "9cf248e1ed99fe4a3284b54b51cd1da53b26ec27",
+      "stats": "5 files changed, 480 insertions(+)",
+      "files": [
+        "tests/a24-provider-source-save.test.js",
+        "tests/a24-studio-document-policy.test.js",
+        "tests/a24-studio-save-composition.test.js",
+        "tests/a24-studio-session-composition.test.js",
+        "tests/support/a24-studio-workspace-fixture.js"
+      ],
+      "sourceProofs": [
+        {
+          "path": "tests/support/a24-studio-workspace-fixture.js",
+          "implementationBlob": "a563f5d0e02fa164eaa965c058130039aa3f4d38",
+          "projectionBlob": "a563f5d0e02fa164eaa965c058130039aa3f4d38"
+        },
+        {
+          "path": "tests/a24-studio-session-composition.test.js",
+          "implementationBlob": "525805e179397ea2b31710dd21462a7b6d32bbff",
+          "projectionBlob": "525805e179397ea2b31710dd21462a7b6d32bbff"
+        },
+        {
+          "path": "tests/a24-studio-save-composition.test.js",
+          "implementationBlob": "ffcc35eeb967c754600e82a86ed772853b6eacd2",
+          "projectionBlob": "ffcc35eeb967c754600e82a86ed772853b6eacd2"
+        },
+        {
+          "path": "tests/a24-provider-source-save.test.js",
+          "implementationBlob": "8bcc8835555f994eba6ed5ac45d94c2a93eb38e3",
+          "projectionBlob": "8bcc8835555f994eba6ed5ac45d94c2a93eb38e3"
+        },
+        {
+          "path": "tests/a24-studio-document-policy.test.js",
+          "implementationBlob": "770f65ff298c2933ea1f7d5766ac04b227cd4154",
+          "projectionBlob": "770f65ff298c2933ea1f7d5766ac04b227cd4154"
+        }
+      ],
+      "remote": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+      "pr": {
+        "number": 4362,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4362",
+        "draft": true,
+        "head": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "base": "codex/p18-studio-prepared-session",
+        "baseSha": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "commitReadBack": {
+        "tree": "2eebacfd83af33df63c9420be094a64864ba7479",
+        "parents": [
+          "ec038a20ac2e6461691855a8ec1f1d093bafd124"
+        ],
+        "verified": true
+      },
+      "refReadBack": {
+        "sha": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "verified": true
+      },
+      "core": {
+        "run": 37180731829,
+        "job": 111372610528,
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180731829/job/111372610528"
+      },
+      "workflowHistory": [
+        {
+          "id": 37180731829,
+          "status": "completed",
+          "conclusion": "success",
+          "head": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180731829"
+        },
+        {
+          "id": 37180729744,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "head": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+          "name": "Validate SharpForge",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180729744"
+        }
+      ],
+      "finalQualification": {
+        "source": "5269d397",
+        "node": "v22.23.3",
+        "tests": 1877,
+        "passed": 1877,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "ownedCases": 23,
+        "log": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "selectedReceipt": "planning/evidence/project18/evaluator-session-save-selected.json",
+        "interpretation": "The final shared complete scope passed. Historical initial and narrow correction evidence remains retained; no publication-local test run."
+      },
+      "pullRequestReadBack": {
+        "number": 4362,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4362",
+        "draft": true,
+        "head": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "base": "codex/p18-studio-prepared-session",
+        "baseSha": "ec038a20ac2e6461691855a8ec1f1d093bafd124",
+        "mergeable": true,
+        "mergeableState": "clean"
+      },
+      "publicationKind": "draft-feature"
+    },
+    {
+      "name": "compiler-api-cleanup",
+      "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "branch": "codex/p18-compiler-api-cleanup",
+      "baseBranch": "codex/p18-compiler-facade-dependencies",
+      "base": "bc031320c838c8f0493e86af1d419d6ca7679ba1",
+      "remoteParent": "1d57150f952cfb4d1227d85581991b352674f46b",
+      "title": "SF-A23-T27: preserve compiler contracts through a shrinking public facade",
+      "issues": [
+        3082
+      ],
+      "exactSourcePaths": [
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/public-api.js"
+      ],
+      "validation": {
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "node": "v26.10.0",
+        "aggregate": {
+          "tests": 382,
+          "passed": 382,
+          "failed": 0,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "files": 18,
+        "gates": [
+          "check",
+          "build",
+          "clean-checkout"
+        ],
+        "log": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+        "execution": "Root ran the complete correction scope once; no projection rerun."
+      },
+      "local": "d102ef46d32d0c4b0572af786005d9c1618452a0",
+      "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+      "baseTree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+      "stats": "2 files changed, 15 insertions(+), 14 deletions(-)",
+      "files": [
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/public-api.js"
+      ],
+      "sourceProofs": [
+        {
+          "path": "packages/compiler/src/index.js",
+          "implementationBlob": "9c8610aed91e581064f3a4245621e35ed975be51",
+          "projectionBlob": "9c8610aed91e581064f3a4245621e35ed975be51"
+        },
+        {
+          "path": "packages/compiler/src/public-api.js",
+          "implementationBlob": "825e927bc5430a557337cf81dd30d64aad95ec2b",
+          "projectionBlob": "825e927bc5430a557337cf81dd30d64aad95ec2b"
+        }
+      ],
+      "remote": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "pr": {
+        "number": 4401,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4401",
+        "head": "93447ed41e2e52331051448769fff7ac87f55d83",
+        "base": "1d57150f952cfb4d1227d85581991b352674f46b",
+        "draft": true,
+        "mergeable": true,
+        "mergeableState": "unstable"
+      },
+      "commitReadBack": {
+        "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+        "parents": [
+          "93447ed41e2e52331051448769fff7ac87f55d83",
+          "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+        ]
+      },
+      "refReadBack": {
+        "ref": "refs/heads/codex/p18-compiler-api-cleanup",
+        "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea"
+      },
+      "forwardHistory": [
+        {
+          "local": "b65d14d01febc5f2c541b9c60808444666ba4ce0",
+          "remote": "93447ed41e2e52331051448769fff7ac87f55d83",
+          "tree": "e81583a76a0f8abaf61f76ea09249a083bf9eedf",
+          "commitReadBack": {
+            "sha": "93447ed41e2e52331051448769fff7ac87f55d83",
+            "tree": "e81583a76a0f8abaf61f76ea09249a083bf9eedf",
+            "parents": [
+              "1d57150f952cfb4d1227d85581991b352674f46b"
+            ]
+          },
+          "refReadBack": {
+            "ref": "refs/heads/codex/p18-compiler-api-cleanup",
+            "sha": "93447ed41e2e52331051448769fff7ac87f55d83"
+          }
+        }
+      ],
+      "remoteParents": [
+        "93447ed41e2e52331051448769fff7ac87f55d83",
+        "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+      ],
+      "projectionCorrection": {
+        "name": "compiler-api-cleanup-correction",
+        "worktree": "/tmp/p18-compiler-api-cleanup",
+        "local": "d102ef46d32d0c4b0572af786005d9c1618452a0",
+        "remoteParents": [
+          "93447ed41e2e52331051448769fff7ac87f55d83",
+          "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+        ],
+        "branch": "codex/p18-compiler-api-cleanup",
+        "title": "SF-A23-T27: merge complete corrected compiler dependencies",
+        "output": "/workspace/scratch/3e16369943fd/p18-evaluator-publication/compiler-api-cleanup-correction.json",
+        "pr": 4401,
+        "resolutions": [
+          "Forward merge only; original compiler facade blobs remain byte-identical to qualified e9 source.",
+          "Restore complete inherited registry fixture and all current pinned-parent policy records; only its existing hash changes.",
+          "Required core failure and the cancelled predecessor remain explicit; no local test replay."
+        ],
+        "localParents": [
+          "b65d14d01febc5f2c541b9c60808444666ba4ce0",
+          "bc031320c838c8f0493e86af1d419d6ca7679ba1"
+        ],
+        "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+        "baseTree": "e81583a76a0f8abaf61f76ea09249a083bf9eedf",
+        "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+        "commitMessage": "SF-A23-T27: merge complete corrected compiler dependencies\n\nSource-Worktree-Commit: d102ef46d32d0c4b0572af786005d9c1618452a0\nSource-Tree: a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+        "remote": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "commitReadBack": {
+          "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+          "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+          "parents": [
+            "93447ed41e2e52331051448769fff7ac87f55d83",
+            "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+          ]
+        },
+        "refReadBack": {
+          "ref": "refs/heads/codex/p18-compiler-api-cleanup",
+          "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea"
+        },
+        "requiredCore": {
+          "run": 37182904926,
+          "job": 111378876897,
+          "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+          "status": "completed",
+          "conclusion": "success",
+          "broadQualificationInferred": false
+        },
+        "failureHistory": [
+          {
+            "run": 37181991312,
+            "conclusion": "cancelled"
+          },
+          {
+            "run": 37181993533,
+            "job": 111376260519,
+            "conclusion": "failure",
+            "reason": "Projection conflict resolver truncated the policy and registry suffix; static JSON parse failed."
+          }
+        ],
+        "policyProof": "compiler-projection-policy-proof.json"
+      },
+      "requiredCore": {
+        "run": 37182904926,
+        "job": 111378876897,
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "status": "completed",
+        "conclusion": "success",
+        "broadQualificationInferred": false
+      },
+      "failureHistory": [
+        {
+          "run": 37181991312,
+          "conclusion": "cancelled"
+        },
+        {
+          "run": 37181993533,
+          "job": 111376260519,
+          "conclusion": "failure",
+          "reason": "Truncated projection-only policy/test suffix; restored forward without canonical product changes."
+        }
+      ],
+      "prReadBack": {
+        "number": 4401,
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "base": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "pullRequestReadBack": {
+        "number": 4401,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4401",
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "base": "codex/p18-compiler-facade-dependencies",
+        "baseSha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "draft": true,
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "initialProjectionBase": {
+        "base": "fad00fde7377232d2fcc6b97ceba54f2ddd3a06e",
+        "baseTree": "261b70e38aa875673c4e2c698580126df6dc494d"
+      },
+      "localParents": [
+        "b65d14d01febc5f2c541b9c60808444666ba4ce0",
+        "bc031320c838c8f0493e86af1d419d6ca7679ba1"
+      ],
+      "localBase": "bc031320c838c8f0493e86af1d419d6ca7679ba1",
+      "remoteBase": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+      "publicationKind": "draft-feature"
+    },
+    {
+      "name": "prepared-project-dependencies",
+      "local": "c21b0b94fd7ae9a6b36274efdfcbeb1d95f36ba3",
+      "remoteParents": [
+        "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "branch": "codex/p18-prepared-project-dependencies",
+      "title": "SF-A23-T13: join evaluator facade with pinned immutable records",
+      "resolutions": [
+        "Keep the complete published ProjectSystem facade and all of its exports; add the pinned-main descriptor/source predicate exports without restoring the obsolete inline evaluator.",
+        "Preserve all pinned-main changes and the auto-merged documentation. This branch contains dependency composition only."
+      ],
+      "localParents": [
+        "c007a84c3a9aafa1ac8595738bb613315cfa8b49",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "tree": "46b5dbe475f66a380ec9c5df02358c80e9c17351",
+      "baseTree": "f1e22cde86ba87205730730aeadc877fedc8dda0",
+      "stats": "2408 files changed, 261796 insertions(+), 4757 deletions(-)",
+      "compressedTreeEntries": 61,
+      "treeBaseLocal": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "remote": "bb0cb5e6164b8f2d223b296ea93662bb92587d1b",
+      "readBack": {
+        "tree": "46b5dbe475f66a380ec9c5df02358c80e9c17351",
+        "parents": [
+          "ace447bdf5d12e3629d3399f3ae08f5428cc25ad",
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ],
+        "ref": "refs/heads/codex/p18-prepared-project-dependencies",
+        "verified": true
+      },
+      "integrationOnly": true,
+      "publicationKind": "actual-dependency-branch"
+    },
+    {
+      "name": "provider-source-dependencies",
+      "local": "96e488aa2ac4e7844c79c867432346704548ab13",
+      "remoteParents": [
+        "4fe9aa827f9a3594fb444da98a3e4f0dc54aaf3c",
+        "6fd9f56cd10dfa59fec1c348cf44fdf899f608da"
+      ],
+      "branch": "codex/p18-provider-source-dependencies",
+      "title": "SF-A24-T08: join prepared-source provider save dependencies",
+      "resolutions": [
+        "Preserve incoming default DiskWorkspace and source encoder exports with the additive provider API.",
+        "Retain prepared source/hash API and provider watcher/lock/handle exports and documentation.",
+        "The final merge adopts corrected transaction-state.js without dropping either parent history."
+      ],
+      "localParents": [
+        "252a5a1a49b7e5283267bc09308eaea71542283c",
+        "6398d034992849de8cacf0af1623d17a5c3fbeb5"
+      ],
+      "tree": "e654ca06f12749f738fefc6642a01752f84f83ad",
+      "baseTree": "6707c4798ab9350e5381dcc66bc7ea477842e513",
+      "stats": "1 file changed, 2 insertions(+), 2 deletions(-)",
+      "remote": "e2c4007d4eaf24af971146335e9bff7030870a07",
+      "readBack": {
+        "tree": "e654ca06f12749f738fefc6642a01752f84f83ad",
+        "parents": [
+          "4fe9aa827f9a3594fb444da98a3e4f0dc54aaf3c",
+          "6fd9f56cd10dfa59fec1c348cf44fdf899f608da"
+        ],
+        "verified": true
+      },
+      "integrationOnly": true,
+      "publicationKind": "actual-dependency-branch"
+    },
+    {
+      "name": "studio-session-dependencies",
+      "local": "518d831f140f10b9766fec968b8c3bf0571d0798",
+      "remoteParents": [
+        "aae8dac0e4395ec14df6b80015343b3f6e65a7d3"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: retain archive entry metadata in the dependency composition",
+      "resolutions": [
+        "Final merge review restored the existing incoming archive import mode/mtime fields alongside the source-aware rebase and validated destination writer.",
+        "archive.js is exact corrected7b canonical; no API or behavior outside the actual parent composition was introduced."
+      ],
+      "localParents": [
+        "07ee1eb175885d5e6cdb7953c789026bb8250bcf"
+      ],
+      "tree": "109a6b333a1e80ea365970d64acaf328f6618696",
+      "baseTree": "d775bb57bceb126f92ada2444576df4f2c417b4a",
+      "stats": "1 file changed, 6 insertions(+), 4 deletions(-)",
+      "remote": "1c05b3eb77745a04eb0470f570469d5e3c67b6f7",
+      "readBack": {
+        "tree": "109a6b333a1e80ea365970d64acaf328f6618696",
+        "parents": [
+          "aae8dac0e4395ec14df6b80015343b3f6e65a7d3"
+        ],
+        "verified": true
+      },
+      "integrationOnly": true,
+      "publicationKind": "actual-dependency-branch"
+    },
+    {
+      "name": "compiler-facade-dependencies",
+      "local": "bc031320c838c8f0493e86af1d419d6ca7679ba1",
+      "remoteParents": [
+        "1d57150f952cfb4d1227d85581991b352674f46b"
+      ],
+      "treeBaseParent": 0,
+      "branch": "codex/p18-compiler-facade-dependencies",
+      "title": "SF-A23-T27: compose published compiler metadata with pinned source query contracts",
+      "integrationOnly": true,
+      "dependencies": [
+        {
+          "pr": 3900,
+          "head": "13e09038c3ff4cb535b46153df3f309cf7b3d499"
+        },
+        {
+          "pr": 3766,
+          "head": "c9c6e57230a42ec21f56ab1c9feea396503ef687"
+        }
+      ],
+      "resolutions": [
+        "Preserve all 14 public compiler export declarations and both README contracts.",
+        "Retain formatted incoming worker validation and every name plus existing prepareTypeRename. Registry test locks the explicit union; existing trusted fixture hash updated without increasing allowed operations.",
+        "Native owner preserved the MSBuild client facade and ported exactly the incoming read/binary AbortSignal parameters to the extracted class.",
+        "Workspace owner preserved metadata and bound source language APIs, retained VFS/watch facade, and ported exactly incoming sourceModel to the extracted class.",
+        "No source feature was recopied; every public target is inherited from these actual published parents. No main refresh or local execution."
+      ],
+      "localParents": [
+        "fad00fde7377232d2fcc6b97ceba54f2ddd3a06e"
+      ],
+      "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+      "baseTree": "261b70e38aa875673c4e2c698580126df6dc494d",
+      "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+      "remote": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+      "commitReadBack": {
+        "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+        "parents": [
+          "1d57150f952cfb4d1227d85581991b352674f46b"
+        ]
+      },
+      "refReadBack": {
+        "ref": "refs/heads/codex/p18-compiler-facade-dependencies",
+        "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+      },
+      "forwardHistory": [
+        {
+          "local": "fad00fde7377232d2fcc6b97ceba54f2ddd3a06e",
+          "remote": "1d57150f952cfb4d1227d85581991b352674f46b",
+          "tree": "261b70e38aa875673c4e2c698580126df6dc494d",
+          "remoteParents": [
+            "13e09038c3ff4cb535b46153df3f309cf7b3d499",
+            "c9c6e57230a42ec21f56ab1c9feea396503ef687"
+          ],
+          "commitReadBack": {
+            "sha": "1d57150f952cfb4d1227d85581991b352674f46b",
+            "tree": "261b70e38aa875673c4e2c698580126df6dc494d",
+            "parents": [
+              "13e09038c3ff4cb535b46153df3f309cf7b3d499",
+              "c9c6e57230a42ec21f56ab1c9feea396503ef687"
+            ]
+          },
+          "refReadBack": {
+            "ref": "refs/heads/codex/p18-compiler-facade-dependencies",
+            "sha": "1d57150f952cfb4d1227d85581991b352674f46b"
+          }
+        }
+      ],
+      "projectionCorrection": {
+        "name": "compiler-facade-dependencies-correction",
+        "worktree": "/tmp/p18-compiler-facade-dependencies",
+        "local": "bc031320c838c8f0493e86af1d419d6ca7679ba1",
+        "remoteParents": [
+          "1d57150f952cfb4d1227d85581991b352674f46b"
+        ],
+        "branch": "codex/p18-compiler-facade-dependencies",
+        "title": "SF-A23-T27: restore complete projected registry and trusted policy records",
+        "output": "/workspace/scratch/3e16369943fd/p18-evaluator-publication/compiler-facade-dependencies-correction.json",
+        "integrationOnly": true,
+        "resolutions": [
+          "Restore full inherited test suffix and full pinned-parent allowlist; retain existing prepareTypeRename registration.",
+          "Only the existing registry SHA256 changes relative to the complete actual pinned-parent policy; no new exception.",
+          "Retain failed required core run37181993533/job111376260519 and cancelled run37181991312."
+        ],
+        "localParents": [
+          "fad00fde7377232d2fcc6b97ceba54f2ddd3a06e"
+        ],
+        "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+        "baseTree": "261b70e38aa875673c4e2c698580126df6dc494d",
+        "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+        "commitMessage": "SF-A23-T27: restore complete projected registry and trusted policy records\n\nSource-Worktree-Commit: bc031320c838c8f0493e86af1d419d6ca7679ba1\nSource-Tree: 42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+        "remote": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "commitReadBack": {
+          "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+          "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+          "parents": [
+            "1d57150f952cfb4d1227d85581991b352674f46b"
+          ]
+        },
+        "refReadBack": {
+          "ref": "refs/heads/codex/p18-compiler-facade-dependencies",
+          "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+        },
+        "requiredCore": {
+          "run": 37182904926,
+          "job": 111378876897,
+          "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+          "status": "completed",
+          "conclusion": "success",
+          "broadQualificationInferred": false
+        },
+        "failureHistory": [
+          {
+            "run": 37181991312,
+            "conclusion": "cancelled"
+          },
+          {
+            "run": 37181993533,
+            "job": 111376260519,
+            "conclusion": "failure",
+            "reason": "Projection conflict resolver truncated the policy and registry suffix; static JSON parse failed."
+          }
+        ],
+        "policyProof": "compiler-projection-policy-proof.json"
+      },
+      "requiredCore": {
+        "run": 37182904926,
+        "job": 111378876897,
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "status": "completed",
+        "conclusion": "success",
+        "broadQualificationInferred": false
+      },
+      "failureHistory": [
+        {
+          "run": 37181991312,
+          "conclusion": "cancelled"
+        },
+        {
+          "run": 37181993533,
+          "job": 111376260519,
+          "conclusion": "failure",
+          "reason": "Truncated projection-only policy/test suffix; restored forward without canonical product changes."
+        }
+      ],
+      "initialJoinComparison": {
+        "localParents": [
+          "254c81377edec64b42a9acdf74c84d76271cc09f",
+          "c0e033b78047a90e0131948f670a009fd59d1ad3"
+        ],
+        "treeBaseParent": 1,
+        "baseTree": "b683cfe5b36e6da1f4416b7caa4f8999a3e0b882",
+        "stats": "1330 files changed, 182140 insertions(+), 2985 deletions(-)"
+      },
+      "publicationKind": "actual-dependency-branch"
+    }
+  ],
+  "orderedDependencyStages": [
+    {
+      "name": "provider-source-base",
+      "local": "252a5a1a49b7e5283267bc09308eaea71542283c",
+      "remoteParents": [
+        "c528018cd1dd206a60cfeb2f47f6a842521baddc",
+        "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3"
+      ],
+      "branch": "codex/p18-provider-source-dependencies",
+      "title": "SF-A24-T08: join prepared-source provider save dependencies",
+      "resolutions": [
+        "Preserve incoming default DiskWorkspace and source encoder exports with the additive provider API.",
+        "Retain prepared source/hash API and provider watcher/lock/handle exports and documentation.",
+        "The final merge adopts corrected transaction-state.js without dropping either parent history."
+      ],
+      "localParents": [
+        "3438ef580905b9469e51cd4641fc135f5ef1895c",
+        "9d8296445dc474224ae348b76a3e6a359b908d35"
+      ],
+      "tree": "6707c4798ab9350e5381dcc66bc7ea477842e513",
+      "baseTree": "af319a16a52017cbdc4ae95cff93beba07505349",
+      "stats": "43 files changed, 3148 insertions(+)",
+      "remote": "4fe9aa827f9a3594fb444da98a3e4f0dc54aaf3c",
+      "readBack": {
+        "tree": "6707c4798ab9350e5381dcc66bc7ea477842e513",
+        "parents": [
+          "c528018cd1dd206a60cfeb2f47f6a842521baddc",
+          "b19c406d3f3f8906e6c6ef8e79dcecfbdef71ee3"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "provider-source-correction",
+      "local": "96e488aa2ac4e7844c79c867432346704548ab13",
+      "remoteParents": [
+        "4fe9aa827f9a3594fb444da98a3e4f0dc54aaf3c",
+        "6fd9f56cd10dfa59fec1c348cf44fdf899f608da"
+      ],
+      "branch": "codex/p18-provider-source-dependencies",
+      "title": "SF-A24-T08: join prepared-source provider save dependencies",
+      "resolutions": [
+        "Preserve incoming default DiskWorkspace and source encoder exports with the additive provider API.",
+        "Retain prepared source/hash API and provider watcher/lock/handle exports and documentation.",
+        "The final merge adopts corrected transaction-state.js without dropping either parent history."
+      ],
+      "localParents": [
+        "252a5a1a49b7e5283267bc09308eaea71542283c",
+        "6398d034992849de8cacf0af1623d17a5c3fbeb5"
+      ],
+      "tree": "e654ca06f12749f738fefc6642a01752f84f83ad",
+      "baseTree": "6707c4798ab9350e5381dcc66bc7ea477842e513",
+      "stats": "1 file changed, 2 insertions(+), 2 deletions(-)",
+      "remote": "e2c4007d4eaf24af971146335e9bff7030870a07",
+      "readBack": {
+        "tree": "e654ca06f12749f738fefc6642a01752f84f83ad",
+        "parents": [
+          "4fe9aa827f9a3594fb444da98a3e4f0dc54aaf3c",
+          "6fd9f56cd10dfa59fec1c348cf44fdf899f608da"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-existing",
+      "local": "c936ac52cc0d33c144a1a487f30fffce26381264",
+      "remoteParents": [
+        "93cd9ed420021f6c4d85010c420b4f8116a7eadd",
+        "8184f4d43283244d4258da88344d89a80f09dfc0"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: compose actual prepared session dependencies",
+      "resolutions": [
+        "Preserve all public APIs and documentation from the actual parent branches; original evaluator and disk implementations yield to their already-published source-aware replacements.",
+        "Keep incoming descriptor/source identity, sourceModel and archive rebase behavior while preserving existing provider/lazy/destination APIs.",
+        "A24 wildcard already covers the policy exact selector; retain one registration without changing selected membership."
+      ],
+      "localParents": [
+        "5874611321a7dfaf60124244269002c786f49639",
+        "01673eca06ce38ef61116aa89b254df390c9d268"
+      ],
+      "tree": "4193144e52c0a376b8c6130c6899612d48aca90f",
+      "baseTree": "cc85304cc1823737eb3e3b88946df745dc4f1a0a",
+      "stats": "96 files changed, 6535 insertions(+), 252 deletions(-)",
+      "remote": "43260d6bbdb8bc466eb5615c46b13a4321a9001b",
+      "readBack": {
+        "tree": "4193144e52c0a376b8c6130c6899612d48aca90f",
+        "parents": [
+          "93cd9ed420021f6c4d85010c420b4f8116a7eadd",
+          "8184f4d43283244d4258da88344d89a80f09dfc0"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-project",
+      "local": "874d9c5901f6387ce5da9eca4a2907a48546912c",
+      "remoteParents": [
+        "c880ef57d75aa377c54ac607646492aee79015e0",
+        "044ea4484c13e8d4914306186698127b4cc720eb"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: compose actual prepared session dependencies",
+      "resolutions": [
+        "Preserve all public APIs and documentation from the actual parent branches; original evaluator and disk implementations yield to their already-published source-aware replacements.",
+        "Keep incoming descriptor/source identity, sourceModel and archive rebase behavior while preserving existing provider/lazy/destination APIs.",
+        "A24 wildcard already covers the policy exact selector; retain one registration without changing selected membership."
+      ],
+      "localParents": [
+        "f28e2b024c18726022ef4ee895608d170d6b0def",
+        "ae63bf4c5d6179c05048c052180b2395178e270c"
+      ],
+      "tree": "f139a94ea597790a46530ee39de1a0805eee9b1a",
+      "baseTree": "9ed611d1bc606846b10ff40af93ff058000fb423",
+      "stats": "76 files changed, 6449 insertions(+), 193 deletions(-)",
+      "remote": "2a2362e14f9540a70d8fb9ea03991a4836d6c364",
+      "readBack": {
+        "tree": "f139a94ea597790a46530ee39de1a0805eee9b1a",
+        "parents": [
+          "c880ef57d75aa377c54ac607646492aee79015e0",
+          "044ea4484c13e8d4914306186698127b4cc720eb"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-provider",
+      "local": "f28e2b024c18726022ef4ee895608d170d6b0def",
+      "remoteParents": [
+        "53f06989dd0f30a40bbe676d5f2da69d37d4669e",
+        "90185d880fafccead5df8e1129aa358a020646b8"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: compose actual prepared session dependencies",
+      "resolutions": [
+        "Preserve all public APIs and documentation from the actual parent branches; original evaluator and disk implementations yield to their already-published source-aware replacements.",
+        "Keep incoming descriptor/source identity, sourceModel and archive rebase behavior while preserving existing provider/lazy/destination APIs.",
+        "A24 wildcard already covers the policy exact selector; retain one registration without changing selected membership."
+      ],
+      "localParents": [
+        "4e1c7dac94d10f08d1292e187535b0ceeff93b06",
+        "732674d989fb0bf7c5a7e647a8b482a716a20ebc"
+      ],
+      "tree": "9ed611d1bc606846b10ff40af93ff058000fb423",
+      "baseTree": "b133ee2c7884a939aed4397c6d4c542ea5bf3060",
+      "stats": "5 files changed, 126 insertions(+), 24 deletions(-)",
+      "remote": "c880ef57d75aa377c54ac607646492aee79015e0",
+      "readBack": {
+        "tree": "9ed611d1bc606846b10ff40af93ff058000fb423",
+        "parents": [
+          "53f06989dd0f30a40bbe676d5f2da69d37d4669e",
+          "90185d880fafccead5df8e1129aa358a020646b8"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-capture",
+      "local": "f4f905694eca1ec1ffad60665d3e1a1c3d61a094",
+      "remoteParents": [
+        "43260d6bbdb8bc466eb5615c46b13a4321a9001b",
+        "f1431852ba77cceee88dc3bf6409630a01c9571b"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: compose actual prepared session dependencies",
+      "resolutions": [
+        "Preserve all public APIs and documentation from the actual parent branches; original evaluator and disk implementations yield to their already-published source-aware replacements.",
+        "Keep incoming descriptor/source identity, sourceModel and archive rebase behavior while preserving existing provider/lazy/destination APIs.",
+        "A24 wildcard already covers the policy exact selector; retain one registration without changing selected membership."
+      ],
+      "localParents": [
+        "c936ac52cc0d33c144a1a487f30fffce26381264",
+        "9838125b1d2c88fabe00518faa1536fca2246b8e"
+      ],
+      "tree": "a6dc2743ba1af09e532e47f72fccfe031bf919a2",
+      "baseTree": "4193144e52c0a376b8c6130c6899612d48aca90f",
+      "stats": "2 files changed, 30 insertions(+)",
+      "remote": "30ed25f2620224d4884e4cb2f572146f2f946929",
+      "readBack": {
+        "tree": "a6dc2743ba1af09e532e47f72fccfe031bf919a2",
+        "parents": [
+          "43260d6bbdb8bc466eb5615c46b13a4321a9001b",
+          "f1431852ba77cceee88dc3bf6409630a01c9571b"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-policy",
+      "local": "07ee1eb175885d5e6cdb7953c789026bb8250bcf",
+      "remoteParents": [
+        "30ed25f2620224d4884e4cb2f572146f2f946929",
+        "4d209fb03d43131fae53c0de3edc57627c239e50"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: compose actual prepared session dependencies",
+      "resolutions": [
+        "Preserve all public APIs and documentation from the actual parent branches; original evaluator and disk implementations yield to their already-published source-aware replacements.",
+        "Keep incoming descriptor/source identity, sourceModel and archive rebase behavior while preserving existing provider/lazy/destination APIs.",
+        "A24 wildcard already covers the policy exact selector; retain one registration without changing selected membership."
+      ],
+      "localParents": [
+        "f4f905694eca1ec1ffad60665d3e1a1c3d61a094",
+        "70db33085e79cea3bd270070ff9fb2e9d6019ec9"
+      ],
+      "tree": "d775bb57bceb126f92ada2444576df4f2c417b4a",
+      "baseTree": "a6dc2743ba1af09e532e47f72fccfe031bf919a2",
+      "stats": "6 files changed, 127 insertions(+), 15 deletions(-)",
+      "remote": "aae8dac0e4395ec14df6b80015343b3f6e65a7d3",
+      "readBack": {
+        "tree": "d775bb57bceb126f92ada2444576df4f2c417b4a",
+        "parents": [
+          "30ed25f2620224d4884e4cb2f572146f2f946929",
+          "4d209fb03d43131fae53c0de3edc57627c239e50"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-recovery",
+      "local": "5874611321a7dfaf60124244269002c786f49639",
+      "remoteParents": [
+        "2a2362e14f9540a70d8fb9ea03991a4836d6c364",
+        "8919b4626d6f7ea7e40623a969e1d44c62ba8d5b"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: compose actual prepared session dependencies",
+      "resolutions": [
+        "Preserve all public APIs and documentation from the actual parent branches; original evaluator and disk implementations yield to their already-published source-aware replacements.",
+        "Keep incoming descriptor/source identity, sourceModel and archive rebase behavior while preserving existing provider/lazy/destination APIs.",
+        "A24 wildcard already covers the policy exact selector; retain one registration without changing selected membership."
+      ],
+      "localParents": [
+        "874d9c5901f6387ce5da9eca4a2907a48546912c",
+        "e5a15a9fb2b9fe7a84a2942bf34a7e6a5f47e6f4"
+      ],
+      "tree": "cc85304cc1823737eb3e3b88946df745dc4f1a0a",
+      "baseTree": "f139a94ea597790a46530ee39de1a0805eee9b1a",
+      "stats": "10 files changed, 389 insertions(+), 34 deletions(-)",
+      "remote": "93cd9ed420021f6c4d85010c420b4f8116a7eadd",
+      "readBack": {
+        "tree": "cc85304cc1823737eb3e3b88946df745dc4f1a0a",
+        "parents": [
+          "2a2362e14f9540a70d8fb9ea03991a4836d6c364",
+          "8919b4626d6f7ea7e40623a969e1d44c62ba8d5b"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "studio-session-join-archive",
+      "local": "518d831f140f10b9766fec968b8c3bf0571d0798",
+      "remoteParents": [
+        "aae8dac0e4395ec14df6b80015343b3f6e65a7d3"
+      ],
+      "branch": "codex/p18-studio-session-dependencies",
+      "title": "SF-A24-T10: retain archive entry metadata in the dependency composition",
+      "resolutions": [
+        "Final merge review restored the existing incoming archive import mode/mtime fields alongside the source-aware rebase and validated destination writer.",
+        "archive.js is exact corrected7b canonical; no API or behavior outside the actual parent composition was introduced."
+      ],
+      "localParents": [
+        "07ee1eb175885d5e6cdb7953c789026bb8250bcf"
+      ],
+      "tree": "109a6b333a1e80ea365970d64acaf328f6618696",
+      "baseTree": "d775bb57bceb126f92ada2444576df4f2c417b4a",
+      "stats": "1 file changed, 6 insertions(+), 4 deletions(-)",
+      "remote": "1c05b3eb77745a04eb0470f570469d5e3c67b6f7",
+      "readBack": {
+        "tree": "109a6b333a1e80ea365970d64acaf328f6618696",
+        "parents": [
+          "aae8dac0e4395ec14df6b80015343b3f6e65a7d3"
+        ],
+        "verified": true
+      }
+    },
+    {
+      "name": "compiler-facade-dependencies-correction",
+      "local": "bc031320c838c8f0493e86af1d419d6ca7679ba1",
+      "remoteParents": [
+        "1d57150f952cfb4d1227d85581991b352674f46b"
+      ],
+      "branch": "codex/p18-compiler-facade-dependencies",
+      "title": "SF-A23-T27: restore complete projected registry and trusted policy records",
+      "integrationOnly": true,
+      "resolutions": [
+        "Restore full inherited test suffix and full pinned-parent allowlist; retain existing prepareTypeRename registration.",
+        "Only the existing registry SHA256 changes relative to the complete actual pinned-parent policy; no new exception.",
+        "Retain failed required core run37181993533/job111376260519 and cancelled run37181991312."
+      ],
+      "localParents": [
+        "fad00fde7377232d2fcc6b97ceba54f2ddd3a06e"
+      ],
+      "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+      "baseTree": "261b70e38aa875673c4e2c698580126df6dc494d",
+      "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+      "remote": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+      "commitReadBack": {
+        "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "tree": "42dda0b9c03ab57dc1dc7106b09fcb762e4ce29d",
+        "parents": [
+          "1d57150f952cfb4d1227d85581991b352674f46b"
+        ]
+      },
+      "refReadBack": {
+        "ref": "refs/heads/codex/p18-compiler-facade-dependencies",
+        "sha": "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+      },
+      "requiredCore": {
+        "run": 37182904926,
+        "job": 111378876897,
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "status": "completed",
+        "conclusion": "success",
+        "broadQualificationInferred": false
+      },
+      "failureHistory": [
+        {
+          "run": 37181991312,
+          "conclusion": "cancelled"
+        },
+        {
+          "run": 37181993533,
+          "job": 111376260519,
+          "conclusion": "failure",
+          "reason": "Truncated projection-only policy/test suffix; restored forward without canonical product changes."
+        }
+      ],
+      "policyProof": "compiler-projection-policy-proof.json"
+    },
+    {
+      "name": "compiler-api-cleanup-correction",
+      "local": "d102ef46d32d0c4b0572af786005d9c1618452a0",
+      "remoteParents": [
+        "93447ed41e2e52331051448769fff7ac87f55d83",
+        "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+      ],
+      "branch": "codex/p18-compiler-api-cleanup",
+      "title": "SF-A23-T27: merge complete corrected compiler dependencies",
+      "pr": 4401,
+      "resolutions": [
+        "Forward merge only; original compiler facade blobs remain byte-identical to qualified e9 source.",
+        "Restore complete inherited registry fixture and all current pinned-parent policy records; only its existing hash changes.",
+        "Required core failure and the cancelled predecessor remain explicit; no local test replay."
+      ],
+      "localParents": [
+        "b65d14d01febc5f2c541b9c60808444666ba4ce0",
+        "bc031320c838c8f0493e86af1d419d6ca7679ba1"
+      ],
+      "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+      "baseTree": "e81583a76a0f8abaf61f76ea09249a083bf9eedf",
+      "stats": "2 files changed, 100 insertions(+), 1 deletion(-)",
+      "remote": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+      "commitReadBack": {
+        "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "tree": "a64b333bb037d8bc12388459d1b03017f6ed1bdf",
+        "parents": [
+          "93447ed41e2e52331051448769fff7ac87f55d83",
+          "81c47b9d5dedff853cafc7e71a9016de467da7a6"
+        ]
+      },
+      "refReadBack": {
+        "ref": "refs/heads/codex/p18-compiler-api-cleanup",
+        "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea"
+      },
+      "requiredCore": {
+        "run": 37182904926,
+        "job": 111378876897,
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "status": "completed",
+        "conclusion": "success",
+        "broadQualificationInferred": false
+      },
+      "failureHistory": [
+        {
+          "run": 37181991312,
+          "conclusion": "cancelled"
+        },
+        {
+          "run": 37181993533,
+          "job": 111376260519,
+          "conclusion": "failure",
+          "reason": "Truncated projection-only policy/test suffix; restored forward without canonical product changes."
+        }
+      ],
+      "policyProof": "compiler-projection-policy-proof.json",
+      "prReadBack": {
+        "number": 4401,
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "base": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "mergeable": null,
+        "mergeableState": "unknown"
+      },
+      "pullRequestReadBack": {
+        "number": 4401,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4401",
+        "head": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "base": "codex/p18-compiler-facade-dependencies",
+        "baseSha": "81c47b9d5dedff853cafc7e71a9016de467da7a6",
+        "draft": true,
+        "mergeable": null,
+        "mergeableState": "unknown"
+      }
+    }
+  ],
+  "selectedEvidence": "planning/evidence/project18/evaluator-session-save-selected.json",
+  "notes": [
+    "All six prepared compatibility drafts are complete and have successful required core checks.",
+    "The session feature includes the complete editor lifecycle/eviction behavior; no separate eviction product remains unpublished.",
+    "The focused qualification layer preserves all four original files and their shared fixture without replacing assertions.",
+    "Compiler and CIL cleanup reuse completed e9 source qualification; projection policy repair retains failed core history."
+  ]
+}

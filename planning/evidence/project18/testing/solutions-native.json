@@ -1,0 +1,613 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "msbuild": "18.3.0.15422",
+    "node": "v22.23.3",
+    "platform": "linux"
+  },
+  "cases": [
+    {
+      "id": "default-clr-slnx-Debug_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "default-clr-slnx-Debug_Any_CPU/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.24\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "default-clr-slnx-Release_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "default-clr-slnx-Release_Any_CPU/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.28\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "default-clr-sln-Debug_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "default-clr-sln-Debug_Any_CPU/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.17\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "default-clr-sln-Release_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "default-clr-sln-Release_Any_CPU/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.20\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "default-clr-project-context",
+      "configuration": "Release",
+      "platform": "AnyCPU",
+      "portableConfiguration": "Release",
+      "portablePlatform": "AnyCPU",
+      "success": true
+    },
+    {
+      "id": "default-clr-single-project",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "default-clr-single-project/App.csproj",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=AnyCPU"
+      ],
+      "exitCode": 0,
+      "actual": "Release|AnyCPU",
+      "expected": "Release|AnyCPU",
+      "success": true
+    },
+    {
+      "id": "mixed-defaults-slnx-Debug_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "mixed-defaults-slnx-Debug_Any_CPU/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.19\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Native.vcxproj",
+          "expected": "Debug|x64",
+          "actual": "Debug|x64",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "mixed-defaults-slnx-Release_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "mixed-defaults-slnx-Release_Any_CPU/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.18\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Native.vcxproj",
+          "expected": "Release|x64",
+          "actual": "Release|x64",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "mixed-defaults-sln-Debug_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "mixed-defaults-sln-Debug_Any_CPU/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.17\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Native.vcxproj",
+          "expected": "Debug|x64",
+          "actual": "Debug|x64",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "mixed-defaults-sln-Release_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "mixed-defaults-sln-Release_Any_CPU/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.19\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Native.vcxproj",
+          "expected": "Release|x64",
+          "actual": "Release|x64",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "mixed-defaults-project-context",
+      "configuration": "Release",
+      "platform": "AnyCPU",
+      "portableConfiguration": "Release",
+      "portablePlatform": "AnyCPU",
+      "success": true
+    },
+    {
+      "id": "mixed-defaults-single-project",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "mixed-defaults-single-project/App.csproj",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=AnyCPU"
+      ],
+      "exitCode": 0,
+      "actual": "Release|AnyCPU",
+      "expected": "Release|AnyCPU",
+      "success": true
+    },
+    {
+      "id": "explicit-rules-slnx-Debug_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-slnx-Debug_Any_CPU/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.18\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-slnx-Debug_x64",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-slnx-Debug_x64/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=x64",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.19\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": null,
+          "actual": null,
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-slnx-Release_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-slnx-Release_Any_CPU/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.28\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Production|AnyCPU",
+          "actual": "Production|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-slnx-Release_x64",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-slnx-Release_x64/Fixture.slnx",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=x64",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.22\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Production|x64",
+          "actual": "Production|x64",
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-sln-Debug_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-sln-Debug_Any_CPU/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.17\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-sln-Debug_x64",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-sln-Debug_x64/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Debug",
+        "-p:Platform=x64",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.17\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": null,
+          "actual": null,
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Debug|AnyCPU",
+          "actual": "Debug|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-sln-Release_Any_CPU",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-sln-Release_Any_CPU/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=Any CPU",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.20\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Production|AnyCPU",
+          "actual": "Production|AnyCPU",
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-sln-Release_x64",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-sln-Release_x64/Fixture.sln",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Release",
+        "-p:Platform=x64",
+        "-p:NuGetAudit=false"
+      ],
+      "exitCode": 0,
+      "stdout": "\n\n    0 Warning(s)\n    0 Error(s)\n\nTime Elapsed 00:00:00.22\n",
+      "stderr": "",
+      "observed": [
+        {
+          "project": "App.csproj",
+          "expected": "Production|x64",
+          "actual": "Production|x64",
+          "equal": true
+        },
+        {
+          "project": "Other.csproj",
+          "expected": "Release|AnyCPU",
+          "actual": "Release|AnyCPU",
+          "equal": true
+        }
+      ],
+      "success": true
+    },
+    {
+      "id": "explicit-rules-project-context",
+      "configuration": "Production",
+      "platform": "AnyCPU",
+      "portableConfiguration": "Production",
+      "portablePlatform": "AnyCPU",
+      "success": true
+    },
+    {
+      "id": "explicit-rules-single-project",
+      "command": [
+        "/workspace/scratch/3e16369943fd/dotnet/dotnet",
+        "build",
+        "explicit-rules-single-project/App.csproj",
+        "--no-restore",
+        "-nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "-verbosity:quiet",
+        "-p:Configuration=Production",
+        "-p:Platform=AnyCPU"
+      ],
+      "exitCode": 0,
+      "actual": "Production|AnyCPU",
+      "expected": "Production|AnyCPU",
+      "success": true
+    }
+  ],
+  "success": true
+}

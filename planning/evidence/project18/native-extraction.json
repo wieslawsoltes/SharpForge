@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed public metadata inspection and mechanical native service/HTTP/workspace/CLI extraction",
+  "sourceCommit": "f9a1555ff63f4815aede4262432237a2e937b79c",
+  "platform": "linux",
+  "architecture": "x64",
+  "node": "22.23.3",
+  "command": "env -u SHARPFORGE_DOTNET -u DOTNET_ROOT -u DOTNET_HOST_PATH /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node scripts/limited.js /workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node --test tests/msbuild-contract.test.js tests/msbuild-native.test.js tests/a24-vfs-conformance.test.js tests/a23-native-http-contributions.test.js tests/a23-metadata-inspection.test.js",
+  "actualFreeBytesBefore": 854466560,
+  "result": {
+    "tests": 109,
+    "passed": 109,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMilliseconds": 4022.63398,
+    "exitCode": 0
+  },
+  "log": "planning/evidence/project18/native/native-extraction-node22.tap",
+  "coverage": [
+    "Public PE identity/reference count and64MiB boundary",
+    "Authenticated native service contribution request/error/disposal behavior",
+    "VFS byte/path/conflict/cancellation behavior through actual Linux loopback HTTP",
+    "VFS generic service alias respects workspace mutation guards",
+    "Admitted pubxml and custom project UTF16-no-BOM reads preserve native text policy",
+    "Existing host/contract/job/workspace/encoding regressions"
+  ],
+  "limits": [
+    "This cohort did not invoke the .NET SDK or repeat the native qualification matrix.",
+    "Windows/macOS/arm64 and Node26 qualification of the final mechanical extraction were not run.",
+    "The original full-scope host/platform/network limitations remain in native.json."
+  ]
+}

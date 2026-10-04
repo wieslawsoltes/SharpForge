@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "publications": {
+    "evaluation": 4129,
+    "nativeSolutionAndFrameworkHarnesses": 4193,
+    "closedGraphIntegrationFixtures": 4181
+  },
+  "evaluation": {
+    "matchedNativeFixtures": 5,
+    "validatedNativeOnlyBoundaries": 10,
+    "divergences": 0,
+    "sdk": "10.0.201",
+    "msbuild": "18.3.0.15422",
+    "platform": "Linux",
+    "capture": {
+      "sha256": "32c78dd349a1c8c4f6d511bd51d401fb179e4cae2815f9bb726cb05511abf815",
+      "bytes": 4494
+    },
+    "frameworkBoundary": "Supported/approximated/native-only rows are explicit. Boundary-only cases never count as executed native comparisons."
+  },
+  "solutions": {
+    "checks": 22,
+    "realSolutionBuilds": 16,
+    "mappedProjectBuilds": 3,
+    "portableEffectiveContexts": 3,
+    "capture": {
+      "sha256": "a11dfb937bcf807c2173147cd99cc1009a2383248c5e4748af8bdfca38c14444",
+      "bytes": 16413
+    },
+    "scope": "Package-free .slnx/.sln custom Build fixtures verify selected globals and exclusion rules; no C++ compiler qualification claimed."
+  },
+  "sharedFrameworks": {
+    "portableEngines": [
+      "source VM",
+      "direct CIL"
+    ],
+    "xunit": {
+      "tests": 8,
+      "passed": 6,
+      "intentionalFailures": 1,
+      "skipped": 1
+    },
+    "nunit": {
+      "tests": 6,
+      "passed": 4,
+      "intentionalFailures": 1,
+      "skipped": 1
+    },
+    "mstest": {
+      "tests": 6,
+      "passed": 4,
+      "intentionalFailures": 1,
+      "skipped": 1
+    },
+    "capture": {
+      "sha256": "2a56e16ce7b6d030bbc401f2e806fe2fdc2ef6f4541ecf64c20be91616752cde",
+      "bytes": 42879
+    },
+    "nativeParity": "Unqualified after the one shared restore timeout; no actual native discovery/display-name/TRX/coverage/debugger-attach result claimed."
+  },
+  "qualification": {
+    "originalOwnedScope": "135/135 Node22 and135/135 Node26 at bbaedef515c6c7ec052f8469dd471e88cdcce7d2",
+    "nativeUiScope": "106/106 Node22 and106/106 Node26",
+    "completeGraphScope": "415/415 Node26 plus68/68 affected Node22 correction",
+    "finalPinnedMainScope": "Owned files are included in the coordinator frozen candidate; pending its actual run result."
+  },
+  "performance": {
+    "baseline": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+    "integrated": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+    "node": "22.23.3",
+    "sharedMachine": true,
+    "pairs": 2,
+    "warmSamplesPerTreeAndWorkload": 8,
+    "overBudget": [
+      {
+        "workload": "dictionary source",
+        "baselineMedianMs": 36.9236025,
+        "integratedMedianMs": 40.8598455,
+        "changePercent": 10.6605
+      },
+      {
+        "workload": "dictionary CIL",
+        "baselineMedianMs": 126.6230575,
+        "integratedMedianMs": 170.185324,
+        "changePercent": 34.4031
+      },
+      {
+        "workload": "queue CIL",
+        "baselineMedianMs": 141.744499,
+        "integratedMedianMs": 153.6864175,
+        "changePercent": 8.425
+      }
+    ],
+    "status": "Explicit >5% review/sign-off remains outstanding. Bounded profiles did not reproduce the slowdown and do not establish a cause. No speculative fast path or repeated benchmark was added.",
+    "rawRecords": "planning/evidence/project18/integration/upstream-performance/benchmark.json and benchmark-runs.json",
+    "profiles": "planning/evidence/project18/integration/upstream-performance/profile-{baseline,integrated}/",
+    "reproducibilityPr": 4008
+  },
+  "canonicalIntegration": {
+    "head": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+    "tree": "9bf41c0b3ba02032b2e9688b2e51add271cdebcf",
+    "parents": [
+      "1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+      "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+    ],
+    "coordinatorQualification": {
+      "selectedFiles": 227,
+      "status": "pending",
+      "owner": "root"
+    },
+    "sourceOwners": "frozen"
+  }
+}

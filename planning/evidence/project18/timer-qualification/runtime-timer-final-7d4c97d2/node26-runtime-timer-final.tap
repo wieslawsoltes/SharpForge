@@ -1,0 +1,214 @@
+TAP version 13
+# Subtest: runtime UI events preserve the browser timer receiver through capture wake, pause and disposal
+ok 1 - runtime UI events preserve the browser timer receiver through capture wake, pause and disposal
+  ---
+  duration_ms: 3.865799
+  type: 'test'
+  ...
+# Subtest: default browser timers rearm bounded polling after completion and cancel the next wake
+ok 2 - default browser timers rearm bounded polling after completion and cancel the next wake
+  ---
+  duration_ms: 3.124571
+  type: 'test'
+  ...
+# Subtest: equal worker serials stay partitioned by app and launch identity
+ok 3 - equal worker serials stay partitioned by app and launch identity
+  ---
+  duration_ms: 2.518628
+  type: 'test'
+  ...
+# Subtest: strict capture validation rejects missing sequences, wrong identities and invalid measurements atomically
+ok 4 - strict capture validation rejects missing sequences, wrong identities and invalid measurements atomically
+  ---
+  duration_ms: 0.943082
+  type: 'test'
+  ...
+# Subtest: bounded history gaps are explicit and malformed replies block only their current launch
+ok 5 - bounded history gaps are explicit and malformed replies block only their current launch
+  ---
+  duration_ms: 1.643598
+  type: 'test'
+  ...
+# Subtest: late replies after replacement cannot attach measurements to the replacement capture
+ok 6 - late replies after replacement cannot attach measurements to the replacement capture
+  ---
+  duration_ms: 0.334144
+  type: 'test'
+  ...
+# Subtest: pausing and disposal cancel outstanding waits without clearing retained launch history
+ok 7 - pausing and disposal cancel outstanding waits without clearing retained launch history
+  ---
+  duration_ms: 0.591682
+  type: 'test'
+  ...
+# Subtest: disposed and removed sessions cannot create new capture work
+ok 8 - disposed and removed sessions cannot create new capture work
+  ---
+  duration_ms: 0.243608
+  type: 'test'
+  ...
+# Subtest: timeline retains bounded descriptors and partitions heap snapshots by launch
+ok 9 - timeline retains bounded descriptors and partitions heap snapshots by launch
+  ---
+  duration_ms: 0.856571
+  type: 'test'
+  ...
+# Subtest: heap snapshots reject late replacement and malformed census data
+ok 10 - heap snapshots reject late replacement and malformed census data
+  ---
+  duration_ms: 0.463268
+  type: 'test'
+  ...
+# Subtest: CPU graph uses actual time, bounded percent and weighted intervals with accessible event detail
+ok 11 - CPU graph uses actual time, bounded percent and weighted intervals with accessible event detail
+  ---
+  duration_ms: 30.474624
+  type: 'test'
+  ...
+# Subtest: execution occupancy measures actual intervals and separate synchronous categories
+ok 12 - execution occupancy measures actual intervals and separate synchronous categories
+  ---
+  duration_ms: 1.798793
+  type: 'test'
+  ...
+# Subtest: nested work counts once and a close inside the operation includes its complete final interval
+ok 13 - nested work counts once and a close inside the operation includes its complete final interval
+  ---
+  duration_ms: 0.265981
+  type: 'test'
+  ...
+# Subtest: measurement preserves synchronous exceptions and rejects asynchronous waiting
+ok 14 - measurement preserves synchronous exceptions and rejects asynchronous waiting
+  ---
+  duration_ms: 0.491781
+  type: 'test'
+  ...
+# Subtest: bounded sequence windows report lost history and replacement clears the previous launch
+ok 15 - bounded sequence windows report lost history and replacement clears the previous launch
+  ---
+  duration_ms: 0.328886
+  type: 'test'
+  ...
+# Subtest: occupancy validates bounds, clock monotonicity and replacement outside measured work
+ok 16 - occupancy validates bounds, clock monotonicity and replacement outside measured work
+  ---
+  duration_ms: 0.423628
+  type: 'test'
+  ...
+# Subtest: runtime pumping closes the actual final interval and cancels idle sampling after termination
+ok 17 - runtime pumping closes the actual final interval and cancels idle sampling after termination
+  ---
+  duration_ms: 1.373421
+  type: 'test'
+  ...
+# Subtest: paused runtimes sample genuine idle intervals and freeze automatic animations
+ok 18 - paused runtimes sample genuine idle intervals and freeze automatic animations
+  ---
+  duration_ms: 0.355005
+  type: 'test'
+  ...
+# Subtest: retired launch timer callbacks cannot clear or execute replacement timers
+ok 19 - retired launch timer callbacks cannot clear or execute replacement timers
+  ---
+  duration_ms: 0.259441
+  type: 'test'
+  ...
+# Subtest: request measurements exclude inspection and count UI/debug actions without changing their results
+ok 20 - request measurements exclude inspection and count UI/debug actions without changing their results
+  ---
+  duration_ms: 0.418891
+  type: 'test'
+  ...
+# Subtest: runtime pump failures keep a paused capture and report the original error
+ok 21 - runtime pump failures keep a paused capture and report the original error
+  ---
+  duration_ms: 0.390579
+  type: 'test'
+  ...
+# Subtest: real source worker exposes actual execution intervals and preserves program output
+ok 22 - real source worker exposes actual execution intervals and preserves program output
+  ---
+  duration_ms: 753.559953
+  type: 'test'
+  ...
+# Subtest: real source workers isolate captures, pause, stop and replacement despite equal raw serials
+ok 23 - real source workers isolate captures, pause, stop and replacement despite equal raw serials
+  ---
+  duration_ms: 1162.411148
+  type: 'test'
+  ...
+# Subtest: real direct CIL worker exposes actual execution intervals and preserves program output
+ok 24 - real direct CIL worker exposes actual execution intervals and preserves program output
+  ---
+  duration_ms: 882.119867
+  type: 'test'
+  ...
+# Subtest: real direct CIL workers isolate captures, pause, stop and replacement despite equal raw serials
+ok 25 - real direct CIL workers isolate captures, pause, stop and replacement despite equal raw serials
+  ---
+  duration_ms: 3047.380548
+  type: 'test'
+  ...
+# Subtest: runtime browser timers preserve sampling, pumping and animation ownership through replacement and stop
+ok 26 - runtime browser timers preserve sampling, pumping and animation ownership through replacement and stop
+  ---
+  duration_ms: 3.14979
+  type: 'test'
+  ...
+# Subtest: real source worker reaches loaded and state with browser timer receivers
+ok 27 - real source worker reaches loaded and state with browser timer receivers
+  ---
+  duration_ms: 805.470859
+  type: 'test'
+  ...
+# Subtest: real CIL worker reaches loaded and state with browser timer receivers
+ok 28 - real CIL worker reaches loaded and state with browser timer receivers
+  ---
+  duration_ms: 636.326659
+  type: 'test'
+  ...
+# Subtest: real source worker consumes a complete launch profile
+ok 29 - real source worker consumes a complete launch profile
+  ---
+  duration_ms: 820.177845
+  type: 'test'
+  ...
+# Subtest: real source workers isolate argv, environment and stop commands despite equal local serials
+ok 30 - real source workers isolate argv, environment and stop commands despite equal local serials
+  ---
+  duration_ms: 792.97379
+  type: 'test'
+  ...
+# Subtest: real source worker rejects malformed replacement settings without retiring its paused session
+ok 31 - real source worker rejects malformed replacement settings without retiring its paused session
+  ---
+  duration_ms: 565.338181
+  type: 'test'
+  ...
+# Subtest: real direct CIL worker consumes a complete launch profile
+ok 32 - real direct CIL worker consumes a complete launch profile
+  ---
+  duration_ms: 554.148049
+  type: 'test'
+  ...
+# Subtest: real direct CIL workers isolate argv, environment and stop commands despite equal local serials
+ok 33 - real direct CIL workers isolate argv, environment and stop commands despite equal local serials
+  ---
+  duration_ms: 643.933583
+  type: 'test'
+  ...
+# Subtest: real direct CIL worker rejects malformed replacement settings without retiring its paused session
+ok 34 - real direct CIL worker rejects malformed replacement settings without retiring its paused session
+  ---
+  duration_ms: 662.427019
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13645.323196

@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T07:21:03.617181+00:00",
+  "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "sourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "comparisons": {
+    "pinned": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "e9": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "candidate": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760"
+  },
+  "method": "Read-only streaming Git blob measurements, matching the unchanged checker roots/extensions/ignored paths, LF split including final empty line, UTF-8 byte count and UTF-16 line length. The structure gate, tests, builds and benchmarks were not executed.",
+  "baselineFile": {
+    "path": "scripts/quality/structure-baseline.json",
+    "identicalBytesAcrossThreeSources": true,
+    "sha256": "b3ff90df9502985e3df99ec38db2396e1ba8d0af8415c96fd91978b82ecc7572",
+    "entries": 159,
+    "blobs": {
+      "pinned": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7",
+      "e9": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7",
+      "candidate": "c0386bebc22e559f89a2ed55d397e8be9a7c86d7"
+    }
+  },
+  "checkerFile": {
+    "path": "scripts/quality/check-structure.js",
+    "identicalAcrossThreeSources": true,
+    "blobs": {
+      "pinned": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44",
+      "e9": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44",
+      "candidate": "fcf46cd1efeb4ca4d590ed11e92099d30f8dbf44"
+    }
+  },
+  "limits": {
+    "lines": 500,
+    "bytes": 40000,
+    "lineLength": 160
+  },
+  "counts": {
+    "sourceFiles": {
+      "pinned": 2079,
+      "e9": 2617,
+      "candidate": 2617
+    },
+    "problemRows": {
+      "pinned": 268,
+      "e9": 265,
+      "candidate": 265
+    },
+    "distinctProblemPaths": {
+      "pinned": 268,
+      "e9": 265,
+      "candidate": 265
+    },
+    "introducedVsPinned": 0,
+    "resolvedVsPinned": 3,
+    "worsenedExistingDimensionsVsPinned": 0,
+    "legacyGrowingVsActualPinned": 0,
+    "sourceFilesChangedSinceE9": 5
+  },
+  "problemRowsUnchangedFromE9": true,
+  "introduced": [],
+  "resolved": [
+    {
+      "path": "apps/studio/tools/definitions.js",
+      "kind": "not-in-baseline",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 5,
+        "bytes": 1494,
+        "lineLength": 1161
+      }
+    },
+    {
+      "path": "apps/studio/tools/msbuild-automation.js",
+      "kind": "not-in-baseline",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 5,
+        "bytes": 494,
+        "lineLength": 425
+      }
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/assembly-identity.js",
+      "kind": "not-in-baseline",
+      "dimensions": [
+        "lineLength"
+      ],
+      "values": {
+        "lines": 114,
+        "bytes": 10809,
+        "lineLength": 319
+      }
+    }
+  ],
+  "worsenedExistingDimensions": [],
+  "legacyGrowthVsActualPinned": [],
+  "changedSourceDimensionsSinceE9": [
+    {
+      "path": "apps/studio/workbench/status-bar.js",
+      "before": {
+        "lines": 106,
+        "bytes": 6214,
+        "lineLength": 134
+      },
+      "after": {
+        "lines": 121,
+        "bytes": 6962,
+        "lineLength": 134
+      },
+      "beforeBlob": "d9eb149ee2192a6fca7a14c43a9a157ae2b4763a",
+      "afterBlob": "87f08046bb5d792cca217be1f4b1f2d8f7f96cc3"
+    },
+    {
+      "path": "apps/studio/workbench/status-position.js",
+      "before": {
+        "lines": 56,
+        "bytes": 2658,
+        "lineLength": 146
+      },
+      "after": {
+        "lines": 62,
+        "bytes": 2917,
+        "lineLength": 146
+      },
+      "beforeBlob": "a8a67086262e3c83fbb535e8497da9d0b445de15",
+      "afterBlob": "a58440b3da9ad188e9ab00fd5669f744aa040a3d"
+    },
+    {
+      "path": "apps/studio/workbench/tools/execution-capture.js",
+      "before": {
+        "lines": 140,
+        "bytes": 7400,
+        "lineLength": 154
+      },
+      "after": {
+        "lines": 141,
+        "bytes": 7480,
+        "lineLength": 154
+      },
+      "beforeBlob": "97a4a296dfff10473b1a61b5f50921c261006732",
+      "afterBlob": "9b82823767edef4bca73b3e67b5478836e35cca3"
+    },
+    {
+      "path": "apps/studio/workers/runtime-activity.js",
+      "before": {
+        "lines": 141,
+        "bytes": 5128,
+        "lineLength": 130
+      },
+      "after": {
+        "lines": 142,
+        "bytes": 5208,
+        "lineLength": 130
+      },
+      "beforeBlob": "53326a06f77d0592898630cb852d241b7a20022c",
+      "afterBlob": "95164c1d693b18aeb549fff3ea88bfe99afe06ee"
+    },
+    {
+      "path": "packages/editor/src/core/code-editor.js",
+      "before": {
+        "lines": 391,
+        "bytes": 19936,
+        "lineLength": 150
+      },
+      "after": {
+        "lines": 390,
+        "bytes": 19893,
+        "lineLength": 150
+      },
+      "beforeBlob": "39782d0542866134fed225c4d56cc1448c184205",
+      "afterBlob": "60d3b3e8e5a7fb733c0bd320f161e52a3aee8e80"
+    }
+  ],
+  "legacyDefinition": "The159 files explicitly frozen by CONTRIBUTING and structure-baseline.json. Other over-budget files remain included in problem-row comparisons.",
+  "elapsedSeconds": 0.44,
+  "interpretation": "Dimensional equality and empty introduced/worsened/frozen-growth lists preserve the earlier structure boundary. Existing strict problems remain nonzero; no behavior, platform or gate pass follows from this read-only proof."
+}

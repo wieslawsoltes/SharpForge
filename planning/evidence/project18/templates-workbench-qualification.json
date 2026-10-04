@@ -1,0 +1,3307 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-04T06:36:09.635496+00:00",
+  "kind": "Existing exact-source qualification and import-review evidence; no tests run during publication.",
+  "workbenchCases": {
+    "schemaVersion": 1,
+    "kind": "read-only-existing-tap-attribution",
+    "localTestsRun": false,
+    "runs": [
+      {
+        "label": "initial",
+        "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "tap": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+        "tapSha256": "0f6bc4a5d62dc50b7991c2991b18d004496802935f6afb79ecd951fa5ec4d0da",
+        "totals": {
+          "tests": 1875,
+          "pass": 1809,
+          "fail": 66,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "files": [
+          {
+            "path": "tests/a24-workbench-project-composition.test.js",
+            "sourceSha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863",
+            "cases": [
+              {
+                "name": "workbench compiler contribution preserves raw worker routing and stale-result ownership",
+                "status": "passed"
+              },
+              {
+                "name": "project preparation pins background selection and forwards worker cancellation",
+                "status": "passed"
+              },
+              {
+                "name": "queued graph preparation rejects cancellation and retired workspace revisions before compiler work",
+                "status": "passed"
+              },
+              {
+                "name": "incoming build queue reaches the structured two-project compiler and retains emitted dependency envelopes",
+                "status": "passed"
+              },
+              {
+                "name": "library invalidation retires its consumers without selecting a background project",
+                "status": "passed"
+              },
+              {
+                "name": "explicit workbench launch profiles keep argument and environment precedence over project defaults",
+                "status": "passed"
+              },
+              {
+                "name": "native run and recovery guards retain the incoming execution coordinator",
+                "status": "passed"
+              }
+            ],
+            "passed": 7,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-feature-callbacks.test.js",
+            "sourceSha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2",
+            "cases": [
+              {
+                "name": "lazy designer activation retains XML source services alongside captured diagnostic and C# callbacks",
+                "status": "passed"
+              },
+              {
+                "name": "lazy native activation forwards hydrated context and test ports without replacing job ownership callbacks",
+                "status": "passed"
+              },
+              {
+                "name": "native generated sources retain metadata and remain read-only through the lazy open callback",
+                "status": "passed"
+              },
+              {
+                "name": "native façade exposes model state passively and forwards run/publish only on explicit operations",
+                "status": "passed"
+              }
+            ],
+            "passed": 4,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-debug-provenance.test.js",
+            "sourceSha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e",
+            "cases": [
+              {
+                "name": "verified source provenance follows each application and clears only the restarted owner",
+                "status": "passed"
+              },
+              {
+                "name": "library breakpoint changes route to dependent apps by verified execution URI and reject mismatched source text",
+                "status": "passed"
+              },
+              {
+                "name": "source breakpoint controls delegate binding to the workbench owner even before an app is active",
+                "status": "passed"
+              },
+              {
+                "name": "source decorations preserve diagnostics from all incoming workbench producers",
+                "status": "passed"
+              }
+            ],
+            "passed": 4,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-workspace-ports.test.js",
+            "sourceSha256": "f0ea8407e6b638c5c8fb517c031f1dd0162da84b29a70ff31bd8b058a2a238ef",
+            "cases": [
+              {
+                "name": "workspace source admission retains the prepared model and is idempotent for an open document",
+                "status": "failed"
+              },
+              {
+                "name": "source admission rejects cancellation, unavailable sources and workspace changes before model adoption",
+                "status": "passed"
+              },
+              {
+                "name": "writable ZIP export captures the selected workspace after the picker and aborts a stale accepted sink",
+                "status": "passed"
+              },
+              {
+                "name": "blocked recovery keeps the original stored value and reports the blocking diagnostic",
+                "status": "passed"
+              },
+              {
+                "name": "workspace entry actions preserve the provider and readonly wizard requests do not begin mutation",
+                "status": "passed"
+              }
+            ],
+            "passed": 4,
+            "failed": 1,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a19-studio-diagnostic-producers.test.js",
+            "sourceSha256": "bad5b831ae2f068f2109b681943d66e41c9608196f4c60d2898949c6a2b96ce5",
+            "cases": [
+              {
+                "name": "actual project loading publishes warnings into Error List without failing a build or leaking to project B",
+                "status": "failed"
+              },
+              {
+                "name": "loader errors block only their project and appear once under their producer; reevaluation removes only obsolete entries",
+                "status": "failed"
+              },
+              {
+                "name": "real designer source synchronization publishes protected-expression warnings and errors under the captured source owner",
+                "status": "passed"
+              },
+              {
+                "name": "source edits, project removal and disposal invalidate designer reports without erasing other producers",
+                "status": "passed"
+              },
+              {
+                "name": "an asynchronous designer failure cannot replace a new link or attribute the old failure to its new project",
+                "status": "passed"
+              }
+            ],
+            "passed": 3,
+            "failed": 2,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-xaml-reopen.test.js",
+            "sourceSha256": "c659a708abee7bfc6b7c08293a23cc9197ca3c00c2b4ee6dabb2734d3057a277",
+            "cases": [
+              {
+                "name": "Generated XAML reconnects to the designer after ZIP reopening and another export",
+                "status": "passed"
+              },
+              {
+                "name": "Generated XAML reconnects to the designer after Blob ZIP reopening and another export",
+                "status": "passed"
+              },
+              {
+                "name": "Generated XAML reconnects to the designer after selected folder reopening and another export",
+                "status": "passed"
+              }
+            ],
+            "passed": 3,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a23-project-runtime-input.test.js",
+            "sourceSha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456",
+            "cases": [
+              {
+                "name": "A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results",
+                "status": "passed"
+              },
+              {
+                "name": "A23 project launch rejects incomplete and oversized artifact envelopes before worker transport",
+                "status": "passed"
+              },
+              {
+                "name": "A23 project launch bounds the entry assembly even without dependencies or when its artifact is duplicated",
+                "status": "passed"
+              }
+            ],
+            "passed": 3,
+            "failed": 0,
+            "notSelected": 0
+          }
+        ]
+      },
+      {
+        "label": "correction",
+        "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "tap": "/tmp/p18-final-qualification-logs/correction-7b087e0f/node26-correction-1.tap",
+        "tapSha256": "7c374995c2c6cea3dd359c65d5525a2753eb1ed2ab106359ad7f4bce1b00ef65",
+        "totals": {
+          "tests": 260,
+          "pass": 259,
+          "fail": 1,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "files": [
+          {
+            "path": "tests/a24-workbench-project-composition.test.js",
+            "sourceSha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863",
+            "cases": [
+              {
+                "name": "workbench compiler contribution preserves raw worker routing and stale-result ownership",
+                "status": "passed"
+              },
+              {
+                "name": "project preparation pins background selection and forwards worker cancellation",
+                "status": "passed"
+              },
+              {
+                "name": "queued graph preparation rejects cancellation and retired workspace revisions before compiler work",
+                "status": "passed"
+              },
+              {
+                "name": "incoming build queue reaches the structured two-project compiler and retains emitted dependency envelopes",
+                "status": "passed"
+              },
+              {
+                "name": "library invalidation retires its consumers without selecting a background project",
+                "status": "passed"
+              },
+              {
+                "name": "explicit workbench launch profiles keep argument and environment precedence over project defaults",
+                "status": "passed"
+              },
+              {
+                "name": "native run and recovery guards retain the incoming execution coordinator",
+                "status": "passed"
+              }
+            ],
+            "passed": 7,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-feature-callbacks.test.js",
+            "sourceSha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2",
+            "cases": [
+              {
+                "name": "lazy designer activation retains XML source services alongside captured diagnostic and C# callbacks",
+                "status": "passed"
+              },
+              {
+                "name": "lazy native activation forwards hydrated context and test ports without replacing job ownership callbacks",
+                "status": "passed"
+              },
+              {
+                "name": "native generated sources retain metadata and remain read-only through the lazy open callback",
+                "status": "passed"
+              },
+              {
+                "name": "native façade exposes model state passively and forwards run/publish only on explicit operations",
+                "status": "passed"
+              }
+            ],
+            "passed": 4,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-debug-provenance.test.js",
+            "sourceSha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e",
+            "cases": [
+              {
+                "name": "verified source provenance follows each application and clears only the restarted owner",
+                "status": "not-selected"
+              },
+              {
+                "name": "library breakpoint changes route to dependent apps by verified execution URI and reject mismatched source text",
+                "status": "not-selected"
+              },
+              {
+                "name": "source breakpoint controls delegate binding to the workbench owner even before an app is active",
+                "status": "not-selected"
+              },
+              {
+                "name": "source decorations preserve diagnostics from all incoming workbench producers",
+                "status": "not-selected"
+              }
+            ],
+            "passed": 0,
+            "failed": 0,
+            "notSelected": 4
+          },
+          {
+            "path": "tests/a24-workbench-workspace-ports.test.js",
+            "sourceSha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5",
+            "cases": [
+              {
+                "name": "workspace source admission retains the prepared model and is idempotent for an open document",
+                "status": "passed"
+              },
+              {
+                "name": "source admission rejects cancellation, unavailable sources and workspace changes before model adoption",
+                "status": "passed"
+              },
+              {
+                "name": "writable ZIP export captures the selected workspace after the picker and aborts a stale accepted sink",
+                "status": "passed"
+              },
+              {
+                "name": "blocked recovery keeps the original stored value and reports the blocking diagnostic",
+                "status": "passed"
+              },
+              {
+                "name": "workspace entry actions preserve the provider and readonly wizard requests do not begin mutation",
+                "status": "passed"
+              }
+            ],
+            "passed": 5,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a19-studio-diagnostic-producers.test.js",
+            "sourceSha256": "fd4b12f0fefccb262c056b7c66f9440ee2eae809425abb96fc285c0598994999",
+            "cases": [
+              {
+                "name": "actual project loading publishes warnings into Error List without failing a build or leaking to project B",
+                "status": "passed"
+              },
+              {
+                "name": "loader errors block only their project and appear once under their producer; reevaluation removes only obsolete entries",
+                "status": "passed"
+              },
+              {
+                "name": "real designer source synchronization publishes protected-expression warnings and errors under the captured source owner",
+                "status": "passed"
+              },
+              {
+                "name": "source edits, project removal and disposal invalidate designer reports without erasing other producers",
+                "status": "passed"
+              },
+              {
+                "name": "an asynchronous designer failure cannot replace a new link or attribute the old failure to its new project",
+                "status": "passed"
+              }
+            ],
+            "passed": 5,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-xaml-reopen.test.js",
+            "sourceSha256": "c659a708abee7bfc6b7c08293a23cc9197ca3c00c2b4ee6dabb2734d3057a277",
+            "cases": [
+              {
+                "name": "Generated XAML reconnects to the designer after ZIP reopening and another export",
+                "status": "not-selected"
+              },
+              {
+                "name": "Generated XAML reconnects to the designer after Blob ZIP reopening and another export",
+                "status": "not-selected"
+              },
+              {
+                "name": "Generated XAML reconnects to the designer after selected folder reopening and another export",
+                "status": "not-selected"
+              }
+            ],
+            "passed": 0,
+            "failed": 0,
+            "notSelected": 3
+          },
+          {
+            "path": "tests/a23-project-runtime-input.test.js",
+            "sourceSha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456",
+            "cases": [
+              {
+                "name": "A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results",
+                "status": "not-selected"
+              },
+              {
+                "name": "A23 project launch rejects incomplete and oversized artifact envelopes before worker transport",
+                "status": "not-selected"
+              },
+              {
+                "name": "A23 project launch bounds the entry assembly even without dependencies or when its artifact is duplicated",
+                "status": "not-selected"
+              }
+            ],
+            "passed": 0,
+            "failed": 0,
+            "notSelected": 3
+          }
+        ]
+      },
+      {
+        "label": "final-node22",
+        "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "metadata": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+        "metadataSha256": "d1999a85e9f4acda1afae848e082dffd0f41ac9fc1e7ba0e04d4d9bb43180203",
+        "tap": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "tapSha256": "826227b2a62d971fc68a371e20f79c7514e37964b0b4fca74841a0c3bd25750a",
+        "totals": {
+          "tests": 1877,
+          "suites": 0,
+          "pass": 1877,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "files": [
+          {
+            "path": "tests/a24-workbench-project-composition.test.js",
+            "sourceSha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863",
+            "cases": [
+              {
+                "name": "workbench compiler contribution preserves raw worker routing and stale-result ownership",
+                "status": "passed"
+              },
+              {
+                "name": "project preparation pins background selection and forwards worker cancellation",
+                "status": "passed"
+              },
+              {
+                "name": "queued graph preparation rejects cancellation and retired workspace revisions before compiler work",
+                "status": "passed"
+              },
+              {
+                "name": "incoming build queue reaches the structured two-project compiler and retains emitted dependency envelopes",
+                "status": "passed"
+              },
+              {
+                "name": "library invalidation retires its consumers without selecting a background project",
+                "status": "passed"
+              },
+              {
+                "name": "explicit workbench launch profiles keep argument and environment precedence over project defaults",
+                "status": "passed"
+              },
+              {
+                "name": "native run and recovery guards retain the incoming execution coordinator",
+                "status": "passed"
+              }
+            ],
+            "passed": 7,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-feature-callbacks.test.js",
+            "sourceSha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2",
+            "cases": [
+              {
+                "name": "lazy designer activation retains XML source services alongside captured diagnostic and C# callbacks",
+                "status": "passed"
+              },
+              {
+                "name": "lazy native activation forwards hydrated context and test ports without replacing job ownership callbacks",
+                "status": "passed"
+              },
+              {
+                "name": "native generated sources retain metadata and remain read-only through the lazy open callback",
+                "status": "passed"
+              },
+              {
+                "name": "native façade exposes model state passively and forwards run/publish only on explicit operations",
+                "status": "passed"
+              }
+            ],
+            "passed": 4,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-debug-provenance.test.js",
+            "sourceSha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e",
+            "cases": [
+              {
+                "name": "verified source provenance follows each application and clears only the restarted owner",
+                "status": "passed"
+              },
+              {
+                "name": "library breakpoint changes route to dependent apps by verified execution URI and reject mismatched source text",
+                "status": "passed"
+              },
+              {
+                "name": "source breakpoint controls delegate binding to the workbench owner even before an app is active",
+                "status": "passed"
+              },
+              {
+                "name": "source decorations preserve diagnostics from all incoming workbench producers",
+                "status": "passed"
+              }
+            ],
+            "passed": 4,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-workbench-workspace-ports.test.js",
+            "sourceSha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5",
+            "cases": [
+              {
+                "name": "workspace source admission retains the prepared model and is idempotent for an open document",
+                "status": "passed"
+              },
+              {
+                "name": "source admission rejects cancellation, unavailable sources and workspace changes before model adoption",
+                "status": "passed"
+              },
+              {
+                "name": "writable ZIP export captures the selected workspace after the picker and aborts a stale accepted sink",
+                "status": "passed"
+              },
+              {
+                "name": "blocked recovery keeps the original stored value and reports the blocking diagnostic",
+                "status": "passed"
+              },
+              {
+                "name": "workspace entry actions preserve the provider and readonly wizard requests do not begin mutation",
+                "status": "passed"
+              }
+            ],
+            "passed": 5,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a19-studio-diagnostic-producers.test.js",
+            "sourceSha256": "fd4b12f0fefccb262c056b7c66f9440ee2eae809425abb96fc285c0598994999",
+            "cases": [
+              {
+                "name": "actual project loading publishes warnings into Error List without failing a build or leaking to project B",
+                "status": "passed"
+              },
+              {
+                "name": "loader errors block only their project and appear once under their producer; reevaluation removes only obsolete entries",
+                "status": "passed"
+              },
+              {
+                "name": "real designer source synchronization publishes protected-expression warnings and errors under the captured source owner",
+                "status": "passed"
+              },
+              {
+                "name": "source edits, project removal and disposal invalidate designer reports without erasing other producers",
+                "status": "passed"
+              },
+              {
+                "name": "an asynchronous designer failure cannot replace a new link or attribute the old failure to its new project",
+                "status": "passed"
+              }
+            ],
+            "passed": 5,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a24-xaml-reopen.test.js",
+            "sourceSha256": "c659a708abee7bfc6b7c08293a23cc9197ca3c00c2b4ee6dabb2734d3057a277",
+            "cases": [
+              {
+                "name": "Generated XAML reconnects to the designer after ZIP reopening and another export",
+                "status": "passed"
+              },
+              {
+                "name": "Generated XAML reconnects to the designer after Blob ZIP reopening and another export",
+                "status": "passed"
+              },
+              {
+                "name": "Generated XAML reconnects to the designer after selected folder reopening and another export",
+                "status": "passed"
+              }
+            ],
+            "passed": 3,
+            "failed": 0,
+            "notSelected": 0
+          },
+          {
+            "path": "tests/a23-project-runtime-input.test.js",
+            "sourceSha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456",
+            "cases": [
+              {
+                "name": "A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results",
+                "status": "passed"
+              },
+              {
+                "name": "A23 project launch rejects incomplete and oversized artifact envelopes before worker transport",
+                "status": "passed"
+              },
+              {
+                "name": "A23 project launch bounds the entry assembly even without dependencies or when its artifact is duplicated",
+                "status": "passed"
+              }
+            ],
+            "passed": 3,
+            "failed": 0,
+            "notSelected": 0
+          }
+        ],
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "--test-concurrency=1",
+          "--test-reporter=tap",
+          "tests/a00-02-registry.test.js",
+          "tests/a00-03-studio-registries.test.js",
+          "tests/a00-20-styles.test.js",
+          "tests/a00-builtin-registry-array-compat.test.js",
+          "tests/a00-builtin-registry-sparse.test.js",
+          "tests/a03-03-assembly-definition.test.js",
+          "tests/a03-03-assembly-references.test.js",
+          "tests/a03-03-entry-stub.test.js",
+          "tests/a03-05-branch-relaxation.test.js",
+          "tests/a03-05-compact-instructions.test.js",
+          "tests/a03-08-prefix-constrained.test.js",
+          "tests/a05-02-generic-calls.test.js",
+          "tests/a05-02-generic-dispatch.test.js",
+          "tests/a05-02-interface-dispatch.test.js",
+          "tests/a05-02-virtual-slots.test.js",
+          "tests/a05-21-static-init.test.js",
+          "tests/a05-b03-dispatch.test.js",
+          "tests/a05-closed-field-owner.test.js",
+          "tests/a05-constrained-interface-calls.test.js",
+          "tests/a05-decode-plan.test.js",
+          "tests/a05-inline-cache.test.js",
+          "tests/a05-native-width-cil.test.js",
+          "tests/a05-native-width.test.js",
+          "tests/a05-scalar-field-loads.test.js",
+          "tests/a05-scalar-slot-loads.test.js",
+          "tests/a05-scalar-wire-emission.test.js",
+          "tests/a05-scalar-wire-validation.test.js",
+          "tests/a05-seams-cil-types.test.js",
+          "tests/a05-source-numeric-modes.test.js",
+          "tests/a05-statics.test.js",
+          "tests/a05-token-cache.test.js",
+          "tests/a05-tokens.test.js",
+          "tests/a05-type-casting.test.js",
+          "tests/a05-type-handle-admission.test.js",
+          "tests/a05-type-tables.test.js",
+          "tests/a05-value-layout-sizeof.test.js",
+          "tests/a07-13-registry.test.js",
+          "tests/a07-20-inventory.test.js",
+          "tests/a07-ordinal-ignore-case.test.js",
+          "tests/a08-array-comparer.test.js",
+          "tests/a08-ordinal-comparer.test.js",
+          "tests/a19-03-document-tabs.test.js",
+          "tests/a19-04-docking-model.test.js",
+          "tests/a19-document-disk-save.test.js",
+          "tests/a19-document-operation-state.test.js",
+          "tests/a19-document-snapshot-save.test.js",
+          "tests/a19-documents-state.test.js",
+          "tests/a19-execution-occupancy.test.js",
+          "tests/a19-execution-worker.test.js",
+          "tests/a19-explorer-resource-transaction.test.js",
+          "tests/a19-explorer-snapshots.test.js",
+          "tests/a19-explorer-source-plans.test.js",
+          "tests/a19-native-background-tasks.test.js",
+          "tests/a19-native-task-integration.test.js",
+          "tests/a19-prepared-documents.test.js",
+          "tests/a19-runtime-arguments.test.js",
+          "tests/a19-runtime-environment.test.js",
+          "tests/a19-runtime-launch-options.test.js",
+          "tests/a19-runtime-settings-bridge.test.js",
+          "tests/a19-runtime-worker-launch.test.js",
+          "tests/a19-studio-diagnostic-producers.test.js",
+          "tests/a19-studio-docking-sync.test.js",
+          "tests/a19-studio-navigation.test.js",
+          "tests/a19-studio-save-ownership.test.js",
+          "tests/a19-studio-workspace-inputs.test.js",
+          "tests/a19-window-layouts-navigation.test.js",
+          "tests/a19-worker-client.test.js",
+          "tests/a19-workspace-loads.test.js",
+          "tests/a20-disk-save-cancellation.test.js",
+          "tests/a20-editor-language-worker.test.js",
+          "tests/a20-prepared-source-paths.test.js",
+          "tests/a20-prepared-source-workspace.test.js",
+          "tests/a20-save-encoding-roundtrip.test.js",
+          "tests/a20-save-normalization.test.js",
+          "tests/a20-save-preparation-flow.test.js",
+          "tests/a20-source-save-as.test.js",
+          "tests/a20-studio-source-import.test.js",
+          "tests/a23-11-native-adapter.test.js",
+          "tests/a23-11-native-testing.test.js",
+          "tests/a23-12-evaluation-differential.test.js",
+          "tests/a23-29-abi-extensions.test.js",
+          "tests/a23-29-managed-environment.test.js",
+          "tests/a23-30-launch-arguments.test.js",
+          "tests/a23-35-test-model.test.js",
+          "tests/a23-36-38-portable-discovery.test.js",
+          "tests/a23-36-provider-projection.test.js",
+          "tests/a23-39-managed-invocation.test.js",
+          "tests/a23-39-portable-fixtures.test.js",
+          "tests/a23-39-portable-runner.test.js",
+          "tests/a23-39-shared-framework-fixtures.test.js",
+          "tests/a23-assembly-access.test.js",
+          "tests/a23-cil-project-graph-contract.test.js",
+          "tests/a23-cil-project-profile.test.js",
+          "tests/a23-compiler-worker-entry.test.js",
+          "tests/a23-member-definitions.test.js",
+          "tests/a23-native-central-boundaries.test.js",
+          "tests/a23-native-context-aliases.test.js",
+          "tests/a23-native-context-ui-model.test.js",
+          "tests/a23-native-designer-files.test.js",
+          "tests/a23-native-document-ownership.test.js",
+          "tests/a23-native-nuget-registration.test.js",
+          "tests/a23-native-profile-ui-model.test.js",
+          "tests/a23-native-publish-encoding.test.js",
+          "tests/a23-native-reference-metadata.test.js",
+          "tests/a23-native-tool-renderer.test.js",
+          "tests/a23-native-view-contracts.test.js",
+          "tests/a23-native-workspace-state.test.js",
+          "tests/a23-project-access-loader.test.js",
+          "tests/a23-project-artifact-cache.test.js",
+          "tests/a23-project-assembly-loader.test.js",
+          "tests/a23-project-assembly-native.test.js",
+          "tests/a23-project-build-order.test.js",
+          "tests/a23-project-build.test.js",
+          "tests/a23-project-debug-banner.test.js",
+          "tests/a23-project-debug-editor.test.js",
+          "tests/a23-project-debug-sources.test.js",
+          "tests/a23-project-emission.test.js",
+          "tests/a23-project-plan-artifacts.test.js",
+          "tests/a23-project-property-access.test.js",
+          "tests/a23-project-reference-binding.test.js",
+          "tests/a23-project-reference-bytecode.test.js",
+          "tests/a23-project-reference-emission.test.js",
+          "tests/a23-project-reference-namespaces.test.js",
+          "tests/a23-project-reference-visibility.test.js",
+          "tests/a23-project-runtime-input.test.js",
+          "tests/a23-project-runtime-types.test.js",
+          "tests/a23-project-runtime-worker.test.js",
+          "tests/a23-project-runtime.test.js",
+          "tests/a23-project-stack-provenance.test.js",
+          "tests/a23-project-static-initialization.test.js",
+          "tests/a23-project-target-lifecycle.test.js",
+          "tests/a23-project-target-native.test.js",
+          "tests/a23-solution-configuration-contract.test.js",
+          "tests/a23-source-emission-model.test.js",
+          "tests/a23-source-member-definitions.test.js",
+          "tests/a23-studio-native-contexts.test.js",
+          "tests/a23-studio-native-profiles.test.js",
+          "tests/a23-studio-test-explorer.test.js",
+          "tests/a23-studio-test-worker.test.js",
+          "tests/a23-studio-tools-registration.test.js",
+          "tests/a23-test-explorer-controller.test.js",
+          "tests/a23-test-model-contract.test.js",
+          "tests/a23-test-runtime-contract.test.js",
+          "tests/a23-test-symbol-contract.test.js",
+          "tests/a23-upstream-emission-composition.test.js",
+          "tests/a23-worker-emission-cache.test.js",
+          "tests/a24-06-archive-large-metadata.test.js",
+          "tests/a24-06-archives.test.js",
+          "tests/a24-06-compression-backends.test.js",
+          "tests/a24-06-recursive-archives.test.js",
+          "tests/a24-09-destination.test.js",
+          "tests/a24-20-template-engine.test.js",
+          "tests/a24-archive-sink-ownership.test.js",
+          "tests/a24-diagnostic-source.test.js",
+          "tests/a24-disk-held-signal.test.js",
+          "tests/a24-disk-load-concurrency.test.js",
+          "tests/a24-disk-notifications.test.js",
+          "tests/a24-disk-scaling.test.js",
+          "tests/a24-disk-services.test.js",
+          "tests/a24-editor-lifecycle-foundation.test.js",
+          "tests/a24-editor-lifecycle.test.js",
+          "tests/a24-explorer-child-loader.test.js",
+          "tests/a24-explorer-hierarchy.test.js",
+          "tests/a24-explorer-history.test.js",
+          "tests/a24-explorer-operations.test.js",
+          "tests/a24-explorer-prepared-journal.test.js",
+          "tests/a24-explorer-resource-errors.test.js",
+          "tests/a24-explorer-reveal.test.js",
+          "tests/a24-explorer-state-restore.test.js",
+          "tests/a24-explorer-transfers.test.js",
+          "tests/a24-explorer-view-policy.test.js",
+          "tests/a24-folder-compilation.test.js",
+          "tests/a24-lazy-tree-identity.test.js",
+          "tests/a24-peer-buffer-resolution.test.js",
+          "tests/a24-prepared-journal.test.js",
+          "tests/a24-prepared-persistence.test.js",
+          "tests/a24-prepared-recovery.test.js",
+          "tests/a24-prepared-source-hashes.test.js",
+          "tests/a24-problems-navigation.test.js",
+          "tests/a24-project-panel.test.js",
+          "tests/a24-provider-source-save.test.js",
+          "tests/a24-provider-transactions.test.js",
+          "tests/a24-recovery-bootstrap.test.js",
+          "tests/a24-recovery-lazy.test.js",
+          "tests/a24-save-conflicts.test.js",
+          "tests/a24-studio-document-policy.test.js",
+          "tests/a24-studio-prepared-navigation.test.js",
+          "tests/a24-studio-save-composition.test.js",
+          "tests/a24-studio-session-composition.test.js",
+          "tests/a24-studio-startup-recovery.test.js",
+          "tests/a24-studio-streaming-ingress.test.js",
+          "tests/a24-template-engine-boundaries.test.js",
+          "tests/a24-template-package-atomicity.test.js",
+          "tests/a24-type-rename.test.js",
+          "tests/a24-workbench-debug-provenance.test.js",
+          "tests/a24-workbench-feature-callbacks.test.js",
+          "tests/a24-workbench-project-composition.test.js",
+          "tests/a24-workbench-workspace-ports.test.js",
+          "tests/a24-workspace-disk-events.test.js",
+          "tests/a24-workspace-host-concurrency.test.js",
+          "tests/a24-workspace-import-regression.test.js",
+          "tests/a24-workspace-imports.test.js",
+          "tests/a24-workspace-navigation.test.js",
+          "tests/a24-workspace-recovery.test.js",
+          "tests/a24-workspace-refactoring.test.js",
+          "tests/a24-workspace-search.test.js",
+          "tests/a24-workspace-session.test.js",
+          "tests/a24-workspace-transition.test.js",
+          "tests/a24-workspace-wizard-native.test.js",
+          "tests/a24-xaml-reopen.test.js",
+          "tests/a24-xml-text-policy.test.js",
+          "tests/managed-il.test.js",
+          "tests/msbuild-solution.test.js",
+          "tests/project-core-contract.test.js",
+          "tests/project-evaluation-build-stages.test.js",
+          "tests/project-evaluation-build.test.js",
+          "tests/project-evaluation-central-packages.test.js",
+          "tests/project-evaluation-contexts.test.js",
+          "tests/project-evaluation-expressions.test.js",
+          "tests/project-evaluation-items.test.js",
+          "tests/project-evaluation-sdk.test.js",
+          "tests/project-evaluation-targets.test.js",
+          "tests/project-expression-contract.test.js",
+          "tests/project-resource-contract.test.js",
+          "tests/project-solution-reader.test.js",
+          "tests/release09-worker.test.js",
+          "tests/workspace-io.test.js",
+          "tests/workspace-roundtrip.test.js"
+        ],
+        "sourceAfter": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "exitCode": 0
+      }
+    ]
+  },
+  "legacyCleanup": {
+    "canonicalSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "steps": [
+      {
+        "name": "node26-legacy-final",
+        "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+        "metadataSha256": "5c00b48926efb1065f0940a8d5c212a27d9f853e0c8d25d330b0fb74a395f72f",
+        "log": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+        "logSha256": "3359169188362cd0c11cbcd15fbe9278ce3e8780bf108d73b622b7c64c2f4ca4",
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "--test-concurrency=1",
+          "--test-reporter=tap",
+          "tests/a19-studio-docking-sync.test.js",
+          "tests/a19-window-layouts-navigation.test.js",
+          "tests/a20-disk-save-cancellation.test.js",
+          "tests/a20-large-file-disk.test.js",
+          "tests/a23-09-project-edits.test.js",
+          "tests/a23-cil-project-profile.test.js",
+          "tests/a23-metadata-inspection.test.js",
+          "tests/a23-source-emission-model.test.js",
+          "tests/a24-explorer-xml-regression.test.js",
+          "tests/a24-type-rename.test.js",
+          "tests/a24-xaml-reopen.test.js",
+          "tests/a24-xml-text-policy.test.js",
+          "tests/cil.test.js",
+          "tests/msbuild-contract.test.js",
+          "tests/msbuild-native.test.js",
+          "tests/project-edits-roundtrip.test.js",
+          "tests/project-solution-reader.test.js",
+          "tests/project-system.test.js"
+        ],
+        "exitCode": 0,
+        "summary": {
+          "tests": 382,
+          "suites": 0,
+          "pass": 382,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "check",
+        "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.json",
+        "metadataSha256": "a5b1e34fa2ff82aa58026a1b749ce50e383fb04d3c0d4c828d3babe6d20259e1",
+        "log": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.log",
+        "logSha256": "9cc3000c0a5ae2c671a9b2f684ddaa6b706b6c10e3863f4eeb644b19aa72af5b",
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "exitCode": 0,
+        "summary": null
+      },
+      {
+        "name": "build",
+        "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.json",
+        "metadataSha256": "3fce7ef85e1ea2db99ffdcdcca246eb5dace074f69c59d19440e79215be06a8d",
+        "log": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.log",
+        "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0,
+        "summary": null
+      },
+      {
+        "name": "clean-checkout",
+        "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.json",
+        "metadataSha256": "c00d67f539a8d526e132a635cefd5d27cc6ffda5a7cd382471f02a791976bbdc",
+        "log": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.log",
+        "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "exitCode": 0,
+        "summary": null
+      },
+      {
+        "name": "structure",
+        "metadata": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.json",
+        "metadataSha256": "44cad9571a3d8e96732a27336c8319879053cd8ca72d70baef53445e7ea7428f",
+        "log": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.log",
+        "logSha256": "9eaf4d9b828a801d696bbb674490e9a97f4991cff4517b8758cf03a1307dd1fb",
+        "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/quality/check-structure.js",
+          "--strict"
+        ],
+        "exitCode": 1,
+        "summary": null
+      }
+    ],
+    "interpretation": "Node26 382/382 and check/build/clean pass. Strict structure remains nonzero with265 inherited violations,0new/worsened. Actual browser mode replay pending root."
+  },
+  "canonicalAndBrowserHistory": {
+    "scope": "Canonical source and helper qualification only; the proposed entry remains unapplied and unexecuted.",
+    "fullCanonicalNode22": {
+      "name": "node22-final-scope",
+      "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a00-02-registry.test.js",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a00-20-styles.test.js",
+        "tests/a00-builtin-registry-array-compat.test.js",
+        "tests/a00-builtin-registry-sparse.test.js",
+        "tests/a03-03-assembly-definition.test.js",
+        "tests/a03-03-assembly-references.test.js",
+        "tests/a03-03-entry-stub.test.js",
+        "tests/a03-05-branch-relaxation.test.js",
+        "tests/a03-05-compact-instructions.test.js",
+        "tests/a03-08-prefix-constrained.test.js",
+        "tests/a05-02-generic-calls.test.js",
+        "tests/a05-02-generic-dispatch.test.js",
+        "tests/a05-02-interface-dispatch.test.js",
+        "tests/a05-02-virtual-slots.test.js",
+        "tests/a05-21-static-init.test.js",
+        "tests/a05-b03-dispatch.test.js",
+        "tests/a05-closed-field-owner.test.js",
+        "tests/a05-constrained-interface-calls.test.js",
+        "tests/a05-decode-plan.test.js",
+        "tests/a05-inline-cache.test.js",
+        "tests/a05-native-width-cil.test.js",
+        "tests/a05-native-width.test.js",
+        "tests/a05-scalar-field-loads.test.js",
+        "tests/a05-scalar-slot-loads.test.js",
+        "tests/a05-scalar-wire-emission.test.js",
+        "tests/a05-scalar-wire-validation.test.js",
+        "tests/a05-seams-cil-types.test.js",
+        "tests/a05-source-numeric-modes.test.js",
+        "tests/a05-statics.test.js",
+        "tests/a05-token-cache.test.js",
+        "tests/a05-tokens.test.js",
+        "tests/a05-type-casting.test.js",
+        "tests/a05-type-handle-admission.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-value-layout-sizeof.test.js",
+        "tests/a07-13-registry.test.js",
+        "tests/a07-20-inventory.test.js",
+        "tests/a07-ordinal-ignore-case.test.js",
+        "tests/a08-array-comparer.test.js",
+        "tests/a08-ordinal-comparer.test.js",
+        "tests/a19-03-document-tabs.test.js",
+        "tests/a19-04-docking-model.test.js",
+        "tests/a19-document-disk-save.test.js",
+        "tests/a19-document-operation-state.test.js",
+        "tests/a19-document-snapshot-save.test.js",
+        "tests/a19-documents-state.test.js",
+        "tests/a19-execution-occupancy.test.js",
+        "tests/a19-execution-worker.test.js",
+        "tests/a19-explorer-resource-transaction.test.js",
+        "tests/a19-explorer-snapshots.test.js",
+        "tests/a19-explorer-source-plans.test.js",
+        "tests/a19-native-background-tasks.test.js",
+        "tests/a19-native-task-integration.test.js",
+        "tests/a19-prepared-documents.test.js",
+        "tests/a19-runtime-arguments.test.js",
+        "tests/a19-runtime-environment.test.js",
+        "tests/a19-runtime-launch-options.test.js",
+        "tests/a19-runtime-settings-bridge.test.js",
+        "tests/a19-runtime-worker-launch.test.js",
+        "tests/a19-studio-diagnostic-producers.test.js",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-studio-navigation.test.js",
+        "tests/a19-studio-save-ownership.test.js",
+        "tests/a19-studio-workspace-inputs.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/a19-worker-client.test.js",
+        "tests/a19-workspace-loads.test.js",
+        "tests/a20-disk-save-cancellation.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a20-prepared-source-paths.test.js",
+        "tests/a20-prepared-source-workspace.test.js",
+        "tests/a20-save-encoding-roundtrip.test.js",
+        "tests/a20-save-normalization.test.js",
+        "tests/a20-save-preparation-flow.test.js",
+        "tests/a20-source-save-as.test.js",
+        "tests/a20-studio-source-import.test.js",
+        "tests/a23-11-native-adapter.test.js",
+        "tests/a23-11-native-testing.test.js",
+        "tests/a23-12-evaluation-differential.test.js",
+        "tests/a23-29-abi-extensions.test.js",
+        "tests/a23-29-managed-environment.test.js",
+        "tests/a23-30-launch-arguments.test.js",
+        "tests/a23-35-test-model.test.js",
+        "tests/a23-36-38-portable-discovery.test.js",
+        "tests/a23-36-provider-projection.test.js",
+        "tests/a23-39-managed-invocation.test.js",
+        "tests/a23-39-portable-fixtures.test.js",
+        "tests/a23-39-portable-runner.test.js",
+        "tests/a23-39-shared-framework-fixtures.test.js",
+        "tests/a23-assembly-access.test.js",
+        "tests/a23-cil-project-graph-contract.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-compiler-worker-entry.test.js",
+        "tests/a23-member-definitions.test.js",
+        "tests/a23-native-central-boundaries.test.js",
+        "tests/a23-native-context-aliases.test.js",
+        "tests/a23-native-context-ui-model.test.js",
+        "tests/a23-native-designer-files.test.js",
+        "tests/a23-native-document-ownership.test.js",
+        "tests/a23-native-nuget-registration.test.js",
+        "tests/a23-native-profile-ui-model.test.js",
+        "tests/a23-native-publish-encoding.test.js",
+        "tests/a23-native-reference-metadata.test.js",
+        "tests/a23-native-tool-renderer.test.js",
+        "tests/a23-native-view-contracts.test.js",
+        "tests/a23-native-workspace-state.test.js",
+        "tests/a23-project-access-loader.test.js",
+        "tests/a23-project-artifact-cache.test.js",
+        "tests/a23-project-assembly-loader.test.js",
+        "tests/a23-project-assembly-native.test.js",
+        "tests/a23-project-build-order.test.js",
+        "tests/a23-project-build.test.js",
+        "tests/a23-project-debug-banner.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a23-project-debug-sources.test.js",
+        "tests/a23-project-emission.test.js",
+        "tests/a23-project-plan-artifacts.test.js",
+        "tests/a23-project-property-access.test.js",
+        "tests/a23-project-reference-binding.test.js",
+        "tests/a23-project-reference-bytecode.test.js",
+        "tests/a23-project-reference-emission.test.js",
+        "tests/a23-project-reference-namespaces.test.js",
+        "tests/a23-project-reference-visibility.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-project-runtime-types.test.js",
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-runtime.test.js",
+        "tests/a23-project-stack-provenance.test.js",
+        "tests/a23-project-static-initialization.test.js",
+        "tests/a23-project-target-lifecycle.test.js",
+        "tests/a23-project-target-native.test.js",
+        "tests/a23-solution-configuration-contract.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a23-source-member-definitions.test.js",
+        "tests/a23-studio-native-contexts.test.js",
+        "tests/a23-studio-native-profiles.test.js",
+        "tests/a23-studio-test-explorer.test.js",
+        "tests/a23-studio-test-worker.test.js",
+        "tests/a23-studio-tools-registration.test.js",
+        "tests/a23-test-explorer-controller.test.js",
+        "tests/a23-test-model-contract.test.js",
+        "tests/a23-test-runtime-contract.test.js",
+        "tests/a23-test-symbol-contract.test.js",
+        "tests/a23-upstream-emission-composition.test.js",
+        "tests/a23-worker-emission-cache.test.js",
+        "tests/a24-06-archive-large-metadata.test.js",
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-compression-backends.test.js",
+        "tests/a24-06-recursive-archives.test.js",
+        "tests/a24-09-destination.test.js",
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-archive-sink-ownership.test.js",
+        "tests/a24-diagnostic-source.test.js",
+        "tests/a24-disk-held-signal.test.js",
+        "tests/a24-disk-load-concurrency.test.js",
+        "tests/a24-disk-notifications.test.js",
+        "tests/a24-disk-scaling.test.js",
+        "tests/a24-disk-services.test.js",
+        "tests/a24-editor-lifecycle-foundation.test.js",
+        "tests/a24-editor-lifecycle.test.js",
+        "tests/a24-explorer-child-loader.test.js",
+        "tests/a24-explorer-hierarchy.test.js",
+        "tests/a24-explorer-history.test.js",
+        "tests/a24-explorer-operations.test.js",
+        "tests/a24-explorer-prepared-journal.test.js",
+        "tests/a24-explorer-resource-errors.test.js",
+        "tests/a24-explorer-reveal.test.js",
+        "tests/a24-explorer-state-restore.test.js",
+        "tests/a24-explorer-transfers.test.js",
+        "tests/a24-explorer-view-policy.test.js",
+        "tests/a24-folder-compilation.test.js",
+        "tests/a24-lazy-tree-identity.test.js",
+        "tests/a24-peer-buffer-resolution.test.js",
+        "tests/a24-prepared-journal.test.js",
+        "tests/a24-prepared-persistence.test.js",
+        "tests/a24-prepared-recovery.test.js",
+        "tests/a24-prepared-source-hashes.test.js",
+        "tests/a24-problems-navigation.test.js",
+        "tests/a24-project-panel.test.js",
+        "tests/a24-provider-source-save.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-recovery-bootstrap.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/a24-save-conflicts.test.js",
+        "tests/a24-studio-document-policy.test.js",
+        "tests/a24-studio-prepared-navigation.test.js",
+        "tests/a24-studio-save-composition.test.js",
+        "tests/a24-studio-session-composition.test.js",
+        "tests/a24-studio-startup-recovery.test.js",
+        "tests/a24-studio-streaming-ingress.test.js",
+        "tests/a24-template-engine-boundaries.test.js",
+        "tests/a24-template-package-atomicity.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-workbench-debug-provenance.test.js",
+        "tests/a24-workbench-feature-callbacks.test.js",
+        "tests/a24-workbench-project-composition.test.js",
+        "tests/a24-workbench-workspace-ports.test.js",
+        "tests/a24-workspace-disk-events.test.js",
+        "tests/a24-workspace-host-concurrency.test.js",
+        "tests/a24-workspace-import-regression.test.js",
+        "tests/a24-workspace-imports.test.js",
+        "tests/a24-workspace-navigation.test.js",
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-workspace-refactoring.test.js",
+        "tests/a24-workspace-search.test.js",
+        "tests/a24-workspace-session.test.js",
+        "tests/a24-workspace-transition.test.js",
+        "tests/a24-workspace-wizard-native.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/managed-il.test.js",
+        "tests/msbuild-solution.test.js",
+        "tests/project-core-contract.test.js",
+        "tests/project-evaluation-build-stages.test.js",
+        "tests/project-evaluation-build.test.js",
+        "tests/project-evaluation-central-packages.test.js",
+        "tests/project-evaluation-contexts.test.js",
+        "tests/project-evaluation-expressions.test.js",
+        "tests/project-evaluation-items.test.js",
+        "tests/project-evaluation-sdk.test.js",
+        "tests/project-evaluation-targets.test.js",
+        "tests/project-expression-contract.test.js",
+        "tests/project-resource-contract.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/release09-worker.test.js",
+        "tests/workspace-io.test.js",
+        "tests/workspace-roundtrip.test.js"
+      ],
+      "startedAt": "2026-10-04T05:29:09.968146+00:00",
+      "completedAt": "2026-10-04T05:33:11.447542+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 1877,
+        "suites": 0,
+        "pass": 1877,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+        "metadataSha256": "d1999a85e9f4acda1afae848e082dffd0f41ac9fc1e7ba0e04d4d9bb43180203",
+        "logPath": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+        "logSha256": "826227b2a62d971fc68a371e20f79c7514e37964b0b4fca74841a0c3bd25750a",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "legacyCleanupNode26": {
+      "name": "node26-legacy-final",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/a20-disk-save-cancellation.test.js",
+        "tests/a20-large-file-disk.test.js",
+        "tests/a23-09-project-edits.test.js",
+        "tests/a23-cil-project-profile.test.js",
+        "tests/a23-metadata-inspection.test.js",
+        "tests/a23-source-emission-model.test.js",
+        "tests/a24-explorer-xml-regression.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/cil.test.js",
+        "tests/msbuild-contract.test.js",
+        "tests/msbuild-native.test.js",
+        "tests/project-edits-roundtrip.test.js",
+        "tests/project-solution-reader.test.js",
+        "tests/project-system.test.js"
+      ],
+      "startedAt": "2026-10-04T05:47:00.489276+00:00",
+      "completedAt": "2026-10-04T05:47:12.798524+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 382,
+        "suites": 0,
+        "pass": 382,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+        "metadataSha256": "5c00b48926efb1065f0940a8d5c212a27d9f853e0c8d25d330b0fb74a395f72f",
+        "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+        "logSha256": "3359169188362cd0c11cbcd15fbe9278ce3e8780bf108d73b622b7c64c2f4ca4",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "legacyGates": [
+      {
+        "name": "check",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T05:47:12.825274+00:00",
+        "completedAt": "2026-10-04T05:47:16.790102+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.json",
+          "metadataSha256": "a5b1e34fa2ff82aa58026a1b749ce50e383fb04d3c0d4c828d3babe6d20259e1",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.log",
+          "logSha256": "9cc3000c0a5ae2c671a9b2f684ddaa6b706b6c10e3863f4eeb644b19aa72af5b",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T05:47:16.815244+00:00",
+        "completedAt": "2026-10-04T05:47:21.667480+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.json",
+          "metadataSha256": "3fce7ef85e1ea2db99ffdcdcca246eb5dace074f69c59d19440e79215be06a8d",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T05:47:21.697507+00:00",
+        "completedAt": "2026-10-04T05:47:21.849949+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.json",
+          "metadataSha256": "c00d67f539a8d526e132a635cefd5d27cc6ffda5a7cd382471f02a791976bbdc",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "structure",
+        "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/quality/check-structure.js",
+          "--strict"
+        ],
+        "startedAt": "2026-10-04T05:47:21.877147+00:00",
+        "completedAt": "2026-10-04T05:47:22.243345+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.json",
+          "metadataSha256": "44cad9571a3d8e96732a27336c8319879053cd8ca72d70baef53445e7ea7428f",
+          "logPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.log",
+          "logSha256": "9eaf4d9b828a801d696bbb674490e9a97f4991cff4517b8758cf03a1307dd1fb",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "legacyStructureInterpretation": "Strict structure exited 1 with 265 inherited violations, down from 268; zero new or worsened violations and all seven actual legacy growth cases removed. The baseline was not expanded.",
+    "editorOwnershipNode26": {
+      "name": "node26-editor-ownership",
+      "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a24-editor-model-ownership.test.js",
+        "tests/a19-document-models.test.js",
+        "tests/a19-prepared-documents.test.js",
+        "tests/a24-studio-document-policy.test.js",
+        "tests/a20-editor-integration-corrections.test.js"
+      ],
+      "startedAt": "2026-10-04T06:11:27.452852+00:00",
+      "completedAt": "2026-10-04T06:11:30.809759+00:00",
+      "exitCode": 0,
+      "summary": {
+        "tests": 40,
+        "suites": 0,
+        "pass": 40,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "authoringCapture": {
+        "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/node26-editor-ownership.json",
+        "metadataSha256": "c9cb09d63aea4f64eec0cfb81ae02ce6c89859ea0119e311592ab9596b1d60a5",
+        "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/node26-editor-ownership.tap",
+        "logSha256": "67ad009406da89d9b8bb1a2230d49dc7fd6370644122c2cf5b35289f10ebb2a9",
+        "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+      }
+    },
+    "editorOwnershipGates": [
+      {
+        "name": "check",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "check"
+        ],
+        "startedAt": "2026-10-04T06:11:30.837360+00:00",
+        "completedAt": "2026-10-04T06:11:35.457035+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/check.json",
+          "metadataSha256": "f735688980ac7d3b9933d698f9b1bb8bfc8aed1fd565d5e2fdbaa5b33724235b",
+          "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/check.log",
+          "logSha256": "6bd7a60c31519819e28b81ceae42740fdc868d9b14eda80f73e3035939592120",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "build",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-04T06:11:35.481970+00:00",
+        "completedAt": "2026-10-04T06:11:40.226787+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/build.json",
+          "metadataSha256": "2403e57df0423704b61621f737037274907d32bd1c54f7ec7b8b4c41c390f73b",
+          "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/build.log",
+          "logSha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      },
+      {
+        "name": "clean-checkout",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/clean-checkout.js"
+        ],
+        "startedAt": "2026-10-04T06:11:40.259884+00:00",
+        "completedAt": "2026-10-04T06:11:40.406153+00:00",
+        "exitCode": 0,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/clean-checkout.json",
+          "metadataSha256": "703c40a8258387646b062310d9a9f3bc3114ce653d273788ea1a34264a1fb6b7",
+          "logPath": "/tmp/p18-final-qualification-logs/editor-ownership-362f1337/clean-checkout.log",
+          "logSha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        }
+      }
+    ],
+    "actualEntryBrowser": [
+      {
+        "name": "browser-release13",
+        "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-362f1337",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T06:12:34.995667+00:00",
+        "completedAt": "2026-10-04T06:13:13.405873+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.json",
+          "metadataSha256": "2556cd8c1733570a9d42e8628f8b553212d88d5303ab9e209c78b3fd5fe0834a",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-362f1337/browser-release13.log",
+          "logSha256": "feaaf1c20fafc8e4e5cbf3580c39f34d299367705a43f1f3909a4390d624565e",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Three checks passed. Root identified the obsolete textarea .fill fixture as the source-input failure; the follow-up fixture uses the virtual editor selection and keyboard path.",
+        "rerun": "pending the root-coordinated correction and qualification",
+        "completedCheckCount": 3
+      },
+      {
+        "name": "browser-release13",
+        "sourceCommit": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+        "argv": [
+          "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+          "scripts/limited.js",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/dev/shm/p18-final-prepared/run-final-browser.py",
+          "--source",
+          "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+          "--suite",
+          "release13",
+          "--output",
+          "/tmp/p18-final-qualification-logs/designer-release13-7d558dab",
+          "--inside-slot"
+        ],
+        "startedAt": "2026-10-04T06:17:16.000584+00:00",
+        "completedAt": "2026-10-04T06:17:26.651269+00:00",
+        "exitCode": 1,
+        "summary": null,
+        "sourceAfter": "7d558dab613acfbcdcc46893ad5f8ff549756e4c",
+        "authoringCapture": {
+          "metadataPath": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.json",
+          "metadataSha256": "27c4a1a6df96dd1894452cb05597a1812ce876d8784724c63d93a9fe527bb419",
+          "logPath": "/tmp/p18-final-qualification-logs/designer-release13-7d558dab/browser-release13.log",
+          "logSha256": "801d2f1ec433e7823406b7509e4efaffb219b4b69f6cb65d7d260d2b0e1de228",
+          "locationNote": "Original authoring capture; these absolute paths are not bundle-relative links."
+        },
+        "entry": "actual canonical apps/studio/studio.js; proposed entry was not used",
+        "completedChecks": [
+          "connect an existing hand-written construction method without replacing source or workers",
+          "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+          "designer property changes compile-check a minimal C# edit and preserve every other byte",
+          "real source editor input updates the design preview automatically",
+          "source undo and redo resynchronize the preview without replacing the editor"
+        ],
+        "status": "failed before completing the suite",
+        "diagnosis": "Five checks passed, including actual source input and undo/redo. Shortening the document exposed a real stale status-column error: RangeError: Visual column offset outside document. The unlocked StatusPosition correction and regressions are being handled by its owner.",
+        "rerun": "pending the root-coordinated correction and qualification",
+        "completedCheckCount": 5
+      }
+    ],
+    "pending": [
+      "The root-coordinated actual browser replay after the status-position correction.",
+      "Application and runtime qualification of the proposed entry after protected ownership is reconciled.",
+      "Windows-only native target execution; source-shape and Linux results do not substitute for Windows builds."
+    ],
+    "historicalFailedScopes": [
+      {
+        "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "node": "26.10.0",
+        "tests": 1875,
+        "pass": 1809,
+        "fail": 66,
+        "note": "Initial synchronized run retained; later green evidence does not rewrite this result."
+      },
+      {
+        "sourceCommit": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+        "node": "26.10.0",
+        "tests": 260,
+        "pass": 259,
+        "fail": 1,
+        "note": "Affected replay retained; remaining native resource-staleness wrapper was corrected later."
+      }
+    ],
+    "ownedAndRelatedCases": [
+      {
+        "path": "tests/a24-workbench-project-composition.test.js",
+        "cases": 7,
+        "passed": 7,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "1d28da7b62100a6910dfeca5ea35e41fbc096dd82cb82af68900d36a85e67863"
+      },
+      {
+        "path": "tests/a24-workbench-feature-callbacks.test.js",
+        "cases": 4,
+        "passed": 4,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "4a6c48d0153fecc68ae4adf3076f1ff825abc40b9aa1b83db120987165daf2b2"
+      },
+      {
+        "path": "tests/a24-workbench-debug-provenance.test.js",
+        "cases": 4,
+        "passed": 4,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "6b4419269a43ffbb381d327166ca1234fc7ac771294f8f27b916d9cbf88cd99e"
+      },
+      {
+        "path": "tests/a24-workbench-workspace-ports.test.js",
+        "cases": 5,
+        "passed": 5,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5"
+      },
+      {
+        "path": "tests/a19-studio-diagnostic-producers.test.js",
+        "cases": 5,
+        "passed": 5,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "fd4b12f0fefccb262c056b7c66f9440ee2eae809425abb96fc285c0598994999"
+      },
+      {
+        "path": "tests/a24-xaml-reopen.test.js",
+        "cases": 3,
+        "passed": 3,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "c659a708abee7bfc6b7c08293a23cc9197ca3c00c2b4ee6dabb2734d3057a277"
+      },
+      {
+        "path": "tests/a23-project-runtime-input.test.js",
+        "cases": 3,
+        "passed": 3,
+        "qualifiedSource": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+        "alsoMatchesAdapterSource": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+        "sha256": "13e67426fed50b60aa3aeb210fa74efcacdaaa2863bc01ebc36d63a1a4190456"
+      }
+    ]
+  },
+  "initialProjectionCoreFailure": {
+    "pr": 4326,
+    "publishedHead": "d139d6dfbbe5c0922c5087d38a3ddd31217eff6a",
+    "runId": 37179732776,
+    "jobId": 111369687734,
+    "log": "templates-workbench-core-failure.log",
+    "sha256": "a01a7830520ec2df8cdb880672be4a74aab5c80e0a202554e8810f63ba90404e",
+    "diagnosis": "The projection omitted the canonical project-runtime-input public helper; the complete forward correction retains the original failed head."
+  },
+  "staticImportReviews": {
+    "build": {
+      "source": "172fa9e6c9f2ecb9d9779d2f5500a1ab08b62f4c",
+      "method": "read-only direct source/package-export resolution; repository code not executed",
+      "edges": [
+        {
+          "source": "apps/studio/workbench/build.js",
+          "specifier": "./worker-client.js",
+          "target": "apps/studio/workbench/worker-client.js"
+        },
+        {
+          "source": "apps/studio/workbench/build.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js"
+        },
+        {
+          "source": "apps/studio/workbench/build.js",
+          "specifier": "./build-analysis.js",
+          "target": "apps/studio/workbench/build-analysis.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./documents.js",
+          "target": "apps/studio/workbench/documents.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./build.js",
+          "target": "apps/studio/workbench/build.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./build-queue.js",
+          "target": "apps/studio/workbench/build-queue.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-manager.js",
+          "target": "apps/studio/workbench/session-manager.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./output-channels.js",
+          "target": "apps/studio/workbench/output-channels.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./diagnostics-store.js",
+          "target": "apps/studio/workbench/diagnostics-store.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./startup-config.js",
+          "target": "apps/studio/workbench/startup-config.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./launch-profiles.js",
+          "target": "apps/studio/workbench/launch-profiles.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./launch-orchestrator.js",
+          "target": "apps/studio/workbench/launch-orchestrator.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-settings.js",
+          "target": "apps/studio/workbench/session-settings.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-breakpoints.js",
+          "target": "apps/studio/workbench/session-breakpoints.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./document-locks.js",
+          "target": "apps/studio/workbench/document-locks.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./build-reveal.js",
+          "target": "apps/studio/workbench/build-reveal.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./state.js",
+          "target": "apps/studio/workbench/state.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-compat.js",
+          "target": "apps/studio/workbench/session-compat.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-events.js",
+          "target": "apps/studio/workbench/session-events.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./worker-client.js",
+          "target": "apps/studio/workbench/worker-client.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./documents.js",
+          "target": "apps/studio/workbench/documents.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./build.js",
+          "target": "apps/studio/workbench/build.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-manager.js",
+          "target": "apps/studio/workbench/session-manager.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./app-session.js",
+          "target": "apps/studio/workbench/app-session.js"
+        },
+        {
+          "source": "apps/studio/workbench/sessions.js",
+          "specifier": "./session-compat.js",
+          "target": "apps/studio/workbench/session-compat.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-project-compiler.js",
+          "specifier": "../project-build.js",
+          "target": "apps/studio/project-build.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-project-compiler.js",
+          "specifier": "../project-runtime-input.js",
+          "target": "apps/studio/project-runtime-input.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-project-compiler.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-projects.js",
+          "specifier": "./studio-diagnostics.js",
+          "target": "apps/studio/workbench/studio-diagnostics.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-projects.js",
+          "specifier": "./studio-project-compiler.js",
+          "target": "apps/studio/workbench/studio-project-compiler.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-projects.js",
+          "specifier": "../native-build/workspace-state.js",
+          "target": "apps/studio/native-build/workspace-state.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-projects.js",
+          "specifier": "../project-build.js",
+          "target": "apps/studio/project-build.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-execution.js",
+          "specifier": "./studio-reveals.js",
+          "target": "apps/studio/workbench/studio-reveals.js"
+        },
+        {
+          "source": "apps/studio/workbench/studio-diagnostics.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js"
+        },
+        {
+          "source": "apps/studio/project-runtime-input.js",
+          "specifier": "@sharpforge/bytecode",
+          "target": "packages/bytecode/src/index.js"
+        },
+        {
+          "source": "tests/a23-project-runtime-input.test.js",
+          "specifier": "@sharpforge/bytecode",
+          "target": "packages/bytecode/src/index.js"
+        },
+        {
+          "source": "tests/a23-project-runtime-input.test.js",
+          "specifier": "../apps/studio/project-runtime-input.js",
+          "target": "apps/studio/project-runtime-input.js"
+        }
+      ],
+      "missing": []
+    },
+    "debug": {
+      "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "mode": "text-only source and import inspection",
+      "imports": [
+        {
+          "path": "apps/studio/debug-editor-decorations.js",
+          "specifier": "./debug-sources.js",
+          "target": "apps/studio/debug-sources.js"
+        },
+        {
+          "path": "apps/studio/debug-source-breakpoints.js",
+          "specifier": "@sharpforge/debugger",
+          "exports": {
+            ".": "./src/index.js"
+          }
+        },
+        {
+          "path": "apps/studio/debug-source-breakpoints.js",
+          "specifier": "./debug-sources.js",
+          "target": "apps/studio/debug-sources.js"
+        },
+        {
+          "path": "apps/studio/workbench/app-session.js",
+          "specifier": "./worker-client.js",
+          "target": "apps/studio/workbench/worker-client.js"
+        },
+        {
+          "path": "apps/studio/workbench/app-session.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js"
+        },
+        {
+          "path": "apps/studio/workbench/app-session.js",
+          "specifier": "./session-settings.js",
+          "target": "apps/studio/workbench/session-settings.js"
+        },
+        {
+          "path": "apps/studio/workbench/app-session.js",
+          "specifier": "../debug-sources.js",
+          "target": "apps/studio/debug-sources.js"
+        },
+        {
+          "path": "apps/studio/workbench/session-breakpoints.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js"
+        },
+        {
+          "path": "apps/studio/workbench/launch-orchestrator.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js"
+        },
+        {
+          "path": "apps/studio/workbench/launch-orchestrator.js",
+          "specifier": "./build-queue.js",
+          "target": "apps/studio/workbench/build-queue.js"
+        },
+        {
+          "path": "apps/studio/workbench/launch-orchestrator.js",
+          "specifier": "@sharpforge/runtime",
+          "exports": {
+            ".": "./src/index.js"
+          }
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "specifier": "../apps/studio/workbench/session-manager.js",
+          "target": "apps/studio/workbench/session-manager.js"
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "specifier": "../apps/studio/workbench/session-breakpoints.js",
+          "target": "apps/studio/workbench/session-breakpoints.js"
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "specifier": "../apps/studio/workbench/state.js",
+          "target": "apps/studio/workbench/state.js"
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "specifier": "../apps/studio/debug-source-breakpoints.js",
+          "target": "apps/studio/debug-source-breakpoints.js"
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "specifier": "../apps/studio/debug-editor-decorations.js",
+          "target": "apps/studio/debug-editor-decorations.js"
+        },
+        {
+          "path": "tests/a24-workbench-debug-provenance.test.js",
+          "specifier": "./a19-session-fixtures.js",
+          "target": "tests/a19-session-fixtures.js"
+        }
+      ]
+    },
+    "workspace": {
+      "kind": "text-only named import and public star-export inspection",
+      "source": "440f218c269724b4dc271d4a00793fc9fddab522",
+      "hostModules": 36,
+      "namedImports": 91,
+      "moduleHashes": [
+        {
+          "path": "apps/studio/workbench/studio-workspace-ports.js",
+          "sha256": "1d66a890502918301f03bc3ecbdd9cbd5423507a0a2a22390b48b23f09f82d3b"
+        },
+        {
+          "path": "packages/project-system/package.json",
+          "sha256": "78f671a23f3fc149e03f1a3959803224866362b6bb1e469497f1f6ef2fd5e808"
+        },
+        {
+          "path": "packages/project-system/src/index.js",
+          "sha256": "a89c954834e355a071608c15d9fa8bf0c2222149d48ba2145048ee9e1b258074"
+        },
+        {
+          "path": "packages/project-system/src/legacy-solution.js",
+          "sha256": "709d54b44a20de379f514294c58531cba2c4148a310bdfb3ee0d9298cd8cdbab"
+        },
+        {
+          "path": "packages/project-system/src/xml.js",
+          "sha256": "e9fd2755666ba97834ce1d04da54337dba6f211d9887a0646a142342f5954bbb"
+        },
+        {
+          "path": "packages/project-system/src/disk.js",
+          "sha256": "3c99368aedf23bac4c0a3a7fd848d2d91f21b365f295fbfcd3beb6ce01512bd3"
+        },
+        {
+          "path": "packages/project-system/src/disk-api.js",
+          "sha256": "43cb342808b46e0c261f21b48febaf48ee2498ca4d0ca8e442f7dfc3154bea72"
+        },
+        {
+          "path": "packages/project-system/src/paths.js",
+          "sha256": "01219cd2a16b7c56423bfdec4d133a767f1c8547a3082b37b37446f59761af25"
+        },
+        {
+          "path": "packages/project-system/src/project-edit-exports.js",
+          "sha256": "a7be1ac2b488081f8370e7483e43328378f19bc06c01eaf32655eb7a5555a58e"
+        },
+        {
+          "path": "packages/project-system/src/explorer.js",
+          "sha256": "e78f3ca18f0c550282fac89580962d0b80ff1d17d57099ab0c7855327f65edad"
+        },
+        {
+          "path": "packages/project-system/src/explorer/solution-edits.js",
+          "sha256": "8b41af43704535ee9bb51226a8af7e80bd390f0ef1df6ac1f4683aa79a58b151"
+        },
+        {
+          "path": "packages/project-system/src/project-edit/index.js",
+          "sha256": "5e101d5d06cade6a334d063e79400d0d2b419066d630a5e5b32bf04f9e618bb2"
+        },
+        {
+          "path": "packages/project-system/src/archive.js",
+          "sha256": "672b55ffc2c0bc83176044bd30ebdacc9e9dac5472b11ad321bb27008865fce2"
+        },
+        {
+          "path": "packages/project-system/src/archive-stream.js",
+          "sha256": "907f486d2846497eb699c50c8fe5a155801ea71fe87859f583e3ffeb194c058e"
+        },
+        {
+          "path": "packages/project-system/src/configuration-exports.js",
+          "sha256": "1eb79ecb255393ccc34cd0bfc51dc9e6beced5beda06c5609027377c1752ebba"
+        },
+        {
+          "path": "packages/project-system/src/tfm.js",
+          "sha256": "901f184106483ab165db025334018550790af251ae5834d01e2e76cdd1d719cf"
+        },
+        {
+          "path": "packages/project-system/src/rid.js",
+          "sha256": "62923a74d10215b4ed3dd09c203104daf6b14dbc95335c95816c3217f11dd3f3"
+        },
+        {
+          "path": "packages/project-system/src/context-selection.js",
+          "sha256": "37cc8424cc4d0590ef4697da7086191903efad0900c1d4c86300ae4f6412188b"
+        },
+        {
+          "path": "packages/project-system/src/launch-settings.js",
+          "sha256": "b380fa5820ca83a6f1941224ad6c3d130531d976710552bde28df8dbe6297670"
+        },
+        {
+          "path": "packages/project-system/src/resources.js",
+          "sha256": "a580e57c028d9d9553c51dd510cacb3c9e81496409cc8b41d10734010de2f2bd"
+        },
+        {
+          "path": "packages/project-system/src/build-plan.js",
+          "sha256": "c1eba7c273fdbca46f8e691af0245060c23a608a732853719517263d49614067"
+        },
+        {
+          "path": "packages/project-system/src/build-contexts.js",
+          "sha256": "55092db31b6117c6e027a35fe7020aab5ff14f68e403b4182b3bfc4bedc12639"
+        },
+        {
+          "path": "packages/project-system/src/output-layout.js",
+          "sha256": "755bbe5bedb1709f8e7c1941b5c6a8958bca966f2a56a74a5f80d990876c430e"
+        },
+        {
+          "path": "apps/studio/workspace-session.js",
+          "sha256": "841a5cc3d1b2bb13d0d97517bb0f8629a9b5d2fe8b3106d45294182d75370399"
+        },
+        {
+          "path": "apps/studio/workspace-disk-events.js",
+          "sha256": "65f7a1300afaf850c718b2eeef9722d619e3fa72f35419ec51dfe578798c8a87"
+        },
+        {
+          "path": "apps/studio/workspace-wizard.js",
+          "sha256": "9b142035a6a4b1d902f0df27f23e58c9abdc3fdf6a926a7a7e48c49583837ee2"
+        },
+        {
+          "path": "apps/studio/workspace-export.js",
+          "sha256": "55fb59fe0690effb7da58e00858851bea3cef6c4442fc98b349fdb3cfbe71287"
+        },
+        {
+          "path": "apps/studio/workspace-bundle.js",
+          "sha256": "f9ef983ab8a00f68e57aa60458a43efbbea6b8c2cd9095008db88be45eed0295"
+        },
+        {
+          "path": "apps/studio/workspace-recovery.js",
+          "sha256": "9286a1c16cdc7fcfab45988c1432982e2e6ae5d2fae1b191b8437d80426a31f7"
+        },
+        {
+          "path": "apps/studio/workspace-save-conflict.js",
+          "sha256": "9c4688b63e852f5ae2968ddff9a42f909a8f825b6670b8bc41f50a7e2c035210"
+        },
+        {
+          "path": "apps/studio/workbench/studio-existing-project.js",
+          "sha256": "bfd0c8aa3763a6516ad4c7bc863413205f8d8d0758c134fa8e68c8a9f8c8ef61"
+        },
+        {
+          "path": "apps/studio/workbench/studio-file-import.js",
+          "sha256": "b539d811621369434254b7d6853e78f954ab137cbee549df7cc2694cc9d353d6"
+        },
+        {
+          "path": "apps/studio/workbench/studio-source-records.js",
+          "sha256": "ea431b58272c4e504418525cb388c37eee102a9cea2b3cac1933528863b1ea4b"
+        },
+        {
+          "path": "tests/a24-workbench-workspace-ports.test.js",
+          "sha256": "ebdb7f831714227b71684eee13d8118681b221168255a3f36945de9e085949f5"
+        },
+        {
+          "path": "packages/editor/package.json",
+          "sha256": "69bbb158408a258f2ad9e29e9992e282aadb361dc23ed731765c77d122a91aeb"
+        },
+        {
+          "path": "packages/editor/src/index.js",
+          "sha256": "c7ec18dca71e28170f0c691bdf0cb70028e691d52bab76fe7e632f2029d2525e"
+        },
+        {
+          "path": "packages/editor/src/commands/index.js",
+          "sha256": "806f5a8986ab73eaa9b0346f34932fa44644357e910f45972d8728792baa36f8"
+        },
+        {
+          "path": "packages/editor/src/selections.js",
+          "sha256": "7466d5ac51beaeb5e425cee2d81046de8ec7fdb51873785abb25ce080a242d49"
+        },
+        {
+          "path": "packages/editor/src/commands/multi-caret.js",
+          "sha256": "421c2b9876c665b577cf5961a174ff4385d44a0ee442875f10ac1dd94da84c16"
+        },
+        {
+          "path": "packages/editor/src/commands/box-selection.js",
+          "sha256": "b617da02085ba6cf06cfd30989e4322719f65f5d97bf75174a290dfef8df34d8"
+        },
+        {
+          "path": "packages/editor/src/commands/multi-clipboard.js",
+          "sha256": "70d65c52b14d06ee9f940ca081ff0a009f87cc3bddc878dbfe2cb59953c8956f"
+        },
+        {
+          "path": "packages/editor/src/services/index.js",
+          "sha256": "f00070b8362a812c9ab73a10da0e0d017889f9a0a5b932e813e17c8aadd90888"
+        },
+        {
+          "path": "packages/editor/src/features/index.js",
+          "sha256": "8618ff0e617c0a531fd7eb65b707e0407deac686b28319e401fb881a5354c00d"
+        },
+        {
+          "path": "packages/editor/src/snippets/index.js",
+          "sha256": "d14144c435740b5fa1ec0777bcc16c30d9f38e210fa42da454ece534e5fec181"
+        },
+        {
+          "path": "packages/editor/src/diff/index.js",
+          "sha256": "c25508cfb8a330ceabd54ae1e87a39a07109b52211d4250e2db20aafdacd106f"
+        },
+        {
+          "path": "apps/studio/workbench/documents.js",
+          "sha256": "8697ec67cea34c94b2b8b07c523755aba595742a8ddc9f2049aa0d164e4e0cf3"
+        },
+        {
+          "path": "apps/studio/workspace-hydration.js",
+          "sha256": "ce0d1bda17b1cbed71832a6ceaee777d4cf5be580276fddcdf4a12c2f16b71bc"
+        },
+        {
+          "path": "apps/studio/workspace-records.js",
+          "sha256": "c95dd103707eae525255c0475bc5dc1053201a1f396290ca05cb82f945ea9ee6"
+        },
+        {
+          "path": "apps/studio/workspace-save.js",
+          "sha256": "58c73842ca53f580fd24428e92480c2b603579242ba955a985fb9ed58e909b1e"
+        },
+        {
+          "path": "apps/studio/workspace-editor-lifecycle.js",
+          "sha256": "1c60860627df9f7b496336cafebb9c242d7a06101033f177e237a8b91d174ec7"
+        },
+        {
+          "path": "apps/studio/workspace-source-records.js",
+          "sha256": "bd9c3a444587086658338a8a45e89e8c1b9e5887df5ca3fee237e51cb2bd9248"
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-loader.js",
+          "sha256": "55bcbfb0676ce343d3c7ecc348ad3218eb10baa83864b540a071b9fb8613ed15"
+        },
+        {
+          "path": "apps/studio/workbench/studio-explorer-workspace.js",
+          "sha256": "06fe52cf6120b06c031490467f3aaf58dc2dae6e2bbe2b350a0a62fa60e952e7"
+        },
+        {
+          "path": "packages/workspace/package.json",
+          "sha256": "4a0027ccb77618b8b6736bfecfc07107db2775da0741fb136763042c79f50cd8"
+        },
+        {
+          "path": "packages/workspace/src/index.js",
+          "sha256": "60699af3725f57372474410c50ba07b51d6731f6cf4d6aa1afd885834cb3893b"
+        },
+        {
+          "path": "packages/workspace/src/content-hash.js",
+          "sha256": "e7305e468522f15bb999214fcdad847c2c37fef2a0b436c6ef3fd487204e2ae1"
+        },
+        {
+          "path": "packages/workspace/src/vfs/index.js",
+          "sha256": "0b1a3185dae7c94a04d26b0254cd92d09cc32e173ff69dc5de26cc7e58891594"
+        },
+        {
+          "path": "packages/workspace/src/vfs/provider.js",
+          "sha256": "2823fe7dd282750dcfc189db8efbe1eaa1533ec25096dbf5b1288b4e0441a1d5"
+        },
+        {
+          "path": "packages/workspace/src/vfs/memory.js",
+          "sha256": "5b8ced5fd5ed3da3261dc6918ab9bd557af7737d184340de9a96666393bbde80"
+        },
+        {
+          "path": "packages/workspace/src/vfs/fsa.js",
+          "sha256": "25d988e16cb9af02b57716b707d08d253cb8b7429beb0f4f7e207d630d006f66"
+        },
+        {
+          "path": "packages/workspace/src/vfs/native-host.js",
+          "sha256": "512d491faf3e973f88cb56d8404d59720515d3854caed606732f522a39e215a4"
+        },
+        {
+          "path": "packages/workspace/src/lazy/document-store.js",
+          "sha256": "de5ad7e459b4f4b79dd22a6b29762fb8a31633a8ee425025c4b6ec3f6559f74d"
+        },
+        {
+          "path": "packages/workspace/src/transaction-state.js",
+          "sha256": "c6e07ac3615a644cd6b2ac96c50de1497b78e9bcd2de48ef527356a662336f04"
+        },
+        {
+          "path": "packages/workspace/src/transactions.js",
+          "sha256": "28dd0a8b68738603097beb9c2249a862057d1560e5883f2912cc8a60b81f6cd5"
+        },
+        {
+          "path": "packages/workspace/src/file-history.js",
+          "sha256": "d2578f2f9991d4f6d6f2bea7e0ac5d40e153449d61c1d9a98294505687d10f78"
+        },
+        {
+          "path": "packages/workspace/src/coordination/locks.js",
+          "sha256": "146e76318b6359c44ef7d8f4aa4e4c35d830a5fe85233d31bf229b42cde2226f"
+        },
+        {
+          "path": "packages/workspace/src/recovery/handles.js",
+          "sha256": "1ce9900175611efaefa42417bb994c2839fe1f0620dcd40579808c8de7da6a32"
+        },
+        {
+          "path": "packages/workspace/src/recovery/schema.js",
+          "sha256": "032930163e9ae234094b187d49080aa9f85e0ff5f376c23692d9c942dc135afd"
+        },
+        {
+          "path": "packages/workspace/src/recovery/integrity.js",
+          "sha256": "a096486e70dae0f051f98a5b84af15a10a9b7036d788e14f01006f34cb54397c"
+        },
+        {
+          "path": "packages/workspace/src/recovery/opfs-store.js",
+          "sha256": "4d7105d52e625c18e80c04f4d6b6b781b58eac6d0f8a95cf5b8fc55e5f76932e"
+        },
+        {
+          "path": "packages/workspace/src/recovery/receipt-store.js",
+          "sha256": "ce4cbc4c7d5e517ec7c3870f1b1032c6943a9d3e3ac7cbdfeb231f564da60cbe"
+        },
+        {
+          "path": "packages/workspace/src/watch.js",
+          "sha256": "813a4c4eb36f8b7f4b26d1e9668ad153ad944bfa12689fd440bc191eb258cdc7"
+        },
+        {
+          "path": "packages/workspace/src/watch-coalesce.js",
+          "sha256": "1c1181009b7124462799fb92f4306552a9f6de8217faa53ef81ebb41d3446339"
+        },
+        {
+          "path": "packages/workspace/src/provider-transactions.js",
+          "sha256": "42b8886bb299285182c05b453cef539dea1f288e2e5c174f7fa0f43387e02061"
+        },
+        {
+          "path": "packages/workspace/src/reconcile.js",
+          "sha256": "fb9813631c7adcabb83c557c0405a1b5d57bf8a2e3d9f316782ca2fca1c2aaa3"
+        },
+        {
+          "path": "packages/workspace/src/coordination/channel.js",
+          "sha256": "80077b2bd015b665e90a527d61c6a5b6db9b4bbb9323440033bec3835b6bbd33"
+        },
+        {
+          "path": "packages/workspace/src/coordination/conflicts.js",
+          "sha256": "cc614559ccd65a735054558ed557ec9ae5d6cc208b01bec41beba9bdb77a5962"
+        },
+        {
+          "path": "packages/templates/package.json",
+          "sha256": "52963180743f501c3b8505901a113b5de143a34d1889627235f2321aaa68718e"
+        },
+        {
+          "path": "packages/templates/src/index.js",
+          "sha256": "91a3405fc98025ab39dd39d419db94b3327512bb178b5e8e5d70e6702c16faca"
+        },
+        {
+          "path": "apps/studio/workbench/source-imports.js",
+          "sha256": "ca91f2ee6a24af410c3bed65c03742f02986aac903dfc5a63cd6dff984d39fe3"
+        },
+        {
+          "path": "packages/archive/package.json",
+          "sha256": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221"
+        },
+        {
+          "path": "packages/archive/src/index.js",
+          "sha256": "d6bd4685c1df9063de56c8f03e08086d0790444a3d4a86b2768bca931d2c2218"
+        },
+        {
+          "path": "packages/archive/src/path-policy.js",
+          "sha256": "21c4a4ca1d7b56e8cd529b1544a6588f1b8260a3452d5eef79bea9ab879d5e51"
+        },
+        {
+          "path": "packages/archive/src/text-encoding.js",
+          "sha256": "507971134b68c31b94900a1f0a4c1b8578a9eebe52febd6725593ebf9952b011"
+        },
+        {
+          "path": "packages/archive/src/deflate.js",
+          "sha256": "c70450aaef9a6ec4ed2e88956deb91551e342a56c9170e58ca7b6047179d0721"
+        },
+        {
+          "path": "apps/studio/workbench/recent-workspaces.js",
+          "sha256": "33cadf9777706e709c7551aed55fe19927430511fda310f5a3d7091a70938473"
+        },
+        {
+          "path": "apps/studio/workbench/state-events.js",
+          "sha256": "9ba158bbe319afbe68aa8af0662aa9781e19a92a0a4a6955c2c1b50c3553e1d5"
+        },
+        {
+          "path": "apps/studio/workbench/documents-ingress.js",
+          "sha256": "076fe07039169d0575d64ba73a85abc0fee0ace5ee108942cd37a45ab5f3603b"
+        },
+        {
+          "path": "apps/studio/workbench/documents-save.js",
+          "sha256": "24cc37083f9c814cfa764296c99f6ff2ef37eff579e8b5b62e9bc2234d791900"
+        },
+        {
+          "path": "apps/studio/workbench/documents-state.js",
+          "sha256": "d45fd2786e309f9500f69298826cf3f6940fcdcb64235d9d22593525f1a72a3f"
+        },
+        {
+          "path": "apps/studio/workbench/documents-reload.js",
+          "sha256": "236283fda868af54e54eaec3266c0452502736122d6140d012395c487bf3c3fc"
+        },
+        {
+          "path": "apps/studio/workspace-save-scope.js",
+          "sha256": "34c1fe0ccf4ac020539ca732c8e49225dd21531a6440d8ec8ab04ff82a485e6b"
+        },
+        {
+          "path": "apps/studio/workspace-document-eviction.js",
+          "sha256": "62e760a60163b6dbfdfb37884ccc8cb6b3051e0d2e63e46934998fe0a17ec2e1"
+        },
+        {
+          "path": "apps/studio/explorer-records.js",
+          "sha256": "ab11cf39cf434152a89e80b1e82ae14345fee396a27e5a8505640cf373b1bcb3"
+        },
+        {
+          "path": "apps/studio/workbench/workspace-records.js",
+          "sha256": "495f2495daf94620f1f97163e835b91b50fa5b0c0cf64b001d36356315f6344b"
+        },
+        {
+          "path": "apps/studio/workbench/workspace-limits.js",
+          "sha256": "7fba6f936a167d12922de8255318ce5058ca6c8bd7e55f63c21c94bc6050c84f"
+        },
+        {
+          "path": "apps/studio/workbench/studio-workspace-preparation.js",
+          "sha256": "da3c4e8396732c2052a1ac9d8ab0c6b2818a01a9371ee6f0e278e0a89e2bc2eb"
+        },
+        {
+          "path": "apps/studio/workbench/studio-source-reader.js",
+          "sha256": "dea79e0fbe78f44479067574d5560c7cdf95f1db48d2224863167a8726a2a9bc"
+        },
+        {
+          "path": "apps/studio/workbench/events.js",
+          "sha256": "c582617ffe48c3923546af899c0591556cc4a48289a4d301fee0457990deb3b8"
+        },
+        {
+          "path": "apps/studio/workbench/document-size.js",
+          "sha256": "a69f7a338d43eeaee874624bc1a89694587a514505a5b2048fe47839e53cba35"
+        }
+      ],
+      "proof": [
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "addSolutionProject",
+            "convertLegacySolution",
+            "exportWorkspaceZip",
+            "isTextRecord",
+            "workspaceManifestRecord",
+            "writeNewDirectory"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-session.js",
+          "target": "apps/studio/workspace-session.js",
+          "names": [
+            "createWorkspaceSession"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-disk-events.js",
+          "target": "apps/studio/workspace-disk-events.js",
+          "names": [
+            "applyExternalDiskChange",
+            "reevaluateDiskWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-wizard.js",
+          "target": "apps/studio/workspace-wizard.js",
+          "names": [
+            "commitWorkspaceWizard"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-export.js",
+          "target": "apps/studio/workspace-export.js",
+          "names": [
+            "exportWorkspaceToWritable"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-bundle.js",
+          "target": "apps/studio/workspace-bundle.js",
+          "names": [
+            "createLegacyWorkspaceBundle"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-recovery.js",
+          "target": "apps/studio/workspace-recovery.js",
+          "names": [
+            "restoreLegacyWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "../workspace-save-conflict.js",
+          "target": "apps/studio/workspace-save-conflict.js",
+          "names": [
+            "promptWorkspaceSaveConflict"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "./studio-existing-project.js",
+          "target": "apps/studio/workbench/studio-existing-project.js",
+          "names": [
+            "importStudioExistingProject"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "./studio-file-import.js",
+          "target": "apps/studio/workbench/studio-file-import.js",
+          "names": [
+            "openStudioWorkspaceZip"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-ports.js",
+          "specifier": "./studio-source-records.js",
+          "target": "apps/studio/workbench/studio-source-records.js",
+          "names": [
+            "studioSourceRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "tests/a24-workbench-workspace-ports.test.js",
+          "specifier": "@sharpforge/editor",
+          "target": "packages/editor/src/index.js",
+          "names": [
+            "EditorModel"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "tests/a24-workbench-workspace-ports.test.js",
+          "specifier": "../apps/studio/workbench/documents.js",
+          "target": "apps/studio/workbench/documents.js",
+          "names": [
+            "DocumentService"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "tests/a24-workbench-workspace-ports.test.js",
+          "specifier": "../apps/studio/workbench/studio-workspace-ports.js",
+          "target": "apps/studio/workbench/studio-workspace-ports.js",
+          "names": [
+            "createStudioWorkspacePorts"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "ProviderDiskWorkspace",
+            "importWorkspaceRecords",
+            "validateWorkspaceSettings",
+            "decodeWorkspaceFile",
+            "readProviderDirectory",
+            "sanitizeSessionUserSettings",
+            "recordSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workspace-hydration.js",
+          "target": "apps/studio/workspace-hydration.js",
+          "names": [
+            "hydrateWorkspaceRecords"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workspace-records.js",
+          "target": "apps/studio/workspace-records.js",
+          "names": [
+            "prepareWorkspaceRecords",
+            "sourceBuffers",
+            "mapWorkspacePath"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workspace-save.js",
+          "target": "apps/studio/workspace-save.js",
+          "names": [
+            "createWorkspaceSave"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workspace-editor-lifecycle.js",
+          "target": "apps/studio/workspace-editor-lifecycle.js",
+          "names": [
+            "createWorkspaceEditorLifecycle"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workspace-source-records.js",
+          "target": "apps/studio/workspace-source-records.js",
+          "names": [
+            "workspaceSourceRecords",
+            "workspaceDocumentStates"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workbench/studio-workspace-loader.js",
+          "target": "apps/studio/workbench/studio-workspace-loader.js",
+          "names": [
+            "loadStudioWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-session.js",
+          "specifier": "./workbench/studio-explorer-workspace.js",
+          "target": "apps/studio/workbench/studio-explorer-workspace.js",
+          "names": [
+            "commitStudioExplorerWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-disk-events.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "ProviderDiskWorkspace",
+            "encodeWorkspaceFile"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-disk-events.js",
+          "specifier": "@sharpforge/workspace",
+          "target": "packages/workspace/src/index.js",
+          "names": [
+            "hashFileBytes"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-wizard.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "addSolutionItem",
+            "readProviderDirectory"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-wizard.js",
+          "specifier": "@sharpforge/templates",
+          "target": "packages/templates/src/index.js",
+          "names": [
+            "validateFilePlan"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-export.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "exportWorkspaceZipTo",
+            "encodeWorkspaceFile",
+            "decodeWorkspaceFile"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-bundle.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "decodeWorkspaceFile",
+            "sanitizeSessionUserSettings"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-bundle.js",
+          "specifier": "@sharpforge/workspace",
+          "target": "packages/workspace/src/index.js",
+          "names": [
+            "workspaceRecordBytes",
+            "workspaceRecordSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-recovery.js",
+          "specifier": "@sharpforge/workspace",
+          "target": "packages/workspace/src/index.js",
+          "names": [
+            "readLegacyWorkspaceRecovery"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-existing-project.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "importWorkspaceZip",
+            "prefixWorkspace",
+            "addSolutionProject"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-existing-project.js",
+          "specifier": "@sharpforge/editor",
+          "target": "packages/editor/src/index.js",
+          "names": [
+            "rebaseEditorSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-existing-project.js",
+          "specifier": "@sharpforge/templates",
+          "target": "packages/templates/src/index.js",
+          "names": [
+            "validateFilePlan"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-existing-project.js",
+          "specifier": "./source-imports.js",
+          "target": "apps/studio/workbench/source-imports.js",
+          "names": [
+            "readStudioFiles"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-existing-project.js",
+          "specifier": "./studio-source-records.js",
+          "target": "apps/studio/workbench/studio-source-records.js",
+          "names": [
+            "releaseStudioSources"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-file-import.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "importWorkspaceZipFromBlob"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-file-import.js",
+          "specifier": "@sharpforge/archive",
+          "target": "packages/archive/src/index.js",
+          "names": [
+            "ZIP_LIMITS"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-file-import.js",
+          "specifier": "./source-imports.js",
+          "target": "apps/studio/workbench/source-imports.js",
+          "names": [
+            "prepareStudioSourceFiles",
+            "prepareLegacyStudioProject",
+            "readStudioFiles"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-file-import.js",
+          "specifier": "./recent-workspaces.js",
+          "target": "apps/studio/workbench/recent-workspaces.js",
+          "names": [
+            "restoreRecentWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js",
+          "names": [
+            "WorkbenchEvents",
+            "requireIdentifier",
+            "workbenchError"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents.js",
+          "specifier": "./documents-ingress.js",
+          "target": "apps/studio/workbench/documents-ingress.js",
+          "names": [
+            "DocumentIngress",
+            "validateDocumentModel"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents.js",
+          "specifier": "./documents-save.js",
+          "target": "apps/studio/workbench/documents-save.js",
+          "names": [
+            "captureDocumentSave",
+            "savedModelBaseline"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents.js",
+          "specifier": "./documents-state.js",
+          "target": "apps/studio/workbench/documents-state.js",
+          "names": [
+            "captureDocumentState"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents.js",
+          "specifier": "./documents-reload.js",
+          "target": "apps/studio/workbench/documents-reload.js",
+          "names": [
+            "reloadDocument"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-records.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "ProjectSystem",
+            "workspaceCandidates",
+            "normalizePath",
+            "isProjectEvaluationInput"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-records.js",
+          "specifier": "@sharpforge/templates",
+          "target": "packages/templates/src/index.js",
+          "names": [
+            "validateFilePlan"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-save.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "decodeWorkspaceFile",
+            "recordSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-save.js",
+          "specifier": "@sharpforge/workspace",
+          "target": "packages/workspace/src/index.js",
+          "names": [
+            "hashFileBytes",
+            "hashWorkspaceRecord",
+            "reconcileWorkspaceFile",
+            "workspaceRecordBytes"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-save.js",
+          "specifier": "./workspace-save-scope.js",
+          "target": "apps/studio/workspace-save-scope.js",
+          "names": [
+            "workspaceSaveScope",
+            "workspaceSaveInputs",
+            "sameSaveRecord",
+            "saveRecordChange",
+            "replaceSaveRecord",
+            "savedWorkspaceCaptures"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-editor-lifecycle.js",
+          "specifier": "@sharpforge/workspace",
+          "target": "packages/workspace/src/index.js",
+          "names": [
+            "FileSystemError",
+            "hashFileBytes",
+            "workspaceRecordBytes"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-editor-lifecycle.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "cloneWorkspaceRecord",
+            "recordSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-editor-lifecycle.js",
+          "specifier": "./workspace-document-eviction.js",
+          "target": "apps/studio/workspace-document-eviction.js",
+          "names": [
+            "evictWorkspaceDocument"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-source-records.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "recordSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-source-records.js",
+          "specifier": "./explorer-records.js",
+          "target": "apps/studio/explorer-records.js",
+          "names": [
+            "captureExplorerRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-source-records.js",
+          "specifier": "./workbench/workspace-records.js",
+          "target": "apps/studio/workbench/workspace-records.js",
+          "names": [
+            "createStudioRecords"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-loader.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "importWorkspaceRecords"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-loader.js",
+          "specifier": "@sharpforge/editor",
+          "target": "packages/editor/src/index.js",
+          "names": [
+            "rebaseEditorSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-loader.js",
+          "specifier": "./workspace-limits.js",
+          "target": "apps/studio/workbench/workspace-limits.js",
+          "names": [
+            "isStudioTextRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-loader.js",
+          "specifier": "./studio-source-records.js",
+          "target": "apps/studio/workbench/studio-source-records.js",
+          "names": [
+            "releaseStudioSources"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-loader.js",
+          "specifier": "./studio-workspace-preparation.js",
+          "target": "apps/studio/workbench/studio-workspace-preparation.js",
+          "names": [
+            "prepareStudioWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-explorer-workspace.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "workspaceCandidates"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-explorer-workspace.js",
+          "specifier": "./studio-workspace-loader.js",
+          "target": "apps/studio/workbench/studio-workspace-loader.js",
+          "names": [
+            "loadStudioWorkspace"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-explorer-workspace.js",
+          "specifier": "./workspace-limits.js",
+          "target": "apps/studio/workbench/workspace-limits.js",
+          "names": [
+            "isStudioTextRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-explorer-workspace.js",
+          "specifier": "./workspace-records.js",
+          "target": "apps/studio/workbench/workspace-records.js",
+          "names": [
+            "createStudioRecords"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-explorer-workspace.js",
+          "specifier": "../explorer-records.js",
+          "target": "apps/studio/explorer-records.js",
+          "names": [
+            "sameExplorerRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/source-imports.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "readBrowserFiles",
+            "readDirectory",
+            "validateItemPath"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/source-imports.js",
+          "specifier": "./workspace-limits.js",
+          "target": "apps/studio/workbench/workspace-limits.js",
+          "names": [
+            "studioDiskLimits",
+            "validateStudioSources",
+            "validateStudioWorkspaceRecords",
+            "isStudioTextRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/source-imports.js",
+          "specifier": "./studio-source-records.js",
+          "target": "apps/studio/workbench/studio-source-records.js",
+          "names": [
+            "studioSourceRecord",
+            "releaseStudioSources"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/source-imports.js",
+          "specifier": "./studio-source-reader.js",
+          "target": "apps/studio/workbench/studio-source-reader.js",
+          "names": [
+            "readStudioSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/recent-workspaces.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "validateItemPath",
+            "validateWorkspaceSettings"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/recent-workspaces.js",
+          "specifier": "./events.js",
+          "target": "apps/studio/workbench/events.js",
+          "names": [
+            "abortError",
+            "assertId"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents-ingress.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js",
+          "names": [
+            "requireIdentifier",
+            "workbenchError",
+            "abortError"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents-ingress.js",
+          "specifier": "./documents-state.js",
+          "target": "apps/studio/workbench/documents-state.js",
+          "names": [
+            "validateDocumentState"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents-reload.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "encodeWorkspaceFile"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents-reload.js",
+          "specifier": "./state-events.js",
+          "target": "apps/studio/workbench/state-events.js",
+          "names": [
+            "workbenchError"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/documents-reload.js",
+          "specifier": "./document-size.js",
+          "target": "apps/studio/workbench/document-size.js",
+          "names": [
+            "AUTOMATIC_DOCUMENT_CHARACTERS"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-save-scope.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "recordSource",
+            "decodeWorkspaceFile"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-save-scope.js",
+          "specifier": "@sharpforge/workspace",
+          "target": "packages/workspace/src/index.js",
+          "names": [
+            "hashWorkspaceRecord",
+            "workspaceRecordBytes"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-save-scope.js",
+          "specifier": "./explorer-records.js",
+          "target": "apps/studio/explorer-records.js",
+          "names": [
+            "captureExplorerRecord",
+            "sameExplorerRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workspace-document-eviction.js",
+          "specifier": "./explorer-records.js",
+          "target": "apps/studio/explorer-records.js",
+          "names": [
+            "captureExplorerRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/explorer-records.js",
+          "specifier": "@sharpforge/editor",
+          "target": "packages/editor/src/index.js",
+          "names": [
+            "EditorModel",
+            "rebaseEditorSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/explorer-records.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "cloneWorkspaceRecord",
+            "recordSource",
+            "isSourceSnapshot"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/explorer-records.js",
+          "specifier": "./workbench/workspace-limits.js",
+          "target": "apps/studio/workbench/workspace-limits.js",
+          "names": [
+            "studioDiskLimits"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/workspace-limits.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "encodedWorkspaceSourceChunks",
+            "isSourceSnapshot"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-preparation.js",
+          "specifier": "@sharpforge/project-system",
+          "target": "packages/project-system/src/index.js",
+          "names": [
+            "ProjectSystem",
+            "DiskWorkspace",
+            "validateWorkspaceSettings",
+            "workspaceCandidates",
+            "isProjectEvaluationInput",
+            "recordSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-preparation.js",
+          "specifier": "@sharpforge/templates",
+          "target": "packages/templates/src/index.js",
+          "names": [
+            "validateFilePlan"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-preparation.js",
+          "specifier": "../explorer-records.js",
+          "target": "apps/studio/explorer-records.js",
+          "names": [
+            "prepareExplorerRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-preparation.js",
+          "specifier": "./workspace-limits.js",
+          "target": "apps/studio/workbench/workspace-limits.js",
+          "names": [
+            "studioDiskLimits",
+            "validateStudioWorkspaceRecords",
+            "isStudioTextRecord",
+            "isStudioLazyRecord"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-workspace-preparation.js",
+          "specifier": "./studio-source-records.js",
+          "target": "apps/studio/workbench/studio-source-records.js",
+          "names": [
+            "studioSourceRecord",
+            "releaseStudioSources"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-source-reader.js",
+          "specifier": "@sharpforge/editor",
+          "target": "packages/editor/src/index.js",
+          "names": [
+            "readEditorSource"
+          ],
+          "missing": []
+        },
+        {
+          "consumer": "apps/studio/workbench/studio-source-reader.js",
+          "specifier": "./workspace-limits.js",
+          "target": "apps/studio/workbench/workspace-limits.js",
+          "names": [
+            "studioDiskLimits"
+          ],
+          "missing": []
+        }
+      ],
+      "missing": [],
+      "limitations": "Source text inspection only; no JS execution. Namespace member use and export ambiguity remain covered by existing root runtime/ordinary core gates."
+    }
+  },
+  "latestFeatureCore": [
+    {
+      "pr": 4326,
+      "sha": "6863a10cbf07d5d2a412afe3b8f231de9f260902",
+      "runId": 37180074437,
+      "jobId": null,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180074437",
+      "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+    },
+    {
+      "pr": 4328,
+      "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+      "runId": 37179804887,
+      "jobId": null,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37179804887",
+      "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+    },
+    {
+      "pr": 4363,
+      "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+      "runId": 37180741251,
+      "jobId": 111372640564,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37180741251",
+      "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+    },
+    {
+      "pr": 4407,
+      "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+      "runId": 37182178812,
+      "jobId": 111376788666,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182178812",
+      "qualification": "Required automatic core; no broad matrix dispatch or repeated local validation."
+    }
+  ],
+  "limits": [
+    "The proposed Studio entry is unapplied and unexecuted. Canonical actual-entry browser runs are separate and incomplete.",
+    "Windows-only native builds/runtime remain unqualified on this Linux host.",
+    "The initial broad Node26 failures and narrower replay failures remain recorded alongside later Node22 and correction results.",
+    "Strict structure remains nonzero for inherited violations; no baseline expansion was used.",
+    "No performance improvement is claimed by these source ports."
+  ]
+}

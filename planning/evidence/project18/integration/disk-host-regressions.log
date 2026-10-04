@@ -1,0 +1,344 @@
+(node:23) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:38) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A24 B03 folder open reports oversized and reserved paths without aborting usable files
+ok 1 - A24 B03 folder open reports oversized and reserved paths without aborting usable files
+  ---
+  duration_ms: 8.006669
+  type: 'test'
+  ...
+# Subtest: A24 B04 create/save persists new and formerly binary files using configured encoded-byte budget
+ok 2 - A24 B04 create/save persists new and formerly binary files using configured encoded-byte budget
+  ---
+  duration_ms: 27.133319
+  type: 'test'
+  ...
+# Subtest: A24 disk save detects byte changes even when decoded text is identical
+ok 3 - A24 disk save detects byte changes even when decoded text is identical
+  ---
+  duration_ms: 1.847767
+  type: 'test'
+  ...
+# Subtest: A24 XML and binary saves retain byte baselines and unloading releases retained text
+ok 4 - A24 XML and binary saves retain byte baselines and unloading releases retained text
+  ---
+  duration_ms: 5.92548
+  type: 'test'
+  ...
+# Subtest: A24 case-insensitive directory aliases preserve canonical record paths through rename and delete
+ok 5 - A24 case-insensitive directory aliases preserve canonical record paths through rename and delete
+  ---
+  duration_ms: 11.571077
+  type: 'test'
+  ...
+# Subtest: A24 browser save requires physical-directory coordination before any write and enforces total loaded bytes
+ok 6 - A24 browser save requires physical-directory coordination before any write and enforces total loaded bytes
+  ---
+  duration_ms: 2.144485
+  type: 'test'
+  ...
+# Subtest: A24 coherent disk snapshot adoption rebuilds indexes without advancing retained hashes or admitting invalid partial state
+ok 7 - A24 coherent disk snapshot adoption rebuilds indexes without advancing retained hashes or admitting invalid partial state
+  ---
+  duration_ms: 1.523108
+  type: 'test'
+  ...
+# Subtest: A24 directory operations rename every byte and deny a complete save batch before first write
+ok 8 - A24 directory operations rename every byte and deny a complete save batch before first write
+  ---
+  duration_ms: 5.651687
+  type: 'test'
+  ...
+# Subtest: A24 20000-file scan reads project bytes only; content is loaded explicitly and scan cancellation is atomic
+ok 9 - A24 20000-file scan reads project bytes only; content is loaded explicitly and scan cancellation is atomic
+  ---
+  duration_ms: 779.64716
+  type: 'test'
+  ...
+# Subtest: A24 NFC/NFD/case collisions and gitignore decisions are individually visible
+ok 10 - A24 NFC/NFD/case collisions and gitignore decisions are individually visible
+  ---
+  duration_ms: 21.024129
+  type: 'test'
+  ...
+# Subtest: A24 nested ignore rules support ranges, escaped literals and directory-only matches
+ok 11 - A24 nested ignore rules support ranges, escaped literals and directory-only matches
+  ---
+  duration_ms: 2.596178
+  type: 'test'
+  ...
+# (node:50) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+ok 12 - opening a metadata-only directory loads the active source and keeps thousands of other buffers unopened
+  ---
+  duration_ms: 14.145181
+  type: 'test'
+  ...
+# Subtest: workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+ok 13 - workspace admission permits more than 100 small sources and preserves the old model on invalid replacement
+  ---
+  duration_ms: 2.4394
+  type: 'test'
+  ...
+# Subtest: resource naming and file references hydrate before the selected project snapshot becomes visible
+ok 14 - resource naming and file references hydrate before the selected project snapshot becomes visible
+  ---
+  duration_ms: 20.391495
+  type: 'test'
+  ...
+# Subtest: a committed structural edit remaps editor state and retains only explicitly unsaved paths
+ok 15 - a committed structural edit remaps editor state and retains only explicitly unsaved paths
+  ---
+  duration_ms: 0.984155
+  type: 'test'
+  ...
+# Subtest: Save to Disk preserves encodings and saves source, project XML, and binary changes together
+ok 16 - Save to Disk preserves encodings and saves source, project XML, and binary changes together
+  ---
+  duration_ms: 9.626283
+  type: 'test'
+  ...
+# Subtest: external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+ok 17 - external reload rejects a stale decision and then adopts accepted bytes without marking them dirty
+  ---
+  duration_ms: 3.478759
+  type: 'test'
+  ...
+# Subtest: metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+ok 18 - metadata rescans preserve a dirty file removed externally so its later save detects the conflict
+  ---
+  duration_ms: 4.815065
+  type: 'test'
+  ...
+# Subtest: permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+ok 19 - permission-denied recent workspaces recover loaded content read-only and never synthesize missing source
+  ---
+  duration_ms: 1.521976
+  type: 'test'
+  ...
+# Subtest: metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+not ok 20 - metadata-only project rescans hydrate XML before evaluation and adopt observed physical baselines
+  ---
+  duration_ms: 7.283278
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-session.test.js:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'After'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'After'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/a24-workspace-session.test.js:187:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a stale rescan leaves the original project model and disk baselines unchanged
+ok 21 - a stale rescan leaves the original project model and disk baselines unchanged
+  ---
+  duration_ms: 6.135907
+  type: 'test'
+  ...
+# Subtest: streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+ok 22 - streaming ZIP export reads one lazy file at a time and aborts its sink after a stale workspace decision
+  ---
+  duration_ms: 8.938496
+  type: 'test'
+  ...
+# Subtest: JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+ok 23 - JSON interchange includes hydrated folder files and preserves UTF-16 bytes with edited source text
+  ---
+  duration_ms: 1.030805
+  type: 'test'
+  ...
+# Subtest: the registered JSON export command returns asynchronous hydration failures to its caller
+ok 24 - the registered JSON export command returns asynchronous hydration failures to its caller
+  ---
+  duration_ms: 1.73046
+  type: 'test'
+  ...
+# Subtest: wizard application keeps the chosen physical folder attached and retains binary item records
+ok 25 - wizard application keeps the chosen physical folder attached and retains binary item records
+  ---
+  duration_ms: 2.564088
+  type: 'test'
+  ...
+# (node:62) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+ok 26 - empty-folder save/reopen preserves utf-8 bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 45.519855
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+ok 27 - empty-folder save/reopen preserves utf-16le bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 8.352121
+  type: 'test'
+  ...
+# Subtest: empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+ok 28 - empty-folder save/reopen preserves utf-16be bytes, all assets, settings and empty directories
+  ---
+  duration_ms: 5.636093
+  type: 'test'
+  ...
+# Subtest: empty-folder writer rejects preexisting contents without opening a write stream
+not ok 29 - empty-folder writer rejects preexisting contents without opening a write stream
+  ---
+  duration_ms: 1.06709
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/workspace-io.test.js:36:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/workspace-io.test.js:36:208)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: empty-folder writer resolves denied permission before any mutation
+ok 30 - empty-folder writer resolves denied permission before any mutation
+  ---
+  duration_ms: 0.387004
+  type: 'test'
+  ...
+# Subtest: empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+not ok 31 - empty-folder writer reports completed writes on mid-operation failure, never claims atomicity
+  ---
+  duration_ms: 0.963733
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-integration/tests/workspace-io.test.js:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /1 file\(s\) written/. Input:
+    
+    'Simulated full disk; rollback left Bad.cs, Good.cs'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Simulated full disk; rollback left Bad.cs, Good.cs'
+  operator: 'match'
+  stack: |-
+    Object.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/workspace-io.test.js:38:372)
+    expectedException (node:assert:576:17)
+    expectsError (node:assert:701:21)
+    Function.rejects (node:assert:767:3)
+    async TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-integration/tests/workspace-io.test.js:38:168)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: aborted empty-folder save creates no files
+ok 32 - aborted empty-folder save creates no files
+  ---
+  duration_ms: 0.215375
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A.txt / a.txt
+ok 33 - empty-folder writer validates complete path plan before mutation A.txt / a.txt
+  ---
+  duration_ms: 0.241915
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+ok 34 - empty-folder writer validates complete path plan before mutation A/one.txt / a/two.txt
+  ---
+  duration_ms: 0.294945
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation é.txt / é.txt
+ok 35 - empty-folder writer validates complete path plan before mutation é.txt / é.txt
+  ---
+  duration_ms: 0.426143
+  type: 'test'
+  ...
+# Subtest: empty-folder writer validates complete path plan before mutation a / a/b
+ok 36 - empty-folder writer validates complete path plan before mutation a / a/b
+  ---
+  duration_ms: 0.261194
+  type: 'test'
+  ...
+# Subtest: directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+ok 37 - directory loader preserves explicitly recorded files but excludes administrative code and stores warning paths
+  ---
+  duration_ms: 4.65924
+  type: 'test'
+  ...
+# Subtest: folder manifests reject ambiguity and preserve the original records on failure
+ok 38 - folder manifests reject ambiguity and preserve the original records on failure
+  ---
+  duration_ms: 0.213082
+  type: 'test'
+  ...
+# Subtest: FileList repository prefix is normalized only by a validated workspace manifest
+ok 39 - FileList repository prefix is normalized only by a validated workspace manifest
+  ---
+  duration_ms: 1.125759
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16le and detects external edits before any writing
+ok 40 - disk source save preserves utf-16le and detects external edits before any writing
+  ---
+  duration_ms: 4.639099
+  type: 'test'
+  ...
+# Subtest: disk source save preserves utf-16be and detects external edits before any writing
+ok 41 - disk source save preserves utf-16be and detects external edits before any writing
+  ---
+  duration_ms: 1.798023
+  type: 'test'
+  ...
+# Subtest: disk source save rechecks after permissions and never overwrites a prompt-time change
+ok 42 - disk source save rechecks after permissions and never overwrites a prompt-time change
+  ---
+  duration_ms: 0.794348
+  type: 'test'
+  ...
+# Subtest: native disk creation rejects case-shadow files and parents before applying any batch entry
+ok 43 - native disk creation rejects case-shadow files and parents before applying any batch entry
+  ---
+  duration_ms: 6.687049
+  type: 'test'
+  ...
+# Subtest: native new destination parents use portable case identity within the same batch
+ok 44 - native new destination parents use portable case identity within the same batch
+  ---
+  duration_ms: 2.619032
+  type: 'test'
+  ...
+# Subtest: CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+ok 45 - CLI ZIP/extraction preserve an existing manifest, binaries and empty folders
+  ---
+  duration_ms: 1544.796544
+  type: 'test'
+  ...
+# Subtest: CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+ok 46 - CLI writePlan validates duplicate/case/traversing destinations before creating output directory
+  ---
+  duration_ms: 7.550482
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 43
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4041.27854

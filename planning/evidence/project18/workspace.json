@@ -1,0 +1,1427 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "scope": "A24 workspace integrity, explorer hierarchy/operations, recovery, cross-window coordination, and Studio lazy document lifetime",
+  "agent": "workspace_integrity",
+  "branch": "codex/p18-workspace",
+  "implementationHead": "4c94bb124a76d33800f0c6d42406131ad175bc56",
+  "interpretation": "Implementation, integrated source qualification, exact dependency projections and platform qualification are separate. Original 500/495/5 and 66/65/1 results remain recorded beside the affected 39/39 and 30/30 correction runs. npm check/build/clean-checkout pass on e8f; strict structure retains 265 inherited violations. The real component browser still closes during setup, with zero qualified groups.",
+  "latestChanges": [
+    "ead93d96 guarded save reconciliation",
+    "a8c0ebd9 lazy recovery and safe bootstrap",
+    "3ebd46da semantic rename boundary",
+    "f5dc9b82 post-stop stale publication guard",
+    "c1a3b735 buffer-only peer resolution and exact hash validation",
+    "059fe71a nested physical source symbol loaders and public explorer contracts",
+    "d8e49eec actual browser component qualification authored; setup blocked before assertions",
+    "eb017fb4 reject stale peer notifications and retain newer conflicts during admitted application",
+    "6c2ee9e5 clean closed source eviction across Studio session, disk, Explorer and worker caches",
+    "2bd44892 conditional source protection flags without per-record temporary arrays",
+    "48862fae compiler worker releaseDocuments registration and exact protocol contract",
+    "6d5007b6 Project panel extraction and lazy Problems loader dispatch",
+    "87c34c59 atomic configuration request and synchronous Problems error reporting",
+    "4b535544 safe physical document watermarks across journal writes",
+    "90064b26 additive ProviderDiskWorkspace API alignment merged; legacy defaults retained",
+    "39bb6d8e peer callback snapshots live admission primitives and rejects version exhaustion",
+    "dae18218 extracted standalone workspace hydration without importing the compiler graph",
+    "dfb8a58c bounded direct reveal of unloaded pages and atomic multi-page child admission",
+    "67927a16 precise peer hash diagnostic and assertions; the complete six-case callback suite passed in the 39-case correction cohort",
+    "37151f1f session platform context and standalone hydration/session contracts",
+    "3f271792 authoritative root source projected into standalone document/refactoring, disk-event and import/export host batches",
+    "940b5d30 lazy refresh restores saved selection/focus/scope; scoped paging retains the full cache; all seven new cases subsequently passed in the affected Explorer replay",
+    "4c94bb12 duplicate page identities reject before recursive staging; the original invalid-page assertion is unchanged; 30/30 affected Explorer cases pass"
+  ],
+  "validation": [
+    {
+      "id": "scope-initial",
+      "result": "132 tests: 130 pass, 2 fail, 0 skips/cancellations; both failures reproduced and fixed in the focused run below",
+      "artifact": "workspace/node-scope-initial.log",
+      "command": "node /workspace/scratch/3e16369943fd/p18-integration/scripts/limited.js node --test --test-concurrency=1 tests/a24-save-conflicts.test.js tests/a24-recovery-lazy.test.js tests/a24-workspace-session.test.js tests/a24-provider-transactions.test.js tests/a24-explorer-lifecycle.test.js tests/a24-workspace-receipts.test.js tests/a24-workspace-import-regression.test.js tests/a24-explorer-hierarchy.test.js tests/a24-explorer-xml-regression.test.js tests/a24-explorer-operations.test.js tests/a24-workspace-transactions.test.js tests/a24-workspace-recovery.test.js tests/a24-workspace-coordination.test.js tests/a24-type-rename.test.js tests/release08-explorer.test.js tests/release08-commands.test.js"
+    },
+    {
+      "id": "save-recovery-final",
+      "result": "27/27 pass; typed disk identity guard, dirty-hash race, partial-save retry and retained folder ordering",
+      "command": "node /workspace/scratch/3e16369943fd/p18-integration/scripts/limited.js node --test --test-concurrency=1 tests/a24-save-conflicts.test.js tests/a24-recovery-lazy.test.js tests/a24-workspace-session.test.js",
+      "artifact": "workspace/node-save-recovery-final.log"
+    },
+    {
+      "id": "recovery-metadata-final",
+      "result": "19/19 pass",
+      "command": "node /workspace/scratch/3e16369943fd/p18-integration/scripts/limited.js node --test --test-concurrency=1 tests/a24-recovery-lazy.test.js tests/a24-explorer-lifecycle.test.js tests/a24-workspace-recovery.test.js",
+      "artifact": "workspace/node-recovery-metadata-final.log"
+    },
+    {
+      "id": "type-rename-final",
+      "result": "9/9 pass",
+      "command": "node /workspace/scratch/3e16369943fd/p18-integration/scripts/limited.js node --test --test-concurrency=1 tests/a24-type-rename.test.js",
+      "artifact": "workspace/node-type-rename-boundary.log"
+    },
+    {
+      "id": "transition-final",
+      "result": "10/10 pass",
+      "command": "node /workspace/scratch/3e16369943fd/p18-integration/scripts/limited.js node --test --test-concurrency=1 tests/a24-workspace-transition.test.js tests/a24-recovery-lazy.test.js",
+      "artifact": "workspace/node-transition-final.log"
+    },
+    {
+      "id": "cross-window-session-final",
+      "result": "51/51 pass; two-session buffer-only adoption, unchanged physical baselines, explicit later Save, stale hash/edit/identity/binary mutation rejection, undo/redo protection, UTF-16 mixed endings",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-cross-window-session.test.js tests/a24-workspace-coordination.test.js tests/a24-explorer-lifecycle.test.js tests/a24-save-conflicts.test.js tests/a24-workspace-session.test.js tests/a24-provider-transactions.test.js",
+      "artifact": "workspace/node-cross-window-initial.log"
+    },
+    {
+      "id": "hierarchy-rename-final",
+      "result": "17/17 pass; nested-file lazy symbols, hierarchy identities and semantic rename after root integration",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-nested-symbols.test.js tests/a24-explorer-hierarchy.test.js tests/a24-type-rename.test.js",
+      "artifact": "workspace/node-hierarchy-rename-final.log"
+    },
+    {
+      "id": "build-components",
+      "result": "pass; dependency-free browser application built",
+      "command": "node scripts/limited.js npm run build",
+      "artifact": "workspace/build-components.log",
+      "scope": "Build included the buffer-only helper and nested-symbol change; the later notification race follow-up has focused Node evidence and awaits the final integrated build."
+    },
+    {
+      "id": "explorer-example",
+      "result": "pass; two-project hierarchy, linked and dependent items, generated appearance, project-reference rename and exact XML undo",
+      "command": "node scripts/limited.js node examples/explorer-integrity.mjs",
+      "artifact": "workspace/example-explorer.log"
+    },
+    {
+      "id": "workspace-example",
+      "result": "pass; atomic buffer move, undo/redo, disjoint merge and binary recovery",
+      "command": "node scripts/limited.js node examples/workspace-integrity.mjs",
+      "artifact": "workspace/example-workspace.log"
+    },
+    {
+      "id": "browser-components-initial",
+      "result": "blocked before the first component assertion: Chromium closed during initial page.evaluate; 0 qualified check groups and 0 CSP violations",
+      "command": "env PYTHONPATH=/workspace/scratch/3e16369943fd/python-deps CHROMIUM_EXECUTABLE=/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell node scripts/limited.js python tests/browser_a24_integrity_components_test.py",
+      "artifact": "workspace/browser-components-initial.log",
+      "engine": "Chromium headless-shell 153.0.8010.12",
+      "initialExecYieldMs": 1000
+    },
+    {
+      "id": "browser-components-retry",
+      "result": "blocked at the same setup call before component assertions; a 30-second initial exec wait did not change the closure",
+      "command": "env PYTHONPATH=/workspace/scratch/3e16369943fd/python-deps CHROMIUM_EXECUTABLE=/workspace/scratch/3e16369943fd/browser-vendor/chrome-headless-shell-linux64/chrome-headless-shell node scripts/limited.js python tests/browser_a24_integrity_components_test.py",
+      "artifact": "workspace/browser-components-retry.log",
+      "engine": "Chromium headless-shell 153.0.8010.12",
+      "initialExecYieldMs": 30000,
+      "resourceObservation": "Container memory.current 6.77 GB then 7.56 GB of 8.59 GB; oom=5 and oom_kill=3 observed after closure, without a pre-run counter baseline. This does not establish causation. Parent requested no further browser attempts during shared memory pressure."
+    },
+    {
+      "id": "cross-window-notifications",
+      "result": "25/25 pass; newer remote notifications before and during atomic application",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-cross-window-session.test.js tests/a24-workspace-coordination.test.js tests/a24-explorer-lifecycle.test.js",
+      "artifact": "workspace/node-cross-window-notifications.log"
+    },
+    {
+      "id": "cross-window-admission-final",
+      "result": "26/26 pass; active requests retain bounded notification state, duplicate requests reject, and pre-cancelled resolution performs no remote read",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-cross-window-session.test.js tests/a24-workspace-coordination.test.js tests/a24-explorer-lifecycle.test.js",
+      "artifact": "workspace/node-cross-window-admission-final.log"
+    },
+    {
+      "id": "editor-lifecycle",
+      "result": "76/76 pass; 15 new lifecycle cases plus disk load concurrency/scaling, session, Explorer persistence and lazy admission regressions",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-editor-lifecycle.test.js tests/a24-disk-load-concurrency.test.js tests/a24-disk-scaling.test.js tests/a24-workspace-session.test.js tests/a24-explorer-lifecycle.test.js tests/a24-lazy-search.test.js",
+      "artifact": "workspace/node-editor-lifecycle.log"
+    },
+    {
+      "id": "editor-coordination",
+      "result": "19/19 pass; peer conflict admission, stale notifications and save locks retained after cache release changes",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-cross-window-session.test.js tests/a24-workspace-coordination.test.js",
+      "artifact": "workspace/node-editor-coordination.log"
+    },
+    {
+      "id": "editor-recovery",
+      "result": "27/27 pass; generated/read-only flags also survive recovery migration",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-editor-lifecycle.test.js tests/a24-recovery-lazy.test.js tests/a24-workspace-recovery.test.js",
+      "artifact": "workspace/node-editor-recovery.log"
+    },
+    {
+      "id": "editor-final",
+      "result": "15/15 pass after equivalent conditional flag assignment removed per-record array allocation",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-editor-lifecycle.test.js",
+      "artifact": "workspace/node-editor-final.log"
+    },
+    {
+      "id": "publication-foundations",
+      "result": "16/16 Node v24.19.0 Linux x64 pass; journal and revision/reconcile projections",
+      "artifact": "workspace-publication/node-foundations.log",
+      "sourceHeads": [
+        "8a5d9a982e85db387cd925c6eaf6d431a29f967d",
+        "3e95eac168b75d8d98855906225bced479c0a492"
+      ]
+    },
+    {
+      "id": "publication-record-models",
+      "result": "49/49 Node v24.19.0 Linux x64 pass; document import/lazy admission, recovery/receipts/lazy metadata, XML edits and prior workspace I/O/grammar",
+      "artifact": "workspace-publication/node-models.log",
+      "sourceHeads": [
+        "22abeafa0ede226ac17766d57f1577d4e0b3b165",
+        "0a74a66f479d1c93e4b10d8c9f952e05ecf860c9",
+        "04a5b7f02f8de57ea746241e5034573a2f48c2fa"
+      ]
+    },
+    {
+      "id": "publication-explorer-models",
+      "result": "13/13 Node v24.19.0 Linux x64 pass; hierarchy/nested symbols and semantic type rename preview",
+      "artifact": "workspace-publication/node-explorer-models.log",
+      "sourceHeads": [
+        "aa56c45afd945f898bfd7e51ac0d81d47e716878",
+        "708dc95a"
+      ]
+    },
+    {
+      "id": "publication-type-protocol",
+      "result": "1/1 exact compiler method registry case pass after the protocol count was updated for the added prepareTypeRename method",
+      "artifact": "workspace-publication/node-type-protocol.log",
+      "sourceHead": "b4be6cb36c63c2c3a2100e4ccca4b11402e156e5"
+    },
+    {
+      "id": "publication-persistence",
+      "result": "6/6 Node v24.19.0 Linux x64 pass in 530 ms; exact published ExplorerPersistence tree",
+      "artifact": "workspace-publication/node-persistence.log",
+      "sourceHead": "aad3de1eaa630e2c2ae84dbd223fcc44de84c5c1",
+      "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a24-explorer-persistence-controller.test.js"
+    },
+    {
+      "id": "publication-followups-pending",
+      "result": "These projection cases had not run at this earlier checkpoint. Corresponding transfer, bootstrap, physical-adapter, history, editor, command, reveal and host source cases subsequently passed in the integrated host cohort; the peer/panel corrections passed in the affected cohort. Independently adapted projection fixtures remain unqualified unless separately recorded.",
+      "sourceHeads": [
+        "9504fe4ee1fb49b2928f143638f480d5c98fc31f",
+        "84416a457e7fb2b28535bba1122dbd741b461368",
+        "6669f4cdfd54e81cae38d0cf7739a45a49bf3388"
+      ],
+      "reason": "Runtime workstream owns the sole heavy qualification slot. No concurrent test/build/browser was launched.",
+      "status": "historical; superseded for source qualification",
+      "laterEvidence": [
+        "node26-host-complete",
+        "node26-host-corrections"
+      ]
+    },
+    {
+      "id": "node26-host-complete",
+      "result": "500 tests: 495 pass, 5 fail, 0 skips/cancellations",
+      "scope": "Completed integrated host scope. New provider, lifecycle, history, operations, child-loader and direct-reveal cases passed. The peer diagnostic mismatch and other host failures are retained in the raw record.",
+      "sourceHead": "8e2941662234e607018f39a3f6d2cadddb2730a0",
+      "node": "v26.10.0",
+      "platform": "Linux x64",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a00-03-studio-registries.test.js",
+        "tests/a00-20-styles.test.js",
+        "tests/a24-workspace-session.test.js",
+        "tests/a24-workspace-transition.test.js",
+        "tests/a24-workspace-host-concurrency.test.js",
+        "tests/a24-workspace-refactoring.test.js",
+        "tests/a24-workspace-imports.test.js",
+        "tests/a24-editor-lifecycle.test.js",
+        "tests/a24-disk-load-concurrency.test.js",
+        "tests/a24-workspace-import-regression.test.js",
+        "tests/workspace-io.test.js",
+        "tests/workspace-roundtrip.test.js",
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-workspace-navigation.test.js",
+        "tests/a24-diagnostic-source.test.js",
+        "tests/a24-project-panel.test.js",
+        "tests/a24-problems-navigation.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-explorer-transfers.test.js",
+        "tests/a24-recovery-bootstrap.test.js",
+        "tests/a24-peer-buffer-resolution.test.js",
+        "tests/a24-explorer-history.test.js",
+        "tests/a24-editor-lifecycle-foundation.test.js",
+        "tests/a24-explorer-child-loader.test.js",
+        "tests/a24-explorer-reveal.test.js",
+        "tests/a24-explorer-operations.test.js",
+        "tests/a24-type-rename.test.js",
+        "tests/a24-workspace-disk-events.test.js",
+        "tests/a24-workspace-search.test.js",
+        "tests/a24-xml-text-policy.test.js",
+        "tests/a24-xaml-reopen.test.js",
+        "tests/a24-workspace-wizard-native.test.js",
+        "tests/a24-archive-sink-ownership.test.js",
+        "tests/a23-native-designer-files.test.js",
+        "tests/a23-native-publish-encoding.test.js",
+        "tests/a23-native-central-boundaries.test.js",
+        "tests/a23-native-nuget-registration.test.js",
+        "tests/a23-solution-configuration-contract.test.js",
+        "tests/msbuild-solution.test.js",
+        "tests/a23-project-debug-editor.test.js",
+        "tests/a19-03-document-tabs.test.js",
+        "tests/a19-04-docking-model.test.js",
+        "tests/a19-studio-docking-sync.test.js",
+        "tests/a19-window-layouts-navigation.test.js",
+        "tests/project-evaluation-expressions.test.js",
+        "tests/project-evaluation-items.test.js",
+        "tests/project-evaluation-sdk.test.js",
+        "tests/project-evaluation-central-packages.test.js",
+        "tests/project-evaluation-targets.test.js",
+        "tests/project-evaluation-build-stages.test.js",
+        "tests/project-evaluation-build.test.js",
+        "tests/project-evaluation-contexts.test.js",
+        "tests/a24-06-archives.test.js",
+        "tests/a24-06-recursive-archives.test.js",
+        "tests/a24-06-archive-large-metadata.test.js",
+        "tests/a24-06-compression-backends.test.js",
+        "tests/a24-09-destination.test.js",
+        "tests/a23-cil-project-profile.test.js"
+      ],
+      "summary": {
+        "tests": 500,
+        "suites": 0,
+        "pass": 495,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "evidenceOwner": "root",
+      "artifact": "integration/upstream-qualification/node26-host-complete.tap",
+      "metadata": "integration/upstream-qualification/node26-host-complete.json"
+    },
+    {
+      "id": "node26-host-corrections",
+      "result": "39/39 pass; 0 failures/skips/cancellations",
+      "scope": "Affected correction scope only: all 10 real-session save-conflict cases, all 6 peer callback cases, all 6 panel cases and the root wizard/template-package cases. This does not replace the original 500-case result.",
+      "sourceHead": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+      "node": "v26.10.0",
+      "platform": "Linux x64",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a24-peer-buffer-resolution.test.js",
+        "tests/a24-project-panel.test.js",
+        "tests/a24-workspace-wizard-native.test.js",
+        "tests/a24-template-package-atomicity.test.js",
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-save-conflicts.test.js"
+      ],
+      "summary": {
+        "tests": 39,
+        "suites": 0,
+        "pass": 39,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "evidenceOwner": "root",
+      "artifact": "integration/upstream-qualification/node26-host-corrections.tap",
+      "metadata": "integration/upstream-qualification/node26-host-corrections.json"
+    },
+    {
+      "id": "lazy-state-pending",
+      "result": "Not run: seven completed lazy refresh/scope cases await the shared affected qualification cohort.",
+      "sourceHead": "940b5d3085ce5cff045ea416cf8d2c049f291ac4",
+      "test": "tests/a24-explorer-state-restore.test.js",
+      "reason": "Root owns the shared serial qualification slot. No additional test, build or browser run was started for this follow-up.",
+      "status": "historical checkpoint; superseded for source qualification",
+      "laterEvidence": [
+        "node26-final-corrections",
+        "node26-explorer-final-correction"
+      ]
+    },
+    {
+      "id": "node26-final-corrections",
+      "result": "66 tests / 65 pass / 1 fail; 0 skips/cancellations",
+      "scope": "Completed 14-file correction cohort. Duplicate root identity reached the depth bound instead of the explicit unique-ID rejection; the initial failure is retained.",
+      "sourceHead": "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a24-explorer-state-restore.test.js",
+        "tests/a24-explorer-reveal.test.js",
+        "tests/a24-explorer-child-loader.test.js",
+        "tests/a24-explorer-view-policy.test.js",
+        "tests/a24-lazy-tree-identity.test.js",
+        "tests/a24-explorer-hierarchy.test.js",
+        "tests/a23-project-runtime-input.test.js",
+        "tests/a23-native-tool-renderer.test.js",
+        "tests/a23-compiler-worker-entry.test.js",
+        "tests/a24-20-template-engine.test.js",
+        "tests/a24-template-package-atomicity.test.js",
+        "tests/a24-template-engine-boundaries.test.js",
+        "tests/a23-test-explorer-controller.test.js",
+        "tests/a23-native-view-contracts.test.js"
+      ],
+      "exitCode": 1,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/node26-final-corrections.tap",
+      "metadata": "/tmp/p18-final-qualification-logs/node26-final-corrections.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "summary": {
+        "tests": 66,
+        "suites": 0,
+        "pass": 65,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "resourcePreflight": {
+        "actualFreeBytes": 2879488000,
+        "availableBytes": 2879488000,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7939235840",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2879488000,
+        "availableBytes": 2879488000,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8051847168",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "node26-explorer-final-correction",
+      "result": "30/30 pass; 0 skips/cancellations",
+      "scope": "Six affected Explorer files after the three-line fix, including all seven lazy-state cases. No test assertion was weakened; unaffected Node cohorts were not repeated.",
+      "sourceHead": "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a24-explorer-state-restore.test.js",
+        "tests/a24-explorer-reveal.test.js",
+        "tests/a24-explorer-child-loader.test.js",
+        "tests/a24-explorer-view-policy.test.js",
+        "tests/a24-lazy-tree-identity.test.js",
+        "tests/a24-explorer-hierarchy.test.js"
+      ],
+      "exitCode": 0,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/explorer-final/node26-explorer-final-correction.tap",
+      "metadata": "/tmp/p18-final-qualification-logs/explorer-final/node26-explorer-final-correction.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "summary": {
+        "tests": 30,
+        "suites": 0,
+        "pass": 30,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "resourcePreflight": {
+        "actualFreeBytes": 2879479808,
+        "availableBytes": 2879479808,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8135860224",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2879479808,
+        "availableBytes": 2879479808,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7955431424",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "core-static-initial",
+      "result": "npm check exit 1: syntax/manifests pass, dynamic-import review fails",
+      "scope": "Two reviewed browser fixture hashes had become stale and one analysis helper used computed imports. Root corrected only those source/review entries before repeating npm check.",
+      "sourceHead": "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 1,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/explorer-final/check.log",
+      "metadata": "/tmp/p18-final-qualification-logs/explorer-final/check.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "resourcePreflight": {
+        "actualFreeBytes": 2879479808,
+        "availableBytes": 2879479808,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7955324928",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8020844544",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 786794\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "core-check-final",
+      "result": "pass: 30 manifest areas, 809 Node files, 33 browser scripts, no assignment errors; 3274 modules syntax-clean; 3270 static modules pass",
+      "scope": "Exact e8f production source in a clean full checkout; no protected Studio proposal applied.",
+      "sourceHead": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/core-final/check.log",
+      "metadata": "/tmp/p18-final-qualification-logs/core-final/check.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "resourcePreflight": {
+        "actualFreeBytes": 2879451136,
+        "availableBytes": 2879451136,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7582523392",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7684304896",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "core-structure-final",
+      "result": "exit 1: 265 inherited structure violations; zero new or worsened over-budget dimensions against reviewed b34 main",
+      "scope": "Root compared every violation against exact b34 Git blobs and retained the failure. No baseline or policy changes; full repository structure is not claimed passing.",
+      "sourceHead": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/quality/check-structure.js",
+        "--strict"
+      ],
+      "exitCode": 1,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/core-final/structure.log",
+      "metadata": "/tmp/p18-final-qualification-logs/core-final/structure.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "resourcePreflight": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7686066176",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2879455232,
+        "availableBytes": 2879455232,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7689424896",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 795183\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "core-build-final",
+      "result": "pass; dependency-free production browser application built, 49 MiB dist",
+      "scope": "Exact e8f source, sequential after npm check and reviewed inherited structure debt.",
+      "sourceHead": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/build-final/build.log",
+      "metadata": "/tmp/p18-final-qualification-logs/build-final/build.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "resourcePreflight": {
+        "actualFreeBytes": 2879963136,
+        "availableBytes": 2879963136,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7810662400",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 802439\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2829246464,
+        "availableBytes": 2829246464,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7828897792",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 802439\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "core-clean-final",
+      "result": "pass; no tracked modifications or unignored outputs",
+      "scope": "Exact e8f remained clean after production build.",
+      "sourceHead": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/clean-checkout.js"
+      ],
+      "exitCode": 0,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/build-final/clean-checkout.log",
+      "metadata": "/tmp/p18-final-qualification-logs/build-final/clean-checkout.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "resourcePreflight": {
+        "actualFreeBytes": 2829246464,
+        "availableBytes": 2829246464,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7830081536",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 802439\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2829246464,
+        "availableBytes": 2829246464,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7835271168",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 802439\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": ""
+    },
+    {
+      "id": "browser-components-clean-final",
+      "result": "blocked before first assertion; TargetClosedError while awaiting persistent folder identity; 0 qualified check groups",
+      "scope": "One coordinator-released attempt after clean tmpfs build. Chromium headless-shell 153.0.8010.12 / Playwright 1.63.0 / Python 3.12.14; real production HTTP/CSP. No in-memory storage or proposal entry.",
+      "sourceHead": "e8f1502379a2635d4cf448c86ad552298404ef53",
+      "command": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "python",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "exitCode": 1,
+      "evidenceOwner": "root",
+      "artifact": "/tmp/p18-final-qualification-logs/browser-components-final/browser-a24-integrity-components.log",
+      "metadata": "/tmp/p18-final-qualification-logs/browser-components-final/browser-a24-integrity-components.json",
+      "archiveStatus": "Raw logs retained outside the clean checkout; root owns final integration archival.",
+      "resourcePreflight": {
+        "actualFreeBytes": 2829254656,
+        "availableBytes": 2829254656,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "8160321536",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 806909\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "resourceAfter": {
+        "actualFreeBytes": 2829221888,
+        "availableBytes": 2829221888,
+        "minimumFreeBytes": 536870912,
+        "memory.current": "7859785728",
+        "memory.max": "8589934592",
+        "memory.events": "low 0\nhigh 0\nmax 807876\noom 5\noom_kill 3\noom_group_kill 0"
+      },
+      "checkoutStatusAfter": "",
+      "engine": "Chromium headless-shell 153.0.8010.12",
+      "qualifiedGroups": 0,
+      "cspViolations": 0,
+      "resourceObservation": "Chromium warned that its temporary shared-memory directory had 0 free bytes. Default --disable-dev-shm-usage and /tmp profile were retained. Cgroup OOM counters were unchanged at 5 events / 3 kills; causation is not asserted.",
+      "session": "/tmp/p18-final-qualification-logs/browser-components-final/results/browser_a24_integrity_components_test/session.json",
+      "results": "/tmp/p18-final-qualification-logs/browser-components-final/results/a24-integrity-components-results.json"
+    }
+  ],
+  "toolchain": {
+    "node": "v26.10.0 for the latest integrated host cohorts; earlier isolated projections used v24.19.0",
+    "platform": "Linux x64",
+    "runner": "scripts/limited.js with explicit --test-concurrency=1; completed scopes run serially under parent coordination",
+    "executionEngines": "Host JavaScript and compiler semantic analysis only. This scope does not add VM, CIL or Rust instruction behavior. Actual browser integrations are qualified separately."
+  },
+  "performance": {
+    "artifact": "workspace-explorer-benchmark.json",
+    "command": "node scripts/benchmark-a24-integrity.js",
+    "reference": "2706a82",
+    "files": 10000,
+    "warmSamples": 20,
+    "facts": [
+      "Full hierarchy cold latency: 126.944 ms before, 137.144 ms after (8.0% slower).",
+      "Warm median: 109.774 ms before, 86.964 ms after; p95 149.810\u2192131.495 ms; p99 164.510\u2192136.198 ms.",
+      "Observed heap delta 32,696,328\u219269,643,880 bytes; this is neither allocation volume nor peak memory.",
+      "25 additional groups are represented after the hierarchy change. Default large Studio scopes now use the VFS owner\u2019s explicit paged Folder fallback, independently qualified there."
+    ],
+    "limits": [
+      "Shared machine; not a controlled benchmark or performance sign-off.",
+      "Allocation volume and controlled cold-path regression budget remain unqualified."
+    ],
+    "lifecycleBound": "5000-provider-entry fixture with 40 open/close cycles ran in 480.445 ms in the first batch. This includes provider population and assertions; it is not a UI latency, allocation or controlled performance benchmark."
+  },
+  "sharedDependencies": [
+    {
+      "issue": 3174,
+      "owner": "filesystem_providers",
+      "evidence": "filesystem.json"
+    },
+    {
+      "issue": 3175,
+      "owner": "filesystem_providers",
+      "evidence": "filesystem.json"
+    },
+    {
+      "issue": 3195,
+      "owner": "filesystem_providers",
+      "evidence": "filesystem.json",
+      "note": "VFS owner qualifies LazyDocumentStore/Workspace admission. This manifest additionally qualifies the real session/disk/Explorer/worker-handler close and reopen composition."
+    },
+    {
+      "issue": 3197,
+      "owner": "filesystem_providers",
+      "evidence": "filesystem.json",
+      "note": "Actual SolutionExplorer uses the explicit paged Folder mode above 2000 entries. Direct reveal resolves only a containing page per ancestor; its six source cases passed. The additional seven-case lazy refresh/scoped-state follow-up remains unqualified."
+    }
+  ],
+  "integrationHooks": {
+    "saveConflict": "chooseSaveConflict: value => promptWorkspaceSaveConflict({ask, query:$, escapeHtml:E}, value)",
+    "legacyBootstrap": "await restoreLegacyWorkspace({storage, legacyStorage:globalThis.localStorage, session:workspaceSession, onDiagnostic}); load default sample only when !restored && !blocked; gate Build/Run on recoveryReadOnly.",
+    "typeRename": "prepareTypeRename: request => prepareExplorerTypeRename(explorerContext(), requestCompiler, request)",
+    "physicalOperations": "session.commit via ExplorerCommands.host.commit and persistence.ready/saveReceipt; provider adapter finalizes physical indexes and only operation-affected dirty paths.",
+    "recentRecovery": "session.reopenRecent accepts a granted physical handle or permission-denied read-only recovery with bounded lazy membership.",
+    "crossWindow": "applyConflictResolution: resolution => applyWorkspaceConflictResolution(workspaceSessionHost, workspaceSession, resolution); this applies dirty buffers only, never a physical journal write.",
+    "editorLifecycle": {
+      "close": "After removing a closed tab, clear active when no tab remains and call session.closeRecord(path). Both docking close and :q use this path.",
+      "open": "Call session.retainRecord(uri) at the start of synchronous openFile. Lazy navigation awaits session.loadRecord(path) before admitWorkspaceSource.",
+      "host": [
+        "isDocumentOpen checks docking location/popouts",
+        "releaseDocumentView calls releaseWorkspaceEditorView and clears matching active editor reference",
+        "canReleaseDocument/releaseDocumentCaches delegate to SolutionExplorer",
+        "releaseCompilerDocuments uses compiler.request directly",
+        "renderDocuments refreshes tabs/tree/breadcrumb without selecting closed buffers"
+      ],
+      "worker": "Register releaseDocuments with registerDocumentLifecycleHandlers; use syncWorkerDocuments to preserve existing source synchronization.",
+      "contract": "apps/studio/WORKSPACE-DOCUMENTS.md"
+    }
+  },
+  "remainingPlatformQualification": [
+    "Final locked apps/studio/studio.js wiring and production browser corpus are owned by root. No acceptance is inferred from the prepared patch.",
+    "Native picker/permission revocation and OS drag/drop UI have not run.",
+    "Firefox, WebKit, Windows and macOS are unqualified for this scope.",
+    "Production application integrity and real-API component scripts are authored. All three recorded Chromium 153 component attempts closed during setup before assertions. The final clean-checkout attempt also records 0 free bytes in Chromium temporary shared memory. No browser group is claimed passing; root controls further completed-scope qualification."
+  ],
+  "issues": [
+    {
+      "issue": 3111,
+      "workId": "SF-A24-B01",
+      "title": "[SF-A24-B01] Workspace.importProject resets document versions to 1",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3111",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified",
+      "implementation": [
+        "packages/workspace/src/workspace.js"
+      ],
+      "testedAcceptance": [
+        "Per-URI watermarks survive import, removal and reopen; stale pre-import edits reject, malformed imports leave the old state intact."
+      ],
+      "evidence": [
+        "tests/a24-workspace-import-regression.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3112,
+      "workId": "SF-A24-B02",
+      "title": "[SF-A24-B02] rewriteProjectPath skips paths containing XML entities",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3112",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified",
+      "implementation": [
+        "packages/project-system/src/explorer/solution-edits.js"
+      ],
+      "testedAcceptance": [
+        "Source spans are entity-decoded for matching and re-escaped with the original quote style; literal path changes preserve unrelated XML."
+      ],
+      "evidence": [
+        "tests/a24-explorer-xml-regression.test.js",
+        "tests/release08-explorer.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3172,
+      "workId": "SF-A24-T01.1",
+      "title": "[SF-A24-T01.1] Implement workspace transaction journal",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3172",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/transactions.js",
+        "packages/workspace/src/transaction-state.js",
+        "packages/workspace/src/provider-transactions.js",
+        "packages/workspace/src/recovery/receipt-store.js"
+      ],
+      "testedAcceptance": [
+        "Complete journal admission precedes physical effects; failure after the third close lists exact completed primitives, preserves unsaved memory and retains a durable before/after receipt."
+      ],
+      "evidence": [
+        "tests/a24-workspace-transactions.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-workspace-receipts.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "Final Studio host callback integration and browser physical-operation corpus are owned by root.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3173,
+      "workId": "SF-A24-T01.2",
+      "title": "[SF-A24-T01.2] Add undo and redo for browser workspace file operations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3173",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/file-history.js",
+        "apps/studio/explorer/operation-history.js"
+      ],
+      "testedAcceptance": [
+        "Byte-bounded undo/redo restores binary bytes, project XML, paths and editor metadata; newer buffers reject stale inverse operations.",
+        "A newer cross-window buffer resolution causes both older undo and redo entries to reject before disk effects, preserving the history entries and newer dirty contents."
+      ],
+      "evidence": [
+        "tests/a24-workspace-transactions.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-explorer-operations.test.js",
+        "tests/a24-cross-window-session.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "Browser/File System Access command UI qualification awaits final Studio wiring. Native redo is an explicit unavailable path and is outside this browser/FSA leaf.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3176,
+      "workId": "SF-A24-T01.5",
+      "title": "[SF-A24-T01.5] Reconcile unsaved buffers with conflicting disk state",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3176",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/reconcile.js",
+        "apps/studio/workspace-save.js",
+        "apps/studio/workspace-save-conflict.js",
+        "apps/studio/workspace-session.js"
+      ],
+      "testedAcceptance": [
+        "Explicit keep-mine, take-theirs and bounded text merge are collected before saving; reviewed remote hashes and current buffer versions are rechecked. Later editor edits survive; partial physical writes are enumerated.",
+        "All 10 real-session save-conflict cases passed in the Node 26.10.0 affected cohort at 3f271792, including workspace identity fencing and edits during asynchronous dirty-hash reconciliation."
+      ],
+      "evidence": [
+        "tests/a24-save-conflicts.test.js",
+        "tests/a24-workspace-session.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "Root must bind chooseSaveConflict to the supplied dialog in the locked Studio host; OS-native picker and actual host Save UI remain unqualified.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3177,
+      "workId": "SF-A24-T02.1",
+      "title": "[SF-A24-T02.1] Extract tree builders from buildSolutionTree",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3177",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified",
+      "implementation": [
+        "packages/project-system/src/explorer.js",
+        "packages/project-system/src/explorer/tree-solution.js",
+        "packages/project-system/src/explorer/tree-folder.js",
+        "packages/project-system/src/explorer/tree-project.js",
+        "packages/project-system/src/explorer/tree-dependencies.js",
+        "packages/project-system/src/explorer/tree-symbols.js",
+        "packages/project-system/src/explorer/solution-edits.js"
+      ],
+      "testedAcceptance": [
+        "Explorer facade reexports focused builders and edit helpers; unchanged release08 regression cases pass, including evaluated non-file Using items."
+      ],
+      "evidence": [
+        "tests/a24-explorer-hierarchy.test.js",
+        "tests/release08-explorer.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3178,
+      "workId": "SF-A24-T02.2",
+      "title": "[SF-A24-T02.2] Show full Dependencies hierarchy per target framework",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3178",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/project-system/src/explorer/tree-dependencies.js"
+      ],
+      "testedAcceptance": [
+        "Each target framework owns Frameworks, Packages, Projects, Assemblies and Analyzers groups. Transitive assets and unresolved diagnostics remain attached to stable nodes."
+      ],
+      "evidence": [
+        "tests/a24-explorer-hierarchy.test.js"
+      ],
+      "remaining": [
+        "Actual native-context metadata production is qualified by the native/MSBuild owner; these tests exercise the public evaluated model contract."
+      ]
+    },
+    {
+      "issue": 3179,
+      "workId": "SF-A24-T02.3",
+      "title": "[SF-A24-T02.3] Apply file nesting rules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3179",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified",
+      "implementation": [
+        "packages/project-system/src/explorer/file-nesting.js",
+        "apps/studio/explorer/toolbar.js"
+      ],
+      "testedAcceptance": [
+        "DependentUpon and default companion rules nest XAML code-behind, designers, generated sources, settings and partial companions; toggling preserves node identifiers."
+      ],
+      "evidence": [
+        "tests/a24-explorer-hierarchy.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3180,
+      "workId": "SF-A24-T02.4",
+      "title": "[SF-A24-T02.4] Show generated files, imports and unloaded projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3180",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/project-system/src/explorer/tree-extras.js",
+        "packages/project-system/src/explorer/tree-solution.js"
+      ],
+      "testedAcceptance": [
+        "Generated groups and imports are project-scoped; non-C# solution projects remain visible as unloaded records with their reasons."
+      ],
+      "evidence": [
+        "tests/a24-explorer-hierarchy.test.js"
+      ],
+      "remaining": [
+        "Legacy solution parsing and A23 project evaluation are dependency implementations by tests_workflows and portable_evaluator."
+      ]
+    },
+    {
+      "issue": 3181,
+      "workId": "SF-A24-T02.5",
+      "title": "[SF-A24-T02.5] Guarantee stable node ids and selection across refresh",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3181",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node hierarchy/remap/direct-reveal/lazy refresh and scope qualified; final Studio/browser focused-row acceptance pending",
+      "implementation": [
+        "packages/project-system/src/explorer/node-identity.js",
+        "apps/studio/explorer/view.js",
+        "packages/project-system/src/explorer/reveal-path.js",
+        "apps/studio/explorer/child-page.js",
+        "apps/studio/explorer/child-loader.js",
+        "apps/studio/explorer/reveal.js",
+        "apps/studio/explorer/lazy-state.js"
+      ],
+      "testedAcceptance": [
+        "Stable identifiers remap selected/focused/expanded TreeModel state after physical renames in the hierarchy tests.",
+        "All five child-loader and six direct-reveal source cases passed at 8e294166, including stale workspace responses, noncontiguous page overlap and atomic invalid-page rejection.",
+        "All seven lazy refresh/scope cases and the complete six-file affected Explorer cohort passed 30/30 at 3ed2eb82 after explicit duplicate-ID rejection; the original failing assertion is unchanged."
+      ],
+      "evidence": [
+        "tests/a24-explorer-hierarchy.test.js",
+        "tests/browser_a24_integrity_test.py",
+        "tests/browser_a24_integrity_components_test.py",
+        "tests/a24-explorer-child-loader.test.js",
+        "tests/a24-explorer-reveal.test.js",
+        "tests/a24-explorer-state-restore.test.js"
+      ],
+      "remaining": [
+        "The authored full-application browser test has not passed on the final Studio host; do not claim its focused-row/rename acceptance yet.",
+        "The real-API component browser suite is authored but all three recorded attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ],
+      "authoredAcceptance": [
+        "Seven new cases at 940b5d30 exercise lazy refresh selection/focus/scroll, scoped page retention, rename remapping, serialized state, cancellation/user-state fencing, same-ID disk replacement and invalid restored pages. All seven passed in the affected Explorer replay at 3ed2eb82."
+      ]
+    },
+    {
+      "issue": 3182,
+      "workId": "SF-A24-T02.6",
+      "title": "[SF-A24-T02.6] Extend symbol children to all type and member kinds",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3182",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/project-system/src/explorer/tree-symbols.js",
+        "packages/project-system/src/explorer/symbol-ownership.js",
+        "apps/studio/explorer/view.js"
+      ],
+      "testedAcceptance": [
+        "Symbol children load on expansion and include nested types, enum members, events, constructors and delegates. Interval ownership avoids ambiguous name attachment and malformed cycles.",
+        "A physical source nested under another source retains its own lazy symbol loader; restoring only the child expansion does not allocate the parent symbols."
+      ],
+      "evidence": [
+        "tests/a24-explorer-hierarchy.test.js",
+        "tests/a24-explorer-lifecycle.test.js",
+        "tests/a24-nested-symbols.test.js"
+      ],
+      "remaining": [
+        "The public symbol list determines which language constructs exist; unsupported compiler constructs retain their language diagnostics."
+      ]
+    },
+    {
+      "issue": 3183,
+      "workId": "SF-A24-T03.1",
+      "title": "[SF-A24-T03.1] Split ExplorerCommands into per-operation command modules",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3183",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "apps/studio/explorer-commands.js",
+        "apps/studio/explorer/commands.js",
+        "apps/studio/explorer/command-table.js",
+        "apps/studio/explorer/clipboard.js",
+        "apps/studio/explorer/move-copy.js",
+        "apps/studio/explorer/rename.js",
+        "apps/studio/explorer/delete.js",
+        "apps/studio/explorer/membership.js",
+        "apps/studio/explorer/solution.js",
+        "apps/studio/explorer/references.js"
+      ],
+      "testedAcceptance": [
+        "Stable facade delegates operation behavior through the command registration table; unchanged release08 command regressions pass."
+      ],
+      "evidence": [
+        "tests/a24-explorer-operations.test.js",
+        "tests/release08-commands.test.js"
+      ],
+      "remaining": [
+        "Existing browser explorer suite requires final integrated Studio callbacks before its unchanged-host acceptance is qualified."
+      ]
+    },
+    {
+      "issue": 3184,
+      "workId": "SF-A24-T03.2",
+      "title": "[SF-A24-T03.2] Implement cut, copy and paste with collision naming",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3184",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "apps/studio/explorer/clipboard.js",
+        "apps/studio/explorer/move-copy.js"
+      ],
+      "testedAcceptance": [
+        "Same-folder copy chooses portable - Copy collision names; cut/paste updates source/destination project membership and retains binary snapshots for undo/redo."
+      ],
+      "evidence": [
+        "tests/a24-explorer-operations.test.js",
+        "tests/release08-commands.test.js"
+      ],
+      "remaining": [
+        "Actual desktop clipboard/keyboard interaction is not qualified by the Node host fixture."
+      ]
+    },
+    {
+      "issue": 3185,
+      "workId": "SF-A24-T03.3",
+      "title": "[SF-A24-T03.3] Implement drag and drop between folders and projects",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3185",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "apps/studio/explorer/drag-drop.js",
+        "apps/studio/explorer/view.js"
+      ],
+      "testedAcceptance": [
+        "Internal move/copy/link modifiers and external File byte imports use the journal; invalid destinations and changed size metadata reject before mutation."
+      ],
+      "evidence": [
+        "tests/a24-explorer-operations.test.js"
+      ],
+      "remaining": [
+        "OS drag gestures are represented by deterministic File/target input fixtures; native desktop drag/drop UI is not claimed as tested."
+      ]
+    },
+    {
+      "issue": 3186,
+      "workId": "SF-A24-T03.4",
+      "title": "[SF-A24-T03.4] Rename and move files with reference fix-ups",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3186",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "apps/studio/explorer/rename.js",
+        "apps/studio/explorer/type-rename.js",
+        "packages/compiler/src/type-rename.js",
+        "packages/compiler/src/type-rename-index.js",
+        "packages/language/src/rename.js",
+        "apps/studio/workers/type-rename.js"
+      ],
+      "testedAcceptance": [
+        "Project renames update solution and dependent references in one history entry. Accepted optional type rename uses actual semantic symbol identities, checks the second binding and joins file/project/source edits in one transaction; decline retains type spelling."
+      ],
+      "evidence": [
+        "tests/a24-type-rename.test.js",
+        "tests/a24-explorer-operations.test.js"
+      ],
+      "remaining": [
+        "Host prepareTypeRename must be bound in the root Studio patch. Native, multiple project/TFM contexts, aliases, cref, inactive regions, generated edits, incomplete or unaccounted semantic references are explicitly unavailable; no text-only substitute is used."
+      ]
+    },
+    {
+      "issue": 3187,
+      "workId": "SF-A24-T03.5",
+      "title": "[SF-A24-T03.5] Implement include, exclude and linked-file workflows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3187",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified",
+      "implementation": [
+        "apps/studio/explorer/membership.js",
+        "packages/project-system/src/explorer/solution-edits.js"
+      ],
+      "testedAcceptance": [
+        "Include/exclude, Link metadata and Build Action changes delegate to source-preserving edits. Links reuse physical bytes and show under logical Link paths."
+      ],
+      "evidence": [
+        "tests/a24-explorer-operations.test.js",
+        "tests/release08-commands.test.js"
+      ],
+      "remaining": []
+    },
+    {
+      "issue": 3188,
+      "workId": "SF-A24-T03.6",
+      "title": "[SF-A24-T03.6] Coalesce project membership edits instead of appending groups",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3188",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/project-system/src/explorer/solution-edits.js",
+        "packages/project-system/src/project-edit/index.js"
+      ],
+      "testedAcceptance": [
+        "Existing literal membership entries and ItemGroups are reused; repeated include/exclude toggles coalesce. Explicit Import ordering uses the A23 edit core override rules."
+      ],
+      "evidence": [
+        "tests/release08-explorer.test.js",
+        "tests/release08-commands.test.js"
+      ],
+      "remaining": [
+        "The source-preserving edit core and its dedicated import/CST qualification are owned by tests_workflows."
+      ]
+    },
+    {
+      "issue": 3189,
+      "workId": "SF-A24-T03.7",
+      "title": "[SF-A24-T03.7] Reject unsafe moves and report batch results",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3189",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "apps/studio/explorer/guards.js",
+        "apps/studio/explorer/move-copy.js",
+        "apps/studio/explorer/commands.js"
+      ],
+      "testedAcceptance": [
+        "Unsafe/reserved destinations, project-folder relocation and collisions are rejected. Partial valid batches require an explicit confirmation and return completed/rejected entries."
+      ],
+      "evidence": [
+        "tests/a24-explorer-operations.test.js",
+        "tests/release08-commands.test.js"
+      ],
+      "remaining": [
+        "Provider trust/symlink and native filesystem platform policies are separately qualified by their owners."
+      ]
+    },
+    {
+      "issue": 3221,
+      "workId": "SF-A24-T10.1",
+      "title": "[SF-A24-T10.1] Define versioned recovery record schema and migrations",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3221",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/recovery/schema.js",
+        "packages/workspace/src/recovery/records.js",
+        "apps/studio/workspace-recovery.js"
+      ],
+      "testedAcceptance": [
+        "0.6\u20130.14 records migrate byte contents, versions, bounded lazy membership, dirty paths, settings, app descriptors and open documents; newer versions remain intact."
+      ],
+      "evidence": [
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/a24-recovery-bootstrap.test.js"
+      ],
+      "remaining": [
+        "Root must replace the old synchronous legacy bootstrap with restoreLegacyWorkspace; blocked means automatic replacement is prohibited, not that the application UI cannot start."
+      ]
+    },
+    {
+      "issue": 3222,
+      "workId": "SF-A24-T10.2",
+      "title": "[SF-A24-T10.2] Store recovery data in OPFS instead of localStorage",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3222",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/recovery/opfs-store.js",
+        "apps/studio/explorer/persistence.js"
+      ],
+      "testedAcceptance": [
+        "Checksummed snapshots close before the current/previous manifest swaps. Binary recovery is exact; quota fallback retains all membership and explicitly marks omitted binary contents as lazy recoveryMissing:quota."
+      ],
+      "evidence": [
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/a24-explorer-lifecycle.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "Real OPFS checkpoint/controller qualification is pending in this manifest; VFS real OPFS byte/worker evidence does not by itself qualify this store.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3223,
+      "workId": "SF-A24-T10.3",
+      "title": "[SF-A24-T10.3] Persist folder handles for recent workspaces",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3223",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/recovery/handles.js",
+        "apps/studio/explorer/persistence.js",
+        "apps/studio/workspace-session.js"
+      ],
+      "testedAcceptance": [
+        "isSameEntry identifies the physical directory under a registration lock; reopen explicitly queries/requests permission, restores tabs and falls back to read-only loaded buffers plus lazy metadata on denial."
+      ],
+      "evidence": [
+        "tests/a24-explorer-lifecycle.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/a24-workspace-session.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "Real IndexedDB handle cloning and OS file picker grant/revocation UI remain to be qualified; current denial/grant tests use an independent directory-handle fixture.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3224,
+      "workId": "SF-A24-T10.4",
+      "title": "[SF-A24-T10.4] Quarantine corrupt records and exclude secrets",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3224",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/recovery/integrity.js",
+        "packages/workspace/src/recovery/schema.js",
+        "packages/workspace/src/recovery/opfs-store.js",
+        "apps/studio/workspace-recovery.js"
+      ],
+      "testedAcceptance": [
+        "Corrupt OPFS payloads are quarantined and the previous checksum-valid generation is read. Legacy originals are retained and diagnostics report invalid/newer formats. Recursive sanitation removes trust, credentials, tokens and authority fields."
+      ],
+      "evidence": [
+        "tests/a24-workspace-recovery.test.js",
+        "tests/a24-recovery-lazy.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "Startup host integration must honor blocked recovery without auto-saving a replacement sample.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3225,
+      "workId": "SF-A24-T11.1",
+      "title": "[SF-A24-T11.1] Broadcast document revisions between windows",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3225",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/coordination/channel.js",
+        "apps/studio/explorer/persistence.js"
+      ],
+      "testedAcceptance": [
+        "Presence and immediate revision/hash notifications use stable physical workspace identity; replayed/out-of-order senders are ignored and divergent peers become stale without changing their text."
+      ],
+      "evidence": [
+        "tests/a24-workspace-coordination.test.js",
+        "tests/a24-explorer-lifecycle.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "The Node injected EventTarget transport passes; actual two-window browser event-loop timing remains unqualified.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3226,
+      "workId": "SF-A24-T11.2",
+      "title": "[SF-A24-T11.2] Guard saves with Web Locks ownership",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3226",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/coordination/locks.js",
+        "packages/workspace/src/provider-transactions.js",
+        "apps/studio/workspace-save.js"
+      ],
+      "testedAcceptance": [
+        "Saves hold a shared workspace and exclusive file lock, reread the SHA baseline inside ownership, and reject stale concurrent writes. Structural journals hold exclusive workspace ownership."
+      ],
+      "evidence": [
+        "tests/a24-workspace-coordination.test.js",
+        "tests/a24-provider-transactions.test.js",
+        "tests/a24-save-conflicts.test.js",
+        "tests/browser_a24_integrity_components_test.py"
+      ],
+      "remaining": [
+        "The one-success/one-conflict race currently uses deterministic injected Web Locks in Node; actual competing browser windows remain unqualified.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet."
+      ]
+    },
+    {
+      "issue": 3227,
+      "workId": "SF-A24-T11.3",
+      "title": "[SF-A24-T11.3] Resolve cross-window edit conflicts explicitly",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3227",
+      "implementationStatus": "implemented",
+      "qualificationStatus": "Node-qualified; pending integration/platform evidence",
+      "implementation": [
+        "packages/workspace/src/coordination/conflicts.js",
+        "apps/studio/explorer/persistence.js",
+        "apps/studio/explorer/command-table.js",
+        "apps/studio/workspace-conflicts.js"
+      ],
+      "testedAcceptance": [
+        "Explicit adopt-newer, keep-mine and non-overlapping merge retain all version snapshots, reject stale decisions and publish the chosen revision through the channel.",
+        "Concrete session helper applies exact selected bytes to dirty buffers without advancing disk baselines. Two sessions can adopt the same unsaved result before an explicit save. Immutable local admission rejects in-place mutations during remote reads.",
+        "A newer notification rejects a pending old choice; if it arrives during admitted application, the selected buffer stays committed and pendingConflict preserves the new comparison. Duplicate resolution requests and pre-cancellation reject explicitly.",
+        "All six peer callback source cases passed in the 39/39 correction cohort at 3f271792 after the precise stale-hash diagnostic was corrected. The original 5/6 callback result remains in the 500-case host log."
+      ],
+      "evidence": [
+        "tests/a24-workspace-coordination.test.js",
+        "tests/a24-explorer-lifecycle.test.js",
+        "tests/a24-cross-window-session.test.js",
+        "tests/browser_a24_integrity_components_test.py",
+        "tests/a24-peer-buffer-resolution.test.js"
+      ],
+      "remaining": [
+        "Root must bind the atomic conflict-resolution command callback; full browser dialog/propagation acceptance is pending.",
+        "The real-API component browser suite is authored but both attempts ended during setup; it supplies no passing acceptance evidence yet.",
+        "The corrected callback has source-host evidence; its independently projected dependency tree and browser dialog propagation remain separately unqualified."
+      ]
+    },
+    {
+      "issue": 3195,
+      "workId": "SF-A24-T05.1",
+      "title": "Remove fixed document ceilings with lazily loaded documents",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3195",
+      "implementationStatus": "Workspace/store and unlocked Studio lifecycle implemented; production entry hook integration remains parent-owned",
+      "qualificationStatus": "Node composition qualified; production Studio/browser close/reopen unqualified",
+      "implementation": [
+        "packages/workspace/src/workspace.js",
+        "packages/workspace/src/lazy/document-store.js",
+        "packages/project-system/src/provider-disk-workspace.js",
+        "apps/studio/workspace-editor-lifecycle.js",
+        "apps/studio/workspace-session.js",
+        "apps/studio/workers/document-lifecycle.js",
+        "apps/studio/explorer/persistence.js",
+        "apps/studio/explorer/view.js"
+      ],
+      "testedAcceptance": [
+        "5000 actual MemoryFileSystemProvider entries; 40 sequential open/close cycles retain at most one editor buffer and zero loaded disk bytes after each close.",
+        "Actual Workspace source/syntax objects are released through an exact-version handler; reopening reads current physical bytes and admits a larger version without parsing until requested.",
+        "Dirty, unbacked, generated, read-only/recovery and unresolved-conflict sources retain contents; protection flags survive load, context overlays, transactional commit and recovery migration.",
+        "Reopen/edit/workspace changes during digest prevent stale eviction. Delayed read/handle acquisition aborts before disk or host publication on close, membership change, workspace replacement or cancellation.",
+        "Both docking content maps release closed editor elements; popouts retain them. Queued obsolete Explorer digests cannot restore released text or merge baselines.",
+        "The eight standalone editor lifecycle foundation cases and existing session/disk/worker-handler composition passed in the completed Node 26.10.0 host cohort at 8e294166."
+      ],
+      "evidence": [
+        "tests/a24-editor-lifecycle.test.js",
+        "tests/a24-lazy-search.test.js",
+        "workspace/node-editor-lifecycle.log",
+        "workspace/node-editor-coordination.log",
+        "workspace/node-editor-recovery.log",
+        "workspace/node-editor-final.log",
+        "tests/a24-editor-lifecycle-foundation.test.js",
+        "integration/upstream-qualification/node26-host-complete.tap"
+      ],
+      "remaining": [
+        "Root must apply the reviewed Studio onClose/:q/retainRecord hooks. Compiler worker releaseDocuments registration is implemented in 48862fae.",
+        "Actual production browser tab lifecycle, detached window and OS permission interactions have not run. Node docking references are a fixture, not platform evidence."
+      ]
+    }
+  ],
+  "examplesAndContracts": {
+    "explorer": "packages/project-system/EXPLORER.md",
+    "workspace": "packages/workspace/TRANSACTIONS.md",
+    "runnable": [
+      "examples/explorer-integrity.mjs",
+      "examples/workspace-integrity.mjs"
+    ],
+    "documentLifecycle": "apps/studio/WORKSPACE-DOCUMENTS.md",
+    "lazyState": "apps/studio/EXPLORER-STATE.md",
+    "documentLifecycleFoundation": "apps/studio/WORKSPACE-EDITOR-LIFECYCLE.md",
+    "save": "apps/studio/WORKSPACE-SAVE.md",
+    "session": "apps/studio/WORKSPACE-SESSION.md"
+  },
+  "logFormatting": "Only trailing whitespace was removed from checked-in browser stderr logs for git diff whitespace checks; all diagnostic text and launch arguments are retained.",
+  "sourceChecks": {
+    "diffWhitespace": "git diff --check: pass after trailing browser-stderr whitespace normalization",
+    "editedSourceLimits": "All new/edited JavaScript, examples and Python fixture files in the latest follow-ups are below 500 lines and 40 KB with no lines over 160 characters.",
+    "centralGate": "Integrated npm check/build/clean-checkout pass at e8f. Strict structure returns exit 1 for inherited debt; root exact-b34 comparison finds zero introduced/worsened over-budget dimensions. Node and browser outcomes are recorded separately.",
+    "latestFollowup": "4c94bb12 changes only three implementation lines in child-page.js; whitespace check passes. Six published file blobs exactly match qualified 3ed source; all seven lazy-state cases pass within the 30-case affected cohort."
+  },
+  "publicationEvidence": "workspace-publication.json",
+  "qualifiedIntegrationHeads": [
+    "8e2941662234e607018f39a3f6d2cadddb2730a0",
+    "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+    "af15e96b59ac41dda59ea4757d0d5de70f0f5b12",
+    "3ed2eb8224005b8084f71a6dd9740e7b16ec65c5",
+    "e8f1502379a2635d4cf448c86ad552298404ef53"
+  ],
+  "publicationSummary": {
+    "manifest": "workspace-publication.json",
+    "draftPullRequests": 26,
+    "actualMergeDependencyBranches": 12,
+    "latestDraft": 3892,
+    "latestRemoteHead": "5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+    "method": "Exact-tree Git Data API creation with ordered parents and commit/PR readback; no force pushes, issue closures or main merges."
+  }
+}

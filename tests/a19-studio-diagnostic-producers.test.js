@@ -26,7 +26,10 @@ function fixture(t) {
     + '<TargetFrameworks>net9.0;net10.0</TargetFrameworks></PropertyGroup></Project>';
   const records = [
     { path: 'Apps.slnx', text: '<Solution><Project Path="A/A.csproj"/><Project Path="B/B.csproj"/></Solution>' },
-    { path: 'A/A.csproj', text: project }, { path: 'B/B.csproj', text: project.replace('net9.0;net10.0', 'net10.0') },
+    { path: 'A/A.csproj', text: project.replace('</Project>',
+      '<Import Project="Shared.props"/><Import Project="Shared.props"/></Project>') },
+    { path: 'A/Shared.props', text: '<Project />' },
+    { path: 'B/B.csproj', text: project.replace('net9.0;net10.0', 'net10.0') },
     { path: 'A/View.cs', text: design }, { path: 'B/View.cs', text: design }
   ];
   const system = new ProjectSystem(records);
@@ -63,6 +66,8 @@ test('actual project loading publishes warnings into Error List without failing 
   assert.equal(warnings.length, 1);
   assert.equal(warnings[0].source, 'project');
   assert.equal(warnings[0].severity, 'warning');
+  assert.equal(warnings[0].code, 'SFP1201');
+  assert.equal(warnings[0].contextId, current.state.projectSystem.getContext('A/A.csproj').id);
   assert.equal(warnings[0].projectId, 'A/A.csproj');
   assert.equal(warnings[0].uri, 'A/A.csproj');
   assert.equal((await current.services.builds.get('A/A.csproj').build()).success, true);
@@ -86,6 +91,7 @@ test('loader errors block only their project and appear once under their produce
   const loadingError = current.errors.rows().filter(item => item.code === 'SFP1202');
   assert.equal(loadingError.length, 1);
   assert.equal(loadingError[0].source, 'project');
+  assert.equal(loadingError[0].contextId, current.state.projectSystem.getContext('A/A.csproj').id);
   current.services.diagnostics.replace('B/B.csproj', 'analysis', [{ message: 'B live warning', severity: 'warning' }]);
   record.text = record.text.replace('<Import Project="missing.props"/>', '');
   current.state.projectSnapshot = current.state.projectSystem.load('Apps.slnx');

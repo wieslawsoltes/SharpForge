@@ -1,0 +1,16 @@
+{
+  "label": "baseline",
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "/workspace/scratch/3e16369943fd/p18-testing-publication/profile-runtime-dictionary.mjs",
+    "/workspace/scratch/3e16369943fd/p18-runtime-baseline",
+    "/workspace/scratch/3e16369943fd/p18-integration/planning/evidence/project18/integration/upstream-performance/profile-baseline",
+    "cil"
+  ],
+  "sourceCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "startedAt": "2026-10-04T02:36:05.955244+00:00",
+  "exitCode": 0,
+  "completedAt": "2026-10-04T02:36:07.928428+00:00"
+}

@@ -1,0 +1,879 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T03:57:21.230Z",
+  "owner": "tests_workflows",
+  "delegatedMaintenanceBy": "filesystem_providers",
+  "existingFeaturePullRequests": 4,
+  "newFeaturePullRequests": 0,
+  "scope": "Only the three already-reviewed portable testing dynamic-import allowlist records; no product/test changes, main refresh, forced updates or manual CI dispatch.",
+  "reviewedSource": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "policyPath": "scripts/conformance/static/allowlist.json",
+  "records": [
+    {
+      "path": "packages/msbuild/src/testing/portable/managed-runtime.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65",
+      "reason": "Portable test execution lazily imports only the fixed compiler and runtime entry points. Managed test source executes in its bounded VM session, never as JavaScript."
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/runtime-data.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff",
+      "reason": "Computed test data lazily imports only the fixed compiler and runtime entry points, then runs generated managed harness code in a bounded isolated session."
+    },
+    {
+      "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+      "reason": "Source test discovery lazily imports the fixed syntax package to inspect source trees without executing user source."
+    }
+  ],
+  "assertions": {
+    "exactApprovedRecordsCopied": true,
+    "recordHashesMatchAllFourOriginalTrees": true,
+    "onlyPolicyChangedRelativeEachPreviousHead": true,
+    "changedLinesPerHead": 21,
+    "allRemoteTreesEqualLocalTrees": true,
+    "allOrderedParentsVerified": true,
+    "allCoreJobsSucceeded": true,
+    "allPrDraftBaseHeadBodyReadbacksVerified": true,
+    "localTestsOrBuildsRun": false
+  },
+  "publications": [
+    {
+      "pr": 3903,
+      "branch": "codex/p18-test-transports",
+      "sourceHead": "41d282692a5435f558eac289251c63542ba6f009",
+      "sourceBase": "067970cf82f8e26c56445ac110f835b9a6292688",
+      "originalSource": "5dd0da99e05c7d471192ecb8f6c032fd6989bb33",
+      "sourceTree": "5c337179d85a135c8e824692781b524ab153ece9",
+      "remoteParents": [
+        "067970cf82f8e26c56445ac110f835b9a6292688"
+      ],
+      "oldTree": "34ae16f73a0aa14e9d721bbb1f252339c8541ada",
+      "paths": [
+        "scripts/conformance/static/allowlist.json"
+      ],
+      "records": [
+        {
+          "path": "packages/msbuild/src/testing/portable/managed-runtime.js",
+          "operation": "dynamic-import",
+          "count": 2,
+          "sha256": "54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65",
+          "reason": "Portable test execution lazily imports only the fixed compiler and runtime entry points. Managed test source executes in its bounded VM session, never as JavaScript."
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/runtime-data.js",
+          "operation": "dynamic-import",
+          "count": 2,
+          "sha256": "23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff",
+          "reason": "Computed test data lazily imports only the fixed compiler and runtime entry points, then runs generated managed harness code in a bounded isolated session."
+        },
+        {
+          "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+          "operation": "dynamic-import",
+          "count": 1,
+          "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+          "reason": "Source test discovery lazily imports the fixed syntax package to inspect source trees without executing user source."
+        }
+      ],
+      "productUnchanged": true,
+      "remoteCommit": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+      "treeVerified": true,
+      "recordedAt": "2026-10-04T03:57:21.230Z",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3903",
+      "readback": {
+        "head": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+        "headBranch": "codex/p18-test-transports",
+        "base": "codex/p18-test-transports-base",
+        "baseSha": "6faf4b6dd80cacd72253ba88f874626af761668f",
+        "draft": true,
+        "mergeable": true,
+        "mergeableState": "clean",
+        "bodyVerified": true,
+        "refVerified": true
+      },
+      "gitFetchProof": {
+        "sha": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+        "tree": "5c337179d85a135c8e824692781b524ab153ece9",
+        "parents": [
+          "067970cf82f8e26c56445ac110f835b9a6292688"
+        ]
+      },
+      "currentCore": {
+        "runId": 37175318708,
+        "jobId": 111356628229,
+        "head": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175318708/job/111356628229",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Review contract changes and seam lock against the PR snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Plan affected areas with conservative fallback",
+            "conclusion": "success"
+          },
+          {
+            "name": "Reject expired test quarantines",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require a clean checkout",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Full qualification Python infrastructure regressions",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run ./.github/actions/qualification-evidence",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Record provenance for the existing PR preview build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload PR preview without a second build or deployment",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      "jobs": [
+        {
+          "id": 111356628229,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111356686308,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356686634,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356686961,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356687449,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356688053,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356688321,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356688533,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356689137,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "previousRuns": [
+        {
+          "id": 37172612626,
+          "head": "067970cf82f8e26c56445ac110f835b9a6292688",
+          "path": ".github/workflows/ci.yml",
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 37172609934,
+          "head": "067970cf82f8e26c56445ac110f835b9a6292688",
+          "path": ".github/workflows/ci.yml",
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "cancelled"
+        }
+      ],
+      "previousFailedCore": {
+        "runId": 37172612626,
+        "jobId": 111349283011,
+        "head": "067970cf82f8e26c56445ac110f835b9a6292688",
+        "conclusion": "failure"
+      }
+    },
+    {
+      "pr": 3908,
+      "branch": "codex/p18-test-explorer",
+      "sourceHead": "3573915987c3a7e0a1bb0c4943479bfba3fb7780",
+      "sourceBase": "fd38a35378b6688d343f1f09c4157e21882e9856",
+      "originalSource": "d9a4a59106235ab688261095e42036c53f369b6b",
+      "sourceParents": [
+        "fd38a35378b6688d343f1f09c4157e21882e9856",
+        "41d282692a5435f558eac289251c63542ba6f009"
+      ],
+      "sourceTree": "afdbb5e1a8c6113ef196fb63dbbfcc874d895648",
+      "remotePrevious": "fd38a35378b6688d343f1f09c4157e21882e9856",
+      "dependencyPr": 3903,
+      "oldTree": "7e9cf895634fa68a1a7c7e9bc7b92547d95fa69e",
+      "paths": [
+        "scripts/conformance/static/allowlist.json"
+      ],
+      "productUnchanged": true,
+      "manualResolutions": [],
+      "remoteParents": [
+        "fd38a35378b6688d343f1f09c4157e21882e9856",
+        "42ab679e87e56412ad540f59314ead3e51bca6dc"
+      ],
+      "remoteCommit": "224da54ab1f5f3d53be6c83fda3b1dceee5921dd",
+      "treeVerified": true,
+      "recordedAt": "2026-10-04T03:57:21.230Z",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3908",
+      "readback": {
+        "head": "224da54ab1f5f3d53be6c83fda3b1dceee5921dd",
+        "headBranch": "codex/p18-test-explorer",
+        "base": "codex/p18-test-transports",
+        "baseSha": "42ab679e87e56412ad540f59314ead3e51bca6dc",
+        "draft": true,
+        "mergeable": true,
+        "mergeableState": "clean",
+        "bodyVerified": true,
+        "refVerified": true
+      },
+      "gitFetchProof": {
+        "sha": "224da54ab1f5f3d53be6c83fda3b1dceee5921dd",
+        "tree": "afdbb5e1a8c6113ef196fb63dbbfcc874d895648",
+        "parents": [
+          "fd38a35378b6688d343f1f09c4157e21882e9856",
+          "42ab679e87e56412ad540f59314ead3e51bca6dc"
+        ]
+      },
+      "currentCore": {
+        "runId": 37175360031,
+        "jobId": 111356747106,
+        "head": "224da54ab1f5f3d53be6c83fda3b1dceee5921dd",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175360031/job/111356747106",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Review contract changes and seam lock against the PR snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Plan affected areas with conservative fallback",
+            "conclusion": "success"
+          },
+          {
+            "name": "Reject expired test quarantines",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require a clean checkout",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Full qualification Python infrastructure regressions",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run ./.github/actions/qualification-evidence",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Record provenance for the existing PR preview build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload PR preview without a second build or deployment",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      "jobs": [
+        {
+          "id": 111356747106,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111356817637,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356817807,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356817843,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356818249,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356818648,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356818923,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356819202,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356819209,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "previousRuns": [
+        {
+          "id": 37172797289,
+          "head": "fd38a35378b6688d343f1f09c4157e21882e9856",
+          "path": ".github/workflows/ci.yml",
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 37172793010,
+          "head": "fd38a35378b6688d343f1f09c4157e21882e9856",
+          "path": ".github/workflows/ci.yml",
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "cancelled"
+        }
+      ],
+      "previousFailedCore": {
+        "runId": 37172797289,
+        "jobId": 111349052691,
+        "head": "fd38a35378b6688d343f1f09c4157e21882e9856",
+        "conclusion": "failure"
+      }
+    },
+    {
+      "pr": 3973,
+      "branch": "codex/p18-native-controller",
+      "sourceHead": "969942e7399f1f855bd5bb961499e578485641a0",
+      "sourceBase": "702d96146b26da2a079431c414cd9d0e8f890d1e",
+      "originalSource": "3216d2c9a2ba5a5bd050ca43edd4335a5b5d0a31",
+      "sourceParents": [
+        "702d96146b26da2a079431c414cd9d0e8f890d1e",
+        "3573915987c3a7e0a1bb0c4943479bfba3fb7780"
+      ],
+      "sourceTree": "e2c9175ab23301da7433e5da73faf710e8bc7abb",
+      "remotePrevious": "702d96146b26da2a079431c414cd9d0e8f890d1e",
+      "dependencyPr": 3908,
+      "oldTree": "bc0a0e2ed6ebae70f09eb7ae5232c1662a7fed1b",
+      "paths": [
+        "scripts/conformance/static/allowlist.json"
+      ],
+      "productUnchanged": true,
+      "manualResolutions": [],
+      "remoteParents": [
+        "702d96146b26da2a079431c414cd9d0e8f890d1e",
+        "224da54ab1f5f3d53be6c83fda3b1dceee5921dd"
+      ],
+      "remoteCommit": "f4545ccf74739637f5c34623a0f8e3b595e9f89f",
+      "treeVerified": true,
+      "recordedAt": "2026-10-04T03:57:21.230Z",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3973",
+      "readback": {
+        "head": "f4545ccf74739637f5c34623a0f8e3b595e9f89f",
+        "headBranch": "codex/p18-native-controller",
+        "base": "codex/p18-native-controller-base",
+        "baseSha": "4b3de7d6da89fb8ff18d1be17c33a3986914f663",
+        "draft": true,
+        "mergeable": true,
+        "mergeableState": "clean",
+        "bodyVerified": true,
+        "refVerified": true
+      },
+      "gitFetchProof": {
+        "sha": "f4545ccf74739637f5c34623a0f8e3b595e9f89f",
+        "tree": "e2c9175ab23301da7433e5da73faf710e8bc7abb",
+        "parents": [
+          "702d96146b26da2a079431c414cd9d0e8f890d1e",
+          "224da54ab1f5f3d53be6c83fda3b1dceee5921dd"
+        ]
+      },
+      "currentCore": {
+        "runId": 37175361883,
+        "jobId": 111356753011,
+        "head": "f4545ccf74739637f5c34623a0f8e3b595e9f89f",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175361883/job/111356753011",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Review contract changes and seam lock against the PR snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Plan affected areas with conservative fallback",
+            "conclusion": "success"
+          },
+          {
+            "name": "Reject expired test quarantines",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require a clean checkout",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Full qualification Python infrastructure regressions",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run ./.github/actions/qualification-evidence",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Record provenance for the existing PR preview build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload PR preview without a second build or deployment",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      "jobs": [
+        {
+          "id": 111356753011,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111356829262,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356829417,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356829730,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830020,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830592,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830692,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830843,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356831409,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "previousFailedCore": {
+        "runId": 37173810639,
+        "jobId": 111352133220,
+        "head": "702d96146b26da2a079431c414cd9d0e8f890d1e",
+        "conclusion": "failure",
+        "errorExcerpt": "2026-10-04T03:21:15.2798793Z {\n2026-10-04T03:21:15.2799308Z   \"passed\": false,\n2026-10-04T03:21:15.2799739Z   \"inspected\": 2759,\n2026-10-04T03:21:15.2800158Z   \"modules\": 2759,\n2026-10-04T03:21:15.2800556Z   \"errors\": [\n2026-10-04T03:21:15.2800909Z     {\n2026-10-04T03:21:15.2801562Z       \"path\": \"packages/msbuild/src/testing/portable/managed-runtime.js\",\n2026-10-04T03:21:15.2802363Z       \"operation\": \"dynamic-import\",\n2026-10-04T03:21:15.2803222Z       \"sha256\": \"54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65\",\n2026-10-04T03:21:15.2804021Z       \"count\": 2,\n2026-10-04T03:21:15.2804399Z       \"lines\": [\n2026-10-04T03:21:15.2804805Z         7,\n2026-10-04T03:21:15.2805145Z         8\n2026-10-04T03:21:15.2805553Z       ],\n2026-10-04T03:21:15.2806168Z       \"message\": \"Unreviewed dynamic-code use or changed file\"\n2026-10-04T03:21:15.2806843Z     },\n2026-10-04T03:21:15.2807203Z     {\n2026-10-04T03:21:15.2807860Z       \"path\": \"packages/msbuild/src/testing/portable/runtime-data.js\",\n2026-10-04T03:21:15.2809247Z       \"operation\": \"dynamic-import\",\n2026-10-04T03:21:15.2810171Z       \"sha256\": \"23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff\",\n2026-10-04T03:21:15.2810971Z       \"count\": 2,\n2026-10-04T03:21:15.2811376Z       \"lines\": [\n2026-10-04T03:21:15.2811774Z         36,\n2026-10-04T03:21:15.2812132Z         44\n2026-10-04T03:21:15.2812477Z       ],\n2026-10-04T03:21:15.2813059Z       \"message\": \"Unreviewed dynamic-code use or changed file\"\n2026-10-04T03:21:15.2813704Z     },\n2026-10-04T03:21:15.2814051Z     {\n2026-10-04T03:21:15.2814768Z       \"path\": \"packages/msbuild/src/testing/portable/source-symbols.js\",\n2026-10-04T03:21:15.2815901Z       \"operation\": \"dynamic-import\",\n2026-10-04T03:21:15.2816907Z       \"sha256\": \"b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa\",\n2026-10-04T03:21:15.2817769Z       \"count\": 1,\n2026-10-04T03:21:15.2818191Z       \"lines\": [\n2026-10-04T03:21:15.2818939Z         124\n2026-10-04T03:21:15.2819344Z       ],\n2026-10-04T03:21:15.2819975Z       \"message\": \"Unreviewed dynamic-code use or changed file\""
+      }
+    },
+    {
+      "pr": 3991,
+      "branch": "codex/p18-native-registration",
+      "sourceHead": "0409d8025f5a56d96b2c6c14002e727c1474abff",
+      "sourceBase": "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+      "originalSource": "b6b920cdd3c54f2c6be3bb3b8b2787e1a508d13e",
+      "sourceParents": [
+        "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+        "969942e7399f1f855bd5bb961499e578485641a0"
+      ],
+      "sourceTree": "a8985843c43b89c597585836021775a93cc9d08e",
+      "remotePrevious": "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+      "dependencyPr": 3973,
+      "oldTree": "bab4b2c5d246f9bfeddfae064bd332d11c376f5e",
+      "paths": [
+        "scripts/conformance/static/allowlist.json"
+      ],
+      "productUnchanged": true,
+      "manualResolutions": [],
+      "remoteParents": [
+        "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+        "f4545ccf74739637f5c34623a0f8e3b595e9f89f"
+      ],
+      "remoteCommit": "ca15377b4d6668d8b79382466dd444c250fdc581",
+      "treeVerified": true,
+      "recordedAt": "2026-10-04T03:57:21.230Z",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3991",
+      "readback": {
+        "head": "ca15377b4d6668d8b79382466dd444c250fdc581",
+        "headBranch": "codex/p18-native-registration",
+        "base": "codex/p18-native-registration-base",
+        "baseSha": "a15d1557c0a71b373c07b8248daff8cc3be07424",
+        "draft": true,
+        "mergeable": true,
+        "mergeableState": "clean",
+        "bodyVerified": true,
+        "refVerified": true
+      },
+      "gitFetchProof": {
+        "sha": "ca15377b4d6668d8b79382466dd444c250fdc581",
+        "tree": "a8985843c43b89c597585836021775a93cc9d08e",
+        "parents": [
+          "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+          "f4545ccf74739637f5c34623a0f8e3b595e9f89f"
+        ]
+      },
+      "currentCore": {
+        "runId": 37175363757,
+        "jobId": 111356758750,
+        "head": "ca15377b4d6668d8b79382466dd444c250fdc581",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175363757/job/111356758750",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Review contract changes and seam lock against the PR snapshot",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Plan affected areas with conservative fallback",
+            "conclusion": "success"
+          },
+          {
+            "name": "Reject expired test quarantines",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require a clean checkout",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Full qualification Python infrastructure regressions",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run ./.github/actions/qualification-evidence",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Record provenance for the existing PR preview build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload PR preview without a second build or deployment",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      "jobs": [
+        {
+          "id": 111356758750,
+          "name": "core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 111356829577,
+          "name": "core-platforms",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356829678,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356829849,
+          "name": "packages",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830105,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830467,
+          "name": "native-il",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356830720,
+          "name": "native-msbuild",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356831023,
+          "name": "clr-wasm",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 111356831041,
+          "name": "ci-ok",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "previousFailedCore": {
+        "runId": 37173988508,
+        "jobId": 111352656631,
+        "head": "7baa6a1ac1a088f9ea25b1ffba30312d92f8eb81",
+        "conclusion": "failure",
+        "errorExcerpt": "2026-10-04T03:24:44.3993653Z {\n2026-10-04T03:24:44.3994111Z   \"passed\": false,\n2026-10-04T03:24:44.3994516Z   \"inspected\": 2763,\n2026-10-04T03:24:44.3994918Z   \"modules\": 2763,\n2026-10-04T03:24:44.3995597Z   \"errors\": [\n2026-10-04T03:24:44.3995930Z     {\n2026-10-04T03:24:44.3996578Z       \"path\": \"packages/msbuild/src/testing/portable/managed-runtime.js\",\n2026-10-04T03:24:44.3997157Z       \"operation\": \"dynamic-import\",\n2026-10-04T03:24:44.3997632Z       \"sha256\": \"54ce8b963ed44a3f204c03409e4a27e75f35387980bd1559045f5a87b38edf65\",\n2026-10-04T03:24:44.3998040Z       \"count\": 2,\n2026-10-04T03:24:44.3998257Z       \"lines\": [\n2026-10-04T03:24:44.3998463Z         7,\n2026-10-04T03:24:44.3998648Z         8\n2026-10-04T03:24:44.3998833Z       ],\n2026-10-04T03:24:44.3999131Z       \"message\": \"Unreviewed dynamic-code use or changed file\"\n2026-10-04T03:24:44.3999782Z     },\n2026-10-04T03:24:44.4000083Z     {\n2026-10-04T03:24:44.4000496Z       \"path\": \"packages/msbuild/src/testing/portable/runtime-data.js\",\n2026-10-04T03:24:44.4001915Z       \"operation\": \"dynamic-import\",\n2026-10-04T03:24:44.4002421Z       \"sha256\": \"23d815e243df7943c1952cd1d638ea8d90ae194307a50c697729b6aa3694ffff\",\n2026-10-04T03:24:44.4002833Z       \"count\": 2,\n2026-10-04T03:24:44.4003035Z       \"lines\": [\n2026-10-04T03:24:44.4003229Z         36,\n2026-10-04T03:24:44.4003420Z         44\n2026-10-04T03:24:44.4003600Z       ],\n2026-10-04T03:24:44.4003896Z       \"message\": \"Unreviewed dynamic-code use or changed file\"\n2026-10-04T03:24:44.4004226Z     },\n2026-10-04T03:24:44.4004408Z     {\n2026-10-04T03:24:44.4004744Z       \"path\": \"packages/msbuild/src/testing/portable/source-symbols.js\",\n2026-10-04T03:24:44.4005166Z       \"operation\": \"dynamic-import\",\n2026-10-04T03:24:44.4005624Z       \"sha256\": \"b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa\",\n2026-10-04T03:24:44.4006042Z       \"count\": 1,\n2026-10-04T03:24:44.4006248Z       \"lines\": [\n2026-10-04T03:24:44.4006444Z         124\n2026-10-04T03:24:44.4006662Z       ],\n2026-10-04T03:24:44.4006966Z       \"message\": \"Unreviewed dynamic-code use or changed file\""
+      }
+    }
+  ]
+}

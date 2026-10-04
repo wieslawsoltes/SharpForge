@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "owner": "tests_workflows",
+  "originalEvidence": "planning/evidence/project18/testing.json at 1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+  "interpretation": "All 23 assigned leaf/bug records have published implementation. Historical qualification remains distinct from pending final pinned-main composition and native/platform gaps. No issue is closed by this publication evidence.",
+  "transfers": [
+    {
+      "scope": "T09 XML/CST and project editing",
+      "owner": "templates_archives",
+      "pr": 3553
+    },
+    {
+      "scope": "B05 legacy solution reader",
+      "owner": "portable_evaluator",
+      "pr": 3666
+    },
+    {
+      "scope": "Six unchanged closed graph integration fixtures",
+      "owner": "workspace_inventory",
+      "pr": 4181
+    }
+  ],
+  "additionalPublishedScope": {
+    "runtimeLaunchAndClosedProjectExecution": [
+      3680,
+      3767,
+      3872,
+      3915,
+      3922,
+      3956,
+      4181
+    ],
+    "nativeContextAndTestExplorerIntegration": [
+      3816,
+      3880,
+      3903,
+      3908,
+      3973,
+      3991
+    ],
+    "delegatedNativeModelsAndViews": [
+      3864,
+      3870,
+      3950
+    ],
+    "delegatedDebugSourceModelsAndEditor": [
+      3742,
+      3745
+    ]
+  },
+  "leafFiles": {
+    "leaf-projects.json": 17,
+    "leaf-frameworks.json": 6
+  },
+  "totalAssignedLeaves": 23
+}

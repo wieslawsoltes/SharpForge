@@ -1,0 +1,147 @@
+{
+  "checks": [
+    {
+      "name": "connect an existing hand-written construction method without replacing source or workers",
+      "passed": true,
+      "milliseconds": 1271.65
+    },
+    {
+      "name": "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+      "passed": true,
+      "milliseconds": 283.48
+    },
+    {
+      "name": "designer property changes compile-check a minimal C# edit and preserve every other byte",
+      "passed": true,
+      "milliseconds": 540.34
+    },
+    {
+      "name": "real source editor input updates the design preview automatically",
+      "passed": true,
+      "milliseconds": 821.57
+    },
+    {
+      "name": "source undo and redo resynchronize the preview without replacing the editor",
+      "passed": true,
+      "milliseconds": 1150.31
+    },
+    {
+      "name": "incomplete C# keeps the last valid preview and recovers when corrected",
+      "passed": true,
+      "milliseconds": 1387.28
+    },
+    {
+      "name": "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+      "passed": true,
+      "milliseconds": 526.07
+    },
+    {
+      "name": "concurrent source and designer edits are rejected without overwriting either side",
+      "passed": true,
+      "milliseconds": 598.54
+    },
+    {
+      "name": "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+      "passed": true,
+      "milliseconds": 1526.72
+    },
+    {
+      "name": "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+      "passed": true,
+      "milliseconds": 1760.68
+    },
+    {
+      "name": "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+      "passed": true,
+      "milliseconds": 1110.78
+    },
+    {
+      "name": "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+      "passed": true,
+      "milliseconds": 55.2
+    },
+    {
+      "name": "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+      "passed": true,
+      "milliseconds": 167.41
+    },
+    {
+      "name": "source VM real worker clock animates after Main and runs managed Completed handler",
+      "passed": true,
+      "milliseconds": 1817.34
+    },
+    {
+      "name": "direct CIL real worker clock animates after Main and runs managed Completed handler",
+      "passed": true,
+      "milliseconds": 1875.09
+    },
+    {
+      "name": "all integration workflows finish without page errors or unowned and churned workers",
+      "passed": true,
+      "milliseconds": 2632.88
+    }
+  ],
+  "errors": [],
+  "workers": 10,
+  "liveWorkers": 1,
+  "workerOwners": {
+    "compilers": [
+      {
+        "id": "$workspace",
+        "name": "compiler:$workspace",
+        "generation": 1
+      }
+    ],
+    "applications": [],
+    "resources": {
+      "limit": 4,
+      "count": 0,
+      "live": 0
+    },
+    "valid": true,
+    "distinct": true
+  },
+  "workerHistory": [
+    {
+      "id": 1,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    },
+    {
+      "id": 2,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    },
+    {
+      "id": 3,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    },
+    {
+      "id": 4,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    },
+    {
+      "id": 5,
+      "url": "http://127.0.0.1:42073/runtime.worker.js"
+    },
+    {
+      "id": 6,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    },
+    {
+      "id": 7,
+      "url": "http://127.0.0.1:42073/runtime.worker.js"
+    },
+    {
+      "id": 8,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    },
+    {
+      "id": 9,
+      "url": "http://127.0.0.1:42073/runtime.worker.js"
+    },
+    {
+      "id": 10,
+      "url": "http://127.0.0.1:42073/compiler.worker.js"
+    }
+  ],
+  "harness": "CSP HTTP and real workers"
+}

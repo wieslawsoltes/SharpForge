@@ -1,0 +1,27 @@
+✔ A24 B03 folder open reports oversized and reserved paths without aborting usable files (8.222141ms)
+✔ A24 B04 create/save persists new and formerly binary files using configured encoded-byte budget (24.414202ms)
+✔ A24 disk save detects byte changes even when decoded text is identical (2.735491ms)
+✔ A24 XML and binary saves retain byte baselines and unloading releases retained text (4.597494ms)
+✔ A24 case-insensitive directory aliases preserve canonical record paths through rename and delete (10.894551ms)
+✔ A24 browser save requires physical-directory coordination before any write and enforces total loaded bytes (2.366108ms)
+✔ A24 coherent disk snapshot adoption rebuilds indexes without advancing retained hashes or admitting invalid partial state (1.621606ms)
+✔ A24 directory operations rename every byte and deny a complete save batch before first write (5.466214ms)
+✔ A24 20000-file scan reads project bytes only; content is loaded explicitly and scan cancellation is atomic (794.613106ms)
+✔ A24 NFC/NFD/case collisions and gitignore decisions are individually visible (2.277385ms)
+✔ A24 nested ignore rules support ranges, escaped literals and directory-only matches (2.183693ms)
+✔ A24 5000 closed files hold metadata only and loaded documents obey the byte budget (14.151644ms)
+✔ A24 Workspace materializes SourceText and syntax only for opened or selected compilation inputs (25.657417ms)
+✔ A24 file admission failure retains the previous dirty buffer and invalidation rejects stale async data (0.960479ms)
+✔ A24 10000-file folder materializes pages and bounds visible row count (29.933767ms)
+✔ A24 deferred explorer construction materializes no files before cancellable expansion (24.430697ms)
+✔ A24 search indexes 20000 paths, streams first results, observes changes and cancels (290.294782ms)
+✔ A24 content search skips binaries and reports inaccessible files (4.740069ms)
+✔ A24 indexed Find in Files preserves LanguageService offsets, result limits, Unicode boundaries and versions (2.346028ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1291.706478

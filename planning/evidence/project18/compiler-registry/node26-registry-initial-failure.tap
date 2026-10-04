@@ -1,0 +1,346 @@
+TAP version 13
+# Selected original failure retained; original numbering preserved.
+# Subtest: automation contributions preserve the complete pre-extraction key surface
+not ok 22 - automation contributions preserve the complete pre-extraction key surface
+  ---
+  duration_ms: 11.379176
+  type: 'test'
+  location: '/dev/shm/p18-final-qualification/tests/a00-03-studio-registries.test.js:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        'advanceUIAnimations',
+        'applyAssemblyChanges',
+        'applyHotReload',
+        'applyRefactoring',
+    ...
+        'native.connect',
+    +   'native.contexts',
+    +   'native.contexts.getState',
+    +   'native.contexts.load',
+    +   'native.contexts.select',
+    +   'native.contexts.selectProject',
+        'native.getState',
+        'native.open',
+    +   'native.profiles',
+    +   'native.profiles.getState',
+    +   'native.profiles.publish',
+    +   'native.profiles.refresh',
+    +   'native.profiles.run',
+    +   'native.profiles.selectLaunch',
+    +   'native.profiles.selectPublish',
+        'native.run',
+        'native.save',
+    +   'native.testing',
+    +   'native.testing.cancel',
+    +   'native.testing.configure',
+    +   'native.testing.discover',
+    +   'native.testing.getState',
+    +   'native.testing.openSource',
+    +   'native.testing.run',
+    +   'native.testing.select',
+    +   'native.testing.selectAll',
+        'openFile',
+        'openItemWizard',
+        'openProjectWizard',
+        'openTool',
+        'openWorkspaceZip',
+    ...
+        'version',
+    -   'native.contexts',
+    -   'native.contexts.getState',
+    -   'native.contexts.load',
+    -   'native.contexts.select',
+    -   'native.contexts.selectProject',
+    -   'native.profiles',
+    -   'native.profiles.getState',
+    -   'native.profiles.publish',
+    -   'native.profiles.refresh',
+    -   'native.profiles.run',
+    -   'native.profiles.selectLaunch',
+    -   'native.profiles.selectPublish',
+    -   'native.testing',
+    -   'native.testing.cancel',
+    -   'native.testing.configure',
+    -   'native.testing.discover',
+    -   'native.testing.getState',
+    -   'native.testing.openSource',
+    -   'native.testing.run',
+    -   'native.testing.select',
+    -   'native.testing.selectAll'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'advanceUIAnimations'
+    1: 'applyAssemblyChanges'
+    2: 'applyHotReload'
+    3: 'applyRefactoring'
+    4: 'assembleIL'
+    5: 'autoHidePanel'
+    6: 'beginHotReload'
+    7: 'breakOnWrite'
+    8: 'build'
+    9: 'cancelHotReload'
+    10: 'configureDebug'
+    11: 'configureExtensions'
+    12: 'configureRuntime'
+    13: 'debug'
+    14: 'designer'
+    15: 'designer.action'
+    16: 'designer.add'
+    17: 'designer.apply'
+    18: 'designer.attach'
+    19: 'designer.clear'
+    20: 'designer.connect'
+    21: 'designer.disconnect'
+    22: 'designer.get'
+    23: 'designer.load'
+    24: 'designer.move'
+    25: 'designer.open'
+    26: 'designer.readSource'
+    27: 'designer.reference'
+    28: 'designer.remove'
+    29: 'designer.select'
+    30: 'designer.set'
+    31: 'designer.setAutoSync'
+    32: 'designer.setView'
+    33: 'designer.style'
+    34: 'designer.template'
+    35: 'designer.tracks'
+    36: 'designer.undo'
+    37: 'designer.writeSource'
+    38: 'dispatchUIEvent'
+    39: 'dockPanel'
+    40: 'editBreakpoint'
+    41: 'evaluate'
+    42: 'evaluateFunction'
+    43: 'execute'
+    44: 'explorerCommand'
+    45: 'exportWorkspaceZip'
+    46: 'floatPanel'
+    47: 'freezeThread'
+    48: 'getAssembly'
+    49: 'getBreakpoints'
+    50: 'getDebugSettings'
+    51: 'getEditorState'
+    52: 'getExplorer'
+    53: 'getGeneratedSources'
+    54: 'getKeymap'
+    55: 'getLayout'
+    56: 'getNavigation'
+    57: 'getParallelStacks'
+    58: 'getPdb'
+    59: 'getRuntimeInfo'
+    60: 'getRuntimeSettings'
+    61: 'getState'
+    62: 'getTemplates'
+    63: 'getThreads'
+    64: 'getUIMetrics'
+    65: 'getUIScene'
+    66: 'getWorkspace'
+    67: 'immediate'
+    68: 'importAssembly'
+    69: 'importFiles'
+    70: 'inspectAssembly'
+    71: 'invokeAssembly'
+    72: 'loadDiskRecords'
+    73: 'loadPdb'
+    74: 'loadSample'
+    75: 'native'
+    76: 'native.attach'
+    77: 'native.cancel'
+    78: 'native.configure'
+    79: 'native.connect'
+    80: 'native.getState'
+    81: 'native.open'
+    82: 'native.run'
+    83: 'native.save'
+    84: 'openFile'
+    85: 'openItemWizard'
+    86: 'openProjectWizard'
+    87: 'openTool'
+    88: 'openWorkspaceZip'
+    89: 'popoutPanel'
+    90: 'restoreLayout'
+    91: 'returnPopout'
+    92: 'run'
+    93: 'saveToDisk'
+    94: 'saveWorkspaceFolder'
+    95: 'selectDebugFrame'
+    96: 'selectThread'
+    97: 'setBreakpoints'
+    98: 'setFunctionBreakpoints'
+    99: 'setKeymap'
+    100: 'setNextStatement'
+    101: 'setStartupProject'
+    102: 'setUIAnimationMode'
+    103: 'setUIRenderer'
+    104: 'showNextStatement'
+    105: 'step'
+    106: 'toggleBreakpoint'
+    107: 'uiSettled'
+    108: 'version'
+    109: 'native.contexts'
+    110: 'native.contexts.getState'
+    111: 'native.contexts.load'
+    112: 'native.contexts.select'
+    113: 'native.contexts.selectProject'
+    114: 'native.profiles'
+    115: 'native.profiles.getState'
+    116: 'native.profiles.publish'
+    117: 'native.profiles.refresh'
+    118: 'native.profiles.run'
+    119: 'native.profiles.selectLaunch'
+    120: 'native.profiles.selectPublish'
+    121: 'native.testing'
+    122: 'native.testing.cancel'
+    123: 'native.testing.configure'
+    124: 'native.testing.discover'
+    125: 'native.testing.getState'
+    126: 'native.testing.openSource'
+    127: 'native.testing.run'
+    128: 'native.testing.select'
+    129: 'native.testing.selectAll'
+  actual:
+    0: 'advanceUIAnimations'
+    1: 'applyAssemblyChanges'
+    2: 'applyHotReload'
+    3: 'applyRefactoring'
+    4: 'assembleIL'
+    5: 'autoHidePanel'
+    6: 'beginHotReload'
+    7: 'breakOnWrite'
+    8: 'build'
+    9: 'cancelHotReload'
+    10: 'configureDebug'
+    11: 'configureExtensions'
+    12: 'configureRuntime'
+    13: 'debug'
+    14: 'designer'
+    15: 'designer.action'
+    16: 'designer.add'
+    17: 'designer.apply'
+    18: 'designer.attach'
+    19: 'designer.clear'
+    20: 'designer.connect'
+    21: 'designer.disconnect'
+    22: 'designer.get'
+    23: 'designer.load'
+    24: 'designer.move'
+    25: 'designer.open'
+    26: 'designer.readSource'
+    27: 'designer.reference'
+    28: 'designer.remove'
+    29: 'designer.select'
+    30: 'designer.set'
+    31: 'designer.setAutoSync'
+    32: 'designer.setView'
+    33: 'designer.style'
+    34: 'designer.template'
+    35: 'designer.tracks'
+    36: 'designer.undo'
+    37: 'designer.writeSource'
+    38: 'dispatchUIEvent'
+    39: 'dockPanel'
+    40: 'editBreakpoint'
+    41: 'evaluate'
+    42: 'evaluateFunction'
+    43: 'execute'
+    44: 'explorerCommand'
+    45: 'exportWorkspaceZip'
+    46: 'floatPanel'
+    47: 'freezeThread'
+    48: 'getAssembly'
+    49: 'getBreakpoints'
+    50: 'getDebugSettings'
+    51: 'getEditorState'
+    52: 'getExplorer'
+    53: 'getGeneratedSources'
+    54: 'getKeymap'
+    55: 'getLayout'
+    56: 'getNavigation'
+    57: 'getParallelStacks'
+    58: 'getPdb'
+    59: 'getRuntimeInfo'
+    60: 'getRuntimeSettings'
+    61: 'getState'
+    62: 'getTemplates'
+    63: 'getThreads'
+    64: 'getUIMetrics'
+    65: 'getUIScene'
+    66: 'getWorkspace'
+    67: 'immediate'
+    68: 'importAssembly'
+    69: 'importFiles'
+    70: 'inspectAssembly'
+    71: 'invokeAssembly'
+    72: 'loadDiskRecords'
+    73: 'loadPdb'
+    74: 'loadSample'
+    75: 'native'
+    76: 'native.attach'
+    77: 'native.cancel'
+    78: 'native.configure'
+    79: 'native.connect'
+    80: 'native.contexts'
+    81: 'native.contexts.getState'
+    82: 'native.contexts.load'
+    83: 'native.contexts.select'
+    84: 'native.contexts.selectProject'
+    85: 'native.getState'
+    86: 'native.open'
+    87: 'native.profiles'
+    88: 'native.profiles.getState'
+    89: 'native.profiles.publish'
+    90: 'native.profiles.refresh'
+    91: 'native.profiles.run'
+    92: 'native.profiles.selectLaunch'
+    93: 'native.profiles.selectPublish'
+    94: 'native.run'
+    95: 'native.save'
+    96: 'native.testing'
+    97: 'native.testing.cancel'
+    98: 'native.testing.configure'
+    99: 'native.testing.discover'
+    100: 'native.testing.getState'
+    101: 'native.testing.openSource'
+    102: 'native.testing.run'
+    103: 'native.testing.select'
+    104: 'native.testing.selectAll'
+    105: 'openFile'
+    106: 'openItemWizard'
+    107: 'openProjectWizard'
+    108: 'openTool'
+    109: 'openWorkspaceZip'
+    110: 'popoutPanel'
+    111: 'restoreLayout'
+    112: 'returnPopout'
+    113: 'run'
+    114: 'saveToDisk'
+    115: 'saveWorkspaceFolder'
+    116: 'selectDebugFrame'
+    117: 'selectThread'
+    118: 'setBreakpoints'
+    119: 'setFunctionBreakpoints'
+    120: 'setKeymap'
+    121: 'setNextStatement'
+    122: 'setStartupProject'
+    123: 'setUIAnimationMode'
+    124: 'setUIRenderer'
+    125: 'showNextStatement'
+    126: 'step'
+    127: 'toggleBreakpoint'
+    128: 'uiSettled'
+    129: 'version'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p18-final-qualification/tests/a00-03-studio-registries.test.js:20:527)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...

@@ -1,0 +1,418 @@
+[
+  {
+    "label": "P18 public host imports",
+    "before": "import {mountStudioComposition",
+    "after": "import {isWorkspaceTextPath} from '@sharpforge/archive';\nimport {createWorkspaceSession,workspaceContext} from './workspace-session.js';\nimport {prepareProjectRequest,projectBuildErrors} from './project-build.js';\nimport {applyExternalDiskChange,reevaluateDiskWorkspace} from './workspace-disk-events.js';\nimport {commitWorkspaceWizard} from './workspace-wizard.js';\nimport {exportWorkspaceToWritable} from './workspace-export.js';\nimport {createLegacyWorkspaceBundle,workspaceBase64 as encodeBase64} from './workspace-bundle.js';\nimport {prepareExplorerTypeRename} from './explorer/type-rename.js';\nimport {workspaceFileNode,navigateWorkspaceDiagnostic} from './workspace-documents.js';\nimport {applyWorkspaceRefactoring} from './workspace-refactoring.js';\nimport {applyWorkspaceConflictResolution} from './workspace-conflicts.js';\nimport {promptWorkspaceSaveConflict} from './workspace-save-conflict.js';\nimport {restoreLegacyWorkspace} from './workspace-recovery.js';\nimport {createDesignerMarkupServices} from './designer/markup-services.js';\nimport {createNativeContextHooks} from './native-build/workspace-state.js';\nimport {debugSourceForWorkspace,workspaceFileForDebugSource,navigateDebugSource} from './debug-sources.js';\nimport {decorateDebugEditors} from './debug-editor-decorations.js';\nimport {createSourceBreakpointController} from './debug-source-breakpoints.js';\nimport {mountStudioComposition"
+  },
+  {
+    "label": "Compiler ownership contribution",
+    "before": "getProjectSnapshot:id=>projectServices.snapshot(id),onError:error=>toast(error.message,'error'),",
+    "after": "getProjectSnapshot:id=>projectServices.snapshot(id),\n requestCompiler:request=>projectServices.compile(request),\n onError:error=>toast(error.message,'error'),"
+  },
+  {
+    "label": "Graph launch envelope contribution",
+    "before": "launchOptions:()=>({...state.debugSettings,functionBreakpoints:state.functionBreakpoints}),",
+    "after": "launchOptions:(projectId,profile,built)=>projectServices.launchOptions(projectId,profile,built),"
+  },
+  {
+    "label": "Provider save contribution",
+    "before": "saveRecovery:saveLocal,canRecover:()=>canRecoverStudioWorkspace(workbenchServices.documents,state.extraFiles),",
+    "after": "saveRecovery:saveLocal,canRecover:()=>canRecoverStudioWorkspace(workbenchServices.documents,state.extraFiles),\n saveWorkspace:options=>workspaceSession().save(options),"
+  },
+  {
+    "label": "Renderer lazy record access",
+    "before": "const studioRenderers=createStudioRenderers({",
+    "after": "const studioRenderers=createStudioRenderers({\n get explorerContext(){return explorerContext;},\n get loadWorkspaceRecord(){return (path,options)=>workspaceSession().loadRecord(path,options);},"
+  },
+  {
+    "label": "Workspace-owned debugger control ports",
+    "before": "const editors=workbenchServices.documents.editors;",
+    "after": "const editors=workbenchServices.documents.editors;\nconst debugNavigation={state,openFile,getEditor:()=>editor,\n showSymbolSource:point=>advancedTools.showSymbolSource(point),setPanel};\nconst sourceBreakpoints=createSourceBreakpointController({state,\n sync:uri=>projectServices.syncBreakpoints(uri),\n decorate:setEditorDecorations,render:renderPanel,save:saveLocal,\n editRule:(...args)=>debugTools.editRule(...args),onError:error=>toast(error.message,'error')});"
+  },
+  {
+    "label": "Closed document eviction after docking ownership",
+    "before": "if(state.active===uri&&state.tabs.length)openFile(state.tabs.at(-1));}saveLocal();}});",
+    "after": "if(state.active===uri&&state.tabs.length)openFile(state.tabs.at(-1));\n  workspaceSession().closeRecord(uri).catch(error=>toast(error.message,'error'));\n }saveLocal();}});"
+  },
+  {
+    "label": "Shared navigation admission",
+    "before": "navigation=new StudioNavigation({docking,getEditor:()=>editor,onChanged:navigationButtons});",
+    "after": "navigation=new StudioNavigation({docking,getEditor:()=>editor,onChanged:navigationButtons,prepareDocument:ensureWorkspaceSource});"
+  },
+  {
+    "label": "Location admission before tab policy",
+    "before": "openLocation=createStudioLocationOpener({docking,navigation,openFile});",
+    "after": "const revealLocation=createStudioLocationOpener({docking,navigation,openFile});\nopenLocation=async location=>{\n await ensureWorkspaceSource(location.uri,{signal:location.signal});\n return revealLocation(location);\n};"
+  },
+  {
+    "label": "Native context and XAML lazy activation ports",
+    "before": " designerDiagnostics:projectServices.diagnostics,\n commands:commandRegistry",
+    "after": " designerDiagnostics:projectServices.diagnostics,\n ...createDesignerMarkupServices({state,records:()=>explorerContext().records,\n  perform:operations=>explorerActions.perform(operations)}),\n ...createNativeContextHooks({state,documents:workbenchServices.documents,stop:stopQuietly,resetEditors,renderWorkspace,scheduleAnalysis,status,\n  getTestInput:({signal}={})=>prepareProjectRequest(state,'analyze',{signal})}),\n getTestProject:()=>state.nativeMode?nativeBuild.contexts?.project??state.nativeStartup:state.startupProject,\n onOpenTestSource:source=>navigateWorkspaceDiagnostic({state,nativeBuild,openFile,setPanel,\n  loadRecord:(path,options)=>workspaceSession().loadRecord(path,options)},source),\n scheduleAnalysis,\n commands:commandRegistry"
+  },
+  {
+    "label": "Set-next-statement execution identity",
+    "before": "cursor:()=>{const p=editor.sourceSnapshot().positionAt(editor.offset);return {uri:editor.uri,line:p.line+1,column:p.character+1};}",
+    "after": "cursor:()=>{\n  const position=editor.sourceSnapshot().positionAt(editor.offset);\n  const source=debugSourceForWorkspace(state,editor.uri);\n  if(!source)throw new Error('The active document has no unambiguous matching source in this debug session');\n  return {uri:source.uri,line:position.line+1,column:position.character+1};\n }"
+  },
+  {
+    "label": "Closed-source refactoring through shared document owner",
+    "before": "async function applyRefactoring(action){if(state.readOnly)throw new Error('Stop execution before editing');const revision=state.revision;for(const e of action.edits)if(state.files.find(f=>f.uri===e.uri)?.version!==e.version)throw new Error('The refactoring is stale. Request it again.');const validated=await requestCompiler('validateRefactoring',{action});if(revision!==state.revision)throw new Error('Source changed during refactoring validation; no edits were applied');for(const change of validated.changes){const file=state.files.find(f=>f.uri===change.uri);if(!file||file.text!==change.previous)throw new Error('Refactoring snapshot mismatch');}applyEdits(action.edits);toast(action.title);}\n",
+    "after": "async function applyRefactoring(action){\n const result=await applyWorkspaceRefactoring({state,context:explorerContext,request:requestCompiler,applyEdits,\n  isReadOnly:file=>state.recoveryReadOnly||file.readOnly||file.generated||\n   workbenchServices.locks.isDocumentLocked(file.uri??file.path)},action);\n toast(action.title);\n return result;\n}\n"
+  },
+  {
+    "label": "Readonly recovery save scheduling",
+    "before": "function saveSoon() {\n clearTimeout(state.saveTimer);",
+    "after": "function saveSoon() {\n clearTimeout(state.saveTimer);\n if(state.recoveryReadOnly)return;"
+  },
+  {
+    "label": "Readonly recovery persistence fence",
+    "before": "function saveLocal() {\n if (state.nativeMode)",
+    "after": "function saveLocal() {\n if(state.recoveryReadOnly)return false;\n if (state.nativeMode)"
+  },
+  {
+    "label": "Transactional asynchronous recovery",
+    "before": "function recover(){try{const project=JSON.parse(storage.getItem(storageKeys.workspace));if(project?.format!=='sharpforge-project'||project.version!==1||!Array.isArray(project.files)||!project.files.every(f=>typeof f.uri==='string'&&typeof f.text==='string'))return false;\n validateStudioSources(project.files);const records=project.diskRecords?.map(r=>({...r,bytes:r.base64?Uint8Array.from(atob(r.base64),c=>c.charCodeAt(0)):undefined}))??[...(project.extraFiles??[]),...project.files.map(f=>({path:f.uri,text:f.text}))];validateFilePlan({records,folders:project.folders??[]},[]);\n state.extraFiles=records.filter(r=>!/\\.cs$/i.test(r.path)||typeof r.text!=='string');state.folders=project.folders??[];state.workspaceMode=project.mode??'solution';state.membershipDirty=project.membershipDirty??false;state.configuration=project.configuration??'Debug';state.startupProject=project.startupProject??null;state.disk=new DiskWorkspace(records);\n if(project.entry){state.projectSystem=new ProjectSystem(records,{configuration:state.configuration,maxFiles:20000});state.projectSnapshot=state.projectSystem.load(project.entry);}\n state.langVersion=/^(?:[1-9]|1[0-4]|preview)$/.test(project.langVersion)?project.langVersion:'14';state.name=project.name??'Application';state.extensionConfig=project.extensions??null;state.files=project.files.map((f,i)=>({...f,version:Date.now()+i}));state.active=project.active??state.files[0]?.uri??'';state.tabs=project.tabs?.filter(t=>state.files.some(f=>f.uri===t))??(state.active?[state.active]:[]);state.breakpoints=project.breakpoints??{};state.functionBreakpoints=project.functionBreakpoints??[];state.watches=project.watches??[];if(project.theme==='light')document.documentElement.dataset.theme='light';projectServices.sync();sessionRecovery.restore(project);runtimeBridge.select(null);return true;\n }catch{return false;}}\n\n",
+    "after": "async function recover(){\n const result=await restoreLegacyWorkspace({storage,key:storageKeys.workspace,session:workspaceSession(),\n  onDiagnostic:diagnostic=>toast(diagnostic.message,'error')});\n return result.restored||result.blocked;\n}\n"
+  },
+  {
+    "label": "No implicit reopened tab after last close",
+    "before": "if(!state.files.some(f=>f.uri===state.active))state.active=state.files[0]?.uri;if(!state.tabs.includes(state.active))state.active&&state.tabs.push(state.active);",
+    "after": "if(!state.files.some(f=>f.uri===state.active))state.active=state.tabs.find(uri=>state.files.some(file=>file.uri===uri))??'';"
+  },
+  {
+    "label": "No disposed editor fallback",
+    "before": "if(state.active)editor=editors.get(state.active)??editor;",
+    "after": "editor=state.active?workbenchServices.documents.views.get(state.active)?.get(workbenchServices.documents.activeViews.get(state.active))?.editor??editors.get(state.active):null;"
+  },
+  {
+    "label": "Lazy direct file open and cancellation retention",
+    "before": "const file=workbenchServices.documents.get(uri);if(!file)return;workbenchServices.reveal.userIntent();",
+    "after": "const file=workbenchServices.documents.get(uri);\n if(!file)return /\\.cs$/i.test(uri)?ensureWorkspaceSource(uri).then(()=>openFile(uri,offset,end,view))\n  :openExplorerNode(workspaceFileNode(explorerContext(),uri));\n workspaceSession().retainRecord(uri);\n workbenchServices.reveal.userIntent();"
+  },
+  {
+    "label": "Intrinsic source readonly alongside session locks",
+    "before": "editor.setReadOnly(workbenchServices.locks.isDocumentLocked(uri));renderTree();",
+    "after": "editor.setReadOnly(workbenchServices.locks.isDocumentLocked(uri)||file.readOnly||file.generated||state.recoveryReadOnly);renderTree();"
+  },
+  {
+    "label": "Qualified source decorations and diagnostics union",
+    "before": "function matchesDebugSource(uri){const file=state.files.find(f=>f.uri===uri),embedded=state.debugSources.get(uri);return !!file&&typeof embedded==='string'&&embedded===file.text;}\nfunction setEditorDecorations(){for(const [uri,instance]of editors){\n instance.setDiagnostics(workbenchServices.diagnostics.query({uri,deduplicate:true}));\n const current=state.debug&&!state.buildDirty&&state.debug.profile!=='managed-il',bound=current?state.debug.breakpoints?.filter(b=>b.uri===uri):null;\n const bps=(state.breakpoints[uri]??[]).map(request=>{const binding=bound?.find(b=>b.requestedLine===request.line&&(b.requestedColumn??1)===(request.column??1));return {...(binding??{...request,verified:current?false:undefined}),muted:state.debugSettings.breakpointsEnabled===false};});instance.setBreakpoints(bps);\n const point=state.debug?.state==='paused'?state.debug.point:null,frame=[...(state.inspectedThreadFrames??[]),...(state.debug?.frames??[])].find(f=>f.id===state.frameId),selected=frame&&frame.id!==state.debug.frames[0]?.id?frame:null;\n const snapshot=instance.sourceSnapshot(),painted=point?.uri===uri&&matchesDebugSource(uri)?{...point,start:snapshot.offsetAt({line:point.line-1,character:point.column-1}),end:snapshot.offsetAt({line:(point.endLine??point.line)-1,character:(point.endColumn??point.column+1)-1})}:null;instance.setExecutionLocation(painted,{phase:state.debug?.reason?.phase,description:state.debug?.reason?.description});\n instance.setSelectedFrameLine(selected?.source===uri&&matchesDebugSource(uri)?selected.line:null);\n }debugTools?.updateBanner();}\n",
+    "after": "function matchesDebugSource(uri){return !!workspaceFileForDebugSource(state,uri);}\nfunction* sourceEditorEntries(){\n for(const [uri,views]of workbenchServices.documents.views)for(const {editor:instance}of views.values())yield [uri,instance];\n}\nfunction setEditorDecorations(){\n return decorateDebugEditors({state,editors:sourceEditorEntries(),\n  diagnostics:uri=>workbenchServices.diagnostics.query({uri,deduplicate:true}),\n  updateBanner:()=>debugTools?.updateBanner()});\n}\n"
+  },
+  {
+    "label": "Show-next-statement provenance",
+    "before": "const point=state.debug.point;if(point&&matchesDebugSource(point.uri)){openFile(point.uri);editor.gotoLine(point.line,point.column);}else if(point&&state.debugSources.has(point.uri))advancedTools.showSymbolSource(point);else if(state.debug.profile==='managed-il')setPanel('disassembly');",
+    "after": "navigateDebugSource(debugNavigation,state.debug.point);"
+  },
+  {
+    "label": "Selected frame provenance",
+    "before": "if(frame.source&&matchesDebugSource(frame.source)){openFile(frame.source);editor.gotoLine(frame.line,frame.column);}",
+    "after": "navigateDebugSource(debugNavigation,frame);"
+  },
+  {
+    "label": "Selected-context native analysis",
+    "before": "if(state.nativeMode||[...workbenchServices.documents.models.values()].some(model=>model.buffer.length>8*1024*1024))return;",
+    "after": "if(state.recoveryReadOnly||state.nativeMode&&!state.nativeProjectContext||[...workbenchServices.documents.models.values()].some(model=>model.buffer.length>8*1024*1024))return;"
+  },
+  {
+    "label": "Paused run-to-cursor provenance",
+    "before": "if(!matchesDebugSource(target.uri))throw new Error('The active document does not match the source embedded in this debug assembly');return runtime.request('runToCursor',target);",
+    "after": "const source=debugSourceForWorkspace(state,target.uri);if(!source)throw new Error('The active document has no unambiguous matching source in this debug session');return runtime.request('runToCursor',{...target,uri:source.uri});"
+  },
+  {
+    "label": "Runtime reveal uses qualified source navigation",
+    "before": "openSource:point=>{openFile(point.uri);editor.gotoLine(point.line,point.column);},",
+    "after": "openSource:point=>navigateDebugSource(debugNavigation,point),"
+  },
+  {
+    "label": "Loaded event keeps AppSession descriptor ownership",
+    "before": "state.runtimeSession=event.sessionId;state.debugSources=new Map(event.sources.filter(s=>typeof s.text==='string').map(s=>[s.uri,s.text]));state.immediateHistory=[];return;",
+    "after": "state.runtimeSession=event.sessionId;state.immediateHistory=[];return;"
+  },
+  {
+    "label": "Data tip execution identity",
+    "before": "matchesDebugSource(params.uri)",
+    "after": "debugSourceForWorkspace(state,params.uri)"
+  },
+  {
+    "label": "Per-document edit guards",
+    "before": "function applyEdits(edits){return editorIntegration.apply(edits);}",
+    "after": "function applyEdits(edits){\n if(edits.some(edit=>{\n  const file=workbenchServices.documents.get(edit.uri);\n  return !file||state.recoveryReadOnly||file.readOnly||file.generated||workbenchServices.locks.isDocumentLocked(edit.uri);\n }))throw new Error('This source document is read-only');\n return editorIntegration.apply(edits);\n}"
+  },
+  {
+    "label": "Breakpoint UI delegates to multi-session binding owner",
+    "before": "function toggleBreakpoint(uri,line){const bps=state.breakpoints[uri]??=[];const existing=sourceBreakpointAt(bps,state.debug?.profile!=='managed-il'&&!state.buildDirty?state.debug?.breakpoints?.filter(b=>b.uri===uri)??[]:[],line);const index=bps.indexOf(existing);if(index>=0)bps.splice(index,1);else bps.push({line,enabled:true});bps.sort((a,b)=>a.line-b.line);syncBreakpoints(uri);setEditorDecorations();renderPanel('breakpoints');saveLocal();}\nasync function syncBreakpoints(uri){await projectServices.syncBreakpoints(uri);setEditorDecorations();renderPanel('breakpoints');}\nasync function editBreakpoint(uri,line){const existing=sourceBreakpointAt(state.breakpoints[uri]??[],state.debug?.profile!=='managed-il'&&!state.buildDirty?state.debug?.breakpoints?.filter(b=>b.uri===uri)??[]:[],line)??{line,enabled:true};const value=await debugTools.editRule(existing,`Breakpoint \u00b7 ${uri}:${existing.line}`,{source:true});if(!value)return;state.breakpoints[uri]??=[];const at=state.breakpoints[uri].indexOf(existing);if(at>=0)state.breakpoints[uri][at]=value;else state.breakpoints[uri].push(value);await syncBreakpoints(uri);saveLocal();setEditorDecorations();renderPanel('breakpoints');}\n\n",
+    "after": "function toggleBreakpoint(uri,line){return sourceBreakpoints.toggle(uri,line);}\nasync function syncBreakpoints(uri){await sourceBreakpoints.sync(uri);setEditorDecorations();renderPanel('breakpoints');}\nfunction editBreakpoint(uri,line){return sourceBreakpoints.edit(uri,line);}\n"
+  },
+  {
+    "label": "Binary/encoding-safe legacy bundle export",
+    "before": "function exportLegacyProject(){if(state.nativeMode){toast('Export workspace applies to browser projects. Native workspace files remain in their original disk folder. Use Save All to save edited native files.','error');return;}saveLocal();const context=explorerContext(),diskRecords=context.records.map(f=>({path:f.path,...(typeof f.text==='string'?{text:f.text}:f.bytes?{base64:encodeBase64(f.bytes)}:{text:''})}));download(state.name+'.sharpforge.json',JSON.stringify({...sessionRecovery.export(),format:'sharpforge-project',version:1,name:state.name,extensions:state.extensionConfig,files:state.files.map(({uri,text})=>({uri,text})),diskRecords:state.projectSystem?diskRecords:undefined,extraFiles:state.extraFiles,folders:state.folders,entry:state.projectSystem?.solution?.path,startupProject:state.startupProject,configuration:state.configuration,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints},null,2));toast('Workspace exported with project files and hierarchy.');}\nfunction encodeBase64(bytes){let result='';for(let i=0;i<bytes.length;i+=32768)result+=String.fromCharCode(...bytes.subarray(i,i+32768));return btoa(result);}\n\n",
+    "after": "async function exportLegacyProject(){\n const snapshot=await workspaceSnapshot();\n download(state.name+'.sharpforge.json',createLegacyWorkspaceBundle(snapshot));\n toast('Workspace exported with original file encodings and hierarchy.');\n}\n"
+  },
+  {
+    "label": "Selected evaluation diagnostics",
+    "before": "function projectErrors(){\n const scope=state.projectSystem?.closure(state.startupProject);\n return (state.projectSnapshot?.diagnostics??[]).filter(d=>d.severity==='error'&&(!scope||scope.has(d.path)||d.path===state.projectSnapshot.solution.path)).map(d=>({...d,uri:d.path,start:0,length:1,range:{start:{line:0,character:0},end:{line:0,character:1}}}));\n}\n",
+    "after": "function projectErrors(){return projectBuildErrors(state);}\n"
+  },
+  {
+    "label": "Workspace loader delegates through compatible session",
+    "before": "return loadStudioWorkspace(records, options, studioWorkspaceContext());",
+    "after": "return workspaceSession().load(records, options);"
+  },
+  {
+    "label": "Descriptor-preserving Explorer context",
+    "before": "function explorerContext(){\n const records=createStudioRecords({state,documents:workbenchServices.documents,nativeBuild});\n const snapshot=state.nativeMode?state.nativeWorkspace?.hierarchy:state.projectSnapshot;\n return {revision:state.revision,mode:state.workspaceMode??'solution',identity:(state.nativeMode?'native:':'preview:')+(state.nativeWorkspace?.root&&state.nativeMode?state.nativeWorkspace.root:(state.projectSystem?.solution?.path??state.name)+':'+(state.workspaceEpoch??0)),name:state.name,native:state.nativeMode,root:state.nativeMode?state.nativeWorkspace?.root:null,client:nativeBuild.client,nativeAvailable:nativeBuild.capabilities?.available,trusted:nativeBuild.settings.trusted&&nativeBuild.capabilities?.trusted,buildBusy:nativeBuild.busy,fileBusy:!!(explorerActions.busy||explorerActions.runningMutation),readOnly:state.readOnly,records,files:records,snapshot,startup:state.nativeMode?state.nativeStartup??nativeBuild.settings.project:state.startupProject,solutionPath:snapshot?.solution?.path?.endsWith('.slnx')?snapshot.solution.path:null,entry:state.projectSystem?.solution?.path,folders:state.nativeMode?state.nativeWorkspace?.folders??[]:state.folders,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,dirty:[...state.dirtyFiles,...nativeBuild.sourceChanges().map(f=>f.path)],generated:state.result?.generatedSources??[],symbols:state.nativeMode?[]:state.result?.symbols??[]};\n}\n",
+    "after": "function explorerContext(){\n return workspaceContext(state,{nativeBuild,explorerActions,settings:workspaceSettings(),documents:workbenchServices.documents});\n}\n"
+  },
+  {
+    "label": "Workspace commit delegates through compatible session",
+    "before": "return commitStudioExplorerWorkspace(payload, { ...studioWorkspaceContext(), workspaceSettings });",
+    "after": "return workspaceSession().commit(payload);"
+  },
+  {
+    "label": "Lazy binary and text record admission",
+    "before": " if(node.kind==='assembly'){const bytes=state.nativeMode?",
+    "after": " if(!state.nativeMode&&node.path)await workspaceSession().loadRecord(node.path);\n if(node.kind==='assembly'){const bytes=state.nativeMode?"
+  },
+  {
+    "label": "Native shared text admission policy",
+    "before": "if(!/\\.(cs|csproj|slnx|sln|props|targets|json|txt|md|xml|resx|resw|config|css|html|js|ts|svg|yml|yaml|rsp|editorconfig)$/i.test(node.path))",
+    "after": "if(!isWorkspaceTextPath(node.path)&&!/\\.(?:[a-z]*proj|slnx?|slnf)$/i.test(node.path))"
+  },
+  {
+    "label": "Native wizard/startup context selection",
+    "before": "if(action==='startup'){if(state.nativeMode){state.nativeStartup=path;nativeBuild.settings.project=path;",
+    "after": "if(action==='startup'){if(state.nativeMode){nativeBuild.contexts.setProject(path);state.nativeStartup=path;nativeBuild.settings.project=path;"
+  },
+  {
+    "label": "Explorer workspace action arguments",
+    "before": "workspaceAction:(id,node)=>workspaceExplorerAction(id,node),",
+    "after": "workspaceAction:(...args)=>workspaceExplorerAction(...args),"
+  },
+  {
+    "label": "Explorer conflict and semantic rename ports",
+    "before": "pathDialog,pickFiles:pickExistingItems,choose:chooseExplorer,confirm:",
+    "after": "pathDialog,pickFiles:pickExistingItems,choose:chooseExplorer,\n applyConflictResolution:resolution=>applyWorkspaceConflictResolution({context:explorerContext},workspaceSession(),resolution),\n prepareTypeRename:request=>prepareExplorerTypeRename(explorerContext(),requestCompiler,request),confirm:"
+  },
+  {
+    "label": "Correct mutation confirmation label",
+    "before": "E(paths.join('\\n'))}</pre>`,'Delete',()=>true)",
+    "after": "E(paths.join('\\n'))}</pre>`,title==='Delete Items'?'Delete':'Continue',()=>true)"
+  },
+  {
+    "label": "Bounded workspace snapshot through session",
+    "before": "async function workspaceSnapshot(){\n const context=explorerContext();if(!context.native)return {records:context.records,folders:context.folders,settings:workspaceSettings()};\n if(nativeBuild.busy)throw new Error('Finish or cancel the native build before exporting');\n // No save is forced by an export. Dirty buffers overlay disk bytes with their original encoding.\n const records=[];let size=0;for(const record of context.records){const bytes=await context.client.binary(record.path);if((size+=bytes.length)>128*1024*1024)throw new Error('Workspace exceeds the 128 MiB ZIP budget');const decoded=decodeWorkspaceFile(record.path,bytes);if(typeof record.text==='string')decoded.text=record.text;records.push(decoded);}\n if(explorerContext().identity!==context.identity||state.revision!==context.revision)throw new Error('Workspace changed during export; retry');\n return {records,folders:context.folders,settings:{...workspaceSettings(),mode:context.solutionPath?'solution':'folder',entry:context.solutionPath??undefined,startup:context.startup&&records.some(r=>r.path===context.startup)?context.startup:undefined}};\n}\n",
+    "after": "function workspaceSnapshot(){return workspaceSession().snapshot();}\n"
+  },
+  {
+    "label": "Writable ZIP export with source ownership fence",
+    "before": "async function exportProject(){const bytes=await workspaceZipBytes();download(state.name+'.zip',bytes,'application/zip');toast('Workspace ZIP saved with source, project XML, assets, empty folders, and debugger settings.');return bytes;}\n",
+    "after": "async function exportProject(){\n if(typeof window.showSaveFilePicker==='function'){\n  let handle;\n  try{handle=await window.showSaveFilePicker({suggestedName:state.name+'.zip',\n   types:[{description:'Workspace ZIP',accept:{'application/zip':['.zip']}}]});}\n  catch(error){if(error.name==='AbortError')return null;throw error;}\n  const context=explorerContext();\n  const writable=await handle.createWritable();\n  const result=await exportWorkspaceToWritable(context,writable,{isCurrent:()=>{\n   const current=explorerContext();\n   return current.identity===context.identity&&current.revision===context.revision&&current.disk===context.disk;\n  }});\n  toast('Workspace ZIP saved with original file bytes and settings.');\n  return result;\n }\n const bytes=await workspaceZipBytes();\n download(state.name+'.zip',bytes,'application/zip');\n toast('Workspace ZIP saved with original file bytes and settings.');\n return bytes;\n}\n"
+  },
+  {
+    "label": "Complete wizard helper with real destination/provider attachment",
+    "before": "async function commitWizardPlan(plan,{add,kind,context,node}){\n if(explorerContext().identity!==context.identity)throw new Error('Workspace changed; reopen the wizard');\n if(state.readOnly)throw new Error('Stop debugging before applying the plan');\n if(!add&&kind==='project'){\n  if((state.dirtyFiles.size||state.membershipDirty)&&!globalThis.confirm('Replace this workspace? Export a ZIP first to retain unsaved files. Local recovery keeps the previous workspace.'))throw new Error('Creation cancelled; current workspace was preserved');\n  const opened=await loadDiskRecords(plan.records,{entry:plan.entry,startup:plan.startup,folders:plan.folders,name:plan.name,mode:plan.entry?/\\.(slnx|sln)$/.test(plan.entry)?'solution':'project':'folder'});if(!opened)throw new Error('Creation cancelled; native workspace and dirty buffers were preserved');\n }else{\n  validateFilePlan(plan,explorerContext().records);for(const edit of plan.modifications??[]){if(explorerContext().records.find(r=>r.path===edit.path)?.text!==edit.expectedText)throw new Error('Project XML changed: '+edit.path);}\n  explorerActions.operationIdentity=context.identity;explorerActions.readSet=new Map((plan.modifications??[]).map(e=>[e.path,e.expectedText]));\n  if(['solution-folder','solution'].includes(node?.kind)&&context.solutionPath&&!plan.modifications?.length){const original=explorerContext().records.find(r=>r.path===context.solutionPath)?.text;if(typeof original==='string'){let text=original;for(const record of plan.records)text=addSolutionItem(text,{solutionPath:context.solutionPath,path:record.path,folder:node.solutionFolder??'Solution Items'});plan.modifications.push({path:context.solutionPath,text,expectedText:original});explorerActions.readSet.set(context.solutionPath,original);}}\n  const ops=[...plan.records.map(r=>({kind:'create',path:r.path,text:r.text})),...plan.folders.filter(p=>!plan.records.some(r=>r.path.startsWith(p+'/'))&&!explorerContext().folders.includes(p)).map(path=>({kind:'mkdir',path})),...(plan.modifications??[]).map(r=>({kind:'write',path:r.path,text:r.text}))];\n  await explorerActions.perform(ops);\n  if(!state.nativeMode&&kind==='project'&&plan.entry&&plan.entry!==state.projectSystem?.solution?.path){await commitExplorerRecords({records:explorerContext().records,folders:state.folders,entry:plan.entry});}\n  if(plan.startup){if(state.nativeMode){state.nativeStartup=plan.startup;nativeBuild.settings.project=plan.startup;}else if(!state.startupProject)state.startupProject=plan.startup;}\n }\n if(plan.openFile?.endsWith('.cs'))await openExplorerNode({kind:'source',path:plan.openFile});renderTree();saveLocal();log('Created '+plan.records.length+' files from '+plan.template+'.');\n if(plan.profile==='winui-web')docking.reset('winui');\n}\n",
+    "after": "function commitWizardPlan(plan,options){\n return commitWorkspaceWizard({state,actions:explorerActions,nativeBuild,context:explorerContext,\n  confirm:message=>globalThis.confirm(message),load:loadDiskRecords,commit:commitExplorerRecords,\n  open:openExplorerNode,render:renderTree,save:saveLocal,log,layout:profile=>docking.reset(profile)},plan,options);\n}\n"
+  },
+  {
+    "label": "Workspace watch/recovery action ports",
+    "before": "async function workspaceExplorerAction(id,node){",
+    "after": "async function workspaceExplorerAction(id,node,payload={}){\n if(id==='reopen-recent-workspace')return workspaceSession().reopenRecent(node?.recent??payload.recent);\n if(id==='disk-external-change')return applyExternalDiskChange({context:explorerContext},workspaceSession(),payload);\n if(id==='disk-reevaluate')return reevaluateDiskWorkspace({context:explorerContext},workspaceSession(),payload);"
+  },
+  {
+    "label": "Workspace entry keeps provider identity",
+    "before": "return loadDiskRecords(explorerContext().records,{entry:node.path,folders:state.folders,name:node.label});",
+    "after": "return loadDiskRecords(explorerContext().records,{entry:node.path,folders:state.folders,name:node.label,disk:state.disk});"
+  },
+  {
+    "label": "Lazy file preview",
+    "before": "async function previewWorkspaceFile(path){const c=explorerContext(),bytes=",
+    "after": "async function previewWorkspaceFile(path){if(!state.nativeMode)await workspaceSession().loadRecord(path);const c=explorerContext(),bytes="
+  },
+  {
+    "label": "Service-aware workspace/session host",
+    "before": "mountStudioComposition({\n",
+    "after": "let activeWorkspaceSession;\nfunction workspaceSession(){\n return activeWorkspaceSession??=createWorkspaceSession({state,nativeBuild,editors,documents:workbenchServices.documents,\n  workbench:()=>({...studioWorkspaceContext(),workspaceSettings}),\n  hasNativeChanges:()=>nativeSourceChanges().length||nativeBuild.sourceChanges().length,\n  confirm:message=>globalThis.confirm(message),selectImport:(records,options)=>projectWizard.selectImport(records,options),\n  revokeRuntime:()=>runtimeTools.revoke(),stop:stopQuietly,savePrevious,resetEditors,renderWorkspace,\n  renderProject:()=>renderPanel('project'),saveLocal,log,projectErrors,applyAnalysis,build,\n  ready:text=>{status(text);renderTree();},toast,scheduleAnalysis,\n  persistenceReady:()=>solutionExplorer.persistence.ready(),\n  isDocumentOpen:path=>[...docking.tabs.views].some(([id,view])=>view.uri===path&&\n   (docking.host.popouts.has(id)||docking.layout.locate(id).kind!=='closed')),\n  canReleaseDocument:path=>solutionExplorer.canReleaseDocument(path),\n  releaseDocumentCaches:path=>solutionExplorer.releaseDocument(path),\n  releaseCompilerDocuments:documents=>compiler.request('releaseDocuments',{documents}),\n  renderDocuments:()=>{renderTabs();renderTree();renderBreadcrumb();},\n  settings:workspaceSettings,context:explorerContext,\n  chooseSaveConflict:conflict=>promptWorkspaceSaveConflict({ask,query:$,escapeHtml:E},conflict)\n });\n}\nasync function ensureWorkspaceSource(uri,{signal}={}){\n const present=workbenchServices.documents.get(uri);\n if(present)return present;\n if(state.nativeMode){await nativeBuild.open(uri);return workbenchServices.documents.get(uri);}\n const record=await workspaceSession().loadRecord(uri,{signal});\n if(!record||!/\\.cs$/i.test(uri)||typeof record.text!=='string')throw new Error('Source is unavailable: '+uri);\n const source=workbenchServices.documents.add(studioSourceRecord(record));\n renderWorkspace();\n return source;\n}\n\nmountStudioComposition({\n  workspaceSession,"
+  },
+  {
+    "label": "Workspace ports public composition import",
+    "before": "import {createWorkspaceSession,workspaceContext} from './workspace-session.js';",
+    "after": "import {workspaceContext} from './workspace-session.js';\nimport {createStudioWorkspacePorts} from './workbench/studio-workspace-ports.js';"
+  },
+  {
+    "label": "Workspace ports own './workspace-disk-events.js';",
+    "before": "import {applyExternalDiskChange,reevaluateDiskWorkspace} from './workspace-disk-events.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workspace-wizard.js';",
+    "before": "import {commitWorkspaceWizard} from './workspace-wizard.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workspace-export.js';",
+    "before": "import {exportWorkspaceToWritable} from './workspace-export.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workspace-save-conflict.js';",
+    "before": "import {promptWorkspaceSaveConflict} from './workspace-save-conflict.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workspace-recovery.js';",
+    "before": "import {restoreLegacyWorkspace} from './workspace-recovery.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workbench/studio-workspace-loader.js';",
+    "before": "import {loadStudioWorkspace} from './workbench/studio-workspace-loader.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workbench/studio-explorer-workspace.js';",
+    "before": "import {commitStudioExplorerWorkspace} from './workbench/studio-explorer-workspace.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workbench/studio-existing-project.js';",
+    "before": "import {importStudioExistingProject} from './workbench/studio-existing-project.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace ports own './workbench/workspace-records.js';",
+    "before": "import {createStudioRecords} from './workbench/workspace-records.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Workspace bundle public encoding import",
+    "before": "import {createLegacyWorkspaceBundle,workspaceBase64 as encodeBase64} from './workspace-bundle.js';",
+    "after": "import {workspaceBase64 as encodeBase64} from './workspace-bundle.js';"
+  },
+  {
+    "label": "File import keeps upstream stream owner",
+    "before": "import {importStudioFiles,openStudioWorkspaceZip} from './workbench/studio-file-import.js';",
+    "after": "import {importStudioFiles} from './workbench/studio-file-import.js';"
+  },
+  {
+    "label": "Recovery through extracted workspace ports",
+    "before": "async function recover(){\n const result=await restoreLegacyWorkspace({storage,key:storageKeys.workspace,session:workspaceSession(),\n  onDiagnostic:diagnostic=>toast(diagnostic.message,'error')});\n return result.restored||result.blocked;\n}\n",
+    "after": "function recover(){return workspacePorts().recover();}\n"
+  },
+  {
+    "label": "Legacy export through extracted workspace ports",
+    "before": "async function exportLegacyProject(){\n const snapshot=await workspaceSnapshot();\n download(state.name+'.sharpforge.json',createLegacyWorkspaceBundle(snapshot));\n toast('Workspace exported with original file encodings and hierarchy.');\n}\n",
+    "after": "function exportLegacyProject(){return workspacePorts().exportLegacy();}\n"
+  },
+  {
+    "label": "Extract workspace action and lifecycle composition",
+    "before": "// Project/solution creation and portable workspace IO. ZIP is data only, never code execution.\nfunction workspaceSettings(){return {...sessionRecovery.export(),langVersion:state.langVersion,name:state.projectSystem?.solution?.name??state.name,mode:state.workspaceMode??(state.projectSystem?'solution':'folder'),entry:state.projectSystem?.solution?.path??undefined,startup:state.startupProject??undefined,configuration:state.configuration,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,extensions:state.extensionConfig};}\nfunction workspaceSnapshot(){return workspaceSession().snapshot();}\nasync function workspaceZipBytes(){return exportWorkspaceZip(await workspaceSnapshot());}\nasync function exportProject(){\n if(typeof window.showSaveFilePicker==='function'){\n  let handle;\n  try{handle=await window.showSaveFilePicker({suggestedName:state.name+'.zip',\n   types:[{description:'Workspace ZIP',accept:{'application/zip':['.zip']}}]});}\n  catch(error){if(error.name==='AbortError')return null;throw error;}\n  const context=explorerContext();\n  const writable=await handle.createWritable();\n  const result=await exportWorkspaceToWritable(context,writable,{isCurrent:()=>{\n   const current=explorerContext();\n   return current.identity===context.identity&&current.revision===context.revision&&current.disk===context.disk;\n  }});\n  toast('Workspace ZIP saved with original file bytes and settings.');\n  return result;\n }\n const bytes=await workspaceZipBytes();\n download(state.name+'.zip',bytes,'application/zip');\n toast('Workspace ZIP saved with original file bytes and settings.');\n return bytes;\n}\nasync function saveWorkspaceFolder(){if(typeof window.showDirectoryPicker!=='function')throw new Error('This browser does not expose writable directory handles. Save as ZIP and extract it instead.');let handle;try{handle=await window.showDirectoryPicker({mode:'readwrite'});}catch(error){if(error.name==='AbortError')return null;throw error;}const snapshot=await workspaceSnapshot();try{const result=await writeNewDirectory(handle,{...snapshot,records:[...snapshot.records,workspaceManifestRecord(snapshot.settings,snapshot.records)]});toast('Saved '+result.written.length+' files to the empty destination folder.');return result;}catch(error){toast(error.message+(error.written?.length?' Completed files: '+error.written.join(', '):''),'error');throw error;}}\nfunction openWorkspaceZip(file, options = {}) {\n return openStudioWorkspaceZip(file, options, studioImportContext());\n}\n\nasync function prepareWizard(node){if(state.readOnly)throw new Error('Stop debugging before creating files');if(state.nativeMode){for(const path of new Set([node?.project,node?.kind==='project'?node.path:null,explorerContext().startup,explorerContext().solutionPath].filter(Boolean))){if(!nativeBuild.buffers.has(path)){const file=await nativeBuild.client.read(path);nativeBuild.buffers.set(path,{...file,baseline:file.text});}}}}\nasync function openProjectWizard({add=false,node=null}={}){await prepareWizard(node);return projectWizard.openProject({add,node});}\nasync function openItemWizard(node=null){await prepareWizard(node);return projectWizard.openItem(node);}\nfunction commitWizardPlan(plan,options){\n return commitWorkspaceWizard({state,actions:explorerActions,nativeBuild,context:explorerContext,\n  confirm:message=>globalThis.confirm(message),load:loadDiskRecords,commit:commitExplorerRecords,\n  open:openExplorerNode,render:renderTree,save:saveLocal,log,layout:profile=>docking.reset(profile)},plan,options);\n}\nasync function workspaceExplorerAction(id,node,payload={}){\n if(id==='reopen-recent-workspace')return workspaceSession().reopenRecent(node?.recent??payload.recent);\n if(id==='disk-external-change')return applyExternalDiskChange({context:explorerContext},workspaceSession(),payload);\n if(id==='disk-reevaluate')return reevaluateDiskWorkspace({context:explorerContext},workspaceSession(),payload);\n if(id==='save-zip')return exportProject();if(id==='save-folder')return saveWorkspaceFolder();\n if(id==='open-workspace-entry'){const record=explorerContext().records.find(r=>r.path===node.path);if(!record)throw new Error('Project/solution file is not present');if(state.nativeMode){nativeBuild.settings.project=node.path;return nativeBuild.open(node.path);}return loadDiskRecords(explorerContext().records,{entry:node.path,folders:state.folders,name:node.label,disk:state.disk});}\n if(id==='convert-sln'){const text=await explorerActions.readText(node.path),converted=convertLegacySolution(text,node.path);await explorerActions.perform([{kind:'create',path:converted.path,text:converted.text}]);toast(converted.warnings.join(' ')||'Created SLNX; original SLN retained.');return;}\n if(id==='import-project')return importExistingProject();\n}\nasync function importExistingProject(){\n const context=explorerContext();if(!context.solutionPath)throw new Error('Open a .slnx solution before adding an external project');\n const source=await ask('Add Existing Project','<p>Keep all project sources, imports, references and assets together.</p><label class=\"tool-field\">Source<select id=\"existing-source\"><option value=\"current\">Project already in this workspace</option><option value=\"zip\">Import a project or solution ZIP</option><option value=\"folder\">Import a containing folder</option></select></label>','Choose',()=>$('#existing-source').value);if(!source)return;\n if(source==='current'){const choices=context.records.filter(r=>r.path.endsWith('.csproj')&&!(context.snapshot?.solution?.projectPaths??[]).includes(r.path)).map(r=>r.path);if(!choices.length)throw new Error('No unlisted project files; import a ZIP or folder first');const path=await chooseExplorer('Add Existing Project',choices);if(path){const text=await explorerActions.readText(context.solutionPath);await explorerActions.perform([{kind:'write',path:context.solutionPath,text:addSolutionProject(text,{solutionPath:context.solutionPath,projectPath:path})}]);}return;}\n const files=await new Promise(resolve=>{const input=document.createElement('input');input.type='file';input.multiple=source==='folder';if(source==='zip')input.accept='.zip';else input.webkitdirectory=true;input.onchange=()=>resolve([...input.files]);input.oncancel=()=>resolve([]);input.click();});if(!files.length)return;\n const result=await importStudioExistingProject(files,source,{\n  workspace:context,current:explorerContext,documents:workbenchServices.documents,explorer:explorerActions,\n  choose:chooseExplorer,pathDialog\n });\n if(result)toast('Imported '+result.count+' files; selected project added to the solution.');\n}\nasync function previewWorkspaceFile(path){if(!state.nativeMode)await workspaceSession().loadRecord(path);const c=explorerContext(),bytes=c.native?await c.client.binary(path):c.records.find(r=>r.path===path)?.bytes;if(!bytes)throw new Error('File bytes unavailable');const image=/\\.(png|jpe?g|gif|webp)$/i.test(path),url=image?URL.createObjectURL(new Blob([bytes])):null;showModal(path,`<p>${bytes.length.toLocaleString()} bytes. Previewing does not execute this file.</p>${url?`<img src=\"${E(url)}\" alt=\"${E(path)}\" style=\"max-width:100%;max-height:55vh\">`:`<pre>${Array.from(bytes.slice(0,256),b=>b.toString(16).padStart(2,'0')).join(' ')}${bytes.length>256?' \u2026':''}</pre>`}`,{footer:'<button id=\"download-workspace-file\">Save file</button><button id=\"modal-done\">Close</button>',onClose:()=>{if(url)URL.revokeObjectURL(url);}});$('#download-workspace-file').onclick=()=>download(path.split('/').at(-1),bytes,'application/octet-stream');}\n\n\nlet activeWorkspaceSession;\nfunction workspaceSession(){\n return activeWorkspaceSession??=createWorkspaceSession({state,nativeBuild,editors,documents:workbenchServices.documents,\n  workbench:()=>({...studioWorkspaceContext(),workspaceSettings}),\n  hasNativeChanges:()=>nativeSourceChanges().length||nativeBuild.sourceChanges().length,\n  confirm:message=>globalThis.confirm(message),selectImport:(records,options)=>projectWizard.selectImport(records,options),\n  revokeRuntime:()=>runtimeTools.revoke(),stop:stopQuietly,savePrevious,resetEditors,renderWorkspace,\n  renderProject:()=>renderPanel('project'),saveLocal,log,projectErrors,applyAnalysis,build,\n  ready:text=>{status(text);renderTree();},toast,scheduleAnalysis,\n  persistenceReady:()=>solutionExplorer.persistence.ready(),\n  isDocumentOpen:path=>[...docking.tabs.views].some(([id,view])=>view.uri===path&&\n   (docking.host.popouts.has(id)||docking.layout.locate(id).kind!=='closed')),\n  canReleaseDocument:path=>solutionExplorer.canReleaseDocument(path),\n  releaseDocumentCaches:path=>solutionExplorer.releaseDocument(path),\n  releaseCompilerDocuments:documents=>compiler.request('releaseDocuments',{documents}),\n  renderDocuments:()=>{renderTabs();renderTree();renderBreadcrumb();},\n  settings:workspaceSettings,context:explorerContext,\n  chooseSaveConflict:conflict=>promptWorkspaceSaveConflict({ask,query:$,escapeHtml:E},conflict)\n });\n}\nasync function ensureWorkspaceSource(uri,{signal}={}){\n const present=workbenchServices.documents.get(uri);\n if(present)return present;\n if(state.nativeMode){await nativeBuild.open(uri);return workbenchServices.documents.get(uri);}\n const record=await workspaceSession().loadRecord(uri,{signal});\n if(!record||!/\\.cs$/i.test(uri)||typeof record.text!=='string')throw new Error('Source is unavailable: '+uri);\n const source=workbenchServices.documents.add(studioSourceRecord(record));\n renderWorkspace();\n return source;\n}\n\n",
+    "after": "function workspaceSettings(){return {...sessionRecovery.export(),langVersion:state.langVersion,name:state.projectSystem?.solution?.name??state.name,mode:state.workspaceMode??(state.projectSystem?'solution':'folder'),entry:state.projectSystem?.solution?.path??undefined,startup:state.startupProject??undefined,configuration:state.configuration,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,extensions:state.extensionConfig};}\nfunction workspaceSession(){return workspacePorts().session();}\nfunction workspaceZipBytes(){return workspacePorts().zipBytes();}\nfunction exportProject(){return workspacePorts().exportZip();}\nfunction saveWorkspaceFolder(){return workspacePorts().saveFolder();}\nfunction openWorkspaceZip(file,options){return workspacePorts().openZip(file,options);}\nfunction openProjectWizard(options){return workspacePorts().openProject(options);}\nfunction openItemWizard(node){return workspacePorts().openItem(node);}\nfunction commitWizardPlan(plan,options){return workspacePorts().commitWizard(plan,options);}\nfunction workspaceExplorerAction(id,node,payload){return workspacePorts().action(id,node,payload);}\nfunction importExistingProject(){return workspacePorts().importExistingProject();}\nfunction previewWorkspaceFile(path){return workspacePorts().previewFile(path);}\nfunction ensureWorkspaceSource(uri,options){return workspacePorts().ensureSource(uri,options);}\nlet activeWorkspacePorts;\nfunction workspacePorts(){\n return activeWorkspacePorts??=createStudioWorkspacePorts({state,documents:workbenchServices.documents,\n  nativeBuild,actions:explorerActions,docking,projectWizard,explorer:solutionExplorer,compiler,runtimeTools,\n  window,document,storage,storageKey:storageKeys.workspace,context:explorerContext,workbench:studioWorkspaceContext,\n  settings:workspaceSettings,nativeSourceChanges,stop:stopQuietly,savePrevious,resetEditors,renderWorkspace,renderPanel,\n  saveLocal,log,projectErrors,applyAnalysis,build,status,scheduleAnalysis,renderTabs,renderTree,renderBreadcrumb,\n  load:loadDiskRecords,commit:commitExplorerRecords,open:openExplorerNode,confirm:message=>globalThis.confirm(message),\n  download,toast,ask,query:$,escapeHtml:E,pathDialog,choose:chooseExplorer,showModal,importContext:studioImportContext\n });\n}\n"
+  },
+  {
+    "label": "Public project-system import entry (2)",
+    "before": "from '../../packages/project-system/src/index.js'",
+    "after": "from '@sharpforge/project-system'",
+    "count": 2
+  },
+  {
+    "label": "Public templates import entry (1)",
+    "before": "from '../../packages/templates/src/index.js'",
+    "after": "from '@sharpforge/templates'",
+    "count": 1
+  },
+  {
+    "label": "Public controls import entry (1)",
+    "before": "from '../../packages/controls/src/index.js'",
+    "after": "from '@sharpforge/controls'",
+    "count": 1
+  },
+  {
+    "label": "Public editor import entry (2)",
+    "before": "from '../../packages/editor/src/index.js'",
+    "after": "from '@sharpforge/editor'",
+    "count": 2
+  },
+  {
+    "label": "Public text import entry (1)",
+    "before": "from '../../packages/text/src/index.js'",
+    "after": "from '@sharpforge/text'",
+    "count": 1
+  },
+  {
+    "label": "Public bytecode import entry (1)",
+    "before": "from '../../packages/bytecode/src/index.js'",
+    "after": "from '@sharpforge/bytecode'",
+    "count": 1
+  },
+  {
+    "label": "Public cil import entry (1)",
+    "before": "from '../../packages/cil/src/index.js'",
+    "after": "from '@sharpforge/cil'",
+    "count": 1
+  },
+  {
+    "label": "Public debugger contract import",
+    "before": "from '../../packages/debugger/src/breakpoints.js'",
+    "after": "from '@sharpforge/debugger'"
+  },
+  {
+    "label": "Prepared native document context and refresh imports",
+    "before": "import {createNativeContextHooks} from './native-build/workspace-state.js';",
+    "after": "import {createNativeContextHooks,collectNativeSourceChanges} from './native-build/workspace-state.js';\nimport {refreshNativeExplorerWorkspace} from './native-build/explorer-refresh.js';"
+  },
+  {
+    "label": "Native dirty sources use captured document ownership",
+    "before": "function nativeSourceChanges(){return state.nativeMode?state.files.filter(f=>f.nativeHash&&f.text!==f.nativeBaseline).map(f=>({path:f.uri,text:f.text,expectedHash:f.nativeHash})):[];}",
+    "after": "function nativeSourceChanges(){return collectNativeSourceChanges(state,workbenchServices.documents);}"
+  },
+  {
+    "label": "Native Explorer refresh through Documents adoption",
+    "before": "async function refreshNativeExplorer(mappings=[],partial=false){\n const paths=state.files.map(f=>({old:f.uri,path:mapWorkspacePath(f.uri,mappings),file:f})),workspace=await nativeBuild.refresh(),available=new Set(workspace.files.map(f=>f.path));\n const next=[];for(const item of paths){if(!available.has(item.path))continue;const disk=await nativeBuild.client.read(item.path);if(!partial&&item.file.text!==item.file.nativeBaseline&&item.old===item.path){next.push(item.file);continue;}next.push({...item.file,uri:item.path,text:disk.text,nativeHash:disk.hash,nativeBaseline:disk.text,version:item.file.version+1});}\n for(const [uri,instance]of editors)if(!next.some(f=>f.uri===uri)){instance.dispose();editors.delete(uri);}\n state.files=next;state.active=mapWorkspacePath(state.active??'',mappings);state.tabs=state.tabs.map(t=>mapWorkspacePath(t,mappings)).filter(t=>next.some(f=>f.uri===t));state.breakpoints=Object.fromEntries(Object.entries(state.breakpoints).map(([p,b])=>[mapWorkspacePath(p,mappings),b]).filter(([p])=>available.has(p)));\n nativeBuild.buffers.clear();nativeBuild.sourcePath=null;nativeBuild.renderSource(true);state.revision++;state.dirtyFiles.clear();state.applyingEdits=true;try{for(const f of next){const instance=editors.get(f.uri);if(instance&&instance.value!==f.text)instance.setValue(f.text);}}finally{state.applyingEdits=false;}renderWorkspace();\n}\n",
+    "after": "function refreshNativeExplorer(mappings=[],partial=false){\n return refreshNativeExplorerWorkspace({state,documents:workbenchServices.documents,nativeBuild,renderWorkspace},\n  mappings,{partial,signal:explorerActions.operationController?.signal});\n}\n"
+  },
+  {
+    "label": "Native refresh module owns path remapping",
+    "before": "function mapWorkspacePath(path,mappings){const map=mappings.find(m=>path===m.from||path.startsWith(m.from+'/'));return map?map.to+path.slice(map.from.length):path;}\n",
+    "after": ""
+  },
+  {
+    "label": "Remove extracted import ownership: './workbench/workspace-limits.js';",
+    "before": "import {studioDiskLimits,validateStudioSources} from './workbench/workspace-limits.js';\n",
+    "after": ""
+  },
+  {
+    "label": "Remove extracted import ownership: '@sharpforge/editor';",
+    "before": "import {EditorModel,rebaseEditorSource} from '@sharpforge/editor';",
+    "after": "import {EditorModel} from '@sharpforge/editor';"
+  },
+  {
+    "label": "Remove extracted import ownership: '@sharpforge/project-system';",
+    "before": "import {importWorkspaceRecords,workspaceManifestRecord,importWorkspaceZip,exportWorkspaceZip,validateWorkspaceSettings,workspaceCandidates,writeNewDirectory,decodeWorkspaceFile,encodeWorkspaceFile,prefixWorkspace,convertLegacySolution} from '@sharpforge/project-system';\n",
+    "after": ""
+  },
+  {
+    "label": "Remove extracted import ownership: '@sharpforge/templates';",
+    "before": "import {validateFilePlan,createProjectPlan,createItemPlan,projectTemplates,itemTemplates} from '@sharpforge/templates';",
+    "after": "import {projectTemplates,itemTemplates} from '@sharpforge/templates';"
+  },
+  {
+    "label": "Remove extracted import ownership: '@sharpforge/project-system';",
+    "before": "import { ProjectSystem, DiskWorkspace, addSolutionProject, addSolutionItem, createCsproj, createSlnx, normalizePath, validateItemPath, parseXml } from '@sharpforge/project-system';",
+    "after": "import {createCsproj,createSlnx,validateItemPath} from '@sharpforge/project-system';"
+  },
+  {
+    "label": "Remove extracted import ownership: '@sharpforge/editor';",
+    "before": "import { CodeEditor, escapeHtml as E } from '@sharpforge/editor';",
+    "after": "import {escapeHtml as E} from '@sharpforge/editor';"
+  },
+  {
+    "label": "Remove extracted import ownership: '@sharpforge/text';",
+    "before": "import { SourceText } from '@sharpforge/text';\n",
+    "after": ""
+  },
+  {
+    "label": "Remove redundant blank lines after extraction",
+    "removedLines": 7
+  }
+]

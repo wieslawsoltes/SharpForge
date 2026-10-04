@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: ZIP64 lists a synthetic 5 GiB stored entry with bounded tail/directory reads
+ok 1 - ZIP64 lists a synthetic 5 GiB stored entry with bounded tail/directory reads
+  ---
+  duration_ms: 4.340336
+  type: 'test'
+  ...
+# Subtest: ZIP64 saturated fields must have the exact required extra metadata
+ok 2 - ZIP64 saturated fields must have the exact required extra metadata
+  ---
+  duration_ms: 0.303197
+  type: 'test'
+  ...
+# Subtest: ZIP64: 70000 entries round-trip and reference Python zipfile accepts every entry
+ok 3 - ZIP64: 70000 entries round-trip and reference Python zipfile accepts every entry
+  ---
+  duration_ms: 1409.973508
+  type: 'test'
+  ...
+# Subtest: ZIP64: small forced archives, safe-integer metadata and corrupted locator rejection
+ok 4 - ZIP64: small forced archives, safe-integer metadata and corrupted locator rejection
+  ---
+  duration_ms: 3.071633
+  type: 'test'
+  ...
+# Subtest: DEFLATE: dynamic and fixed output matches the platform reference and compresses text
+ok 5 - DEFLATE: dynamic and fixed output matches the platform reference and compresses text
+  ---
+  duration_ms: 29.597122
+  type: 'test'
+  ...
+# Subtest: ZIP streams: backpressure, CRC descriptors and portable fixed compression round-trip
+ok 6 - ZIP streams: backpressure, CRC descriptors and portable fixed compression round-trip
+  ---
+  duration_ms: 158.885655
+  type: 'test'
+  ...
+# Subtest: ZIP streams: cancellation aborts the sink and closing an archive cancels active readers
+ok 7 - ZIP streams: cancellation aborts the sink and closing an archive cancels active readers
+  ---
+  duration_ms: 1.450718
+  type: 'test'
+  ...
+# Subtest: ZIP metadata: preservation retains UTC seconds and executable mode, deterministic default ignores them
+ok 8 - ZIP metadata: preservation retains UTC seconds and executable mode, deterministic default ignores them
+  ---
+  duration_ms: 0.561987
+  type: 'test'
+  ...
+# Subtest: ZIP malformed corpus: CRC, ratios, paths, overlaps, truncation and count budgets reject before returning records
+ok 9 - ZIP malformed corpus: CRC, ratios, paths, overlaps, truncation and count budgets reject before returning records
+  ---
+  duration_ms: 2.427281
+  type: 'test'
+  ...
+# Subtest: CRC32 slicing keeps byte-wise reference parity across short tails and chunk boundaries
+ok 10 - CRC32 slicing keeps byte-wise reference parity across short tails and chunk boundaries
+  ---
+  duration_ms: 4.787992
+  type: 'test'
+  ...
+# Subtest: Malformed ZIP path encodings and traversal expose stable archive diagnostics
+ok 11 - Malformed ZIP path encodings and traversal expose stable archive diagnostics
+  ---
+  duration_ms: 0.441136
+  type: 'test'
+  ...
+# Subtest: Every DEFLATE backend enforces its input budget before starting compression
+ok 12 - Every DEFLATE backend enforces its input budget before starting compression
+  ---
+  duration_ms: 1.735698
+  type: 'test'
+  ...
+# Subtest: Platform and portable compressors report actual backends and match zlib bytes
+ok 13 - Platform and portable compressors report actual backends and match zlib bytes
+  ---
+  duration_ms: 25.812918
+  type: 'test'
+  ...
+# {"requested":"portable","actual":"portable","runtime":"v24.19.0"}
+# {"requested":"auto","actual":"CompressionStream","runtime":"v24.19.0"}
+# Subtest: Aborting an active platform compression cancels the stream
+ok 14 - Aborting an active platform compression cancels the stream
+  ---
+  duration_ms: 5.257243
+  type: 'test'
+  ...
+# Subtest: The pinned ZIP quine contains its exact original bytes according to reference Python zipfile
+ok 15 - The pinned ZIP quine contains its exact original bytes according to reference Python zipfile
+  ---
+  duration_ms: 36.311489
+  type: 'test'
+  ...
+# Subtest: A real ZIP quine is rejected by synchronous and bounded streaming extraction
+ok 16 - A real ZIP quine is rejected by synchronous and bounded streaming extraction
+  ---
+  duration_ms: 7.202768
+  type: 'test'
+  ...
+# Subtest: Strict nested archive policy rejects a nested bomb without inflating its inner contents
+ok 17 - Strict nested archive policy rejects a nested bomb without inflating its inner contents
+  ---
+  duration_ms: 34.027693
+  type: 'test'
+  ...
+# Subtest: Equal archive and payload sizes do not reject ordinary content or require whole-archive streaming copies
+ok 18 - Equal archive and payload sizes do not reject ordinary content or require whole-archive streaming copies
+  ---
+  duration_ms: 3.92298
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2137.980281

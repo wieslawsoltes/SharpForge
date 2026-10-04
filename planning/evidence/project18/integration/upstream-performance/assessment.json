@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "status": "performance budget review unresolved",
+  "benchmark": "benchmark.json",
+  "baselineCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "measuredIntegrationCommit": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "sourceReviewCommit": "e8f1502379a2635d4cf448c86ad552298404ef53",
+  "measuredSourcePathsUnchanged": [
+    "packages/runtime/src",
+    "packages/compiler/src",
+    "packages/cil/src",
+    "packages/bytecode/src",
+    "packages/bcl-core/src",
+    "packages/bcl-collections/src"
+  ],
+  "method": "Unchanged existing benchmark-release14.js; each process has one cold and four warm runs per workload/engine. Alternating baseline/final order; all processes serial through limited.js.",
+  "caveat": "Shared machine under resource pressure; these measurements compare the complete upstream and integrated trees. They do not isolate a single commit, measure graph loading, or measure JavaScript heap allocation. allocatedBytes is the managed heap counter.",
+  "rows": [
+    {
+      "workload": "dictionary",
+      "engine": "source",
+      "baselineMedianMs": 36.923602500000015,
+      "integratedMedianMs": 40.85984549999995,
+      "medianChangePercent": 10.660506379354317,
+      "p95ChangePercent": -4.887187566062867,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": true
+    },
+    {
+      "workload": "dictionary",
+      "engine": "cil",
+      "baselineMedianMs": 126.62305749999996,
+      "integratedMedianMs": 170.18532400000004,
+      "medianChangePercent": 34.403107427729026,
+      "p95ChangePercent": 50.942427208006436,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": true
+    },
+    {
+      "workload": "list",
+      "engine": "source",
+      "baselineMedianMs": 52.845522500000015,
+      "integratedMedianMs": 53.52597750000007,
+      "medianChangePercent": 1.2876303758753593,
+      "p95ChangePercent": -12.448026404635392,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": false
+    },
+    {
+      "workload": "list",
+      "engine": "cil",
+      "baselineMedianMs": 368.3493094999999,
+      "integratedMedianMs": 377.524576,
+      "medianChangePercent": 2.49091453773993,
+      "p95ChangePercent": -2.461676988052086,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": false
+    },
+    {
+      "workload": "queue",
+      "engine": "source",
+      "baselineMedianMs": 22.253629500000216,
+      "integratedMedianMs": 23.24746750000031,
+      "medianChangePercent": 4.465959137137987,
+      "p95ChangePercent": 2.4227346246719295,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": false
+    },
+    {
+      "workload": "queue",
+      "engine": "cil",
+      "baselineMedianMs": 141.74449899999945,
+      "integratedMedianMs": 153.6864174999996,
+      "medianChangePercent": 8.42496081629256,
+      "p95ChangePercent": -10.23676175535375,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": true
+    },
+    {
+      "workload": "builder",
+      "engine": "source",
+      "baselineMedianMs": 25.069653000000017,
+      "integratedMedianMs": 23.51738299999988,
+      "medianChangePercent": -6.1918288218833055,
+      "p95ChangePercent": 30.07191933051281,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": false
+    },
+    {
+      "workload": "builder",
+      "engine": "cil",
+      "baselineMedianMs": 66.40346550000004,
+      "integratedMedianMs": 62.5392425,
+      "medianChangePercent": -5.819309234696545,
+      "p95ChangePercent": -9.082280905286954,
+      "managedAllocationUnchanged": true,
+      "requiresMedianBudgetReview": false
+    }
+  ],
+  "profileEvidence": {
+    "baseline": "profile-baseline/summary.json",
+    "integrated": "profile-integrated/summary.json",
+    "runsPerTree": 4,
+    "intervalMicroseconds": 100,
+    "correctnessPassed": true,
+    "sampledTimes": [
+      {
+        "function": "runCilSlice",
+        "baseline": {
+          "selfMicroseconds": 33688,
+          "inclusiveMicroseconds": 591242
+        },
+        "integrated": {
+          "selfMicroseconds": 28755,
+          "inclusiveMicroseconds": 503544
+        }
+      },
+      {
+        "function": "runtimeTypeName",
+        "baseline": {
+          "selfMicroseconds": 41068,
+          "inclusiveMicroseconds": 49568
+        },
+        "integrated": {
+          "selfMicroseconds": 34475,
+          "inclusiveMicroseconds": 41140
+        }
+      },
+      {
+        "function": "flush",
+        "baseline": {
+          "selfMicroseconds": 71150,
+          "inclusiveMicroseconds": 71150
+        },
+        "integrated": {
+          "selfMicroseconds": 61609,
+          "inclusiveMicroseconds": 61609
+        }
+      },
+      {
+        "function": "(garbage collector)",
+        "baseline": {
+          "selfMicroseconds": 17389,
+          "inclusiveMicroseconds": 17389
+        },
+        "integrated": {
+          "selfMicroseconds": 15246,
+          "inclusiveMicroseconds": 15246
+        }
+      }
+    ],
+    "interpretation": "Instrumented dictionary CIL profiles run faster in the integration tree. This contradicts a simple stable hotspot explanation but does not invalidate the unprofiled benchmark regressions. Causality remains unproven."
+  },
+  "reviewFindings": [
+    "Existing dictionary/list/queue/builder correctness outputs all passed. Managed allocation counters are unchanged; JavaScript allocation behavior was not measured.",
+    "The unprofiled dictionary source/CIL and queue CIL median rows exceed the contribution budget. Dictionary CIL and source builder p95 also increased.",
+    "The direct dispatch/call/field/intrinsic/generic code and collection algorithm paths were retained from the reviewed upstream. Earlier object-comparer speculation was rejected because primitive dictionary hashing does not use that route.",
+    "Runtime typename normalization remains on the call path, but bounded CPU profiles do not establish a regression there. No speculative runtime change was made."
+  ],
+  "requiredFollowup": "CONTRIBUTING.md requires explicit justification and PR sign-off for more than 5% slowdown. The original measurements and counterevidence are retained; no performance acceptance or blanket speedup is claimed."
+}

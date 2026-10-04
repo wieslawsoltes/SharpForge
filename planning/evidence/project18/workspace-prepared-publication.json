@@ -1,0 +1,1362 @@
+{
+  "schemaVersion": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "agent": "workspace_integrity",
+  "recordedAt": "2026-10-04T06:02:31.418558+00:00",
+  "scope": "Prepared immutable workspace records, journal/provider adoption, durable recovery, Explorer revision checkpoints and bundle settings",
+  "canonicalSource": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+  "canonicalTree": "b643b789c80773f5ee88ebe3e4c02147541f169f",
+  "initialSynchronizedSource": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+  "previousPublicationManifest": "workspace-publication.json",
+  "publicationCounts": {
+    "newDrafts": 4,
+    "newMergeOnlyDependencies": 5,
+    "forwardCorrectionsToExistingDrafts": 1,
+    "cumulativeOwnedDrafts": 30,
+    "cumulativeOwnedMergeOnlyDependencies": 17,
+    "additionalIssueCompletionClaims": 0
+  },
+  "method": "Actual ordered remote parents, sparse worktrees, exact canonical feature blobs, Git Data tree equality and fetched commit/PR readback. No force push, main refresh, issue closure or per-PR full-matrix dispatch.",
+  "publications": [
+    {
+      "branch": "codex/p18-workspace-snapshot-dependencies",
+      "source": null,
+      "local": "7bdab6df0e95af30bbf3f6673e450ba29f44ce82",
+      "tree": "554ad3ee778b6c65a48e8dd1042402f0f20cd911",
+      "parents": [
+        "bd0539232b26388fa456720c4a9012724640b5b3",
+        "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+      ],
+      "baseBranch": "codex/p18-workspace-journal",
+      "baseTree": "f1e22cde86ba87205730730aeadc877fedc8dda0",
+      "remote": "f4ea17e0dc82984e232ef0840ebca67941f4efca",
+      "kind": "merge-only-dependency",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/snapshot-dependencies-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/workspace/src/workspace.js",
+          "blob": "eb9130959109354a58edc42bc1eed7707a93eff0",
+          "canonical": false
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-records",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "6398d034992849de8cacf0af1623d17a5c3fbeb5",
+      "tree": "741b075d09135968cc1747aec779416269e20c53",
+      "parents": [
+        "c528018cd1dd206a60cfeb2f47f6a842521baddc"
+      ],
+      "baseBranch": "codex/p18-workspace-snapshot-dependencies",
+      "baseTree": "af319a16a52017cbdc4ae95cff93beba07505349",
+      "remote": "6fd9f56cd10dfa59fec1c348cf44fdf899f608da",
+      "kind": "draft-feature",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-records-correction-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/workspace/src/transaction-state.js",
+          "blob": "c4255a18ae1c84115aee108582893210619e0619",
+          "canonical": true
+        }
+      ],
+      "pr": 4299,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4299",
+      "readback": {
+        "head": "6fd9f56cd10dfa59fec1c348cf44fdf899f608da",
+        "base": "f4ea17e0dc82984e232ef0840ebca67941f4efca",
+        "draft": true
+      },
+      "exactCanonicalFiles": [
+        {
+          "path": "packages/workspace/src/transaction-records.js",
+          "blob": "fabd2e011a079e52743b877be7330e5e15d1c273",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "packages/workspace/src/source-record-bytes.js",
+          "blob": "e8ab94121d1e30627d92b1dfa9f9b54ad7cdc0f6",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "packages/workspace/src/sha256-stream.js",
+          "blob": "fb16388116166d941c1f6b66b5cd5b39bbc825eb",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "packages/workspace/src/content-hash.js",
+          "blob": "27eb1811989b331147d96b0c04b3fe48bdba5b3f",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "packages/workspace/src/transaction-state.js",
+          "blob": "c4255a18ae1c84115aee108582893210619e0619",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "tests/a24-prepared-source-hashes.test.js",
+          "blob": "8efcf7f1abe3636d0f05c921afc67bf72687984c",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "tests/support/prepared-workspace-record.js",
+          "blob": "994f4f02dd282df28bb5938e28bcc04e78161a5c",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        },
+        {
+          "path": "packages/workspace/PREPARED_SOURCES.md",
+          "blob": "f54d7ac83493f037419a61f6ee00a026e311721e",
+          "qualifiedBlobEqual": true,
+          "pr": 4299
+        }
+      ],
+      "previousHead": {
+        "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+        "local": "3438ef580905b9469e51cd4641fc135f5ef1895c",
+        "remote": "c528018cd1dd206a60cfeb2f47f6a842521baddc",
+        "tree": "af319a16a52017cbdc4ae95cff93beba07505349",
+        "parents": [
+          "f4ea17e0dc82984e232ef0840ebca67941f4efca"
+        ]
+      },
+      "maintenance": "Forward child changes the shadowing loop binding and its member reads; all assertions retained."
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-provider-dependencies",
+      "source": null,
+      "local": "66b66e03661c64a2379e292e957f04346c8973e9",
+      "tree": "555a1b7a55853480ea4a81318c726c1067aa1caf",
+      "parents": [
+        "6fd9f56cd10dfa59fec1c348cf44fdf899f608da",
+        "a40e784068a6c068fda53b21af91c81165155908"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-records",
+      "baseTree": "741b075d09135968cc1747aec779416269e20c53",
+      "remote": "a027be914b3faef67a5045d3022f43eb9648216a",
+      "kind": "merge-only-dependency",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-provider-dependencies-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/project-system/README.md",
+          "blob": "3d81e83c7b5be42a2bd447c91f5ec7323d05c462",
+          "canonical": false
+        },
+        {
+          "path": "packages/project-system/src/disk.js",
+          "blob": "5d80dd2ec91b618fd623a75bee4f67703f9bd1c3",
+          "canonical": false
+        },
+        {
+          "path": "packages/workspace/README.md",
+          "blob": "0f7fc30d4cda893950033ccfb7ec06772567d373",
+          "canonical": false
+        },
+        {
+          "path": "packages/workspace/src/index.js",
+          "blob": "73510d9a8832279a3312937ec3d83f98afe5afbb",
+          "canonical": false
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-journal",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "03c1264c2d19574193a4a19288e5f7ab661a13bd",
+      "tree": "d0af10b18c14beaec70a6f7b93b4ab827e32da88",
+      "parents": [
+        "a027be914b3faef67a5045d3022f43eb9648216a"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-provider-dependencies",
+      "baseTree": "555a1b7a55853480ea4a81318c726c1067aa1caf",
+      "remote": "0f5515a30cd9aca987e088c55f5d7bbaa1e10e7c",
+      "kind": "draft-feature",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-journal-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/workspace/JOURNAL.md",
+          "blob": "822a33ba303602c8dce24c4d7d20d65b41ad1cee",
+          "canonical": false
+        },
+        {
+          "path": "packages/workspace/src/file-history.js",
+          "blob": "c3e88fa2a240443e33116dcab834878d5b3a5617",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/provider-transactions.js",
+          "blob": "a34fbaeca442b44f0707fc937fada38cbad6b843",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/transactions.js",
+          "blob": "123296c210b801cc89d8739eafe15c5fa3ed143e",
+          "canonical": true
+        },
+        {
+          "path": "tests/a24-prepared-journal.test.js",
+          "blob": "1eebde1be6850ac3c08c7b025b73c517992c9041",
+          "canonical": true
+        }
+      ],
+      "pr": 4325,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4325",
+      "readback": {
+        "head": "0f5515a30cd9aca987e088c55f5d7bbaa1e10e7c",
+        "base": "a027be914b3faef67a5045d3022f43eb9648216a",
+        "draft": true
+      },
+      "exactCanonicalFiles": [
+        {
+          "path": "packages/workspace/src/transactions.js",
+          "blob": "123296c210b801cc89d8739eafe15c5fa3ed143e",
+          "qualifiedBlobEqual": true,
+          "pr": 4325
+        },
+        {
+          "path": "packages/workspace/src/file-history.js",
+          "blob": "c3e88fa2a240443e33116dcab834878d5b3a5617",
+          "qualifiedBlobEqual": true,
+          "pr": 4325
+        },
+        {
+          "path": "packages/workspace/src/provider-transactions.js",
+          "blob": "a34fbaeca442b44f0707fc937fada38cbad6b843",
+          "qualifiedBlobEqual": true,
+          "pr": 4325
+        },
+        {
+          "path": "tests/a24-prepared-journal.test.js",
+          "blob": "1eebde1be6850ac3c08c7b025b73c517992c9041",
+          "qualifiedBlobEqual": true,
+          "pr": 4325
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-recovery",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "e5a15a9fb2b9fe7a84a2942bf34a7e6a5f47e6f4",
+      "tree": "1b7a7e7f3643d9623c0ff1e30cc0c9f487329d56",
+      "parents": [
+        "0f5515a30cd9aca987e088c55f5d7bbaa1e10e7c"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-journal",
+      "baseTree": "d0af10b18c14beaec70a6f7b93b4ab827e32da88",
+      "remote": "8919b4626d6f7ea7e40623a969e1d44c62ba8d5b",
+      "kind": "draft-feature",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-recovery-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/workspace/README.md",
+          "blob": "4da6eb3d193d95857749c8bc7bdc1537187b3adb",
+          "canonical": false
+        },
+        {
+          "path": "packages/workspace/src/recovery/integrity.js",
+          "blob": "5860ffb093273860b616abff051d235f0849577b",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/recovery/opfs-store.js",
+          "blob": "5c001dd9274db1ba722ac538dab3c09a1efb1033",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/recovery/prepared-records.js",
+          "blob": "edecc6bd7d64a354ca25898458696f93e28fb32f",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/recovery/receipt-store.js",
+          "blob": "29967b154098d7e35aa801e113f2b28ab03bbe53",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/recovery/records.js",
+          "blob": "7379564a6f30175a7ad01ba14a0c698e7cadba68",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/recovery/schema.js",
+          "blob": "13b97a02c6a8d1a798781cc7c54a355efd5f2445",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/recovery/snapshot-codec.js",
+          "blob": "71ca406f2990d0f851a5476842cf3591fbdf2b2e",
+          "canonical": true
+        },
+        {
+          "path": "tests/a24-prepared-recovery.test.js",
+          "blob": "8eba72b3c9a051e95e8e805c9dc6909fbf91e74c",
+          "canonical": true
+        },
+        {
+          "path": "tests/a24-workspace-recovery.test.js",
+          "blob": "95581ee1e95c7c0165fcc01cde9394ed9e493dee",
+          "canonical": true
+        }
+      ],
+      "pr": 4339,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4339",
+      "readback": {
+        "head": "8919b4626d6f7ea7e40623a969e1d44c62ba8d5b",
+        "base": "0f5515a30cd9aca987e088c55f5d7bbaa1e10e7c",
+        "draft": true
+      },
+      "exactCanonicalFiles": [
+        {
+          "path": "packages/workspace/src/recovery/prepared-records.js",
+          "blob": "edecc6bd7d64a354ca25898458696f93e28fb32f",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "packages/workspace/src/recovery/snapshot-codec.js",
+          "blob": "71ca406f2990d0f851a5476842cf3591fbdf2b2e",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "packages/workspace/src/recovery/schema.js",
+          "blob": "13b97a02c6a8d1a798781cc7c54a355efd5f2445",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "packages/workspace/src/recovery/records.js",
+          "blob": "7379564a6f30175a7ad01ba14a0c698e7cadba68",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "packages/workspace/src/recovery/integrity.js",
+          "blob": "5860ffb093273860b616abff051d235f0849577b",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "packages/workspace/src/recovery/receipt-store.js",
+          "blob": "29967b154098d7e35aa801e113f2b28ab03bbe53",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "packages/workspace/src/recovery/opfs-store.js",
+          "blob": "5c001dd9274db1ba722ac538dab3c09a1efb1033",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "tests/a24-workspace-recovery.test.js",
+          "blob": "95581ee1e95c7c0165fcc01cde9394ed9e493dee",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        },
+        {
+          "path": "tests/a24-prepared-recovery.test.js",
+          "blob": "8eba72b3c9a051e95e8e805c9dc6909fbf91e74c",
+          "qualifiedBlobEqual": true,
+          "pr": 4339
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-persistence-base",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "8ee3626d5797e2b0572c8361856b7a511f88d347",
+      "tree": "9c46d2cb406da9e79513d6e10f5c763a191b5843",
+      "parents": [
+        "8919b4626d6f7ea7e40623a969e1d44c62ba8d5b",
+        "e4eec3162eeffd58a69856b69540f90637152e65"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-recovery",
+      "baseTree": "1b7a7e7f3643d9623c0ff1e30cc0c9f487329d56",
+      "remote": "bdfdb9d18c289a8895524801f0caf35ed3c6472b",
+      "kind": "merge-only-dependency",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-persistence-base-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/workspace/src/index.js",
+          "blob": "56711e73debb583e92f32c1cdb3bb7dbf019dc03",
+          "canonical": false
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-project-base",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "1b9bdb6f608ebc37edd769beead139bf9d2cc3d3",
+      "tree": "954a21e9e9fa1f32d4ebc82589c3c55e07063081",
+      "parents": [
+        "bdfdb9d18c289a8895524801f0caf35ed3c6472b",
+        "044ea4484c13e8d4914306186698127b4cc720eb"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-persistence-base",
+      "baseTree": "9c46d2cb406da9e79513d6e10f5c763a191b5843",
+      "remote": "ce35bbd9b9fea70a65221055577dfd5c186d24be",
+      "kind": "merge-only-dependency",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-project-base-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/project-system/README.md",
+          "blob": "23a0ad81d9f2c6e6d7bedcdb40d4ae84f8a23ae4",
+          "canonical": false
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-interchange-base",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "678dc9a65bc3142d80bcd95e22bf40dc3c7b4fdc",
+      "tree": "55ed7df615c71c125347f6abaad65bd51f6215d7",
+      "parents": [
+        "ce35bbd9b9fea70a65221055577dfd5c186d24be",
+        "d4d0c4b9d79dedb9902bcbcc4b2bcf56a0b6acaf"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-project-base",
+      "baseTree": "954a21e9e9fa1f32d4ebc82589c3c55e07063081",
+      "remote": "5ca2ffe6926fa35b33e4e69e1ad6f2c150af61d3",
+      "kind": "merge-only-dependency",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-interchange-base-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "packages/project-system/src/archive.js",
+          "blob": "0564cf09e34bf71c6049494dc01b1989314445b8",
+          "canonical": false
+        },
+        {
+          "path": "packages/project-system/src/index.js",
+          "blob": "68a9a693d3d6726e2c97c355fa97bb3dec6ebccf",
+          "canonical": false
+        },
+        {
+          "path": "packages/workspace/src/index.js",
+          "blob": "821b5c3afe58b5ecac061d2d64e433f40c403e27",
+          "canonical": false
+        },
+        {
+          "path": "packages/workspace/src/workspace.js",
+          "blob": "1d72f57e701afe98bc92c48603bab6df6825b3d7",
+          "canonical": false
+        },
+        {
+          "path": "scripts/conformance/static/allowlist.json",
+          "blob": "8bed1ee266c785395240c968a1d396e3baf2ccd6",
+          "canonical": false
+        }
+      ]
+    },
+    {
+      "branch": "codex/p18-workspace-prepared-persistence",
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "local": "194908008b4214838e83a769580c21e914ea632a",
+      "tree": "ce89ed7078a86644512da2a0afe7491eca717703",
+      "parents": [
+        "5ca2ffe6926fa35b33e4e69e1ad6f2c150af61d3"
+      ],
+      "baseBranch": "codex/p18-workspace-prepared-interchange-base",
+      "baseTree": "55ed7df615c71c125347f6abaad65bd51f6215d7",
+      "remote": "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e",
+      "kind": "draft-feature",
+      "sourceReceipt": "/tmp/p18-workspace-prepared-publication/prepared-persistence-published.json",
+      "treeAndOrderedParentsReadBackFromGit": true,
+      "changedOrResolvedFiles": [
+        {
+          "path": "apps/studio/explorer/PERSISTENCE.md",
+          "blob": "8936f7c34dc871c16beba16e4e46b2081b199597",
+          "canonical": false
+        },
+        {
+          "path": "apps/studio/explorer/persistence.js",
+          "blob": "1ed121af95a99f1cea1350afafb0e0bdc69b8502",
+          "canonical": true
+        },
+        {
+          "path": "apps/studio/explorer/revision-records.js",
+          "blob": "aa911530168bb351262900339baaa81e394d9f8c",
+          "canonical": true
+        },
+        {
+          "path": "apps/studio/workspace-bundle.js",
+          "blob": "686efd7e9b72bf4ade702781083aefb15c5f06f3",
+          "canonical": true
+        },
+        {
+          "path": "packages/workspace/src/coordination/conflicts.js",
+          "blob": "4a5ef3d901dcb8c1d17ff41e9f844d53877b8370",
+          "canonical": true
+        },
+        {
+          "path": "tests/a24-prepared-persistence.test.js",
+          "blob": "cbdbe01a4a581353de684febd811b29e1bd011e3",
+          "canonical": true
+        }
+      ],
+      "pr": 4360,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4360",
+      "readback": {
+        "head": "4bc8c86c42b8cea766f206f4ae3b0bb4c082923e",
+        "base": "5ca2ffe6926fa35b33e4e69e1ad6f2c150af61d3",
+        "draft": true,
+        "mergeable": true
+      },
+      "exactCanonicalFiles": [
+        {
+          "path": "packages/workspace/src/coordination/conflicts.js",
+          "blob": "4a5ef3d901dcb8c1d17ff41e9f844d53877b8370",
+          "qualifiedBlobEqual": true,
+          "pr": 4360
+        },
+        {
+          "path": "apps/studio/explorer/persistence.js",
+          "blob": "1ed121af95a99f1cea1350afafb0e0bdc69b8502",
+          "qualifiedBlobEqual": true,
+          "pr": 4360
+        },
+        {
+          "path": "apps/studio/explorer/revision-records.js",
+          "blob": "aa911530168bb351262900339baaa81e394d9f8c",
+          "qualifiedBlobEqual": true,
+          "pr": 4360
+        },
+        {
+          "path": "apps/studio/workspace-bundle.js",
+          "blob": "686efd7e9b72bf4ade702781083aefb15c5f06f3",
+          "qualifiedBlobEqual": true,
+          "pr": 4360
+        },
+        {
+          "path": "tests/a24-prepared-persistence.test.js",
+          "blob": "cbdbe01a4a581353de684febd811b29e1bd011e3",
+          "qualifiedBlobEqual": true,
+          "pr": 4360
+        }
+      ]
+    }
+  ],
+  "sourceLedger": [
+    {
+      "path": "packages/project-system/README.md",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "c47f80575542f30d344d046f66293c97943b28c1",
+      "sha256": "e308686f491f995415aff3d5463cd8b9a6ad2b16306af86d1f2ab6e369ff0bae",
+      "initialFrozenSha256": "e308686f491f995415aff3d5463cd8b9a6ad2b16306af86d1f2ab6e369ff0bae",
+      "publication": {
+        "kind": "actual-parent-public-contract-union",
+        "boundary": "Each projected barrel/document retains the exports whose implementation exists in that actual dependency graph; the whole cross-workstream canonical barrel is not copied into a smaller prerequisite."
+      }
+    },
+    {
+      "path": "packages/project-system/src/archive.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "0564cf09e34bf71c6049494dc01b1989314445b8",
+      "sha256": "672b55ffc2c0bc83176044bd30ebdacc9e9dac5472b11ad321bb27008865fce2",
+      "initialFrozenSha256": "672b55ffc2c0bc83176044bd30ebdacc9e9dac5472b11ad321bb27008865fce2",
+      "publication": {
+        "kind": "exact-actual-parent-union",
+        "remote": "5ca2ffe6926fa35b33e4e69e1ad6f2c150af61d3"
+      }
+    },
+    {
+      "path": "packages/project-system/src/disk.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "5d80dd2ec91b618fd623a75bee4f67703f9bd1c3",
+      "sha256": "3c99368aedf23bac4c0a3a7fd848d2d91f21b365f295fbfcd3beb6ce01512bd3",
+      "initialFrozenSha256": "3c99368aedf23bac4c0a3a7fd848d2d91f21b365f295fbfcd3beb6ce01512bd3",
+      "publication": {
+        "kind": "actual-parent-public-contract-union",
+        "boundary": "Each projected barrel/document retains the exports whose implementation exists in that actual dependency graph; the whole cross-workstream canonical barrel is not copied into a smaller prerequisite."
+      }
+    },
+    {
+      "path": "packages/project-system/src/index.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "0346392ca35b277bef12e9b56d4323817ff7a265",
+      "sha256": "f592cffaf062b6e0cbedb4c66a88b5ec89ae82868ac0de36a8987bcd5e552062",
+      "initialFrozenSha256": "f592cffaf062b6e0cbedb4c66a88b5ec89ae82868ac0de36a8987bcd5e552062",
+      "publication": {
+        "kind": "actual-parent-public-contract-union",
+        "boundary": "Each projected barrel/document retains the exports whose implementation exists in that actual dependency graph; the whole cross-workstream canonical barrel is not copied into a smaller prerequisite."
+      }
+    },
+    {
+      "path": "packages/project-system/src/project-system.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "acc29ccc908c09a56882dd11aca883718b7c7fd5",
+      "sha256": "025e2b9a5702c568702b8bc8cb5e3502d38d90ab05387631bd299cb0499b794e",
+      "initialFrozenSha256": "025e2b9a5702c568702b8bc8cb5e3502d38d90ab05387631bd299cb0499b794e",
+      "publication": {
+        "kind": "transferred-prepared-evaluator",
+        "owner": "portable_evaluator",
+        "pr": 4335
+      }
+    },
+    {
+      "path": "packages/workspace/src/index.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "6ff1f513f1b225b26b4e76c04d608100cce1f92d",
+      "sha256": "508bb68724df985a48afe096d8afbfc500460d307e970c92e3e45eb1ffa3dc0d",
+      "initialFrozenSha256": "508bb68724df985a48afe096d8afbfc500460d307e970c92e3e45eb1ffa3dc0d",
+      "publication": {
+        "kind": "actual-parent-public-contract-union",
+        "boundary": "Each projected barrel/document retains the exports whose implementation exists in that actual dependency graph; the whole cross-workstream canonical barrel is not copied into a smaller prerequisite."
+      }
+    },
+    {
+      "path": "packages/workspace/src/workspace.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "1d72f57e701afe98bc92c48603bab6df6825b3d7",
+      "sha256": "1da97a013d7f4763bc2e415af59727fea37d455cf6413ef9eb75af0d2989dcd2",
+      "initialFrozenSha256": "1da97a013d7f4763bc2e415af59727fea37d455cf6413ef9eb75af0d2989dcd2",
+      "publication": {
+        "kind": "exact-actual-parent-union",
+        "remote": "5ca2ffe6926fa35b33e4e69e1ad6f2c150af61d3"
+      }
+    },
+    {
+      "path": "packages/language/README.md",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "673777b27dd96dad53448c8aa5ecec7991cd09dd",
+      "sha256": "de77049b91fd3cf7ff88bd4f8c11e4ed66974b450e6bed961f7ea9218f0d0fe9",
+      "initialFrozenSha256": "de77049b91fd3cf7ff88bd4f8c11e4ed66974b450e6bed961f7ea9218f0d0fe9",
+      "publication": {
+        "kind": "minimal-semantic-union-and-separate-native-language-stack",
+        "owner": "workspace_inventory",
+        "minimalUnion": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+        "inheritedBy": 4340,
+        "boundary": "The prepared app dependency preserves upstream rename/source queries and the type-preview API; native metadata-language #3900 stays a separate dependency."
+      }
+    },
+    {
+      "path": "packages/language/src/index.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "edf61a0d7ee21358ad9cc2f2f434cd219189c5e1",
+      "sha256": "161345bdfa70553defc58bf83b8740a3a566fc3d81feb1b9912dc3a44681d07a",
+      "initialFrozenSha256": "161345bdfa70553defc58bf83b8740a3a566fc3d81feb1b9912dc3a44681d07a",
+      "publication": {
+        "kind": "minimal-semantic-union-and-separate-native-language-stack",
+        "owner": "workspace_inventory",
+        "minimalUnion": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+        "inheritedBy": 4340,
+        "boundary": "The prepared app dependency preserves upstream rename/source queries and the type-preview API; native metadata-language #3900 stays a separate dependency."
+      }
+    },
+    {
+      "path": "packages/language/src/rename.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "8d46b7a9254bb0abdded654537cbaeff6c8a1ccc",
+      "sha256": "6a9e0f27c72a43bc4d2b5ef9ffff792b556865e8f2bb786fc4b7498ba4ab892d",
+      "initialFrozenSha256": "6a9e0f27c72a43bc4d2b5ef9ffff792b556865e8f2bb786fc4b7498ba4ab892d",
+      "publication": {
+        "kind": "minimal-semantic-union-and-separate-native-language-stack",
+        "owner": "workspace_inventory",
+        "minimalUnion": "c765c26e03cbcb3bf33da7e00c26407db4435314",
+        "inheritedBy": 4340,
+        "boundary": "The prepared app dependency preserves upstream rename/source queries and the type-preview API; native metadata-language #3900 stays a separate dependency."
+      }
+    },
+    {
+      "path": "apps/studio/explorer-commands.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "3a936c606303b6547b6c574508d987a4e35d82ed",
+      "sha256": "e47cd11a3c2a6a3b199440468ac9dba1b3f30d848a6fda5a3d5dcc8274d9e954",
+      "initialFrozenSha256": "e47cd11a3c2a6a3b199440468ac9dba1b3f30d848a6fda5a3d5dcc8274d9e954",
+      "publication": {
+        "kind": "transferred-app-port",
+        "owner": "workspace_inventory",
+        "pr": 4340
+      }
+    },
+    {
+      "path": "apps/studio/explorer/commands.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "880a80e0402aa19e1cb88fa6ff0280378e6bdc71",
+      "sha256": "639042f7c7c835bbf274c9cd6d8fc92b6bed1016a0cd2c12e38297fbcf4eac6f",
+      "initialFrozenSha256": "639042f7c7c835bbf274c9cd6d8fc92b6bed1016a0cd2c12e38297fbcf4eac6f",
+      "publication": {
+        "kind": "transferred-app-port",
+        "owner": "workspace_inventory",
+        "pr": 4340
+      }
+    },
+    {
+      "path": "apps/studio/explorer/menu.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "b74ff51f160908caa79d7c179ac9be354c2f86f4",
+      "sha256": "c8952a3dd58b55b6d8191e9d76bc23e8007c279e5f3a61ff09e37433a5c9ec05",
+      "initialFrozenSha256": "c8952a3dd58b55b6d8191e9d76bc23e8007c279e5f3a61ff09e37433a5c9ec05",
+      "publication": {
+        "kind": "transferred-app-port",
+        "owner": "workspace_inventory",
+        "pr": 4340
+      }
+    },
+    {
+      "path": "apps/studio/explorer/command-table.js",
+      "group": "public_and_command_merge_ports",
+      "canonicalBlob": "208aacb8d2779aea14c03649c7eb88086e9c3784",
+      "sha256": "b72ea98eb6980c7c15c3196fa54785c1e356a29c7e45542a861a56053d5c5f09",
+      "initialFrozenSha256": "b72ea98eb6980c7c15c3196fa54785c1e356a29c7e45542a861a56053d5c5f09",
+      "publication": {
+        "kind": "transferred-app-port",
+        "owner": "workspace_inventory",
+        "pr": 4340
+      }
+    },
+    {
+      "path": "packages/workspace/src/transaction-records.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "fabd2e011a079e52743b877be7330e5e15d1c273",
+      "sha256": "99b2cb580d469f4f38babdb43607d2f84d3adb880734894f6fd32f0c6b08d2d9",
+      "initialFrozenSha256": "99b2cb580d469f4f38babdb43607d2f84d3adb880734894f6fd32f0c6b08d2d9",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "packages/workspace/src/source-record-bytes.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "e8ab94121d1e30627d92b1dfa9f9b54ad7cdc0f6",
+      "sha256": "b981831cc35d9c32314f63657d9e726bc7023b92f602a80d8c90fe8259bdaf14",
+      "initialFrozenSha256": "b981831cc35d9c32314f63657d9e726bc7023b92f602a80d8c90fe8259bdaf14",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "packages/workspace/src/sha256-stream.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "fb16388116166d941c1f6b66b5cd5b39bbc825eb",
+      "sha256": "4c86a2951e200e7871187fde7d98820d5338dbdf9f8888a2ce84fea969626bb9",
+      "initialFrozenSha256": "4c86a2951e200e7871187fde7d98820d5338dbdf9f8888a2ce84fea969626bb9",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "packages/workspace/src/content-hash.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "27eb1811989b331147d96b0c04b3fe48bdba5b3f",
+      "sha256": "e7305e468522f15bb999214fcdad847c2c37fef2a0b436c6ef3fd487204e2ae1",
+      "initialFrozenSha256": "e7305e468522f15bb999214fcdad847c2c37fef2a0b436c6ef3fd487204e2ae1",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "packages/workspace/src/transaction-state.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "c4255a18ae1c84115aee108582893210619e0619",
+      "sha256": "c6e07ac3615a644cd6b2ac96c50de1497b78e9bcd2de48ef527356a662336f04",
+      "initialFrozenSha256": "1802d6b0f45f9a27b0479ef38198b603f127c340a334d7ae1aaf4a5c8a20d558",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "tests/a24-prepared-source-hashes.test.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "8efcf7f1abe3636d0f05c921afc67bf72687984c",
+      "sha256": "023bff69cb034f3e886628223708d4d50f06e2e63b11139795d1c8a3d0b03dad",
+      "initialFrozenSha256": "023bff69cb034f3e886628223708d4d50f06e2e63b11139795d1c8a3d0b03dad",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "tests/support/prepared-workspace-record.js",
+      "group": "prepared_record_hash",
+      "canonicalBlob": "994f4f02dd282df28bb5938e28bcc04e78161a5c",
+      "sha256": "aa9431c7217114875d9b67ebe9afdeabaa81d652bccd42f60735dcefbb89c23a",
+      "initialFrozenSha256": "aa9431c7217114875d9b67ebe9afdeabaa81d652bccd42f60735dcefbb89c23a",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "packages/workspace/src/transactions.js",
+      "group": "journal_provider_adoption",
+      "canonicalBlob": "123296c210b801cc89d8739eafe15c5fa3ed143e",
+      "sha256": "28dd0a8b68738603097beb9c2249a862057d1560e5883f2912cc8a60b81f6cd5",
+      "initialFrozenSha256": "28dd0a8b68738603097beb9c2249a862057d1560e5883f2912cc8a60b81f6cd5",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4325
+      }
+    },
+    {
+      "path": "packages/workspace/src/file-history.js",
+      "group": "journal_provider_adoption",
+      "canonicalBlob": "c3e88fa2a240443e33116dcab834878d5b3a5617",
+      "sha256": "d2578f2f9991d4f6d6f2bea7e0ac5d40e153449d61c1d9a98294505687d10f78",
+      "initialFrozenSha256": "d2578f2f9991d4f6d6f2bea7e0ac5d40e153449d61c1d9a98294505687d10f78",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4325
+      }
+    },
+    {
+      "path": "packages/workspace/src/provider-transactions.js",
+      "group": "journal_provider_adoption",
+      "canonicalBlob": "a34fbaeca442b44f0707fc937fada38cbad6b843",
+      "sha256": "42b8886bb299285182c05b453cef539dea1f288e2e5c174f7fa0f43387e02061",
+      "initialFrozenSha256": "42b8886bb299285182c05b453cef539dea1f288e2e5c174f7fa0f43387e02061",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4325
+      }
+    },
+    {
+      "path": "tests/a24-prepared-journal.test.js",
+      "group": "journal_provider_adoption",
+      "canonicalBlob": "1eebde1be6850ac3c08c7b025b73c517992c9041",
+      "sha256": "45e8e959e267fbb4bfb1f3206e7e8a916046c5acdec1f2f9a14717773b60c4e3",
+      "initialFrozenSha256": "45e8e959e267fbb4bfb1f3206e7e8a916046c5acdec1f2f9a14717773b60c4e3",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4325
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/prepared-records.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "edecc6bd7d64a354ca25898458696f93e28fb32f",
+      "sha256": "64af8f6811f6521282a879fa5fb7501a08fca411f49327d0e92d755d3776c602",
+      "initialFrozenSha256": "64af8f6811f6521282a879fa5fb7501a08fca411f49327d0e92d755d3776c602",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/snapshot-codec.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "71ca406f2990d0f851a5476842cf3591fbdf2b2e",
+      "sha256": "1765d3a45b93121fcd79a413a059587c7669bb9a87fc36d07a260debe881ac11",
+      "initialFrozenSha256": "1765d3a45b93121fcd79a413a059587c7669bb9a87fc36d07a260debe881ac11",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/schema.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "13b97a02c6a8d1a798781cc7c54a355efd5f2445",
+      "sha256": "032930163e9ae234094b187d49080aa9f85e0ff5f376c23692d9c942dc135afd",
+      "initialFrozenSha256": "032930163e9ae234094b187d49080aa9f85e0ff5f376c23692d9c942dc135afd",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/records.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "7379564a6f30175a7ad01ba14a0c698e7cadba68",
+      "sha256": "25eb06ad2aa405c79e53bc4d546cb741de0722d8f1e389cb34a4f362214d3534",
+      "initialFrozenSha256": "25eb06ad2aa405c79e53bc4d546cb741de0722d8f1e389cb34a4f362214d3534",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/integrity.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "5860ffb093273860b616abff051d235f0849577b",
+      "sha256": "a096486e70dae0f051f98a5b84af15a10a9b7036d788e14f01006f34cb54397c",
+      "initialFrozenSha256": "a096486e70dae0f051f98a5b84af15a10a9b7036d788e14f01006f34cb54397c",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/receipt-store.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "29967b154098d7e35aa801e113f2b28ab03bbe53",
+      "sha256": "ce4cbc4c7d5e517ec7c3870f1b1032c6943a9d3e3ac7cbdfeb231f564da60cbe",
+      "initialFrozenSha256": "ce4cbc4c7d5e517ec7c3870f1b1032c6943a9d3e3ac7cbdfeb231f564da60cbe",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/recovery/opfs-store.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "5c001dd9274db1ba722ac538dab3c09a1efb1033",
+      "sha256": "4d7105d52e625c18e80c04f4d6b6b781b58eac6d0f8a95cf5b8fc55e5f76932e",
+      "initialFrozenSha256": "4d7105d52e625c18e80c04f4d6b6b781b58eac6d0f8a95cf5b8fc55e5f76932e",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "tests/a24-workspace-recovery.test.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "95581ee1e95c7c0165fcc01cde9394ed9e493dee",
+      "sha256": "945d4048ce5b73d2adfaed3e70477bf860df147e90d4054544be354ea453b09a",
+      "initialFrozenSha256": "945d4048ce5b73d2adfaed3e70477bf860df147e90d4054544be354ea453b09a",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "tests/a24-prepared-recovery.test.js",
+      "group": "prepared_recovery",
+      "canonicalBlob": "8eba72b3c9a051e95e8e805c9dc6909fbf91e74c",
+      "sha256": "6f7d6150db1cbfda63541ec689897393eb89852ca542bce851dfa42e0ec48ca6",
+      "initialFrozenSha256": "6f7d6150db1cbfda63541ec689897393eb89852ca542bce851dfa42e0ec48ca6",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4339
+      }
+    },
+    {
+      "path": "packages/workspace/src/coordination/conflicts.js",
+      "group": "prepared_persistence_interchange",
+      "canonicalBlob": "4a5ef3d901dcb8c1d17ff41e9f844d53877b8370",
+      "sha256": "cc614559ccd65a735054558ed557ec9ae5d6cc208b01bec41beba9bdb77a5962",
+      "initialFrozenSha256": "cc614559ccd65a735054558ed557ec9ae5d6cc208b01bec41beba9bdb77a5962",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4360
+      }
+    },
+    {
+      "path": "apps/studio/explorer/persistence.js",
+      "group": "prepared_persistence_interchange",
+      "canonicalBlob": "1ed121af95a99f1cea1350afafb0e0bdc69b8502",
+      "sha256": "5af622bcd16ca2067215b7962828b3b966ec351537c869f5642f6549fafbfe2c",
+      "initialFrozenSha256": "5af622bcd16ca2067215b7962828b3b966ec351537c869f5642f6549fafbfe2c",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4360
+      }
+    },
+    {
+      "path": "apps/studio/explorer/revision-records.js",
+      "group": "prepared_persistence_interchange",
+      "canonicalBlob": "aa911530168bb351262900339baaa81e394d9f8c",
+      "sha256": "4001384f049ddbfc9c22ebba7cad3e2df382884ad2ec33bce69a89a92f27ea45",
+      "initialFrozenSha256": "4001384f049ddbfc9c22ebba7cad3e2df382884ad2ec33bce69a89a92f27ea45",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4360
+      }
+    },
+    {
+      "path": "apps/studio/workspace-bundle.js",
+      "group": "prepared_persistence_interchange",
+      "canonicalBlob": "686efd7e9b72bf4ade702781083aefb15c5f06f3",
+      "sha256": "f9ef983ab8a00f68e57aa60458a43efbbea6b8c2cd9095008db88be45eed0295",
+      "initialFrozenSha256": "f9ef983ab8a00f68e57aa60458a43efbbea6b8c2cd9095008db88be45eed0295",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4360
+      }
+    },
+    {
+      "path": "tests/a24-prepared-persistence.test.js",
+      "group": "prepared_persistence_interchange",
+      "canonicalBlob": "cbdbe01a4a581353de684febd811b29e1bd011e3",
+      "sha256": "99c636493087bb7cf634b0060b9f28be6989616461946defb92ee226b48c91db",
+      "initialFrozenSha256": "99c636493087bb7cf634b0060b9f28be6989616461946defb92ee226b48c91db",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4360
+      }
+    },
+    {
+      "path": "packages/workspace/PREPARED_SOURCES.md",
+      "group": "prepared_persistence_interchange",
+      "canonicalBlob": "f54d7ac83493f037419a61f6ee00a026e311721e",
+      "sha256": "395163c6505aa8b46167afa41204775b11867c4b96288fa9c9de07e174cdaaf9",
+      "initialFrozenSha256": "395163c6505aa8b46167afa41204775b11867c4b96288fa9c9de07e174cdaaf9",
+      "publication": {
+        "kind": "exact-feature-blob",
+        "pr": 4299
+      }
+    },
+    {
+      "path": "packages/project-system/src/evaluation/result.js",
+      "canonicalBlob": "e77598607c1ea02f4498f57ebcc72657cc1e1c44",
+      "publication": {
+        "owner": "portable_evaluator",
+        "pr": 4335
+      },
+      "correction": "Use public isTextRecord during Compile discovery so prepared compatibility text getters remain unread."
+    }
+  ],
+  "qualification": {
+    "kind": "completed-synchronized-source",
+    "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "sourceAfter": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "node": "22.23.3",
+    "files": 228,
+    "summary": {
+      "tests": 1877,
+      "suites": 0,
+      "pass": 1877,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 0,
+    "argvPrefix": [
+      "/workspace/scratch/3e16369943fd/node-vendor/node-v22.23.3-linux-x64/bin/node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-reporter=tap"
+    ],
+    "testSelection": [
+      "tests/a00-02-registry.test.js",
+      "tests/a00-03-studio-registries.test.js",
+      "tests/a00-20-styles.test.js",
+      "tests/a00-builtin-registry-array-compat.test.js",
+      "tests/a00-builtin-registry-sparse.test.js",
+      "tests/a03-03-assembly-definition.test.js",
+      "tests/a03-03-assembly-references.test.js",
+      "tests/a03-03-entry-stub.test.js",
+      "tests/a03-05-branch-relaxation.test.js",
+      "tests/a03-05-compact-instructions.test.js",
+      "tests/a03-08-prefix-constrained.test.js",
+      "tests/a05-02-generic-calls.test.js",
+      "tests/a05-02-generic-dispatch.test.js",
+      "tests/a05-02-interface-dispatch.test.js",
+      "tests/a05-02-virtual-slots.test.js",
+      "tests/a05-21-static-init.test.js",
+      "tests/a05-b03-dispatch.test.js",
+      "tests/a05-closed-field-owner.test.js",
+      "tests/a05-constrained-interface-calls.test.js",
+      "tests/a05-decode-plan.test.js",
+      "tests/a05-inline-cache.test.js",
+      "tests/a05-native-width-cil.test.js",
+      "tests/a05-native-width.test.js",
+      "tests/a05-scalar-field-loads.test.js",
+      "tests/a05-scalar-slot-loads.test.js",
+      "tests/a05-scalar-wire-emission.test.js",
+      "tests/a05-scalar-wire-validation.test.js",
+      "tests/a05-seams-cil-types.test.js",
+      "tests/a05-source-numeric-modes.test.js",
+      "tests/a05-statics.test.js",
+      "tests/a05-token-cache.test.js",
+      "tests/a05-tokens.test.js",
+      "tests/a05-type-casting.test.js",
+      "tests/a05-type-handle-admission.test.js",
+      "tests/a05-type-tables.test.js",
+      "tests/a05-value-layout-sizeof.test.js",
+      "tests/a07-13-registry.test.js",
+      "tests/a07-20-inventory.test.js",
+      "tests/a07-ordinal-ignore-case.test.js",
+      "tests/a08-array-comparer.test.js",
+      "tests/a08-ordinal-comparer.test.js",
+      "tests/a19-03-document-tabs.test.js",
+      "tests/a19-04-docking-model.test.js",
+      "tests/a19-document-disk-save.test.js",
+      "tests/a19-document-operation-state.test.js",
+      "tests/a19-document-snapshot-save.test.js",
+      "tests/a19-documents-state.test.js",
+      "tests/a19-execution-occupancy.test.js",
+      "tests/a19-execution-worker.test.js",
+      "tests/a19-explorer-resource-transaction.test.js",
+      "tests/a19-explorer-snapshots.test.js",
+      "tests/a19-explorer-source-plans.test.js",
+      "tests/a19-native-background-tasks.test.js",
+      "tests/a19-native-task-integration.test.js",
+      "tests/a19-prepared-documents.test.js",
+      "tests/a19-runtime-arguments.test.js",
+      "tests/a19-runtime-environment.test.js",
+      "tests/a19-runtime-launch-options.test.js",
+      "tests/a19-runtime-settings-bridge.test.js",
+      "tests/a19-runtime-worker-launch.test.js",
+      "tests/a19-studio-diagnostic-producers.test.js",
+      "tests/a19-studio-docking-sync.test.js",
+      "tests/a19-studio-navigation.test.js",
+      "tests/a19-studio-save-ownership.test.js",
+      "tests/a19-studio-workspace-inputs.test.js",
+      "tests/a19-window-layouts-navigation.test.js",
+      "tests/a19-worker-client.test.js",
+      "tests/a19-workspace-loads.test.js",
+      "tests/a20-disk-save-cancellation.test.js",
+      "tests/a20-editor-language-worker.test.js",
+      "tests/a20-prepared-source-paths.test.js",
+      "tests/a20-prepared-source-workspace.test.js",
+      "tests/a20-save-encoding-roundtrip.test.js",
+      "tests/a20-save-normalization.test.js",
+      "tests/a20-save-preparation-flow.test.js",
+      "tests/a20-source-save-as.test.js",
+      "tests/a20-studio-source-import.test.js",
+      "tests/a23-11-native-adapter.test.js",
+      "tests/a23-11-native-testing.test.js",
+      "tests/a23-12-evaluation-differential.test.js",
+      "tests/a23-29-abi-extensions.test.js",
+      "tests/a23-29-managed-environment.test.js",
+      "tests/a23-30-launch-arguments.test.js",
+      "tests/a23-35-test-model.test.js",
+      "tests/a23-36-38-portable-discovery.test.js",
+      "tests/a23-36-provider-projection.test.js",
+      "tests/a23-39-managed-invocation.test.js",
+      "tests/a23-39-portable-fixtures.test.js",
+      "tests/a23-39-portable-runner.test.js",
+      "tests/a23-39-shared-framework-fixtures.test.js",
+      "tests/a23-assembly-access.test.js",
+      "tests/a23-cil-project-graph-contract.test.js",
+      "tests/a23-cil-project-profile.test.js",
+      "tests/a23-compiler-worker-entry.test.js",
+      "tests/a23-member-definitions.test.js",
+      "tests/a23-native-central-boundaries.test.js",
+      "tests/a23-native-context-aliases.test.js",
+      "tests/a23-native-context-ui-model.test.js",
+      "tests/a23-native-designer-files.test.js",
+      "tests/a23-native-document-ownership.test.js",
+      "tests/a23-native-nuget-registration.test.js",
+      "tests/a23-native-profile-ui-model.test.js",
+      "tests/a23-native-publish-encoding.test.js",
+      "tests/a23-native-reference-metadata.test.js",
+      "tests/a23-native-tool-renderer.test.js",
+      "tests/a23-native-view-contracts.test.js",
+      "tests/a23-native-workspace-state.test.js",
+      "tests/a23-project-access-loader.test.js",
+      "tests/a23-project-artifact-cache.test.js",
+      "tests/a23-project-assembly-loader.test.js",
+      "tests/a23-project-assembly-native.test.js",
+      "tests/a23-project-build-order.test.js",
+      "tests/a23-project-build.test.js",
+      "tests/a23-project-debug-banner.test.js",
+      "tests/a23-project-debug-editor.test.js",
+      "tests/a23-project-debug-sources.test.js",
+      "tests/a23-project-emission.test.js",
+      "tests/a23-project-plan-artifacts.test.js",
+      "tests/a23-project-property-access.test.js",
+      "tests/a23-project-reference-binding.test.js",
+      "tests/a23-project-reference-bytecode.test.js",
+      "tests/a23-project-reference-emission.test.js",
+      "tests/a23-project-reference-namespaces.test.js",
+      "tests/a23-project-reference-visibility.test.js",
+      "tests/a23-project-runtime-input.test.js",
+      "tests/a23-project-runtime-types.test.js",
+      "tests/a23-project-runtime-worker.test.js",
+      "tests/a23-project-runtime.test.js",
+      "tests/a23-project-stack-provenance.test.js",
+      "tests/a23-project-static-initialization.test.js",
+      "tests/a23-project-target-lifecycle.test.js",
+      "tests/a23-project-target-native.test.js",
+      "tests/a23-solution-configuration-contract.test.js",
+      "tests/a23-source-emission-model.test.js",
+      "tests/a23-source-member-definitions.test.js",
+      "tests/a23-studio-native-contexts.test.js",
+      "tests/a23-studio-native-profiles.test.js",
+      "tests/a23-studio-test-explorer.test.js",
+      "tests/a23-studio-test-worker.test.js",
+      "tests/a23-studio-tools-registration.test.js",
+      "tests/a23-test-explorer-controller.test.js",
+      "tests/a23-test-model-contract.test.js",
+      "tests/a23-test-runtime-contract.test.js",
+      "tests/a23-test-symbol-contract.test.js",
+      "tests/a23-upstream-emission-composition.test.js",
+      "tests/a23-worker-emission-cache.test.js",
+      "tests/a24-06-archive-large-metadata.test.js",
+      "tests/a24-06-archives.test.js",
+      "tests/a24-06-compression-backends.test.js",
+      "tests/a24-06-recursive-archives.test.js",
+      "tests/a24-09-destination.test.js",
+      "tests/a24-20-template-engine.test.js",
+      "tests/a24-archive-sink-ownership.test.js",
+      "tests/a24-diagnostic-source.test.js",
+      "tests/a24-disk-held-signal.test.js",
+      "tests/a24-disk-load-concurrency.test.js",
+      "tests/a24-disk-notifications.test.js",
+      "tests/a24-disk-scaling.test.js",
+      "tests/a24-disk-services.test.js",
+      "tests/a24-editor-lifecycle-foundation.test.js",
+      "tests/a24-editor-lifecycle.test.js",
+      "tests/a24-explorer-child-loader.test.js",
+      "tests/a24-explorer-hierarchy.test.js",
+      "tests/a24-explorer-history.test.js",
+      "tests/a24-explorer-operations.test.js",
+      "tests/a24-explorer-prepared-journal.test.js",
+      "tests/a24-explorer-resource-errors.test.js",
+      "tests/a24-explorer-reveal.test.js",
+      "tests/a24-explorer-state-restore.test.js",
+      "tests/a24-explorer-transfers.test.js",
+      "tests/a24-explorer-view-policy.test.js",
+      "tests/a24-folder-compilation.test.js",
+      "tests/a24-lazy-tree-identity.test.js",
+      "tests/a24-peer-buffer-resolution.test.js",
+      "tests/a24-prepared-journal.test.js",
+      "tests/a24-prepared-persistence.test.js",
+      "tests/a24-prepared-recovery.test.js",
+      "tests/a24-prepared-source-hashes.test.js",
+      "tests/a24-problems-navigation.test.js",
+      "tests/a24-project-panel.test.js",
+      "tests/a24-provider-source-save.test.js",
+      "tests/a24-provider-transactions.test.js",
+      "tests/a24-recovery-bootstrap.test.js",
+      "tests/a24-recovery-lazy.test.js",
+      "tests/a24-save-conflicts.test.js",
+      "tests/a24-studio-document-policy.test.js",
+      "tests/a24-studio-prepared-navigation.test.js",
+      "tests/a24-studio-save-composition.test.js",
+      "tests/a24-studio-session-composition.test.js",
+      "tests/a24-studio-startup-recovery.test.js",
+      "tests/a24-studio-streaming-ingress.test.js",
+      "tests/a24-template-engine-boundaries.test.js",
+      "tests/a24-template-package-atomicity.test.js",
+      "tests/a24-type-rename.test.js",
+      "tests/a24-workbench-debug-provenance.test.js",
+      "tests/a24-workbench-feature-callbacks.test.js",
+      "tests/a24-workbench-project-composition.test.js",
+      "tests/a24-workbench-workspace-ports.test.js",
+      "tests/a24-workspace-disk-events.test.js",
+      "tests/a24-workspace-host-concurrency.test.js",
+      "tests/a24-workspace-import-regression.test.js",
+      "tests/a24-workspace-imports.test.js",
+      "tests/a24-workspace-navigation.test.js",
+      "tests/a24-workspace-recovery.test.js",
+      "tests/a24-workspace-refactoring.test.js",
+      "tests/a24-workspace-search.test.js",
+      "tests/a24-workspace-session.test.js",
+      "tests/a24-workspace-transition.test.js",
+      "tests/a24-workspace-wizard-native.test.js",
+      "tests/a24-xaml-reopen.test.js",
+      "tests/a24-xml-text-policy.test.js",
+      "tests/managed-il.test.js",
+      "tests/msbuild-solution.test.js",
+      "tests/project-core-contract.test.js",
+      "tests/project-evaluation-build-stages.test.js",
+      "tests/project-evaluation-build.test.js",
+      "tests/project-evaluation-central-packages.test.js",
+      "tests/project-evaluation-contexts.test.js",
+      "tests/project-evaluation-expressions.test.js",
+      "tests/project-evaluation-items.test.js",
+      "tests/project-evaluation-sdk.test.js",
+      "tests/project-evaluation-targets.test.js",
+      "tests/project-expression-contract.test.js",
+      "tests/project-resource-contract.test.js",
+      "tests/project-solution-reader.test.js",
+      "tests/release09-worker.test.js",
+      "tests/workspace-io.test.js",
+      "tests/workspace-roundtrip.test.js"
+    ],
+    "checkoutStatusAfter": "",
+    "rawJson": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.json",
+    "rawJsonSha256": "d1999a85e9f4acda1afae848e082dffd0f41ac9fc1e7ba0e04d4d9bb43180203",
+    "rawTap": "/tmp/p18-final-qualification-logs/node22-5269d397/node22-final-scope.tap",
+    "rawTapSha256": "826227b2a62d971fc68a371e20f79c7514e37964b0b4fca74841a0c3bd25750a",
+    "interpretation": "Every recorded feature/test/guide blob equals this qualified source. No per-projection runtime run was repeated."
+  },
+  "historicalQualification": [
+    {
+      "source": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+      "node": "26.10.0",
+      "tests": 1875,
+      "pass": 1809,
+      "fail": 66,
+      "rawTap": "/tmp/p18-final-qualification-logs/synchronized-bb2b8d84/node26-synchronized-scope.tap",
+      "interpretation": "Initial failed aggregate retained; workspaceStateSize shadowing and prepared discovery getter defects were corrected without weakening assertions."
+    },
+    {
+      "source": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "files": 38,
+      "interpretation": "Root reported workspace/journal/recovery and A20 discovery assertions passing; one separate app stale-resource diagnostic still failed in that intermediate replay. This record is not a full-scope pass."
+    }
+  ],
+  "browserBoundary": {
+    "source": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+    "assertionsReached": 0,
+    "result": "TargetClosedError during setup while awaiting persistence revisionQueue",
+    "rawLog": "/tmp/p18-final-qualification-logs/browser-5269d397/browser-components.log",
+    "rawLogSha256": "620498522d72730151642ab82a98d6a3ec562a4b5da99e8348f59233c692fd0a",
+    "results": "/tmp/p18-final-qualification-logs/browser-5269d397/results/a24-integrity-components-results.json",
+    "oomCountersBeforeAndAfter": {
+      "oom": 5,
+      "oom_kill": 3
+    },
+    "interpretation": "An owned writable TMPDIR removed the earlier shared-memory warning, but browser closure remained. Cause is not established and no product assertion failure or browser pass is claimed.",
+    "diagnosticProbe": "/tmp/p18-storage-boundary-probe.py",
+    "probeExecutedByThisAgent": false
+  },
+  "diagnosedBrowserBoundary": {
+    "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "chromium": "153.0.8010.12",
+    "probe": "/tmp/p18-storage-boundary-probe.py",
+    "probeSha256": "93d911f4527dde012e877e3e79f015ecc8f034e69847c4a2f9d71d10c476dbfd",
+    "result": "Browser process SIGTRAP during IndexedDB get of a successfully stored FileSystemDirectoryHandle",
+    "passedSteps": [
+      "production HTTP/CSP",
+      "OPFS byte round trip",
+      "fresh IndexedDB open",
+      "plain IndexedDB put/get",
+      "directory-handle put"
+    ],
+    "unrunSteps": [
+      "handle isSameEntry",
+      "separate Web Lock",
+      "Explorer component assertions"
+    ],
+    "rawLog": "/tmp/p18-final-qualification-logs/storage-probe-e9f8a8cd/browser-storage-probe.log",
+    "rawLogSha256": "39fa39a74a2d19acbd1d5c7ad98cb1426db24e92f6d985b381400ebf89703862",
+    "report": "/tmp/p18-final-qualification-logs/storage-probe-e9f8a8cd/results/storage-boundary-probe.json",
+    "interpretation": "The coordinator ran this bounded probe using actual browser APIs and the production harness without instantiating the isolated Explorer fixture. It isolates a native browser failure boundary, not an Explorer assertion or platform pass. No further browser attempt was made by this agent."
+  },
+  "ownershipTransfers": [
+    {
+      "owner": "workspace_inventory",
+      "pr": 4340,
+      "remote": "53f06989dd0f30a40bbe676d5f2da69d37d4669e",
+      "local": "4e1c7dac94d10f08d1292e187535b0ceeff93b06",
+      "tree": "b133ee2c7884a939aed4397c6d4c542ea5bf3060",
+      "receipt": "/workspace/scratch/3e16369943fd/p18-publication/explorer-prepared-journal-published.json",
+      "scope": "Four command facade ports and prepared Explorer source/model adoption; actual journal remains authoritative."
+    },
+    {
+      "owner": "portable_evaluator",
+      "pr": 4335,
+      "remote": "044ea4484c13e8d4914306186698127b4cc720eb",
+      "local": "ae63bf4c5d6179c05048c052180b2395178e270c",
+      "tree": "d04d02879c3908d8072bd2f8725d030c5fc9de03",
+      "receipt": "/workspace/scratch/3e16369943fd/p18-evaluator-publication/published/prepared-project.json",
+      "scope": "Prepared ProjectSystem/result discovery, including the public isTextRecord correction."
+    },
+    {
+      "owner": "portable_evaluator",
+      "scope": "Provider save and Studio session/document/lifecycle adoption; exact compatibility changes in original workspace-records/hydration helpers are included by that owner, not duplicated here."
+    }
+  ],
+  "pending": [
+    "Current core/structure/build qualification is coordinated by root separately from the passed Node source scope.",
+    "Protected production Studio composition remains a separately prepared root-owned entry change; no proposed entry was applied or executed by this agent.",
+    "Real browser component acceptance remains unqualified; the bounded diagnostic probe isolates Chromium SIGTRAP to deserializing an IndexedDB directory handle. Native picker/permission UI and non-Chromium engines are not qualified by these Node fixtures."
+  ]
+}

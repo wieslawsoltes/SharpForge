@@ -1,0 +1,53 @@
+{
+  "path": "/workspace/scratch/3e16369943fd/p18-vfs",
+  "sourceHead": "100165d3f9583801c9714d20b91ed303a5466528",
+  "mode": "tracked-only sparse checkout; preserve evidence and every untracked/ignored path",
+  "unknownCount": 2,
+  "ignoredCount": 2852,
+  "trackedStateClean": true,
+  "headUnchanged": true,
+  "untrackedMetadataUnchanged": true,
+  "beforeBytes": 252182528,
+  "afterBytes": 42004480,
+  "bytesFreed": 210178048,
+  "fullReceipt": {
+    "path": "/workspace/scratch/3e16369943fd/p18-publication/project-application-cleanup.json",
+    "sha256": "ad8ac804e53719d959497b9c0b7ce68b38f1bb0955129acc3c19895b75c315db",
+    "preservedPathCount": 2854
+  },
+  "removedCompletedWorktrees": [
+    {
+      "path": "/workspace/scratch/3e16369943fd/p18-worker-cache-fix",
+      "branch": "codex/p18-worker-cache-fix",
+      "head": "810bcea3b0d25c47c258a69301fafdb685f7be09",
+      "tree": "f8167ca647eddea93e8d9deb91645a628d806829",
+      "cleanTrackedUntrackedAndIgnored": true,
+      "trackedFileBytes": 28672,
+      "receipt": "planning/evidence/project18/project-application-node26-qualification.json",
+      "status": "removed_without_force",
+      "branchRetained": true
+    },
+    {
+      "path": "/workspace/scratch/3e16369943fd/p18-publish-project-worker",
+      "branch": "codex/p18-local-project-build-qualification",
+      "head": "bf320e219ae8f4733e1c1b86da0ccbcba81e67b0",
+      "tree": "fab19d39d4ec7d6b83db5c1ae937c76150c2c64f",
+      "cleanTrackedUntrackedAndIgnored": true,
+      "trackedFileBytes": 159744,
+      "receipt": "planning/evidence/project18/project-application-published.json",
+      "status": "removed_without_force",
+      "branchRetained": true
+    },
+    {
+      "path": "/workspace/scratch/3e16369943fd/p18-publish-workspace-search",
+      "branch": "codex/p18-local-workspace-search",
+      "head": "91a1cba1a323d349f6e41c9302cd84620a91c370",
+      "tree": "d0c76ed01df1264cba34dc079dcb5b484e08d0b5",
+      "cleanTrackedUntrackedAndIgnored": true,
+      "trackedFileBytes": 36864,
+      "receipt": "planning/evidence/project18/workspace-search-publication.json",
+      "status": "removed_without_force",
+      "branchRetained": true
+    }
+  ]
+}

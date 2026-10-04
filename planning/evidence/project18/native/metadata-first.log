@@ -1,0 +1,607 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:20) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native metadata reads require an authorized context reference and enforce file/count/total budgets
+ok 1 - native metadata reads require an authorized context reference and enforce file/count/total budgets
+  ---
+  duration_ms: 13.420267
+  type: 'test'
+  ...
+# Subtest: actual native contexts deliver SDK metadata over authenticated HTTP for LINQ completion and semantic binding
+not ok 2 - actual native contexts deliver SDK metadata over authenticated HTTP for LINQ completion and semantic binding
+  ---
+  duration_ms: 5003.396537
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-native/tests/a23-native-metadata.test.js:45:1'
+  failureType: 'testCodeFailure'
+  error: `[{"uri":"Program.cs","version":1,"start":0,"length":108,"code":"CS8636","message":"Invalid option '' for /nullable; must be 'disable', 'enable', 'warnings' or 'annotations'","severity":"error","range":{"start":{"line":0,"character":0},"end":{"line":0,"character":108}}},{"uri":"Program.cs","version":1,"start":63,"length":40,"code":"CS1501","message":"No overload for method 'Count' takes 1 arguments","severity":"error","range":{"start":{"line":0,"character":63},"end":{"line":0,"character":103}}},{"uri":"Program.cs","version":1,"start":80,"length":22,"code":"CS1501","message":"No overload for method 'Range' takes 2 arguments","severity":"error","range":{"start":{"line":0,"character":80},"end":{"line":0,"character":102}}}]`
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-native/tests/a23-native-metadata.test.js:98:3)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# (node:92) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real emitted project reference preserves public visibility and primitive return types
+ok 3 - real emitted project reference preserves public visibility and primitive return types
+  ---
+  duration_ms: 94.634379
+  type: 'test'
+  ...
+# Subtest: real emitted project reference preserves internal visibility and primitive return types
+ok 4 - real emitted project reference preserves internal visibility and primitive return types
+  ---
+  duration_ms: 14.257221
+  type: 'test'
+  ...
+# Subtest: real emitted project reference preserves friend internal visibility and primitive return types
+ok 5 - real emitted project reference preserves friend internal visibility and primitive return types
+  ---
+  duration_ms: 15.326875
+  type: 'test'
+  ...
+# Subtest: an external reference remains strict unless its producer explicitly selects the SharpForge runtime profile
+ok 6 - an external reference remains strict unless its producer explicitly selects the SharpForge runtime profile
+  ---
+  duration_ms: 25.076344
+  type: 'test'
+  ...
+# Subtest: metadata-backed language sessions complete imported methods, bind hover and invalidate edited sources
+ok 7 - metadata-backed language sessions complete imported methods, bind hover and invalidate edited sources
+  ---
+  duration_ms: 16.593325
+  type: 'test'
+  ...
+# (node:100) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A02-T21 custom attribute blobs decode to typed constructor and named arguments
+ok 8 - A02-T21 custom attribute blobs decode to typed constructor and named arguments
+  ---
+  duration_ms: 5.301098
+  type: 'test'
+  ...
+# Subtest: A02-T21 ParamArray and Extension: isParams and isExtensionMethod
+ok 9 - A02-T21 ParamArray and Extension: isParams and isExtensionMethod
+  ---
+  duration_ms: 3.521093
+  type: 'test'
+  ...
+# Subtest: A02-T21 Obsolete: message, error flag, DiagnosticId and UrlFormat, with the Roslyn diagnostics
+ok 10 - A02-T21 Obsolete: message, error flag, DiagnosticId and UrlFormat, with the Roslyn diagnostics
+  ---
+  duration_ms: 0.934791
+  type: 'test'
+  ...
+# Subtest: A02-T21 Conditional and DefaultMember
+ok 11 - A02-T21 Conditional and DefaultMember
+  ---
+  duration_ms: 0.918906
+  type: 'test'
+  ...
+# Subtest: A02-T21 Nullable and NullableContext give every type position its annotation
+ok 12 - A02-T21 Nullable and NullableContext give every type position its annotation
+  ---
+  duration_ms: 2.774166
+  type: 'test'
+  ...
+# Subtest: A02-T21 the nullable transform follows the metadata encoding and rejects data that does not fit
+ok 13 - A02-T21 the nullable transform follows the metadata encoding and rejects data that does not fit
+  ---
+  duration_ms: 0.396729
+  type: 'test'
+  ...
+# Subtest: A02-T21 TupleElementNames and Dynamic transforms
+ok 14 - A02-T21 TupleElementNames and Dynamic transforms
+  ---
+  duration_ms: 1.365119
+  type: 'test'
+  ...
+# Subtest: A02-T21 IsReadOnly, IsByRefLike, RequiredMember and CompilerFeatureRequired
+ok 15 - A02-T21 IsReadOnly, IsByRefLike, RequiredMember and CompilerFeatureRequired
+  ---
+  duration_ms: 0.646977
+  type: 'test'
+  ...
+# Subtest: A02-T21 InternalsVisibleTo declarations and friend checks
+ok 16 - A02-T21 InternalsVisibleTo declarations and friend checks
+  ---
+  duration_ms: 1.968129
+  type: 'test'
+  ...
+# (node:108) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A02-T20 an assembly image becomes an assembly symbol with identity and a metadata namespace tree
+ok 17 - A02-T20 an assembly image becomes an assembly symbol with identity and a metadata namespace tree
+  ---
+  duration_ms: 2.364007
+  type: 'test'
+  ...
+# Subtest: A02-T20 a reference to a netstandard-style DLL binds System.Console.WriteLine with a string argument
+ok 18 - A02-T20 a reference to a netstandard-style DLL binds System.Console.WriteLine with a string argument
+  ---
+  duration_ms: 4.380029
+  type: 'test'
+  ...
+# Subtest: A02-T20 a generic List<T>.Add call binds on the constructed type with the parameter substituted
+ok 19 - A02-T20 a generic List<T>.Add call binds on the constructed type with the parameter substituted
+  ---
+  duration_ms: 3.399318
+  type: 'test'
+  ...
+# Subtest: A02-T20 core types carry special-type ids and display as keywords
+ok 20 - A02-T20 core types carry special-type ids and display as keywords
+  ---
+  duration_ms: 0.484541
+  type: 'test'
+  ...
+# Subtest: A02-T20 type kinds, accessibility, modifiers, base types and interfaces come from TypeDef rows
+ok 21 - A02-T20 type kinds, accessibility, modifiers, base types and interfaces come from TypeDef rows
+  ---
+  duration_ms: 0.986709
+  type: 'test'
+  ...
+# Subtest: A02-T20 type parameters import variance and constraints
+ok 22 - A02-T20 type parameters import variance and constraints
+  ---
+  duration_ms: 0.540326
+  type: 'test'
+  ...
+# Subtest: A02-T20 nested types and generic signatures map VAR/MVAR/GENERICINST to the right symbols
+ok 23 - A02-T20 nested types and generic signatures map VAR/MVAR/GENERICINST to the right symbols
+  ---
+  duration_ms: 1.823672
+  type: 'test'
+  ...
+# Subtest: A02-T20 members import kinds, accessibility and declaration modifiers
+ok 24 - A02-T20 members import kinds, accessibility and declaration modifiers
+  ---
+  duration_ms: 7.386233
+  type: 'test'
+  ...
+# Subtest: A02-T20 by-reference parameters and returns become RefKind; arrays, pointers and function pointers import structurally
+ok 25 - A02-T20 by-reference parameters and returns become RefKind; arrays, pointers and function pointers import structurally
+  ---
+  duration_ms: 1.515176
+  type: 'test'
+  ...
+# Subtest: A02-T20 types from assemblies that are not bound are error types with a reason
+ok 26 - A02-T20 types from assemblies that are not bound are error types with a reason
+  ---
+  duration_ms: 4.870999
+  type: 'test'
+  ...
+# (node:116) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: valid imported symbols cannot turn a failed execution bind into an empty successful image
+ok 27 - valid imported symbols cannot turn a failed execution bind into an empty successful image
+  ---
+  duration_ms: 150.5017
+  type: 'test'
+  ...
+# Subtest: reference-aware semantic errors retain their diagnostic instead of claiming emission support
+ok 28 - reference-aware semantic errors retain their diagnostic instead of claiming emission support
+  ---
+  duration_ms: 12.859422
+  type: 'test'
+  ...
+# Subtest: adding metadata references preserves executable programs already supported by the profile
+ok 29 - adding metadata references preserves executable programs already supported by the profile
+  ---
+  duration_ms: 12.915677
+  type: 'test'
+  ...
+# Subtest: unused invalid metadata is rejected before reporting compilation success
+ok 30 - unused invalid metadata is rejected before reporting compilation success
+  ---
+  duration_ms: 5.380208
+  type: 'test'
+  ...
+# (node:124) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A02-T22 assembly identities parse, display and compare like Roslyn
+ok 31 - A02-T22 assembly identities parse, display and compare like Roslyn
+  ---
+  duration_ms: 6.951499
+  type: 'test'
+  ...
+# Subtest: A02-T22 an assembly reference binds to an exact match, else the lowest higher version, else the highest lower version
+ok 32 - A02-T22 an assembly reference binds to an exact match, else the lowest higher version, else the highest lower version
+  ---
+  duration_ms: 0.488096
+  type: 'test'
+  ...
+# Subtest: A02-T22 references bind without diagnostics when every identity matches
+ok 33 - A02-T22 references bind without diagnostics when every identity matches
+  ---
+  duration_ms: 6.465514
+  type: 'test'
+  ...
+# Subtest: A02-T22 a reference to an older version unifies with the supplied higher version: CS1701 / CS1702
+ok 34 - A02-T22 a reference to an older version unifies with the supplied higher version: CS1701 / CS1702
+  ---
+  duration_ms: 10.944042
+  type: 'test'
+  ...
+# Subtest: A02-T22 a reference that needs a higher version than the one supplied is CS1705
+ok 35 - A02-T22 a reference that needs a higher version than the one supplied is CS1705
+  ---
+  duration_ms: 7.302107
+  type: 'test'
+  ...
+# Subtest: A02-T22 a type defined in an assembly that is not referenced is CS0012
+ok 36 - A02-T22 a type defined in an assembly that is not referenced is CS0012
+  ---
+  duration_ms: 8.613526
+  type: 'test'
+  ...
+# Subtest: A02-T22 duplicate references: identical identities merge, equivalent ones are CS1703, weak same-name ones CS1704
+ok 37 - A02-T22 duplicate references: identical identities merge, equivalent ones are CS1703, weak same-name ones CS1704
+  ---
+  duration_ms: 12.837809
+  type: 'test'
+  ...
+# Subtest: A02-T22 extern aliases select the references a namespace root can see
+ok 38 - A02-T22 extern aliases select the references a namespace root can see
+  ---
+  duration_ms: 3.065806
+  type: 'test'
+  ...
+# Subtest: A02-T22 type forwarders are followed to the assembly that defines the type
+ok 39 - A02-T22 type forwarders are followed to the assembly that defines the type
+  ---
+  duration_ms: 21.830537
+  type: 'test'
+  ...
+# Subtest: A02-T22 a type forwarder cycle is CS0731 and a forwarded type missing from its destination is CS7069
+ok 40 - A02-T22 a type forwarder cycle is CS0731 and a forwarded type missing from its destination is CS7069
+  ---
+  duration_ms: 7.398523
+  type: 'test'
+  ...
+# (node:132) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: C\# language additions on IR, strict IL and direct CIL: cast int
+ok 41 - C\# language additions on IR, strict IL and direct CIL: cast int
+  ---
+  duration_ms: 70.688812
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: cast double
+ok 42 - C\# language additions on IR, strict IL and direct CIL: cast double
+  ---
+  duration_ms: 9.503207
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: typed defaults
+ok 43 - C\# language additions on IR, strict IL and direct CIL: typed defaults
+  ---
+  duration_ms: 7.419484
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: switch grouped
+ok 44 - C\# language additions on IR, strict IL and direct CIL: switch grouped
+  ---
+  duration_ms: 15.809272
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: string switch
+ok 45 - C\# language additions on IR, strict IL and direct CIL: string switch
+  ---
+  duration_ms: 10.16037
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null switch
+ok 46 - C\# language additions on IR, strict IL and direct CIL: null switch
+  ---
+  duration_ms: 5.567018
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: negative pattern
+ok 47 - C\# language additions on IR, strict IL and direct CIL: negative pattern
+  ---
+  duration_ms: 6.558325
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: switch expression
+ok 48 - C\# language additions on IR, strict IL and direct CIL: switch expression
+  ---
+  duration_ms: 5.319846
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: numeric switch expression
+ok 49 - C\# language additions on IR, strict IL and direct CIL: numeric switch expression
+  ---
+  duration_ms: 6.27707
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: nested switch continue
+ok 50 - C\# language additions on IR, strict IL and direct CIL: nested switch continue
+  ---
+  duration_ms: 7.575839
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null coalescing assignment once
+ok 51 - C\# language additions on IR, strict IL and direct CIL: null coalescing assignment once
+  ---
+  duration_ms: 12.85879
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null coalescing field
+ok 52 - C\# language additions on IR, strict IL and direct CIL: null coalescing field
+  ---
+  duration_ms: 10.031295
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: unchecked overflow
+ok 53 - C\# language additions on IR, strict IL and direct CIL: unchecked overflow
+  ---
+  duration_ms: 3.34059
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: unchecked block
+ok 54 - C\# language additions on IR, strict IL and direct CIL: unchecked block
+  ---
+  duration_ms: 3.533191
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: duplicate switch
+ok 55 - C\# diagnostics: duplicate switch
+  ---
+  duration_ms: 8.829662
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: fallthrough
+ok 56 - C\# diagnostics: fallthrough
+  ---
+  duration_ms: 4.657406
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: nonconstant switch
+ok 57 - C\# diagnostics: nonconstant switch
+  ---
+  duration_ms: 3.155481
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: invalid cast
+ok 58 - C\# diagnostics: invalid cast
+  ---
+  duration_ms: 3.082451
+  type: 'test'
+  ...
+# Subtest: C\# nonexhaustive switch expression warns and throws for unmatched value
+ok 59 - C\# nonexhaustive switch expression warns and throws for unmatched value
+  ---
+  duration_ms: 3.972243
+  type: 'test'
+  ...
+# Subtest: Generators: build-info source participates in binding and execution
+ok 60 - Generators: build-info source participates in binding and execution
+  ---
+  duration_ms: 3.42
+  type: 'test'
+  ...
+# Subtest: Generators: source/additional/options snapshots invalidate input cache
+ok 61 - Generators: source/additional/options snapshots invalidate input cache
+  ---
+  duration_ms: 2.424978
+  type: 'test'
+  ...
+# Subtest: Generators: cache reused when compiler-only options change
+ok 62 - Generators: cache reused when compiler-only options change
+  ---
+  duration_ms: 1.762389
+  type: 'test'
+  ...
+# Subtest: Generators: JSON schema classes are usable by source
+ok 63 - Generators: JSON schema classes are usable by source
+  ---
+  duration_ms: 1.983142
+  type: 'test'
+  ...
+# Subtest: Generators: failure rolls back partial output and blocks emission
+ok 64 - Generators: failure rolls back partial output and blocks emission
+  ---
+  duration_ms: 0.860208
+  type: 'test'
+  ...
+# Subtest: Generators: Promise callbacks explicitly refused
+ok 65 - Generators: Promise callbacks explicitly refused
+  ---
+  duration_ms: 0.648299
+  type: 'test'
+  ...
+# Subtest: Generators: duplicate paths and traversal rejected
+ok 66 - Generators: duplicate paths and traversal rejected
+  ---
+  duration_ms: 1.804533
+  type: 'test'
+  ...
+# Subtest: Generators: generated-document API cannot be edited as user source
+ok 67 - Generators: generated-document API cannot be edited as user source
+  ---
+  duration_ms: 1.073539
+  type: 'test'
+  ...
+# Subtest: Generators: output budgets reject oversized generators
+ok 68 - Generators: output budgets reject oversized generators
+  ---
+  duration_ms: 0.653937
+  type: 'test'
+  ...
+# Subtest: Analyzers: unreferenced locals and empty catches use actual source spans
+ok 69 - Analyzers: unreferenced locals and empty catches use actual source spans
+  ---
+  duration_ms: 1.934199
+  type: 'test'
+  ...
+# Subtest: Analyzers: severity overrides can suppress or block compilation
+ok 70 - Analyzers: severity overrides can suppress or block compilation
+  ---
+  duration_ms: 0.903853
+  type: 'test'
+  ...
+# Subtest: Extensions: cancellation precedes callback execution
+ok 71 - Extensions: cancellation precedes callback execution
+  ---
+  duration_ms: 0.23248
+  type: 'test'
+  ...
+# Subtest: Refactoring: bound var to explicit type applies transactionally
+ok 72 - Refactoring: bound var to explicit type applies transactionally
+  ---
+  duration_ms: 3.16179
+  type: 'test'
+  ...
+# Subtest: Refactoring: stale, overlapping and malformed multi-file edits never partially apply
+ok 73 - Refactoring: stale, overlapping and malformed multi-file edits never partially apply
+  ---
+  duration_ms: 1.300623
+  type: 'test'
+  ...
+# Subtest: Refactoring: successful project rejects a rewrite that introduces compile errors
+ok 74 - Refactoring: successful project rejects a rewrite that introduces compile errors
+  ---
+  duration_ms: 2.700965
+  type: 'test'
+  ...
+# Subtest: Refactoring: rename updates bound references, not strings or comments
+ok 75 - Refactoring: rename updates bound references, not strings or comments
+  ---
+  duration_ms: 2.439291
+  type: 'test'
+  ...
+# Subtest: Formatting: indentation preserves literal and comment text
+ok 76 - Formatting: indentation preserves literal and comment text
+  ---
+  duration_ms: 2.303686
+  type: 'test'
+  ...
+# Subtest: Folding and selection ranges are nested and ignore braces inside literals
+ok 77 - Folding and selection ranges are nested and ignore braces inside literals
+  ---
+  duration_ms: 0.861971
+  type: 'test'
+  ...
+# Subtest: LSP: new capabilities correspond to actual handlers
+ok 78 - LSP: new capabilities correspond to actual handlers
+  ---
+  duration_ms: 1.774167
+  type: 'test'
+  ...
+# Subtest: LSP: code actions carry versions and type hints use inferred types
+ok 79 - LSP: code actions carry versions and type hints use inferred types
+  ---
+  duration_ms: 1.615227
+  type: 'test'
+  ...
+# Subtest: LSP: versioned rename WorkspaceEdit when client supports documentChanges
+ok 80 - LSP: versioned rename WorkspaceEdit when client supports documentChanges
+  ---
+  duration_ms: 1.086079
+  type: 'test'
+  ...
+# (node:140) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: workspace: unchanged compilation returns cached identity
+ok 81 - workspace: unchanged compilation returns cached identity
+  ---
+  duration_ms: 43.544518
+  type: 'test'
+  ...
+# Subtest: workspace: edit retains other document tree and reparses only changed file
+ok 82 - workspace: edit retains other document tree and reparses only changed file
+  ---
+  duration_ms: 6.723745
+  type: 'test'
+  ...
+# Subtest: workspace: rejects stale changes
+ok 83 - workspace: rejects stale changes
+  ---
+  duration_ms: 0.169656
+  type: 'test'
+  ...
+# Subtest: workspace: incremental UTF-16 document changes
+ok 84 - workspace: incremental UTF-16 document changes
+  ---
+  duration_ms: 2.887677
+  type: 'test'
+  ...
+# Subtest: workspace: pre-cancelled request aborts
+ok 85 - workspace: pre-cancelled request aborts
+  ---
+  duration_ms: 1.118528
+  type: 'test'
+  ...
+# Subtest: workspace: limits and atomic project imports
+ok 86 - workspace: limits and atomic project imports
+  ---
+  duration_ms: 0.344099
+  type: 'test'
+  ...
+# Subtest: workspace: export/import roundtrip
+ok 87 - workspace: export/import roundtrip
+  ---
+  duration_ms: 1.38499
+  type: 'test'
+  ...
+# Subtest: language: member completion on unfinished file
+ok 88 - language: member completion on unfinished file
+  ---
+  duration_ms: 28.492818
+  type: 'test'
+  ...
+# Subtest: language: local type-aware array completion
+ok 89 - language: local type-aware array completion
+  ---
+  duration_ms: 21.609654
+  type: 'test'
+  ...
+# Subtest: language: definitions, bound references, hover and rename
+ok 90 - language: definitions, bound references, hover and rename
+  ---
+  duration_ms: 3.225817
+  type: 'test'
+  ...
+# Subtest: language: rename collision rejected
+ok 91 - language: rename collision rejected
+  ---
+  duration_ms: 1.774908
+  type: 'test'
+  ...
+# Subtest: language: no unbound text replacements during rename
+ok 92 - language: no unbound text replacements during rename
+  ---
+  duration_ms: 1.686364
+  type: 'test'
+  ...
+# Subtest: language: cross-file method definition
+ok 93 - language: cross-file method definition
+  ---
+  duration_ms: 2.445549
+  type: 'test'
+  ...
+# Subtest: language: document symbols and semantic tokens
+ok 94 - language: document symbols and semantic tokens
+  ---
+  duration_ms: 1.653845
+  type: 'test'
+  ...
+1..94
+# tests 94
+# suites 0
+# pass 93
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8750.534624

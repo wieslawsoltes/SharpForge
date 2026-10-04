@@ -1,0 +1,2621 @@
+(node:8) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:23) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A03 explicit definition version/culture survive canonical execution on anycpu
+ok 1 - A03 explicit definition version/culture survive canonical execution on anycpu
+  ---
+  duration_ms: 94.092537
+  type: 'test'
+  ...
+# Subtest: A03 explicit definition version/culture survive canonical execution on x86
+ok 2 - A03 explicit definition version/culture survive canonical execution on x86
+  ---
+  duration_ms: 12.908704
+  type: 'test'
+  ...
+# Subtest: A03 explicit definition version/culture survive canonical execution on x64
+ok 3 - A03 explicit definition version/culture survive canonical execution on x64
+  ---
+  duration_ms: 11.173459
+  type: 'test'
+  ...
+# Subtest: A03 explicit definition version/culture survive canonical execution on arm64
+ok 4 - A03 explicit definition version/culture survive canonical execution on arm64
+  ---
+  duration_ms: 10.496378
+  type: 'test'
+  ...
+# Subtest: A03 low-level definition identity preserves defaults and owns numeric version arrays
+ok 5 - A03 low-level definition identity preserves defaults and owns numeric version arrays
+  ---
+  duration_ms: 0.846108
+  type: 'test'
+  ...
+# Subtest: A03 invalid version and culture options produce explicit diagnostics without wildcard expansion
+ok 6 - A03 invalid version and culture options produce explicit diagnostics without wildcard expansion
+  ---
+  duration_ms: 6.896432
+  type: 'test'
+  ...
+# Subtest: A03 AssemblyName reads the same emitted definition identities as the metadata reader
+ok 7 - A03 AssemblyName reads the same emitted definition identities as the metadata reader
+  ---
+  duration_ms: 6.096544
+  type: 'test'
+  ...
+# Subtest: A03 definition identity composes with public signing and both resource directories
+ok 8 - A03 definition identity composes with public signing and both resource directories
+  ---
+  duration_ms: 4.903824
+  type: 'test'
+  ...
+# (node:31) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A03 net9 input identities replace fixed versions and survive both JS engines
+ok 9 - A03 net9 input identities replace fixed versions and survive both JS engines
+  ---
+  duration_ms: 89.3
+  type: 'test'
+  ...
+# Subtest: A03 net10 input identities replace fixed versions and survive both JS engines
+ok 10 - A03 net10 input identities replace fixed versions and survive both JS engines
+  ---
+  duration_ms: 10.943371
+  type: 'test'
+  ...
+# Subtest: A03 reference identities are copied, case-insensitively interned and preserve version/culture/token
+ok 11 - A03 reference identities are copied, case-insensitively interned and preserve version/culture/token
+  ---
+  duration_ms: 0.405271
+  type: 'test'
+  ...
+# Subtest: A03 default reference profiles keep their historical versions and empty custom-key heap handle
+ok 12 - A03 default reference profiles keep their historical versions and empty custom-key heap handle
+  ---
+  duration_ms: 0.337619
+  type: 'test'
+  ...
+# Subtest: A03 invalid, duplicate, excessive and missing reference identities are explicit diagnostics
+ok 13 - A03 invalid, duplicate, excessive and missing reference identities are explicit diagnostics
+  ---
+  duration_ms: 10.019308
+  type: 'test'
+  ...
+# Subtest: A03 real net9/net10 reference-pack identities are confirmed by native GetReferencedAssemblies
+ok 14 - A03 real net9/net10 reference-pack identities are confirmed by native GetReferencedAssemblies
+  ---
+  duration_ms: 0.679886
+  type: 'test'
+  ...
+# Subtest: A03 canonical reference count is rejected before visiting invalid shared rows
+ok 15 - A03 canonical reference count is rejected before visiting invalid shared rows
+  ---
+  duration_ms: 4.142947
+  type: 'test'
+  ...
+# Subtest: A03 canonical reference key is bounded before copying or reading its invalid name
+ok 16 - A03 canonical reference key is bounded before copying or reading its invalid name
+  ---
+  duration_ms: 0.703681
+  type: 'test'
+  ...
+# (node:39) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A03 anycpu desktop CLR entry stub has imports and relocations
+ok 17 - A03 anycpu desktop CLR entry stub has imports and relocations
+  ---
+  duration_ms: 72.376403
+  type: 'test'
+  ...
+# Subtest: A03 x86 desktop CLR entry stub has imports and relocations
+ok 18 - A03 x86 desktop CLR entry stub has imports and relocations
+  ---
+  duration_ms: 9.207023
+  type: 'test'
+  ...
+# Subtest: A03 x64 desktop CLR entry stub has imports and relocations
+ok 19 - A03 x64 desktop CLR entry stub has imports and relocations
+  ---
+  duration_ms: 5.685973
+  type: 'test'
+  ...
+# Subtest: A03 library desktop stubs use CorDllMain and unsupported ARM64 is explicit
+ok 20 - A03 library desktop stubs use CorDllMain and unsupported ARM64 is explicit
+  ---
+  duration_ms: 5.830542
+  type: 'test'
+  ...
+# Subtest: A03 canonical multi-section loading rejects modified desktop import/stub bytes
+ok 21 - A03 canonical multi-section loading rejects modified desktop import/stub bytes
+  ---
+  duration_ms: 6.259388
+  type: 'test'
+  ...
+# (node:47) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: base calls and independent hiding slots through MethodDef
+ok 22 - base calls and independent hiding slots through MethodDef
+  ---
+  duration_ms: 18.29091
+  type: 'test'
+  ...
+# Subtest: base calls and independent hiding slots through MemberRef
+ok 23 - base calls and independent hiding slots through MemberRef
+  ---
+  duration_ms: 3.760551
+  type: 'test'
+  ...
+# Subtest: a sealed override remains callable while a derived newslot stays independent
+ok 24 - a sealed override remains callable while a derived newslot stays independent
+  ---
+  duration_ms: 1.986866
+  type: 'test'
+  ...
+# Subtest: MethodImpl alias chains are materialized once and follow the final overriding body
+ok 25 - MethodImpl alias chains are materialized once and follow the final overriding body
+  ---
+  duration_ms: 33.545502
+  type: 'test'
+  ...
+# Subtest: MemberRef declarations cache their canonical MethodDef without reparsing signatures on dispatch
+ok 26 - MemberRef declarations cache their canonical MethodDef without reparsing signatures on dispatch
+  ---
+  duration_ms: 2.647852
+  type: 'test'
+  ...
+# Subtest: abstract declarations remain verifiable through concrete implementations and fault when directly resolved
+ok 27 - abstract declarations remain verifiable through concrete implementations and fault when directly resolved
+  ---
+  duration_ms: 8.325493
+  type: 'test'
+  ...
+# Subtest: missing implementations and cyclic MethodImpl mappings remain verification failures
+ok 28 - missing implementations and cyclic MethodImpl mappings remain verification failures
+  ---
+  duration_ms: 2.892812
+  type: 'test'
+  ...
+# Subtest: snapshot replay retains derived slot identity without serializing dispatch caches
+ok 29 - snapshot replay retains derived slot identity without serializing dispatch caches
+  ---
+  duration_ms: 4.540987
+  type: 'test'
+  ...
+# (node:55) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 T21 precise and beforefieldinit types obey distinct lazy triggers
+ok 30 - A05 T21 precise and beforefieldinit types obey distinct lazy triggers
+  ---
+  duration_ms: 1.267191
+  type: 'test'
+  ...
+# Subtest: A05 T21 same-context recursive initialization observes partial state and runs once
+ok 31 - A05 T21 same-context recursive initialization observes partial state and runs once
+  ---
+  duration_ms: 0.508457
+  type: 'test'
+  ...
+# Subtest: A05 T21 initializer failure caches a rooted TypeInitializationException and InnerException
+ok 32 - A05 T21 initializer failure caches a rooted TypeInitializationException and InnerException
+  ---
+  duration_ms: 3.779058
+  type: 'test'
+  ...
+# Subtest: A05 T21 another scheduler context waits then retries after initialization
+ok 33 - A05 T21 another scheduler context waits then retries after initialization
+  ---
+  duration_ms: 0.262266
+  type: 'test'
+  ...
+# Subtest: A05 T21 waiting context retries a cached failure at the triggering instruction
+ok 34 - A05 T21 waiting context retries a cached failure at the triggering instruction
+  ---
+  duration_ms: 5.058508
+  type: 'test'
+  ...
+# Subtest: A05 T21 initialization wait cycles expose partial state instead of deadlocking
+ok 35 - A05 T21 initialization wait cycles expose partial state instead of deadlocking
+  ---
+  duration_ms: 0.149646
+  type: 'test'
+  ...
+# Subtest: A05 T21 initialization state is separate for each closed generic identity
+ok 36 - A05 T21 initialization state is separate for each closed generic identity
+  ---
+  duration_ms: 0.218309
+  type: 'test'
+  ...
+# Subtest: A05 T21 missing initializers and unknown trigger boundaries are deterministic
+ok 37 - A05 T21 missing initializers and unknown trigger boundaries are deterministic
+  ---
+  duration_ms: 0.162575
+  type: 'test'
+  ...
+# Subtest: A05 T21 a failing managed cctor rethrows on the second field access and keeps its cause
+ok 38 - A05 T21 a failing managed cctor rethrows on the second field access and keeps its cause
+  ---
+  duration_ms: 13.726227
+  type: 'test'
+  ...
+# Subtest: A05 T21 direct delegate-shaped calls initialize before method entry
+ok 39 - A05 T21 direct delegate-shaped calls initialize before method entry
+  ---
+  duration_ms: 3.158613
+  type: 'test'
+  ...
+# Subtest: A05 T21 failure at a direct method-entry gate cannot enter the target catch clause
+ok 40 - A05 T21 failure at a direct method-entry gate cannot enter the target catch clause
+  ---
+  duration_ms: 2.260018
+  type: 'test'
+  ...
+# Subtest: A05 T21 frame-budget failures retain their fatal resource-fault identity
+ok 41 - A05 T21 frame-budget failures retain their fatal resource-fault identity
+  ---
+  duration_ms: 0.165159
+  type: 'test'
+  ...
+# (node:63) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 B03 newslot preserves base declaration through MethodDef
+ok 42 - A05 B03 newslot preserves base declaration through MethodDef
+  ---
+  duration_ms: 17.571776
+  type: 'test'
+  ...
+# Subtest: A05 B03 newslot preserves base declaration through MemberRef
+ok 43 - A05 B03 newslot preserves base declaration through MemberRef
+  ---
+  duration_ms: 3.494049
+  type: 'test'
+  ...
+# Subtest: A05 B03 nonvirtual hiding cannot override the base virtual slot
+ok 44 - A05 B03 nonvirtual hiding cannot override the base virtual slot
+  ---
+  duration_ms: 1.596577
+  type: 'test'
+  ...
+# Subtest: A05 B03 verifier qualifies reachable reuse-slot overrides
+ok 45 - A05 B03 verifier qualifies reachable reuse-slot overrides
+  ---
+  duration_ms: 2.101158
+  type: 'test'
+  ...
+# Subtest: A05 B03 explicit class MethodImpl can use a differently named body
+ok 46 - A05 B03 explicit class MethodImpl can use a differently named body
+  ---
+  duration_ms: 1.619672
+  type: 'test'
+  ...
+# Subtest: A05 B03 explicit interface MethodImpl dispatches without executing an abstract declaration
+ok 47 - A05 B03 explicit interface MethodImpl dispatches without executing an abstract declaration
+  ---
+  duration_ms: 1.547023
+  type: 'test'
+  ...
+# Subtest: A05 B03 invalid MethodImpl signatures and duplicate slots fail verification
+ok 48 - A05 B03 invalid MethodImpl signatures and duplicate slots fail verification
+  ---
+  duration_ms: 3.399636
+  type: 'test'
+  ...
+# Subtest: A05 B03 a final class virtual slot cannot be overridden
+ok 49 - A05 B03 a final class virtual slot cannot be overridden
+  ---
+  duration_ms: 1.195743
+  type: 'test'
+  ...
+# Subtest: A05 B03 inherited interface mapping follows overrides without merging independent class slots
+ok 50 - A05 B03 inherited interface mapping follows overrides without merging independent class slots
+  ---
+  duration_ms: 1.573443
+  type: 'test'
+  ...
+# (node:71) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: decode plans preserve wide operands, original debugger objects and the existing offset map
+ok 51 - decode plans preserve wide operands, original debugger objects and the existing offset map
+  ---
+  duration_ms: 12.820501
+  type: 'test'
+  ...
+# Subtest: warm method entries reuse their handler plan and offset map while preserving results
+ok 52 - warm method entries reuse their handler plan and offset map while preserving results
+  ---
+  duration_ms: 2.583786
+  type: 'test'
+  ...
+# Subtest: decoded and original dispatch preserve one-instruction budgets, calls, branches and debugger pauses
+ok 53 - decoded and original dispatch preserve one-instruction budgets, calls, branches and debugger pauses
+  ---
+  duration_ms: 10.193179
+  type: 'test'
+  ...
+# Subtest: instruction-limit faults retain the same stopped frame with either dispatch mode
+ok 54 - instruction-limit faults retain the same stopped frame with either dispatch mode
+  ---
+  duration_ms: 1.841737
+  type: 'test'
+  ...
+# Subtest: decoded dispatch preserves nested catch/finally continuations across snapshot replay
+ok 55 - decoded dispatch preserves nested catch/finally continuations across snapshot replay
+  ---
+  duration_ms: 73.644395
+  type: 'test'
+  ...
+# Subtest: invalid opcode and branch plans are rejected without replacing an executable cached plan
+ok 56 - invalid opcode and branch plans are rejected without replacing an executable cached plan
+  ---
+  duration_ms: 1.588656
+  type: 'test'
+  ...
+# Subtest: body replacement refreshes both handler slots and branch offsets on the next instruction
+ok 57 - body replacement refreshes both handler slots and branch offsets on the next instruction
+  ---
+  duration_ms: 1.455093
+  type: 'test'
+  ...
+# Subtest: explicit invalidation refreshes an in-place opcode edit before executing its new semantics
+ok 58 - explicit invalidation refreshes an in-place opcode edit before executing its new semantics
+  ---
+  duration_ms: 2.968281
+  type: 'test'
+  ...
+# Subtest: owner replacement and stop drop code caches even when metadata tokens are reused
+ok 59 - owner replacement and stop drop code caches even when metadata tokens are reused
+  ---
+  duration_ms: 1.850921
+  type: 'test'
+  ...
+# Subtest: snapshots contain execution state only and successful restore rebuilds plans for identical replay
+ok 60 - snapshots contain execution state only and successful restore rebuilds plans for identical replay
+  ---
+  duration_ms: 3.757385
+  type: 'test'
+  ...
+# Subtest: CIL Hot Reload refreshes derived plans only after a committed update
+ok 61 - CIL Hot Reload refreshes derived plans only after a committed update
+  ---
+  duration_ms: 20.236314
+  type: 'test'
+  ...
+# (node:79) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 CIL type membership is indexed before execution
+ok 62 - A05 CIL type membership is indexed before execution
+  ---
+  duration_ms: 4.537342
+  type: 'test'
+  ...
+# Subtest: A05 CIL layouts preserve inherited field offsets and reject foreign fields
+ok 63 - A05 CIL layouts preserve inherited field offsets and reject foreign fields
+  ---
+  duration_ms: 1.976801
+  type: 'test'
+  ...
+# Subtest: A05 CIL metadata replacement rebuilds the derived indexes
+ok 64 - A05 CIL metadata replacement rebuilds the derived indexes
+  ---
+  duration_ms: 86.647702
+  type: 'test'
+  ...
+# Subtest: A05 CIL call and static initialization adapters retain frame and depth contracts
+ok 65 - A05 CIL call and static initialization adapters retain frame and depth contracts
+  ---
+  duration_ms: 13.283869
+  type: 'test'
+  ...
+# (node:87) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 T26 closed generic types have distinct static slots and independent initializers
+ok 66 - A05 T26 closed generic types have distinct static slots and independent initializers
+  ---
+  duration_ms: 16.554282
+  type: 'test'
+  ...
+# Subtest: A05 T26 generic field signatures substitute the declaring type arguments
+ok 67 - A05 T26 generic field signatures substitute the declaring type arguments
+  ---
+  duration_ms: 1.733414
+  type: 'test'
+  ...
+# Subtest: A05 T26 ldsflda retains its closed generic identity
+ok 68 - A05 T26 ldsflda retains its closed generic identity
+  ---
+  duration_ms: 2.822757
+  type: 'test'
+  ...
+# Subtest: A05 T26 ThreadStatic defaults and writes are isolated by scheduler context
+ok 69 - A05 T26 ThreadStatic defaults and writes are isolated by scheduler context
+  ---
+  duration_ms: 2.24819
+  type: 'test'
+  ...
+# Subtest: A05 T26 ThreadStatic addresses preserve their original context across switches
+ok 70 - A05 T26 ThreadStatic addresses preserve their original context across switches
+  ---
+  duration_ms: 1.18763
+  type: 'test'
+  ...
+# Subtest: A05 T26 closed generic static references remain rooted and restore with snapshots
+ok 71 - A05 T26 closed generic static references remain rooted and restore with snapshots
+  ---
+  duration_ms: 3.123049
+  type: 'test'
+  ...
+# Subtest: A05 T26 volatile field and indirect accesses execute in instruction order
+ok 72 - A05 T26 volatile field and indirect accesses execute in instruction order
+  ---
+  duration_ms: 1.575766
+  type: 'test'
+  ...
+# Subtest: A05 T26 verifier rejects malformed volatile prefixes and branches that split prefixes
+ok 73 - A05 T26 verifier rejects malformed volatile prefixes and branches that split prefixes
+  ---
+  duration_ms: 1.649857
+  type: 'test'
+  ...
+# Subtest: A05 T26 interleaved cooperative workers retain independent ThreadStatic values
+ok 74 - A05 T26 interleaved cooperative workers retain independent ThreadStatic values
+  ---
+  duration_ms: 4.380505
+  type: 'test'
+  ...
+# (node:95) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: tokens source: GetType identity, names, and primitive static types
+ok 75 - tokens source: GetType identity, names, and primitive static types
+  ---
+  duration_ms: 88.383324
+  type: 'test'
+  ...
+# Subtest: tokens source: cached Type roots, snapshot replay, and stop
+ok 76 - tokens source: cached Type roots, snapshot replay, and stop
+  ---
+  duration_ms: 8.122908
+  type: 'test'
+  ...
+# Subtest: tokens source: null GetType faults
+ok 77 - tokens source: null GetType faults
+  ---
+  duration_ms: 4.586807
+  type: 'test'
+  ...
+# Subtest: tokens reload: GetType identity, names, and primitive static types
+ok 78 - tokens reload: GetType identity, names, and primitive static types
+  ---
+  duration_ms: 18.724254
+  type: 'test'
+  ...
+# Subtest: tokens reload: cached Type roots, snapshot replay, and stop
+ok 79 - tokens reload: cached Type roots, snapshot replay, and stop
+  ---
+  duration_ms: 5.163585
+  type: 'test'
+  ...
+# Subtest: tokens reload: null GetType faults
+ok 80 - tokens reload: null GetType faults
+  ---
+  duration_ms: 4.559125
+  type: 'test'
+  ...
+# Subtest: tokens cil: GetType identity, names, and primitive static types
+ok 81 - tokens cil: GetType identity, names, and primitive static types
+  ---
+  duration_ms: 15.548555
+  type: 'test'
+  ...
+# Subtest: tokens cil: cached Type roots, snapshot replay, and stop
+ok 82 - tokens cil: cached Type roots, snapshot replay, and stop
+  ---
+  duration_ms: 3.616924
+  type: 'test'
+  ...
+# Subtest: tokens cil: null GetType faults
+ok 83 - tokens cil: null GetType faults
+  ---
+  duration_ms: 4.458192
+  type: 'test'
+  ...
+# Subtest: tokens: aliases, closed/open generics, and array identity share stable tables
+ok 84 - tokens: aliases, closed/open generics, and array identity share stable tables
+  ---
+  duration_ms: 2.031073
+  type: 'test'
+  ...
+# Subtest: tokens: inherited object headers report actual type and boxed enum remains distinct
+ok 85 - tokens: inherited object headers report actual type and boxed enum remains distinct
+  ---
+  duration_ms: 0.425511
+  type: 'test'
+  ...
+# Subtest: tokens: default handle, null comparisons, wrong kind, foreign and forged handles
+ok 86 - tokens: default handle, null comparisons, wrong kind, foreign and forged handles
+  ---
+  duration_ms: 0.796872
+  type: 'test'
+  ...
+# Subtest: tokens: snapshots taken before the lazy Type cache discard subsequent entries
+ok 87 - tokens: snapshots taken before the lazy Type cache discard subsequent entries
+  ---
+  duration_ms: 2.780732
+  type: 'test'
+  ...
+# Subtest: tokens: ldtoken supports TypeDef/Ref/Spec and method/field definitions and references
+ok 88 - tokens: ldtoken supports TypeDef/Ref/Spec and method/field definitions and references
+  ---
+  duration_ms: 8.146378
+  type: 'test'
+  ...
+# Subtest: tokens CIL: typeof primitive, open generic and closed generic handles execute
+ok 89 - tokens CIL: typeof primitive, open generic and closed generic handles execute
+  ---
+  duration_ms: 2.988516
+  type: 'test'
+  ...
+# Subtest: strings: String(char[]) copies UTF-16 units, remains non-interned, and rejects invalid arrays
+ok 90 - strings: String(char[]) copies UTF-16 units, remains non-interned, and rejects invalid arrays
+  ---
+  duration_ms: 1.235493
+  type: 'test'
+  ...
+# Subtest: strings CIL: String(char[]) constructor produces a fresh managed string
+ok 91 - strings CIL: String(char[]) constructor produces a fresh managed string
+  ---
+  duration_ms: 2.153276
+  type: 'test'
+  ...
+# (node:103) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 assignability: string -> object
+ok 92 - A05 assignability: string -> object
+  ---
+  duration_ms: 3.409442
+  type: 'test'
+  ...
+# Subtest: A05 assignability: object -> string
+ok 93 - A05 assignability: object -> string
+  ---
+  duration_ms: 0.663621
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int -> object
+ok 94 - A05 assignability: int -> object
+  ---
+  duration_ms: 0.231639
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Derived -> CastFixtures.Base
+ok 95 - A05 assignability: CastFixtures.Derived -> CastFixtures.Base
+  ---
+  duration_ms: 0.147332
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Base -> CastFixtures.Derived
+ok 96 - A05 assignability: CastFixtures.Base -> CastFixtures.Derived
+  ---
+  duration_ms: 0.253502
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Derived -> CastFixtures.Derived
+ok 97 - A05 assignability: CastFixtures.Derived -> CastFixtures.Derived
+  ---
+  duration_ms: 0.110887
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Derived -> CastFixtures.Other
+ok 98 - A05 assignability: CastFixtures.Derived -> CastFixtures.Other
+  ---
+  duration_ms: 0.242856
+  type: 'test'
+  ...
+# Subtest: A05 assignability: First.Widget -> Second.Widget
+ok 99 - A05 assignability: First.Widget -> Second.Widget
+  ---
+  duration_ms: 0.110437
+  type: 'test'
+  ...
+# Subtest: A05 assignability: First.Widget -> object
+ok 100 - A05 assignability: First.Widget -> object
+  ---
+  duration_ms: 0.319362
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Base -> CastFixtures.IRoot
+ok 101 - A05 assignability: CastFixtures.Base -> CastFixtures.IRoot
+  ---
+  duration_ms: 0.337529
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Derived -> CastFixtures.IChild
+ok 102 - A05 assignability: CastFixtures.Derived -> CastFixtures.IChild
+  ---
+  duration_ms: 0.161033
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Derived -> CastFixtures.IRoot
+ok 103 - A05 assignability: CastFixtures.Derived -> CastFixtures.IRoot
+  ---
+  duration_ms: 0.098959
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Base -> CastFixtures.IChild
+ok 104 - A05 assignability: CastFixtures.Base -> CastFixtures.IChild
+  ---
+  duration_ms: 0.075014
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.IChild -> CastFixtures.IRoot
+ok 105 - A05 assignability: CastFixtures.IChild -> CastFixtures.IRoot
+  ---
+  duration_ms: 0.095013
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.IRoot -> CastFixtures.IChild
+ok 106 - A05 assignability: CastFixtures.IRoot -> CastFixtures.IChild
+  ---
+  duration_ms: 0.057416
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.IRoot -> object
+ok 107 - A05 assignability: CastFixtures.IRoot -> object
+  ---
+  duration_ms: 0.057998
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Other -> CastFixtures.IRoot
+ok 108 - A05 assignability: CastFixtures.Other -> CastFixtures.IRoot
+  ---
+  duration_ms: 0.058378
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string -> System.IComparable
+ok 109 - A05 assignability: string -> System.IComparable
+  ---
+  duration_ms: 0.237238
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int -> System.IComparable`1<int>
+ok 110 - A05 assignability: int -> System.IComparable`1<int>
+  ---
+  duration_ms: 0.160412
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int -> System.IComparable`1<long>
+ok 111 - A05 assignability: int -> System.IComparable`1<long>
+  ---
+  duration_ms: 0.340022
+  type: 'test'
+  ...
+# Subtest: A05 assignability: bool -> System.IFormattable
+ok 112 - A05 assignability: bool -> System.IFormattable
+  ---
+  duration_ms: 0.225239
+  type: 'test'
+  ...
+# Subtest: A05 assignability: char -> System.IFormattable
+ok 113 - A05 assignability: char -> System.IFormattable
+  ---
+  duration_ms: 0.151849
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[] -> object[]
+ok 114 - A05 assignability: string[] -> object[]
+  ---
+  duration_ms: 0.777202
+  type: 'test'
+  ...
+# Subtest: A05 assignability: object[] -> string[]
+ok 115 - A05 assignability: object[] -> string[]
+  ---
+  duration_ms: 0.565202
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> object[]
+ok 116 - A05 assignability: int[] -> object[]
+  ---
+  duration_ms: 0.668608
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> System.Array
+ok 117 - A05 assignability: int[] -> System.Array
+  ---
+  duration_ms: 0.363619
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> object
+ok 118 - A05 assignability: int[] -> object
+  ---
+  duration_ms: 0.419022
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[,] -> object[,]
+ok 119 - A05 assignability: string[,] -> object[,]
+  ---
+  duration_ms: 0.315396
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[] -> object[,]
+ok 120 - A05 assignability: string[] -> object[,]
+  ---
+  duration_ms: 0.507956
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[,] -> int[,,]
+ok 121 - A05 assignability: int[,] -> int[,,]
+  ---
+  duration_ms: 0.300734
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[,] -> int[,]
+ok 122 - A05 assignability: int[,] -> int[,]
+  ---
+  duration_ms: 0.189285
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> int[*]
+ok 123 - A05 assignability: int[] -> int[*]
+  ---
+  duration_ms: 0.39103
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[*] -> int[]
+ok 124 - A05 assignability: int[*] -> int[]
+  ---
+  duration_ms: 0.343448
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[][] -> object[]
+ok 125 - A05 assignability: int[][] -> object[]
+  ---
+  duration_ms: 0.745425
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[][] -> object[][]
+ok 126 - A05 assignability: int[][] -> object[][]
+  ---
+  duration_ms: 0.784133
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[][] -> object[][]
+ok 127 - A05 assignability: string[][] -> object[][]
+  ---
+  duration_ms: 0.723141
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> uint[]
+ok 128 - A05 assignability: int[] -> uint[]
+  ---
+  duration_ms: 0.486283
+  type: 'test'
+  ...
+# Subtest: A05 assignability: uint[] -> int[]
+ok 129 - A05 assignability: uint[] -> int[]
+  ---
+  duration_ms: 0.507075
+  type: 'test'
+  ...
+# Subtest: A05 assignability: byte[] -> sbyte[]
+ok 130 - A05 assignability: byte[] -> sbyte[]
+  ---
+  duration_ms: 0.525612
+  type: 'test'
+  ...
+# Subtest: A05 assignability: bool[] -> byte[]
+ok 131 - A05 assignability: bool[] -> byte[]
+  ---
+  duration_ms: 0.422878
+  type: 'test'
+  ...
+# Subtest: A05 assignability: char[] -> ushort[]
+ok 132 - A05 assignability: char[] -> ushort[]
+  ---
+  duration_ms: 0.514686
+  type: 'test'
+  ...
+# Subtest: A05 assignability: float[] -> int[]
+ok 133 - A05 assignability: float[] -> int[]
+  ---
+  duration_ms: 0.43116
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[] -> System.Collections.Generic.IEnumerable`1<object>
+ok 134 - A05 assignability: string[] -> System.Collections.Generic.IEnumerable`1<object>
+  ---
+  duration_ms: 0.407004
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[] -> System.Collections.Generic.IList`1<object>
+ok 135 - A05 assignability: string[] -> System.Collections.Generic.IList`1<object>
+  ---
+  duration_ms: 0.415126
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> System.Collections.Generic.IList`1<uint>
+ok 136 - A05 assignability: int[] -> System.Collections.Generic.IList`1<uint>
+  ---
+  duration_ms: 0.448987
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> System.Collections.Generic.IEnumerable`1<object>
+ok 137 - A05 assignability: int[] -> System.Collections.Generic.IEnumerable`1<object>
+  ---
+  duration_ms: 0.35155
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[,] -> System.Collections.Generic.IEnumerable`1<string>
+ok 138 - A05 assignability: string[,] -> System.Collections.Generic.IEnumerable`1<string>
+  ---
+  duration_ms: 0.238089
+  type: 'test'
+  ...
+# Subtest: A05 assignability: string[,] -> System.Collections.IEnumerable
+ok 139 - A05 assignability: string[,] -> System.Collections.IEnumerable
+  ---
+  duration_ms: 0.287534
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.ICov`1<string> -> CastFixtures.ICov`1<object>
+ok 140 - A05 assignability: CastFixtures.ICov`1<string> -> CastFixtures.ICov`1<object>
+  ---
+  duration_ms: 0.226522
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.ICov`1<object> -> CastFixtures.ICov`1<string>
+ok 141 - A05 assignability: CastFixtures.ICov`1<object> -> CastFixtures.ICov`1<string>
+  ---
+  duration_ms: 0.204048
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.ICov`1<int> -> CastFixtures.ICov`1<object>
+ok 142 - A05 assignability: CastFixtures.ICov`1<int> -> CastFixtures.ICov`1<object>
+  ---
+  duration_ms: 0.144328
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.IContra`1<object> -> CastFixtures.IContra`1<string>
+ok 143 - A05 assignability: CastFixtures.IContra`1<object> -> CastFixtures.IContra`1<string>
+  ---
+  duration_ms: 0.197939
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.IContra`1<string> -> CastFixtures.IContra`1<object>
+ok 144 - A05 assignability: CastFixtures.IContra`1<string> -> CastFixtures.IContra`1<object>
+  ---
+  duration_ms: 0.25867
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.IInvariant`1<string> -> CastFixtures.IInvariant`1<object>
+ok 145 - A05 assignability: CastFixtures.IInvariant`1<string> -> CastFixtures.IInvariant`1<object>
+  ---
+  duration_ms: 0.203507
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Producer -> CastFixtures.ICov`1<object>
+ok 146 - A05 assignability: CastFixtures.Producer -> CastFixtures.ICov`1<object>
+  ---
+  duration_ms: 0.203336
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Consumer -> CastFixtures.IContra`1<string>
+ok 147 - A05 assignability: CastFixtures.Consumer -> CastFixtures.IContra`1<string>
+  ---
+  duration_ms: 0.200032
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Collections.Generic.List`1<string> -> System.Collections.Generic.IEnumerable`1<object>
+ok 148 - A05 assignability: System.Collections.Generic.List`1<string> -> System.Collections.Generic.IEnumerable`1<object>
+  ---
+  duration_ms: 0.461976
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Collections.Generic.List`1<string> -> System.Collections.Generic.List`1<object>
+ok 149 - A05 assignability: System.Collections.Generic.List`1<string> -> System.Collections.Generic.List`1<object>
+  ---
+  duration_ms: 0.594236
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Collections.Generic.List`1<int> -> System.Collections.Generic.IEnumerable`1<object>
+ok 150 - A05 assignability: System.Collections.Generic.List`1<int> -> System.Collections.Generic.IEnumerable`1<object>
+  ---
+  duration_ms: 0.664873
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Collections.Generic.IList`1<string> -> System.Collections.Generic.IList`1<object>
+ok 151 - A05 assignability: System.Collections.Generic.IList`1<string> -> System.Collections.Generic.IList`1<object>
+  ---
+  duration_ms: 0.411421
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Action`1<object> -> System.Action`1<string>
+ok 152 - A05 assignability: System.Action`1<object> -> System.Action`1<string>
+  ---
+  duration_ms: 0.49757
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Func`1<string> -> System.Func`1<object>
+ok 153 - A05 assignability: System.Func`1<string> -> System.Func`1<object>
+  ---
+  duration_ms: 0.270749
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Func`1<int> -> System.Func`1<object>
+ok 154 - A05 assignability: System.Func`1<int> -> System.Func`1<object>
+  ---
+  duration_ms: 0.197308
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Func`2<object, string> -> System.Func`2<string, object>
+ok 155 - A05 assignability: System.Func`2<object, string> -> System.Func`2<string, object>
+  ---
+  duration_ms: 0.342506
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Collections.Generic.List`1<string> -> System.Collections.Generic.List`1
+ok 156 - A05 assignability: System.Collections.Generic.List`1<string> -> System.Collections.Generic.List`1
+  ---
+  duration_ms: 0.565944
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Collections.Generic.List`1 -> System.Collections.Generic.List`1
+ok 157 - A05 assignability: System.Collections.Generic.List`1 -> System.Collections.Generic.List`1
+  ---
+  duration_ms: 0.213893
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int -> System.Nullable`1<int>
+ok 158 - A05 assignability: int -> System.Nullable`1<int>
+  ---
+  duration_ms: 0.22574
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Nullable`1<int> -> int
+ok 159 - A05 assignability: System.Nullable`1<int> -> int
+  ---
+  duration_ms: 0.153741
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Nullable`1<int> -> object
+ok 160 - A05 assignability: System.Nullable`1<int> -> object
+  ---
+  duration_ms: 0.143566
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Nullable`1<int> -> System.ValueType
+ok 161 - A05 assignability: System.Nullable`1<int> -> System.ValueType
+  ---
+  duration_ms: 0.13914
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Nullable`1<int> -> System.Nullable`1<long>
+ok 162 - A05 assignability: System.Nullable`1<int> -> System.Nullable`1<long>
+  ---
+  duration_ms: 0.184248
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Nullable`1<int> -> System.IComparable
+ok 163 - A05 assignability: System.Nullable`1<int> -> System.IComparable
+  ---
+  duration_ms: 0.177297
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> System.Enum
+ok 164 - A05 assignability: CastFixtures.Color -> System.Enum
+  ---
+  duration_ms: 0.314594
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> System.ValueType
+ok 165 - A05 assignability: CastFixtures.Color -> System.ValueType
+  ---
+  duration_ms: 0.188234
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> object
+ok 166 - A05 assignability: CastFixtures.Color -> object
+  ---
+  duration_ms: 0.136556
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> int
+ok 167 - A05 assignability: CastFixtures.Color -> int
+  ---
+  duration_ms: 0.134563
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int -> CastFixtures.Color
+ok 168 - A05 assignability: int -> CastFixtures.Color
+  ---
+  duration_ms: 0.168665
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> CastFixtures.OtherColor
+ok 169 - A05 assignability: CastFixtures.Color -> CastFixtures.OtherColor
+  ---
+  duration_ms: 0.179591
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> System.IComparable
+ok 170 - A05 assignability: CastFixtures.Color -> System.IComparable
+  ---
+  duration_ms: 0.151068
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> System.Nullable`1<CastFixtures.Color>
+ok 171 - A05 assignability: CastFixtures.Color -> System.Nullable`1<CastFixtures.Color>
+  ---
+  duration_ms: 0.158589
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color -> System.Nullable`1<int>
+ok 172 - A05 assignability: CastFixtures.Color -> System.Nullable`1<int>
+  ---
+  duration_ms: 0.15252
+  type: 'test'
+  ...
+# Subtest: A05 assignability: System.Nullable`1<CastFixtures.Color> -> System.Enum
+ok 173 - A05 assignability: System.Nullable`1<CastFixtures.Color> -> System.Enum
+  ---
+  duration_ms: 0.17921
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color[] -> int[]
+ok 174 - A05 assignability: CastFixtures.Color[] -> int[]
+  ---
+  duration_ms: 0.450459
+  type: 'test'
+  ...
+# Subtest: A05 assignability: int[] -> CastFixtures.Color[]
+ok 175 - A05 assignability: int[] -> CastFixtures.Color[]
+  ---
+  duration_ms: 0.428066
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.Color[] -> CastFixtures.OtherColor[]
+ok 176 - A05 assignability: CastFixtures.Color[] -> CastFixtures.OtherColor[]
+  ---
+  duration_ms: 0.522608
+  type: 'test'
+  ...
+# Subtest: A05 assignability: CastFixtures.ByteColor[] -> byte[]
+ok 177 - A05 assignability: CastFixtures.ByteColor[] -> byte[]
+  ---
+  duration_ms: 0.612564
+  type: 'test'
+  ...
+# Subtest: A05 cast cache has at least 60 independent .NET reference pairs
+ok 178 - A05 cast cache has at least 60 independent .NET reference pairs
+  ---
+  duration_ms: 0.144398
+  type: 'test'
+  ...
+# Subtest: A05 casts use object headers and preserve null, failure and boxed enum distinctions
+ok 179 - A05 casts use object headers and preserve null, failure and boxed enum distinctions
+  ---
+  duration_ms: 1.958073
+  type: 'test'
+  ...
+# Subtest: A05 covariant array stores retain the actual element constraint
+ok 180 - A05 covariant array stores retain the actual element constraint
+  ---
+  duration_ms: 1.15346
+  type: 'test'
+  ...
+# Subtest: A05 cast boundary inputs and cache clearing stay explicit
+ok 181 - A05 cast boundary inputs and cache clearing stay explicit
+  ---
+  duration_ms: 0.408246
+  type: 'test'
+  ...
+# (node:111) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A05 a generic interface first lookup retains identity through recursive primitive materialization
+ok 182 - A05 a generic interface first lookup retains identity through recursive primitive materialization
+  ---
+  duration_ms: 6.118608
+  type: 'test'
+  ...
+# Subtest: A05 method tables retain canonical primitive, token and generic identities
+ok 183 - A05 method tables retain canonical primitive, token and generic identities
+  ---
+  duration_ms: 2.951702
+  type: 'test'
+  ...
+# Subtest: A05 method tables describe inherited storage and interface implementation slots
+ok 184 - A05 method tables describe inherited storage and interface implementation slots
+  ---
+  duration_ms: 0.901811
+  type: 'test'
+  ...
+# Subtest: A05 source image tables retain type and field identities across namespaces
+ok 185 - A05 source image tables retain type and field identities across namespaces
+  ---
+  duration_ms: 0.851804
+  type: 'test'
+  ...
+# Subtest: A05 heap headers survive collection, snapshots and metadata registry replacement
+ok 186 - A05 heap headers survive collection, snapshots and metadata registry replacement
+  ---
+  duration_ms: 2.662566
+  type: 'test'
+  ...
+# Subtest: A05 recursive generic reference fields materialize without losing their closed identity
+ok 187 - A05 recursive generic reference fields materialize without losing their closed identity
+  ---
+  duration_ms: 0.431691
+  type: 'test'
+  ...
+# Subtest: A05 invalid method table definitions fail without retaining broken identities
+ok 188 - A05 invalid method table definitions fail without retaining broken identities
+  ---
+  duration_ms: 0.998566
+  type: 'test'
+  ...
+# Subtest: A05 CIL headers distinguish namespaced virtual method declarations
+ok 189 - A05 CIL headers distinguish namespaced virtual method declarations
+  ---
+  duration_ms: 13.662987
+  type: 'test'
+  ...
+# Subtest: A05 CIL metadata tables preserve enum backing widths and rebuilt heap headers
+ok 190 - A05 CIL metadata tables preserve enum backing widths and rebuilt heap headers
+  ---
+  duration_ms: 1.456937
+  type: 'test'
+  ...
+# Subtest: A05 CIL GenericParam variance and TypeSpec identities feed the same cast lattice
+ok 191 - A05 CIL GenericParam variance and TypeSpec identities feed the same cast lattice
+  ---
+  duration_ms: 1.166299
+  type: 'test'
+  ...
+# (node:119) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+ok 192 - A23 T29 extension contracts retain released runtime builtin identities independent of contribution order
+  ---
+  duration_ms: 0.985867
+  type: 'test'
+  ...
+# Subtest: A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+ok 193 - A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries
+  ---
+  duration_ms: 1.218377
+  type: 'test'
+  ...
+# (node:127) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T29 source reads explicit environment and isolated dictionary snapshots
+ok 194 - A23 T29 source reads explicit environment and isolated dictionary snapshots
+  ---
+  duration_ms: 117.83868
+  type: 'test'
+  ...
+# Subtest: A23 T29 source snapshots once per session and never inherits host environment
+ok 195 - A23 T29 source snapshots once per session and never inherits host environment
+  ---
+  duration_ms: 10.976946
+  type: 'test'
+  ...
+# Subtest: A23 T29 source rejects malformed options and null names with managed faults
+ok 196 - A23 T29 source rejects malformed options and null names with managed faults
+  ---
+  duration_ms: 19.636135
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil reads explicit environment and isolated dictionary snapshots
+ok 197 - A23 T29 cil reads explicit environment and isolated dictionary snapshots
+  ---
+  duration_ms: 44.140083
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil snapshots once per session and never inherits host environment
+ok 198 - A23 T29 cil snapshots once per session and never inherits host environment
+  ---
+  duration_ms: 25.269106
+  type: 'test'
+  ...
+# Subtest: A23 T29 cil rejects malformed options and null names with managed faults
+ok 199 - A23 T29 cil rejects malformed options and null names with managed faults
+  ---
+  duration_ms: 21.208472
+  type: 'test'
+  ...
+# Subtest: A23 T29 environment contracts use the A07 extension block without renumbering released contracts
+ok 200 - A23 T29 environment contracts use the A07 extension block without renumbering released contracts
+  ---
+  duration_ms: 0.527115
+  type: 'test'
+  ...
+# (node:135) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 T30 source launch args preserve static initialization and async Main completion
+ok 201 - A23 T30 source launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 76.322892
+  type: 'test'
+  ...
+# Subtest: A23 T30 cil launch args preserve static initialization and async Main completion
+ok 202 - A23 T30 cil launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 37.656724
+  type: 'test'
+  ...
+# Subtest: A23 T30 source-from-cil launch args preserve static initialization and async Main completion
+ok 203 - A23 T30 source-from-cil launch args preserve static initialization and async Main completion
+  ---
+  duration_ms: 19.214329
+  type: 'test'
+  ...
+# Subtest: A23 T30 rejects malformed argv and preserves parameterless Main
+ok 204 - A23 T30 rejects malformed argv and preserves parameterless Main
+  ---
+  duration_ms: 1.706714
+  type: 'test'
+  ...
+# (node:143) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: compiler binding and CIL graph loading share weak and full-public-key friend identity rules
+ok 205 - compiler binding and CIL graph loading share weak and full-public-key friend identity rules
+  ---
+  duration_ms: 1.472431
+  type: 'test'
+  ...
+# Subtest: invalid friend identity declarations never fall back to an unsigned grant
+ok 206 - invalid friend identity declarations never fall back to an unsigned grant
+  ---
+  duration_ms: 0.289867
+  type: 'test'
+  ...
+# (node:151) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: explicit member metadata preserves all six access kinds, ctor visibility and readonly flags in canonical PEs
+ok 207 - explicit member metadata preserves all six access kinds, ctor visibility and readonly flags in canonical PEs
+  ---
+  duration_ms: 84.0934
+  type: 'test'
+  ...
+# {"fixture":"Api with six method/field access kinds","legacyBytes":4608,"memberMetadataBytes":5632}
+# Subtest: member projection rejects missing, duplicate, unknown or out-of-range identities before emission
+ok 208 - member projection rejects missing, duplicate, unknown or out-of-range identities before emission
+  ---
+  duration_ms: 9.498376
+  type: 'test'
+  ...
+# Subtest: omitted member metadata retains the previous canonical public-member profile
+ok 209 - omitted member metadata retains the previous canonical public-member profile
+  ---
+  duration_ms: 7.443617
+  type: 'test'
+  ...
+# (node:159) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual project member flags prevent forged canonical references from bypassing visibility
+ok 210 - actual project member flags prevent forged canonical references from bypassing visibility
+  ---
+  duration_ms: 355.284348
+  type: 'test'
+  ...
+# Subtest: actual IVT attributes grant internal project access while keeping private members inaccessible
+ok 211 - actual IVT attributes grant internal project access while keeping private members inaccessible
+  ---
+  duration_ms: 43.084771
+  type: 'test'
+  ...
+# Subtest: actual TypeDef visibility is enforced independently from member visibility
+ok 212 - actual TypeDef visibility is enforced independently from member visibility
+  ---
+  duration_ms: 25.635644
+  type: 'test'
+  ...
+# Subtest: external writes to actual initonly fields are rejected even with friend access
+ok 213 - external writes to actual initonly fields are rejected even with friend access
+  ---
+  duration_ms: 13.7113
+  type: 'test'
+  ...
+# (node:167) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+ok 214 - successful sibling artifacts survive replacement of the latest analysis result and carry the emitted runtime profile
+  ---
+  duration_ms: 89.764664
+  type: 'test'
+  ...
+# Subtest: startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+ok 215 - startup changes retain valid dependency metadata; dependency source, options and context changes invalidate it
+  ---
+  duration_ms: 63.833775
+  type: 'test'
+  ...
+# Subtest: a later failed dependency build clears previously emitted cache entries
+ok 216 - a later failed dependency build clears previously emitted cache entries
+  ---
+  duration_ms: 16.662301
+  type: 'test'
+  ...
+# Subtest: external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+ok 217 - external HintPath references preserve case-insensitive aliases without an emitted sibling profile
+  ---
+  duration_ms: 10.676613
+  type: 'test'
+  ...
+# (node:175) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: closed project loading preserves distinct canonical PEs and resolves all six external operations
+not ok 218 - closed project loading preserves distinct canonical PEs and resolves all six external operations
+  ---
+  duration_ms: 190.887258
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-assembly-loader.test.js:13:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '42\n2\n4\nnull\n'
+    - '42\n42\n44\nnull\n'
+           ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    42
+    42
+    44
+    null
+    
+  actual: |-
+    42
+    2
+    4
+    null
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-assembly-loader.test.js:49:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  ...
+# Subtest: transitive project closure resolves a library without inventing its entry point
+ok 219 - transitive project closure resolves a library without inventing its entry point
+  ---
+  duration_ms: 39.308826
+  type: 'test'
+  ...
+# Subtest: same-named aliased dependency types retain separate objects, statics and opaque assembly names
+ok 220 - same-named aliased dependency types retain separate objects, statics and opaque assembly names
+  ---
+  duration_ms: 28.960689
+  type: 'test'
+  ...
+# Subtest: project type mappings use actual metadata identities and normalize reference assembly casing
+ok 221 - project type mappings use actual metadata identities and normalize reference assembly casing
+  ---
+  duration_ms: 21.38946
+  type: 'test'
+  ...
+# Subtest: project dependency hashes and full identities reject stale or ambiguous outputs before execution
+ok 222 - project dependency hashes and full identities reject stale or ambiguous outputs before execution
+  ---
+  duration_ms: 19.577727
+  type: 'test'
+  ...
+# Subtest: canonical single-module admission preserves unresolved target descriptors for later token verification
+ok 223 - canonical single-module admission preserves unresolved target descriptors for later token verification
+  ---
+  duration_ms: 31.031041
+  type: 'test'
+  ...
+# Subtest: noncanonical CIL, assembly budgets and caller cancellation fail before a runtime can observe effects
+ok 224 - noncanonical CIL, assembly budgets and caller cancellation fail before a runtime can observe effects
+  ---
+  duration_ms: 20.94895
+  type: 'test'
+  ...
+# Subtest: real CLI type initializers preserve the existing source initialization helper and old canonical emission option
+not ok 225 - real CLI type initializers preserve the existing source initialization helper and old canonical emission option
+  ---
+  duration_ms: 15.551205
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-assembly-loader.test.js:159:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(inspector.getMethod(initializer.token).instructions.some(instruction => instruction.name === 'call'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-assembly-loader.test.js:165:3)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: closed assembly images retain original resources, project attributes and assembly provenance
+ok 226 - closed assembly images retain original resources, project attributes and assembly provenance
+  ---
+  duration_ms: 20.953191
+  type: 'test'
+  ...
+# (node:183) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: separate project PEs preserve constructors and static fields on Roslyn, actual CLR and both JavaScript engines
+not ok 227 - separate project PEs preserve constructors and static fields on Roslyn, actual CLR and both JavaScript engines
+  ---
+  duration_ms: 4656.527045
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-assembly-native.test.js:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '42\n2\n4\nnull\n'
+    - '42\n42\n44\nnull\n'
+           ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    42
+    42
+    44
+    null
+    
+  actual: |-
+    42
+    2
+    4
+    null
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-assembly-native.test.js:64:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# (node:296) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity
+ok 228 - editor decoration uses actual UTF-16 CRLF offsets and assembly-qualified breakpoint identity
+  ---
+  duration_ms: 1.874046
+  type: 'test'
+  ...
+# Subtest: edited source withholds execution and selected-frame painting and unbound muted requests stay visible
+ok 229 - edited source withholds execution and selected-frame painting and unbound muted requests stay visible
+  ---
+  duration_ms: 1.245939
+  type: 'test'
+  ...
+# Subtest: toggling a moved binding removes its original workspace anchor without creating a qualified anchor key
+ok 230 - toggling a moved binding removes its original workspace anchor without creating a qualified anchor key
+  ---
+  duration_ms: 0.570991
+  type: 'test'
+  ...
+# Subtest: editing a moved binding preserves its requested line and selected document mapping
+ok 231 - editing a moved binding preserves its requested line and selected document mapping
+  ---
+  duration_ms: 0.415537
+  type: 'test'
+  ...
+# Subtest: late breakpoint replies cannot replace a newer request or another runtime session
+ok 232 - late breakpoint replies cannot replace a newer request or another runtime session
+  ---
+  duration_ms: 0.390439
+  type: 'test'
+  ...
+# Subtest: cancelled edits and unavailable runtime bindings preserve persisted requests
+ok 233 - cancelled edits and unavailable runtime bindings preserve persisted requests
+  ---
+  duration_ms: 0.482477
+  type: 'test'
+  ...
+# (node:304) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: debug navigation opens an exact current original source and preserves executable identity for painting
+ok 234 - debug navigation opens an exact current original source and preserves executable identity for painting
+  ---
+  duration_ms: 2.226438
+  type: 'test'
+  ...
+# Subtest: changed or unavailable source uses the read-only viewer with the exact executing document key
+ok 235 - changed or unavailable source uses the read-only viewer with the exact executing document key
+  ---
+  duration_ms: 0.213542
+  type: 'test'
+  ...
+# Subtest: ambiguous generated paths never select a workspace buffer without matching project context
+ok 236 - ambiguous generated paths never select a workspace buffer without matching project context
+  ---
+  duration_ms: 0.296978
+  type: 'test'
+  ...
+# Subtest: same execution URI shared by identical generated sources requires the point assembly identity
+ok 237 - same execution URI shared by identical generated sources requires the point assembly identity
+  ---
+  duration_ms: 0.49714
+  type: 'test'
+  ...
+# Subtest: frame navigation, source breakpoint bindings and current-source choice use the selected context
+ok 238 - frame navigation, source breakpoint bindings and current-source choice use the selected context
+  ---
+  duration_ms: 0.398811
+  type: 'test'
+  ...
+# Subtest: source record publication is atomic and legacy single-module symbol maps remain supported
+ok 239 - source record publication is atomic and legacy single-module symbol maps remain supported
+  ---
+  duration_ms: 0.554536
+  type: 'test'
+  ...
+# Subtest: worker source publication retains graph provenance without transferring metadata tables
+ok 240 - worker source publication retains graph provenance without transferring metadata tables
+  ---
+  duration_ms: 0.243237
+  type: 'test'
+  ...
+# (node:312) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: project emission writes assembly identity, string attributes, visibility and exact CLI resource bytes
+ok 241 - project emission writes assembly identity, string attributes, visibility and exact CLI resource bytes
+  ---
+  duration_ms: 72.677739
+  type: 'test'
+  ...
+# Subtest: project metadata rejects duplicate, unsupported, nondeterministic and oversized inputs
+ok 242 - project metadata rejects duplicate, unsupported, nondeterministic and oversized inputs
+  ---
+  duration_ms: 3.38804
+  type: 'test'
+  ...
+# Subtest: satellite resource assemblies carry an explicit culture in Assembly metadata
+ok 243 - satellite resource assemblies carry an explicit culture in Assembly metadata
+  ---
+  duration_ms: 3.974403
+  type: 'test'
+  ...
+# Subtest: the installed CLR reads project attributes and resources from the emitted PE
+ok 244 - the installed CLR reads project attributes and resources from the emitted PE
+  ---
+  duration_ms: 3041.399525
+  type: 'test'
+  ...
+# (node:406) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a later worker build accepts a real previous artifact and resolves its separately emitted dependency
+ok 245 - a later worker build accepts a real previous artifact and resolves its separately emitted dependency
+  ---
+  duration_ms: 116.626537
+  type: 'test'
+  ...
+# Subtest: seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts
+ok 246 - seeded contexts obey reference-output metadata and reject duplicate, missing, failed or unprofiled artifacts
+  ---
+  duration_ms: 1.487904
+  type: 'test'
+  ...
+# Subtest: seed artifact count and byte budgets are explicit before compilation begins
+ok 247 - seed artifact count and byte budgets are explicit before compilation begins
+  ---
+  duration_ms: 1.141552
+  type: 'test'
+  ...
+# (node:414) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 external instructions append stable opcode IDs without changing existing bytecode
+ok 248 - A23 external instructions append stable opcode IDs without changing existing bytecode
+  ---
+  duration_ms: 1.652743
+  type: 'test'
+  ...
+# Subtest: A23 explicit assembly keys preserve full versions, identity flags and escaped names
+ok 249 - A23 explicit assembly keys preserve full versions, identity flags and escaped names
+  ---
+  duration_ms: 3.739861
+  type: 'test'
+  ...
+# Subtest: A23 well-formed unlinked project references verify and survive bytecode serialization
+ok 250 - A23 well-formed unlinked project references verify and survive bytecode serialization
+  ---
+  duration_ms: 2.322899
+  type: 'test'
+  ...
+# Subtest: A23 external call, allocation, field and static-store stack effects retain expression results
+ok 251 - A23 external call, allocation, field and static-store stack effects retain expression results
+  ---
+  duration_ms: 3.019124
+  type: 'test'
+  ...
+# Subtest: A23 external operands reject missing profiles, incorrect arity, access modes and stack underflow
+ok 252 - A23 external operands reject missing profiles, incorrect arity, access modes and stack underflow
+  ---
+  duration_ms: 1.870992
+  type: 'test'
+  ...
+# Subtest: A23 descriptor validation rejects malformed identities, tokens, signatures and duplicate definitions
+ok 253 - A23 descriptor validation rejects malformed identities, tokens, signatures and duplicate definitions
+  ---
+  duration_ms: 1.126218
+  type: 'test'
+  ...
+# Subtest: A23 external descriptor limits bound sparse tables, metadata text and error collection
+ok 254 - A23 external descriptor limits bound sparse tables, metadata text and error collection
+  ---
+  duration_ms: 20.462753
+  type: 'test'
+  ...
+# (node:422) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: project reference lowering keeps external identities out of local definitions and retains native member tokens
+ok 255 - project reference lowering keeps external identities out of local definitions and retains native member tokens
+  ---
+  duration_ms: 123.480338
+  type: 'test'
+  ...
+# Subtest: emitted project consumers contain AssemblyRef and MemberRef rows with no copied dependency definitions
+ok 256 - emitted project consumers contain AssemblyRef and MemberRef rows with no copied dependency definitions
+  ---
+  duration_ms: 23.20665
+  type: 'test'
+  ...
+# Subtest: an intermediate library with project references remains a library without an invented entry point
+ok 257 - an intermediate library with project references remains a library without an invented entry point
+  ---
+  duration_ms: 23.919255
+  type: 'test'
+  ...
+# Subtest: extern aliases keep identical dependency type names distinct through assembly-qualified image types
+ok 258 - extern aliases keep identical dependency type names distinct through assembly-qualified image types
+  ---
+  duration_ms: 23.312731
+  type: 'test'
+  ...
+# Subtest: a runtime-profile marker never admits a PE without canonical SharpForge method verification
+ok 259 - a runtime-profile marker never admits a PE without canonical SharpForge method verification
+  ---
+  duration_ms: 12.965425
+  type: 'test'
+  ...
+# Subtest: supplied project-reference count is bounded even when identities would coalesce
+ok 260 - supplied project-reference count is bounded even when identities would coalesce
+  ---
+  duration_ms: 77.036176
+  type: 'test'
+  ...
+# (node:430) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: source declaration metadata matches semantic full names and legacy simple names without splitting generated names
+ok 261 - source declaration metadata matches semantic full names and legacy simple names without splitting generated names
+  ---
+  duration_ms: 6.31893
+  type: 'test'
+  ...
+# Subtest: source declaration metadata rejects malformed and excessive input explicitly
+ok 262 - source declaration metadata rejects malformed and excessive input explicitly
+  ---
+  duration_ms: 0.935081
+  type: 'test'
+  ...
+# Subtest: public compileToIL emits real source namespaces that a separate consumer binds through metadata
+ok 263 - public compileToIL emits real source namespaces that a separate consumer binds through metadata
+  ---
+  duration_ms: 115.522753
+  type: 'test'
+  ...
+# Subtest: public compileToIL preserves internal source visibility across a separate assembly boundary
+ok 264 - public compileToIL preserves internal source visibility across a separate assembly boundary
+  ---
+  duration_ms: 9.761913
+  type: 'test'
+  ...
+# (node:438) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real emitted project reference preserves public visibility and primitive return types
+ok 265 - real emitted project reference preserves public visibility and primitive return types
+  ---
+  duration_ms: 121.559547
+  type: 'test'
+  ...
+# Subtest: real emitted project reference preserves internal visibility and primitive return types
+ok 266 - real emitted project reference preserves internal visibility and primitive return types
+  ---
+  duration_ms: 14.953523
+  type: 'test'
+  ...
+# Subtest: real emitted project reference preserves friend internal visibility and primitive return types
+ok 267 - real emitted project reference preserves friend internal visibility and primitive return types
+  ---
+  duration_ms: 22.383419
+  type: 'test'
+  ...
+# Subtest: an external reference remains strict unless its producer explicitly selects the SharpForge runtime profile
+ok 268 - an external reference remains strict unless its producer explicitly selects the SharpForge runtime profile
+  ---
+  duration_ms: 27.716017
+  type: 'test'
+  ...
+# Subtest: metadata-backed language sessions complete imported methods, bind hover and invalidate edited sources
+ok 269 - metadata-backed language sessions complete imported methods, bind hover and invalidate edited sources
+  ---
+  duration_ms: 21.740809
+  type: 'test'
+  ...
+# (node:446) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results
+ok 270 - A23 project launch transmits explicit dependency bytes without duplicating the entry or analysis results
+  ---
+  duration_ms: 1.945394
+  type: 'test'
+  ...
+# Subtest: A23 project launch rejects incomplete and oversized artifact envelopes before worker transport
+ok 271 - A23 project launch rejects incomplete and oversized artifact envelopes before worker transport
+  ---
+  duration_ms: 1.515595
+  type: 'test'
+  ...
+# (node:454) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: registered project type identities remain opaque inside arrays and generic framework types
+ok 272 - registered project type identities remain opaque inside arrays and generic framework types
+  ---
+  duration_ms: 4.465135
+  type: 'test'
+  ...
+# Subtest: same metadata type names from different assemblies have distinct tables and correct reflection display
+ok 273 - same metadata type names from different assemblies have distinct tables and correct reflection display
+  ---
+  duration_ms: 1.085057
+  type: 'test'
+  ...
+# Subtest: source method tables retain assembly provenance and ordinary table identities
+ok 274 - source method tables retain assembly provenance and ordinary table identities
+  ---
+  duration_ms: 1.977563
+  type: 'test'
+  ...
+# Subtest: source runtime admission rejects unresolved images before constructing any method table
+ok 275 - source runtime admission rejects unresolved images before constructing any method table
+  ---
+  duration_ms: 0.295315
+  type: 'test'
+  ...
+# (node:462) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: worker cache keys cover the complete supplied graph, failures preserve the prior cache, and launch overlays are isolated
+not ok 276 - worker cache keys cover the complete supplied graph, failures preserve the prior cache, and launch overlays are isolated
+  ---
+  duration_ms: 143.336331
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime-worker.test.js:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '2\n1\n'
+    - '42\n1\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    42
+    1
+    
+  actual: |-
+    2
+    1
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime-worker.test.js:22:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  ...
+# Subtest: worker CIL cache retains immutable inspection data and creates independent runtime state
+ok 277 - worker CIL cache retains immutable inspection data and creates independent runtime state
+  ---
+  duration_ms: 40.976441
+  type: 'test'
+  ...
+# Subtest: worker artifact normalization removes the entry PE and rejects malformed or oversized requests
+ok 278 - worker artifact normalization removes the entry PE and rejects malformed or oversized requests
+  ---
+  duration_ms: 8.080508
+  type: 'test'
+  ...
+# (node:462) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker source executes the complete supplied project graph
+not ok 279 - production worker source executes the complete supplied project graph
+  ---
+  duration_ms: 601.044298
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime-worker.test.js:64:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '42\n2\n4\nnull\n'
+    - '42\n42\n44\nnull\n'
+           ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    42
+    42
+    44
+    null
+    
+  actual: |-
+    42
+    2
+    4
+    null
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime-worker.test.js:74:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# (node:462) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker source preserves a paused graph when replacement validation fails
+not ok 280 - production worker source preserves a paused graph when replacement validation fails
+  ---
+  duration_ms: 565.809251
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime-worker.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading '9')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:372:51
+    Array.map (<anonymous>)
+    DebugSession.stackTrace (file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:366:139)
+    DebugSession.state (file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:393:23)
+    state (file:///workspace/scratch/3e16369943fd/p18-tests/apps/studio/runtime.worker.js:10:125)
+    Timeout._onTimeout (file:///workspace/scratch/3e16369943fd/p18-tests/apps/studio/runtime.worker.js:27:205)
+    listOnTimeout (node:internal/timers:585:17)
+    process.processTimers (node:internal/timers:521:7)
+  ...
+# (node:462) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker CIL executes the complete supplied project graph
+ok 281 - production worker CIL executes the complete supplied project graph
+  ---
+  duration_ms: 550.015777
+  type: 'test'
+  ...
+# (node:462) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: production worker CIL preserves a paused graph when replacement validation fails
+ok 282 - production worker CIL preserves a paused graph when replacement validation fails
+  ---
+  duration_ms: 510.735538
+  type: 'test'
+  ...
+# (node:474) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: project runtime executes constructors, field initialization, properties, object returns and null faults on both engines
+not ok 283 - project runtime executes constructors, field initialization, properties, object returns and null faults on both engines
+  ---
+  duration_ms: 174.637329
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '42\n2\n4\nnull\n'
+    - '42\n42\n44\nnull\n'
+           ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    42
+    42
+    44
+    null
+    
+  actual: |-
+    42
+    2
+    4
+    null
+    
+  operator: 'strictEqual'
+  stack: |-
+    file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:26:76
+    executeBoth (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:18:5)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:26:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  ...
+# Subtest: transitive project calls share one state and explicit library entry invocation remains available
+not ok 284 - transitive project calls share one state and explicit library entry invocation remains available
+  ---
+  duration_ms: 45.023683
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '2\n2\n'
+    - '42\n42\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    42
+    42
+    
+  actual: |-
+    2
+    2
+    
+  operator: 'strictEqual'
+  stack: |-
+    file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:45:64
+    executeBoth (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:18:5)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:45:3)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: assembly-qualified objects, arrays, statics and reflection distinguish equal metadata names
+ok 285 - assembly-qualified objects, arrays, statics and reflection distinguish equal metadata names
+  ---
+  duration_ms: 47.76065
+  type: 'test'
+  ...
+# Subtest: namespace-qualified dependency signatures and runtime reflection retain their metadata names
+ok 286 - namespace-qualified dependency signatures and runtime reflection retain their metadata names
+  ---
+  duration_ms: 21.84103
+  type: 'test'
+  ...
+# Subtest: public VM construction rejects unresolved external operations before any program effect
+ok 287 - public VM construction rejects unresolved external operations before any program effect
+  ---
+  duration_ms: 19.802545
+  type: 'test'
+  ...
+# Subtest: verified graph inspectors retain owned bytes and fresh VM static state across sessions
+ok 288 - verified graph inspectors retain owned bytes and fresh VM static state across sessions
+  ---
+  duration_ms: 30.227628
+  type: 'test'
+  ...
+# Subtest: same-path dependency source files remain independently debuggable on both engines
+not ok 289 - same-path dependency source files remain independently debuggable on both engines
+  ---
+  duration_ms: 21.706447
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading '1')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:372:51
+    Array.map (<anonymous>)
+    DebugSession.stackTrace (file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:366:139)
+    DebugSession.state (file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:393:23)
+    DebugSession.runUntilStop (file:///workspace/scratch/3e16369943fd/p18-tests/packages/debugger/src/index.js:236:141)
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-project-runtime.test.js:129:27)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+  ...
+# (node:482) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: source member definitions cover every image slot with exact access and private generated backing storage
+ok 290 - source member definitions cover every image slot with exact access and private generated backing storage
+  ---
+  duration_ms: 58.187556
+  type: 'test'
+  ...
+# Subtest: source member metadata disambiguates overloads and partial classes by source location
+ok 291 - source member metadata disambiguates overloads and partial classes by source location
+  ---
+  duration_ms: 3.745569
+  type: 'test'
+  ...
+# Subtest: compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+ok 292 - compileToIL emits source access flags, constructor access and readonly backing fields into real metadata
+  ---
+  duration_ms: 34.556116
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal method with CS0122
+ok 293 - separate project assembly rejects internal method with CS0122
+  ---
+  duration_ms: 29.17448
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private method with CS0122
+ok 294 - separate project assembly rejects private method with CS0122
+  ---
+  duration_ms: 13.661884
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal field with CS0122
+ok 295 - separate project assembly rejects internal field with CS0122
+  ---
+  duration_ms: 13.969258
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects private field with CS0122
+ok 296 - separate project assembly rejects private field with CS0122
+  ---
+  duration_ms: 8.699721
+  type: 'test'
+  ...
+# Subtest: separate project assembly rejects internal constructor with CS0122
+ok 297 - separate project assembly rejects internal constructor with CS0122
+  ---
+  duration_ms: 8.887985
+  type: 'test'
+  ...
+# Subtest: friend assembly access permits internal methods, fields and constructors while retaining private rejection
+ok 298 - friend assembly access permits internal methods, fields and constructors while retaining private rejection
+  ---
+  duration_ms: 26.084509
+  type: 'test'
+  ...
+# Subtest: readonly fields reject external writes and private setters remain inaccessible
+not ok 299 - readonly fields reject external writes and private setters remain inaccessible
+  ---
+  duration_ms: 15.303751
+  type: 'test'
+  location: '/workspace/scratch/3e16369943fd/p18-tests/tests/a23-source-member-definitions.test.js:134:1'
+  failureType: 'testCodeFailure'
+  error: `[{"uri":"Program.cs","version":1,"start":53,"length":3,"code":"CS0122","message":"'Api.Api(SharpForge.<>AllocationToken)' is inaccessible due to its protection level","severity":"error","range":{"start":{"line":0,"character":53},"end":{"line":0,"character":56}}}]`
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/3e16369943fd/p18-tests/tests/a23-source-member-definitions.test.js:141:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the installed CLR initializes and reads emitted instance and static readonly fields
+ok 300 - the installed CLR initializes and reads emitted instance and static readonly fields
+  ---
+  duration_ms: 845.150326
+  type: 'test'
+  ...
+# {"sdk":"10.0.201","runtime":"10.0.12","platform":"linux","architecture":"x64","actualClrReadonlyInitialization":true}
+# (node:525) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Upstream identity and public signing compose with project attributes, resources and canonical execution
+ok 301 - Upstream identity and public signing compose with project attributes, resources and canonical execution
+  ---
+  duration_ms: 99.129537
+  type: 'test'
+  ...
+# Subtest: Canonical culture comes from actual Assembly metadata, including invariant and neutral values
+ok 302 - Canonical culture comes from actual Assembly metadata, including invariant and neutral values
+  ---
+  duration_ms: 13.795488
+  type: 'test'
+  ...
+# Subtest: Project type definitions preserve upstream internal netmodule scaffolding and public exports
+ok 303 - Project type definitions preserve upstream internal netmodule scaffolding and public exports
+  ---
+  duration_ms: 6.440293
+  type: 'test'
+  ...
+# Subtest: Conflicting version sources and assembly attributes on netmodules produce explicit diagnostics
+ok 304 - Conflicting version sources and assembly attributes on netmodules produce explicit diagnostics
+  ---
+  duration_ms: 1.93588
+  type: 'test'
+  ...
+# (node:533) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:541) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:553) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:565) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:577) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:589) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Rewritten assemblies are unsigned. \#SF debug maps were invalidated. Metadata and resources were preserved; method bodies came only from IL text.
+# (node:601) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:613) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:625) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Managed DLL without \#SF: int output
+ok 305 - Managed DLL without \#SF: int output
+  ---
+  duration_ms: 71.601777
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: double
+ok 306 - Managed DLL without \#SF: double
+  ---
+  duration_ms: 10.556882
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: loop
+ok 307 - Managed DLL without \#SF: loop
+  ---
+  duration_ms: 15.781057
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: call
+ok 308 - Managed DLL without \#SF: call
+  ---
+  duration_ms: 9.02336
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: object
+ok 309 - Managed DLL without \#SF: object
+  ---
+  duration_ms: 13.429997
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: array
+ok 310 - Managed DLL without \#SF: array
+  ---
+  duration_ms: 8.112195
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: throw catch
+ok 311 - Managed DLL without \#SF: throw catch
+  ---
+  duration_ms: 10.9001
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: null catch
+ok 312 - Managed DLL without \#SF: null catch
+  ---
+  duration_ms: 7.429576
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: bool boxing
+ok 313 - Managed DLL without \#SF: bool boxing
+  ---
+  duration_ms: 5.856774
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: empty catch
+ok 314 - Managed DLL without \#SF: empty catch
+  ---
+  duration_ms: 4.257772
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: string ops
+ok 315 - Managed DLL without \#SF: string ops
+  ---
+  duration_ms: 18.032909
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: ceil
+ok 316 - Managed DLL without \#SF: ceil
+  ---
+  duration_ms: 3.551707
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: methods can be invoked without an entry point
+ok 317 - Independent managed DLL: methods can be invoked without an entry point
+  ---
+  duration_ms: 7.00783
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: 64-bit arithmetic stays exact
+ok 318 - Independent managed DLL: 64-bit arithmetic stays exact
+  ---
+  duration_ms: 1.231678
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: short floating literal and conversion
+ok 319 - Independent managed DLL: short floating literal and conversion
+  ---
+  duration_ms: 0.763441
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: switch table dispatch
+ok 320 - Independent managed DLL: switch table dispatch
+  ---
+  duration_ms: 1.612342
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: managed address into local
+ok 321 - Independent managed DLL: managed address into local
+  ---
+  duration_ms: 0.824524
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: static initializer executes exactly once
+ok 322 - Independent managed DLL: static initializer executes exactly once
+  ---
+  duration_ms: 1.513192
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: finally executes on leave
+ok 323 - Independent managed DLL: finally executes on leave
+  ---
+  duration_ms: 0.91502
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: checked overflow becomes a managed fault
+ok 324 - Independent managed DLL: checked overflow becomes a managed fault
+  ---
+  duration_ms: 0.895811
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: unsigned division uses unsigned operands
+ok 325 - Independent managed DLL: unsigned division uses unsigned operands
+  ---
+  duration_ms: 0.541417
+  type: 'test'
+  ...
+# Subtest: Direct CIL: hard instruction limit
+ok 326 - Direct CIL: hard instruction limit
+  ---
+  duration_ms: 0.708239
+  type: 'test'
+  ...
+# Subtest: Direct CIL: hard output limit
+ok 327 - Direct CIL: hard output limit
+  ---
+  duration_ms: 2.547162
+  type: 'test'
+  ...
+# Subtest: Direct CIL: unknown external method is refused before output
+ok 328 - Direct CIL: unknown external method is refused before output
+  ---
+  duration_ms: 1.365129
+  type: 'test'
+  ...
+# Subtest: Direct CIL: native pointer instructions remain inspectable, not executable
+ok 329 - Direct CIL: native pointer instructions remain inspectable, not executable
+  ---
+  duration_ms: 0.60999
+  type: 'test'
+  ...
+# Subtest: Direct CIL: invalid local slot and stack underflow rejected
+ok 330 - Direct CIL: invalid local slot and stack underflow rejected
+  ---
+  duration_ms: 1.065998
+  type: 'test'
+  ...
+# Subtest: Direct CIL: host arguments use strict declared types and arity
+ok 331 - Direct CIL: host arguments use strict declared types and arity
+  ---
+  duration_ms: 1.380873
+  type: 'test'
+  ...
+# Subtest: IL text: every method rebuilt; changed constants actually execute
+ok 332 - IL text: every method rebuilt; changed constants actually execute
+  ---
+  duration_ms: 2.626802
+  type: 'test'
+  ...
+# Subtest: IL text: IL from a debug-profile binary loses stale profile metadata
+ok 333 - IL text: IL from a debug-profile binary loses stale profile metadata
+  ---
+  duration_ms: 4.962564
+  type: 'test'
+  ...
+# Subtest: IL text: long, branch and switch round trips
+ok 334 - IL text: long, branch and switch round trips
+  ---
+  duration_ms: 1.077034
+  type: 'test'
+  ...
+# Subtest: IL text: catches round trip
+ok 335 - IL text: catches round trip
+  ---
+  duration_ms: 4.241067
+  type: 'test'
+  ...
+# Subtest: IL text: omitted or duplicate methods are never read from image fallback
+ok 336 - IL text: omitted or duplicate methods are never read from image fallback
+  ---
+  duration_ms: 0.896072
+  type: 'test'
+  ...
+# Subtest: IL text: undefined labels and invalid opcodes are rejected
+ok 337 - IL text: undefined labels and invalid opcodes are rejected
+  ---
+  duration_ms: 1.06757
+  type: 'test'
+  ...
+# Subtest: Decompiler: simple independently authored Add is reconstructable C\#
+ok 338 - Decompiler: simple independently authored Add is reconstructable C\#
+  ---
+  duration_ms: 6.612683
+  type: 'test'
+  ...
+# Subtest: Decompiler: mutable local loads captured before writes
+ok 339 - Decompiler: mutable local loads captured before writes
+  ---
+  duration_ms: 1.415344
+  type: 'test'
+  ...
+# Subtest: Decompiler: EH returns full IL and explicit fallback, not fake C\#
+ok 340 - Decompiler: EH returns full IL and explicit fallback, not fake C\#
+  ---
+  duration_ms: 3.957148
+  type: 'test'
+  ...
+# Subtest: Decoder: i64, r4 and standard two-byte operations
+ok 341 - Decoder: i64, r4 and standard two-byte operations
+  ---
+  duration_ms: 0.114773
+  type: 'test'
+  ...
+# Subtest: Decoder: branch into operand rejected
+ok 342 - Decoder: branch into operand rejected
+  ---
+  duration_ms: 0.161594
+  type: 'test'
+  ...
+# Subtest: Metadata: generic method spec signature uses its blob column
+ok 343 - Metadata: generic method spec signature uses its blob column
+  ---
+  duration_ms: 1.456647
+  type: 'test'
+  ...
+# Subtest: Metadata: generic variables, arrays, byrefs and function pointers inspect
+ok 344 - Metadata: generic variables, arrays, byrefs and function pointers inspect
+  ---
+  duration_ms: 0.306713
+  type: 'test'
+  ...
+# Subtest: PE: inspection rejects malformed and truncated user DLLs
+ok 345 - PE: inspection rejects malformed and truncated user DLLs
+  ---
+  duration_ms: 0.546855
+  type: 'test'
+  ...
+# Subtest: GC: strong handles retain; weak handles clear after strong release
+ok 346 - GC: strong handles retain; weak handles clear after strong release
+  ---
+  duration_ms: 0.662289
+  type: 'test'
+  ...
+# Subtest: GC: scratch marks reused; foreign handles rejected
+ok 347 - GC: scratch marks reused; foreign handles rejected
+  ---
+  duration_ms: 0.509428
+  type: 'test'
+  ...
+# Subtest: CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL
+ok 348 - CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL
+  ---
+  duration_ms: 3074.380577
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: byte local truncates and extends
+ok 349 - Direct CIL storage: byte local truncates and extends
+  ---
+  duration_ms: 1.216014
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: sbyte local truncates and extends
+ok 350 - Direct CIL storage: sbyte local truncates and extends
+  ---
+  duration_ms: 0.555999
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ushort local truncates and extends
+ok 351 - Direct CIL storage: ushort local truncates and extends
+  ---
+  duration_ms: 0.540976
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: short local truncates and extends
+ok 352 - Direct CIL storage: short local truncates and extends
+  ---
+  duration_ms: 0.478882
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ldelem.u1 array extends correctly
+ok 353 - Direct CIL storage: ldelem.u1 array extends correctly
+  ---
+  duration_ms: 1.306421
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ldelem.i1 array extends correctly
+ok 354 - Direct CIL storage: ldelem.i1 array extends correctly
+  ---
+  duration_ms: 0.974069
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: indirect byte store truncates before unsigned load
+ok 355 - Direct CIL storage: indirect byte store truncates before unsigned load
+  ---
+  duration_ms: 0.612114
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps uint identity
+ok 356 - Direct CIL host result keeps uint identity
+  ---
+  duration_ms: 0.574496
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps ulong identity
+ok 357 - Direct CIL host result keeps ulong identity
+  ---
+  duration_ms: 0.668218
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps bool identity
+ok 358 - Direct CIL host result keeps bool identity
+  ---
+  duration_ms: 1.121201
+  type: 'test'
+  ...
+# Subtest: Direct CIL: string[] Main defaults to an empty argument array
+ok 359 - Direct CIL: string[] Main defaults to an empty argument array
+  ---
+  duration_ms: 1.066398
+  type: 'test'
+  ...
+# Subtest: CLI: no dummy arguments required for method decompilation or string[] entry point
+ok 360 - CLI: no dummy arguments required for method decompilation or string[] entry point
+  ---
+  duration_ms: 1079.480644
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker F5 default starts at breakpoint rather than forced entry
+ok 361 - 0.9 worker F5 default starts at breakpoint rather than forced entry
+  ---
+  duration_ms: 625.219076
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker publishes exact source and new identity before any session state
+ok 362 - 0.9 worker publishes exact source and new identity before any session state
+  ---
+  duration_ms: 510.106266
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker explicit entry remains distinct from breakpoint
+ok 363 - 0.9 worker explicit entry remains distinct from breakpoint
+  ---
+  duration_ms: 543.708519
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker malformed assembly does not destroy existing paused session
+ok 364 - 0.9 worker malformed assembly does not destroy existing paused session
+  ---
+  duration_ms: 492.860429
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker bad breakpoint target preserves the previously paused session
+ok 365 - 0.9 worker bad breakpoint target preserves the previously paused session
+  ---
+  duration_ms: 541.665348
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker rejects stale session commands without disturbing current session
+ok 366 - 0.9 worker rejects stale session commands without disturbing current session
+  ---
+  duration_ms: 505.082427
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker unscoped Stop safely covers a launch followed immediately by stop
+ok 367 - 0.9 worker unscoped Stop safely covers a launch followed immediately by stop
+  ---
+  duration_ms: 515.260428
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker live source breakpoint update retains encounter counts
+ok 368 - 0.9 worker live source breakpoint update retains encounter counts
+  ---
+  duration_ms: 549.034999
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker source write stop is at caller store not callee return
+ok 369 - 0.9 worker source write stop is at caller store not callee return
+  ---
+  duration_ms: 557.792332
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker changed condition and reverse continue reproduce exact count
+ok 370 - 0.9 worker changed condition and reverse continue reproduce exact count
+  ---
+  duration_ms: 513.92568
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker function breakpoint binds signature and passes conditions
+ok 371 - 0.9 worker function breakpoint binds signature and passes conditions
+  ---
+  duration_ms: 540.132666
+  type: 'test'
+  ...
+# (node:637) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 0.9 worker exact screenshot sample runs all ten requested stops
+ok 372 - 0.9 worker exact screenshot sample runs all ten requested stops
+  ---
+  duration_ms: 611.849774
+  type: 'test'
+  ...
+1..372
+# tests 372
+# suites 0
+# pass 362
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43545.478933

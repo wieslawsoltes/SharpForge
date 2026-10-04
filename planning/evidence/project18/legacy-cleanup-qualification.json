@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T06:13:05.096142+00:00",
+  "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "sourceTree": "c5cb8401b9d26fde41be02c0383aa8cfeef642f9",
+  "toolchain": {
+    "node": "v26.10.0",
+    "npm": "11.19.1"
+  },
+  "summary": {
+    "tests": 382,
+    "suites": 0,
+    "pass": 382,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "exitCode": 0,
+  "testFiles": 18,
+  "argv": [
+    "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a19-studio-docking-sync.test.js",
+    "tests/a19-window-layouts-navigation.test.js",
+    "tests/a20-disk-save-cancellation.test.js",
+    "tests/a20-large-file-disk.test.js",
+    "tests/a23-09-project-edits.test.js",
+    "tests/a23-cil-project-profile.test.js",
+    "tests/a23-metadata-inspection.test.js",
+    "tests/a23-source-emission-model.test.js",
+    "tests/a24-explorer-xml-regression.test.js",
+    "tests/a24-type-rename.test.js",
+    "tests/a24-xaml-reopen.test.js",
+    "tests/a24-xml-text-policy.test.js",
+    "tests/cil.test.js",
+    "tests/msbuild-contract.test.js",
+    "tests/msbuild-native.test.js",
+    "tests/project-edits-roundtrip.test.js",
+    "tests/project-solution-reader.test.js",
+    "tests/project-system.test.js"
+  ],
+  "completedAt": "2026-10-04T05:47:12.798524+00:00",
+  "steps": [
+    {
+      "name": "node26-legacy-final",
+      "exitCode": 0,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+    },
+    {
+      "name": "check",
+      "exitCode": 0,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+    },
+    {
+      "name": "clean-checkout",
+      "exitCode": 0,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+    },
+    {
+      "name": "structure",
+      "exitCode": 1,
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/final-qualification.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/final-qualification.json",
+      "sha256": "09c66cfb0602aeffabf8096fcabfe76b190b5f83ea7e36bc5fd3adee6d15bf96",
+      "bytes": 8029
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/node26-legacy-final.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.json",
+      "sha256": "5c00b48926efb1065f0940a8d5c212a27d9f853e0c8d25d330b0fb74a395f72f",
+      "bytes": 2054
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/node26-legacy-final.tap",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/node26-legacy-final.tap",
+      "sha256": "3359169188362cd0c11cbcd15fbe9278ce3e8780bf108d73b622b7c64c2f4ca4",
+      "bytes": 66407
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/check.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.json",
+      "sha256": "a5b1e34fa2ff82aa58026a1b749ce50e383fb04d3c0d4c828d3babe6d20259e1",
+      "bytes": 1052
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/check.log",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/check.log",
+      "sha256": "9cc3000c0a5ae2c671a9b2f684ddaa6b706b6c10e3863f4eeb644b19aa72af5b",
+      "bytes": 432
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/build.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.json",
+      "sha256": "3fce7ef85e1ea2db99ffdcdcca246eb5dace074f69c59d19440e79215be06a8d",
+      "bytes": 1052
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/build.log",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/build.log",
+      "sha256": "6b5e539302108a759518ea2d0afc2acee91d40759979327fafe6a1be101f35a9",
+      "bytes": 257
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/clean-checkout.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.json",
+      "sha256": "c00d67f539a8d526e132a635cefd5d27cc6ffda5a7cd382471f02a791976bbdc",
+      "bytes": 1092
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/clean-checkout.log",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/clean-checkout.log",
+      "sha256": "cd98ea1425306e7e4c9ef095c15ed176c7eb8d7cd4d4adeaa8d37c5853e27ba2",
+      "bytes": 63
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/structure.json",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.json",
+      "sha256": "44cad9571a3d8e96732a27336c8319879053cd8ca72d70baef53445e7ea7428f",
+      "bytes": 1095
+    },
+    {
+      "path": "planning/evidence/project18/legacy-cleanup-qualification/structure.log",
+      "originalPath": "/tmp/p18-final-qualification-logs/legacy-e9f8a8cd/structure.log",
+      "sha256": "9eaf4d9b828a801d696bbb674490e9a97f4991cff4517b8758cf03a1307dd1fb",
+      "bytes": 21142
+    }
+  ],
+  "actualPinnedFacadeComparison": {
+    "base": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "method": "Read-only bytes and splitlines() physical-line comparison of seven frozen files against the actual pinned main commit. Shrinks requires no line or byte growth and a strict reduction in at least one; no test/build was executed.",
+    "files": [
+      {
+        "path": "apps/studio/designer-chrome.js",
+        "pinned": {
+          "lines": 36,
+          "bytes": 11771,
+          "maxLine": 1845
+        },
+        "final": {
+          "lines": 34,
+          "bytes": 10516,
+          "maxLine": 1392
+        },
+        "lineDelta": -2,
+        "byteDelta": -1255,
+        "sourceBlob": "fac86794d0c7095c91efb3c44f16f80c6babb9f4",
+        "noLineOrByteGrowth": true,
+        "shrinks": true
+      },
+      {
+        "path": "apps/studio/docking-workspace.js",
+        "pinned": {
+          "lines": 1,
+          "bytes": 101,
+          "maxLine": 100
+        },
+        "final": {
+          "lines": 1,
+          "bytes": 93,
+          "maxLine": 92
+        },
+        "lineDelta": 0,
+        "byteDelta": -8,
+        "shrinks": true,
+        "sourceBlob": "c9dac08ec5dabddb3395ef91f6e230b82693bff7",
+        "noLineOrByteGrowth": true
+      },
+      {
+        "path": "packages/cil/src/analysis.js",
+        "pinned": {
+          "lines": 37,
+          "bytes": 4354,
+          "maxLine": 804
+        },
+        "final": {
+          "lines": 37,
+          "bytes": 4234,
+          "maxLine": 804
+        },
+        "lineDelta": 0,
+        "byteDelta": -120,
+        "shrinks": true,
+        "sourceBlob": "b0ccdf5bf50ec62c76f922dbd5d52d08a4493ecc",
+        "noLineOrByteGrowth": true
+      },
+      {
+        "path": "packages/compiler/src/index.js",
+        "pinned": {
+          "lines": 9,
+          "bytes": 505,
+          "maxLine": 84
+        },
+        "final": {
+          "lines": 1,
+          "bytes": 33,
+          "maxLine": 32
+        },
+        "lineDelta": -8,
+        "byteDelta": -472,
+        "shrinks": true,
+        "sourceBlob": "9c8610aed91e581064f3a4245621e35ed975be51",
+        "noLineOrByteGrowth": true
+      },
+      {
+        "path": "packages/msbuild/src/engine.js",
+        "pinned": {
+          "lines": 105,
+          "bytes": 13444,
+          "maxLine": 666
+        },
+        "final": {
+          "lines": 2,
+          "bytes": 100,
+          "maxLine": 49
+        },
+        "lineDelta": -103,
+        "byteDelta": -13344,
+        "shrinks": true,
+        "sourceBlob": "c8057e5af18285051dc797d9907aa7b9704c2028",
+        "noLineOrByteGrowth": true
+      },
+      {
+        "path": "packages/project-system/src/disk.js",
+        "pinned": {
+          "lines": 3,
+          "bytes": 230,
+          "maxLine": 114
+        },
+        "final": {
+          "lines": 1,
+          "bytes": 33,
+          "maxLine": 32
+        },
+        "lineDelta": -2,
+        "byteDelta": -197,
+        "shrinks": true,
+        "sourceBlob": "9674c9c5ca5441e1a4fec5391489a4890463a069",
+        "noLineOrByteGrowth": true
+      },
+      {
+        "path": "packages/project-system/src/xml.js",
+        "pinned": {
+          "lines": 36,
+          "bytes": 3484,
+          "maxLine": 589
+        },
+        "final": {
+          "lines": 2,
+          "bytes": 142,
+          "maxLine": 88
+        },
+        "lineDelta": -34,
+        "byteDelta": -3342,
+        "shrinks": true,
+        "sourceBlob": "ac400bd2259bc50e45f6a805c459b035c8c96187",
+        "noLineOrByteGrowth": true
+      }
+    ]
+  },
+  "historicalScopes": [
+    "planning/evidence/project18/canonical-port-qualification.json",
+    "planning/evidence/project18/prepared-ingress-publication.json",
+    "planning/evidence/project18/compiler-worker-registry-publication.json"
+  ],
+  "limits": [
+    "This is the completed 18-file correction scope, not a rerun of every Project 18 acceptance test.",
+    "Strict structure exits1 for265 historical legacy files; the named frozen-file cleanup is separately demonstrated by exact pinned-source comparison.",
+    "The initial Node26 failures and final5269 Node22 scope remain separate historical evidence; no browser/OS/architecture matrix is inferred."
+  ]
+}
