@@ -1,3 +1,4 @@
+import { SignatureCategories } from './signature-categories.js';
 import { TypeDesc } from '../type-system/type-desc.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
@@ -45,6 +46,7 @@ export class GenericResolutionContext {
   #bindingsChanged = false;
   #disposed = false;
   #closure;
+  #categories;
 
   constructor(maxWork, signal, watch) {
     this.#remaining = maxWork;
@@ -85,6 +87,13 @@ export class GenericResolutionContext {
   template(type) { return this.#closure?.template(type); }
   verifyBinding(type, binding) { this.#closure?.verifyBinding(type, binding); }
 
+  requireCategory(type, encoding) { (this.#categories ??= new SignatureCategories(this)).add(type, encoding); }
+  *pendingCategories() { if (this.#categories) yield* this.#categories.pending(); }
+  validateCategories(requireAll = false) {
+    this.visit(0);
+    this.#categories?.validate(requireAll);
+  }
+
   complete() {
     this.visit(0);
     // A throwing user event listener can prevent later listeners from being invoked.
@@ -101,6 +110,7 @@ export class GenericResolutionContext {
     for (const monitor of this.#monitors) monitor.release(this);
     this.#monitors.length = 0;
     this.#closure?.dispose();
+    this.#categories?.dispose();
   }
 
   observe(type) {

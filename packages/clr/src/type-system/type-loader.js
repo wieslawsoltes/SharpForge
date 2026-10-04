@@ -240,6 +240,14 @@ export class TypeLoader {
   async #finish(operation, action) {
     try {
       const result = await action();
+      const work = operation.generic;
+      if (work) {
+        for (const definition of work.pendingCategories()) {
+          await work.closure(this.#closureService).require(definition, operation);
+          work.validateCategories();
+        }
+        work.validateCategories(true);
+      }
       operation.generic?.complete();
       operation.generic?.publishClosure();
       return result;
@@ -293,6 +301,7 @@ export class TypeLoader {
       work.observeContext(operation.root.originContext, operation.root.originWasUnloading);
       await work.closure(this.#closureService).require(type, operation);
       this.#checkOperation(operation);
+      work.validateCategories();
     }
     if (type.isLoaded) return type;
     if (isGenericCompletionKind(type.kind)) return this.#genericCompletion.complete(type, operation);
@@ -369,6 +378,7 @@ export class TypeLoader {
 
   #publish(type, state, operation, binding = null) {
     this.#checkOperation(operation);
+    operation.root.generic?.validateCategories();
     if (operation.rootResult) operation.root.generic?.complete();
     if (binding) {
       operation.root.generic?.verifyBinding(type, binding);
@@ -383,7 +393,6 @@ export class TypeLoader {
     }, {
       load: (module, token, operation) => this.#load(module, token, operation),
       complete: (type, operation) => this.#complete(type, operation),
-      scope: type => type.loadContext.types.#definitionScope(type),
       work: operation => this.#genericOperation(operation),
       instantiate: (definition, arguments_) => this.#intern(definition, arguments_),
     });

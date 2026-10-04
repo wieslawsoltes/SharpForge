@@ -101,6 +101,17 @@ cycle markers include both ordered environments, preserving distinctions
 between type and method parameters, foreign owners, and swapped arguments.
 Every final construction still reaches the shared canonical tuple cache.
 
+Every encoded class/value occurrence, including occurrences inside arrays and
+other wrappers, contributes a bounded root-local category obligation. Binding
+does not memoize an unloaded definition's category or independently resolve its
+base for classification. Closure proof and category qualification use the same
+completed direct-binding record, with the defining context's intrinsic
+`System.ValueType`/`System.Enum` identity as authority. Known obligations are
+checked before graph publication or a loaded return; a final root drain checks
+any additional signature-only occurrences before returning or admitting a weak
+closure success. A still-unloaded definition is rebound on a later root request.
+A same-name type from another context cannot establish value-type authority.
+
 Definition inheritance resolves with that definition's own formal parameters;
 a caller's TypeSpec environment is not applied to unrelated metadata. Handle
 substitution then maps the completed definition graph to the requested tuple.
@@ -310,7 +321,9 @@ often uses argument exceptions where this metadata loader uses `SFCLR012`; the
 reference corpus records both contracts without asserting exception-type parity.
 
 Warm instantiation costs are linear in argument arity for the input copy,
-validation and tuple key. Cold work is bounded by the distinct construction
+validation and tuple key when the tuple has an admitted immutable closure proof.
+A loaded tuple with an unloaded dependency, or without optional admission at the
+proof-cache cap, repeats the bounded closure proof on later calls. Cold work is bounded by the distinct construction
 shapes visited, metadata indexes, substituted inheritance/interface edges and
 output, with memoized immutable shape depths and per-substitution identities.
 TypeSpec decoding occurs once per admitted module/token; binding and scope
