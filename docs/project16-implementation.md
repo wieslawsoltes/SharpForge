@@ -2,18 +2,20 @@
 
 **The supplied Project 16 snapshot contains 226 open issues: 194 distinct implementation leaves, 24 parent tasks and eight epics.** Every issue is mapped in [project16-implementation.json](project16-implementation.json). The map records source, its owning evidence and remaining qualification; it does not declare 226 completed capabilities or recommend closing an issue.
 
-Source was read from root integration commit `6d5b033f885e409224726bd3ed4ee3c5bed98942` with the working-tree state listed in the JSON at `2026-10-04T00:29:24.261365+00:00`. The JSON preserves that snapshot and the SHA-256 of the supplied issue inventory. It reads every supplied issue body, including the original deliverable and task-specific acceptance. There is no #1545 in that inventory. Parent and epic entries roll up their leaves.
+Source is pinned to committed root integration revision `40bbdea7b45ab64b24c9741046b897a35118814e` at `2026-10-04T01:26:55.971234+00:00` after the final acceptance corrections and affected retry. The JSON retains the earlier source snapshot and the SHA-256 of the supplied issue inventory. It reads every supplied issue body, including the original deliverable and task-specific acceptance. There is no #1545 in that inventory. Parent and epic entries roll up their leaves.
 
 ## How to read the status
 
 | Leaf source state | Count | Meaning |
 |---|---:|---|
-| `source_present` | 132 | Source responsibilities and cited evidence exist; this is not a fully qualified or merged issue. |
-| `source_present_with_limits` | 62 | Source exists with an explicit behavior, provider or qualification boundary retained from its owning ledger. |
+| `source_present` | 135 | Source responsibilities and cited evidence exist; this is not a fully qualified or merged issue. |
+| `source_present_with_limits` | 59 | Source exists with an explicit behavior, provider or qualification boundary retained from its owning ledger. |
 
-**The initial clean normal build passed, and all 13 initial A19 failures now have passing affected evidence.** A19 ran 592 tests: 579 passed and 13 failed; its nine-file correction ran 83 tests: 81 passed and two Explorer expectations failed; the final five-case Explorer rerun passed. A20 completed 610 tests: 601 passed, zero failed and nine were explicitly skipped. These are overlapping outcomes, with no repeated full-suite pass claimed. The static-policy retry and final normal/standalone builds remain separate. No actual browser, native desktop or Visual Studio oracle run is claimed.
+**All 13 final acceptance-correction groups are now present in source, covering 15 distinct issue IDs.** The completed corrective cohort at `4b1c0291` ran **305 tests: 302 passed, three failed, zero skipped**. Only the three affected files were rerun at `40bbdea7`; **36/36 passed with zero skips**. Thus every one of the 305 initial corrective cases has a passing observation across the two runs. The initial run remains recorded as failed; there is no additive 341-case total or final all-in-one 305-case pass.
 
-The JSON separates `implementation`, `evidenceLevel`, `recordedBatches`, `explicitLimits` and `remainingQualification`. All entries deliberately have `closeIssue: false`. A provider host with an explicitly requested fake-provider test is described as such; a missing production provider is never described as native or end-to-end success.
+Historical initial stages remain separate: A19 ran 592 tests (579 passed/13 failed), its affected correction ran 83 (81 passed/two failed), and the five-case Explorer retry passed; A20 ran 610 (601 passed/zero failed/nine explicit skips). All initial A19 failures also have passing affected evidence. Final checks/builds and the separate binder measurement are not inferred from these runs. Actual browser, native desktop, OS input, assistive technology and Visual Studio oracle qualification remain open.
+
+The JSON separates `implementation`, `evidenceLevel`, `recordedBatches`, `explicitLimits` and `remainingQualification`. Final correction entries additionally separate actual `sourceLimits` from `qualificationNotes`; the aggregate `sourceBoundaries` lists retained product/capability limits. Older mixed ledger notes are retained as provenance. All entries deliberately have `closeIssue: false`. A provider host with an explicitly requested fake-provider test is described as such; a missing production provider is never described as native or end-to-end success.
 
 ## Scope map
 
@@ -69,6 +71,7 @@ These counts are **separate, overlapping runs**. Adding them would overstate dis
 | Shell metadata, Outline and execution capture | Initial 136: 134 pass/two fail; affected 14: 13 pass/one fail; final metadata 12/12. 140 distinct observed names; no additive 162 total | All observed provider failures corrected. Final graph and sparse-enumeration assertions also pass in root scope. Actual browser delivery remains unqualified. |
 | Matched worker instrumentation benchmark | Nine recorded samples per variant after three warmups; source p95 −15.33%, direct-CIL p95 +1.63% at `3b3f6546` | Shared-host observations with actual source/direct-CIL pumps; no speedup, native OS CPU, allocation or less-than-one-percent overhead verdict. |
 | Complete A19/A20 Node stages | A19: 592 tests, 579 passed/13 failed, 28.090 s; affected 83 tests, 81 passed/two failed; final Explorer 5/5. A20: 610 tests, 601 passed/zero failed/nine skipped, 31.390 s | Every initial A19 failure now has a passing affected case. Eight A20 skips are explicitly unsupported targets, and one is an unavailable pinned native Intl oracle. No overlapping sum or repeated full run. |
+| Final 13 acceptance-correction groups | Initial 305 tests:302 passed/3 failed/0 skipped at `4b1c0291`; affected 36/36 at `40bbdea7` | All 305 distinct corrective cases have passing observations across the two runs. Two stale assertions and one real capture-listener cleanup bug were corrected; no 341 sum or final 305-case rerun. All 16 new host and 19 new provider cases passed in the initial cohort. |
 
 Full matrix scheduling follows the current contribution policy: complete scope first, then serial/resource-limited qualification. The documentation aggregation did not run tests or builds. Independently assigned navigation, Watch, task/native, CodeLens and split source batches were completed before their recorded focused checks. The import-inventory correction ran only the affected static policy scope.
 
@@ -107,11 +110,57 @@ The audit assigned the concrete missing provider behavior to its owners. Test-st
 
 Other bounded contracts remain explicit: replacement preview caps at 32,000,000 UTF-16 units while large literal Find is independent; safe regex can report `SEARCH_LIMIT`; automatic polling/reload/comment scanning uses an eight-million UTF-16 unit limit with a notice, while root workspace recovery has an eight-MiB character budget; actual Test Explorer adapters are external to the fake-provider host acceptance. The eight native-keymap skips are documented unsupported shell/Vimscript/terminal/regex-extension/OS-primary-selection/unbounded-macro targets and unrun desktop/browser/assistive qualification. The latest column cohort adds one explicit native Unicode16 oracle skip because the host uses Unicode17; the independent pinned Unicode16 conformance rows pass. Skipped targets are not counted as passing tests.
 
+## Final acceptance corrections and remaining source limits
+
+The following **13 correction groups cover 15 distinct leaves**. Their actual source and test paths are appended to those
+leaves in the JSON. The completed cohort includes the new correction fixtures and their affected regressions. The three
+registry/composition/reveal failures are resolved by the affected retry. The original failure records remain available
+in [the qualification history](project16-qualification-history.json) and the exact
+[initial log](evidence/project16-integration/p16-correction-cohort.log) and
+[retry log](evidence/project16-integration/p16-correction-retry.log).
+
+| Correction group | Issue(s) | Completed behavior and owning evidence |
+| --- | --- | --- |
+| Origin-based next occurrence | #1600 | Indexed single-match lookup starts after the actual selection, bypasses capped prefix results and preserves exclusions/capacity; [text evidence](project16-text-native-evidence.md). |
+| Incremental search | #1507 | Actual widget retains origin, direction, wrap, cancellation and model/session ownership; [text evidence](project16-text-native-evidence.md). |
+| Surround With | #1494 | Production picker preserves selected line endings and contextual visual indentation; [snippet/edit contract](../packages/editor/docs/surround-and-tab-conversion.md). |
+| Tabify/Untabify | #1510 | Every logical line resets visual columns while all CR/LF/CRLF terminators survive; [snippet/edit contract](../packages/editor/docs/surround-and-tab-conversion.md). |
+| Call Hierarchy | #1458 | Public shell command, worker and lazy model preserve actual project and source identity through expansion/navigation; [provider evidence](a20-provider-acceptance-corrections.md). |
+| Method completion | #1482 | Actual C# method items supply the opening-parenthesis commit character and retain widget/undo/read-only behavior; [provider evidence](a20-provider-acceptance-corrections.md). |
+| Parameter information | #1483 | Bound receiver/accessibility/overload/generic invocation candidates drive signature information; [provider evidence](a20-provider-acceptance-corrections.md). |
+| Startup and instance menus | #1526, #1530 | Actual menu registry reaches startup/instance commands with explicit project context and current availability; [Studio contract](project16-studio-composition.md). |
+| Captured reveals | #1556 | Runtime/build/launch navigation retains initiating intent and app generation; capture listeners dispose correctly; [Studio contract](project16-studio-composition.md). |
+| Startup profile preservation | #1529, #1531 | Legacy Explorer and toolbar startup selection preserve the intended project's selected profile; [Studio contract](project16-studio-composition.md). |
+| Diagnostic producers | #1555 | Real project/designer warnings and errors reach the shared store/Error List with exact ownership and invalidation; [host evidence](a19-host-producers.md). |
+| Explorer project rows | #1557 | Startup/build/running/paused badges, accessible names and real subscriptions/disposal are connected; [host evidence](a19-host-producers.md). |
+| Build Cancel | #1558 | Actual TaskCenter cancellation stops its complete captured queue while preserving independent or later work; [host evidence](a19-host-producers.md). |
+
+**Confirmed remaining unimplemented primary source-acceptance issue IDs in these known records: none.** This statement
+reconciles the existing coverage maps and correction documents; it is not a new broad source audit or a claim that every
+acceptance criterion is qualified. Every issue remains open for review/qualification in this map. Actual platform behavior,
+measured thresholds and completed CI outcomes still need their own evidence.
+
+The following are retained source/capability limits, rather than unrun tests:
+
+| Issue(s) | Retained product boundary |
+| --- | --- |
+| #1454, #1456, #1458, #1483, #1485, #1487, #1489 | Registered writers/bound providers define the surface; unsafe reorders are rejected, unavailable external relationships/tips are not fabricated, and Fix All/test lenses/hints require valid implemented families and current ownership. |
+| #1461 | The Test Explorer implements the requested provider host and fake-provider acceptance; a built-in xUnit/NUnit/MSTest adapter is absent. |
+| #1462, #1471 | CPU activity measures managed worker execution occupancy. Analysis cancellation suppresses an owned request's late reply but does not interrupt synchronous work already executing in the shared compiler worker. |
+| #1464, #1477, #1506, #1507, #1600 | Content scanning, automatic reload, replacement previews, search work and selection count retain documented bounds. Safe regex/navigation report budget exhaustion explicitly; larger-file explicit chunked opening is separate. |
+| #1488, #1529, #1530 | Generated/metadata sources remain read-only; native atomic resource rename and native start-instance are not advertised. Launch argv/environment execute on source VM/direct CIL with explicit unsupported-target refusal. |
+| #1493, #1496 | Regex snippet transforms are rejected. Documentation comments provide a generic summary template; symbol-specific parameter/return tags require a provider. Those extensions are not named in the primary acceptance assertions. |
+| #1623 | Native Vim explicitly excludes shell/external filters, Vimscript/plugins, terminal buffers, Vim-specific regex extensions, OS primary selection and unbounded recursive macros; unsupported-target reporting is part of its requested contract. |
+
+Browser/native/OS/oracle gaps in the next table are **qualification gaps**, not additional source implementations or passing
+results. In particular #1513's actual 200 MiB/p95 requirement, #1578's overhead threshold, #1580's measured startup/offline
+first use, #1581's compatible-runner performance verdict, and #1577/#1583's actual browser results remain unestablished.
+
 ## Remaining qualification
 
 | Required evidence | Current state |
 |---|---|
-| Final root checks and complete scope | Initial normal build and manifest/syntax/link stages passed. Exact-byte policy retry and final normal/standalone builds remain pending. A19 initial 592/579/13 → affected 83/81/2 → Explorer 5/5; all initial failures resolved. A20: 610 tests, 601 pass, zero fail, nine explicit skips. No full-suite rerun or browser/native qualification is inferred. |
+| Final root checks and complete scope | Earlier stage results are preserved in the qualification history. Final 13-source-correction cohort:305/302/3/0 skips; affected retry 36/36/0 skips. All 305 distinct corrective cases have passing observations, without a 341sum or final 305-case rerun. Required final statics/builds and separate measurements remain pending at this snapshot; platform acceptance is not inferred. |
 | Actual static and standalone Studio/editor browser scenarios | Authored production/CSP-aware drivers, unrun. The supported Playwright installation exhausted unusable browser-download attempts; no placeholder browser artifact exists. |
 | Chromium, Firefox, WebKit and browser workers | Unrun; actual engine/version and unsupported targets must be recorded. |
 | 200 MiB load/scroll/type p95, map frame budget, 300 ms definition update, instrumentation overhead below 1%, cold lazy evaluation and workbench baseline | Unmeasured in an actual browser. Node model/test durations cannot satisfy these thresholds. |
