@@ -14,6 +14,7 @@ export * from './metadata.js';
 export * from './property-values.js';
 export * from './property-source-values.js';
 export * from './property-editors.js';
+export * from './property-grid-model.js';
 export * from './property-commands.js';
 export * from './property-events.js';
 export * from './property-collections.js';
