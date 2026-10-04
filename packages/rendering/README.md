@@ -78,6 +78,10 @@ Scanbeam tessellation preserves holes and self-intersections. Strokes preserve d
 
 `CompositionTransport` and `CompositionTransportHost` install definitions and native visual graphs in an explicit application session. Host frames use an injected shared animation clock and return completion identities, avoiding per-frame managed messages. Independent XAML timelines accept only supported render properties; dependent layout properties stay with managed execution. Snapshot, pause, stop, binding removal and disposal preserve ownership and restore transient base values when requested.
 
+## Application composition services
+
+`createCompositionServices` owns one default compositor and connects preview, implicit, theme, connected and navigation services through explicit host callbacks. Additional compositors use weak bookkeeping and do not become permanent managed roots. Host environment changes cancel convenience motion while preserving reusable service instances; app-started storyboards keep their own policy. Paint-brush transitions bind native brush descriptors and clear those bindings when complete.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.
