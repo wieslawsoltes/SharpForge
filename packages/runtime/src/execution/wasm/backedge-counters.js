@@ -59,7 +59,7 @@ export function countWasmBackedge(vm, record, from, to, options) {
   }
   site.count = increment(site.count);
   counters.hottest = Math.max(counters.hottest, site.count);
-  return counters.hottest >= options.backedgeThreshold;
+  return site.count >= options.backedgeThreshold;
 }
 
 /** Detached frozen rows ordered by source then target IL offset. */
