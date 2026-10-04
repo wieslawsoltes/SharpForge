@@ -25,6 +25,28 @@ scopes remain accepted. Constants accept primitive `type`/`value` pairs, optiona
 BigInt for 64-bit integers. Invalid names, ranges, imports and references throw
 `SymbolError`.
 
+`readPortablePdb` reads complete primitive and enum LocalConstant signatures,
+ordered `customModifiers` (`required`, `typeToken`), object/string null and typed
+class null. Existing character values remain numeric UTF-16 units and 64-bit
+integers remain BigInt. Strings preserve BOMs, embedded NUL and unmatched UTF-16
+surrogates. Enums retain the historical coded `enumType` and additionally expose
+the full `enumTypeToken`; this is a handle, not a resolved enum definition.
+Typed null exposes `type: 'class'`, `typeToken` and `value: null`.
+Malformed Boolean values, fixed-width payloads, trailing data and out-of-range
+handles fail explicitly. Type-dependent general constants (including decimal,
+DateTime and value-type defaults) retain owned `raw` bytes and expose
+`decoded: false`, `reason: 'type-metadata-required'`, `typeKind`, `typeToken` and
+`defaultValue` (whether the payload is absent). Their values are not guessed.
+
+Reader options `maxConstantBytes` (16 MiB default, 64 MiB hard cap) and
+`maxConstantEntries` (100,000 default, 1,000,000 hard cap, counting rows plus
+custom modifiers) bound aggregate allocations before copying any constant.
+`maxConstantModifiers` defaults to 64 per
+constant, capped at 1,024. Constant names are capped at 3,072 UTF-8 bytes before
+decoding and 1,024 UTF-16 units afterward. These options also apply through
+`loadSymbols`. Native C# examples and offline reference data are in
+`interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
+
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
 supplied hashes are checked against the exact source bytes. Hash inputs are exact source
@@ -81,7 +103,7 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Capability | Writer and reader coverage |
 | --- | --- |
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
-| Locals and imports | Lexical scopes, primitive/raw constants, import kinds 1–9 |
+| Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
@@ -262,3 +284,24 @@ alias entries, stepping parents and awaits before snapshot allocation (default
 parents and ambiguous aliases throw `SymbolError`. Each lookup costs O(returned
 awaits), with fresh state and step records. This API exposes PDB stepping metadata;
 it does not infer runtime states or iterator yield positions.
+
+Bound `loadSymbols` results expose `closureInfo(lambdaMethodToken)`. For supported
+Roslyn C# generation-zero, nongeneric display classes, it returns `available: true`,
+the `containingMethod`, `methodOrdinal`, `lambdaOrdinal`, lambda `syntaxOffset`,
+`closureType`, `closureOrdinal`, `closureSyntaxOffset` and `captures` containing
+`{ name, fieldToken }`. Syntax offsets retain their raw EnC values; this API does
+not convert them to source line/column positions. Method identity uses the
+enclosing type plus EnC method ordinal and exact generated lambda/closure ordinals.
+It never selects an overloaded method by name alone.
+
+Unknown, missing, inconsistent or unsupported mappings return `available: false`,
+an explicit `reason` and no captures. VB, generic or edited display-class naming,
+static/this-only lambdas, capture-link traversal and runtime field values are not
+supported by this capability. Recognized lambda delegate caches are omitted from
+captures; other synthesized capture fields make the result unavailable.
+`maxClosureEntries` bounds metadata, EnC records and expanded capture entries
+(default 100,000; maximum 1,000,000) before snapshots/index expansion. Names share
+the bounded 3,072-byte/1,024-UTF-16-unit metadata scan used by hoisted locals.
+Relevant facts are owned at load, the query index is lazy, and results are fresh;
+input-byte and returned-record mutations cannot alter subsequent queries.
+Naming follows Roslyn's [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs).

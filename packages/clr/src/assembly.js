@@ -2,7 +2,9 @@ import { readPE } from '@sharpforge/cil';
 import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
-import { MetadataMethodDefinitions } from './type-system/metadata-method-definitions.js';
+import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
+import { MetadataConstants } from './type-system/metadata-constants.js';
+import { MetadataPropertyAccessors } from './type-system/metadata-property-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
@@ -39,6 +41,10 @@ export class RuntimeModule {
   #bodyReads = 0;
   #typeDefinitions;
   #methodDefinitions;
+  #fieldDefinitions;
+  #propertyDefinitions;
+  #propertyAccessors;
+  #constants;
   #parameterDefinitions;
   #genericParameters;
   constructor(assembly, pe) {
@@ -122,14 +128,14 @@ export class RuntimeModule {
   /** Canonical MethodDef identity; decoding signatures and bodies remains explicit and lazy. */
   methodDefinition(token) {
     this.#assembly.ensureUsable();
-    this.#methodDefinitions ??= new MetadataMethodDefinitions(this);
+    this.#methodDefinitions ??= new MetadataMemberDefinitions(this);
     return this.#methodDefinitions.get(token);
   }
 
   /** Immutable declared method list in metadata order; this does not apply reflection BindingFlags. */
   methodDefinitions(typeToken) {
     this.#assembly.ensureUsable();
-    this.#methodDefinitions ??= new MetadataMethodDefinitions(this);
+    this.#methodDefinitions ??= new MetadataMemberDefinitions(this);
     return this.#methodDefinitions.forType(typeToken);
   }
 
@@ -138,6 +144,48 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#parameterDefinitions ??= new MetadataParameters(this);
     return this.#parameterDefinitions.forMethod(methodToken);
+  }
+
+  /** Canonical FieldDef metadata identity; signatures and raw constants remain lazy. */
+  fieldDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#fieldDefinitions ??= new MetadataMemberDefinitions(this, 'field');
+    return this.#fieldDefinitions.get(token);
+  }
+
+  /** Frozen declared-field list in metadata order, including #- FieldPtr indirection. */
+  fieldDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#fieldDefinitions ??= new MetadataMemberDefinitions(this, 'field');
+    return this.#fieldDefinitions.forType(typeToken);
+  }
+
+  /** Canonical Property metadata identity with lazy signature and accessor links. */
+  propertyDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.get(token);
+  }
+
+  /** Frozen declared-property list through PropertyMap and optional #- PropertyPtr indirection. */
+  propertyDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {getMethod, setMethod, otherMethods} using canonical methods; no visibility filtering or execution. */
+  propertyAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyAccessors ??= new MetadataPropertyAccessors(this);
+    return this.#propertyAccessors.get(token);
+  }
+
+  /** Frozen raw Constant value for a Field/Param/Property token, or null; malformed metadata yields SFCLR005/007. */
+  constant(token) {
+    this.#assembly.ensureUsable();
+    this.#constants ??= new MetadataConstants(this);
+    return this.#constants.get(token);
   }
 
   /** Ordered canonical GenericParam identities for a TypeDef; constraints are unresolved metadata tokens. */

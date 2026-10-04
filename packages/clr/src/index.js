@@ -17,3 +17,5 @@ export { MethodDesc } from './type-system/method-desc.js';
 export { ParameterDesc } from './type-system/parameter-desc.js';
 export { resolveArrayMethod } from './type-system/constructed-types.js';
 export { substituteSignature, substituteTypeSignature } from './generics/substitution.js';
+export { FieldDesc } from './type-system/field-desc.js';
+export { PropertyDesc } from './type-system/property-desc.js';

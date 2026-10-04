@@ -12,6 +12,7 @@ import { numericKind } from '../../conversions/numeric.js';
 import { isAsyncDisposable } from '../async-streams.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { untypedInitializerProblem } from '../implicit-types.js';
+import { isWriteAUse } from '../../flow/write-is-a-use.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSourceType = t => {
@@ -149,7 +150,7 @@ export const DeclarationBinding = Base =>
         if (init) {
           local.writes++;
           local.hasInitializer = true;
-          if (value && !(value.constantValue || value.literal || value.kind === 'Default' || value.isCompileTimeValue)) local.nonConstantWrite = true;
+          if (value && isWriteAUse(local.type, value)) local.nonConstantWrite = true;
           if (isUsing || isFixed) local.nonConstantWrite = true;
         }
         if (isConst && value && !value.hasErrors) {

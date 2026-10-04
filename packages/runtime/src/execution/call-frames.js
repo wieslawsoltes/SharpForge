@@ -1,3 +1,4 @@
+import {admitCilStack} from './frame-stack.js';
 import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
@@ -5,6 +6,7 @@ import {storageDefault} from './storage.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
+  admitCilStack(vm, method);
   const pool = framePool(vm), frame = pool.acquire(method, args.length);
   try {
     frame.id = ++vm.frameId;
@@ -39,6 +41,7 @@ export function callSourceFrame(vm, methodId, args) {
   frame.base = vm.stack.length;
   for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
   vm.frames.push(frame);
+  vm.profiler?.enter(frame);
 }
 
 export function callSourceFromStack(vm, methodId, count) {

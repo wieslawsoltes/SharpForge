@@ -1,11 +1,6 @@
 import { decodeSignature } from '@sharpforge/cil';
+import { freezeSignature } from './frozen-signature.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
-
-function freezeSignature(node) {
-  if (!node || typeof node !== 'object' || Object.isFrozen(node)) return node;
-  for (const value of Object.values(node)) freezeSignature(value);
-  return Object.freeze(node);
-}
 
 /** Canonical MethodDef metadata identity. Signature and body decoding remain lazy. */
 export class MethodDesc {
@@ -32,7 +27,7 @@ export class MethodDesc {
   get signature() {
     if (this.#signature) return this.#signature;
     try {
-      const signature = decodeSignature(this.module.blob(this.#state.signatureIndex));
+      const signature = decodeSignature(this.module.blob(this.#state.signatureIndex, { maxBytes: 1024 * 1024 }));
       if (signature.kind !== 'method' || signature.hasThis === this.isStatic) {
         throw loadError(LoadErrorCode.InvalidImage, 'MethodDef signature kind or receiver does not match its flags');
       }
