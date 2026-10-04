@@ -1,5 +1,6 @@
-import {frameworkType, MEDIA} from '@sharpforge/framework';
+import {MEDIA} from '@sharpforge/framework';
 import {ManagedFault, isReference} from './heap.js';
+import {isExportedFrameworkValue, exportGradientStops} from './platform-brushes.js';
 
 function boxedPrimitive(type, value) {
   if (type === 'System.Boolean') return Boolean(value);
@@ -24,12 +25,15 @@ export function exportPlatformValue(platform, value, depth = 0) {
     const contents = exportPlatformValue(platform, record.data[0], depth + 1);
     return boxedPrimitive(record.type, contents);
   }
-  const type = frameworkType(record.type);
-  if (type?.kind === 'value' || record.type === MEDIA + 'SolidColorBrush') {
+  if (isExportedFrameworkValue(record.type)) {
     const properties = {};
     for (const [key, property] of platform.propertyEntries(value)) {
-      if (!key.startsWith('$')) properties[key] = exportPlatformValue(platform, property, depth + 1);
+      if (key.startsWith('$')) continue;
+      properties[key] = key === 'GradientStops' && record.type === MEDIA + 'LinearGradientBrush'
+        ? exportGradientStops(platform, property, exportPlatformValue, depth)
+        : exportPlatformValue(platform, property, depth + 1);
     }
+    if (record.type === MEDIA + 'LinearGradientBrush') properties.GradientStops ??= [];
     return {valueType: record.type, ...properties};
   }
   return {$ref: `${value.h}:${value.g}`};
