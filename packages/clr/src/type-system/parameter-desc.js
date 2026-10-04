@@ -1,3 +1,4 @@
+import { formatParameterDisplay } from './parameter-display.js';
 import { readCustomModifierTokens } from './custom-modifiers.js';
 
 /** Canonical method or property parameter metadata. A zero token denotes an omitted Param row. */
@@ -28,6 +29,8 @@ export class ParameterDesc {
   get isIn() { return Boolean(this.flags & 1); }
   get isOut() { return Boolean(this.flags & 2); }
   get isOptional() { return Boolean(this.flags & 0x10); }
+  /** Cached Reflection-style type and optional name; unsupported resolved forms report SFCLR012. */
+  toString() { return this.#state.display ??= formatParameterDisplay(this); }
   /** Frozen {type, value} from the Constant table, or null. Custom-attribute defaults are not projected. */
   get constant() {
     if (this.#constant !== undefined) return this.#constant;
