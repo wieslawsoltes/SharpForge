@@ -1,11 +1,14 @@
 """Actual browser launchers: WebKit and Safari are reported as different engines."""
 import base64
 import json
+import math
 import platform
 import subprocess
 import time
 import urllib.request
 from contextlib import contextmanager
+
+from native_ime_driver import run_native_ime
 
 
 class SafariPage:
@@ -42,6 +45,12 @@ class SafariPage:
             raise RuntimeError(result['error'])
         return result['value']
 
+    def configure(self, fixture):
+        # Resize the real window; its actual DPR is still observed and cannot be fabricated by WebDriver.
+        self.request('POST', '/session/' + self.session + '/window/rect', {
+            'width': max(1280, math.ceil(fixture.get('width', 0)) + 96),
+            'height': max(1300, math.ceil(fixture.get('height', 0)) + 160)})
+
     def screenshot(self, path):
         value = self.request('GET', '/session/' + self.session + '/screenshot')
         path.write_bytes(base64.b64decode(value))
@@ -58,12 +67,35 @@ class SafariPage:
 class PlaywrightPage:
     def __init__(self, browser):
         self.browser = browser
-        self.page = browser.new_page(viewport={'width': 1200, 'height': 1100}, device_scale_factor=1)
+        self.page = None
+        self.scale = None
+        self.viewport = None
+        self.url = None
         self.version = browser.version
         self.errors = []
+        self.configure({'dpr': 1})
+
+    def configure(self, fixture):
+        scale = fixture.get('dpr', 1)
+        viewport = {'width': max(1200, math.ceil(fixture.get('width', 0)) + 32),
+                    'height': max(1100, math.ceil(fixture.get('height', 0)) + 32)}
+        if self.scale == scale:
+            if self.viewport != viewport:
+                self.page.set_viewport_size(viewport)
+                self.viewport = viewport
+            return
+        if self.page:
+            self.page.evaluate('() => globalThis.renderingConformance?.dispose()')
+            self.page.close()
+        self.scale = scale
+        self.viewport = viewport
+        self.page = self.browser.new_page(viewport=viewport, device_scale_factor=scale)
         self.page.on('pageerror', lambda error: self.errors.append(str(error)))
+        if self.url:
+            self.navigate(self.url)
 
     def navigate(self, url):
+        self.url = url
         response = self.page.goto(url)
         if response.status != 200:
             raise RuntimeError('Fixture server failed: ' + str(response.status))
@@ -77,11 +109,13 @@ class PlaywrightPage:
     def run(self, value):
         self.errors.clear()
         result = self.page.evaluate('value => globalThis.renderingConformance.run(value)', value)
+        if value['fixture'].get('nativeIME'):
+            result['verification'] = run_native_ime(self.page, self.browser)
         result['errors'].extend(self.errors)
         return result
 
     def screenshot(self, path):
-        self.page.screenshot(path=str(path), full_page=False)
+        self.page.screenshot(path=str(path), full_page=False, omit_background=True)
 
     def close(self):
         try:
