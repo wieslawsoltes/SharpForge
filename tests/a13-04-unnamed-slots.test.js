@@ -31,7 +31,7 @@ function fixture({
   const offset = section.length;
   section.bytes(bytes);
   const assembly = writePE(section.finish(), offset, bytes.length, 0);
-  const pdb = emitPortablePdb(assembly, { methods: [{ token: 0x06000001, scopes }] }).bytes;
+  const pdb = emitPortablePdb(assembly, { methods: scopes.length ? [{ token: 0x06000001, scopes }] : [] }).bytes;
   return { assembly: attachPortablePdb(assembly, pdb), rawAssembly: assembly, pdb, signature };
 }
 
