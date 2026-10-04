@@ -16,6 +16,31 @@ test-manifest registration, stacked publication and the complete browser matrix.
 
 ## Observed verification
 
+### Origin-based search corrections awaiting integrated qualification
+
+The complete correction batch for **#1600 / SF-A20-T03.2** and
+**#1507 / SF-A20-T38** replaces capped-prefix navigation with the shared
+`findLiteralMatch` / `findLiteralMatchAsync` API. Add Next Occurrence preserves
+the explicit 10,000-selection capacity. Incremental search owns cancellation
+and rejects stale model, version or session results before navigation.
+
+`tests/a20-search-navigation.test.js` covers more than 10,000 earlier matches,
+both directions and wrap boundaries, overlapping matches, UTF-16 chunk seams,
+whole-word/exclusion behavior, limits, cancellation, captured snapshots and
+selection capacity. Its 200 MiB case is a **virtual indexed ASCII source** that
+asserts bounded nearby reads; it is not an allocated-file or browser latency
+measurement. `tests/a20-incremental-search-navigation.test.js` uses the actual
+widget search methods with real `EditorModel` state and explicit view/host
+seams, including query extension, Escape/accept, failure, stale results,
+supersession and disposal.
+
+No tests, checks, builds or benchmarks were run while authoring this batch.
+Root owns one affected-scope qualification after all corrections are complete.
+The existing `tests/text-search-regex.test.js` and
+`tests/editor-model-selections.test.js` belong in that run because the scalar
+KMP implementation and multi-caret consumer are shared. Earlier measurements
+below describe their named revisions and do not qualify these new changes.
+
 Runtime: Node.js **v24.19.0**, Linux x64. The buffer benchmark identifies the
 CPU, workload and measurements in
 [text-buffer benchmark evidence](../packages/text/bench/results.md).
