@@ -81,10 +81,15 @@ for (const managedIL of [false, true]) {
     const originalAlpha = alpha.identity;
     assert.ok(alpha.programOutput.endsWith('alpha environment\n'));
     assert.ok(betaOutput.endsWith('beta environment\n'));
+    assert.equal(services.sessions.active, alpha, 'Launching Beta in the background preserves the selected Alpha');
+    assert.equal(state.debug.sessionId, originalAlpha);
+    services.sessions.setActive(beta.id);
+    assert.equal(services.sessions.active, beta);
+    assert.equal(state.debug.sessionId, betaIdentity);
     await alpha.stop();
     await completedCapture(fixture, alpha);
     assert.equal(alpha.live, false);
-    assert.equal(services.sessions.active, beta);
+    assert.equal(services.sessions.active, beta, 'Stopping background Alpha preserves the selected Beta');
     assert.equal(state.debug.sessionId, betaIdentity);
     assert.equal(beta.identity, betaIdentity);
     assert.equal(beta.debug.uiActive, true);
@@ -97,6 +102,7 @@ for (const managedIL of [false, true]) {
     assert.equal(alpha.runtimeSession, 1, 'The replacement worker may reuse its local serial');
     assert.equal(alpha.debug.uiActive, true);
     assert.equal(services.sessions.active, beta, 'A background restart does not select its application');
+    assert.equal(state.debug.sessionId, betaIdentity);
     assert.equal(beta.programOutput, betaOutput);
     capture.setPaused(false);
     await waitForEvent(fixture.timeline, () => fixture.timeline.histories.get(alpha.identity), 'replacement capture identity');
