@@ -1,0 +1,1542 @@
+{
+  "format": "sharpforge-workbench-inventory",
+  "version": 1,
+  "scope": "A19 shell commands and contributed tool windows",
+  "qualification": "docs/vs-workflow-matrix.md",
+  "commands": [
+    {
+      "id": "about",
+      "title": "About SharpForge Studio",
+      "category": "About SharpForge Studio",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "architecture",
+      "title": "View modular architecture",
+      "category": "View modular architecture",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "assemblyExport",
+      "title": "Export .NET IL assembly (.dll)",
+      "category": "Export .NET IL assembly (.dll)",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "breakpoints",
+      "title": "Open Breakpoints",
+      "category": "Open Breakpoints",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "build",
+      "title": "Build solution",
+      "category": "Build solution",
+      "shortcut": "Ctrl+Shift+B",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "bytecodeExport",
+      "title": "Export legacy VM IR",
+      "category": "Export legacy VM IR",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "callHierarchy",
+      "title": "Call hierarchy",
+      "category": "Call hierarchy",
+      "shortcut": "Shift+Alt+H",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "collect",
+      "title": "Collect managed garbage",
+      "category": "Collect managed garbage",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "debug",
+      "title": "Start / Continue debugging",
+      "category": "Start / Continue debugging",
+      "shortcut": "F5",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "debugPanel",
+      "title": "Open Locals & Watch",
+      "category": "Open Locals & Watch",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "debugSettings",
+      "title": "Debugger and Exception Settings",
+      "category": "Debugger and Exception Settings",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "designer",
+      "title": "WinUI visual designer",
+      "category": "WinUI visual designer",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "disassembly",
+      "title": "Open Disassembly",
+      "category": "Open Disassembly",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "examples",
+      "title": "Load an example",
+      "category": "Load an example",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "exportCsproj",
+      "title": "Export .csproj",
+      "category": "Export .csproj",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "exportSlnx",
+      "title": "Export .slnx",
+      "category": "Export .slnx",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "findFiles",
+      "title": "Find in Files",
+      "category": "Workbench",
+      "shortcut": "Ctrl+Shift+F",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "heap",
+      "title": "Inspect managed heap",
+      "category": "Inspect managed heap",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "hotReload",
+      "title": "Hot Reload",
+      "category": "Hot Reload",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "ilExport",
+      "title": "Export IL inspection listing",
+      "category": "Export IL inspection listing",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "immediate",
+      "title": "Immediate — safe evaluation",
+      "category": "Immediate — safe evaluation",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "keymap:emacs",
+      "title": "Keyboard: Emacs",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "keymap:resharper",
+      "title": "Keyboard: ReSharper-like (IntelliJ)",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "keymap:sublime",
+      "title": "Keyboard: Sublime Text",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "keymap:vim",
+      "title": "Keyboard: Vim",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "keymap:visual-studio",
+      "title": "Keyboard: Visual Studio (default)",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "keymap:vscode",
+      "title": "Keyboard: Visual Studio Code",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "launch-profiles",
+      "title": "Launch Profiles",
+      "category": "Project",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "muteBreakpoints",
+      "title": "Toggle All Breakpoints",
+      "category": "Toggle All Breakpoints",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "nativeBuildLayout",
+      "title": "Native build layout",
+      "category": "Native build layout",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "nativeCancel",
+      "title": "Cancel native operation",
+      "category": "Cancel native operation",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "nativeEvaluate",
+      "title": "Evaluate native project",
+      "category": "Evaluate native project",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "nativeMSBuild",
+      "title": "Native MSBuild workspace",
+      "category": "Native MSBuild workspace",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "navigateBack",
+      "title": "Navigate back",
+      "category": "Navigate back",
+      "shortcut": "Alt+Left",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "navigateForward",
+      "title": "Navigate forward",
+      "category": "Navigate forward",
+      "shortcut": "Alt+Right",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "new",
+      "title": "New C# file",
+      "category": "New C# file",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "newFunctionBreakpoint",
+      "title": "New Function Breakpoint",
+      "category": "New Function Breakpoint",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "next",
+      "title": "Step over",
+      "category": "Step over",
+      "shortcut": "F10",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "open",
+      "title": "Open project or source files",
+      "category": "Open project or source files",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "openAssemblyFile",
+      "title": "Open DLL / EXE in decompiler",
+      "category": "Open DLL / EXE in decompiler",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "openFolder",
+      "title": "Open folder from disk",
+      "category": "Open folder from disk",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "outline",
+      "title": "Document outline",
+      "category": "Document outline",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "parallelStacks",
+      "title": "Parallel Stacks",
+      "category": "Parallel Stacks",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "pause",
+      "title": "Break all",
+      "category": "Break all",
+      "shortcut": "F6",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "problems",
+      "title": "Open Error List",
+      "category": "Open Error List",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "processes",
+      "title": "Processes",
+      "category": "Debug",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "profile",
+      "title": "View compatibility profile",
+      "category": "View compatibility profile",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "projectDebugStartNewInstance",
+      "title": "Start New Instance",
+      "category": "Debug",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "projectProperties",
+      "title": "Project properties and loading diagnostics",
+      "category": "Project properties and loading diagnostics",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "removeBreakpoints",
+      "title": "Debug: Remove All Breakpoints",
+      "category": "Debug",
+      "shortcut": "Ctrl+Shift+F9",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "resetLayout",
+      "title": "Reset window layout",
+      "category": "Reset window layout",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "reverseContinue",
+      "title": "Reverse continue (recorded history)",
+      "category": "Reverse continue (recorded history)",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "run",
+      "title": "Run without debugging",
+      "category": "Run without debugging",
+      "shortcut": "Ctrl+F5",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "runToCursor",
+      "title": "Run to cursor",
+      "category": "Run to cursor",
+      "shortcut": "Ctrl+F10",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "save",
+      "title": "Export project",
+      "category": "Export project",
+      "shortcut": "Ctrl+S",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "saveDisk",
+      "title": "Save changed source files to disk",
+      "category": "Save changed source files to disk",
+      "shortcut": "Ctrl+Alt+S",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "setNext",
+      "title": "Set Next Statement",
+      "category": "Set Next Statement",
+      "shortcut": "Ctrl+Shift+F10",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "settings",
+      "title": "Options",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "shortcuts",
+      "title": "Keyboard shortcuts",
+      "category": "Keyboard shortcuts",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "showNext",
+      "title": "Show Next Statement",
+      "category": "Show Next Statement",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "solutionSetStartupProjects",
+      "title": "Set Startup Projects…",
+      "category": "Project",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stack",
+      "title": "Open Call Stack",
+      "category": "Open Call Stack",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "start-new-instance",
+      "title": "Start New Instance",
+      "category": "Debug",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "startup-projects",
+      "title": "Set Startup Projects…",
+      "category": "Project",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stepBack",
+      "title": "Step back",
+      "category": "Step back",
+      "shortcut": "Alt+F10",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stepIn",
+      "title": "Step into",
+      "category": "Step into",
+      "shortcut": "F11",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stepOut",
+      "title": "Step out",
+      "category": "Step out",
+      "shortcut": "Shift+F11",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stop",
+      "title": "Stop debugging",
+      "category": "Stop debugging",
+      "shortcut": "Shift+F5",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stop-all",
+      "title": "Stop All Applications",
+      "category": "Debug",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "symbols",
+      "title": "Portable PDB Symbols",
+      "category": "Portable PDB Symbols",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "theme",
+      "title": "Toggle dark / light theme",
+      "category": "Toggle dark / light theme",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "threads",
+      "title": "Threads (managed contexts)",
+      "category": "Threads (managed contexts)",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "toggleBreakpoint",
+      "title": "Debug: Toggle Breakpoint",
+      "category": "Debug",
+      "shortcut": "F9",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:assembly",
+      "title": "View: Assembly Explorer",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:background-tasks",
+      "title": "Background Tasks",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:bookmarks",
+      "title": "Bookmarks",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:breakpoints",
+      "title": "View: Breakpoints",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:bytecode",
+      "title": "View: IL Compiler Output",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:calls",
+      "title": "Call Hierarchy",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:class-view",
+      "title": "Class View",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:code-definition",
+      "title": "Code Definition",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:command-window",
+      "title": "Command Window",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:debug",
+      "title": "View: Locals",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:debug-session",
+      "title": "View: Debugger / Exception Settings",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer",
+      "title": "View: WinUI Designer",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer-layout",
+      "title": "View: Layout Editor",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer-properties",
+      "title": "View: Design Properties",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer-source",
+      "title": "View: Design Source",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer-styles",
+      "title": "View: Styles & Templates",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer-toolbox",
+      "title": "View: Toolbox",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:designer-tree",
+      "title": "View: Design Outline",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:diagnostic-timeline",
+      "title": "Diagnostic Tools: App Sessions",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:diagnostics",
+      "title": "Diagnostic Tools: App Sessions",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:disassembly",
+      "title": "View: MSIL Disassembly",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:examples",
+      "title": "View: Examples",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:extensions",
+      "title": "View: Generators & Analyzers",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:find-results-1",
+      "title": "Find Results 1",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:find-results-2",
+      "title": "Find Results 2",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:generated",
+      "title": "View: Generated Sources",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:heap",
+      "title": "View: Managed Heap",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:hot-reload",
+      "title": "View: Hot Reload",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:immediate",
+      "title": "View: Immediate",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:layouts",
+      "title": "View: Window Layouts",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:msbuild",
+      "title": "View: MSBuild",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:msbuild-inspector",
+      "title": "View: MSBuild Evaluation",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:notifications",
+      "title": "Notifications",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:object",
+      "title": "View: Object Inspector",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:object-browser",
+      "title": "Object Browser",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:outline",
+      "title": "Document Outline",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:output",
+      "title": "Output",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:parallel-stacks",
+      "title": "View: Parallel Stacks",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:problems",
+      "title": "Error List",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:project",
+      "title": "View: Project Properties",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:project-source",
+      "title": "View: Project / Solution Source",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:properties",
+      "title": "Properties",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:references",
+      "title": "Find All References",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:replace-files",
+      "title": "Replace in Files",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:runtime-settings",
+      "title": "View: Language & Runtime",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:search",
+      "title": "Find in Files",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:settings",
+      "title": "View: Environment / Keyboard",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:solution",
+      "title": "View: Solution Explorer",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:solution-view",
+      "title": "Solution Explorer View",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:stack",
+      "title": "View: Call Stack",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:symbol-source",
+      "title": "View: Symbol Source",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:symbols",
+      "title": "View: Portable PDB Symbols",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:task-list",
+      "title": "Task List",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:test-explorer",
+      "title": "Test Explorer",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:threads",
+      "title": "View: Threads",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:toolbox",
+      "title": "Toolbox",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:visual-tree",
+      "title": "View: Live Visual Tree",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:watch",
+      "title": "View: Watch",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "tool:winui",
+      "title": "View: WinUI Application",
+      "category": "View",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "windowLayouts",
+      "title": "Window layouts",
+      "category": "Window layouts",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "winui",
+      "title": "WinUI Application",
+      "category": "WinUI Application",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.bookmark.next",
+      "title": "Next Bookmark",
+      "category": "Workbench",
+      "shortcut": "Ctrl+K Ctrl+N",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.bookmark.previous",
+      "title": "Previous Bookmark",
+      "category": "Workbench",
+      "shortcut": "Ctrl+K Ctrl+P",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.bookmark.toggle",
+      "title": "Toggle Bookmark",
+      "category": "Workbench",
+      "shortcut": "Ctrl+K Ctrl+K",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.commandWindow",
+      "title": "Command Window",
+      "category": "Workbench",
+      "shortcut": "Ctrl+Alt+A",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.configuration",
+      "title": "Configuration Manager",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.goToAll",
+      "title": "Go To All",
+      "category": "Workbench",
+      "shortcut": "Ctrl+T",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.goToLine",
+      "title": "Go To Line",
+      "category": "Workbench",
+      "shortcut": "Ctrl+G",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.keyboard",
+      "title": "Options: Keyboard",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.nextResult",
+      "title": "Go To Next Message",
+      "category": "Workbench",
+      "shortcut": "F8",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.options",
+      "title": "Options",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.performance",
+      "title": "Export Workbench Performance Trace",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.previousResult",
+      "title": "Go To Previous Message",
+      "category": "Workbench",
+      "shortcut": "Shift+F8",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.recent",
+      "title": "Go To Recent File",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.replaceFiles",
+      "title": "Replace in Files",
+      "category": "Workbench",
+      "shortcut": "Ctrl+Shift+H",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.settingsProfile",
+      "title": "Import and Export Settings",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.solutionView",
+      "title": "New Solution Explorer View",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.start",
+      "title": "Start Window",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.tests.failed",
+      "title": "Run Failed Tests",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.tests.run",
+      "title": "Run All Tests",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "workbench.toolbars",
+      "title": "Customize Toolbars",
+      "category": "Workbench",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    }
+  ],
+  "windows": [
+    {
+      "id": "problems",
+      "title": "Error List",
+      "kind": "tool",
+      "command": "tool:problems",
+      "status": "registered"
+    },
+    {
+      "id": "output",
+      "title": "Output",
+      "kind": "tool",
+      "command": "tool:output",
+      "status": "registered"
+    },
+    {
+      "id": "task-list",
+      "title": "Task List",
+      "kind": "tool",
+      "command": "tool:task-list",
+      "status": "registered"
+    },
+    {
+      "id": "class-view",
+      "title": "Class View",
+      "kind": "tool",
+      "command": "tool:class-view",
+      "status": "registered"
+    },
+    {
+      "id": "object-browser",
+      "title": "Object Browser",
+      "kind": "tool",
+      "command": "tool:object-browser",
+      "status": "registered"
+    },
+    {
+      "id": "properties",
+      "title": "Properties",
+      "kind": "tool",
+      "command": "tool:properties",
+      "status": "registered"
+    },
+    {
+      "id": "toolbox",
+      "title": "Toolbox",
+      "kind": "tool",
+      "command": "tool:toolbox",
+      "status": "registered"
+    },
+    {
+      "id": "outline",
+      "title": "Document Outline",
+      "kind": "tool",
+      "command": "tool:outline",
+      "status": "registered"
+    },
+    {
+      "id": "bookmarks",
+      "title": "Bookmarks",
+      "kind": "tool",
+      "command": "tool:bookmarks",
+      "status": "registered"
+    },
+    {
+      "id": "calls",
+      "title": "Call Hierarchy",
+      "kind": "tool",
+      "command": "tool:calls",
+      "status": "registered"
+    },
+    {
+      "id": "code-definition",
+      "title": "Code Definition",
+      "kind": "tool",
+      "command": "tool:code-definition",
+      "status": "registered"
+    },
+    {
+      "id": "references",
+      "title": "Find All References",
+      "kind": "tool",
+      "command": "tool:references",
+      "status": "registered"
+    },
+    {
+      "id": "test-explorer",
+      "title": "Test Explorer",
+      "kind": "tool",
+      "command": "tool:test-explorer",
+      "status": "registered"
+    },
+    {
+      "id": "diagnostic-timeline",
+      "title": "Diagnostic Tools: App Sessions",
+      "kind": "tool",
+      "command": "tool:diagnostic-timeline",
+      "status": "registered"
+    },
+    {
+      "id": "command-window",
+      "title": "Command Window",
+      "kind": "tool",
+      "command": "tool:command-window",
+      "status": "registered"
+    },
+    {
+      "id": "solution-view",
+      "title": "Solution Explorer View",
+      "kind": "tool",
+      "command": "tool:solution-view",
+      "status": "registered"
+    },
+    {
+      "id": "search",
+      "title": "Find in Files",
+      "kind": "tool",
+      "command": "tool:search",
+      "status": "registered"
+    },
+    {
+      "id": "find-results-1",
+      "title": "Find Results 1",
+      "kind": "tool",
+      "command": "tool:find-results-1",
+      "status": "registered"
+    },
+    {
+      "id": "find-results-2",
+      "title": "Find Results 2",
+      "kind": "tool",
+      "command": "tool:find-results-2",
+      "status": "registered"
+    },
+    {
+      "id": "replace-files",
+      "title": "Replace in Files",
+      "kind": "tool",
+      "command": "tool:replace-files",
+      "status": "registered"
+    },
+    {
+      "id": "notifications",
+      "title": "Notifications",
+      "kind": "tool",
+      "command": "tool:notifications",
+      "status": "registered"
+    },
+    {
+      "id": "background-tasks",
+      "title": "Background Tasks",
+      "kind": "tool",
+      "command": "tool:background-tasks",
+      "status": "registered"
+    }
+  ],
+  "menus": [
+    {
+      "id": "file",
+      "title": "File",
+      "mnemonic": "f",
+      "commands": [
+        "open",
+        "openFolder",
+        "save",
+        "saveDisk",
+        "workbench.start",
+        "workbench.recent",
+        "workbench.settingsProfile"
+      ]
+    },
+    {
+      "id": "edit",
+      "title": "Edit",
+      "mnemonic": "e",
+      "commands": [
+        "findFiles",
+        "workbench.replaceFiles",
+        "workbench.goToAll"
+      ]
+    },
+    {
+      "id": "view",
+      "title": "View",
+      "mnemonic": "v",
+      "commands": [
+        "tool:solution",
+        "tool:problems",
+        "tool:output",
+        "tool:task-list",
+        "tool:class-view",
+        "tool:object-browser",
+        "tool:properties",
+        "tool:toolbox",
+        "tool:outline",
+        "tool:bookmarks",
+        "tool:calls",
+        "tool:code-definition",
+        "tool:references",
+        "tool:command-window",
+        "workbench.toolbars"
+      ]
+    },
+    {
+      "id": "project",
+      "title": "Project",
+      "mnemonic": "p",
+      "commands": [
+        "solutionSetStartupProjects",
+        "projectProperties",
+        "workbench.configuration"
+      ]
+    },
+    {
+      "id": "build",
+      "title": "Build",
+      "mnemonic": "b",
+      "commands": [
+        "build",
+        "nativeMSBuild",
+        "nativeEvaluate",
+        "nativeCancel"
+      ]
+    },
+    {
+      "id": "debug",
+      "title": "Debug",
+      "mnemonic": "d",
+      "commands": [
+        "debug",
+        "run",
+        "start-new-instance",
+        "stop",
+        "stop-all",
+        "pause",
+        "next",
+        "stepIn",
+        "stepOut",
+        "toggleBreakpoint",
+        "removeBreakpoints",
+        "tool:diagnostics"
+      ]
+    },
+    {
+      "id": "test",
+      "title": "Test",
+      "mnemonic": "t",
+      "commands": [
+        "tool:test-explorer",
+        "workbench.tests.run",
+        "workbench.tests.failed"
+      ]
+    },
+    {
+      "id": "analyze",
+      "title": "Analyze",
+      "mnemonic": "a",
+      "commands": [
+        "tool:task-list",
+        "tool:calls",
+        "tool:diagnostics",
+        "workbench.performance"
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Tools",
+      "mnemonic": "o",
+      "commands": [
+        "workbench.options",
+        "workbench.settingsProfile",
+        "workbench.toolbars",
+        "tool:background-tasks",
+        "tool:notifications",
+        "workbench.commandWindow"
+      ]
+    },
+    {
+      "id": "extensions",
+      "title": "Extensions",
+      "mnemonic": "x",
+      "commands": []
+    },
+    {
+      "id": "window",
+      "title": "Window",
+      "mnemonic": "w",
+      "commands": []
+    },
+    {
+      "id": "help",
+      "title": "Help",
+      "mnemonic": "h",
+      "commands": [
+        "examples",
+        "shortcuts",
+        "architecture",
+        "profile",
+        "about"
+      ]
+    }
+  ]
+}

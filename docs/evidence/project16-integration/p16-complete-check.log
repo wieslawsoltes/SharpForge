@@ -1,0 +1,52 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 617,
+  "browserScripts": 32,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 2504 JavaScript modules; 0 syntax errors.
+{
+  "passed": false,
+  "inspected": 2500,
+  "modules": 2500,
+  "errors": [
+    {
+      "path": "apps/studio/workbench/comment-tasks.js",
+      "operation": "dynamic-import",
+      "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+      "count": 1,
+      "lines": [
+        5
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "packages/editor/smoke.mjs",
+      "operation": "dynamic-import",
+      "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+      "count": 3,
+      "lines": [
+        9,
+        21,
+        32
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "apps/studio/workbench/comment-tasks.js",
+      "operation": "dynamic-import",
+      "message": "Stale or mismatched allow-list entry"
+    },
+    {
+      "path": "packages/editor/smoke.mjs",
+      "operation": "dynamic-import",
+      "message": "Stale or mismatched allow-list entry"
+    }
+  ]
+}

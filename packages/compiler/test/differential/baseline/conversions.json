@@ -1,4 +1,7 @@
 {
+  "conversions/as-and-is": ["directCil"],
+  "conversions/boxing-unboxing": ["directCil"],
+  "conversions/char-conversions": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "conversions/cs0029-int-to-bool": ["diagnostics", "warnings"],
   "conversions/cs0029-int-to-string": ["diagnostics", "warnings"],
   "conversions/cs0029-return-type": ["diagnostics", "warnings"],
@@ -7,5 +10,6 @@
   "conversions/cs0031-constant-out-of-range": ["diagnostics", "warnings"],
   "conversions/cs0266-double-to-int": ["diagnostics", "warnings"],
   "conversions/cs0266-long-to-int": ["diagnostics", "warnings"],
-  "conversions/cs0664-double-literal-to-float": ["diagnostics", "warnings"]
+  "conversions/cs0664-double-literal-to-float": ["diagnostics", "warnings"],
+  "conversions/numeric-implicit-explicit": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

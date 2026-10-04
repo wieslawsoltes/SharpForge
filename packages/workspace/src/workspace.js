@@ -67,6 +67,12 @@ export class Workspace {
 
   compile(options = {}) { return compileWorkspace(this, options); }
 
+  /** Semantic source queries share the current compilation and its options. */
+  sourceModel(options = {}) {
+    this.compile(options);
+    return this.documents.size ? this.compilation.getSourceModel() : null;
+  }
+
   exportProject() {
     return {format: 'sharpforge-project', version: 1,
       files: [...this.documents.values()].map(document => ({

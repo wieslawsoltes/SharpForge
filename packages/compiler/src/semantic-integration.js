@@ -5,6 +5,7 @@
  * are always analysed, including when unused, so invalid metadata and reference binding errors cannot pass silently.
  * Programs already emitted retain their image; using and feature diagnostics are added where analysis requires them.
  */
+import {DiagnosticId} from './diagnostics/codes.js';
 import { diagnostic } from '@sharpforge/text';
 import { SemanticAnalysis } from './semantic-analysis.js';
 import { SymbolKind } from './symbols/types.js';
@@ -12,72 +13,73 @@ import { formatMessage, isFeatureGateCode } from './diagnostics/codes.js';
 import { suspiciousUsings, usingDiagnosticClassifier } from './binder/using-check.js';
 import { featureDiagnosticCodes, newestLanguageVersion } from './binder/feature-check.js';
 import { generateFromSemanticAnalysis, isEntryPointCandidate } from './codegen/semantic/generator.js';
-import { needsSemanticRules, semanticRuleCodes } from './semantic/profile-rechecks.js';
+import { applicableRuleCodes } from './semantic/profile-rechecks.js';
 
 /** Profile diagnostics that mark a construct the execution profile cannot run (as opposed to option and API errors). */
 export const isProfileConstructDiagnostic = code =>
   /^SF1\d{3}$/.test(code) || /^SF20(0[1-7]|1[0-4]|9[89])$/.test(code) || /^SF214[1-3]$/.test(code);
 /** Diagnostics the legacy pipeline owns whatever the semantic analysis says: entry point, options, CIL. */
 const pipelineCodes = new Set([
-  'CS5001',
-  'CS0017',
-  'CS0028',
-  'CS7022',
-  'CS8892',
-  'CS1555',
-  'CS1558',
-  'CS4009',
-  'CS9273',
-  'CS8803',
-  'CS1617',
-  'CS2019',
-  'CS8630',
-  'CS8636',
-  'CS1900',
-  'CS2029',
-  'CS2017',
-  'CS8203',
-  'CS7088',
-  'CS2007',
-  'SF2008',
-  'SF2009',
-  'SF2140',
-  'SF3001',
+  DiagnosticId.CS5001,
+  DiagnosticId.CS0017,
+  DiagnosticId.CS0028,
+  DiagnosticId.CS7022,
+  DiagnosticId.CS8892,
+  DiagnosticId.CS1555,
+  DiagnosticId.CS1558,
+  DiagnosticId.CS4009,
+  DiagnosticId.CS9273,
+  DiagnosticId.CS8803,
+  DiagnosticId.CS1617,
+  DiagnosticId.CS2019,
+  DiagnosticId.CS8630,
+  DiagnosticId.CS8636,
+  DiagnosticId.CS1900,
+  DiagnosticId.CS2029,
+  DiagnosticId.CS2017,
+  DiagnosticId.CS8203,
+  DiagnosticId.CS7088,
+  DiagnosticId.CS2007,
+  DiagnosticId.SF2008,
+  DiagnosticId.SF2009,
+  DiagnosticId.SF2140,
+  DiagnosticId.SF3001,
 ]);
 /** What the pipeline's source-level async rewrite reports when it meets `await` or `async` it cannot rewrite. */
-const asyncRewriteCodes = new Set(['CS4032', 'CS1983']);
-const adapterPseudo = d =>
-  (d.code === 'CS1014' && /init is not supported/.test(d.message)) || (d.code === 'CS0528' && /Duplicate IDisposable/.test(d.message));
+const asyncRewriteCodes = new Set([DiagnosticId.CS4032, DiagnosticId.CS1983]);
+/** The syntax adapter's stand-in errors: they mark a construct outside the execution profile and are not C# diagnostics. */
+export const adapterPseudo = d =>
+  (d.code === DiagnosticId.CS1014 && /init is not supported/.test(d.message)) || (d.code === DiagnosticId.CS0528 && /Duplicate IDisposable/.test(d.message));
 const constructNames = {
-  SF1003: '64-bit and unsigned integer literals',
-  SF1004: 'integer literals outside Int32',
-  SF1005: 'float and decimal literals',
-  SF1010: 'struct, interface, enum, delegate and record declarations',
-  SF1011: 'virtual, abstract, override and other member modifiers',
-  SF1012: 'user-defined generics',
-  SF1013: 'nullable types',
-  SF1014: 'base classes and interfaces',
-  SF1015: 'nested types',
-  SF1017: 'ref, out, in and named arguments',
-  SF1018: 'declaration forms outside the profile',
-  SF1019: 'multi-dimensional arrays and type forms outside the profile',
-  SF2001: 'const and readonly fields',
-  SF2014: 'static constructors',
-  SF2002: 'typed exception handlers',
-  SF2003: 'char values',
-  SF2004: 'integers outside Int32',
-  SF2005: 'indexers',
-  SF2006: 'casts across class hierarchies',
-  SF2098: 'expressions outside the profile',
-  SF2099: 'statements outside the profile',
-  SF2141: 'null-conditional access as a value',
+  [DiagnosticId.SF1003]: '64-bit and unsigned integer literals',
+  [DiagnosticId.SF1004]: 'integer literals outside Int32',
+  [DiagnosticId.SF1005]: 'float and decimal literals',
+  [DiagnosticId.SF1010]: 'struct, interface, enum, delegate and record declarations',
+  [DiagnosticId.SF1011]: 'virtual, abstract, override and other member modifiers',
+  [DiagnosticId.SF1012]: 'user-defined generics',
+  [DiagnosticId.SF1013]: 'nullable types',
+  [DiagnosticId.SF1014]: 'base classes and interfaces',
+  [DiagnosticId.SF1015]: 'nested types',
+  [DiagnosticId.SF1017]: 'ref, out, in and named arguments',
+  [DiagnosticId.SF1018]: 'declaration forms outside the profile',
+  [DiagnosticId.SF1019]: 'multi-dimensional arrays and type forms outside the profile',
+  [DiagnosticId.SF2001]: 'const and readonly fields',
+  [DiagnosticId.SF2014]: 'static constructors',
+  [DiagnosticId.SF2002]: 'typed exception handlers',
+  [DiagnosticId.SF2003]: 'char values',
+  [DiagnosticId.SF2004]: 'integers outside Int32',
+  [DiagnosticId.SF2005]: 'indexers',
+  [DiagnosticId.SF2006]: 'casts across class hierarchies',
+  [DiagnosticId.SF2098]: 'expressions outside the profile',
+  [DiagnosticId.SF2099]: 'statements outside the profile',
+  [DiagnosticId.SF2141]: 'null-conditional access as a value',
 };
 const key = d => d.code + '|' + d.uri + '|' + d.start + '|' + d.length + '|' + d.message;
 
 function internalFailure(compilation, error) {
   const source = compilation.files[0]?.source;
   const reason = String(error?.message ?? error).split('\n')[0];
-  return diagnostic(source, 0, 1, 'SF2201', formatMessage('SF2201', [reason]), 'warning');
+  return diagnostic(source, 0, 1, DiagnosticId.SF2201, formatMessage(DiagnosticId.SF2201, [reason]), 'warning');
 }
 
 /** True when every error is one the pipeline owns: a syntax error or an entry-point, option or feature-gate diagnostic. */
@@ -91,7 +93,7 @@ function onlyStandingErrors(legacy, files) {
   return true;
 }
 
-const hasNoEntryPoint = legacy => legacy.some(d => d.code === 'CS5001');
+const hasNoEntryPoint = legacy => legacy.some(d => d.code === DiagnosticId.CS5001);
 
 /**
  * @param compilation the Compilation after its pipeline ran  @param {object[]} featureDiagnostics parser-level version gates
@@ -121,16 +123,26 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (!compiled && !gatesVersion && !outside.length && !hasReferences && nothingToGenerate) return null;
   const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null,
     // ... and for the few language rules the pipeline does not check on constructs it compiles.
-    rechecked = compiled && needsSemanticRules(files);
+    nullableContext = compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext ?? compilation.options.nullable,
+    ruleCodes = compiled ? applicableRuleCodes(files, { nullableContext }) : null,
+    rechecked = !!ruleCodes?.size;
   if (compiled && !gatesVersion && !hasReferences && !usings && !rechecked) return null;
   let result;
   try {
     const analysis = new SemanticAnalysis(files, {
       ...compilation.options,
+      // Compilation consumes diagnostics and bound trees, not editor invocation candidates.
+      captureInvocations: false,
+      // Retain the execution profile's builtin receiver shorthands when semantic lowering takes over.
+      // Explicit using policy or metadata references keep ordinary C# name resolution.
+      executionBuiltinAliases: !compiled && !hasReferences && options.implicitUsings === undefined,
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
     result = usings === 'directives' && !rechecked ? analysis.runUsings() : analysis.run();
+    compilation.sourceAnalysis = analysis;
+    compilation.sourceAnalysisResult = result;
+    compilation.sourceAnalysisComplete = !result.usingsOnly && !result.unsupported;
   } catch (error) {
     // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
     // not pass silently either: it is reported as a diagnostic of its own.
@@ -144,7 +156,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const hasEntry =
     result.assembly.topLevel.some(i => i.statement) ||
     result.assembly.types.some(t => t.getMembers('Main').some(m => m.kind === SymbolKind.Method && isEntryPointCandidate(m)));
-  const owned = d => syntax.has(key(d)) || features.has(key(d)) || (pipelineCodes.has(d.code) && !(d.code === 'CS5001' && hasEntry));
+  const owned = d => syntax.has(key(d)) || features.has(key(d)) || (pipelineCodes.has(d.code) && !(d.code === DiagnosticId.CS5001 && hasEntry));
   const merge = (base, extra) => {
     const seen = new Set(base.map(key)),
       out = [...base];
@@ -163,9 +175,15 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const unchanged = () => (featureGates.length ? { diagnostics: merge(legacy, featureGates), semantic: result } : null);
   if (compiled && (!hasReferences || !errors.length)) {
     // The image stands; the analysis only adds what it found in the using directives and alias declarations.
-    const taken = d => isUsingDiagnostic(d) || d.code === 'CS0576' || (rechecked && semanticRuleCodes.has(d.code));
+    const taken = d => isUsingDiagnostic(d) || d.code === DiagnosticId.CS0576 || (rechecked && ruleCodes.has(d.code));
     const extra = [...semantic.filter(taken), ...featureGates];
-    return extra.length ? { diagnostics: merge(legacy, extra), semantic: result } : null;
+    if (!extra.length) return null;
+    if (!extra.some(d => d.severity === 'error')) return { diagnostics: merge(legacy, extra), semantic: result };
+    // A rule of the analysis rejects the program: its warnings describe the program too (the pipeline bound it wrongly,
+    // so what it found unused or unreachable need not be).
+    const standing = legacy.filter(d => d.severity !== 'warning' || owned(d)),
+      warnings = result.incomplete ? [] : semantic.filter(d => d.severity === 'warning');
+    return { diagnostics: merge(standing, [...extra, ...warnings]), semantic: result };
   }
   if (errors.length) {
     // Both binders reject the program: without profile constructs (or references) the pipeline's diagnostics stand,
@@ -177,7 +195,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
     // Not valid C#: the semantic diagnostics replace the errors the string-typed binder derived from the constructs it does not
     // know. The profile diagnostics stay (the program still names constructs the profile lacks), except a literal-range one
     // that sits on the very literal a C# error is reported for (one diagnostic per literal).
-    const literalCodes = new Set(['SF1003', 'SF1004', 'SF1005', 'SF2004']);
+    const literalCodes = new Set([DiagnosticId.SF1003, DiagnosticId.SF1004, DiagnosticId.SF1005, DiagnosticId.SF2004]);
     const keptProfile = profile.filter(p => !(literalCodes.has(p.code) && errors.some(e => e.uri === p.uri && e.start === p.start)));
     return {
       diagnostics: merge([...legacy.filter(owned), ...keptProfile], semantic).sort((a, b) => (a.uri === b.uri ? a.start - b.start : 0)),
@@ -187,7 +205,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (result.incomplete) return unchanged();
   // Valid C#. Diagnostics the pipeline owns (syntax, entry point, options, language-version gates) stand whatever the
   // analysis says; if one of them is an error there is nothing to generate.
-  const standing = legacy.filter(d => (owned(d) && !(d.code === 'CS5001' && hasEntry)) || isFeatureGateCode(d.code)),
+  const standing = legacy.filter(d => (owned(d) && !(d.code === DiagnosticId.CS5001 && hasEntry)) || isFeatureGateCode(d.code)),
     blocked = standing.some(d => d.severity === 'error');
   if (!profile.length && blocked) {
     // Only a stand-in error named a construct outside the profile: the standing errors are the whole story.
@@ -209,6 +227,6 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
         : first,
     source = compilation.sources.get(at?.uri) ?? compilation.sources.get(first?.uri) ?? compilation.files[0]?.source;
   const diagnostics = merge([...standing, ...profile], semantic);
-  if (at && source) diagnostics.push(diagnostic(source, at.start, at.length, 'SF2200', formatMessage('SF2200', [construct]), 'error'));
+  if (at && source) diagnostics.push(diagnostic(source, at.start, at.length, DiagnosticId.SF2200, formatMessage(DiagnosticId.SF2200, [construct]), 'error'));
   return { diagnostics, semantic: result };
 }

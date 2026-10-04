@@ -1,6 +1,6 @@
 {
   "constant-interpolation/constant-interpolation-in-csharp-9": ["diagnostics", "warnings"],
-  "constant-interpolation/constants-fold-in-fields-locals-labels-and-patterns": ["diagnostics", "warnings", "bytecode", "cil"],
+  "constant-interpolation/constants-fold-in-fields-locals-labels-and-patterns": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "constant-interpolation/cs0133-holes-must-be-constant-strings": ["diagnostics", "warnings"],
-  "constant-interpolation/doubled-braces-are-one-brace": ["diagnostics", "warnings", "bytecode", "cil"]
+  "constant-interpolation/doubled-braces-are-one-brace": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

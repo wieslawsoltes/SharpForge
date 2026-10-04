@@ -1,7 +1,7 @@
 /**
  * Differential fixtures for C# 14 extension blocks (SF-A02-T83): instance and static extension methods and
  * properties, generic blocks, operators, lookup scopes and precedence, the implementation methods called by name;
- * CS9282, CS9283, CS9285, CS9287, CS9290-CS9292, CS9295, CS9300-CS9304, CS9316, CS9317, CS9319, CS9326, CS9339,
+ * CS9282, CS9283, CS9284, CS9285, CS9287, CS9290-CS9292, CS9295, CS9300-CS9304, CS9316, CS9317, CS9319, CS9326, CS9339,
  * CS9342, CS9347, CS0120, CS0176, CS0200, CS0558, CS1061, CS0117.
  */
 import { cs, out, diag, feature } from './kit.js';
@@ -349,6 +349,18 @@ export const fixtures = feature('extension-blocks', [
               var c = a ^ a;
           }
       }
+    `,
+  ),
+  diag(
+    'cs9284-cs9285-receiver-default-value',
+    cs`
+      static class E
+      {
+          extension(int x = 0) { public int Plain => x; }
+          extension(string s = null, int extra = 1) { public int Two => 1; }
+          extension(int = 5) { public static int Unnamed => 1; }
+      }
+      class Program { static void Main() { } }
     `,
   ),
 ]);

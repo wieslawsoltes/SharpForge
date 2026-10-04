@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+
+var values = new Dictionary<string, int>(8);
+values.Add("a", 1); values.Add("b", 2); values.Add("c", 3);
+values.Add("d", 4); values.Add("e", 5);
+var originalKeys = values.Keys;
+Console.WriteLine(values.Remove("b")); Console.WriteLine(values.Remove("d"));
+Console.WriteLine(string.Join(",", values.Keys));
+Console.WriteLine(string.Join(",", values.Values));
+values.Add("f", 6); values.Add("g", 7);
+Console.WriteLine(string.Join(",", values.Keys));
+Console.WriteLine(string.Join(",", values.Values));
+values["c"] = 8;
+Console.WriteLine(values.TryAdd("a", 9)); Console.WriteLine(values.Remove("missing"));
+Console.WriteLine(string.Join(",", values.Keys));
+Console.WriteLine(string.Join(",", values.Values));
+Console.WriteLine(values.ContainsValue(2)); Console.WriteLine(values.ContainsValue(8));
+values.Remove("a"); values.Remove("g"); values.Remove("c"); values.Remove("f"); values.Remove("e");
+Console.WriteLine(values.Count);
+values.Add("x", 10); values.Add("y", 11);
+Console.WriteLine(string.Join(",", values.Keys));
+Console.WriteLine(string.Join(",", values.Values));
+values.Clear(); values.Add("first", 12); values.Add("second", 13);
+GC.Collect();
+Console.WriteLine(string.Join(",", values.Keys));
+Console.WriteLine(string.Join(",", values.Values));
+
+var integers = new Dictionary<int, string>();
+integers.Add(0, "zero"); integers.Add(-1, "negative"); integers.Add(2147483647, "maximum");
+integers.Remove(-1); integers.Add(-2147483648, "minimum");
+Console.WriteLine(string.Join(",", integers.Keys));
+Console.WriteLine(string.Join(",", integers.Values));
+Console.WriteLine(integers[0]); Console.WriteLine(integers[-2147483648]);
+integers.Clear(); integers.Clear();
+Console.WriteLine(integers.Count); Console.WriteLine(integers.Remove(0));

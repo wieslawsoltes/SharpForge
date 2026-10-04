@@ -1,6 +1,6 @@
 {
-  "member-properties/accessor-forms": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-properties/accessor-forms": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-properties/property-declaration-errors": ["diagnostics", "warnings"],
   "member-properties/property-use-errors": ["diagnostics", "warnings"],
-  "member-properties/static-properties-and-accessor-order": ["diagnostics", "warnings", "bytecode", "cil"]
+  "member-properties/static-properties-and-accessor-order": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

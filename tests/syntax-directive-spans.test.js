@@ -37,7 +37,7 @@ test('CS1529 covers the whole misplaced using directive', () => {
 
 test('await using records asynchronous using, await foreach records async streams', () => {
   const featuresOf = body => SyntaxTree.parseText(`class C { async void M() { ${body} } }`).features.map(use => use.id);
-  assert.deepEqual(featuresOf('await using (r) { }').filter(id => id.startsWith('Async')), ['AsyncUsing']);
+  assert.deepEqual(featuresOf('await using (r) { }').filter(id => id.startsWith('Async')), ['Async', 'AsyncUsing'], 'the async method and the using');
   assert(featuresOf('await using var s = F();').includes('AsyncUsing'));
   assert(!featuresOf('await using var s = F();').includes('AsyncStreams'));
   assert(featuresOf('await foreach (var x in xs) { }').includes('AsyncStreams'));

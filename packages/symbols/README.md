@@ -25,6 +25,87 @@ scopes remain accepted. Constants accept primitive `type`/`value` pairs, optiona
 BigInt for 64-bit integers. Invalid names, ranges, imports and references throw
 `SymbolError`.
 
+`readPortablePdb` reads complete primitive and enum LocalConstant signatures,
+ordered `customModifiers` (`required`, `typeToken`), object/string null and typed
+class null. Existing character values remain numeric UTF-16 units and 64-bit
+integers remain BigInt. Strings preserve BOMs, embedded NUL and unmatched UTF-16
+surrogates. Enums retain the historical coded `enumType` and additionally expose
+the full `enumTypeToken` and `enumTypeVerified: false`; standalone reading does
+not resolve enum definitions.
+Typed null exposes `type: 'class'`, `typeToken` and `value: null`.
+Malformed Boolean values, fixed-width payloads, trailing data and out-of-range
+handles fail explicitly. Type-dependent general constants (including decimal,
+DateTime and value-type defaults) retain owned `raw` bytes and expose
+`decoded: false`, `reason: 'type-metadata-required'`, `typeKind`, `typeToken` and
+`defaultValue` (whether the payload is absent). Their values are not guessed.
+
+Reader options `maxConstantBytes` (16 MiB default, 64 MiB hard cap) and
+`maxConstantEntries` (100,000 default, 1,000,000 hard cap, counting rows plus
+custom modifiers) bound aggregate allocations before copying any constant.
+`maxConstantModifiers` defaults to 64 per
+constant, capped at 1,024. Constant names are capped at 3,072 UTF-8 bytes before
+decoding and 1,024 UTF-16 units afterward. These options also apply through
+`loadSymbols`. Native C# examples and offline reference data are in
+`interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
+
+For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
+framework `System.Enum` base and exactly one special `value__` instance field.
+Its scalar signature must match the constant's encoded kind; mismatches,
+unsupported bases and malformed fields fail explicitly. Successful checks set
+`enumTypeVerified: true`; this verifies base identity and underlying scalar type,
+not every ECMA type-definition rule. TypeRef/TypeSpec enums and unbound symbols
+retain decoded scalar values with `enumTypeVerified: false`; external assemblies
+are not loaded. FieldPtr indirection and field custom modifiers are supported.
+Before list expansion, the binder caps selected enums at 1,024 and fields at
+4,096 per enum / 65,536 total. Inspected instance-field signatures are capped at
+4 KiB each / 1 MiB total, with decoder depth 32 / nodes 256; names use the same
+bounded metadata-name reader. Definitions are checked once per load and no PE
+views or signature ASTs escape. This reuses the captured native C# short enum.
+
+For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal` or
+`System.DateTime` TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
+framework identity: `System.Runtime` / `b03f5f7f11d50a3a`,
+`System.Private.CoreLib` / `7cec85d7bea7798e`, or `mscorlib` / `b77a5c561934e089`.
+AssemblyRef tokens and full public keys are supported; TypeDef requires its own
+Assembly public key. This checks declared metadata identity without loading
+assemblies or verifying signatures. Custom-assembly lookalikes remain unresolved.
+The binder caps inspected assembly scopes at 1,024, each public key at 16 KiB
+and aggregate key bytes at 1 MiB before hashing. Decimal
+constants expose `type: 'decimal'`, exact decimal text in `value`, and
+`decimal: { coefficient, scale, negative }`; `coefficient` is an unsigned 96-bit
+BigInt. Trailing fractional zeroes and the sign bit of zero are preserved without
+floating-point conversion. Their complete signature, raw bytes and type token
+remain available. Payload length must be 13 bytes and scale must be 0–28.
+Standalone PDBs and explicitly unbound symbols remain unresolved. TypeSpec,
+nested same-name types and other type-dependent payloads remain outside
+this binding increment. The native reference uses SRM `BlobReader.ReadDecimal`;
+constructed boundary cases test the full coefficient, scale and sign encoding.
+
+DateTime constants expose `type: 'datetime'`, exact BigInt ticks in `value`, and
+`dateTime: { ticks, kind: 'unspecified' }`. A tick is 100 nanoseconds from
+0001-01-01 in the Gregorian calendar. The payload must be exactly eight bytes;
+negative ticks and values above 3155378975999999999 fail explicitly. The
+representation preserves all ticks without converting to JavaScript Date or
+inferring UTC/local time. The same declared framework identity checks, owned raw
+signature, modifiers and unbound behavior apply. VB Date literals and SRM
+`BlobReader.ReadDateTime` are captured by
+`scripts/validate-pdb-datetime-constants.mjs`; offline tests read that corpus.
+Calendar formatting, time-zone conversion, DateTimeOffset and general type
+resolution are separate capabilities.
+
+Payload-free `VALUETYPE` constants referencing a TypeSpec for `System.Nullable<T>`
+now bind to `type: 'nullable'`, `value: null`, `decoded: true` and
+`defaultValue: true`. The original TypeSpec token and owned raw signature remain
+available. This represents the boxed default (no value), not a fabricated value
+of `T`. The nullable definition uses the same declared framework identity gate.
+Closed arguments supported here are Boolean, Char, signed/unsigned integer widths,
+Single, Double, IntPtr, UIntPtr and identity-checked Decimal/DateTime. Other
+constructed types, generic variables, modified arguments and nonempty nullable
+payloads remain explicitly unresolved. TypeSpec count (1,024), each blob (4 KiB)
+and aggregate bytes (1 MiB) are checked before decoding; each AST has depth 32
+and node 256 limits. ASTs/PE views do not escape the load. The native reference
+uses SRM-built metadata and CLR boxed defaults, not C# nullable const declarations.
+
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
 supplied hashes are checked against the exact source bytes. Hash inputs are exact source
@@ -81,7 +162,7 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Capability | Writer and reader coverage |
 | --- | --- |
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
-| Locals and imports | Lexical scopes, primitive/raw constants, import kinds 1–9 |
+| Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
@@ -143,6 +224,36 @@ outside credential-free HTTPS raise `SymbolError`. Paths/URLs are limited to
 32,768 UTF-16 code units; `maxMappings` bounds a linear scan of the mapping table.
 This mapping capability does not fetch or grant access to an origin.
 
+`portablePdbKey(path, pdbId)` and `peSymbolKey(path, { timestamp, sizeOfImage })`
+produce [SSQP keys](https://github.com/dotnet/symstore/blob/main/docs/specs/SSQP_Key_Conventions.md).
+Paths accept both separator styles; keys use lowercase basenames, the PDB GUID
+with `FFFFFFFF`, or an eight-digit uppercase PE timestamp followed by a minimal
+lowercase image size. The PDB input is its complete 20-byte identity; its timestamp
+does not participate in the key. Filename casing uses simple per-codepoint
+lowercasing without contextual or multi-character expansions.
+
+`createSymbolServer({ serverUrl, fetch, requestPermission, allowedOrigins })`
+reuses the source client's explicit origin grants, bounded streaming, redirects,
+timeout, cancellation and disposal. It never performs implicit lookup. Methods
+`lookupPortablePdb(name, id, { signal, assembly })`, `lookupForAssembly(assembly,
+{ signal })`, and `lookupPE(name, identity, { signal })` return `SourceStatus`
+results with artifact bytes only after identity checks. URLs preserve the server
+prefix and escape filenames. The default artifact limit is 64 MiB. Both public
+assembly inputs are copied before permission or transport callbacks run. Assembly-derived
+lookup reuses that owned snapshot internally, avoiding a second full assembly copy.
+The [Node allocation benchmark](benchmarks/symbol-copy-node24.json) records paired measurements
+at the permission boundary; it does not measure downloads or PDB verification.
+
+`identityVerified` describes the requested identity match; it is not a digital
+signature. `checksumVerified` is true only when an assembly-bound PDB lookup also
+validates its debug-directory checksum. Without the optional assembly, PDB
+lookup still compares all 20 identity bytes; PE lookup compares timestamp and
+image size. The current PE payload verifier accepts managed CLI images through
+the existing CIL inspector. Pure PE key generation accepts headers from any PE;
+native PE, MSF PDB, ELF, Mach-O, compressed-store files and pointer-file payloads
+are not supported by this lookup client and cannot be returned as verified.
+Ordinary tests use captured dotnet-symbol keys and injected transports offline.
+
 `await resolveSources(symbols, { sources, fetcher, signal })` tries workspace
 sources (a Map or name-keyed object), embedded bytes, then an explicitly supplied
 source client in that order. Missing, mismatched or undecodable candidates fall
@@ -159,3 +270,97 @@ allocation is separately bounded by the source client's own limit before the
 resolution verification budget is applied. `fallbackEncoding` controls decoding;
 `mapping` passes options to `sourceLinkUrl`. Cancellation and timeout leave pending
 documents unverified. The caller owns the supplied fetch client's lifetime.
+Local projection builds one method-token index per binding call. Scope processing
+is linear in methods, scopes and variables, preserves scope/variable order, and
+does not retain stale results between bindings.
+
+A result from `loadSymbols(assembly, pdb)` exposes
+`symbols.hoistedLocals(methodToken, moveNextOffset)`. It returns
+`{ available, reason, moveNext, kickoff, locals }`. For supported bound symbols,
+each live local contains `name`, `fieldToken`, `fieldName`, zero-based `slot`,
+`startOffset` and exclusive `endOffset`. The method token may be the kickoff or
+MoveNext token; the offset is always relative to MoveNext IL. This maps names and
+field identities, not field values.
+
+The current convention is Roslyn C# user fields (`<name>5__N`) paired with the
+Portable PDB hoisted-scope entry at `N - 1`. Zero-length synthesized slots do not
+become user locals. Missing scopes, unsupported conventions/slots, unknown methods
+and unbound inspection return `available: false` with an explicit reason and no
+locals. Malformed ranges, ambiguous fields and invalid query arguments throw
+`SymbolError`. Visual Basic, closure fields and compiler state reconstruction are
+not mapped by this capability.
+
+Relevant scope, field, method and body-length facts are snapshotted at load without
+copying the whole assembly. The private query index is built on its first use.
+`maxHoistedEntries`
+bounds metadata/index/expanded local entries (default 100,000; hard maximum
+1,000,000) before list expansion; field names are limited to 1,024 UTF-16 units.
+The index uses `metadata.list` for field/method ownership, including pointer-table
+indirection. Each type's fields are read once; each query scans only that method's
+hoisted locals and returns fresh records. Load a new symbol set after changing
+symbols; modifying input bytes or returned records, including before the first
+query, does not alter lookup results. The lookup retains no borrowed bytes or ASTs.
+
+The naming convention and zero-length slot rule follow the primary Roslyn sources:
+[GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs)
+and [StateMachineHoistedLocalScope](https://github.com/dotnet/roslyn/blob/main/src/Dependencies/CodeAnalysis.Debugging/StateMachineHoistedLocalScope.cs).
+
+`emitPortablePdb(assembly, { stateMachines })` accepts explicit records
+`{ moveNext, kickoff, catchHandlerOffset, awaits }`, where method references are
+MethodDef tokens and each await is `{ yieldOffset, resumeOffset, resumeMethod }`.
+Omitting both stepping fields keeps the record table-only (including iterator
+links). An explicit empty await list emits a stepping record with no awaits;
+`catchHandlerOffset` defaults to `-1` for no debugger catch handler.
+
+The writer validates yield/resume offsets against IL instruction boundaries in
+the exact supplied assembly and requires a nonnegative catch offset to identify a
+catch-clause entry. Missing/bodyless methods, operand offsets, end-of-body offsets,
+malformed or over-budget await lists, duplicate pairs and duplicate stepping CDI
+are rejected. Each referenced body is decoded once per emission; await validation
+is linear in records plus decoded instructions. The `asyncLimits` emission option
+bounds aggregate state records (default 10,000), awaits (100,000), unique method
+body bytes (8 MiB), and decoded instructions (250,000). Hard maxima are 100,000
+state records, 1,000,000 awaits/instructions, and 64 MiB of body bytes. Counts and
+body bytes are checked before mapping records or decoding IL; the existing
+decoder receives only the remaining aggregate instruction budget. Existing raw CDI
+input remains available through `debug.custom` and its existing codec validation.
+This API consumes explicit producer data. It does not infer Roslyn states or
+stepping offsets from SharpForge's preserved-stack async roles, nor reconstruct
+hoisted fields, logical frames or async-iterator state.
+
+`readPortablePdb(bytes).asyncInfo(methodToken)` returns `{ stateMachine, steps }`.
+Kickoff and MoveNext aliases return the same `{ moveNext, kickoff }` link and
+MoveNext await records (`yieldOffset`, `resumeOffset`, `resumeMethod`). Table-only
+iterator links have no await records. An independent stepping record without a
+state-machine link remains queryable with `stateMachine: null`; unknown tokens
+return `{ stateMachine: null, steps: [] }`.
+
+Async information snapshots only its relevant values while reading and lazily
+indexes them on the first query. Input-byte, exposed-table and returned-result
+mutations cannot change later queries. `maxAsyncEntries` bounds the aggregate
+alias entries, stepping parents and awaits before snapshot allocation (default
+100,000; hard maximum 1,000,000). Invalid method references, duplicate stepping
+parents and ambiguous aliases throw `SymbolError`. Each lookup costs O(returned
+awaits), with fresh state and step records. This API exposes PDB stepping metadata;
+it does not infer runtime states or iterator yield positions.
+
+Bound `loadSymbols` results expose `closureInfo(lambdaMethodToken)`. For supported
+Roslyn C# generation-zero, nongeneric display classes, it returns `available: true`,
+the `containingMethod`, `methodOrdinal`, `lambdaOrdinal`, lambda `syntaxOffset`,
+`closureType`, `closureOrdinal`, `closureSyntaxOffset` and `captures` containing
+`{ name, fieldToken }`. Syntax offsets retain their raw EnC values; this API does
+not convert them to source line/column positions. Method identity uses the
+enclosing type plus EnC method ordinal and exact generated lambda/closure ordinals.
+It never selects an overloaded method by name alone.
+
+Unknown, missing, inconsistent or unsupported mappings return `available: false`,
+an explicit `reason` and no captures. VB, generic or edited display-class naming,
+static/this-only lambdas, capture-link traversal and runtime field values are not
+supported by this capability. Recognized lambda delegate caches are omitted from
+captures; other synthesized capture fields make the result unavailable.
+`maxClosureEntries` bounds metadata, EnC records and expanded capture entries
+(default 100,000; maximum 1,000,000) before snapshots/index expansion. Names share
+the bounded 3,072-byte/1,024-UTF-16-unit metadata scan used by hoisted locals.
+Relevant facts are owned at load, the query index is lazy, and results are fresh;
+input-byte and returned-record mutations cannot alter subsequent queries.
+Naming follows Roslyn's [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs).

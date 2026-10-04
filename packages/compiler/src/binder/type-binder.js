@@ -7,6 +7,7 @@
  * QualifiedName, AliasQualifiedName, ArrayType, NullableType, TupleType, PointerType and RefType into symbols and
  * reports, on the span of the offending name: CS0246, CS0234, CS0426, CS0104, CS0118, CS0305, CS0308, CS0122, CS0307.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {
   SymbolKind,
   TypeKind,
@@ -22,7 +23,9 @@ import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
 import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
-import { maxTupleElements, tupleNameProblems, tupleTypeOf } from './tuples.js';
+import { tupleNameProblems, tupleTypeOf } from './tuples.js';
+import { bindFunctionPointerType } from './function-pointers.js';
+import { isRefLike } from './ref-struct.js';
 
 export class Scope {
   /** @param {'unit'|'namespace'|'type'|'typeParameters'} kind */
@@ -169,7 +172,7 @@ export class TypeBinder {
         if (syntax.identifier.isMissing) return error('');
         let found = this.lookup(name, arity, scope, { ...options, aliasConflicts: true });
         if (found?.aliasConflict) {
-          if (!options.quiet) this.report(scope, syntax.identifier, 'CS0576', [found.aliasConflict.toDisplayString(), name]);
+          if (!options.quiet) this.report(scope, syntax.identifier, DiagnosticId.CS0576, [found.aliasConflict.toDisplayString(), name]);
           return error(name, arity);
         }
         if (!found) {
@@ -182,7 +185,7 @@ export class TypeBinder {
           }
           const missing = {
             node: syntax.kind === 'GenericName' ? syntax : syntax.identifier,
-            code: 'CS0246',
+            code: DiagnosticId.CS0246,
             args: [name + (arity ? '<>' : '')],
           };
           if (options.quietMissingNamespace) {
@@ -195,7 +198,7 @@ export class TypeBinder {
         }
         if (found.ambiguous) {
           if (!options.quiet)
-            this.report(scope, syntax.identifier, 'CS0104', [
+            this.report(scope, syntax.identifier, DiagnosticId.CS0104, [
               name,
               found.ambiguous[0].toDisplayString(),
               found.ambiguous[1].toDisplayString(),
@@ -231,12 +234,12 @@ export class TypeBinder {
             else if (u?.aliases.has(alias)) root = this.aliasTarget(u.aliases.get(alias));
           }
         if (!root) {
-          if (!options.quiet) this.report(scope, syntax.alias, 'CS0432', [alias]);
+          if (!options.quiet) this.report(scope, syntax.alias, DiagnosticId.CS0432, [alias]);
           return error(alias);
         }
         if (root.kind !== SymbolKind.Namespace) {
           // `A::B` needs a namespace alias; an alias of a type is used with `.`.
-          if (root.kind !== SymbolKind.ErrorType && !options.quiet) this.report(scope, syntax.alias, 'CS0431', [alias]);
+          if (root.kind !== SymbolKind.ErrorType && !options.quiet) this.report(scope, syntax.alias, DiagnosticId.CS0431, [alias]);
           return error(alias);
         }
         return this.member(root, syntax.name, scope, options);
@@ -251,7 +254,7 @@ export class TypeBinder {
       assembly = name ? this.host.forwardedToMissingAssembly?.(name) : null;
     if (!assembly) return false;
     const right = syntax.right.identifier;
-    if (!options.quiet) this.report(scope, right, 'CS1069', [right.valueText, name.slice(0, name.lastIndexOf('.')), assembly]);
+    if (!options.quiet) this.report(scope, right, DiagnosticId.CS1069, [right.valueText, name.slice(0, name.lastIndexOf('.')), assembly]);
     return true;
   }
   member(container, right, scope, options) {
@@ -263,7 +266,7 @@ export class TypeBinder {
       const types = container.getTypeMembers(name, arity),
         conflict = assemblyConflict(types);
       if (conflict) {
-        if (!options.quiet) this.report(scope, right.identifier, 'CS0433', conflict);
+        if (!options.quiet) this.report(scope, right.identifier, DiagnosticId.CS0433, conflict);
         return error(name, arity);
       }
       let found = types[0] ?? (arity === 0 ? container.getNamespace(name) : null);
@@ -277,7 +280,7 @@ export class TypeBinder {
         }
         const missing = {
           node: right.kind === 'GenericName' ? right : right.identifier,
-          code: 'CS0234',
+          code: DiagnosticId.CS0234,
           args: [name, container.toDisplayString()],
         };
         if (options.quietMissingNamespace) {
@@ -291,20 +294,20 @@ export class TypeBinder {
       return this.finish(found, args, scope, right, options);
     }
     if (container.kind === SymbolKind.TypeParameter) {
-      this.report(scope, right.identifier, 'CS0704', [container.name]);
+      this.report(scope, right.identifier, DiagnosticId.CS0704, [container.name]);
       return error(name, arity);
     }
     let found = null;
     for (let t = container; t && !found; t = t.baseType) found = (t.originalDefinition ?? t).getTypeMembers?.(name, arity)[0] ?? null;
     if (!found) {
-      if (!options.quiet) this.report(scope, right.identifier, 'CS0426', [name, container.toDisplayString()]);
+      if (!options.quiet) this.report(scope, right.identifier, DiagnosticId.CS0426, [name, container.toDisplayString()]);
       return error(name, arity);
     }
     return this.finish(found, args, scope, right, options, container);
   }
   arityError(scope, syntax, symbol, arity) {
-    if (symbol.arity) this.report(scope, syntax, 'CS0305', [symbol.toDisplayString(), 'type', symbol.arity]);
-    else this.report(scope, syntax, 'CS0308', [symbol.toDisplayString(), 'type']);
+    if (symbol.arity) this.report(scope, syntax, DiagnosticId.CS0305, [symbol.toDisplayString(), 'type', symbol.arity]);
+    else this.report(scope, syntax, DiagnosticId.CS0308, [symbol.toDisplayString(), 'type']);
     return error(symbol.name, arity);
   }
   /** Applies type arguments and accessibility to a looked-up symbol. */
@@ -318,7 +321,7 @@ export class TypeBinder {
         symbol.locations?.length &&
         !isAccessible(symbol.originalDefinition, within?.originalDefinition ?? null, { withinModule: this.host.module })
       )
-        this.report(scope, syntax.identifier ?? syntax, 'CS0122', [symbol.toDisplayString()]);
+        this.report(scope, syntax.identifier ?? syntax, DiagnosticId.CS0122, [symbol.toDisplayString()]);
     }
     if (!argSyntax.length) {
       // A nested type named from inside a generic container keeps the container's own type parameters.
@@ -352,14 +355,16 @@ export class TypeBinder {
         if (name === 'var' && !this.lookup('var', 0, scope)) {
           if (options.allowVar) return { isVar: true, type: error('var'), nullableAnnotation: NullableAnnotation.Oblivious };
           // `var` is a type only in a local declaration: a field, a parameter, `var[]` and `var?` are CS0825.
-          if (!options.quiet) this.report(scope, syntax, 'CS0825');
+          if (!options.quiet) this.report(scope, syntax, DiagnosticId.CS0825);
           return twa(error('var'));
         }
         if ((name === 'nint' || name === 'nuint') && !this.lookup(name, 0, scope)) {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
         }
-        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
+        // 'dynamic' is a type from C# 4; before that it is an ordinary name (CS0246 unless something declares it).
+        const hasDynamic = (this.host.languageVersionAt?.(scope.uri) ?? 4) >= 4;
+        if (name === 'dynamic' && hasDynamic && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
       }
       // falls through
       case 'GenericName':
@@ -367,7 +372,7 @@ export class TypeBinder {
       case 'AliasQualifiedName': {
         const symbol = this.bindNamespaceOrType(syntax, scope, options);
         if (symbol.kind === SymbolKind.Namespace) {
-          if (!options.quiet) this.report(scope, syntax, 'CS0118', [symbol.toDisplayString(), 'namespace', 'type']);
+          if (!options.quiet) this.report(scope, syntax, DiagnosticId.CS0118, [symbol.toDisplayString(), 'namespace', 'type']);
           return twa(error(symbol.name));
         }
         return plain(symbol);
@@ -375,7 +380,9 @@ export class TypeBinder {
       case 'ArrayType': {
         let element = this.bindType(syntax.elementType, scope, elementOptions(options));
         if (element.type.isStatic && element.type.kind === SymbolKind.NamedType)
-          this.report(scope, syntax.elementType, 'CS0719', [element.type.toDisplayString()]);
+          this.report(scope, syntax.elementType, DiagnosticId.CS0719, [element.type.toDisplayString()]);
+        // A ref struct lives on the stack: it cannot be the element of an array, wherever the array type is written.
+        if (isRefLike(element.type)) this.report(scope, syntax.elementType, DiagnosticId.CS0611, [element.type.toDisplayString()]);
         // Rank specifiers read left to right from the outside in: int[][,] is an array of int[,].
         for (const rank of [...syntax.rankSpecifiers].reverse()) element = plain(this.core.arrayOf(element, rank.sizes.length || 1));
         return element;
@@ -386,7 +393,7 @@ export class TypeBinder {
         if (t.kind === SymbolKind.ErrorType) return element;
         if (t.isValueType === true) {
           if (t.isNullableValueType) {
-            this.report(scope, syntax, 'CS0453', [this.core.nullable.toDisplayString(), 'T', t.toDisplayString()]);
+            this.report(scope, syntax, DiagnosticId.CS0453, [this.core.nullable.toDisplayString(), 'T', t.toDisplayString()]);
             return element;
           }
           return twa(this.core.nullableOf(element), NullableAnnotation.Annotated);
@@ -396,20 +403,28 @@ export class TypeBinder {
           const mark = syntax.questionToken ?? syntax,
             available = this.host.useFeature?.(scope.uri, mark, 'NullableReferenceTypes');
           // Outside a `#nullable` annotations context the annotation is accepted and has no effect (CS8632).
-          if (available !== false && this.host.nullableAnnotationsAt?.(scope.uri, mark.span?.start ?? 0) === false) this.report(scope, mark, 'CS8632');
+          if (available !== false && this.host.nullableAnnotationsAt?.(scope.uri, mark.span?.start ?? 0) === false) this.report(scope, mark, DiagnosticId.CS8632);
         }
         return twa(t, NullableAnnotation.Annotated);
       }
       case 'TupleType': {
         const elements = syntax.elements.map(e => this.bindType(e.type, scope, options)),
           names = syntax.elements.map(e => e.identifier?.valueText ?? null);
-        if (elements.length < 2 || elements.length > maxTupleElements) return twa(error('ValueTuple', elements.length));
+        if (elements.length < 2) return twa(error('ValueTuple', elements.length));
         if (!options.quiet)
           for (const problem of tupleNameProblems(names)) this.report(scope, syntax.elements[problem.index].identifier, problem.code, problem.args);
         return twa(tupleTypeOf(this.core.bridge, elements, names));
       }
       case 'PointerType':
         return twa(new PointerTypeSymbol(this.bindType(syntax.elementType, scope, options)));
+      case 'FunctionPointerType':
+        return twa(
+          bindFunctionPointerType(
+            syntax,
+            type => this.bindType(type, scope, options),
+            (node, code, args) => options.quiet || this.report(scope, node, code, args),
+          ),
+        );
       case 'RefType':
       case 'ScopedType':
         return this.bindType(syntax.type, scope, options);

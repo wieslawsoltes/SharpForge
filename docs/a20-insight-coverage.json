@@ -1,0 +1,670 @@
+{
+  "schemaVersion": 1,
+  "workstream": "A20 editor insights and widgets",
+  "branch": "codex/p16-editor-insight",
+  "implementationRevision": "57d69326c6717600da812cc13f2211adc6e1b592",
+  "leafCount": 25,
+  "validation": {
+    "nodeStatus": "passed",
+    "nodeTests": {
+      "tests/a20-editor-services.test.js": 11,
+      "tests/a20-editor-snippets-intelligence.test.js": 8,
+      "tests/a20-editor-search-diff.test.js": 9,
+      "tests/a20-editor-cooperative-search.test.js": 5,
+      "tests/a20-editor-language-worker.test.js": 7,
+      "tests/a20-editor-formatting.test.js": 3
+    },
+    "nodeCount": 43,
+    "nodeCommand": "node --test tests/a20-editor-services.test.js tests/a20-editor-snippets-intelligence.test.js tests/a20-editor-search-diff.test.js tests/a20-editor-cooperative-search.test.js tests/a20-editor-language-worker.test.js tests/a20-editor-formatting.test.js",
+    "browserStatus": "not-run",
+    "browserReason": "No usable supported Playwright browser is installed; the supported installation attempt failed. No browser/platform parity is claimed.",
+    "browserFixtureSyntax": "passed Python AST parse for both scripts and shared editor_fixture.py",
+    "sourceStructure": "Owned source files remain within 500 lines, 40 KB and 160-character line limits.",
+    "fullMatrix": "Root integration owns one completed-scope npm check/test/build and browser CI matrix."
+  },
+  "sharedBridgeFiles": [
+    "apps/studio/workers/editor-language.js",
+    "apps/studio/workers/protocol.js",
+    "apps/studio/compiler.worker.js",
+    "packages/language/src/inlay-hints.js",
+    "packages/language/src/signature-help.js",
+    "packages/language/src/index.js",
+    "packages/protocol/src/lsp.js"
+  ],
+  "bridgeNote": "Existing worker handler registrations were extracted through the protocol registration seam. Language and protocol legacy files shrink. New methods reuse bound language and refactoring implementations.",
+  "documentation": [
+    "packages/editor/docs/insights.md",
+    "packages/language/README.md",
+    "docs/editor-language-providers.md",
+    "docs/editor-language-provider-evidence.json"
+  ],
+  "items": [
+    {
+      "workId": "SF-A20-T06.1",
+      "issue": 1614,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/providers.js",
+        "packages/editor/src/features/context.js",
+        "packages/editor/src/features/insights.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Explicit standalone provider registry and pure Studio compiler bridge; every advertised method is callable without Studio.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T06.2",
+      "issue": 1615,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/async-guard.js",
+        "packages/editor/src/features/context.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-cooperative-search.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Per-feature generations, AbortSignal propagation, model/snapshot/version guards, cross-document target version handling and disposal.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T06.3",
+      "issue": 1616,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/decorations.js",
+        "packages/editor/src/widgets/insights.css"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Severity, unnecessary/deprecated tags, quick-fix metadata, glyph and overview decoration mapping.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T06.4",
+      "issue": 1617,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/workspace-edit.js",
+        "packages/editor/src/services/model-workspace.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Validate every target before commit; all roots swap before notifications; internal failure rolls back bytes, selections and undo.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T06.5",
+      "issue": 1618,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/decorations.js",
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/editor/src/widgets/insights.css"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Versioned semantic spans overlay lexical presentation without editing source; type, method, parameter and local styles differ.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T10.2",
+      "issue": 1633,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/diff/side-by-side.js",
+        "packages/editor/src/diff/rows.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Virtual aligned rows, synchronized scroll positions, F8 change navigation and overview controls.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T10.3",
+      "issue": 1634,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/diff/inline.js",
+        "packages/editor/src/diff/rows.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Inline inserted/deleted rows share exactly the same source hunks as side-by-side mode.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T10.5",
+      "issue": 1636,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/diff/merge-editor.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Editable three-pane merge, left/right/both/manual resolution, conflict count and undo; unresolved bytes remain explicit.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T13",
+      "issue": 1482,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/completion.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js",
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Fuzzy/ranked/kind-filtered completion, matching highlights, docs, MRU, suggestion mode, trigger/commit characters and snippet insertion.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T14",
+      "issue": 1483,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/signature-help.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Nested invocation tracking, provider-resolved overloads, active parameter highlighting, docs and overload cycling.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T15",
+      "issue": 1484,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/quick-info.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Colorized signature and safe documentation, diagnostics with codes, quick-fix link, delayed hover and sticky/focusable popup.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T16",
+      "issue": 1485,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/code-actions.js",
+        "packages/refactoring/src/fix-all.js",
+        "packages/refactoring/src/validate-plan.js",
+        "apps/studio/workbench/language-actions.js",
+        "apps/studio/workers/editor-language.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a20-fix-all.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py",
+        "tests/browser_a20_language_providers_test.py"
+      ],
+      "behavior": "Selected explicit/implicit local-type action families implement document, project and solution Fix All through isolated compiler contexts, shared-edit reconciliation, preview and all-target validation.",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "capabilityLimits": [
+        "Fix All is advertised only for families with a real implementation; arbitrary structural refactorings are not repeated automatically."
+      ],
+      "closeIssue": false,
+      "providerRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+      "providerEvidence": "docs/editor-language-provider-evidence.json"
+    },
+    {
+      "workId": "SF-A20-T17",
+      "issue": 1486,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/peek-definition.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Inline result picker with editable target, serial versioned target writes, promotion, target navigation and cancellation.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T18",
+      "issue": 1487,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/editor/src/services/providers.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a20-provider-transactions.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py",
+        "tests/browser_a20_language_providers_test.py"
+      ],
+      "behavior": "Actual TestProviders supplies versioned test-status lenses; widget resolves visible lenses, routes explicit commands and refreshes labels without changing member-line layout.",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "providerRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+      "providerEvidence": "docs/editor-language-provider-evidence.json",
+      "externalEvidence": {
+        "sourceRevision": "6bbb1dca",
+        "source": "apps/studio/workbench/test-code-lens.js",
+        "tests": "tests/a20-test-code-lens.test.js",
+        "documentation": "docs/a20-test-code-lens.md",
+        "ownerReportedCompletedScope": {
+          "tests": 29,
+          "passed": 29,
+          "newCases": 14
+        },
+        "note": "The owning agent qualified the real registry adapter. Root composes reference/test providers and execution/invalidation."
+      }
+    },
+    {
+      "workId": "SF-A20-T19",
+      "issue": 1488,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/rename.js",
+        "packages/editor/src/features/rename-preview.js",
+        "packages/language/src/rename.js",
+        "packages/refactoring/src/validate-plan.js",
+        "apps/studio/workbench/language-actions.js",
+        "packages/editor/src/services/workspace-edit.js",
+        "packages/editor/src/services/model-workspace.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a20-semantic-providers.test.js",
+        "tests/a20-fix-all.test.js",
+        "tests/a20-provider-transactions.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py",
+        "tests/browser_a20_language_providers_test.py"
+      ],
+      "behavior": "Bound type/member/local/parameter rename, comment/string options, exact cancel, guarded file-rename intent and one complete host transaction across edited files/resources/project XML.",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "capabilityLimits": [
+        "Generated/metadata source remains read-only. File rename requires a matching declaring type filename and an atomic resource host. Native atomic resource rename is not advertised."
+      ],
+      "closeIssue": false,
+      "providerRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+      "providerEvidence": "docs/editor-language-provider-evidence.json",
+      "externalEvidence": {
+        "sourceRevision": "c4fe63eb",
+        "evidenceRevision": "14d5d1cd",
+        "source": "apps/studio/explorer-resource-transaction.js",
+        "tests": "tests/a19-explorer-resource-transaction.test.js",
+        "documentation": "docs/a19-resource-rename.md",
+        "ownerReportedNewCases": {
+          "tests": 9,
+          "passed": 9
+        },
+        "note": "Explorer owner qualified complete staging/adoption and stale/cancelled plans. Root owns composed Studio wiring."
+      }
+    },
+    {
+      "workId": "SF-A20-T20",
+      "issue": 1489,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/compiler/src/source-arguments.js",
+        "packages/compiler/src/source-model.js",
+        "packages/language/src/inlay-hints.js",
+        "apps/studio/workers/editor-language.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-language-worker.test.js",
+        "tests/a20-semantic-providers.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py",
+        "tests/browser_a20_language_providers_test.py"
+      ],
+      "behavior": "Parameter-name labels come from actual selected call, constructor and indexer argument mappings; type hints stay separate and neither changes text offsets.",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "capabilityLimits": [
+        "Failed overloads, explicit named arguments, synthetic extension receivers and omitted arguments receive no misleading parameter label."
+      ],
+      "closeIssue": false,
+      "providerRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+      "providerEvidence": "docs/editor-language-provider-evidence.json"
+    },
+    {
+      "workId": "SF-A20-T21",
+      "issue": 1490,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/navigation-bar.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Project/type/member dropdowns, sorted members, provider ownership hierarchy and caret synchronization.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T22",
+      "issue": 1491,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Current-version highlights, next/previous references, edit invalidation, lexical Ctrl-hover underline and bound definition navigation.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T23",
+      "issue": 1492,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/editor/src/services/decorations.js",
+        "packages/editor/src/widgets/insights.css"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Squiggles, glyphs, overview metadata, optional inline messages and current-version diagnostic navigation.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T24",
+      "issue": 1493,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/snippets/parser.js",
+        "packages/editor/src/snippets/builtins.js",
+        "packages/editor/src/snippets/session.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Bounded placeholders/mirrors/nesting/choices/variables, C# catalog, picker/Tab expansion and primary-plus-mirrors undo groups.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [
+        "Regex snippet transforms are explicitly unsupported and rejected."
+      ],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T25",
+      "issue": 1494,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/snippets/session.js",
+        "packages/editor/src/snippets/builtins.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Selection wrapping with if/try/region/using snippets, indentation adaptation and undo-preserved source selection.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T26",
+      "issue": 1495,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/formatting.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-formatting.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Semicolon/brace, real clipboard-paste and completion triggers, disable options, range adapter and separate formatting undo.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T27",
+      "issue": 1496,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/smart-typing.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Cached lexical guards, bracket/quote type-over and paired backspace, smart newline and generic XML summary template.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [
+        "Documentation comments generate a generic summary template; symbol-specific parameter/return tags require an upstream provider."
+      ],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T37",
+      "issue": 1506,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/find-replace.js",
+        "packages/editor/src/features/search-session.js",
+        "packages/editor/src/features/search-snapshots.js",
+        "packages/editor/src/features/cooperative-search.js",
+        "packages/editor/src/features/search-worker.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js",
+        "tests/a20-editor-cooperative-search.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Scoped regex/capture and preserve-case replacement, history/count/highlights, exact preview, cancellation and responsive 100 MiB literal search.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [
+        "Built-in replacement/preview plans cap edited document text at 32,000,000 UTF-16 units; Find remains independent.",
+        "Large regex is a bounded safe-VM worker and may report SEARCH_LIMIT; actual browser worker execution is unverified."
+      ],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T38",
+      "issue": 1507,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/incremental-search.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js",
+        "tests/a20-editor-cooperative-search.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Forward/reverse/repeat incremental search with original-caret cancellation, wrap status and cooperative large-source search.",
+      "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    }
+  ],
+  "providerCompletion": {
+    "sourceRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+    "evidence": "docs/editor-language-provider-evidence.json",
+    "nodeRuns": [
+      {
+        "stage": "initial-complete-provider-scope",
+        "sourceRevision": "3f1d57b81dc95f45dd507f25fbd589af8c122cec",
+        "command": "node scripts/limited.js node --test tests/a20-semantic-providers.test.js tests/a20-fix-all.test.js tests/a20-provider-transactions.test.js tests/a20-editor-services.test.js tests/a20-editor-language-worker.test.js tests/a19-outline-reorder.test.js tests/language.test.js tests/language-ide-extensions.test.js tests/protocol.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js",
+        "tests": 141,
+        "passed": 138,
+        "failed": 3,
+        "failures": [
+          "Outline did not reject a recovered missing semicolon",
+          "Implicit Fix All removed a nonexact numeric conversion",
+          "Rename preview fixture omitted the actual editor value facade"
+        ]
+      },
+      {
+        "stage": "first-affected-corrections",
+        "sourceNote": "Intermediate correction state retained in ee32eebc846325b44b29716a9a28a179563a6c3e",
+        "command": "node scripts/limited.js node --test tests/a20-fix-all.test.js tests/a20-provider-transactions.test.js tests/a20-editor-services.test.js",
+        "tests": 26,
+        "passed": 26,
+        "failed": 0
+      },
+      {
+        "stage": "final-corrective-scope",
+        "sourceRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+        "command": "node scripts/limited.js node --test tests/a20-semantic-providers.test.js tests/a20-fix-all.test.js tests/a20-provider-transactions.test.js tests/a19-outline-reorder.test.js tests/compiler-binder-csharp6.test.js tests/compiler-binder-csharp6-members.test.js",
+        "tests": 63,
+        "passed": 63,
+        "failed": 0,
+        "files": {
+          "tests/a20-semantic-providers.test.js": 15,
+          "tests/a20-fix-all.test.js": 10,
+          "tests/a20-provider-transactions.test.js": 8,
+          "tests/a19-outline-reorder.test.js": 14,
+          "tests/compiler-binder-csharp6.test.js": 9,
+          "tests/compiler-binder-csharp6-members.test.js": 7
+        }
+      }
+    ],
+    "browserStatus": "not-run",
+    "nativeStatus": "not-run",
+    "visualStudioOracleStatus": "not-run",
+    "note": "Original widget revision/test count above is retained as historical evidence. This follow-up implements the previously missing source providers."
+  }
+}
