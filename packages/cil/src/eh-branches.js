@@ -52,8 +52,8 @@ export function validateExceptionBranches(code, handlers, options = {}) {
 }
 
 /** Internal transfer pass reused by the complete EH control-flow validator, without decoding or indexing again. */
-export function validateBranchInstructions(instructions, tree, options, index) {
-  const boundaries = decodedInstructionBoundaries(tree.codeSize, instructions, options.signal);
+export function validateBranchInstructions(instructions, tree, options, index,
+  boundaries = decodedInstructionBoundaries(tree.codeSize, instructions, options.signal)) {
   if (index.entryRegion(0, index.regionAt(0))) reject('CILCF0012', 0);
   for (const instruction of instructions) {
     checkRegionCancellation(options.signal);
