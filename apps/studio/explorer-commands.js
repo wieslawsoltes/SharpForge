@@ -134,6 +134,6 @@ export class ExplorerCommands {
   for(const [path,text]of projectEdits)ops.push({kind:'write',path,text});
   await this.perform(ops,copy?[]:mappings);
  }
- async perform(operations,mappings=[]){return performExplorerOperation(this,operations,mappings);}
+ async perform(operations,mappings=[],options={}){return performExplorerOperation(this,operations,mappings,options);}
  async undo(){return undoExplorerOperation(this);}
 }

@@ -31,16 +31,19 @@ export function explorerDocuments(records) {
       const valid = new Set(files.map(record => record.path));
       const tabs = (restore?.tabs ?? documents.tabs.map(uri => mapped(uri, mappings))).filter(uri => valid.has(uri));
       const active = restore?.active ?? mapped(documents.active, mappings);
+      const commitMetadata = () => {
+        extra = next.filter(record => !source(record));
+        metadata = { ...metadata, folders, breakpoints: restore?.breakpoints ?? metadata.breakpoints };
+      };
       let callbackError;
       try {
+        prepared.validate?.();
         documents.replace(files, { tabs, active: valid.has(active) ? active : '', discard: true,
-          preserveEditors: true, preserveDirty: true, documentStates });
+          preserveEditors: true, preserveDirty: true, documentStates, commitMetadata });
       } catch (error) {
         if (!error.committed) throw error;
         callbackError = error;
       }
-      extra = next.filter(record => !source(record));
-      metadata = { ...metadata, folders, breakpoints: restore?.breakpoints ?? metadata.breakpoints };
       if (callbackError) throw callbackError;
       return { committed: true };
     }
