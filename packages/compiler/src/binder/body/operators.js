@@ -73,7 +73,16 @@ export const OperatorBinding = Base =>
         if (!r.suppressed) this.report(r.atOperator ? syntax.operatorToken : syntax, r.code, r.args);
         return this.bad(syntax);
       }
-      if (r.kind === 'user') return this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted });
+      if (r.kind === 'user') {
+        const node = this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted }),
+          constant = operand.constantValue;
+        // `-Price` over a decimal constant is a constant, also when the operator is the method of System.Decimal.
+        if (r.method.containingType?.specialType === 'System_Decimal' && constant?.type === 'decimal' && !r.isLifted) {
+          const folded = foldUnary(operator, constant, { checked: !this.uncheckedContext });
+          if (folded && !isFoldError(folded)) node.constantValue = folded;
+        }
+        return node;
+      }
       const converted = operand.type && r.leftType && !operand.type.equals(r.leftType) ? this.convert(operand, r.leftType) : operand,
         n = this.node('Unary', syntax, r.resultType, { operator, operand: converted, isLifted: r.isLifted, isChecked: this.checked });
       if (converted.constantValue && !r.isLifted) {
@@ -140,6 +149,21 @@ export const OperatorBinding = Base =>
       const conversion = this.conversions.classifyFromExpression(operand, parameterType);
       return conversion.exists && conversion.isImplicit ? this.applyConversion(operand, parameterType, conversion) : operand;
     }
+    /**
+     * Against reference assemblies the operators of `decimal` are the methods `System.Decimal` declares; applied to
+     * constants they are still constant expressions (`const decimal Total = 19.99m * 3;`).
+     */
+    foldDecimalOperator(node, syntax) {
+      const { left, right, method } = node;
+      if (method.containingType?.specialType !== 'System_Decimal' || node.isLifted) return;
+      if (!left.constantValue || !right.constantValue || left.hasErrors || right.hasErrors) return;
+      if (left.constantValue.type !== 'decimal' || right.constantValue.type !== 'decimal') return;
+      const folded = foldBinary(node.operator, left.constantValue, right.constantValue, { checked: !this.uncheckedContext });
+      if (isFoldError(folded)) {
+        this.report(syntax, folded.error.code, folded.error.args);
+        node.hasErrors = true;
+      } else if (folded) node.constantValue = folded;
+    }
     binaryOperation(syntax, operator, left, right) {
       const delegate = this.delegateOperation(syntax, operator, left, right);
       if (delegate) return delegate;
@@ -163,7 +187,7 @@ export const OperatorBinding = Base =>
           : r.isLifted
             ? [left, right].map((e, i) => this.liftedOperatorOperand(e, r.method.parameters[i].type))
             : [left, right];
-        return this.node('Binary', syntax, r.isLogical ? r.method.returnType : r.resultType, {
+        const node = this.node('Binary', syntax, r.isLogical ? r.method.returnType : r.resultType, {
           operator,
           left: args[0],
           right: args[1],
@@ -172,6 +196,8 @@ export const OperatorBinding = Base =>
           isLogical: !!r.isLogical,
           shortCircuit: r.shortCircuitOperator ?? null,
         });
+        this.foldDecimalOperator(node, syntax);
+        return node;
       }
       const l = this.operand(left, r.leftType),
         rt = this.operand(right, r.rightType),
