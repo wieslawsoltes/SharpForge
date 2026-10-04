@@ -1,8 +1,10 @@
 import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
+import {createRuntimeExecutable,createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
+import {requireSingleAssemblyUpdate} from './workers/runtime-inputs.js';
+import {runtimeSourceRecords} from './workers/runtime-sources.js';
 import {applyDesignPatch} from '../../packages/runtime/src/index.js';
-import { loadAssembly, equalBytes } from '../../packages/cil/src/index.js';
-import {createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
-let session=null,timer=null,lastSent=0,uiCommands=[],output=[],loadedModule=null,sessionSerial=0,animationTimer=null,animationLast=0,manualAnimations=false;
+const executable=createRuntimeExecutable();
+let session=null,timer=null,lastSent=0,uiCommands=[],output=[],sessionSerial=0,animationTimer=null,animationLast=0,manualAnimations=false;
 function flush(){if(uiCommands.length){self.postMessage({event:'ui',sessionId:sessionSerial,commands:uiCommands});uiCommands=[];}if(output.length){self.postMessage({event:'output',sessionId:sessionSerial,text:output.join('')});output=[];}}
 function state(){scheduleAnimations();flush();if(session)self.postMessage({event:'state',sessionId:sessionSerial,...session.state(),assemblyLoad:session.assemblyLoad??null});}
 // The UI clock is independent of managed instruction pumping. It freezes at debugger stops.
@@ -14,12 +16,6 @@ function scheduleAnimations(){
     if(session.vm.state!=='paused'){try{session.vm.platform.advanceAnimations(delta);flush();schedule();}catch(error){session.vm.platform.animations.clear();self.postMessage({event:'error',sessionId:sessionSerial,message:error.message});}}
     scheduleAnimations();
   },16);
-}
-function executable(params){
-  if(!params.assembly)return {image:params.image,load:null};
-  const started=performance.now(),hit=loadedModule&&equalBytes(loadedModule.bytes,params.assembly);
-  if(!hit)loadedModule={bytes:params.assembly.slice(),image:loadAssembly(params.assembly)};
-  return {image:loadedModule.image,load:{format:'ECMA-335',cacheHit:!!hit,milliseconds:performance.now()-started,bytes:params.assembly.length}};
 }
 function schedule(){
   if(timer!==null||!session||!['ready','running','waiting'].includes(session.vm.state))return;const serial=sessionSerial;const delay=session.vm.state==='waiting'?session.vm.scheduler.nextDelay():0;if(delay===null)return;
@@ -37,10 +33,10 @@ function launch(params){
     onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}
   });
   if(timer!==null){clearTimeout(timer);timer=null;}session?.stop();session=candidate;sessionSerial++;output=[];uiCommands=[];self.postMessage({event:'ui',sessionId:sessionSerial,commands:[{op:'reset',snapshot:{version:1,windows:[],nodes:[]}}]});lastSent=0;animationLast=0;manualAnimations=!!params.manualAnimations;
-  self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
+  self.postMessage({event:'loaded',sessionId:sessionSerial,sources:runtimeSourceRecords(session)});
   state();schedule();
   return {started:true,sessionId:sessionSerial,capabilities,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
-    sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text,version:s.version}))};
+    sources:runtimeSourceRecords(session)};
 }
 const handlers=createWorkerProtocol('runtime');
 for(const method of ["launch"])handlers.registerHandler(method,(params,method)=>{let result;result=launch(params);return result;});
@@ -63,9 +59,9 @@ for(const method of ["runToCursor"])handlers.registerHandler(method,(params,meth
 for(const method of ["disassemble"])handlers.registerHandler(method,(params,method)=>{let result;result=session.disassemble(params.reference,params);return result;});
 for(const method of ["gotoTargets"])handlers.registerHandler(method,(params,method)=>{let result;result=session.gotoTargets(params);return result;});
 for(const method of ["setNextStatement"])handlers.registerHandler(method,(params,method)=>{let result;result=session.setNextStatement(params);state();return result;});
-for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{let result;result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});state();return result;});
+for(const method of ["hotReload"])handlers.registerHandler(method,(params,method)=>{let result;requireSingleAssemblyUpdate(session,'Hot reload');result=session.applyChanges(params.image??params.assembly,{expectedVersion:params.expectedVersion});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:runtimeSourceRecords(session)});state();return result;});
 for(const method of ["evaluateFunction"])handlers.registerHandler(method,(params,method)=>{let result;result=session.evaluateFunction(params.expression,{...params,allowSideEffects:params.allowSideEffects===true});state();return result;});
-for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{let result;result=session.loadSymbols(params.pdb??null,params.sources??{});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});state();return result;});
+for(const method of ["loadSymbols"])handlers.registerHandler(method,(params,method)=>{let result;requireSingleAssemblyUpdate(session,'Symbol replacement');result=session.loadSymbols(params.pdb??null,params.sources??{});self.postMessage({event:'loaded',sessionId:sessionSerial,sources:runtimeSourceRecords(session)});state();return result;});
 for(const method of ["symbolInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.symbolBinding?{id:session.symbols.idHex,documents:session.symbolBinding.documents.map(({embedded,hash,...d})=>({...d,text:undefined,hash:[...hash]})),methods:session.symbols.methods.length,stateMachines:session.symbols.stateMachines}:null;return result;});
 for(const method of ["threads"])handlers.registerHandler(method,(params,method)=>{let result;result=session.threads();return result;});
 for(const method of ["parallelStacks"])handlers.registerHandler(method,(params,method)=>{let result;result=session.parallelStacks();return result;});

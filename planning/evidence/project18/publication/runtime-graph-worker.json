@@ -1,0 +1,21 @@
+{
+  "workIds": [
+    "SF-A23-T28",
+    "SF-A23-T29"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "tests": {
+    "tests/a23-project-runtime-worker.test.js": 9,
+    "tests/a23-runtime-source-records.test.js": 1
+  },
+  "qualification": {
+    "node22": "Selected cases passed in initial upstream-composed runtime scope: 794 total, 788 pass, 6 failures retained. Affected correction scope then passed 77/77.",
+    "earlierNode26": "415/415 complete graph scope passed before canonical launch compatibility addition."
+  },
+  "sourceAssertionExtraction": "Original a23-project-debug-sources worker source publication assertion (lines 102\u2013108, initial TAP case 575) retained unchanged in the focused source-record test.",
+  "limits": [
+    "Protected Studio entry remains a root-owned unapplied integration patch",
+    "No arbitrary external CLR loader or Rust/Wasm project graph implementation",
+    "Related runtime performance budget exceptions remain open; no causal correction established by CPU profiles"
+  ]
+}
