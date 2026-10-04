@@ -72,8 +72,8 @@ test('A02-T14 comparison options: dynamic, nullable annotations, tuple names',()
   const dyn=DynamicTypeSymbol.instance;assert(!dyn.equals(object));assert(dyn.equals(object,TypeCompareKind.IgnoreDynamic));assert(object.equals(dyn,TypeCompareKind.IgnoreDynamic));
   assert(!list.construct(dyn).equals(list.construct(object)));assert(list.construct(dyn).equals(list.construct(object),TypeCompareKind.IgnoreDynamic));
   const annotated=new TypeWithAnnotations(string,NullableAnnotation.Annotated),plain=new TypeWithAnnotations(string,NullableAnnotation.NotAnnotated),oblivious=new TypeWithAnnotations(string);
-  assert(!annotated.equals(plain));assert(annotated.equals(plain,TypeCompareKind.IgnoreNullableModifiersForReferenceTypes));assert(annotated.equals(oblivious),'oblivious matches either annotation');
-  assert(!list.construct(annotated).equals(list.construct(plain)));assert(list.construct(annotated).equals(list.construct(plain),TypeCompareKind.AllIgnoreOptions));
+  assert(annotated.equals(plain),'nullability is not part of type identity');assert(!annotated.equals(plain,TypeCompareKind.StrictNullability));assert(annotated.equals(plain,TypeCompareKind.IgnoreNullableModifiersForReferenceTypes));assert(annotated.equals(oblivious),'oblivious matches either annotation');
+  assert(list.construct(annotated).equals(list.construct(plain)));assert(!list.construct(annotated).equals(list.construct(plain),TypeCompareKind.StrictNullability));assert(list.construct(annotated).equals(list.construct(plain),TypeCompareKind.AllIgnoreOptions));
   const named=tuple2.construct(int,string).withTupleElementNames(['a','b']),other=tuple2.construct(int,string).withTupleElementNames(['x','y']);
   assert(!named.equals(other));assert(named.equals(other,TypeCompareKind.IgnoreTupleNames));assert(named.equals(tuple2.construct(int,string),TypeCompareKind.IgnoreTupleNames));
   assert.equal(TypeWithAnnotations.create(annotated),annotated);assert.equal(TypeWithAnnotations.create(string,NullableAnnotation.Annotated).isAnnotated,true);assert.equal(annotated.withAnnotation(NullableAnnotation.NotAnnotated).isAnnotated,false);
