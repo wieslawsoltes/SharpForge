@@ -7,8 +7,10 @@ and family-or-assembly-to-family narrowing. Reflection records GetBaseDefinition
 or the actual type-load failure, with metadata tokens obtained independently from
 SRM. No method is invoked. Source/image hashes are mandatory in the native test.
 
-Capture, authored tests and benchmarks are pending the assigned serial slot.
-No availability skip or reference pass is claimed before that capture.
+SDK 10.0.201/CoreCLR 10.0.5 captured all twelve observations: eight successful
+roots and four TypeLoadException failures agree with the loader. All 48 affected
+tests pass with no skips. Native capture, focused tests, fixed benchmarks and
+static/structure checks ran serially through one limiter (concurrency 1, 1 GiB).
 
 ```sh
 node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-base-strict tests/fixtures/clr-method-base-strict/Program.cs
