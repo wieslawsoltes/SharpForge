@@ -129,7 +129,7 @@ function declaredType({
       handle === token
         ? [scope, indices.get('DateTime'), indices.get(namespace)]
         : [4, 0, 0, 0, 0, 1, indices.get(name), 0, 0],
-    blob: () => Buffer.from(key, 'hex'),
+    blob: () => (token >>> 24 === 27 ? new Uint8Array([0x13, 0]) : Buffer.from(key, 'hex')),
     streams: new Map([['#Strings', new TextEncoder().encode(text)]]),
     string: (index) => names.get(index),
   };

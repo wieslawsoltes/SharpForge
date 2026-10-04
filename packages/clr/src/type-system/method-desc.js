@@ -1,5 +1,6 @@
 import { decodeSignature } from '@sharpforge/cil';
 import { freezeSignature } from './frozen-signature.js';
+import { formatMethodDisplay } from './method-display.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
 /** Canonical MethodDef metadata identity. Signature and body decoding remain lazy. */
@@ -20,10 +21,28 @@ export class MethodDesc {
   get assembly() { return this.module.assembly; }
   get loadContext() { return this.assembly.loadContext; }
   get isStatic() { return Boolean(this.flags & 0x10); }
+  get isAbstract() { return Boolean(this.flags & 0x400); }
+  get isFinal() { return Boolean(this.flags & 0x20); }
+  get isVirtual() { return Boolean(this.flags & 0x40); }
+  get isHideBySig() { return Boolean(this.flags & 0x80); }
+  get isSpecialName() { return Boolean(this.flags & 0x800); }
+  get isPrivate() { return (this.flags & 7) === 1; }
+  get isFamilyAndAssembly() { return (this.flags & 7) === 2; }
+  get isAssembly() { return (this.flags & 7) === 3; }
+  get isFamily() { return (this.flags & 7) === 4; }
+  get isFamilyOrAssembly() { return (this.flags & 7) === 5; }
+  get isPublic() { return (this.flags & 7) === 6; }
+  /** Reflection CallingConventions bits, projected lazily from the cached signature header. */
+  get callingConvention() {
+    const signature = this.signature;
+    return (signature.callingConvention === 5 ? 2 : 1) | (signature.hasThis ? 0x20 : 0) | (signature.explicitThis ? 0x40 : 0);
+  }
   get #parameterMetadata() { return this.#state.parameterMetadata ??= this.module.methodParameters(this.metadataToken); }
   get parameters() { return this.#parameterMetadata.parameters; }
   get returnParameter() { return this.#parameterMetadata.returnParameter; }
   get genericParameters() { return this.#state.genericParameters ??= this.module.methodGenericParameters(this.metadataToken); }
+  /** Resolve the canonical implicit class override root; unsupported slot families reject with SFCLR012. */
+  getBaseDefinition(options = {}) { return this.loadContext.types.getBaseDefinition(this, options); }
   get signature() {
     if (this.#signature) return this.#signature;
     try {
@@ -38,6 +57,8 @@ export class MethodDesc {
       throw loadError(LoadErrorCode.InvalidImage, `Invalid method signature: ${error.message}`);
     }
   }
+  /** Cached Reflection-style signature display; unsupported resolved-type forms report SFCLR012. */
+  toString() { return this.#state.display ??= formatMethodDisplay(this); }
   /** Returns null for absent RVA or an isolated body snapshot; executable bytes are never cached on this descriptor. */
   getMethodBody() { return this.module.methodBody(this.metadataToken); }
 }

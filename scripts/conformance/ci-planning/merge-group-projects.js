@@ -3,7 +3,7 @@ import { claimedIdentity } from './claim-identity.js';
 
 const query = `query ClaimProjects($owner:String!,$repo:String!,$issue:Int!,$after:String) {
   repository(owner:$owner,name:$repo) { issue(number:$issue) {
-    number title repository { nameWithOwner }
+    number title body repository { nameWithOwner }
     projectItems(first:50,after:$after,includeArchived:false) {
       nodes {
         id isArchived
@@ -48,7 +48,7 @@ export async function claimProjectItems(client, claim) {
       if (!item.project.id || !Number.isSafeInteger(item.project.number) || item.project.number <= 0) {
         throw new Error('Missing authoritative Project identity');
       }
-      items.push({ id: item.id, content: { number: issue.number, title: issue.title, repository: issue.repository },
+      items.push({ id: item.id, content: { number: issue.number, title: issue.title, body: issue.body, repository: issue.repository },
         fields: { 'Work ID': workId, Branch: branch, Agent: agent },
         project: { id: item.project.id, number: item.project.number, url: item.project.url, owner: item.project.owner.login } });
     }

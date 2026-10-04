@@ -282,6 +282,8 @@ export const AssignmentExpressions = Base =>
             this.patternLocals(e.pattern.pattern, f, true);
             return { t: s.clone(), f };
           }
+          // `x is var v` always matches: the false outcome is unreachable, so `v` counts as assigned on both.
+          if (e.pattern?.kind === 'VarPattern' || e.pattern?.kind === 'DiscardPattern') return { t, f: null };
           return { t, f: s };
         }
         case 'Call': {

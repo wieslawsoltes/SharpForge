@@ -41,7 +41,7 @@ export function genericCallFixture(types, {decorate, entry = 'Program.Main'} = {
   for (const type of types) {
     parameters(typeTokens.get(type.name), type.genericParameters);
     for (const field of type.fields ?? []) {
-      md.add(4, [field.flags ?? 6, md.string(field.name), md.blob(fieldSignature(field.type, resolve))]);
+      md.add(4, [field.flags ?? 6, md.string(field.name), md.blob(field.signature ?? fieldSignature(field.type, resolve))]);
     }
     for (const method of type.methods) {
       const methodToken = methods.get(type.name + '.' + method.name);
@@ -62,10 +62,11 @@ export function genericCallFixture(types, {decorate, entry = 'Program.Main'} = {
     const writer = new CilWriter();
     method.body(writer, context);
     const code = writer.finish();
-    const locals = method.locals?.length ? md.add(17, [md.blob(localSignature(method.locals, resolve))]) : 0;
+    const locals = method.localsSignature || method.locals?.length
+      ? md.add(17, [md.blob(method.localsSignature ?? localSignature(method.locals, resolve))]) : 0;
     section.pad(4);
     md.rows[6][(method.token & 0xffffff) - 1][0] = TEXT_RVA + section.length;
-    section.u16(0x3013).u16(method.maxStack ?? 16).u32(code.length).u32(locals).bytes(code);
+    section.u16(method.initLocals === false ? 0x3003 : 0x3013).u16(method.maxStack ?? 16).u32(code.length).u32(locals).bytes(code);
   }
   decorate?.(context);
   section.pad(4);

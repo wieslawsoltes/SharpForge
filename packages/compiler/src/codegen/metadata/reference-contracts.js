@@ -15,6 +15,8 @@ const byType = new Map(
       'SortedSet`1', 'PriorityQueue`2', 'Comparer`1', 'EqualityComparer`1',
     ].map(name => 'System.Collections.Generic.' + name),
     'System.Console': ['System.Console', 'System.ConsoleColor', 'System.ConsoleKey', 'System.ConsoleKeyInfo'],
+    'System.Threading': ['System.Threading.Monitor', 'System.Threading.Interlocked'],
+    'System.Linq.Expressions': ['System.Runtime.CompilerServices.DynamicAttribute'],
   }).flatMap(([assembly, names]) => names.map(name => [name, assembly])),
 );
 

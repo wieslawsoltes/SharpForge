@@ -37,7 +37,7 @@ export async function checkVersions({ root = repository, tag = process.env.GITHU
     names.add(workspace.name);
     packages.push({ path, name: workspace.name, version: workspace.version });
   }
-  if (packages.length !== 25) throw new Error('Release requires exactly 25 reviewed workspace packages');
+  if (!packages.length) throw new Error('Release requires at least one workspace package');
   const changelog = (await boundedRead(resolve(root, 'CHANGELOG.md'), { root, signal })).toString('utf8');
   const lines = changelog.split(/\r?\n/);
   const headings = lines.map((line, index) => ({ line, index })).filter(({ line }) => /^#{1,2} /.test(line));

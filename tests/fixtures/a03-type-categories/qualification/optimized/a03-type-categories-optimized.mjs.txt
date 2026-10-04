@@ -1,0 +1,82 @@
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+
+const root = '/tmp/sharpforge-a03-object-field-transfers';
+const baselineRoot = '/tmp/sharpforge-a03-type-categories-baseline';
+const evidence = '/tmp/a03-type-categories-optimized-validation';
+const candidateHead = '892822c33016ad7502821e245716efbbf552a16d';
+const baselineHead = 'b79fbbb9e9b54cb77d2376765e290e9b0922b2d6';
+assert.match(process.version, /^v24\./);
+assert.equal(process.env.SHARPFORGE_MAX_PARALLEL_RUNS, '1');
+assert.equal(process.env.SHARPFORGE_TEST_CONCURRENCY, '1');
+assert.equal(process.env.SHARPFORGE_MAX_OLD_SPACE_MB, '1024');
+mkdirSync(evidence, { recursive: true });
+const records = [];
+const hash = value => createHash('sha256').update(value).digest('hex');
+function run(label, command, args, expected = 0, cwd = root) {
+  const log = path.join(evidence, `${label}.log`);
+  writeFileSync(log, '', { flag: 'wx' });
+  const started = new Date().toISOString();
+  const result = spawnSync(command, args, { cwd, env: process.env, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+  writeFileSync(log, result.stdout + result.stderr);
+  records.push({ label, command, args, cwd, started, completed: new Date().toISOString(),
+    exitCode: result.status, signal: result.signal, error: result.error?.message });
+  writeFileSync(path.join(evidence, 'commands.json'), JSON.stringify(records, null, 2) + '\n');
+  process.stdout.write(`${label}: ${result.status}\n${result.stdout}${result.stderr}`);
+  assert.equal(result.status, expected, `${label}: unexpected exit`);
+  assert.equal(result.signal, null, `${label}: signal`);
+  return result.stdout.trim();
+}
+const node = (label, args, expected) => run(label, process.execPath, args, expected);
+assert.equal(run('candidate-head', 'git', ['rev-parse', 'HEAD']), candidateHead);
+assert.equal(run('candidate-clean', 'git', ['status', '--porcelain']), '');
+assert.equal(run('baseline-head', 'git', ['rev-parse', 'HEAD'], 0, baselineRoot), baselineHead);
+const first = JSON.parse(readFileSync('/tmp/a03-type-categories-validation/source-proof.json'));
+const sourceFiles = Object.keys(first.sourceBefore);
+const hashFiles = (directory, files) => Object.fromEntries(files.map(file => [file, hash(readFileSync(path.join(directory, file)))]));
+const sourceBefore = hashFiles(root, sourceFiles);
+assert.deepEqual(hashFiles(baselineRoot, Object.keys(first.baselineSource)), first.baselineSource);
+assert.deepEqual(hashFiles(root, Object.keys(first.candidateInputs)), first.candidateInputs);
+assert.deepEqual(hashFiles(baselineRoot, Object.keys(first.baselineInputs)), first.baselineInputs);
+const nativeFile = 'tests/fixtures/a03-type-categories/native.json';
+assert.equal(hash(readFileSync(path.join(root, nativeFile))), hash(readFileSync('/tmp/a03-type-categories-validation/native.json')));
+for (const directory of [root, baselineRoot])
+  assert.equal(realpathSync(path.join(directory, 'node_modules/@sharpforge/cil')), realpathSync(path.join(directory, 'packages/cil')));
+const proof = { candidateHead, baselineHead, sourceBefore, baselineSource: first.baselineSource,
+  baselineInputs: first.baselineInputs, candidateInputs: first.candidateInputs, workspaceLinks: first.workspaceLinks,
+  nativeSHA256: hash(readFileSync(path.join(root, nativeFile))),
+  reason: 'Changed product removes default category passes and unused record fields; original 96 samples retained separately.' };
+writeFileSync(path.join(evidence, 'source-proof.json'), JSON.stringify(proof, null, 2)+'\n');
+node('focused-tests', ['--test', '--test-concurrency=1',
+  'tests/a03-type-categories.test.js', 'tests/a03-type-categories-native.test.js',
+  'tests/a03-07-nested-type-references.test.js', 'tests/a03-07-local-type-references.test.js',
+  'tests/a03-07-local-type-references-native.test.js', 'tests/a03-07-type-system.test.js',
+  'tests/a03-07-type-system-native.test.js', 'tests/a03-verification-types.test.js',
+  'tests/a03-07-members.test.js', 'tests/a03-07-members-inherited.test.js', 'tests/a03-07-type-access.test.js',
+  'tests/a03-07-nested-access.test.js', 'tests/a03-07-member-access.test.js', 'tests/a03-coded-index-bounds.test.js']);
+run('browser', '/tmp/sharpforge-bcl-browser-venv/bin/python',
+  ['/tmp/a03-type-categories-browser.py', root, path.join(evidence, 'browser')]);
+for (const [mode, script] of [['categories', 'benchmark-type-categories.mjs'], ['existing', 'benchmark-verifier-types.mjs'],
+  ['local-alias', 'benchmark-local-type-references.mjs']]) {
+  run(`baseline-${mode}-performance`, process.execPath, ['--expose-gc', `packages/cil/tools/${script}`,
+    path.join(evidence, `baseline-${mode}-performance.json`)], 0, baselineRoot);
+}
+for (const [mode, script] of [['categories', 'benchmark-type-categories.mjs'], ['existing', 'benchmark-verifier-types.mjs'],
+  ['local-alias', 'benchmark-local-type-references.mjs']]) {
+  node(`candidate-${mode}-performance`, ['--expose-gc', `packages/cil/tools/${script}`,
+    path.join(evidence, `candidate-${mode}-performance.json`)]);
+}
+node('manifests', ['scripts/planning/check-test-manifests.js']);
+node('syntax', ['scripts/check.js']);
+node('static-imports', ['scripts/conformance/static/check-imports.js', '--output', path.join(evidence, 'static-imports.json')]);
+node('structure', ['scripts/quality/check-structure.js']);
+run('diff-check', 'git', ['diff', '--check']);
+assert.deepEqual(hashFiles(root, sourceFiles), sourceBefore);
+proof.sourceAfter = hashFiles(root, sourceFiles);
+proof.finalHead = run('final-head', 'git', ['rev-parse', 'HEAD']);
+assert.equal(proof.finalHead, candidateHead);
+writeFileSync(path.join(evidence, 'source-proof.json'), JSON.stringify(proof, null, 2) + '\n');
+console.log(`Validation evidence: ${evidence}`);

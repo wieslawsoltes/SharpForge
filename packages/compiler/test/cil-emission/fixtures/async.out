@@ -1,0 +1,70 @@
+eval 1
+eval 2
+slow 2
+eval 3
+6
+eval 4
+slow 5
+eval 6
+slow 6
+15
+eval 1
+slow 7
+eval 2
+slow 8
+eval 9
+7 17
+eval 10
+slow 11
+eval 12
+a101112
+eval 13
+slow 14
+slow 15
+slow 17
+True 15 n17
+deposit 5
+after call 0
+deposit 20
+30
+5
+reset 0
+42
+signal waits
+101
+101
+described x
+ok x
+described bad
+caught bad name
+described bad
+retry after bad name
+described bad
+retry after bad name
+described good
+3
+rethrowing late
+outer late
+slow 0
+round 0
+round 1
+slow 20
+round 2
+slow 30
+round 3
+round 4
+50
+open r
+slow 2
+slow 3
+plain finally
+close r
+1005
+early is faulted: True
+early
+54 15
+31
+fire x
+between
+fired x
+done

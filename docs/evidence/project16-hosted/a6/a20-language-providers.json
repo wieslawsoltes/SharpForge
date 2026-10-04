@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "engine": "chromium",
+  "passed": 3,
+  "checks": [
+    "selected Fix All family previews the complete batch and applies exact source edits",
+    "bound type/comment/string live preview cancels to exact UTF-16/CRLF source and undo state",
+    "parameter hints and provider invalidation preserve real source offsets and caret"
+  ],
+  "failure": null
+}

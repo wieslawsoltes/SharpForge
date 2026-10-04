@@ -49,13 +49,9 @@
     {
       "id": "two-apps-two-instances",
       "requirement": "session-isolation",
-      "blocker": "MULTI-APP",
-      "steps": [
-        "Start Dashboard and Monitor then a second Dashboard instance",
-        "Attach debugger and designer to first Dashboard session/generation",
-        "Hot-reload and stop/restart first instance",
-        "Assert other output, windows, permissions and late callback routing remain isolated"
-      ]
+      "adapter": "browser",
+      "actions": ["sessions"],
+      "scope": "Three simultaneous production Studio applications: Dashboard, Monitor and another Dashboard. Selected debugger, Hot Reload, designer attachment, stop/restart, memory-only grant routing and real pending worker request cancellation. The observed duplicate-instance editor lock remains an explicit blocker; no model/worker substitutes."
     },
     {
       "id": "numeric-local-http-websocket",

@@ -1,6 +1,6 @@
 {
   "using-declarations/declaration-rules": ["diagnostics", "warnings"],
-  "using-declarations/disposed-in-reverse-order-at-the-end-of-the-block": ["diagnostics", "warnings", "bytecode", "cil"],
+  "using-declarations/disposed-in-reverse-order-at-the-end-of-the-block": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "using-declarations/goto-over-a-using-declaration": ["diagnostics", "warnings"],
   "using-declarations/pattern-disposal-in-7-3": ["diagnostics", "warnings"],
   "using-declarations/pattern-disposal-needs-an-accessible-void-dispose-on-a-ref-struct": ["diagnostics", "warnings"]

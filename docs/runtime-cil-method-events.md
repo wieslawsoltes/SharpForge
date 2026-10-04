@@ -27,6 +27,16 @@ discards their stacks, the next host slice closes the missing frames with
 not emit another leave for those frames. A normal wake-up instead emits ordinary
 returns when the methods complete.
 
+Host-boundary reconciliation reuses a private Boolean on each active span row
+instead of allocating a Set of all live frame IDs. It marks actual active and
+parked live frames, then closes discarded spans in the same reverse-admission
+order. When no spans remain, it skips frame enumeration but still flushes queued
+callbacks. The marker belongs only to the host observer: enter/leave payloads
+still contain exactly `method`, `frame` and `reason`, and snapshots/guest frames
+gain no fields. Reconciliation remains O(active spans + live frames); temporary
+discarded-ID storage is needed only when spans actually disappear. No measured
+latency or allocation-byte improvement is claimed for this change.
+
 VM construction records the initial entry and initializer calls before a host
 can subscribe. Use `{replay: true}` to receive that retained history. Callbacks
 flush at the end of `runSlice`, including debugger pauses and waiting states,
@@ -73,3 +83,10 @@ structure report completed with 264 repository warnings. Final main integration
 at `f4696f74` resolves the stacked merge ancestry; it changes no runtime, bytecode,
 CIL or focused test files. No native/browser qualification or performance
 measurement was performed.
+
+`tests/a05-cil-event-reconciliation.test.js` adds authored cases for avoiding
+frame enumeration after all spans close, repeated live boundaries, restore,
+parked cancellation and subscriber failure, reentrant stop, exact payload keys
+and retained fatal inspection frames. These cases have not run; the validation
+evidence above applies to the preceding implementation. The pending source
+event stack is unchanged by this CIL-only leaf.

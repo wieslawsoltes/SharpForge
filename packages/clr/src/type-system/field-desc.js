@@ -1,10 +1,12 @@
 import { readFrozenSignature } from './frozen-signature.js';
+import { readCustomModifierTokens } from './custom-modifiers.js';
 
 /** Canonical FieldDef metadata identity; signatures and raw constants are decoded lazily. */
 export class FieldDesc {
   #state;
   #signature;
   #constant;
+  #modifiers;
   constructor(state, key) {
     if (key !== creationKey) throw new TypeError('Field descriptors are created by their runtime module');
     this.#state = state;
@@ -23,6 +25,9 @@ export class FieldDesc {
   get signature() {
     return this.#signature ??= readFrozenSignature(this.module, this.#state.signatureIndex, 'field');
   }
+  get #customModifiers() { return this.#modifiers ??= readCustomModifierTokens(this.signature.type, this.module); }
+  get requiredCustomModifierTokens() { return this.#customModifiers.required; }
+  get optionalCustomModifierTokens() { return this.#customModifiers.optional; }
   get constant() {
     if (this.#constant !== undefined) return this.#constant;
     return this.#constant = this.module.constant(this.metadataToken);

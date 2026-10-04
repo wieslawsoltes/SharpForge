@@ -1,0 +1,11 @@
+{
+  "suite": "browser_a19_docking_test",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 1.1925023389999865,
+  "diagnosticErrors": []
+}

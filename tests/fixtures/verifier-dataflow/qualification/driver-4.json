@@ -1,0 +1,106 @@
+[
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-dataflow/capture.mjs",
+      "tests/fixtures/verifier-dataflow/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T08:00:14.853Z",
+    "completed": "2026-10-04T08:00:15.957Z",
+    "status": 0,
+    "signal": null,
+    "log": "04-native-pinned"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-verifier-dataflow.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-07-handler-entry.test.js",
+      "tests/a03-07-eh-admission.test.js",
+      "tests/a03-07-no-handler-placement.test.js",
+      "tests/managed-il.test.js",
+      "tests/a05-09-verified-stack.test.js",
+      "tests/a05-cil-stack-byte-budget.test.js",
+      "tests/a05-managed-calli.test.js",
+      "tests/a05-calli-stack-byte-budget.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T08:00:15.957Z",
+    "completed": "2026-10-04T08:00:20.473Z",
+    "status": 0,
+    "signal": null,
+    "log": "05-focused"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-handler-entry.mjs",
+      "/tmp/a03-dataflow-validation/baseline.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow-baseline",
+    "started": "2026-10-04T08:00:20.473Z",
+    "completed": "2026-10-04T08:00:20.882Z",
+    "status": 0,
+    "signal": null,
+    "log": "06-benchmark-baseline"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-handler-entry.mjs",
+      "/tmp/a03-dataflow-validation/candidate.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T08:00:20.882Z",
+    "completed": "2026-10-04T08:00:21.285Z",
+    "status": 0,
+    "signal": null,
+    "log": "07-benchmark-candidate"
+  },
+  {
+    "command": "/tmp/sharpforge-bcl-browser-venv/bin/python",
+    "args": [
+      "/tmp/a03-dataflow-browser.py",
+      "/tmp/sharpforge-project6-a03-dataflow",
+      "/tmp/a03-dataflow-validation/browser"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T08:00:21.285Z",
+    "completed": "2026-10-04T08:00:27.649Z",
+    "status": 0,
+    "signal": null,
+    "log": "08-browser"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "run",
+      "check"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T08:00:27.650Z",
+    "completed": "2026-10-04T08:00:30.378Z",
+    "status": 0,
+    "signal": null,
+    "log": "09-check"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "run",
+      "check:structure"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T08:00:30.378Z",
+    "completed": "2026-10-04T08:00:30.655Z",
+    "status": 0,
+    "signal": null,
+    "log": "10-structure"
+  }
+]

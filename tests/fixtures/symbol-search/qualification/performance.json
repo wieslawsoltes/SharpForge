@@ -1,0 +1,2063 @@
+{
+  "config": {
+    "variants": {
+      "before": {
+        "directory": "/tmp/sharpforge-a13-search-qualification/baseline",
+        "sourceRevision": "42962e3fb67c1236242e89046627a0723f295bc2"
+      },
+      "after": {
+        "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-symbol-search",
+        "sourceRevision": "b8b23fa61d3376be0144552ccf9166c601a29afc",
+        "qualificationHead": "b94ce128689c21a0cdcab4912705cf522650a944"
+      }
+    },
+    "dependencies": "Own CIL source per variant; only hash-identical transitive package trees/manifests shared.",
+    "sharedHashes": {
+      "package.json": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "package-lock.json": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "unchangedPackageTrees": "040000 tree 6451aced45878f841bb3343d46f19abb6ade87fb\tarchive\n040000 tree 71e38278536a6e9cbf19f12ac991cef100f7c82d\tbcl-collections\n040000 tree a60436110fed5effbcd23d43b7d79b04105cffaa\tbcl-core\n040000 tree a5272c86aac71fbfa274f45e093901858a21e794\tbytecode\n040000 tree 770d3d300bd75c604743a5405452337dc0cf388b\tclr\n040000 tree 6e37648953f0dacf519df7fdcd54435757d995a3\tcompiler\n040000 tree 0ba385b2754947d34e884b975fee619d6d2b71ec\tcompute\n040000 tree fe83d527755ba36794b73e0d34a90f94187055ba\tcontrols\n040000 tree fd17779feebc4ae7c9c202bdfad3e213a2c74d00\tdebugger\n040000 tree 0d1086a83afd08708b0537a1483ce2e17774a24d\tdesigner\n040000 tree aa39592ceb5254769301fe24a0ed64b48b221513\tdocking\n040000 tree 10f9244ea1843fb970479574725c7b78c7a1f964\teditor\n040000 tree 427b86e3d081c0895f4e7664111f21b4986df541\textensions\n040000 tree 108be42adb2197c11cb598c5e9257c030f172d40\tframework\n040000 tree 51eba0f53f80cf915307e84578a00e0f6632eea4\tlanguage\n040000 tree 3fb5a1ebc086c121907f2c6b2c76353630619783\tmsbuild\n040000 tree a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5\tnetwork\n040000 tree bdfc9583047902789d8bedf0717e0e638582f3c0\tproject-system\n040000 tree 32463189d2d45a832d614d8e81b5924cac073965\tprotocol\n040000 tree 1ae684c57dba0709a30e4dcdbf78bf2815785f34\trefactoring\n040000 tree 1001e27e76a06ef54b8c07db72f3809ac8a5027b\truntime\n040000 tree a184fdfeeb4cab3ddeaa80d53249c4b71fd15a10\tsymbols\n040000 tree 3795c80a55768bebce57209e360fed69420107fe\tsyntax\n040000 tree cd2c191bfb65843ea99448059521d44343b23552\ttemplates\n040000 tree e68012e1423ba4c7dcb5fcab453f22fa87ffda05\ttext\n040000 tree 6158f4499d0ed48e6780605ea05736a97ade3b29\twinui\n040000 tree 2ef61c563232e8ed2966421936e621d4d6466e82\tworkspace"
+    },
+    "priorAttempt": "/tmp/sharpforge-a13-search-qualification/performance.json",
+    "change": "ASCII preflight counts exact lengths without scratch normalization strings; Unicode unchanged."
+  },
+  "host": "darwin arm64 Apple M3 Pro",
+  "node": "v24.21.0",
+  "startedAt": "2026-10-04T09:12:52.003Z",
+  "protocol": {
+    "existingControlPairs": 20,
+    "controlWarmups": 5,
+    "controlIterations": 3,
+    "order": "AB/BA alternating",
+    "searchRounds": 10,
+    "queryOrder": "six cases in forward/reverse order on alternating rounds",
+    "queryStates": [
+      "cold cache, including all normalization/preflight",
+      "warm cache immediately after cold"
+    ],
+    "timedQueryIterations": 1,
+    "queryWarmups": 0,
+    "gcBeforeEachCell": true,
+    "thresholdMs": 50,
+    "qualification": "One fixed shared-host schedule; retain every sample, no retries/exclusions or noise/speed/heap causality claim."
+  },
+  "fixture": {
+    "authoredTypes": 50000,
+    "indexedTypesIncludingGlobal": 50001,
+    "bytes": 1801216,
+    "sha256": "ed65da170c7a7c1d711b67adb5237d84a557bce8d5ee71eb6d1535f1d5792f7c",
+    "fixtureSourceSha256": "62afaa2301c3ed904629bb1b643f9ff94c4ac80c3cb1b9ec53a2e8be0b0b25bc",
+    "queryCasesSha256": "fe915988f46912e05fb2b4663ca3a26cf68a1dbc296f2112bcc22a493d23b170",
+    "harnessSha256": "3553e3e848b66ad0fdd849a1fbd77df39431aa24f07ce5614df0ae5645d1ecbb"
+  },
+  "queries": [
+    {
+      "name": "prefix-late",
+      "query": "SearchType4999",
+      "mode": "prefix",
+      "count": 10
+    },
+    {
+      "name": "prefix-miss",
+      "query": "AbsentType",
+      "mode": "prefix",
+      "count": 0
+    },
+    {
+      "name": "substring-late",
+      "query": "Type4999",
+      "mode": "substring",
+      "count": 10
+    },
+    {
+      "name": "substring-miss",
+      "query": "AbsentType",
+      "mode": "substring",
+      "count": 0
+    },
+    {
+      "name": "camel-late",
+      "query": "ST4",
+      "mode": "camel",
+      "offset": 9990,
+      "count": 10
+    },
+    {
+      "name": "camel-miss",
+      "query": "ZZ",
+      "mode": "camel",
+      "count": 0
+    }
+  ],
+  "summaries": {
+    "existingIndex": {
+      "before": {
+        "medianMs": 6.472360999999998,
+        "p95Ms": 6.727805666666654,
+        "maxMs": 6.747347333333323
+      },
+      "after": {
+        "medianMs": 6.463507000000012,
+        "p95Ms": 6.624319666666641,
+        "maxMs": 6.6993193333333165
+      }
+    },
+    "search50k": {
+      "prefix-late": {
+        "cold": {
+          "medianMs": 18.43224949999967,
+          "p95Ms": 20.49000000000001,
+          "maxMs": 20.49000000000001
+        },
+        "warm": {
+          "medianMs": 2.6094374999997854,
+          "p95Ms": 2.896957999999813,
+          "maxMs": 2.896957999999813
+        }
+      },
+      "prefix-miss": {
+        "cold": {
+          "medianMs": 17.2519585,
+          "p95Ms": 17.75070800000003,
+          "maxMs": 17.75070800000003
+        },
+        "warm": {
+          "medianMs": 1.5278954999996586,
+          "p95Ms": 1.60024999999996,
+          "maxMs": 1.60024999999996
+        }
+      },
+      "substring-late": {
+        "cold": {
+          "medianMs": 18.23199999999997,
+          "p95Ms": 20.131250000000364,
+          "maxMs": 20.131250000000364
+        },
+        "warm": {
+          "medianMs": 2.1861044999998285,
+          "p95Ms": 2.5312919999996666,
+          "maxMs": 2.5312919999996666
+        }
+      },
+      "substring-miss": {
+        "cold": {
+          "medianMs": 17.464291500000172,
+          "p95Ms": 17.8385830000002,
+          "maxMs": 17.8385830000002
+        },
+        "warm": {
+          "medianMs": 1.9612709999996696,
+          "p95Ms": 2.1349999999997635,
+          "maxMs": 2.1349999999997635
+        }
+      },
+      "camel-late": {
+        "cold": {
+          "medianMs": 18.361021000000164,
+          "p95Ms": 19.025084000000106,
+          "maxMs": 19.025084000000106
+        },
+        "warm": {
+          "medianMs": 2.4338749999997162,
+          "p95Ms": 2.607292000000143,
+          "maxMs": 2.607292000000143
+        }
+      },
+      "camel-miss": {
+        "cold": {
+          "medianMs": 17.6501874999999,
+          "p95Ms": 18.065332999999555,
+          "maxMs": 18.065332999999555
+        },
+        "warm": {
+          "medianMs": 1.661646500000188,
+          "p95Ms": 1.7527079999999842,
+          "maxMs": 1.7527079999999842
+        }
+      }
+    }
+  },
+  "chronologicalSamples": [
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 0,
+      "elapsedMs": 19.471834,
+      "perOperationMs": 6.490611333333334,
+      "startOffsetMs": 104.323083
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 0,
+      "elapsedMs": 19.78445899999997,
+      "perOperationMs": 6.594819666666656,
+      "startOffsetMs": 136.439208
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 1,
+      "elapsedMs": 19.402582999999993,
+      "perOperationMs": 6.467527666666665,
+      "startOffsetMs": 168.85116700000003
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 1,
+      "elapsedMs": 19.719625000000008,
+      "perOperationMs": 6.573208333333336,
+      "startOffsetMs": 198.638417
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 2,
+      "elapsedMs": 19.662124999999946,
+      "perOperationMs": 6.554041666666649,
+      "startOffsetMs": 236.35975000000002
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 2,
+      "elapsedMs": 19.122333000000026,
+      "perOperationMs": 6.374111000000009,
+      "startOffsetMs": 266.368667
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 3,
+      "elapsedMs": 19.424709000000007,
+      "perOperationMs": 6.474903000000002,
+      "startOffsetMs": 297.30920799999996
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 3,
+      "elapsedMs": 19.14087500000005,
+      "perOperationMs": 6.380291666666683,
+      "startOffsetMs": 339.78925
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 4,
+      "elapsedMs": 19.396540999999957,
+      "perOperationMs": 6.465513666666652,
+      "startOffsetMs": 370.33979200000005
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 4,
+      "elapsedMs": 19.335417000000007,
+      "perOperationMs": 6.445139000000002,
+      "startOffsetMs": 404.074583
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 5,
+      "elapsedMs": 19.247208,
+      "perOperationMs": 6.415736,
+      "startOffsetMs": 435.82466700000003
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 5,
+      "elapsedMs": 20.183416999999963,
+      "perOperationMs": 6.727805666666654,
+      "startOffsetMs": 466.94275
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 6,
+      "elapsedMs": 20.24204199999997,
+      "perOperationMs": 6.747347333333323,
+      "startOffsetMs": 499.331208
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 6,
+      "elapsedMs": 20.09795799999995,
+      "perOperationMs": 6.6993193333333165,
+      "startOffsetMs": 534.5382500000001
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 7,
+      "elapsedMs": 19.872958999999923,
+      "perOperationMs": 6.624319666666641,
+      "startOffsetMs": 573.6338330000001
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 7,
+      "elapsedMs": 19.053749999999923,
+      "perOperationMs": 6.3512499999999745,
+      "startOffsetMs": 604.0066670000001
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 8,
+      "elapsedMs": 19.105708999999933,
+      "perOperationMs": 6.3685696666666445,
+      "startOffsetMs": 634.4207080000001
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 8,
+      "elapsedMs": 19.27291600000001,
+      "perOperationMs": 6.424305333333336,
+      "startOffsetMs": 670.4577919999999
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 9,
+      "elapsedMs": 19.478042000000073,
+      "perOperationMs": 6.492680666666691,
+      "startOffsetMs": 707.975083
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 9,
+      "elapsedMs": 19.83012500000018,
+      "perOperationMs": 6.610041666666727,
+      "startOffsetMs": 744.4865419999999
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 10,
+      "elapsedMs": 19.344874999999774,
+      "perOperationMs": 6.4482916666665915,
+      "startOffsetMs": 778.3535420000001
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 10,
+      "elapsedMs": 19.745666999999912,
+      "perOperationMs": 6.581888999999971,
+      "startOffsetMs": 815.886583
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 11,
+      "elapsedMs": 19.141041000000087,
+      "perOperationMs": 6.380347000000029,
+      "startOffsetMs": 848.3492919999999
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 11,
+      "elapsedMs": 19.993375000000015,
+      "perOperationMs": 6.6644583333333385,
+      "startOffsetMs": 879.718333
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 12,
+      "elapsedMs": 19.722917000000052,
+      "perOperationMs": 6.574305666666684,
+      "startOffsetMs": 916.828583
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 12,
+      "elapsedMs": 19.066667000000052,
+      "perOperationMs": 6.355555666666684,
+      "startOffsetMs": 949.6985829999999
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 13,
+      "elapsedMs": 19.198374999999942,
+      "perOperationMs": 6.399458333333314,
+      "startOffsetMs": 980.100917
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 13,
+      "elapsedMs": 19.110500000000002,
+      "perOperationMs": 6.370166666666667,
+      "startOffsetMs": 1009.8580419999998
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 14,
+      "elapsedMs": 19.116333999999824,
+      "perOperationMs": 6.372111333333275,
+      "startOffsetMs": 1040.723958
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 14,
+      "elapsedMs": 19.869541000000027,
+      "perOperationMs": 6.623180333333342,
+      "startOffsetMs": 1071.756917
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 15,
+      "elapsedMs": 19.391000000000076,
+      "perOperationMs": 6.463666666666692,
+      "startOffsetMs": 1103.215417
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 15,
+      "elapsedMs": 19.11612500000001,
+      "perOperationMs": 6.372041666666671,
+      "startOffsetMs": 1133.039
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 16,
+      "elapsedMs": 19.741416999999956,
+      "perOperationMs": 6.580472333333319,
+      "startOffsetMs": 1162.6695
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 16,
+      "elapsedMs": 19.390041999999994,
+      "perOperationMs": 6.463347333333331,
+      "startOffsetMs": 1201.6934999999999
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 17,
+      "elapsedMs": 19.75566600000002,
+      "perOperationMs": 6.585222000000006,
+      "startOffsetMs": 1232.760167
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 17,
+      "elapsedMs": 19.118082999999842,
+      "perOperationMs": 6.372694333333281,
+      "startOffsetMs": 1264.144
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 18,
+      "elapsedMs": 19.437625000000025,
+      "perOperationMs": 6.479208333333342,
+      "startOffsetMs": 1294.265625
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 18,
+      "elapsedMs": 19.219667000000072,
+      "perOperationMs": 6.406555666666691,
+      "startOffsetMs": 1323.6135829999998
+    },
+    {
+      "control": "existingIndex",
+      "label": "after",
+      "pair": 19,
+      "elapsedMs": 18.830375000000004,
+      "perOperationMs": 6.276791666666668,
+      "startOffsetMs": 1353.9752919999999
+    },
+    {
+      "control": "existingIndex",
+      "label": "before",
+      "pair": 19,
+      "elapsedMs": 18.844750000000204,
+      "perOperationMs": 6.281583333333401,
+      "startOffsetMs": 1384.7469999999998
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 0,
+      "state": "cold",
+      "elapsedMs": 20.49000000000001,
+      "startOffsetMs": 1445.289625,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 0,
+      "state": "warm",
+      "elapsedMs": 1.4924590000000535,
+      "startOffsetMs": 1479.161833,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 0,
+      "state": "cold",
+      "elapsedMs": 17.32883300000003,
+      "startOffsetMs": 1519.843292,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 0,
+      "state": "warm",
+      "elapsedMs": 1.5793340000000171,
+      "startOffsetMs": 1552.987833,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 0,
+      "state": "cold",
+      "elapsedMs": 18.396792000000005,
+      "startOffsetMs": 1596.7447499999998,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 0,
+      "state": "warm",
+      "elapsedMs": 2.2657910000000356,
+      "startOffsetMs": 1629.471417,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 0,
+      "state": "cold",
+      "elapsedMs": 17.418249999999944,
+      "startOffsetMs": 1672.103375,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 0,
+      "state": "warm",
+      "elapsedMs": 2.0425830000001497,
+      "startOffsetMs": 1700.9095419999999,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 0,
+      "state": "cold",
+      "elapsedMs": 19.025084000000106,
+      "startOffsetMs": 1749.6884579999999,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 0,
+      "state": "warm",
+      "elapsedMs": 2.607292000000143,
+      "startOffsetMs": 1782.9189999999999,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 0,
+      "state": "cold",
+      "elapsedMs": 17.436333000000104,
+      "startOffsetMs": 1825.858292,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 0,
+      "state": "warm",
+      "elapsedMs": 1.7159160000001066,
+      "startOffsetMs": 1855.9831669999999,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 1,
+      "state": "cold",
+      "elapsedMs": 17.726290999999947,
+      "startOffsetMs": 1897.941917,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 1,
+      "state": "warm",
+      "elapsedMs": 1.6258750000001783,
+      "startOffsetMs": 1928.935458,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 1,
+      "state": "cold",
+      "elapsedMs": 18.46054200000026,
+      "startOffsetMs": 1978.651833,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 1,
+      "state": "warm",
+      "elapsedMs": 2.552041999999801,
+      "startOffsetMs": 2010.3538330000001,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 1,
+      "state": "cold",
+      "elapsedMs": 17.736749999999574,
+      "startOffsetMs": 2055.391375,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 1,
+      "state": "warm",
+      "elapsedMs": 1.9261249999999563,
+      "startOffsetMs": 2087.243958,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 1,
+      "state": "cold",
+      "elapsedMs": 18.444874999999683,
+      "startOffsetMs": 2128.35575,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 1,
+      "state": "warm",
+      "elapsedMs": 2.1538330000003043,
+      "startOffsetMs": 2158.822417,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 1,
+      "state": "cold",
+      "elapsedMs": 17.75070800000003,
+      "startOffsetMs": 2211.228917,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 1,
+      "state": "warm",
+      "elapsedMs": 1.60024999999996,
+      "startOffsetMs": 2240.980333,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 1,
+      "state": "cold",
+      "elapsedMs": 18.86499999999978,
+      "startOffsetMs": 2289.339625,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 1,
+      "state": "warm",
+      "elapsedMs": 2.6367919999997866,
+      "startOffsetMs": 2320.676958,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 2,
+      "state": "cold",
+      "elapsedMs": 17.970749999999953,
+      "startOffsetMs": 2363.701208,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 2,
+      "state": "warm",
+      "elapsedMs": 1.6098329999999805,
+      "startOffsetMs": 2393.706042,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 2,
+      "state": "cold",
+      "elapsedMs": 17.017624999999953,
+      "startOffsetMs": 2434.824875,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 2,
+      "state": "warm",
+      "elapsedMs": 1.540208999999777,
+      "startOffsetMs": 2466.355208,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 2,
+      "state": "cold",
+      "elapsedMs": 18.26720800000021,
+      "startOffsetMs": 2510.12675,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 2,
+      "state": "warm",
+      "elapsedMs": 2.1737499999999272,
+      "startOffsetMs": 2541.49975,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 2,
+      "state": "cold",
+      "elapsedMs": 17.612750000000233,
+      "startOffsetMs": 2588.191042,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 2,
+      "state": "warm",
+      "elapsedMs": 1.931666000000405,
+      "startOffsetMs": 2619.2772919999998,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 2,
+      "state": "cold",
+      "elapsedMs": 18.414834000000155,
+      "startOffsetMs": 2672.829958,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 2,
+      "state": "warm",
+      "elapsedMs": 2.4297919999999067,
+      "startOffsetMs": 2707.983208,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 2,
+      "state": "cold",
+      "elapsedMs": 17.627290999999786,
+      "startOffsetMs": 2753.502292,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 2,
+      "state": "warm",
+      "elapsedMs": 1.6237080000000788,
+      "startOffsetMs": 2785.313917,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 3,
+      "state": "cold",
+      "elapsedMs": 17.673084000000017,
+      "startOffsetMs": 2827.4679579999997,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 3,
+      "state": "warm",
+      "elapsedMs": 1.7527079999999842,
+      "startOffsetMs": 2860.30375,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 3,
+      "state": "cold",
+      "elapsedMs": 18.801958000000013,
+      "startOffsetMs": 2903.303292,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 3,
+      "state": "warm",
+      "elapsedMs": 2.480540999999903,
+      "startOffsetMs": 2936.428417,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 3,
+      "state": "cold",
+      "elapsedMs": 17.8385830000002,
+      "startOffsetMs": 2991.380417,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 3,
+      "state": "warm",
+      "elapsedMs": 2.1349999999997635,
+      "startOffsetMs": 3023.743875,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 3,
+      "state": "cold",
+      "elapsedMs": 18.551082999999835,
+      "startOffsetMs": 3080.713667,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 3,
+      "state": "warm",
+      "elapsedMs": 2.1830839999997806,
+      "startOffsetMs": 3114.556208,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 3,
+      "state": "cold",
+      "elapsedMs": 17.488416000000143,
+      "startOffsetMs": 3159.896667,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 3,
+      "state": "warm",
+      "elapsedMs": 1.5721250000001419,
+      "startOffsetMs": 3191.653625,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 3,
+      "state": "cold",
+      "elapsedMs": 18.827708000000257,
+      "startOffsetMs": 3236.1282499999998,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 3,
+      "state": "warm",
+      "elapsedMs": 2.693749999999909,
+      "startOffsetMs": 3271.018333,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 4,
+      "state": "cold",
+      "elapsedMs": 17.860791000000063,
+      "startOffsetMs": 3316.718542,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 4,
+      "state": "warm",
+      "elapsedMs": 2.896957999999813,
+      "startOffsetMs": 3351.296542,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 4,
+      "state": "cold",
+      "elapsedMs": 17.163583000000017,
+      "startOffsetMs": 3403.060125,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 4,
+      "state": "warm",
+      "elapsedMs": 1.5251659999998992,
+      "startOffsetMs": 3431.857042,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 4,
+      "state": "cold",
+      "elapsedMs": 18.196791999999732,
+      "startOffsetMs": 3473.431125,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 4,
+      "state": "warm",
+      "elapsedMs": 2.1546660000003612,
+      "startOffsetMs": 3504.036292,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 4,
+      "state": "cold",
+      "elapsedMs": 17.422541999999794,
+      "startOffsetMs": 3545.552,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 4,
+      "state": "warm",
+      "elapsedMs": 1.930417000000034,
+      "startOffsetMs": 3575.531875,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 4,
+      "state": "cold",
+      "elapsedMs": 18.307208000000173,
+      "startOffsetMs": 3629.745,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 4,
+      "state": "warm",
+      "elapsedMs": 2.39520900000025,
+      "startOffsetMs": 3661.566958,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 4,
+      "state": "cold",
+      "elapsedMs": 17.062374999999975,
+      "startOffsetMs": 3711.348167,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 4,
+      "state": "warm",
+      "elapsedMs": 1.6595839999999953,
+      "startOffsetMs": 3739.619458,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 5,
+      "state": "cold",
+      "elapsedMs": 17.911333000000013,
+      "startOffsetMs": 3783.3334999999997,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 5,
+      "state": "warm",
+      "elapsedMs": 1.6742919999996957,
+      "startOffsetMs": 3814.087875,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 5,
+      "state": "cold",
+      "elapsedMs": 18.01458300000013,
+      "startOffsetMs": 3856.077125,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 5,
+      "state": "warm",
+      "elapsedMs": 2.437124999999469,
+      "startOffsetMs": 3885.911833,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 5,
+      "state": "cold",
+      "elapsedMs": 17.50604100000055,
+      "startOffsetMs": 3929.5667919999996,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 5,
+      "state": "warm",
+      "elapsedMs": 1.9720839999999953,
+      "startOffsetMs": 3959.851708,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 5,
+      "state": "cold",
+      "elapsedMs": 18.082791999999245,
+      "startOffsetMs": 4007.9615000000003,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 5,
+      "state": "warm",
+      "elapsedMs": 2.193000000000211,
+      "startOffsetMs": 4038.111167,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 5,
+      "state": "cold",
+      "elapsedMs": 17.28137499999957,
+      "startOffsetMs": 4083.8158750000002,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 5,
+      "state": "warm",
+      "elapsedMs": 1.5208330000004935,
+      "startOffsetMs": 4113.91775,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 5,
+      "state": "cold",
+      "elapsedMs": 18.281750000000102,
+      "startOffsetMs": 4157.469667,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 5,
+      "state": "warm",
+      "elapsedMs": 2.584874999999556,
+      "startOffsetMs": 4187.535125,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 6,
+      "state": "cold",
+      "elapsedMs": 17.866290999999364,
+      "startOffsetMs": 4231.232417,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 6,
+      "state": "warm",
+      "elapsedMs": 2.594125000000531,
+      "startOffsetMs": 4261.778708,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 6,
+      "state": "cold",
+      "elapsedMs": 17.20495799999935,
+      "startOffsetMs": 4305.281417,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 6,
+      "state": "warm",
+      "elapsedMs": 1.5185419999997976,
+      "startOffsetMs": 4334.278083,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 6,
+      "state": "cold",
+      "elapsedMs": 17.97533300000032,
+      "startOffsetMs": 4376.201375,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 6,
+      "state": "warm",
+      "elapsedMs": 2.1891249999998763,
+      "startOffsetMs": 4406.003458,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 6,
+      "state": "cold",
+      "elapsedMs": 17.227208000000246,
+      "startOffsetMs": 4447.964542,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 6,
+      "state": "warm",
+      "elapsedMs": 1.9682089999996606,
+      "startOffsetMs": 4477.506708,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 6,
+      "state": "cold",
+      "elapsedMs": 18.15587500000038,
+      "startOffsetMs": 4529.102167,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 6,
+      "state": "warm",
+      "elapsedMs": 2.4041249999991123,
+      "startOffsetMs": 4559.290458,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 6,
+      "state": "cold",
+      "elapsedMs": 17.076665999999932,
+      "startOffsetMs": 4603.598792,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 6,
+      "state": "warm",
+      "elapsedMs": 1.6604590000006283,
+      "startOffsetMs": 4634.469708,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 7,
+      "state": "cold",
+      "elapsedMs": 17.685499999999593,
+      "startOffsetMs": 4683.552917,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 7,
+      "state": "warm",
+      "elapsedMs": 1.624374999999418,
+      "startOffsetMs": 4713.415417,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 7,
+      "state": "cold",
+      "elapsedMs": 18.431958000000122,
+      "startOffsetMs": 4755.399917,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 7,
+      "state": "warm",
+      "elapsedMs": 2.481416000000536,
+      "startOffsetMs": 4785.685167,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 7,
+      "state": "cold",
+      "elapsedMs": 17.21308300000055,
+      "startOffsetMs": 4836.210125,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 7,
+      "state": "warm",
+      "elapsedMs": 1.960624999999709,
+      "startOffsetMs": 4866.749417,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 7,
+      "state": "cold",
+      "elapsedMs": 18.131083000000217,
+      "startOffsetMs": 4916.015292,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 7,
+      "state": "warm",
+      "elapsedMs": 2.25683300000037,
+      "startOffsetMs": 4945.3072919999995,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 7,
+      "state": "cold",
+      "elapsedMs": 16.818167000000358,
+      "startOffsetMs": 4987.095708,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 7,
+      "state": "warm",
+      "elapsedMs": 1.5146660000000338,
+      "startOffsetMs": 5015.359042,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 7,
+      "state": "cold",
+      "elapsedMs": 19.043625000000247,
+      "startOffsetMs": 5058.650333,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 7,
+      "state": "warm",
+      "elapsedMs": 2.6242080000001806,
+      "startOffsetMs": 5093.705167,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 8,
+      "state": "cold",
+      "elapsedMs": 18.582665999999335,
+      "startOffsetMs": 5141.028167,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 8,
+      "state": "warm",
+      "elapsedMs": 2.637333000000581,
+      "startOffsetMs": 5171.638875,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 8,
+      "state": "cold",
+      "elapsedMs": 17.22254200000043,
+      "startOffsetMs": 5217.723375,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 8,
+      "state": "warm",
+      "elapsedMs": 1.5240420000000086,
+      "startOffsetMs": 5247.83275,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 8,
+      "state": "cold",
+      "elapsedMs": 18.165750000000116,
+      "startOffsetMs": 5296.247125,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 8,
+      "state": "warm",
+      "elapsedMs": 2.5312919999996666,
+      "startOffsetMs": 5327.648,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 8,
+      "state": "cold",
+      "elapsedMs": 17.099167000000307,
+      "startOffsetMs": 5369.958583,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 8,
+      "state": "warm",
+      "elapsedMs": 1.9238750000004075,
+      "startOffsetMs": 5398.7135,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 8,
+      "state": "cold",
+      "elapsedMs": 18.01274999999987,
+      "startOffsetMs": 5439.349625,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 8,
+      "state": "warm",
+      "elapsedMs": 2.3965840000000753,
+      "startOffsetMs": 5468.754583,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 8,
+      "state": "cold",
+      "elapsedMs": 16.9071670000003,
+      "startOffsetMs": 5512.323458,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 8,
+      "state": "warm",
+      "elapsedMs": 1.666374999999789,
+      "startOffsetMs": 5541.630375,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 9,
+      "state": "cold",
+      "elapsedMs": 18.065332999999555,
+      "startOffsetMs": 5582.509667,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-miss",
+      "round": 9,
+      "state": "warm",
+      "elapsedMs": 1.662833999999748,
+      "startOffsetMs": 5612.057583,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 9,
+      "state": "cold",
+      "elapsedMs": 18.14716700000008,
+      "startOffsetMs": 5655.87425,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "camel-late",
+      "round": 9,
+      "state": "warm",
+      "elapsedMs": 2.4306249999999636,
+      "startOffsetMs": 5687.206333,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 9,
+      "state": "cold",
+      "elapsedMs": 17.662083000000166,
+      "startOffsetMs": 5729.654375,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-miss",
+      "round": 9,
+      "state": "warm",
+      "elapsedMs": 1.9619169999996302,
+      "startOffsetMs": 5759.328208,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 9,
+      "state": "cold",
+      "elapsedMs": 20.131250000000364,
+      "startOffsetMs": 5801.1047499999995,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "substring-late",
+      "round": 9,
+      "state": "warm",
+      "elapsedMs": 2.171624999999949,
+      "startOffsetMs": 5833.594667,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 9,
+      "state": "cold",
+      "elapsedMs": 17.387915999999677,
+      "startOffsetMs": 5881.692667,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-miss",
+      "round": 9,
+      "state": "warm",
+      "elapsedMs": 1.530624999999418,
+      "startOffsetMs": 5912.302292,
+      "resultCount": 0,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 9,
+      "state": "cold",
+      "elapsedMs": 18.281833000000006,
+      "startOffsetMs": 5960.9725,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    },
+    {
+      "control": "search50k",
+      "name": "prefix-late",
+      "round": 9,
+      "state": "warm",
+      "elapsedMs": 2.59466699999939,
+      "startOffsetMs": 5990.432125,
+      "resultCount": 10,
+      "logicalCache": {
+        "entries": 50001,
+        "bytes": 2900020
+      }
+    }
+  ],
+  "thresholdFailures": [],
+  "passed": true
+}

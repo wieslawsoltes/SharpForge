@@ -1,0 +1,4 @@
+console.warning: [JavaScript Warning: "Window.fullScreen attribute is deprecated and will be removed in the future." {file: "debugger eval code" line: 255}]
+console.warning: [JavaScript Warning: "InstallTrigger is deprecated and will be removed in the future." {file: "debugger eval code" line: 255}]
+console.warning: [JavaScript Warning: "onmozfullscreenchange is deprecated." {file: "debugger eval code" line: 255}]
+console.warning: [JavaScript Warning: "onmozfullscreenerror is deprecated." {file: "debugger eval code" line: 255}]

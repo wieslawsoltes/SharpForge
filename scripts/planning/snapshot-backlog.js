@@ -2,17 +2,29 @@ import { parseArgs } from 'node:util';
 import { GitHubProject } from './lib/github-project.js';
 import { parseDependencies, WORK_ID } from './lib/deps-parse.js';
 import { isMain, writeJSON } from './lib/io.js';
+
+function metadataField(body, name) {
+  // Metadata precedes the deliverable/dependency sections. Release tasks put
+  // several fields on one line; legacy tasks bold the field label instead.
+  const header = body.split(/^##[ \t]/m, 1)[0];
+  const value = header.match(new RegExp(`(?:^|[.·][ \\t]+)[ \\t]*(?:\\*\\*)?${name}:(?:\\*\\*)?[ \\t]*([^\\r\\n]*)`, 'm'))?.[1];
+  return value?.split(/[ \t]+·[ \t]+|\.[ \t]+(?=(?:\*\*)?[A-Z][\w ]*:)/, 1)[0] ?? '';
+}
+
 export function normalizeSnapshot({ issues, items = [], defaultBranch = 'main', repository, updatedAt = new Date().toISOString() }) {
   const issueIds = new Map(issues.map(i => [i.number, i.title.match(/^\[([^\]]+)\]/)?.[1]]));
   const normalized = [];
   for (const issue of issues) {
     const id = issueIds.get(issue.number); if (!WORK_ID.test(id ?? '')) continue;
     const body = issue.body ?? '', deps = parseDependencies(body);
-    const parentNumber = Number(body.match(/\*\*Parent:\*\*[^\n]*?(?:issues\/|#)(\d+)/)?.[1]);
-    const parentName = body.match(/\*\*Parent:\*\*\s*\[(SF-[^\]]+)\]/)?.[1];
+    const parentField = metadataField(body, 'Parent');
+    const parentNumber = Number(parentField.match(/(?:issues\/|#)(\d+)/)?.[1]);
+    const parentName = parentField.match(/^(?:\*\*)?\[(SF-[^\]]+)\]/)?.[1];
     const parent = parentName && WORK_ID.test(parentName) ? parentName : issueIds.get(parentNumber);
+    const declaredArea = metadataField(body, 'Area').match(/^(?:\*\*)?(A\d{2})(?:\*\*)?(?=[ \t.·]|$)/)?.[1];
+    const area = id.match(/^SF-(A\d{2})-/)?.[1] ?? declaredArea ?? id.match(/^SF-(R\d{3})-/)?.[1];
     const item = items.find(i => i.content?.number === issue.number);
-    normalized.push({ id, number: issue.number, title: issue.title, body, state: issue.state.toUpperCase(), area: id.match(/^SF-(A\d+)/)?.[1] ?? 'R015', kind: /-E\d/.test(id) ? 'Epic' : /\.\d+$/.test(id) ? 'Sub-task' : /-B\d/.test(id) ? 'Bug' : 'Task', parent: WORK_ID.test(parent ?? '') ? parent : null, ...deps, labels: (issue.labels?.nodes ?? issue.labels ?? []).map(l => typeof l === 'string' ? l : l.name).sort(), project: item?.fields ?? {}, pullRequests: (issue.closedByPullRequestsReferences?.nodes ?? issue.pullRequests ?? []).map(pr => ({ number: pr.number, merged: pr.merged === true, mergedAt: pr.mergedAt ?? null, mergeCommit: pr.mergeCommit?.oid ?? pr.mergeCommit ?? null, head: pr.headRefOid ?? null, baseRefName: pr.baseRefName })).sort((a, b) => a.number - b.number) });
+    normalized.push({ id, number: issue.number, title: issue.title, body, state: issue.state.toUpperCase(), area, kind: /-E\d/.test(id) ? 'Epic' : /\.\d+$/.test(id) ? 'Sub-task' : /-B\d/.test(id) ? 'Bug' : 'Task', parent: WORK_ID.test(parent ?? '') ? parent : null, ...deps, labels: (issue.labels?.nodes ?? issue.labels ?? []).map(l => typeof l === 'string' ? l : l.name).sort(), project: item?.fields ?? {}, pullRequests: (issue.closedByPullRequestsReferences?.nodes ?? issue.pullRequests ?? []).map(pr => ({ number: pr.number, merged: pr.merged === true, mergedAt: pr.mergedAt ?? null, mergeCommit: pr.mergeCommit?.oid ?? pr.mergeCommit ?? null, head: pr.headRefOid ?? null, baseRefName: pr.baseRefName })).sort((a, b) => a.number - b.number) });
   }
   return { version: 1, repository, defaultBranch, updatedAt, issues: normalized.sort((a, b) => a.id.localeCompare(b.id)) };
 }
