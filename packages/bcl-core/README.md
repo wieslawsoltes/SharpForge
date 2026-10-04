@@ -413,6 +413,28 @@ input text does not count toward it. Work and temporary text are O(count), with
 existing amortized chunk growth. Observer faults retain the released partial
 chunk behavior and release roots; this host policy makes no rollback guarantee.
 
+`StringBuilder.Append(char[])` and `Append(char[], int, int)` append at IDs
+524320–524321. The pinned .NET 10.0.5 reference contains 61 cases covering
+null receivers/arrays, fluent identity, competing range faults and UTF-16
+surrogate cuts. Slice validation checks negative `startIndex`, negative
+`charCount`, null, then array bounds. Unlike string slices, array slices check
+the upper bound even for zero count; invalid windows name `charCount`.
+Full null arrays and valid empty slices return the original builder without
+conversion, writes or managed allocations. Host callers must supply an actual
+single-dimensional zero-based character array.
+
+Nonempty input is checked against the remaining host text budget before any
+unit conversion. Bounded 4096-unit host blocks preserve NUL and isolated
+surrogates, followed by one existing managed chunk append. The builder is
+never flattened, and no per-unit managed strings are created. Conversion takes
+O(charCount) work and temporary host text; those host buffers are distinct from
+the managed chunk allocation and existing amortized backing-array growth.
+Existing argument roots, snapshot behavior and append observer partial progress
+are retained. The array source is fully converted before write callbacks run.
+The unchanged native oracle runs through source-platform and independent CIL
+calls; compiled typed arrays cover both pipelines and both VMs. Other builder
+overloads remain separate work under #2637.
+
 `StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
 return the same destination without writes or managed allocations. Nonempty
 sources are validated as builders, then the combined length is checked against
@@ -610,6 +632,38 @@ baseline is Int64 parent `2ca53c88`, with the identical runner copied into it,
 so builder prerequisite costs are excluded. Culture
 implementations, other search APIs and native/Wasm execution remain open under
 #2621 and are not qualified by this batch.
+
+`StringComparer.FromComparison(StringComparison)` appends A07 contract `524322`
+after the character-array StringBuilder Append overloads. Ordinal (4) and
+OrdinalIgnoreCase (5) return the exact existing getter singleton handles, using
+the same comparison, registered interface, List.Sort and Array.BinarySearch
+paths. Invalid enum values retain `ArgumentException` with parameter
+`comparisonType`; valid culture modes 0–3 explicitly raise `NotSupportedException`.
+No culture getter or collation backend is introduced by this factory.
+
+The [pinned native reference](reference/string-comparer-from-comparison/README.md)
+captures .NET 10.0.5 / SDK 10.0.201 factory/getter identities, invalid enum values,
+nullable/Unicode signs and ordering consumers under invariant and tr-TR cultures.
+All native culture results remain unchanged evidence; those modes are unsupported
+by this factory. In particular, the existing host-normalized default ordering
+profile is not exposed as a native InvariantCulture/CurrentCulture comparer.
+Thread culture, exact collation, comparer equality/hash and other factories
+remain tracked by #2616/#2619/#2621/#2655.
+
+The existing enum validator moves into a dependency leaf and is re-exported from
+its original module, avoiding an import cycle without changing validation order
+or messages for released String APIs. Both getters and the factory share a
+private singleton helper and the same platform snapshot/root storage. Successful
+factory calls allocate no new managed objects after their getter singleton is
+initialized. Existing dispatch result objects and the singleton factory callback
+remain host allocations; this is not a claim of zero host allocation.
+
+Focused tests cover both compiler pipelines/VMs, independent CIL, true comparer
+interface calls, exact identity, collection consumers, managed GC and snapshots.
+`scripts/benchmarks/a07-string-comparer-from-comparison.mjs` provides identical
+before/after getter, comparison and enum-validation controls against parent
+`16a13a16`, plus separate warmed factory measurements with one warmup and five samples. Validation and timing
+are queued serially; native/Wasm execution is outside this batch and #2621 remains open.
 
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
