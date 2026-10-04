@@ -1,6 +1,7 @@
 import { Writer, CilError } from '../binary.js';
 import { CilOpcodes } from './catalog.js';
 import { emitLocal, emitInteger } from './compact.js';
+import { finishCilLayout } from '../il-layout.js';
 
 /** Byte-oriented CIL writer. Optional compact helpers select encodings before offsets are observed. */
 export class CilWriter extends Writer {
@@ -28,6 +29,11 @@ export class CilWriter extends Writer {
       } else this.patch32(fixup.at, delta);
     }
     return super.finish();
+  }
+
+  /** Return relaxed code and original-boundary to final-boundary offsets without changing this writer. */
+  finishWithLayout(options) {
+    return finishCilLayout(this.buffer.subarray(0, this.length), this.labels, this.fixups, options);
   }
 
   op(name, operand) {

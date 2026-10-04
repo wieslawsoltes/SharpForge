@@ -20,6 +20,7 @@ import { declareExceptionTypes } from './exception-types.js';
 import { declareAttributeTypes } from './attribute-types.js';
 import { declareArrayMembers } from './array-members.js';
 import { declareComparisonInterfaces } from './comparison-interfaces.js';
+import { declareNumericConstants } from './numeric-constants.js';
 
 const keywordNames = [
   'object',
@@ -77,6 +78,7 @@ export class CoreTypes {
     this.ireadOnlyListT = bridge.coreType('System_Collections_Generic_IReadOnlyList_T');
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
+    declareNumericConstants(this);
     declareExceptionTypes(this);
     Object.assign(this, declareSpanTypes(this), declareIndexRangeTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');

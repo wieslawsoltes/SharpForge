@@ -17,6 +17,11 @@ function mappedPoint(point, ranges) {
   return point;
 }
 
+/** Read one captured simple uppercase mapping without constructing a transformed string. */
+export function simpleUpperPoint(point) {
+  return mappedPoint(point, upperCaseRanges);
+}
+
 /** Apply pinned .NET simple invariant scalar mappings, preserving UTF-16 length and isolated surrogates. */
 export function invariantCase(value, upper) {
   // Native casing is equivalent only within ASCII; Unicode always uses the captured simple mapping.

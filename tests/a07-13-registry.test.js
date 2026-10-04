@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
-import {createRegistry} from '@sharpforge/framework';
+import {createRegistry, findContracts} from '@sharpforge/framework';
 
 const example = (name = 'example', family = name) => ({
   name,
@@ -73,6 +73,8 @@ test('released BCL groups keep module order and independent registries cannot le
   const empty = createBclRegistry([]);
   assert.equal(empty.modules.length, 0);
   assert.equal(modules.modules.length, 8);
+  const property = findContracts('System.StringComparer', 'get_OrdinalIgnoreCase', true)[0];
+  assert.equal(property.id, 524297, 'StringComparer extension appends after the released object comparer contracts');
 });
 
 test('BCL registry rejects async contracts and malformed invocation results', () => {
