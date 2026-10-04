@@ -17,7 +17,7 @@ this job before entering its concurrency group.
 Use this exact branch grammar:
 
 ```text
-codex/project16/qualify-(ubuntu|windows|macos)-(chromium|firefox|webkit)-(all|node|browser|performance)-<nonce>
+codex/project16/qualify-(ubuntu|windows|macos)-(chromium|firefox|webkit)-(all|node|browser|performance|standalone)-<nonce>
 ```
 
 The nonce is **8–64 lowercase ASCII letters, digits or internal hyphens**, starts
@@ -41,6 +41,32 @@ kind, event ref, full `GITHUB_REF`, selected runner OS and immutable 40-characte
 SHA. The resolver reads at most 256 KiB of event data and only writes validated,
 single-line, fixed-key values to `GITHUB_ENV`. Baseline paths cannot inject an
 extra environment record.
+
+## Selected scopes
+
+Both trigger forms use the same serial qualification runner and existing suite
+registry. Stage selection is explicit:
+
+| Stage | Selected scopes |
+| --- | --- |
+| `all` | All 16 scopes: 2 Node, 9 browser, 5 performance |
+| `node` | The 2 Node areas |
+| `browser` | All 9 browser suites, including standalone workflows |
+| `performance` | The 5 performance scopes |
+| `standalone` | Only `browser:workbench-workflows-standalone` |
+
+The `standalone` stage supports an affected-suite retry after a complete browser
+run isolates a standalone failure. For example:
+
+```text
+codex/project16/qualify-macos-webkit-standalone-20261004-m2
+```
+
+It retains the existing build, browser setup, supervisor deadline, production
+standalone file navigation, offline checks and outcome recording. It does not
+repeat the other eight browser suites or run Node/performance scopes. Its report
+keeps the existing standalone scope ID and the exact newly checked-out source;
+earlier results for other suites remain evidence for their original source.
 
 ## One explicit run
 
@@ -73,7 +99,8 @@ null; existing absolute correctness/latency checks still apply. An explicit
 codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6
 ```
 
-This profile permits only Ubuntu/Chromium with `all` or `performance`. The
+This profile permits only Ubuntu/Chromium with `all` or `performance`;
+`standalone` with `compare-a5-` is rejected before baseline reads or capture. The
 `compare-` namespace is reserved: malformed or unknown profile requests fail
 instead of falling back to capture-only. Profile bytes, source identity and
 schemas are verified before environment output; live host compatibility stays
@@ -97,3 +124,10 @@ profile integrity, reserved prefixes and preserved performance-stage failures.
 These tests exercise no browser, benchmark, dependency install or remote action.
 They were authored for the next consolidated affected validation; no execution
 or successful remote qualification is claimed by this source change.
+
+`tests/a19-qualification-standalone.test.js` adds focused contracts for standalone
+create/manual selection, the single existing suite and deadline, checkpointed
+failure/source identity, and comparative-profile rejection. The existing
+`tests/a19-qualification-outcomes.test.js` retains the exact all/node/browser/
+performance selections. The standalone-stage tests are authored but unrun;
+their source change makes no claim of a successful platform retry.

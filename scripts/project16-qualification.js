@@ -11,9 +11,11 @@ const directory = resolve(root, process.env.SHARPFORGE_RESULTS_DIR || 'artifacts
 const engine = process.env.SHARPFORGE_BROWSER_ENGINE || 'chromium';
 const python = process.env.PYTHON || 'python';
 const browserSupervisorTimeout = 1_320_000;
-const stages = new Set(['node', 'browser', 'performance', 'all']);
+const stages = new Set(['node', 'browser', 'performance', 'all', 'standalone']);
+const standaloneSuite = 'workbench-workflows-standalone';
 const suites = ['workbench-docking', 'workbench-shell', 'workbench-sessions', 'workbench-lazy',
-  'workbench-workflows', 'workbench-workflows-standalone', 'editor-insights', 'editor-providers', 'editor-view'];
+  'workbench-workflows', standaloneSuite, 'editor-insights', 'editor-providers', 'editor-view'];
+const browserStages = new Map([['all', suites], ['browser', suites], ['standalone', [standaloneSuite]]]);
 
 async function run(command, args, timeout = 1_200_000) {
   const code = await runProcess(command, args, { cwd: root, timeout });
@@ -59,17 +61,17 @@ export async function performance({ runCapture = run, read = readFile, write = w
 /** Run independent scopes serially, checkpoint every outcome, and return the required aggregate process exit code. */
 export async function qualify({ stage = 'all', selectedEngine = engine, outputDirectory = directory, env = process.env,
   runScope = run, runPerformance = performance, write = writeReport, now = () => new Date().toISOString() } = {}) {
-  if (!stages.has(stage)) throw new Error('Choose node, browser, performance, or all');
+  if (!stages.has(stage)) throw new Error('Choose node, browser, performance, standalone, or all');
   if (!['chromium', 'firefox', 'webkit'].includes(selectedEngine)) throw new Error('Unsupported qualification browser');
   const scopes = [];
   if (stage === 'node' || stage === 'all') {
     for (const area of ['A19', 'A20']) scopes.push({ id: 'node:' + area, phase: 'node', command: process.execPath,
       args: ['scripts/planning/run-tests.js', '--area', area], timeoutMs: 1_200_000 });
   }
-  if (stage === 'browser' || stage === 'all') {
-    for (const suite of suites) scopes.push({ id: 'browser:' + suite, phase: 'browser', command: env.PYTHON || python,
-      args: ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], timeoutMs: browserSupervisorTimeout });
-  }
+  for (const suite of browserStages.get(stage) ?? []) scopes.push({
+    id: 'browser:' + suite, phase: 'browser', command: env.PYTHON || python,
+    args: ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], timeoutMs: browserSupervisorTimeout
+  });
   if (stage === 'performance' || stage === 'all') {
     scopes.push({ id: 'performance', phase: 'performance' });
     for (const suite of ['editor-budgets', 'studio-large-file']) {

@@ -5,13 +5,15 @@ import { fileURLToPath } from 'node:url';
 import { activateBaselineProfile, baselineProfileRequest } from './project16-baseline-profiles.js';
 
 const prefix = 'codex/project16/qualify-';
-const branchPattern =
-  /^codex\/project16\/qualify-(ubuntu|windows|macos)-(chromium|firefox|webkit)-(all|node|browser|performance)-([a-z0-9][a-z0-9-]{6,62}[a-z0-9])$/;
+const branchPattern = new RegExp(
+  '^codex/project16/qualify-(ubuntu|windows|macos)-(chromium|firefox|webkit)-' +
+  '(all|node|browser|performance|standalone)-([a-z0-9][a-z0-9-]{6,62}[a-z0-9])$'
+);
 const runners = new Map([
   ['ubuntu-latest', 'Linux'], ['windows-latest', 'Windows'], ['macos-latest', 'macOS']
 ]);
 const engines = new Set(['chromium', 'firefox', 'webkit']);
-const stages = new Set(['all', 'node', 'browser', 'performance']);
+const stages = new Set(['all', 'node', 'browser', 'performance', 'standalone']);
 const maximumEventBytes = 256 * 1024;
 
 function singleLine(value, label, maximum = 4096) {
