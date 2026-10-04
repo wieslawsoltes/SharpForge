@@ -18,10 +18,14 @@ and `codeSize`; it does not request PE method bytes or decode instructions again
 Internal decoded-tree/flow seams are not exported through the package entry
 point and are not an unchecked public option. The boundary bitmap is shared
 between tree construction and transfer validation, then released with the
-temporary region/index state. No tree or EH index is allocated for methods
-without handlers; those methods retain their existing admission behavior.
-In particular, this batch does not newly reject `rethrow` or `endfinally` in a
-method without handlers. That remaining placement gap is a separate increment.
+temporary region/index state. Methods without handlers check the same opcode
+placement rules during their existing offset-index pass. This rejects `rethrow`,
+`endfinally` and `endfilter` without an enclosing handler/filter, including
+unreachable instructions, before granting stack proofs. The no-handler path
+allocates no tree, cursor, boundary bitmap or EH index and no temporary offset
+pair arrays. Its ordinary return/throw/branch behavior and EH-budget bypass
+remain unchanged. Its [focused reference plan](../../tests/fixtures/a03-no-handler-placement/README.md)
+records validation separately from the handler-bearing batch.
 
 The existing region defaults bound code to 16 MiB, instructions to one million,
 clauses to 100,000 and lexical depth to 1,024. `maxCodeBytes`, `maxInstructions`,
