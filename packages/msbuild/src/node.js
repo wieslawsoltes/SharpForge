@@ -20,3 +20,4 @@ export * from './design-time-generated.js';
 export * from './native-metadata.js';
 export * from './launch.js';
 export * from './publish-profiles.js';
+export * from './project-edits/index.js';
