@@ -1,12 +1,13 @@
 import { findTextMatches } from '@sharpforge/text';
 import { adjacentCharacter } from '../commands/movement.js';
-import { findCharacter, motionRange, normalPoint, vimMotion, vimWord } from './vim-motions.js';
+import { findCharacter, motionRange, normalPoint, vimMotion, vimWord, visualPointColumn } from './vim-motions.js';
 import { textObject } from './vim-text-objects.js';
 import { VimRegisters } from './vim-registers.js';
 import { VimExCommands } from './vim-ex.js';
 import { openKeymapPrompt } from './prompt.js';
-import { applyOperator, enterInsert, joinLines, leaveInsert, pasteRegister, removeCharacters,
-  toggleVisual, updateVisual, visualRanges } from './vim-actions.js';
+import { applyOperator, enterInsert, insertVisualBlock, joinLines, leaveInsert, pasteRegister, removeCharacters } from './vim-actions.js';
+import { blockHorizontalMotion, toggleVisual, updateVisual, visualRanges } from './vim-visual.js';
+import { replaceVisual, visualCommandHandlers } from './vim-visual-commands.js';
 
 function keyToken(event) {
   if (event.ctrlKey && !event.altKey && !event.metaKey) return `Ctrl+${event.key.toLowerCase()}`;
@@ -94,13 +95,16 @@ export class VimKeymap {
     const count = counted.count * (this.operator?.count ?? 1);
     const vertical = ['j', 'k', 'ArrowUp', 'ArrowDown'].includes(key);
     if (!vertical) this.goalColumn = undefined;
-    else this.goalColumn ??= this.context.position(this.point).character;
+    else this.goalColumn ??= this.mode === 'visual-block' ? this.visualHeadColumn : visualPointColumn(this.context, this.point);
     const motionKey = this.operator?.operation === 'c' && ['w', 'W'].includes(key) &&
       /\S/u.test(this.context.slice(this.point, this.point + 1)) ? (key === 'w' ? 'e' : 'E') : key;
-    const motion = vimMotion(this.context, motionKey, this.point, { count, explicitCount: counted.explicit,
+    const motion = blockHorizontalMotion(this, motionKey, count) ?? vimMotion(this.context, motionKey, this.point, { count, explicitCount: counted.explicit,
       goalColumn: this.goalColumn, lastFind: this.lastFind });
-    if (motion) return this.acceptMotion(motion) ?? true;
-    const handlers = this.commandHandlers(counted.count);
+    if (motion) {
+      if (this.mode === 'visual-block' && !vertical) this.visualToEol = key === '$' || key === 'End';
+      return this.acceptMotion(motion) ?? true;
+    }
+    const handlers = { ...this.commandHandlers(counted.count), ...visualCommandHandlers(this) };
     const handler = handlers[key];
     if (handler) return handler() ?? true;
     this.resetPending();
@@ -117,11 +121,15 @@ export class VimKeymap {
         enterInsert(this);
       },
       I: () => {
+        if (this.mode === 'visual-block') return insertVisualBlock(this);
         const line = context.position(point).line;
         context.goto(context.lineStart(line) + context.line(line).match(/^\s*/u)[0].length);
         enterInsert(this);
       },
-      A: () => { context.goto(context.lineEnd(context.position(point).line)); enterInsert(this); },
+      A: () => {
+        if (this.mode === 'visual-block') return insertVisualBlock(this, true);
+        context.goto(context.lineEnd(context.position(point).line)); enterInsert(this);
+      },
       o: () => this.openLine(false), O: () => this.openLine(true), R: () => enterInsert(this, 'replace'),
       r: () => { this.pending = { kind: 'replace', count }; },
       x: () => removeCharacters(this, false, count), X: () => removeCharacters(this, true, count),
@@ -158,6 +166,7 @@ export class VimKeymap {
   }
   insertKey(key, replay) {
     if (key === 'Escape' || key === 'Ctrl+[') { leaveInsert(this); return true; }
+    if (!this.inUndoGroup && !this.context.readOnly) enterInsert(this, this.mode);
     if (key === 'Ctrl+r') { this.pending = { kind: 'insert-register' }; return true; }
     if (this.pending?.kind === 'insert-register') {
       this.pending = null;
@@ -203,7 +212,7 @@ export class VimKeymap {
     return false;
   }
   beginOperator(operation) {
-    if (this.mode.startsWith('visual')) return applyOperator(this, operation, visualRanges(this)) ?? true;
+    if (this.mode.startsWith('visual')) return applyOperator(this, operation, visualRanges(this), this.takeCount().count) ?? true;
     const { count } = this.takeCount();
     if (this.operator?.operation === operation) return this.lineOperator(operation, count * this.operator.count);
     this.operator = { operation, count, start: this.context.selection.head };
@@ -218,7 +227,12 @@ export class VimKeymap {
   }
   acceptMotion(motion) {
     if (this.operator) return applyOperator(this, this.operator.operation, [motionRange(this.context, this.operator.start, motion)]);
-    else if (this.mode.startsWith('visual')) { this.visualHead = motion.target; updateVisual(this); this.keys = []; }
+    else if (this.mode.startsWith('visual')) {
+      this.visualHead = motion.target;
+      this.visualHeadColumn = motion.visualColumn ?? visualPointColumn(this.context, motion.target);
+      updateVisual(this);
+      this.keys = [];
+    }
     else { this.context.goto(normalPoint(this.context, motion.target)); this.resetPending(); }
   }
   completePending(key) {
@@ -265,6 +279,9 @@ export class VimKeymap {
       return true;
     }
     if (pending.kind === 'replace') {
+      if (pending.visual) return replaceVisual(this, key);
+      key = key === 'Space' ? ' ' : key;
+      if ([...key].length !== 1) throw new Error('Vim replace requires one character');
       const start = this.point;
       let end = start;
       const limit = this.context.lineEnd(this.context.position(start).line);
@@ -328,10 +345,13 @@ export class VimKeymap {
     if (this.replayDepth >= 16) throw new RangeError('Vim macro recursion exceeds 16');
     if (!this.replayDepth) { this.replaySteps = 0; this.cancelReplay = false; }
     this.replayDepth++;
+    const buffer = this.context.buffer;
+    const profile = this.context.editor.keymap;
     this.context.editor.model?.beginUndoGroup?.('vim-macro');
     try {
       for (let repeat = 0; repeat < count; repeat++) for (const key of [...tokens]) {
-        if (this.disposed || this.context.disposed || this.cancelReplay || ++this.replaySteps > 10000) {
+        if (this.disposed || this.context.disposed || this.cancelReplay || this.context.buffer !== buffer
+          || this.context.editor.keymap !== profile || ++this.replaySteps > 10000) {
           throw new RangeError('Vim macro cancelled or key budget exceeded');
         }
         await this.feed(key, true);

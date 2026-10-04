@@ -1,7 +1,15 @@
+import { offsetAtVisualColumn, visualColumnAt } from '@sharpforge/text';
 import { adjacentCharacter } from '../commands/movement.js';
 
 const word = /[\p{L}\p{N}\p{M}_]/u;
 const category = (character, big) => /\s/u.test(character) ? 0 : big || word.test(character) ? 1 : 2;
+
+export function visualPointColumn(context, offset) {
+  const position = context.position(offset);
+  return visualColumnAt(context.line(position.line), position.character, {
+    tabSize: context.editor.options?.tabSize ?? 4, segmenter: context.graphemes
+  });
+}
 
 export function wordRuns(context, line, big) {
   const runs = [];
@@ -52,6 +60,7 @@ export function vimMotion(context, key, offset, { count = 1, explicitCount = fal
   let target = offset;
   let inclusive = false;
   let linewise = false;
+  let visualColumn;
   if (['w', 'W', 'b', 'B', 'e', 'E'].includes(key)) {
     for (let step = 0; step < count; step++) target = vimWord(context, target, {
       direction: ['b', 'B'].includes(key) ? -1 : 1, end: ['e', 'E'].includes(key), big: key === key.toUpperCase()
@@ -64,8 +73,15 @@ export function vimMotion(context, key, offset, { count = 1, explicitCount = fal
   } else if (['j', 'k', 'ArrowDown', 'ArrowUp', '+', '-', 'Enter'].includes(key)) {
     const direction = ['k', 'ArrowUp', '-'].includes(key) ? -1 : 1;
     const line = Math.max(0, Math.min(context.lineCount - 1, position.line + count * direction));
-    const column = ['+', '-', 'Enter'].includes(key) ? context.line(line).match(/^\s*/u)[0].length : goalColumn ?? position.character;
-    target = normalPoint(context, context.offset({ line, character: column }), line);
+    if (['+', '-', 'Enter'].includes(key)) target = context.lineStart(line) + context.line(line).match(/^\s*/u)[0].length;
+    else {
+      visualColumn = goalColumn ?? visualPointColumn(context, offset);
+      const point = offsetAtVisualColumn(context.line(line), visualColumn, {
+        tabSize: context.editor.options?.tabSize ?? 4, segmenter: context.graphemes
+      });
+      target = context.lineStart(line) + point.offset;
+    }
+    target = normalPoint(context, target, line);
     linewise = true;
   } else if (key === '0' || key === 'Home') target = context.lineStart(position.line);
   else if (key === '^' || key === '_') {
@@ -78,7 +94,12 @@ export function vimMotion(context, key, offset, { count = 1, explicitCount = fal
     inclusive = true;
   } else if (key === '|' || key === 'gg' || key === 'G') {
     const line = key === '|' ? position.line : explicitCount ? count - 1 : key === 'G' ? context.lineCount - 1 : 0;
-    target = context.offset({ line: Math.max(0, Math.min(context.lineCount - 1, line)), character: key === '|' ? count - 1 : 0 });
+    if (key === '|') {
+      visualColumn = count - 1;
+      target = context.lineStart(line) + offsetAtVisualColumn(context.line(line), visualColumn, {
+        tabSize: context.editor.options?.tabSize ?? 4, segmenter: context.graphemes
+      }).offset;
+    } else target = context.offset({ line: Math.max(0, Math.min(context.lineCount - 1, line)), character: 0 });
     linewise = key !== '|';
   } else if (key === '{' || key === '}') {
     let line = position.line;
@@ -103,7 +124,7 @@ export function vimMotion(context, key, offset, { count = 1, explicitCount = fal
       ...lastFind, direction: key === ',' ? -lastFind.direction : lastFind.direction, count
     });
   } else return null;
-  return { target, inclusive, linewise };
+  return { target, inclusive, linewise, visualColumn };
 }
 
 export function findCharacter(context, offset, character, { direction = 1, till = false, count = 1 } = {}) {

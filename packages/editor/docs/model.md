@@ -20,6 +20,8 @@ Selections use `{anchor,active}` UTF-16 offsets. `{anchor,head}` is an accepted 
 
 Multi-caret functions cover add/remove/collapse, next/all occurrences, and line-end carets. `replaceSelections` performs every caret edit in one transaction. Box selection records visual columns rather than treating columns as UTF-16 indices. Tab interiors expand into equivalent unselected spaces during editing; short rows retain virtual-space padding. Clipboard functions return plain text and optional versioned metadata; matching fragment counts distribute per caret, including fragments containing newlines. Rectangular paste grows missing lines in the same undo operation.
 
+`boxSelectionEdits` and `boxSelectionText` share the same geometry for editing and copying. Wide graphemes remain indivisible when a rectangle intersects only one of their visual cells. `padVirtualSpace:false` lets deletion leave short rows unchanged. Box insertion defaults to a 16 Mi-character combined payload budget, including tab splitting, virtual padding, and newly created clipboard rows; `maxInsertedCharacters` explicitly configures that budget up to one billion UTF-16 code units. Exceeding it rejects preparation before any model edit.
+
 ## Undo and dirty state
 
 `UndoStack` stores forward and inverse edits, selection snapshots, command identity, and a persistent linked sequence within each coalesced group. It never stores a complete document value. A 500 KB document can retain 1,000 one-character undo groups with 1,000 retained payload characters.
@@ -38,3 +40,13 @@ Typing/deletion coalesces only when command identity, selection continuity, time
 `checkpoint`/`restoreCheckpoint` include buffer root/version, undo state, selections, and scroll. Notification callbacks never run in the no-notification commit phase. If a later participant rejects a change, the workspace can restore every checkpoint before any listener observes partial state. Listener failures after publication do not retroactively roll back committed text.
 
 The direct `.buffer` API bypasses editor history. User editing commands should use `model.applyEdits` or the editor facade's transaction method. Several views can share one `EditorModel`; each view can additionally keep a `SelectionSet` for independent local caret/scroll state. Disposing an injected model buffer remains the owner's responsibility.
+
+## Exact visual status columns
+
+`model.visualColumnAtOffset(offset,{tabSize:4,ambiguousWidth:1,signal})` returns a promise for the zero-based visual column on the offset's logical line. `cachedVisualColumnAtOffset` returns an exact number or `null`; it reads at most one bounded chunk when a sparse checkpoint is close enough. `positionAt(offset).character` remains the line-relative UTF-16 position for a status bar's **Ch** field. Add one to the visual result for a one-based **Col** field.
+
+The index is created lazily and shared by every view of the model. Defaults use 4,096-unit chunks, 8,192-unit checkpoint spacing, at most 32 cached line/style pairs, 32,768 sparse checkpoints, 256 recent answers per pair and 64 pending requests. The first large-prefix lookup yields after 65,536 scanned units or an 8 ms scheduling slice. A chunk may read one extra unit to keep a surrogate pair intact. Numeric grapheme state crosses chunks without retaining an unfinished cluster's text. Sparse checkpoints coarsen when the configured memory budget is full; document length has no separate visual-column cutoff.
+
+Edits retain unaffected line indexes and the prefix checkpoints before the earliest changed part of a line. Silent workspace commits and checkpoint restores are checked against snapshot identity before every query and scan slice. A changed snapshot rejects pending requests with `TEXT_VERSION_MISMATCH`; cancellation uses `AbortError`/`VISUAL_COLUMN_CANCELLED`. Disposal and capacity failures have `VISUAL_COLUMN_DISPOSED` and `VISUAL_COLUMN_LIMIT` codes. Read-only state does not prevent a coordinate lookup.
+
+A status consumer should render an explicit pending state while awaiting an uncached result, cancel its preceding request when the caret moves, and compare the captured model, version and caret before displaying the result. No estimated column is returned as exact. `visualColumnStatistics` exposes scan units, chunks, yields, hits, checkpoint count, cached line count and pending count for qualification. Pass `{visualColumns:{...indexOptions}}` to the model constructor to configure index resources or inject scheduling for deterministic tests.

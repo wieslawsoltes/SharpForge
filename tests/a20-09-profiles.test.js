@@ -37,6 +37,27 @@ test('profile switches preserve the authoritative model, undo, primary selection
   editor.dispose();
 });
 
+test('resuming Vim insert after a profile switch opens a new complete undo group', async () => {
+  const editor = createNativeEditor('', { mode: 'vim' });
+  await editor.feed(['i', 'A', 'B']);
+  editor.adapter.setMode('vscode');
+  assert.equal(editor.adapter.vim.inUndoGroup, false);
+  editor.insertText('X', { undoStop: true });
+  editor.adapter.setMode('vim');
+  assert.equal(editor.adapter.vim.mode, 'insert');
+  assert.equal(editor.adapter.vim.inUndoGroup, true);
+  await editor.feed(['C', 'D', 'Escape']);
+  assert.equal(editor.value, 'ABXCD');
+  assert.equal(editor.model.undoStack.depth, 3);
+  editor.undo();
+  assert.equal(editor.value, 'ABX');
+  editor.undo();
+  assert.equal(editor.value, 'AB');
+  editor.undo();
+  assert.equal(editor.value, '');
+  editor.dispose();
+});
+
 test('Emacs mark extends motion, exchanges ends and kills the marked region with one undo', async () => {
   const editor = createNativeEditor('abcdef', { mode: 'emacs', selections: [[1, 1]] });
   await editor.press('Ctrl+Space');
