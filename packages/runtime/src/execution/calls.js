@@ -86,6 +86,7 @@ export function invoke(vm,instruction) {
       else if(systemType(descriptor.owner)==='System.Object'&&args.length===0)ref=vm.heap.object(vm.typeSystem.table('System.Object'),[]);
       else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
+      if(vm.state==='terminated')return;
       args.unshift(ref);vm.heap.pins.push(ref);
       if(target)vm.call(target,args,{returnObject:ref,genericIdentity,methodArguments:descriptor.methodArguments});
       else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}

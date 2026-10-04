@@ -19,7 +19,36 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
+The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
+graphs and the conservative source reconstruction pipeline, including explicit
+IL fallbacks and exception-boundary metadata.
+
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+## Parameterless Object construction
+
+`compile` and `compileToIL` support `new object()` and `new System.Object()` through
+the source allocation builtin `object.new`, appended at wire ID 1848 after the
+released scalar families. It creates one ordinary managed `System.Object` with
+zero fields. Existing framework contract IDs and source builtin IDs retain their
+meaning. The emitted assembly uses the real instance MemberRef
+`System.Object::.ctor(): void` with `newobj`; the canonical loader reconstructs
+the allocation with zero arguments. Ordinary base-constructor `call` instructions
+keep the direct-CIL runtime's existing initialization behavior.
+
+Constructor decoding checks its opcode, complete admitted call shape, raw
+top-level type identity, and approved signing token and neutral culture before
+the full canonical assembly check. It shares the readonly-field identity helper;
+each consumer keeps its own allowed facade names. Object construction retains
+the existing `mscorlib4` emission profile. Canonical replay by itself can preserve
+an input AssemblyRef identity, so it does not replace the constructor's explicit
+identity check.
+
+Focused coverage is in `tests/a05-source-object-construction.test.js` and
+`tests/a05-object-constructor-metadata.test.js`: both compiler pipelines, source
+and CIL execution, canonical reload, distinct identities, GC and snapshot roots,
+allocation failure, stopping from an allocation observer, derived constructors,
+and forged metadata.
 
 ## Registered external readonly fields
 

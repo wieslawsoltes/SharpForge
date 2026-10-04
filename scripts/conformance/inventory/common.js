@@ -34,7 +34,12 @@ export function counts(rows) {
 }
 
 export function normalizeType(value) {
-  const aliases = { 'System.Void': 'void', 'System.Boolean': 'bool', 'System.Char': 'char', 'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.String': 'string', 'System.Object': 'object', 'System.IntPtr': 'nint', 'System.UIntPtr': 'nuint' };
+  const aliases = {
+    'System.Void': 'void', 'System.Boolean': 'bool', 'System.Char': 'char', 'System.SByte': 'sbyte', 'System.Byte': 'byte',
+    'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Int32': 'int', 'System.UInt32': 'uint',
+    'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double',
+    'System.Decimal': 'decimal', 'System.String': 'string', 'System.Object': 'object', 'System.IntPtr': 'nint', 'System.UIntPtr': 'nuint'
+  };
   return value.replace(/System\.[A-Za-z][A-Za-z0-9]*/g, word => aliases[word] ?? word).replaceAll(', ', ',');
 }
 

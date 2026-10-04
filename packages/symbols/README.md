@@ -21,6 +21,12 @@ The caller supplies authoritative aggregate CLI row counts and a baseline /
 previous-PDB identity envelope. See the [generation API and native
 fixture](interop/PdbGenerations/README.md) for handle semantics, limits,
 errors and a runnable example. The baseline reader continues to reject deltas.
+`emitPortablePdbDelta(debug, generation, options)` writes changed methods through
+the same codecs and returns a baseline/previous-generation envelope alongside
+the standard bytes. See the [delta writer contract](interop/PdbGenerations/delta-writer.md).
+`PortablePdbRevisionMap` binds an exact caller-supplied generation/method/revision
+triple to a retained snapshot, keeping old frame maps stable after updates.
+See the [snapshot contract](interop/PdbGenerations/revision-map.md).
 
 `emitPortablePdb(assembly, debug)` accepts `debug.importScopes` in row order;
 `parent` is zero or an earlier one-based scope id. Each scope has `definitions`
@@ -296,7 +302,8 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
 | Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
-| PDB generations | Explicit minimal-delta reader; bounded aggregate history; caller-supplied baseline/previous-generation identity |
+| PDB generations | Minimal-delta read/write; bounded aggregate history; caller-supplied baseline/previous-generation identity |
+| Revision snapshots | Exact generation/method/revision checks; retained maps; shared bounded cache and explicit disposal |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
 

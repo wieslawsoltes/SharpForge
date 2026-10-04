@@ -1,6 +1,19 @@
 import { Reader, Writer } from '@sharpforge/cil';
 import { writeSignedCompressed as signed } from './signed-integer.js';
 import { fail, HIDDEN } from './contracts.js';
+
+/** Find the last ordered point at or before an IL-byte offset, retaining hidden-point barriers. */
+export function sequencePointAt(points, offset) {
+  let low = 0;
+  let high = points.length;
+  while (low < high) {
+    const middle = (low + high) >>> 1;
+    if (points[middle].offset <= offset) low = middle + 1;
+    else high = middle;
+  }
+  return points[low - 1];
+}
+
 export function readSequencePoints(bytes, document = 0, { maxPoints = 1_000_000, documents = Infinity } = {}) {
   if (!bytes.length) return { localSignature: 0, points: [] };
   const r = new Reader(bytes),
