@@ -532,6 +532,20 @@
       "count": 1,
       "sha256": "6aa324809e5b796f72a36b7ba972cc67754880600c285977e9f9e2978b435312",
       "reason": "Operator-selected trusted clean exact-SHA checkouts supply only fixed public compiler, runtime and CIL exports plus optional compiler/node. Every transitive workspace alias is verified inside its checkout before loading and again before reporting, with physical links and resolved entries checked. Exact production source/package/manifest Git objects record intentional whole-revision runtime and CIL changes. Program source never forms a module specifier."
+    },
+    {
+      "path": "scripts/benchmarks/a02-extension-metadata-paired.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "0e29a734fa90447e87e509d44387cff738b8ec30b2014035df72ae6976610476",
+      "reason": "Developer benchmark imports an explicit operator-selected local compiler entry from a trusted checkout. The entry is supplied only by the developer running the benchmark; managed source and metadata cannot choose JavaScript modules. Historical benchmark bytes and hashes are preserved."
+    },
+    {
+      "path": "scripts/benchmarks/a02-extension-metadata.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "5cbc987ea93b50396182046631c39c97a0956f2cbfebda9ed4a3fae4cbc8dc0b",
+      "reason": "Developer benchmark imports an explicit operator-selected local compiler entry from a trusted checkout. The entry is supplied only by the developer running the benchmark; managed source and metadata cannot choose JavaScript modules. Historical benchmark bytes and hashes are preserved."
     }
   ]
 }
