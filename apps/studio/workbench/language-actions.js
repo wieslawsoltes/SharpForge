@@ -1,6 +1,7 @@
 /** Project-isolated semantic batches. This coordinator returns preview data and never commits editor or resource state. */
 export function createWorkspaceLanguageActions({projects, documents, getProjectDocuments}) {
   if (typeof getProjectDocuments !== 'function') throw new TypeError('Explicit project-owned source enumeration is required');
+  if (typeof projects.sourceUris !== 'function') throw new TypeError('Metadata-only compiler source enumeration is required');
   const builds = projects.services.builds;
   const source = uri => {
     const record = documents.get(uri);
@@ -101,7 +102,7 @@ export function createWorkspaceLanguageActions({projects, documents, getProjectD
       const target = await request(first, 'prepareRename', {...parameters, version: start.version}, options);
       if (!target?.declaration) throw new Error('No bound source declaration to rename');
       const declaration = source(target.declaration.uri);
-      const batches = builds.list().map(capture).filter(batch => batch.sources.some(item => item.uri === declaration.uri));
+      const batches = builds.list().filter(service => projects.sourceUris(service.id).includes(declaration.uri)).map(capture);
       const ids = builds.list().map(item => item.id).sort().join('\n');
       const results = await Promise.all(batches.map(batch => request(batch, 'rename', {...parameters,
         uri: declaration.uri, version: declaration.version, offset: target.declaration.start}, options)));
