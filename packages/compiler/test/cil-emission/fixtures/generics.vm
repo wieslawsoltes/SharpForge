@@ -1,2 +1,2 @@
-External member 'System.Object::Equals' is not implemented
-constrained. execution requires a nongeneric internal class or interface instance method
+IL_PREFIX: constrained. execution requires a nongeneric internal class or interface instance method
+IL_REFERENCE: External member 'System.Object::Equals' is not implemented
