@@ -56,11 +56,11 @@ function awaitsInFinally(body) {
 export const AsyncEmission = Base =>
   class extends Base {
     get isAsyncBody() {
-      return this.machine?.kind === 'async';
+      return this.machine?.kind === 'async' || this.machine?.kind === 'asyncIterator';
     }
     createInstructionStream(frame) {
       const machine = frame.stateMachine;
-      if (machine?.kind !== 'async') return super.createInstructionStream(frame);
+      if (machine?.kind !== 'async' && machine?.kind !== 'asyncIterator') return super.createInstructionStream(frame);
       return new TypedIlBuilder(this.core, [machine.type]);
     }
     expression(node) {
@@ -197,9 +197,15 @@ export const AsyncEmission = Base =>
     }
     exprAwait(node) {
       if (!this.isAsyncBody) return this.unsupported('await outside an async method', node.syntax);
+      return this.awaitWith(awaiterOf(this, node), node.type, node.syntax);
+    }
+    /**
+     * Awaits through an awaiter description (awaitables.js); the result, when there is one, is left on the stack.
+     * @param awaiter `{awaiterType, isCritical, getAwaiter, isCompleted, getResult}`  @param resultType the type of the await
+     */
+    awaitWith(awaiter, resultType, syntax) {
       const il = this.il,
-        saved = this.savePending(node.syntax),
-        awaiter = awaiterOf(this, node),
+        saved = this.savePending(syntax),
         awaiterType = awaiter.awaiterType,
         isObject = isReference(awaiterType),
         slot = this.transient(awaiterType),
@@ -227,8 +233,8 @@ export const AsyncEmission = Base =>
       il.mark(completed);
       pushAwaiter();
       awaiter.getResult();
-      if (!isVoid(node.type)) il.recordTop(node.type);
-      this.restorePending(saved, node.type);
+      if (!isVoid(resultType)) il.recordTop(resultType);
+      this.restorePending(saved, resultType);
       return undefined;
     }
     /** An assignment to a variable whose value awaits: the value first, then the store (the variable may be a field). */
