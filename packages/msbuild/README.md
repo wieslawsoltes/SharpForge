@@ -45,3 +45,6 @@ cancellable progress while retaining separate execution capabilities. See
 
 [Portable framework discovery](docs/test-discovery.md) describes the xUnit, NUnit
 and MSTest adapter registry, data evaluation controls and explicit boundaries.
+
+[Portable test sessions](docs/portable-testing.md) execute the managed framework
+profile with isolated fixtures, cancellation, explicit outcomes and replayable progress.
