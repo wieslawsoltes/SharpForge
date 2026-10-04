@@ -6,17 +6,25 @@ const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const widening = Object.freeze([0, 0b0000010, 0b0000110, 0b0001110, 0b0010110, 0b0111110, 0b1111110]);
 
 function checkOwner(method, maxRows, maxDepth) {
+  const owner = method.declaringType;
   if (method.module.rowCount(42) + method.module.rowCount(44) > maxRows) {
     throw loadError(LoadErrorCode.LimitExceeded, 'Strict override generic metadata row limit exceeded');
   }
+  // Ordinary owners retain their original checks without walking an enclosing chain.
+  if (!owner.declaringType && (owner.flags & 7) <= 1) {
+    if (owner.genericParameters.length || method.signature.genericArity) {
+      throw fail('Generic strict overrides require a later access policy');
+    }
+    return;
+  }
   if (method.signature.genericArity) throw fail('Generic strict overrides require a later access policy');
   let depth = 0;
-  for (let owner = method.declaringType; owner; owner = owner.declaringType) {
+  for (let enclosing = owner; enclosing; enclosing = enclosing.declaringType) {
     if (++depth > maxDepth) throw loadError(LoadErrorCode.LimitExceeded, 'Strict override enclosing depth exceeded');
-    if (Boolean(owner.declaringType) !== ((owner.flags & 7) > 1)) {
+    if (Boolean(enclosing.declaringType) !== ((enclosing.flags & 7) > 1)) {
       throw loadError(LoadErrorCode.InvalidImage, 'Strict override owner nesting and visibility disagree');
     }
-    if (owner.genericParameters.length) throw fail('Generic strict overrides require a later access policy');
+    if (enclosing.genericParameters.length) throw fail('Generic strict overrides require a later access policy');
   }
 }
 
