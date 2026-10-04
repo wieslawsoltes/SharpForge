@@ -5,3 +5,6 @@ export * from './watch.js';
 export * from './watch-coalesce.js';
 export * from './coordination/locks.js';
 export * from './recovery/handles.js';
+export * from './reconcile.js';
+export * from './coordination/channel.js';
+export * from './coordination/conflicts.js';
