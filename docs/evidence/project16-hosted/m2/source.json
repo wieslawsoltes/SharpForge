@@ -1,0 +1,16 @@
+{
+  "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+  "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+  "trigger": "create",
+  "triggerRef": "refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2",
+  "triggerNonce": "20261004-m2",
+  "captureOnly": true,
+  "baselineProfile": null,
+  "workflowRunId": "37186932517",
+  "stage": "standalone",
+  "engine": "chromium",
+  "runner": "macOS",
+  "runnerLabel": "macos-latest",
+  "editorBaseline": null,
+  "workbenchBaseline": null
+}

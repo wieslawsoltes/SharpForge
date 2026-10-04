@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-qualification",
+  "stage": "standalone",
+  "engine": "chromium",
+  "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+  "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+  "workflowRunId": "37186932517",
+  "startedAt": "2026-10-04T07:49:41.321Z",
+  "finishedAt": "2026-10-04T07:49:47.330Z",
+  "status": "passed",
+  "exitCode": 0,
+  "scopes": [
+    {
+      "id": "browser:workbench-workflows-standalone",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-workflows-standalone",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T07:49:41.323Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T07:49:47.328Z"
+    }
+  ],
+  "counts": {
+    "selected": 1,
+    "passed": 1,
+    "failed": 0
+  }
+}
