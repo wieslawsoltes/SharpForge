@@ -66,7 +66,7 @@ function delegateRecord(vm, reference) {
   return record;
 }
 
-function bindingMode(vm, reference, method) {
+export function delegateBindingMode(vm, reference, method) {
   const mode = vm.platform.get(reference, 'mode');
   if (mode !== null) return mode;
   // Existing source/platform records predate explicit binding modes.
@@ -82,7 +82,7 @@ export function boundDelegatesEqual(vm, left, right) {
   if (first.kind !== 'delegate' || second.kind !== 'delegate') return false;
   const firstMethod = vm.platform.get(left, 'method'), secondMethod = vm.platform.get(right, 'method');
   return first.methodTable === second.methodTable && firstMethod === secondMethod &&
-    bindingMode(vm, left, firstMethod) === bindingMode(vm, right, secondMethod) &&
+    delegateBindingMode(vm, left, firstMethod) === delegateBindingMode(vm, right, secondMethod) &&
     equalReference(vm.platform.get(left, 'receiver'), vm.platform.get(right, 'receiver'));
 }
 
@@ -93,7 +93,7 @@ export function boundDelegateCall(vm, reference, args) {
   if (!signature || args.length !== signature.parameters.length) throw fault('Delegate argument count mismatch');
   const method = vm.platform.get(reference, 'method');
   const receiver = vm.platform.get(reference, 'receiver');
-  const mode = bindingMode(vm, reference, method);
+  const mode = delegateBindingMode(vm, reference, method);
   if (!['static', 'closed-static', 'open-instance', 'closed-instance'].includes(mode)) throw fault('Unknown delegate binding mode');
   return {method, arguments: mode === 'closed-static' || mode === 'closed-instance' ? [receiver, ...args] : [...args]};
 }
