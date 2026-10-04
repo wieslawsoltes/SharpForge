@@ -12,7 +12,10 @@
     "tests/browser_release13_test.py",
     "tests/browser_designer_documents_test.py",
     "tests/browser_designer_geometry_test.py",
-    "tests/browser_designer_app_host_test.py"
+    "tests/browser_designer_app_host_test.py",
+    "tests/browser_designer_canvas_translation_test.py",
+    "tests/browser_designer_gradient_test.py",
+    "tests/browser_designer_integrated_test.py"
   ],
   "requiredServices": [
     "studio-http",

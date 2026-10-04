@@ -387,6 +387,27 @@
       "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
     },
     {
+      "path": "tests/browser_designer_gradient_test.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "14b63fadc71c31c548ff03d10b1ddebe6030ebf57723571eec6976a51d928996",
+      "reason": "Browser qualification loads the fixed same-origin production public WinUI package to compare actual DOM gradient paint and SVG raster pixels; no user-selected or remote JavaScript."
+    },
+    {
+      "path": "tests/browser_designer_canvas_translation_test.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "43ce849c6934259a68a2ab286acd76490cbdae3aa04ba1242396e52702435282",
+      "reason": "Browser qualification loads the fixed same-origin production Canvas translation reference module to compare actual retained and complete DOM geometry and native interaction; no user-selected or remote JavaScript."
+    },
+    {
+      "path": "tests/browser_designer_gate_performance.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "87af26706e34c0d549e1ea91b71d5665c10c6f423820ea608f4ce29712f682cb",
+      "reason": "Browser qualification loads the fixed same-origin production layout-reference module inside the page to compare actual designer, Source VM and CIL DOM geometry; no user-selected or remote JavaScript."
+    },
+    {
       "path": "tests/conformance/flaky/detect.test.js",
       "operation": "dynamic-import",
       "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",

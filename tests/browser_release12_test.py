@@ -1,10 +1,14 @@
 """Designer and edit/continue end-to-end acceptance. Production modules and two real workers."""
 import os,json,time,traceback
+from math import floor
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from conformance.browser.launch import launch_browser, results_dir
 RESULTS = results_dir()
 from browser_harness import load_application,wait_condition
+from browser_designer_release_controls import ReleaseDesignerControls
+from browser_designer_source_input import replace_source
+from browser_designer_release_attachment import attach_running_application
 ROOT=Path(__file__).resolve().parents[1];checks=[]
 def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
@@ -21,47 +25,74 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def action(name):return ev('a=>sharpforge.designer.action(a)',name)
  def tool(name):ev('n=>sharpforge.openTool(n)',name)
  def select(id):ev('id=>sharpforge.designer.select(id)',id)
- def new():action('new');page.wait_for_timeout(70)
- def edit(text):ev('sharpforge.openFile("Program.cs")');page.locator('[data-source-uri="Program.cs"] .sf-input').fill(text);wait('sharpforge.getState().files.find(f=>f.uri==="Program.cs").text===document.querySelector(\'[data-source-uri="Program.cs"] .sf-input\').value')
+ def new():ui.new()
+ def edit(text):
+  replace_source(page,"Program.cs",text)
  def app_node(name):return next(n for n in ev('sharpforge.getUIScene()')['nodes'] if n['properties'].get('Name')==name)
+ attachments=[]
+ def attach(allow_unlinked=False):
+  try:
+   return attach_running_application(page,ev,ds,records=attachments,allow_unlinked=allow_unlinked)
+  finally:
+   (RESULTS/'browser-release12-attachments.json').write_text(json.dumps(attachments,indent=2),encoding='utf-8')
  def drag(locator,dx,dy):
   box=locator.bounding_box();truth(box,'element has no bounds');x,y=box['x']+box['width']/2,box['y']+box['height']/2;page.mouse.move(x,y);page.mouse.down();page.mouse.move(x+dx,y+dy,steps=8);page.mouse.up();page.wait_for_timeout(120)
+ ui=ReleaseDesignerControls(page,ds,action,select,tool,ev,drag)
  try:
   load_application(page)
   ev('sharpforge.designer.open()');page.wait_for_timeout(300)
-  check('all seven designer tools initialize with production preview and two runtime/compiler workers',lambda:truth(len(workers)==2 and page.locator('.design-preview [data-sf-id="action"]').count()==1 and 'Canvas' in page.locator('.design-tree').inner_text() and not errors,str(errors)))
+  check('all seven designer tools initialize with production preview and two runtime/compiler workers',lambda:truth(len(workers)==2 and ui.host.locator('.design-preview [data-sf-id="action"]').count()==1 and 'Canvas' in ui.side('tree').locator('.design-tree').inner_text() and not errors,str(errors)))
   def toolbox():
-   select('canvas');tool('designer-toolbox');page.locator('#designer-tool-filter').fill('NumberBox');truth(page.locator('[data-control]').count()==1);page.locator('[data-control]').click();truth(node(ds()['selection'][0])['type'].endswith('NumberBox'));truth(page.locator('.design-preview input[type=number]').count()==1);action('undo');truth(not any(n['type'].endswith('NumberBox') for n in ds()['document']['nodes']));page.locator('#designer-tool-filter').fill('')
+   select('canvas');tool('designer-toolbox');ui.search_controls('NumberBox');truth(ui.side('toolbox').locator('[data-control]').count()==1);ui.side('toolbox').locator('[data-control]').click();truth(node(ds()['selection'][0])['type'].endswith('NumberBox'));truth(ui.host.locator('.design-preview input[type=number]').count()==1);action('undo');truth(not any(n['type'].endswith('NumberBox') for n in ds()['document']['nodes']));ui.side('toolbox').get_by_role('searchbox',name='Search toolbox').fill('')
   check('searchable toolbox inserts a real NumberBox into the selected parent and supports undo',toolbox)
   def pixel():
-   new();select('action');before=node('action')['properties'];z=ds()['zoom'];drag(page.locator('.design-preview [data-sf-id="action"]'),32*z,24*z);truth(node('action')['properties']['Left']==before['Left']+32,str(node('action')));truth(node('action')['properties']['Top']==before['Top']+24);action('undo');truth(node('action')['properties']['Left']==before['Left']);action('redo');truth(node('action')['properties']['Left']==before['Left']+32)
+   new()
+   select('action')
+   before = node('action')['properties']
+   zoom = ds()['zoom']
+   grid = ds()['document'].get('designer', {}).get('guides', {}).get('gridSize', 8)
+   # Snap absolute Canvas coordinates, including an initially off-grid control.
+   expected = {key: floor((before[key] + delta) / grid + .5) * grid for key, delta in [('Left', 32), ('Top', 24)]}
+   drag(ui.host.locator('.design-preview [data-sf-id="action"]'), 32 * zoom, 24 * zoom)
+   truth(all(node('action')['properties'][key] == value for key, value in expected.items()), str(node('action')))
+   action('undo')
+   truth(node('action')['properties'] == before)
+   action('redo')
+   truth(all(node('action')['properties'][key] == value for key, value in expected.items()), str(node('action')))
   check('actual mouse dragging uses snapped Canvas coordinates and a single undo/redo transaction',pixel)
   def resize():
-   select('action');before=node('action')['properties'];z=ds()['zoom'];drag(page.locator('[data-control-id="action"][data-resize="se"]'),40*z,16*z);truth(node('action')['properties']['Width']==before['Width']+40,str(node('action')));truth(node('action')['properties']['Height']==before['Height']+16)
+   select('action');before=node('action')['properties'];z=ds()['zoom'];drag(ui.host.locator('[data-control-id="action"][data-resize="se"]'),40*z,16*z);truth(node('action')['properties']['Width']==before['Width']+40,str(node('action')));truth(node('action')['properties']['Height']==before['Height']+16)
   check('eight-handle adorner resizes actual controls without losing selection or source geometry',resize)
   def properties():
-   select('action');tool('designer-properties');page.locator('.design-property-search').fill('Content');x=page.locator('[data-property="Content"]');x.fill('Edited in property grid');x.press('Tab');truth(node('action')['properties']['Content']=='Edited in property grid');truth(page.locator('.design-preview [data-sf-id="action"]').inner_text()=='Edited in property grid');page.locator('.design-property-search').fill('')
+   select('action');tool('designer-properties');ui.side('properties').locator('.design-property-search').fill('Content');x=ui.side('properties').locator('[data-property="Content"]');x.fill('Edited in property grid');x.press('Tab');truth(node('action')['properties']['Content']=='Edited in property grid');truth(ui.host.locator('.design-preview [data-sf-id="action"]').inner_text()=='Edited in property grid');ui.side('properties').locator('.design-property-search').fill('')
   check('typed property grid updates the design and preview; filtering retains editor focus',properties)
   def clip():
    select('action');action('copy');select('canvas');action('paste');id=ds()['selection'][0];truth(id!='action');truth(node(id)['properties']['Content']=='Edited in property grid');action('delete');truth(not any(n['id']==id for n in ds()['document']['nodes']));action('undo');truth(any(n['id']==id for n in ds()['document']['nodes']))
   check('tree/surface copy-paste creates independent controls and delete restores through undo',clip)
-  def grid():
-   new();select('canvas');tool('designer-layout');page.locator('[data-to-grid]').click();truth(node('canvas')['type'].endswith('Grid'));page.locator('#design-grid-rows').fill('100, *, 80');page.locator('#design-grid-cols').fill('200, 2*, *');page.locator('#design-grid-apply').click();truth(len(node('canvas')['rows'])==3);select('action');ev('sharpforge.designer.set("HorizontalAlignment",0);sharpforge.designer.set("VerticalAlignment",0)');page.locator('#designer-mode').select_option('layout');page.wait_for_timeout(150);element=page.locator('.design-preview [data-sf-id="action"]');box=element.bounding_box();parent=page.locator('.design-preview [data-sf-id="canvas"]').bounding_box();x,y=box['x']+20,box['y']+15;page.mouse.move(x,y);page.mouse.down();page.mouse.move(parent['x']+parent['width']*.8,parent['y']+parent['height']*.8,steps=8);page.mouse.up();page.wait_for_timeout(100);truth(node('action')['properties']['Row']==1,str(node('action')));truth(node('action')['properties']['Column']>=1);page.locator('#designer-mode').select_option('pixel')
+  def grid():ui.grid()
   check('layout panel converts Canvas to Grid, edits Auto/pixel/star tracks and mouse-drags controls between cells',grid)
-  def grid_boundary():
-   page.locator('#designer-mode').select_option('layout');select('canvas');page.wait_for_timeout(120);before=ds()['document'];handles=page.locator('[data-grid-axis="columns"]');truth(handles.count()==2);drag(handles.first,24*ds()['zoom'],0);after=node('canvas')['columns'];truth(after[0]['Value']==224,str(after));truth(after[0]['GridUnitType']==1);action('undo');truth(ds()['document']==before)
+  def grid_boundary():ui.grid_boundary()
   check('actual Grid boundary dragging resizes adjacent tracks and restores through one undo',grid_boundary)
   def zoom_marquee():
-   new();page.locator('#designer-mode').select_option('pixel');before=ds()['zoom'];box=page.locator('.design-preview').bounding_box();page.mouse.move(box['x']+100,box['y']+100);page.keyboard.down('Control');page.mouse.wheel(0,-120);page.keyboard.up('Control');page.wait_for_timeout(100);truth(ds()['zoom']>before);select('canvas');box=page.locator('.design-preview [data-sf-id="canvas"]').bounding_box();z=ds()['zoom'];page.keyboard.down('Shift');page.mouse.move(box['x']+8*z,box['y']+8*z);page.mouse.down();page.mouse.move(box['x']+600*z,box['y']+210*z,steps=8);page.mouse.up();page.keyboard.up('Shift');truth('action' in ds()['selection'],str(ds()['selection']));truth(len(ds()['selection'])>=2,str(ds()['selection']));select('action');truth('ActionButton' in page.locator('.design-tree').inner_text() or 'action' in page.locator('.design-tree').inner_text().lower())
+   new();ui.editing_mode('pixel');before=ds()['zoom'];box=ui.host.locator('.design-preview').bounding_box();page.mouse.move(box['x']+100,box['y']+100);page.keyboard.down('Control');page.mouse.wheel(0,-120);page.keyboard.up('Control');page.wait_for_timeout(100);truth(ds()['zoom']>before);select('canvas');box=ui.host.locator('.design-preview [data-sf-id="canvas"]').bounding_box();z=ds()['zoom'];page.keyboard.down('Shift');page.mouse.move(box['x']+8*z,box['y']+8*z);page.mouse.down();page.mouse.move(box['x']+600*z,box['y']+210*z,steps=8);page.mouse.up();page.keyboard.up('Shift');truth('action' in ds()['selection'],str(ds()['selection']));truth(len(ds()['selection'])>=2,str(ds()['selection']));select('action');truth('ActionButton' in ui.side('tree').locator('.design-tree').inner_text() or 'action' in ui.side('tree').locator('.design-tree').inner_text().lower())
   check('anchor-preserving Ctrl-wheel zoom and Shift marquee select controls and reveal them in the tree',zoom_marquee)
-  def styles():
-   new();select('action');tool('designer-styles');page.locator('#design-setter-name').select_option('FontSize');page.locator('#design-setter-value').fill('25');page.locator('#design-setter-add').click();truth(ds()['document']['styles']['Accent']['setters']['FontSize']==25);truth(page.locator('.design-preview [data-sf-id="action"]').evaluate('e=>getComputedStyle(e).fontSize')=='25px');ev('sharpforge.designer.set("FontSize",32)');truth(page.locator('.design-preview [data-sf-id="action"]').evaluate('e=>getComputedStyle(e).fontSize')=='32px');ev('sharpforge.designer.clear("FontSize")');truth(page.locator('.design-preview [data-sf-id="action"]').evaluate('e=>getComputedStyle(e).fontSize')=='25px')
+  def styles():ui.styles()
   check('style setter UI applies shared styles and local values override then clear back to style',styles)
-  def templates():
-   select('action');tool('designer-styles');page.locator('#design-resource-kind').select_option('template');page.locator('#design-resource-new').click();page.locator('#design-resource-apply').click();truth(node('action')['template']=='Template1');truth(page.locator('.design-preview [data-sf-id="action::presenter"]').count()==1);action('duplicate');other=ds()['selection'][0];truth(page.locator(f'.design-preview [data-sf-id="{other}::presenter"]').count()==1);truth(node(other)['template']=='Template1');truth(page.locator('.design-template-parts').inner_text().find('presenter')>=0)
+  def templates():ui.templates()
   check('control-template editor creates bound parts and clones independent per-control template trees',templates)
   def persist():
-   action('save');files=ev('sharpforge.getWorkspace()')['records'];truth(any(r['path'].endswith('.sfdesign.json') for r in files));ev('async()=>{window.__designArchive=await sharpforge.exportWorkspaceZip()}');bytes_=ev('window.__designArchive.length');truth(bytes_>1000);before=ds()['document'];ev('async()=>await sharpforge.openWorkspaceZip(new File([window.__designArchive],"Designer.zip",{type:"application/zip"}))');stored=next(r for r in ev('sharpforge.getWorkspace()')['records'] if r['path'].endswith('.sfdesign.json'));truth(json.loads(stored['text'])==before);ev('sharpforge.designer.open()')
+   action('save')
+   current=ds();uri=current['uri'];before=current['document']
+   files=ev('sharpforge.getWorkspace()')['records']
+   saved=next(r for r in files if r['path']==uri)
+   truth(json.loads(saved['text'])==before,'The active design was not saved before export')
+   ev('async()=>{window.__designArchive=await sharpforge.exportWorkspaceZip()}')
+   truth(ev('window.__designArchive.length')>1000)
+   ev('async()=>await sharpforge.openWorkspaceZip(new File([window.__designArchive],"Designer.zip",{type:"application/zip"}))')
+   stored=next(r for r in ev('sharpforge.getWorkspace()')['records'] if r['path']==uri)
+   truth(json.loads(stored['text'])==before,'The exported active design changed when the workspace was reopened')
+   ev('uri=>sharpforge.designerDocuments.open(uri,"design")',uri)
+   truth(ds()['document']==before,'Reopening the saved design changed its authored state')
   check('saved design JSON including styles/templates survives a real complete-workspace ZIP export/reopen',persist)
   def generate():
    new();action('generate');wait('sharpforge.getState().debug?.uiActive');tool('winui');ev('sharpforge.uiSettled()');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')));page.locator('[data-tool="winui"]') if False else None
@@ -75,13 +106,13 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()')
   for direct in [False,True]:
    def live(direct=direct):
-    start_live(direct);input_=app_node('Input');button=app_node('Button');ev('id=>sharpforge.dispatchUIEvent(id,"TextChanged",{value:"typed"})',input_['id']);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:1")');ev('sharpforge.designer.open();');ev('sharpforge.designer.attach()');doc=ds()['document'];target=next(n for n in doc['nodes'] if n['properties'].get('Name')=='Button')['id'];ev('id=>{sharpforge.designer.select(id);sharpforge.designer.set("Width",250);sharpforge.designer.style("LiveStyle",{targetType:"Button",setters:{FontSize:24}});sharpforge.designer.reference("style","LiveStyle");}',target);ev('sharpforge.designer.apply()');truth(app_node('Input')['properties']['Text']=='typed');truth(app_node('Button')['id']==button['id']);truth(app_node('Button')['properties']['FontSize']==24);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:2")');truth(ds()['live']);page.screenshot(path=str(RESULTS/'screenshots/release12-live-designer.png'))
+    start_live(direct);input_=app_node('Input');button=app_node('Button');ev('id=>sharpforge.dispatchUIEvent(id,"TextChanged",{value:"typed"})',input_['id']);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:1")');ev('sharpforge.designer.open();');attach(allow_unlinked=direct);doc=ds()['document'];target=next(n for n in doc['nodes'] if n['properties'].get('Name')=='Button')['id'];ev('id=>{sharpforge.designer.select(id);sharpforge.designer.set("Width",250);sharpforge.designer.style("LiveStyle",{targetType:"Button",setters:{FontSize:24}});sharpforge.designer.reference("style","LiveStyle");}',target);ev('sharpforge.designer.apply()');truth(app_node('Input')['properties']['Text']=='typed');truth(app_node('Button')['id']==button['id']);truth(app_node('Button')['properties']['FontSize']==24);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:2")');truth(ds()['live']);page.screenshot(path=str(RESULTS/'screenshots/release12-live-designer.png'))
    check(('direct CIL' if direct else 'source VM')+' live designer patch retains typed input, object identity, counter state and callbacks',live)
   def enc():
    start_live(False);ev('sharpforge.beginHotReload()');edit(live_src.replace('count++;','count += Step();').replace('static int count;','static int count; static int added; static int Step(){return 3;}'));result=ev('sharpforge.applyHotReload()');truth(ev('sharpforge.getState().debug.codeVersion')==1,str(result));ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',app_node('Button')['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="initial:3")')
   check('actual compiler-worker Edit & Continue adds a method and static field while keeping the live C# window',enc)
   def stale():
-   ev('sharpforge.designer.open()');ev('sharpforge.designer.attach()');cmd('stop');message=ev('async()=>{try{await sharpforge.designer.apply();return ""}catch(e){return e.message}}');truth('session' in message.lower(),message)
+   ev('sharpforge.designer.open()');attach();cmd('stop');message=ev('async()=>{try{await sharpforge.designer.apply();return ""}catch(e){return e.message}}');truth('session' in message.lower(),message)
   check('stale designer session is rejected before any managed mutation',stale)
   def javascript_styles():
    result=ev("""async()=>{const {createWinUIApp}=await __sharpforgeTestImport('/packages/winui/src/index.js');const mount=document.createElement('div');mount.id='js-style-test';document.body.append(mount);Object.assign(mount.style,{position:'fixed',inset:'100px 500px 100px 500px',zIndex:99999,background:'#222'});const app=createWinUIApp(mount,{backend:'dom'}),X=app.Microsoft.UI.Xaml,C=X.Controls;const s=new X.Style('Button'),v=new X.Setter(C.Button.FontSizeProperty,20);s.Setters.Add(v);const a=new C.Button(),b=new C.Button(),input=new C.TextBox(),t=new C.ControlTemplate(),part=new C.TextBox();a.Content='Styled A';b.Content='Styled B';a.Style=s;b.Style=s;b.FontSize=28;v.Value=24;b.ClearValue(C.Button.FontSizeProperty);part.Name='PART_Input';t.TargetTypeName='TextBox';t.VisualTree=part;t.Bind(part,'Text',C.TextBox.TextProperty);input.Name='JSOwner';input.Text='initial';input.Template=t;let events=0;input.TextChanged.add(()=>events++);const panel=new C.StackPanel(),w=new X.Window();panel.Children.Add(a);panel.Children.Add(b);panel.Children.Add(input);w.Content=panel;w.Activate();await app.settled();window.__jsStyle={app,a,b,input,v,X,C,getEvents:()=>events};return {a:a.FontSize,b:b.FontSize,sameProperty:C.Button.WidthProperty===X.FrameworkElement.WidthProperty,unset:a.ReadLocalValue(C.Button.WidthProperty)===X.DependencyProperty.UnsetValue,part:!!input.GetTemplateChild('PART_Input')};}""")
@@ -89,11 +120,11 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
   check('independent JavaScript facade supports shared styles, stable dependency properties, templates and real bound input',javascript_styles)
   def gallery():
    cmd('stop');ev('sharpforge.loadSample("winui-expanded-controls",true)');cmd('winuiLayout');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()')
-   page.locator('.sf-winui input[type=number]').fill('63');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Amount: 63")')
-   radios=page.locator('.sf-winui input[type=radio]');radios.nth(0).check();radios.nth(1).check();wait('async()=> (await sharpforge.getUIScene()).nodes.filter(n=>n.type.endsWith("RadioButton")&&n.properties.IsChecked===true).length===1')
-   page.locator('.sf-winui input[type=date]').fill('2026-11-12');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Date==="2026-11-12")')
-   page.locator('.sf-winui input[type=time]').fill('16:45');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Time==="16:45")')
-   page.locator('.sf-winui [data-close-tab]').click();wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.type.endsWith("TabView")&&n.collections.TabItems.length===1)');truth(not errors,json.dumps(errors));page.screenshot(path=str(RESULTS/'screenshots/release12-controls.png'));cmd('stop')
+   page.locator('.winui-app-root input[type=number]').fill('63');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Amount: 63")')
+   radios=page.locator('.winui-app-root input[type=radio]');radios.nth(0).check();radios.nth(1).check();wait('async()=> (await sharpforge.getUIScene()).nodes.filter(n=>n.type.endsWith("RadioButton")&&n.properties.IsChecked===true).length===1')
+   page.locator('.winui-app-root input[type=date]').fill('2026-11-12');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Date==="2026-11-12")')
+   page.locator('.winui-app-root input[type=time]').fill('16:45');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Time==="16:45")')
+   page.locator('.winui-app-root [data-close-tab]').click();wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.type.endsWith("TabView")&&n.collections.TabItems.length===1)');truth(not errors,json.dumps(errors));page.screenshot(path=str(RESULTS/'screenshots/release12-controls.png'));cmd('stop')
   check('new control gallery routes NumberBox, radio groups, date/time inputs and closable tabs into real managed state',gallery)
   def final_preview():
    ev('sharpforge.designer.open()');new();select('canvas');a=ev('sharpforge.designer.add("TextBox","canvas")');ev('id=>{sharpforge.designer.set("Text","Design a live application",[id]);sharpforge.designer.set("Top",230,[id]);sharpforge.designer.set("Width",360,[id]);}',a);select('action');tool('designer-properties');page.screenshot(path=str(RESULTS/'screenshots/release12-designer.png'));truth(not errors,json.dumps(errors));truth(len(workers)==2)
