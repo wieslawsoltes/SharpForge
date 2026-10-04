@@ -3,3 +3,6 @@ export {parseCompiledBindingExpression, CompiledBindingCompileError} from './syn
 export {compileBindingDescriptor, compileBindingExpression, CompiledBindingDefinition} from './compiler.js';
 export {evaluateCompiledExpression, writeCompiledPath} from './evaluate.js';
 export {CompiledBindings, createCompiledBindings} from './executor.js';
+export {DeferredElementScope} from './deferred-elements.js';
+export {BindingPhaseScheduler} from './phase-scheduler.js';
+export {CompiledBindingGroup, CompiledBindingLifetime} from './group.js';
