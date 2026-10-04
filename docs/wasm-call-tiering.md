@@ -1,7 +1,7 @@
 # Opt-in CIL call-entry Wasm tiering
 
 Pass `wasmTiering: true` or a limits object to `CilVirtualMachine` to count actual
-method entries and queue compilation after a call threshold. The option defaults
+method entries and taken loop back-edges, queueing compilation at either threshold. The option defaults
 to disabled. It applies only to the JavaScript direct-CIL engine; source VM and
 Rust execution do not use this policy.
 
@@ -17,11 +17,12 @@ disposeWasmTiering(vm);
 
 When compilation becomes ready, a subsequent call selects the prepared method.
 The call that triggered compilation, and every other already-entered frame,
-continues interpreted. There is no back-edge counting, OSR, frame conversion, or
+continues interpreted. [Back-edge counters](wasm-backedge-counters.md) can make a
+loop hot during that first invocation, but there is no OSR, frame conversion, or
 deoptimization machinery in this increment. These remaining parts of
 [SF-A05-T11.3 / #1407](https://github.com/wieslawsoltes/SharpForge/issues/1407)
-stay open. In particular, a single long-running invocation does not become hot
-under this policy, even if it executes many loop iterations.
+stay open. A single long-running invocation can become hot and compile, but it
+continues interpreted until it returns. Only a later invocation selects Wasm.
 
 Preparation uses the existing [eligibility/IR](wasm-ir-eligibility.md), encoder and
 [manual runtime bridge](wasm-runtime-bridge.md). Analysis and binary encoding
@@ -33,6 +34,8 @@ host turn. There are no performance or cross-platform qualification claims here.
 | Option | Default | Accepted range |
 | --- | ---: | ---: |
 | `callThreshold` | 32 | 1–1,000,000,000 |
+| `backedgeThreshold` | 256 | 1–1,000,000,000 |
+| `maxBackedgesPerMethod` | 64 | 1–1,024 |
 | `maxMethods` | 64 | 1–1,024 |
 | `maxConcurrentCompilations` | 1 | 1–4 |
 | `maxMethodInstructions` | 4,096 | 1–65,536 |
@@ -55,6 +58,7 @@ bounded failure reasons and byte counts. `selectedCalls` and
 operations: host instructions and failed operand guards retain their canonical
 handlers. Compilation attempts and cancellations are lifetime counters;
 per-method and selection counters restart on code-generation invalidation.
+Method rows also include bounded per-edge counts and explicit site overflow.
 
 Stop, restore, code-owner changes and explicit `invalidateExecutionCode` discard
 derived selections and queued work. Metadata edits still require the established
