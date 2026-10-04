@@ -1,6 +1,135 @@
 # Project 16 implementation and qualification map
 
-## Current publication and qualification
+## Current publication and acceptance reconciliation — remaining qualification failures
+
+**The requested source and all identified product corrections are merged through
+PR #4453; acceptance qualification remains incomplete.** The latest a7 run
+failed the strict positive lazy-evaluation saving gate (#1580), and M1 retains
+its Playwright-managed WebKit offline-file qualification block (#1583).
+The 194-leaf audit below remains historical: 135 `source_present`, 59 `source_present_with_limits`, and zero
+fully qualified leaves at its `40bbdea7` cutoff. Zero is an audit closure count,
+not a count of implemented capabilities. Every `closeIssue: false` is preserved.
+No additional mandatory product-source omission was identified by the existing
+inventory and correction documents; this update is not a fresh source audit.
+
+The twelve merged implementation, correction and profile PRs are #3451, #3475,
+#3485, #3533, #3843, #3865, #3904, #4105, #4297, #4413, #4426 and
+[#4453](https://github.com/wieslawsoltes/SharpForge/pull/4453). The latest merge is
+`b8d68d417c792156dedb2ac2b98acf33cac3f141`, tree
+`74021421e044947908f037bf34d00bcb258e25fc`. Its public head is
+`353daec76089751f17a49c0319da82ea1bd1a1a9`, equivalent to local
+`553054623b08fd8c9f070378ab758d03af4cf38d`, tree
+`eac6e1b6756367581023f7135361a78be932e880`. Own core
+**37186193332 / 111388507391** and exact main core
+**37186282226 / 111388761783** passed. Core does not rerun the full browser matrix
+or transfer an earlier source's qualification to this merge.
+
+PR4453 corrects ChangeTracking deletion/CRLF geometry and adds the explicit
+standalone-only qualification stage. The [complete affected local cohort](project16-final-followup-local.md)
+passed **69/69, zero failures or skips**, at local
+`20474bfed2c3c442ae50ae46d2dbcff02f155bc5` / public equivalent
+`dbbc90a8b0db41858e93be5aa099aa8db1a38dbb`, tree
+`5c5d290f9c190cd4e5c1b5d8e7124f9c0980ec4a`. The unchanged old source failed
+seven of the 16 new regression cases, with nine passes. Both executions remain
+separate. This functional correction does not prove the cause of the a6 latency
+difference or establish a browser paint-time improvement.
+
+The latest completed `all` observation is [a6](project16-hosted-a6.md), run
+**37183721322 / 111381241587**, on PR4426 merge
+`25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e`, tree
+`a0922a5f98e4ce38cd377d109a083a1da77df9a1`: **16 scopes, 15 passed and one failed**.
+A19 passed **807/807**; A20 reported **722 tests, 713 passed and nine skipped**.
+All nine browser scopes passed, as did the independent editor budgets, actual
+Studio 200 MiB File-input workflow, instrumentation and lazy-evaluation scopes.
+The comparative performance scope failed three editor undo p95 rows against the
+unchanged 20% a5 threshold; workbench absolute and relative gates passed. The
+cause of the relative timing difference is not established. A6 remains failed.
+
+[Cross-platform records](project16-cross-platform-browser.md) preserve separate
+executions at that same PR4426 source:
+
+| Attempt | Actual hosted combination | Selected scope result | Offline artifact result |
+|---|---|---|---|
+| a6 / 37183721322 | Ubuntu / Chromium 153.0.8010.12 | Nine browser scopes passed within the failed 16-scope run | Complete workflow and all five lazy tools passed |
+| w1 / 37184606471 | Windows / Firefox 155.0 | Nine of nine browser scopes passed | Complete workflow and all five lazy tools passed |
+| m1 / 37184861392 | macOS / Playwright WebKit 26.6 | Eight of nine browser scopes passed | Initial file navigation failed before any product checks |
+
+M1 reported `Page.goto: WebKit encountered an internal error` with `offline=True`.
+The pinned Playwright 1.63.0 WebKit patch rejects file loads at its offline loader
+guard before request interception; the matching trace supports a **strong
+source-based automation explanation**, not a separate controlled runtime proof.
+The [ledger and exact upstream links](project16-cross-platform-browser.md#source-based-explanation-of-the-automation-limitation)
+retain that boundary. No route-only waiver, offline-flag removal, auto-skip or
+native Safari pass is claimed. These are three OS/engine combinations, not a
+nine-cell matrix, and later source has not inherited their outcomes.
+
+The later [a7 performance-only run](project16-hosted-a7.md), **37186353254 /
+111388977941**, completed on the PR4453 merge above with **five scopes: four
+passed and one failed**. Editor absolute typing passed at approximately **32.3 ms
+for 200 MiB**, below 50 ms. All **25/25** relative editor rows passed against the
+reviewed a5 baseline, including the three previously failed undo sizes; workbench
+absolute and relative gates also passed. UI budgets, actual Studio 200 MiB File
+ingress and instrumentation passed; measured instrumentation overhead was
+**0.309067%**, below 1%.
+
+**A7's strict positive lazy-saving gate failed.** Across 12 alternating pairs and
+24 fresh browser processes, eager script evaluation totaled **1560.778 ms** and
+lazy evaluation **1569.77 ms**: **−8.992 ms saving (−0.576123%)**, with five positive
+and seven negative pairs. The failed aggregate is retained without a noise
+dismissal, causal claim, threshold waiver or rerun. Earlier a5/a6 passes do not
+turn this result into a pass. The completed narrow source/harness review found no
+concrete loader defect or remaining mandatory source correction: the same harness ran a5/a6/a7, the lazy
+graph omitted all five deferred controllers, and the eager graph included them
+with 14 additional module requests. Those observations do not explain the
+negative aggregate or override the failed qualification.
+A7 selected no Node-area or nine-scope browser rerun, and its counts are not added
+to a6 or the 69-case functional cohort.
+
+The separate **m2 / 37186932517 / 111390739312** macOS/Chromium run passed its
+one selected `standalone` scope on the PR4453 merge, from
+**07:49:41.321 to 07:49:47.330 UTC on 2026-10-04**. Its actual offline `file:`
+artifact passed all five workflow scenarios and all five lazy-tool activations,
+with no HTTP attempts or page errors. The artifact was **16,625,302 bytes**,
+SHA-256 `f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a`.
+The [M2 record](project16-cross-platform-browser.md) supplies additional macOS
+artifact coverage; it does not replace M1, qualify WebKit/native Safari, or claim
+nine browser scopes on this newer source.
+
+| Exact issues | Observed evidence association | Remaining boundary |
+|---|---|---|
+| #1513, #1517, #1518, #1615 | A6 and a7 actual 200 MiB File/Blob ingress through the production input handler; source-faithful viewport, editing and undo passed | Synthetic input is not native picker/permission or disk-throughput evidence |
+| #1462, #1519, #1522, #1524, #1528, #1530, #1583 | Multi-session and HTTP workflows passed on all three combinations; standalone passed on Linux/Chromium, Windows/Firefox and separately macOS/Chromium | M1 offline-file automation block and unsupported native process capabilities remain explicit |
+| #1479, #1550, #1620, #1622 | Local strict timer-receiver cases and exercised browser key behavior passed | Physical OS key delivery and assistive technology are distinct |
+| #1459, #1497 | A6 and a7 Code Definition and overview budget captures passed | Bounded headless measurements do not certify physical frame rate or Safari |
+| #1578, #1580 | A7 instrumentation passed; all five tools activated offline on three selected combinations | A7 strict positive lazy-saving gate failed; no prior pass, noise dismissal or causal claim overrides it |
+| #1581, #1643 | A7 exact a5 comparison passed all 25 editor rows and workbench absolute/relative gates | A6 original failure is retained; passing later comparison does not prove why timing changed |
+| #1504, #1643 | ChangeTracking correction reproduced seven old-source failures and passed the complete 69-case affected cohort | Functional correction does not establish a6 timing causation or waive the gate |
+
+The remaining a7 lazy-evaluation failure is retained as an open qualification
+boundary for #1580. No further rerun, waiver, gate change or issue closure is
+claimed. No source change is credited with a timing effect without evidence, and
+no external automation limitation is relabeled as a product or native-browser
+pass.
+
+Earlier failures remain immutable. [A1–a5 hosted records](project16-hosted-qualification.md)
+retain a5's **16 scopes / 11 passes / five failures**, A19 **748/748**, and A20
+**712 tests / 703 passes / nine skips**. The [a5 local correction archive](project16-a5-correction-local-qualification.md)
+retains A19 **790/787/3/0 skips**, A20 **722/712/1/9 skips**, and the affected
+**21/21** retry. [PR4413's initial core failure](https://github.com/wieslawsoltes/SharpForge/actions/runs/37182594704/job/111378010076)
+for the missing exact-hash benchmark review remains recorded; a review-only fix
+preceded its successful own/main cores. [PR4426's profile](project16-a5-baseline-profile.md)
+retains its separate **35/35** local cohort and successful cores. No overlapping
+counts are added or renamed as a complete latest-source rerun.
+
+Documented source limits remain distinct from unperformed qualification: native
+atomic resource rename/start-instance and unadvertised native launch capabilities
+are unsupported, while bounded search/replacement/provider contracts and Vim
+extension exclusions remain as written. Actual screen-reader output
+(#1576/#1637/#1638), native IME/cross-application clipboard/Windows high contrast
+(#1606/#1624/#1640), and reference-runtime/editor oracles (#1604/#1605/#1623)
+remain separate. No suite pass grants blanket leaf acceptance or closes an issue.
+
+## Historical publication and qualification — a4 cutoff
 
 **The implementation stack through PR4105 is merged; full acceptance qualification is still incomplete.**
 The eight merged PRs are
