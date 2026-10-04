@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-348099a42359ad918496",
+  "kind": "spec",
+  "sourceText": "public interface I1\n{\n    sealed void M3() {}\n}\n\nclass C\n{\n    static void Test2<T>(T x) where T : I1, allows ref struct\n    {\n#line 100\n        x.M3(); // (100,9): error: A non-virtual instance interface member cannot be accessed on a type parameter that allows ref struct.\n    }\n}",
+  "sourceSHA256": "3b110dc640862287f26bb16369c2fea0e6891757787b145478ba5a29cd332e5b",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 4406
+  }
+}

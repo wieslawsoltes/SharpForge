@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-54aeaa6fcbb174cc062f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\nnamespace ManagedDebuggingAssistants\n{\n    internal class DebugMonitor\n    {\n        internal DebugMonitor()\n        {\n            SECURITY_ATTRIBUTES attributes = new SECURITY_ATTRIBUTES();\n            SECURITY_DESCRIPTOR descriptor = new SECURITY_DESCRIPTOR();\n \n            IntPtr pDescriptor = IntPtr.Zero;\n            IntPtr pAttributes = IntPtr.Zero;\n            attributes.nLength = Marshal.SizeOf(attributes);\n            attributes.bInheritHandle = true;\n            attributes.lpSecurityDescriptor = pDescriptor;\n \n            if (!InitializeSecurityDescriptor(ref descriptor, 1 /*SECURITY_DESCRIPTOR_REVISION*/))\n                throw new ApplicationException(\"InitializeSecurityDescriptor failed: \" + Marshal.GetLastWin32Error());\n \n            if (!SetSecurityDescriptorDacl(ref descriptor, true, IntPtr.Zero, false))\n                throw new ApplicationException(\"SetSecurityDescriptorDacl failed: \" + Marshal.GetLastWin32Error());\n \n            Marshal.StructureToPtr(descriptor, pDescriptor, false);\n            Marshal.StructureToPtr(attributes, pAttributes, false);\n        }\n        \n        #region Interop definitions\n        private struct SECURITY_DESCRIPTOR\n        {\n            internal byte Revision;\n            internal byte Sbz1;\n            internal short Control;\n            internal IntPtr Owner;\n            internal IntPtr Group;\n            internal IntPtr Sacl;\n            internal IntPtr Dacl;\n        }\n \n        private struct SECURITY_ATTRIBUTES\n        {\n            internal int nLength;\n            internal IntPtr lpSecurityDescriptor;\n            // disable csharp compiler warning #0414: field assigned unused value\n#pragma warning disable 0414\n            internal bool bInheritHandle;\n#pragma warning restore 0414\n        }\n \n        [DllImport(\"advapi32.dll\", SetLastError = true)]\n        private static extern bool InitializeSecurityDescriptor([In] ref SECURITY_DESCRIPTOR pSecurityDescriptor, int dwRevision);\n \n        [DllImport(\"advapi32.dll\", SetLastError = true)]\n        private static extern bool SetSecurityDescriptorDacl([In] ref SECURITY_DESCRIPTOR pSecurityDescriptor, bool bDaclPresent, IntPtr pDacl, bool bDaclDefaulted);\n        #endregion\n    }\n}",
+  "sourceSHA256": "6944e30a4403a9c29dcd8e38dd8ce49dfbb47526bd4f6aaf5f7864194a75a926",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "TestUnassignedStructFieldsInPInvokePassByRefCase",
+    "offset": 72403
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

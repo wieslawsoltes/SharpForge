@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-cac5047c5311d817989f",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\n\nstatic class C\n{\n    static string M0(this string s, object x) => s;\n\n    static void M1()\n    {\n        object x, y;\n        _ = \"\"?.Equals(x = y = new object()) ?? false\n            ? x.ToString()\n            : y.ToString();\n    }\n\n    static void M2()\n    {\n        object w, x, y, z;\n        _ = \"\"?.M0(w = x = new object())?.Equals(y = z = new object()) ?? false\n            ? w.ToString() + y.ToString()\n            : x.ToString() + z.ToString(); // 1\n    }\n}\n",
+  "sourceSHA256": "4df8bbedc4e9d95deb4c28a4f188d4024015ab6793ab3b6272f29409fff14f08",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "NullCoalescing_CondAccess_NonNullConstantLeft",
+    "offset": 145022
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: targetFramework)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (21,30): error CS0165: Use of unassigned local variable 'z'\n                //             : x.ToString() + z.ToString(); // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"z\").WithArguments(\"z\").WithLocation(21, 30)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

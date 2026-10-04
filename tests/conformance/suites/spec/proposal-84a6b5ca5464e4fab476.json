@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-84a6b5ca5464e4fab476",
+  "kind": "spec",
+  "sourceText": "public struct S\n{\n    public int x, y;\n    public S() // error: Fields 'S.x' and 'S.y' must be fully assigned before control is returned to the caller\n    {\n    }\n}",
+  "sourceSHA256": "bcb44e9f939a1eef5826f93d697e0e1a6f61af3b860b6c581608e929410f11c0",
+  "target": "library",
+  "featureId": "csharp-11-0-auto-default-structs",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/auto-default-structs.md",
+    "sha256": "ef94c71a977016911c9fb1ac490aaf2c63d30ee809982111f21ef945f4dda24a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+    "license": "NOASSERTION",
+    "offset": 795
+  }
+}

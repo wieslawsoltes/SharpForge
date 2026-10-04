@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-1a98c09b2c47abb74095",
+  "kind": "spec",
+  "sourceText": "public delegate void EventHandler(object sender, EventArgs e);\n\npublic class Button : Control\n{\n    public event EventHandler Click;\n\n    protected void OnClick(EventArgs e)\n    {\n        EventHandler handler = Click;\n        if (handler != null)\n        {\n            handler(this, e);\n        }\n    }\n\n    public void Reset() => Click = null;\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "a14596a5cca2336fef41bd65436ce55a8eb219a473458b5f68e6857ee3b0381f",
+  "originalSource": "public delegate void EventHandler(object sender, EventArgs e);\n\npublic class Button : Control\n{\n    public event EventHandler Click;\n\n    protected void OnClick(EventArgs e)\n    {\n        EventHandler handler = Click;\n        if (handler != null)\n        {\n            handler(this, e);\n        }\n    }\n\n    public void Reset() => Click = null;\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "FieldlikeEvents1",
+    "additionalFiles": [
+      "Control.cs",
+      "Graphics.cs",
+      "Rectangle.cs",
+      "Point.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "FieldlikeEvents1",
+    "offsetInUnquotedMarkdown": 206468
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1a0fbfb7135e688250b5",
+  "kind": "spec",
+  "sourceText": "[RegexGenerated(\"(dog|cat|fish)\")]\npartial bool IsPetMatch(string input);",
+  "sourceSHA256": "2da25c848eb671bfef9a679ec368b5c5c6fd4df8e3e40a2ff6773edcbfbae6e3",
+  "target": "library",
+  "featureId": "csharp-9-0-partial-methods-with-returned-values",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/extending-partial-methods.md",
+    "sha256": "6152b1fd3ccc1c2b91306b6395d48bfb438428c54472c37fcb4de1545723d7df",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/extending-partial-methods.md",
+    "license": "NOASSERTION",
+    "offset": 3368
+  }
+}

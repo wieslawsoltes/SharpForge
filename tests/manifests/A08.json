@@ -7,5 +7,5 @@
   "browserScripts": [],
   "requiredServices": [],
   "timeout": 300000,
-  "tags": ["bcl", "collections"]
+  "tags": ["bcl", "collections", "dictionary", "hashset", "list"]
 }

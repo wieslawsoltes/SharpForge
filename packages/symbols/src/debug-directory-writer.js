@@ -1,4 +1,4 @@
-import { Writer, readPE, utf8, align } from '@sharpforge/cil';
+import { Writer, readPE, utf8, align, peChecksum } from '@sharpforge/cil';
 import { fail } from './contracts.js';
 import { deflateRaw } from './deflate.js';
 import { readPortablePdb } from './pdb-reader.js';
@@ -104,6 +104,7 @@ function patchImage(pe, image, target, entryCount) {
     view.setUint32(pe.optionalStart - 12, coffSymbols + image.overlayShift, true);
   view.setUint32(dataStart + 6 * 8, section.rva + image.directoryOffset - section.offset, true);
   view.setUint32(dataStart + 6 * 8 + 4, entryCount * 28, true);
+  if (pe.checksum) view.setUint32(pe.optionalStart + 64, peChecksum(image.bytes), true);
   return image.bytes;
 }
 

@@ -23,6 +23,7 @@ import { assemblyConflict, dottedName } from './reference-lookup.js';
 import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
 import { maxTupleElements, tupleNameProblems, tupleTypeOf } from './tuples.js';
+import { bindFunctionPointerType } from './function-pointers.js';
 
 export class Scope {
   /** @param {'unit'|'namespace'|'type'|'typeParameters'} kind */
@@ -410,6 +411,14 @@ export class TypeBinder {
       }
       case 'PointerType':
         return twa(new PointerTypeSymbol(this.bindType(syntax.elementType, scope, options)));
+      case 'FunctionPointerType':
+        return twa(
+          bindFunctionPointerType(
+            syntax,
+            type => this.bindType(type, scope, options),
+            (node, code, args) => options.quiet || this.report(scope, node, code, args),
+          ),
+        );
       case 'RefType':
       case 'ScopedType':
         return this.bindType(syntax.type, scope, options);

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-274165c1f50a34d55b7f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\n#nullable enable\n\npublic interface I2<T, TResult>\n{\n    Task<TResult> ExecuteAsync(T parameter);\n}\n\npublic interface I1<T> : I2<T, object>\n{\n}\n",
+  "sourceSHA256": "5b372ba2cbe63289725c9ab024ac790041608d9f066c0bd3de6e9657b0acd2fc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "SynthesizeNullableAttributeBasedOnInterfacesToEmit",
+    "offset": 2049
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(lib1_source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

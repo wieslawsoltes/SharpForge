@@ -1,5 +1,7 @@
-import { cliSystemName, decodeCoded, decodeSignature } from '@sharpforge/cil';
+import { cliSystemName, decodeCoded, decodeSignature, decodeTypeSignature } from '@sharpforge/cil';
 import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-desc.js';
+import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
+import { TypeAssignability } from './casting.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -13,7 +15,11 @@ export class TypeLoader {
   #maxRows;
   #indices = new WeakMap();
   #intrinsics = new Map();
-  constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000 } = {}) {
+  #constructed;
+  #casting;
+  #maxConstructedTypes;
+  #specMarkers = new WeakMap();
+  constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000, maxConstructedTypes = 100000 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
     if (!Number.isInteger(maxDepth) || maxDepth < 1 || maxDepth > 512 ||
         !Number.isInteger(maxMetadataRows) || maxMetadataRows < 1 || maxMetadataRows > 1000000) throw new RangeError('Invalid type graph limits');
@@ -21,20 +27,30 @@ export class TypeLoader {
     this.#resolveExternal = resolveExternalType;
     this.#maxDepth = maxDepth;
     this.#maxRows = maxMetadataRows;
+    if (!Number.isSafeInteger(maxConstructedTypes) || maxConstructedTypes < 1 || maxConstructedTypes > 1000000) {
+      throw new RangeError('Invalid constructed type limit');
+    }
+    this.#maxConstructedTypes = maxConstructedTypes;
   }
 
   /** Explicit host BCL registration. Names never implicitly satisfy an AssemblyRef. */
-  defineIntrinsic(fullName, { kind = TypeKind.Class, baseType = null, interfaces = [] } = {}) {
+  defineIntrinsic(fullName, { kind = TypeKind.Class, baseType = null, interfaces = [], genericArity = 0 } = {}) {
     if (this.#intrinsics.has(fullName)) throw fail(`Intrinsic ${fullName} is already registered`);
     if (typeof fullName !== 'string' || !fullName.length || fullName.length > 4096 ||
         ![TypeKind.Class, TypeKind.ValueType, TypeKind.Enum, TypeKind.Interface].includes(kind)) throw fail('Invalid intrinsic definition');
     if (this.#intrinsics.size >= 4096 || interfaces.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Intrinsic type limit exceeded');
+    if (!Number.isInteger(genericArity) || genericArity < 0 || genericArity > 1024) throw fail('Invalid intrinsic generic arity');
     if (baseType !== null && !(baseType instanceof TypeDesc)) throw new TypeError('Expected base TypeDesc');
     for (const type of interfaces) if (!(type instanceof TypeDesc)) throw new TypeError('Expected interface TypeDesc');
     const split = fullName.lastIndexOf('.');
-    const type = createTypeDesc({ name: fullName.slice(split + 1), namespace: split < 0 ? '' : fullName.slice(0, split), fullName,
+    const state = { name: fullName.slice(split + 1), namespace: split < 0 ? '' : fullName.slice(0, split), fullName,
       kind, module: null, token: 0, context: this.#context, declaringType: null, baseType,
-      interfaces: Object.freeze([...interfaces]), loaded: true });
+      interfaces: Object.freeze([...interfaces]), loaded: true };
+    const type = createTypeDesc(state);
+    state.genericParameters = Object.freeze(Array.from({ length: genericArity }, (_, position) => createTypeDesc({
+      name: `T${position}`, fullName: `T${position}`, namespace: '', kind: TypeKind.GenericParameter, context: this.#context,
+      module: null, token: 0, declaringType: null, owner: type, position, loaded: true,
+    })));
     this.#intrinsics.set(fullName, type);
     return type;
   }
@@ -43,6 +59,25 @@ export class TypeLoader {
     const type = this.#intrinsics.get(fullName);
     if (!type) throw fail(`Host must register intrinsic ${fullName}`);
     return type;
+  }
+
+  isIntrinsic(type, fullName) { return type === this.#intrinsics.get(fullName); }
+  get #constructions() { return this.#constructed ??= new ConstructedTypes(this, this.#context, this.#maxConstructedTypes); }
+  constructElement(kind, element, rank = 0) {
+    if (!(element instanceof TypeDesc)) throw new TypeError('Expected element TypeDesc');
+    if (![TypeKind.SZArray, TypeKind.Array, TypeKind.Pointer, TypeKind.ByRef].includes(kind)) throw fail('Invalid element construction');
+    const owner = element.loadContext.types;
+    return owner === this ? this.#constructions.element(kind, element, rank) : owner.constructElement(kind, element, rank);
+  }
+  szArray(element) { return this.constructElement(TypeKind.SZArray, element, 1); }
+  array(element, rank) { return this.constructElement(TypeKind.Array, element, rank); }
+  pointer(element) { return this.constructElement(TypeKind.Pointer, element); }
+  byRef(element) { return this.constructElement(TypeKind.ByRef, element); }
+  functionPointer(signature) { return this.#constructions.functionPointer(signature); }
+  /** Compare already loaded descriptors; unsupported generic/unsafe cases fail explicitly. */
+  isAssignableFrom(target, source, options = {}) {
+    this.#casting ??= new TypeAssignability({ maxDepth: this.#maxDepth, maxMetadataRows: this.#maxRows });
+    return this.#casting.isAssignableFrom(target, source, options);
   }
 
   #index(module) {
@@ -95,8 +130,15 @@ export class TypeLoader {
     if (module.assembly.loadContext !== this.#context) return module.assembly.loadContext.types.#load(module, token, operation);
     if (token >>> 24 === 1) return this.#reference(module, token, operation);
     if (token >>> 24 === 27) {
-      module.row(token);
-      throw fail('TypeSpec inheritance requires constructed-type loading');
+      const signature = decodeTypeSignature(module.blob(module.row(token)[0]));
+      if (!this.#specMarkers.has(module)) this.#specMarkers.set(module, new Map());
+      const markers = this.#specMarkers.get(module);
+      if (!markers.has(token) && markers.size >= this.#maxConstructedTypes) throw loadError(LoadErrorCode.LimitExceeded, 'TypeSpec limit exceeded');
+      if (!markers.has(token)) markers.set(token, Object.freeze({ token }));
+      const marker = markers.get(token);
+      if (operation.path.has(marker)) throw fail('Circular TypeSpec resolution');
+      const nested = { ...operation, path: new Set([...operation.path, marker]) };
+      return this.#constructions.signature(signature, reference => this.#load(module, reference, nested), operation.signal);
     }
     const type = module.typeDefinition(token);
     if (operation.path.has(type)) throw fail(`Circular inheritance involving ${type.fullName}`);
@@ -105,6 +147,9 @@ export class TypeLoader {
     const nested = { ...operation, path: new Set([...operation.path, type]) };
     const baseType = row[3] ? await this.#load(module, decodeCoded('TypeDefOrRef', row[3]), nested) : null;
     if (baseType?.isInterface || (type.isInterface && baseType)) throw fail('Invalid class/interface base relationship');
+    if (baseType && [TypeKind.Array, TypeKind.SZArray, TypeKind.Pointer, TypeKind.ByRef, TypeKind.FunctionPointer].includes(baseType.kind)) {
+      throw fail('Invalid constructed base type');
+    }
     if (baseType && ((baseType.flags & 0x100) || [TypeKind.ValueType, TypeKind.Enum].includes(baseType.kind))) {
       throw fail('A type cannot derive from a sealed or value type');
     }
@@ -166,5 +211,30 @@ export class TypeLoader {
       throw fail('Enum instance field must have an integral type');
     }
     return this.intrinsic(cliSystemName(signature.type.name));
+  }
+
+  /** Decode and exactly resolve an array MemberRef, including rank and lower-bound constructor signatures. */
+  async resolveArrayMember(module, token, options = {}) {
+    try { return await this.#resolveArrayMember(module, token, options); }
+    catch (error) {
+      if (error.code?.startsWith('SFCLR')) throw error;
+      throw loadError(LoadErrorCode.InvalidImage, `Invalid array member metadata: ${error.message}`);
+    }
+  }
+
+  async #resolveArrayMember(module, token, options) {
+    checkCancellation(options.signal);
+    if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || token >>> 24 !== 10) throw fail('Expected MemberRef token');
+    const [parent, name, blob] = module.row(token);
+    if ((parent & 7) !== 4) throw fail('Array MemberRef must be scoped by TypeSpec');
+    const type = await this.load(module, 0x1b000000 + (parent >>> 3), options);
+    const signature = decodeSignature(module.blob(blob));
+    if (signature.kind !== 'method' || !signature.hasThis || signature.explicitThis || signature.callingConvention !== 0 ||
+        signature.genericArity || signature.sentinel !== -1) throw fail('Array member requires a default instance method signature');
+    const resolveType = reference => this.load(module, reference, options);
+    const returnType = await this.#constructions.signature(signature.returnType, resolveType, options.signal);
+    const parameters = [];
+    for (const parameter of signature.parameters) parameters.push(await this.#constructions.signature(parameter, resolveType, options.signal));
+    return resolveArrayMethod(type, module.string(name), returnType, parameters);
   }
 }

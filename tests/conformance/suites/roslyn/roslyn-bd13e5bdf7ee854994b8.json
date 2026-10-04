@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bd13e5bdf7ee854994b8",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    bool F()\n    {\n        do { break; } while (F());\n        return true;\n    }\n}\n",
+  "sourceSHA256": "87d1bfa3a6499076d9f00c1f0af62d0210c2dd3b80a76e0ae7561c9ea40299b9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "UnreachableDoWhileCondition",
+    "offset": 51644
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

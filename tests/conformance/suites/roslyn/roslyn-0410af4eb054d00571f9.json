@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0410af4eb054d00571f9",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I0\n{\n    void M2((int a, int b) x);\n    (int a, int b) MR2();\n}\npublic interface I1 : I0\n{\n    void M2((int notA, int notB) z);\n    (int notA, int notB) MR2();\n}\n",
+  "sourceSHA256": "ead1f06653a3c1f255445132c036f9d84cfe1b6e3f490b23af61f68a4d1a34ce",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "InterfaceHidingAnotherInterfaceWithDifferentTupleNames",
+    "offset": 890353
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0108",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0108",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,26): warning CS0108: 'I1.MR2()' hides inherited member 'I0.MR2()'. Use the new keyword if hiding was intended.\n                //     (int notA, int notB) MR2();\n                Diagnostic(ErrorCode.WRN_NewRequired, \"MR2\").WithArguments(\"I1.MR2()\", \"I0.MR2()\").WithLocation(10, 26),\n                // (9,10): warning CS0108: 'I1.M2((int notA, int notB))' hides inherited member 'I0.M2((int a, int b))'. Use the new keyword if hiding was intended.\n                //     void M2((int notA, int notB) z);\n                Diagnostic(ErrorCode.WRN_NewRequired, \"M2\").WithArguments(\"I1.M2((int notA, int notB))\", \"I0.M2((int a, int b))\").WithLocation(9, 10)\n                ",
+  "unsupported": []
+}

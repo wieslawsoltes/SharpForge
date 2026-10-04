@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0a5a9dea7e314653fd15",
+  "kind": "spec",
+  "sourceText": "[...]\nT* operator +(T* x, nint y);\nT* operator +(T* x, nuint y);\nT* operator +(nint x, T* y);\nT* operator +(nuint x, T* y);\nT* operator -(T* x, nint y);\nT* operator -(T* x, nuint y);",
+  "sourceSHA256": "d2dd934c2a680cd6c50ae440ddd53e23115c1c27670cb6b811d0c136450575dc",
+  "target": "library",
+  "featureId": "csharp-11-0-numeric-intptr",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/numeric-intptr.md",
+    "sha256": "b6fa2f3916ac2f585240e1ac40182daa372d04f4a8ea5a289855cf172af02f40",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/numeric-intptr.md",
+    "license": "NOASSERTION",
+    "offset": 14196
+  }
+}

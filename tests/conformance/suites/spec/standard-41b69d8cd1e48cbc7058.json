@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-41b69d8cd1e48cbc7058",
+  "kind": "spec",
+  "sourceText": "enum Color\n{\n    Red,\n    Green = 10,\n    Blue\n}\n\nclass Test\n{\n    static void Main()\n    {\n        Console.WriteLine(StringFromColor(Color.Red));\n        Console.WriteLine(StringFromColor(Color.Green));\n        Console.WriteLine(StringFromColor(Color.Blue));\n    }\n\n    static string StringFromColor(Color c)\n    {\n        switch (c)\n        {\n            case Color.Red:\n                return $\"Red = {(int) c}\";\n            case Color.Green:\n                return $\"Green = {(int) c}\";\n            case Color.Blue:\n                return $\"Blue = {(int) c}\";\n            default:\n                return \"Invalid color\";\n      }\n   }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "e3aabe5b91850ffc8f1e563995072d043b9320fc8992c1f4e626ba5e958b158e",
+  "originalSource": "enum Color\n{\n    Red,\n    Green = 10,\n    Blue\n}\n\nclass Test\n{\n    static void Main()\n    {\n        Console.WriteLine(StringFromColor(Color.Red));\n        Console.WriteLine(StringFromColor(Color.Green));\n        Console.WriteLine(StringFromColor(Color.Blue));\n    }\n\n    static string StringFromColor(Color c)\n    {\n        switch (c)\n        {\n            case Color.Red:\n                return $\"Red = {(int) c}\";\n            case Color.Green:\n                return $\"Green = {(int) c}\";\n            case Color.Blue:\n                return $\"Blue = {(int) c}\";\n            default:\n                return \"Invalid color\";\n      }\n   }\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "PrintingEnumValues",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-enums",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/enums.md",
+    "sha256": "be068daa3bac45e43824b0f4d57fa39a4eef82a0d572fad7ce0d0d835e8008c2",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/enums.md",
+    "license": "MIT",
+    "example": "PrintingEnumValues",
+    "offsetInUnquotedMarkdown": 5884
+  }
+}

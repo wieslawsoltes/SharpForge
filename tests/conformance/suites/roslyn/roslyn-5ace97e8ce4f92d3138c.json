@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5ace97e8ce4f92d3138c",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Gen<T> {}\nclass Gen2<T>: System.Attribute {}\n\t\n[Gen]\n[Gen2]\npublic class Test\n{\n\tpublic static int Main()\n\t{\n\t\treturn 1;\n\t}\n}",
+  "sourceSHA256": "323353efdb8f85400cf197e06406bedbca918b9ae0f2d5d00b52d7fdede5e816",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "OpenGenericTypeInAttribute",
+    "offset": 310935
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, null, options: opt, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS0616",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,16): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // class Gen2<T>: System.Attribute {}\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"System.Attribute\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(3, 16),\n                // (5,2): error CS0616: 'Gen<T>' is not an attribute class\n                // [Gen]\n                Diagnostic(ErrorCode.ERR_NotAnAttributeClass, \"Gen\").WithArguments(\"Gen<T>\").WithLocation(5, 2),\n                // (6,2): error CS0305: Using the generic type 'Gen2<T>' requires 1 type arguments\n                // [Gen2]\n                Diagnostic(ErrorCode.ERR_BadArity, \"Gen2\").WithArguments(\"Gen2<T>\", \"type\", \"1\").WithLocation(6, 2)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

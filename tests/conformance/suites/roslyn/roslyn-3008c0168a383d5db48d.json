@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3008c0168a383d5db48d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\nclass Test\n{\n    public string Prop { get; set; }\n\n    public static implicit operator Test(int i)\n    {\n        return new Test() { Prop = i.ToString() };\n    }\n\n    public static implicit operator Test(string i)\n    {\n        return new Test() { Prop = i };\n    }\n\n    public bool M1(string expected, [CallerLineNumber] Test line = null)\n    {\n        Console.WriteLine(\"expected: {0}; actual: {1}\", expected, line);\n        return expected == line.Prop;\n    }\n\n    public bool M2(string expected, [CallerMemberName] Test line = null)\n    {\n        Console.WriteLine(\"expected: {0}; actual: {1}\", expected, line);\n        return expected == line.Prop;\n    }\n}\n",
+  "sourceSHA256": "3bb40eec58d4183da18bc9ebf0ce401815311e426decc65805ffb3facfe4fedd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestUserDefinedImplicitConversion",
+    "offset": 164702
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (19,38): error CS4017: CallerLineNumberAttribute cannot be applied because there are no standard conversions from type 'int' to type 'Test'\n                //     public bool M1(string expected, [CallerLineNumber] Test line = null)\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithArguments(\"int\", \"Test\"),\n                // (25,38): error CS4019: CallerMemberNameAttribute cannot be applied because there are no standard conversions from type 'string' to type 'Test'\n                //     public bool M2(string expected, [CallerMemberName] Test line = null)\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithArguments(\"string\", \"Test\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
