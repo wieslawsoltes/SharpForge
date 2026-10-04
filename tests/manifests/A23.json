@@ -28,7 +28,8 @@
     "tests/project-evaluation-contexts.test.js",
     "tests/a23-native-command-lines.test.js",
     "tests/a23-native-process.test.js",
-    "tests/a23-native-engine.test.js"
+    "tests/a23-native-engine.test.js",
+    "tests/a23-12-evaluation-differential.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
