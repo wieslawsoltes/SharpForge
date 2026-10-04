@@ -90,7 +90,7 @@ export async function restoreRecentWorkspace(payload, {signal} = {}) {
 }
 
 /** Resolve recent projects through explicit host providers; cancelled or unconfirmed opens never dismiss the Start window. */
-export function createRecentWorkspaces({recent, getCurrent, readRecovery, openRecords, loadSample, openFolder, activateCurrent}) {
+export function createRecentWorkspaces({recent, getCurrent, readRecovery, openRecords, loadSample, openFolder, activateCurrent, beginLoad}) {
   if (!recent?.add || typeof getCurrent !== 'function') throw new TypeError('Recent workspaces require MRU and current-metadata providers');
   const remember = (metadata = getCurrent()) => {
     const item = recentWorkspaceItem(metadata);
@@ -109,20 +109,30 @@ export function createRecentWorkspaces({recent, getCurrent, readRecovery, openRe
     recent.add(item);
     return true;
   };
-  const open = async (item, {signal} = {}) => {
+  const open = async (item, options = {}) => {
+    const signal = options.signal;
     signal?.throwIfAborted();
     if (item?.kind !== 'project') throw new TypeError('Expected a recent project or solution');
     assertId(item.uri, 'Recent workspace URI');
     if (matches(item, getCurrent())) return confirmed(item, activateCurrent, [item, {signal}], signal);
-    if (item.uri.startsWith('sample:')) return confirmed(item, loadSample, [item.uri.slice(7), {signal}], signal);
-    for (const slot of ['workspace', 'previous']) {
-      const payload = await readRecovery?.(slot, {signal});
-      signal?.throwIfAborted();
-      if (!matches(item, payload)) continue;
-      const {records, options} = await restoreRecentWorkspace(payload, {signal});
-      return confirmed(item, openRecords, [records, {...options, signal}], signal);
+    const load = options.load ?? beginLoad?.(signal);
+    const pending = {signal: load?.signal ?? signal, load};
+    try {
+      load?.check();
+      if (item.uri.startsWith('sample:')) return await confirmed(item, loadSample, [item.uri.slice(7), pending], pending.signal);
+      for (const slot of ['workspace', 'previous']) {
+        const payload = await readRecovery?.(slot, pending);
+        pending.signal?.throwIfAborted();
+        load?.check();
+        if (!matches(item, payload)) continue;
+        const restored = await restoreRecentWorkspace(payload, pending);
+        load?.check();
+        return await confirmed(item, openRecords, [restored.records, {...restored.options, ...pending}], pending.signal);
+      }
+      return await confirmed(item, openFolder, [item, {reason: 'permission-required', ...pending}], pending.signal);
+    } finally {
+      if (!options.load) load?.finish();
     }
-    return confirmed(item, openFolder, [item, {reason: 'permission-required', signal}], signal);
   };
   return {remember, open};
 }

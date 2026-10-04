@@ -1,0 +1,64 @@
+{
+  "qualifiedHead": "f9d00bdcddd2f5804cc0469a0353b14daf5f879a",
+  "baseline": "b0dff7f7738c78b34c113514cf38790e2f5ed71d",
+  "machine": "Apple M3 Pro",
+  "os": "Darwin 25.6.0",
+  "node": "v24.21.0",
+  "existingAdmissionSourceAndInputsUnchanged": true,
+  "comparisons": {
+    "noHandlers": {
+      "medianMs": {
+        "beforeMs": 4.565667000000019,
+        "afterMs": 4.592917,
+        "deltaMs": 0.0272499999999809,
+        "percent": 0.5968459811015681
+      },
+      "p95Ms": {
+        "beforeMs": 5.5545840000000055,
+        "afterMs": 7.31887500000002,
+        "deltaMs": 1.7642910000000143,
+        "percent": 31.762792677183604
+      }
+    },
+    "catch": {
+      "medianMs": {
+        "beforeMs": 9.510291999999993,
+        "afterMs": 11.963041000000004,
+        "deltaMs": 2.4527490000000114,
+        "percent": 25.790469945612738
+      },
+      "p95Ms": {
+        "beforeMs": 12.812749999999994,
+        "afterMs": 22.819999999999993,
+        "deltaMs": 10.007249999999999,
+        "percent": 78.1038418762561
+      }
+    },
+    "finally": {
+      "medianMs": {
+        "beforeMs": 8.074957999999981,
+        "afterMs": 9.650374999999997,
+        "deltaMs": 1.5754170000000158,
+        "percent": 19.509909525226266
+      },
+      "p95Ms": {
+        "beforeMs": 10.605707999999993,
+        "afterMs": 21.441499999999962,
+        "deltaMs": 10.83579199999997,
+        "percent": 102.16943555300575
+      }
+    }
+  },
+  "rawSampleCount": 108,
+  "nativeCases": 77,
+  "nativeDisagreements": [
+    "Add_1_2",
+    "Add_2_1",
+    "CompareLongInteger",
+    "CompareObjectOrdering",
+    "ArgumentStoreNative",
+    "LocalNativeStoreInteger",
+    "NativeReturn",
+    "NativeJoin"
+  ]
+}

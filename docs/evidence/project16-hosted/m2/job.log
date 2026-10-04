@@ -1,0 +1,709 @@
+﻿2026-10-04T07:49:01.1698730Z Current runner version: '2.337.0'
+2026-10-04T07:49:01.1714620Z ##[group]Runner Image Provisioner
+2026-10-04T07:49:01.1715250Z Hosted Compute Agent
+2026-10-04T07:49:01.1715780Z Version: 20260828.587
+2026-10-04T07:49:01.1716180Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-10-04T07:49:01.1716720Z Build Date: 2026-08-28T16:44:25Z
+2026-10-04T07:49:01.1717210Z Worker ID: {ea2a29ba-932d-4cd3-8387-a0b63cf816d2}
+2026-10-04T07:49:01.1717680Z Azure Region: westus
+2026-10-04T07:49:01.1718050Z ##[endgroup]
+2026-10-04T07:49:01.1719500Z ##[group]Operating System
+2026-10-04T07:49:01.1719950Z macOS
+2026-10-04T07:49:01.1720290Z 26.6.2
+2026-10-04T07:49:01.1720600Z 25G83
+2026-10-04T07:49:01.1720920Z ##[endgroup]
+2026-10-04T07:49:01.1721310Z ##[group]Runner Image
+2026-10-04T07:49:01.1721750Z Image: macos-26-arm64
+2026-10-04T07:49:01.1722120Z Version: 20260907.0351.1
+2026-10-04T07:49:01.1723010Z Included Software: https://github.com/actions/runner-images/blob/macos-26-arm64/20260907.0351/images/macos/macos-26-arm64-Readme.md
+2026-10-04T07:49:01.1725000Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-26-arm64%2F20260907.0351
+2026-10-04T07:49:01.1725960Z ##[endgroup]
+2026-10-04T07:49:01.1726850Z ##[group]GITHUB_TOKEN Permissions
+2026-10-04T07:49:01.1728300Z Contents: read
+2026-10-04T07:49:01.1728900Z Metadata: read
+2026-10-04T07:49:01.1729300Z ##[endgroup]
+2026-10-04T07:49:01.1731910Z Secret source: Actions
+2026-10-04T07:49:01.1732550Z Cache mode: write
+2026-10-04T07:49:01.1733140Z Prepare workflow directory
+2026-10-04T07:49:01.2058250Z Prepare all required actions
+2026-10-04T07:49:01.2094590Z Getting action download info
+2026-10-04T07:49:01.3837180Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-04T07:49:01.6602790Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-04T07:49:01.7911150Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-04T07:49:01.9167690Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-04T07:49:02.1002300Z Complete job name: qualify
+2026-10-04T07:49:02.1440490Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-04T07:49:02.1441160Z with:
+2026-10-04T07:49:02.1441500Z   ref: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:02.1441940Z   repository: wieslawsoltes/SharpForge
+2026-10-04T07:49:02.1444430Z   token: ***
+2026-10-04T07:49:02.1444720Z   ssh-strict: true
+2026-10-04T07:49:02.1445030Z   ssh-user: git
+2026-10-04T07:49:02.1445370Z   persist-credentials: true
+2026-10-04T07:49:02.1445710Z   clean: true
+2026-10-04T07:49:02.1446020Z   sparse-checkout-cone-mode: true
+2026-10-04T07:49:02.1446380Z   fetch-depth: 1
+2026-10-04T07:49:02.1446680Z   fetch-tags: false
+2026-10-04T07:49:02.1447020Z   show-progress: true
+2026-10-04T07:49:02.1447330Z   lfs: false
+2026-10-04T07:49:02.1447610Z   submodules: false
+2026-10-04T07:49:02.1447930Z   set-safe-directory: true
+2026-10-04T07:49:02.1448280Z   allow-unsafe-pr-checkout: false
+2026-10-04T07:49:02.1448740Z env:
+2026-10-04T07:49:02.1449110Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:02.1449540Z ##[endgroup]
+2026-10-04T07:49:02.5131640Z Syncing repository: wieslawsoltes/SharpForge
+2026-10-04T07:49:02.5133070Z ##[group]Getting Git version info
+2026-10-04T07:49:02.5133590Z Working directory is '/Users/runner/work/SharpForge/SharpForge'
+2026-10-04T07:49:02.5134350Z [command]/opt/homebrew/bin/git version
+2026-10-04T07:49:02.5687730Z git version 2.55.0
+2026-10-04T07:49:02.5736340Z ##[endgroup]
+2026-10-04T07:49:02.5741170Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/20330930-63bf-48a2-aacf-a3e5aad08f3b/.gitconfig'
+2026-10-04T07:49:02.5742320Z Temporarily overriding HOME='/Users/runner/work/_temp/20330930-63bf-48a2-aacf-a3e5aad08f3b' before making global git config changes
+2026-10-04T07:49:02.5743770Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T07:49:02.5744720Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/SharpForge/SharpForge
+2026-10-04T07:49:02.5841990Z Deleting the contents of '/Users/runner/work/SharpForge/SharpForge'
+2026-10-04T07:49:02.5843870Z ##[group]Determining repository object format
+2026-10-04T07:49:02.5844640Z ##[endgroup]
+2026-10-04T07:49:02.5845300Z ##[group]Initializing the repository
+2026-10-04T07:49:02.5847620Z [command]/opt/homebrew/bin/git init /Users/runner/work/SharpForge/SharpForge
+2026-10-04T07:49:02.6195190Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-04T07:49:02.6212770Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-04T07:49:02.6225150Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-04T07:49:02.6225960Z hint: call:
+2026-10-04T07:49:02.6226410Z hint:
+2026-10-04T07:49:02.6226890Z hint: 	git config --global init.defaultBranch <name>
+2026-10-04T07:49:02.6227430Z hint:
+2026-10-04T07:49:02.6227940Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-04T07:49:02.6228770Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-04T07:49:02.6229460Z hint:
+2026-10-04T07:49:02.6229850Z hint: 	git branch -m <name>
+2026-10-04T07:49:02.6230300Z hint:
+2026-10-04T07:49:02.6230870Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-04T07:49:02.6231930Z Initialized empty Git repository in /Users/runner/work/SharpForge/SharpForge/.git/
+2026-10-04T07:49:02.6236790Z [command]/opt/homebrew/bin/git remote add origin https://github.com/wieslawsoltes/SharpForge
+2026-10-04T07:49:02.6302780Z ##[endgroup]
+2026-10-04T07:49:02.6303960Z ##[group]Disabling automatic garbage collection
+2026-10-04T07:49:02.6304780Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-10-04T07:49:02.6383020Z ##[endgroup]
+2026-10-04T07:49:02.6383830Z ##[group]Setting up auth
+2026-10-04T07:49:02.6384440Z Removing SSH command configuration
+2026-10-04T07:49:02.6389030Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T07:49:02.6514010Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-04T07:49:02.7520630Z Removing HTTP extra header
+2026-10-04T07:49:02.7523740Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T07:49:02.7599190Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-04T07:49:02.8437470Z Removing includeIf entries pointing to credentials config files
+2026-10-04T07:49:02.8439110Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T07:49:02.8510020Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-04T07:49:03.0215630Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-04T07:49:03.0528880Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/SharpForge/SharpForge/.git.path /Users/runner/work/_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:03.0541270Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/SharpForge/SharpForge/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:03.0547360Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:03.0552070Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:03.0555670Z ##[endgroup]
+2026-10-04T07:49:03.0556460Z ##[group]Fetching the repository
+2026-10-04T07:49:03.0558550Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:07.0629090Z From https://github.com/wieslawsoltes/SharpForge
+2026-10-04T07:49:07.0756130Z  * branch            b8d68d417c792156dedb2ac2b98acf33cac3f141 -> FETCH_HEAD
+2026-10-04T07:49:07.0777200Z [command]/opt/homebrew/bin/git rev-parse --verify --quiet b8d68d417c792156dedb2ac2b98acf33cac3f141^{object}
+2026-10-04T07:49:07.0780510Z b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:07.0810370Z ##[endgroup]
+2026-10-04T07:49:07.0845940Z ##[group]Determining the checkout info
+2026-10-04T07:49:07.0846920Z ##[endgroup]
+2026-10-04T07:49:07.0860940Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-10-04T07:49:07.0900340Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-04T07:49:07.1003730Z ##[group]Checking out the ref
+2026-10-04T07:49:07.1026550Z [command]/opt/homebrew/bin/git checkout --progress --force b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:08.4882970Z Updating files:  45% (5421/11854)
+2026-10-04T07:49:08.5143210Z Updating files:  46% (5453/11854)
+2026-10-04T07:49:08.5631830Z Updating files:  47% (5572/11854)
+2026-10-04T07:49:08.5761980Z Updating files:  48% (5690/11854)
+2026-10-04T07:49:08.5877650Z Updating files:  49% (5809/11854)
+2026-10-04T07:49:08.6001670Z Updating files:  50% (5927/11854)
+2026-10-04T07:49:08.6137380Z Updating files:  51% (6046/11854)
+2026-10-04T07:49:08.6284350Z Updating files:  52% (6165/11854)
+2026-10-04T07:49:08.6413070Z Updating files:  53% (6283/11854)
+2026-10-04T07:49:08.6612580Z Updating files:  54% (6402/11854)
+2026-10-04T07:49:08.6748540Z Updating files:  55% (6520/11854)
+2026-10-04T07:49:08.6901020Z Updating files:  56% (6639/11854)
+2026-10-04T07:49:08.7016700Z Updating files:  57% (6757/11854)
+2026-10-04T07:49:08.7137280Z Updating files:  58% (6876/11854)
+2026-10-04T07:49:08.7258730Z Updating files:  59% (6994/11854)
+2026-10-04T07:49:08.7367210Z Updating files:  60% (7113/11854)
+2026-10-04T07:49:08.7515480Z Updating files:  61% (7231/11854)
+2026-10-04T07:49:08.7681180Z Updating files:  62% (7350/11854)
+2026-10-04T07:49:08.7852760Z Updating files:  63% (7469/11854)
+2026-10-04T07:49:08.7976070Z Updating files:  64% (7587/11854)
+2026-10-04T07:49:08.8085750Z Updating files:  65% (7706/11854)
+2026-10-04T07:49:08.8195250Z Updating files:  66% (7824/11854)
+2026-10-04T07:49:08.8351450Z Updating files:  67% (7943/11854)
+2026-10-04T07:49:08.8502000Z Updating files:  68% (8061/11854)
+2026-10-04T07:49:08.8619030Z Updating files:  69% (8180/11854)
+2026-10-04T07:49:08.8727970Z Updating files:  70% (8298/11854)
+2026-10-04T07:49:08.8831610Z Updating files:  71% (8417/11854)
+2026-10-04T07:49:08.8938350Z Updating files:  72% (8535/11854)
+2026-10-04T07:49:08.9042560Z Updating files:  73% (8654/11854)
+2026-10-04T07:49:08.9238060Z Updating files:  74% (8772/11854)
+2026-10-04T07:49:08.9339750Z Updating files:  75% (8891/11854)
+2026-10-04T07:49:08.9451310Z Updating files:  76% (9010/11854)
+2026-10-04T07:49:08.9553300Z Updating files:  77% (9128/11854)
+2026-10-04T07:49:08.9654440Z Updating files:  78% (9247/11854)
+2026-10-04T07:49:08.9773720Z Updating files:  79% (9365/11854)
+2026-10-04T07:49:08.9856760Z Updating files:  80% (9484/11854)
+2026-10-04T07:49:09.0005960Z Updating files:  81% (9602/11854)
+2026-10-04T07:49:09.0107860Z Updating files:  82% (9721/11854)
+2026-10-04T07:49:09.0244960Z Updating files:  83% (9839/11854)
+2026-10-04T07:49:09.0380250Z Updating files:  84% (9958/11854)
+2026-10-04T07:49:09.0453500Z Updating files:  85% (10076/11854)
+2026-10-04T07:49:09.0555610Z Updating files:  86% (10195/11854)
+2026-10-04T07:49:09.0676530Z Updating files:  87% (10313/11854)
+2026-10-04T07:49:09.0773150Z Updating files:  88% (10432/11854)
+2026-10-04T07:49:09.0893940Z Updating files:  89% (10551/11854)
+2026-10-04T07:49:09.0992650Z Updating files:  90% (10669/11854)
+2026-10-04T07:49:09.1110920Z Updating files:  91% (10788/11854)
+2026-10-04T07:49:09.1201420Z Updating files:  92% (10906/11854)
+2026-10-04T07:49:09.1204760Z Updating files:  93% (11025/11854)
+2026-10-04T07:49:09.1333150Z Updating files:  93% (11031/11854)
+2026-10-04T07:49:09.1467580Z Updating files:  94% (11143/11854)
+2026-10-04T07:49:09.1579040Z Updating files:  95% (11262/11854)
+2026-10-04T07:49:09.1705580Z Updating files:  96% (11380/11854)
+2026-10-04T07:49:09.1838930Z Updating files:  97% (11499/11854)
+2026-10-04T07:49:09.1974350Z Updating files:  98% (11617/11854)
+2026-10-04T07:49:09.2093530Z Updating files:  99% (11736/11854)
+2026-10-04T07:49:09.2093970Z Updating files: 100% (11854/11854)
+2026-10-04T07:49:09.2094260Z Updating files: 100% (11854/11854), done.
+2026-10-04T07:49:09.2236990Z HEAD is now at b8d68d4 Merge pull request #4453 from wieslawsoltes/codex/project16/12-final-qualification-followups
+2026-10-04T07:49:09.2376390Z ##[endgroup]
+2026-10-04T07:49:09.2476730Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-10-04T07:49:09.2575940Z b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:09.3021600Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-04T07:49:09.3021970Z with:
+2026-10-04T07:49:09.3022110Z   node-version: 24
+2026-10-04T07:49:09.3022320Z   always-auth: false
+2026-10-04T07:49:09.3022470Z   check-latest: false
+2026-10-04T07:49:09.3024770Z   token: ***
+2026-10-04T07:49:09.3024900Z env:
+2026-10-04T07:49:09.3025080Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:09.3025390Z ##[endgroup]
+2026-10-04T07:49:09.5638440Z Found in cache @ /Users/runner/hostedtoolcache/node/24.20.0/arm64
+2026-10-04T07:49:09.5642850Z (node:5407) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T07:49:09.5643750Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T07:49:09.5644880Z ##[group]Environment details
+2026-10-04T07:49:10.3364000Z node: v24.20.0
+2026-10-04T07:49:10.3403900Z npm: 11.19.0
+2026-10-04T07:49:10.3404370Z yarn: 1.22.22
+2026-10-04T07:49:10.3406210Z ##[endgroup]
+2026-10-04T07:49:10.3523890Z ##[group]Run node scripts/project16-trigger.js
+2026-10-04T07:49:10.3524320Z [36;1mnode scripts/project16-trigger.js[0m
+2026-10-04T07:49:10.3595630Z shell: /bin/bash -e {0}
+2026-10-04T07:49:10.3595950Z env:
+2026-10-04T07:49:10.3596190Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:10.3596470Z ##[endgroup]
+2026-10-04T07:49:10.5544740Z Resolved create: macos-latest/chromium/standalone at b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:10.5721780Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-04T07:49:10.5722210Z with:
+2026-10-04T07:49:10.5722430Z   python-version: 3.12
+2026-10-04T07:49:10.5722660Z   check-latest: false
+2026-10-04T07:49:10.5724780Z   token: ***
+2026-10-04T07:49:10.5725020Z   update-environment: true
+2026-10-04T07:49:10.5725260Z   allow-prereleases: false
+2026-10-04T07:49:10.5725580Z   freethreaded: false
+2026-10-04T07:49:10.5725800Z env:
+2026-10-04T07:49:10.5726090Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:10.5726410Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:10.5726990Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:10.5727440Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:10.5727890Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:10.5728830Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:10.5729250Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:10.5729480Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:10.5729740Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:10.5730080Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:10.5730330Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:10.5730660Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:10.5730970Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:10.5731180Z ##[endgroup]
+2026-10-04T07:49:10.7465070Z ##[group]Installed versions
+2026-10-04T07:49:10.7623290Z Successfully set up CPython (3.12.10)
+2026-10-04T07:49:10.7624080Z ##[endgroup]
+2026-10-04T07:49:10.7685120Z ##[group]Run npm ci --ignore-scripts --no-audit --no-fund
+2026-10-04T07:49:10.7707210Z [36;1mnpm ci --ignore-scripts --no-audit --no-fund[0m
+2026-10-04T07:49:10.7870780Z shell: /bin/bash -e {0}
+2026-10-04T07:49:10.7871000Z env:
+2026-10-04T07:49:10.7871230Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:10.7871590Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:10.7872040Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:10.7872480Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:10.7872850Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:10.7873250Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:10.7873570Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:10.7873850Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:10.7874070Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:10.7874450Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:10.7874720Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:10.7874960Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:10.7875200Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:10.7875510Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:10.7876050Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:10.7876570Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:10.7876970Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:10.7877460Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:10.7877810Z ##[endgroup]
+2026-10-04T07:49:11.8566010Z 
+2026-10-04T07:49:11.8615280Z added 28 packages in 909ms
+2026-10-04T07:49:11.9342950Z ##[group]Run npm run check
+2026-10-04T07:49:11.9343290Z [36;1mnpm run check[0m
+2026-10-04T07:49:11.9343500Z [36;1mnpm run build[0m
+2026-10-04T07:49:11.9343680Z [36;1mnode scripts/standalone.js[0m
+2026-10-04T07:49:11.9382990Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-04T07:49:11.9383280Z env:
+2026-10-04T07:49:11.9383670Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:11.9384140Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:11.9384560Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:11.9384980Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:11.9385360Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:11.9385750Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:11.9386060Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:11.9386350Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:11.9386630Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:11.9386880Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:11.9387180Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:11.9387440Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:11.9387680Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:11.9388040Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:11.9389030Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:11.9389510Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:11.9389920Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:11.9390380Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:11.9390660Z ##[endgroup]
+2026-10-04T07:49:12.1009350Z 
+2026-10-04T07:49:12.1062880Z > sharpforge@0.14.0 check
+2026-10-04T07:49:12.1064430Z > node scripts/run.js check
+2026-10-04T07:49:12.1065450Z 
+2026-10-04T07:49:12.3996690Z {
+2026-10-04T07:49:12.4099630Z   "areas": 30,
+2026-10-04T07:49:12.4201120Z   "nodeFiles": 962,
+2026-10-04T07:49:12.4302320Z   "browserScripts": 37,
+2026-10-04T07:49:12.4403390Z   "unassigned": 0,
+2026-10-04T07:49:12.4504400Z   "duplicate": 0
+2026-10-04T07:49:12.4605380Z }
+2026-10-04T07:49:14.0815520Z Checked 3560 JavaScript modules; 0 syntax errors.
+2026-10-04T07:49:16.7080310Z {
+2026-10-04T07:49:16.7080750Z   "passed": true,
+2026-10-04T07:49:16.7080950Z   "inspected": 3556,
+2026-10-04T07:49:16.7081140Z   "modules": 3556,
+2026-10-04T07:49:16.7081280Z   "errors": []
+2026-10-04T07:49:16.7081450Z }
+2026-10-04T07:49:16.8810850Z 
+2026-10-04T07:49:16.8829470Z > sharpforge@0.14.0 build
+2026-10-04T07:49:16.8829830Z > node scripts/run.js build
+2026-10-04T07:49:16.8830860Z 
+2026-10-04T07:49:24.1733810Z Built dependency-free browser application in dist/
+2026-10-04T07:49:25.7072030Z Built /Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html (16,625,302 bytes; 5 embedded worker graphs)
+2026-10-04T07:49:25.7266400Z ##[group]Run python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+2026-10-04T07:49:25.7267200Z [36;1mpython -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt[0m
+2026-10-04T07:49:25.7314240Z shell: /bin/bash -e {0}
+2026-10-04T07:49:25.7314540Z env:
+2026-10-04T07:49:25.7314830Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:25.7315320Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:25.7315810Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:25.7316370Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:25.7316880Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:25.7317340Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:25.7317750Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:25.7318030Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:25.7318460Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:25.7318710Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:25.7319020Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:25.7319260Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:25.7319590Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:25.7319930Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:25.7320490Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:25.7321010Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:25.7321460Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:25.7321940Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:25.7322340Z ##[endgroup]
+2026-10-04T07:49:27.1062990Z Collecting attrs==26.1.0 (from -r tests/requirements.txt (line 3))
+2026-10-04T07:49:27.1422250Z   Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+2026-10-04T07:49:27.2498600Z Collecting greenlet==3.5.6 (from -r tests/requirements.txt (line 5))
+2026-10-04T07:49:27.2535970Z   Downloading greenlet-3.5.6-cp312-cp312-macosx_11_0_universal2.whl (295 kB)
+2026-10-04T07:49:27.2761660Z Collecting jsonschema==4.26.0 (from -r tests/requirements.txt (line 84))
+2026-10-04T07:49:27.2792040Z   Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+2026-10-04T07:49:27.2949600Z Collecting jsonschema-specifications==2025.9.1 (from -r tests/requirements.txt (line 86))
+2026-10-04T07:49:27.2985330Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+2026-10-04T07:49:27.3234550Z Collecting playwright==1.63.0 (from -r tests/requirements.txt (line 88))
+2026-10-04T07:49:27.3281900Z   Downloading playwright-1.63.0-py3-none-macosx_11_0_arm64.whl (42.9 MB)
+2026-10-04T07:49:27.5128980Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.9/42.9 MB 234.1 MB/s  0:00:00
+2026-10-04T07:49:27.5514050Z Collecting pyee==13.0.1 (from -r tests/requirements.txt (line 97))
+2026-10-04T07:49:27.5554190Z   Downloading pyee-13.0.1-py3-none-any.whl (15 kB)
+2026-10-04T07:49:27.5854780Z Collecting PyYAML==6.0.3 (from -r tests/requirements.txt (line 99))
+2026-10-04T07:49:27.5892350Z   Downloading pyyaml-6.0.3-cp312-cp312-macosx_11_0_arm64.whl (173 kB)
+2026-10-04T07:49:27.6079580Z Collecting referencing==0.37.0 (from -r tests/requirements.txt (line 172))
+2026-10-04T07:49:27.6113520Z   Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+2026-10-04T07:49:27.7713020Z Collecting rpds-py==2026.6.3 (from -r tests/requirements.txt (line 174))
+2026-10-04T07:49:27.7815400Z   Downloading rpds_py-2026.6.3-cp312-cp312-macosx_11_0_arm64.whl (338 kB)
+2026-10-04T07:49:27.8014540Z Collecting typing_extensions==4.16.0 (from -r tests/requirements.txt (line 290))
+2026-10-04T07:49:27.8116910Z   Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-04T07:49:27.8323190Z Installing collected packages: typing_extensions, rpds-py, PyYAML, greenlet, attrs, referencing, pyee, playwright, jsonschema-specifications, jsonschema
+2026-10-04T07:49:28.5058760Z 
+2026-10-04T07:49:28.5069300Z Successfully installed PyYAML-6.0.3 attrs-26.1.0 greenlet-3.5.6 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 playwright-1.63.0 pyee-13.0.1 referencing-0.37.0 rpds-py-2026.6.3 typing_extensions-4.16.0
+2026-10-04T07:49:28.5565090Z ##[group]Run python -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"
+2026-10-04T07:49:28.5565640Z [36;1mpython -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"[0m
+2026-10-04T07:49:28.5597520Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-04T07:49:28.5597910Z env:
+2026-10-04T07:49:28.5598140Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:28.5598500Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:28.5598890Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:28.5599420Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:28.5599830Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:28.5600310Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:28.5600650Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:28.5601020Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:28.5601400Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:28.5601770Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:28.5602030Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:28.5602420Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:28.5602700Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:28.5603110Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:28.5603560Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:28.5604130Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:28.5604650Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:28.5605150Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:28.5605720Z ##[endgroup]
+2026-10-04T07:49:28.9345910Z Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/mac-arm64/chrome-mac-arm64.zip
+2026-10-04T07:49:29.7230690Z |                                                                                |   0% of 182.1 MiB
+2026-10-04T07:49:30.5420440Z |■■■■■■■■                                                                        |  10% of 182.1 MiB
+2026-10-04T07:49:30.8748860Z |■■■■■■■■■■■■■■■■                                                                |  20% of 182.1 MiB
+2026-10-04T07:49:31.1883830Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 182.1 MiB
+2026-10-04T07:49:31.4889810Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 182.1 MiB
+2026-10-04T07:49:31.8003580Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 182.1 MiB
+2026-10-04T07:49:32.0976030Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 182.1 MiB
+2026-10-04T07:49:32.4056380Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 182.1 MiB
+2026-10-04T07:49:32.7192570Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 182.1 MiB
+2026-10-04T07:49:33.0640530Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 182.1 MiB
+2026-10-04T07:49:33.4319700Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 182.1 MiB
+2026-10-04T07:49:36.1376450Z Chrome for Testing 153.0.8010.12 (playwright chromium v1243) downloaded to /Users/runner/Library/Caches/ms-playwright/chromium-1243
+2026-10-04T07:49:36.1400160Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-mac-arm64.zip
+2026-10-04T07:49:36.6003910Z |                                                                                |   1% of 1 MiB
+2026-10-04T07:49:36.6107110Z |■■■■■■■■                                                                        |  10% of 1 MiB
+2026-10-04T07:49:36.6208630Z |■■■■■■■■■■■■■■■■                                                                |  20% of 1 MiB
+2026-10-04T07:49:36.6310600Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 1 MiB
+2026-10-04T07:49:36.6411270Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 1 MiB
+2026-10-04T07:49:36.6512510Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  51% of 1 MiB
+2026-10-04T07:49:36.6613620Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 1 MiB
+2026-10-04T07:49:36.6715350Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 1 MiB
+2026-10-04T07:49:36.6815980Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 1 MiB
+2026-10-04T07:49:36.6916830Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  91% of 1 MiB
+2026-10-04T07:49:36.7017710Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 1 MiB
+2026-10-04T07:49:36.7261030Z FFmpeg (playwright ffmpeg v1011) downloaded to /Users/runner/Library/Caches/ms-playwright/ffmpeg-1011
+2026-10-04T07:49:36.7262190Z Downloading Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/mac-arm64/chrome-headless-shell-mac-arm64.zip
+2026-10-04T07:49:37.5695630Z |                                                                                |   0% of 94.3 MiB
+2026-10-04T07:49:38.2092730Z |■■■■■■■■                                                                        |  10% of 94.3 MiB
+2026-10-04T07:49:38.3683280Z |■■■■■■■■■■■■■■■■                                                                |  20% of 94.3 MiB
+2026-10-04T07:49:38.5237920Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 94.3 MiB
+2026-10-04T07:49:38.6766280Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 94.3 MiB
+2026-10-04T07:49:38.8323040Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 94.3 MiB
+2026-10-04T07:49:39.0020380Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 94.3 MiB
+2026-10-04T07:49:39.1594220Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 94.3 MiB
+2026-10-04T07:49:39.3225140Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 94.3 MiB
+2026-10-04T07:49:39.4856600Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 94.3 MiB
+2026-10-04T07:49:39.6440690Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 94.3 MiB
+2026-10-04T07:49:40.9047560Z Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to /Users/runner/Library/Caches/ms-playwright/chromium_headless_shell-1243
+2026-10-04T07:49:40.9478100Z ##[group]Run import os
+2026-10-04T07:49:40.9478480Z [36;1mimport os[0m
+2026-10-04T07:49:40.9478740Z [36;1mfrom pathlib import Path[0m
+2026-10-04T07:49:40.9479080Z [36;1mimport playwright[0m
+2026-10-04T07:49:40.9479450Z [36;1mdriver = Path(playwright.__file__).parent / 'driver' / 'package'[0m
+2026-10-04T07:49:40.9479930Z [36;1mif not (driver / 'package.json').is_file():[0m
+2026-10-04T07:49:40.9480440Z [36;1m    raise RuntimeError('Pinned Playwright driver is missing')[0m
+2026-10-04T07:49:40.9480890Z [36;1mwith open(os.environ['GITHUB_ENV'], 'a', encoding='utf8') as output:[0m
+2026-10-04T07:49:40.9481460Z [36;1m    output.write('SHARPFORGE_PLAYWRIGHT_MODULE=' + str(driver) + '\n')[0m
+2026-10-04T07:49:40.9491890Z shell: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/bin/python {0}
+2026-10-04T07:49:40.9492380Z env:
+2026-10-04T07:49:40.9492680Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:40.9493090Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:40.9493690Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:40.9494700Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:40.9495110Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:40.9495670Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:40.9496090Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:40.9496510Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:40.9496830Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:40.9497230Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:40.9497570Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:40.9497900Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:40.9498160Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:40.9498560Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:40.9499050Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:40.9499730Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:40.9500240Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:40.9500760Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:40.9501170Z ##[endgroup]
+2026-10-04T07:49:41.0685290Z ##[group]Run node scripts/project16-qualification.js "$QUALIFICATION_STAGE"
+2026-10-04T07:49:41.0685840Z [36;1mnode scripts/project16-qualification.js "$QUALIFICATION_STAGE"[0m
+2026-10-04T07:49:41.0724400Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-04T07:49:41.0724750Z env:
+2026-10-04T07:49:41.0724980Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:41.0725330Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:41.0725760Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:41.0726250Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:41.0726640Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:41.0727070Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:41.0740280Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:41.0740550Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:41.0740990Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:41.0741230Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:41.0741490Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:41.0741860Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:41.0742100Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:41.0742470Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:41.0742950Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:41.0743340Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:41.0743700Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:41.0744100Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:41.0744660Z   SHARPFORGE_PLAYWRIGHT_MODULE: /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/driver/package
+2026-10-04T07:49:41.0745110Z ##[endgroup]
+2026-10-04T07:49:47.2141860Z {
+2026-10-04T07:49:47.2232280Z   "suite": "browser_vs_workflows_standalone_test",
+2026-10-04T07:49:47.2232790Z   "mode": "file",
+2026-10-04T07:49:47.2233600Z   "engine": "chromium",
+2026-10-04T07:49:47.2234890Z   "passed": true,
+2026-10-04T07:49:47.2235780Z   "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+2026-10-04T07:49:47.2236880Z   "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+2026-10-04T07:49:47.2237760Z   "checks": [
+2026-10-04T07:49:47.2238360Z     {
+2026-10-04T07:49:47.2238990Z       "scenario": "create-console-project",
+2026-10-04T07:49:47.2239780Z       "passed": true,
+2026-10-04T07:49:47.2240550Z       "emptyNameRejected": true
+2026-10-04T07:49:47.2248810Z     },
+2026-10-04T07:49:47.2249110Z     {
+2026-10-04T07:49:47.2249440Z       "scenario": "edit-and-build-shared-document",
+2026-10-04T07:49:47.2250670Z       "passed": true
+2026-10-04T07:49:47.2251070Z     },
+2026-10-04T07:49:47.2251290Z     {
+2026-10-04T07:49:47.2251750Z       "scenario": "breakpoint-step-continue",
+2026-10-04T07:49:47.2252100Z       "passed": true,
+2026-10-04T07:49:47.2252480Z       "backend": "ECMA-335",
+2026-10-04T07:49:47.2252930Z       "runtimeStatistics": {
+2026-10-04T07:49:47.2253220Z         "artifactFormat": "ECMA-335",
+2026-10-04T07:49:47.2253640Z         "assembly": {
+2026-10-04T07:49:47.2253890Z           "bytes": 4096,
+2026-10-04T07:49:47.2254250Z           "loadMs": 10.400000000023283,
+2026-10-04T07:49:47.2255130Z           "decodeMs": 3,
+2026-10-04T07:49:47.2255890Z           "verificationMs": 7.400000000023283
+2026-10-04T07:49:47.2256270Z         },
+2026-10-04T07:49:47.2256480Z         "instructions": 14,
+2026-10-04T07:49:47.2256790Z         "elapsedMs": 2.5,
+2026-10-04T07:49:47.2257140Z         "frames": 0,
+2026-10-04T07:49:47.2257390Z         "heap": {
+2026-10-04T07:49:47.2257700Z           "allocatedBytes": 0,
+2026-10-04T07:49:47.2257980Z           "hostStrongHandles": 0,
+2026-10-04T07:49:47.2258360Z           "hostWeakHandles": 0,
+2026-10-04T07:49:47.2260930Z           "rootsScanned": 0,
+2026-10-04T07:49:47.2261340Z           "edgesScanned": 0,
+2026-10-04T07:49:47.2261760Z           "markedObjects": 0,
+2026-10-04T07:49:47.2262020Z           "maxPauseMs": 0,
+2026-10-04T07:49:47.2262320Z           "markMs": 0,
+2026-10-04T07:49:47.2262620Z           "sweepMs": 0,
+2026-10-04T07:49:47.2262870Z           "liveBytes": 0,
+2026-10-04T07:49:47.2263200Z           "liveObjects": 0,
+2026-10-04T07:49:47.2263460Z           "allocations": 0,
+2026-10-04T07:49:47.2263780Z           "collections": 0,
+2026-10-04T07:49:47.2264040Z           "freedObjects": 0,
+2026-10-04T07:49:47.2264360Z           "freedBytes": 0,
+2026-10-04T07:49:47.2264720Z           "lastPauseMs": 0,
+2026-10-04T07:49:47.2265000Z           "totalPauseMs": 0,
+2026-10-04T07:49:47.2265310Z           "peakBytes": 0,
+2026-10-04T07:49:47.2265590Z           "maxBytes": 33554432,
+2026-10-04T07:49:47.2265940Z           "threshold": 65536
+2026-10-04T07:49:47.2266280Z         }
+2026-10-04T07:49:47.2266460Z       }
+2026-10-04T07:49:47.2266730Z     },
+2026-10-04T07:49:47.2266930Z     {
+2026-10-04T07:49:47.2267310Z       "scenario": "designer-edit-undo-redo-save",
+2026-10-04T07:49:47.2267660Z       "passed": true
+2026-10-04T07:49:47.2267940Z     },
+2026-10-04T07:49:47.2268180Z     {
+2026-10-04T07:49:47.2268450Z       "scenario": "export-project-and-design",
+2026-10-04T07:49:47.2268790Z       "passed": true
+2026-10-04T07:49:47.2269020Z     }
+2026-10-04T07:49:47.2269300Z   ],
+2026-10-04T07:49:47.2269910Z   "navigation": {
+2026-10-04T07:49:47.2270270Z     "mode": "file",
+2026-10-04T07:49:47.2270800Z     "url": "file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+2026-10-04T07:49:47.2271240Z     "offline": true,
+2026-10-04T07:49:47.2271810Z     "artifact": "/Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+2026-10-04T07:49:47.2272460Z     "artifactSha256": "f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a",
+2026-10-04T07:49:47.2273010Z     "bytes": 16625302,
+2026-10-04T07:49:47.2273280Z     "policy": {
+2026-10-04T07:49:47.2274450Z       "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-8kb8ftwYHmdaE2K0vEJxLVIy3cKvZNLpIMtLQtFzSsY='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+2026-10-04T07:49:47.2275670Z       "transport": "meta"
+2026-10-04T07:49:47.2275920Z     }
+2026-10-04T07:49:47.2276180Z   },
+2026-10-04T07:49:47.2276390Z   "httpAttempts": [],
+2026-10-04T07:49:47.2276700Z   "pageErrors": [],
+2026-10-04T07:49:47.2277010Z   "browser": "153.0.8010.12",
+2026-10-04T07:49:47.2277320Z   "lazyTools": [
+2026-10-04T07:49:47.2278190Z     {
+2026-10-04T07:49:47.2278450Z       "tool": "assembly",
+2026-10-04T07:49:47.2278790Z       "passed": true,
+2026-10-04T07:49:47.2279050Z       "mountedHosts": 1,
+2026-10-04T07:49:47.2279340Z       "reopened": true
+2026-10-04T07:49:47.2279640Z     },
+2026-10-04T07:49:47.2279820Z     {
+2026-10-04T07:49:47.2280110Z       "tool": "disassembly",
+2026-10-04T07:49:47.2280360Z       "passed": true,
+2026-10-04T07:49:47.2280660Z       "mountedHosts": 1,
+2026-10-04T07:49:47.2280900Z       "reopened": true
+2026-10-04T07:49:47.2281180Z     },
+2026-10-04T07:49:47.2281450Z     {
+2026-10-04T07:49:47.2281670Z       "tool": "msbuild",
+2026-10-04T07:49:47.2281980Z       "passed": true,
+2026-10-04T07:49:47.2282220Z       "mountedHosts": 1,
+2026-10-04T07:49:47.2282530Z       "reopened": true
+2026-10-04T07:49:47.2282870Z     },
+2026-10-04T07:49:47.2283110Z     {
+2026-10-04T07:49:47.2283380Z       "tool": "wizard",
+2026-10-04T07:49:47.2283620Z       "passed": true,
+2026-10-04T07:49:47.2283960Z       "reopened": true
+2026-10-04T07:49:47.2284240Z     },
+2026-10-04T07:49:47.2284490Z     {
+2026-10-04T07:49:47.2284780Z       "tool": "designer",
+2026-10-04T07:49:47.2285090Z       "passed": true,
+2026-10-04T07:49:47.2285400Z       "mountedHosts": 1,
+2026-10-04T07:49:47.2285660Z       "reopened": true,
+2026-10-04T07:49:47.2286270Z       "documentRetained": true
+2026-10-04T07:49:47.2286630Z     }
+2026-10-04T07:49:47.2286930Z   ],
+2026-10-04T07:49:47.2287210Z   "lazyMeasurement": {
+2026-10-04T07:49:47.2287640Z     "controllerConstructionCount": "unavailable: no public construction counter",
+2026-10-04T07:49:47.2288500Z     "scriptEvaluationReduction": "not measured by this correctness workflow"
+2026-10-04T07:49:47.2288970Z   }
+2026-10-04T07:49:47.2289200Z }
+2026-10-04T07:49:47.3483490Z ##[group]Run import json
+2026-10-04T07:49:47.3483860Z [36;1mimport json[0m
+2026-10-04T07:49:47.3484060Z [36;1mimport os[0m
+2026-10-04T07:49:47.3484390Z [36;1mfrom pathlib import Path[0m
+2026-10-04T07:49:47.3484730Z [36;1moutput = Path(os.environ['SHARPFORGE_RESULTS_DIR'])[0m
+2026-10-04T07:49:47.3485190Z [36;1moutput.mkdir(parents=True, exist_ok=True)[0m
+2026-10-04T07:49:47.3485610Z [36;1m(output / 'source.json').write_text(json.dumps({[0m
+2026-10-04T07:49:47.3486030Z [36;1m    'sourceSha': os.environ['QUALIFICATION_SOURCE_SHA'],[0m
+2026-10-04T07:49:47.3486510Z [36;1m    'sourceTree': os.environ['QUALIFICATION_SOURCE_TREE'],[0m
+2026-10-04T07:49:47.3507030Z [36;1m    'trigger': os.environ['QUALIFICATION_TRIGGER_EVENT'],[0m
+2026-10-04T07:49:47.3507660Z [36;1m    'triggerRef': os.environ['QUALIFICATION_TRIGGER_REF'],[0m
+2026-10-04T07:49:47.3508130Z [36;1m    'triggerNonce': os.environ['QUALIFICATION_TRIGGER_NONCE'] or None,[0m
+2026-10-04T07:49:47.3508840Z [36;1m    'captureOnly': os.environ['QUALIFICATION_CAPTURE_ONLY'] == 'true',[0m
+2026-10-04T07:49:47.3509390Z [36;1m    'baselineProfile': os.environ['QUALIFICATION_BASELINE_PROFILE'] or None,[0m
+2026-10-04T07:49:47.3509890Z [36;1m    'workflowRunId': os.environ['GITHUB_RUN_ID'],[0m
+2026-10-04T07:49:47.3510350Z [36;1m    'stage': os.environ['QUALIFICATION_STAGE'],[0m
+2026-10-04T07:49:47.3510730Z [36;1m    'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],[0m
+2026-10-04T07:49:47.3511220Z [36;1m    'runner': os.environ['RUNNER_OS'],[0m
+2026-10-04T07:49:47.3511600Z [36;1m    'runnerLabel': os.environ['QUALIFICATION_RUNNER'],[0m
+2026-10-04T07:49:47.3512020Z [36;1m    'editorBaseline': os.environ['SHARPFORGE_EDITOR_BASELINE'] or None,[0m
+2026-10-04T07:49:47.3512610Z [36;1m    'workbenchBaseline': os.environ['SHARPFORGE_WORKBENCH_BASELINE'] or None,[0m
+2026-10-04T07:49:47.3512950Z [36;1m}, indent=2) + '\n', encoding='utf8')[0m
+2026-10-04T07:49:47.3517580Z shell: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/bin/python {0}
+2026-10-04T07:49:47.3517930Z env:
+2026-10-04T07:49:47.3518120Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:47.3518360Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:47.3518770Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:47.3519470Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:47.3519900Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:47.3520320Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:47.3520710Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:47.3520970Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:47.3521280Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:47.3521480Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:47.3521680Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:47.3521880Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:47.3522070Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:47.3522330Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.3522770Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:47.3523200Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.3523640Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.3524080Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.3524650Z   SHARPFORGE_PLAYWRIGHT_MODULE: /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/driver/package
+2026-10-04T07:49:47.3525220Z ##[endgroup]
+2026-10-04T07:49:47.4570950Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-04T07:49:47.4571340Z with:
+2026-10-04T07:49:47.4571540Z   name: project16-macos-latest-chromium-standalone
+2026-10-04T07:49:47.4571820Z   path: artifacts/results/project16/
+2026-10-04T07:49:47.4572030Z   if-no-files-found: error
+2026-10-04T07:49:47.4572250Z   compression-level: 6
+2026-10-04T07:49:47.4572430Z   overwrite: false
+2026-10-04T07:49:47.4572640Z   include-hidden-files: false
+2026-10-04T07:49:47.4572860Z env:
+2026-10-04T07:49:47.4573150Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:49:47.4573430Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:49:47.4573830Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2
+2026-10-04T07:49:47.4574260Z   QUALIFICATION_TRIGGER_NONCE: 20261004-m2
+2026-10-04T07:49:47.4574560Z   QUALIFICATION_SOURCE_SHA: b8d68d417c792156dedb2ac2b98acf33cac3f141
+2026-10-04T07:49:47.4574970Z   QUALIFICATION_SOURCE_TREE: 74021421e044947908f037bf34d00bcb258e25fc
+2026-10-04T07:49:47.4575300Z   QUALIFICATION_RUNNER: macos-latest
+2026-10-04T07:49:47.4575540Z   QUALIFICATION_STAGE: standalone
+2026-10-04T07:49:47.4575750Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:49:47.4575970Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:49:47.4576200Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T07:49:47.4576420Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:49:47.4576620Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:49:47.4576890Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.4577320Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-04T07:49:47.4577750Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.4578110Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.4578490Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-04T07:49:47.4579060Z   SHARPFORGE_PLAYWRIGHT_MODULE: /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/driver/package
+2026-10-04T07:49:47.4579580Z ##[endgroup]
+2026-10-04T07:49:48.6851690Z (node:6149) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T07:49:48.6852950Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T07:49:48.7047120Z With the provided path, there will be 6 files uploaded
+2026-10-04T07:49:48.7065840Z Artifact name is valid!
+2026-10-04T07:49:48.7066350Z Root directory input is valid!
+2026-10-04T07:49:48.9183880Z Beginning upload of artifact content to blob storage
+2026-10-04T07:49:48.9422050Z (node:6149) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-04T07:49:48.9786740Z Uploaded bytes 3360
+2026-10-04T07:49:48.9972770Z Finished uploading artifact content to blob storage!
+2026-10-04T07:49:48.9975780Z SHA256 digest of uploaded artifact zip is 4dac7ada7468eadc27801eb2d145480e021e9830f511771b4261cff1d4660b24
+2026-10-04T07:49:48.9977470Z Finalizing artifact upload
+2026-10-04T07:49:49.2249000Z Artifact project16-macos-latest-chromium-standalone.zip successfully finalized. Artifact ID 11297034626
+2026-10-04T07:49:49.2250130Z Artifact project16-macos-latest-chromium-standalone has been successfully uploaded! Final size is 3360 bytes. Artifact ID is 11297034626
+2026-10-04T07:49:49.2251340Z Artifact download URL: https://github.com/wieslawsoltes/SharpForge/actions/runs/37186932517/artifacts/11297034626
+2026-10-04T07:49:49.2343860Z Post job cleanup.
+2026-10-04T07:49:49.3739910Z Post job cleanup.
+2026-10-04T07:49:49.5406080Z (node:6366) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T07:49:49.5408170Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T07:49:49.5619380Z Post job cleanup.
+2026-10-04T07:49:49.6868490Z [command]/opt/homebrew/bin/git version
+2026-10-04T07:49:49.7137770Z git version 2.55.0
+2026-10-04T07:49:49.7167790Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/ff96e2e5-304d-4491-9af3-e2acc42f6bf9/.gitconfig'
+2026-10-04T07:49:49.7182490Z Temporarily overriding HOME='/Users/runner/work/_temp/ff96e2e5-304d-4491-9af3-e2acc42f6bf9' before making global git config changes
+2026-10-04T07:49:49.7183400Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T07:49:49.7188830Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/SharpForge/SharpForge
+2026-10-04T07:49:49.7356770Z Removing SSH command configuration
+2026-10-04T07:49:49.7370600Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T07:49:49.7462470Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-04T07:49:49.8412030Z Removing HTTP extra header
+2026-10-04T07:49:49.8416900Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T07:49:49.8482890Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-04T07:49:49.9329080Z Removing includeIf entries pointing to credentials config files
+2026-10-04T07:49:49.9338360Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T07:49:49.9399840Z includeif.gitdir:/Users/runner/work/SharpForge/SharpForge/.git.path
+2026-10-04T07:49:49.9402160Z includeif.gitdir:/Users/runner/work/SharpForge/SharpForge/.git/worktrees/*.path
+2026-10-04T07:49:49.9403620Z includeif.gitdir:/github/workspace/.git.path
+2026-10-04T07:49:49.9404360Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-04T07:49:49.9406570Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/SharpForge/SharpForge/.git.path
+2026-10-04T07:49:49.9483420Z /Users/runner/work/_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:49.9788020Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/SharpForge/SharpForge/.git.path \/Users\/runner\/work\/_temp\/git\-credentials\-1384c763\-e54d\-450b\-bde3\-c4f3e0c87d44\.config
+2026-10-04T07:49:49.9981600Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/SharpForge/SharpForge/.git/worktrees/*.path
+2026-10-04T07:49:50.0035440Z /Users/runner/work/_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:50.0055450Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/SharpForge/SharpForge/.git/worktrees/*.path \/Users\/runner\/work\/_temp\/git\-credentials\-1384c763\-e54d\-450b\-bde3\-c4f3e0c87d44\.config
+2026-10-04T07:49:50.0056980Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-04T07:49:50.0057850Z /github/runner_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:50.0059370Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-1384c763\-e54d\-450b\-bde3\-c4f3e0c87d44\.config
+2026-10-04T07:49:50.0060940Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-04T07:49:50.0153310Z /github/runner_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config
+2026-10-04T07:49:50.0171530Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-1384c763\-e54d\-450b\-bde3\-c4f3e0c87d44\.config
+2026-10-04T07:49:50.0277400Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-04T07:49:50.1293650Z Removing credentials config '/Users/runner/work/_temp/git-credentials-1384c763-e54d-450b-bde3-c4f3e0c87d44.config'
+2026-10-04T07:49:50.1426630Z Cleaning up orphan processes
+2026-10-04T07:49:51.4758080Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

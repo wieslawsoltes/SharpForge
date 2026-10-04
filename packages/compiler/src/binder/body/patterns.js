@@ -9,6 +9,25 @@ import { ConversionKind } from '../../conversions/classify.js';
 import { typeTestOutcome } from '../../conversions/reference.js';
 import { isPointerType } from '../../conversions/pointer.js';
 import { containsTypeParameter } from '../../symbols/substitution.js';
+import { stripNullable } from '../../conversions/nullable.js';
+
+/**
+ * The type the input is known to have where a pattern has matched, for the pattern after `and`: in
+ * `o is int and > 0 and var n` the relational pattern compares an `int`, and `n` is an `int`.
+ */
+function narrowedTypeOf(pattern, inputType) {
+  switch (pattern.kind) {
+    case 'TypePattern':
+    case 'DeclarationPattern':
+      return pattern.testedType ?? inputType;
+    case 'RecursivePattern':
+      return pattern.testedType ?? pattern.inputType ?? inputType;
+    case 'AndPattern':
+      return narrowedTypeOf(pattern.right, narrowedTypeOf(pattern.left, inputType));
+    default:
+      return inputType;
+  }
+}
 
 const unknown = ErrorTypeSymbol.unknown;
 
@@ -66,9 +85,10 @@ export const PatternBinding = Base =>
               return { kind: 'ConstantPattern', syntax, value: e, isSpanText: true };
             }
             const c = this.conversions.classifyFromExpression(e, inputType);
-            if (c.exists && c.isImplicit) return { kind: 'ConstantPattern', syntax, value: this.applyConversion(e, inputType, c) };
-            // A value of a type parameter that is not known to be a value type can be tested for null.
-            if (e.literal === 'null' && inputType.typeKind === TypeKind.TypeParameter && !inputType.isValueType) {
+            if (c.exists && c.isImplicit) return { kind: 'ConstantPattern', syntax, value: this.constantPatternValue(e, inputType, c) };
+            // A value of a type parameter can be tested for null (unless it is known to be a value type) and, since
+            // C# 7.1, for a constant of any type: `value is 5` is false for a T that is not an int.
+            if (inputType.typeKind === TypeKind.TypeParameter && (e.literal === 'null' ? !inputType.isValueType : this.version.number >= 7.1)) {
               return { kind: 'ConstantPattern', syntax, value: e };
             }
             const explicit = e.type ? this.conversions.classifyExplicit(inputType, e.type) : null;
@@ -99,8 +119,9 @@ export const PatternBinding = Base =>
         case 'SlicePattern':
           return this.straySlicePattern(syntax);
         case 'VarPattern': {
+          // `var (a, b)` deconstructs the value: of a nullable tuple or struct, the value it has.
           if (syntax.designation?.kind === 'ParenthesizedVariableDesignation')
-            return this.varPositionalPattern(syntax.designation, inputType, syntax);
+            return this.varPositionalPattern(syntax.designation, inputType ? stripNullable(inputType) : inputType, syntax);
           const p = { kind: 'VarPattern', syntax };
           this.designation(syntax.designation, inputType ?? unknown, p);
           return p;
@@ -112,21 +133,27 @@ export const PatternBinding = Base =>
             kind: 'RelationalPattern',
             syntax,
             operator: syntax.operatorToken.text,
-            value: inputType && !e.hasErrors ? this.convertQuiet(e, inputType) : e,
+            // A nullable input is compared by its value (`x is > 5` is false for null), so the constant has that type.
+            value: inputType && !e.hasErrors ? this.convertQuiet(e, stripNullable(inputType)) : e,
           };
         }
         case 'NotPattern':
           return { kind: 'NotPattern', syntax, pattern: this.pattern(syntax.pattern, inputType, input) };
         case 'OrPattern':
-        case 'AndPattern':
           return {
             kind: syntax.kind,
             syntax,
             left: this.pattern(syntax.left, inputType, input),
             right: this.pattern(syntax.right, inputType, input),
           };
+        case 'AndPattern': {
+          const left = this.pattern(syntax.left, inputType, input),
+            narrowed = left.hasErrors || !inputType ? inputType : narrowedTypeOf(left, inputType);
+          return { kind: syntax.kind, syntax, left, right: this.pattern(syntax.right, narrowed, input), narrowedType: narrowed };
+        }
         case 'RecursivePattern': {
-          const type = syntax.type ? this.bindType(syntax.type).type : inputType,
+          // Without a type the pattern matches a value that is not null: of a nullable value type, the value it has.
+          const type = syntax.type ? this.bindType(syntax.type).type : inputType ? stripNullable(inputType) : inputType,
             p = syntax.type ? this.typePattern(syntax, type, inputType) : { kind: 'RecursivePattern', syntax },
             properties = [];
           for (const sub of syntax.propertyPatternClause?.subpatterns ?? []) properties.push(this.propertySubpattern(sub, type));
@@ -150,6 +177,18 @@ export const PatternBinding = Base =>
         };
       walk(syntax);
       return out;
+    }
+    /**
+     * The constant as the pattern compares it: converted to the input type - except where that conversion only
+     * changes the static type (`o is 5`, `o is Color.Red`, `o is "text"` for an `object`): there the input is
+     * tested for the constant's own type and compared as that.
+     */
+    constantPatternValue(e, inputType, conversion) {
+      const keepsType = e.literal !== 'null' && (conversion.isBoxing || conversion.isReference);
+      if (keepsType) return e;
+      // A nullable input is compared by its value: the constant keeps being a constant of the underlying type.
+      const underlying = e.literal !== 'null' && inputType.isNullableValueType ? stripNullable(inputType) : null;
+      return underlying ? this.convertQuiet(e, underlying) : this.applyConversion(e, inputType, conversion);
     }
     typePattern(syntax, type, inputType) {
       if (type.isErrorType() || !inputType || inputType.isErrorType()) return { kind: 'TypePattern', syntax, testedType: type };

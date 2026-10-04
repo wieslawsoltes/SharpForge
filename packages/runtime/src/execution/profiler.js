@@ -38,6 +38,7 @@ class ExecutionProfiler {
     this.allocationSites = [];
     this.pending = null;
     this.instructions = 0;
+    this.suspensions = 0;
     this.allocations = 0;
     this.allocatedBytes = 0;
     this.overflow = {methods: 0, stackInstructions: 0, stackDepthInstructions: 0, allocationBytes: 0, allocationCount: 0};
@@ -76,6 +77,11 @@ class ExecutionProfiler {
   enter(frame) {
     this.closeSample();
     if (!frame.filterSearch) this.methods[this.method(frame)].calls++;
+  }
+
+  /** A committed suspension is counted once, independently of event-log retention. */
+  suspend() {
+    this.suspensions++;
   }
 
   sample(frame, method) {
@@ -203,6 +209,7 @@ class ExecutionProfiler {
     this.flushSample();
     this.durationClock?.reportFailure();
     return {format: 'SharpForge.InstructionProfile/1', clock: 'instructions', instructions: this.instructions,
+      suspensions: this.suspensions,
       allocations: this.allocations, allocatedBytes: this.allocatedBytes, sampleBudget: this.sampleBudget,
       overflow: {...this.overflow}, methods: this.methods.map(method => ({...method})),
       samples: this.samples.map(sample => ({...sample, stack: [...sample.stack]})),
@@ -230,7 +237,7 @@ export function executionProfiler(vm) {
   return profilers.get(vm) ?? null;
 }
 
-/** Read bounded instruction/call/allocation counters, or null when profiling was not enabled at construction. */
+/** Read bounded instruction/call/allocation/suspension counters, or null when profiling was not enabled at construction. */
 export function instructionProfile(vm) {
   return executionProfiler(vm)?.read() ?? null;
 }

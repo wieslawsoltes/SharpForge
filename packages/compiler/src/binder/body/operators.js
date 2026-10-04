@@ -115,9 +115,24 @@ export const OperatorBinding = Base =>
       if (operands.some(e => e.hasErrors)) return this.bad(syntax);
       return this.node('Binary', syntax, type, { operator, left: operands[0], right: operands[1], family: 'delegate' });
     }
+    /**
+     * `handler == Method` and `Method != handler`: a method group compared with a delegate converts to the delegate
+     * type, and the two delegates are compared. @returns {[object, object]} the operands, converted where that applies
+     */
+    delegateComparisonOperands(operator, left, right) {
+      if (operator !== '==' && operator !== '!=') return [left, right];
+      const group = [left, right].find(e => e.kind === 'MethodGroup'),
+        other = group === left ? right : left;
+      if (!group || other.type?.typeKind !== TypeKind.Delegate) return [left, right];
+      if (!this.conversions.classifyFromExpression(group, other.type).isImplicit) return [left, right];
+      const converted = this.convert(group, other.type, group.syntax);
+      return group === left ? [converted, right] : [left, converted];
+    }
     binaryOperation(syntax, operator, left, right) {
       const delegate = this.delegateOperation(syntax, operator, left, right);
       if (delegate) return delegate;
+      [left, right] = this.delegateComparisonOperands(operator, left, right);
+      if (left.hasErrors || right.hasErrors) return this.bad(syntax);
       const tuple = this.tupleEquality(syntax, operator, left, right);
       if (tuple) return tuple;
       for (const e of [left, right])
@@ -216,6 +231,12 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       const writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', this.variableContext);
+      // A ref iteration variable of a foreach denotes the current element for the whole iteration (CS1656).
+      if (isRefAssign && left.kind === 'Local' && left.local.isForEach) {
+        this.report(syntax.left, DiagnosticId.CS1656, [left.local.name, left.local.readOnlyReason]);
+        this.value(syntax.right);
+        return this.bad(syntax);
+      }
       if (writable && !(isRefAssign && left.kind === 'Local' && left.local.refKind !== RefKind.None)) {
         // CS1612 points at the struct-valued expression whose member cannot be modified.
         const target = writable.code === DiagnosticId.CS1612 && left.receiver?.syntax ? left.receiver.syntax : syntax.left;

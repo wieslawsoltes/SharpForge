@@ -5,7 +5,49 @@ order. `returnParameter` represents position −1. `module.methodParameters(toke
 returns the same frozen `{parameters, returnParameter}` record. Names and raw
 flags come from Param rows; `isIn`, `isOut` and `isOptional` expose their flag bits.
 Each ParameterDesc retains its `method`, `module` and immutable `signatureType`
-AST. No type references or executable bodies are loaded.
+AST. Its `member` is the method, or the owning property for a
+[property index-parameter projection](PROPERTY-PARAMETERS.md). The `method`
+always remains the defining accessor. No type references or executable bodies
+are loaded. Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) expose
+required and optional outer modifiers, including return parameters.
+
+`parameter.toString()` returns a cached Reflection-style type name and metadata
+name. It follows [ParameterInfo.ToString](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Reflection/ParameterInfo.cs#L89):
+by-reference types retain `&` (for example `Int32& value`), and a missing name
+adds no separator. A present empty name preserves the trailing space. Return
+parameters, constructor arguments and property index-parameter projections use
+the same behavior. Rendering does not inspect constants, activate attributes,
+resolve assemblies or read method bodies.
+
+The existing bounded [method type formatter](METHOD-DISPLAY.md) supplies primitive,
+generic, nested and array naming, modifier suppression, depth/node/name limits
+and explicit unsupported-type diagnostics. The final type-plus-name result has
+a 16,384-character limit checked before concatenation. Successful strings are
+cached in existing descriptor state only after a display query; ordinary parameter
+metadata/constant reads add no display work or eager cache storage. Metadata remains usable
+through cooperative unloading. This synchronous operation adds no cancellation
+contract. Default-value evaluation and generic instantiation remain separate.
+
+SDK 10.0.201/CoreCLR 10.0.5 captured all 16 ParameterInfo displays, covering
+arguments, missing/empty return names, constructor arguments, generic/nested types,
+ref/in/out and property index parameters. All 24 affected tests pass with zero
+skips, including mandatory source/image provenance. Syntax/static checks pass
+(3,484/3,480 modules), manifests pass, and structure reports 271 existing findings,
+none in changed files. Local jobs ran serially under one limiter, concurrency 1
+and a 1 GiB heap cap.
+
+The new 16-display fixture measured cold median 100.791 µs / p95 239.625 µs and
+cached median 2.7708 ns / p95 13.2875 ns. The exact-parent control (`e905566c` →
+`e3a4617d`) retained the prior three-method parameter/constant workload: cold
+median 42.792 → 42.125 µs, p95 157.583 → 101.250 µs; cached median
+8.9666 → 8.6625 ns, p95 41.2333 → 23.4416 ns. No median or p95 regression
+exceeded the budget. [All 600 raw samples, p99, commands and exact sources](benchmarks/parameter-display-node24.json)
+and the [control harness](benchmarks/parameter-display-control.mjs.txt) are retained.
+Each control imports its own CLR directly; only byte-identical CIL/archive
+dependencies are shared. Runs used a shared Apple M3 Pro/darwin-arm64 host and
+Node 24.21.0. There is no prior equivalent parameter-display baseline or causal,
+noise, significance or speed claim; allocations and retained strings were not
+measured.
 
 Param rows are optional. Missing rows receive canonical positional descriptors
 with name `null`, flags 0 and metadata token 0. A zero token is this metadata API's

@@ -11,8 +11,9 @@ import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { baseTypeChain } from '../symbols/substitution.js';
 import { isNullableType, stripNullable } from './nullable.js';
 
+/** The conversion operators a type declares, looked up by name (member lists of framework types are long). */
 const operatorsOf = (type, names) =>
-  type.getMembers ? type.getMembers().filter(m => m.kind === SymbolKind.Method && names.includes(m.name) && m.parameters.length === 1) : [];
+  type.getMembers ? names.flatMap(name => type.getMembers(name)).filter(m => m.kind === SymbolKind.Method && m.parameters.length === 1) : [];
 const declaringTypes = (type, core, withBases) => {
   if (!type || type.typeKind === TypeKind.Interface) return [];
   if (type.typeKind === TypeKind.TypeParameter) return withBases ? baseTypeChain(type, core).slice(1) : [];

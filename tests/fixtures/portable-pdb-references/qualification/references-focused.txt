@@ -1,0 +1,18 @@
+✔ all declared CDI parent tables retain opaque bytes and permit empty import payloads (6.836167ms)
+✔ MethodDebugInformation documents are checked even when the sequence-point blob is empty (1.318417ms)
+✔ opaque CDI parents must belong to declared external or local rows, including zero and invalid coded tags (4.236667ms)
+✔ scope, import and state-machine row references reject out-of-range targets and retain legal list sentinels (2.349333ms)
+✔ all debug blob, string and GUID handles fail at the public SymbolError boundary (1.587833ms)
+✔ nested import blob handles and type/assembly references retain semantic validation (0.760625ms)
+✔ constant signatures reject truncated scalars and out-of-range type/modifier references as SymbolError (0.591208ms)
+✔ sequence-point local signatures and nested document blobs are validated without PE binding (0.7805ms)
+✔ PDB entry points are optional bounded MethodDef tokens (0.730125ms)
+✔ retained native Roslyn Debug and Release corpora remain readable without rebuilding fixtures (7.3125ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 182.076959

@@ -52,6 +52,18 @@ export const ConversionBinding = Base =>
       this.reportConversionFailure(e, type, node, c);
       return this.bad(node, { operand: e });
     }
+    /**
+     * The operand of a user-defined conversion whose parameter is a tuple (`implicit operator Vec2((double X, double
+     * Y) t)` for `Vec2 v = (1.5, -2)`): the tuple conversion that precedes the operator is part of the bound tree,
+     * because it works element by element and cannot be done on the finished value like a numeric conversion.
+     */
+    tupleOperandOfUserConversion(e, c, node) {
+      const parameterType = c.method?.parameters?.[0]?.type;
+      if (!parameterType?.isTupleType || (e.type && e.type.equals(parameterType))) return e;
+      if (e.form !== 'tupleLiteral' && !e.type?.isTupleType) return e;
+      const standard = this.conversions.classifyFromExpression(e, parameterType);
+      return standard.exists && !standard.isUserDefined ? this.applyConversion(e, parameterType, standard, node) : e;
+    }
     applyConversion(e, type, c, node = e.syntax, isExplicit = false) {
       if (c.kind === ConversionKind.Identity && e.type && !e.constantValue?.isEnum && e.type.equals(type)) return e;
       if (
@@ -62,15 +74,22 @@ export const ConversionBinding = Base =>
           e.isTargetTypedSwitch)
       )
         return e.materialize(type);
+      if (e.form === 'tupleLiteral') this.finishTupleLiteralElements(e, type, c);
       if (e.form === 'lambda' && c.kind === ConversionKind.AnonymousFunction) {
         e.boundAs = type;
+        // The body is bound for the delegate type here, whoever converts the lambda (an initializer value, an operand
+        // of `?:`, an element of a tuple or a collection); a speculative conversion leaves it to the final one.
+        if (!this.quiet && !e.hasErrors) this.finishLambda(e, type);
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
       }
+      e = this.tupleOperandOfUserConversion(e, c, node);
       const result = this.node('Conversion', node, type, {
         operand: e,
         conversion: c,
         isExplicit,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
+        // A numeric conversion in a checked context traps on overflow; code generation reads the context from the node.
+        ...(this.checked ? { isChecked: true } : {}),
       });
       // A constant string converted to ReadOnlySpan<char> by the C# 14 span conversion has no side effect (CS0219 applies).
       if (c.kind === ConversionKind.ImplicitSpan && e.constantValue) result.isCompileTimeValue = true;

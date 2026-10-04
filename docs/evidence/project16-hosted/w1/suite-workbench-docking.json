@@ -1,0 +1,10 @@
+{
+  "suite": "workbench-docking",
+  "command": [
+    "C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\python.exe",
+    "tests/browser_a19_docking_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 26.562000000000012
+}

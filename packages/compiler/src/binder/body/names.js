@@ -7,19 +7,26 @@ import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../sy
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
-import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
+import { extensionScopes, isValidReceiverConversion, couldTakeReceiver } from '../../overload/extension-methods.js';
+import { findConstruction, memberTypeOf } from '../../symbols/substitution.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter, staticVirtualAccess } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
+import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+/** A member that can be invoked: a method or event, or a field or property of a delegate type or `dynamic`. */
+const isInvocable = member =>
+  ![SymbolKind.Field, SymbolKind.Property].includes(member.kind) || [TypeKind.Delegate, TypeKind.Dynamic].includes(member.type?.typeKind);
 const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly || s.isAnonymousType) return true;
   return false;
 };
+
+const nativeIntegerKeywords = new Set(['nint', 'nuint']);
 
 /** Class mixin: Simple names and member access: locals, parameters, members of enclosing types, types, namespaces, */
 export const NameBinding = Base =>
@@ -87,6 +94,10 @@ export const NameBinding = Base =>
         }
         if (members.length)
           return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
+      }
+      // `nint` and `nuint` are contextual keywords: types wherever nothing else has the name (`nint.Size`).
+      if (!symbol && !arity && nativeIntegerKeywords.has(name)) {
+        return this.node('TypeExpression', syntax, null, { referencedType: this.bindType(syntax).type });
       }
       if (!symbol && !arity) {
         const builtin = this.d.executionBuiltin?.(name);
@@ -235,6 +246,7 @@ export const NameBinding = Base =>
         }
         case SymbolKind.Property: {
           const n = this.node('PropertyAccess', syntax, first.type, { property: first, receiver: r });
+          if (r?.kind === 'Base' && isAbstractBaseAccess(first, r.type)) this.report(syntax, DiagnosticId.CS0205, [first.toDisplayString()]);
           if (virtualAccess?.constrainedTo) n.constrainedTo = virtualAccess.constrainedTo;
           if (first.type?.isErrorType?.()) n.hasErrors = true;
           return n;
@@ -314,6 +326,9 @@ export const NameBinding = Base =>
             this.report(nameSyntax, DiagnosticId.CS0122, [found.inaccessible[0].toDisplayString()]);
             return this.bad(syntax);
           }
+          // A nested type of a constructed type (`Outer<string>.Cache<int>`) is not among the members of the construction.
+          const nested = memberTypeOf(type, name, typeArguments ?? []);
+          if (nested) return this.node('TypeExpression', syntax, null, { referencedType: nested });
           if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
           const extension = this.staticExtensionMember(left, type, name, syntax, typeArguments, options);
           if (extension) return extension;
@@ -366,12 +381,20 @@ export const NameBinding = Base =>
         within: this.c.containingType,
         throughType: left.kind === 'Base' ? this.c.containingType : type,
       });
-      if (type instanceof ArrayTypeSymbol && !found.members.length) {
+      // The length of a single-dimensional array is the array's own operation (`ldlen`), not a call of the
+      // `System.Array.Length` property a referenced core library declares.
+      const isVectorLength = type instanceof ArrayTypeSymbol && type.isSZArray && (name === 'Length' || name === 'LongLength');
+      if (type instanceof ArrayTypeSymbol && (!found.members.length || isVectorLength)) {
         if (name === 'Length' || name === 'Rank') return this.node('ArrayLength', syntax, this.core.int, { array: left, member: name });
         if (name === 'LongLength') return this.node('ArrayLength', syntax, this.core.long, { array: left, member: name });
       }
-      if (found.members.length)
-        return this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
+      if (found.members.length) {
+        // An invoked name ignores the members that cannot be invoked (C# spec 12.5): `list.Count(predicate)` is the
+        // extension method although `List<T>` has a `Count` property.
+        const hidden = options.invoked && !found.members.some(isInvocable),
+          group = hidden ? this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments }) : null;
+        return group ?? this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
+      }
       if (found.inaccessible.length) {
         this.reportInaccessible(found.inaccessible[0], type, nameSyntax);
         return this.bad(syntax);
@@ -395,32 +418,44 @@ export const NameBinding = Base =>
         isSpan = !!(spanElementType(type, 'Span') ?? spanElementType(type, 'ReadOnlySpan'));
       if (isOpen && !(type instanceof ArrayTypeSymbol) && !isSpan) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
-      const scopes = extensionScopes(
-        this.typeScope.namespaceChain.map(l => ({
-          namespace: l.namespace,
-          usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
-        })),
-        name,
-      );
-      const takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
+      const scopes = this.extensionScopesNamed(name),
+        takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
       // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
       if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
-      if (scopes.length)
-        return this.node('MethodGroup', syntax, null, {
-          methods: [],
-          extensionScopes: scopes,
-          receiver: left,
-          receiverType: type,
-          name,
-          nameNode: nameSyntax,
-          form: 'methodGroup',
-          typeArguments,
-          isExtensionOnly: true,
-        });
+      // A name that is not invoked is a method group only when an extension method could take the receiver;
+      // an invoked one always is, and the call reports why no candidate applies (CS0411, CS1929).
+      const construction = (from, definition) => findConstruction(from, definition, this.core),
+        fits = method => method.name === name && couldTakeReceiver(this.conversions, left, method.parameters[0].type, construction),
+        isCandidate = options.invoked || isOpen || isSpan || scopes.some(scope => scope.methods.some(fits)),
+        group = isCandidate ? this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes }) : null;
+      if (group) return group;
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, DiagnosticId.CS1061);
       this.report(nameSyntax, DiagnosticId.CS1061, [this.display(type), name]);
       return this.bad(syntax);
+    }
+    /** The extension methods named `name` in scope, innermost namespace first. */
+    extensionScopesNamed(name) {
+      const chain = this.typeScope.namespaceChain.map(level => ({
+        namespace: level.namespace,
+        usings: level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null,
+      }));
+      return extensionScopes(chain, name);
+    }
+    /** The method group of the extension methods named `name` on the receiver `left`, or null when none is in scope. */
+    extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes = this.extensionScopesNamed(name) }) {
+      if (!scopes.length) return null;
+      return this.node('MethodGroup', syntax, null, {
+        methods: [],
+        extensionScopes: scopes,
+        receiver: left,
+        receiverType: type,
+        name,
+        nameNode: nameSyntax,
+        form: 'methodGroup',
+        typeArguments,
+        isExtensionOnly: true,
+      });
     }
     /** Seams of binder/extension-members.js: a member the type lacks, found among the extension members in scope (or null). */
     instanceExtensionMember() {

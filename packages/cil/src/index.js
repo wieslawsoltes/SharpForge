@@ -24,7 +24,26 @@ export { readAssemblyModules } from './pe/module-reader.js';
 export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
 export { buildExceptionRegionTree, exceptionRegionDiagnosticCatalog } from './eh-regions.js';
 export { validateExceptionInstructionPlacement, exceptionPlacementDiagnosticCatalog } from './eh-control-flow.js';
+export { validateExceptionBranches, exceptionBranchDiagnosticCatalog } from './eh-branches.js';
+export { validateExceptionControlFlow, exceptionLeaveDiagnosticCatalog } from './eh-leave.js';
 export { VerificationKind, verificationType, verificationDiagnosticCatalog } from './verify/types.js';
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
+export { verifyCilMethodTypes } from './verify/typed-flow.js';
+export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/prefix-tail.js';
 
 export {verifiedStackBound} from './verified-stack.js';
+export {parseFunctionPointerType} from './function-pointer-signature.js';
+export {VirtualPointerProfile} from './virtual-pointer-profile.js';
+export {InstanceCalliTargets} from './instance-calli-targets.js';
+export {instancePointerLocalSignature} from './instance-pointer-local.js';
+export {readExecutionSignatureAst, signatureSlotType} from './metadata/execution-signature.js';
+export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
+export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
+export {isByrefStructForwarder} from './generic-struct-forwarder.js';
+export {isSizeOfOnlyMethod} from './generic-sizeof-method.js';
+export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
+export {ConstrainedObjectProfile} from './constrained-object-profile.js';
+export {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
+export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';
+
+export { AssemblySymbolIndex } from './browser/index.js';

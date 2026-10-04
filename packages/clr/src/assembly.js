@@ -6,6 +6,7 @@ import { MetadataMemberDefinitions } from './type-system/metadata-member-definit
 import { MetadataConstants } from './type-system/metadata-constants.js';
 import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
+import { MetadataPropertyParameters } from './type-system/metadata-property-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
@@ -47,6 +48,7 @@ export class RuntimeModule {
   #accessors;
   #constants;
   #parameterDefinitions;
+  #propertyParameters;
   #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
@@ -90,6 +92,39 @@ export class RuntimeModule {
       if (end === heap.length) throw loadError(LoadErrorCode.InvalidImage, 'Unterminated metadata string');
     }
     return this.#pe.metadata.string(index);
+  }
+
+  /** Bounded metadata spelling of a TypeDef/TypeRef; no assembly binding or TypeSpec expansion. */
+  typeName(token) {
+    this.#requireTypeNameToken(token);
+    const metadata = this.#pe.metadata;
+    if ((metadata.counts[2] ?? 0) + (metadata.counts[41] ?? 0) > 100000) {
+      throw loadError(LoadErrorCode.LimitExceeded, 'Type name metadata row limit exceeded');
+    }
+    let characters = 0;
+    const adapter = { ...metadata, string: index => {
+      const name = this.string(index, { maxBytes: 16384 });
+      if (name.length > 4096 || (characters += name.length) > 16384) {
+        throw loadError(LoadErrorCode.LimitExceeded, 'Type name expansion limit exceeded');
+      }
+      return name;
+    } };
+    try {
+      const name = metadata.typeName.call(adapter, token);
+      if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Type name length exceeded');
+      return name;
+    } catch (error) {
+      if (error.code?.startsWith('SFCLR')) throw error;
+      throw loadError(LoadErrorCode.InvalidImage, `Invalid type name: ${error.message}`);
+    }
+  }
+
+  #requireTypeNameToken(token) {
+    this.#assembly.ensureUsable();
+    if (!Number.isInteger(token) || token < 0 || token > 0xffffffff ||
+        ![1, 2].includes(token >>> 24) || !(token & 0xffffff)) {
+      throw loadError(LoadErrorCode.InvalidImage, 'Type name requires a TypeDef or TypeRef token');
+    }
   }
 
   /** Return an owned copy, optionally rejecting maxBytes before materialization (SFCLR006/007 for invalid/exceeded limits). */
@@ -180,6 +215,13 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#accessors ??= new MetadataAccessors(this);
     return this.#accessors.get(token);
+  }
+
+  /** Frozen index parameters projected from getter or setter Param metadata, with the Property as owning member. */
+  propertyParameters(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyParameters ??= new MetadataPropertyParameters(this);
+    return this.#propertyParameters.get(token);
   }
 
   /** Canonical Event metadata identity; the event type is an unresolved module-relative token. */

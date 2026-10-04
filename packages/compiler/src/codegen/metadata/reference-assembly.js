@@ -15,7 +15,11 @@ import { parseCompilerInput } from '../../parse-input.js';
 import { SemanticAnalysis } from '../../semantic-analysis.js';
 import { adapterPseudo } from '../../semantic-integration.js';
 import { SymbolMetadataWriter } from './symbol-metadata.js';
+import { CustomAttributeWriter } from './custom-attributes.js';
 import { MetadataEmitError } from './type-tokens.js';
+import { referenceIdentitiesOf } from './reference-identities.js';
+
+import { RecordPlan } from './record-plan.js';
 
 const CLI_HEADER_SIZE = 72;
 /** `ldnull; throw`. */
@@ -27,12 +31,18 @@ const THROW_NULL = Uint8Array.of(0x14, 0x7a);
  * @returns {{bytes: Uint8Array, writer: SymbolMetadataWriter}} the image and the writer (definition tokens by symbol)
  */
 export function emitReferenceAssembly(analysis, options = {}) {
-  const builder = new MetadataBuilder(options.name ?? 'Application', { framework: options.framework ?? 'net8' });
+  const builder = new MetadataBuilder(options.name ?? 'Application', {
+    framework: options.framework ?? 'net8',
+    assemblyReferences: referenceIdentitiesOf(analysis),
+  });
   const section = new Writer().zero(CLI_HEADER_SIZE);
   // Every body is the same two instructions, so all methods share one body, as Roslyn shares identical small bodies.
   const bodyRva = TEXT_RVA + section.length;
   section.bytes(writeMethodBody(THROW_NULL, 0, 1, []));
-  const writer = new SymbolMetadataWriter(builder, analysis, { bodyRva }).write();
+  const records = new RecordPlan(analysis.core),
+    synthesized = { types: [], extend: (type, plan) => records.extend(type, plan) },
+    writer = new SymbolMetadataWriter(builder, analysis, { bodyRva, synthesized }).write();
+  new CustomAttributeWriter(writer, analysis).write();
   section.pad();
   const metadataOffset = section.length,
     metadata = builder.finish(null, section.finish());

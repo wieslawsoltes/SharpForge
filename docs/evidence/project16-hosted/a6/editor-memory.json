@@ -1,0 +1,685 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-editor-memory",
+  "generatedAt": "2026-10-04T06:49:18.902Z",
+  "environment": {
+    "node": "v24.21.0",
+    "v8": "13.6.233.17-node.53",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "logicalCpus": 4,
+    "commit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+  },
+  "methodology": "Measured signed GC-retained heap/ArrayBuffer deltas. Sources are ASCII. Undo attribution clears history while preserving current text.",
+  "rows": [
+    {
+      "backend": "node-retained",
+      "sizeBytes": 1024,
+      "gc": "two explicit V8 major collection requests per stage",
+      "source": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": -13224,
+          "arrayBufferBytes": 0,
+          "externalBytes": 40,
+          "rssBytes": 0
+        },
+        "retainedBytes": -13224,
+        "bytesPerSourceByte": -12.9140625,
+        "bytesPerMiB": -13541376
+      },
+      "buffer": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 12480,
+          "arrayBufferBytes": 0,
+          "externalBytes": 40,
+          "rssBytes": 0
+        },
+        "retainedBytes": 12480,
+        "bytesPerSourceByte": 12.1875,
+        "bytesPerMiB": 12779520,
+        "indexOnlyDelta": {
+          "heapUsedBytes": 25704,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "statistics": {
+          "length": 2314,
+          "pieces": 196,
+          "height": 10,
+          "textMaterialized": true
+        }
+      },
+      "model": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 13120,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 13120,
+        "bytesPerSourceByte": 12.8125,
+        "bytesPerMiB": 13434880
+      },
+      "undo": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": -248336,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 565248
+        },
+        "retainedBytes": -248336,
+        "bytesPerSourceByte": -242.515625,
+        "bytesPerMiB": -254296064,
+        "steps": 100,
+        "bytesPerStep": -2483.36,
+        "statistics": {
+          "groups": 100,
+          "operations": 100,
+          "retainedCharacters": 1290
+        }
+      },
+      "tokens": {
+        "status": "measured",
+        "backend": "compiler-token-index",
+        "delta": {
+          "heapUsedBytes": 235704,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 131072
+        },
+        "retainedBytes": 235704,
+        "bytesPerSourceByte": 230.1796875,
+        "bytesPerMiB": 241360896,
+        "statistics": {
+          "tokenCount": 111,
+          "visibleRuns": 210,
+          "lexicalCharacterLimit": 2000000,
+          "syntaxEnabled": true,
+          "metrics": {
+            "relexedLines": 13,
+            "relexedTokens": 111,
+            "resynced": false
+          }
+        }
+      },
+      "view": {
+        "status": "measured",
+        "backend": "VisualLineMap",
+        "delta": {
+          "heapUsedBytes": 7440,
+          "arrayBufferBytes": 112,
+          "externalBytes": 112,
+          "rssBytes": 0
+        },
+        "retainedBytes": 7552,
+        "bytesPerSourceByte": 7.375,
+        "bytesPerMiB": 7733248,
+        "logicalLines": 13,
+        "indexedBytes": 164,
+        "scope": "Logical-to-visual row index; DOM and native renderer excluded"
+      },
+      "browserDom": {
+        "status": "unavailable",
+        "reason": "Node has no DOM; browser DOM retained memory requires browser heap instrumentation"
+      },
+      "allocations": {
+        "status": "not-measured",
+        "reason": "Retained GC deltas do not measure total allocations"
+      },
+      "budgets": {
+        "limits": {
+          "fixedBufferBytes": 65536,
+          "bufferBytesPerSourceByte": 6,
+          "modelBytes": 65536,
+          "undoBytesPerStep": 16384,
+          "fixedTokenBytes": 1048576,
+          "tokenBytesPerLexedCharacter": 256,
+          "fixedViewBytes": 65536,
+          "viewBytesPerLogicalLine": 24
+        },
+        "rows": [
+          {
+            "component": "buffer",
+            "retainedBytes": 12480,
+            "limitBytes": 71680,
+            "passed": true
+          },
+          {
+            "component": "model",
+            "retainedBytes": 13120,
+            "limitBytes": 65536,
+            "passed": true
+          },
+          {
+            "component": "undo",
+            "retainedBytes": -248336,
+            "limitBytes": 1638400,
+            "passed": true
+          },
+          {
+            "component": "view",
+            "retainedBytes": 7552,
+            "limitBytes": 65848,
+            "passed": true
+          },
+          {
+            "component": "tokens",
+            "retainedBytes": 235704,
+            "limitBytes": 1310720,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    },
+    {
+      "backend": "node-retained",
+      "sizeBytes": 1048576,
+      "gc": "two explicit V8 major collection requests per stage",
+      "source": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 1049456,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 1179648
+        },
+        "retainedBytes": 1049456,
+        "bytesPerSourceByte": 1.0008392333984375,
+        "bytesPerMiB": 1049456
+      },
+      "buffer": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 1048336,
+          "arrayBufferBytes": 104856,
+          "externalBytes": 104856,
+          "rssBytes": 1064960
+        },
+        "retainedBytes": 1153192,
+        "bytesPerSourceByte": 1.0997695922851562,
+        "bytesPerMiB": 1153192,
+        "indexOnlyDelta": {
+          "heapUsedBytes": -1120,
+          "arrayBufferBytes": 104856,
+          "externalBytes": 104856,
+          "rssBytes": -114688
+        },
+        "statistics": {
+          "length": 1049866,
+          "pieces": 200,
+          "height": 9,
+          "textMaterialized": true
+        }
+      },
+      "model": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 5608,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 131072
+        },
+        "retainedBytes": 5608,
+        "bytesPerSourceByte": 0.00534820556640625,
+        "bytesPerMiB": 5608
+      },
+      "undo": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 74488,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 74488,
+        "bytesPerSourceByte": 0.07103729248046875,
+        "bytesPerMiB": 74488,
+        "steps": 100,
+        "bytesPerStep": 744.88,
+        "statistics": {
+          "groups": 100,
+          "operations": 100,
+          "retainedCharacters": 1290
+        }
+      },
+      "tokens": {
+        "status": "measured",
+        "backend": "compiler-token-index",
+        "delta": {
+          "heapUsedBytes": 26231896,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 63565824
+        },
+        "retainedBytes": 26231896,
+        "bytesPerSourceByte": 25.016685485839844,
+        "bytesPerMiB": 26231896,
+        "statistics": {
+          "tokenCount": 65556,
+          "visibleRuns": 569,
+          "lexicalCharacterLimit": 2000000,
+          "syntaxEnabled": true,
+          "metrics": {
+            "relexedLines": 13108,
+            "relexedTokens": 65556,
+            "resynced": false
+          }
+        }
+      },
+      "view": {
+        "status": "measured",
+        "backend": "VisualLineMap",
+        "delta": {
+          "heapUsedBytes": 6992,
+          "arrayBufferBytes": 157304,
+          "externalBytes": 157304,
+          "rssBytes": 0
+        },
+        "retainedBytes": 164296,
+        "bytesPerSourceByte": 0.15668487548828125,
+        "bytesPerMiB": 164296,
+        "logicalLines": 13108,
+        "indexedBytes": 157304,
+        "scope": "Logical-to-visual row index; DOM and native renderer excluded"
+      },
+      "browserDom": {
+        "status": "unavailable",
+        "reason": "Node has no DOM; browser DOM retained memory requires browser heap instrumentation"
+      },
+      "allocations": {
+        "status": "not-measured",
+        "reason": "Retained GC deltas do not measure total allocations"
+      },
+      "budgets": {
+        "limits": {
+          "fixedBufferBytes": 65536,
+          "bufferBytesPerSourceByte": 6,
+          "modelBytes": 65536,
+          "undoBytesPerStep": 16384,
+          "fixedTokenBytes": 1048576,
+          "tokenBytesPerLexedCharacter": 256,
+          "fixedViewBytes": 65536,
+          "viewBytesPerLogicalLine": 24
+        },
+        "rows": [
+          {
+            "component": "buffer",
+            "retainedBytes": 1153192,
+            "limitBytes": 6356992,
+            "passed": true
+          },
+          {
+            "component": "model",
+            "retainedBytes": 5608,
+            "limitBytes": 65536,
+            "passed": true
+          },
+          {
+            "component": "undo",
+            "retainedBytes": 74488,
+            "limitBytes": 1638400,
+            "passed": true
+          },
+          {
+            "component": "view",
+            "retainedBytes": 164296,
+            "limitBytes": 380128,
+            "passed": true
+          },
+          {
+            "component": "tokens",
+            "retainedBytes": 26231896,
+            "limitBytes": 269484032,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    },
+    {
+      "backend": "node-retained",
+      "sizeBytes": 10485760,
+      "gc": "two explicit V8 major collection requests per stage",
+      "source": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 10486576,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 11014144
+        },
+        "retainedBytes": 10486576,
+        "bytesPerSourceByte": 1.0000778198242188,
+        "bytesPerMiB": 1048657.6
+      },
+      "buffer": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 10491736,
+          "arrayBufferBytes": 1048576,
+          "externalBytes": 1048576,
+          "rssBytes": 12255232
+        },
+        "retainedBytes": 11540312,
+        "bytesPerSourceByte": 1.1005699157714843,
+        "bytesPerMiB": 1154031.2,
+        "indexOnlyDelta": {
+          "heapUsedBytes": 5160,
+          "arrayBufferBytes": 1048576,
+          "externalBytes": 1048576,
+          "rssBytes": 1241088
+        },
+        "statistics": {
+          "length": 10487050,
+          "pieces": 200,
+          "height": 9,
+          "textMaterialized": false
+        }
+      },
+      "model": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 5616,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 5616,
+        "bytesPerSourceByte": 0.00053558349609375,
+        "bytesPerMiB": 561.6
+      },
+      "undo": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 74840,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 74840,
+        "bytesPerSourceByte": 0.007137298583984375,
+        "bytesPerMiB": 7484,
+        "steps": 100,
+        "bytesPerStep": 748.4,
+        "statistics": {
+          "groups": 100,
+          "operations": 100,
+          "retainedCharacters": 1290
+        }
+      },
+      "tokens": {
+        "status": "measured",
+        "backend": "plain-text-large-file",
+        "delta": {
+          "heapUsedBytes": 3544,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 3544,
+        "bytesPerSourceByte": 0.000337982177734375,
+        "bytesPerMiB": 354.4,
+        "statistics": {
+          "tokenCount": 0,
+          "visibleRuns": 1,
+          "lexicalCharacterLimit": 2000000,
+          "syntaxEnabled": false,
+          "metrics": {
+            "relexedLines": 0,
+            "relexedTokens": 0,
+            "resynced": false
+          }
+        }
+      },
+      "view": {
+        "status": "measured",
+        "backend": "VisualLineMap",
+        "delta": {
+          "heapUsedBytes": 2704,
+          "arrayBufferBytes": 1572884,
+          "externalBytes": 1572884,
+          "rssBytes": 1572864
+        },
+        "retainedBytes": 1575588,
+        "bytesPerSourceByte": 0.15025978088378905,
+        "bytesPerMiB": 157558.8,
+        "logicalLines": 131073,
+        "indexedBytes": 1572884,
+        "scope": "Logical-to-visual row index; DOM and native renderer excluded"
+      },
+      "browserDom": {
+        "status": "unavailable",
+        "reason": "Node has no DOM; browser DOM retained memory requires browser heap instrumentation"
+      },
+      "allocations": {
+        "status": "not-measured",
+        "reason": "Retained GC deltas do not measure total allocations"
+      },
+      "budgets": {
+        "limits": {
+          "fixedBufferBytes": 65536,
+          "bufferBytesPerSourceByte": 6,
+          "modelBytes": 65536,
+          "undoBytesPerStep": 16384,
+          "fixedTokenBytes": 1048576,
+          "tokenBytesPerLexedCharacter": 256,
+          "fixedViewBytes": 65536,
+          "viewBytesPerLogicalLine": 24
+        },
+        "rows": [
+          {
+            "component": "buffer",
+            "retainedBytes": 11540312,
+            "limitBytes": 62980096,
+            "passed": true
+          },
+          {
+            "component": "model",
+            "retainedBytes": 5616,
+            "limitBytes": 65536,
+            "passed": true
+          },
+          {
+            "component": "undo",
+            "retainedBytes": 74840,
+            "limitBytes": 1638400,
+            "passed": true
+          },
+          {
+            "component": "view",
+            "retainedBytes": 1575588,
+            "limitBytes": 3211288,
+            "passed": true
+          },
+          {
+            "component": "tokens",
+            "retainedBytes": 3544,
+            "limitBytes": 1048576,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    },
+    {
+      "backend": "node-retained",
+      "sizeBytes": 104857600,
+      "gc": "two explicit V8 major collection requests per stage",
+      "source": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 104858424,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 104865792
+        },
+        "retainedBytes": 104858424,
+        "bytesPerSourceByte": 1.0000078582763672,
+        "bytesPerMiB": 1048584.24
+      },
+      "buffer": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 104863616,
+          "arrayBufferBytes": 10485760,
+          "externalBytes": 10485760,
+          "rssBytes": 115523584
+        },
+        "retainedBytes": 115349376,
+        "bytesPerSourceByte": 1.100057373046875,
+        "bytesPerMiB": 1153493.76,
+        "indexOnlyDelta": {
+          "heapUsedBytes": 5192,
+          "arrayBufferBytes": 10485760,
+          "externalBytes": 10485760,
+          "rssBytes": 10657792
+        },
+        "statistics": {
+          "length": 104858890,
+          "pieces": 200,
+          "height": 9,
+          "textMaterialized": false
+        }
+      },
+      "model": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 6256,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 6256,
+        "bytesPerSourceByte": 0.000059661865234375,
+        "bytesPerMiB": 62.56
+      },
+      "undo": {
+        "status": "measured",
+        "delta": {
+          "heapUsedBytes": 74840,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 74840,
+        "bytesPerSourceByte": 0.0007137298583984375,
+        "bytesPerMiB": 748.4,
+        "steps": 100,
+        "bytesPerStep": 748.4,
+        "statistics": {
+          "groups": 100,
+          "operations": 100,
+          "retainedCharacters": 1290
+        }
+      },
+      "tokens": {
+        "status": "measured",
+        "backend": "plain-text-large-file",
+        "delta": {
+          "heapUsedBytes": 3352,
+          "arrayBufferBytes": 0,
+          "externalBytes": 0,
+          "rssBytes": 0
+        },
+        "retainedBytes": 3352,
+        "bytesPerSourceByte": 0.0000319671630859375,
+        "bytesPerMiB": 33.52,
+        "statistics": {
+          "tokenCount": 0,
+          "visibleRuns": 1,
+          "lexicalCharacterLimit": 2000000,
+          "syntaxEnabled": false,
+          "metrics": {
+            "relexedLines": 0,
+            "relexedTokens": 0,
+            "resynced": false
+          }
+        }
+      },
+      "view": {
+        "status": "measured",
+        "backend": "VisualLineMap",
+        "delta": {
+          "heapUsedBytes": 1040,
+          "arrayBufferBytes": 15728660,
+          "externalBytes": 15728660,
+          "rssBytes": 15802368
+        },
+        "retainedBytes": 15729700,
+        "bytesPerSourceByte": 0.1500101089477539,
+        "bytesPerMiB": 157297,
+        "logicalLines": 1310721,
+        "indexedBytes": 15728660,
+        "scope": "Logical-to-visual row index; DOM and native renderer excluded"
+      },
+      "browserDom": {
+        "status": "unavailable",
+        "reason": "Node has no DOM; browser DOM retained memory requires browser heap instrumentation"
+      },
+      "allocations": {
+        "status": "not-measured",
+        "reason": "Retained GC deltas do not measure total allocations"
+      },
+      "budgets": {
+        "limits": {
+          "fixedBufferBytes": 65536,
+          "bufferBytesPerSourceByte": 6,
+          "modelBytes": 65536,
+          "undoBytesPerStep": 16384,
+          "fixedTokenBytes": 1048576,
+          "tokenBytesPerLexedCharacter": 256,
+          "fixedViewBytes": 65536,
+          "viewBytesPerLogicalLine": 24
+        },
+        "rows": [
+          {
+            "component": "buffer",
+            "retainedBytes": 115349376,
+            "limitBytes": 629211136,
+            "passed": true
+          },
+          {
+            "component": "model",
+            "retainedBytes": 6256,
+            "limitBytes": 65536,
+            "passed": true
+          },
+          {
+            "component": "undo",
+            "retainedBytes": 74840,
+            "limitBytes": 1638400,
+            "passed": true
+          },
+          {
+            "component": "view",
+            "retainedBytes": 15729700,
+            "limitBytes": 31522840,
+            "passed": true
+          },
+          {
+            "component": "tokens",
+            "retainedBytes": 3352,
+            "limitBytes": 1048576,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    }
+  ],
+  "correctness": {
+    "passed": true
+  },
+  "unsupported": [
+    "total-allocation-counts",
+    "native-allocator",
+    "browser-DOM-in-node"
+  ]
+}

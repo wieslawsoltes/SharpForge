@@ -75,24 +75,33 @@ function notation(digits, exponent, precision, lowercase) {
   return digits.slice(0, position) + '.' + digits.slice(position);
 }
 
+/** Render already-selected default digits; callers use binary32's width 9 or binary64's width 17. */
+export function formatDefaultNumber(value, precision = 17, lowercase = false) {
+  const special = specialValue(value);
+  if (special !== null) return special;
+  const magnitude = Math.abs(value);
+  // Keep common fixed notation free of digit records and scientific string parsing.
+  if (magnitude >= 1e-4 && magnitude < (precision === 9 ? 1e9 : 1e17)) return String(value);
+  const decimal = shortestDigits(magnitude);
+  return (value < 0 ? '-' : '') + notation(decimal.digits, decimal.exponent, precision, lowercase);
+}
+
 /**
  * Format binary64 using invariant .NET general notation; precision is null or 1..99.
  * Explicit precision rounds the exact binary value to even; null uses shortest round-trip digits.
  * Runtime callers validate the format/precision before reaching this pure formatter.
  */
 export function formatDoubleGeneral(value, precision = null, lowercase = false) {
+  if (precision === null) return formatDefaultNumber(value, 17, lowercase);
   const special = specialValue(value);
   if (special !== null) return special;
   const magnitude = Math.abs(value);
-  // Both hosts use the same shortest fixed notation in this range; keep common
-  // integer/default formatting free of digit records and scientific string parsing.
-  if (precision === null && magnitude >= 1e-4 && magnitude < 1e17) return String(value);
   const shortest = shortestDigits(magnitude);
-  const decimal = precision === null ? shortest : significantDigits(magnitude, precision, shortest.exponent);
-  return (value < 0 ? '-' : '') + notation(decimal.digits, decimal.exponent, precision ?? 17, lowercase);
+  const decimal = significantDigits(magnitude, precision, shortest.exponent);
+  return (value < 0 ? '-' : '') + notation(decimal.digits, decimal.exponent, precision, lowercase);
 }
 
 /** Format binary64 default text with invariant .NET exponent case, width and signed zero. */
 export function formatDoubleDefault(value) {
-  return formatDoubleGeneral(value);
+  return formatDefaultNumber(value);
 }

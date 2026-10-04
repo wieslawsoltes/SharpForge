@@ -1,0 +1,44 @@
+{
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "templateSHA256": "6021bf263376f4dfe8ed200808b5cdc8902fd086c1ff23a8995d3a167a6864a2",
+  "sourceSHA256": "26910f23d84038697f6a618f8d557b8a962e2accb890d6b2efed96620e539de1",
+  "fixtureSHA256": "5778396c191dd8de911272393fc2518417ff31672e69b011fb5bdcb287a07096",
+  "inputSHA256": "a29038f9438e518fd53c331548e754b4ada6ceac4c49982642b2e4f4c48711c8",
+  "compilation": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "5d3a4d39580e8dcb2812dc3f43cf0f4bbe43da5cce6008e26df6b871734397d9"
+  },
+  "assembly": "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",
+  "execution": {
+    "stdout": "{\"runtime\":\"10.0.5\",\"types\":[{\"token\":16777217,\"success\":true,\"definition\":33554541,\"local\":false,\"name\":\"System.Object\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777218,\"success\":true,\"definition\":33554434,\"local\":true,\"name\":\"Fixture.Parent\",\"generic\":false,\"baseToken\":null,\"interfaces\":[33554438,33554437],\"error\":\"\"},{\"token\":16777219,\"success\":true,\"definition\":33554434,\"local\":true,\"name\":\"Fixture.Parent\",\"generic\":false,\"baseToken\":null,\"interfaces\":[33554438,33554437],\"error\":\"\"},{\"token\":16777220,\"success\":true,\"definition\":33554435,\"local\":true,\"name\":\"Fixture.Child\",\"generic\":false,\"baseToken\":33554434,\"interfaces\":[33554438,33554437],\"error\":\"\"},{\"token\":16777221,\"success\":true,\"definition\":33554437,\"local\":true,\"name\":\"Fixture.IRoot\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777222,\"success\":true,\"definition\":33554438,\"local\":true,\"name\":\"Fixture.IChild\",\"generic\":false,\"baseToken\":null,\"interfaces\":[33554437],\"error\":\"\"},{\"token\":16777223,\"success\":true,\"definition\":33554439,\"local\":true,\"name\":\"Other.Parent\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777224,\"success\":true,\"definition\":33554440,\"local\":true,\"name\":\"Global\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777225,\"success\":true,\"definition\":33554441,\"local\":true,\"name\":\"Za\\u017C\\u00F3\\u0142\\u0107.\\u017B\\u00F3\\u0142\\u0107\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777226,\"success\":true,\"definition\":33554442,\"local\":true,\"name\":\"Fixture.\\uFEFFParent\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777227,\"success\":true,\"definition\":33554443,\"local\":true,\"name\":\"Fixture.Open\\u00601\",\"generic\":true,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777228,\"success\":true,\"definition\":33554444,\"local\":true,\"name\":\"Fixture.Parent\\u002BNested\",\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"\"},{\"token\":16777229,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"TypeLoadException\"},{\"token\":16777230,\"success\":true,\"definition\":33554434,\"local\":true,\"name\":\"Fixture.Parent\",\"generic\":false,\"baseToken\":null,\"interfaces\":[33554438,33554437],\"error\":\"\"},{\"token\":16777231,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"FileLoadException\"},{\"token\":16777232,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"FileNotFoundException\"},{\"token\":16777233,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"TypeLoadException\"},{\"token\":16777234,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"TypeLoadException\"},{\"token\":16777235,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"TypeLoadException\"},{\"token\":16777236,\"success\":false,\"definition\":0,\"local\":false,\"name\":null,\"generic\":false,\"baseToken\":null,\"interfaces\":[],\"error\":\"TypeLoadException\"}]}",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  }
+}

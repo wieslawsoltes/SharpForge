@@ -3,8 +3,11 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir, homedir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { git } from '../../../scripts/planning/lib/io.js';
-import { captureEvidence, evidenceDirectory } from '../../../scripts/planning/capture-evidence.js';
+import { captureEvidence, evidenceDirectory, isEvidenceTask } from '../../../scripts/planning/capture-evidence.js';
+import { validate } from '../../../scripts/planning/schema/validate.js';
 import { validateHandoff, artifactDigest, tapSummary, runCommand, proofObligations } from '../../../scripts/planning/lib/evidence.js';
 import { handoff } from '../../../scripts/planning/handoff.js';
 import { latestHandoff, parseHandoff, resume } from '../../../scripts/planning/resume.js';
@@ -22,6 +25,62 @@ function repository(t,body=source()) {
   writeFileSync(join(root,'.gitignore'),'artifacts/\n');writeFileSync(join(root,'sample.test.cjs'),body);g(['add','.']);g(['commit','-m','fixture']);return {root,g};
 }
 const evidence=record=>({schemaVersion:1,leafId:record.task,commit:record.headCommit,evidenceDigest:record.evidenceDigest,...Object.fromEntries(Object.entries(record.obligations[0]??target).filter(([key])=>key!=='testName'))});
+
+test('evidence task contracts retain legacy area IDs and accept release task and bug IDs',()=>{
+ const predicates=[['handoff','task'],['evidence-bundle','task'],['evidence','leafId']].map(([name,field])=>
+  JSON.parse(readFileSync(new URL(`../${name}.schema.json`,import.meta.url),'utf8')).properties[field]);
+ for(const id of ['SF-A00-T1','SF-A29-B123.0','SF-A00-T11.3','SF-R000-T00','SF-R015-T01','SF-R999-B99.7']) {
+  assert.equal(isEvidenceTask(id),true,id);for(const predicate of predicates)assert.doesNotThrow(()=>validate(predicate,id));
+ }
+ for(const id of ['SF-R15-T01','SF-R015-T1','SF-R015-T001','SF-R1000-T01','SF-R015-E01','SF-R015-T01/../other',null,42,['SF-R015-T01']]) {
+  assert.equal(isEvidenceTask(id),false);for(const predicate of predicates)assert.throws(()=>validate(predicate,id));
+ }
+});
+
+test('release default capture requires an explicit area before running a command',t=>{
+ const {root}=repository(t),releaseTask='SF-R015-T01';
+ assert.throws(()=>captureEvidence({task:releaseTask,root}),/requires --area or an explicit command/);
+ for(const area of ['R015','A0','../A00','',null])assert.throws(()=>captureEvidence({task:releaseTask,root,area}),/Axx area id/);
+ assert.throws(()=>captureEvidence({task,root,area:'A20'}),/does not match the task area/);
+ const cli=spawnSync(process.execPath,[fileURLToPath(new URL('../../../scripts/planning/capture-evidence.js',import.meta.url)),
+  '--task',releaseTask,'--root',root],{encoding:'utf8',env:{...process.env,NODE_TEST_CONTEXT:undefined}});
+ assert.equal(cli.status,1);assert.match(cli.stderr,/requires --area or an explicit command/);
+ assert.equal(existsSync(join(root,'artifacts/evidence')),false);
+});
+
+test('release capture CLI records the explicitly selected area and verifies its real TAP evidence',t=>{
+ const {root,g}=repository(t),releaseTask='SF-R015-T01';
+ mkdirSync(join(root,'scripts/planning'),{recursive:true});
+ writeFileSync(join(root,'scripts/planning/run-tests.js'),`
+  require('node:assert/strict').deepEqual(process.argv.slice(2),['--area','A00','--','--test-reporter=tap']);
+  const child=require('node:child_process').spawnSync(process.execPath,['--test','--test-reporter=tap','sample.test.cjs'],{stdio:'inherit'});
+  process.exitCode=child.status??1;
+ `);g(['add','.']);g(['commit','-m','area runner fixture']);
+ const output=execFileSync(process.execPath,[fileURLToPath(new URL('../../../scripts/planning/capture-evidence.js',import.meta.url)),
+  '--task',releaseTask,'--root',root,'--area','A00'],{encoding:'utf8',env:{...process.env,NODE_TEST_CONTEXT:undefined}});
+ const captured=JSON.parse(output);
+ assert.equal(captured.task,releaseTask);assert.equal(captured.summary.passed,1);assert.equal(captured.summary.complete,true);
+ assert.deepEqual(captured.command,['node','scripts/planning/run-tests.js','--area','A00','--','--test-reporter=tap']);
+ assert.equal(verifyArtifact(evidence(captured),evidenceDirectory(root,captured)),true);
+});
+
+test('release task handoff recaptures explicit commands and replays from a clean clone',async t=>{
+ const releaseTask='SF-R015-T01',{root,g}=repository(t),directory=mkdtempSync(join(tmpdir(),'sf-release-handoff-'));
+ t.after(()=>rmSync(directory,{recursive:true,force:true}));const remote=join(directory,'remote.git'),clone=join(directory,'clone');
+ git(['init','--bare',remote],directory);g(['remote','add','origin',remote]);g(['push','origin','main']);
+ g(['checkout','-b','codex/release-fixture']);g(['push','-u','origin','HEAD']);
+ const captured=captureEvidence({task:releaseTask,root,command}),details={commands:[{argv:command,summary:captured.summary}],
+  testSummary:captured.summary,blockers:[],remainingSteps:[],openQuestions:[]};
+ let posted;
+ const client={comment:async(issue,body)=>{assert.equal(issue,423);posted=body;return {id:1};}};
+ const {record}=await handoff({root,task:releaseTask,agent:'fixture',issue:423,client,details});
+ assert.equal(record.task,releaseTask);assert.equal(record.testSummary.passed,1);assert.deepEqual(parseHandoff(posted),record);
+ assert.equal(record.commands[0].headCommit,record.headCommit);
+ assert.equal(verifyArtifact(evidence(captured),evidenceDirectory(root,captured)),true);
+ assert.equal(verifyArtifact({...evidence(captured),leafId:'SF-R015-T02'},evidenceDirectory(root,captured)),false);
+ git(['clone',remote,clone],directory);const replay=resume({record,root:clone});
+ assert.deepEqual(replay.divergences,[]);assert.equal(replay.results[0].summary.passed,1);
+});
 
 test('digest binds TAP bytes, commit, command and exact target/status proof',()=>{
  const meta={schemaVersion:2,task,headCommit:'a'.repeat(40),command,summary:tapSummary('',0),obligations:[target]},files={'tests.tap':'ok 1\n','stderr.log':'','environment.json':'{}\n'};

@@ -1,6 +1,7 @@
 import {registerBclModules} from '@sharpforge/bcl-core';
 import {registerBclCollectionExtensions} from '../bcl-contracts.js';
 import {jsonExtensionContribution} from './json.js';
+import {numericTypeContribution} from './numeric.js';
 import {registerDesignerLayout} from './designer-layout.js';
 
 /** Extension ownership stays in reserved area blocks and cannot change the released manifest. */
@@ -11,5 +12,5 @@ export const bclExtensionContribution = Object.freeze({
 export const collectionExtensionContribution = Object.freeze({name: 'A08', register: registerBclCollectionExtensions});
 export const designerLayoutContribution = Object.freeze({name: 'A18', register: registerDesignerLayout});
 export const frameworkExtensions = Object.freeze([
-  bclExtensionContribution, collectionExtensionContribution, jsonExtensionContribution, designerLayoutContribution
+  bclExtensionContribution, collectionExtensionContribution, jsonExtensionContribution, numericTypeContribution, designerLayoutContribution
 ]);

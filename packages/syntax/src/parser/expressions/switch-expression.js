@@ -31,7 +31,7 @@ export const switchExpressionMethods = {
     if (this.at('=>')) {
       this.error(this.errorAnchor(), 'CS8504', 'Pattern missing');
       pattern = this.n('ConstantPattern', this.missingName());
-    } else pattern = this.pattern(true);
+    } else pattern = this.pattern(true, Precedence.Coalescing);
     const when = this.atWord('when') ? this.n('WhenClause', this.takeWord('when'), this.expression()) : null,
       arrow = this.expect('=>');
     return this.n('SwitchExpressionArm', pattern, when, arrow, this.coalesceOperand(Precedence.Expression));

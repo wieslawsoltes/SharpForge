@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "issue": 1513,
+  "engine": "chromium",
+  "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "input": "synthetic File/Blob assigned through DataTransfer to the real Studio file-input change handler",
+  "limits": [
+    "No OS file chooser or native file permission claim",
+    "No physical disk throughput claim",
+    "No cross-application clipboard claim",
+    "Functional case; latency budgets belong to the existing editor benchmark"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "browserVersion": "153.0.8010.12",
+  "fixture": {
+    "sizeBytes": 209715200,
+    "originalSourceCount": 2,
+    "expectedSourceCount": 3,
+    "expectedLines": 204803,
+    "reusedChunkBytes": 262144,
+    "blobPartCount": 802
+  },
+  "opened": {
+    "elapsedMs": 7278.899999999907,
+    "sourceCount": 3,
+    "byteLength": 209715200,
+    "sourceLength": 209715200,
+    "lineCount": 204803,
+    "uri": "A20StudioLargeFile.cs",
+    "active": "A20StudioLargeFile.cs",
+    "encoding": "utf-8",
+    "bom": false,
+    "originalSource": true,
+    "ownedSource": true,
+    "sharedModel": true,
+    "versionMatches": true,
+    "retainedSiblings": true,
+    "prefixMatches": true,
+    "suffixMatches": true,
+    "textMaterialized": false,
+    "largeFile": true,
+    "dirty": false,
+    "selectionConsumed": true
+  },
+  "viewports": [
+    {
+      "end": false,
+      "offset": 0,
+      "caret": 0,
+      "targetLine": 0,
+      "firstLine": 0,
+      "lastLine": 29,
+      "targetVisible": true,
+      "rows": 30,
+      "renderedCharacters": 29694,
+      "scrollTop": 0,
+      "nativeContextLength": 1024,
+      "viewportVisible": true,
+      "textMaterialized": false
+    },
+    {
+      "end": true,
+      "offset": 209715174,
+      "caret": 209715174,
+      "targetLine": 204801,
+      "firstLine": 204790,
+      "lastLine": 204802,
+      "targetVisible": true,
+      "rows": 13,
+      "renderedCharacters": 11224,
+      "scrollTop": 4505485,
+      "nativeContextLength": 1050,
+      "viewportVisible": true,
+      "textMaterialized": false
+    }
+  ],
+  "editing": {
+    "edited": {
+      "length": 209715201,
+      "version": 2,
+      "dirty": true,
+      "insertion": "X/",
+      "sameModel": true,
+      "sameRecord": true,
+      "textMaterialized": false
+    },
+    "restored": {
+      "length": 209715200,
+      "version": 3,
+      "dirty": false,
+      "suffixMatches": true,
+      "prefixMatches": true,
+      "sourceCount": 3,
+      "sameModel": true,
+      "textMaterialized": false
+    },
+    "undoKey": "Control+z"
+  },
+  "disposal": {
+    "documentsDisposed": true,
+    "editorDisposed": true,
+    "records": 0,
+    "models": 0,
+    "views": 0,
+    "renderedRows": 0,
+    "disposedModelRejectsMutation": true
+  }
+}

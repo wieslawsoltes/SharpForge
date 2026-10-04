@@ -105,6 +105,13 @@ export class DocumentTabs {
     this.mru = [id, ...this.mru.filter(item => item !== id)].slice(0, 8192);
   }
 
+  /** Drops panel navigation history when its workspace document is removed; DocumentService keeps buffer ownership. */
+  forget(id) {
+    this.views.delete(id);
+    this.mru = this.mru.filter(item => item !== id);
+    this.closed = this.closed.filter(entry => entry.id !== id);
+  }
+
   promote(id) {
     if (!this.metadata(id) || !this.layout.panels.has(id)) return false;
     return this.layout.setTabState(id, { preview: false });
@@ -216,8 +223,8 @@ export class DocumentTabs {
     return id;
   }
 
-  split(id, axis = 'vertical') {
-    const group = this.layout.locate(id).group;
+  split(id, axis = 'vertical', { groupId = null } = {}) {
+    const group = groupId ? this.layout.group(groupId) : this.layout.locate(id).group;
     if (!group || !['horizontal', 'vertical'].includes(axis)) throw new Error('Invalid document group split');
     this.promote(id);
     return this.layout.dock(id, group.id, axis === 'vertical' ? 'right' : 'bottom');
@@ -232,14 +239,18 @@ export class DocumentTabs {
     return this.layout.dock(id, next.id);
   }
 
-  async newView(id) {
+  async newView(id, { axis = 'vertical' } = {}) {
     const view = this.metadata(id);
     if (!view) throw new Error('No active document');
+    if (!['horizontal', 'vertical'].includes(axis)) throw new Error('Invalid document group split');
+    const groupId = this.layout.locate(id).group?.id;
+    if (!groupId) throw new Error('No active document group');
     let viewId;
     do { viewId = `view-${++this.serial}`; } while (this.panel(view.uri, viewId));
-    const next = await this.open(view.uri, { viewId,
+    const next = await this.open(view.uri, { viewId, groupId,
       viewState: this.documents.getViewState?.(view.uri, view.viewId) ?? null });
-    this.split(next, 'vertical');
+    if (!next) return null;
+    this.split(next, axis, { groupId });
     return next;
   }
 

@@ -16,6 +16,8 @@ export class Workspace {
   /** Read syntax using configured or explicitly supplied compilation settings. */
   syntax(uri, options=this.compilationOptions){return documentSyntax(this,uri,options);}
   compile(options={}){return compileWorkspace(this,options);}
+  /** Semantic source queries share the current compilation and are invalidated with every source/options change. */
+  sourceModel(options={}){this.compile(options);return this.documents.size?this.compilation.getSourceModel():null;}
   exportProject(){return {format:'sharpforge-project',version:1,files:[...this.documents.values()].map(d=>({uri:d.source.uri,text:d.source.text,version:d.source.version}))};}
   importProject(project){if(project?.format!=='sharpforge-project'||project.version!==1||!Array.isArray(project.files))throw new Error('Not a SharpForge project');if(project.files.length>this.maxDocuments)throw new Error('Too many documents');const next=new Workspace({maxDocumentLength:this.maxDocumentLength,maxDocuments:this.maxDocuments});for(const file of project.files)next.update(file.uri,file.text,1);this.documents=next.documents;this.generatedDocuments.clear();this.revision++;this.result=null;}
 }

@@ -1,0 +1,71 @@
+{
+  "revision": "9af3ee4b51f66f12c2743060cf508750cd847b49",
+  "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "playwright": "1.63.0",
+  "moduleSha256": "a89fc267281de29e9ff2119fe8948460d4453a3ac80fb491c63fae26260d0391",
+  "mode": "HTTP source modules/import map, CSP enabled",
+  "engines": [
+    {
+      "engine": "chromium",
+      "passed": true,
+      "version": "153.0.8010.12",
+      "checks": [
+        "native effective imports",
+        "import ownership/invalid scope",
+        "native typed scope tree",
+        "scope ownership/invalid method",
+        "authored dynamic/tuple/constant joins",
+        "annotation ownership/shared formatter budget",
+        "Release native unnamed slots/no invented names",
+        "slot ownership/unbound/bounds/cancellation",
+        "all 27 opaque CDI parent extents",
+        "all debug heap columns and empty-blob document/local-signature guards",
+        "five count budgets at boundary and limit+1",
+        "aggregate CDI and stored/compressed source boundary and limit+1",
+        "all-source preflight, cancellation and invalid limits"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "passed": true,
+      "version": "155.0",
+      "checks": [
+        "native effective imports",
+        "import ownership/invalid scope",
+        "native typed scope tree",
+        "scope ownership/invalid method",
+        "authored dynamic/tuple/constant joins",
+        "annotation ownership/shared formatter budget",
+        "Release native unnamed slots/no invented names",
+        "slot ownership/unbound/bounds/cancellation",
+        "all 27 opaque CDI parent extents",
+        "all debug heap columns and empty-blob document/local-signature guards",
+        "five count budgets at boundary and limit+1",
+        "aggregate CDI and stored/compressed source boundary and limit+1",
+        "all-source preflight, cancellation and invalid limits"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "passed": true,
+      "version": "26.6",
+      "checks": [
+        "native effective imports",
+        "import ownership/invalid scope",
+        "native typed scope tree",
+        "scope ownership/invalid method",
+        "authored dynamic/tuple/constant joins",
+        "annotation ownership/shared formatter budget",
+        "Release native unnamed slots/no invented names",
+        "slot ownership/unbound/bounds/cancellation",
+        "all 27 opaque CDI parent extents",
+        "all debug heap columns and empty-blob document/local-signature guards",
+        "five count budgets at boundary and limit+1",
+        "aggregate CDI and stored/compressed source boundary and limit+1",
+        "all-source preflight, cancellation and invalid limits"
+      ]
+    }
+  ],
+  "passed": true
+}

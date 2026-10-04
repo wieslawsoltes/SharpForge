@@ -1,0 +1,44 @@
+{
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "templateSHA256": "83740fda3d547657a16b7f9052949546fb57c3f1e2e4bba430849bccd9327342",
+  "sourceSHA256": "dfaba81481fee03765675855663f867c85ef9483cf5785a049cc94d0d5a1b7fb",
+  "fixtureSHA256": "12ba86b30ad0e136ef52f779ffe37e9d35bbe7f1b7a180d585c69a25df906ba9",
+  "inputSHA256": "7234db8aec7a9333c37e885b1736344426510dac3bed40b91624b6d469000b79",
+  "compilation": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "52657bef6f729ea5641956dbc5a5984f7c573987931fa6b1f99d7b00a2364580"
+  },
+  "execution": {
+    "stdout": "",
+    "stderr": "Unhandled exception. System.ArgumentOutOfRangeException: Token 0x0a000003 is not valid in the scope of module InheritedMemberReferences.dll. (Parameter 'metadataToken')\n   at System.Reflection.RuntimeModule.ResolveLiteralField(Int32 metadataToken, Type[] genericTypeArguments, Type[] genericMethodArguments)\n   at System.Reflection.RuntimeModule.ResolveField(Int32 metadataToken, Type[] genericTypeArguments, Type[] genericMethodArguments)\n   at System.Reflection.RuntimeModule.ResolveMember(Int32 metadataToken, Type[] genericTypeArguments, Type[] genericMethodArguments)\n   at Program.<>c__DisplayClass0_0.<Main>b__0(Int32 token)\n   at System.Linq.Enumerable.ArraySelectIterator`2.MoveNext()\n   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)\n   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)\n   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)\n   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)\n   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)\n   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)\n   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)\n   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)\n   at System.Text.Json.JsonSerializer.WriteString[TValue](TValue& value, JsonTypeInfo`1 jsonTypeInfo)\n   at System.Text.Json.JsonSerializer.Serialize[TValue](TValue value, JsonSerializerOptions options)\n   at Program.Main()\n",
+    "exitCode": null,
+    "signal": "SIGABRT",
+    "unhandledException": "System.ArgumentOutOfRangeException"
+  },
+  "fixtureBase64": "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"
+}

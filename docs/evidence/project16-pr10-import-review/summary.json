@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "sourceSha": "4abe16d863d633b92c8782a12b13b6a1252077d4",
+  "sourceTree": "315d58ca90153c22a839060c2e849bf427cb0de9",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--input-type=module",
+    "-e",
+    "import { readFileSync } from 'node:fs';\nimport { checkDynamicUses } from './scripts/conformance/static/check-imports.js';\nconst path = 'scripts/benchmarks/a19-correction-paths.mjs';\nconst inventory = JSON.parse(readFileSync('scripts/conformance/static/allowlist.json', 'utf8'));\nconst allow = inventory.allow.filter(entry => entry.path === path);\nif (allow.length !== 1) throw new Error('Expected exactly one reviewed benchmark inventory row');\nconst report = checkDynamicUses(process.cwd(), [path], { ...inventory, allow });\nconsole.log(JSON.stringify({ scope: [path], passed: report.errors.length === 0, ...report }, null, 2));\nif (report.errors.length) process.exitCode = 1;\n"
+  ],
+  "nodeVersion": "v24.19.0",
+  "startedAt": "2026-10-04T06:31:34.878096+00:00",
+  "finishedAt": "2026-10-04T06:31:35.018160+00:00",
+  "wallSeconds": 0.1443098599993391,
+  "exitCode": 0,
+  "sourceUnchanged": true,
+  "scope": "Existing checkDynamicUses on one reviewed file and its one existing-schema inventory row; no module linker, whole-repository gate, product tests, build or benchmark",
+  "log": {
+    "path": "audit.log",
+    "bytes": 374,
+    "sha256": "4718ad5b1043c265bb5cf68a9d73a45897c492056551aceccfcd01be94dd9bc1"
+  }
+}

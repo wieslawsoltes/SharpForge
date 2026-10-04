@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "base": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "eventBase": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "head": "48472269ec106049debc0d448985882463365215",
+  "checkout": "48472269ec106049debc0d448985882463365215",
+  "mergeBase": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "labels": [],
+  "changes": [],
+  "errors": [],
+  "evidenceKind": "local immutable snapshot review; not a hosted PR event"
+}

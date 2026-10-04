@@ -1,0 +1,43 @@
+{
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "templateSHA256": "3c0aba25c4b1a8b40fe62a624d34c59b3702cfcb674bc28b0c7ef405fa86973f",
+  "sourceSHA256": "62cfcba3f9da4dd06960ad7cc923241962fbb96082b5b36c2817b20db4bce153",
+  "fixtureSHA256": "942bfe98f0535d3edfc08c17de63fe5bfb37a25e45da89912083c96c938a59ed",
+  "inputSHA256": "76027da0b4dc5c5bf367477b71ee469644008f3411fd5809f7a8111b9b99b2b5",
+  "compilation": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "00f11d4924ef8723440704550c06ffc838ed55a293d75e6c986ea3ed02ce66df"
+  },
+  "execution": {
+    "stdout": "",
+    "stderr": "Unhandled exception. System.BadImageFormatException: Enclosing type(s) not found for type 'Middle' in assembly 'InheritedMemberReferences, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null'.\n   at System.Runtime.Loader.AssemblyLoadContext.InternalLoad(ReadOnlySpan`1 arrAssembly, ReadOnlySpan`1 arrSymbols)\n   at Program.Main()\n",
+    "exitCode": null,
+    "signal": "SIGABRT",
+    "unhandledException": "System.BadImageFormatException"
+  }
+}

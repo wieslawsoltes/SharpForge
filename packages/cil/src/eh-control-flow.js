@@ -37,18 +37,31 @@ function endFilter(instruction, cursor) {
     reject('CILCF0005', instruction.offset);
   }
 }
-function tail(instruction, cursor) {
+export function validateTailPlacement(instruction, cursor) {
   if (cursor.region) reject('CILCF0006', instruction.offset);
 }
 
 const placementChecks = Object.freeze({ rethrow, ret: returnInstruction, jmp: jump, endfinally: endFinally,
-  endfilter: endFilter, 'tail.': tail });
+  endfilter: endFilter, 'tail.': validateTailPlacement });
+
+const outsideRegions = Object.freeze({ region: null, catches: 0 });
+
+/** Internal no-clause seam: reuse placement rules without constructing a lexical tree or cursor. */
+export function validateInstructionOutsideRegions(instruction) {
+  if (Object.hasOwn(placementChecks, instruction.name)) placementChecks[instruction.name](instruction, outsideRegions);
+}
 
 /** Check EH-sensitive instruction placement, returning an immutable lexical tree; branch/leave edges are separate. */
 export function validateExceptionInstructionPlacement(code, handlers, options = {}) {
   const tree = buildExceptionRegionTree(code, handlers, options);
   // Keep the tree builder's bounded decoding contract independent; this second pass supplies opcode records only.
   const instructions = decodeInstructions(code, options);
+  validateInstructionPlacement(instructions, tree, options);
+  return tree;
+}
+
+/** Internal seam for validators that already own decoded instructions and a checked region tree. */
+export function validateInstructionPlacement(instructions, tree, options) {
   const cursor = new ExceptionRegionCursor(tree);
   for (const instruction of instructions) {
     checkRegionCancellation(options.signal);
@@ -58,5 +71,4 @@ export function validateExceptionInstructionPlacement(code, handlers, options = 
         instruction.name !== 'endfilter') reject('CILCF0007', instruction.offset);
   }
   checkRegionCancellation(options.signal);
-  return tree;
 }

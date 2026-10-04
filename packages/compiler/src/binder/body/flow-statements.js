@@ -2,7 +2,7 @@
  * foreach over every enumeration pattern, switch statements with patterns and return.
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
-import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { lookupMembers } from '../inheritance.js';
 import { findConstruction, implementsInterface } from '../../symbols/substitution.js';
@@ -31,7 +31,9 @@ export const FlowStatementBinding = Base =>
       try {
         let element = null,
           enumeration = null,
-          extension = null;
+          extension = null,
+          // How `Current` yields the element: by value, or by reference (`foreach (ref var x in ...)` needs one).
+          currentRefKind = RefKind.None;
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
@@ -44,7 +46,10 @@ export const FlowStatementBinding = Base =>
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
           else if (type.specialType === 'System_String') element = this.core.char;
-          else if (isSpanType(type, this.core)) element = type.typeArguments[0].type;
+          else if (isSpanType(type, this.core)) {
+            element = type.typeArguments[0].type;
+            currentRefKind = type.originalDefinition === this.core.span ? RefKind.Ref : RefKind.RefReadOnly;
+          }
           else {
             const getEnumerator = lookupMembers(type, 'GetEnumerator', this.core, { within: this.c.containingType }).members.find(
               m => m.kind === SymbolKind.Method && !m.isStatic && !m.parameters.length && m.declaredAccessibility === 'public',
@@ -53,8 +58,10 @@ export const FlowStatementBinding = Base =>
               const current = lookupMembers(getEnumerator.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
                 m => m.kind === SymbolKind.Property,
               );
-              if (current) element = current.type;
-              else {
+              if (current) {
+                element = current.type;
+                currentRefKind = current.refKind ?? RefKind.None;
+              } else {
                 const generic = findConstruction(getEnumerator.returnType, this.core.ienumeratorT, this.core);
                 element = generic ? generic.typeArguments[0].type : isSourceType(getEnumerator.returnType) ? null : unknown;
                 if (!element) {
@@ -77,6 +84,7 @@ export const FlowStatementBinding = Base =>
                   m => m.kind === SymbolKind.Property,
                 );
                 element = current?.type ?? unknown;
+                currentRefKind = current?.refKind ?? RefKind.None;
               } else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
                 this.report(syntax.expression, DiagnosticId.CS8414, [this.display(type), 'GetEnumerator']);
                 element = unknown;
@@ -113,6 +121,7 @@ export const FlowStatementBinding = Base =>
         local.writes++;
         local.nonConstantWrite = true;
         local.reads++;
+        this.refIterationVariable(syntax, local, currentRefKind, !collection.hasErrors && !element.isErrorType());
         this.declare(name, local, syntax.identifier);
         const loop = this.enterLoop(),
           body = this.embedded(syntax.statement);
@@ -128,6 +137,20 @@ export const FlowStatementBinding = Base =>
         });
       } finally {
         this.popScope();
+      }
+    }
+    /**
+     * `foreach (ref var x in e)` / `foreach (ref readonly var x in e)` (C# 7.3): the iteration variable is a
+     * reference to the element `Current` returns. CS1510 when `Current` returns a value; CS8331 when the variable
+     * is writable and `Current` returns a read-only reference.
+     */
+    refIterationVariable(syntax, local, currentRefKind, isEnumerable) {
+      if (syntax.type.kind !== 'RefType') return;
+      local.refKind = syntax.type.readOnlyKeyword ? RefKind.RefReadOnly : RefKind.Ref;
+      if (!isEnumerable) return;
+      if (currentRefKind === RefKind.None) this.report(syntax.expression, DiagnosticId.CS1510);
+      else if (local.refKind === RefKind.Ref && currentRefKind === RefKind.RefReadOnly) {
+        this.report(syntax.expression, DiagnosticId.CS8331, ['property', 'Current']);
       }
     }
     switchStatement(syntax) {

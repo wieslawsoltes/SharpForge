@@ -1,0 +1,7 @@
+{
+  "source": "/tmp/sharpforge-project6-a03-dataflow/tests/fixtures/inspector-navigation/browser.py",
+  "sourceSHA256": "d23fb279c5ab2de020b80ad1f8a64a357eac7db0a673c52eaf142e0ce9610dc1",
+  "derived": "/tmp/a03-dataflow-browser.py",
+  "derivedSHA256": "c1bd1483dc2d21c9774eec348f685ebe1c68746ba2ac6f597d0fdf5131bb6606",
+  "changes": "Module path and page/run labels only; shared CSP source-module launch, browser order and cleanup unchanged"
+}

@@ -256,11 +256,17 @@ export class Conversions {
     if (standard.exists) return standard;
     return this.userDefined(from, to, true);
   }
-  userDefined(from, to, explicit) {
+  /**
+   * @param {object|null} [constant] the value of the converted expression when it is an integral constant: the standard
+   *   conversion to the parameter type of an operator is then that of the expression (`Natural n = 1` through
+   *   `implicit operator Natural(ulong)`: the constant 1 converts to `ulong`, the type `int` does not).
+   */
+  userDefined(from, to, explicit, constant = null) {
     if (from.typeKind === TypeKind.Interface && to.typeKind === TypeKind.Interface) return NONE;
     // Where a span conversion exists (here: only explicitly), the operators of the span types are not considered.
     if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return NONE;
-    const found = resolveUserDefinedConversion(from, to, { explicit }, this.standard, this.core);
+    const standard = constant ? this.standardFromConstant(from, constant) : this.standard,
+      found = resolveUserDefinedConversion(from, to, { explicit }, standard, this.core);
     if (!found) return NONE;
     if (found.ambiguous)
       return explicit
@@ -271,6 +277,15 @@ export class Conversions {
       method: found.method,
       isLifted: found.isLifted,
     });
+  }
+  /** The standard conversion tests with the implicit constant expression conversions of one constant of type `from`. */
+  standardFromConstant(from, constant) {
+    const sourceKind = this.kindOf(from),
+      fits = to => {
+        const targetKind = this.kindOf(to);
+        return !!sourceKind && !!targetKind && implicitConstantConversion(sourceKind, constant.bigint, targetKind);
+      };
+    return { ...this.standard, implicit: (a, b) => this.standard.implicit(a, b) || (a === from && fits(b)) };
   }
   /**
    * Implicit conversion of an expression to a type.
@@ -337,7 +352,8 @@ export class Conversions {
       )
         return wrap(simple.ImplicitConstant);
     }
-    return this.userDefined(from, to, false);
+    const integral = constant && !constant.isNull && constant.isIntegral && !constant.isEnum && constant.type !== 'char' ? constant : null;
+    return this.userDefined(from, to, false, integral);
   }
   /** Explicit conversion of an expression (a cast): the expression-based implicit conversions, then `classifyExplicit`. */
   classifyCastFromExpression(expression, to) {

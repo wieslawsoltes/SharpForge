@@ -1,0 +1,10 @@
+{
+  "suite": "editor-view",
+  "command": [
+    "C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\python.exe",
+    "tests/browser_a20_view_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 16.75
+}
