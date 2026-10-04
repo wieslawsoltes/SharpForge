@@ -22,7 +22,7 @@ function tableStream(builder, external, delta) {
   for (let table = start; table <= 55; table++) {
     for (const row of builder.rows[table] ?? []) row.forEach((value, column) => {
       const kind = metadataSchemas[table][column];
-      const width = delta ? (kind === 'u16' ? 2 : 4) : metadataIndexWidth(kind, counts, flags);
+      const width = metadataIndexWidth(kind, counts, flags, delta);
       if (delta && (!Number.isInteger(value) || value < 0 || value > (width === 2 ? 0xffff : 0xffffffff))) {
         generationError('PDB_DELTA_INPUT', 'PDB delta table value exceeds its physical column width');
       }
