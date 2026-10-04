@@ -1,0 +1,21 @@
+✖ explicit fundamental identity classifies local roots and concrete descendants without spelling rules (7.106458ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 137.89825
+
+✖ failing tests:
+
+test at tests/a03-type-categories.test.js:10:1
+✖ explicit fundamental identity classifies local roots and concrete descendants without spelling rules (7.106458ms)
+  TypeError: adapter.typeCategory is not a function
+      at category (file:///private/tmp/sharpforge-a03-type-categories-baseline/tests/a03-type-categories.test.js:7:46)
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-type-categories-baseline/tests/a03-type-categories.test.js:14:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
