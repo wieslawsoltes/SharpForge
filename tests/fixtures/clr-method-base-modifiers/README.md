@@ -14,6 +14,13 @@ the compiled harness hash:
 node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-base-modifiers tests/fixtures/clr-method-base-modifiers/Program.cs
 ```
 
+The existing base-definition benchmark accepts this emitted fixture with an
+explicit test-host CoreLib resolver (ordinary benchmark defaults are preserved):
+
+```
+node packages/clr/tools/benchmark-method-base-definition.mjs tests/fixtures/clr-method-base-modifiers/native-method-bases.json --corelib-intrinsics
+```
+
 Kind/order/identity mismatches, malformed tokens, unsupported generic modifiers,
 limits and cancellation are additionally covered by authored metadata tests.
 Opaque intrinsic-slot traversal, TypeSpec modifier resolution and generic base
