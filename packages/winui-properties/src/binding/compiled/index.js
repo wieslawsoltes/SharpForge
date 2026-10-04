@@ -2,3 +2,4 @@ export {COMPILED_BINDING_VERSION, validateCompiledBindingDescriptor} from './des
 export {parseCompiledBindingExpression, CompiledBindingCompileError} from './syntax.js';
 export {compileBindingDescriptor, compileBindingExpression, CompiledBindingDefinition} from './compiler.js';
 export {evaluateCompiledExpression, writeCompiledPath} from './evaluate.js';
+export {CompiledBindings, createCompiledBindings} from './executor.js';
