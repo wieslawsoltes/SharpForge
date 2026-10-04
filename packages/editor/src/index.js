@@ -2,6 +2,7 @@ import {installTabEscape} from './tab-focus.js';
 import {ClassicKeymapAdapter,EDITOR_KEYMAPS,handleVisualStudioKey} from './keymaps.js';
 export {EDITOR_KEYMAPS} from './keymaps.js';
 import {EditorViewport} from './editor-viewport.js';
+import {publishEditorChange,restoreEditorChange} from './editor-changes.js';
 import {escapeHtml} from './html.js';
 export {escapeHtml} from './html.js';
 export {SyntaxHighlightIndex} from './highlight.js';
@@ -39,13 +40,8 @@ export class CodeEditor {
   setValue(text){this.record();this.input.value=text;this.changed(false);}
   setReadOnly(value){this.input.readOnly=value;this.keymapAdapter?.setReadOnly(value);for(const b of this.findBox.querySelectorAll('[data-replace]'))b.disabled=value;this.input.setAttribute('aria-readonly',String(value));}
   record(){this.history.push({text:this.previous,start:this.input.selectionStart,end:this.input.selectionEnd});if(this.history.length>200)this.history.shift();while(this.history.reduce((n,s)=>n+s.text.length,0)>4_000_000&&this.history.length>1)this.history.shift();this.future=[];}
-  changed(record=true){
-    // Chromium can deliver multiple insertText input events for one multiline
-    // replacement, each already exposing the same final value. Publish a source
-    // revision only once; otherwise a paste triggers O(lines) identical renders.
-    const text=this.value;if(text===this.previous)return;
-    const now=performance.now();if(record&&(now-this.lastEdit>450||!this.history.length))this.record();this.lastEdit=now;this.previous=this.value;this.keymapAdapter?.syncFromBridge();this.onChange(this.value);this.paint();this.cursor();if(!this.completion.classList.contains('hidden'))this.complete();}
-  undo(redo=false){if(this.input.readOnly)return;if(this.keymapAdapter){this.keymapAdapter.undo(redo);return;}const from=redo?this.future:this.history,to=redo?this.history:this.future,item=from.pop();if(!item)return;to.push({text:this.value,start:this.input.selectionStart,end:this.input.selectionEnd});this.input.value=item.text;this.input.setSelectionRange(item.start,item.end);this.previous=this.value;this.lastEdit=0;this.onChange(this.value);this.paint();this.cursor();}
+  changed(record=true){publishEditorChange(this,record);}
+  undo(redo=false){restoreEditorChange(this,redo);}
   insert(text,start=this.input.selectionStart,end=this.input.selectionEnd,caret=null){if(this.input.readOnly)return;this.record();this.input.setRangeText(text,start,end,'end');if(caret!==null)this.input.setSelectionRange(caret,caret);this.changed(false);}
   keydown(e){
     if(e.isComposing||this.composing||e.keyCode===229)return;

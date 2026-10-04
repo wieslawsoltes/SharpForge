@@ -5,6 +5,7 @@ import {escapeHtml} from './html.js';
 
 const diagnosticKey = diagnostics => JSON.stringify(diagnostics.map(item => [item.start, item.length, item.severity, item.range?.start.line]));
 const setStyle = (element, name, value) => { if (element.style[name] !== value) element.style[name] = value; };
+const setHidden = (element, value) => { if (element.hidden !== value) element.hidden = value; };
 
 /** Owns the existing native-textarea overlay and gutter. No second text model or whole-document DOM is created. */
 export class EditorViewport {
@@ -16,6 +17,8 @@ export class EditorViewport {
     this.windowInput = null;
     this.highlightMarkup = null;
     this.pendingChange = null;
+    this.updateDepth = 0;
+    this.pendingSync = false;
     this.currentLine = editor.element.querySelector('.sf-current-line');
     this.selectedLine = editor.element.querySelector('.sf-selected-frame-line');
     this.executionLine = editor.element.querySelector('.sf-execution-line');
@@ -41,6 +44,20 @@ export class EditorViewport {
     if (this.editor.disposed) return;
     this.height = this.editor.element.clientHeight;
     this.sync();
+  }
+
+  /** Batches DOM work only; source and diagnostic preparation remain synchronous inside callbacks. */
+  batch(action) {
+    this.updateDepth++;
+    try {
+      return action();
+    } finally {
+      this.updateDepth--;
+      if (this.updateDepth === 0 && this.pendingSync) {
+        this.pendingSync = false;
+        this.sync();
+      }
+    }
   }
 
   paint() {
@@ -188,6 +205,10 @@ export class EditorViewport {
   sync() {
     const editor = this.editor;
     if (editor.disposed) return;
+    if (this.updateDepth > 0) {
+      this.pendingSync = true;
+      return;
+    }
     if (editor.keymapAdapter) {
       editor.keymapAdapter.decorate();
       if (editor.keymapAdapter.doc !== editor.element.ownerDocument) editor.setKeymap(editor.keymap);
@@ -198,9 +219,9 @@ export class EditorViewport {
     const current = this.sourceSnapshot().positionAt(editor.offset).line + 1;
     this.gutter(top, current);
     setStyle(this.currentLine, 'top', editor.padding + (current - 1) * editor.lineHeight - top + 'px');
-    this.selectedLine.hidden = !editor.selectedFrameLine;
+    setHidden(this.selectedLine, !editor.selectedFrameLine);
     if (editor.selectedFrameLine) setStyle(this.selectedLine, 'top', editor.padding + (editor.selectedFrameLine - 1) * editor.lineHeight - top + 'px');
-    this.executionLine.hidden = !editor.executionLine;
+    setHidden(this.executionLine, !editor.executionLine);
     if (editor.executionLine) setStyle(this.executionLine, 'top', editor.padding + (editor.executionLine - 1) * editor.lineHeight - top + 'px');
   }
 
@@ -208,6 +229,7 @@ export class EditorViewport {
     this.window = null;
     this.windowIndex = null;
     this.pendingChange = null;
+    this.pendingSync = false;
     this.highlightMarkup = null;
   }
 }
