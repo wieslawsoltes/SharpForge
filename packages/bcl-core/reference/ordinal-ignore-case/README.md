@@ -13,6 +13,12 @@ surrogate sequences. Separate native rows capture
 List.Sort, non-generic Array.BinarySearch, object comparison/fault wrapping and
 singleton identity. Strings use UTF-16 integer arrays to retain isolated surrogates.
 
+The capture contains 83 values (6,889 ordered pairs) and 1,504 changed invariant
+uppercase relations. All but 26 relations compare equal: U+017F and the 25 Garay
+lowercase letters U+16EBB–U+16ED3 retain distinct ordinal identity. Their ASCII
+prefix/suffix forms agree. The matrix also distinguishes scalar ordering of
+complete supplementary pairs from the UTF-16 order of StringComparer.Ordinal.
+
 Root captures once, with build output separate from the JSON artifact:
 
 ```sh

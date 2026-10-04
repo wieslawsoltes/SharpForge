@@ -44,6 +44,12 @@ for (const [engine, create] of Object.entries(engines)) {
         expected.push(reference.signs[index][index + 1]);
       }
     }
+    const input = reference.input.map(value => JSON.stringify(fromUnits(value))).join(',');
+    lines.push(`var values = new List<string>(new string[] {${input}}); values.Sort(comparer);`);
+    for (let index = 0; index < reference.sorted.length; index++) {
+      lines.push(`Console.WriteLine(values[${index}] == ${JSON.stringify(fromUnits(reference.sorted[index]))});`);
+      expected.push('True');
+    }
     const vm = create(compile(lines.join('\n')));
     try {
       const result = vm.run();
@@ -137,6 +143,50 @@ for (const [engine, create] of Object.entries(engines)) {
           [first, pin(platform, 'a'), pin(platform, 'A')]), 0);
       });
       assert(reference.sameSingleton && reference.distinctOrdinal);
+    } finally { vm.stop(); }
+  });
+
+  test(`OrdinalIgnoreCase ${engine}: object comparison and wrapped search faults retain existing semantics`, () => {
+    const vm = create(compile('Console.WriteLine(0);'));
+    const platform = vm.platform;
+    try {
+      platform.heap.withRoots([], () => {
+        const comparer = platform.invoke(contract(comparerType, 'get_OrdinalIgnoreCase'), []);
+        const compare = contract(objectInterface, 'Compare', ['object', 'object']);
+        const box = (type, value) => {
+          const reference = platform.heap.allocate('box', type, [platform.managed(value, type)]);
+          platform.heap.pins.push(reference);
+          return reference;
+        };
+        const opaque = () => {
+          const reference = platform.heap.allocate('object', 'object', []);
+          platform.heap.pins.push(reference);
+          return reference;
+        };
+        const shared = opaque();
+        const text = pin(platform, 'a');
+        const number = box('int', 1);
+        const pairs = [[null, pin(platform, 'A')], [text, pin(platform, 'A')], [number, box('int', 2)],
+          [number, box('double', 1)], [text, number], [shared, shared], [shared, opaque()]];
+        for (const [index, pair] of pairs.entries()) {
+          const expected = reference.objectRows[index];
+          if (expected.error) assert.throws(() => platform.invoke(compare, [comparer, ...pair]), {name: expected.error});
+          else assert.equal(Math.sign(platform.invoke(compare, [comparer, ...pair])), expected.sign);
+        }
+        assert.throws(() => platform.invoke(compare, [null, null, null]), {name: 'NullReferenceException'});
+        const array = platform.heap.allocate('array', 'string[]', [text]);
+        platform.heap.pins.push(array);
+        const search = contract('System.Array', 'BinarySearch', ['System.Array', 'object', objectInterface]);
+        assert.throws(() => platform.invoke(search, [array, number, comparer]), error => {
+          assert.equal(error.name, reference.searchFault.error);
+          platform.heap.withRoots([error.reference], () => {
+            platform.heap.collect();
+            const inner = platform.heap.get(error.reference).data[1];
+            assert.equal(platform.heap.get(inner).methodTable.name, 'System.' + reference.searchFault.inner);
+          });
+          return true;
+        });
+      });
     } finally { vm.stop(); }
   });
 }
