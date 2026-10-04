@@ -68,7 +68,10 @@ export function stageChildPages(model, pages) {
     for (const child of next.children) if (!indexed.has(child.id)) indexed.set(child.id, child);
   }
   let count = 0;
+  const identities = new Set();
   const replace = (node, depth) => {
+    if (identities.has(node.id)) throw new Error('Explorer tree IDs must be unique');
+    identities.add(node.id);
     if (++count > model.maxNodes || depth > model.maxDepth) throw new RangeError('Tree size/depth limit exceeded');
     const next = replacements.get(node.id) ?? node;
     const children = (next.children ?? []).map(child => replace(child, depth + 1));
