@@ -18,8 +18,12 @@ function memberAt(root, offset) {
   return selected;
 }
 
+function invalidSyntax(member) {
+  return !!(member.green.flags & (GreenFlags.ContainsDiagnostics | GreenFlags.ContainsMissing | GreenFlags.ContainsSkippedText));
+}
+
 function safeMember(member) {
-  if (member.containsDiagnostics) return false;
+  if (invalidSyntax(member)) return false;
   // Alias/global-alias attributes can hide ModuleInitializer: reject every possible attributed initializer.
   if (member.attributeLists?.length && member.kind === 'MethodDeclaration' &&
       member.modifiers?.some(token => token.valueText === 'static') && member.returnType?.toString() === 'void' &&
@@ -73,7 +77,7 @@ export function outlineReorder(workspace, params) {
   const members = [...moving.parent.members], from = members.indexOf(moving), to = members.indexOf(target);
   const first = Math.min(from, to), last = Math.max(from, to), region = members.slice(first, last + 1);
   const start = region[0].fullSpan.start, end = region.at(-1).fullSpan.end;
-  if (region.some(member => member.containsDiagnostics)) fail('OUTLINE_SYNTAX_ERROR', 'Fix syntax errors before reordering this region');
+  if (region.some(invalidSyntax)) fail('OUTLINE_SYNTAX_ERROR', 'Fix syntax errors before reordering this region');
   if ((syntax.directives ?? []).some(directive => (directive.start ?? directive.offset) >= start &&
       (directive.start ?? directive.offset) < end)) {
     fail('OUTLINE_DIRECTIVE', 'Reorder cannot cross or relocate a preprocessor directive');
@@ -92,3 +96,4 @@ export function outlineReorder(workspace, params) {
     edits: [{uri: params.uri, start, end, newText, version: source.version}],
     selection: {uri: params.uri, start: movedStart + (moving.identifier?.span.start ?? moving.span.start) - moving.fullSpan.start}};
 }
+import {GreenFlags} from '@sharpforge/syntax';
