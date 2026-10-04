@@ -179,6 +179,19 @@ test('A20 prepared commits use the latest view selections and the shared contrib
   model.dispose();
 });
 
+test('A20 trimming before a requested final newline retains a content-end caret before that new terminator', async () => {
+  const model = new EditorModel('text  ', {selections: [{anchor: 4, active: 4}]});
+  const {editor} = editorFor(model, {trimTrailingWhitespace: true, insertFinalNewline: true});
+  await editor.presentation.prepareSave();
+  assert.equal(model.getText(), 'text\n');
+  assert.equal(model.primarySelection.active, 4);
+  assert.equal(model.undoStack.depth, 1);
+  model.undo();
+  assert.equal(model.getText(), 'text  ');
+  assert.equal(model.primarySelection.active, 4);
+  model.dispose();
+});
+
 test('A20 a shared read-only transition during preparation never changes the buffer', async () => {
   const model = new EditorModel('original' + ' '.repeat(10_000));
   const {editor} = editorFor(model, {trimTrailingWhitespace: true});

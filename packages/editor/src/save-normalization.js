@@ -58,25 +58,21 @@ function* saveEditSteps(source, options, controls) {
       const trimmed = options.trimTrailingWhitespace ? yield* trailingStart(source, start, contentEnd, controls) : contentEnd;
       const previousEnding = source.getText(contentEnd, next);
       const replacementEnding = next > contentEnd && normalize ? ending : previousEnding;
-      if (replacementEnding !== previousEnding) yield {edit: {start: trimmed, end: next, text: replacementEnding}};
-      else if (trimmed < contentEnd) yield {edit: {start: trimmed, end: contentEnd, text: ''}};
+      if (trimmed < contentEnd) yield {edit: {start: trimmed, end: contentEnd, text: ''}};
+      if (replacementEnding !== previousEnding) yield {edit: {start: contentEnd, end: next, text: replacementEnding}};
       if ((line + 1) % controls.batchSize === 0) yield {progress: {phase: 'scan-lines', completed: line + 1, total: lineCount}};
     }
   }
   if (options.insertFinalNewline && source.length) {
     const last = source.getText(source.length - 1, source.length);
-    if (last !== '\r' && last !== '\n') yield {edit: {start: source.length, end: source.length, text: ending}, final: true};
+    if (last !== '\r' && last !== '\n') yield {edit: {start: source.length, end: source.length, text: ending}};
   }
 }
 
 function appendEdit(edits, step, maximum) {
   if (!step.edit) return;
-  const last = edits.at(-1);
-  if (step.final && last?.end === step.edit.start) last.text += step.edit.text;
-  else {
-    if (edits.length === maximum) throw new RangeError(`Save normalization exceeds the ${maximum} edit limit`);
-    edits.push(step.edit);
-  }
+  if (edits.length === maximum) throw new RangeError(`Save normalization exceeds the ${maximum} edit limit`);
+  edits.push(step.edit);
 }
 
 /** Synchronous compatibility for bounded callers; each read is bounded even when an individual logical line is huge. */
