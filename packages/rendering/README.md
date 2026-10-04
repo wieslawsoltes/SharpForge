@@ -126,6 +126,14 @@ Pinned Unicode17 UAX14 rules preserve nonbreaking spaces, word joiners, explicit
 
 Portable shaping, atlas residency and GPU instances share exact font identities and measured glyph positions. Ready color assets invalidate reused plans and cached layers; pending images do not become permanent empty cache entries. Non-solid runs use the documented complete-run raster path. The shipped text documentation separates implemented capabilities from external qualification.
 
+## SVG projection
+
+`SvgBackend` preserves scoped transforms/clips and paints actual stroke geometry. Gradients retain coordinate, spread and interpolation policy. Numeric text consumes provider glyph outlines; native runs retain their measured font runs. Operations requiring shared raster semantics report the Canvas fallback.
+
+## Rendering surfaces
+
+`RenderSurface` selects an explicit or negotiated backend, subscribes to its app-owned resources and text service, and preserves device borrowing rules across switching and disposal. Viewport dimensions and pixel budgets are validated before allocation. A complete portable drawing example shows authorized font loading, text layout, geometry and readback.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
