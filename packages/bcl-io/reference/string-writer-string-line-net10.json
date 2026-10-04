@@ -1,0 +1,5811 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "platform": "Ubuntu 24.04.3 LTS",
+  "architecture": "X64",
+  "culture": "InvariantCulture",
+  "environmentNewLine": [
+    10
+  ],
+  "sourceSha256": "c2e7a66aa4059fa4b1a61a6d2edd347592f06a12f92bc2452bcb89a349025717",
+  "runtimeSource": {
+    "tag": "v10.0.5",
+    "textWriterBlob": "035664cc815f5e70e478413e3efbe4c9407deae9",
+    "stringWriterBlob": "478d95fd347ac47198fc5341e606aba7d62eb19c"
+  },
+  "rows": [
+    {
+      "id": "WriteLine/False/null/default/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/null/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/null/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/null/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/null/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/False/null/default/open",
+      "operation": "Write",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/null/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/null/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/null/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/null/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/null/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/False/null/default/disposed",
+      "operation": "Write",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/null/default/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/null/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/null/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/null/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/null/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/False/null/default/null",
+      "operation": "Write",
+      "valueCase": "null",
+      "value": null,
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/empty/default/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/empty/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/empty/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/empty/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/empty/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/False/empty/default/open",
+      "operation": "Write",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/empty/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/empty/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/empty/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/empty/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/empty/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/False/empty/default/disposed",
+      "operation": "Write",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/empty/default/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/empty/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/empty/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/empty/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/empty/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/False/empty/default/null",
+      "operation": "Write",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/payload/default/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/payload/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/payload/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/payload/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/payload/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/False/payload/default/open",
+      "operation": "Write",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/payload/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/payload/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/payload/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/payload/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/payload/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/False/payload/default/disposed",
+      "operation": "Write",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/payload/default/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/payload/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/payload/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/payload/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/payload/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/False/payload/default/null",
+      "operation": "Write",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/utf16/default/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/utf16/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/utf16/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/utf16/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/utf16/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/False/utf16/default/open",
+      "operation": "Write",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/False/utf16/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/utf16/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/utf16/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/utf16/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/utf16/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/False/utf16/default/disposed",
+      "operation": "Write",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/False/utf16/default/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/utf16/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/utf16/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/utf16/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/False/utf16/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/False/utf16/default/null",
+      "operation": "Write",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": false,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/null/default/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/null/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/null/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/null/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/null/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/True/null/default/open",
+      "operation": "Write",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/null/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/null/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/null/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/null/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/null/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/True/null/default/disposed",
+      "operation": "Write",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/null/default/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/null/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/null/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/null/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/null/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/True/null/default/null",
+      "operation": "Write",
+      "valueCase": "null",
+      "value": null,
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/empty/default/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/empty/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/empty/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/empty/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/empty/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/True/empty/default/open",
+      "operation": "Write",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/empty/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/empty/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/empty/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/empty/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/empty/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/True/empty/default/disposed",
+      "operation": "Write",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/empty/default/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/empty/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/empty/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/empty/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/empty/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/True/empty/default/null",
+      "operation": "Write",
+      "valueCase": "empty",
+      "value": [],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/payload/default/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/payload/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/payload/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/payload/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/payload/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/True/payload/default/open",
+      "operation": "Write",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/payload/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/payload/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/payload/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/payload/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/payload/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/True/payload/default/disposed",
+      "operation": "Write",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/payload/default/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/payload/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/payload/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/payload/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/payload/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/True/payload/default/null",
+      "operation": "Write",
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/utf16/default/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/utf16/empty/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/utf16/custom/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/utf16/null-reset/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/utf16/utf16/open",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        0,
+        57343,
+        33
+      ],
+      "fault": null
+    },
+    {
+      "id": "Write/True/utf16/default/open",
+      "operation": "Write",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "open",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "fault": null
+    },
+    {
+      "id": "WriteLine/True/utf16/default/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/utf16/empty/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": [],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/utf16/custom/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/utf16/null-reset/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/utf16/utf16/disposed",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "Write/True/utf16/default/disposed",
+      "operation": "Write",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "disposed",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": [
+        10
+      ],
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "WriteLine/True/utf16/default/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/utf16/empty/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/utf16/custom/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        126
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/utf16/null-reset/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "WriteLine/True/utf16/utf16/null",
+      "operation": "WriteLine",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": true,
+      "requestedNewLine": [
+        0,
+        57343,
+        33
+      ],
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "Write/True/utf16/default/null",
+      "operation": "Write",
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "baseView": true,
+      "receiverState": "null",
+      "setNewLine": false,
+      "requestedNewLine": null,
+      "actualNewLine": null,
+      "output": null,
+      "fault": "NullReferenceException"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "False/null/open/newline",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "open",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "newline-changed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "actualNewLine": [
+        33,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "False/null/open/dispose",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "open",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "disposed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "False/null/open/throw",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "open",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "callback-threw",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "InvalidOperationException"
+    },
+    {
+      "id": "False/null/disposed/newline",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "disposed",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/null/disposed/dispose",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "disposed",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/null/disposed/throw",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "disposed",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/payload/open/newline",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "open",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "newline-changed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            33,
+            13,
+            10
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 2,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        33,
+        13,
+        10
+      ],
+      "actualNewLine": [
+        33,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "False/payload/open/dispose",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "open",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "disposed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 2,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/payload/open/throw",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "open",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "callback-threw",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "InvalidOperationException"
+    },
+    {
+      "id": "False/payload/disposed/newline",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "disposed",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/payload/disposed/dispose",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "disposed",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/payload/disposed/throw",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "disposed",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/utf16/open/newline",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "open",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "newline-changed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            33,
+            13,
+            10
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 2,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        33,
+        13,
+        10
+      ],
+      "actualNewLine": [
+        33,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "False/utf16/open/dispose",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "open",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "disposed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 2,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/utf16/open/throw",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "open",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "callback-threw",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "InvalidOperationException"
+    },
+    {
+      "id": "False/utf16/disposed/newline",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "disposed",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/utf16/disposed/dispose",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "disposed",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "False/utf16/disposed/throw",
+      "nativeOnly": true,
+      "baseView": false,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "disposed",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/null/open/newline",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "open",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "newline-changed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "actualNewLine": [
+        33,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "True/null/open/dispose",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "open",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "disposed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": null
+    },
+    {
+      "id": "True/null/open/throw",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "open",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "callback-threw",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        126
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "InvalidOperationException"
+    },
+    {
+      "id": "True/null/disposed/newline",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "disposed",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/null/disposed/dispose",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "disposed",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/null/disposed/throw",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "null",
+      "value": null,
+      "receiverState": "disposed",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/payload/open/newline",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "open",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "newline-changed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            33,
+            13,
+            10
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 2,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100,
+        33,
+        13,
+        10
+      ],
+      "actualNewLine": [
+        33,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "True/payload/open/dispose",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "open",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "disposed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 2,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/payload/open/throw",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "open",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "callback-threw",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "InvalidOperationException"
+    },
+    {
+      "id": "True/payload/disposed/newline",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "disposed",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/payload/disposed/dispose",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "disposed",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/payload/disposed/throw",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "payload",
+      "value": [
+        112,
+        97,
+        121,
+        108,
+        111,
+        97,
+        100
+      ],
+      "receiverState": "disposed",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            112,
+            97,
+            121,
+            108,
+            111,
+            97,
+            100
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/utf16/open/newline",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "open",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "newline-changed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            33,
+            13,
+            10
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 2,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535,
+        33,
+        13,
+        10
+      ],
+      "actualNewLine": [
+        33,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "True/utf16/open/dispose",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "open",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "disposed",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "write-enter",
+          "call": 2,
+          "value": [
+            126
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 2,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/utf16/open/throw",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "open",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-complete",
+          "call": 1,
+          "value": null,
+          "fault": null
+        },
+        {
+          "kind": "callback-threw",
+          "call": 1,
+          "value": null,
+          "fault": null
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": false,
+      "disposed": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "InvalidOperationException"
+    },
+    {
+      "id": "True/utf16/disposed/newline",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "disposed",
+      "mode": "newline",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/utf16/disposed/dispose",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "disposed",
+      "mode": "dispose",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "True/utf16/disposed/throw",
+      "nativeOnly": true,
+      "baseView": true,
+      "valueCase": "utf16",
+      "value": [
+        0,
+        55296,
+        56320,
+        57343,
+        65535
+      ],
+      "receiverState": "disposed",
+      "mode": "throw",
+      "requestedNewLine": [
+        126
+      ],
+      "changedNewLine": [
+        33,
+        13,
+        10
+      ],
+      "events": [
+        {
+          "kind": "write-enter",
+          "call": 1,
+          "value": [
+            0,
+            55296,
+            56320,
+            57343,
+            65535
+          ],
+          "fault": null
+        },
+        {
+          "kind": "write-fault",
+          "call": 1,
+          "value": null,
+          "fault": "ObjectDisposedException"
+        }
+      ],
+      "parameterlessLineCalls": 0,
+      "armed": true,
+      "disposed": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "actualNewLine": [
+        126
+      ],
+      "fault": "ObjectDisposedException"
+    }
+  ]
+}

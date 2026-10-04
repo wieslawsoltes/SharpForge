@@ -1,6 +1,7 @@
 import {bclScalar, fail, integer, string} from '@sharpforge/bcl-core';
-import {appendWriterBuilder, createWriterBuilder, writerBuilderText} from './string-writer-builder.js';
+import {appendWriterBuilder, appendWriterScalar, createWriterBuilder, writerBuilderText} from './string-writer-builder.js';
 import {writeStringBuffer} from './string-writer-buffer.js';
+import {isWriterScalar} from './string-writer-scalars.js';
 
 const writerType = 'System.IO.StringWriter';
 const builderType = 'System.Text.StringBuilder';
@@ -43,17 +44,29 @@ function appendNewLine(platform, builder, reference) {
 
 function write(platform, descriptor, reference, value) {
   const builder = platform.get(reference, '$builder');
-  if (descriptor.parameters[0] === 'char') {
+  const line = descriptor.name === 'WriteLine';
+  if (descriptor.parameters.length === 0) {
+    if (line) appendNewLine(platform, builder, reference);
+    return null;
+  }
+  const parameter = descriptor.parameters[0];
+  if (parameter === 'char') {
     const unit = integer(platform, bclScalar(platform, value), 0, 65535);
     appendWriterBuilder(platform, builder, String.fromCharCode(unit));
-    // TextWriter.WriteLine(char) re-enters the parameterless newline gate after Write(char).
-    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
-  } else if (descriptor.parameters.length) {
+  } else if (parameter === 'string') {
     string(platform, value, true);
     if (value !== null) appendWriterBuilder(platform, builder, value);
+  } else if (isWriterScalar(parameter)) {
+    appendWriterScalar(platform, builder, value, parameter);
+  } else {
+    fail(platform, 'MissingMethodException', descriptor.name + '(' + descriptor.parameters.join(',') + ')');
   }
-  // Keep these separate: a failed newline append retains an already-written value, as TextWriter does.
-  if (descriptor.name === 'WriteLine') appendNewLine(platform, builder, reference);
+  if (line) {
+    // Inherited value overloads enter a second write gate, including null and empty strings.
+    // Read the current newline after value callbacks; a failure retains the already-written value.
+    requireOpen(platform, reference);
+    appendNewLine(platform, builder, reference);
+  }
   return null;
 }
 

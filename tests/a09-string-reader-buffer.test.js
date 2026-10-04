@@ -165,7 +165,7 @@ test('SF-A09-T03 buffer: registration appends after all reader and writer base I
     ctor(owner, parameters = []) {entries.push({owner, name: '.ctor', parameters});},
     prop(owner, name) {entries.push({owner, name: 'get_' + name}, {owner, name: 'set_' + name});}
   });
-  assert.equal(entries.length, 27);
+  assert.equal(entries.length, 43);
   assert.deepEqual(entries.slice(20, 22), ['Read', 'ReadBlock']
     .map(name => ({owner: parentType, name, parameters: ['char[]', 'int', 'int']})));
   assert.deepEqual(entries.slice(22, 24), [['char[]'], ['char[]', 'int', 'int']]

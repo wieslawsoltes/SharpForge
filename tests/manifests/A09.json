@@ -12,7 +12,10 @@
     "tests/a09-string-writer-object.test.js",
     "tests/a09-string-writer-buffer.test.js",
     "tests/a09-string-writer-line-buffer.test.js",
-    "tests/a09-string-writer-char-line.test.js"
+    "tests/a09-string-writer-char-line.test.js",
+    "tests/a09-string-writer-scalars.test.js",
+    "tests/a09-string-writer-scalars-state.test.js",
+    "tests/a09-string-writer-string-line.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],

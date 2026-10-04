@@ -2,39 +2,44 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {compile, compileToIL} from '@sharpforge/compiler';
+import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {managedFixture} from './managed-fixtures.js';
 
 const directory = new URL('./fixtures/json-integer-keys/', import.meta.url);
 const source = readFileSync(new URL('Cases.cs', directory), 'utf8');
 const reference = JSON.parse(readFileSync(new URL('oracle.json', directory), 'utf8'));
-const nativeCharStatement = "objects.Add(1, '<');";
-assert.equal(source.split(nativeCharStatement).length, 2, 'Adapt exactly one unsupported source Char expression');
 const nativeCatch = 'catch (JsonException)';
 assert.equal(source.split(nativeCatch).length, 2, 'Adapt exactly one unsupported typed catch');
-const supportedSource = source.replace(nativeCharStatement, 'objects.Add(1, "<");')
-  .replace(nativeCatch, 'catch (Exception)');
-let compiled;
+const supportedSource = source.replace(nativeCatch, 'catch (Exception)');
+
+for (const pipeline of ['bound', 'legacy']) {
+  let compiled;
+  for (const engine of ['source', 'cil']) {
+    test(`SF-A09-B02 ${pipeline}/${engine} native JSON retains source Char with only the typed-catch adaptation`, () => {
+      compiled ??= compileToIL(supportedSource, {pipeline});
+      assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+      assert.deepEqual(compiled.diagnostics.filter(item => item.severity === 'error'), []);
+      const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.deepEqual(result.output.trimEnd().split('\n'), reference.lines);
+        const boxes = vm.heap.records.filter(record => record?.kind === 'box');
+        const boxedTypes = new Set(boxes.map(record => record.methodTable.name));
+        for (const type of ['System.Int32', 'System.Double', 'System.Boolean', 'System.Char']) {
+          assert(boxedTypes.has(type), 'The fixture must execute real managed boxing for ' + type);
+        }
+        const character = boxes.find(record => record.methodTable.name === 'System.Char');
+        assert.equal(vm.platform.native(character.data[0]), 60, 'The native fixture must retain its actual Char payload');
+      } finally {
+        vm.stop();
+      }
+    });
+  }
+}
 
 for (const engine of ['source', 'cil']) {
-  test(`SF-A09-B02 ${engine} supported source profile matches native JSON with explicit Char/catch profile adaptations`, () => {
-    compiled ??= compileToIL(supportedSource);
-    assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
-    const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
-    try {
-      const result = vm.run();
-      assert.equal(result.state, 'terminated', result.fault?.stack);
-      assert.deepEqual(result.output.trimEnd().split('\n'), reference.lines);
-      const boxedTypes = new Set(vm.heap.records.filter(record => record?.kind === 'box').map(record => record.methodTable.name));
-      for (const type of ['System.Int32', 'System.Double', 'System.Boolean']) {
-        assert(boxedTypes.has(type), 'The fixture must execute real managed boxing for ' + type);
-      }
-    } finally {
-      vm.stop();
-    }
-  });
-
   test(`SF-A09-B02 ${engine} integer dictionary retains nonfinite and unsupported-object faults`, () => {
     const cases = [
       ['using System.Text.Json; using System.Collections.Generic; ' +
@@ -123,13 +128,6 @@ test('SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Bo
     vm.stop();
   }
 });
-
-for (const pipeline of ['bound', 'legacy']) {
-  test(`SF-A09-B02 ${pipeline} source Char remains an explicit unsupported-profile diagnostic`, () => {
-    const result = compile("object[] values = new object[] {'<'};", {pipeline});
-    assert(result.diagnostics.some(item => item.code === 'SF2003' && item.severity === 'error'));
-  });
-}
 
 test('SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases', () => {
   assert.equal(reference.sdk, '10.0.201');

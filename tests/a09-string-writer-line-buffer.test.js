@@ -115,7 +115,7 @@ for (const engine of ['source', 'cil']) {
     } finally { heap.releaseHandle(root); writer.stop(); }
   });
 
-  test(`StringWriter buffer line ${engine}: the released string overload keeps its single disposal check`, () => {
+  test(`StringWriter buffer line ${engine}: the string overload rechecks disposal before its newline`, () => {
     const writer = writerPlatform(engine);
     const {platform, vm, call} = writer;
     call('Write', ['string'], ['seed|']);
@@ -128,9 +128,9 @@ for (const engine of ['source', 'cil']) {
           call('Dispose');
         }
       };
-      call('WriteLine', ['string'], ['AB']);
+      assert.throws(() => call('WriteLine', ['string'], ['AB']), {name: 'ObjectDisposedException'});
       assert.equal(armed, false);
-      assert.equal(platform.native(call('ToString')), 'seed|AB\n');
+      assert.equal(platform.native(call('ToString')), 'seed|AB');
       assert.throws(() => call('WriteLine'), {name: 'ObjectDisposedException'});
     } finally { vm.onWrite = null; writer.stop(); }
   });
