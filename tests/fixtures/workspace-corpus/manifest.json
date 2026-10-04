@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "mixed-encoding-solution",
+      "folders": [
+        "App/Empty",
+        "App/Empty/Nested"
+      ],
+      "settings": {
+        "name": "Encoding corpus",
+        "mode": "solution",
+        "entry": "Corpus.slnx",
+        "startup": "App/App.csproj",
+        "configuration": "Debug"
+      },
+      "memberships": {
+        "App/App.csproj": [
+          "App/Program.cs",
+          "App/Models/A&B.cs"
+        ]
+      },
+      "files": [
+        {
+          "path": "Corpus.slnx",
+          "size": 93,
+          "sha256": "b4d4cd014dec139c8dc49cff7f95da3e6807f5a65fce63c9a1c4bda404d7fe49"
+        },
+        {
+          "path": "App/App.csproj",
+          "size": 375,
+          "sha256": "f2e5c7c8f0e114a3cf4ddbf649da152b5e5f8727c3f8e66d7f00b632b6079db3"
+        },
+        {
+          "path": "App/Program.cs",
+          "size": 128,
+          "sha256": "c2c5a868f57962c22c9a45f91ca33260690d0a6d54d0b1bb8ac9e805dd8f0561"
+        },
+        {
+          "path": "App/Models/A&B.cs",
+          "size": 56,
+          "sha256": "770040b447f4e7a155adf9b5ecd6c28bd2c545f4494768f083aec4d67520b1c8"
+        },
+        {
+          "path": "App/Notes/utf16be-bom.txt",
+          "size": 42,
+          "sha256": "4a4c7cbdeede1841576d6dfff3cb84cea857609d03fe343558dfd9f0b4777ee5"
+        },
+        {
+          "path": "App/Notes/utf16le-no-bom.txt",
+          "size": 58,
+          "sha256": "b6a47e210a26ce90f2a93f933cd3de5abd5c7835f8491f7bff82391a9a407ead"
+        },
+        {
+          "path": "App/Notes/utf16be-no-bom.txt",
+          "size": 52,
+          "sha256": "fc44bce2ad5bd916f6256c92e10126ce39eae3cf979c3e02cb480a1d083b536c"
+        },
+        {
+          "path": "App/Notes/utf8-bom.txt",
+          "size": 19,
+          "sha256": "aabf3c1d226f63627b6dc045006c72fe0387bb29cceb4cf67e046d1235017bd2"
+        },
+        {
+          "path": "App/Notes/plain-lf.txt",
+          "size": 21,
+          "sha256": "de865f7e285444930137651193a75f09a2c87799a45f008000fa32ac27d63785"
+        },
+        {
+          "path": "App/Assets/payload.bin",
+          "size": 2048,
+          "sha256": "10fc3c51a152e90e5b90319b601d92ccf37290ef53c35ff92507687d8a911a08"
+        },
+        {
+          "path": "App/Assets/zero.bin",
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "App/Deep/one/two/three/four/five/data.dat",
+          "size": 6,
+          "sha256": "6c53813576977f23cbebe2c4d77773ce8e18b4ca12a85a19de6532f70bc45bd0"
+        },
+        {
+          "path": "App/Unicode/NFC/café.txt",
+          "size": 9,
+          "sha256": "7f670bc85c3625039786380833fee0f957630fd916c7c15b2638058690a51915"
+        },
+        {
+          "path": "App/Unicode/NFD/café.txt",
+          "size": 9,
+          "sha256": "4980350b46e124c42463400b38287f95774b04f920e1550ab167a8764d88fc66"
+        }
+      ]
+    },
+    {
+      "id": "legacy-solution",
+      "folders": [
+        "App/Vacant"
+      ],
+      "settings": {
+        "name": "Legacy corpus",
+        "mode": "solution",
+        "entry": "Legacy.sln",
+        "startup": "App/App.csproj"
+      },
+      "memberships": {
+        "App/App.csproj": [
+          "App/Model.cs"
+        ]
+      },
+      "files": [
+        {
+          "path": "Legacy.sln",
+          "size": 353,
+          "sha256": "b5c41706e3df43ea90818acaf96199ae8001c1bccea5b0c6b1beab23ccffe776"
+        },
+        {
+          "path": "App/App.csproj",
+          "size": 117,
+          "sha256": "91275edd3790c4f0cb484653195ccd8ad6af2f1a0a69b84fdb26b88c0b52407f"
+        },
+        {
+          "path": "App/Model.cs",
+          "size": 64,
+          "sha256": "caeac6b05f610d076c184c9c3ed08de823042c30a67dae2dfa6085141f415cd7"
+        },
+        {
+          "path": "App/Assets/raw.bin",
+          "size": 9,
+          "sha256": "36cbaca578f2a3143e7e8ed737737426e317575e4f6a239b73b03a84114a83ac"
+        }
+      ]
+    },
+    {
+      "id": "folder-only",
+      "folders": [
+        "empty",
+        "empty/deeper"
+      ],
+      "settings": {
+        "name": "Folder corpus",
+        "mode": "folder"
+      },
+      "memberships": {},
+      "files": [
+        {
+          "path": "loose/Program.cs",
+          "size": 29,
+          "sha256": "4ec041d7490105400bf2ed5b28a573ca2c34e91aedc0f753247702ed2f19462f"
+        },
+        {
+          "path": "docs/zażółć.txt",
+          "size": 21,
+          "sha256": "c453c7fdad2d2247dba63865cff77640e280eb16774634b9d9f6459943edfab8"
+        },
+        {
+          "path": "artifacts/opaque.bin",
+          "size": 513,
+          "sha256": "adaa601b9ca46c35260969c4d5d8012bdab39522d5b044c788b3945d4493f7f3"
+        },
+        {
+          "path": "config/settings.json",
+          "size": 42,
+          "sha256": "24e299bea096be55ab6eb89ffa2dcc2c8078fef3399c40ed242e9024709b0a48"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <!-- Preserve ampersands, quotes, and CRLF byte for byte. -->
+  <ItemGroup><Compile Include="Program.cs" /><Compile Include="Models/A&amp;B.cs" /></ItemGroup>
+</Project>
