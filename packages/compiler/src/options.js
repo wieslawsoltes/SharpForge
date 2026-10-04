@@ -13,6 +13,7 @@
  * `profile:true`, the default - SF2008 for output kinds other than exe/library.
  * Language spellings and feature selection use the shared syntax language-version table.
  */
+import {DiagnosticId} from './diagnostics/codes.js';
 import {parseLanguageVersion as syntaxLanguageVersion,displayLanguageVersion} from '@sharpforge/syntax';
 import {normalizeDiagnosticId} from './diagnostics/suppression.js';
 
@@ -71,7 +72,7 @@ export class CompilationOptions{
    */
   with(changes={}){
     const {options,diagnostics}=parseCompilationOptions({...this.toJSON(),...changes});
-    const errors=diagnostics.filter(d=>d.code!=='CS2029');
+    const errors=diagnostics.filter(d=>d.code!==DiagnosticId.CS2029);
     if(errors.length)throw new RangeError('Invalid compilation options: '+errors.map(d=>d.code).join(', '));
     return options;
   }
@@ -113,48 +114,48 @@ export function parseCompilationOptions(raw={},{profile=true}={}){
   if(raw instanceof CompilationOptions)return {options:raw,diagnostics:[]};
   const diagnostics=[],fields={},report=(code,args=[])=>{diagnostics.push({code,args});};
   const given=key=>raw?.[key]!==undefined&&raw[key]!==null;
-  const boolean=(key,optionName)=>{if(!given(key))return;if(typeof raw[key]==='boolean')fields[key]=raw[key];else report('CS7088',[optionName,String(raw[key])]);};
+  const boolean=(key,optionName)=>{if(!given(key))return;if(typeof raw[key]==='boolean')fields[key]=raw[key];else report(DiagnosticId.CS7088,[optionName,String(raw[key])]);};
 
-  if(given('name')){const name=raw.name;if(typeof name==='string'&&name.length>0&&!/^\s|[\\/:*?"<>|\u0000-\u001f]/.test(name))fields.name=name;else report('CS8203',[String(name)]);}
+  if(given('name')){const name=raw.name;if(typeof name==='string'&&name.length>0&&!/^\s|[\\/:*?"<>|\u0000-\u001f]/.test(name))fields.name=name;else report(DiagnosticId.CS8203,[String(name)]);}
   if(given('outputKind')){
     const kind=raw.outputKind;
-    if(typeof kind!=='string'||!outputKinds.includes(kind))report('CS2019');
-    else if(profile&&!profileOutputKinds.includes(kind))report('SF2008',[kind]);
+    if(typeof kind!=='string'||!outputKinds.includes(kind))report(DiagnosticId.CS2019);
+    else if(profile&&!profileOutputKinds.includes(kind))report(DiagnosticId.SF2008,[kind]);
     else fields.outputKind=kind;
   }
   // The JavaScript API takes real booleans here; SF2009 is the existing code for that typing error.
-  if(given('checkOverflow')||raw.checkOverflow===null){if(typeof raw.checkOverflow==='boolean')fields.checkOverflow=raw.checkOverflow;else report('SF2009',['checkOverflow']);}
-  if(given('checkOverflowByUri')){if(isPlainObject(raw.checkOverflowByUri)&&Object.values(raw.checkOverflowByUri).every(v=>typeof v==='boolean'))fields.checkOverflowByUri={...raw.checkOverflowByUri};else if(!diagnostics.some(d=>d.code==='SF2009'))report('SF2009',['checkOverflow']);}
+  if(given('checkOverflow')||raw.checkOverflow===null){if(typeof raw.checkOverflow==='boolean')fields.checkOverflow=raw.checkOverflow;else report(DiagnosticId.SF2009,['checkOverflow']);}
+  if(given('checkOverflowByUri')){if(isPlainObject(raw.checkOverflowByUri)&&Object.values(raw.checkOverflowByUri).every(v=>typeof v==='boolean'))fields.checkOverflowByUri={...raw.checkOverflowByUri};else if(!diagnostics.some(d=>d.code===DiagnosticId.SF2009))report(DiagnosticId.SF2009,['checkOverflow']);}
   boolean('allowUnsafe','AllowUnsafe');boolean('deterministic','Deterministic');boolean('treatWarningsAsErrors','TreatWarningsAsErrors');
 
   const language=(value)=>{
     const parsed=parseLanguageVersion(value);
-    if(!parsed||typeof value!=='string'&&typeof value!=='number'){report('CS1617',[String(value)]);return null;}
+    if(!parsed||typeof value!=='string'&&typeof value!=='number'){report(DiagnosticId.CS1617,[String(value)]);return null;}
     return parsed;
   };
   let selected=null;
   if(given('langVersion')){selected=language(raw.langVersion);if(selected)fields.langVersion=selected.name;}
   if(given('langVersionByUri')){
-    if(!isPlainObject(raw.langVersionByUri))report('CS1617',[String(raw.langVersionByUri)]);
+    if(!isPlainObject(raw.langVersionByUri))report(DiagnosticId.CS1617,[String(raw.langVersionByUri)]);
     else{const map={};for(const [uri,value] of Object.entries(raw.langVersionByUri)){const parsed=language(value);if(parsed)map[uri]=parsed.name;}fields.langVersionByUri=map;}
   }
   const nullable=given('nullableContext')?raw.nullableContext:given('nullable')?raw.nullable:undefined;
   if(nullable!==undefined){
     const value=String(nullable).trim().toLowerCase();
-    if(typeof nullable!=='string'||!nullableContexts.includes(value))report('CS8636',[String(nullable)]);
-    else if(value!=='disable'&&selected&&selected.number<8)report('CS8630',['nullable',value[0].toUpperCase()+value.slice(1),selected.display,'8.0']);
+    if(typeof nullable!=='string'||!nullableContexts.includes(value))report(DiagnosticId.CS8636,[String(nullable)]);
+    else if(value!=='disable'&&selected&&selected.number<8)report(DiagnosticId.CS8630,['nullable',value[0].toUpperCase()+value.slice(1),selected.display,'8.0']);
     else fields.nullableContext=value;
   }
-  if(given('optimizationLevel')){const value=String(raw.optimizationLevel).trim().toLowerCase();if(typeof raw.optimizationLevel==='string'&&optimizationLevels.includes(value))fields.optimizationLevel=value;else report('CS7088',['OptimizationLevel',String(raw.optimizationLevel)]);}
-  else if(given('optimize')){if(typeof raw.optimize==='boolean')fields.optimizationLevel=raw.optimize?'release':'debug';else report('CS7088',['OptimizationLevel',String(raw.optimize)]);}
+  if(given('optimizationLevel')){const value=String(raw.optimizationLevel).trim().toLowerCase();if(typeof raw.optimizationLevel==='string'&&optimizationLevels.includes(value))fields.optimizationLevel=value;else report(DiagnosticId.CS7088,['OptimizationLevel',String(raw.optimizationLevel)]);}
+  else if(given('optimize')){if(typeof raw.optimize==='boolean')fields.optimizationLevel=raw.optimize?'release':'debug';else report(DiagnosticId.CS7088,['OptimizationLevel',String(raw.optimize)]);}
   if(given('preprocessorSymbols')){
     const symbols=[];
-    for(const symbol of splitList(raw.preprocessorSymbols)){if(isIdentifier(symbol))symbols.push(symbol);else report('CS2029',[symbol]);}
+    for(const symbol of splitList(raw.preprocessorSymbols)){if(isIdentifier(symbol))symbols.push(symbol);else report(DiagnosticId.CS2029,[symbol]);}
     fields.preprocessorSymbols=unique(symbols);
   }
   if(given('warningLevel')){
     const level=typeof raw.warningLevel==='string'&&/^\s*[+-]?\d+\s*$/.test(raw.warningLevel)?Number(raw.warningLevel):raw.warningLevel;
-    if(Number.isInteger(level)&&level>=0)fields.warningLevel=level;else report('CS1900');
+    if(Number.isInteger(level)&&level>=0)fields.warningLevel=level;else report(DiagnosticId.CS1900);
   }
   for(const key of ['noWarn','warnAsError','warnNotAsError']){
     if(!given(key))continue;
@@ -163,8 +164,8 @@ export function parseCompilationOptions(raw={},{profile=true}={}){
   }
   if(given('mainTypeName')){
     const main=raw.mainTypeName,kind=fields.outputKind??'exe';
-    if(typeof main!=='string'||!main.trim())report('CS7088',['MainTypeName',String(main)]);
-    else if(['library','module','winmdobj'].includes(kind))report('CS2017');
+    if(typeof main!=='string'||!main.trim())report(DiagnosticId.CS7088,['MainTypeName',String(main)]);
+    else if(['library','module','winmdobj'].includes(kind))report(DiagnosticId.CS2017);
     else fields.mainTypeName=main.trim();
   }
   return {options:new CompilationOptions(fields),diagnostics};
@@ -184,7 +185,7 @@ export function fromMSBuildProperties(properties={},settings={}){
   const lower=new Map(Object.entries(properties??{}).map(([k,v])=>[k.toLowerCase(),v]));
   const get=name=>{const v=lower.get(name.toLowerCase());if(v===undefined||v===null)return undefined;const text=String(v).trim();return text===''?undefined:text;};
   const raw={},early=[];
-  const boolean=(name,key,flag)=>{const v=get(name);if(v===undefined)return;const t=v.toLowerCase();if(t==='true'||t==='false')raw[key]=t==='true';else early.push({code:'CS2007',args:[`/${flag}:${v}`]});};
+  const boolean=(name,key,flag)=>{const v=get(name);if(v===undefined)return;const t=v.toLowerCase();if(t==='true'||t==='false')raw[key]=t==='true';else early.push({code:DiagnosticId.CS2007,args:[`/${flag}:${v}`]});};
   const output=get('OutputType');if(output!==undefined)raw.outputKind=output.toLowerCase();
   boolean('CheckForOverflowUnderflow','checkOverflow','checked');boolean('AllowUnsafeBlocks','allowUnsafe','unsafe');boolean('Optimize','optimize','optimize');
   boolean('Deterministic','deterministic','deterministic');boolean('TreatWarningsAsErrors','treatWarningsAsErrors','warnaserror');

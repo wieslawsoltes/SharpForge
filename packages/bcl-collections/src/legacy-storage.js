@@ -3,6 +3,8 @@ import {keyOf} from './object-equality.js';
 
 export {keyOf} from './object-equality.js';
 
+export const ACTIVE_SLOT = -2;
+
 export function count(p, reference) {
   return p.get(reference, '$count', 0);
 }
@@ -43,11 +45,28 @@ export function commitItems(p, reference, items, slots = 1) {
 }
 
 export function write(p, reference, index, value) {
-  const storage = p.get(reference, '$data');
+  writeArray(p, p.get(reference, '$data'), index, value);
+}
+
+export function writeArray(p, storage, index, value) {
   const record = p.heap.get(storage);
   const oldValue = record.data[index];
   record.data[index] = value;
   p.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index, oldValue, value});
+}
+
+/** Dense collections retain their prefix; indexed collections skip released slots. */
+export function* positions(p, reference) {
+  const slots = p.get(reference, '$slots');
+  const states = slots ? p.heap.get(slots).data : null;
+  const length = states ? p.get(reference, '$used', 0) : count(p, reference);
+  for (let position = 0; position < length; position++) {
+    if (!states || states[position] === ACTIVE_SLOT) yield position;
+  }
+}
+
+export function rememberIndex(p, reference, index) {
+  p.bclIndexes.set(p.record(reference), {version: version(p, reference), index});
 }
 
 export function queueItems(p, reference) {
@@ -88,7 +107,7 @@ export function indexMap(p, reference, slots = 1) {
   if (cache?.version !== revision) {
     const index = new Map();
     const items = data(p, reference);
-    for (let position = 0; position < count(p, reference); position++) {
+    for (const position of positions(p, reference)) {
       index.set(keyOf(p, items[position * slots]), position);
     }
     cache = {version: revision, index};

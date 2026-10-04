@@ -1,0 +1,38 @@
+{
+  "runtime": ".NET 10.0.5",
+  "hashAlgorithm": "Sha256",
+  "modules": [
+    {
+      "name": "Alpha.netmodule",
+      "hashMatches": true,
+      "typeHintsMatch": true,
+      "containsMetadata": true
+    },
+    {
+      "name": "Beta.netmodule",
+      "hashMatches": true,
+      "typeHintsMatch": true,
+      "containsMetadata": true
+    }
+  ],
+  "exports": [
+    {
+      "token": 654311425,
+      "name": "Alpha",
+      "implementation": 637534209,
+      "typeDefId": 4
+    },
+    {
+      "token": 654311426,
+      "name": "Beta",
+      "implementation": 637534210,
+      "typeDefId": 2
+    },
+    {
+      "token": 654311427,
+      "name": "Nested",
+      "implementation": 654311426,
+      "typeDefId": 4
+    }
+  ]
+}
