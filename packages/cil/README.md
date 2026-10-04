@@ -130,3 +130,10 @@ The [project metadata contract](PROJECT-METADATA.md) documents generated assembl
 attributes, resources, source type/member visibility, named properties and canonical
 unlinked external-reference emission. It preserves the existing public emitter and
 loader result shapes.
+
+## Closed project graphs
+
+`loadProjectAssembly` loads an explicitly supplied closure of canonical project PEs.
+It verifies identities, content hashes, definition tokens and access before returning
+an independent linked image plus the retained original modules and source provenance.
+See [PROJECT-ASSEMBLIES.md](./PROJECT-ASSEMBLIES.md) for the public contract and limits.
