@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {DockLayout, createGroup, createSplit} from '@sharpforge/docking';
 import {DesignerDocuments} from '../apps/studio/designer-documents.js';
 import {sessionDom} from './fixtures/a18-session-dom.js';
+import {editorModelView, attachEditorModelInput} from './fixtures/a18-editor-model-view.js';
 
 /** Native focus precedes bubbling focusin, including both production listeners installed by DesignerDocuments.wrap. */
 function focusDom() {
@@ -74,11 +75,10 @@ function navigationHost({connect = () => Promise.resolve(), secondUri = 'B.cs', 
   for (const file of state.files) {
     const element = document.createElement('section');
     const input = document.createElement('textarea');
-    input.value = file.text;
+    const editor = attachEditorModelInput(editorModelView(file.text, file.uri), input);
     input.setSelectionRange(3, 7);
     element.append(input);
     document.body.append(element);
-    const editor = {input, focus: () => input.focus(), paint() {}};
     editors.set(file.uri, editor);
     documents.wrap(file.uri, element, editor);
   }
@@ -90,7 +90,7 @@ function navigationHost({connect = () => Promise.resolve(), secondUri = 'B.cs', 
   });
   return {document, documents, state, layout, calls, panels, editors, failures, openSource,
     ready: Promise.all([...documents.views.values()].map(view => view.ready)),
-    dispose() { unsubscribe(); documents.dispose(); }
+    dispose() { unsubscribe(); documents.dispose(); for (const editor of editors.values()) editor.dispose(); }
   };
 }
 

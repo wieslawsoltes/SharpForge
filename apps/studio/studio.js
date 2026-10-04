@@ -21,6 +21,7 @@ import {createAboutDialogs} from './dialogs/about.js';
 import {RuntimeTools} from './runtime-tools.js';
 import {createDesignerWorkbench} from './designer-workbench.js';
 import {DesignerMainAppSources} from './designer-main-app-sources.js';
+import {applyDesignerSourceTransaction,applyStudioSourceChange} from './designer-source-transaction.js';
 import {DesignerWorkerChannel} from './designer-worker-channel.js';
 import {ProjectWizard} from './project-wizard.js';
 import {importWorkspaceRecords,workspaceManifestRecord,importWorkspaceZip,exportWorkspaceZip,validateWorkspaceSettings,workspaceCandidates,writeNewDirectory,decodeWorkspaceFile,encodeWorkspaceFile,prefixWorkspace,convertLegacySolution} from '../../packages/project-system/src/index.js';
@@ -94,7 +95,7 @@ function createSourceDocument(uri){
  const root=document.createElement('div');root.className='source-document';root.dataset.sourceUri=uri;
  if(/\.sfdesign\.json$/i.test(uri))return designerWorkbench.documents.wrap(uri,root,null,designerWorkbench.documents.file(uri));
  const host=document.createElement('div');host.className='editor-host';root.append(host);
- const instance=new CodeEditor(host,{keymap:state.keymap,onKeymapState:value=>{if(!state.active||state.active===uri)updateKeymapStatus(value);},onChange:text=>{if(state.applyingEdits)return;const file=state.files.find(f=>f.uri===uri);if(!file)return;state.breakpoints[uri]=remapSourceBreakpoints(file.text,text,state.breakpoints[uri]??[]);file.text=text;file.version++;state.revision++;state.buildDirty=true;state.dirtyFiles.add(uri);state.diskRevision++;renderTabs();renderTree();saveSoon();scheduleAnalysis();setEditorDecorations();designerWorkbench?.sourceChanged(uri);},onCursor:position=>{if(state.active===uri){$('#status-cursor').textContent=`Ln ${position.line+1}, Col ${position.character+1}`;updateKeymapStatus({keymap:state.keymap,mode:editors.get(uri)?.modalMode});}},onBreakpoint:line=>toggleBreakpoint(uri,line),onBreakpointEdit:(line,event)=>event?showBreakpointMenu(uri,line,event):editBreakpoint(uri,line),request:languageRequest});
+ const instance=new CodeEditor(host,{keymap:state.keymap,onKeymapState:value=>{if(!state.active||state.active===uri)updateKeymapStatus(value);},onChange:text=>{if(!applyStudioSourceChange({state,uri,text,remapBreakpoints:remapSourceBreakpoints}))return;renderTabs();renderTree();saveSoon();scheduleAnalysis();setEditorDecorations();designerWorkbench?.sourceChanged(uri);},onCursor:position=>{if(state.active===uri){$('#status-cursor').textContent=`Ln ${position.line+1}, Col ${position.character+1}`;updateKeymapStatus({keymap:state.keymap,mode:editors.get(uri)?.modalMode});}},onBreakpoint:line=>toggleBreakpoint(uri,line),onBreakpointEdit:(line,event)=>event?showBreakpointMenu(uri,line,event):editBreakpoint(uri,line),request:languageRequest});
  editors.set(uri,instance);instance.setModel(uri,state.files.find(f=>f.uri===uri)?.text??'');instance.input.setAttribute('aria-label',uri+' — C# source editor');
  return designerWorkbench?.documents.wrap(uri,root,instance)??root;
 }
@@ -306,7 +307,11 @@ async function refreshWatches(){if(state.debug?.state!=='paused'){state.watchRes
 async function languageRequest(method,params){try{if(['save','closeDocument','openDocument','nextDocument','previousDocument','findFiles'].includes(method))return await editorHostCommand(method,params);if(method==='hover'&&state.debug?.state==='paused'&&matchesDebugSource(params.uri)){const file=state.files.find(f=>f.uri===params.uri),offset=params.offset;let start=offset,end=offset;while(start>0&&/[\w]/.test(file.text[start-1]))start--;while(end<file.text.length&&/[\w]/.test(file.text[end]))end++;const expression=file.text.slice(start,end);if(/^[A-Za-z_]\w*$/.test(expression)){const sessionId=state.debug.sessionId,frameId=state.frameId;try{const value=await runtime.request('evaluate',{expression,frameId,sessionId});if(state.debug?.sessionId===sessionId&&state.frameId===frameId)return {contents:expression+' = '+value.result+'\n'+value.type+' · selected paused frame · side-effect-free data tip'};}catch{}}}
  if(method==='callHierarchy'){await showCallHierarchy(params);return;}if(method==='codeActions')return await codeActions(params);if(method==='format'){const action=await requestCompiler('format',params);return await applyRefactoring(action);}if(method==='definition'){const result=await requestCompiler(method,params);if(result)openFile(result.uri,result.start,result.end);else toast('No bound definition at this position.');return result;}if(method==='references'){const refs=await requestCompiler(method,params);showReferences(refs);return refs;}if(method==='rename'){if(state.readOnly){toast('Stop debugging before renaming.');return;}const name=await ask('Rename symbol',`<div class="form-row"><label for="new-symbol">New name</label><input id="new-symbol" autofocus placeholder="New identifier"></div><p>Applies bound references only. Type renaming is not yet supported.</p>`,'Rename',()=>$('#new-symbol').value.trim());if(!name)return;const edits=await requestCompiler('rename',{...params,newName:name});await applyRefactoring({title:`Renamed ${edits.length} bound occurrences.`,edits});return;}
  return await requestCompiler(method,params);}catch(error){if(['hover','completion'].includes(method))return null;toast(error.message,'error');if(['save','closeDocument','openDocument'].includes(method))return false;}}
-function applyEdits(edits){state.applyingEdits=true;try{for(const file of state.files){const fileEdits=edits.filter(e=>e.uri===file.uri).sort((a,b)=>b.start-a.start);if(!fileEdits.length)continue;const before=file.text;for(const e of fileEdits)file.text=file.text.slice(0,e.start)+e.newText+file.text.slice(e.end);state.breakpoints[file.uri]=remapSourceBreakpoints(before,file.text,state.breakpoints[file.uri]??[]);file.version++;state.dirtyFiles.add(file.uri);const instance=editors.get(file.uri);if(instance&&instance.value!==file.text)instance.setValue(file.text);}}finally{state.applyingEdits=false;}state.revision++;state.diskRevision++;state.buildDirty=true;renderWorkspace();saveLocal();analyze();for(const uri of new Set(edits.map(e=>e.uri)))designerWorkbench?.sourceChanged(uri);}
+function applyEdits(edits){
+ const uris=applyDesignerSourceTransaction({state,editors,edits,remapBreakpoints:remapSourceBreakpoints});
+ if(!uris.length)return;
+ renderWorkspace();saveLocal();analyze();for(const uri of uris)designerWorkbench?.sourceChanged(uri);
+}
 
 function showReferences(refs){state.toolReferences=refs;setPanel('references');}
 function toggleBreakpoint(uri,line){const bps=state.breakpoints[uri]??=[];const existing=sourceBreakpointAt(bps,state.debug?.profile!=='managed-il'&&!state.buildDirty?state.debug?.breakpoints?.filter(b=>b.uri===uri)??[]:[],line);const index=bps.indexOf(existing);if(index>=0)bps.splice(index,1);else bps.push({line,enabled:true});bps.sort((a,b)=>a.line-b.line);syncBreakpoints(uri);setEditorDecorations();renderPanel('breakpoints');saveLocal();}
@@ -398,11 +403,6 @@ function commandsDialog(){showModal('Command palette',`<input class="command-inp
 
 function openMenuAt(x,y,items,options={}){sharedMenu.show({items:items.map(item=>Array.isArray(item)?[item[0],typeof item[1]==='function'?item[1]:()=>execute(item[1]),item[2],item[3]]:item),x,y,...options});}
 function closeMenu(){sharedMenu.close(false);$$('[data-menu]').forEach(b=>b.classList.remove('active'));}
-
-
-
-
-
 async function execute(command){try{return await commandRegistry.execute(command);}catch(error){toast(error.message,'error');}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-command]');if(b&&!b.disabled)execute(b.dataset.command);});
 for(const content of docking.content.values())content.addEventListener('click',e=>{const button=e.target.closest('[data-command]');if(button){e.stopPropagation();if(!button.disabled)execute(button.dataset.command);}});

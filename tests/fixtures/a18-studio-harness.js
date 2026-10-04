@@ -4,6 +4,7 @@ import {DesignerSourceSync} from '../../apps/studio/designer-source-sync.js';
 import {DesignerDocumentHistory} from '../../apps/studio/designer-document-history.js';
 import {createDesignerSourceServices, designerCompilationContext} from '../../apps/studio/designer-source-services.js';
 import {designerSourceDocument} from '../../apps/studio/designer-source-projection.js';
+import {editorModelView} from './a18-editor-model-view.js';
 
 export const ownerUri = 'App/View.cs';
 export const constructionUri = 'App/View.g.cs';
@@ -90,29 +91,22 @@ function compilerTransport(test) {
 }
 
 function sourceEditor(file) {
-  let modal = {done: ['before ' + file.uri], undone: []};
-  return {
-    uri: file.uri, get value() { return file.text; }, history: ['typing before ' + file.uri], future: [], lastEdit: 10,
-    input: {selectionStart: 3, selectionEnd: 8, scrollTop: 40, scrollLeft: 5,
-      setSelectionRange(start, end) { this.selectionStart = start; this.selectionEnd = end; }},
-    keymapAdapter: {cm: {getHistory: () => structuredClone(modal), setHistory: value => { modal = structuredClone(value); }}},
-    cursor() { this.cursorUpdates = (this.cursorUpdates ?? 0) + 1; }
-  };
+  const editor = editorModelView(file.text + ' ', file.uri);
+  editor.setValue(file.text);
+  editor.setSelections([{anchor: 3, active: 8}, {anchor: 14, active: 11}], {primaryIndex: 1});
+  editor.view.scrollTo({top: 40, left: 5});
+  editor.cursorUpdates = 0;
+  return editor;
 }
 
 function commitEditorText(editor, file, text) {
-  editor.history.push(file.text);
-  editor.future.length = 0;
-  editor.lastEdit++;
-  const modal = editor.keymapAdapter.cm.getHistory();
-  modal.done.push(file.text);
-  modal.undone.length = 0;
-  editor.keymapAdapter.cm.setHistory(modal);
+  editor.setValue(text);
   file.text = text;
   file.version++;
-  editor.input.setSelectionRange(0, 0);
-  editor.input.scrollTop = 0;
-  editor.input.scrollLeft = 0;
+  editor.model.setSelections([{anchor: 0, active: 0}], {notify: false});
+  editor.selections = editor.model.selections;
+  editor.primaryIndex = 0;
+  editor.view.scrollTo({top: 0, left: 0});
 }
 
 function editorBoundary({state, editors, notify, applied}) {
@@ -157,7 +151,7 @@ function previewBoundary({state, document, services, navigation, previews}) {
   };
 }
 
-/** Fake editor/preview edges surround the production SourceSync, source services, history and compiler worker. */
+/** Public EditorModels and explicit view edges surround production SourceSync, services, history and compiler worker. */
 export async function studioHarness(test, options = {}) {
   const state = {name: 'DesignerTransactions', revision: 10, active: ownerUri, readOnly: false,
     startupProject: 'Other/Other.csproj', langVersion: 'preview', extensionConfig: null, files: partialSources(options)};
@@ -194,7 +188,10 @@ export async function studioHarness(test, options = {}) {
     if (event.kind !== 'selection') view.host.load(projectDesignerAuthoringScene(document.value, designScene(document.value)));
     sync.designChanged(event);
   });
-  test.after(() => { subscription(); sync.dispose(); history.dispose(); document.dispose(); });
+  test.after(() => {
+    subscription(); sync.dispose(); history.dispose(); document.dispose();
+    for (const editor of editors.values()) editor.dispose();
+  });
   return {state, compiler, editors, documents, history, services, document, view, sync, applied, restored, navigation, previews, file, type,
     async connect() { return sync.connect(ownerUri); },
     async plan() {
@@ -212,9 +209,7 @@ export function sourceState(harness) {
   return {revision: harness.state.revision, files: harness.state.files.map(file => ({uri: file.uri, text: file.text, version: file.version})),
     applied: harness.applied.length, past: harness.history.past.length, future: harness.history.future.length,
     editors: Object.fromEntries([...harness.editors].map(([uri, editor]) => [uri, {
-      history: [...editor.history], future: [...editor.future], lastEdit: editor.lastEdit,
-      start: editor.input.selectionStart, end: editor.input.selectionEnd,
-      scrollTop: editor.input.scrollTop, scrollLeft: editor.input.scrollLeft,
-      modalHistory: editor.keymapAdapter.cm.getHistory()
+      undo: editor.model.undoStack.checkpoint(), selections: editor.getSelections(), primaryIndex: editor.primaryIndex,
+      scrollTop: editor.view.scrollTop, scrollLeft: editor.view.viewport.scrollLeft
     }]))};
 }
