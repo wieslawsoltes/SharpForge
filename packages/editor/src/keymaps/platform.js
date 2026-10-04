@@ -30,11 +30,20 @@ export function normalizeStroke(value, platform = 'windows') {
   return [...['Ctrl', 'Meta', 'Alt', 'Shift'].filter(part => modifiers.has(part)), key].join('+');
 }
 
+// Normalize Shift+punctuation against its observed physical key only; other keyboard layouts retain their logical key.
+const punctuationKeys = Object.freeze({
+  BracketLeft: ['[', '{'], BracketRight: [']', '}'], Backslash: ['\\', '|'],
+  Comma: [',', '<'], Period: ['.', '>'], Slash: ['/', '?'], Semicolon: [';', ':'],
+  Quote: ["'", '"'], Minus: ['-', '_'], Equal: ['=', '+'], Backquote: ['`', '~']
+});
+
 /** Converts a trusted keyboard event without treating AltGraph text entry as a shortcut. */
 export function eventStroke(event, platform = 'windows') {
   if (event.isComposing || event.keyCode === 229 || event.getModifierState?.('AltGraph')) return null;
   if (['Control', 'Meta', 'Alt', 'Shift', 'AltGraph', 'Dead', 'Process', 'Unidentified'].includes(event.key)) return null;
-  const key = event.key === ' ' ? 'Space' : event.key;
+  let key = event.key === ' ' ? 'Space' : event.key;
+  const physical = punctuationKeys[event.code];
+  if (event.shiftKey && physical?.[1] === key) key = physical[0];
   if (typeof key !== 'string' || !key) return null;
   const parts = [];
   if (event.ctrlKey) parts.push('Ctrl');

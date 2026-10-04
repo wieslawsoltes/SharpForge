@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "complete": true,
+  "compilerVersions": [
+    "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "4.8.0-7.23558.1 (e0917286)"
+  ],
+  "results": [
+    {
+      "name": "SRM reads emitted SHA256 symbols",
+      "status": "passed",
+      "pdbSha256": "0d2487a21bd891b195ae03499f7a5e3f43f6ca5714922f2019fb5a0ecc1c7775"
+    },
+    {
+      "name": "SRM reads emitted SHA384 symbols",
+      "status": "passed",
+      "pdbSha256": "0d2487a21bd891b195ae03499f7a5e3f43f6ca5714922f2019fb5a0ecc1c7775"
+    },
+    {
+      "name": "SRM reads emitted SHA512 symbols",
+      "status": "passed",
+      "pdbSha256": "0d2487a21bd891b195ae03499f7a5e3f43f6ca5714922f2019fb5a0ecc1c7775"
+    },
+    {
+      "name": "SRM document name byte identity",
+      "status": "passed"
+    },
+    {
+      "name": "Installed SDK Roslyn cs",
+      "status": "passed",
+      "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+      "pdbSha256": "90e5332c1942c17ff4ca17e5d5ec94bba27930aaedc5d8d7bc8c663dc5c26c0e",
+      "kinds": [
+        "0e8a571b-6926-466e-b4ad-8ab04611f5fe",
+        "54fd2ac5-e925-401a-9c2a-f94f171072f8",
+        "6da9a61e-f8c7-4874-be62-68bc5630df71",
+        "755f52a8-91c5-45be-b4b8-209571e552bd",
+        "7e4d4708-096e-4c5c-aeda-cb10ba6a740d",
+        "83c563c4-b4f3-47d5-b824-ba5441477ea8",
+        "8b78cd68-2ede-420b-980b-e15884b8aaa3",
+        "932e74bc-dba9-4478-8d46-0f32a7bab3d3",
+        "9d40ace1-c703-4d0e-bf41-7243060a8fb5",
+        "a643004c-0240-496f-a783-30d64f4979de",
+        "b5feec05-8cd0-4a83-96da-466284bb4bd8",
+        "cc110556-a091-4d38-9fec-25ab9a351a6a",
+        "ed9fdf71-8879-4747-8ed3-fe5ede3ce710"
+      ]
+    },
+    {
+      "name": "Installed SDK Roslyn vb",
+      "status": "passed",
+      "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "compilerSha256": "61c990abc92c6fe091be160cd949447a0678256bc1b2dac30ef595304c7d7f1d",
+      "pdbSha256": "95178beaf41909cc73ab5ab3eaa69b3e0c70cdd68e1a2dfb180a098be51bd826",
+      "kinds": [
+        "0e8a571b-6926-466e-b4ad-8ab04611f5fe",
+        "58b2eab6-209f-4e4e-a22c-b2d0f910c782",
+        "755f52a8-91c5-45be-b4b8-209571e552bd",
+        "7e4d4708-096e-4c5c-aeda-cb10ba6a740d",
+        "932e74bc-dba9-4478-8d46-0f32a7bab3d3",
+        "b5feec05-8cd0-4a83-96da-466284bb4bd8",
+        "cc110556-a091-4d38-9fec-25ab9a351a6a",
+        "ed9fdf71-8879-4747-8ed3-fe5ede3ce710"
+      ]
+    },
+    {
+      "name": "Roslyn 4.8.0 cs",
+      "status": "passed",
+      "compilerVersion": "4.8.0-7.23558.1 (e0917286)",
+      "compilerSha256": "6a028261ae5eac77f823d28ead7bbb9d374156aa224e586ad480e865ace1ca82",
+      "pdbSha256": "dff0aa8eec2d314be9cabdd1dfccf0d1f62e59155270effcd0e73059418d3e31",
+      "kinds": [
+        "0e8a571b-6926-466e-b4ad-8ab04611f5fe",
+        "54fd2ac5-e925-401a-9c2a-f94f171072f8",
+        "6da9a61e-f8c7-4874-be62-68bc5630df71",
+        "755f52a8-91c5-45be-b4b8-209571e552bd",
+        "7e4d4708-096e-4c5c-aeda-cb10ba6a740d",
+        "83c563c4-b4f3-47d5-b824-ba5441477ea8",
+        "8b78cd68-2ede-420b-980b-e15884b8aaa3",
+        "932e74bc-dba9-4478-8d46-0f32a7bab3d3",
+        "9d40ace1-c703-4d0e-bf41-7243060a8fb5",
+        "a643004c-0240-496f-a783-30d64f4979de",
+        "b5feec05-8cd0-4a83-96da-466284bb4bd8",
+        "cc110556-a091-4d38-9fec-25ab9a351a6a",
+        "ed9fdf71-8879-4747-8ed3-fe5ede3ce710"
+      ]
+    },
+    {
+      "name": "Roslyn 4.8.0 vb",
+      "status": "passed",
+      "compilerVersion": "4.8.0-7.23558.1 (e0917286)",
+      "compilerSha256": "b989b8258d551bc213cfc9e8ab554b74576de1e9e823ee2fac5141af33cd4317",
+      "pdbSha256": "197fe37d8a48cb5ea1fffe9f8f8e72b1047ea5694082a0ea6a42e54dbea40c55",
+      "kinds": [
+        "0e8a571b-6926-466e-b4ad-8ab04611f5fe",
+        "58b2eab6-209f-4e4e-a22c-b2d0f910c782",
+        "755f52a8-91c5-45be-b4b8-209571e552bd",
+        "7e4d4708-096e-4c5c-aeda-cb10ba6a740d",
+        "932e74bc-dba9-4478-8d46-0f32a7bab3d3",
+        "b5feec05-8cd0-4a83-96da-466284bb4bd8",
+        "cc110556-a091-4d38-9fec-25ab9a351a6a",
+        "ed9fdf71-8879-4747-8ed3-fe5ede3ce710"
+      ]
+    }
+  ]
+}

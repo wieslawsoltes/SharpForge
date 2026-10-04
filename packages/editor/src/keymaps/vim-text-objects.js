@@ -1,4 +1,4 @@
-const isWord = character => character !== undefined && /[\p{L}\p{N}\p{M}_]/u.test(character);
+import { wordRuns } from './vim-motions.js';
 
 /** Text-object ranges are half-open UTF-16 spans; bracket objects reuse the editor's syntax-aware pair index. */
 export function textObject(context, offset, key, around = false, count = 1) {
@@ -7,23 +7,22 @@ export function textObject(context, offset, key, around = false, count = 1) {
   const line = context.line(position.line);
   const column = Math.min(position.character, Math.max(0, line.length - 1));
   if (key === 'w' || key === 'W') {
-    const kind = character => /\s/u.test(character ?? '') ? 0 : key === 'W' || isWord(character) ? 1 : 2;
-    let start = column;
-    let end = column + 1;
-    while (start > 0 && kind(line[start - 1]) === kind(line[column])) start--;
-    for (let step = 0; step < count; step++) {
-      while (end < line.length && kind(line[end]) === kind(line[end - 1])) end++;
-      if (step + 1 < count) {
-        while (end < line.length && /\s/u.test(line[end])) end++;
-        end++;
-      }
+    const runs = wordRuns(context, position.line, key === 'W');
+    let index = runs.findIndex(run => run.start <= column && column < run.end);
+    if (index < 0) return { start: lineStart, end: lineStart, linewise: false };
+    let start = runs[index].start;
+    let end = runs[index].end;
+    for (let step = 1; step < count; step++) {
+      do { index++; } while (index < runs.length && !runs[index].kind);
+      if (index >= runs.length) break;
+      end = runs[index].end;
     }
     if (around) {
       const original = end;
       while (end < line.length && /\s/u.test(line[end])) end++;
       if (end === original) while (start > 0 && /\s/u.test(line[start - 1])) start--;
     }
-    return { start: lineStart + start, end: lineStart + Math.min(line.length, end), linewise: false };
+    return { start: lineStart + start, end: lineStart + end, linewise: false };
   }
   if (['"', "'", '`'].includes(key)) {
     const positions = [];

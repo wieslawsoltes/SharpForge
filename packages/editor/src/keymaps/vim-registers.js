@@ -18,23 +18,24 @@ export class VimRegisters {
     if (!/^[a-zA-Z0-9"+*_-]$/.test(name)) throw new Error('Invalid Vim register');
     if (text.length > this.maxCharacters) throw new RangeError('Vim register exceeds the configured character budget');
     if (name === '_') return;
-    if (name === '+' || name === '*') {
-      this.context.writeClipboard(text).catch(error => this.context.status(`Clipboard: ${error.message}`));
-    }
     const key = /^[A-Z]$/.test(name) ? name.toLowerCase() : name;
     const previous = this.values.get(key);
     const value = { text: /^[A-Z]$/.test(name) && previous ? previous.text + text : text, linewise };
     if (value.text.length > this.maxCharacters) throw new RangeError('Vim appended register exceeds the character budget');
-    this.values.set(key, value);
-    this.values.set('"', value);
-    if (yank) this.values.set('0', value);
-    else {
-      for (let number = 9; number > 1; number--) {
-        const item = this.values.get(String(number - 1));
-        if (item) this.values.set(String(number), item);
+    const commit = () => {
+      this.values.set(key, value);
+      this.values.set('"', value);
+      if (yank) this.values.set('0', value);
+      else {
+        for (let number = 9; number > 1; number--) {
+          const item = this.values.get(String(number - 1));
+          if (item) this.values.set(String(number), item);
+        }
+        this.values.set(linewise || text.includes('\n') ? '1' : '-', value);
       }
-      this.values.set(linewise || text.includes('\n') ? '1' : '-', value);
-    }
+    };
+    if (name === '+' || name === '*') return this.context.writeClipboard(text).then(commit);
+    commit();
   }
   setMacro(name, tokens) {
     if (!/^[a-zA-Z0-9]$/.test(name)) throw new Error('A macro requires a named register');
