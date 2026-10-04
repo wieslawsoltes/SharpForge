@@ -25,3 +25,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Fluent theme resources
 
 `FluentResources` provides the pinned Light, Dark and HighContrast color and brush catalog. The resource inventory records its upstream revision; THIRD-PARTY-NOTICES.md contains the accompanying license. Accent ramps update live consumers, and `connectThemeHost` attaches browser theme and forced-color observations that disconnect with their explicit lease. HighContrast values use CSS system color tokens.
+
+## Object lifetimes and UI dispatch
+
+`UIObjectTree` keeps logical and visual parents, bounded host-coordinate lookup and loading/unloading state. `DispatcherQueue` serializes work by priority and FIFO order on an injected logical UI thread. `RoutedEventRegistry` owns event identities; `RoutedHandlerList` delegates actual routing to the injected host router. `DisposableScope` owns subscriptions and supports in-memory rewind without replaying factories.
