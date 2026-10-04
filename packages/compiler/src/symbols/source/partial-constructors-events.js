@@ -9,6 +9,7 @@
  *   CS9280  a constructor initializer on the defining part of a partial constructor
  *   CS0751  not in a partial type       CS0763 / CS8799  static or accessibility differs between the parts
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind } from '../types.js';
 import { MethodKind, DeclarationModifiers } from '../members.js';
 
@@ -41,33 +42,33 @@ function mergeParts(parts, type, isDefining, adopt) {
     rows = [],
     removed = [],
     row = (member, code, args = [member.toDisplayString()]) => rows.push({ member, code, args });
-  if (!type.isPartial) for (const part of parts) row(part, 'CS0751', []);
+  if (!type.isPartial) for (const part of parts) row(part, DiagnosticId.CS0751, []);
   for (const extra of definitions.slice(1)) {
-    row(extra, 'CS9277');
+    row(extra, DiagnosticId.CS9277);
     // A repeated defining part is also a duplicate member: CS0111 for a constructor, CS0102 for an event.
-    if (extra.kind === SymbolKind.Method) row(extra, 'CS0111', [extra.containingType?.name ?? '', type.toDisplayString()]);
-    else row(extra, 'CS0102', [type.toDisplayString(), extra.name]);
+    if (extra.kind === SymbolKind.Method) row(extra, DiagnosticId.CS0111, [extra.containingType?.name ?? '', type.toDisplayString()]);
+    else row(extra, DiagnosticId.CS0102, [type.toDisplayString(), extra.name]);
     removed.push(extra);
   }
   for (const extra of implementations.slice(1)) {
-    row(extra, 'CS9278');
+    row(extra, DiagnosticId.CS9278);
     removed.push(extra);
   }
   if (definition && implementation) {
-    if (definition.isStatic !== implementation.isStatic) row(implementation, 'CS0763', []);
-    if (definition.declaredAccessibility !== implementation.declaredAccessibility) row(implementation, 'CS8799', []);
+    if (definition.isStatic !== implementation.isStatic) row(implementation, DiagnosticId.CS0763, []);
+    if (definition.declaredAccessibility !== implementation.declaredAccessibility) row(implementation, DiagnosticId.CS8799, []);
     adopt?.(definition, implementation, rows);
     implementation.partialDefinitionPart = definition;
     definition.partialImplementationPart = implementation;
     removed.push(definition);
-  } else if (implementation) row(implementation, 'CS9276');
-  else row(definition, 'CS9275');
+  } else if (implementation) row(implementation, DiagnosticId.CS9276);
+  else row(definition, DiagnosticId.CS9275);
   return { removed, rows };
 }
 
 /** Callers see the defining part of a constructor: its default values and parameter names. */
 function adoptConstructorSignature(definition, implementation, rows) {
-  if (definition.initializerSyntax) rows.push({ member: definition, code: 'CS9280', args: [definition.toDisplayString()], at: definition.initializerSyntax });
+  if (definition.initializerSyntax) rows.push({ member: definition, code: DiagnosticId.CS9280, args: [definition.toDisplayString()], at: definition.initializerSyntax });
   definition.parameters.forEach((from, index) => {
     const to = implementation.parameters[index];
     if (!to) return;
@@ -93,7 +94,7 @@ export function mergePartialConstructorsAndEvents(type, members) {
   for (const parts of groupBy(members.filter(isPartialConstructor), constructor => constructor.signatureKey))
     apply(mergeParts(parts, type, part => !part.hasBody, adoptConstructorSignature));
   for (const parts of groupBy(members.filter(isPartialEvent), event => event.name)) {
-    for (const part of parts) if (part.initializerSyntax) rows.push({ member: part, code: 'CS9279', args: [part.toDisplayString()] });
+    for (const part of parts) if (part.initializerSyntax) rows.push({ member: part, code: DiagnosticId.CS9279, args: [part.toDisplayString()] });
     apply(mergeParts(parts, type, isDefiningEvent, null));
   }
   return { removed, rows };
