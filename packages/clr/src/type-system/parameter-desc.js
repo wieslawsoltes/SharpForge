@@ -1,7 +1,10 @@
+import { readCustomModifierTokens } from './custom-modifiers.js';
+
 /** Canonical method or property parameter metadata. A zero token denotes an omitted Param row. */
 export class ParameterDesc {
   #state;
   #constant;
+  #modifiers;
   constructor(state, key) {
     if (key !== creationKey) throw new TypeError('Parameter descriptors are created by their runtime module');
     this.#state = state;
@@ -15,6 +18,13 @@ export class ParameterDesc {
   get member() { return this.#state.member ?? this.method; }
   get module() { return this.method.module; }
   get signatureType() { return this.#state.signatureType; }
+  get #customModifiers() {
+    if (this.#modifiers) return this.#modifiers;
+    const type = this.#state.source ? this.member.signature.parameters[this.position] : this.signatureType;
+    return this.#modifiers = readCustomModifierTokens(type, this.module);
+  }
+  get requiredCustomModifierTokens() { return this.#customModifiers.required; }
+  get optionalCustomModifierTokens() { return this.#customModifiers.optional; }
   get isIn() { return Boolean(this.flags & 1); }
   get isOut() { return Boolean(this.flags & 2); }
   get isOptional() { return Boolean(this.flags & 0x10); }

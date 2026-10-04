@@ -21,13 +21,15 @@ explicitly. Parked frame lookup reuses the existing scheduler frame inventory.
 Copying a struct into object storage requires boxing and is rejected here.
 
 Managed-reference fields, auto/explicit layouts, Nullable, readonly and
-byref-like structs, scoped/modified signatures, user-struct boxing, instance
-constructors/methods and constrained calls remain outside this leaf. User
-struct constructors reject before allocation; they never allocate a
-class-shaped substitute. Existing generic-call restrictions remain unchanged;
+byref-like structs, scoped/modified signatures, instance
+constructors/methods and constrained calls remain outside this storage leaf.
+The separate [direct instance-call leaf](runtime-value-instance-calls.md) adds
+nongeneric mutable methods and constructors, without class-shaped substitutes.
+Existing generic-call restrictions remain unchanged;
 aggregate `cpobj` admission is limited to a concrete TypeDef operand.
 Source custom-struct lowering, raw memory, portable snapshots and aggregate GC
 qualification remain pending; this increment does not close #1365 or #1366.
+The separate [boxing leaf](runtime-value-boxing.md) adds user-struct boxes.
 
 Focused regressions use independently authored CIL, copied and interior
 mutations, normalized narrow stores, arrays/object/statics, managed by-value

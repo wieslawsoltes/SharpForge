@@ -1,0 +1,159 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "sourceSHA256": "47845cbbc3ea0b708a6025c8378353aa1dda48be3d846de2494977f1d0378b8b",
+  "assemblySHA256": "f043f61c0d4d4f0fd49d74504d78302c43660e3c1e1b0fa00f8987bb83806417",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "Valid",
+      "code": "/hQoAQAABio=",
+      "handlers": [],
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixTail.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 74.652875
+      }
+    },
+    {
+      "name": "BadTarget",
+      "code": "/hQAKg==",
+      "handlers": [],
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TailCall"
+        ]
+      },
+      "diagnostic": "CILPT0002",
+      "raw": {
+        "stdout": "[IL]: Error [TailCall]: [<temporary>/PrefixTail.dll : Fixture.Program::BadTarget()][offset 0x00000002] Missing call/callvirt/calli.\n1 Error(s) Verifying <temporary>/PrefixTail.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 77.00325000000004
+      }
+    },
+    {
+      "name": "MissingRet",
+      "code": "/hQoAQAABg==",
+      "handlers": [],
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodFallthrough",
+          "TailRet"
+        ]
+      },
+      "diagnostic": "CILPT0003",
+      "raw": {
+        "stdout": "[IL]: Error [TailRet]: [<temporary>/PrefixTail.dll : Fixture.Program::MissingRet()][offset 0x00000002] tail.call may only be followed by ret.\n[IL]: Error [MethodFallthrough]: [<temporary>/PrefixTail.dll : Fixture.Program::MissingRet()][offset 0x00000002] Fall through end of the method without returning.\n2 Error(s) Verifying <temporary>/PrefixTail.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.10825
+      }
+    },
+    {
+      "name": "Intervening",
+      "code": "/hQoAQAABgAq",
+      "handlers": [],
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TailRet"
+        ]
+      },
+      "diagnostic": "CILPT0003",
+      "raw": {
+        "stdout": "[IL]: Error [TailRet]: [<temporary>/PrefixTail.dll : Fixture.Program::Intervening()][offset 0x00000002] tail.call may only be followed by ret.\n1 Error(s) Verifying <temporary>/PrefixTail.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.867708
+      }
+    },
+    {
+      "name": "Repeated",
+      "code": "/hT+FCgBAAAGKg==",
+      "handlers": [],
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TailCall"
+        ]
+      },
+      "diagnostic": "CILPT0001",
+      "raw": {
+        "stdout": "[IL]: Error [TailCall]: [<temporary>/PrefixTail.dll : Fixture.Program::Repeated()][offset 0x00000002] Missing call/callvirt/calli.\n1 Error(s) Verifying <temporary>/PrefixTail.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 75.68045800000004
+      }
+    },
+    {
+      "name": "Protected",
+      "code": "/hQoAQAABiomFio=",
+      "handlers": [
+        {
+          "start": 0,
+          "end": 8,
+          "target": 8,
+          "handlerEnd": 11,
+          "catchType": 16777218,
+          "flags": 0,
+          "kind": "catch"
+        }
+      ],
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReturnFromHandler",
+          "ReturnFromTry",
+          "TailCallInsideER"
+        ]
+      },
+      "diagnostic": "CILCF0006",
+      "raw": {
+        "stdout": "[IL]: Error [TailCallInsideER]: [<temporary>/PrefixTail.dll : Fixture.Program::Protected()][offset 0x00000000] The tail.call (or calli or callvirt) instruction cannot be used to transfer control out of a try, filter, catch, or finally block.\n[IL]: Error [ReturnFromTry]: [<temporary>/PrefixTail.dll : Fixture.Program::Protected()][offset 0x00000007] Return out of try block.\n[IL]: Error [ReturnFromHandler]: [<temporary>/PrefixTail.dll : Fixture.Program::Protected()][offset 0x0000000A] Return out of exception handler block.\n3 Error(s) Verifying <temporary>/PrefixTail.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.73204199999998
+      }
+    }
+  ],
+  "execution": {
+    "stdout": "",
+    "stderr": "",
+    "exitCode": 42,
+    "signal": null,
+    "elapsedMs": 17.761416000000054
+  }
+}

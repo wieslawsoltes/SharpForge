@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp, mkdir, writeFile, rm} from 'node:fs/promises';
-import {dirname, join} from 'node:path';
+import {dirname, join, relative, sep} from 'node:path';
 import {tmpdir} from 'node:os';
+import {fileURLToPath} from 'node:url';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {bundleWorker} from '../scripts/bundle-worker.js';
@@ -86,7 +87,7 @@ process.stdout.write(JSON.stringify({absent: !('conflict' in ambiguous), chosen:
     'invalid.js': "import {conflict} from './ambiguous.js';"
   });
   assert.deepEqual(await runBundle(directory, await bundleWorker(join(directory, 'entry.js'))), {absent: true, chosen: 1});
-  await assert.rejects(bundleWorker(join(directory, 'invalid.js')), /Unknown or ambiguous worker export conflict/);
+  await assert.rejects(bundleWorker(join(directory, 'invalid.js')), /Missing or ambiguous export conflict/);
 });
 
 test('Namespace cycles and unsupported or unresolved imports fail before a bundle is emitted', async t => {
@@ -98,9 +99,13 @@ test('Namespace cycles and unsupported or unresolved imports fail before a bundl
     'malformed.js': "import * as first.second from './a.js';",
     'namespace-export.js': "export * as names from './a.js';"
   });
-  await assert.rejects(bundleWorker(join(directory, 'a.js')), /Worker module cycle/);
-  await assert.rejects(bundleWorker(join(directory, 'external.js')), /Unresolved worker dependency node:fs/);
-  for (const name of ['default.js', 'malformed.js', 'namespace-export.js']) {
-    await assert.rejects(bundleWorker(join(directory, name)), /Unsupported module syntax/);
+  await assert.rejects(bundleWorker(join(directory, 'a.js')), /Static module cycle/);
+  await assert.rejects(bundleWorker(join(directory, 'external.js')), /Unresolved dependency node:fs/);
+  for (const [name, diagnostic] of [
+    ['default.js', /Default imports require native ESM/],
+    ['malformed.js', /Invalid static import/],
+    ['namespace-export.js', /Unsupported export-star declaration/]
+  ]) {
+    await assert.rejects(bundleWorker(join(directory, name)), diagnostic);
   }
 });

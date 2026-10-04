@@ -6,9 +6,10 @@
   "switch/cs8509-non-exhaustive-expression": ["diagnostics", "warnings"],
   "switch/cs8510-subsumed-arm": ["diagnostics", "warnings"],
   "switch/cs9135-non-constant-case": ["diagnostics", "warnings"],
-  "switch/int-switch": ["diagnostics", "warnings", "bytecode", "cil"],
-  "switch/string-switch": ["diagnostics", "warnings", "bytecode", "cil"],
-  "switch/switch-expression": ["diagnostics", "warnings", "bytecode", "cil"],
+  "switch/int-switch": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "switch/string-switch": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "switch/switch-expression": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "switch/switch-expression-unmatched-throws": ["diagnostics", "warnings"],
-  "switch/switch-return-in-method": ["diagnostics", "warnings", "bytecode", "cil"]
+  "switch/switch-return-in-method": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "switch/switch-with-when": ["directCil"]
 }

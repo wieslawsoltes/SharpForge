@@ -1,6 +1,10 @@
 /** Badges are derived from current services and include an accessible verbal description. */
-export function projectDecoration(projectId, { startup, sessions, builds }) {
-  const configured = startup.entries?.some(entry => entry.projectId === projectId && entry.action !== 'none') ?? false;
+export function projectDecoration(projectId, { startup, sessions, builds, documents }) {
+  const entries = startup.entries?.filter(entry => entry.action !== 'none') ?? [];
+  const targets = startup.mode === 'single' ? entries.slice(0, 1) : entries;
+  const memberships = documents?.projectsFor(documents.active) ?? [];
+  const current = memberships.includes(builds.activeId) ? builds.activeId : memberships[0] ?? builds.activeId;
+  const configured = startup.mode === 'currentSelection' ? projectId === current : targets.some(entry => entry.projectId === projectId);
   const applications = sessions.list({ projectId });
   const running = applications.filter(session => session.live && session.state !== 'paused' && session.state !== 'created').length;
   const paused = applications.filter(session => session.state === 'paused').length;
