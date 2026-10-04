@@ -16,3 +16,11 @@ edges and interface cycles are rejected. `frameworkAssignable` follows declared
 base/interface edges with cycle protection. The compiler bridge and runtime
 method tables retain these shapes, and interface methods are abstract. This
 metadata seam does not itself implement managed comparer callback execution.
+
+## Shared typed animation clock
+
+`AnimationClock` preserves the released timeline interface and injects target read, base read,
+write, clear and completion callbacks. Typed sampling comes from `@sharpforge/rendering`;
+the framework owns the one clock implementation used by XAML and composition. Manual advance,
+pause, seek, repeats, fill behavior, snapshots and completion are deterministic. This stage
+does not change the existing framework contract identifiers or register later UI extensions.

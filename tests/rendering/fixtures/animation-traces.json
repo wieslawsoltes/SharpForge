@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "reference": {
+    "kind": "analytical piecewise-linear and byte-channel interpolation",
+    "nativeWinUI": "pending; these are deterministic mathematical baselines, not captured native traces"
+  },
+  "tolerance": 1e-07,
+  "cases": [
+    {
+      "id": "linear-double",
+      "definition": {
+        "duration": 1000,
+        "valueKind": "Double",
+        "from": 0,
+        "to": 100
+      },
+      "samples": [
+        {"time": 0, "value": 0.0},
+        {"time": 50, "value": 5.0},
+        {"time": 100, "value": 10.0},
+        {"time": 150, "value": 15.0},
+        {"time": 200, "value": 20.0},
+        {"time": 250, "value": 25.0},
+        {"time": 300, "value": 30.0},
+        {"time": 350, "value": 35.0},
+        {"time": 400, "value": 40.0},
+        {"time": 450, "value": 45.0},
+        {"time": 500, "value": 50.0},
+        {"time": 550, "value": 55.0},
+        {"time": 600, "value": 60.0},
+        {"time": 650, "value": 65.0},
+        {"time": 700, "value": 70.0},
+        {"time": 750, "value": 75.0},
+        {"time": 800, "value": 80.0},
+        {"time": 850, "value": 85.0},
+        {"time": 900, "value": 90.0},
+        {"time": 950, "value": 95.0}
+      ]
+    },
+    {
+      "id": "point",
+      "definition": {
+        "duration": 1000,
+        "valueKind": "Point",
+        "from": {
+          "X": 0,
+          "Y": 0
+        },
+        "to": {
+          "X": 20,
+          "Y": 40
+        }
+      },
+      "samples": [
+        {"time": 0, "value": {"X": 0.0, "Y": 0.0}},
+        {"time": 50, "value": {"X": 1.0, "Y": 2.0}},
+        {"time": 100, "value": {"X": 2.0, "Y": 4.0}},
+        {"time": 150, "value": {"X": 3.0, "Y": 6.0}},
+        {"time": 200, "value": {"X": 4.0, "Y": 8.0}},
+        {"time": 250, "value": {"X": 5.0, "Y": 10.0}},
+        {"time": 300, "value": {"X": 6.0, "Y": 12.0}},
+        {"time": 350, "value": {"X": 7.0, "Y": 14.0}},
+        {"time": 400, "value": {"X": 8.0, "Y": 16.0}},
+        {"time": 450, "value": {"X": 9.0, "Y": 18.0}},
+        {"time": 500, "value": {"X": 10.0, "Y": 20.0}},
+        {"time": 550, "value": {"X": 11.0, "Y": 22.0}},
+        {"time": 600, "value": {"X": 12.0, "Y": 24.0}},
+        {"time": 650, "value": {"X": 13.0, "Y": 26.0}},
+        {"time": 700, "value": {"X": 14.0, "Y": 28.0}},
+        {"time": 750, "value": {"X": 15.0, "Y": 30.0}},
+        {"time": 800, "value": {"X": 16.0, "Y": 32.0}},
+        {"time": 850, "value": {"X": 17.0, "Y": 34.0}},
+        {"time": 900, "value": {"X": 18.0, "Y": 36.0}},
+        {"time": 950, "value": {"X": 19.0, "Y": 38.0}}
+      ]
+    },
+    {
+      "id": "color",
+      "definition": {
+        "duration": 1000,
+        "valueKind": "Color",
+        "from": {
+          "R": 0,
+          "G": 0,
+          "B": 0,
+          "A": 255
+        },
+        "to": {
+          "R": 255,
+          "G": 100,
+          "B": 0,
+          "A": 255
+        }
+      },
+      "samples": [
+        {"time": 0, "value": {"R": 0, "G": 0, "B": 0, "A": 255}},
+        {"time": 50, "value": {"R": 13, "G": 5, "B": 0, "A": 255}},
+        {"time": 100, "value": {"R": 26, "G": 10, "B": 0, "A": 255}},
+        {"time": 150, "value": {"R": 38, "G": 15, "B": 0, "A": 255}},
+        {"time": 200, "value": {"R": 51, "G": 20, "B": 0, "A": 255}},
+        {"time": 250, "value": {"R": 64, "G": 25, "B": 0, "A": 255}},
+        {"time": 300, "value": {"R": 77, "G": 30, "B": 0, "A": 255}},
+        {"time": 350, "value": {"R": 89, "G": 35, "B": 0, "A": 255}},
+        {"time": 400, "value": {"R": 102, "G": 40, "B": 0, "A": 255}},
+        {"time": 450, "value": {"R": 115, "G": 45, "B": 0, "A": 255}},
+        {"time": 500, "value": {"R": 128, "G": 50, "B": 0, "A": 255}},
+        {"time": 550, "value": {"R": 140, "G": 55, "B": 0, "A": 255}},
+        {"time": 600, "value": {"R": 153, "G": 60, "B": 0, "A": 255}},
+        {"time": 650, "value": {"R": 166, "G": 65, "B": 0, "A": 255}},
+        {"time": 700, "value": {"R": 179, "G": 70, "B": 0, "A": 255}},
+        {"time": 750, "value": {"R": 191, "G": 75, "B": 0, "A": 255}},
+        {"time": 800, "value": {"R": 204, "G": 80, "B": 0, "A": 255}},
+        {"time": 850, "value": {"R": 217, "G": 85, "B": 0, "A": 255}},
+        {"time": 900, "value": {"R": 230, "G": 90, "B": 0, "A": 255}},
+        {"time": 950, "value": {"R": 242, "G": 95, "B": 0, "A": 255}}
+      ]
+    },
+    {
+      "id": "discrete-boundary",
+      "definition": {
+        "duration": 1000,
+        "valueKind": "Double",
+        "from": 0,
+        "keyFrames": [
+          {
+            "progress": 0,
+            "value": 0
+          },
+          {
+            "progress": 0.5,
+            "value": 10,
+            "discrete": true
+          },
+          {
+            "progress": 1,
+            "value": 20
+          }
+        ]
+      },
+      "samples": [
+        {"time": 0, "value": 0},
+        {"time": 50, "value": 0},
+        {"time": 100, "value": 0},
+        {"time": 150, "value": 0},
+        {"time": 200, "value": 0},
+        {"time": 250, "value": 0},
+        {"time": 300, "value": 0},
+        {"time": 350, "value": 0},
+        {"time": 400, "value": 0},
+        {"time": 450, "value": 0},
+        {"time": 500, "value": 10.0},
+        {"time": 550, "value": 11.0},
+        {"time": 600, "value": 12.0},
+        {"time": 650, "value": 13.0},
+        {"time": 700, "value": 14.0},
+        {"time": 750, "value": 15.0},
+        {"time": 800, "value": 16.0},
+        {"time": 850, "value": 17.0},
+        {"time": 900, "value": 18.0},
+        {"time": 950, "value": 19.0}
+      ]
+    }
+  ]
+}
