@@ -1,4 +1,5 @@
 import {invokeStringWriter} from './string-writer.js';
+import {registerWriterScalars} from './string-writer-scalars.js';
 
 const parentType = 'System.IO.TextWriter';
 const writerType = 'System.IO.StringWriter';
@@ -23,6 +24,7 @@ function extensionContracts({member}) {
   member(parentType, 'WriteLine', ['char[]'], 'void');
   member(parentType, 'WriteLine', ['char[]', 'int', 'int'], 'void');
   member(parentType, 'WriteLine', ['char'], 'void');
+  registerWriterScalars({member});
 }
 
 function invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {

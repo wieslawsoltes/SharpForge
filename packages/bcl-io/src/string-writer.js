@@ -1,6 +1,7 @@
 import {bclScalar, fail, integer, string} from '@sharpforge/bcl-core';
-import {appendWriterBuilder, createWriterBuilder, writerBuilderText} from './string-writer-builder.js';
+import {appendWriterBuilder, appendWriterScalar, createWriterBuilder, writerBuilderText} from './string-writer-builder.js';
 import {writeStringBuffer} from './string-writer-buffer.js';
+import {isWriterScalar} from './string-writer-scalars.js';
 
 const writerType = 'System.IO.StringWriter';
 const builderType = 'System.Text.StringBuilder';
@@ -48,9 +49,17 @@ function write(platform, descriptor, reference, value) {
     appendWriterBuilder(platform, builder, String.fromCharCode(unit));
     // TextWriter.WriteLine(char) re-enters the parameterless newline gate after Write(char).
     if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
-  } else if (descriptor.parameters.length) {
+  } else if (descriptor.parameters[0] === 'string') {
     string(platform, value, true);
     if (value !== null) appendWriterBuilder(platform, builder, value);
+    // Inherited WriteLine(string) enters a second virtual string write for the current newline.
+    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
+  } else if (isWriterScalar(descriptor.parameters[0])) {
+    appendWriterScalar(platform, builder, value, descriptor.parameters[0]);
+    // Inherited scalar WriteLine calls typed Write first, then the current parameterless newline gate.
+    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
+  } else if (descriptor.parameters.length) {
+    fail(platform, 'MissingMethodException', descriptor.name + '(' + descriptor.parameters.join(',') + ')');
   }
   // Keep these separate: a failed newline append retains an already-written value, as TextWriter does.
   if (descriptor.name === 'WriteLine') appendNewLine(platform, builder, reference);

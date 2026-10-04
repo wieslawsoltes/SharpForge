@@ -12,7 +12,8 @@ these contracts after JSON GetInt64 in A09, retaining all released IDs.
 Registration order is part of the ABI: the `bcl-io` base group registers reader
 slots 655361–655367 and writer slots 655368–655380, then the `extensions` group
 appends reader buffer slots 655381–655382, writer buffer slots 655383–655384 and
-writer buffer-line slots 655385–655386 and character-line slot 655387. Call `registerIoModules` for this canonical
+writer buffer-line slots 655385–655386, character-line slot 655387, scalar Write slots
+655388–655395 and scalar WriteLine slots 655396–655403. Call `registerIoModules` for this canonical
 order; standalone core registration of a module still includes its own extension hook.
 
 This batch provides abstract TextReader metadata and StringReader construction,
@@ -51,6 +52,20 @@ and calls its existing module through the public core registry; storage, growth,
 notifications and the 1,000,000 UTF-16-unit text bound are shared. Appending costs
 the input length plus the builder's existing amortized chunk growth; ToString
 materializes the current buffer. No second buffer or private core import is used.
+
+`WriteLine(string)` writes a non-null value, then checks disposal again before
+writing the current NewLine. A callback that disposes the writer after its text
+append leaves that text visible and prevents the newline, including an empty
+newline. Changing NewLine at that boundary changes the newline that is written.
+A null string skips the value append: its only write is the newline, so disposal
+after that completed newline does not introduce another fault. Null/empty string
+calls on initially disposed writers still fault, and null receivers fault first.
+The earlier one-check assertion encoded a defect and is corrected by the separate
+`reference/string-writer-string-line` capture: 144 ordinary rows and 36 native-only
+subclass observations, with exact UTF-16, source/runtime and callback provenance.
+Both platform adapters, independent CIL and bound/legacy source regressions cover
+the captured behavior. Managed host-observer tests qualify the append boundary;
+they do not claim executable writer subclasses.
 
 StringWriter's existing parameterless ToString contract (ID 655380) explicitly opts
 in to Object.ToString dispatch. An `object` reference therefore returns the current
@@ -94,8 +109,8 @@ when NewLine is empty. Slice buffer/range validation still precedes disposal.
 NewLine changes during the completed buffer append are observed by the newline
 step. Disposal at that boundary faults while retaining the buffer text. A newline
 allocation or host-limit failure also retains the completed buffer; there is no
-combined-size precheck or transactional rollback. Existing WriteLine(string)
-retains its original single disposal check before writing.
+combined-size precheck or transactional rollback. String-line writes observe the
+same disposal boundary described above.
 
 The new overloads reuse the bounded bulk conversion and builder append. Nonempty
 buffer text and newline each create one managed text chunk, plus existing backing
@@ -114,8 +129,8 @@ conversion and builder append, then rechecks disposal and appends the current
 NewLine. NUL and isolated surrogates remain exact code units. Null receivers and
 disposed writers fault before character validation or progress; a callback that
 disposes the writer after the character append prevents the newline while keeping
-the completed character. NewLine changes at that boundary are observed. Existing
-Write(char) and WriteLine(string) keep their original single disposal checks.
+the completed character. NewLine changes at that boundary are observed.
+Write(char) remains a single value write.
 
 Character append work is constant plus the existing builder growth; newline work
 scales with NewLine length. A character and nonempty newline use two managed text
@@ -125,6 +140,40 @@ throwing observers retain the existing nontransactional behavior. Forty ordinary
 compiled concrete/base, GC, snapshot and fault tests. The line benchmark also
 reports separate Write(char)+WriteLine() and new WriteLine(char) paths; copy the
 current runner unchanged to character-line baseline `1ff8cd7b`.
+
+`Write` and `WriteLine` also accept `bool`, `int`, `uint`, `long`, `ulong`, `float`,
+`double`, and `decimal`, in that contract order. Each value uses the existing typed
+`StringBuilder.Append` contract through a cached descriptor. UInt32/UInt64 retain
+their unsigned widths, Int64 avoids conversion through a JavaScript Number, Single
+uses its own shortest default representation, Double retains special values and
+negative zero, and Decimal preserves its 96-bit coefficient and trailing scale.
+The Boolean strings are `True` and `False`. Narrow integer arguments use ordinary
+compiler widening to Int32; character and string retain distinct overload selection.
+
+Scalar `WriteLine` first completes typed Write, then checks disposal again and
+appends the current NewLine. Changing NewLine during the completed value append is
+observed. Disposal at that point faults while preserving the value, and a throwing
+observer prevents the newline step. Existing StringBuilder growth, managed roots,
+snapshots and the UTF-16 text limit apply. A nonempty scalar write produces one
+managed text chunk; a nonempty newline produces a second chunk. No descriptor or
+format-provider object is allocated per invocation. Conversion cost follows the
+existing typed default formatter; newline work scales with NewLine length.
+
+The scalar tests reuse named, pinned .NET 10.0.5 StringBuilder and Double formatting
+captures for scalar text, keeping their original provenance. Independent CIL emits
+I4/I8 bits and exact Decimal words; bound and legacy source tests check all sixteen
+contracts on both JavaScript VMs. An independent native writer fixture under
+`reference/string-writer-scalars` has 312 captured ordinary rows and 24 native-only
+transition observations, consumed by source-platform and independent CIL tests.
+Its exact source/runtime provenance is recorded there. These overloads implement the existing invariant formatting and LF
+execution profile. Culture/provider constructors, custom formatters, object and
+composite-format overloads, and native/Wasm execution remain outside this batch.
+No new performance measurement is claimed before scheduled qualification.
+The bounded runner at `benchmarks/string-writer-scalars.mjs` compares unchanged
+string, character, buffer and separate-newline controls against final #4517
+(`bac87e4f`), and exercises all sixteen scalar contracts. The adjacent benchmark
+README gives serial commands, exact revision/configuration checks and measurement
+limits. New scalar paths are explicitly absent from the baseline comparison.
 
 The builder remains available and mutable after disposal. String/character writes
 and every WriteLine throw ObjectDisposedException, including null/empty values;
@@ -145,8 +194,8 @@ CIL and platform coverage. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
 Rust native/Wasm execution is not qualified by this batch.
 
-Issue #2723 remains open: span/memory reader APIs, writer numeric/formatted WriteLine and async methods,
-Null/Synchronized wrappers, numeric/formatting/culture overloads, Encoding, and Console
+Issue #2723 remains open: span/memory reader APIs, object/composite-formatted writer and async methods,
+Null/Synchronized wrappers, format/culture providers, Encoding, and Console
 writer replacement remain separate batches. These APIs are not registered; unsupported
 source uses continue to fail compilation. User-defined TextReader/TextWriter subclasses
 are not executable through this closed framework profile.
