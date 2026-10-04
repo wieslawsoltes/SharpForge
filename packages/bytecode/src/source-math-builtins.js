@@ -30,3 +30,8 @@ export const sourceSignMathBuiltins = Object.freeze(signWidths.map(([type, suffi
   return Object.freeze({name: `Math.Sign#1:${suffix}`, min: 1, max: 1, result: 'int',
     params, math, parameterNames: signParameterNames});
 }));
+
+const smallWidths = [['sbyte', 'SByte'], ['byte', 'Byte'], ['short', 'Int16'], ['ushort', 'UInt16']];
+
+/** Keep narrow result types while appending after every released Sign entry. */
+export const sourceSmallMathBuiltins = Object.freeze(smallWidths.flatMap(([type, suffix]) => extrema(type, suffix)));
