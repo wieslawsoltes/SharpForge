@@ -33,9 +33,10 @@ No functions, numeric plans or type facts enter snapshots.
 
 This is a partial implementation of #1396. Focused deterministic arithmetic
 differentials, checked/unsigned boundaries, direct-CIL loops, host edits,
-snapshot replay, budgets and cancellation regressions are staged. No tests,
-builds or benchmarks ran in the implementation slot. The required one-million
-case qualification, at least 2x loop result, latency/allocation measurements and
+snapshot replay, budgets and cancellation regressions passed in the serial queue.
+All 90 focused Node 24 tests passed at `16907fc9`, including typed-float option
+coexistence, verified stack and manual Wasm bridge integration. The required
+one-million case qualification, at least 2x loop result, latency/allocation measurements and
 broader width/platform qualification remain open. No speedup is claimed.
 
 Run `examples/runtime/int32-specialization.mjs` for the ordinary and specialized
