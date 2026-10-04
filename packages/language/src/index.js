@@ -1,6 +1,7 @@
 import {sourceHover} from './hover.js';
 import {boundInlayHints} from './inlay-hints.js';
 import {boundSignatureHelp} from './signature-help.js';
+import {withCSharpCommitCharacters} from './completion-rules.js';
 import {renameSource, renameSourceText, prepareSourceRename} from './rename.js';
 import {sourceReferences, sourceReferenceLenses} from './source-queries.js';
 import {types as frameworkTypes,frameworkType,canonicalType,propertiesFor,eventsFor,findContracts,contracts} from '@sharpforge/framework';
@@ -29,7 +30,7 @@ export class LanguageService {
     for(const [label,detail]of Object.entries(intrinsicDocs))items.push({label,kind:'class',detail,insertText:label});for(const word of keywords)items.push({label:word,kind:'keyword',detail:'C# keyword (some syntax is outside the executable profile)',insertText:word});
     return this.unique(items).filter(i=>i.label.toLowerCase().startsWith(prefix.toLowerCase())).sort((a,b)=>a.kind==='keyword'?1:b.kind==='keyword'?-1:a.label.localeCompare(b.label)).slice(0,100);
   }
-  unique(items){return [...new Map(items.map(i=>[i.label,i])).values()];}
+  unique(items){return [...new Map(items.map(i=>[i.label,i])).values()].map(withCSharpCommitCharacters);}
   hover(uri,offset){return sourceHover(this,uri,offset,symbolDetail,intrinsicDocs);}
   definition(uri,offset){const symbol=this.symbolAt(uri,offset);return symbol?{uri:symbol.uri,start:symbol.start,end:symbol.end}:null;}
   references(uri,offset,includeDeclaration=true){return sourceReferences(this.workspace,uri,offset,includeDeclaration);}
@@ -46,7 +47,7 @@ export class LanguageService {
   }
   referenceLenses(uri){return sourceReferenceLenses(this.workspace,uri);}
   documentSymbols(uri){return (this.workspace.sourceModel()?.documentSymbols(uri)??[]).map(s=>({...s,detail:symbolDetail(s)}));}
-  signatureHelp(uri,offset){return boundSignatureHelp(this.workspace,uri,offset,symbolDetail);}
+  signatureHelp(uri,offset,options){return boundSignatureHelp(this.workspace,uri,offset,options);}
   inlayHints(uri,range){return boundInlayHints(this.workspace,uri,range);}
   diagnostics(uri){return this.workspace.compile().diagnostics.filter(d=>d.uri===uri);}
   semanticTokens(uri){const syntax=this.workspace.syntax(uri),result=this.workspace.compile(),refMap=new Map(result.references.filter(r=>r.uri===uri).map(r=>[r.start,r])),symbolMap=new Map(result.symbols.map(s=>[s.id,s]));return syntax.tokens.filter(t=>t.kind!=='eof').map(t=>{const symbol=symbolMap.get(refMap.get(t.start)?.symbolId);const kind=symbol?symbol.kind:['string','char'].includes(t.kind)?'string':['integer','double'].includes(t.kind)?'number':keywords.has(t.kind)?'keyword':t.kind==='identifier'?'variable':'operator';return {start:t.start,end:t.end,kind};});}

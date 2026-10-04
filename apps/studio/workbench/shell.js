@@ -110,6 +110,15 @@ export class WorkbenchShell {
     finally { this.metrics.end(mark, {uri: location.uri}); }
   }
 
+  /** Open the shared lazy hierarchy for the requested URI, retaining its provider-selected project. */
+  async openCallHierarchy(location, options) {
+    const roots = await this.calls.prepare(location, options);
+    if (this.disposed) return [];
+    await this.activateTool('calls');
+    this.invalidateTool('calls');
+    return roots;
+  }
+
   navigateBookmark(backwards) {
     const current = this.context();
     const item = this.bookmarks.next(current.uri, current.offset, backwards);
