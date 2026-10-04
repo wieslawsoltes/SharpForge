@@ -3,3 +3,4 @@ export { GroupedItemIndex, ViewportGroupIndex, SemanticZoomModel } from './group
 export { ViewportItemSource, ViewportSelectionModel } from './viewport-source.js';
 export { TreeViewModel } from './treeview.js';
 export { visibleItemRange, navigationIndex, sourceItems } from './item-source.js';
+export { getSelectionModel, scrollItemIntoView } from './list-renderer.js';
