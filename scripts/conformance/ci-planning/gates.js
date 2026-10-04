@@ -2,39 +2,16 @@ import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
-import { resolveTask } from '../../planning/lib/task-ref.js';
 import { checkOwnership } from '../../planning/check-ownership.js';
 import { checkHotFiles } from '../../planning/check-hot-files.js';
 import { git, isMain } from '../../planning/lib/io.js';
 import { validatePlanningContext } from './context.js';
+import { projectClaimedIdentity } from './merge-group-projects.js';
+export { claimedIdentity } from './claim-identity.js';
 import { planningClient, qualificationEnvironment } from './qualification-client.js';
 export { qualificationEnvironment } from './qualification-client.js';
 
 const load = (root, ref, path) => JSON.parse(git(['show', `${ref}:${path}`], root));
-
-/** Resolve claims from authoritative refs, never from a PR's self-declared lock list. */
-export async function claimedIdentity(client, pullRequest, now = Date.now()) {
-  const task = resolveTask({ branch: pullRequest.head.ref, body: pullRequest.body ?? '' });
-  const items = (await client.items()).filter(item => item.fields['Work ID'] === task || item.content.title.startsWith(`[${task}]`));
-  if (items.length !== 1) throw new Error(`Task ${task} must identify exactly one project item`);
-  resolveTask({ branch: pullRequest.head.ref, body: pullRequest.body ?? '', projectBranch: items[0].fields.Branch });
-  const ref = await client.ref(`agent/${task}`);
-  if (!ref) throw new Error(`Task ${task} has no authoritative claim`);
-  const claim = await client.readRecord(ref.object.sha);
-  if (claim.task !== task || claim.branch !== pullRequest.head.ref || !Number.isFinite(Date.parse(claim.expires)) || Date.parse(claim.expires) <= now) {
-    throw new Error(`Task ${task} has a mismatched or expired claim`);
-  }
-  const locks = [];
-  for (const key of claim.locks) {
-    const lock = await client.ref(`agent-locks/${key}`);
-    const record = lock ? await client.readRecord(lock.object.sha) : null;
-    if (!record || record.generation !== claim.generation || record.task !== task) throw new Error(`Unverified lock ${key}`);
-    locks.push({ key, paths: record.paths ?? [] });
-  }
-  const area = task.match(/^SF-(A\d{2})-/)?.[1];
-  if (!area) throw new Error('Release overlays require an explicit area-owned task for planning gates');
-  return { task, area, locks };
-}
 
 /** Evaluate one contribution using policy from the pinned base and only its own claim. */
 export function reviewOwnership({ root, base, head, mergeBase, identity, execute = spawnSync }) {
@@ -68,8 +45,9 @@ export async function runGates({ root = process.cwd(), context, repository, clie
     return { schemaVersion: 1, passed: false, results, errors };
   }
   try {
-    const identity = await claimedIdentity(client ?? planningClient(environment), verified.pull_request);
-    record('ownership and hot-file budget', reviewOwnership({ root, ...verified, identity, execute }));
+    const identity = await projectClaimedIdentity(client ?? planningClient(environment), verified.pull_request);
+    record('ownership and hot-file budget', { ...reviewOwnership({ root, ...verified, identity, execute }),
+      project: identity.project, issue: identity.issue });
   } catch (error) {
     record('ownership and hot-file budget', { passed: false, error: error.message });
   }

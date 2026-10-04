@@ -61,7 +61,7 @@ test('stale head/base, foreign identity and missing/malformed API labels cannot 
   }
 });
 
-function fixture(t) {
+function fixture(t, {project = 4} = {}) {
   const root = mkdtempSync(join(tmpdir(), 'sf-manual-context-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const command = args => git(args, root).trim();
@@ -89,9 +89,17 @@ function fixture(t) {
     request: { ...request(), base: { sha: base, repo: { full_name: repository } },
       head: { sha: head, ref: branch, repo: { full_name: 'fork/repository' } } } });
   const client = {
+    owner: 'fixture', repo: 'repository',
     items: async () => [{ fields: { 'Work ID': task, Branch: branch }, content: { title: `[${task}] fixture` } }],
     ref: async name => ({ object: { sha: name } }),
-    readRecord: async () => ({ task, branch, expires: '2099-01-01T00:00:00Z', locks: [], generation: 'fixture' }),
+    readRecord: async () => ({ task, branch, issue: 483, agent: 'fixture-agent', expires: '2099-01-01T00:00:00Z', locks: [], generation: 'fixture' }),
+    graphql: async () => ({repository: {issue: {number: 483, title: `[${task}] fixture`,
+      repository: {nameWithOwner: repository}, projectItems: {nodes: [{
+        id: `item-${project}`, isArchived: false, project: {id: `project-${project}`, number: project,
+          owner: {login: 'fixture'}, url: `https://github.com/users/fixture/projects/${project}`},
+        workId: {text: task}, branch: {text: branch}, agent: {text: 'fixture-agent'},
+      }], pageInfo: {hasNextPage: false, endCursor: null}},
+    }}}),
   };
   const execute = (command, args, options) => command === 'git'
     ? spawnSync(command, args, options) : { status: 0, stdout: '', stderr: '' };
@@ -132,11 +140,36 @@ test('PR edits to policy cannot authorize its own cross-area hot-file growth', a
 test('missing Project access remains a recorded failure with the exact context retained', async t => {
   const value = fixture(t);
   const result = await runGates({ ...value, context: value.snapshot(value.base),
-    client: { items: async () => { throw new Error('Project access denied'); } },
+    client: { ...value.client, graphql: async () => { throw new Error('Project access denied'); } },
     execute: () => assert.fail('Denied ownership must stop candidate commands') });
   assert.equal(result.passed, false);
   assert.match(result.errors.join('\n'), /Project access denied/);
   assert.equal(result.context.head, value.base);
+  assert.equal(result.results.length, 1);
+});
+
+test('manual qualification resolves the claimed issue across Projects without a board scan', async t => {
+  for (const project of [6, 9]) {
+    const value = fixture(t, {project});
+    const head = value.commit({'scripts/conformance/owned.js': 'export const owned = true;\n'});
+    const result = await runGates({...value, context: value.snapshot(head), repository,
+      client: {...value.client, items: () => assert.fail('Do not scan the default Project board')}});
+    assert.equal(result.passed, true, result.errors.join('\n'));
+    assert.equal(result.results[0].project.number, project);
+    assert.equal(result.results[0].issue, 483);
+    assert.equal(result.results.length, 5);
+  }
+});
+
+test('manual qualification rejects stale managed Project ownership before child commands', async t => {
+  const value = fixture(t);
+  const response = await value.client.graphql();
+  response.repository.issue.projectItems.nodes[0].agent.text = 'different-owner';
+  const result = await runGates({...value, context: value.snapshot(value.base), repository,
+    client: {...value.client, graphql: async () => response},
+    execute: () => assert.fail('Stale Project ownership must stop candidate commands')});
+  assert.equal(result.passed, false);
+  assert.match(result.errors.join('\n'), /Agent/);
   assert.equal(result.results.length, 1);
 });
 
