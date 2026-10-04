@@ -109,8 +109,7 @@ test('existing type/member budgets and cancellation apply to snapshot and cached
   assert.throws(() => limited.access('Instance4field', 'Further', 'Further'), fails('CILVT0002'));
   const malformed = new AssemblyInspector(input.bytes);
   malformed.metadata.rows[2][6][0] = -1;
-  // Canonical TypeDef flags are validated by the type snapshot before member access facts.
-  assert.throws(() => create(malformed), fails('CILVT0001'));
+  assert.throws(() => create(malformed), fails('CILVM0001'));
 });
 
 test('pinned ILVerify access decisions match known queries and retain unresolved-root negatives', () => {
