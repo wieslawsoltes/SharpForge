@@ -29,3 +29,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Object lifetimes and UI dispatch
 
 `UIObjectTree` keeps logical and visual parents, bounded host-coordinate lookup and loading/unloading state. `DispatcherQueue` serializes work by priority and FIFO order on an injected logical UI thread. `RoutedEventRegistry` owns event identities; `RoutedHandlerList` delegates actual routing to the injected host router. `DisposableScope` owns subscriptions and supports in-memory rewind without replaying factories.
+
+## Resource and object-model contract providers
+
+`registerResourceContracts(registry)` and `registerObjectModelContracts(registry)` add the declared resource, style, template, item, state, namescope, dispatcher and routed-event ABI. Registration remains explicit: importing this package does not mutate a framework registry. Providers preserve released IDs and use real by-reference signatures. Framework activation must supply the companion property/controls types and the registry byref/nullable profile before invoking the providers.
