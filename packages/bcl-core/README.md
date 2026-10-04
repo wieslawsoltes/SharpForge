@@ -1001,3 +1001,33 @@ separately from new range costs, including 20-call repeated-prefix misses and
 late hits over 16,385 UTF-16 units. Host allocations are not counted as managed
 allocations. Validation and measurements remain with the serial root queue;
 this overload does not complete every Insert/Replace surface tracked by #2638.
+
+`StringBuilder.Insert(int index, string value, int count)` occupies A07 slot
+524339 after Boolean insertion 524338. Negative `count` is checked before the
+index range. Null/empty values and zero count return the same reference only
+after index validation, with no builder chunk reads, managed allocation, writes
+or version change. Int32.MaxValue counts with null/empty values remain no-ops at
+a valid index. The insertion remains literal UTF-16, preserving NUL and isolated
+or split surrogate units.
+
+The helper reuses the existing index validator, nonnegative Int32 validator and
+`insertText` callback. Before `String.repeat`, division checks the repeat count
+against `(MAX - currentLength) / value.length`, avoiding multiplication overflow
+and limiting the complete result. Nonempty work keeps the existing full-buffer
+storage path: O(original text + repeated text + backing slots), host temporary
+strings, and one managed result string (plus backing growth when needed). Native
+capacity/chunk topology and host-observer partial progress remain the established
+runtime profile; the released string, character and Boolean overloads retain
+their behavior.
+
+The unchanged [native reference](reference/string-builder-insert-repeat/README.md)
+contains 206 .NET 10.0.5 / SDK 10.0.201 rows plus an evaluation-order control.
+Large positive native counts occur only on null/empty values or invalid indices;
+valid nonempty native repetition is bounded to 17. Tests exercise both compiler
+pipelines/VMs, the full native matrix through real platforms and independent CIL,
+no-op counters, exact host limits, allocation failure, observer GC/throws and
+snapshot restoration. The static `scripts/benchmarks/a07-string-builder-insert-repeat.mjs`
+runner reports released Length/string Insert controls separately from new repeated
+insertion costs using prepared builders, one warmup and five samples. Managed
+counters exclude host temporary text. Validation is scheduled by root; the other
+Insert/Replace overloads in #2638 remain outside this batch.
