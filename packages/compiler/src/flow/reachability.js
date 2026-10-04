@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Reachability analysis over the control-flow graph.
  *
@@ -52,11 +53,11 @@ export function analyzeReachability(graph,body,options={}){
     let previous=containerReachable;
     for(const s of list){
       if(!s)continue;const r=startReachable(s);
-      if(!r&&previous){const at=reportable(s);if(at){diagnostics.push({code:'CS0162',args:[],node:at.syntax});previous=false;}}else previous=r;
+      if(!r&&previous){const at=reportable(s);if(at){diagnostics.push({code:DiagnosticId.CS0162,args:[],node:at.syntax});previous=false;}}else previous=r;
       for(const nested of nestedStatementLists(s))visit(nested,r);
     }
   };
   if(body&&!body.isExpression)visit([body],true);
-  for(const end of graph.switchSectionEnds)if(end.open&&reachable.has(end.block)&&isUserCode(end.section))diagnostics.push({code:end.isLast?'CS8070':'CS0163',args:[options.labelText?.(end.section.syntax)??'case'],node:end.section.syntax});
+  for(const end of graph.switchSectionEnds)if(end.open&&reachable.has(end.block)&&isUserCode(end.section))diagnostics.push({code:end.isLast?DiagnosticId.CS8070:DiagnosticId.CS0163,args:[options.labelText?.(end.section.syntax)??'case'],node:end.section.syntax});
   return {reachable,endReachable:reachable.has(graph.exit),isReachable:startReachable,diagnostics};
 }

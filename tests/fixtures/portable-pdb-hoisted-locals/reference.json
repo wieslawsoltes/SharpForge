@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "60bc1d4a926fe5c469998b508380ffb9b8419fad623333e1726d1748497ca718",
+    "assemblySha256": "29c47cb7753a45d72eecaec3259b60766fd63e0bd6b371cefff43f1de5c54730",
+    "pdbSha256": "6c6ce4f374beef4c519b8a18883cd21861870e3acc04607bfb0620fbbe3bbdef"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "moveNext": 100663331,
+    "kickoff": 100663327,
+    "typeToken": 33554440,
+    "scopes": [
+      {
+        "start": 0,
+        "end": 432
+      },
+      {
+        "start": 146,
+        "end": 276
+      }
+    ],
+    "awaits": [
+      {
+        "yieldOffset": 79,
+        "resumeOffset": 110,
+        "resumeMethod": 100663331
+      },
+      {
+        "yieldOffset": 194,
+        "resumeOffset": 226,
+        "resumeMethod": 100663331
+      },
+      {
+        "yieldOffset": 309,
+        "resumeOffset": 338,
+        "resumeMethod": 100663331
+      }
+    ],
+    "fields": [
+      {
+        "fieldToken": 67108881,
+        "fieldName": "<>1__state"
+      },
+      {
+        "fieldToken": 67108882,
+        "fieldName": "<>t__builder"
+      },
+      {
+        "fieldToken": 67108883,
+        "fieldName": "<first>5__1"
+      },
+      {
+        "fieldToken": 67108884,
+        "fieldName": "<nested>5__2"
+      },
+      {
+        "fieldToken": 67108885,
+        "fieldName": "<>u__1"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "offset": 79,
+      "locals": [
+        {
+          "name": "first",
+          "fieldToken": 67108883,
+          "fieldName": "<first>5__1",
+          "slot": 0,
+          "startOffset": 0,
+          "endOffset": 432
+        }
+      ]
+    },
+    {
+      "offset": 194,
+      "locals": [
+        {
+          "name": "first",
+          "fieldToken": 67108883,
+          "fieldName": "<first>5__1",
+          "slot": 0,
+          "startOffset": 0,
+          "endOffset": 432
+        },
+        {
+          "name": "nested",
+          "fieldToken": 67108884,
+          "fieldName": "<nested>5__2",
+          "slot": 1,
+          "startOffset": 146,
+          "endOffset": 276
+        }
+      ]
+    },
+    {
+      "offset": 309,
+      "locals": [
+        {
+          "name": "first",
+          "fieldToken": 67108883,
+          "fieldName": "<first>5__1",
+          "slot": 0,
+          "startOffset": 0,
+          "endOffset": 432
+        }
+      ]
+    }
+  ]
+}

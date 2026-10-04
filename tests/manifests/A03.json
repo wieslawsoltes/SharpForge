@@ -4,6 +4,7 @@
   "nodeGlobs": [
     "tests/cil.test.js",
     "tests/cil-cli.test.js",
+    "tests/cil-opcodes.test.js",
     "tests/a03-*.test.js",
     "tests/cil-table-widths.test.js"
   ],

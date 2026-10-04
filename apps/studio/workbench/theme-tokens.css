@@ -1,0 +1,70 @@
+:root {
+  --wb-bg: #202024;
+  --wb-panel: #28282d;
+  --wb-raised: #34343b;
+  --wb-fg: #f2f2f5;
+  --wb-muted: #b9bac4;
+  --wb-border: #60606b;
+  --wb-accent: #75bfff;
+  --wb-selected: #244f78;
+  --wb-selected-fg: var(--wb-fg);
+  --wb-error: #ff9c9c;
+  --wb-warning: #efcc79;
+  --wb-success: #98d8a6;
+  --wb-shadow: #0008;
+  --wb-font-family: system-ui;
+  --wb-font-size: 12px;
+  --wb-row-height: 26px;
+}
+[data-theme="light"] {
+  --wb-bg: #f7f7fa;
+  --wb-panel: #ffffff;
+  --wb-raised: #ededf3;
+  --wb-fg: #181820;
+  --wb-muted: #50515d;
+  --wb-border: #8c8d98;
+  --wb-accent: #075ba8;
+  --wb-selected: #d7eaff;
+  --wb-error: #ac1420;
+  --wb-warning: #7c5600;
+  --wb-success: #196d32;
+}
+[data-theme="blue"] {
+  --wb-bg: #17273e;
+  --wb-panel: #1e334f;
+  --wb-raised: #2a4768;
+  --wb-fg: #f2f7ff;
+  --wb-muted: #c1d3eb;
+  --wb-border: #728eaf;
+  --wb-accent: #8bcaff;
+  --wb-selected: #375e8b;
+}
+[data-theme="high-contrast"] {
+  --wb-bg: #000000;
+  --wb-panel: #000000;
+  --wb-raised: #000000;
+  --wb-fg: #ffffff;
+  --wb-muted: #ffffff;
+  --wb-border: #ffffff;
+  --wb-accent: #ffff00;
+  --wb-selected: #002e72;
+  --wb-error: #ffb3b3;
+  --wb-warning: #ffff00;
+  --wb-success: #b3ffb3;
+}
+@media (forced-colors: active) {
+  :root {
+    --wb-bg: Canvas;
+    --wb-panel: Canvas;
+    --wb-raised: ButtonFace;
+    --wb-fg: CanvasText;
+    --wb-muted: CanvasText;
+    --wb-border: ButtonText;
+    --wb-accent: LinkText;
+    --wb-selected: Highlight;
+    --wb-selected-fg: HighlightText;
+    --wb-error: CanvasText;
+    --wb-warning: CanvasText;
+    --wb-success: CanvasText;
+  }
+}

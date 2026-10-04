@@ -1,0 +1,50 @@
+{
+  "runtime": "10.0.5",
+  "securityType": "System.Security.Permissions.SecurityPermissionAttribute, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+  "cases": [
+    {
+      "name": "empty",
+      "blob": "2E00"
+    },
+    {
+      "name": "security",
+      "blob": "2E01808453797374656D2E53656375726974792E5065726D697373696F6E732E53656375726974795065726D697373696F6E4174747269627574652C206D73636F726C69622C2056657273696F6E3D342E302E302E302C2043756C747572653D6E65757472616C2C205075626C69634B6579546F6B656E3D623737613563353631393334653038390E01540209457865637574696F6E01"
+    },
+    {
+      "name": "multiple",
+      "blob": "2E02808453797374656D2E53656375726974792E5065726D697373696F6E732E53656375726974795065726D697373696F6E4174747269627574652C206D73636F726C69622C2056657273696F6E3D342E302E302E302C2043756C747572653D6E65757472616C2C205075626C69634B6579546F6B656E3D623737613563353631393334653038390E01540209457865637574696F6E01124578616D706C652E5065726D697373696F6E1D02530E054C6162656C05636166C3A95408074D6178696D756D2A000000"
+    }
+  ],
+  "expected": [
+    {
+      "typeName": "System.Security.Permissions.SecurityPermissionAttribute, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "values": [
+        {
+          "name": "Execution",
+          "isField": false,
+          "type": "System.Boolean",
+          "value": true
+        }
+      ]
+    },
+    {
+      "typeName": "Example.Permission",
+      "values": [
+        {
+          "name": "Label",
+          "isField": true,
+          "type": "System.String",
+          "value": "café"
+        },
+        {
+          "name": "Maximum",
+          "isField": false,
+          "type": "System.Int32",
+          "value": 42
+        }
+      ]
+    }
+  ],
+  "sdk": "10.0.201",
+  "sourceSha256": "fecc126a0c639f08dd59016dad837a51d4f388c21e6cd852131d3b61c8eb4ccc"
+}

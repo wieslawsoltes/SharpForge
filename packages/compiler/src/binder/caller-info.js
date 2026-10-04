@@ -9,6 +9,7 @@
  * `callerInfoArguments` computes the constants of one call, which the binder records on the bound node as
  * `callerInfo` (parameter ordinal -> value) and code generation uses in place of the default value.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { createLineMap } from '@sharpforge/syntax';
 import { SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
@@ -16,16 +17,16 @@ import { MethodKind } from '../symbols/members.js';
 const namespaceName = 'System.Runtime.CompilerServices.';
 /** In precedence order: when several are applied, the first one is used and the others have no effect. */
 const kinds = [
-  { kind: 'line', className: 'CallerLineNumberAttribute', missingDefault: 'CS4020', badType: 'CS4017' },
-  { kind: 'path', className: 'CallerFilePathAttribute', missingDefault: 'CS4021', badType: 'CS4018' },
-  { kind: 'member', className: 'CallerMemberNameAttribute', missingDefault: 'CS4022', badType: 'CS4019' },
-  { kind: 'expression', className: 'CallerArgumentExpressionAttribute', missingDefault: 'CS8964', badType: 'CS8959' },
+  { kind: 'line', className: 'CallerLineNumberAttribute', missingDefault: DiagnosticId.CS4020, badType: DiagnosticId.CS4017 },
+  { kind: 'path', className: 'CallerFilePathAttribute', missingDefault: DiagnosticId.CS4021, badType: DiagnosticId.CS4018 },
+  { kind: 'member', className: 'CallerMemberNameAttribute', missingDefault: DiagnosticId.CS4022, badType: DiagnosticId.CS4019 },
+  { kind: 'expression', className: 'CallerArgumentExpressionAttribute', missingDefault: DiagnosticId.CS8964, badType: DiagnosticId.CS8959 },
 ];
 /** The warning for an attribute that a stronger one overrides: [overridden kind][winning kind]. */
 const overridden = {
-  member: { line: 'CS7081', path: 'CS7080' },
-  path: { line: 'CS7082' },
-  expression: { line: 'CS8960', path: 'CS8961', member: 'CS8962' },
+  member: { line: DiagnosticId.CS7081, path: DiagnosticId.CS7080 },
+  path: { line: DiagnosticId.CS7082 },
+  expression: { line: DiagnosticId.CS8960, path: DiagnosticId.CS8961, member: DiagnosticId.CS8962 },
 };
 
 /** The namespace-qualified name of an attribute class (`System.Runtime.CompilerServices.CallerLineNumberAttribute`). */
@@ -93,8 +94,8 @@ export function checkCallerInfoParameters(method, converts, types) {
     }
     if (strongest.kind !== 'expression') continue;
     const name = targetNameOf(strongest.attribute);
-    if (name === parameter.name) row(strongest, 'CS8965', [parameter.name]);
-    else if (!method.parameters.some(candidate => candidate.name === name)) row(strongest, 'CS8963', [parameter.name]);
+    if (name === parameter.name) row(strongest, DiagnosticId.CS8965, [parameter.name]);
+    else if (!method.parameters.some(candidate => candidate.name === name)) row(strongest, DiagnosticId.CS8963, [parameter.name]);
   }
   return rows;
 }

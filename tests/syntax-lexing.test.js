@@ -145,7 +145,8 @@ test('directives: shebang, #: and script-only directives', () => {
   assert.deepEqual(app.directives.slice(1, 4).map(d => [d.structure.key, d.structure.value]), [['package', 'Humanizer@2.14.1'], ['sdk', 'Microsoft.NET.Sdk.Web'], ['property', 'LangVersion preview']]);
   assert.deepEqual(app.diagnostics.map(d => d.code), ['CS9297'], '#: after the first token'); assert.equal(app.tokens[0].text, 'Console'); assert.equal(app.tokens[0].leadingTrivia.length, 4);
   assert.deepEqual(codes('#if A\n#endif\n#:sdk X\nx();'), ['CS9299']); assert.deepEqual(codes('#:sdk X\nx();', { fileBasedProgram: false }), ['CS9298']); assert.deepEqual(codes('x();\n#!late'), ['CS1024']);
-  assert.equal(parse('#:sdk X\nx();', undefined, { languageVersion: '13' }).diagnostics[0].code, 'CS9260');
+  // Roslyn has no language-version gate for '#:' (see tests/syntax-directive-gates.test.js).
+  assert.deepEqual(parse('#:sdk X\nx();', undefined, { languageVersion: '13' }).diagnostics.filter(d => d.code === 'CS9260'), []);
   const script = lex(new SourceText('#r "System.Xml"\n#load "other.csx"\nvar x = 1;\n#r "late"'), undefined, { script: true });
   assert.deepEqual(script.directives.map(d => [d.kind, d.structure.file]), [['ReferenceDirectiveTrivia', 'System.Xml'], ['LoadDirectiveTrivia', 'other.csx'], ['ReferenceDirectiveTrivia', 'late']]); assert.deepEqual(script.diagnostics.map(d => d.code), ['CS7011']);
   assert.deepEqual(codes('#r "a"\n#load "b"'), ['CS7011', 'CS8097']); assert.deepEqual(codes('#r nope', { script: true }), ['CS7010']);
