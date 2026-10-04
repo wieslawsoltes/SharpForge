@@ -88,6 +88,10 @@ export const NameBinding = Base =>
         if (members.length)
           return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
       }
+      if (!symbol && !arity) {
+        const builtin = this.d.executionBuiltin?.(name);
+        if (builtin) return this.node('TypeExpression', syntax, null, { referencedType: builtin });
+      }
       if (name === 'nameof' && options.invoked) return this.node('NameOfMarker', syntax, null, {});
       if (name === 'var' || name === 'dynamic') return this.lenient(syntax);
       if (this.d.isKnownFrameworkName(name)) return this.lenient(syntax);

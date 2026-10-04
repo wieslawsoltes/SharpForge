@@ -1,3 +1,4 @@
+import {number} from '@sharpforge/bytecode';
 import {enumTypes} from '@sharpforge/framework';
 import {isReference} from '../heap.js';
 import {enumValue} from './enums.js';
@@ -6,6 +7,7 @@ import {enumValue} from './enums.js';
 export function sourceValue(heap, value) {
   if (value === null || typeof value !== 'object') return value;
   if (value.enumType) return value.value;
+  if (value.float || value.nativeInt) return number(value);
   if (!isReference(value)) return value;
   const record = heap.get(value);
   return record.kind === 'string' ? record.data : value;
