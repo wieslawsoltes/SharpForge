@@ -38,6 +38,8 @@ export class EmitterCore {
     this.substitutions = new Map();
     /** The node being assigned to, while its location is resolved (a get-only auto-property is then its field). */
     this.assignmentTarget = null;
+    /** The section labels of the enclosing switch statements, for `goto case`. */
+    this.switchSections = new Map();
   }
   unsupported(construct, syntax = null) {
     throw new UnsupportedInCil(construct, syntax, this.frame.uri);

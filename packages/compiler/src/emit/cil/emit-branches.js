@@ -38,6 +38,10 @@ export const BranchEmission = Base =>
         this.branchOn(condition.operand, target, !sense);
         return;
       }
+      if (condition.kind === 'IsPattern' && this.branchOnPattern) {
+        this.branchOnPattern(condition, target, sense);
+        return;
+      }
       const isLogical = condition.kind === 'Binary' && !condition.method && (condition.operator === '&&' || condition.operator === '||');
       if (!isLogical) {
         this.expression(condition);

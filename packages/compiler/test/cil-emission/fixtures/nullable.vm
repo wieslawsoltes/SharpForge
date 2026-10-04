@@ -1,0 +1,6 @@
+External member 'System.Nullable`1<int>::.ctor' is not implemented
+External member 'System.Nullable`1<int>::GetValueOrDefault' is not implemented
+External member 'System.Nullable`1<int>::get_HasValue' is not implemented
+External member 'System.Nullable`1<int>::get_Value' is not implemented
+External member 'System.Nullable`1<long>::.ctor' is not implemented
+External member 'System.Nullable`1<long>::get_Value' is not implemented
