@@ -216,7 +216,8 @@ test('manual and reusable workflow inputs retain separate harness/PR checkouts a
   assert.ok(workflow.indexOf('context.js --output') < workflow.indexOf('ref: ${{ steps.context.outputs.head_sha }}'));
   assert.equal((workflow.match(/persist-credentials: false/g) ?? []).length, 2);
   assert.doesNotMatch(workflow, /pull_request_target|: write/);
-  assert.equal((workflow.match(/PROJECT_READ_TOKEN:/g) ?? []).length, 1);
+  assert.equal((workflow.match(/^          PROJECT_READ_TOKEN:/gm) ?? []).length, 1);
+  assert.match(workflow, /workflow_call:\n    secrets:\n      PLANNING_PROJECT_READ_TOKEN:\n        description: [^\n]+\n        required: true/);
   assert.match(workflow, /Ownership, DAG, manifests, contracts and combined-tree regression\n        env:\n          GH_TOKEN: \$\{\{ github.token \}\}\n          PROJECT_READ_TOKEN: \$\{\{ secrets.PLANNING_PROJECT_READ_TOKEN \}\}/);
   assert.doesNotMatch(workflow.slice(workflow.indexOf('      - name: Explicit flake measurement')), /PROJECT_READ_TOKEN|secrets\./);
 });

@@ -30,6 +30,8 @@ client. The trusted planning step requires repository `GH_TOKEN` and the separat
 GraphQL reads. Neither credential reaches candidate commands. Missing credentials,
 Project access or ownership stop the manual lane before those commands and retain
 the exact PR context with the failure. This wiring does not configure the secret.
+Reusable callers must pass the declared `PLANNING_PROJECT_READ_TOKEN` secret by
+name (or explicitly inherit the caller's secrets); it is required by `workflow_call`.
 
 Both lanes resolve the authoritative claim issue into its live Project membership;
 neither assumes Project 4. Work-ID-only tracking boards are ignored, while the one
