@@ -3,8 +3,8 @@ import {reconcileWorkspaceFile} from '../reconcile.js';
 
 /** Explicit cross-window resolution. Divergent buffers remain intact until a chosen result is committed by the host. */
 export class WorkspaceConflictCoordinator {
-  constructor({getDocument, applyResolution, channel}) {
-    Object.assign(this, {getDocument, applyResolution, channel});
+  constructor({getDocument, applyResolution, channel, readLocal = async document => document}) {
+    Object.assign(this, {getDocument, applyResolution, channel, readLocal});
     this.conflicts = new Map();
     this.pending = new Map();
   }
@@ -41,7 +41,11 @@ export class WorkspaceConflictCoordinator {
       throw new Error('SFW1422: Local document changed while resolving its conflict');
     }
     // A host may mutate its live document in place while remote bytes are read.
-    const local = structuredClone(observed);
+    const local = await this.readLocal(structuredClone(observed), {signal});
+    throwIfWorkspaceAborted(signal);
+    if (!local || local.revision !== observed.revision || local.hash !== observed.hash) {
+      throw new Error('SFW1422: Local document changed while reading its conflict contents');
+    }
     const remote = await readRemote(conflict.remote, {signal});
     const remoteContent = remote.content ?? remote.text ?? remote.bytes;
     const remoteBytes = remote.bytes ?? (typeof remoteContent === 'string' ? workspaceRecordBytes({...remote, text: remoteContent}) : remoteContent);

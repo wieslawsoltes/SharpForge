@@ -33,3 +33,24 @@ publication from a replaced session.
 This controller is composed by the dependent SolutionExplorer view and actual Studio
 entry. Its focused tests use deterministic channel/OPFS-shaped services on Node;
 they do not claim a browser component or multi-window UI qualification.
+
+## Immutable prepared sources
+
+Revision observation captures model-free immutable source roots and source/encoding
+identity. Hashing yields between bounded encoded chunks; ordinary observation and
+OPFS checkpoints do not read a prepared record's compatibility text getter.
+Document-state Maps retain saved baselines in the version-two recovery envelope.
+
+`WorkspaceConflictCoordinator` accepts optional `readLocal(document, options)`.
+Only an explicit resolution invokes it, and its result must retain the observed
+revision/hash. Existing stale-content guards and the 16 MiB content limit remain.
+A resolved peer buffer remains unsaved until the host's explicit disk save.
+
+The bounded JSON bundle export encodes immutable source records at the export
+boundary and preserves sanitized startup configuration and launch-profile
+metadata. Runtime arguments, environment values and grants are excluded.
+
+The three prepared-persistence cases passed in the completed 228-file Node 22.23.3
+source qualification at `5269d3970f10fee404ef23e5fe3d07cb61d8750c` (1,877 passed).
+The original failed Node 26 run remains recorded independently; browser process
+closure before assertions is not a browser pass.
