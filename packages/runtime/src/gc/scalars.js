@@ -1,11 +1,13 @@
 import {binary, unary, compare, convert, float, number} from '../execution/numeric-ops.js';
 import {ManagedFault} from './fault.js';
+import {ManagedAddress} from './address-space.js';
 
 const context = Object.freeze({fault: (name, message) => new ManagedFault(name, message)});
 const binaryNames = Object.freeze({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div', '%': 'rem', '&': 'and', '|': 'or', '^': 'xor'});
 const compareNames = Object.freeze({'==': 'eq', '!=': 'ne', '<': 'lt', '<=': 'le', '>': 'gt', '>=': 'ge'});
 const convertNames = Object.freeze({Long: 'i8', Native: 'i', Int32: 'i4', Double: 'r8'});
-const opaque = value => value && typeof value === 'object' && typeof value.kind === 'string' && value.kind.includes('token');
+const opaque = value => value instanceof ManagedAddress ||
+  value && typeof value === 'object' && typeof value.kind === 'string' && value.kind.includes('token');
 
 function numeric(value) {
   if (opaque(value)) throw new ManagedFault('NotSupportedException', 'Opaque GC address tokens do not support numeric arithmetic');

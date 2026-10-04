@@ -1,11 +1,12 @@
 import {ManagedFault} from './fault.js';
 import {isReference} from './reference.js';
 import {StaticDataMetadata} from './static-data-metadata.js';
+import {publishStoredRange} from './spatial-payload.js';
 
 function targetBinding(heap, reference) {
   if (!isReference(reference)) throw new ManagedFault('ArgumentException', 'A managed primitive array is required');
   const record = heap.get(reference);
-  const binding = heap.spaces.byHandle.get(reference.h);
+  const binding = heap.spaces.getBinding(record);
   if (record.kind !== 'array' || !binding?.codec || binding.arena.hostBacked || record.descriptor.scan !== 'none') {
     throw new ManagedFault('ArgumentException', 'InitializeArray requires primitive or enum array elements');
   }
@@ -37,6 +38,7 @@ export function initializeArray(vm, destination, fieldHandle) {
     const source = heap.spaces.byHandle.get(reference.h);
     const current = targetBinding(heap, destination);
     current.arena.bytes.set(source.arena.bytes.subarray(source.block.offset, source.block.offset + byteLength), current.block.offset);
+    publishStoredRange(current, 0, current.length);
     heap.barriers.publishRange(destination, 0, current.length, 'array-initialize', {referenceStores: 0});
   });
 }

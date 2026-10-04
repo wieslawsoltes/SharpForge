@@ -1,5 +1,6 @@
 import {ManagedFault} from './fault.js';
 import {primitiveStorage} from './primitive-storage.js';
+import {synchronizePayload, publishStoredRange} from './spatial-payload.js';
 
 const owner = 'SharpForge.Runtime.FixedMemory';
 const pointerType = 'SharpForge.Runtime.FixedPointer';
@@ -51,7 +52,7 @@ function pin(platform, args) {
   }
   const record = platform.heap.get(reference);
   const string = record.kind === 'string';
-  const binding = platform.heap.spaces.byHandle.get(reference.h);
+  const binding = platform.heap.spaces.getBinding(record);
   if (string ? element !== 'char' : record.kind !== 'array' || !binding?.codec || binding.elementType !== elementNames[element]) {
     throw new ManagedFault('NotSupportedException', 'Fixed requires a compatible primitive array or UTF-16 string');
   }
@@ -82,6 +83,7 @@ function position(platform, state, offset, allowEnd = false) {
   const byteOffset = state.byteOffset + offset * codec.size;
   if (!Number.isSafeInteger(byteOffset) || byteOffset < 0) throw addressFault('The pointer offset is outside its object');
   const record = platform.heap.get(state.lease.reference);
+  platform.heap.spaces.getBinding(record);
   const limit = record.storage.byteLength + (record.kind === 'string' ? 2 : 0);
   if (byteOffset > limit || !allowEnd && byteOffset + codec.size > limit) {
     throw addressFault('The pointer access is outside the pinned payload');
@@ -140,11 +142,15 @@ function access(platform, descriptor, args) {
     if (writing) throw new ManagedFault('NotSupportedException', 'Pinned strings are read-only in this runtime profile');
     return at.byteOffset === at.record.data.length * 2 ? 0 : at.record.data.charCodeAt(at.byteOffset / 2);
   }
-  const binding = platform.heap.spaces.byHandle.get(state.lease.reference.h);
+  const binding = platform.heap.spaces.getBinding(at.record);
   if (writing && binding.readOnly) throw new ManagedFault('InvalidOperationException', 'Frozen managed storage is read-only');
+  const first = Math.floor(at.byteOffset / binding.codec.size);
+  const count = Math.ceil((at.byteOffset + at.codec.size) / binding.codec.size) - first;
+  synchronizePayload(binding, first, count);
   const offset = binding.block.offset + at.byteOffset;
   if (writing) {
     at.codec.write(binding.arena.view, offset, platform.native(args[2]));
+    publishStoredRange(binding, first, count);
     platform.heap.noteMutation();
   }
   return platform.managed(at.codec.read(binding.arena.view, offset), resultTypes[suffix]);
