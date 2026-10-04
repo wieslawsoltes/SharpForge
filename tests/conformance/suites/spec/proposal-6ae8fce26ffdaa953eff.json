@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6ae8fce26ffdaa953eff",
+  "kind": "spec",
+  "sourceText": "string s = \"\";\nC c = new C();\nc.M(s, $\"\", c.ToString(), s.ToString()); // No warnings on c.ToString() or s.ToString(), as the `MaybeNull` does not flow back.\n\npublic class C\n{\n    public void M(string s1, [InterpolatedStringHandlerArgument(\"\", \"s1\")] CustomHandler c1, string s2, string s3) { }\n}\n\n[InterpolatedStringHandler]\npublic partial struct CustomHandler\n{\n    public CustomHandler(int literalLength, int formattedCount, [MaybeNull] C c, [MaybeNull] string s) : this()\n    {\n    }\n}",
+  "sourceSHA256": "20f7bce8c9de7f29de72b19563aa8e90596a63b31f999b008b32f38e557e414a",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 29803
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9b6ec3e999a5813f1482",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace X\n{ \n\tclass DynamicMembers\n\t{\n        enum HRESULT : int\n        {\n            S_OK = 0x0000,\n            S_FALSE = 0x0001,\n            S_PT_NO_CONFLICT = 0x40001,\n            E_INVALID_DATA = unchecked((int)0x8007000D),\n            E_INVALIDARG = unchecked((int)0x80070057),\n            E_OUTOFMEMORY = unchecked((int)0x8007000E),\n            ERROR_NOT_FOUND = unchecked((int)0x80070490)\n        }\n    }\n}",
+  "sourceSHA256": "ef72bad047725fff6ab392d66a8db47a511f6ca1a885192260238cce67ac9f84",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBWinMdExpTests.cs",
+    "sha256": "163ecae94fc35975b5376031fec87fad6b73ea52cf66e8f022437c471a95b283",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBWinMdExpTests.cs",
+    "license": "MIT",
+    "method": "Bug693206",
+    "offset": 8458
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n                text,\n                options: TestOptions.ReleaseWinMD,\n                sourceFileName: \"source.cs\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

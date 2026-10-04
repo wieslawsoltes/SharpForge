@@ -1,0 +1,542 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "button-positive",
+      "control": "Button",
+      "kind": "positive",
+      "className": "GalleryCases.ButtonPositive",
+      "xaml": "fixtures/button-positive.xaml",
+      "source": "fixtures/button-positive.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsEnabled",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "Standard XAML button",
+        "IsEnabled": true,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "4bd1d900794a742551312f1292135cb84a76bb9055a90c085c80d16468b4b106",
+        "xaml": "913ba7472c18359497ff673d45ab0b98419a168963c10472587454352c96ba8d"
+      }
+    },
+    {
+      "id": "button-boundary",
+      "control": "Button",
+      "kind": "boundary",
+      "className": "GalleryCases.ButtonBoundary",
+      "xaml": "fixtures/button-boundary.xaml",
+      "source": "fixtures/button-boundary.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsEnabled",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "",
+        "IsEnabled": false,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "0072558ac2d93c25dee4f898ac3a0cf61937c508c74078dcce0e74e6f89faff4",
+        "xaml": "4b989e0dc6832db0b7216a6b3ade48cd1eae947bd43b2ca05e38be36170149fd"
+      }
+    },
+    {
+      "id": "checkbox-positive",
+      "control": "CheckBox",
+      "kind": "positive",
+      "className": "GalleryCases.CheckBoxPositive",
+      "xaml": "fixtures/checkbox-positive.xaml",
+      "source": "fixtures/checkbox-positive.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsChecked",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "Two-state CheckBox",
+        "IsChecked": true,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "97205fc1359aa93b7c56da819f35f97bebac288030eacb1fb3cbe31dbcdb4189",
+        "xaml": "f588c3de2d3fe09e66bfc242be44ef55b4258f482042e849d499e2b9dd789689"
+      }
+    },
+    {
+      "id": "checkbox-boundary",
+      "control": "CheckBox",
+      "kind": "boundary",
+      "className": "GalleryCases.CheckBoxBoundary",
+      "xaml": "fixtures/checkbox-boundary.xaml",
+      "source": "fixtures/checkbox-boundary.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsChecked",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "",
+        "IsChecked": false,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "d4a5ce20031ef7c1fa5acad8e2cf2d731b2320dd08f09aa2b89fb4f5803e71c7",
+        "xaml": "d84d4a6c4bf9e939b69fd07d29d556ae6083505f537a660649361a0fc0ad7470"
+      }
+    },
+    {
+      "id": "toggleswitch-positive",
+      "control": "ToggleSwitch",
+      "kind": "positive",
+      "className": "GalleryCases.ToggleSwitchPositive",
+      "xaml": "fixtures/toggleswitch-positive.xaml",
+      "source": "fixtures/toggleswitch-positive.cs",
+      "properties": [
+        "Name",
+        "Header",
+        "IsOn",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Header": "ToggleSwitch",
+        "IsOn": true,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "bdda769011118c9e0882c96c5381a5628712ceee19e3f49941ca0ef2bd76f0e9",
+        "xaml": "12b59da816a9ebc4734e80ae7e498ceb150e1fd699b69c1225def2bef5caea82"
+      }
+    },
+    {
+      "id": "toggleswitch-boundary",
+      "control": "ToggleSwitch",
+      "kind": "boundary",
+      "className": "GalleryCases.ToggleSwitchBoundary",
+      "xaml": "fixtures/toggleswitch-boundary.xaml",
+      "source": "fixtures/toggleswitch-boundary.cs",
+      "properties": [
+        "Name",
+        "Header",
+        "IsOn",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Header": "",
+        "IsOn": false,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "245b712177697f55e8bd40315788b4518782100a453dbe734fea33f2c000a293",
+        "xaml": "33f72c09b7460af8441010b4e2c1bc1bbf04cf7b6991a61b220a4908c017dafc"
+      }
+    },
+    {
+      "id": "slider-positive",
+      "control": "Slider",
+      "kind": "positive",
+      "className": "GalleryCases.SliderPositive",
+      "xaml": "fixtures/slider-positive.xaml",
+      "source": "fixtures/slider-positive.cs",
+      "properties": [
+        "Name",
+        "Minimum",
+        "Maximum",
+        "Value",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Minimum": 0,
+        "Maximum": 100,
+        "Value": 50,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "8c77f2ac0a477e0f732332316a78e8cd42e28a95f701e2985d9277e15aa404cc",
+        "xaml": "cc61b8a468cb11bb372a591cb8e3415b1440407633a04c2026068d8ef3cce3f7"
+      }
+    },
+    {
+      "id": "slider-boundary",
+      "control": "Slider",
+      "kind": "boundary",
+      "className": "GalleryCases.SliderBoundary",
+      "xaml": "fixtures/slider-boundary.xaml",
+      "source": "fixtures/slider-boundary.cs",
+      "properties": [
+        "Name",
+        "Minimum",
+        "Maximum",
+        "Value",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Minimum": 0,
+        "Maximum": 100,
+        "Value": 0,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "d7d3758e89c4b492534a1c198db61e1c337668e8772d615edd8637d4865bdf9f",
+        "xaml": "c1d6b893a2b41077cb82f267090d825fab81cc73053ca9af61291715b2c2c810"
+      }
+    },
+    {
+      "id": "progressbar-positive",
+      "control": "ProgressBar",
+      "kind": "positive",
+      "className": "GalleryCases.ProgressBarPositive",
+      "xaml": "fixtures/progressbar-positive.xaml",
+      "source": "fixtures/progressbar-positive.cs",
+      "properties": [
+        "Name",
+        "Minimum",
+        "Maximum",
+        "Value",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Minimum": 0,
+        "Maximum": 100,
+        "Value": 50,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "fb4fb0e9802b9d88ae4cb5b7966452c893829f89918af7afe3a3528db5b25477",
+        "xaml": "c9e348adc52a6abaa61e1ff71ea76c5613a556aa40662914c2d4e3aa3a52a656"
+      }
+    },
+    {
+      "id": "progressbar-boundary",
+      "control": "ProgressBar",
+      "kind": "boundary",
+      "className": "GalleryCases.ProgressBarBoundary",
+      "xaml": "fixtures/progressbar-boundary.xaml",
+      "source": "fixtures/progressbar-boundary.cs",
+      "properties": [
+        "Name",
+        "Minimum",
+        "Maximum",
+        "Value",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Minimum": 0,
+        "Maximum": 100,
+        "Value": 100,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "c6f967062618f4205163491f89e91598484462ab829a0f65983c73c063142e43",
+        "xaml": "b4fbca05be3bf64ae7f5b51e1728e970681f6ad5cc01b57713e3853016574a68"
+      }
+    },
+    {
+      "id": "textbox-positive",
+      "control": "TextBox",
+      "kind": "positive",
+      "className": "GalleryCases.TextBoxPositive",
+      "xaml": "fixtures/textbox-positive.xaml",
+      "source": "fixtures/textbox-positive.cs",
+      "properties": [
+        "Name",
+        "Text",
+        "PlaceholderText",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Text": "Gallery caf\u00e9",
+        "PlaceholderText": "Name",
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "36f0bf86d377dad0c225a3ab45c458ae97ba9db9cd64b82cc96b0507460dda53",
+        "xaml": "c34dc62166db68bb6fa1c99622dc2103c3c0035a0c4a7a6b7d8946156012db9a"
+      }
+    },
+    {
+      "id": "textbox-boundary",
+      "control": "TextBox",
+      "kind": "boundary",
+      "className": "GalleryCases.TextBoxBoundary",
+      "xaml": "fixtures/textbox-boundary.xaml",
+      "source": "fixtures/textbox-boundary.cs",
+      "properties": [
+        "Name",
+        "Text",
+        "MaxLength",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Text": "",
+        "MaxLength": 0,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "3f83c9ba5e17fec79e1ee8097d23440a97e04463f91a4854a1f15c85723c69f8",
+        "xaml": "0af0d100df809badeca02b5c55c57d0c018ccd0928332371ac5fd2c063dc68ce"
+      }
+    },
+    {
+      "id": "textblock-positive",
+      "control": "TextBlock",
+      "kind": "positive",
+      "className": "GalleryCases.TextBlockPositive",
+      "xaml": "fixtures/textblock-positive.xaml",
+      "source": "fixtures/textblock-positive.cs",
+      "properties": [
+        "Name",
+        "Text",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Text": "I am a TextBlock.",
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "71299764fd0fc16f688aeb620e22a2315294770c3dc77cd661e10e9f7c69259e",
+        "xaml": "92f2e2df873cb938ce73df52aa7533249c5916a69c28082eb048c2154ee5b06f"
+      }
+    },
+    {
+      "id": "textblock-boundary",
+      "control": "TextBlock",
+      "kind": "boundary",
+      "className": "GalleryCases.TextBlockBoundary",
+      "xaml": "fixtures/textblock-boundary.xaml",
+      "source": "fixtures/textblock-boundary.cs",
+      "properties": [
+        "Name",
+        "Text",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Text": "",
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "f3e656bf9d3f04db6d670ca36544ed6fa5c170c7d924c0bca2cde58bcfcfff64",
+        "xaml": "b390c8e253a466ba95795a5fa784cc05681668f41f39ae27bbfd0d6172e2c253"
+      }
+    },
+    {
+      "id": "passwordbox-positive",
+      "control": "PasswordBox",
+      "kind": "positive",
+      "className": "GalleryCases.PasswordBoxPositive",
+      "xaml": "fixtures/passwordbox-positive.xaml",
+      "source": "fixtures/passwordbox-positive.cs",
+      "properties": [
+        "Name",
+        "Password",
+        "MaxLength",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Password": "fixture",
+        "MaxLength": 20,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "929e7876391bb7aff5e20fb9eb7206662241b4c4b99417778026d6c3b0769009",
+        "xaml": "ce49b3a87ba85b1a643942b939373ec9f5156fc368392af145e452451ad596ed"
+      }
+    },
+    {
+      "id": "passwordbox-boundary",
+      "control": "PasswordBox",
+      "kind": "boundary",
+      "className": "GalleryCases.PasswordBoxBoundary",
+      "xaml": "fixtures/passwordbox-boundary.xaml",
+      "source": "fixtures/passwordbox-boundary.cs",
+      "properties": [
+        "Name",
+        "Password",
+        "MaxLength",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Password": "",
+        "MaxLength": 0,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "93dc57b92d8369cb77d4ab5e6f60e5ba82f2dd9de523f777044cb3c8285273dc",
+        "xaml": "10b5d6bf365c6ae2688873b43f02e16acf4c19610b2c0dead92fa15bcbf32863"
+      }
+    },
+    {
+      "id": "radiobutton-positive",
+      "control": "RadioButton",
+      "kind": "positive",
+      "className": "GalleryCases.RadioButtonPositive",
+      "xaml": "fixtures/radiobutton-positive.xaml",
+      "source": "fixtures/radiobutton-positive.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsChecked",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "Option 1",
+        "IsChecked": true,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "e14afe6eb83ef2524f5ff2f70a7f483bdcccab7b907aec25f6c09f8a4dd71b5a",
+        "xaml": "032c19f3e34de881e647ddf719cca25036d3b879116a50223aa6adfddd149cd3"
+      }
+    },
+    {
+      "id": "radiobutton-boundary",
+      "control": "RadioButton",
+      "kind": "boundary",
+      "className": "GalleryCases.RadioButtonBoundary",
+      "xaml": "fixtures/radiobutton-boundary.xaml",
+      "source": "fixtures/radiobutton-boundary.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsChecked",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "",
+        "IsChecked": false,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "01223cba093a5a3164d59929a1cd1aadf0bf116b965db7aa0df168e2461285a7",
+        "xaml": "4e16823dfb98307d907e49e19f0a8a9ca9241d314e20766f43e2187151a37fde"
+      }
+    },
+    {
+      "id": "togglebutton-positive",
+      "control": "ToggleButton",
+      "kind": "positive",
+      "className": "GalleryCases.ToggleButtonPositive",
+      "xaml": "fixtures/togglebutton-positive.xaml",
+      "source": "fixtures/togglebutton-positive.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsChecked",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "Toggle button",
+        "IsChecked": true,
+        "Width": 120
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "6cebd0c29c1271b0db1f76cfe95d5f1617995350136e9dd9db7c862885b17617",
+        "xaml": "c483befd9ba3626d6910917d2daa1e9d223fbb8b090125a7a7bb9c72d54474a4"
+      }
+    },
+    {
+      "id": "togglebutton-boundary",
+      "control": "ToggleButton",
+      "kind": "boundary",
+      "className": "GalleryCases.ToggleButtonBoundary",
+      "xaml": "fixtures/togglebutton-boundary.xaml",
+      "source": "fixtures/togglebutton-boundary.cs",
+      "properties": [
+        "Name",
+        "Content",
+        "IsChecked",
+        "Width"
+      ],
+      "expected": {
+        "Name": "fixture",
+        "Content": "",
+        "IsChecked": false,
+        "Width": 0
+      },
+      "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
+      "hashes": {
+        "source": "7f1ab99619ed195f891683a02de646a214cba1c374c8df89e7c28048f193cf8a",
+        "xaml": "8e6be34f71fe27bb0e9947c9dfa93394ca6568959a807714524e72681ac09182"
+      }
+    },
+    {
+      "id": "malformed",
+      "control": "Button",
+      "kind": "negative",
+      "xaml": "fixtures/malformed.xaml",
+      "properties": [],
+      "expectedException": true,
+      "hashes": {
+        "xaml": "deec9da733a8b8d100d2d8419baca4682b5abafa35fa2fd4cbf9ec665da00a83"
+      }
+    },
+    {
+      "id": "unknown-control",
+      "control": "Button",
+      "kind": "negative",
+      "xaml": "fixtures/unknown-control.xaml",
+      "properties": [],
+      "expectedException": true,
+      "hashes": {
+        "xaml": "eacd43d57bb6d95bda5a7ddeda0310bbc72d0058a282b34f2613a1b6d10aa561"
+      }
+    },
+    {
+      "id": "negative-width",
+      "control": "Button",
+      "kind": "negative",
+      "xaml": "fixtures/negative-width.xaml",
+      "properties": [],
+      "expectedException": true,
+      "hashes": {
+        "xaml": "1219204f8434d9ca59f74a180b4d63dd642f229bb0441dc1dcb68a457c5ce80d"
+      }
+    }
+  ]
+}

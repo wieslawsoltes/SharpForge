@@ -12,13 +12,13 @@
  *   CS9334 an explicit implementation whose type differs from the member's
  * The resulting map (`type.interfaceImplementations`) is what a back end emits as MethodImpl rows / interface vtables.
  */
-import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
+import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf } from '../symbols/substitution.js';
 
 const sameType = (a, b, ma, mb) => {
   if (!a || !b) return a === b;
-  if (a.equals(b)) return true;
+  if (a.equals(b, TypeCompareKind.IgnoreDynamic)) return true;
   const ia = (ma.typeParameters ?? []).indexOf(a),
     ib = (mb.typeParameters ?? []).indexOf(b);
   if (ia >= 0 && ia === ib) return true;

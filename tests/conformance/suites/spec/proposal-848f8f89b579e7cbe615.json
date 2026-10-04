@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-848f8f89b579e7cbe615",
+  "kind": "spec",
+  "sourceText": "var i = 5;\nSystem.Console.Write(C.M(null, ref i));\n\ninterface I1 { }\ninterface I2 { }\nstatic class C\n{\n    public static string M(I1 o, ref int x) => \"1\";\n    public static string M(I2 o, in int x) => \"2\";\n}",
+  "sourceSHA256": "0d3122300e9eb1e11660a01a0d8252be724797249fdfe7b07071f52577922d3f",
+  "target": "library",
+  "featureId": "csharp-12-0-ref-readonly-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/ref-readonly-parameters.md",
+    "sha256": "a742250323e36f0b81de0743acf0124a6fa60e08c8c2a660eac4da17a8bba683",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/ref-readonly-parameters.md",
+    "license": "NOASSERTION",
+    "offset": 13754
+  }
+}

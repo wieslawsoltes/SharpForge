@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-daebc0c94034cdd3639a",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S\n{\n    public int _x;\n    public int _y;\n\n    public S(int x, int y)\n    {\n        _y = 0;\n        void Local()\n        {\n            S s2 = this;\n        }\n        Local();\n        _x = 0;\n    }\n}",
+  "sourceSHA256": "85ecbf5dc19d096dc6edeb698ab3326b08e839f9e7a2e759ca699ca301e86dc3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "PiecewiseStructAssignmentInConstructor2",
+    "offset": 40133
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS9015",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,20): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             S s2 = this;\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"this\").WithLocation(12, 20),\n                // (14,9): error CS9015: Use of possibly unassigned field '_x'. Consider updating to language version '11.0' to auto-default the field.\n                //         Local();\n                Diagnostic(ErrorCode.ERR_UseDefViolationFieldUnsupportedVersion, \"Local()\").WithArguments(\"_x\", \"11.0\").WithLocation(14, 9)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1d0dff7af3e333f5d8ae",
+  "kind": "spec",
+  "sourceText": "public record R(int P1, string P2 = \"xyz\")\n{\n    public void Deconstruct(out int P1, out string P2)\n    {\n        P1 = this.P1;\n        P2 = this.P2;\n    }\n}\n\nclass Program\n{\n    static void Main()\n    {\n        R r = new R(12);\n        (int p1, string p2) = r;\n        Console.WriteLine($\"p1: {p1}, p2: {p2}\");\n    }\n}",
+  "sourceSHA256": "24dc84f63e86a40976b4304ca2a609d0be22cacba1716a72557e4081b27148f4",
+  "target": "library",
+  "featureId": "csharp-9-0-records",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/records.md",
+    "sha256": "a3198542cb3ddbad72e522fdf5442c5762254d2e6d571bf1dfba2a11110f15e6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/records.md",
+    "license": "NOASSERTION",
+    "offset": 19997
+  }
+}

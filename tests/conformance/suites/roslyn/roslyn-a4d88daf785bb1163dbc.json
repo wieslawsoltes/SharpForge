@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a4d88daf785bb1163dbc",
+  "kind": "diagnostics",
+  "sourceText": "struct S\n{\n    public int P { get; set; } = 1;\n    internal static long Q { get; } = 10;\n    public decimal R { get; } = 300;\n\n    public S(int i) {}\n}",
+  "sourceSHA256": "15859e222883c5bad3f9572db2309f4973f764516a59b057507e6285ea7ad666",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "AutoPropInitialization2",
+    "offset": 40840
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8773",
+        "severity": "error"
+      },
+      {
+        "code": "CS8773",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,16): error CS8773: Feature 'struct field initializers' is not available in C# 9.0. Please use language version 10.0 or greater.\n                //     public int P { get; set; } = 1;\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion9, \"P\").WithArguments(\"struct field initializers\", \"10.0\").WithLocation(3, 16),\n                // (5,20): error CS8773: Feature 'struct field initializers' is not available in C# 9.0. Please use language version 10.0 or greater.\n                //     public decimal R { get; } = 300;\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion9, \"R\").WithArguments(\"struct field initializers\", \"10.0\").WithLocation(5, 20)",
+  "unsupported": []
+}

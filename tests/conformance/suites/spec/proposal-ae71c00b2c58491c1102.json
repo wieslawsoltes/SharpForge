@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ae71c00b2c58491c1102",
+  "kind": "spec",
+  "sourceText": "#line hidden\nvoid Render()            \n{ \n#line spanof('F(...)') 15 \"page.razor\"  // 4\n  _builder.Add(F(() => 1+1,            // 5\n  () => 2+2                            // 6\n));                                    // 7\n#line hidden\n}\n);\n}",
+  "sourceSHA256": "899946c50ffe56903c895d2c17720b6568761a5171613afed6558f66e9d1c159",
+  "target": "library",
+  "featureId": "csharp-10-0-line-span-directive",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/enhanced-line-directives.md",
+    "sha256": "7bc14b928ee5e5e920a3b4c7fa01d40aaa74d31f3af8810e3dbf9b8963a9a3fa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/enhanced-line-directives.md",
+    "license": "NOASSERTION",
+    "offset": 7983
+  }
+}

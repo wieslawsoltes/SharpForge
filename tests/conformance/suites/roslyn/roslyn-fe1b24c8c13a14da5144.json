@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fe1b24c8c13a14da5144",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass A\n{\n}\n\nclass B\n{\n    [Obsolete(\"B to A\")]\n    public static explicit operator B(A a)\n    {\n        return null;\n    }\n\n    [Obsolete(\"A to B\")]\n    public static implicit operator A(B b)\n    {\n        return null;\n    }\n}\n\n\nclass Test\n{\n    static void Main()\n    {\n        A a = new A();\n        B b = (B)a;\n        a = b;\n        a = (A)(B)(A)b;\n    }\n}\n",
+  "sourceSHA256": "8919371becca84a2c831c85ab97a8e026d4e2bd8985c3b607649d562ff2ae42e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteUserDefinedConversion1",
+    "offset": 312001
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (29,15): warning CS0618: 'B.explicit operator B(A)' is obsolete: 'B to A'\n                //         B b = (B)a;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"(B)a\").WithArguments(\"B.explicit operator B(A)\", \"B to A\"),\n                // (30,13): warning CS0618: 'B.implicit operator A(B)' is obsolete: 'A to B'\n                //         a = b;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"b\").WithArguments(\"B.implicit operator A(B)\", \"A to B\"),\n                // (31,19): warning CS0618: 'B.implicit operator A(B)' is obsolete: 'A to B'\n                //         a = (A)(B)(A)b;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"(A)b\").WithArguments(\"B.implicit operator A(B)\", \"A to B\"),\n                // (31,16): warning CS0618: 'B.explicit operator B(A)' is obsolete: 'B to A'\n                //         a = (A)(B)(A)b;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"(B)(A)b\").WithArguments(\"B.explicit operator B(A)\", \"B to A\"),\n                // (31,13): warning CS0618: 'B.implicit operator A(B)' is obsolete: 'A to B'\n                //         a = (A)(B)(A)b;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"(A)(B)(A)b\").WithArguments(\"B.implicit operator A(B)\", \"A to B\")",
+  "unsupported": []
+}

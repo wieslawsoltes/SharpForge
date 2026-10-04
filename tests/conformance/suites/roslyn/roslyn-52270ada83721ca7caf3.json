@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-52270ada83721ca7caf3",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        (x1, string y1) = new C();\n        (int x2, y2) = new C();\n    }\n\n    public void Deconstruct(out int a, out string b)\n    {\n        a = 1;\n        b = \"hello\";\n    }\n}\n",
+  "sourceSHA256": "c773c9caf85bae3bb9c94e75272d84e08bbf76cef836f27d38b070bee9478c91",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "AssignmentToUndeclaredVariableInMixedDeclarationAndAssignment",
+    "offset": 331667
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.RegularPreview)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,10): error CS0103: The name 'x1' does not exist in the current context\n                //         (x1, string y1) = new C();\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"x1\").WithArguments(\"x1\").WithLocation(6, 10),\n                // (7,18): error CS0103: The name 'y2' does not exist in the current context\n                //         (int x2, y2) = new C();\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"y2\").WithArguments(\"y2\").WithLocation(7, 18)",
+  "unsupported": []
+}

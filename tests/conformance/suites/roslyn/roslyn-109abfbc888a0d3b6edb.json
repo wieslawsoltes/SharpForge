@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-109abfbc888a0d3b6edb",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface ITest\n{\n    ref readonly int M();\n}\npublic class Test : ITest\n{\n    public int M() => 0;\n}",
+  "sourceSHA256": "ecc7b9028be977c1cc4e4a8201e6ef4d09ae254de579a1ac0bb27dcf1d17d868",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "sha256": "fed7c6d5beeb0e3296094c4c3973b927e627482323c4609b726e7af2365eb925",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "license": "MIT",
+    "method": "OverridingMethodSymbolDoesNotCopyModifiersIfItWasRefKindNone_Interface",
+    "offset": 170562
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8152",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,21): error CS8152: 'Test' does not implement interface member 'ITest.M()'. 'Test.M()' cannot implement 'ITest.M()' because it does not have matching return by reference.\n                // public class Test : ITest\n                Diagnostic(ErrorCode.ERR_CloseUnimplementedInterfaceMemberWrongRefReturn, \"ITest\").WithArguments(\"Test\", \"ITest.M()\", \"Test.M()\").WithLocation(6, 21)",
+  "unsupported": []
+}

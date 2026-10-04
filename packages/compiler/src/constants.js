@@ -11,6 +11,7 @@
  *   - (int) of a finite out-of-range double is CS0220 when checked (NaN/infinity report CS0221).
  * Unchecked floating constants follow Roslyn's zero result, independently of CoreCLR's saturating runtime casts.
  */
+import {DiagnosticId} from './diagnostics/codes.js';
 import {formatMessage} from './diagnostics/codes.js';
 import {ConstantValue,foldUnary,foldBinary,foldConversion,isFoldError} from './constants/fold.js';
 export class ConstantError extends Error {
@@ -39,7 +40,7 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
   const int=(n,result,check)=>{
     if(isFoldError(result))return plain(n,result);
     const big=typeof result==='bigint'?result:result.value;
-    if(check&&(big< -2147483648n||big>2147483647n))throw new ConstantError(n,'CS0220',[]);
+    if(check&&(big< -2147483648n||big>2147483647n))throw new ConstantError(n,DiagnosticId.CS0220,[]);
     return {type:'int',value:Number(BigInt.asIntN(32,big))};
   };
   const walk=(n,check)=>{
@@ -62,7 +63,7 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
       if(n.type==='double')return plain(n,foldConversion(x.type==='int'?long(x):double(x),'double'));
       if(x.type==='int')return int(n,BigInt(Math.trunc(x.value)),check);
       const value=Math.trunc(x.value);
-      if(Number.isFinite(value)&&(value<-2147483648||value>2147483647)&&check)throw new ConstantError(n,'CS0220',[]);
+      if(Number.isFinite(value)&&(value<-2147483648||value>2147483647)&&check)throw new ConstantError(n,DiagnosticId.CS0220,[]);
       return plain(n,foldConversion(double(x),'int',{checked:check}));
     }
     if(n.kind==='Conditional'){

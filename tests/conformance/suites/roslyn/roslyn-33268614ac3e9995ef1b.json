@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-33268614ac3e9995ef1b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\npublic class C\n{\n    public static void f([Optional, DefaultParameterValue(default(decimal))]decimal a)\n    {\n    }\n}\n",
+  "sourceSHA256": "93d5c25f67e17044d8fb5a902844dbf7ec9b44c211606a6fc692fd978a575cee",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "DPV_Decimal",
+    "offset": 33895
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,59): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(decimal)\")",
+  "unsupported": []
+}

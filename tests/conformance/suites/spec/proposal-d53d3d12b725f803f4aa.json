@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d53d3d12b725f803f4aa",
+  "kind": "spec",
+  "sourceText": "// File1.cs\nclass C\n{\n    public static void M() { }\n}",
+  "sourceSHA256": "eee149b05ac7237d6146078ee7b27e22e4cb381e11f988fba67f28a598015961",
+  "target": "library",
+  "featureId": "csharp-11-0-file-local-types",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/file-local-types.md",
+    "sha256": "c9907c62543e8698e69f8bd26b0435b3365ebd1e7405b79536b18134385374b6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/file-local-types.md",
+    "license": "NOASSERTION",
+    "offset": 4029
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e601158bf0004d3d2aad",
+  "kind": "diagnostics",
+  "sourceText": "public class Derived : Base\n{\n    void M()\n    {\n        Field1 = Constant;\n        Field2 = Constant;\n        Method();\n        Event1 += null;\n        Property1 = Constant;\n        Property2 = Constant;\n        this[1] = 2;\n        this[string.Empty] = 4;\n    }\n    Derived(int x) : base() {}\n    Derived(long x) {} // implicit base()\n}\n",
+  "sourceSHA256": "7cd46656e3154d5c66c7497124ce8be94aea560c8310cb482d272ea38917f79e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "AccessibleWhereRequired_02",
+    "offset": 9427
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "references: new[] { MetadataReference.CreateFromImage(baseCompilation.EmitToArray()) },\n                assemblyName: \"WantsIVTAccessButCantHave\",\n                options: TestOptions.SigningReleaseDll)",
+  "options": "(source2, parseOptions: TestOptions.Regular7_2,\n                references: new[] { MetadataReference.CreateFromImage(baseCompilation.EmitToArray()) },\n                assemblyName: \"WantsIVTAccessButCantHave\",\n                options: TestOptions.SigningReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0272",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS0272",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,9): error CS0122: 'Base.Field1' is inaccessible due to its protection level\n                //         Field1 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Field1\").WithArguments(\"Base.Field1\").WithLocation(5, 9),\n                // (5,18): error CS0122: 'Base.Constant' is inaccessible due to its protection level\n                //         Field1 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Constant\").WithArguments(\"Base.Constant\").WithLocation(5, 18),\n                // (6,9): error CS0122: 'Base.Field2' is inaccessible due to its protection level\n                //         Field2 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Field2\").WithArguments(\"Base.Field2\").WithLocation(6, 9),\n                // (6,18): error CS0122: 'Base.Constant' is inaccessible due to its protection level\n                //         Field2 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Constant\").WithArguments(\"Base.Constant\").WithLocation(6, 18),\n                // (7,9): error CS0122: 'Base.Method()' is inaccessible due to its protection level\n                //         Method();\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Method\").WithArguments(\"Base.Method()\").WithLocation(7, 9),\n                // (8,9): error CS0122: 'Base.Event1' is inaccessible due to its protection level\n                //         Event1 += null;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Event1\").WithArguments(\"Base.Event1\").WithLocation(8, 9),\n                // (8,9): error CS0122: 'Base.Event1.add' is inaccessible due to its protection level\n                //         Event1 += null;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Event1 += null\").WithArguments(\"Base.Event1.add\").WithLocation(8, 9),\n                // (9,9): error CS0122: 'Base.Property1' is inaccessible due to its protection level\n                //         Property1 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Property1\").WithArguments(\"Base.Property1\").WithLocation(9, 9),\n                // (9,21): error CS0122: 'Base.Constant' is inaccessible due to its protection level\n                //         Property1 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Constant\").WithArguments(\"Base.Constant\").WithLocation(9, 21),\n                // (10,9): error CS0272: The property or indexer 'Base.Property2' cannot be used in this context because the set accessor is inaccessible\n                //         Property2 = Constant;\n                Diagnostic(ErrorCode.ERR_InaccessibleSetter, \"Property2\").WithArguments(\"Base.Property2\").WithLocation(10, 9),\n                // (10,21): error CS0122: 'Base.Constant' is inaccessible due to its protection level\n                //         Property2 = Constant;\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Constant\").WithArguments(\"Base.Constant\").WithLocation(10, 21),\n                // (11,14): error CS1503: Argument 1: cannot convert from 'int' to 'string'\n                //         this[1] = 2;\n                Diagnostic(ErrorCode.ERR_BadArgType, \"1\").WithArguments(\"1\", \"int\", \"string\").WithLocation(11, 14),\n                // (12,9): error CS0272: The property or indexer 'Base.this[string]' cannot be used in this context because the set accessor is inaccessible\n                //         this[string.Empty] = 4;\n                Diagnostic(ErrorCode.ERR_InaccessibleSetter, \"this[string.Empty]\").WithArguments(\"Base.this[string]\").WithLocation(12, 9),\n                // (14,22): error CS0122: 'Base.Base()' is inaccessible due to its protection level\n                //     Derived(int x) : base() {}\n                Diagnostic(ErrorCode.ERR_BadAccess, \"base\").WithArguments(\"Base.Base()\").WithLocation(14, 22),\n                // (15,5): error CS0122: 'Base.Base()' is inaccessible due to its protection level\n                //     Derived(long x) {} // implicit base()\n                Diagnostic(ErrorCode.ERR_BadAccess, \"Derived\").WithArguments(\"Base.Base()\").WithLocation(15, 5)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-13b0f5074ce2bdb879c2",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nAction<int> a = new int[0].M; // binds to M<int>(IEnumerable<int>, int)\nstatic class E\n{\n    public static void M<T>(this Span<T> s, T x) => Console.Write(1);\n    public static void M<T>(this IEnumerable<T> e, T x) => Console.Write(2);\n}",
+  "sourceSHA256": "b59e74ce69b6ddf79b04f844e6d5e31b38deb264fb449597b25c1e752fb2b252",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 7268
+  }
+}

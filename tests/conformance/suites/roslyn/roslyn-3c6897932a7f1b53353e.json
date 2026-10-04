@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3c6897932a7f1b53353e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class C\n{\n    public static void Main()\n    {\n        Console.Write(M(new C()));\n        Console.Write(M(null));\n    }\n    public static bool M(C c)\n    {\n        return c is ();\n    }\n    public void Deconstruct() { }\n}\n",
+  "sourceSHA256": "014d28a6cf23b12c704004eac259437733ecb1348ce5f9bcff949782be409b67",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "EmptyPositionalPatternVsDeconstruct",
+    "offset": 120863
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

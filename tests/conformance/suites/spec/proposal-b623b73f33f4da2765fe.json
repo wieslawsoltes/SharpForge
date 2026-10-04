@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b623b73f33f4da2765fe",
+  "kind": "spec",
+  "sourceText": "// ❌ Error, will not compile\n[field: Xyz]\npublic string Name => Compute();",
+  "sourceSHA256": "a8809d8ac1fcce4dc04411927a8f3eb9fbd632b6d8f8bc334296918a157eca9d",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 5682
+  }
+}

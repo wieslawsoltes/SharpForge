@@ -1,11 +1,12 @@
 import {enumTypes} from '@sharpforge/framework';
 import {EnumConvertBase} from '@sharpforge/bytecode';
 import {checkArrayStore} from './casting.js';
-import {convert as cilConvert,float} from './numeric-ops.js';
+import {binary as cilBinary,convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
 import {enumInfo,enumValue} from './enums.js';
 export {sourceEnum,enumToString} from './enums.js';
 export {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './tokens.js';
+const numericContext = Object.freeze({fault: (name, message) => new ManagedFault(name, message)});
 
 export function defaultValue(type,vm={}) {
   if(enumInfo(vm,type))return enumValue(vm,type,0);
@@ -26,16 +27,8 @@ export function binary(vm, operator, a, b, mode = 0) {
     case '+': return mode === 1 ? (l + r) | 0 : l + r;
     case '-': return mode === 1 ? (l - r) | 0 : l - r;
     case '*': return mode === 1 ? Math.imul(l, r) : l * r;
-    case '/':
-      if (mode === 1) {
-        if (r === 0) throw new ManagedFault('DivideByZeroException', 'Attempted to divide by zero');
-        if (l === -2147483648 && r === -1) throw new ManagedFault('OverflowException', 'Integer division overflow');
-        return (l / r) | 0;
-      }
-      return l / r;
-    case '%':
-      if (mode === 1 && r === 0) throw new ManagedFault('DivideByZeroException', 'Attempted to divide by zero');
-      return mode === 1 ? (l % r) | 0 : l % r;
+    case '/': return mode === 1 ? cilBinary('div', l, r, numericContext) : l / r;
+    case '%': return mode === 1 ? cilBinary('rem', l, r, numericContext) : l % r;
     case '==': return same();
     case '!=': return !same();
     case '<': return l < r;
