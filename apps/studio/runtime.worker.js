@@ -1,38 +1,72 @@
-import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
-import {applyDesignPatch} from '@sharpforge/runtime';
-import {loadAssembly, equalBytes} from '@sharpforge/cil';
-import {createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
+import {RuntimeUIBridge, registerRuntimeUIHandlers} from './workers/ui-bridge.js';
+import {createWorkerProtocol, readWorkerRequest} from './workers/protocol.js';
+import {applyDesignPatch, runtimeLaunchCapabilities} from '@sharpforge/runtime';
+import {RuntimeSessionFactory} from './workers/runtime-session.js';
 import {RuntimeActivity} from './workers/runtime-activity.js';
-let session=null,uiCommands=[],output=[],loadedModule=null,sessionSerial=0;
-const activity=new RuntimeActivity({getSession:()=>session,getSerial:()=>sessionSerial,flush,publishState:state,
-  onError:error=>self.postMessage({event:'error',sessionId:sessionSerial,message:error.message})});
-function flush(){if(uiCommands.length){self.postMessage({event:'ui',sessionId:sessionSerial,commands:uiCommands});uiCommands=[];}if(output.length){self.postMessage({event:'output',sessionId:sessionSerial,text:output.join('')});output=[];}}
-function state(){activity.observeState();flush();if(session)self.postMessage({event:'state',sessionId:sessionSerial,...session.state(),assemblyLoad:session.assemblyLoad??null});}
-function schedule(){activity.schedule();}
-function scheduleAnimations(){activity.scheduleAnimations();}
-function executable(params){
-  if(!params.assembly)return {image:params.image,load:null};
-  const started=performance.now(),hit=loadedModule&&equalBytes(loadedModule.bytes,params.assembly);
-  if(!hit)loadedModule={bytes:params.assembly.slice(),image:loadAssembly(params.assembly)};
-  return {image:loadedModule.image,load:{format:'ECMA-335',cacheHit:!!hit,milliseconds:performance.now()-started,bytes:params.assembly.length}};
+
+const sessions = new RuntimeSessionFactory();
+let session = null, uiBridge = null, output = [], sessionSerial = 0;
+const activity = new RuntimeActivity({getSession: () => session, getSerial: () => sessionSerial, flush, publishState: state,
+  onError: error => self.postMessage({event: 'error', sessionId: sessionSerial, message: error.message})});
+
+function flush() {
+  uiBridge?.flush();
+  if (output.length) { self.postMessage({event: 'output', sessionId: sessionSerial, text: output.join('')}); output = []; }
 }
-function launch(params){
-  // Fully construct and bind a candidate first. A malformed replacement must not destroy a live session.
-  const {candidate,capabilities}=createRuntimeLaunchCandidate(params,{
-    executable,onOutput:text=>output.push(text),
-    onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}
-  });
-  activity.stop();session?.stop();session=candidate;sessionSerial++;output=[];uiCommands=[];self.postMessage({event:'ui',sessionId:sessionSerial,commands:[{op:'reset',snapshot:{version:1,windows:[],nodes:[]}}]});activity.start({manualAnimations:!!params.manualAnimations});
-  self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
-  state();schedule();
-  return {started:true,sessionId:sessionSerial,capabilities,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
-    sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text,version:s.version}))};
+function state() {
+  activity.observeState();
+  flush();
+  if (session) self.postMessage({event: 'state', sessionId: sessionSerial, ...session.state(), assemblyLoad: session.assemblyLoad ?? null});
+}
+function schedule() { activity.schedule(); }
+function scheduleAnimations() { activity.scheduleAnimations(); }
+function wakeUI(bridge) {
+  if (bridge !== uiBridge || !session) return;
+  try {
+    activity.execution.measure('ui', () => session.vm.platform.ui.work.drain());
+    flush();
+    schedule();
+    activity.observeState();
+  } catch (error) {
+    session.pause();
+    self.postMessage({event: 'error', sessionId: sessionSerial, message: error.message});
+    state();
+  }
+}
+function launch(params) {
+  const candidateOutput = [];
+  const candidateBridge = new RuntimeUIBridge({post: value => self.postMessage(value), wake: wakeUI,
+    onError: error => self.postMessage({event: 'error', sessionId: sessionSerial, message: error.message})});
+  let candidate;
+  try {
+    candidate = sessions.create(params, {onOutput: text => candidateOutput.push(text),
+      ...candidateBridge.runtimeOptions({bindingAssembly: params.assembly})});
+  } catch (error) { candidateBridge.dispose(); throw error; }
+  activity.stop();
+  uiBridge?.dispose();
+  session?.stop();
+  session = candidate;
+  sessionSerial++;
+  output = candidateOutput;
+  uiBridge = candidateBridge;
+  activity.start({manualAnimations: !!params.manualAnimations});
+  self.postMessage({event: 'ui', sessionId: sessionSerial, commands: [{op: 'reset', snapshot: {version: 1, windows: [], nodes: []}}]});
+  candidateBridge.attach(session.vm, sessionSerial);
+  const sources = session.vm.image?.sources ?? session.vm.inspector?.debug?.sources ?? [];
+  self.postMessage({event: 'loaded', sessionId: sessionSerial, sources: sources.map(source => ({uri: source.uri, text: source.text}))});
+  state();
+  schedule();
+  return {started: true, sessionId: sessionSerial, capabilities: runtimeLaunchCapabilities,
+    profile: params.managedIL ? 'SharpForge.ManagedIL/1' : 'SharpForge.CIL',
+    sources: sources.map(source => ({uri: source.uri, text: source.text, version: source.version}))};
 }
 const handlers=createWorkerProtocol('runtime');
+registerRuntimeUIHandlers(handlers, {current: () => ({vm: session.vm, bridge: uiBridge}), flush, schedule,
+  interactive: () => { if (session.vm.state === 'paused') throw new Error('Continue execution before interacting with the managed application'); }});
 for(const method of ["launch"])handlers.registerHandler(method,(params,method)=>{let result;result=launch(params);return result;});
 for(const method of ["resume"])handlers.registerHandler(method,(params,method)=>{let result;session.resume(params.mode,{granularity:params.granularity});state();schedule();return result;});
 for(const method of ["pause"])handlers.registerHandler(method,(params,method)=>{let result;session.pause();state();return result;});
-for(const method of ["stop"])handlers.registerHandler(method,(params,method)=>{let result;session?.stop();activity.stop();state();return result;});
+for(const method of ["stop"])handlers.registerHandler(method,(params,method)=>{let result;session?.stop();flush();uiBridge?.dispose();activity.stop();state();return result;});
 for(const method of ["stepBack"])handlers.registerHandler(method,(params,method)=>{let result;session.stepBack();state();return result;});
 for(const method of ["reverseContinue"])handlers.registerHandler(method,(params,method)=>{let result;session.reverseContinue();state();return result;});
 for(const method of ["dataBreakpointInfo"])handlers.registerHandler(method,(params,method)=>{let result;result=session.dataBreakpointInfo(params);return result;});
@@ -111,7 +145,7 @@ handlers.registerHandler('executionMetrics',params=>activity.execution.read(para
 for(const method of ["retentionPath"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.heap.retentionPath(params.reference,params.options);return result;});
 for(const method of ["heap"])handlers.registerHandler(method,(params,method)=>{let result;result=session.vm.heap.inspect(params.limit??200);return result;});
 for(const method of ["state"])handlers.registerHandler(method,(params,method)=>{let result;result=session?.state()??null;return result;});
-self.onmessage=event=>{
+self.onmessage=async event=>{
   const id=event.data?.id;
   try{
     const {method,params}=readWorkerRequest(event.data);
@@ -119,7 +153,12 @@ self.onmessage=event=>{
     handlers.assertMethod(method);
     if(method!=='launch'&&params.sessionId!==undefined&&params.sessionId!==sessionSerial)throw new Error('Debug session changed; retry the command in the current session');
     if(!session&&!['launch','stop','state'].includes(method))throw new Error('Start a debug session first');
+    const serial=sessionSerial;
     result=activity.dispatch(method,params,handlers.dispatch);
+    if(result&&typeof result.then==='function'){
+      result=await result;
+      if(serial!==sessionSerial)throw new Error('Debug session changed while the command was pending');
+    }
     if(id!==undefined)self.postMessage({id,result});
   }catch(error){if(id!==undefined)self.postMessage({id,error:{message:error.message,name:error.name,code:error.code}});else self.postMessage({event:'error',sessionId:sessionSerial,message:error.message,name:error.name,code:error.code});}
 };
