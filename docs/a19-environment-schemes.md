@@ -122,5 +122,11 @@ node scripts/limited.js node --test --test-reporter=spec \
   tests/a19-studio-keyboard.test.js tests/a19-shell-settings.test.js
 ```
 
-Source-ready status: focused execution pending. Final results are recorded in
-`docs/project16-text-native-evidence.md` after the scheduled run.
+Qualification completed on Node v24.19.0, Linux x64: all 27 new cases passed;
+the completed scope has 48 distinct eventual passes and no skipped tests. An
+existing Emacs binding-count expectation was updated to assert both global save
+gestures and actual invocation after projection; its 10-case regression file then
+passed in full. The editor public-API smoke and all three exported integration
+steps passed. The initial stylesheet smoke was corrected to follow the entry
+file's bundled CSS imports. Detailed commands and limits are recorded in
+`docs/project16-text-native-evidence.md`.

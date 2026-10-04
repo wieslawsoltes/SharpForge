@@ -307,6 +307,74 @@ cold/warm samples, p50/p95/p99 and retained-memory deltas separately from the
 explicitly unavailable browser measurements; Node test duration is not used as
 a key-to-paint benchmark.
 
+## First-run schemes and ReSharper-like follow-up
+
+| Work ID / issue | Implementation | Focused evidence and boundary |
+| --- | --- | --- |
+| SF-A19-T42 / [#1478](https://github.com/wieslawsoltes/SharpForge/issues/1478) | Native `keymaps/resharper.js` and public profile registration; Studio `keyboard-profile.js`, `studio-keyboard.js`, `shell-commands.js`; `first-run.js`, `options-dialog.js`, `settings-profile.js`, `settings-store.js`; `c33b162a`, `79c888a6` | `tests/a20-resharper-keymap.test.js` (12 cases) and `tests/a19-first-run-schemes.test.js` (15 cases). Real model/edit/history results, provider boundaries, all distinctive gestures and explicit browser chords, Windows/Mac event normalization, read-only/IME/AltGraph/disposal, global routing without an active editor, actual search filters, profile switching, first-run, Options, import/export/reset, workspace overlays, cancellation, invalid values, quota rollback, and preserved document/undo state. Physical browser/OS/JetBrains execution is not claimed. |
+
+The stable new identifier is `resharper`, labelled **ReSharper-like (IntelliJ)**.
+The reference is the IntelliJ column of JetBrains' official ReSharper 2026.2
+shortcut documentation, updated 7 August 2026, and its official reference card.
+[The scheme contract and complete mapped table](a19-environment-schemes.md)
+link both sources and distinguish SharpForge provider behavior from complete
+JetBrains feature parity. Visual Studio remains the default. No second editor
+document or history was introduced. The current shell already installs the
+shared global resolver and changes all views through its existing callback.
+
+Source, tests, and docs were committed before running this complete scope:
+
+```sh
+node scripts/limited.js node --test --test-reporter=spec \
+  tests/a19-first-run-schemes.test.js tests/a20-resharper-keymap.test.js \
+  tests/a19-studio-keyboard.test.js tests/a19-shell-settings.test.js
+```
+
+Node v24.19.0, Linux x64: initial result **47 passed / 1 failed**, no skips,
+1.224 seconds. All **27 new cases passed**. The affected older test expected only
+one default global Save binding under Emacs. Global scheme projection now also
+exposes Emacs' distinct Ctrl+X, Ctrl+S chord. `3acf6974` replaces that count with
+the exact expected key sequences, executes the chord once, and verifies that
+removing a dynamic binding preserves both defaults. The focused rerun passed
+**10/10**, no skips, 0.264 seconds:
+
+```sh
+node scripts/limited.js node --test --test-reporter=spec tests/a19-studio-keyboard.test.js
+```
+
+The complete scope therefore has **48 distinct eventual passing cases**,
+including 21 existing regression cases; this was not reported as a single
+48-pass invocation. No full local suite, browser run, or OS key-delivery run was
+performed. Test duration is not a UI latency or JetBrains performance measure.
+
+The editor's exported smoke and all three integration steps also ran explicitly:
+
+```sh
+node scripts/limited.js node --input-type=module -e '
+import {smoke,smokeSteps} from "./packages/editor/smoke.mjs";
+await smoke({api:await import("@sharpforge/editor")});
+const context={};
+for(const step of smokeSteps) await step.run(context);'
+```
+
+An initial direct module invocation only loaded its exports and was not counted
+as smoke evidence. The first actual execution found the old expectation that
+the public CSS entry itself contains `.sf-editor`; the view now composes that
+entry through imports. `1911ae38` makes the smoke read every directly imported
+bundled stylesheet and then require the native editor selector. Final result:
+public API smoke plus **3/3 integration steps passed**, including the new six
+profile inventory and retained Visual Studio default.
+
+`git diff --check efcc20d3..HEAD` passed. The structure report still lists 242
+pre-existing aggregate findings; none of this scope's new source or test files
+exceeds its size/line limits. The touched legacy settings renderer retains its
+structure and shrinks from 29,150 to 29,114 bytes while removing the obsolete
+CodeMirror claim. Root owns final manifest registration and the integrated PR
+check. Logs are `/tmp/p16-resharper-tests.log`,
+`/tmp/p16-resharper-keyboard-regression.log`,
+`/tmp/p16-resharper-smoke-executed.log`, and
+`/tmp/p16-resharper-structure.log`.
+
 ## Commit trail and integration handoff
 
 | Revision | Complete owned batch |
@@ -326,6 +394,8 @@ a key-to-paint benchmark.
 | `e688ce9c`, `e43c811e` | Exact sparse visual-column index, Unicode16 data/state, stable model cancellation/disposal, official and host compatibility cases. |
 | `5d4b79f2` | Exact B01 Surround With shortcut, one-undo snippet result and absent-provider regressions. |
 | `fe2c20f7` | Captured large-source native Save As, explicit download exports, complete focused I/O/encoding/scale tests and contract. |
+| `c33b162a`, `79c888a6` | Native ReSharper-like profile, global scheme projection, first-run/Options/import/reset and complete focused fixtures/docs. |
+| `3acf6974`, `1911ae38` | Exact projected Emacs save/disposal regression and modular installed-stylesheet smoke correction. |
 
 Root-provided initial native source ends at `909796e3`. This branch also merged
 the view facade correction `ccdd6894`, root dependency merge `447a2325`, and the
