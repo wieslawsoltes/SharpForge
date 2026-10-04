@@ -1,5 +1,6 @@
 import {distribution} from '../editor-benchmarks/common.js';
 import {operations, pairOrder, protocol, workspaceFixture} from './protocol.js';
+import {requireExactSource} from './identity.js';
 
 const sum = values => values.reduce((total, value) => total + value, 0);
 const overhead = (enabled, disabled) => disabled > 0 ? (enabled - disabled) / disabled * 100 : null;
@@ -63,6 +64,15 @@ export function assessOverhead(report) {
     || report.fixture.sourceFiles !== protocol.sourceFiles || report.fixture.projectFiles !== 1
     || JSON.stringify(report.workload) !== JSON.stringify(protocol)) throw new Error('Missing or changed capture provenance');
   if (!Array.isArray(report.browserErrors) || report.browserErrors.length) throw new Error('Browser errors invalidate overhead capture');
+  requireExactSource(report.identity?.source, report.identity?.driver);
+  if (!report.identity.harness?.sha256 || !report.identity.artifact?.manifestSha256 || !report.identity.artifact.stable
+    || report.identity.served?.length !== 2 || report.identity.served.some((record, index) =>
+      record.phase !== ['before', 'after'][index] || !record.matched
+      || record.expectedManifestSha256 !== report.identity.artifact.manifestSha256
+      || record.assets?.length !== report.identity.artifact.assetCount)
+    || report.identity.served[0].assetsSha256 !== report.identity.served[1].assetsSha256) {
+    throw new Error('Missing or changed served-artifact identity');
+  }
   if (!Array.isArray(report.runs) || report.runs.length !== protocol.pairs * 2) throw new Error('Incomplete alternating pairs');
   report.runs.forEach(validateRun);
   const diagnostics = Object.keys(operations).map(operation => {

@@ -25,7 +25,8 @@ async function stop(child) {
 export async function productionServer(url = process.env.SHARPFORGE_BROWSER_URL) {
   if (url) {
     const parsed = new URL(url);
-    if (!['http:', 'https:'].includes(parsed.protocol) || !['127.0.0.1', 'localhost', '[::1]'].includes(parsed.hostname)) {
+    if (!['http:', 'https:'].includes(parsed.protocol) || !['127.0.0.1', 'localhost', '[::1]'].includes(parsed.hostname)
+      || parsed.username || parsed.password) {
       throw new Error('Instrumentation captures require a local production HTTP server');
     }
     return {url: parsed.href, stop: async () => {}};

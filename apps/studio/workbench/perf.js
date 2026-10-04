@@ -9,6 +9,10 @@ export function performanceTracingEnabled(settings, options = {}) {
 
 /** Bounded per-session traces; disabled instrumentation does not create marks or samples. */
 export class WorkbenchPerformance {
+  #enabled = true;
+  #epoch = 0;
+  #marks = new WeakMap();
+
   constructor({clock = () => performance.now(), limit = 4096, enabled = true} = {}) {
     if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) throw new RangeError('Invalid performance trace limit');
     if (typeof enabled !== 'boolean') throw new TypeError('Performance tracing enabled must be a boolean');
@@ -19,6 +23,11 @@ export class WorkbenchPerformance {
     this.offset = 0;
     this.seen = new Map();
   }
+  get enabled() { return this.#enabled; }
+  set enabled(value) {
+    if (typeof value !== 'boolean') throw new TypeError('Performance tracing enabled must be a boolean');
+    if (value !== this.#enabled) { this.#enabled = value; this.#epoch++; }
+  }
   start(name, sessionId = 'workbench') {
     if (!this.enabled) return null;
     let names = this.seen.get(sessionId);
@@ -28,10 +37,13 @@ export class WorkbenchPerformance {
     }
     const cold = !names.has(name);
     names.add(name);
-    return {name, sessionId, start: this.clock(), cold};
+    const mark = {name, sessionId, start: this.clock(), cold};
+    this.#marks.set(mark, this.#epoch);
+    return mark;
   }
   end(mark, metadata) {
-    if (!mark) return;
+    if (!mark || !this.enabled || this.#marks.get(mark) !== this.#epoch) return;
+    this.#marks.delete(mark);
     const duration = this.clock() - mark.start;
     if (!Number.isFinite(duration) || duration < 0) throw new RangeError('Invalid performance clock');
     const sample = {...mark, duration, metadata};
@@ -41,7 +53,9 @@ export class WorkbenchPerformance {
   }
   record(name, duration, sessionId = 'workbench') {
     if (!this.enabled) return;
-    return this.end({name, sessionId, start: this.clock() - duration, cold: false});
+    const mark = {name, sessionId, start: this.clock() - duration, cold: false};
+    this.#marks.set(mark, this.#epoch);
+    return this.end(mark);
   }
   summary() {
     const groups = new Map();
