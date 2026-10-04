@@ -682,8 +682,9 @@ Registered families: <code>builder</code>.
 | 524319 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(string, int, int)</code> | implemented |
 | 524320 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char[])</code> | implemented |
 | 524321 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char[], int, int)</code> | implemented |
+| 524323 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(System.Text.StringBuilder)</code> | implemented |
 
-Pinned reference: 41 implemented and 67 missing exact metadata rows.
+Pinned reference: 42 implemented and 66 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -721,7 +722,7 @@ Pinned reference: 41 implemented and 67 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.String):System.Text.StringBuilder instance</code> | implemented | 807 |
 | method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524319 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | implemented | 524323 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.UInt16):System.Text.StringBuilder instance</code> | missing | — |
