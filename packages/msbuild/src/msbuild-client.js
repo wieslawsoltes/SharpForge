@@ -68,6 +68,10 @@ export class MSBuildClient {
     return this.request('/services/' + scope + '/' + operation, { method: 'POST', body: request, signal: options.signal });
   }
 
+  vfs(method, payload, options = {}) {
+    return this.request('/vfs', { method: 'POST', body: { method, payload }, signal: options.signal });
+  }
+
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
