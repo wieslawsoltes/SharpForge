@@ -11,6 +11,29 @@ always remains the defining accessor. No type references or executable bodies
 are loaded. Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) expose
 required and optional outer modifiers, including return parameters.
 
+`parameter.toString()` returns a cached Reflection-style type name and metadata
+name. It follows [ParameterInfo.ToString](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Reflection/ParameterInfo.cs#L89):
+by-reference types retain `&` (for example `Int32& value`), and a missing name
+adds no separator. A present empty name preserves the trailing space. Return
+parameters, constructor arguments and property index-parameter projections use
+the same behavior. Rendering does not inspect constants, activate attributes,
+resolve assemblies or read method bodies.
+
+The existing bounded [method type formatter](METHOD-DISPLAY.md) supplies primitive,
+generic, nested and array naming, modifier suppression, depth/node/name limits
+and explicit unsupported-type diagnostics. The final type-plus-name result has
+a 16,384-character limit checked before concatenation. Successful strings are
+cached in existing descriptor state only after a display query; ordinary parameter
+metadata/constant reads add no display work or eager cache storage. Metadata remains usable
+through cooperative unloading. This synchronous operation adds no cancellation
+contract. Default-value evaluation and generic instantiation remain separate.
+
+Six authored tests and a mandatory native fixture for 16 parameter displays are
+prepared. The C# source covers arguments, missing/empty return names, constructor
+arguments, generic/nested types, ref/in/out and property index parameters.
+Capture, focused tests, new-API timings and static/structure checks are pending
+the shared serial slot. No passing qualification is claimed for this extension.
+
 Param rows are optional. Missing rows receive canonical positional descriptors
 with name `null`, flags 0 and metadata token 0. A zero token is this metadata API's
 explicit absence marker, not a usable Param token. Real rows preserve their tokens.
