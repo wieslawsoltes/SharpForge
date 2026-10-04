@@ -35,7 +35,7 @@ The proposal cannot be used as policy until reviewed. Keep the prior floors when
 measurements regress; fix the cause or review an explicit scope/baseline change.
 
 The coverage workflow uploads the report and logs with `if: always()` on every
-coverage run, including failures. It is manual or `full-ci` opt-in, so ordinary
+coverage run, including failures. It is manually dispatched, so ordinary
 PRs retain the agreed single required core job. It does not publish measurements
 to the repository or silently approve a new baseline.
 

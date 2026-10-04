@@ -1,0 +1,2481 @@
+{
+  "version": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/6",
+  "objective": "Implement all 304 board items in isolated worktrees and dependent stacked PRs; integrate other agents and fix conflicts; validate completed scopes.",
+  "complete": false,
+  "observedAt": "2026-10-03T19:24:17.635813+00:00",
+  "boardItems": [
+    {
+      "id": "SF-A03-E01",
+      "issue": 44,
+      "kind": "Epic",
+      "title": "[SF-A03-E01] Metadata completeness",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-E02",
+      "issue": 45,
+      "kind": "Epic",
+      "title": "[SF-A03-E02] Verification and binary interoperability",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01",
+      "issue": 46,
+      "kind": "Task",
+      "title": "[SF-A03-T01] Complete ECMA335 table writers, sorting and row validation",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02",
+      "issue": 47,
+      "kind": "Task",
+      "title": "[SF-A03-T02] Complete signature encoding",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03",
+      "issue": 48,
+      "kind": "Task",
+      "title": "[SF-A03-T03] Emit deterministic PE and modules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04",
+      "issue": 49,
+      "kind": "Task",
+      "title": "[SF-A03-T04] Implement generic and attribute metadata",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05",
+      "issue": 50,
+      "kind": "Task",
+      "title": "[SF-A03-T05] Complete CIL instruction encoding",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T06",
+      "issue": 51,
+      "kind": "Task",
+      "title": "[SF-A03-T06] Implement exception region encoding",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07",
+      "issue": 52,
+      "kind": "Task",
+      "title": "[SF-A03-T07] Implement typed stack verification",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08",
+      "issue": 53,
+      "kind": "Task",
+      "title": "[SF-A03-T08] Verify calls and prefix legality",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T09",
+      "issue": 54,
+      "kind": "Task",
+      "title": "[SF-A03-T09] Harden binary parsing budgets",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10",
+      "issue": 55,
+      "kind": "Task",
+      "title": "[SF-A03-T10] Implement standard ilasm grammar assembler independent of the .image scaffold",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T11",
+      "issue": 56,
+      "kind": "Task",
+      "title": "[SF-A03-T11] Separate binary fidelity from executability",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T12",
+      "issue": 57,
+      "kind": "Task",
+      "title": "[SF-A03-T12] Establish cross-tool emit gates",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-E01",
+      "issue": 58,
+      "kind": "Epic",
+      "title": "[SF-A04-E01] Assembly and type loading",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-E02",
+      "issue": 59,
+      "kind": "Epic",
+      "title": "[SF-A04-E02] Reflection and host boundaries",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01",
+      "issue": 60,
+      "kind": "Task",
+      "title": "[SF-A04-T01] Implement assembly identity resolution",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T02",
+      "issue": 61,
+      "kind": "Task",
+      "title": "[SF-A04-T02] Implement multi-assembly load contexts",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03",
+      "issue": 62,
+      "kind": "Task",
+      "title": "[SF-A04-T03] Implement type construction and layout service",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T04",
+      "issue": 63,
+      "kind": "Task",
+      "title": "[SF-A04-T04] Implement module and type initialization",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07",
+      "issue": 66,
+      "kind": "Task",
+      "title": "[SF-A04-T07] Implement System.Type reflection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08",
+      "issue": 67,
+      "kind": "Task",
+      "title": "[SF-A04-T08] Implement invocation and custom attributes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09",
+      "issue": 68,
+      "kind": "Task",
+      "title": "[SF-A04-T09] Implement Reflection.Emit and dynamic-code policy",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10",
+      "issue": 69,
+      "kind": "Task",
+      "title": "[SF-A04-T10] Implement explicit native interop ABI",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T11",
+      "issue": 70,
+      "kind": "Task",
+      "title": "[SF-A04-T11] Implement Wasm host interop boundary",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T12",
+      "issue": 71,
+      "kind": "Task",
+      "title": "[SF-A04-T12] Qualify ordinary third-party assemblies",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05",
+      "issue": 64,
+      "kind": "Task",
+      "title": "[SF-A04-T05] Implement generic runtime dictionaries",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06",
+      "issue": 65,
+      "kind": "Task",
+      "title": "[SF-A04-T06] Implement resources and type forwarding",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-E01",
+      "issue": 184,
+      "kind": "Epic",
+      "title": "[SF-A13-E01] Symbols interoperability",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-E02",
+      "issue": 185,
+      "kind": "Epic",
+      "title": "[SF-A13-E02] Verified high-level reconstruction",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01",
+      "issue": 186,
+      "kind": "Task",
+      "title": "[SF-A13-T01] Complete Portable PDB writer coverage and native reader interoperability",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T02",
+      "issue": 187,
+      "kind": "Task",
+      "title": "[SF-A13-T02] Implement permissioned SourceLink fetch and source resolution order",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T03",
+      "issue": 188,
+      "kind": "Task",
+      "title": "[SF-A13-T03] Implement async and iterator symbol mapping",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T04",
+      "issue": 189,
+      "kind": "Task",
+      "title": "[SF-A13-T04] Implement scope and constant fidelity",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T05",
+      "issue": 190,
+      "kind": "Task",
+      "title": "[SF-A13-T05] Implement incremental symbol updates",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T06",
+      "issue": 191,
+      "kind": "Task",
+      "title": "[SF-A13-T06] Harden symbol parser budgets",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07",
+      "issue": 192,
+      "kind": "Task",
+      "title": "[SF-A13-T07] Build decompiler control-flow graph",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08",
+      "issue": 193,
+      "kind": "Task",
+      "title": "[SF-A13-T08] Reconstruct expressions and structured control flow",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T09",
+      "issue": 194,
+      "kind": "Task",
+      "title": "[SF-A13-T09] Reconstruct generics closures and async",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T10",
+      "issue": 195,
+      "kind": "Task",
+      "title": "[SF-A13-T10] Reconstruct types attributes and resources",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T11",
+      "issue": 196,
+      "kind": "Task",
+      "title": "[SF-A13-T11] Add navigable assembly object browser",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T12",
+      "issue": 197,
+      "kind": "Task",
+      "title": "[SF-A13-T12] Establish decompile round-trip corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-E03",
+      "issue": 534,
+      "kind": "Epic",
+      "title": "[SF-A03-E03] Emitter type-system lowering",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-E04",
+      "issue": 535,
+      "kind": "Epic",
+      "title": "[SF-A03-E04] EnC metadata deltas",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-E03",
+      "issue": 536,
+      "kind": "Epic",
+      "title": "[SF-A04-E03] Runtime metadata services for execution engines",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-E03",
+      "issue": 537,
+      "kind": "Epic",
+      "title": "[SF-A13-E03] Disassembler and metadata inspection completeness",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-B01",
+      "issue": 675,
+      "kind": "Bug",
+      "title": "[SF-A03-B01] signatureType splits nested generic arguments on every comma",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-B03",
+      "issue": 677,
+      "kind": "Bug",
+      "title": "[SF-A03-B03] signatureType lacks element types for char, float and small/unsigned integers",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-B02",
+      "issue": 676,
+      "kind": "Bug",
+      "title": "[SF-A03-B02] signatureType encodes every generic instantiation as CLASS",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-B04",
+      "issue": 678,
+      "kind": "Bug",
+      "title": "[SF-A03-B04] writePE marks every image as a DLL and hardcodes PE32/x86",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-B05",
+      "issue": 679,
+      "kind": "Bug",
+      "title": "[SF-A03-B05] Metadata typeName does a linear NestedClass scan per lookup",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-B02",
+      "issue": 681,
+      "kind": "Bug",
+      "title": "[SF-A13-B02] readDebugDirectory eagerly inflates embedded PDB on every call",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-B01",
+      "issue": 680,
+      "kind": "Bug",
+      "title": "[SF-A13-B01] attachPortablePdb has two contradictory path-length checks",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T13",
+      "issue": 682,
+      "kind": "Task",
+      "title": "[SF-A03-T13] Split emitter.js into emit/ modules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T15",
+      "issue": 684,
+      "kind": "Task",
+      "title": "[SF-A03-T15] Emit struct and enum TypeDefs",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T14",
+      "issue": 683,
+      "kind": "Task",
+      "title": "[SF-A03-T14] Emit namespaces and base types with virtual dispatch flags",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T16",
+      "issue": 685,
+      "kind": "Task",
+      "title": "[SF-A03-T16] Emit interface TypeDefs and implementations",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T17",
+      "issue": 686,
+      "kind": "Task",
+      "title": "[SF-A03-T17] Emit delegate TypeDefs and event metadata",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T18",
+      "issue": 687,
+      "kind": "Task",
+      "title": "[SF-A03-T18] Emit nested types and accessibility",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T19",
+      "issue": 688,
+      "kind": "Task",
+      "title": "[SF-A03-T19] Replace AllocationToken constructor protocol with standard constructors",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T21",
+      "issue": 690,
+      "kind": "Task",
+      "title": "[SF-A03-T21] Resolve TypeRef scopes from reference assembly metadata",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T22",
+      "issue": 691,
+      "kind": "Task",
+      "title": "[SF-A03-T22] Emit reference assemblies",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T20",
+      "issue": 689,
+      "kind": "Task",
+      "title": "[SF-A03-T20] Emit static data via FieldRVA and PrivateImplementationDetails",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T23",
+      "issue": 692,
+      "kind": "Task",
+      "title": "[SF-A03-T23] Emit EnC metadata and IL delta blobs",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T24",
+      "issue": 693,
+      "kind": "Task",
+      "title": "[SF-A03-T24] Aggregate baseline and delta generations in the reader",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T13",
+      "issue": 694,
+      "kind": "Task",
+      "title": "[SF-A04-T13] Extract intrinsic registry from execution-profile.js",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T14",
+      "issue": 695,
+      "kind": "Task",
+      "title": "[SF-A04-T14] Define engine-facing token resolution API",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T15",
+      "issue": 696,
+      "kind": "Task",
+      "title": "[SF-A04-T15] Bind framework references to host-implemented BCL types",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T16",
+      "issue": 697,
+      "kind": "Task",
+      "title": "[SF-A04-T16] Implement member access and visibility checks",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T17",
+      "issue": 698,
+      "kind": "Task",
+      "title": "[SF-A04-T17] Rename and isolate the canonical profile lifter",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T18",
+      "issue": 699,
+      "kind": "Task",
+      "title": "[SF-A04-T18] Provide stack-trace and frame reflection metadata",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T19",
+      "issue": 700,
+      "kind": "Task",
+      "title": "[SF-A04-T19] Implement MetadataLoadContext inspection-only reflection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T21",
+      "issue": 702,
+      "kind": "Task",
+      "title": "[SF-A04-T21] Reflect function-pointer and modified types",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T20",
+      "issue": 701,
+      "kind": "Task",
+      "title": "[SF-A04-T20] Implement RuntimeHelpers and Type.InvokeMember services",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T13",
+      "issue": 703,
+      "kind": "Task",
+      "title": "[SF-A13-T13] Produce ildasm-compatible full listing",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T14",
+      "issue": 704,
+      "kind": "Task",
+      "title": "[SF-A13-T14] Expose decoded views of every metadata table",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T15",
+      "issue": 705,
+      "kind": "Task",
+      "title": "[SF-A13-T15] Inspect member details beyond names",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T16",
+      "issue": 706,
+      "kind": "Task",
+      "title": "[SF-A13-T16] Inspect PE headers and image kind",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T17",
+      "issue": 707,
+      "kind": "Task",
+      "title": "[SF-A13-T17] Generate Portable PDB for decompiled source",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T18",
+      "issue": 708,
+      "kind": "Task",
+      "title": "[SF-A13-T18] Attach XML documentation to inspected members",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.1",
+      "issue": 2351,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.1] Extract named-column table registry into metadata/tables.js",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.2",
+      "issue": 2352,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.2] Extract heap builders with hashed dedupe into metadata/heaps.js",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.3",
+      "issue": 2353,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.3] Add typed row writers for layout and definition tables",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.4",
+      "issue": 2354,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.4] Add typed row writers for manifest tables",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.5",
+      "issue": 2355,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.5] Add typed row writers for interop and security tables",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.6",
+      "issue": 2356,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.6] Sort required tables and write the Sorted bit vector",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.7",
+      "issue": 2357,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.7] Read #- uncompressed streams through pointer tables",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.8",
+      "issue": 2358,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.8] Add 65535/65536 row boundary tests for simple and coded indexes",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T01.9",
+      "issue": 2359,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T01.9] Implement II.22 metadata row validator",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.1",
+      "issue": 2360,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.1] Introduce structured signature model and decoder",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.2",
+      "issue": 2361,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.2] Encode primitive, class and valuetype type signatures from the AST",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.3",
+      "issue": 2362,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.3] Encode generic instantiations and type/method variables",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.4",
+      "issue": 2363,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.4] Encode byref, pointer, pinned and custom-modifier forms",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.5",
+      "issue": 2364,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.5] Encode function pointers, vararg sentinel and calling conventions",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.6",
+      "issue": 2365,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.6] Encode multidimensional array shapes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.7",
+      "issue": 2366,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.7] Encode property, field and local-variable signature kinds",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T02.8",
+      "issue": 2367,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T02.8] Build SRM signature fixture corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.1",
+      "issue": 2368,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.1] Extract PE writer with a section layout model",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.2",
+      "issue": 2369,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.2] Emit PE32+ and machine/CorFlags variants",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.3",
+      "issue": 2370,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.3] Emit exe/dll characteristics, subsystem and native entry stub",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.4",
+      "issue": 2371,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.4] Emit embedded managed resources",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.5",
+      "issue": 2372,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.5] Emit Win32 resources section",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.6",
+      "issue": 2373,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.6] Derive deterministic MVID, timestamp and checksum from content hash",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.7",
+      "issue": 2374,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.7] Support strong-name public key and public signing",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.8",
+      "issue": 2375,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.8] Emit assembly identity and reference versions from inputs",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.9",
+      "issue": 2376,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.9] Complete PE reader directories and image-kind detection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T03.10",
+      "issue": 2378,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T03.10] Support multi-module assemblies and netmodules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.1",
+      "issue": 2379,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.1] Emit GenericParam rows with variance and special constraints",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.2",
+      "issue": 2380,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.2] Emit GenericParamConstraint rows",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.3",
+      "issue": 2381,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.3] Emit MethodSpec and MemberRef on TypeSpec parents",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.4",
+      "issue": 2382,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.4] Implement custom attribute blob encoder",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.5",
+      "issue": 2383,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.5] Implement custom attribute blob decoder with diagnostics",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.6",
+      "issue": 2384,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.6] Map pseudo-custom attributes to metadata flags and tables",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.7",
+      "issue": 2385,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.7] Emit compiler-synthesized attributes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.8",
+      "issue": 2386,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.8] Encode Constant table values",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T04.9",
+      "issue": 2387,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T04.9] Decode DeclSecurity and FieldMarshal blobs for inspection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05.1",
+      "issue": 2388,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T05.1] Add stack-behaviour, flow-control and operand-token kind to the opcode table",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05.2",
+      "issue": 2389,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T05.2] Implement branch relaxation and short-form selection in CilWriter",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05.3",
+      "issue": 2390,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T05.3] Decode and encode prefix chains as instruction groups",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05.4",
+      "issue": 2391,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T05.4] Emit tiny method headers and compute exact maxstack",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05.5",
+      "issue": 2392,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T05.5] Add exhaustive opcode assemble/disassemble round-trip test",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T05.6",
+      "issue": 2393,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T05.6] Lift il-document.js limits on new strings, tokens and branch widths",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T06.1",
+      "issue": 2394,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T06.1] Emit filter and fault clauses and small EH sections",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T06.2",
+      "issue": 2395,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T06.2] Build exception region tree and structural validator",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T06.3",
+      "issue": 2396,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T06.3] Generalize emitter handler layout to nested regions",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T06.4",
+      "issue": 2397,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T06.4] Validate leave, endfinally, endfilter and rethrow placement",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T06.5",
+      "issue": 2398,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T06.5] Add ILVerify differential corpus for exception graphs",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.1",
+      "issue": 2399,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.1] Define verification type lattice and merge rules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.2",
+      "issue": 2400,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.2] Define verifier type-system adapter interface",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.3",
+      "issue": 2401,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.3] Implement CIL dataflow engine with worklist and stack states",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.4",
+      "issue": 2402,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.4] Implement transfer functions for constants, locals, arguments and arithmetic",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.5",
+      "issue": 2403,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.5] Implement transfer functions for object model opcodes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.6",
+      "issue": 2404,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.6] Implement transfer functions for arrays and indirect access",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.7",
+      "issue": 2405,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.7] Verify definite local initialization and constructor this-state",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.8",
+      "issue": 2406,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.8] Verify generic code with VAR/MVAR substitution and constraints",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.9",
+      "issue": 2407,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.9] Verify exception handler entry states and accessibility",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T07.10",
+      "issue": 2408,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T07.10] Publish verifier diagnostic catalog and negative corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08.1",
+      "issue": 2409,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T08.1] Verify call, callvirt and newobj argument and this compatibility",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08.2",
+      "issue": 2410,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T08.2] Verify tail. prefix legality",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08.3",
+      "issue": 2411,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T08.3] Verify constrained. and readonly. prefix legality",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08.4",
+      "issue": 2412,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T08.4] Verify volatile., unaligned. and no. prefix targets",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08.5",
+      "issue": 2413,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T08.5] Verify calli, ldftn, ldvirtftn and delegate construction",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T08.6",
+      "issue": 2414,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T08.6] Verify jmp, vararg arglist and typed-reference opcodes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T09.1",
+      "issue": 2415,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T09.1] Introduce shared parse-budget object",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T09.2",
+      "issue": 2416,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T09.2] Precheck table stream size before allocating rows",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T09.3",
+      "issue": 2417,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T09.3] Audit PE reader integer arithmetic and overlaps",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T09.4",
+      "issue": 2418,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T09.4] Harden heap readers and compressed integers",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T09.5",
+      "issue": 2419,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T09.5] Provide fuzz targets and seed corpus for PE/metadata/IL readers",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.1",
+      "issue": 2420,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.1] Implement ilasm lexer",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.2",
+      "issue": 2421,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.2] Parse ilasm type, signature and member reference syntax",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.3",
+      "issue": 2422,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.3] Parse assembly-level and .class declarations",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.4",
+      "issue": 2423,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.4] Parse .method bodies with scoped exception blocks",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.5",
+      "issue": 2424,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.5] Assemble ilasm AST into a fresh PE image",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.6",
+      "issue": 2425,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.6] Support .data, FieldRVA, .vtfixup and raw blob directives",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T10.7",
+      "issue": 2426,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T10.7] Add ildasm/ilasm round-trip fixture suite",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T11.2",
+      "issue": 2428,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T11.2] Add per-method capability report API",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T11.3",
+      "issue": 2429,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T11.3] Implement lossless read-modify-write image model",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T12.1",
+      "issue": 2430,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T12.1] Add ILVerify gate script",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T12.2",
+      "issue": 2431,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T12.2] Add System.Reflection.Metadata dump comparator",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T12.3",
+      "issue": 2432,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T12.3] Extend dotnet gate with reflection observation",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T12.4",
+      "issue": 2433,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T12.4] Run emit gates across target framework matrix",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T12.5",
+      "issue": 2434,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T12.5] Check in Roslyn-built reader reference corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01.1",
+      "issue": 2435,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T01.1] Scaffold packages/clr with AssemblyName parsing",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01.2",
+      "issue": 2436,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T01.2] Compute public-key tokens and compare identities",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01.3",
+      "issue": 2437,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T01.3] Implement explicit resolver policy",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01.4",
+      "issue": 2438,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T01.4] Read deps.json and runtimeconfig.json probing data",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01.5",
+      "issue": 2439,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T01.5] Select assemblies from NuGet package layouts",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T01.6",
+      "issue": 2440,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T01.6] Map load failures to managed exception contracts",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T02.1",
+      "issue": 2441,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T02.1] Implement AssemblyLoadContext model",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T02.2",
+      "issue": 2442,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T02.2] Implement Assembly and Module runtime objects",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T02.3",
+      "issue": 2443,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T02.3] Load dependency graphs lazily with cycle handling",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T02.4",
+      "issue": 2445,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T02.4] Implement collectible contexts and unload lifecycle",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T02.5",
+      "issue": 2446,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T02.5] Expose AppDomain and AppContext facades",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.1",
+      "issue": 2447,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.1] Define TypeDesc model and type handle identity",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.2",
+      "issue": 2448,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.2] Load TypeDefs with base resolution and cycle detection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.3",
+      "issue": 2449,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.3] Compute field layout for auto, sequential and explicit kinds",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.4",
+      "issue": 2450,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.4] Build virtual method tables",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.5",
+      "issue": 2451,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.5] Build interface maps and dispatch resolution",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.6",
+      "issue": 2452,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.6] Construct array, pointer and byref types",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.7",
+      "issue": 2453,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.7] Implement assignability and cast service",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T03.8",
+      "issue": 2454,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T03.8] Add native layout and assignability fixture dumps",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T04.1",
+      "issue": 2455,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T04.1] Implement class-constructor trigger rules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T04.2",
+      "issue": 2456,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T04.2] Implement initialization state machine with recursion and sticky failure",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T04.3",
+      "issue": 2457,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T04.3] Run module initializers",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T04.4",
+      "issue": 2458,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T04.4] Provide static field storage classes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T04.5",
+      "issue": 2459,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T04.5] Add cross-assembly initialization order corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05.1",
+      "issue": 2460,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T05.1] Cache closed generic type instantiations",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05.2",
+      "issue": 2461,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T05.2] Implement signature substitution engine",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05.3",
+      "issue": 2462,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T05.3] Instantiate generic methods and virtual generic dispatch",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05.4",
+      "issue": 2463,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T05.4] Check generic constraints at instantiation",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05.5",
+      "issue": 2464,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T05.5] Validate variance declarations and variant casts",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T05.6",
+      "issue": 2465,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T05.6] Expose runtime generic dictionary lookup contract",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06.1",
+      "issue": 2466,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T06.1] Resolve TypeRefs across all resolution scopes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06.2",
+      "issue": 2467,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T06.2] Follow ExportedType forwarders with cycle detection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A03-T11.1",
+      "issue": 2468,
+      "kind": "Sub-task",
+      "title": "[SF-A03-T11.1] Move execution-profile restrictions out of readPE",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06.3",
+      "issue": 2469,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T06.3] Resolve MemberRefs to field and method definitions",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06.4",
+      "issue": 2470,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T06.4] Read manifest resources with size limits",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06.5",
+      "issue": 2471,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T06.5] Implement .resources binary reader",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T06.6",
+      "issue": 2472,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T06.6] Implement ResourceManager satellite fallback",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.1",
+      "issue": 2473,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.1] Implement RuntimeType core properties",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.2",
+      "issue": 2474,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.2] Implement member enumeration with BindingFlags",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.3",
+      "issue": 2475,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.3] Implement MethodInfo, ConstructorInfo and ParameterInfo",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.4",
+      "issue": 2476,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.4] Implement FieldInfo, PropertyInfo and EventInfo",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.5",
+      "issue": 2477,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.5] Implement generic reflection surface",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.6",
+      "issue": 2478,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.6] Implement interface and hierarchy queries",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.7",
+      "issue": 2479,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.7] Implement type-name parser and Assembly/Module type lookup",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.8",
+      "issue": 2480,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.8] Implement runtime handles and ldtoken services",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.9",
+      "issue": 2481,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.9] Implement enum, Nullable and MethodBody reflection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T07.10",
+      "issue": 2482,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T07.10] Implement Assembly reflection surface",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.1",
+      "issue": 2483,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.1] Implement MethodBase.Invoke with argument coercion",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.2",
+      "issue": 2484,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.2] Implement constructor invocation and Activator",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.3",
+      "issue": 2485,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.3] Implement field and property reflection access",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.4",
+      "issue": 2486,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.4] Implement default Binder and method selection",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.5",
+      "issue": 2487,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.5] Implement CustomAttributeData without instantiation",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.6",
+      "issue": 2488,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.6] Materialize custom attributes with inheritance rules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.7",
+      "issue": 2489,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.7] Implement delegate creation and DynamicInvoke",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T08.8",
+      "issue": 2490,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T08.8] Handle byref, out, pointer and byref-like invocation edge cases",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09.1",
+      "issue": 2491,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T09.1] Define dynamic-code capability and feature switches",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09.2",
+      "issue": 2492,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T09.2] Implement ILGenerator over CilWriter",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09.3",
+      "issue": 2493,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T09.3] Implement DynamicMethod with mandatory verification",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09.4",
+      "issue": 2494,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T09.4] Implement AssemblyBuilder/TypeBuilder family for Run access",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09.5",
+      "issue": 2495,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T09.5] Implement PersistedAssemblyBuilder save path",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T09.6",
+      "issue": 2496,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T09.6] Define delegate and function-pointer runtime model",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.1",
+      "issue": 2497,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.1] Resolve P/Invoke metadata to import descriptors",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.2",
+      "issue": 2498,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.2] Implement native library resolution policy",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.3",
+      "issue": 2499,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.3] Classify blittable types and marshal primitives",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.4",
+      "issue": 2500,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.4] Marshal strings, arrays and MarshalAs descriptors",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.5",
+      "issue": 2501,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.5] Implement Marshal memory and structure APIs",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.6",
+      "issue": 2502,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.6] Define pinning and GCHandle contract",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.7",
+      "issue": 2503,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.7] Implement reverse P/Invoke callbacks",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.8",
+      "issue": 2504,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.8] Implement SafeHandle and CriticalHandle ownership",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T10.9",
+      "issue": 2505,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T10.9] Define COM interop policy",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T11.1",
+      "issue": 2506,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T11.1] Implement capability-scoped host import table",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T11.2",
+      "issue": 2507,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T11.2] Implement JSImport/JSExport binding model",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T11.3",
+      "issue": 2508,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T11.3] Marshal managed objects across the host export boundary",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T11.4",
+      "issue": 2509,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T11.4] Implement async callback and Promise/Task lifetime rules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T11.5",
+      "issue": 2510,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T11.5] Bind P/Invoke to host-provided Wasm modules",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T12.1",
+      "issue": 2511,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T12.1] Define third-party corpus manifest and fetch script",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T12.2",
+      "issue": 2512,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T12.2] Add loader gate over the corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T12.3",
+      "issue": 2513,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T12.3] Add reflection differential gate over the corpus",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A04-T12.4",
+      "issue": 2514,
+      "kind": "Sub-task",
+      "title": "[SF-A04-T12.4] Publish compatibility report format",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.1",
+      "issue": 2515,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.1] Split symbols/index.js into reader, writer and directory modules",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.2",
+      "issue": 2516,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.2] Emit ImportScope and LocalConstant rows",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.3",
+      "issue": 2517,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.3] Encode document names and hash algorithms like Roslyn",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.4",
+      "issue": 2519,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.4] Decode and encode EnC custom debug information",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.5",
+      "issue": 2520,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.5] Decode and encode dynamic, tuple and compilation CDI kinds",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.6",
+      "issue": 2521,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.6] Write compressed embedded source and embedded PDB",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.7",
+      "issue": 2522,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.7] Complete debug directory entry kinds",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.8",
+      "issue": 2523,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.8] Add SRM and Roslyn PDB interoperability gate",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T01.9",
+      "issue": 2524,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T01.9] Detect Windows PDB and unsupported symbol formats",
+      "observedBoardStatus": "Ready",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T02.1",
+      "issue": 2525,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T02.1] Implement permission-gated SourceLink fetcher",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T02.2",
+      "issue": 2526,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T02.2] Implement source resolution order and status model",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T02.3",
+      "issue": 2527,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T02.3] Conform sourceLinkUrl to the SourceLink mapping spec",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T02.4",
+      "issue": 2528,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T02.4] Handle source encodings and checksum normalization",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T02.5",
+      "issue": 2529,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T02.5] Compute symbol-server lookup keys",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T03.1",
+      "issue": 2530,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T03.1] Emit StateMachineMethod and async stepping records",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T03.2",
+      "issue": 2531,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T03.2] Map hoisted locals to state-machine fields",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T03.3",
+      "issue": 2532,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T03.3] Expose logical async and iterator frame mapping API",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T03.4",
+      "issue": 2533,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T03.4] Map lambdas and closures through EnC lambda map",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T03.5",
+      "issue": 2534,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T03.5] Add multi-version Roslyn state-machine fixture set",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T04.1",
+      "issue": 2535,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T04.1] Decode all LocalConstant signature forms",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T04.2",
+      "issue": 2536,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T04.2] Resolve import scopes to effective usings",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T04.3",
+      "issue": 2537,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T04.3] Expose scope tree with typed locals",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T04.4",
+      "issue": 2538,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T04.4] Apply dynamic and tuple annotations to locals and constants",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T04.5",
+      "issue": 2539,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T04.5] Label optimized and unnamed slots without inventing names",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T05.1",
+      "issue": 2540,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T05.1] Read PDB delta generations",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T05.2",
+      "issue": 2542,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T05.2] Write PDB deltas for updated methods",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T05.3",
+      "issue": 2543,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T05.3] Bind snapshots to generation and method revision",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T06.1",
+      "issue": 2544,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T06.1] Introduce symbol parse budgets",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T06.2",
+      "issue": 2545,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T06.2] Validate all cross-row references in debug tables",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T06.3",
+      "issue": 2546,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T06.3] Provide fuzz targets for PDB and debug directory parsing",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07.1",
+      "issue": 2547,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T07.1] Create decompiler pipeline skeleton and basic-block CFG",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07.2",
+      "issue": 2548,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T07.2] Model exception regions in the CFG",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07.3",
+      "issue": 2549,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T07.3] Convert evaluation stack to SSA temporaries",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07.4",
+      "issue": 2550,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T07.4] Compute dominators and loop nesting",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07.5",
+      "issue": 2551,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T07.5] Infer types over SSA",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T07.6",
+      "issue": 2552,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T07.6] Track IL range provenance on every IR node",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.1",
+      "issue": 2553,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.1] Build expression trees with order-preserving inlining",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.2",
+      "issue": 2554,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.2] Structure conditionals and short-circuit operators",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.3",
+      "issue": 2555,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.3] Structure loops with break and continue",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.4",
+      "issue": 2556,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.4] Reconstruct switch statements",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.5",
+      "issue": 2557,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.5] Reconstruct try/catch/finally and resource patterns",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.6",
+      "issue": 2558,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.6] Emit C# through an AST printer with precedence handling",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.7",
+      "issue": 2559,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.7] Recover initializers, string and array idioms",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T08.8",
+      "issue": 2560,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T08.8] Recover local and parameter names from symbols",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T09.1",
+      "issue": 2561,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T09.1] Print generic types, methods and constraints",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T09.2",
+      "issue": 2562,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T09.2] Reconstruct lambdas, closures and local functions",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T09.3",
+      "issue": 2563,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T09.3] Reconstruct iterator methods",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T09.4",
+      "issue": 2564,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T09.4] Reconstruct async methods and async streams",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T09.5",
+      "issue": 2565,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T09.5] Recombine properties, events, records and tuples",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T10.1",
+      "issue": 2566,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T10.1] Print complete type declarations",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T10.2",
+      "issue": 2567,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T10.2] Print member signatures with constants and defaults",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T10.3",
+      "issue": 2568,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T10.3] Render custom and pseudo attributes",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T10.4",
+      "issue": 2569,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T10.4] Export manifest resources from the inspector",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T10.5",
+      "issue": 2570,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T10.5] Report metadata inventory coverage",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T11.1",
+      "issue": 2571,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T11.1] Build cross-assembly symbol index",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T11.2",
+      "issue": 2572,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T11.2] Implement paged symbol search",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T11.3",
+      "issue": 2573,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T11.3] Implement usage analysis",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T11.4",
+      "issue": 2574,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T11.4] Implement type hierarchy across assemblies",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T11.5",
+      "issue": 2575,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T11.5] Define stable navigation URIs and lazy summaries",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T12.1",
+      "issue": 2576,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T12.1] Define decompile round-trip corpus and manifest",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T12.2",
+      "issue": 2577,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T12.2] Implement differential execution harness",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T12.3",
+      "issue": 2578,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T12.3] Track readability metrics separately from fidelity",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    },
+    {
+      "id": "SF-A13-T12.4",
+      "issue": 2579,
+      "kind": "Sub-task",
+      "title": "[SF-A13-T12.4] Gate the complete flag on differential evidence",
+      "observedBoardStatus": "Backlog",
+      "completion": "unproven"
+    }
+  ],
+  "executionPolicy": {
+    "implementation": "Parallel isolated worktrees with narrow file ownership",
+    "validation": "One local test, build, benchmark, or native fixture generation process at a time; complete scopes before validation",
+    "merge": "Merge commits only; no rebase or force push"
+  },
+  "workstreams": [
+    {
+      "area": "A03",
+      "branch": "codex/a03-metadata-completeness",
+      "scope": "SF-A03-T01",
+      "state": "implementation-in-progress"
+    },
+    {
+      "area": "A03",
+      "branch": "codex/project6-integration",
+      "base": "codex/a03-metadata-completeness",
+      "scope": "SF-A03-T02",
+      "state": "implemented; validation and performance qualification in progress",
+      "evidence": {
+        "nativeSignatureCases": 340,
+        "nativeRuntime": ".NET 10.0.5",
+        "testCommand": "node --test --test-concurrency=1 tests/a03-02-signatures.test.js tests/cil.test.js tests/portable-pdb.test.js",
+        "testsPassed": 231,
+        "qualificationNote": "231 tests passed before the subsequent prototype-name regression fix; final committed head must be revalidated."
+      }
+    },
+    {
+      "area": "A04",
+      "branch": "codex/project6-a04-identity",
+      "scope": "SF-A04-T01",
+      "state": "implemented; validation in progress"
+    },
+    {
+      "area": "A13",
+      "branch": "codex/a13-symbols-writer",
+      "scope": "SF-A13-T01",
+      "state": "implementation-in-progress"
+    }
+  ],
+  "remaining": "Every board item remains unproven until acceptance evidence and merged implementation are audited individually. No umbrella issue is complete merely because a foundational batch passes."
+}

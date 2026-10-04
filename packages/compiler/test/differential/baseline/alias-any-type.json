@@ -1,0 +1,4 @@
+{
+  "alias-any-type/alias-any-type-in-csharp-11": ["diagnostics", "warnings"],
+  "alias-any-type/tuples-and-arrays": ["diagnostics", "warnings", "bytecode", "cil"]
+}

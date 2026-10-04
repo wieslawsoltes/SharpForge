@@ -25,3 +25,12 @@ surface; `--check` compares the checked-in output. Public String, StringBuilder,
 Array and Random metadata is pinned to .NET 10.0.5 and SDK 10.0.201, with native
 extractor and source hashes. Exact signature presence is reported separately
 from behavioral qualification; this extraction does not claim complete BCL parity.
+
+StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
+(`2147483647`) in both metadata and execution. The host separately limits text
+and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation
+budget raises `OutOfMemoryException`; negative capacities and capacities below
+the current length raise `ArgumentOutOfRangeException`. The host budget is not
+a claim that allocations up to .NET's maximum can be satisfied. Constructor
+defaults are captured in `reference/builder-format/oracle.json` against the
+pinned .NET toolchain, and source/direct CIL regression tests consume the capture.
