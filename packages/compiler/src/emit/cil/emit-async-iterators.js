@@ -104,6 +104,7 @@ export const AsyncIteratorEmission = Base =>
       });
       this.dropUnusedDispatch(dispatch);
       il.mark(handlerStart, 1);
+      this.debug?.asyncCatch(handlerStart);
       il.emit('stloc', exception);
       this.storeState(FINISHED);
       this.pushPromise().emit('ldloc', exception);

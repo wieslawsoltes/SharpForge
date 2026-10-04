@@ -253,6 +253,15 @@ language column and no vendor column. References: the
 [Portable PDB v1.0 specification](https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md)
 and [SRM document-name encoder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/Ecma335/MetadataBuilder.Heaps.cs).
 
+For a mapped document whose source is unavailable, pass `{ uri, documentOnly: true }`.
+Its hash and algorithm handles are nil and no source is embedded. An optional
+`hashAlgorithm` GUID and `hash` Uint8Array pair preserves a producer-declared
+checksum, such as C# `#pragma checksum`, without claiming to verify missing bytes.
+Both fields must be supplied together; opaque hashes are bounded to 4,096 bytes.
+Unknown algorithm GUIDs and empty declared hashes are preserved. Providing `text`
+or `bytes` with `documentOnly` is rejected. Ordinary source records retain their
+existing checksum computation and exact-content verification.
+
 The independent [native gate](interop/README.md) checks emitted imports, constants,
 document-name bytes, hashes and debug directories with System.Reflection.Metadata.
 Its checked-in report records the exact tools and cases; this qualification does
