@@ -133,6 +133,9 @@ Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readon
 The source-image emitter uses [nested exception-region layout](EMITTER-EXCEPTION-REGIONS.md) for catch/finally clause ordering and indexed transfers.
 The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves bounded local hierarchy relations and reports missing metadata as unknown.
 
+The opt-in [typed numeric verifier](VERIFIER-NUMERIC.md) propagates primitive stack
+types through decoded method blocks, with explicit rejected and unknown results.
+
 `formatSignatureType(node, metadata, options)` optionally accepts
 `formatType(node, formatChild)`, returning a display string or `undefined` to
 use the default formatter. `formatChild` shares the original depth/node budget
