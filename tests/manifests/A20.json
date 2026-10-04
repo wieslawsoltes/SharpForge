@@ -17,7 +17,8 @@
   "browserScripts": [
     "tests/browser_a20_insights_test.py",
     "tests/browser_a20_language_providers_test.py",
-    "tests/browser_a20_view_test.py"
+    "tests/browser_a20_view_test.py",
+    "tests/browser_a20_studio_large_file_test.py"
   ],
   "requiredServices": [
     "studio-http",

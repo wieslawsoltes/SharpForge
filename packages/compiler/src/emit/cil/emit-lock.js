@@ -5,7 +5,7 @@
  *   try { Monitor.Enter(monitor, ref taken); body } finally { if (taken) Monitor.Exit(monitor); }
  *
  * `Enter` is inside the protected region so that an asynchronous exception between the call and the `try` cannot
- * leave the monitor held. A `System.Threading.Lock` (C# 13) is locked through its scope instead; that form is refused.
+ * leave the monitor held. A `System.Threading.Lock` (C# 13) is locked through its scope instead (`lockScope`).
  */
 import { RefKind } from '../../symbols/types.js';
 
@@ -18,7 +18,7 @@ export const LockEmission = Base =>
       const il = this.il,
         core = this.core,
         type = node.expression.type;
-      if (type?.name === 'Lock' && type.containingSymbol?.name === 'Threading') return this.unsupported('lock over System.Threading.Lock', node.syntax);
+      if (type?.name === 'Lock' && type.containingSymbol?.name === 'Threading') return this.lockScope(node);
       const monitorType = core.bridge.coreType(MONITOR),
         enter = { isStatic: true, returnType: core.void, parameters: [{ type: core.object }, { type: core.bool, refKind: RefKind.Ref }] },
         exit = { isStatic: true, returnType: core.void, parameters: [{ type: core.object }] },
@@ -40,6 +40,31 @@ export const LockEmission = Base =>
           il.emit('ldloc', taken).emit('brfalse', skip).emit('ldloc', monitor);
           il.emit('call', this.tokens.external(monitorType, 'Exit', exit), { pops: 1, pushes: 0 });
           il.mark(skip);
+        },
+      );
+    }
+    /**
+     * C# 13: a `System.Threading.Lock` is locked through its scope,
+     * `{ Lock.Scope scope = expression.EnterScope(); try { body } finally { scope.Dispose(); } }`.
+     * The members come from the referenced library; the framework registry does not declare them.
+     */
+    lockScope(node) {
+      const il = this.il,
+        instanceMethod = (owner, name) => owner?.getMembers(name).find(member => !member.isStatic && member.parameters?.length === 0),
+        enterScope = instanceMethod(node.expression.type, 'EnterScope'),
+        dispose = instanceMethod(enterScope?.returnType, 'Dispose');
+      if (!dispose) return this.unsupported('lock over System.Threading.Lock', node.syntax);
+      const scopeType = enterScope.returnType,
+        scope = this.temp(scopeType);
+      this.expression(node.expression);
+      this.callMethod(enterScope, { receiver: node.expression, syntax: node.syntax });
+      il.emit('stloc', scope);
+      return this.tryRegions(
+        () => this.statement(node.body),
+        [],
+        () => {
+          il.emit('ldloca', scope);
+          this.callMethod(dispose, { receiver: { type: scopeType }, syntax: node.syntax });
         },
       );
     }

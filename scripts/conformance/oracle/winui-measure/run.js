@@ -95,7 +95,12 @@ export async function captureWinUI({ sourceRoot = directory, target = platform, 
       const attempt = { number: index + 1, argv: argv.map(relative), process: null, output: null, result: null };
       report.attempts.push(attempt);
       attempt.process = await execute(argv[0], argv.slice(1), { cwd: out, timeoutMs: 180000, env: { DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: '0' } });
-      if (attempt.process.exitCode !== 0 || attempt.process.signal || attempt.process.stderr) throw new Error('Native WinUI measurement failed; an interactive Windows desktop is required');
+      if (attempt.process.exitCode !== 0 || attempt.process.signal || attempt.process.stderr) {
+        const code = attempt.process.exitCode;
+        const hex = Number.isInteger(code) ? ' (0x' + (code >>> 0).toString(16).toUpperCase().padStart(8, '0') + ')' : '';
+        throw new Error('Native WinUI measurement process failed: exitCode=' + code + hex +
+          ', signal=' + attempt.process.signal + ', stderrPresent=' + Boolean(attempt.process.stderr));
+      }
       attempt.output = await readFile(output, 'utf8');
       if (Buffer.byteLength(attempt.output) > 16 * 1024 * 1024) throw new Error('WinUI measurement exceeds output bound');
       attempt.result = validateDump(JSON.parse(attempt.output), input);

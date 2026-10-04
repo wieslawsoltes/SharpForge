@@ -85,7 +85,16 @@ export function methodFlags(method, { implementsInterface, inInterface }) {
     if (kind === MethodKind.StaticConstructor) flags = (flags & ~MethodAttributes.MemberAccessMask) | MethodAttributes.Private;
   }
   if (specialNameKinds.has(kind)) flags |= MethodAttributes.SpecialName;
-  if (method.isStatic || kind === MethodKind.StaticConstructor) return flags | MethodAttributes.Static;
+  if (method.isStatic || kind === MethodKind.StaticConstructor) {
+    flags |= MethodAttributes.Static;
+    // C# 11: a static abstract or virtual interface member occupies a slot that the implementing type fills.
+    // (An accessor takes the modifiers of its property or event.)
+    const declared = method.associatedSymbol ?? method,
+      isAbstract = !!(method.isAbstract || declared.isAbstract),
+      isVirtual = isAbstract || !!(method.isVirtual || declared.isVirtual);
+    if (inInterface && isVirtual) flags |= MethodAttributes.Virtual | (isAbstract ? MethodAttributes.Abstract : 0);
+    return flags;
+  }
   if (kind === MethodKind.Constructor) return flags;
   const isAbstract = method.isAbstract || (inInterface && !method.hasBody);
   if (isAbstract) flags |= MethodAttributes.Abstract;

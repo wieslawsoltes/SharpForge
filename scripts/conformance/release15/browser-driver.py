@@ -10,12 +10,15 @@ spec.loader.exec_module(base)
 sys.path.insert(0, str(Path(__file__).parent))
 from documents import documents, geometry
 from rendering import render, device_loss
+from sessions import sessions
 
 
 def dispatch(page, step):
     action = step['action']
     if action == 'documents':
         return documents(page, ROOT)
+    if action == 'sessions':
+        return sessions(page, ROOT, base.OUTPUT)
     if action == 'geometry':
         return geometry(page, base.OUTPUT)
     if action in ('canvas2d', 'dom', 'webgpu'):

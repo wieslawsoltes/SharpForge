@@ -46,3 +46,4 @@ export {accessibleWidget} from './a11y/widgets.js';
 export {commandAliases} from './core/command-map.js';
 export const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;')
   .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+export {workerOptions} from './worker-options.js';

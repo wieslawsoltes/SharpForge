@@ -187,11 +187,11 @@ test('throwing constrained implementation releases frames without allocating a r
 });
 
 for (const malformed of ['dangling', 'wrong-opcode', 'duplicate', 'branch-tail', 'switch-tail',
-  'class', 'object-call', 'type-spec', 'primitive']) {
+  'interface', 'object-call', 'type-spec', 'primitive']) {
   test(`verifier rejects constrained ${malformed}`, () => {
     const bytes = fixture((writer, context) => {
       const type = malformed === 'type-spec' ? context.typeSpec('valuetype Point')
-        : context.resolve(malformed === 'class' ? 'Program' : malformed === 'primitive' ? 'System.Int32' : 'Point');
+        : context.resolve(malformed === 'interface' ? 'IAdjust' : malformed === 'primitive' ? 'System.Int32' : 'Point');
       if (malformed === 'dangling') { writer.op('constrained.', type); return; }
       writer.op('ldloca.s', 0).op('ldc.i4.1');
       if (malformed === 'branch-tail') writer.op('br', 'call');

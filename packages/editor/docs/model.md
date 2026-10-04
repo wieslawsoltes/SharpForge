@@ -51,6 +51,72 @@ Typing/deletion coalesces only when command identity, selection continuity, time
 
 The direct `.buffer` API bypasses editor history. User editing commands should use `model.applyEdits` or the editor facade's transaction method. Several views can share one `EditorModel`; each view can additionally keep a `SelectionSet` for independent local caret/scroll state. Disposing an injected model buffer remains the owner's responsibility.
 
+### Temporary previews and published source
+
+`snapshot()` remains the current visual source. Workspace, compiler, export,
+recovery and save consumers use `publishedSnapshot()`: ordinarily it returns
+the same immutable root, including during normal `{notify:false}` atomic swaps.
+Only an explicit preview lease retains a separate committed root. Its source,
+version and length must be read together; do not pair a published root with the
+visual `model.version` or `model.length`.
+
+`beginPreview()` returns an opaque model-bound lease whose `source` is the
+committed snapshot. The owner passes `{previewLease: lease}` to `prepareEdits`
+and commits with `{notify:false}`. Preview writes update visual source and
+selections without recording undo or acquiring a source notification token.
+`restorePreview(lease)` restores the original buffer, selections and scroll,
+retaining ownership for the next preview. `endPreview(lease)` restores and
+releases ownership; repeat release returns false. Release before preparing and
+committing the real workspace edit. A stale lease cannot release a newer lease.
+
+Normal model writes, undo/redo, competing previews and checkpoint restoration
+reject with `SFEDITOR_PREVIEW_ACTIVE` during a lease. `markSaved()` still records
+the committed history identity: preview edits never entered that history, and
+restoration does not roll back saved markers acknowledged during preview.
+`previewActive` reports ownership; `editOwnershipEpoch` is a monotonic generation
+for asynchronous preparation. Acquire, release and invalidation advance it;
+restoration never rewinds it. Prepared edits, rebinding, checkpoints and save
+normalization reject stale ownership with `SFEDITOR_PREVIEW_STALE` (or the save
+boundary's `SFEDITOR_SAVE_STALE`), even after exact root/version restoration.
+
+`emitChange(event)` consumes a private, single-use token created by an actual
+normal commit or history operation. Already committed atomic changes still
+notify if an earlier listener acquires a preview on another participant.
+Preview, uncommitted, rolled-back and replayed events cannot publish source.
+This preserves root-swap-before-notification semantics without a batch-wide lock.
+
+The lease guards **model APIs and public workspace routes**, not arbitrary direct
+access to an independently owned `TextBuffer` or `UndoStack`. An external buffer
+write is detectable by snapshot identity: the next published read, preview write,
+restore, release or disposal invalidates the lease and reports
+`SFEDITOR_PREVIEW_STALE`; it never restores over the externally advanced source.
+The model does not synthesize history or model notifications for such low-level
+writes. Disposal cleans up even when reporting that stale ownership error, and
+never disposes a borrowed buffer. Hosts must route ordinary edits through the
+model and treat direct buffer/history mutation as their own synchronization work.
+
+### View-state ownership during replacement
+
+`CodeEditor` binds models through its constructor and `setModel`. The supplied
+`session.models` registry remains authoritative when its owner removes a document
+or replaces a model at the same URI. `saveViewState` and view disposal never add
+models back to that registry. They save folding, selection and scroll state only
+while the registry still contains the exact model displayed by that view.
+
+Cached view state is associated with a model identity as well as its URI. Switching
+back to the same retained model restores its local caret, scroll, folding,
+bookmarks and change tracking. Binding a different model at the same URI starts
+from the replacement model's selections and new view services. Disposing a
+standalone view retains its registered models for the session owner to dispose.
+
+`CodeEditor.prepareViewState()` cancels/releases an owned rename before persistent
+view state is captured. `saveViewState()` invokes it before storing selections,
+scroll and folding; model switches and disposal therefore use committed source.
+DocumentService calls every closing view's preparation hook before capturing
+any of them, so a secondary view cannot cache a shared model's temporary state
+before the preview-owning view is released. The hook also aborts asynchronous
+rename resource staging through the widget's existing cancellation ownership.
+
 ### Cooperative prepared transactions
 
 `buffer.prepareEditsAsync(edits, options)` and `model.prepareEditsAsync` accept

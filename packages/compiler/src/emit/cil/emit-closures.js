@@ -25,7 +25,10 @@ export const ClosureEmission = Base =>
         closure = this.frame.function?.closure;
       this.cellAccess = new Map();
       for (const [variable, field] of closure?.fields ?? []) {
-        this.cellAccess.set(variable, () => il.emit('ldarg', 0).emit('ldfld', field.token));
+        this.cellAccess.set(variable, () => {
+          this.pushFrameObject();
+          il.emit('ldfld', field.token);
+        });
       }
       for (const parameter of this.frame.parameters) {
         const cell = this.cellOf(parameter);
@@ -33,7 +36,9 @@ export const ClosureEmission = Base =>
         if (parameter.refKind && parameter.refKind !== RefKind.None) this.unsupported(`capturing the by-reference parameter '${parameter.name}'`);
         const slot = this.temp(cell.type);
         il.emit('newobj', cell.constructor.token, { pops: 0, pushes: 1 }).emit('stloc', slot);
-        il.emit('ldloc', slot).emit('ldarg', this.argumentIndexOf(parameter)).emit('stfld', cell.value.token);
+        il.emit('ldloc', slot);
+        this.ownParameterLocation(parameter).load();
+        il.emit('stfld', cell.value.token);
         this.cellAccess.set(parameter, () => il.emit('ldloc', slot));
       }
     }
@@ -98,7 +103,8 @@ export const ClosureEmission = Base =>
     exprThis(node) {
       const thisField = this.frame.function?.closure?.thisField;
       if (!thisField) return super.exprThis(node);
-      return this.il.emit('ldarg', 0).emit('ldfld', thisField.token);
+      this.pushFrameObject();
+      return this.il.emit('ldfld', thisField.token);
     }
     address(node) {
       if ((node.kind === 'This' || node.kind === 'Base') && this.frame.function?.closure) return this.spill(node);
@@ -140,6 +146,16 @@ export const ClosureEmission = Base =>
       this.pushFunctionTarget(plan, false);
       this.arguments(node, method);
       const effect = { pops: plan.parameters.length + (plan.isStatic ? 0 : 1), pushes: isVoid(plan.returnType) ? 0 : 1 };
-      return this.il.emit('call', plan.method.token, effect);
+      return this.il.emit('call', this.functionToken(plan, method), effect);
+    }
+    /**
+     * The token of a function's method as this body names it. A generic method is instantiated over the type
+     * parameters in scope and, for a generic local function, the type arguments of the use.
+     * @param [method] the constructed local function symbol of a call or a method group
+     */
+    functionToken(plan, method = null) {
+      if (!plan.method.typeParameters.length) return plan.method.token;
+      const own = (method?.typeArguments ?? []).map(argument => argument.type ?? argument);
+      return this.tokens.planned(plan.method, plan.declaringType, [...plan.scopeTypeArguments, ...own]);
     }
   };

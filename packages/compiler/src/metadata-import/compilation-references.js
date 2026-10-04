@@ -28,11 +28,16 @@ class RegistryCoreLibrary {
   }
 }
 
-/** A referenced core library: predefined types are looked up in its metadata, falling back to the registry for types it lacks. */
+/**
+ * A referenced core library: predefined types are looked up in its metadata, then in the other references (the
+ * reference pack defines `List<T>` in System.Collections and `Expression<T>` in System.Linq.Expressions), falling
+ * back to the registry for types no reference has.
+ */
 class MetadataCoreLibrary {
-  constructor(assembly, bridge) {
+  constructor(assembly, bridge, manager = null) {
     this.assembly = assembly;
     this.bridge = bridge;
+    this.manager = manager;
     // Imported types already carry their full member lists; nothing needs to be added.
     this.coreAugmented = true;
     this.cache = new Map();
@@ -41,11 +46,16 @@ class MetadataCoreLibrary {
     const cached = this.cache.get(id);
     if (cached) return cached;
     const descriptor = coreTypeDescriptor(id);
-    const imported = descriptor ? this.assembly.getTypeByMetadataName(descriptor.metadataName) : null;
+    const imported = descriptor ? (this.assembly.getTypeByMetadataName(descriptor.metadataName) ?? this.referencedType(descriptor.metadataName)) : null;
     const type = imported ?? this.bridge.coreType(id);
     if (imported && imported._specialType == null && id.startsWith('System_')) imported._specialType = imported.specialType ?? null;
     this.cache.set(id, type);
     return type;
+  }
+  /** A type one of the other references defines (or forwards to a referenced assembly), or null. */
+  referencedType(metadataName) {
+    const found = this.manager?.getTypeByMetadataName(metadataName) ?? null;
+    return found && !found.isErrorType?.() ? found : null;
   }
 }
 
@@ -83,7 +93,7 @@ export function bindCompilationReferences(references, bridge) {
   if (!coreAssembly) globalNamespaces.push(bridge.globalNamespace);
   if (referenced) globalNamespaces.push(referenced);
   return {
-    coreLibrary: coreAssembly ? new MetadataCoreLibrary(coreAssembly, bridge) : new RegistryCoreLibrary(bridge),
+    coreLibrary: coreAssembly ? new MetadataCoreLibrary(coreAssembly, bridge, manager) : new RegistryCoreLibrary(bridge),
     globalNamespaces,
     diagnostics: [...imported.diagnostics, ...manager.diagnostics],
     hasCoreLibrary: !!coreAssembly,

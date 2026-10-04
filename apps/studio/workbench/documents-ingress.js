@@ -7,6 +7,7 @@ function checkAbort(signal) {
 
 /** Validate a prepared model without reading its text or taking ownership. The source must be its current immutable snapshot. */
 export function validateDocumentModel(record, model) {
+  if (model?.previewActive) throw workbenchError('DOCUMENT_PREVIEW_ACTIVE', 'Finish or cancel the source preview before adopting its model');
   if (!model || !['onDidChange', 'setValue', 'markSaved', 'snapshot'].every(name => typeof model[name] === 'function')) {
     throw new TypeError('Document model factory must return an EditorModel-compatible object');
   }

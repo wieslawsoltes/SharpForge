@@ -13,7 +13,7 @@ const python = process.env.PYTHON || 'python';
 const browserSupervisorTimeout = 1_320_000;
 const stages = new Set(['node', 'browser', 'performance', 'all']);
 const suites = ['workbench-docking', 'workbench-shell', 'workbench-sessions', 'workbench-lazy',
-  'workbench-workflows', 'editor-insights', 'editor-providers', 'editor-view'];
+  'workbench-workflows', 'workbench-workflows-standalone', 'editor-insights', 'editor-providers', 'editor-view'];
 
 async function run(command, args, timeout = 1_200_000) {
   const code = await runProcess(command, args, { cwd: root, timeout });
@@ -70,7 +70,19 @@ export async function qualify({ stage = 'all', selectedEngine = engine, outputDi
     for (const suite of suites) scopes.push({ id: 'browser:' + suite, phase: 'browser', command: env.PYTHON || python,
       args: ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], timeoutMs: browserSupervisorTimeout });
   }
-  if (stage === 'performance' || stage === 'all') scopes.push({ id: 'performance', phase: 'performance' });
+  if (stage === 'performance' || stage === 'all') {
+    scopes.push({ id: 'performance', phase: 'performance' });
+    for (const suite of ['editor-budgets', 'studio-large-file']) {
+      scopes.push({ id: 'performance:' + suite, phase: 'performance', command: env.PYTHON || python,
+        args: ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], timeoutMs: browserSupervisorTimeout });
+    }
+    scopes.push({ id: 'performance:instrumentation', phase: 'performance', command: process.execPath,
+      args: ['scripts/limited.js', 'node', 'scripts/bench-workbench-overhead.js', '--browser', selectedEngine,
+        '--output', resolve(outputDirectory, 'instrumentation-overhead.json')], timeoutMs: 1_200_000 });
+    scopes.push({ id: 'performance:lazy-evaluation', phase: 'performance', command: process.execPath,
+      args: ['scripts/limited.js', 'node', 'scripts/bench-workbench-lazy-evaluation.js', '--browser', selectedEngine,
+        '--output', resolve(outputDirectory, 'lazy-evaluation.json')], timeoutMs: 1_200_000 });
+  }
   for (const scope of scopes) scope.status = 'pending';
   const report = { schemaVersion: 1, kind: 'sharpforge-project16-qualification', stage, engine: selectedEngine,
     sourceSha: env.QUALIFICATION_SOURCE_SHA ?? null, sourceTree: env.QUALIFICATION_SOURCE_TREE ?? null,
@@ -84,7 +96,7 @@ export async function qualify({ stage = 'all', selectedEngine = engine, outputDi
     scope.startedAt = now();
     await write(reportPath, report);
     try {
-      if (scope.phase === 'performance') {
+      if (scope.id === 'performance') {
         scope.assessment = await runPerformance({ env, selectedEngine, outputDirectory, runCapture: runScope });
       } else await runScope(scope.command, scope.args, scope.timeoutMs);
       scope.status = 'passed';

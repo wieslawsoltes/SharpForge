@@ -150,6 +150,10 @@ can accept `{applyResourceTransaction, supportsResourceRename}`. The latter may
 be a boolean or a function; it is evaluated before both display and commit.
 Versioned LSP rename operations then delegate the entire immutable text/resource
 plan to that host, which stages all work before adoption and owns resource undo.
+`commitWorkspaceEdit(workspace, plan, {signal})` forwards cancellation through
+`applyTransaction(plan, {signal})` to `applyResourceTransaction(plan, {signal})`.
+An asynchronous resource host must check this signal before adoption; Studio's
+Explorer adapter uses its existing captured-state cancellation checks.
 Studio's Explorer adapter does this for browser workspace resources and project
 XML; native mode does not advertise atomic resource rename. Creation/deletion
 remain unsupported here. The text adapter never applies half of a resource plan.
@@ -160,10 +164,21 @@ preflight; Studio's general workspace-edit entry uses its larger document limit.
 The built-in insight edit paths retain the bounded default. Searching a larger
 document remains available independently of that edit-preview limit.
 
-Inline rename temporarily changes the current model using a retained checkpoint
-without publishing source-change events. Each new preview first restores that
-checkpoint. Cancel restores exact bytes, version, selection, and history.
-Commit restores the checkpoint before applying the final atomic workspace plan.
+Inline rename acquires an explicit model preview lease. Temporary visual changes
+never enter undo history or publish source events. Each update restores original
+source before requesting the next rename plan. Published model snapshots remain
+committed throughout, so pending Studio analysis and another document's whole
+project request cannot advance the compiler workspace to a temporary version.
+Cancel restores bytes, version, selection and scroll without erasing a legitimate
+save acknowledgement. Commit restores and releases before the real atomic plan.
+
+The owning insight context cancels pending requests; only its rename request may
+read restored original source. Other views of the same leased model, commands,
+CodeLens actions and legacy semantic host requests remain suspended. Other models
+can still query the published project. Model/URI replacement or removal closes
+the old rename. Async Apply owns one cancellation signal; Cancel and disposal
+abort resource staging, duplicate Apply is ignored, and an old completion cannot
+close a newer rename dialog. Failed final commits close their released capability.
 `editor.refreshPreview()` synchronizes the visible text, highlighter and bounded
 input context without publishing an extra edit.
 

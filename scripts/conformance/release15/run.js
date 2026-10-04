@@ -22,6 +22,21 @@ function blockerRow(blockers, id) {
   if (!blocker) throw new Error('Unrecorded release15 blocker: ' + id);
   return blocker;
 }
+export function applyBrowserOutcomes(report, outcomes, blockers) {
+  const observed = [];
+  for (const step of report.steps) {
+    const value = outcomes.get(step.id);
+    if (value?.checks) step.phases = value.checks;
+    if (!value?.blocker) continue;
+    observed.push(blockerRow(blockers, value.blocker));
+    if (step.status === 'passed') step.status = 'blocked';
+  }
+  if (observed.length) {
+    report.blockers = observed;
+    if (report.status === 'passed') report.status = 'blocked';
+  }
+  return report;
+}
 async function browserCheck(check, output, blockers, signal) {
   await mkdir(output);
   const child = new Child(
@@ -37,12 +52,13 @@ async function browserCheck(check, output, blockers, signal) {
       },
     },
   );
-  const observedBlockers = [];
+  const outcomes = new Map();
   const adapter = {
     step: async (step, options) => {
       const result = await child.request('step', step, options);
       if (result.value?.blocker)
-        observedBlockers.push(blockerRow(blockers, result.value.blocker));
+        blockerRow(blockers, result.value.blocker);
+      outcomes.set(step.id, result.value);
       return result;
     },
     close: async () => {
@@ -57,7 +73,7 @@ async function browserCheck(check, output, blockers, signal) {
   const scenario = {
     schemaVersion: 1,
     id: check.id,
-    timeoutMs: check.id === 'keyboard-theme-dpi' ? 120000 : 30000,
+    timeoutMs: check.id === 'two-apps-two-instances' ? 240000 : check.id === 'keyboard-theme-dpi' ? 120000 : 30000,
     steps: check.actions.map((action, index) => ({
       id: `${check.id}-${index + 1}`,
       action,
@@ -70,12 +86,8 @@ async function browserCheck(check, output, blockers, signal) {
     output,
     signal,
   });
-  if (report.status === 'passed' && observedBlockers.length) {
-    report.status = 'blocked';
-    report.blockers = observedBlockers;
-    for (const step of report.steps) step.status = 'blocked';
-    await writeJSON(join(output, 'report.json'), report);
-  }
+  applyBrowserOutcomes(report, outcomes, blockers);
+  await writeJSON(join(output, 'report.json'), report);
   return report;
 }
 async function dispatch(check, options, blockers) {

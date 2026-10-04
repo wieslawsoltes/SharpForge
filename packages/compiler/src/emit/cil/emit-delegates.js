@@ -28,9 +28,9 @@ export const DelegateEmission = Base =>
       if (node.boundAs?.typeKind !== TypeKind.Delegate) return this.unsupported('a lambda that is not converted to a delegate type', node.syntax);
       return this.functionDelegate(this.functionPlan(node, node.syntax), node.boundAs);
     }
-    functionDelegate(plan, type) {
+    functionDelegate(plan, type, method = null) {
       this.pushFunctionTarget(plan, true);
-      this.il.emit('ldftn', plan.method.token);
+      this.il.emit('ldftn', this.functionToken(plan, method));
       return this.newDelegate(type);
     }
     methodGroupConversion(node) {
@@ -40,7 +40,7 @@ export const DelegateEmission = Base =>
       if (!method) return this.unsupported('this method group conversion', node.syntax);
       if (node.type.typeKind !== TypeKind.Delegate) return this.unsupported('a method group converted to a function pointer', node.syntax);
       if (method.methodKind === MethodKind.LocalFunction) {
-        return this.functionDelegate(this.functionPlan(method.originalDefinition ?? method, node.syntax), node.type);
+        return this.functionDelegate(this.functionPlan(method.originalDefinition ?? method, node.syntax), node.type, method);
       }
       if (method.isExtensionMethod && group.receiver && method.isStatic) return this.unsupported('a delegate over an extension method', node.syntax);
       if (method.isStatic) {
