@@ -35,15 +35,22 @@ export const CollectionExpressionBinding = Base =>
       const elements = [];
       let withArguments = null;
       for (const [index, element] of syntax.elements.entries()) {
-        if (element.kind === 'ExpressionElement') elements.push({ value: this.value(element.expression), syntax: element });
-        else if (element.kind === 'SpreadElement') elements.push({ spread: this.value(element.expression), syntax: element });
+        // A value element has an argument's expression shape; argument binding retains method-group inference.
+        if (element.kind === 'ExpressionElement') elements.push({ value: this.argument(element), syntax: element });
+        else if (element.kind === 'SpreadElement') {
+          const spread = this.value(element.expression);
+          elements.push({ spread, syntax: element, iterationType: this.spreadElementType(spread) });
+        }
         // `with(...)` arguments (C# 15 preview): ./collection-arguments.js.
         else if (element.kind === 'WithElement' && this.collectionArguments) withArguments = this.collectionArguments(element, index) ?? withArguments;
         else return this.lenient(syntax);
       }
-      const node = this.node('CollectionExpression', syntax, null, { elements, form: 'collection', withArguments });
+      const node = this.node('CollectionExpression', syntax, null, {
+        elements, form: 'collection', withArguments, collectionLanguageVersion: this.version.number,
+      });
+      node.collectionTarget = to => this.collectionTarget(to);
       node.convert = to => {
-        const target = this.collectionTarget(to);
+        const target = node.collectionTarget(to);
         return target && elements.every(element => this.elementConverts(element, target.elementType))
           ? new Conversion(ConversionKind.CollectionExpression)
           : null;

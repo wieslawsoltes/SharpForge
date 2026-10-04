@@ -34,10 +34,22 @@ export class Claims {
     return { item, task, ref, record: ref ? await this.client.readRecord(ref.object.sha) : null };
   }
   async exclusive(state, fn) {
+    const expectedGeneration = state.record?.generation;
+    if (typeof expectedGeneration !== 'string' || !expectedGeneration) {
+      throw new Error(`Task ${state.task} has no valid claim generation; manual reconciliation required`);
+    }
     const mutex = operationRef(state.task);
     try { await this.client.createRef(mutex, state.ref.object.sha); }
     catch (error) { if (error.status === 422) throw new Error(`Task ${state.task} is busy; an interrupted operation requires manual reconciliation`); throw error; }
-    try { return await fn(await this.state(state.item.content.number)); }
+    try {
+      const current = await this.state(state.item.content.number);
+      // A release/reclaim can finish between the initial read and mutex creation.
+      // Ref names and agent IDs may repeat; the immutable generation must not.
+      if (current.task !== state.task || current.record?.generation !== expectedGeneration) {
+        throw new Error(`Task ${state.task} claim generation changed or was released; inspect current ownership before retrying`);
+      }
+      return await fn(current);
+    }
     finally { await this.client.deleteRef(mutex); }
   }
   owner(state, agent, { allowExpired = false } = {}) {

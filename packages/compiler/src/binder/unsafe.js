@@ -31,6 +31,7 @@ import {
 } from './unsafe-declarations.js';
 
 const pointerExpressions = new Set(['AddressOfExpression', 'PointerIndirectionExpression', 'PointerMemberAccessExpression']);
+const isFixedBuffer = expression => expression.kind === 'FieldAccess' && (expression.field.originalDefinition ?? expression.field).isFixedSizeBuffer;
 
 /**
  * True for a variable whose storage cannot be moved by the collector: a local, a value parameter, a field of such a
@@ -54,7 +55,10 @@ export function isFixedVariable(expression) {
   }
 }
 
-const isVariable = expression => ['Local', 'Parameter', 'FieldAccess', 'ArrayAccess', 'PointerIndirection', 'PointerElementAccess'].includes(expression.kind);
+function isVariable(expression) {
+  if (expression.kind === 'ImplicitIndexerAccess') return expression.accessKind === 'index' && isVariable(expression.access);
+  return ['Local', 'Parameter', 'FieldAccess', 'ArrayAccess', 'PointerIndirection', 'PointerElementAccess'].includes(expression.kind);
+}
 
 /** Class mixin of the body binder: unsafe contexts and pointer expressions. */
 export const UnsafeBinding = Base =>
@@ -174,11 +178,11 @@ export const UnsafeBinding = Base =>
         return this.bad(syntax);
       }
       // C# 7.3: a fixed-size buffer of a moveable variable is indexed without pinning it first.
-      if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver && !isFixedVariable(target.receiver))
+      if (isFixedBuffer(target) && target.receiver && !isFixedVariable(target.receiver))
         this.d.gate(this.c.uri, target.syntax, 'IndexingMovableFixedBuffers');
       // The elements of a fixed-size buffer are reached through a pointer into the variable that holds the struct:
       // Roslyn counts that as a write of the variable (no CS0649 for a field that is only indexed).
-      if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver) this.markWrite(target.receiver, null);
+      if (isFixedBuffer(target) && target.receiver) this.markWrite(target.receiver, null);
       let index = null;
       for (const type of [this.core.int, this.core.uint, this.core.long, this.core.ulong]) {
         const conversion = this.conversions.classifyFromExpression(args[0], type);
@@ -257,7 +261,7 @@ export const UnsafeBinding = Base =>
         let element = null;
         if (type instanceof ArrayTypeSymbol) element = type.elementType;
         else if (type?.specialType === 'System_String') element = this.core.char;
-        else if (isPointerType(type) && value.kind === 'FieldAccess' && value.field.isFixedSizeBuffer) element = type.pointedAtType;
+        else if (isPointerType(type) && isFixedBuffer(value)) element = type.pointedAtType;
         if (!element && (element = this.pinnableElementType(type))) this.d.gate(this.c.uri, init, 'ExtensibleFixedStatement');
         if (!element) {
           this.report(init, DiagnosticId.CS8385);
