@@ -169,6 +169,33 @@ misses/late hits, with one warmup, five samples, median/p95 and managed allocati
 No speedup is claimed. IndexOf, range searches and culture modes remain outside
 this slice; #2621 remains open.
 
+`String.IndexOf(string, StringComparison)` is appended at A07 slot `524306` after
+Contains `524305`. It returns the first matching UTF-16 unit offset, zero for an
+empty value, or -1 when absent. Ordinal uses the native JavaScript UTF-16 search;
+OrdinalIgnoreCase reuses the bounded search from Contains, including matches
+starting or ending inside surrogate pairs. Contains now tests that shared offset
+for nonnegativity, preserving its faults and mode-specific diagnostic text.
+
+The runtime selects this overload by its registered enum parameter, keeping the
+released same-arity `IndexOf(string, int)` start-index behavior and IDs unchanged.
+Null receivers fail first; null values raise `ArgumentNullException` naming
+`value` before invalid modes. Invalid enum values raise `ArgumentException` naming
+`comparisonType`; valid culture modes 0–3 explicitly raise `NotSupportedException`
+before empty/identity shortcuts. Start/count comparison overloads and culture
+implementation remain outside this batch; #2621 remains open.
+
+The [218-row .NET 10.0.5 reference](reference/string-indexof-comparison/README.md)
+retains exact native offsets, Contains results, faults and native culture controls.
+Tests cover both pipelines/VMs, independent CIL, int-versus-enum overload binding,
+first/overlapping matches, supplementary prefixes, malformed UTF-16, GC and zero
+managed allocation. The shared ignore-case scan retains O((n - m + 1) * m)
+worst-case time and constant auxiliary space; it creates no substrings or folded
+copies. The bounded `scripts/benchmarks/a07-string-indexof-comparison.mjs` runner
+compares identical workloads against parent `080ec4ed`, with released IndexOf and
+Contains controls, ordinary input and 1024-unit repeated-prefix misses/late hits
+using 64-unit needles. One warmup and five samples per VM report median/p95 and
+managed allocation counters; setup and result checks are excluded.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
