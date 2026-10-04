@@ -23,10 +23,11 @@ allocation. Readonly and uninitialized receivers remain rejected. Prefixes retai
 their existing debugger-visible offsets and branch/exception-region boundaries.
 
 This is one increment of #1357. Explicit Object MethodImpl, generic receivers or
-constraints, generic structs, primitive/enum/class receivers, other Object
+constraints, generic structs, primitive/enum receivers, other Object
 members, reference-containing/auto/explicit layouts, readonly/ref-like structs,
 and source frontend lowering remain outside this leaf. Existing generic struct
 interface-forwarding support remains bounded to its interface declarations.
+Concrete reference receivers use the [separate reference ToString leaf](runtime-constrained-reference-tostring.md).
 Full issue acceptance, native/platform qualification and performance evidence
 remain pending; this change makes no timing claim or portable snapshot claim.
 
