@@ -1,0 +1,1417 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-04T15:15:38.263Z",
+  "finalMain": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+  "finalMainTree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+  "abi": {
+    "head": "52bde3173ae86e01cd9fb1d1a8cb01764eb024cb",
+    "parent": "fbb0b086e05720eeacb954800a4a690a644313cd",
+    "tree": "874fca7633c61df1f28817db1a6aefae3b0acbf2",
+    "baseTree": "e4b3e51c4d723b9a0bcfe7105a3821c42675395e",
+    "path": "planning/contracts/value-abi/current-js-inventory.json",
+    "sha": "dbd8b6cc5dac76cb46c1d5b31d81cc3e396ffe74",
+    "bytes": 8845,
+    "published": "bb7d1b8c6ff260a33be4f16a76054f1bfd84e2b8",
+    "pr": 4565,
+    "merge": "31900dce5c1454c1f9c244c9ac14e1798eac3e5f",
+    "coreRun": 37211623006,
+    "mainCoreRun": 37211720001
+  },
+  "diagnostics": {
+    "head": "7132306bc9d86b691cd11529c1c7a48900dee075",
+    "parent": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+    "tree": "0547f7787aff8f12bc9cb9081bb5db6d0277557e",
+    "baseTree": "9ae5666621febc7564f5a0c6b5391f97ae674ffa",
+    "path": "packages/compiler/src/semantic/model-scopes.js",
+    "sha": "3fc1a05993ed05540af5b35b96b91d69c5390c73",
+    "bytes": 8250,
+    "message": "SF-A00-T14: use catalog ID in speculative binding",
+    "published": "cf0d5621cabca85fddc5ba6b56761e472ac153a9",
+    "pr": 4566,
+    "merge": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+    "coreRun": 37211962454,
+    "mainCoreRun": 37212071119
+  },
+  "diagnosticHistory": {
+    "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c": {
+      "head": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+      "parent": "fbb0b086e05720eeacb954800a4a690a644313cd",
+      "tree": "9ae5666621febc7564f5a0c6b5391f97ae674ffa",
+      "baseTree": "e4b3e51c4d723b9a0bcfe7105a3821c42675395e",
+      "path": "packages/compiler/src/binder/body/calls.js",
+      "sha": "58c44e3882007744274822c39547f123b57ccf68",
+      "bytes": 26446,
+      "message": "SF-A00-T14: use catalog IDs in delegate count checks",
+      "published": "2b585992be1367528c1d5a100af2e1c27e022118"
+    },
+    "7132306bc9d86b691cd11529c1c7a48900dee075": {
+      "head": "7132306bc9d86b691cd11529c1c7a48900dee075",
+      "parent": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+      "tree": "0547f7787aff8f12bc9cb9081bb5db6d0277557e",
+      "baseTree": "9ae5666621febc7564f5a0c6b5391f97ae674ffa",
+      "path": "packages/compiler/src/semantic/model-scopes.js",
+      "sha": "3fc1a05993ed05540af5b35b96b91d69c5390c73",
+      "bytes": 8250,
+      "message": "SF-A00-T14: use catalog ID in speculative binding",
+      "published": "cf0d5621cabca85fddc5ba6b56761e472ac153a9"
+    }
+  },
+  "central": {
+    "id": 37210639599,
+    "attempt": 1,
+    "head": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+    "status": "completed",
+    "conclusion": "failure",
+    "started": "2026-10-04T14:48:46Z",
+    "updated": "2026-10-04T14:50:47Z"
+  },
+  "archiveMerge": {
+    "local": "a0cc5465fa4b2e6cccc369b5a5d6215b5fa2fd01",
+    "published": "23a91b16cf70b04d5943776697e45abf202c65d2",
+    "tree": "530a187444514fd9940ba2eb00e3af43c2deb3ab",
+    "parents": [
+      "c9bda180705db8d4efebdec0023df3d31667a2a7",
+      "fedb9a894608693d2250fd5be04f3c0fc51682f6"
+    ]
+  },
+  "evidencePR": {
+    "head": "e961141594262bca70eba2121d40745e4555bdfe",
+    "parent": "b00d4405feb6b7dba12642f111c78c0abe0d8998",
+    "baseTree": "bc7f7b1968036a1e6cf4490256fe315d52ca6449",
+    "tree": "9486b49fda3da6302932182e75a530c9263dd6fa",
+    "files": [
+      {
+        "path": "packages/cil/IL-DOCUMENT-PRESERVATION.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5b88dd9bd44e99a8268a520dd2dc6c5b0cb25653",
+        "bytes": 4545
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d004a734ffbd0234234e5bf2e14ab643d69c446",
+        "bytes": 74239
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/capture-index.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "41102a2d38f42e60b9d5253dcfb335516013b428",
+        "bytes": 34419
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/a00-check.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce23b2e6a715348b119473ead45a069ae6c00eeb",
+        "bytes": 382
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/a00-claim-release-result.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1d765c4a5aa31c8579de90b93d2b8722f30229d3",
+        "bytes": 2181
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/a00-claim-release-walkthrough.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "864d51b3471f8c365f713950f52ddf87d171a8e4",
+        "bytes": 2275
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/a00-evidence-walkthrough.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "25e5d4568a142726675f3e1df228b3f1a88f8d95",
+        "bytes": 3451
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/a00-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df23b408d034d07f47219996e9dd825821856dbb",
+        "bytes": 6442
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/a00-parent.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7ef95717c4c4036565e396d37e90c35bda40c2bf",
+        "bytes": 9323
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/all-corrected-campaign.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d84f1e70f01ecb89b1c6e93a8af18e05d534b0b3",
+        "bytes": 2390
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/all-final18-campaign.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "401907bfb3f560ca402480b3e3d3757ac584228b",
+        "bytes": 2483
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/audit-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "81cbd775537161c30e8802c0edf0530ab1be34f9",
+        "bytes": 7702
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/audit-parent.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3db34d8c9b783d0e01286efe7a9bb090bb6e333a",
+        "bytes": 13735
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/binary-expanded.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "602e7d71ea9797db8e8cb35a28d1b7e60f15abeb",
+        "bytes": 4114
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/browser-install.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d9349f504974a7db1a9fbda2f10b42312d32cfc2",
+        "bytes": 3181
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/browser-shell-install.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "024dfa18f643abbc4f24284d0cd7ba979410e757",
+        "bytes": 4315
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/bytecode-profile-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ffd9b134c6c01893b11a7d7a32adfd4b0579738a",
+        "bytes": 9006
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/bytecode-profile-parent-probe.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba2f9afe492a8ad6011d875a6c7abde761339ce7",
+        "bytes": 1341
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/bytecode-profile-parent.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "56afed5746be095ddf556b24eab51cdb877b0c24",
+        "bytes": 3277
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/bytecode-profile-setup-failure.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "42cbbbea3fae8eef4ec7ec81073470d140306ef7",
+        "bytes": 3060
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/cli-focused.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "851a246955e982298ae8c0e31cd1ba5936bf8c5c",
+        "bytes": 926
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/bytecode-image/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3b6b9af874413a74dcf0ff5346193240e82473ea",
+        "bytes": 50049
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/il-document/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "50a65a5245f47afcf5d8babbaa5fa8bcdf814b94",
+        "bytes": 47911
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/msbuild-xml/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "058c857d772f9e51a46e07fa830287a166742d6e",
+        "bytes": 47610
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/network/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f95784b85ce149d1eb23433d469f45daa426e17c",
+        "bytes": 63030
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/pe-loader/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ff282802be3d86fe6d457165f0eb7e87505b6286",
+        "bytes": 49839
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/portable-pdb/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f2685ce701b0e51c3dea0a6f2e2e03707e0fde8e",
+        "bytes": 50077
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/protocol/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "09c9f3b242042ed0cff59b066826e0eb41525c4d",
+        "bytes": 47762
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d8ac83f441484d1c98faa7b17830b3166b9e43f4",
+        "bytes": 5397
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/corrected-campaign-seed1/zip-archive/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e035b27868492195225b2a045ea3ab80f4dc137e",
+        "bytes": 49524
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4521/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0988f53bdc67a4ff2aeb9948a6497f49c7cdd890",
+        "bytes": 13046
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4521/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c581d69fc0b679ed3ce39f166d53caf2785e6952",
+        "bytes": 13324
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4521/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e7474ca421719762124bbb65fd1f6f3e041f97ee",
+        "bytes": 20798
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4522/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a13a8d805c4cf368d689b208438f99bf1a7df6d3",
+        "bytes": 13045
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4522/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d61324d7da662bd76dd6ca62eb99d3fddffae632",
+        "bytes": 13332
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4522/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b0d9a062881c84b0dc665b58b83b8127300c5df",
+        "bytes": 20674
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4524/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9067016c10c3862e2a1ef7c748a6f7baac9f249c",
+        "bytes": 13043
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4524/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d4b151cad0ba62f23b5e0bd39be56ac01bb188d",
+        "bytes": 13321
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4524/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db2debeb0005d8164861360726a51c5080914393",
+        "bytes": 20963
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4525/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9d1efcfd67cd086d28d8f3547d5775fc882e55b5",
+        "bytes": 13064
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4525/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2edc95291cf181fb360f83d76ee13bb388849f1",
+        "bytes": 13333
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4525/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b68759881c45d5751c8bc7b5264c1029daa0b370",
+        "bytes": 20843
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4527/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ecd1424ddee68aeae74277933fbd996e7547e74",
+        "bytes": 13058
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4527/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "400232908cd920f087060bad7ada21df9fdc5d2d",
+        "bytes": 13348
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4527/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1fb1d35785a4f1f87251b7e44f55dc2b2b7dc618",
+        "bytes": 21455
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4528/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d065d10be5933f2cc8353dec12d2b6e958190d81",
+        "bytes": 13047
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4528/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cf86405922dfd383ef685183dd1a21a77b2a892e",
+        "bytes": 13350
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4528/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "86c997d6e4e92cee1cc0cbd1a343b50480ac9042",
+        "bytes": 21050
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4529/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "94c76d4e21dbca71a6756cad130cd4d32c79aecc",
+        "bytes": 13067
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4529/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec4c4ab8ad4870b5e46ec15195586c5810fd1eaa",
+        "bytes": 13347
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4529/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e4e26c30cdc69ade9c22aff0fbc697d48f35c2f3",
+        "bytes": 21588
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4531/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "550b952d6b36654465d6a3b2e154134762f3e775",
+        "bytes": 13069
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4531/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba3162563ba2aae31208bb0fb0f5a5a89f9db954",
+        "bytes": 13352
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4531/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "633d48f76384958ca64f7d09ee40995ada14fe8a",
+        "bytes": 20845
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4534/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "84832802281bf9f4c7f154799b98ec83247679c6",
+        "bytes": 13063
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4534/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c0ae96d6b8aa80142af668157a4bfef6c537297d",
+        "bytes": 13524
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4534/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e645caa804ffce3a42526b3fa652fb35829c74c",
+        "bytes": 20124
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4536/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec117193d49d4234d56643fbacb7faed0a1a7897",
+        "bytes": 13039
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4536/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "946e90953375d8a03c1d8d94a8aa724a4e5279a9",
+        "bytes": 13477
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4536/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "09110e32015761776cc485965c6478f0f4677569",
+        "bytes": 20260
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4538/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f120a02b57d2e50e46413e79a1505c489f790714",
+        "bytes": 13078
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4538/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7cb393f2dcf6822c703abac30525d788c9ba36aa",
+        "bytes": 13572
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4538/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "239bed375610a0b5eb517e4b1b2144d5ae793dd6",
+        "bytes": 20899
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4539/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a706fdd8ebd8ddae2d3953130a5af7accb63d17d",
+        "bytes": 13053
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4539/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0dedd64f039fa012847b837bc4c9a089ca95e64d",
+        "bytes": 13506
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4539/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4ce4727b1a2c4531cc914c38aceb1ae23126d040",
+        "bytes": 20588
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4543/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e9a94246899cab8ec86120a2cd58ca34bda1de99",
+        "bytes": 13052
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4543/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2f9a0a8775cc9af284d7cb7a1571df5f1636f04",
+        "bytes": 13510
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4543/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e912d431f83e545b99424a65ced43633ab894ba",
+        "bytes": 20167
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4546/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "95fe67bc19e1509765265bcda5aa3a12ccbbf730",
+        "bytes": 13056
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4546/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8cf516163f90d570398ab91f628c85872a826ae0",
+        "bytes": 13577
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4546/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "50e11d17d6c734b8e9689385fc2e9ff0e64855f2",
+        "bytes": 20495
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4549/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "99028074e6b285ddddff918fe36b369c9dbd7230",
+        "bytes": 13043
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4549/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fa026cca1fcb71fbbcfb10ab7cbe85350d677be3",
+        "bytes": 13589
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4549/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "977d91b9c8023859ee36ed48d7be41c17859fa38",
+        "bytes": 20892
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4550/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec2a6dda0087c3e9ddc02d8a60182038bf5218bb",
+        "bytes": 13065
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4550/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2fc66d1a21fe87d9d04637e3308d6b83e5898e54",
+        "bytes": 13555
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4550/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a658ec72a8637ac331a6e7a55a22b71531c3576f",
+        "bytes": 21722
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4554/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d494b9f026b3cfc2f71697dfc3d70fc5d475bf45",
+        "bytes": 14386
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4554/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "218ffcd7c15fd9b785a3b3dfa06628ef58e05107",
+        "bytes": 15653
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4554/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad4f8e22ab6afcf9cde0912eb267fe0516190245",
+        "bytes": 25348
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4556/main-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "642d7378db23d02a235ec3c8fd15961464473356",
+        "bytes": 14396
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4556/pr-core-run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e99252a6b7b808bc71c167ec99210d12b3aaca9d",
+        "bytes": 15367
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/4556/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a5718a337805b752c6989c5d1a9d04fb5ee89552",
+        "bytes": 23971
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/observation.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0995f62fe7932b6222135266a38ab16118bae531",
+        "bytes": 6124
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/deliveries/record-index.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a943f0eadf4f534ca65452e97490c6076fd88605",
+        "bytes": 8818
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final-18/build.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d55cabe838a6eac56fdf66914a22c54d80ba62f3",
+        "bytes": 206
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final-18/check.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e6bcc60b009e0dc40703288bdda60521108cb891",
+        "bytes": 382
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final-18/integrated.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cb19689d6f9a0c8983ef7b513748d1af3a70cdc8",
+        "bytes": 71243
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final-18/run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dd550ca6f68960a46aeb6daf33b60699fa6fc0bb",
+        "bytes": 4028
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final-build.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d55cabe838a6eac56fdf66914a22c54d80ba62f3",
+        "bytes": 206
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final-check.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bb91a05271da6009ff109f86e9f033c75361f3ef",
+        "bytes": 382
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/bytecode-image/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4c2bcaa08e0305873372f510aae5c2bdca18cdb0",
+        "bytes": 52440
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/il-document/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7959ac53b2ea360e17dbadeb277b899eaeee44f",
+        "bytes": 48055
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/msbuild-xml/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a013fc4ae35441589dff05862905d1cfd4f31f4",
+        "bytes": 47609
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/network/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "69592f377c79f08810ecf0242235956f758ee37f",
+        "bytes": 63037
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/pe-loader/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e80aa4bb5737cbc4efa6140ca71ccbea517fb213",
+        "bytes": 49856
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/portable-pdb/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ebdb978df4f595bc1c00fed51bf0a96c74f9a88a",
+        "bytes": 50096
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/protocol/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "819ec00d54d73a39512c069429ab24eadd707223",
+        "bytes": 47764
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "74e66ee42e9c7f166e647ba638a4af06ff6b8cc5",
+        "bytes": 5396
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/final18-campaign-seed1/zip-archive/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1179f311ac8cfb707ca57f1c45b6442bc460a09c",
+        "bytes": 49534
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/fuzz-binary.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "32f767c16e8494026b9075bdf70f342fc4e07c29",
+        "bytes": 5682
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/fuzz-integrated-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d8b2f0c175d317c7cb184a4f1ae7ab377fa57447",
+        "bytes": 7066
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/fuzz-text.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8644bf5f676b7d9dc7cb4522e515b58534300520",
+        "bytes": 5639
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/http-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71d3cefc0979320a844654740c02a6e44ad1c4be",
+        "bytes": 11311
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/il-exact-seed1/il-document/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f9a4e28c570602f6eda4bb2db999cf2c40b34062",
+        "bytes": 48048
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/il-exact-seed1/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6283ba8cb87ae3c2066f350dbb400696b799317a",
+        "bytes": 2355
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/il-idempotence-campaign.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e5612e7fecd4eafad4503c25aee27907999935a",
+        "bytes": 560
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/il-idempotence-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9195bc5fa8d69cbf1b2047c576ac739bf8de1876",
+        "bytes": 26165
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/il-idempotence-parent.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0ad30f3a5ff9272f69cfc8ad5126a3b58f9eef7f",
+        "bytes": 480514
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/bytecode-image/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "56ea4bf098cf00924bae36b26dc996d9296c657d",
+        "bytes": 50183
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/il-document/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "49da81335b8a02c6b704368bd6865e21ebea53c6",
+        "bytes": 48013
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/msbuild-xml/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ed46f009dbfc1e270edfd7a37ec5919986a7a230",
+        "bytes": 47765
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/network/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e19f723871241420a1f6610e253c528fe33be203",
+        "bytes": 47713
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/pe-loader/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b4dd637eb699525803a8b4dcd8252ea2d6c81f0e",
+        "bytes": 49897
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/portable-pdb/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37e38e00c55159b3dba3411d693b0a57a6b32599",
+        "bytes": 50158
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/protocol/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9918797737a0eb97fe89b99e9433ab20d78b7121",
+        "bytes": 47772
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3d5ff81975bf307d73509d799e58af6eb1875069",
+        "bytes": 4857
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/initial-campaign-seed1/zip-archive/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2aab1a9ab72a4f55e141021da459a89005e65297",
+        "bytes": 49573
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/integrated-build.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d55cabe838a6eac56fdf66914a22c54d80ba62f3",
+        "bytes": 206
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/integrated-check.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3d2451ac1e5fd74d42e39121350d69ced7756a67",
+        "bytes": 382
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/integrated-corrected.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8032d4d5b4cf7a13e9ddfcb3343dc56e0ebcc98e",
+        "bytes": 51829
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/integrated-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "98592021cf06c04a402426dd96a2b855b5a281d3",
+        "bytes": 46571
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/integrated-structure.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2119076e26fc3a03ffc1498a6ecc929d00e7ab58",
+        "bytes": 21924
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/lsp-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c2fe7b050d3907ada4e6f0ac9a9d7e9f7e18c3cb",
+        "bytes": 6450
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/lsp-params-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a69b36ab42e1838b0488fa763e9c9e78bf167d95",
+        "bytes": 13661
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/lsp-params-parent.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "38f733dcb5cf095cdd551471ad1d166c44ccf440",
+        "bytes": 18039
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/native-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35abe765526540dcfd7d583aba3c8f05c3f90c2b",
+        "bytes": 7951
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pdb-original-capture/findings/3c86512192511f3ccac53a2a3524116a48c0db0347131bad5b81b86705213514.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20a1f0f3e2fae8717c602bc6a654ec16496d6813",
+        "bytes": 1530
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pdb-original-capture/observation.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "639a0e683afebe390f16aaa94878959e63e38bfb",
+        "bytes": 1779
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pdb-original-finding.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "855b1a6fd268d2575be88acb23e7855121e1c91c",
+        "bytes": 477
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-duration-supervisor.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "51203ee8425dfda6b25b18968290cd2ad9f748c6",
+        "bytes": 3959
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-original-duration.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a0a359c0dfc2aa23a357ae795055720847dd81ce",
+        "bytes": 1971
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-original-duration.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "78d1be4b399cf6a085b333aed8981a64111a55f1",
+        "bytes": 770
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-original-seed1/pe-loader/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4f14de4cfaa0797153f492167683b2067961f335",
+        "bytes": 778309
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-original-seed1/pe-loader/findings/785e0a86d8b92af35934d30f4702dbd46f594a62351748346c5b91da4030b8a9.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c53b8e4be244a3eee7ab5374ee93809ffca9d604",
+        "bytes": 3822
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-original-seed1/pe-loader/findings/7bc4a304622007af30517506a2a37fad3dbe213ec27fc4e31504df833b00a39b.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "af094795eebf0467597aaaf5a9e6f6170c0343ea",
+        "bytes": 5187
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-original-seed1/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "777dc497e25c583dc5cbfdb89e5355bfa0adf6c4",
+        "bytes": 2888
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-duration.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a4c37f3d1e2db8cf3219234a36aae8cf03047bab",
+        "bytes": 3153
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-duration.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b8a492c6c79af64ff4d160003c57cc8851d2d7bb",
+        "bytes": 1413
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-seed1/pe-loader/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "854de5854e48beb2979ceca853536eb0f6d39c42",
+        "bytes": 777923
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-seed1/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ea02e73ffea047d51383685a043aab8869cb866",
+        "bytes": 2368
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-seed2/pe-loader/campaign.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "579475f20b435a90ebcaf98d2877dcbaa76da276",
+        "bytes": 776604
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-seed2/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "87e4fdcf8cb537bdb6b26001394636dd5a2eb971",
+        "bytes": 2368
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-postfix-supervisor.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "367e30e831d60af92c6321bd0ca765587baab07d",
+        "bytes": 3983
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-final-corpus-replay.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf8bf7687a13f7a062935715696f330d2a05eb10",
+        "bytes": 471
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-final-corpus-replay/replay.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "952e943a321c5278af25fe0a204ebf15213c7da0",
+        "bytes": 5952
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-final-corpus-replay/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d0a2c50318a2c5e953b081e7994bd2620f1bc4dc",
+        "bytes": 2374
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b0df1917c38e85873488c89b1dac3fe1025de85c",
+        "bytes": 7689
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-fixed-original-replay/replay.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1d8c75c1faea16f12e8885fd942f24ae50615633",
+        "bytes": 4231
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-fixed-original-replay/summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "33705bf3778b5a383612bb48253345e3fe24b90b",
+        "bytes": 2415
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "03ddcc45f9df802302b04ac1447aa41c19fb48ab",
+        "bytes": 7465
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-original-replay.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "783b1d675901c626706d1937f1bbe3d2c8f20281",
+        "bytes": 473
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/pe-utf8-parent.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b233709a7bf825edfa9d01ba0e832566877fb8c4",
+        "bytes": 5591
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/project4-board-dom.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1c1363ec6d98e3022f48e2dfcd94b4796a0500ee",
+        "bytes": 21040
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/protocol-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d152128b244669c1321237db96892b43c2f47c3e",
+        "bytes": 9481
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/r015-workflow-proposal.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9c5223726fb65cebf615200c87533d236a608adb",
+        "bytes": 6065
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/r015-workflow-reservation.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5d540776a52e175d61bc5236967217d88c87b85a",
+        "bytes": 371540
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/review-parent.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b6dcd49bce0b82607ba4b0bf0f946ad664b35e74",
+        "bytes": 53913
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/runtime-focused.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cdc0fa2f8041a6d5b6ce5a4a4221d115b30456e9",
+        "bytes": 6354
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-build.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d55cabe838a6eac56fdf66914a22c54d80ba62f3",
+        "bytes": 206
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-browser.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0768748390e1bf2123ce1aeb1a58208f9707f14a",
+        "bytes": 3489
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-capture/browser-adapter-stderr.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "599ded6949263292c46bbbfd986d1ef2990ffc32",
+        "bytes": 3007
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-capture/browser/report.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "00110264814bb93b25b479d227c5f7f173fe2fd0",
+        "bytes": 6497
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-capture/browser/session-io-driver-failure.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "60dac770f72922637b2a1086d978c6a1b27349da",
+        "bytes": 1636
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-capture/build-identity.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59abe5551513f9efb3df045de9a78d8db0348412",
+        "bytes": 947390
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-capture/report.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6b831f939f72273ac861a5913d25f3d06fd82ed0",
+        "bytes": 3779
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/session-io-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "17ffac4ac288fcfedd4845db09156f2700bc51d2",
+        "bytes": 918
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/symbols-final.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b4ab7cb374526149616fe12f67c6d21fed1a707",
+        "bytes": 3089
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/tap-fixed.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d05f480aa05f13ed29ac31f3fc2788306091243d",
+        "bytes": 11346
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/tap-flaky-consumer.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a929436b9182f6a0e9839f85454b3f7c92c18af4",
+        "bytes": 2831
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/worker-focused.tap",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "06ed5bc31c5f2aab3bd8d293b985cd68e2551167",
+        "bytes": 4933
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/session-results.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8973f25cb1c23aef590923b40ad5f0142ef4d269",
+        "bytes": 45507
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/source-observations.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0c0ffa052a3ae93c5e53e3b0ac2bbf3f158b6ae4",
+        "bytes": 53863
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/verification-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a77e72e461d9a571d957d9dfef0b5d7162f1dc0f",
+        "bytes": 338
+      }
+    ],
+    "published": "24fe2d86e3871997ac2266a9b3b0d21b0d44030c",
+    "pr": 4564,
+    "fixedHead": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+    "fixedPublished": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+    "fixedTree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15"
+  },
+  "evidenceCorrection": {
+    "head": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+    "parent": "e961141594262bca70eba2121d40745e4555bdfe",
+    "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+    "baseTree": "9486b49fda3da6302932182e75a530c9263dd6fa",
+    "files": [
+      {
+        "path": "planning/qualification/project4-2026-10-04/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b74ba49a65d5023522619bf22277ef81d24fb8c6",
+        "bytes": 76841
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/capture-index.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "31337e4a3efb96d3b99084fb75f5bc3e065350dd",
+        "bytes": 35849
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/bytecode-profile-parent-probe.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": null,
+        "bytes": 0
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/bytecode-profile-parent-probe.mjs.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba2f9afe492a8ad6011d875a6c7abde761339ce7",
+        "bytes": 1341
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/evidence-pr4564-first-core/checkout-commit.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf955ff582bbfa01d07678ab2d02dd1f89e63cdc",
+        "bytes": 2701
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/evidence-pr4564-first-core/core-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2f29f58b9c1c920eb26591962dd79fb6d8dd95f0",
+        "bytes": 274721
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/evidence-pr4564-first-core/events.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bff7eacfe3d89974002d752fe77abe7dd93d69d7",
+        "bytes": 1737
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/evidence-pr4564-first-core/jobs.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "95d555feeb27302a84e8205f94c28dedf27225a6",
+        "bytes": 11805
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/evidence-pr4564-first-core/pr.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c0fa7bc57ff4a0d39fd7066f0f2a4aed83dfc727",
+        "bytes": 24035
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/captures/evidence-pr4564-first-core/run.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d503bd10cf7347125872601f8228b5068932ca0",
+        "bytes": 15378
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/session-results.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "00e5d1b75d1aae50da2a122011779d6e3db5ce76",
+        "bytes": 50046
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/source-observations.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "de721ff5a46610efb1ce6eb7fdbb77432c63223f",
+        "bytes": 54944
+      },
+      {
+        "path": "planning/qualification/project4-2026-10-04/verification-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "162a2a2856068f2a70f8af1859ea5e01f73dcafb",
+        "bytes": 1607
+      }
+    ],
+    "verifiedCaptures": 175,
+    "publishedParent": "24fe2d86e3871997ac2266a9b3b0d21b0d44030c",
+    "published": "c9bda180705db8d4efebdec0023df3d31667a2a7"
+  }
+}

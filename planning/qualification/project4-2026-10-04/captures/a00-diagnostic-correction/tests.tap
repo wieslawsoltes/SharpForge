@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: A00-T14 literal scanning inspects code without interpreting documentation or regular expressions
+ok 1 - A00-T14 literal scanning inspects code without interpreting documentation or regular expressions
+  ---
+  duration_ms: 1.689424
+  type: 'test'
+  ...
+# Subtest: A00-T14 the diagnostic seam shares the existing catalog and every descriptor id
+ok 2 - A00-T14 the diagnostic seam shares the existing catalog and every descriptor id
+  ---
+  duration_ms: 2.690306
+  type: 'test'
+  ...
+# Subtest: A00-T14 identifier constants are frozen and prototype-safe
+ok 3 - A00-T14 identifier constants are frozen and prototype-safe
+  ---
+  duration_ms: 0.535688
+  type: 'test'
+  ...
+# Subtest: A00-T14 inspected parser ids do not acquire compiler message descriptors
+ok 4 - A00-T14 inspected parser ids do not acquire compiler message descriptors
+  ---
+  duration_ms: 0.230129
+  type: 'test'
+  ...
+# Subtest: A00-T14 identifiers preserve formatting, missing arguments and profile mappings
+ok 5 - A00-T14 identifiers preserve formatting, missing arguments and profile mappings
+  ---
+  duration_ms: 0.199944
+  type: 'test'
+  ...
+# Subtest: A00-T14 every compiler identifier reference resolves to the exact catalog id
+ok 6 - A00-T14 every compiler identifier reference resolves to the exact catalog id
+  ---
+  duration_ms: 24.706682
+  type: 'test'
+  ...
+# Subtest: A00-T14 compiler diagnostic id literals are confined to the existing catalog
+not ok 7 - A00-T14 compiler diagnostic id literals are confined to the existing catalog
+  ---
+  duration_ms: 372.484588
+  type: 'test'
+  location: '/dev/shm/p4-a00-diagnostic-refs/tests/a00-diagnostic-ids.test.js:88:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    /dev/shm/p4-a00-diagnostic-refs/packages/compiler/src/semantic/model-scopes.js
+    + actual - expected
+    
+    + [
+    +   "'CS0103'"
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: "'CS0103'"
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-a00-diagnostic-refs/tests/a00-diagnostic-ids.test.js:94:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SF-A02 corpus: diagnostic-spans fixtures match Roslyn
+ok 8 - SF-A02 corpus: diagnostic-spans fixtures match Roslyn
+  ---
+  duration_ms: 176.255801
+  type: 'test'
+  ...
+# Subtest: SF-A02-T07 argument-count diagnostics sit on the invoked name
+ok 9 - SF-A02-T07 argument-count diagnostics sit on the invoked name
+  ---
+  duration_ms: 11.309211
+  type: 'test'
+  ...
+# Subtest: SF-A02-B01 gates: async on the name or the keyword, discard patterns, dynamic before C\# 4
+ok 10 - SF-A02-B01 gates: async on the name or the keyword, discard patterns, dynamic before C\# 4
+  ---
+  duration_ms: 38.630007
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 9
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1662.664285

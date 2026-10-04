@@ -4,13 +4,18 @@
 unfinished code, qualification, reserved ownership, external configuration and upstream product requirements. It makes no new issue-closure,
 Project-field, release or platform-pass claim.
 
+**Latest result:** 20 implementation PRs are merged through #4566. The actual central full-ci attempt failed with **462 of 465 A00 tests passing**.
+After two narrow corrections, the later clean local A00 manifest records **464 passed / 1 failed**; the root-provider inventory repair remains
+an unapplied proposal for its existing owner. [Current results](session-results.json) and the [remaining qualification](#final-qualification-status)
+retain those failures separately from the earlier passing 18-PR integration and bounded PE duration.
+
 ## Scope and provenance
 
 - Repository: [SharpForge](https://github.com/wieslawsoltes/SharpForge); requested board: [Project #4](https://github.com/users/wieslawsoltes/projects/4).
 - Initial record prepared: `2026-10-04T12:28:25Z`; isolated record base: [dc84bcbfea54](https://github.com/wieslawsoltes/SharpForge/commit/dc84bcbfea548a152e239d60b3950f06b9ebd2c7).
 - Live issue/claim observation: `2026-10-04T11:12:01Z` at source [ca3c083b61d6](https://github.com/wieslawsoltes/SharpForge/commit/ca3c083b61d637f98d53d0e55d9c2e564b11bf5d).
 - Classification code inspection: `2026-10-04T11:45:46.044Z` with local inspection commit `db6eb3278c49043132554463ceffc18f8e50899d`.
-- Session evidence summarized below: [session-results.json](session-results.json), updated at `2026-10-04T14:41:53.193882Z`. Its run-specific sources and owner-observation times remain separate from the earlier classification.
+- Session evidence summarized below: [session-results.json](session-results.json), updated at `2026-10-04T15:28:01.401080Z`. Its run-specific sources and owner-observation times remain separate from the earlier classification.
 - The inputs agree on all 244 unique issue/Work-ID pairs and observed states: **109 A00, 133 A29, 2 R015; 204 open and 40 closed**.
 - The open issues comprise **32 parent trackers and 172 non-parent items**; these are not 204 independent missing features.
 - There are **43 group definitions, 40 populated groups**. `a00-services`, `a00-claims` and `a29-ci` preserve context with zero assigned rows.
@@ -47,7 +52,7 @@ The original issue/claim audit retains its earlier timestamp, states and all 68 
 | [classification.json](classification.json) | Complete parsed classification input: all 43 definitions, all 244 issue records, acceptance text, deliverables, summarized leases and original session follow-ups. Only formatting is compacted. |
 | [source-observations.json](source-observations.json) | Original input hashes, byte counts, timestamps, scope/summary and all 68 full claim records, with explicit references to later session and owner evidence. Full original audit and acceptance-inventory files are hash-identified rather than duplicated. |
 | [session-results.json](session-results.json) | Authoritative session results: tested local and published source mappings, merged PRs, the TAP draft, public-board reconciliation, workflow reservation audit, regression reproductions, integrated runs, original findings, corrected replays and remaining qualification. |
-| [capture-index.json](capture-index.json) | Complete index of 175 captures: the original 169 with unchanged digests, plus six raw records from the first failed evidence-publication core run. Byte counts, SHA-256 digests and explicit archival format labels are retained. |
+| [capture-index.json](capture-index.json) | Complete index of 226 captures, including central jobs/artifacts, later corrections and owner evidence. All 175 preceding capture digests are preserved: 174 at their original paths, and the original 54-record delivery index at its explicit historical path before the current index was refreshed. New source captures retain original bytes; ZIPs have binary format labels. |
 | [verification-summary.json](verification-summary.json) | Data-integrity check results for indexed bytes, original-capture preservation, campaign-report digests, JSON reference pointers, local Markdown links, delivery identities and the complete 244-pair board reconciliation. The summary distinguishes integrity checks from product tests/builds and hosted qualification. |
 
 The archived classification column below preserves the supplied classification, including descriptions of earlier in-progress branches.
@@ -71,12 +76,12 @@ Counts partition the 244 mapped identities exactly once. The issue mapping follo
 | --- | ---: | --- | --- |
 | `closed` | 40 | `closed-existing` | Preserve the 40 observed closures. They do not reopen automatically or become fresh platform evidence; three closed issues still have reserved claims. |
 | `parent` | 32 | `parent-rollup` | These 32 aggregate trackers close only after child acceptance and retained evidence support the rollup. Avoid counting parents and children as separate delivered capabilities. |
-| `a00-contracts` | 22 | `implemented-qualification` | Qualify the existing codec, ABI, schema and safepoint contracts at exact source revisions. The independent native structural schema reader exists; actual Rust/Wasm runtime execution remains an A27 prerequisite. |
+| `a00-contracts` | 22 | `implemented-qualification` | PR #4565 refreshes the stale value ABI hashes. The latest A00 manifest still fails on the reserved root-provider inventory; the reviewed three-file proposal is unapplied. Qualify the remaining contracts at exact sources; actual Rust/Wasm runtime execution remains an A27 prerequisite. |
 | `a00-services` | 0 | `implemented-qualification` | Context only: child issues are in closed and aggregate issues in parent. Qualify the existing registration, rollback and disposal behavior across actual consumers, browsers/platforms and performance runs. |
-| `a00-build` | 8 | `implemented-qualification` | Qualify manifest completeness, task/build registration, package discovery and the CI matrix at the final source revision and on the required platforms. |
+| `a00-build` | 8 | `implemented-qualification` | The central attempt failed A00 source integration and skipped downstream families. Qualify manifest completeness, task/build registration, package discovery and the required CI matrix after owner integration at an exact final source. |
 | `a00-claims` | 0 | `implemented-regression-fixed-this-session` | Context only: closed child issues and open parents are counted elsewhere. Reconcile any session regression evidence in the final sections, and preserve all existing leases until explicit owner resolution. |
 | `a00-governance` | 29 | `implemented-qualification-or-project-configuration` | The public active-board identities/statuses now match all 244 mapped pairs. Existing ownership, readiness, gate, handoff and rollup tools still need full GraphQL/Agent/lease field verification, authorized writes where configuration changes are required, linked-PR evidence and exact-source qualification. TAP qualification also has the reserved fixture dependency below. |
-| `a00-seams` | 7 | `implemented-qualification` | Qualify the existing parser, diagnostic, declaration, dispatch and style seams with byte-identical corpora and comparable performance. Existing CIL extraction uses execution/cil-step.js and execution/handlers; duplicating the issue’s proposed path is unnecessary. |
+| `a00-seams` | 7 | `implemented-qualification` | PR #4566 fixes the reviewed caller diagnostic literals without catalog/test changes. Qualify the remaining seams with comparable corpora/performance. Existing CIL extraction uses execution/cil-step.js and execution/handlers; duplicating the proposed path is unnecessary. |
 | `a00-bootstrap` | 1 | `implemented-project-configuration` | Apply and verify the existing idempotent bootstrap against actual Project fields, views and labels when configured Project access is available. Public active-board identity/status reconciliation is complete; full field/configuration verification and authorized writes remain separate requirements. |
 | `a29-ci` | 0 | `implemented-qualification` | Context only: child closures and parent rows hold the mapped identities. Retain independent hosted platform captures; ordinary core checks provide only the scope defined by serial validation policy. |
 | `a29-oracles` | 7 | `implemented-external-qualification` | Run pinned SDK/Roslyn/CoreCLR/BCL oracles and actual Windows App SDK fixtures, including culture checks, repeated captures and output stability. Harness availability does not supply those results. |
@@ -213,14 +218,16 @@ are separate capabilities. Re-enabling schedules or silently marking the nightly
 
 ## Merged implementation evidence
 
-At the session-record update shown above, **18 implementation PRs through #4556 are merged**, and their recorded PR and main core runs succeeded.
+At the session-record update shown above, **20 implementation PRs through #4566 are merged**, and their recorded ordinary PR and main core runs succeeded.
 The table links each measured batch; focused suites overlap and their counts must not be added to claim unique test coverage.
-The separately recorded corrected integration below has its own total. The TAP draft is excluded from this merged count.
+The earlier 18-PR integration and the later 20-PR A00 manifest have distinct sources and totals. The TAP draft and evidence PR #4564 are excluded from this implementation count.
 
-The [delivery record index](captures/deliveries/record-index.json), generated at `2026-10-04T14:13:36.348884Z`, lists **54 retained raw records for all 18 deliveries**:
-PR snapshots and successful PR/main workflow-run records. It is a derived index. The original [48-record observation](captures/deliveries/observation.json)
-retains its `2026-10-04T13:24:33.992Z` capture timestamp; the six later IL/bytecode snapshots were captured after their respective successful runs.
-Index generation does not re-date those observations. Published heads, merge commits and run identities matched the session delivery record.
+The current [delivery record index](captures/deliveries/record-index.json) lists **60 retained raw records for all 20 deliveries**:
+PR snapshots and successful ordinary PR/main workflow-run records. The preceding [54-record index](captures/deliveries/record-index-18-prs-54-records.json)
+preserves its exact original bytes and `2026-10-04T14:13:36.348884Z` generation timestamp. The original
+[48-record observation](captures/deliveries/observation.json) retains `2026-10-04T13:24:33.992Z`; all original 54 raw records are unchanged.
+Six raw records for #4565/#4566 are added. Refreshing the derived index does not re-date observations. Published heads, merges and run identities
+match the session record; successful ordinary core does not replace the failed central attempt.
 
 Local runs used Node `v24.19.0` on Linux x64. Ordinary core declares Node 22 and performs static/manifest, policy and build checks;
 it skips Node unit tests under the serial validation policy. Dedicated build/fuzz lanes have their own pins.
@@ -257,12 +264,14 @@ An equivalent source tree allows retrieval of the tested code; it does not rewri
 | [#4550](https://github.com/wieslawsoltes/SharpForge/pull/4550) — Controlled malformed metadata UTF-8 rejection and two retained PE inputs | `f0362e5e1874` → [c9357cc985ed](https://github.com/wieslawsoltes/SharpForge/commit/c9357cc985ed1dbe2bd2b76f99ef5e3cb81d89a9) | [8019f2f9b22e](https://github.com/wieslawsoltes/SharpForge/commit/8019f2f9b22e26d7c221454f3b751b0b0e0c67df) | [34 passed / 0 failed](captures/pe-utf8-final.tap) | [PR](https://github.com/wieslawsoltes/SharpForge/actions/runs/37204857889) / [main](https://github.com/wieslawsoltes/SharpForge/actions/runs/37204915609) |
 | [#4554](https://github.com/wieslawsoltes/SharpForge/pull/4554) — Full image preservation for validated unchanged IL bodies, signed-zero/NaN handling, and exact image fuzz comparison. | `9e6235635fdf` → [7ae8ae6727f6](https://github.com/wieslawsoltes/SharpForge/commit/7ae8ae6727f627be4cd63c56099814f5004f9c29) | [b519b371d10b](https://github.com/wieslawsoltes/SharpForge/commit/b519b371d10b35299004aa142b73696bd482d4cc) | [124 passed / 0 failed](captures/il-idempotence-fixed.tap) | [PR](https://github.com/wieslawsoltes/SharpForge/actions/runs/37206598569) / [main](https://github.com/wieslawsoltes/SharpForge/actions/runs/37206929616) |
 | [#4556](https://github.com/wieslawsoltes/SharpForge/pull/4556) — Constrained managed local calls, integer statics, fixed objects and integer arrays; general metadata, host calls and exception-handler admission remain excluded. | `cde74a88fcb8` → [6dcf13fae492](https://github.com/wieslawsoltes/SharpForge/commit/6dcf13fae492f7ba74197d88770e3c26251126d4) | [d64188af91f0](https://github.com/wieslawsoltes/SharpForge/commit/d64188af91f03d02041316bdde2ee64fd0634be0) | [39 passed / 0 failed](captures/bytecode-profile-fixed.tap) | [PR](https://github.com/wieslawsoltes/SharpForge/actions/runs/37207262331) / [main](https://github.com/wieslawsoltes/SharpForge/actions/runs/37207356433) |
+| [#4565](https://github.com/wieslawsoltes/SharpForge/pull/4565) — Refresh the generated value ABI inventory with exactly four current source hashes; all non-hash sections, generator, runtime and tests are unchanged. | `52bde3173ae8` → [bb7d1b8c6ff2](https://github.com/wieslawsoltes/SharpForge/commit/bb7d1b8c6ff260a33be4f16a76054f1bfd84e2b8) | [31900dce5c14](https://github.com/wieslawsoltes/SharpForge/commit/31900dce5c1454c1f9c244c9ac14e1798eac3e5f) | [19 passed / 0 failed](captures/a00-abi-correction/tests.tap) | [PR](https://github.com/wieslawsoltes/SharpForge/actions/runs/37211623006) / [main](https://github.com/wieslawsoltes/SharpForge/actions/runs/37211720001) |
+| [#4566](https://github.com/wieslawsoltes/SharpForge/pull/4566) — Use existing catalog IDs for two delegate argument-count diagnostics and the third CS0103 speculative-binding caller; catalog and tests are unchanged. | `7132306bc9d8` → [cf0d5621cabc](https://github.com/wieslawsoltes/SharpForge/commit/cf0d5621cabca85fddc5ba6b56761e472ac153a9) | [fedb9a894608](https://github.com/wieslawsoltes/SharpForge/commit/fedb9a894608693d2250fd5be04f3c0fc51682f6) | [31 passed / 0 failed](captures/a00-diagnostic-correction-final/tests.tap) | [PR](https://github.com/wieslawsoltes/SharpForge/actions/runs/37211962454) / [main](https://github.com/wieslawsoltes/SharpForge/actions/runs/37212071119) |
 
 ## Recorded validation and campaign evidence
 
 [session-results.json](session-results.json) is authoritative for result details and later updates. The historical audit and classification
 remain evidence of their own observation times. The captures below record executed scopes, including failures and unsupported results;
-none of these observations asserts issue closure, full Project membership, release qualification or complete product acceptance.
+none of these observations asserts issue closure, full Project field/ownership verification, release qualification or complete product acceptance.
 
 ### Capture format and regression proof
 
@@ -348,7 +357,7 @@ A concrete [separate manual-workflow proposal](captures/r015-workflow-proposal.y
 The audit did not establish the live, owned, directly scoped leaf-task claim required to acquire `ci-workflows` for that proposal.
 Existing [ci.yml](https://github.com/wieslawsoltes/SharpForge/blob/d64188af91f03d02041316bdde2ee64fd0634be0/.github/workflows/ci.yml)
 and R015 runner scopes remain reserved. Legitimate task ownership and workflow-dispatch capability are prerequisites for this execution path.
-A central full-ci run of existing jobs would not by itself execute this currently unwired scenario. The local missing-browser result supplies
+The recorded central full-ci attempt did not execute this unwired scenario; its downstream families were skipped after the core failure. The local missing-browser result supplies
 no evidence that an appropriately configured hosted runner is unavailable.
 
 Host-wide fairness and managed WebSocket support remain code gaps. Remote Git/auth, independent designers, duplicate-instance Hot Reload
@@ -372,23 +381,119 @@ and [raw core log](captures/evidence-pr4564-first-core/core-job.log). Other jobs
 The correction renames only the archived probe to [bytecode-profile-parent-probe.mjs.txt](captures/bytecode-profile-parent-probe.mjs.txt)
 and updates its references, format metadata and index entry. Original source bytes and all 169 earlier capture digests remain unchanged;
 the original filename is retained in metadata and in the historical diagnostics. No policy exemption or probe-content edit is introduced.
-Corrected local checks/build and a subsequent hosted core result are **pending**. Exact evidence and correction scope are recorded at
-`/evidencePublication` in [session-results.json](session-results.json).
+The initial [ordinary run 37209752375](captures/evidence-pr4564-cancelled-core/run.json) was cancelled after the `size/XXL` bot label triggered a replacement;
+its [jobs](captures/evidence-pr4564-cancelled-core/jobs.json) and [log](captures/evidence-pr4564-cancelled-core/core-job.log) preserve that chronology.
+
+The archive correction subsequently passed [local checks/build](captures/evidence-pr4564-fixed/run.json) at clean local `c7cc7a514e7398ab152c4283f554b176f3869abc`,
+tree `f87ffca6ef47c89691bad1c4db0fdf3e12400f15`, published as
+[c9bda180705d](https://github.com/wieslawsoltes/SharpForge/commit/c9bda180705db8d4efebdec0023df3d31667a2a7).
+[Ordinary core 37210582854 succeeded](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210582854); its
+[raw run](captures/evidence-pr4564-successful-core/run.json), [jobs](captures/evidence-pr4564-successful-core/jobs.json),
+[log](captures/evidence-pr4564-successful-core/core-job.log) and [actual checkout](captures/evidence-pr4564-successful-core/checkout-commit.json) are retained.
+That ordinary success skipped Node unit tests. The separately labelled central attempt below failed A00 at the same actual merge checkout.
+Exact evidence and correction scope are recorded at `/evidencePublication` in [session-results.json](session-results.json).
+
+## Central qualification failure and subsequent corrections
+
+The `full-ci` label was added to frozen [PR #4564](https://github.com/wieslawsoltes/SharpForge/pull/4564) at `2026-10-04T14:48:45.996Z`,
+after its ordinary core succeeded. [Run 37210639599, attempt 1](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599)
+**failed**, running from `2026-10-04T14:48:46Z` to `2026-10-04T14:50:47Z`. The PR head was
+[c9bda180705d](https://github.com/wieslawsoltes/SharpForge/commit/c9bda180705db8d4efebdec0023df3d31667a2a7);
+the actual checkout was [33c30d7361fe](https://github.com/wieslawsoltes/SharpForge/commit/33c30d7361feaca46642c833e6f9394996b09e1e),
+tree `e081cf2c538baa5d049b1a422fd77c1be26809d0`. The [raw Git object](captures/central-37210639599-attempt1/checkout-commit.json),
+[core log](captures/central-37210639599-attempt1/core-job.log), and both artifact environments agree on that checkout.
+The [label action](captures/central-37210639599-attempt1/label-action.json), [run](captures/central-37210639599-attempt1/run.json)
+and [exact pre-label PR snapshot](captures/central-37210639599-attempt1/pr-before-label.json) preserve the trigger.
+
+The [jobs response](captures/central-37210639599-attempt1/jobs.json) has **nine actual job records: two failures and seven skipped families**.
+Only `core` and `ci-ok` executed. Skipped family records are not expanded or executed platform combinations; their raw timestamps are preserved without deriving durations.
+
+| Actual job record | Conclusion | Executed scope |
+| --- | --- | --- |
+| [core](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111460940659) | failure | A00 manifest: 465 tests, 462 passed, 3 failed. |
+| [core-platforms](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461248190) | skipped | Unexecuted family placeholder; zero recorded steps. |
+| [build](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461248982) | skipped | Unexecuted family placeholder; zero recorded steps. |
+| [packages](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461249147) | skipped | Unexecuted family placeholder; zero recorded steps. |
+| [browser (${{ matrix.os }}, ${{ matrix.suite }})](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461249684) | skipped | Unexecuted family placeholder; zero recorded steps. |
+| [ci-ok](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461249943) | failure | Failure aggregator; retained environment artifact. |
+| [native-msbuild](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461250140) | skipped | Unexecuted family placeholder; zero recorded steps. |
+| [native-il](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461250240) | skipped | Unexecuted family placeholder; zero recorded steps. |
+| [clr-wasm](https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461250404) | skipped | Unexecuted family placeholder; zero recorded steps. |
+
+The three failures were stale value-inventory hashes, undocumented root-provider sites, and diagnostic literals outside the catalog.
+They are source-contract integration failures. Downstream browser, native and cross-platform families did not execute; this attempt produced
+**no completed build identity or sealed payload**.
+
+Only **two actual artifacts** were uploaded: [core-ubuntu-latest ZIP](captures/central-37210639599-attempt1/artifacts/11306492051-core-ubuntu-latest.zip)
+and [ci-ok ZIP](captures/central-37210639599-attempt1/artifacts/11306257677-ci-ok.zip). Their original binary bytes and SHA-256 digests match the
+[artifact API records](captures/central-37210639599-attempt1/artifacts.json) and upload logs. Each contains only `checkout-status.txt` and `env.json`;
+[verification metadata](captures/central-37210639599-attempt1/artifact-verification.json) and byte-identical extracted files are retained.
+The hosted environments record **Node v22.23.3, Linux x64**, run/attempt/job identities and a clean checkout. Playwright absence in the executed
+core environment is not evidence that the skipped hosted browser lane was unavailable.
+
+The [exact checkout workflow](captures/central-37210639599-attempt1/workflow-ci.yml.txt) is retained with its original path, blob, byte count and
+[SHA-256 metadata](captures/central-37210639599-attempt1/workflow-source.json). **An independent `GITHUB_WORKFLOW_SHA` environment field was not captured.**
+The API workflow path and observed job graph agree with the retained source; no stronger workflow-environment attestation is invented.
+
+### Merged corrections and the remaining local failure
+
+A later [reservation audit](captures/full-ci-37210639599-reservation-summary.json) read **98 claims and 13 locks** from stable refs,
+between `2026-10-04 14:54:26 UTC` and `14:57:49 UTC`. Its [full raw observations](captures/full-ci-37210639599-reservation-raw.json)
+and [diagnostic caller follow-up](captures/compiler-model-scopes-reservation-followup.json) are separate from the unchanged 68-claim historical audit.
+They scoped two narrow corrections in files without an observed matching path reservation; they do not release another owner's scope or verify custom Project field-only ownership.
+
+| Observation | Exact local source | Actual result | Evidence |
+| --- | --- | --- | --- |
+| Value ABI inventory correction, merged #4565 | `52bde3173ae86e01cd9fb1d1a8cb01764eb024cb`, tree `874fca7633c61df1f28817db1a6aefae3b0acbf2` | **19 passed / 0 failed**. Exactly four source hashes refreshed; all non-hash sections, generator, runtime and tests unchanged. | [Run](captures/a00-abi-correction/run.json), [TAP](captures/a00-abi-correction/tests.tap) |
+| Intermediate diagnostic caller correction | `eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c`, tree `9ae5666621febc7564f5a0c6b5391f97ae674ffa` | **9 passed / 1 failed**, exit 1. Two delegate-count literals were fixed; the separate CS0103 caller remained. This historical failure is preserved. | [Run](captures/a00-diagnostic-correction/run.json), [TAP](captures/a00-diagnostic-correction/tests.tap) |
+| Complete diagnostic caller correction, merged #4566 | `7132306bc9d86b691cd11529c1c7a48900dee075`, tree `0547f7787aff8f12bc9cb9081bb5db6d0277557e` | **31 passed / 0 failed**. The third CS0103 caller uses the existing catalog constant. No catalog or contract-test changes. | [Run](captures/a00-diagnostic-correction-final/run.json), [TAP](captures/a00-diagnostic-correction-final/tests.tap) |
+| Post-correction A00 manifest | Clean `fedb9a894608693d2250fd5be04f3c0fc51682f6`, tree `8c7eaa338498404e3feed163913c5a94d852ac18`, unchanged before/after | **465 tests: 464 passed / 1 failed / 0 skipped / 0 cancelled**, exit 1. Sole failure: undocumented `execution/frame-roots.js:roots:1`. | [Run](captures/post-central-a00/run.json), [TAP](captures/post-central-a00/tests.tap) |
+
+The [source/publication ledger](captures/post-central-corrections.json) retains local and published heads, identical correction trees, both
+successful PR/main core run IDs and merges. All six new raw delivery records are indexed above. The latest A00 manifest is a **failed local
+A00-only run, not a full-ci rerun or pass**. The [local environment observation](captures/post-central-local-environment.json) records Node v24.19.0
+at `2026-10-04T15:17:42.470358+00:00`, after validation; it is not an initial environment attestation or a hosted result.
+
+### Root-provider owner proposal remains unapplied
+
+The remaining root scope belongs to **`codex-p4-abi`**, [SF-A00-T01.4 #1035](https://github.com/wieslawsoltes/SharpForge/issues/1035).
+The final [patch proposal](captures/full-ci-37210639599-root-provider-owner-proposal.patch.txt) is **unapplied** and changes exactly three paths:
+`planning/contracts/gc-roots.md`, `planning/contracts/gc-roots-sites.json`, and `tests/a00-04-execution.test.js`.
+It documents shared visitor/callback/retired-frame ownership, aligns the inventory with **12 current literal root sites**, and replaces the obsolete
+minimum-site assertion with **exact full inventory-row equality plus seven required provider IDs**. Both negative new-file and new-subdirectory
+checks remain. Runtime, scanner, ABI and safepoint behavior are unchanged by the proposal.
+
+The patch is **21,233 bytes**, SHA-256 `e317a7ab3b57dcc5364f154b816c97c1b66eddd6021045214befaf49d3aabe52`;
+its [metadata](captures/full-ci-37210639599-root-provider-owner-proposal.json) is **5,087 bytes**,
+SHA-256 `83c9e546c95c00f7b940dc8d6db095c8fa8a30d32f4d6b32bedeb54309cd9ad8`.
+Independent source review is complete. The only recorded execution is **`git apply --check` exit 0**, an application preflight on `fedb9a894608`;
+the patch was not applied, and no product test/build was run for it. Owner resolution, implementation and serial qualification remain required.
+
+### Archival review source
+
+This report is prepared on the separate `codex/p4-central-evidence` archival review branch. Its base is local
+`a0cc5465fa4b2e6cccc369b5a5d6215b5fa2fd01`, published same-tree as
+[23a91b16cf70](https://github.com/wieslawsoltes/SharpForge/commit/23a91b16cf70b04d5943776697e45abf202c65d2),
+tree `530a187444514fd9940ba2eb00e3af43c2deb3ab`, with ordered parents `c9bda180705db8d4efebdec0023df3d31667a2a7` and
+`fedb9a894608693d2250fd5be04f3c0fc51682f6`. This combines frozen evidence and the recorded 20-delivery source before the report update.
+Archive assembly does not qualify the combined tree. PR #4564's failed head and label remain frozen; this is review-only evidence,
+not a merge of failed qualification. The existing 317-test integration, PE duration and eight-target campaign remain at their original 18-PR source.
 
 ## Final qualification status
 
-These three named rows summarize the current integrated scope. Update their exact-source results from [session-results.json](session-results.json)
-when additional validation finishes; preserve the earlier observations above, including failed and unsupported campaigns.
+These three named rows distinguish the current failed qualification from earlier passing or unsupported bounded scopes.
+[session-results.json](session-results.json) retains every exact-source observation; later corrections do not rewrite earlier results.
 
 | Qualification row | Actual recorded state | Evidence and remaining work |
 | --- | --- | --- |
-| **Corrected integrated validation** | **317 passed / 0 failed / 0 skipped / 0 cancelled**; `npm run check` and build passed at clean merged source `d64188af91f03d02041316bdde2ee64fd0634be0`, tree `d683a1cee6e29cddb2735734878f70c1ea382a05`. | [Final 18-PR integrated tests](captures/final-18/integrated.tap), [checks](captures/final-18/check.log), [build](captures/final-18/build.log) and [execution record](captures/final-18/run.json). The record retains exact argv, timing and before/after source identities. Checks cover **3,942 syntax modules / 3,938 linked modules**, with zero syntax/import errors or manifest unassigned/duplicate entries. Earlier [200/0](captures/integrated-final.tap) at `bf85020e6024` and [222/0](captures/integrated-corrected.tap) at `8019f2f9b22e` remain separate historical integrations. |
+| **Corrected integrated validation** | Recorded 20-delivery source `fedb9a894608`, tree `8c7eaa338498404e3feed163913c5a94d852ac18`: **local A00 464 passed / 1 failed**, exit 1, with no skips/cancellations. The root-provider owner proposal remains unapplied. Earlier 18-PR integration: **317 passed / 0 failed / 0 skipped / 0 cancelled**; `npm run check` and build passed at clean merged source `d64188af91f03d02041316bdde2ee64fd0634be0`, tree `d683a1cee6e29cddb2735734878f70c1ea382a05`. | [Latest A00 run](captures/post-central-a00/run.json) and [log](captures/post-central-a00/tests.tap) retain the remaining failure. [Final 18-PR integrated tests](captures/final-18/integrated.tap), [checks](captures/final-18/check.log), [build](captures/final-18/build.log) and [execution record](captures/final-18/run.json). The record retains exact argv, timing and before/after source identities. Checks cover **3,942 syntax modules / 3,938 linked modules**, with zero syntax/import errors or manifest unassigned/duplicate entries. Earlier [200/0](captures/integrated-final.tap) at `bf85020e6024` and [222/0](captures/integrated-corrected.tap) at `8019f2f9b22e` remain separate historical integrations. |
 | **Fuzz campaigns** | Final eight-target campaign remains **overall unsupported**: 71 accepted / 179 rejected / 6 unsupported / 0 findings / 0 cancelled, `qualified: false`, exit 2. **Post-fix PE duration passed** separately: 1,024 cases across seeds 1 and 2, 4 accepted / 1,020 rejected / 0 unsupported / 0 findings / 0 cancelled, **714,755 ms**, exit 0. | Both results bind to clean `d64188af91f03d02041316bdde2ee64fd0634be0`. The [final expanded campaign](captures/final18-campaign-seed1/summary.json) retains six unsupported bytecode cases. The [PE duration result](captures/pe-postfix-duration.json) exceeds its 600,000 ms requirement using completed campaign windows only; gaps and all 351,421 ms of the old failed run receive no credit. PE qualification is limited to the bounded Node/Linux x64 loader profile and establishes no universal parser, other-engine/platform or OS-sandbox safety claim. Exact captures and limitations are at `/pendingQualification/finalExpandedTargets` and `/pendingQualification/postFixPeDuration` in [session-results.json](session-results.json). |
-| **Central full-ci** | **Pending.** No central full-ci run or result is recorded at this observation. | The available mechanism is the `full-ci` PR label after the integrated scope is ready; manual workflow dispatch capability was absent. Retain the actual triggering PR/head, hosted run URL and per-job outcomes when available. Ordinary core results above do not establish this broader run. Specialty/nightly trigger criteria remain policy-deferred independently. |
+| **Central full-ci** | **Failed**, run **37210639599 attempt 1**, actual checkout `33c30d7361feaca46642c833e6f9394996b09e1e`, tree `e081cf2c538baa5d049b1a422fd77c1be26809d0`. A00: **465 tests / 462 passed / 3 failed**. Nine actual job records: **2 failures / 7 skipped families**. | [Run](captures/central-37210639599-attempt1/run.json), [jobs](captures/central-37210639599-attempt1/jobs.json), [core log](captures/central-37210639599-attempt1/core-job.log) and [artifact verification](captures/central-37210639599-attempt1/artifact-verification.json). Only two environment/status ZIP artifacts exist; no completed build identity, sealed payload or downstream browser/native/platform execution. The two later corrections and local A00 result do not rerun this failed attempt. Owner integration and subsequent exact-source qualification remain; R015 wiring and specialty/nightly criteria retain their separate limits. |
 
 ## Remaining completion work
 
-The remaining classification is concrete: resolve the TAP fixture and DAP owner integrations; qualify the required remaining IL corpus
+The remaining classification is concrete: resolve the reserved root-provider inventory and test integration, then qualify the resulting exact source;
+resolve the TAP fixture and DAP owner integrations; qualify the required remaining IL corpus
 and bytecode scope beyond the implemented bounded profiles; preserve the completed bounded PE duration evidence while completing remaining manifest and hosted/platform qualification;
 complete native/oracle, trusted archive, signing, recording and external configuration evidence; and verify the remaining full GraphQL/Agent/lease field projection.
 The public active-board identity/status reconciliation is complete at its recorded timestamp; its status labels do not replace authoritative ownership checks.

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-04T15:07:19.442753Z",
+  "finishedAt": "2026-10-04T15:07:22.724297Z",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a00-diagnostic-ids.test.js",
+    "tests/compiler-diagnostic-spans.test.js",
+    "tests/compiler-semantic-model-analysis.test.js",
+    "tests/compiler-semantic-model.test.js"
+  ],
+  "sourceBefore": {
+    "commit": "7132306bc9d86b691cd11529c1c7a48900dee075",
+    "tree": "0547f7787aff8f12bc9cb9081bb5db6d0277557e",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "7132306bc9d86b691cd11529c1c7a48900dee075",
+    "tree": "0547f7787aff8f12bc9cb9081bb5db6d0277557e",
+    "clean": true
+  },
+  "exitCode": 0,
+  "summary": {
+    "tests": 31,
+    "suites": 0,
+    "pass": 31,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "status": "passed"
+}

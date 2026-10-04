@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-04T14:46:00.822931+00:00",
+  "source": {
+    "commit": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+    "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+    "status": ""
+  },
+  "commands": [
+    {
+      "name": "check",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-10-04T14:46:00.844681+00:00",
+      "before": {
+        "commit": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+        "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+        "status": ""
+      },
+      "exitCode": 0,
+      "completedAt": "2026-10-04T14:46:08.017186+00:00",
+      "after": {
+        "commit": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+        "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+        "status": ""
+      }
+    },
+    {
+      "name": "build",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-04T14:46:08.046161+00:00",
+      "before": {
+        "commit": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+        "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+        "status": ""
+      },
+      "exitCode": 0,
+      "completedAt": "2026-10-04T14:46:16.769182+00:00",
+      "after": {
+        "commit": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+        "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+        "status": ""
+      }
+    }
+  ],
+  "completedAt": "2026-10-04T14:46:16.808832+00:00",
+  "status": "passed"
+}

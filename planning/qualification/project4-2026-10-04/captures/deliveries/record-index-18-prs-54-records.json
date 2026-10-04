@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T15:25:17.083555Z",
-  "records": 60,
+  "generatedAt": "2026-10-04T14:13:36.348884Z",
+  "records": 54,
   "entries": [
     {
       "pr": 4521,
@@ -272,45 +272,7 @@
       "pr": 4556,
       "path": "4556/main-core-run.json",
       "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37207356433"
-    },
-    {
-      "pr": 4565,
-      "path": "4565/pr.json",
-      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4565"
-    },
-    {
-      "pr": 4565,
-      "path": "4565/pr-core-run.json",
-      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37211623006"
-    },
-    {
-      "pr": 4565,
-      "path": "4565/main-core-run.json",
-      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37211720001"
-    },
-    {
-      "pr": 4566,
-      "path": "4566/pr.json",
-      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4566"
-    },
-    {
-      "pr": 4566,
-      "path": "4566/pr-core-run.json",
-      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37211962454"
-    },
-    {
-      "pr": 4566,
-      "path": "4566/main-core-run.json",
-      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/runs/37212071119"
     }
   ],
-  "note": "Derived index of 60 retained raw GitHub snapshots for 20 merged implementation PRs. The original 48-record observation and all original 54 raw files retain their timestamps and bytes; six IL/bytecode records preceded the six post-central records for PR4565 and PR4566. The exact preceding 54-record derived index, including its original note, is retained at precedingIndex. Index generation does not re-date any observation.",
-  "precedingIndex": {
-    "path": "record-index-18-prs-54-records.json",
-    "records": 54,
-    "generatedAt": "2026-10-04T14:13:36.348884Z",
-    "bytes": 8818,
-    "sha256": "53cec054d810881caa70a728dac54f85e22cac43864309bc004bcad815212ea9",
-    "policy": "Exact original 54-record derived index retained; refreshed index generation does not re-date raw observations."
-  }
+  "note": "Derived index of 54 retained raw GitHub snapshots. The original observation.json retains its earlier 48-record capture timestamp; the six later IL/bytecode snapshots were captured after their separate successful runs."
 }

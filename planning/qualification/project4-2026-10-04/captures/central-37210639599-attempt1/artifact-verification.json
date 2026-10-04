@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "artifactId": 11306492051,
+      "name": "core-ubuntu-latest",
+      "bytes": 2009,
+      "sha256": "7b8deca226df52a155c222f762656a71b2a6d359416a99e98a75fb30024f79f2",
+      "entries": [
+        {
+          "path": "checkout-status.txt",
+          "bytes": 15,
+          "sha256": "d07c1390305b7d67e71964ffc7122adaa41e57af88def16508526b142969b756"
+        },
+        {
+          "path": "env.json",
+          "bytes": 5956,
+          "sha256": "6080340b0a4a3b88ddb354734f74ca23025d071acba57079b0eede78fe8d4151",
+          "data": {
+            "schemaVersion": 1,
+            "timestamp": "2026-10-04T14:50:21.682Z",
+            "commit": "33c30d7361feaca46642c833e6f9394996b09e1e",
+            "runner": {
+              "os": "linux",
+              "release": "6.17.0-1022-azure",
+              "architecture": "x64",
+              "image": "ubuntu24",
+              "imageVersion": "20260927.320.1",
+              "runnerOS": "Linux",
+              "runnerArch": "X64"
+            },
+            "github": {
+              "runId": "37210639599",
+              "attempt": "1",
+              "job": "core"
+            },
+            "node": {
+              "version": "v22.23.3",
+              "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+              "versions": {
+                "node": "22.23.3",
+                "acorn": "8.16.0",
+                "ada": "2.9.2",
+                "amaro": "1.1.8",
+                "ares": "1.34.8",
+                "brotli": "1.1.0",
+                "cjs_module_lexer": "2.2.0",
+                "cldr": "48.0",
+                "icu": "78.3",
+                "llhttp": "9.4.3",
+                "modules": "127",
+                "napi": "10",
+                "nbytes": "0.1.3",
+                "ncrypto": "0.0.1",
+                "nghttp2": "1.69.0",
+                "openssl": "3.5.8",
+                "simdjson": "4.5.0",
+                "simdutf": "6.4.2",
+                "sqlite": "3.51.3",
+                "tz": "2026c",
+                "undici": "6.28.1",
+                "unicode": "17.0",
+                "uv": "1.51.0",
+                "uvwasi": "0.0.23",
+                "v8": "12.4.254.21-node.57",
+                "zlib": "1.3.1-e00f703",
+                "zstd": "1.5.7"
+              }
+            },
+            "npm": {
+              "command": [
+                "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+                "/opt/hostedtoolcache/node/22.23.3/x64/lib/node_modules/npm/bin/npm-cli.js",
+                "--version"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": "10.9.9",
+              "stderr": "",
+              "error": null
+            },
+            "python": {
+              "command": [
+                "python",
+                "--version"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": "Python 3.12.3",
+              "stderr": "",
+              "error": null
+            },
+            "playwright": {
+              "command": [
+                "python",
+                "-c",
+                "import importlib.metadata,json,pathlib,playwright; from playwright.sync_api import sync_playwright\nwith sync_playwright() as p:\n print(json.dumps({'version':importlib.metadata.version('playwright'),'chromiumExecutable':p.chromium.executable_path,'installed':pathlib.Path(p.chromium.executable_path).exists(),'browsers':json.loads((pathlib.Path(playwright.__file__).parent/'driver/package/browsers.json').read_text())['browsers']}))"
+              ],
+              "available": false,
+              "status": 1,
+              "stdout": "",
+              "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'playwright'",
+              "error": null
+            },
+            "chromiumOverride": null,
+            "dotnet": {
+              "command": [
+                "dotnet",
+                "--info"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": ".NET SDK:\n Version:           10.0.401\n Commit:            e34a38d2ae\n Workload version:  10.0.400-manifests.63b36e85\n MSBuild version:   18.9.11+e34a38d2a\n\nRuntime Environment:\n OS Name:     ubuntu\n OS Version:  24.04\n OS Platform: Linux\n RID:         linux-x64\n Base Path:   /usr/share/dotnet/sdk/10.0.401/\n\n.NET workloads installed:\nThere are no installed workloads to display.\nConfigured to use workload sets when installing new manifests.\nNo workload sets are installed. Run \"dotnet workload restore\" to install a workload set.\n\nHost:\n  Version:      10.0.12\n  Architecture: x64\n  Commit:       95017c711e\n\n.NET SDKs installed:\n  8.0.131 [/usr/share/dotnet/sdk]\n  8.0.206 [/usr/share/dotnet/sdk]\n  8.0.319 [/usr/share/dotnet/sdk]\n  8.0.425 [/usr/share/dotnet/sdk]\n  9.0.121 [/usr/share/dotnet/sdk]\n  9.0.205 [/usr/share/dotnet/sdk]\n  9.0.318 [/usr/share/dotnet/sdk]\n  10.0.112 [/usr/share/dotnet/sdk]\n  10.0.204 [/usr/share/dotnet/sdk]\n  10.0.303 [/usr/share/dotnet/sdk]\n  10.0.401 [/usr/share/dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_MULTILEVEL_LOOKUP                 [0]\n  DOTNET_NOLOGO                            [1]\n  DOTNET_SKIP_FIRST_TIME_EXPERIENCE        [1]\n\nglobal.json file:\n  Not found\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download",
+              "stderr": "",
+              "error": null
+            },
+            "dotnetSDKs": {
+              "command": [
+                "dotnet",
+                "--list-sdks"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": "8.0.131 [/usr/share/dotnet/sdk]\n8.0.206 [/usr/share/dotnet/sdk]\n8.0.319 [/usr/share/dotnet/sdk]\n8.0.425 [/usr/share/dotnet/sdk]\n9.0.121 [/usr/share/dotnet/sdk]\n9.0.205 [/usr/share/dotnet/sdk]\n9.0.318 [/usr/share/dotnet/sdk]\n10.0.112 [/usr/share/dotnet/sdk]\n10.0.204 [/usr/share/dotnet/sdk]\n10.0.303 [/usr/share/dotnet/sdk]\n10.0.401 [/usr/share/dotnet/sdk]",
+              "stderr": "",
+              "error": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "artifactId": 11306257677,
+      "name": "ci-ok",
+      "bytes": 2010,
+      "sha256": "e72ca0095c0d292783f854532d56e51fbcc283a9f80d83cd1df7842fb14c0de4",
+      "entries": [
+        {
+          "path": "checkout-status.txt",
+          "bytes": 15,
+          "sha256": "d07c1390305b7d67e71964ffc7122adaa41e57af88def16508526b142969b756"
+        },
+        {
+          "path": "env.json",
+          "bytes": 5958,
+          "sha256": "5ef2c2c375ee257396a43c211020a686db0907158bf5af8b1df04f1f723e8548",
+          "data": {
+            "schemaVersion": 1,
+            "timestamp": "2026-10-04T14:50:43.549Z",
+            "commit": "33c30d7361feaca46642c833e6f9394996b09e1e",
+            "runner": {
+              "os": "linux",
+              "release": "6.17.0-1022-azure",
+              "architecture": "x64",
+              "image": "ubuntu24",
+              "imageVersion": "20260927.320.1",
+              "runnerOS": "Linux",
+              "runnerArch": "X64"
+            },
+            "github": {
+              "runId": "37210639599",
+              "attempt": "1",
+              "job": "ci-ok"
+            },
+            "node": {
+              "version": "v22.23.3",
+              "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+              "versions": {
+                "node": "22.23.3",
+                "acorn": "8.16.0",
+                "ada": "2.9.2",
+                "amaro": "1.1.8",
+                "ares": "1.34.8",
+                "brotli": "1.1.0",
+                "cjs_module_lexer": "2.2.0",
+                "cldr": "48.0",
+                "icu": "78.3",
+                "llhttp": "9.4.3",
+                "modules": "127",
+                "napi": "10",
+                "nbytes": "0.1.3",
+                "ncrypto": "0.0.1",
+                "nghttp2": "1.69.0",
+                "openssl": "3.5.8",
+                "simdjson": "4.5.0",
+                "simdutf": "6.4.2",
+                "sqlite": "3.51.3",
+                "tz": "2026c",
+                "undici": "6.28.1",
+                "unicode": "17.0",
+                "uv": "1.51.0",
+                "uvwasi": "0.0.23",
+                "v8": "12.4.254.21-node.57",
+                "zlib": "1.3.1-e00f703",
+                "zstd": "1.5.7"
+              }
+            },
+            "npm": {
+              "command": [
+                "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+                "/opt/hostedtoolcache/node/22.23.3/x64/lib/node_modules/npm/bin/npm-cli.js",
+                "--version"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": "10.9.9",
+              "stderr": "",
+              "error": null
+            },
+            "python": {
+              "command": [
+                "python",
+                "--version"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": "Python 3.12.14",
+              "stderr": "",
+              "error": null
+            },
+            "playwright": {
+              "command": [
+                "python",
+                "-c",
+                "import importlib.metadata,json,pathlib,playwright; from playwright.sync_api import sync_playwright\nwith sync_playwright() as p:\n print(json.dumps({'version':importlib.metadata.version('playwright'),'chromiumExecutable':p.chromium.executable_path,'installed':pathlib.Path(p.chromium.executable_path).exists(),'browsers':json.loads((pathlib.Path(playwright.__file__).parent/'driver/package/browsers.json').read_text())['browsers']}))"
+              ],
+              "available": false,
+              "status": 1,
+              "stdout": "",
+              "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'playwright'",
+              "error": null
+            },
+            "chromiumOverride": null,
+            "dotnet": {
+              "command": [
+                "dotnet",
+                "--info"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": ".NET SDK:\n Version:           10.0.401\n Commit:            e34a38d2ae\n Workload version:  10.0.400-manifests.63b36e85\n MSBuild version:   18.9.11+e34a38d2a\n\nRuntime Environment:\n OS Name:     ubuntu\n OS Version:  24.04\n OS Platform: Linux\n RID:         linux-x64\n Base Path:   /usr/share/dotnet/sdk/10.0.401/\n\n.NET workloads installed:\nThere are no installed workloads to display.\nConfigured to use workload sets when installing new manifests.\nNo workload sets are installed. Run \"dotnet workload restore\" to install a workload set.\n\nHost:\n  Version:      10.0.12\n  Architecture: x64\n  Commit:       95017c711e\n\n.NET SDKs installed:\n  8.0.131 [/usr/share/dotnet/sdk]\n  8.0.206 [/usr/share/dotnet/sdk]\n  8.0.319 [/usr/share/dotnet/sdk]\n  8.0.425 [/usr/share/dotnet/sdk]\n  9.0.121 [/usr/share/dotnet/sdk]\n  9.0.205 [/usr/share/dotnet/sdk]\n  9.0.318 [/usr/share/dotnet/sdk]\n  10.0.112 [/usr/share/dotnet/sdk]\n  10.0.204 [/usr/share/dotnet/sdk]\n  10.0.303 [/usr/share/dotnet/sdk]\n  10.0.401 [/usr/share/dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 8.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 8.0.22 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 8.0.31 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 9.0.6 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 9.0.20 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.8 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.11 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.12 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_MULTILEVEL_LOOKUP                 [0]\n  DOTNET_NOLOGO                            [1]\n  DOTNET_SKIP_FIRST_TIME_EXPERIENCE        [1]\n\nglobal.json file:\n  Not found\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download",
+              "stderr": "",
+              "error": null
+            },
+            "dotnetSDKs": {
+              "command": [
+                "dotnet",
+                "--list-sdks"
+              ],
+              "available": true,
+              "status": 0,
+              "stdout": "8.0.131 [/usr/share/dotnet/sdk]\n8.0.206 [/usr/share/dotnet/sdk]\n8.0.319 [/usr/share/dotnet/sdk]\n8.0.425 [/usr/share/dotnet/sdk]\n9.0.121 [/usr/share/dotnet/sdk]\n9.0.205 [/usr/share/dotnet/sdk]\n9.0.318 [/usr/share/dotnet/sdk]\n10.0.112 [/usr/share/dotnet/sdk]\n10.0.204 [/usr/share/dotnet/sdk]\n10.0.303 [/usr/share/dotnet/sdk]\n10.0.401 [/usr/share/dotnet/sdk]",
+              "stderr": "",
+              "error": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

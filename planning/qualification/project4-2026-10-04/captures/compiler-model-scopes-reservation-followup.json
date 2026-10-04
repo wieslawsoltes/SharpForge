@@ -1,0 +1,1296 @@
+{
+  "schemaVersion": 1,
+  "kind": "project4-compiler-diagnostic-caller-reservation-followup",
+  "observedRefsAt": "2026-10-04 15:03:30 UTC",
+  "retainedRecordsCompletedAt": "2026-10-04 14:57:49 UTC",
+  "taskRecordRefreshedAt": "2026-10-04 15:05:59 UTC",
+  "source": {
+    "localCommit": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+    "fileObjects": "100644 blob 8e2db13c3259170248c9361b45a3c6862c111e6c\tpackages/compiler/src/diagnostics/codes.js\n100644 blob 2a4a98419d56f2f40f98c37ec7ea1e1c6f16200a\tpackages/compiler/src/diagnostics/roslyn-codes.js\n100644 blob 60ac93e2ae084b544a9b738cf375a026d9dfe5c6\tpackages/compiler/src/semantic/model-scopes.js"
+  },
+  "retainedRaw": {
+    "path": "/dev/shm/p4-validation/full-ci-37210639599-reservation-raw.json",
+    "sha256": "1223e8a494d476eed5e0a250fa429fc4abdb7f01001df90978b6a3ac57d47d22",
+    "claimCount": 98,
+    "lockCount": 13
+  },
+  "currentRefReads": [
+    {
+      "kind": "claims",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent/",
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "[{\"ref\":\"refs/heads/agent/SF-A00-T01.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T01.4\",\"object\":{\"sha\":\"d659289e3d34951f4cb44f5f0818c08a3648bb6a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d659289e3d34951f4cb44f5f0818c08a3648bb6a\"}},{\"ref\":\"refs/heads/agent/SF-A00-T01.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDEuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T01.5\",\"object\":{\"sha\":\"98f608769923ca20d3bfcb13c0f685ad0a56d8ec\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/98f608769923ca20d3bfcb13c0f685ad0a56d8ec\"}},{\"ref\":\"refs/heads/agent/SF-A00-T02.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDIuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T02.5\",\"object\":{\"sha\":\"488f97958f3c580e941549dcc6abafd3ea938263\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/488f97958f3c580e941549dcc6abafd3ea938263\"}},{\"ref\":\"refs/heads/agent/SF-A00-T05.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.1\",\"object\":{\"sha\":\"2021a5004e46f3ac0824ae8f679725fa499cd266\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2021a5004e46f3ac0824ae8f679725fa499cd266\"}},{\"ref\":\"refs/heads/agent/SF-A00-T05.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.5\",\"object\":{\"sha\":\"03d5edf10750530446a26031760da8af27c7696c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/03d5edf10750530446a26031760da8af27c7696c\"}},{\"ref\":\"refs/heads/agent/SF-A00-T05.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.7\",\"object\":{\"sha\":\"7dc209705258b524873c97bad695e47a2b0a3eea\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7dc209705258b524873c97bad695e47a2b0a3eea\"}},{\"ref\":\"refs/heads/agent/SF-A00-T06.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDYuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T06.3\",\"object\":{\"sha\":\"e5adca87728b82492efa57e81adb31a794205ec2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e5adca87728b82492efa57e81adb31a794205ec2\"}},{\"ref\":\"refs/heads/agent/SF-A00-T09.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.2\",\"object\":{\"sha\":\"3fda2d3b02640332e8ad8aeee864e4b1063a9032\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3fda2d3b02640332e8ad8aeee864e4b1063a9032\"}},{\"ref\":\"refs/heads/agent/SF-A00-T09.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.3\",\"object\":{\"sha\":\"90b232153afde795614096570090a96a2dee6f9c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/90b232153afde795614096570090a96a2dee6f9c\"}},{\"ref\":\"refs/heads/agent/SF-A00-T09.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.6\",\"object\":{\"sha\":\"33a18aa849301e0a9ea740682c6c2af8c2e2da6f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33a18aa849301e0a9ea740682c6c2af8c2e2da6f\"}},{\"ref\":\"refs/heads/agent/SF-A00-T10.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTAuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T10.4\",\"object\":{\"sha\":\"b7f72e7145f93d51ce11c10f814896017118cda6\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b7f72e7145f93d51ce11c10f814896017118cda6\"}},{\"ref\":\"refs/heads/agent/SF-A00-T11.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTEuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T11.2\",\"object\":{\"sha\":\"fe3d1c2e73cadab4b1a48b7c17cbd30d7de035d2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/fe3d1c2e73cadab4b1a48b7c17cbd30d7de035d2\"}},{\"ref\":\"refs/heads/agent/SF-A00-T13\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T13\",\"object\":{\"sha\":\"54016abde0a618eed998130781d09208869c2b37\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/54016abde0a618eed998130781d09208869c2b37\"}},{\"ref\":\"refs/heads/agent/SF-A00-T14\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T14\",\"object\":{\"sha\":\"6cb577d2f33bbae5c0dd19d5427d67e318cb4024\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6cb577d2f33bbae5c0dd19d5427d67e318cb4024\"}},{\"ref\":\"refs/heads/agent/SF-A00-T15\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T15\",\"object\":{\"sha\":\"b53a8c2828d779e111e27079947e186846569f2d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b53a8c2828d779e111e27079947e186846569f2d\"}},{\"ref\":\"refs/heads/agent/SF-A00-T17\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T17\",\"object\":{\"sha\":\"5df5cdc1001593bd568bf90940acb0b10e5589b3\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5df5cdc1001593bd568bf90940acb0b10e5589b3\"}},{\"ref\":\"refs/heads/agent/SF-A00-T19\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T19\",\"object\":{\"sha\":\"3cc55cee22b5cf7234a0818a00da9f2bf32a26df\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3cc55cee22b5cf7234a0818a00da9f2bf32a26df\"}},{\"ref\":\"refs/heads/agent/SF-A00-T22\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMjI\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T22\",\"object\":{\"sha\":\"3a3ddbc30ca22d02de6dea621c260d139dfe3a95\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3a3ddbc30ca22d02de6dea621c260d139dfe3a95\"}},{\"ref\":\"refs/heads/agent/SF-A00-T23\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMjM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T23\",\"object\":{\"sha\":\"a3db2d68f3c129049e79520583c51c4e4ad0cbdd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a3db2d68f3c129049e79520583c51c4e4ad0cbdd\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.1\",\"object\":{\"sha\":\"220b8cbb4a70244678fa90def0179c6bf7216472\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/220b8cbb4a70244678fa90def0179c6bf7216472\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.2\",\"object\":{\"sha\":\"7146c14c33a26380da655f02e7ceddf5d9318795\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7146c14c33a26380da655f02e7ceddf5d9318795\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.3\",\"object\":{\"sha\":\"f19e226a92b6c28ca7379cfc297fe34cd203a1bb\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f19e226a92b6c28ca7379cfc297fe34cd203a1bb\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.4\",\"object\":{\"sha\":\"b06dbdb5fda4fbb1b95e7e8921d0c90271922e88\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b06dbdb5fda4fbb1b95e7e8921d0c90271922e88\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.5\",\"object\":{\"sha\":\"44ae1e9d5a1618b17fb393cd24f47faf02bbdc50\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/44ae1e9d5a1618b17fb393cd24f47faf02bbdc50\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.6\",\"object\":{\"sha\":\"e6b333645dda895e543fbb96f8005db19cbff2c7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e6b333645dda895e543fbb96f8005db19cbff2c7\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.7\",\"object\":{\"sha\":\"5cb7375241bd7363f7d5346eada86d7452b1d90f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5cb7375241bd7363f7d5346eada86d7452b1d90f\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.8\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuOA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.8\",\"object\":{\"sha\":\"2cac49fb1f13789047ab038d4f7378733bc8f985\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2cac49fb1f13789047ab038d4f7378733bc8f985\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.9\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuOQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.9\",\"object\":{\"sha\":\"05bcf5a6b39617e26dbe76037685fbd9ef32a65f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/05bcf5a6b39617e26dbe76037685fbd9ef32a65f\"}},{\"ref\":\"refs/heads/agent/SF-A07-T13\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T13\",\"object\":{\"sha\":\"1a867412654ac2aafd0f4495440cefe88307bb55\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1a867412654ac2aafd0f4495440cefe88307bb55\"}},{\"ref\":\"refs/heads/agent/SF-A07-T14\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T14\",\"object\":{\"sha\":\"768daf258c1d9edc3ae449b3533ed1e6029e196e\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/768daf258c1d9edc3ae449b3533ed1e6029e196e\"}},{\"ref\":\"refs/heads/agent/SF-A07-T15\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T15\",\"object\":{\"sha\":\"0c7cfc6912da5233e42de21cb405dd09414c1649\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0c7cfc6912da5233e42de21cb405dd09414c1649\"}},{\"ref\":\"refs/heads/agent/SF-A07-T16\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T16\",\"object\":{\"sha\":\"660aebfe01e43b2b27d495a45d2f823d6e6aebc7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/660aebfe01e43b2b27d495a45d2f823d6e6aebc7\"}},{\"ref\":\"refs/heads/agent/SF-A07-T17\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T17\",\"object\":{\"sha\":\"a8fbc5e1f3569960d3024b246748a2d8605baf14\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a8fbc5e1f3569960d3024b246748a2d8605baf14\"}},{\"ref\":\"refs/heads/agent/SF-A07-T18\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T18\",\"object\":{\"sha\":\"778beff88e7669fe28490e64f5ffb0da9d250ba3\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/778beff88e7669fe28490e64f5ffb0da9d250ba3\"}},{\"ref\":\"refs/heads/agent/SF-A07-T19\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T19\",\"object\":{\"sha\":\"1c4bffdec4d296254962931e4d809c07746b0251\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1c4bffdec4d296254962931e4d809c07746b0251\"}},{\"ref\":\"refs/heads/agent/SF-A07-T20\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMjA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T20\",\"object\":{\"sha\":\"3f1b02f125fa67df672399ee838f642bf318cb12\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f1b02f125fa67df672399ee838f642bf318cb12\"}},{\"ref\":\"refs/heads/agent/SF-A08-T01.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwOC1UMDEuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A08-T01.1\",\"object\":{\"sha\":\"0bd6ac5c9c047973ad55e00063a1fa4f2070902f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0bd6ac5c9c047973ad55e00063a1fa4f2070902f\"}},{\"ref\":\"refs/heads/agent/SF-A14-T06.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUExNC1UMDYuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A14-T06.6\",\"object\":{\"sha\":\"b324076d4213b52dc07ae8f08fe55380aa644e83\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b324076d4213b52dc07ae8f08fe55380aa644e83\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.1\",\"object\":{\"sha\":\"d538f55223dd3fcfcd234e170af8a166da81ad86\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d538f55223dd3fcfcd234e170af8a166da81ad86\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.10\",\"node_id\":\"REF_kwDOU59Ms75yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMTA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.10\",\"object\":{\"sha\":\"6d72d5eb22520825dcac9aba2a3c866a8fbb1220\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6d72d5eb22520825dcac9aba2a3c866a8fbb1220\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.11\",\"node_id\":\"REF_kwDOU59Ms75yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMTE\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.11\",\"object\":{\"sha\":\"5d80799de4b75384cb70438a4cceab5a0552ca19\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5d80799de4b75384cb70438a4cceab5a0552ca19\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.2\",\"object\":{\"sha\":\"5391229f761833e5baa3f0d55287ba0aab40f152\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5391229f761833e5baa3f0d55287ba0aab40f152\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.3\",\"object\":{\"sha\":\"ad0f37d5e870499c7c01cc505184c1c760964df5\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ad0f37d5e870499c7c01cc505184c1c760964df5\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.4\",\"object\":{\"sha\":\"8b4d0754c44221e22766fa58d9b9c590740932a6\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8b4d0754c44221e22766fa58d9b9c590740932a6\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.5\",\"object\":{\"sha\":\"39eac39410e86e0210d6cd2201566e550829cb80\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/39eac39410e86e0210d6cd2201566e550829cb80\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.6\",\"object\":{\"sha\":\"8201f119c7c7cad3b5bbb1ca369a6240ae34e04f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8201f119c7c7cad3b5bbb1ca369a6240ae34e04f\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.7\",\"object\":{\"sha\":\"ec8967f64a26ec492f7a3aa5e605c5a7a83e590e\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ec8967f64a26ec492f7a3aa5e605c5a7a83e590e\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.8\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuOA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.8\",\"object\":{\"sha\":\"8b1f19b20e0710508d1a8c94ad4edb30df63a50b\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8b1f19b20e0710508d1a8c94ad4edb30df63a50b\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.9\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuOQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.9\",\"object\":{\"sha\":\"42210ed545ba7d6f0fa9cad94b5c6c9852fba4d2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/42210ed545ba7d6f0fa9cad94b5c6c9852fba4d2\"}},{\"ref\":\"refs/heads/agent/SF-A29-B03\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1CMDM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-B03\",\"object\":{\"sha\":\"a3133d2d5b841f2d9b4ae44fc535c2cb9ea27f8d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a3133d2d5b841f2d9b4ae44fc535c2cb9ea27f8d\"}},{\"ref\":\"refs/heads/agent/SF-A29-B06\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1CMDY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-B06\",\"object\":{\"sha\":\"c1562017c5c11fcb6ad018f5ce38445d2606e6f8\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c1562017c5c11fcb6ad018f5ce38445d2606e6f8\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.4\",\"object\":{\"sha\":\"a4d8a3fc1592c76401ec324b486556dde70e7dab\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a4d8a3fc1592c76401ec324b486556dde70e7dab\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.5\",\"object\":{\"sha\":\"76248b4c6a51cef9f748793b96f496fa5497be9a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/76248b4c6a51cef9f748793b96f496fa5497be9a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.6\",\"object\":{\"sha\":\"4b1ac6bde344e62f454b6c81d1e845b0c4dcc1e7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b1ac6bde344e62f454b6c81d1e845b0c4dcc1e7\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.7\",\"object\":{\"sha\":\"e2e66a7fdfc845c7b0a0423dfa5becb8f87d749d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e2e66a7fdfc845c7b0a0423dfa5becb8f87d749d\"}},{\"ref\":\"refs/heads/agent/SF-A29-T03.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDMuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T03.1\",\"object\":{\"sha\":\"da1a4d9237c7603ea6b288bd6685b9c1fc55d093\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/da1a4d9237c7603ea6b288bd6685b9c1fc55d093\"}},{\"ref\":\"refs/heads/agent/SF-A29-T03.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDMuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T03.3\",\"object\":{\"sha\":\"0e530a760829445e7cdab38f2938661d3ca66c42\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0e530a760829445e7cdab38f2938661d3ca66c42\"}},{\"ref\":\"refs/heads/agent/SF-A29-T04.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.3\",\"object\":{\"sha\":\"1e0ef62da2ac84aacc12247dabd0ad86bedf9330\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1e0ef62da2ac84aacc12247dabd0ad86bedf9330\"}},{\"ref\":\"refs/heads/agent/SF-A29-T04.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.5\",\"object\":{\"sha\":\"d625081326f848719c6acd54e11f3c64ffcaaa46\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d625081326f848719c6acd54e11f3c64ffcaaa46\"}},{\"ref\":\"refs/heads/agent/SF-A29-T04.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.6\",\"object\":{\"sha\":\"b15275c03f02ae776f7cd862a407457028f53f3a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b15275c03f02ae776f7cd862a407457028f53f3a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T08.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDguMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T08.1\",\"object\":{\"sha\":\"c879eb54ee91d02a5ac2762a0e461eb0dc65429d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c879eb54ee91d02a5ac2762a0e461eb0dc65429d\"}},{\"ref\":\"refs/heads/agent/SF-A29-T08.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDguNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T08.5\",\"object\":{\"sha\":\"acf2b460f291654432de4ed590db68e697244418\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/acf2b460f291654432de4ed590db68e697244418\"}},{\"ref\":\"refs/heads/agent/SF-A29-T11.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTEuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T11.3\",\"object\":{\"sha\":\"ee473657832698e4ede5167f9718afe2122eec84\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ee473657832698e4ede5167f9718afe2122eec84\"}},{\"ref\":\"refs/heads/agent/SF-A29-T11.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T11.4\",\"object\":{\"sha\":\"995afa8533ff959175859ccf3021969fb6dd1000\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/995afa8533ff959175859ccf3021969fb6dd1000\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.1\",\"object\":{\"sha\":\"402308d2251f8342337046c3198ba7d241248fe4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/402308d2251f8342337046c3198ba7d241248fe4\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.2\",\"object\":{\"sha\":\"530777e6633b4515a8dc6ae244c082bb4d2e22b4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/530777e6633b4515a8dc6ae244c082bb4d2e22b4\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.3\",\"object\":{\"sha\":\"b9ad55f61d94bb337849d59d01b5d01f12becbe9\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b9ad55f61d94bb337849d59d01b5d01f12becbe9\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.4\",\"object\":{\"sha\":\"ef580de6f49e0f34ba68746838ec0864bbe3dd7f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ef580de6f49e0f34ba68746838ec0864bbe3dd7f\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.5\",\"object\":{\"sha\":\"7219ba4d1bf3264416af1ccbd420186d9b63f54c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7219ba4d1bf3264416af1ccbd420186d9b63f54c\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.6\",\"object\":{\"sha\":\"3f1a8e964730002318c5e177a894df36f530c02a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f1a8e964730002318c5e177a894df36f530c02a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T13\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T13\",\"object\":{\"sha\":\"443df094998924f3aa6c4e6eef759c577d932d61\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/443df094998924f3aa6c4e6eef759c577d932d61\"}},{\"ref\":\"refs/heads/agent/SF-A29-T14\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T14\",\"object\":{\"sha\":\"33cfc13ae896ca086346cb70f9e9bb86a39278e2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33cfc13ae896ca086346cb70f9e9bb86a39278e2\"}},{\"ref\":\"refs/heads/agent/SF-A29-T15\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T15\",\"object\":{\"sha\":\"06177e5b2ca2316924ae58b3e410a741b4293d98\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06177e5b2ca2316924ae58b3e410a741b4293d98\"}},{\"ref\":\"refs/heads/agent/SF-A29-T16\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T16\",\"object\":{\"sha\":\"02cc5be4c5cd0b7dc34f959c7e5e42a1b5249354\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/02cc5be4c5cd0b7dc34f959c7e5e42a1b5249354\"}},{\"ref\":\"refs/heads/agent/SF-A29-T17\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T17\",\"object\":{\"sha\":\"5b91d1d3a6903bc37e43b04f322f730ac329f3bd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5b91d1d3a6903bc37e43b04f322f730ac329f3bd\"}},{\"ref\":\"refs/heads/agent/SF-A29-T18\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T18\",\"object\":{\"sha\":\"0d640093a7ff71debf52113415ee75441cf4bced\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0d640093a7ff71debf52113415ee75441cf4bced\"}},{\"ref\":\"refs/heads/agent/SF-A29-T19\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T19\",\"object\":{\"sha\":\"7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\"}},{\"ref\":\"refs/heads/agent/SF-A29-T20\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T20\",\"object\":{\"sha\":\"66b5ccd62f7a68c96d8365a39a3dc7de7e85218a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/66b5ccd62f7a68c96d8365a39a3dc7de7e85218a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T21\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjE\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T21\",\"object\":{\"sha\":\"7e3f42503c478def62a0f6922db559dbebd7b5c5\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7e3f42503c478def62a0f6922db559dbebd7b5c5\"}},{\"ref\":\"refs/heads/agent/SF-A29-T22\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjI\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T22\",\"object\":{\"sha\":\"15f17092955fa178f49bed5c3e320b9718c64298\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/15f17092955fa178f49bed5c3e320b9718c64298\"}},{\"ref\":\"refs/heads/agent/SF-A29-T23\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T23\",\"object\":{\"sha\":\"cd77c82def2a0316d00358f81ce6f02a7ab1a50f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/cd77c82def2a0316d00358f81ce6f02a7ab1a50f\"}},{\"ref\":\"refs/heads/agent/SF-A29-T24\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T24\",\"object\":{\"sha\":\"b615889360c83fc4fc3f235dbe7ea2e4cdded904\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b615889360c83fc4fc3f235dbe7ea2e4cdded904\"}},{\"ref\":\"refs/heads/agent/SF-A29-T25\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T25\",\"object\":{\"sha\":\"689c9f51284f5f3fd17eee63ba39c927baf513b6\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/689c9f51284f5f3fd17eee63ba39c927baf513b6\"}},{\"ref\":\"refs/heads/agent/SF-A29-T26\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T26\",\"object\":{\"sha\":\"f621e4c1cac39f87ee2413165aaaf04537376adc\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f621e4c1cac39f87ee2413165aaaf04537376adc\"}},{\"ref\":\"refs/heads/agent/SF-A29-T27\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T27\",\"object\":{\"sha\":\"9253ae047ecdabe70fc8c0a05f244261ee628277\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9253ae047ecdabe70fc8c0a05f244261ee628277\"}},{\"ref\":\"refs/heads/agent/SF-A29-T28\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T28\",\"object\":{\"sha\":\"41d33533dfe55103abe2ee6e433cf33bd5b77f47\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/41d33533dfe55103abe2ee6e433cf33bd5b77f47\"}},{\"ref\":\"refs/heads/agent/SF-A29-T29\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T29\",\"object\":{\"sha\":\"8cfc1d40833b35ef6634748d26f248303dee2ccd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8cfc1d40833b35ef6634748d26f248303dee2ccd\"}},{\"ref\":\"refs/heads/agent/SF-A29-T30\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T30\",\"object\":{\"sha\":\"afe50e2e845e70c39384c6dc945ecf8240f32b5d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/afe50e2e845e70c39384c6dc945ecf8240f32b5d\"}},{\"ref\":\"refs/heads/agent/SF-A29-T31\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzE\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T31\",\"object\":{\"sha\":\"4b9053489ba25933d7f8a372a2466efc811fbbd0\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b9053489ba25933d7f8a372a2466efc811fbbd0\"}},{\"ref\":\"refs/heads/agent/SF-A29-T32\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzI\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T32\",\"object\":{\"sha\":\"3029445d58c9f178cae6a18241386ee98e07213b\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3029445d58c9f178cae6a18241386ee98e07213b\"}},{\"ref\":\"refs/heads/agent/SF-A29-T33\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T33\",\"object\":{\"sha\":\"8ad82b7517a65cf330491abb1c90cf2659ee41ea\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8ad82b7517a65cf330491abb1c90cf2659ee41ea\"}},{\"ref\":\"refs/heads/agent/SF-A29-T34\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T34\",\"object\":{\"sha\":\"c0f19b064279a38845a1d82717d404eb9f01011a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c0f19b064279a38845a1d82717d404eb9f01011a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T35\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T35\",\"object\":{\"sha\":\"a734d6dde3a4536596f780e5e8b1d3eb7aa142e4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a734d6dde3a4536596f780e5e8b1d3eb7aa142e4\"}},{\"ref\":\"refs/heads/agent/SF-A29-T36\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T36\",\"object\":{\"sha\":\"ebe828f5bc5bdb6b1f2cc411c2c671c038ed439e\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ebe828f5bc5bdb6b1f2cc411c2c671c038ed439e\"}},{\"ref\":\"refs/heads/agent/SF-A29-T37\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T37\",\"object\":{\"sha\":\"5731020070308a1022a7bc14cbdbe4a930a373e1\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5731020070308a1022a7bc14cbdbe4a930a373e1\"}},{\"ref\":\"refs/heads/agent/SF-A29-T38\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T38\",\"object\":{\"sha\":\"1ed40b3331bd655c4fcb4409626b7f843445cd84\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1ed40b3331bd655c4fcb4409626b7f843445cd84\"}},{\"ref\":\"refs/heads/agent/SF-R015-T01\",\"node_id\":\"REF_kwDOU59Ms7xyZWZzL2hlYWRzL2FnZW50L1NGLVIwMTUtVDAx\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-R015-T01\",\"object\":{\"sha\":\"de96725a86af429a34cd2173faa8924c70ff3925\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/de96725a86af429a34cd2173faa8924c70ff3925\"}},{\"ref\":\"refs/heads/agent/SF-R015-T04\",\"node_id\":\"REF_kwDOU59Ms7xyZWZzL2hlYWRzL2FnZW50L1NGLVIwMTUtVDA0\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-R015-T04\",\"object\":{\"sha\":\"9f405ef9aaeef882e80a9d9332932bd887b2db04\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9f405ef9aaeef882e80a9d9332932bd887b2db04\"}}]",
+          "title": "agent",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent/",
+          "display_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent/",
+          "display_title": "agent",
+          "structuredContent": {
+            "title": "agent",
+            "content": "[{\"ref\":\"refs/heads/agent/SF-A00-T01.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T01.4\",\"object\":{\"sha\":\"d659289e3d34951f4cb44f5f0818c08a3648bb6a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d659289e3d34951f4cb44f5f0818c08a3648bb6a\"}},{\"ref\":\"refs/heads/agent/SF-A00-T01.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDEuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T01.5\",\"object\":{\"sha\":\"98f608769923ca20d3bfcb13c0f685ad0a56d8ec\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/98f608769923ca20d3bfcb13c0f685ad0a56d8ec\"}},{\"ref\":\"refs/heads/agent/SF-A00-T02.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDIuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T02.5\",\"object\":{\"sha\":\"488f97958f3c580e941549dcc6abafd3ea938263\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/488f97958f3c580e941549dcc6abafd3ea938263\"}},{\"ref\":\"refs/heads/agent/SF-A00-T05.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.1\",\"object\":{\"sha\":\"2021a5004e46f3ac0824ae8f679725fa499cd266\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2021a5004e46f3ac0824ae8f679725fa499cd266\"}},{\"ref\":\"refs/heads/agent/SF-A00-T05.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.5\",\"object\":{\"sha\":\"03d5edf10750530446a26031760da8af27c7696c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/03d5edf10750530446a26031760da8af27c7696c\"}},{\"ref\":\"refs/heads/agent/SF-A00-T05.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.7\",\"object\":{\"sha\":\"7dc209705258b524873c97bad695e47a2b0a3eea\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7dc209705258b524873c97bad695e47a2b0a3eea\"}},{\"ref\":\"refs/heads/agent/SF-A00-T06.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDYuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T06.3\",\"object\":{\"sha\":\"e5adca87728b82492efa57e81adb31a794205ec2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e5adca87728b82492efa57e81adb31a794205ec2\"}},{\"ref\":\"refs/heads/agent/SF-A00-T09.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.2\",\"object\":{\"sha\":\"3fda2d3b02640332e8ad8aeee864e4b1063a9032\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3fda2d3b02640332e8ad8aeee864e4b1063a9032\"}},{\"ref\":\"refs/heads/agent/SF-A00-T09.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.3\",\"object\":{\"sha\":\"90b232153afde795614096570090a96a2dee6f9c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/90b232153afde795614096570090a96a2dee6f9c\"}},{\"ref\":\"refs/heads/agent/SF-A00-T09.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.6\",\"object\":{\"sha\":\"33a18aa849301e0a9ea740682c6c2af8c2e2da6f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33a18aa849301e0a9ea740682c6c2af8c2e2da6f\"}},{\"ref\":\"refs/heads/agent/SF-A00-T10.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTAuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T10.4\",\"object\":{\"sha\":\"b7f72e7145f93d51ce11c10f814896017118cda6\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b7f72e7145f93d51ce11c10f814896017118cda6\"}},{\"ref\":\"refs/heads/agent/SF-A00-T11.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTEuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T11.2\",\"object\":{\"sha\":\"fe3d1c2e73cadab4b1a48b7c17cbd30d7de035d2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/fe3d1c2e73cadab4b1a48b7c17cbd30d7de035d2\"}},{\"ref\":\"refs/heads/agent/SF-A00-T13\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T13\",\"object\":{\"sha\":\"54016abde0a618eed998130781d09208869c2b37\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/54016abde0a618eed998130781d09208869c2b37\"}},{\"ref\":\"refs/heads/agent/SF-A00-T14\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T14\",\"object\":{\"sha\":\"6cb577d2f33bbae5c0dd19d5427d67e318cb4024\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6cb577d2f33bbae5c0dd19d5427d67e318cb4024\"}},{\"ref\":\"refs/heads/agent/SF-A00-T15\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T15\",\"object\":{\"sha\":\"b53a8c2828d779e111e27079947e186846569f2d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b53a8c2828d779e111e27079947e186846569f2d\"}},{\"ref\":\"refs/heads/agent/SF-A00-T17\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T17\",\"object\":{\"sha\":\"5df5cdc1001593bd568bf90940acb0b10e5589b3\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5df5cdc1001593bd568bf90940acb0b10e5589b3\"}},{\"ref\":\"refs/heads/agent/SF-A00-T19\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T19\",\"object\":{\"sha\":\"3cc55cee22b5cf7234a0818a00da9f2bf32a26df\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3cc55cee22b5cf7234a0818a00da9f2bf32a26df\"}},{\"ref\":\"refs/heads/agent/SF-A00-T22\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMjI\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T22\",\"object\":{\"sha\":\"3a3ddbc30ca22d02de6dea621c260d139dfe3a95\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3a3ddbc30ca22d02de6dea621c260d139dfe3a95\"}},{\"ref\":\"refs/heads/agent/SF-A00-T23\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMjM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T23\",\"object\":{\"sha\":\"a3db2d68f3c129049e79520583c51c4e4ad0cbdd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a3db2d68f3c129049e79520583c51c4e4ad0cbdd\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.1\",\"object\":{\"sha\":\"220b8cbb4a70244678fa90def0179c6bf7216472\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/220b8cbb4a70244678fa90def0179c6bf7216472\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.2\",\"object\":{\"sha\":\"7146c14c33a26380da655f02e7ceddf5d9318795\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7146c14c33a26380da655f02e7ceddf5d9318795\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.3\",\"object\":{\"sha\":\"f19e226a92b6c28ca7379cfc297fe34cd203a1bb\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f19e226a92b6c28ca7379cfc297fe34cd203a1bb\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.4\",\"object\":{\"sha\":\"b06dbdb5fda4fbb1b95e7e8921d0c90271922e88\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b06dbdb5fda4fbb1b95e7e8921d0c90271922e88\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.5\",\"object\":{\"sha\":\"44ae1e9d5a1618b17fb393cd24f47faf02bbdc50\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/44ae1e9d5a1618b17fb393cd24f47faf02bbdc50\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.6\",\"object\":{\"sha\":\"e6b333645dda895e543fbb96f8005db19cbff2c7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e6b333645dda895e543fbb96f8005db19cbff2c7\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.7\",\"object\":{\"sha\":\"5cb7375241bd7363f7d5346eada86d7452b1d90f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5cb7375241bd7363f7d5346eada86d7452b1d90f\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.8\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuOA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.8\",\"object\":{\"sha\":\"2cac49fb1f13789047ab038d4f7378733bc8f985\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2cac49fb1f13789047ab038d4f7378733bc8f985\"}},{\"ref\":\"refs/heads/agent/SF-A03-T01.9\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuOQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.9\",\"object\":{\"sha\":\"05bcf5a6b39617e26dbe76037685fbd9ef32a65f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/05bcf5a6b39617e26dbe76037685fbd9ef32a65f\"}},{\"ref\":\"refs/heads/agent/SF-A07-T13\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T13\",\"object\":{\"sha\":\"1a867412654ac2aafd0f4495440cefe88307bb55\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1a867412654ac2aafd0f4495440cefe88307bb55\"}},{\"ref\":\"refs/heads/agent/SF-A07-T14\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T14\",\"object\":{\"sha\":\"768daf258c1d9edc3ae449b3533ed1e6029e196e\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/768daf258c1d9edc3ae449b3533ed1e6029e196e\"}},{\"ref\":\"refs/heads/agent/SF-A07-T15\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T15\",\"object\":{\"sha\":\"0c7cfc6912da5233e42de21cb405dd09414c1649\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0c7cfc6912da5233e42de21cb405dd09414c1649\"}},{\"ref\":\"refs/heads/agent/SF-A07-T16\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T16\",\"object\":{\"sha\":\"660aebfe01e43b2b27d495a45d2f823d6e6aebc7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/660aebfe01e43b2b27d495a45d2f823d6e6aebc7\"}},{\"ref\":\"refs/heads/agent/SF-A07-T17\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T17\",\"object\":{\"sha\":\"a8fbc5e1f3569960d3024b246748a2d8605baf14\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a8fbc5e1f3569960d3024b246748a2d8605baf14\"}},{\"ref\":\"refs/heads/agent/SF-A07-T18\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T18\",\"object\":{\"sha\":\"778beff88e7669fe28490e64f5ffb0da9d250ba3\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/778beff88e7669fe28490e64f5ffb0da9d250ba3\"}},{\"ref\":\"refs/heads/agent/SF-A07-T19\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T19\",\"object\":{\"sha\":\"1c4bffdec4d296254962931e4d809c07746b0251\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1c4bffdec4d296254962931e4d809c07746b0251\"}},{\"ref\":\"refs/heads/agent/SF-A07-T20\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMjA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T20\",\"object\":{\"sha\":\"3f1b02f125fa67df672399ee838f642bf318cb12\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f1b02f125fa67df672399ee838f642bf318cb12\"}},{\"ref\":\"refs/heads/agent/SF-A08-T01.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwOC1UMDEuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A08-T01.1\",\"object\":{\"sha\":\"0bd6ac5c9c047973ad55e00063a1fa4f2070902f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0bd6ac5c9c047973ad55e00063a1fa4f2070902f\"}},{\"ref\":\"refs/heads/agent/SF-A14-T06.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUExNC1UMDYuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A14-T06.6\",\"object\":{\"sha\":\"b324076d4213b52dc07ae8f08fe55380aa644e83\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b324076d4213b52dc07ae8f08fe55380aa644e83\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.1\",\"object\":{\"sha\":\"d538f55223dd3fcfcd234e170af8a166da81ad86\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d538f55223dd3fcfcd234e170af8a166da81ad86\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.10\",\"node_id\":\"REF_kwDOU59Ms75yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMTA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.10\",\"object\":{\"sha\":\"6d72d5eb22520825dcac9aba2a3c866a8fbb1220\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6d72d5eb22520825dcac9aba2a3c866a8fbb1220\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.11\",\"node_id\":\"REF_kwDOU59Ms75yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMTE\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.11\",\"object\":{\"sha\":\"5d80799de4b75384cb70438a4cceab5a0552ca19\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5d80799de4b75384cb70438a4cceab5a0552ca19\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.2\",\"object\":{\"sha\":\"5391229f761833e5baa3f0d55287ba0aab40f152\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5391229f761833e5baa3f0d55287ba0aab40f152\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.3\",\"object\":{\"sha\":\"ad0f37d5e870499c7c01cc505184c1c760964df5\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ad0f37d5e870499c7c01cc505184c1c760964df5\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.4\",\"object\":{\"sha\":\"8b4d0754c44221e22766fa58d9b9c590740932a6\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8b4d0754c44221e22766fa58d9b9c590740932a6\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.5\",\"object\":{\"sha\":\"39eac39410e86e0210d6cd2201566e550829cb80\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/39eac39410e86e0210d6cd2201566e550829cb80\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.6\",\"object\":{\"sha\":\"8201f119c7c7cad3b5bbb1ca369a6240ae34e04f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8201f119c7c7cad3b5bbb1ca369a6240ae34e04f\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.7\",\"object\":{\"sha\":\"ec8967f64a26ec492f7a3aa5e605c5a7a83e590e\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ec8967f64a26ec492f7a3aa5e605c5a7a83e590e\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.8\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuOA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.8\",\"object\":{\"sha\":\"8b1f19b20e0710508d1a8c94ad4edb30df63a50b\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8b1f19b20e0710508d1a8c94ad4edb30df63a50b\"}},{\"ref\":\"refs/heads/agent/SF-A25-T01.9\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuOQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.9\",\"object\":{\"sha\":\"42210ed545ba7d6f0fa9cad94b5c6c9852fba4d2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/42210ed545ba7d6f0fa9cad94b5c6c9852fba4d2\"}},{\"ref\":\"refs/heads/agent/SF-A29-B03\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1CMDM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-B03\",\"object\":{\"sha\":\"a3133d2d5b841f2d9b4ae44fc535c2cb9ea27f8d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a3133d2d5b841f2d9b4ae44fc535c2cb9ea27f8d\"}},{\"ref\":\"refs/heads/agent/SF-A29-B06\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1CMDY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-B06\",\"object\":{\"sha\":\"c1562017c5c11fcb6ad018f5ce38445d2606e6f8\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c1562017c5c11fcb6ad018f5ce38445d2606e6f8\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.4\",\"object\":{\"sha\":\"a4d8a3fc1592c76401ec324b486556dde70e7dab\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a4d8a3fc1592c76401ec324b486556dde70e7dab\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.5\",\"object\":{\"sha\":\"76248b4c6a51cef9f748793b96f496fa5497be9a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/76248b4c6a51cef9f748793b96f496fa5497be9a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.6\",\"object\":{\"sha\":\"4b1ac6bde344e62f454b6c81d1e845b0c4dcc1e7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b1ac6bde344e62f454b6c81d1e845b0c4dcc1e7\"}},{\"ref\":\"refs/heads/agent/SF-A29-T02.7\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.7\",\"object\":{\"sha\":\"e2e66a7fdfc845c7b0a0423dfa5becb8f87d749d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e2e66a7fdfc845c7b0a0423dfa5becb8f87d749d\"}},{\"ref\":\"refs/heads/agent/SF-A29-T03.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDMuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T03.1\",\"object\":{\"sha\":\"da1a4d9237c7603ea6b288bd6685b9c1fc55d093\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/da1a4d9237c7603ea6b288bd6685b9c1fc55d093\"}},{\"ref\":\"refs/heads/agent/SF-A29-T03.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDMuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T03.3\",\"object\":{\"sha\":\"0e530a760829445e7cdab38f2938661d3ca66c42\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0e530a760829445e7cdab38f2938661d3ca66c42\"}},{\"ref\":\"refs/heads/agent/SF-A29-T04.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.3\",\"object\":{\"sha\":\"1e0ef62da2ac84aacc12247dabd0ad86bedf9330\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1e0ef62da2ac84aacc12247dabd0ad86bedf9330\"}},{\"ref\":\"refs/heads/agent/SF-A29-T04.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.5\",\"object\":{\"sha\":\"d625081326f848719c6acd54e11f3c64ffcaaa46\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d625081326f848719c6acd54e11f3c64ffcaaa46\"}},{\"ref\":\"refs/heads/agent/SF-A29-T04.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.6\",\"object\":{\"sha\":\"b15275c03f02ae776f7cd862a407457028f53f3a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b15275c03f02ae776f7cd862a407457028f53f3a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T08.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDguMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T08.1\",\"object\":{\"sha\":\"c879eb54ee91d02a5ac2762a0e461eb0dc65429d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c879eb54ee91d02a5ac2762a0e461eb0dc65429d\"}},{\"ref\":\"refs/heads/agent/SF-A29-T08.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDguNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T08.5\",\"object\":{\"sha\":\"acf2b460f291654432de4ed590db68e697244418\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/acf2b460f291654432de4ed590db68e697244418\"}},{\"ref\":\"refs/heads/agent/SF-A29-T11.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTEuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T11.3\",\"object\":{\"sha\":\"ee473657832698e4ede5167f9718afe2122eec84\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ee473657832698e4ede5167f9718afe2122eec84\"}},{\"ref\":\"refs/heads/agent/SF-A29-T11.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTEuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T11.4\",\"object\":{\"sha\":\"995afa8533ff959175859ccf3021969fb6dd1000\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/995afa8533ff959175859ccf3021969fb6dd1000\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.1\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.1\",\"object\":{\"sha\":\"402308d2251f8342337046c3198ba7d241248fe4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/402308d2251f8342337046c3198ba7d241248fe4\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.2\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.2\",\"object\":{\"sha\":\"530777e6633b4515a8dc6ae244c082bb4d2e22b4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/530777e6633b4515a8dc6ae244c082bb4d2e22b4\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.3\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.3\",\"object\":{\"sha\":\"b9ad55f61d94bb337849d59d01b5d01f12becbe9\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b9ad55f61d94bb337849d59d01b5d01f12becbe9\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.4\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.4\",\"object\":{\"sha\":\"ef580de6f49e0f34ba68746838ec0864bbe3dd7f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ef580de6f49e0f34ba68746838ec0864bbe3dd7f\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.5\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.5\",\"object\":{\"sha\":\"7219ba4d1bf3264416af1ccbd420186d9b63f54c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7219ba4d1bf3264416af1ccbd420186d9b63f54c\"}},{\"ref\":\"refs/heads/agent/SF-A29-T12.6\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.6\",\"object\":{\"sha\":\"3f1a8e964730002318c5e177a894df36f530c02a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f1a8e964730002318c5e177a894df36f530c02a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T13\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T13\",\"object\":{\"sha\":\"443df094998924f3aa6c4e6eef759c577d932d61\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/443df094998924f3aa6c4e6eef759c577d932d61\"}},{\"ref\":\"refs/heads/agent/SF-A29-T14\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T14\",\"object\":{\"sha\":\"33cfc13ae896ca086346cb70f9e9bb86a39278e2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33cfc13ae896ca086346cb70f9e9bb86a39278e2\"}},{\"ref\":\"refs/heads/agent/SF-A29-T15\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T15\",\"object\":{\"sha\":\"06177e5b2ca2316924ae58b3e410a741b4293d98\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06177e5b2ca2316924ae58b3e410a741b4293d98\"}},{\"ref\":\"refs/heads/agent/SF-A29-T16\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T16\",\"object\":{\"sha\":\"02cc5be4c5cd0b7dc34f959c7e5e42a1b5249354\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/02cc5be4c5cd0b7dc34f959c7e5e42a1b5249354\"}},{\"ref\":\"refs/heads/agent/SF-A29-T17\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T17\",\"object\":{\"sha\":\"5b91d1d3a6903bc37e43b04f322f730ac329f3bd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5b91d1d3a6903bc37e43b04f322f730ac329f3bd\"}},{\"ref\":\"refs/heads/agent/SF-A29-T18\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T18\",\"object\":{\"sha\":\"0d640093a7ff71debf52113415ee75441cf4bced\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0d640093a7ff71debf52113415ee75441cf4bced\"}},{\"ref\":\"refs/heads/agent/SF-A29-T19\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T19\",\"object\":{\"sha\":\"7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\"}},{\"ref\":\"refs/heads/agent/SF-A29-T20\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T20\",\"object\":{\"sha\":\"66b5ccd62f7a68c96d8365a39a3dc7de7e85218a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/66b5ccd62f7a68c96d8365a39a3dc7de7e85218a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T21\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjE\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T21\",\"object\":{\"sha\":\"7e3f42503c478def62a0f6922db559dbebd7b5c5\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7e3f42503c478def62a0f6922db559dbebd7b5c5\"}},{\"ref\":\"refs/heads/agent/SF-A29-T22\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjI\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T22\",\"object\":{\"sha\":\"15f17092955fa178f49bed5c3e320b9718c64298\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/15f17092955fa178f49bed5c3e320b9718c64298\"}},{\"ref\":\"refs/heads/agent/SF-A29-T23\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T23\",\"object\":{\"sha\":\"cd77c82def2a0316d00358f81ce6f02a7ab1a50f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/cd77c82def2a0316d00358f81ce6f02a7ab1a50f\"}},{\"ref\":\"refs/heads/agent/SF-A29-T24\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T24\",\"object\":{\"sha\":\"b615889360c83fc4fc3f235dbe7ea2e4cdded904\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b615889360c83fc4fc3f235dbe7ea2e4cdded904\"}},{\"ref\":\"refs/heads/agent/SF-A29-T25\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T25\",\"object\":{\"sha\":\"689c9f51284f5f3fd17eee63ba39c927baf513b6\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/689c9f51284f5f3fd17eee63ba39c927baf513b6\"}},{\"ref\":\"refs/heads/agent/SF-A29-T26\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T26\",\"object\":{\"sha\":\"f621e4c1cac39f87ee2413165aaaf04537376adc\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f621e4c1cac39f87ee2413165aaaf04537376adc\"}},{\"ref\":\"refs/heads/agent/SF-A29-T27\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T27\",\"object\":{\"sha\":\"9253ae047ecdabe70fc8c0a05f244261ee628277\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9253ae047ecdabe70fc8c0a05f244261ee628277\"}},{\"ref\":\"refs/heads/agent/SF-A29-T28\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T28\",\"object\":{\"sha\":\"41d33533dfe55103abe2ee6e433cf33bd5b77f47\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/41d33533dfe55103abe2ee6e433cf33bd5b77f47\"}},{\"ref\":\"refs/heads/agent/SF-A29-T29\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjk\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T29\",\"object\":{\"sha\":\"8cfc1d40833b35ef6634748d26f248303dee2ccd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8cfc1d40833b35ef6634748d26f248303dee2ccd\"}},{\"ref\":\"refs/heads/agent/SF-A29-T30\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T30\",\"object\":{\"sha\":\"afe50e2e845e70c39384c6dc945ecf8240f32b5d\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/afe50e2e845e70c39384c6dc945ecf8240f32b5d\"}},{\"ref\":\"refs/heads/agent/SF-A29-T31\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzE\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T31\",\"object\":{\"sha\":\"4b9053489ba25933d7f8a372a2466efc811fbbd0\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b9053489ba25933d7f8a372a2466efc811fbbd0\"}},{\"ref\":\"refs/heads/agent/SF-A29-T32\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzI\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T32\",\"object\":{\"sha\":\"3029445d58c9f178cae6a18241386ee98e07213b\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3029445d58c9f178cae6a18241386ee98e07213b\"}},{\"ref\":\"refs/heads/agent/SF-A29-T33\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzM\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T33\",\"object\":{\"sha\":\"8ad82b7517a65cf330491abb1c90cf2659ee41ea\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8ad82b7517a65cf330491abb1c90cf2659ee41ea\"}},{\"ref\":\"refs/heads/agent/SF-A29-T34\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T34\",\"object\":{\"sha\":\"c0f19b064279a38845a1d82717d404eb9f01011a\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c0f19b064279a38845a1d82717d404eb9f01011a\"}},{\"ref\":\"refs/heads/agent/SF-A29-T35\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzU\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T35\",\"object\":{\"sha\":\"a734d6dde3a4536596f780e5e8b1d3eb7aa142e4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a734d6dde3a4536596f780e5e8b1d3eb7aa142e4\"}},{\"ref\":\"refs/heads/agent/SF-A29-T36\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T36\",\"object\":{\"sha\":\"ebe828f5bc5bdb6b1f2cc411c2c671c038ed439e\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ebe828f5bc5bdb6b1f2cc411c2c671c038ed439e\"}},{\"ref\":\"refs/heads/agent/SF-A29-T37\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzc\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T37\",\"object\":{\"sha\":\"5731020070308a1022a7bc14cbdbe4a930a373e1\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5731020070308a1022a7bc14cbdbe4a930a373e1\"}},{\"ref\":\"refs/heads/agent/SF-A29-T38\",\"node_id\":\"REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzg\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T38\",\"object\":{\"sha\":\"1ed40b3331bd655c4fcb4409626b7f843445cd84\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1ed40b3331bd655c4fcb4409626b7f843445cd84\"}},{\"ref\":\"refs/heads/agent/SF-R015-T01\",\"node_id\":\"REF_kwDOU59Ms7xyZWZzL2hlYWRzL2FnZW50L1NGLVIwMTUtVDAx\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-R015-T01\",\"object\":{\"sha\":\"de96725a86af429a34cd2173faa8924c70ff3925\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/de96725a86af429a34cd2173faa8924c70ff3925\"}},{\"ref\":\"refs/heads/agent/SF-R015-T04\",\"node_id\":\"REF_kwDOU59Ms7xyZWZzL2hlYWRzL2FnZW50L1NGLVIwMTUtVDA0\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-R015-T04\",\"object\":{\"sha\":\"9f405ef9aaeef882e80a9d9332932bd887b2db04\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9f405ef9aaeef882e80a9d9332932bd887b2db04\"}}]",
+            "display_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent/"
+          }
+        },
+        "isError": false
+      },
+      "rows": [
+        {
+          "ref": "refs/heads/agent/SF-A00-T01.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDEuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T01.4",
+          "object": {
+            "sha": "d659289e3d34951f4cb44f5f0818c08a3648bb6a",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d659289e3d34951f4cb44f5f0818c08a3648bb6a"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T01.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDEuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T01.5",
+          "object": {
+            "sha": "98f608769923ca20d3bfcb13c0f685ad0a56d8ec",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/98f608769923ca20d3bfcb13c0f685ad0a56d8ec"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T02.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDIuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T02.5",
+          "object": {
+            "sha": "488f97958f3c580e941549dcc6abafd3ea938263",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/488f97958f3c580e941549dcc6abafd3ea938263"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T05.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.1",
+          "object": {
+            "sha": "2021a5004e46f3ac0824ae8f679725fa499cd266",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2021a5004e46f3ac0824ae8f679725fa499cd266"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T05.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.5",
+          "object": {
+            "sha": "03d5edf10750530446a26031760da8af27c7696c",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/03d5edf10750530446a26031760da8af27c7696c"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T05.7",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDUuNw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T05.7",
+          "object": {
+            "sha": "7dc209705258b524873c97bad695e47a2b0a3eea",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7dc209705258b524873c97bad695e47a2b0a3eea"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T06.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDYuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T06.3",
+          "object": {
+            "sha": "e5adca87728b82492efa57e81adb31a794205ec2",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e5adca87728b82492efa57e81adb31a794205ec2"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T09.2",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuMg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.2",
+          "object": {
+            "sha": "3fda2d3b02640332e8ad8aeee864e4b1063a9032",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3fda2d3b02640332e8ad8aeee864e4b1063a9032"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T09.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.3",
+          "object": {
+            "sha": "90b232153afde795614096570090a96a2dee6f9c",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/90b232153afde795614096570090a96a2dee6f9c"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T09.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMDkuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T09.6",
+          "object": {
+            "sha": "33a18aa849301e0a9ea740682c6c2af8c2e2da6f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33a18aa849301e0a9ea740682c6c2af8c2e2da6f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T10.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTAuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T10.4",
+          "object": {
+            "sha": "b7f72e7145f93d51ce11c10f814896017118cda6",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b7f72e7145f93d51ce11c10f814896017118cda6"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T11.2",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTEuMg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T11.2",
+          "object": {
+            "sha": "fe3d1c2e73cadab4b1a48b7c17cbd30d7de035d2",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/fe3d1c2e73cadab4b1a48b7c17cbd30d7de035d2"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T13",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T13",
+          "object": {
+            "sha": "54016abde0a618eed998130781d09208869c2b37",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/54016abde0a618eed998130781d09208869c2b37"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T14",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T14",
+          "object": {
+            "sha": "6cb577d2f33bbae5c0dd19d5427d67e318cb4024",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6cb577d2f33bbae5c0dd19d5427d67e318cb4024"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T15",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTU",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T15",
+          "object": {
+            "sha": "b53a8c2828d779e111e27079947e186846569f2d",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b53a8c2828d779e111e27079947e186846569f2d"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T17",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTc",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T17",
+          "object": {
+            "sha": "5df5cdc1001593bd568bf90940acb0b10e5589b3",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5df5cdc1001593bd568bf90940acb0b10e5589b3"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T19",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMTk",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T19",
+          "object": {
+            "sha": "3cc55cee22b5cf7234a0818a00da9f2bf32a26df",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3cc55cee22b5cf7234a0818a00da9f2bf32a26df"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T22",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMjI",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T22",
+          "object": {
+            "sha": "3a3ddbc30ca22d02de6dea621c260d139dfe3a95",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3a3ddbc30ca22d02de6dea621c260d139dfe3a95"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A00-T23",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwMC1UMjM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A00-T23",
+          "object": {
+            "sha": "a3db2d68f3c129049e79520583c51c4e4ad0cbdd",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a3db2d68f3c129049e79520583c51c4e4ad0cbdd"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.1",
+          "object": {
+            "sha": "220b8cbb4a70244678fa90def0179c6bf7216472",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/220b8cbb4a70244678fa90def0179c6bf7216472"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.2",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.2",
+          "object": {
+            "sha": "7146c14c33a26380da655f02e7ceddf5d9318795",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7146c14c33a26380da655f02e7ceddf5d9318795"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.3",
+          "object": {
+            "sha": "f19e226a92b6c28ca7379cfc297fe34cd203a1bb",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f19e226a92b6c28ca7379cfc297fe34cd203a1bb"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.4",
+          "object": {
+            "sha": "b06dbdb5fda4fbb1b95e7e8921d0c90271922e88",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b06dbdb5fda4fbb1b95e7e8921d0c90271922e88"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.5",
+          "object": {
+            "sha": "44ae1e9d5a1618b17fb393cd24f47faf02bbdc50",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/44ae1e9d5a1618b17fb393cd24f47faf02bbdc50"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.6",
+          "object": {
+            "sha": "e6b333645dda895e543fbb96f8005db19cbff2c7",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e6b333645dda895e543fbb96f8005db19cbff2c7"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.7",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuNw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.7",
+          "object": {
+            "sha": "5cb7375241bd7363f7d5346eada86d7452b1d90f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5cb7375241bd7363f7d5346eada86d7452b1d90f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.8",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuOA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.8",
+          "object": {
+            "sha": "2cac49fb1f13789047ab038d4f7378733bc8f985",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/2cac49fb1f13789047ab038d4f7378733bc8f985"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A03-T01.9",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwMy1UMDEuOQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A03-T01.9",
+          "object": {
+            "sha": "05bcf5a6b39617e26dbe76037685fbd9ef32a65f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/05bcf5a6b39617e26dbe76037685fbd9ef32a65f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T13",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T13",
+          "object": {
+            "sha": "1a867412654ac2aafd0f4495440cefe88307bb55",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1a867412654ac2aafd0f4495440cefe88307bb55"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T14",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T14",
+          "object": {
+            "sha": "768daf258c1d9edc3ae449b3533ed1e6029e196e",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/768daf258c1d9edc3ae449b3533ed1e6029e196e"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T15",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTU",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T15",
+          "object": {
+            "sha": "0c7cfc6912da5233e42de21cb405dd09414c1649",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0c7cfc6912da5233e42de21cb405dd09414c1649"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T16",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTY",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T16",
+          "object": {
+            "sha": "660aebfe01e43b2b27d495a45d2f823d6e6aebc7",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/660aebfe01e43b2b27d495a45d2f823d6e6aebc7"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T17",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTc",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T17",
+          "object": {
+            "sha": "a8fbc5e1f3569960d3024b246748a2d8605baf14",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a8fbc5e1f3569960d3024b246748a2d8605baf14"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T18",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T18",
+          "object": {
+            "sha": "778beff88e7669fe28490e64f5ffb0da9d250ba3",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/778beff88e7669fe28490e64f5ffb0da9d250ba3"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T19",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMTk",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T19",
+          "object": {
+            "sha": "1c4bffdec4d296254962931e4d809c07746b0251",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1c4bffdec4d296254962931e4d809c07746b0251"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A07-T20",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEwNy1UMjA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A07-T20",
+          "object": {
+            "sha": "3f1b02f125fa67df672399ee838f642bf318cb12",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f1b02f125fa67df672399ee838f642bf318cb12"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A08-T01.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEwOC1UMDEuMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A08-T01.1",
+          "object": {
+            "sha": "0bd6ac5c9c047973ad55e00063a1fa4f2070902f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0bd6ac5c9c047973ad55e00063a1fa4f2070902f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A14-T06.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUExNC1UMDYuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A14-T06.6",
+          "object": {
+            "sha": "b324076d4213b52dc07ae8f08fe55380aa644e83",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b324076d4213b52dc07ae8f08fe55380aa644e83"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.1",
+          "object": {
+            "sha": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d538f55223dd3fcfcd234e170af8a166da81ad86"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.10",
+          "node_id": "REF_kwDOU59Ms75yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMTA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.10",
+          "object": {
+            "sha": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6d72d5eb22520825dcac9aba2a3c866a8fbb1220"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.11",
+          "node_id": "REF_kwDOU59Ms75yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMTE",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.11",
+          "object": {
+            "sha": "5d80799de4b75384cb70438a4cceab5a0552ca19",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5d80799de4b75384cb70438a4cceab5a0552ca19"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.2",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.2",
+          "object": {
+            "sha": "5391229f761833e5baa3f0d55287ba0aab40f152",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5391229f761833e5baa3f0d55287ba0aab40f152"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.3",
+          "object": {
+            "sha": "ad0f37d5e870499c7c01cc505184c1c760964df5",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ad0f37d5e870499c7c01cc505184c1c760964df5"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.4",
+          "object": {
+            "sha": "8b4d0754c44221e22766fa58d9b9c590740932a6",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8b4d0754c44221e22766fa58d9b9c590740932a6"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.5",
+          "object": {
+            "sha": "39eac39410e86e0210d6cd2201566e550829cb80",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/39eac39410e86e0210d6cd2201566e550829cb80"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.6",
+          "object": {
+            "sha": "8201f119c7c7cad3b5bbb1ca369a6240ae34e04f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8201f119c7c7cad3b5bbb1ca369a6240ae34e04f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.7",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuNw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.7",
+          "object": {
+            "sha": "ec8967f64a26ec492f7a3aa5e605c5a7a83e590e",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ec8967f64a26ec492f7a3aa5e605c5a7a83e590e"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.8",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuOA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.8",
+          "object": {
+            "sha": "8b1f19b20e0710508d1a8c94ad4edb30df63a50b",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8b1f19b20e0710508d1a8c94ad4edb30df63a50b"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A25-T01.9",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyNS1UMDEuOQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A25-T01.9",
+          "object": {
+            "sha": "42210ed545ba7d6f0fa9cad94b5c6c9852fba4d2",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/42210ed545ba7d6f0fa9cad94b5c6c9852fba4d2"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-B03",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1CMDM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-B03",
+          "object": {
+            "sha": "a3133d2d5b841f2d9b4ae44fc535c2cb9ea27f8d",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a3133d2d5b841f2d9b4ae44fc535c2cb9ea27f8d"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-B06",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1CMDY",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-B06",
+          "object": {
+            "sha": "c1562017c5c11fcb6ad018f5ce38445d2606e6f8",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c1562017c5c11fcb6ad018f5ce38445d2606e6f8"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T02.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.4",
+          "object": {
+            "sha": "a4d8a3fc1592c76401ec324b486556dde70e7dab",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a4d8a3fc1592c76401ec324b486556dde70e7dab"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T02.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.5",
+          "object": {
+            "sha": "76248b4c6a51cef9f748793b96f496fa5497be9a",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/76248b4c6a51cef9f748793b96f496fa5497be9a"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T02.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.6",
+          "object": {
+            "sha": "4b1ac6bde344e62f454b6c81d1e845b0c4dcc1e7",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b1ac6bde344e62f454b6c81d1e845b0c4dcc1e7"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T02.7",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDIuNw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T02.7",
+          "object": {
+            "sha": "e2e66a7fdfc845c7b0a0423dfa5becb8f87d749d",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e2e66a7fdfc845c7b0a0423dfa5becb8f87d749d"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T03.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDMuMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T03.1",
+          "object": {
+            "sha": "da1a4d9237c7603ea6b288bd6685b9c1fc55d093",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/da1a4d9237c7603ea6b288bd6685b9c1fc55d093"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T03.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDMuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T03.3",
+          "object": {
+            "sha": "0e530a760829445e7cdab38f2938661d3ca66c42",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0e530a760829445e7cdab38f2938661d3ca66c42"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T04.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.3",
+          "object": {
+            "sha": "1e0ef62da2ac84aacc12247dabd0ad86bedf9330",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1e0ef62da2ac84aacc12247dabd0ad86bedf9330"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T04.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.5",
+          "object": {
+            "sha": "d625081326f848719c6acd54e11f3c64ffcaaa46",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d625081326f848719c6acd54e11f3c64ffcaaa46"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T04.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDQuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T04.6",
+          "object": {
+            "sha": "b15275c03f02ae776f7cd862a407457028f53f3a",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b15275c03f02ae776f7cd862a407457028f53f3a"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T08.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDguMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T08.1",
+          "object": {
+            "sha": "c879eb54ee91d02a5ac2762a0e461eb0dc65429d",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c879eb54ee91d02a5ac2762a0e461eb0dc65429d"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T08.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMDguNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T08.5",
+          "object": {
+            "sha": "acf2b460f291654432de4ed590db68e697244418",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/acf2b460f291654432de4ed590db68e697244418"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T11.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTEuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T11.3",
+          "object": {
+            "sha": "ee473657832698e4ede5167f9718afe2122eec84",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ee473657832698e4ede5167f9718afe2122eec84"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T11.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTEuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T11.4",
+          "object": {
+            "sha": "995afa8533ff959175859ccf3021969fb6dd1000",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/995afa8533ff959175859ccf3021969fb6dd1000"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T12.1",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.1",
+          "object": {
+            "sha": "402308d2251f8342337046c3198ba7d241248fe4",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/402308d2251f8342337046c3198ba7d241248fe4"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T12.2",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.2",
+          "object": {
+            "sha": "530777e6633b4515a8dc6ae244c082bb4d2e22b4",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/530777e6633b4515a8dc6ae244c082bb4d2e22b4"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T12.3",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuMw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.3",
+          "object": {
+            "sha": "b9ad55f61d94bb337849d59d01b5d01f12becbe9",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b9ad55f61d94bb337849d59d01b5d01f12becbe9"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T12.4",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.4",
+          "object": {
+            "sha": "ef580de6f49e0f34ba68746838ec0864bbe3dd7f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ef580de6f49e0f34ba68746838ec0864bbe3dd7f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T12.5",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.5",
+          "object": {
+            "sha": "7219ba4d1bf3264416af1ccbd420186d9b63f54c",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7219ba4d1bf3264416af1ccbd420186d9b63f54c"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T12.6",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTIuNg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T12.6",
+          "object": {
+            "sha": "3f1a8e964730002318c5e177a894df36f530c02a",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3f1a8e964730002318c5e177a894df36f530c02a"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T13",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T13",
+          "object": {
+            "sha": "443df094998924f3aa6c4e6eef759c577d932d61",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/443df094998924f3aa6c4e6eef759c577d932d61"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T14",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T14",
+          "object": {
+            "sha": "33cfc13ae896ca086346cb70f9e9bb86a39278e2",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33cfc13ae896ca086346cb70f9e9bb86a39278e2"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T15",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTU",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T15",
+          "object": {
+            "sha": "06177e5b2ca2316924ae58b3e410a741b4293d98",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06177e5b2ca2316924ae58b3e410a741b4293d98"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T16",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTY",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T16",
+          "object": {
+            "sha": "02cc5be4c5cd0b7dc34f959c7e5e42a1b5249354",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/02cc5be4c5cd0b7dc34f959c7e5e42a1b5249354"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T17",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTc",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T17",
+          "object": {
+            "sha": "5b91d1d3a6903bc37e43b04f322f730ac329f3bd",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5b91d1d3a6903bc37e43b04f322f730ac329f3bd"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T18",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T18",
+          "object": {
+            "sha": "0d640093a7ff71debf52113415ee75441cf4bced",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0d640093a7ff71debf52113415ee75441cf4bced"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T19",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMTk",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T19",
+          "object": {
+            "sha": "7eed73ea9d4ce6c2595336aabcd325bfe2d85c87",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7eed73ea9d4ce6c2595336aabcd325bfe2d85c87"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T20",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T20",
+          "object": {
+            "sha": "66b5ccd62f7a68c96d8365a39a3dc7de7e85218a",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/66b5ccd62f7a68c96d8365a39a3dc7de7e85218a"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T21",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjE",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T21",
+          "object": {
+            "sha": "7e3f42503c478def62a0f6922db559dbebd7b5c5",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7e3f42503c478def62a0f6922db559dbebd7b5c5"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T22",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjI",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T22",
+          "object": {
+            "sha": "15f17092955fa178f49bed5c3e320b9718c64298",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/15f17092955fa178f49bed5c3e320b9718c64298"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T23",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T23",
+          "object": {
+            "sha": "cd77c82def2a0316d00358f81ce6f02a7ab1a50f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/cd77c82def2a0316d00358f81ce6f02a7ab1a50f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T24",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T24",
+          "object": {
+            "sha": "b615889360c83fc4fc3f235dbe7ea2e4cdded904",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/b615889360c83fc4fc3f235dbe7ea2e4cdded904"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T25",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjU",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T25",
+          "object": {
+            "sha": "689c9f51284f5f3fd17eee63ba39c927baf513b6",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/689c9f51284f5f3fd17eee63ba39c927baf513b6"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T26",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjY",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T26",
+          "object": {
+            "sha": "f621e4c1cac39f87ee2413165aaaf04537376adc",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f621e4c1cac39f87ee2413165aaaf04537376adc"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T27",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjc",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T27",
+          "object": {
+            "sha": "9253ae047ecdabe70fc8c0a05f244261ee628277",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9253ae047ecdabe70fc8c0a05f244261ee628277"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T28",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T28",
+          "object": {
+            "sha": "41d33533dfe55103abe2ee6e433cf33bd5b77f47",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/41d33533dfe55103abe2ee6e433cf33bd5b77f47"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T29",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMjk",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T29",
+          "object": {
+            "sha": "8cfc1d40833b35ef6634748d26f248303dee2ccd",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8cfc1d40833b35ef6634748d26f248303dee2ccd"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T30",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T30",
+          "object": {
+            "sha": "afe50e2e845e70c39384c6dc945ecf8240f32b5d",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/afe50e2e845e70c39384c6dc945ecf8240f32b5d"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T31",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzE",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T31",
+          "object": {
+            "sha": "4b9053489ba25933d7f8a372a2466efc811fbbd0",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4b9053489ba25933d7f8a372a2466efc811fbbd0"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T32",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzI",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T32",
+          "object": {
+            "sha": "3029445d58c9f178cae6a18241386ee98e07213b",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3029445d58c9f178cae6a18241386ee98e07213b"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T33",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzM",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T33",
+          "object": {
+            "sha": "8ad82b7517a65cf330491abb1c90cf2659ee41ea",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8ad82b7517a65cf330491abb1c90cf2659ee41ea"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T34",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T34",
+          "object": {
+            "sha": "c0f19b064279a38845a1d82717d404eb9f01011a",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c0f19b064279a38845a1d82717d404eb9f01011a"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T35",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzU",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T35",
+          "object": {
+            "sha": "a734d6dde3a4536596f780e5e8b1d3eb7aa142e4",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a734d6dde3a4536596f780e5e8b1d3eb7aa142e4"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T36",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzY",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T36",
+          "object": {
+            "sha": "ebe828f5bc5bdb6b1f2cc411c2c671c038ed439e",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ebe828f5bc5bdb6b1f2cc411c2c671c038ed439e"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T37",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzc",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T37",
+          "object": {
+            "sha": "5731020070308a1022a7bc14cbdbe4a930a373e1",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5731020070308a1022a7bc14cbdbe4a930a373e1"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-A29-T38",
+          "node_id": "REF_kwDOU59Ms7tyZWZzL2hlYWRzL2FnZW50L1NGLUEyOS1UMzg",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-A29-T38",
+          "object": {
+            "sha": "1ed40b3331bd655c4fcb4409626b7f843445cd84",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1ed40b3331bd655c4fcb4409626b7f843445cd84"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-R015-T01",
+          "node_id": "REF_kwDOU59Ms7xyZWZzL2hlYWRzL2FnZW50L1NGLVIwMTUtVDAx",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-R015-T01",
+          "object": {
+            "sha": "de96725a86af429a34cd2173faa8924c70ff3925",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/de96725a86af429a34cd2173faa8924c70ff3925"
+          }
+        },
+        {
+          "ref": "refs/heads/agent/SF-R015-T04",
+          "node_id": "REF_kwDOU59Ms7xyZWZzL2hlYWRzL2FnZW50L1NGLVIwMTUtVDA0",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent/SF-R015-T04",
+          "object": {
+            "sha": "9f405ef9aaeef882e80a9d9332932bd887b2db04",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9f405ef9aaeef882e80a9d9332932bd887b2db04"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "locks",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent-locks/",
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "[{\"ref\":\"refs/heads/agent-locks/a00-dag-export\",\"node_id\":\"REF_kwDOU59Ms9oAJXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTAwLWRhZy1leHBvcnQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a00-dag-export\",\"object\":{\"sha\":\"39dc2b7876816a21f17ef8b401292ba5da71fc14\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/39dc2b7876816a21f17ef8b401292ba5da71fc14\"}},{\"ref\":\"refs/heads/agent-locks/a00-value-codec-1036\",\"node_id\":\"REF_kwDOU59Ms9oAK3JlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTAwLXZhbHVlLWNvZGVjLTEwMzY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a00-value-codec-1036\",\"object\":{\"sha\":\"9f72a2154b43a9573f6b869226676777af7f7db4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9f72a2154b43a9573f6b869226676777af7f7db4\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-483\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4Mw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-483\",\"object\":{\"sha\":\"80d37357ccb9f89b7b729bd3da86c0f5c456dd30\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/80d37357ccb9f89b7b729bd3da86c0f5c456dd30\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-484\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4NA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-484\",\"object\":{\"sha\":\"33cfc13ae896ca086346cb70f9e9bb86a39278e2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33cfc13ae896ca086346cb70f9e9bb86a39278e2\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-485\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4NQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-485\",\"object\":{\"sha\":\"06177e5b2ca2316924ae58b3e410a741b4293d98\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06177e5b2ca2316924ae58b3e410a741b4293d98\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-487\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4Nw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-487\",\"object\":{\"sha\":\"5b91d1d3a6903bc37e43b04f322f730ac329f3bd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5b91d1d3a6903bc37e43b04f322f730ac329f3bd\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-488\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4OA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-488\",\"object\":{\"sha\":\"0d640093a7ff71debf52113415ee75441cf4bced\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0d640093a7ff71debf52113415ee75441cf4bced\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-489\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4OQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-489\",\"object\":{\"sha\":\"7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-490\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ5MA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-490\",\"object\":{\"sha\":\"ac55beb1694222008bc6473afb16704cd6442ad7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ac55beb1694222008bc6473afb16704cd6442ad7\"}},{\"ref\":\"refs/heads/agent-locks/a29-e03-workflows\",\"node_id\":\"REF_kwDOU59Ms9oAKHJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWUwMy13b3JrZmxvd3M\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-e03-workflows\",\"object\":{\"sha\":\"80d37357ccb9f89b7b729bd3da86c0f5c456dd30\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/80d37357ccb9f89b7b729bd3da86c0f5c456dd30\"}},{\"ref\":\"refs/heads/agent-locks/package-json\",\"node_id\":\"REF_kwDOU59Ms9oAI3JlZnMvaGVhZHMvYWdlbnQtbG9ja3MvcGFja2FnZS1qc29u\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/package-json\",\"object\":{\"sha\":\"d538f55223dd3fcfcd234e170af8a166da81ad86\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d538f55223dd3fcfcd234e170af8a166da81ad86\"}},{\"ref\":\"refs/heads/agent-locks/release15-evidence\",\"node_id\":\"REF_kwDOU59Ms9oAKXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvcmVsZWFzZTE1LWV2aWRlbmNl\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/release15-evidence\",\"object\":{\"sha\":\"f13c7c6d5801e1d0e4a077758737a1e071ebd32f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f13c7c6d5801e1d0e4a077758737a1e071ebd32f\"}},{\"ref\":\"refs/heads/agent-locks/studio\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50LWxvY2tzL3N0dWRpbw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/studio\",\"object\":{\"sha\":\"6d72d5eb22520825dcac9aba2a3c866a8fbb1220\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6d72d5eb22520825dcac9aba2a3c866a8fbb1220\"}}]",
+          "title": "agent-locks",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent-locks/",
+          "display_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent-locks/",
+          "display_title": "agent-locks",
+          "structuredContent": {
+            "title": "agent-locks",
+            "content": "[{\"ref\":\"refs/heads/agent-locks/a00-dag-export\",\"node_id\":\"REF_kwDOU59Ms9oAJXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTAwLWRhZy1leHBvcnQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a00-dag-export\",\"object\":{\"sha\":\"39dc2b7876816a21f17ef8b401292ba5da71fc14\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/39dc2b7876816a21f17ef8b401292ba5da71fc14\"}},{\"ref\":\"refs/heads/agent-locks/a00-value-codec-1036\",\"node_id\":\"REF_kwDOU59Ms9oAK3JlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTAwLXZhbHVlLWNvZGVjLTEwMzY\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a00-value-codec-1036\",\"object\":{\"sha\":\"9f72a2154b43a9573f6b869226676777af7f7db4\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9f72a2154b43a9573f6b869226676777af7f7db4\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-483\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4Mw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-483\",\"object\":{\"sha\":\"80d37357ccb9f89b7b729bd3da86c0f5c456dd30\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/80d37357ccb9f89b7b729bd3da86c0f5c456dd30\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-484\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4NA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-484\",\"object\":{\"sha\":\"33cfc13ae896ca086346cb70f9e9bb86a39278e2\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33cfc13ae896ca086346cb70f9e9bb86a39278e2\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-485\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4NQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-485\",\"object\":{\"sha\":\"06177e5b2ca2316924ae58b3e410a741b4293d98\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06177e5b2ca2316924ae58b3e410a741b4293d98\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-487\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4Nw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-487\",\"object\":{\"sha\":\"5b91d1d3a6903bc37e43b04f322f730ac329f3bd\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5b91d1d3a6903bc37e43b04f322f730ac329f3bd\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-488\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4OA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-488\",\"object\":{\"sha\":\"0d640093a7ff71debf52113415ee75441cf4bced\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0d640093a7ff71debf52113415ee75441cf4bced\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-489\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4OQ\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-489\",\"object\":{\"sha\":\"7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7eed73ea9d4ce6c2595336aabcd325bfe2d85c87\"}},{\"ref\":\"refs/heads/agent-locks/a29-ci-490\",\"node_id\":\"REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ5MA\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-490\",\"object\":{\"sha\":\"ac55beb1694222008bc6473afb16704cd6442ad7\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ac55beb1694222008bc6473afb16704cd6442ad7\"}},{\"ref\":\"refs/heads/agent-locks/a29-e03-workflows\",\"node_id\":\"REF_kwDOU59Ms9oAKHJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWUwMy13b3JrZmxvd3M\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-e03-workflows\",\"object\":{\"sha\":\"80d37357ccb9f89b7b729bd3da86c0f5c456dd30\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/80d37357ccb9f89b7b729bd3da86c0f5c456dd30\"}},{\"ref\":\"refs/heads/agent-locks/package-json\",\"node_id\":\"REF_kwDOU59Ms9oAI3JlZnMvaGVhZHMvYWdlbnQtbG9ja3MvcGFja2FnZS1qc29u\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/package-json\",\"object\":{\"sha\":\"d538f55223dd3fcfcd234e170af8a166da81ad86\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d538f55223dd3fcfcd234e170af8a166da81ad86\"}},{\"ref\":\"refs/heads/agent-locks/release15-evidence\",\"node_id\":\"REF_kwDOU59Ms9oAKXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvcmVsZWFzZTE1LWV2aWRlbmNl\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/release15-evidence\",\"object\":{\"sha\":\"f13c7c6d5801e1d0e4a077758737a1e071ebd32f\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f13c7c6d5801e1d0e4a077758737a1e071ebd32f\"}},{\"ref\":\"refs/heads/agent-locks/studio\",\"node_id\":\"REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50LWxvY2tzL3N0dWRpbw\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/studio\",\"object\":{\"sha\":\"6d72d5eb22520825dcac9aba2a3c866a8fbb1220\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6d72d5eb22520825dcac9aba2a3c866a8fbb1220\"}}]",
+            "display_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/matching-refs/heads/agent-locks/"
+          }
+        },
+        "isError": false
+      },
+      "rows": [
+        {
+          "ref": "refs/heads/agent-locks/a00-dag-export",
+          "node_id": "REF_kwDOU59Ms9oAJXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTAwLWRhZy1leHBvcnQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a00-dag-export",
+          "object": {
+            "sha": "39dc2b7876816a21f17ef8b401292ba5da71fc14",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/39dc2b7876816a21f17ef8b401292ba5da71fc14"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a00-value-codec-1036",
+          "node_id": "REF_kwDOU59Ms9oAK3JlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTAwLXZhbHVlLWNvZGVjLTEwMzY",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a00-value-codec-1036",
+          "object": {
+            "sha": "9f72a2154b43a9573f6b869226676777af7f7db4",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9f72a2154b43a9573f6b869226676777af7f7db4"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-483",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4Mw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-483",
+          "object": {
+            "sha": "80d37357ccb9f89b7b729bd3da86c0f5c456dd30",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/80d37357ccb9f89b7b729bd3da86c0f5c456dd30"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-484",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4NA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-484",
+          "object": {
+            "sha": "33cfc13ae896ca086346cb70f9e9bb86a39278e2",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/33cfc13ae896ca086346cb70f9e9bb86a39278e2"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-485",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4NQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-485",
+          "object": {
+            "sha": "06177e5b2ca2316924ae58b3e410a741b4293d98",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06177e5b2ca2316924ae58b3e410a741b4293d98"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-487",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4Nw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-487",
+          "object": {
+            "sha": "5b91d1d3a6903bc37e43b04f322f730ac329f3bd",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5b91d1d3a6903bc37e43b04f322f730ac329f3bd"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-488",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4OA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-488",
+          "object": {
+            "sha": "0d640093a7ff71debf52113415ee75441cf4bced",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/0d640093a7ff71debf52113415ee75441cf4bced"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-489",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ4OQ",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-489",
+          "object": {
+            "sha": "7eed73ea9d4ce6c2595336aabcd325bfe2d85c87",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/7eed73ea9d4ce6c2595336aabcd325bfe2d85c87"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-ci-490",
+          "node_id": "REF_kwDOU59Ms9oAIXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWNpLTQ5MA",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-ci-490",
+          "object": {
+            "sha": "ac55beb1694222008bc6473afb16704cd6442ad7",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/ac55beb1694222008bc6473afb16704cd6442ad7"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/a29-e03-workflows",
+          "node_id": "REF_kwDOU59Ms9oAKHJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvYTI5LWUwMy13b3JrZmxvd3M",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/a29-e03-workflows",
+          "object": {
+            "sha": "80d37357ccb9f89b7b729bd3da86c0f5c456dd30",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/80d37357ccb9f89b7b729bd3da86c0f5c456dd30"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/package-json",
+          "node_id": "REF_kwDOU59Ms9oAI3JlZnMvaGVhZHMvYWdlbnQtbG9ja3MvcGFja2FnZS1qc29u",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/package-json",
+          "object": {
+            "sha": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d538f55223dd3fcfcd234e170af8a166da81ad86"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/release15-evidence",
+          "node_id": "REF_kwDOU59Ms9oAKXJlZnMvaGVhZHMvYWdlbnQtbG9ja3MvcmVsZWFzZTE1LWV2aWRlbmNl",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/release15-evidence",
+          "object": {
+            "sha": "f13c7c6d5801e1d0e4a077758737a1e071ebd32f",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f13c7c6d5801e1d0e4a077758737a1e071ebd32f"
+          }
+        },
+        {
+          "ref": "refs/heads/agent-locks/studio",
+          "node_id": "REF_kwDOU59Ms71yZWZzL2hlYWRzL2FnZW50LWxvY2tzL3N0dWRpbw",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/agent-locks/studio",
+          "object": {
+            "sha": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+            "type": "commit",
+            "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/6d72d5eb22520825dcac9aba2a3c866a8fbb1220"
+          }
+        }
+      ]
+    }
+  ],
+  "refComparison": {
+    "claims": {
+      "count": 98,
+      "changed": [],
+      "added": [],
+      "removed": []
+    },
+    "locks": {
+      "count": 13,
+      "changed": [],
+      "added": [],
+      "removed": []
+    },
+    "meaning": "Every retained claim and lock file was read at its immutable current ref commit; no stale record is substituted for a changed ref."
+  },
+  "currentRelatedTaskRead": {
+    "request": {
+      "repository_full_name": "wieslawsoltes/SharpForge",
+      "path": "claim.json",
+      "ref": "6cb577d2f33bbae5c0dd19d5427d67e318cb4024"
+    },
+    "response": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "content": "{\"version\":1,\"task\":\"SF-A00-T14\",\"issue\":432,\"agent\":\"codex-a00-diagnostic-ids\",\"branch\":\"codex/a00-diagnostic-ids\",\"expires\":\"2026-10-04T20:37:25.725Z\",\"heartbeat\":\"2026-10-03T20:37:25.698Z\",\"lastHeartbeatComment\":null,\"locks\":[],\"generation\":\"812dac8f-9d05-4fce-b2e1-1289f3fffae5\",\"sequence\":0,\"event\":\"claim\",\"at\":\"2026-10-03T20:37:25.698Z\"}",
+        "encoding": "utf-8",
+        "sha": "a41671ceb65d07cc033b00bf44b11cd6bebf1a87",
+        "display_url": "https://github.com/wieslawsoltes/SharpForge/blob/6cb577d2f33bbae5c0dd19d5427d67e318cb4024/claim.json",
+        "display_title": "claim.json"
+      },
+      "isError": false
+    },
+    "record": {
+      "version": 1,
+      "task": "SF-A00-T14",
+      "issue": 432,
+      "agent": "codex-a00-diagnostic-ids",
+      "branch": "codex/a00-diagnostic-ids",
+      "expires": "2026-10-04T20:37:25.725Z",
+      "heartbeat": "2026-10-03T20:37:25.698Z",
+      "lastHeartbeatComment": null,
+      "locks": [],
+      "generation": "812dac8f-9d05-4fce-b2e1-1289f3fffae5",
+      "sequence": 0,
+      "event": "claim",
+      "at": "2026-10-03T20:37:25.698Z"
+    }
+  },
+  "pathMap": [
+    {
+      "path": "packages/compiler/src/semantic/model-scopes.js",
+      "claimMatches": [],
+      "lockMatches": [],
+      "legacyMatches": []
+    }
+  ],
+  "matchingMethod": {
+    "explicitFields": [
+      "activePaths",
+      "paths",
+      "writePaths",
+      "coordinatedPaths",
+      "integrationScope",
+      "baselinePaths",
+      "path-valued locks",
+      "semicolon-separated path-valued scope"
+    ],
+    "legacyFields": [
+      "legacyLockKeys"
+    ],
+    "normalization": "Semicolon-separated legacy scopes are brace-expanded; glob * excludes slash and ** spans directories."
+  },
+  "sourceFinding": {
+    "path": "packages/compiler/src/semantic/model-scopes.js",
+    "line": 117,
+    "literal": "CS0103",
+    "seam": "Add import { DiagnosticId } from '../diagnostics/codes.js'; replace this diagnostic code literal with DiagnosticId.CS0103.",
+    "catalogEntry": {
+      "path": "packages/compiler/src/diagnostics/roslyn-codes.js",
+      "line": 43,
+      "code": "CS0103"
+    },
+    "noExistingImport": true,
+    "meaning": "Caller alias preserves the registered diagnostic ID; no catalog or diagnostic output change is required."
+  },
+  "relatedScan": {
+    "reportedBy": "/root/text_targets",
+    "method": "Read-only pure scan using exact test codeTokens and diagnosticLiterals predicate",
+    "sourceCommit": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+    "javascriptFiles": 566,
+    "catalogExemptions": 2,
+    "callerFiles": 564,
+    "remainingOffenders": [
+      {
+        "path": "packages/compiler/src/semantic/model-scopes.js",
+        "line": 117,
+        "literal": "CS0103"
+      }
+    ],
+    "executedTests": false
+  },
+  "conclusion": "No advertised exact path reservation, active path glob, preserved legacy scope or held lock matches the caller file. SF-A00-T14 remains claimed by codex-a00-diagnostic-ids. This finding is confined to a caller-only existing-constant substitution; catalog, contract tests, claim and issue status are excluded.",
+  "limits": [
+    "Project custom field-only ownership is not exposed by the available connector, so absence there is not asserted.",
+    "This is a read-only reservation and source review. No test, build, workflow, repository change, claim change or hosted mutation was performed."
+  ]
+}

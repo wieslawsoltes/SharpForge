@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-04T14:41:53.193882Z",
+  "updatedAt": "2026-10-04T15:28:01.401080Z",
   "scope": "Project4 A00/A29/R015 continuation; historical244 mapped identities are separately timestamped.",
   "qualificationPolicy": {
     "localEnvironment": {
@@ -8,9 +8,9 @@
       "platform": "linux",
       "arch": "x64"
     },
-    "ordinaryCore": "Static/manifests, policy and build checks; Node unit tests are skipped. Core declares Node22; dedicated build/fuzz toolchains have separate pins.",
+    "ordinaryCore": "Ordinary PR/main core performs static/manifest, policy and build checks and skips Node unit tests. The separately labelled full-ci attempt executed the A00 manifest before failing. Core declares Node22; dedicated build/fuzz toolchains have separate pins.",
     "sourceIdentity": "Local commit metadata and API-created GitHub commit metadata differ. Every implementation publishing tree was compared byte-for-byte with its tested local tree.",
-    "counting": "Focused suites overlap; do not add their counts to claim unique coverage. Final integration has its own distinct total.",
+    "counting": "Focused suites overlap; do not add their counts to claim unique coverage. Each integration, central attempt and later A00 manifest has its own exact source and distinct total. The earlier 18-PR tests/campaigns do not qualify the later 20-PR source.",
     "serial": "Each hosted submission and local heavy job was serialized; the main core run after every merge completed before the next batch."
   },
   "deliveries": [
@@ -400,6 +400,56 @@
       "capture": "captures/bytecode-profile-fixed.tap",
       "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37207262331",
       "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37207356433"
+    },
+    {
+      "pr": 4565,
+      "scope": "Refresh the generated value ABI inventory with exactly four current source hashes; all non-hash sections, generator, runtime and tests are unchanged.",
+      "localCommit": "52bde3173ae86e01cd9fb1d1a8cb01764eb024cb",
+      "tree": "874fca7633c61df1f28817db1a6aefae3b0acbf2",
+      "publishedCommit": "bb7d1b8c6ff260a33be4f16a76054f1bfd84e2b8",
+      "merge": "31900dce5c1454c1f9c244c9ac14e1798eac3e5f",
+      "prCore": 37211623006,
+      "mainCore": 37211720001,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4565",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success",
+      "state": "merged",
+      "tests": {
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/a00-abi-correction/tests.tap",
+      "runCapture": "captures/a00-abi-correction/run.json",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37211623006",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37211720001",
+      "sourceMapCapture": "captures/post-central-corrections.json"
+    },
+    {
+      "pr": 4566,
+      "scope": "Use existing catalog IDs for two delegate argument-count diagnostics and the third CS0103 speculative-binding caller; catalog and tests are unchanged.",
+      "localCommit": "7132306bc9d86b691cd11529c1c7a48900dee075",
+      "tree": "0547f7787aff8f12bc9cb9081bb5db6d0277557e",
+      "publishedCommit": "cf0d5621cabca85fddc5ba6b56761e472ac153a9",
+      "merge": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+      "prCore": 37211962454,
+      "mainCore": 37212071119,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4566",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success",
+      "state": "merged",
+      "tests": {
+        "passed": 31,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/a00-diagnostic-correction-final/tests.tap",
+      "runCapture": "captures/a00-diagnostic-correction-final/run.json",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37211962454",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37212071119",
+      "sourceMapCapture": "captures/post-central-corrections.json"
     }
   ],
   "drafts": [
@@ -685,6 +735,16 @@
       "comments": "Suppressed per explicit user instruction.",
       "observedAt": "2026-10-04T13:15:13.470Z",
       "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=agent%2FSF-A14-T06.6"
+    },
+    "postCentral": {
+      "observedFrom": "2026-10-04 14:54:26 UTC",
+      "observedThrough": "2026-10-04 14:57:49 UTC",
+      "claimsRead": 98,
+      "lockRecordsRead": 13,
+      "rawCapture": "captures/full-ci-37210639599-reservation-raw.json",
+      "summaryCapture": "captures/full-ci-37210639599-reservation-summary.json",
+      "diagnosticCallerFollowupCapture": "captures/compiler-model-scopes-reservation-followup.json",
+      "policy": "Later repository-ref observations are separate from the original 68 historical claims. No claim, lock, owner or issue state is changed; custom Project field-only ownership is not verified by these reads."
     }
   },
   "pendingQualification": {
@@ -854,8 +914,183 @@
       "note": "At this historical source the IL property measured visible-text stability. PR4554 later strengthened it to full-image identity; finalExpandedTargets records the integrated stronger profile. Known DAP malformed operations remain outside this finite seed."
     },
     "centralFullCi": {
-      "status": "pending",
-      "mechanism": "full-ci PR label after the integrated scope is ready"
+      "status": "failed",
+      "qualified": false,
+      "runStatus": "completed",
+      "conclusion": "failure",
+      "run": 37210639599,
+      "attempt": 1,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599",
+      "runStartedAt": "2026-10-04T14:48:46Z",
+      "runFinishedAt": "2026-10-04T14:50:47Z",
+      "mechanism": "full-ci label added to PR4564 after ordinary core succeeded; the label action and exact pre-label PR are retained.",
+      "pullRequest": 4564,
+      "publishedHead": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+      "actualCheckout": {
+        "commit": "33c30d7361feaca46642c833e6f9394996b09e1e",
+        "tree": "e081cf2c538baa5d049b1a422fd77c1be26809d0",
+        "parents": [
+          "fbb0b086e05720eeacb954800a4a690a644313cd",
+          "c9bda180705db8d4efebdec0023df3d31667a2a7"
+        ],
+        "evidence": "Raw Git commit/tree, job logs and both extracted environment records agree on the actual merge checkout."
+      },
+      "a00": {
+        "tests": 465,
+        "passed": 462,
+        "failed": 3,
+        "skipped": 0,
+        "cancelled": 0,
+        "failedTestFiles": [
+          "tests/a00-01-value-abi.test.js",
+          "tests/a00-04-execution.test.js",
+          "tests/a00-diagnostic-ids.test.js"
+        ],
+        "failures": [
+          "Generated value ABI inventory contains four stale source hashes.",
+          "Root-provider manifest does not document execution/frame-roots.js:roots:1.",
+          "Compiler callers contain diagnostic code literals outside the central catalog."
+        ]
+      },
+      "jobRecords": 9,
+      "jobConclusions": {
+        "failure": 2,
+        "skipped": 7
+      },
+      "jobs": [
+        {
+          "id": 111460940659,
+          "name": "core",
+          "conclusion": "failure",
+          "steps": 20,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111460940659"
+        },
+        {
+          "id": 111461248190,
+          "name": "core-platforms",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461248190"
+        },
+        {
+          "id": 111461248982,
+          "name": "build",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461248982"
+        },
+        {
+          "id": 111461249147,
+          "name": "packages",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461249147"
+        },
+        {
+          "id": 111461249684,
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461249684"
+        },
+        {
+          "id": 111461249943,
+          "name": "ci-ok",
+          "conclusion": "failure",
+          "steps": 11,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461249943"
+        },
+        {
+          "id": 111461250140,
+          "name": "native-msbuild",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461250140"
+        },
+        {
+          "id": 111461250240,
+          "name": "native-il",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461250240"
+        },
+        {
+          "id": 111461250404,
+          "name": "clr-wasm",
+          "conclusion": "skipped",
+          "steps": 0,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210639599/job/111461250404"
+        }
+      ],
+      "jobBoundary": "The seven skipped records are unexecuted family placeholders, not executed or expanded platform matrix jobs. Preserve raw API timestamps without inferring durations for skipped records.",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "linux",
+        "arch": "x64",
+        "capture": "captures/central-37210639599-attempt1/extracted/11306492051/env.json",
+        "scope": "Environment observed in core, not qualification of skipped browser/native/platform jobs."
+      },
+      "artifactCount": 2,
+      "artifacts": [
+        {
+          "id": 11306492051,
+          "name": "core-ubuntu-latest",
+          "bytes": 2009,
+          "sha256": "7b8deca226df52a155c222f762656a71b2a6d359416a99e98a75fb30024f79f2",
+          "zip": "captures/central-37210639599-attempt1/artifacts/11306492051-core-ubuntu-latest.zip",
+          "format": "binary-zip",
+          "extracted": [
+            "captures/central-37210639599-attempt1/extracted/11306492051/checkout-status.txt",
+            "captures/central-37210639599-attempt1/extracted/11306492051/env.json"
+          ],
+          "contents": "Only checkout-status.txt and env.json; original ZIP digest/bytes and extracted entries verified against retained API metadata."
+        },
+        {
+          "id": 11306257677,
+          "name": "ci-ok",
+          "bytes": 2010,
+          "sha256": "e72ca0095c0d292783f854532d56e51fbcc283a9f80d83cd1df7842fb14c0de4",
+          "zip": "captures/central-37210639599-attempt1/artifacts/11306257677-ci-ok.zip",
+          "format": "binary-zip",
+          "extracted": [
+            "captures/central-37210639599-attempt1/extracted/11306257677/checkout-status.txt",
+            "captures/central-37210639599-attempt1/extracted/11306257677/env.json"
+          ],
+          "contents": "Only checkout-status.txt and env.json; original ZIP digest/bytes and extracted entries verified against retained API metadata."
+        }
+      ],
+      "completedBuildIdentity": false,
+      "sealedPayload": false,
+      "workflowSource": {
+        "schemaVersion": 1,
+        "source": "33c30d7361feaca46642c833e6f9394996b09e1e",
+        "originalPath": ".github/workflows/ci.yml",
+        "blob": "edd217608d5a5f56b31b693f4f39d53b18dd02d9",
+        "bytes": 15667,
+        "sha256": "dcfb6f5724726edb470c21f0fda50fa61097c146cc0ca503f29c5b3519fce18c",
+        "note": "Workflow file retained from the exact checkout attested by job logs and environment artifacts. The API run path and observed job graph agree; an independent GITHUB_WORKFLOW_SHA field was not captured.",
+        "capture": "captures/central-37210639599-attempt1/workflow-ci.yml.txt",
+        "metadataCapture": "captures/central-37210639599-attempt1/workflow-source.json"
+      },
+      "captures": {
+        "run.json": "captures/central-37210639599-attempt1/run.json",
+        "jobs.json": "captures/central-37210639599-attempt1/jobs.json",
+        "core-job.log": "captures/central-37210639599-attempt1/core-job.log",
+        "ci-ok-job.log": "captures/central-37210639599-attempt1/ci-ok-job.log",
+        "checkout-commit.json": "captures/central-37210639599-attempt1/checkout-commit.json",
+        "artifacts.json": "captures/central-37210639599-attempt1/artifacts.json",
+        "artifact-verification.json": "captures/central-37210639599-attempt1/artifact-verification.json",
+        "workflow-source.json": "captures/central-37210639599-attempt1/workflow-source.json",
+        "workflow-ci.yml.txt": "captures/central-37210639599-attempt1/workflow-ci.yml.txt",
+        "label-action.json": "captures/central-37210639599-attempt1/label-action.json",
+        "pr-before-label.json": "captures/central-37210639599-attempt1/pr-before-label.json"
+      },
+      "qualificationBoundary": "Failed source-contract integration. No downstream browser, native, cross-platform, completed build identity, sealed payload or R015 production-scenario result was produced. Core environment Playwright absence does not establish that skipped hosted lanes were unavailable. No full-ci rerun is recorded.",
+      "precedingObservation": {
+        "recordUpdatedAt": "2026-10-04T14:41:53.193882Z",
+        "status": "pending",
+        "mechanism": "full-ci PR label after the integrated scope is ready"
+      }
     },
     "postFixPeDuration": {
       "status": "passed",
@@ -1097,10 +1332,12 @@
   },
   "rawDeliveryMetadata": {
     "capture": "captures/deliveries/record-index.json",
-    "mergedPRs": 18,
-    "rawRecords": 54,
-    "scope": "Fresh raw GitHub PR snapshots and completed successful PR/main workflow-run JSON; all heads, merge commits and run identities matched the delivery records.",
-    "initialObservation": "captures/deliveries/observation.json"
+    "mergedPRs": 20,
+    "rawRecords": 60,
+    "scope": "Retained raw GitHub PR snapshots and completed successful ordinary PR/main workflow-run JSON for all 20 implementation deliveries. Their heads, merge commits and run identities match the delivery records. These successes do not replace or rerun the failed central full-ci attempt.",
+    "initialObservation": "captures/deliveries/observation.json",
+    "precedingIndex": "captures/deliveries/record-index-18-prs-54-records.json",
+    "preservation": "All original 54 raw records and the original observation.json are unchanged. The exact prior 54-record derived index is retained separately before updating the current index to 60 records."
   },
   "pendingImplementation": {
     "ilImageIdempotence": {
@@ -1350,7 +1587,282 @@
       "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
       "purpose": "Original disposable parent-probe JavaScript source retained as archival text. The .txt suffix distinguishes captured input from a repository runtime module; source bytes are unchanged.",
       "scope": "Rename the archive to .mjs.txt and update evidence references/index metadata; retain the original source, capture bytes and historical results. No policy exception or captured-probe edit.",
-      "status": "prepared locally; corrected npm check/build and hosted core outcomes remain pending"
+      "status": "Local static checks/build passed at the recorded clean source; subsequent ordinary core succeeded. The later central full-ci attempt failed independently.",
+      "precedingStatus": {
+        "recordUpdatedAt": "2026-10-04T14:41:53.193882Z",
+        "status": "prepared locally; corrected npm check/build and hosted core outcomes remain pending"
+      },
+      "sourceMapping": {
+        "head": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+        "published": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+        "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+        "parent": "e961141594262bca70eba2121d40745e4555bdfe",
+        "publishedParent": "24fe2d86e3871997ac2266a9b3b0d21b0d44030c"
+      },
+      "localValidation": {
+        "status": "passed",
+        "source": {
+          "commit": "c7cc7a514e7398ab152c4283f554b176f3869abc",
+          "tree": "f87ffca6ef47c89691bad1c4db0fdf3e12400f15",
+          "status": ""
+        },
+        "capture": "captures/evidence-pr4564-fixed/run.json",
+        "check": "captures/evidence-pr4564-fixed/check.log",
+        "build": "captures/evidence-pr4564-fixed/build.log",
+        "scope": "Existing npm check and build only; no new unit-test result implied."
+      }
+    },
+    "cancelledOrdinaryCore": {
+      "run": 37209752375,
+      "attempt": 1,
+      "publishedHead": "24fe2d86e3871997ac2266a9b3b0d21b0d44030c",
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37209752375",
+      "conclusion": "cancelled",
+      "startedAt": "2026-10-04T14:34:21Z",
+      "finishedAt": "2026-10-04T14:34:48Z",
+      "captures": {
+        "run.json": "captures/evidence-pr4564-cancelled-core/run.json",
+        "jobs.json": "captures/evidence-pr4564-cancelled-core/jobs.json",
+        "core-job.log": "captures/evidence-pr4564-cancelled-core/core-job.log"
+      },
+      "reason": "The size/XXL bot label at 14:34:40 triggered the replacement run at 14:34:43; event history is retained in captures/evidence-pr4564-first-core/events.json."
+    },
+    "successfulOrdinaryCore": {
+      "run": 37210582854,
+      "attempt": 1,
+      "publishedHead": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37210582854",
+      "conclusion": "success",
+      "startedAt": "2026-10-04T14:47:50Z",
+      "finishedAt": "2026-10-04T14:48:34Z",
+      "actualCheckout": {
+        "commit": "33c30d7361feaca46642c833e6f9394996b09e1e",
+        "tree": "e081cf2c538baa5d049b1a422fd77c1be26809d0"
+      },
+      "captures": {
+        "run.json": "captures/evidence-pr4564-successful-core/run.json",
+        "jobs.json": "captures/evidence-pr4564-successful-core/jobs.json",
+        "core-job.log": "captures/evidence-pr4564-successful-core/core-job.log",
+        "checkout-commit.json": "captures/evidence-pr4564-successful-core/checkout-commit.json",
+        "pr-before-full-ci.json": "captures/evidence-pr4564-successful-core/pr-before-full-ci.json",
+        "artifacts.json": "captures/evidence-pr4564-successful-core/artifacts.json"
+      },
+      "boundary": "Ordinary core success with Node unit tests skipped; the separately labelled central attempt on the same actual checkout failed the A00 manifest."
+    },
+    "centralQualification": {
+      "source": "session-results.json",
+      "jsonPointer": "/pendingQualification/centralFullCi"
     }
+  },
+  "postCentralCorrections": {
+    "observedAt": "2026-10-04T15:15:38.263Z",
+    "sourceMapCapture": "captures/post-central-corrections.json",
+    "finalMain": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+    "finalMainTree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+    "valueInventory": {
+      "pr": 4565,
+      "source": {
+        "commit": "52bde3173ae86e01cd9fb1d1a8cb01764eb024cb",
+        "tree": "874fca7633c61df1f28817db1a6aefae3b0acbf2",
+        "clean": true
+      },
+      "summary": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "capture": "captures/a00-abi-correction/run.json",
+      "tests": "captures/a00-abi-correction/tests.tap",
+      "scope": "Four source-hash replacements only in planning/contracts/value-abi/current-js-inventory.json; all non-hash sections identical. No generator, runtime or test changes."
+    },
+    "diagnosticHistory": [
+      {
+        "stage": "partial caller correction",
+        "source": {
+          "commit": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+          "tree": "9ae5666621febc7564f5a0c6b5391f97ae674ffa",
+          "clean": true
+        },
+        "publishedCommit": "2b585992be1367528c1d5a100af2e1c27e022118",
+        "summary": {
+          "tests": 10,
+          "suites": 0,
+          "pass": 9,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "status": "failed",
+        "capture": "captures/a00-diagnostic-correction/run.json",
+        "tests": "captures/a00-diagnostic-correction/tests.tap",
+        "remainingAtThisStage": "Two delegate count literals were replaced; the separate CS0103 caller in semantic/model-scopes.js still failed confinement."
+      },
+      {
+        "stage": "complete reviewed caller correction",
+        "pr": 4566,
+        "source": {
+          "commit": "7132306bc9d86b691cd11529c1c7a48900dee075",
+          "tree": "0547f7787aff8f12bc9cb9081bb5db6d0277557e",
+          "clean": true
+        },
+        "publishedCommit": "cf0d5621cabca85fddc5ba6b56761e472ac153a9",
+        "summary": {
+          "tests": 31,
+          "suites": 0,
+          "pass": 31,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "status": "passed",
+        "capture": "captures/a00-diagnostic-correction-final/run.json",
+        "tests": "captures/a00-diagnostic-correction-final/tests.tap",
+        "scope": "The third CS0103 literal now uses the existing DiagnosticId.CS0103 constant. No catalog, contract-test or diagnostic-output change."
+      }
+    ],
+    "boundary": "Both implementation PRs merged with ordinary PR/main core success. The historical partial diagnostic failure remains retained, and these focused successes do not constitute a rerun or pass of central full-ci."
+  },
+  "postCentralA00": {
+    "schemaVersion": 1,
+    "kind": "post-central-correction-a00-manifest",
+    "startedAt": "2026-10-04T15:13:08.252644Z",
+    "sourceBefore": {
+      "commit": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+      "tree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+      "clean": true
+    },
+    "argv": [
+      "node",
+      "scripts/planning/run-tests.js",
+      "--area",
+      "A00",
+      "--",
+      "--test-reporter=tap"
+    ],
+    "limits": "Existing manifest runner acquires the shared run slot, applies limitedEnv and --test-concurrency=1.",
+    "finishedAt": "2026-10-04T15:14:36.567885Z",
+    "sourceAfter": {
+      "commit": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+      "tree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+      "clean": true
+    },
+    "exitCode": 1,
+    "summary": {
+      "tests": 465,
+      "suites": 0,
+      "pass": 464,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "status": "failed",
+    "capture": "captures/post-central-a00/run.json",
+    "tests": "captures/post-central-a00/tests.tap",
+    "remainingFailure": {
+      "test": "A00 root provider manifest guards new sites",
+      "file": "tests/a00-04-execution.test.js",
+      "message": "Undocumented root site execution/frame-roots.js:roots:1"
+    },
+    "environmentObservation": {
+      "capture": "captures/post-central-local-environment.json",
+      "observedAt": "2026-10-04T15:17:42.470358+00:00",
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64",
+      "scope": "Post-validation local runtime observation, not an initial environment attestation or hosted result."
+    },
+    "qualificationBoundary": "A failed local A00-only manifest run on the clean recorded 20-delivery source, not a full-ci rerun or passing qualification. The earlier 317-test integration and fuzz/PE campaigns retain their 18-PR d64188af source."
+  },
+  "rootProviderOwnerProposal": {
+    "status": "final-unapplied-owner-proposal",
+    "implemented": false,
+    "owner": "codex-p4-abi",
+    "task": "SF-A00-T01.4",
+    "issue": 1035,
+    "issueUrl": "https://github.com/wieslawsoltes/SharpForge/issues/1035",
+    "reservationCapture": "captures/full-ci-37210639599-reservation-summary.json",
+    "patch": {
+      "path": "captures/full-ci-37210639599-root-provider-owner-proposal.patch.txt",
+      "bytes": 21233,
+      "sha256": "e317a7ab3b57dcc5364f154b816c97c1b66eddd6021045214befaf49d3aabe52"
+    },
+    "metadata": {
+      "path": "captures/full-ci-37210639599-root-provider-owner-proposal.json",
+      "bytes": 5087,
+      "sha256": "83c9e546c95c00f7b940dc8d6db095c8fa8a30d32f4d6b32bedeb54309cd9ad8"
+    },
+    "paths": [
+      "planning/contracts/gc-roots.md",
+      "planning/contracts/gc-roots-sites.json",
+      "tests/a00-04-execution.test.js"
+    ],
+    "scope": "Document the shared frame-root visitor, callback and retired-frame ownership; align the inventory with all 12 current literal sites. Replace the obsolete >=13 assertion with exact reviewed inventory row equality plus seven required common-provider IDs; preserve both negative new-file and new-subdirectory checks. No runtime, scanner, ABI or safepoint changes.",
+    "review": {
+      "reviewer": "/root/a00_gaps/evidence_review",
+      "status": "no-remaining-source-blocker",
+      "reviewedPatchSha256": "e317a7ab3b57dcc5364f154b816c97c1b66eddd6021045214befaf49d3aabe52",
+      "observedAt": "2026-10-04T15:16:09+00:00",
+      "correction": "CIL initialization records retain both fault references and wait-task references.",
+      "scope": "Source-only review of docs, exact inventory, test changes and proposal identities; no application, scanner execution or product tests."
+    },
+    "applicationCheck": {
+      "status": "applies-cleanly",
+      "command": [
+        "git",
+        "apply",
+        "--check",
+        "/dev/shm/p4-validation/full-ci-37210639599-root-provider-owner-proposal.patch.txt"
+      ],
+      "cwd": "/dev/shm/sharpforge-p4",
+      "checkedWorkingHead": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+      "meaning": "Patch application preflight only; patch was not applied and no product test was executed.",
+      "exitCode": 0,
+      "observedAt": "2026-10-04T15:14:54+00:00"
+    },
+    "productTests": "not-run",
+    "builds": "not-run",
+    "boundary": "Unapplied reserved-owner proposal for review, not an implementation or passing test result. The existing owner must resolve the scope before application and serial validation."
+  },
+  "archivalReview": {
+    "branch": "codex/p4-central-evidence",
+    "base": {
+      "local": "a0cc5465fa4b2e6cccc369b5a5d6215b5fa2fd01",
+      "published": "23a91b16cf70b04d5943776697e45abf202c65d2",
+      "tree": "530a187444514fd9940ba2eb00e3af43c2deb3ab",
+      "parents": [
+        "c9bda180705db8d4efebdec0023df3d31667a2a7",
+        "fedb9a894608693d2250fd5be04f3c0fc51682f6"
+      ]
+    },
+    "sourceMapCapture": "captures/post-central-corrections.json",
+    "frozenEvidencePullRequest": 4564,
+    "frozenEvidenceHead": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+    "purpose": "Separate archival review of retained failures, subsequent merged corrections and remaining work. The base combines frozen evidence with the recorded 20-delivery source; its existence is not qualification of the combined archive.",
+    "policy": "Do not modify the frozen PR4564 head or labels, and do not merge it as passing qualification. This report update is an archival review record; no new product test/build or full-ci result is implied."
+  },
+  "latestStatus": {
+    "status": "remaining-work-incomplete",
+    "mergedImplementationPRs": 20,
+    "draftImplementationPRs": [
+      4547
+    ],
+    "implementationMain": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+    "implementationTree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+    "centralQualification": "failed-attempt-1-no-rerun",
+    "latestLocalA00": "failed-464-of-465-passed",
+    "historicalSourceScope": "The earlier 317-test integration, 714755 ms bounded PE duration and 256-case eight-target campaign are scoped to the 18-PR source. The latter remains unsupported with six unsupported cases.",
+    "remaining": "Root-provider owner integration and subsequent exact-source qualification remain unresolved, together with TAP/DAP owner dependencies, R015 workflow/archive obligations, unsupported profiles and required product/platform evidence.",
+    "historicalValidationSource": "d64188af91f03d02041316bdde2ee64fd0634be0",
+    "sourceScope": "Recorded 20-delivery source at the correction ledger observation; not an assertion about a later moving main head."
   }
 }

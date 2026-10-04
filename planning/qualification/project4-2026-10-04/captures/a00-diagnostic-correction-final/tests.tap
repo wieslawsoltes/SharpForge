@@ -1,0 +1,196 @@
+TAP version 13
+# Subtest: A00-T14 literal scanning inspects code without interpreting documentation or regular expressions
+ok 1 - A00-T14 literal scanning inspects code without interpreting documentation or regular expressions
+  ---
+  duration_ms: 1.780137
+  type: 'test'
+  ...
+# Subtest: A00-T14 the diagnostic seam shares the existing catalog and every descriptor id
+ok 2 - A00-T14 the diagnostic seam shares the existing catalog and every descriptor id
+  ---
+  duration_ms: 2.870288
+  type: 'test'
+  ...
+# Subtest: A00-T14 identifier constants are frozen and prototype-safe
+ok 3 - A00-T14 identifier constants are frozen and prototype-safe
+  ---
+  duration_ms: 0.545011
+  type: 'test'
+  ...
+# Subtest: A00-T14 inspected parser ids do not acquire compiler message descriptors
+ok 4 - A00-T14 inspected parser ids do not acquire compiler message descriptors
+  ---
+  duration_ms: 0.204921
+  type: 'test'
+  ...
+# Subtest: A00-T14 identifiers preserve formatting, missing arguments and profile mappings
+ok 5 - A00-T14 identifiers preserve formatting, missing arguments and profile mappings
+  ---
+  duration_ms: 0.201897
+  type: 'test'
+  ...
+# Subtest: A00-T14 every compiler identifier reference resolves to the exact catalog id
+ok 6 - A00-T14 every compiler identifier reference resolves to the exact catalog id
+  ---
+  duration_ms: 13.405563
+  type: 'test'
+  ...
+# Subtest: A00-T14 compiler diagnostic id literals are confined to the existing catalog
+ok 7 - A00-T14 compiler diagnostic id literals are confined to the existing catalog
+  ---
+  duration_ms: 329.731985
+  type: 'test'
+  ...
+# Subtest: SF-A02 corpus: diagnostic-spans fixtures match Roslyn
+ok 8 - SF-A02 corpus: diagnostic-spans fixtures match Roslyn
+  ---
+  duration_ms: 134.960693
+  type: 'test'
+  ...
+# Subtest: SF-A02-T07 argument-count diagnostics sit on the invoked name
+ok 9 - SF-A02-T07 argument-count diagnostics sit on the invoked name
+  ---
+  duration_ms: 7.768599
+  type: 'test'
+  ...
+# Subtest: SF-A02-B01 gates: async on the name or the keyword, discard patterns, dynamic before C\# 4
+ok 10 - SF-A02-B01 gates: async on the name or the keyword, discard patterns, dynamic before C\# 4
+  ---
+  duration_ms: 28.909051
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 pins: every program has a current Roslyn pin
+ok 11 - SF-A02-T38 pins: every program has a current Roslyn pin
+  ---
+  duration_ms: 1.398316
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of classes-and-statements
+ok 12 - SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of classes-and-statements
+  ---
+  duration_ms: 103.224139
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of structs-interfaces-enums
+ok 13 - SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of structs-interfaces-enums
+  ---
+  duration_ms: 38.557423
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of generics-lambdas-patterns
+ok 14 - SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of generics-lambdas-patterns
+  ---
+  duration_ms: 33.728675
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of inheritance-and-statics
+ok 15 - SF-A02-T38 Roslyn agreement: symbols, types, converted types, constants and declarations of inheritance-and-statics
+  ---
+  duration_ms: 14.885013
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 Roslyn agreement in total: more than 1400 answers, none differs, 8 are unanswered
+ok 16 - SF-A02-T38 Roslyn agreement in total: more than 1400 answers, none differs, 8 are unanswered
+  ---
+  duration_ms: 59.609006
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 a program outside the execution profile is answered from the semantic analysis
+ok 17 - SF-A02-T38 a program outside the execution profile is answered from the semantic analysis
+  ---
+  duration_ms: 35.088103
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 conversions, constants and diagnostics
+ok 18 - SF-A02-T38 conversions, constants and diagnostics
+  ---
+  duration_ms: 21.97122
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 lookupSymbols and speculative binding over the semantic analysis
+ok 19 - SF-A02-T38 lookupSymbols and speculative binding over the semantic analysis
+  ---
+  duration_ms: 13.501769
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 data flow and control flow of a region
+ok 20 - SF-A02-T38 data flow and control flow of a region
+  ---
+  duration_ms: 12.488549
+  type: 'test'
+  ...
+# Subtest: SF-A02-T38 the same queries on a program of the execution profile: both models answer alike
+ok 21 - SF-A02-T38 the same queries on a program of the execution profile: both models answer alike
+  ---
+  duration_ms: 15.47547
+  type: 'test'
+  ...
+# Subtest: A02-T39 the model is built over a successful bound compilation
+ok 22 - A02-T39 the model is built over a successful bound compilation
+  ---
+  duration_ms: 9.254154
+  type: 'test'
+  ...
+# Subtest: A02-T39 getSymbolInfo returns locals, parameters, fields, properties, methods and types
+ok 23 - A02-T39 getSymbolInfo returns locals, parameters, fields, properties, methods and types
+  ---
+  duration_ms: 1.813736
+  type: 'test'
+  ...
+# Subtest: A02-T39 getTypeInfo and getConstantValue describe expressions
+ok 24 - A02-T39 getTypeInfo and getConstantValue describe expressions
+  ---
+  duration_ms: 24.318101
+  type: 'test'
+  ...
+# Subtest: A02-T39 getDeclaredSymbol maps declarations to symbols
+ok 25 - A02-T39 getDeclaredSymbol maps declarations to symbols
+  ---
+  duration_ms: 0.55112
+  type: 'test'
+  ...
+# Subtest: A02-T39 lookupSymbols lists what is in scope at a position
+ok 26 - A02-T39 lookupSymbols lists what is in scope at a position
+  ---
+  duration_ms: 1.480647
+  type: 'test'
+  ...
+# Subtest: A02-T39 speculative binding evaluates an expression in the scope of a position without touching the compilation
+ok 27 - A02-T39 speculative binding evaluates an expression in the scope of a position without touching the compilation
+  ---
+  duration_ms: 2.738846
+  type: 'test'
+  ...
+# Subtest: A02-T39 flow results are available per method
+ok 28 - A02-T39 flow results are available per method
+  ---
+  duration_ms: 0.186945
+  type: 'test'
+  ...
+# Subtest: A02-T35 data-flow analysis of a region reports reads, writes and what flows in and out
+ok 29 - A02-T35 data-flow analysis of a region reports reads, writes and what flows in and out
+  ---
+  duration_ms: 1.637077
+  type: 'test'
+  ...
+# Subtest: A02-T35 control-flow analysis of a region reports exits and end-point reachability
+ok 30 - A02-T35 control-flow analysis of a region reports exits and end-point reachability
+  ---
+  duration_ms: 1.318799
+  type: 'test'
+  ...
+# Subtest: A02-T35 region selection picks the statements of one list and fails cleanly otherwise
+ok 31 - A02-T35 region selection picks the statements of one list and fails cleanly otherwise
+  ---
+  duration_ms: 0.52325
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3118.392722

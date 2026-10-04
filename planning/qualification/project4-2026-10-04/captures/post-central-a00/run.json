@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "kind": "post-central-correction-a00-manifest",
+  "startedAt": "2026-10-04T15:13:08.252644Z",
+  "sourceBefore": {
+    "commit": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+    "tree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+    "clean": true
+  },
+  "argv": [
+    "node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "A00",
+    "--",
+    "--test-reporter=tap"
+  ],
+  "limits": "Existing manifest runner acquires the shared run slot, applies limitedEnv and --test-concurrency=1.",
+  "finishedAt": "2026-10-04T15:14:36.567885Z",
+  "sourceAfter": {
+    "commit": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+    "tree": "8c7eaa338498404e3feed163913c5a94d852ac18",
+    "clean": true
+  },
+  "exitCode": 1,
+  "summary": {
+    "tests": 465,
+    "suites": 0,
+    "pass": 464,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "status": "failed"
+}

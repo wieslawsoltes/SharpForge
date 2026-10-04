@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "kind": "unapplied-a00-root-provider-owner-proposal",
+  "status": "proposal-only",
+  "applied": false,
+  "createdAt": "2026-10-04T15:07:30+00:00",
+  "ownerReviewRequired": true,
+  "source": {
+    "commit": "33c30d7361feaca46642c833e6f9394996b09e1e",
+    "tree": "e081cf2c538baa5d049b1a422fd77c1be26809d0",
+    "pullRequestHead": "c9bda180705db8d4efebdec0023df3d31667a2a7",
+    "base": "fbb0b086e05720eeacb954800a4a690a644313cd"
+  },
+  "failedQualification": {
+    "runId": 37210639599,
+    "attempt": 1,
+    "jobId": 111460940659,
+    "test": "A00 root provider manifest guards new sites",
+    "failure": "Undocumented root site execution/frame-roots.js:roots:1"
+  },
+  "reservation": {
+    "owner": "codex-p4-abi",
+    "task": "SF-A00-T01.4",
+    "issue": 1035,
+    "claimCommit": "d659289e3d34951f4cb44f5f0818c08a3648bb6a",
+    "expires": "2026-10-05T06:08:14.662Z",
+    "evidence": "/dev/shm/p4-validation/full-ci-37210639599-reservation-summary.json",
+    "sha256": "bec0869759790666781fd531df0d2c3ae248ceaeda3734b11edd7f7b9202770e",
+    "documentationScope": "Preserved planning/contracts/gc-* reservation; no implicit release from narrower activePaths."
+  },
+  "proposal": {
+    "path": "/dev/shm/p4-validation/full-ci-37210639599-root-provider-owner-proposal.patch.txt",
+    "bytes": 21233,
+    "sha256": "e317a7ab3b57dcc5364f154b816c97c1b66eddd6021045214befaf49d3aabe52",
+    "changedFiles": [
+      {
+        "path": "planning/contracts/gc-roots.md",
+        "originalGitBlob": "9b9a0d98e8cabca098846d18e91f9f1330aa0f8b",
+        "proposedGitBlob": "b0fbe936621910cc389b70b2cb5e046feac635b0",
+        "originalSha256": "c0380481857ae098e9800b3a6903498c0e35722233f3908e4375f91c39c3f5f2",
+        "proposedSha256": "bb27b0f8bfd6ea485a05cf631d5780badb58ee50a10637040e997b0a8c871df8"
+      },
+      {
+        "path": "planning/contracts/gc-roots-sites.json",
+        "originalGitBlob": "f7fc0c3bbc793c70592a3b7cd06e09c3db30b89c",
+        "proposedGitBlob": "c4e85e076dc5057b6030e0a025ca5ff6625dc26a",
+        "originalSha256": "96f43624c0e28088449bf8950e5b89e4be141c44730e7cf935dd3fe16f2af562",
+        "proposedSha256": "bd8d544a55e66b4a6235974399d58c80e6f599fef54ac8a2c657c89b8f09f543"
+      },
+      {
+        "path": "tests/a00-04-execution.test.js",
+        "originalGitBlob": "51c22a9052fbc974cf524b433252fecc4ec3fa9d",
+        "proposedGitBlob": "c43cc2cd30a2f91b24f08b28b4101d6109ba1441",
+        "originalSha256": "226c7b21d0f58ce65f4dbf482bf7ca8680d8e0bfdc9b7ea5418d1cc1394408f0",
+        "proposedSha256": "5cfda8aa46901e56b49be862e7f33d151f6699a5c380335ee8f28c0845c48522"
+      }
+    ]
+  },
+  "inventory": {
+    "previousRecordedSites": 16,
+    "currentSourceSites": 12,
+    "addedIds": [
+      "execution/frame-roots.js:roots:1",
+      "execution/frame-roots.js:roots:2"
+    ],
+    "removedIds": [
+      "cil-vm.js:roots:2",
+      "cil-vm.js:roots:3",
+      "cil-vm.js:roots:4",
+      "vm.js:roots:2",
+      "vm.js:roots:3",
+      "vm.js:roots:4"
+    ],
+    "extraction": "Read-only git source text; same literal-site pattern, ordering, line and ASCII excerpt rules; repository scanner not executed."
+  },
+  "testChange": {
+    "replacement": "Exact reviewed inventory row equality plus seven required common-provider IDs; no lowered minimum.",
+    "preservedNegativeCases": [
+      "undocumented provider in a new runtime file",
+      "undocumented provider in a new runtime subdirectory"
+    ]
+  },
+  "checks": {
+    "applicationCheck": {
+      "status": "applies-cleanly",
+      "command": [
+        "git",
+        "apply",
+        "--check",
+        "/dev/shm/p4-validation/full-ci-37210639599-root-provider-owner-proposal.patch.txt"
+      ],
+      "cwd": "/dev/shm/sharpforge-p4",
+      "checkedWorkingHead": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+      "meaning": "Patch application preflight only; patch was not applied and no product test was executed.",
+      "exitCode": 0,
+      "observedAt": "2026-10-04T15:14:54+00:00"
+    },
+    "productTests": "not-run",
+    "builds": "not-run",
+    "runtimeOrScannerChanges": false,
+    "reservedSourcePathsUnchanged": [
+      "planning/contracts/gc-roots.md",
+      "planning/contracts/gc-roots-sites.json",
+      "tests/a00-04-execution.test.js"
+    ],
+    "independentSourceReview": {
+      "reviewer": "/root/a00_gaps/evidence_review",
+      "status": "no-remaining-source-blocker",
+      "reviewedPatchSha256": "e317a7ab3b57dcc5364f154b816c97c1b66eddd6021045214befaf49d3aabe52",
+      "observedAt": "2026-10-04T15:16:09+00:00",
+      "correction": "CIL initialization records retain both fault references and wait-task references.",
+      "scope": "Source-only review of docs, exact inventory, test changes and proposal identities; no application, scanner execution or product tests."
+    }
+  },
+  "limitations": [
+    "Unapplied reserved-owner proposal, not an implementation or passing test result.",
+    "Full row equality intentionally requires review when recorded line numbers or source excerpts drift.",
+    "No ABI, runtime, scanner or safepoint changes are proposed."
+  ]
+}

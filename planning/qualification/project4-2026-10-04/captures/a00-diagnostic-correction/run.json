@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-04T15:01:48.527932Z",
+  "finishedAt": "2026-10-04T15:01:50.384293Z",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a00-diagnostic-ids.test.js",
+    "tests/compiler-diagnostic-spans.test.js"
+  ],
+  "sourceBefore": {
+    "commit": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+    "tree": "9ae5666621febc7564f5a0c6b5391f97ae674ffa",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "eeeb6d3caba8767b494a7b2fb44aea807a9e4b1c",
+    "tree": "9ae5666621febc7564f5a0c6b5391f97ae674ffa",
+    "clean": true
+  },
+  "exitCode": 1,
+  "summary": {
+    "tests": 10,
+    "suites": 0,
+    "pass": 9,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "status": "failed"
+}

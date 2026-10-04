@@ -1,0 +1,270 @@
+diff --git a/planning/contracts/gc-roots.md b/planning/contracts/gc-roots.md
+index 9b9a0d98e8cabca098846d18e91f9f1330aa0f8b..b0fbe936621910cc389b70b2cb5e046feac635b0 100644
+--- a/planning/contracts/gc-roots.md
++++ b/planning/contracts/gc-roots.md
+@@ -1,40 +1,94 @@
+ # GC roots: current providers and obligations
+ 
+-The non-moving collector calls ManagedHeap.rootProvider, pins, extra allocation roots and strong handles. Weak handles do not keep objects alive. Scanning must retain interior byref owners, not merely the byref wrapper. Inventory IDs below enumerate every literal `roots(` site (definitions and calls), including modules added outside the original issue's list. `node scripts/planning/check-root-providers.js` fails on a new undocumented occurrence; update this document after reviewing source extraction. Source hashes are not a substitute for this audit.
++The non-moving collector calls the installed `ManagedHeap.rootProvider` with a
++visitor and also consumes an iterable returned by that provider. Pins, explicit
++allocation roots and strong handles remain separate root inputs. Weak handles do
++not keep objects alive. Interior byrefs retain their containing object, not merely
++the byref wrapper.
+ 
+-| Category | File and function | Roots |
++Both VM `roots()` methods now delegate to `rootValues` in
++`execution/frame-roots.js`. That iterable wrapper and the collection visitor share
++`visitVMRoots`, `visitSchedulerRoots` and the frame/continuation visitors. This
++inventory documents those existing implementations; it does not add a root or
++change a safepoint kind, ABI, snapshot format or supported callback operation.
++
++## Root categories
++
++| Category | File and function | Retained roots |
+ | --- | --- | --- |
+-| Active frames | vm.js VirtualMachine.roots | locals, evaluation stack, return value, unwind return/fault, caught/pending/current faults |
+-| CIL active frames | cil-vm.js CilVirtualMachine.roots | args, locals, stack, constructor return object, byref owners, exceptions |
+-| Source exception continuations | execution/source-eh.js roots | unwind return values/faults, current/caught frame exceptions, VM current/pending faults |
+-| Static/cache | both VM roots | statics, cached constant references, interned strings and runtime type objects |
+-| Runtime type objects | execution/tokens.js runtimeTypeRoots | canonical System.Type objects, scoped to the VM and cleared on stop |
+-| Interned strings | execution/strings.js StringInternPool.roots / stringRoots | strong pool entries only; weak pool entries do not root referents |
+-| Parked contexts | scheduler.js CooperativeScheduler.roots | task/thread/delegate, wait task, frame state, resume fault; terminal contexts excluded |
+-| Pending tasks | scheduler.js CooperativeScheduler.roots | waiting task, dependencies, error reference |
+-| Platform | platform.js ManagedPlatform.roots | app, windows, singletons, pending objects, host and animation providers |
+-| Pending operations | host-operations.js HostOperations.roots | task ref and captured managed argument/receiver roots |
+-| Handles and temporaries | heap.js ManagedHeap.collect | strong handles, withRoots pins, explicit allocation roots and object input edges |
+-| Debugger snapshots | snapshot.js copyExecution; VM snapshot/restore | independent copied heap records, not additional live roots; same-owner restore only |
++| Source active frames | execution/frame-roots.js `visitVMRoots`, `slots` | Shared evaluation stack, frame locals, return value and current/pending faults. |
++| CIL active frames | execution/frame-roots.js `visitFrameRoots` | Evaluation stack, arguments, locals, constructor return object and continuation state. |
++| Byrefs and edited scalar slots | execution/frame-roots.js `offer`, `slots`, `values` | Byref owners and managed handles survive host/debugger edits; declared scalar metadata alone is not proof that a slot is root-free. |
++| Exception continuations | execution/frame-roots.js `visitFrameContinuations` | Unwind return values and error references, current/caught frame exceptions and pending continuations. |
++| Source EH compatibility | execution/source-eh.js `roots`; execution/frame-roots.js `continuationRootValues` | Iterable continuation and current/pending fault references; the VMs use the shared inventory directly. |
++| Static and constant caches | execution/frame-roots.js `visitVMRoots` | Both VM static stores and the source VM's cached constant references. |
++| CIL type initialization | execution/static-init.js `initializationRoots` | Initialization fault references and wait-task references retained by initialization records. |
++| Runtime type objects | execution/tokens.js `runtimeTypeRoots` | Canonical System.Type objects scoped to the VM and cleared on stop. |
++| Interned strings | execution/strings.js `StringInternPool.roots`, `stringRoots` | Strong pool entries only; weak pool entries do not root referents. |
++| Interrupted synchronous callbacks | execution/frame-roots.js `visitSchedulerRoots` | Callback-scope stacks, frames, return values and current/pending faults, visited even when normal scheduling is disabled. |
++| Parked contexts | execution/frame-roots.js `visitSchedulerRoots`; scheduler.js `CooperativeScheduler.roots` | Task/thread/delegate, return value, wait task, resume fault and parked frame/stack state; terminal contexts are excluded. |
++| Pending tasks | execution/frame-roots.js `visitSchedulerRoots` | Nonterminal task references, dependencies and error references. |
++| Retired frames awaiting flush | execution/frame-roots.js `visitVMRoots`; execution/frame-pool.js `visitRetiredFrames` | Frames still observable by return/EH callbacks remain roots until the instruction flush; cleared free frames do not retain values. |
++| Platform | platform.js `ManagedPlatform.roots` | Application, windows, singletons, pending objects, host operations and animation roots. |
++| Pending operations | host-operations.js `HostOperations.roots` | Task reference and captured managed argument/receiver roots. |
++| Handles and temporaries | heap.js `ManagedHeap.collect`; execution/heap-collection.js `collectHeap` | Strong handles, withRoots pins, explicit allocation roots and object input edges. |
++| Debugger snapshots | snapshot.js `copyExecution`; VM snapshot/restore | Independent copied heap records, not additional live roots; same-owner restore only. |
+ 
+-Snapshot heap copies retain old contents without making them current live objects. Restoring preserves monotonically increasing generation and frame identities. Native/Rust stacks must publish roots explicitly before yielding; no conservative native stack scan is specified.
++Evaluation stacks remain conservative. The precise slot path skips only canonical
++scalar values accepted by the live-value guard, and never skips a managed handle
++or owned byref merely because the declared type is scalar. Retired frames are
++visited conservatively until their enclosing instruction has finished observing
++them. Callback scopes are visited before the scheduler-enabled check.
+ 
+-## Reviewed sites
+-- `cil-vm.js:roots:1` — packages/runtime/src/cil-vm.js:30; ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new
+-- `cil-vm.js:roots:2` — packages/runtime/src/cil-vm.js:38; reInitialized(entry.ownerToken); } *roots(){yield* this.platform?.roots()??[
+-- `cil-vm.js:roots:3` — packages/runtime/src/cil-vm.js:38; ); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots
+-- `cil-vm.js:roots:4` — packages/runtime/src/cil-vm.js:38; orm?.roots()??[];yield* this.scheduler?.roots()??[]; const root=function*(v)
+-- `host-operations.js:roots:1` — packages/runtime/src/host-operations.js:5; ;this.revision=0;this.closed=false;} *roots(){for(const op of this.active.valu
+-- `platform.js:roots:1` — packages/runtime/src/platform.js:17; perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots
+-- `platform.js:roots:2` — packages/runtime/src/platform.js:17; } *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y
+-- `platform.js:roots:3` — packages/runtime/src/platform.js:17; erations.roots();yield* this.animations.roots();yield this.application;yield* th
+-- `scheduler.js:roots:1` — packages/runtime/src/scheduler.js:26;  this.contexts.get(this.currentId);} *roots(){if(!this.enabled)return;for(cons
+-- `vm.js:roots:1` — packages/runtime/src/vm.js:15; ptions);this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi
+-- `vm.js:roots:2` — packages/runtime/src/vm.js:19; ;this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??[
+-- `vm.js:roots:3` — packages/runtime/src/vm.js:19; ); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots
+-- `vm.js:roots:4` — packages/runtime/src/vm.js:19; orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield
++`installRootProvider` preserves the no-argument iterable contract used by heap
++diagnostics. It calls `vm.roots()` when no visitor is supplied, precise roots are
++disabled, or the host has replaced the VM's roots method. Otherwise it supplies the
++shared visitor inventory without first materializing all scalar frame slots.
+ 
+-- `execution/source-eh.js:roots:1` — extracted source EH provider retains unwind values, fault references and caught exceptions; vm.js delegates to it. Scheduler frames continue to retain the same references while parked.
++Snapshot heap copies retain old contents without making them current live
++objects. Restoring preserves monotonically increasing generation and frame
++identities. Native/Rust stacks must publish roots explicitly before yielding; no
++conservative native stack scan is specified.
+ 
+-- `execution/strings.js:roots:1` — StringInternPool.roots yields strong interned references; weak interning deliberately yields none.
+-- `execution/strings.js:roots:2` — stringRoots delegates to the pool for both VM root scans; stop clears the pool and snapshots retain its managed handles.
++## Reviewed literal sites
++
++The following IDs enumerate every literal `roots(` definition and call in runtime
++JavaScript. They count source occurrences, not independent root categories. The
++shared visitors reduced duplicate VM occurrences, so no historical minimum count
++is a contract. `gc-roots-sites.json` records the reviewed file, line and source
++excerpt for this same inventory.
++
++`node scripts/planning/check-root-providers.js` rejects a new undocumented
++occurrence, including one in a new subdirectory. Its `--generate` option updates
++only the JSON inventory; it does not review or update this document. Source hashes
++are not a substitute for reviewing category and lifetime changes.
++
++The A00 fixture compares every scanner result with its checked-in JSON record,
++including the line and source excerpt. Moving a literal site or changing its
++nearby source therefore requires an explicit reviewed JSON refresh. Tests never
++rewrite this evidence.
++
++- `cil-vm.js:roots:1` — `packages/runtime/src/cil-vm.js:47`;
++  `CilVirtualMachine.roots` delegates to the shared `rootValues` iterable.
++- `execution/frame-roots.js:roots:1` — `packages/runtime/src/execution/frame-roots.js:131`;
++  `visitVMRoots` consumes the platform provider before scheduler and VM roots.
++- `execution/frame-roots.js:roots:2` — `packages/runtime/src/execution/frame-roots.js:195`;
++  `installRootProvider` preserves the iterable, disabled-precision and host-override fallback.
++- `execution/source-eh.js:roots:1` — `packages/runtime/src/execution/source-eh.js:10`;
++  the compatibility generator retains shared continuation roots and VM fault references.
++- `execution/strings.js:roots:1` — `packages/runtime/src/execution/strings.js:23`;
++  `StringInternPool.roots` yields strong interned references and excludes weak entries.
++- `execution/strings.js:roots:2` — `packages/runtime/src/execution/strings.js:37`;
++  `stringRoots` delegates to the current VM's string pool.
++- `host-operations.js:roots:1` — `packages/runtime/src/host-operations.js:5`;
++  `HostOperations.roots` retains active task references and captured roots.
++- `platform.js:roots:1` — `packages/runtime/src/platform.js:14`;
++  `ManagedPlatform.roots` composes platform state and its subordinate providers.
++- `platform.js:roots:2` — `packages/runtime/src/platform.js:14`;
++  the platform delegates to active host-operation roots.
++- `platform.js:roots:3` — `packages/runtime/src/platform.js:14`;
++  the platform delegates to animation roots.
++- `scheduler.js:roots:1` — `packages/runtime/src/scheduler.js:32`;
++  `CooperativeScheduler.roots` delegates to the shared `schedulerRootValues` iterable.
++- `vm.js:roots:1` — `packages/runtime/src/vm.js:23`;
++  `VirtualMachine.roots` delegates to the shared `rootValues` iterable.
+diff --git a/planning/contracts/gc-roots-sites.json b/planning/contracts/gc-roots-sites.json
+index f7fc0c3bbc793c70592a3b7cd06e09c3db30b89c..c4e85e076dc5057b6030e0a025ca5ff6625dc26a 100644
+--- a/planning/contracts/gc-roots-sites.json
++++ b/planning/contracts/gc-roots-sites.json
+@@ -2,31 +2,25 @@
+   {
+     "id": "cil-vm.js:roots:1",
+     "file": "packages/runtime/src/cil-vm.js",
+-    "line": 27,
+-    "provider": "ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new "
++    "line": 47,
++    "provider": "try.ownerToken,'static-method'); } *roots(){yield* rootValues(this);} get "
+   },
+   {
+-    "id": "cil-vm.js:roots:2",
+-    "file": "packages/runtime/src/cil-vm.js",
+-    "line": 35,
+-    "provider": "try.ownerToken,'static-method'); } *roots(){yield* this.platform?.roots()??["
++    "id": "execution/frame-roots.js:roots:1",
++    "file": "packages/runtime/src/execution/frame-roots.js",
++    "line": 131,
++    "provider": "precise = true) { values(vm.platform?.roots(), visit); visitSchedulerRoots(v"
+   },
+   {
+-    "id": "cil-vm.js:roots:3",
+-    "file": "packages/runtime/src/cil-vm.js",
+-    "line": 35,
+-    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
+-  },
+-  {
+-    "id": "cil-vm.js:roots:4",
+-    "file": "packages/runtime/src/cil-vm.js",
+-    "line": 35,
+-    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[]; const root=function*(v)"
++    "id": "execution/frame-roots.js:roots:2",
++    "file": "packages/runtime/src/execution/frame-roots.js",
++    "line": 195,
++    "provider": "| vm.roots !== originalRoots) return vm.roots(); visitVMRoots(vm, visit); "
+   },
+   {
+     "id": "execution/source-eh.js:roots:1",
+     "file": "packages/runtime/src/execution/source-eh.js",
+-    "line": 6,
++    "line": 10,
+     "provider": "urn value or fault. */ export function* roots(vm) { for (const frame of vm.fra"
+   },
+   {
+@@ -50,49 +44,31 @@
+   {
+     "id": "platform.js:roots:1",
+     "file": "packages/runtime/src/platform.js",
+-    "line": 17,
++    "line": 14,
+     "provider": "perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots"
+   },
+   {
+     "id": "platform.js:roots:2",
+     "file": "packages/runtime/src/platform.js",
+-    "line": 17,
++    "line": 14,
+     "provider": "} *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y"
+   },
+   {
+     "id": "platform.js:roots:3",
+     "file": "packages/runtime/src/platform.js",
+-    "line": 17,
++    "line": 14,
+     "provider": "erations.roots();yield* this.animations.roots();yield this.application;yield* th"
+   },
+   {
+     "id": "scheduler.js:roots:1",
+     "file": "packages/runtime/src/scheduler.js",
+-    "line": 26,
+-    "provider": " this.contexts.get(this.currentId);} *roots(){if(!this.enabled)return;for(cons"
++    "line": 32,
++    "provider": " this.contexts.get(this.currentId);} *roots(){yield* schedulerRootValues(this)"
+   },
+   {
+     "id": "vm.js:roots:1",
+     "file": "packages/runtime/src/vm.js",
+-    "line": 18,
+-    "provider": "mage)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi"
+-  },
+-  {
+-    "id": "vm.js:roots:2",
+-    "file": "packages/runtime/src/vm.js",
+-    "line": 22,
+-    "provider": ";this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??["
+-  },
+-  {
+-    "id": "vm.js:roots:3",
+-    "file": "packages/runtime/src/vm.js",
+-    "line": 22,
+-    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
+-  },
+-  {
+-    "id": "vm.js:roots:4",
+-    "file": "packages/runtime/src/vm.js",
+-    "line": 22,
+-    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield"
++    "line": 23,
++    "provider": "izeSourceVM(this,image,options); } *roots(){yield* rootValues(this);} call"
+   }
+ ]
+diff --git a/tests/a00-04-execution.test.js b/tests/a00-04-execution.test.js
+index 51c22a9052fbc974cf524b433252fecc4ec3fa9d..c43cc2cd30a2f91b24f08b28b4101d6109ba1441 100644
+--- a/tests/a00-04-execution.test.js
++++ b/tests/a00-04-execution.test.js
+@@ -46,7 +46,29 @@
+   assert.throws(()=>validate(definition,cyclic,options),{code:'SCHEMA_LIMIT'});
+ });
+ test('A00 force GC at safepoints in both actual VMs',async()=>{const results=await runSafepointFixtures();assert.equal(results.length,14);assert(results.every(r=>r.collections>r.polls));});
+-test('A00 root provider manifest guards new sites',()=>{assert(checkRootProviders().length>=13);const root=mkdtempSync(join(tmpdir(),'sf-roots-'));try{mkdirSync(join(root,'packages/runtime/src'),{recursive:true});mkdirSync(join(root,'planning/contracts'),{recursive:true});writeFileSync(join(root,'packages/runtime/src/new.js'),'class NewProvider { *roots(){ yield null; } }');writeFileSync(join(root,'planning/contracts/gc-roots.md'),'');assert.throws(()=>checkRootProviders(root),/Undocumented root site new.js/);writeFileSync(join(root,'planning/contracts/gc-roots.md'),'`new.js:roots:1`');assert.equal(checkRootProviders(root).length,1);mkdirSync(join(root,'packages/runtime/src/execution'));writeFileSync(join(root,'packages/runtime/src/execution/parked.js'),'function roots(){}');assert.throws(()=>checkRootProviders(root),/execution\/parked.js/);}finally{rmSync(root,{recursive:true,force:true});}});
++test('A00 root provider manifest guards new sites', () => {
++  const sites = checkRootProviders();
++  const reviewed = JSON.parse(readFileSync(new URL('../planning/contracts/gc-roots-sites.json', import.meta.url), 'utf8'));
++  assert.deepEqual(sites, reviewed, 'Root sites must match the reviewed source inventory');
++  const ids = new Set(sites.map(site => site.id));
++  for (const id of [
++    'cil-vm.js:roots:1', 'vm.js:roots:1', 'platform.js:roots:1', 'host-operations.js:roots:1',
++    'scheduler.js:roots:1', 'execution/frame-roots.js:roots:1', 'execution/frame-roots.js:roots:2',
++  ]) assert(ids.has(id), `Required root provider ${id} is missing`);
++  const root = mkdtempSync(join(tmpdir(), 'sf-roots-'));
++  try {
++    mkdirSync(join(root, 'packages/runtime/src'), { recursive: true });
++    mkdirSync(join(root, 'planning/contracts'), { recursive: true });
++    writeFileSync(join(root, 'packages/runtime/src/new.js'), 'class NewProvider { *roots(){ yield null; } }');
++    writeFileSync(join(root, 'planning/contracts/gc-roots.md'), '');
++    assert.throws(() => checkRootProviders(root), /Undocumented root site new.js/);
++    writeFileSync(join(root, 'planning/contracts/gc-roots.md'), '`new.js:roots:1`');
++    assert.equal(checkRootProviders(root).length, 1);
++    mkdirSync(join(root, 'packages/runtime/src/execution'));
++    writeFileSync(join(root, 'packages/runtime/src/execution/parked.js'), 'function roots(){}');
++    assert.throws(() => checkRootProviders(root), /execution\/parked.js/);
++  } finally { rmSync(root, { recursive: true, force: true }); }
++});
+ for(const [engine,make]of Object.entries(engines)){
+  test('A00 '+engine+' snapshot projection, owner isolation and stable frame IDs',()=>{const c=build('int[] data = new int[] {1,2}; Console.WriteLine(data[0]);'),vm=make(c),other=make(c);try{vm.runSlice({instructionBudget:2,timeBudgetMs:100});const snapshot=vm.snapshot(),record=snapshotRecord(vm);validate(schema('pause-snapshot'),record);const initial=vm.frameId;vm.run();vm.restore(snapshot);assert(vm.frameId>=initial);assert.throws(()=>other.restore(snapshot),/another/);assert.throws(()=>validate(schema('pause-snapshot'),{...record,frames:[{id:-1}]}),{code:'SCHEMA_INVALID'});}finally{vm.stop();other.stop();}});
+  test('A00 '+engine+' faults, nested finally and fatal budget transfer',()=>{for(const [text,message,budget]of [['throw new Exception("catchable");','catchable',undefined],['try { throw new Exception("first"); } finally { throw new Exception("second"); }','second',undefined],['while(true) { }','Program exceeded its instruction budget',10]]){const vm=make(build('using System;'+text));try{if(budget)vm.options.maxInstructions=budget;vm.run();assert.equal(vm.state,'faulted');assert.equal(vm.fault.message,message);const record=faultRecord(vm);validate(schema('fault'),record);assert.equal(record.uncatchable,!!budget);const modern=faultRecord(vm,undefined,{schemaVersion:2});validate(schema('fault-v2'),modern,{supportedVersion:2});assert.deepEqual(modern,{...record,schemaVersion:2});}finally{vm.stop();}}});

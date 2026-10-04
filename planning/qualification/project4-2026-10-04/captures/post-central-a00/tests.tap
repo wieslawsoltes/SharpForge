@@ -1,0 +1,2821 @@
+Discovered 42 Node test files and 0 Python suites in 1 area manifests. Node reports executed test counts below.
+Running Node tests for A00.
+TAP version 13
+# Subtest: comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+ok 1 - comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+  ---
+  duration_ms: 5.744992
+  type: 'test'
+  ...
+# Subtest: actual fake API release/reclaim comments preserve their owner at a fixed clock
+ok 2 - actual fake API release/reclaim comments preserve their owner at a fixed clock
+  ---
+  duration_ms: 11.468684
+  type: 'test'
+  ...
+# Subtest: same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+ok 3 - same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+  ---
+  duration_ms: 0.740748
+  type: 'test'
+  ...
+# Subtest: different generations with distinct timestamps can be ordered without comment IDs
+ok 4 - different generations with distinct timestamps can be ordered without comment IDs
+  ---
+  duration_ms: 0.420788
+  type: 'test'
+  ...
+# Subtest: mixed-generation ties without complete IDs preserve input order and report ambiguity
+ok 5 - mixed-generation ties without complete IDs preserve input order and report ambiguity
+  ---
+  duration_ms: 0.695682
+  type: 'test'
+  ...
+# Subtest: chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+ok 6 - chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+  ---
+  duration_ms: 1.111213
+  type: 'test'
+  ...
+# Subtest: malformed structured records remain visible and never clear established ownership
+ok 7 - malformed structured records remain visible and never clear established ownership
+  ---
+  duration_ms: 3.12995
+  type: 'test'
+  ...
+# Subtest: malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+ok 8 - malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+  ---
+  duration_ms: 0.669303
+  type: 'test'
+  ...
+# Subtest: mismatched generation and agent events cannot change current owner or locks
+ok 9 - mismatched generation and agent events cannot change current owner or locks
+  ---
+  duration_ms: 0.899001
+  type: 'test'
+  ...
+# Subtest: overlapping and reused claims are rejected without adopting their owner or dropping locks
+ok 10 - overlapping and reused claims are rejected without adopting their owner or dropping locks
+  ---
+  duration_ms: 0.493515
+  type: 'test'
+  ...
+# Subtest: duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+ok 11 - duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+  ---
+  duration_ms: 0.543649
+  type: 'test'
+  ...
+# Subtest: a copied event from another task or issue cannot release the current claim
+ok 12 - a copied event from another task or issue cannot release the current claim
+  ---
+  duration_ms: 0.303226
+  type: 'test'
+  ...
+# Subtest: field history remains informational even when its data resembles claim or release events
+ok 13 - field history remains informational even when its data resembles claim or release events
+  ---
+  duration_ms: 0.466275
+  type: 'test'
+  ...
+# Subtest: malformed field history and comment containers fail visibly without throwing or inventing owners
+ok 14 - malformed field history and comment containers fail visibly without throwing or inventing owners
+  ---
+  duration_ms: 0.608194
+  type: 'test'
+  ...
+# Subtest: a stale explicit reconciler cannot release a replacement agent or its locks
+ok 15 - a stale explicit reconciler cannot release a replacement agent or its locks
+  ---
+  duration_ms: 20.328463
+  type: 'test'
+  ...
+# Subtest: a stale heartbeat cannot mutate a new generation reusing the same agent ID
+ok 16 - a stale heartbeat cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 14.056787
+  type: 'test'
+  ...
+# Subtest: a stale lock cannot mutate a new generation reusing the same agent ID
+ok 17 - a stale lock cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 10.504037
+  type: 'test'
+  ...
+# Subtest: a stale unlock cannot mutate a new generation reusing the same agent ID
+ok 18 - a stale unlock cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 2.812203
+  type: 'test'
+  ...
+# Subtest: a stale release cannot mutate a new generation reusing the same agent ID
+ok 19 - a stale release cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 9.429627
+  type: 'test'
+  ...
+# Subtest: a disappeared claim reports stale ownership and removes only the temporary operation mutex
+ok 20 - a disappeared claim reports stale ownership and removes only the temporary operation mutex
+  ---
+  duration_ms: 4.479207
+  type: 'test'
+  ...
+# Subtest: an expired-lease reaper cannot label or report a replacement generation
+ok 21 - an expired-lease reaper cannot label or report a replacement generation
+  ---
+  duration_ms: 2.573622
+  type: 'test'
+  ...
+# Subtest: a same-generation heartbeat between inspection and mutex acquisition remains valid
+ok 22 - a same-generation heartbeat between inspection and mutex acquisition remains valid
+  ---
+  duration_ms: 1.569897
+  type: 'test'
+  ...
+# Subtest: a task identity change cannot redirect an operation to an unrelated mutex namespace
+ok 23 - a task identity change cannot redirect an operation to an unrelated mutex namespace
+  ---
+  duration_ms: 0.981002
+  type: 'test'
+  ...
+# Subtest: missing claim generation fails before acquiring a mutex or invoking the action
+ok 24 - missing claim generation fails before acquiring a mutex or invoking the action
+  ---
+  duration_ms: 1.590557
+  type: 'test'
+  ...
+# Subtest: 50 seeded concurrent claim races have exactly one owner and no loser field writes
+ok 25 - 50 seeded concurrent claim races have exactly one owner and no loser field writes
+  ---
+  duration_ms: 1223.089944
+  type: 'test'
+  ...
+# Subtest: project pagination reads/writes items beyond 100 and clears all lease fields
+ok 26 - project pagination reads/writes items beyond 100 and clears all lease fields
+  ---
+  duration_ms: 17.591781
+  type: 'test'
+  ...
+# Subtest: unknown project fields, choices and invalid lease inputs fail without acquiring ownership
+ok 27 - unknown project fields, choices and invalid lease inputs fail without acquiring ownership
+  ---
+  duration_ms: 1.412856
+  type: 'test'
+  ...
+# Subtest: parents, closed tasks, and tasks not Ready cannot be claimed
+ok 28 - parents, closed tasks, and tasks not Ready cannot be claimed
+  ---
+  duration_ms: 0.994711
+  type: 'test'
+  ...
+# Subtest: owner-only heartbeat extends exact expiry; comments are throttled per hour
+ok 29 - owner-only heartbeat extends exact expiry; comments are throttled per hour
+  ---
+  duration_ms: 3.369391
+  type: 'test'
+  ...
+# Subtest: shared lock races name holder, release frees locks and branch remains untouched
+ok 30 - shared lock races name holder, release frees locks and branch remains untouched
+  ---
+  duration_ms: 132.107186
+  type: 'test'
+  ...
+# Subtest: expired lease remains owned; reaper is idempotent; reconciler must provide audit reason
+ok 31 - expired lease remains owned; reaper is idempotent; reconciler must provide audit reason
+  ---
+  duration_ms: 4.385354
+  type: 'test'
+  ...
+# Subtest: partial project update keeps claim reserved and explicit release recovers
+ok 32 - partial project update keeps claim reserved and explicit release recovers
+  ---
+  duration_ms: 1.39496
+  type: 'test'
+  ...
+# Subtest: failed lock field update is recovered by scanning lock refs on release
+ok 33 - failed lock field update is recovered by scanning lock refs on release
+  ---
+  duration_ms: 2.469969
+  type: 'test'
+  ...
+# Subtest: secondary rate limit retry is bounded and hard failures preserve distinct exit code
+ok 34 - secondary rate limit retry is bounded and hard failures preserve distinct exit code
+  ---
+  duration_ms: 1.105825
+  type: 'test'
+  ...
+# Subtest: audit reconstructs complete claim-heartbeat-lock-unlock-release and flags missing claim
+ok 35 - audit reconstructs complete claim-heartbeat-lock-unlock-release and flags missing claim
+  ---
+  duration_ms: 3.626159
+  type: 'test'
+  ...
+# Subtest: fake REST/GraphQL transport also exposes an actual HTTP server
+ok 36 - fake REST/GraphQL transport also exposes an actual HTTP server
+  ---
+  duration_ms: 35.217742
+  type: 'test'
+  ...
+# Subtest: GraphQL resource limits shrink page size and surface permanent node overflow
+ok 37 - GraphQL resource limits shrink page size and surface permanent node overflow
+  ---
+  duration_ms: 0.703584
+  type: 'test'
+  ...
+# Subtest: recorded live Project 4 fields support text, date and single-select projections
+ok 38 - recorded live Project 4 fields support text, date and single-select projections
+  ---
+  duration_ms: 9.822765
+  type: 'test'
+  ...
+# Subtest: reaper discovers an expired authoritative claim after the first Agent field write failed
+ok 39 - reaper discovers an expired authoritative claim after the first Agent field write failed
+  ---
+  duration_ms: 0.980561
+  type: 'test'
+  ...
+# Subtest: ambiguous DELETE response never deletes a replacement mutex owner
+ok 40 - ambiguous DELETE response never deletes a replacement mutex owner
+  ---
+  duration_ms: 0.981022
+  type: 'test'
+  ...
+# Subtest: transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed
+ok 41 - transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed
+  ---
+  duration_ms: 1.060548
+  type: 'test'
+  ...
+# Subtest: partial GraphQL mutation data with rate-limit errors is never replayed
+ok 42 - partial GraphQL mutation data with rate-limit errors is never replayed
+  ---
+  duration_ms: 0.387359
+  type: 'test'
+  ...
+# Subtest: the exact release boundary changes effective edges without changing parent or sibling requirements
+ok 43 - the exact release boundary changes effective edges without changing parent or sibling requirements
+  ---
+  duration_ms: 4.643074
+  type: 'test'
+  ...
+# Subtest: the repository policy matches captured release metadata without asserting actual readiness
+ok 44 - the repository policy matches captured release metadata without asserting actual readiness
+  ---
+  duration_ms: 94.631681
+  type: 'test'
+  ...
+# Subtest: descendants retain the scoped boundary and their own prerequisites
+ok 45 - descendants retain the scoped boundary and their own prerequisites
+  ---
+  duration_ms: 3.025777
+  type: 'test'
+  ...
+# Subtest: direct and other-ancestor declarations of the excluded target remain required
+ok 46 - direct and other-ancestor declarations of the excluded target remain required
+  ---
+  duration_ms: 0.806666
+  type: 'test'
+  ...
+# Subtest: an independent transitive route still requires Rust and its own prerequisites
+ok 47 - an independent transitive route still requires Rust and its own prerequisites
+  ---
+  duration_ms: 0.486004
+  type: 'test'
+  ...
+# Subtest: own and retained inherited prerequisites still need closed issues and merged main evidence
+ok 48 - own and retained inherited prerequisites still need closed issues and merged main evidence
+  ---
+  duration_ms: 1.432114
+  type: 'test'
+  ...
+# Subtest: all contracts on the release, its ancestors and retained dependency ancestry remain mandatory
+ok 49 - all contracts on the release, its ancestors and retained dependency ancestry remain mandatory
+  ---
+  duration_ms: 1.879462
+  type: 'test'
+  ...
+# Subtest: malformed and duplicate scope policies fail without partially applying valid exclusions
+ok 50 - malformed and duplicate scope policies fail without partially applying valid exclusions
+  ---
+  duration_ms: 1.696513
+  type: 'test'
+  ...
+# Subtest: absent policy children leave subsets valid while present stale identities or edges fail closed
+ok 51 - absent policy children leave subsets valid while present stale identities or edges fail closed
+  ---
+  duration_ms: 1.515828
+  type: 'test'
+  ...
+# Subtest: scopes do not conceal unresolved raw references, parent cycles or required dependency cycles
+ok 52 - scopes do not conceal unresolved raw references, parent cycles or required dependency cycles
+  ---
+  duration_ms: 0.656144
+  type: 'test'
+  ...
+# Subtest: DAG exports use effective edges while rollups preserve the full organizational ancestry
+ok 53 - DAG exports use effective edges while rollups preserve the full organizational ancestry
+  ---
+  duration_ms: 10.190946
+  type: 'test'
+  ...
+# Subtest: ready-label sync shares scope decisions and stale policy matches prevent all writes
+ok 54 - ready-label sync shares scope decisions and stale policy matches prevent all writes
+  ---
+  duration_ms: 1.788479
+  type: 'test'
+  ...
+# Subtest: the claim readiness hook preserves mandatory blockers before creating simulated ownership
+ok 55 - the claim readiness hook preserves mandatory blockers before creating simulated ownership
+  ---
+  duration_ms: 6.15167
+  type: 'test'
+  ...
+# Subtest: readiness command aliases load the same repository policy for snapshot input
+ok 56 - readiness command aliases load the same repository policy for snapshot input
+  ---
+  duration_ms: 531.653413
+  type: 'test'
+  ...
+# Subtest: evidence task contracts retain legacy area IDs and accept release task and bug IDs
+ok 57 - evidence task contracts retain legacy area IDs and accept release task and bug IDs
+  ---
+  duration_ms: 4.422939
+  type: 'test'
+  ...
+# Subtest: release default capture requires an explicit area before running a command
+ok 58 - release default capture requires an explicit area before running a command
+  ---
+  duration_ms: 86.542743
+  type: 'test'
+  ...
+# Subtest: release capture CLI records the explicitly selected area and verifies its real TAP evidence
+ok 59 - release capture CLI records the explicitly selected area and verifies its real TAP evidence
+  ---
+  duration_ms: 416.944737
+  type: 'test'
+  ...
+# Subtest: release task handoff recaptures explicit commands and replays from a clean clone
+ok 60 - release task handoff recaptures explicit commands and replays from a clean clone
+  ---
+  duration_ms: 762.514417
+  type: 'test'
+  ...
+# Subtest: digest binds TAP bytes, commit, command and exact target/status proof
+ok 61 - digest binds TAP bytes, commit, command and exact target/status proof
+  ---
+  duration_ms: 0.564891
+  type: 'test'
+  ...
+# Subtest: capture refuses dirty passing changes over a failing committed tree before running any command
+ok 62 - capture refuses dirty passing changes over a failing committed tree before running any command
+  ---
+  duration_ms: 44.480549
+  type: 'test'
+  ...
+# Subtest: capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+ok 63 - capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+  ---
+  duration_ms: 297.569881
+  type: 'test'
+  ...
+# Subtest: only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+ok 64 - only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+  ---
+  duration_ms: 449.51917
+  type: 'test'
+  ...
+# Subtest: skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+ok 65 - skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+  ---
+  duration_ms: 901.304175
+  type: 'test'
+  ...
+# Subtest: unknown and unsupported proofs retain their reasons and never verify as pass
+ok 66 - unknown and unsupported proofs retain their reasons and never verify as pass
+  ---
+  duration_ms: 489.511524
+  type: 'test'
+  ...
+# Subtest: fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+ok 67 - fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+  ---
+  duration_ms: 2010.149676
+  type: 'test'
+  ...
+# Subtest: resume detects command mutations and stops before later commands
+ok 68 - resume detects command mutations and stops before later commands
+  ---
+  duration_ms: 617.471464
+  type: 'test'
+  ...
+# Subtest: a real failed target remains verified failure and cannot be relabeled pass
+ok 69 - a real failed target remains verified failure and cannot be relabeled pass
+  ---
+  duration_ms: 221.681184
+  type: 'test'
+  ...
+# Subtest: incomplete or contradictory TAP statistics never qualify a passing target
+ok 70 - incomplete or contradictory TAP statistics never qualify a passing target
+  ---
+  duration_ms: 0.594974
+  type: 'test'
+  ...
+# Subtest: V8 parses escaped, multiline and re-export imports without executing modules or matching comments
+ok 71 - V8 parses escaped, multiline and re-export imports without executing modules or matching comments
+  ---
+  duration_ms: 122.545539
+  type: 'test'
+  ...
+# Subtest: graph resolves workspaces, recursive outside-root-directory dependencies and every JS including package bins
+ok 72 - graph resolves workspaces, recursive outside-root-directory dependencies and every JS including package bins
+  ---
+  duration_ms: 370.27725
+  type: 'test'
+  ...
+# Subtest: reverse consumer selection covers transitive compiler runtime debugger, docs none, deleted modules conservative
+ok 73 - reverse consumer selection covers transitive compiler runtime debugger, docs none, deleted modules conservative
+  ---
+  duration_ms: 1.5786
+  type: 'test'
+  ...
+# Subtest: real impacted-test CLI awaits asynchronous manifest discovery and selects actual consumers
+ok 74 - real impacted-test CLI awaits asynchronous manifest discovery and selects actual consumers
+  ---
+  duration_ms: 3407.797453
+  type: 'test'
+  ...
+# Subtest: contract removal needs label and relevant version bump; append passes; duplicate IDs never pass
+ok 75 - contract removal needs label and relevant version bump; append passes; duplicate IDs never pass
+  ---
+  duration_ms: 1.55836
+  type: 'test'
+  ...
+# Subtest: schema constraints cannot hide as additive keys or exclusive-union array appends; revisions cannot be repointed
+ok 76 - schema constraints cannot hide as additive keys or exclusive-union array appends; revisions cannot be repointed
+  ---
+  duration_ms: 0.545802
+  type: 'test'
+  ...
+# Subtest: string-pattern unions preserve complete task predicates without a label or version bump
+ok 77 - string-pattern unions preserve complete task predicates without a label or version bump
+  ---
+  duration_ms: 1.684044
+  type: 'test'
+  ...
+# Subtest: string-pattern union proofs reject altered branches, constraints, references and invalid patterns
+ok 78 - string-pattern union proofs reject altered branches, constraints, references and invalid patterns
+  ---
+  duration_ms: 1.05515
+  type: 'test'
+  ...
+# Subtest: gate emits every check including failure and stops on prior cancellation
+ok 79 - gate emits every check including failure and stops on prior cancellation
+  ---
+  duration_ms: 114.63127
+  type: 'test'
+  ...
+# Subtest: golden comparison reports precise assembly bytecode syntax and distribution drift including removals
+ok 80 - golden comparison reports precise assembly bytecode syntax and distribution drift including removals
+  ---
+  duration_ms: 2.513874
+  type: 'test'
+  ...
+# Subtest: seam label rejects rewritten lock even when a newly generated lock matches the new output
+ok 81 - seam label rejects rewritten lock even when a newly generated lock matches the new output
+  ---
+  duration_ms: 46.774705
+  type: 'test'
+  ...
+# Subtest: lossless syntax golden retains tree structure without red parent cycles or allocation IDs
+ok 82 - lossless syntax golden retains tree structure without red parent cycles or allocation IDs
+  ---
+  duration_ms: 88.272145
+  type: 'test'
+  ...
+# Subtest: captured release, legacy and portfolio-parent bodies satisfy the template
+ok 83 - captured release, legacy and portfolio-parent bodies satisfy the template
+  ---
+  duration_ms: 4.538199
+  type: 'test'
+  ...
+# Subtest: metadata supports actual plain, bold, numeric and linked header declarations
+ok 84 - metadata supports actual plain, bold, numeric and linked header declarations
+  ---
+  duration_ms: 0.485924
+  type: 'test'
+  ...
+# Subtest: area requires a declared complete area token, including for release IDs
+ok 85 - area requires a declared complete area token, including for release IDs
+  ---
+  duration_ms: 0.506835
+  type: 'test'
+  ...
+# Subtest: the explicit legacy workstream write scope remains a valid area declaration
+ok 86 - the explicit legacy workstream write scope remains a valid area declaration
+  ---
+  duration_ms: 0.229437
+  type: 'test'
+  ...
+# Subtest: Parent must contain its own issue token within the metadata field
+ok 87 - Parent must contain its own issue token within the metadata field
+  ---
+  duration_ms: 0.382672
+  type: 'test'
+  ...
+# Subtest: owned paths require a body declaration and share the primary-path grammar
+ok 88 - owned paths require a body declaration and share the primary-path grammar
+  ---
+  duration_ms: 0.407759
+  type: 'test'
+  ...
+# Subtest: required sections and issue-number diagnostics remain enforced
+ok 89 - required sections and issue-number diagnostics remain enforced
+  ---
+  duration_ms: 0.37418
+  type: 'test'
+  ...
+# Subtest: work IDs and duplicate subtasks retain their existing validation
+ok 90 - work IDs and duplicate subtasks retain their existing validation
+  ---
+  duration_ms: 0.359147
+  type: 'test'
+  ...
+# Subtest: CLI succeeds for a captured release and reports each invalid issue number
+ok 91 - CLI succeeds for a captured release and reports each invalid issue number
+  ---
+  duration_ms: 130.100962
+  type: 'test'
+  ...
+# Subtest: actual Owns declarations exclude workstream scope and shared-hot-file cautions
+ok 92 - actual Owns declarations exclude workstream scope and shared-hot-file cautions
+  ---
+  duration_ms: 2.404273
+  type: 'test'
+  ...
+# Subtest: actual area and release Write only declarations expose their overlapping publish paths
+ok 93 - actual area and release Write only declarations expose their overlapping publish paths
+  ---
+  duration_ms: 0.988062
+  type: 'test'
+  ...
+# Subtest: plain and bold ownership labels retain contiguous code paths and periods inside paths
+ok 94 - plain and bold ownership labels retain contiguous code paths and periods inside paths
+  ---
+  duration_ms: 0.23139
+  type: 'test'
+  ...
+# Subtest: primary lists stop at prose or a newline and do not infer paths from other fields
+ok 95 - primary lists stop at prose or a newline and do not infer paths from other fields
+  ---
+  duration_ms: 3.584998
+  type: 'test'
+  ...
+# Subtest: mixed declaration styles collide on primary paths but not on explanatory broad scopes
+ok 96 - mixed declaration styles collide on primary paths but not on explanatory broad scopes
+  ---
+  duration_ms: 0.297577
+  type: 'test'
+  ...
+# Subtest: explicit paths overrides remain authoritative including an empty override
+ok 97 - explicit paths overrides remain authoritative including an empty override
+  ---
+  duration_ms: 0.291038
+  type: 'test'
+  ...
+# Subtest: only a common declared lock covering both primary paths serializes a collision
+ok 98 - only a common declared lock covering both primary paths serializes a collision
+  ---
+  duration_ms: 0.373599
+  type: 'test'
+  ...
+# Subtest: closed issues, epics and parents remain excluded from open-leaf collisions
+ok 99 - closed issues, epics and parents remain excluded from open-leaf collisions
+  ---
+  duration_ms: 0.224119
+  type: 'test'
+  ...
+# Subtest: the CLI fails on a real primary collision and passes distinct primary declarations
+ok 100 - the CLI fails on a real primary collision and passes distinct primary declarations
+  ---
+  duration_ms: 131.604643
+  type: 'test'
+  ...
+# Subtest: release snapshots preserve actual inline and legacy parent metadata formats
+ok 101 - release snapshots preserve actual inline and legacy parent metadata formats
+  ---
+  duration_ms: 10.11875
+  type: 'test'
+  ...
+# Subtest: explicit valid parent identity wins over link number and unresolved numbers stay absent
+ok 102 - explicit valid parent identity wins over link number and unresolved numbers stay absent
+  ---
+  duration_ms: 0.287563
+  type: 'test'
+  ...
+# Subtest: release area fallback retains the actual release and does not infer labels or project fields
+ok 103 - release area fallback retains the actual release and does not infer labels or project fields
+  ---
+  duration_ms: 0.411344
+  type: 'test'
+  ...
+# Subtest: only metadata before the first section supplies release area and parent
+ok 104 - only metadata before the first section supplies release area and parent
+  ---
+  duration_ms: 0.234275
+  type: 'test'
+  ...
+# Subtest: normalization is deterministic and preserves captured project and merged PR evidence
+ok 105 - normalization is deterministic and preserves captured project and merged PR evidence
+  ---
+  duration_ms: 2.636174
+  type: 'test'
+  ...
+# Subtest: release leaves inherit parent prerequisites and still require merged dependency evidence
+ok 106 - release leaves inherit parent prerequisites and still require merged dependency evidence
+  ---
+  duration_ms: 1.205722
+  type: 'test'
+  ...
+# Subtest: normalized release leaves roll up through their area parents without manufacturing qualification
+ok 107 - normalized release leaves roll up through their area parents without manufacturing qualification
+  ---
+  duration_ms: 0.874145
+  type: 'test'
+  ...
+# Subtest: the captured release rows agree with their existing declared areas and parent identities
+ok 108 - the captured release rows agree with their existing declared areas and parent identities
+  ---
+  duration_ms: 52.475673
+  type: 'test'
+  ...
+# Subtest: paginated backlog export resolves a release parent from a later issue page
+ok 109 - paginated backlog export resolves a release parent from a later issue page
+  ---
+  duration_ms: 1.13643
+  type: 'test'
+  ...
+# Subtest: dependency grammar accepts legacy Markdown and multiline requirements, rejects malformed IDs
+ok 110 - dependency grammar accepts legacy Markdown and multiline requirements, rejects malformed IDs
+  ---
+  duration_ms: 2.865411
+  type: 'test'
+  ...
+# Subtest: dependency IDs retain malformed suffixes instead of resolving a valid prefix
+ok 111 - dependency IDs retain malformed suffixes instead of resolving a valid prefix
+  ---
+  duration_ms: 0.61933
+  type: 'test'
+  ...
+# Subtest: dependency delimiters preserve Markdown, prose punctuation and child IDs
+ok 112 - dependency delimiters preserve Markdown, prose punctuation and child IDs
+  ---
+  duration_ms: 0.302234
+  type: 'test'
+  ...
+# Subtest: dependency link destinations do not contribute work-ID candidates
+ok 113 - dependency link destinations do not contribute work-ID candidates
+  ---
+  duration_ms: 0.257127
+  type: 'test'
+  ...
+# Subtest: diamond readiness requires actual merged evidence; cycles and unresolved IDs block
+ok 114 - diamond readiness requires actual merged evidence; cycles and unresolved IDs block
+  ---
+  duration_ms: 1.199663
+  type: 'test'
+  ...
+# Subtest: leaf readiness inherits parent requirements; explicit contracts require qualified versions
+ok 115 - leaf readiness inherits parent requirements; explicit contracts require qualified versions
+  ---
+  duration_ms: 0.481037
+  type: 'test'
+  ...
+# Subtest: task identity cross-checks branch, body, and project field; missing identity fails
+ok 116 - task identity cross-checks branch, body, and project field; missing identity fails
+  ---
+  duration_ms: 0.565841
+  type: 'test'
+  ...
+# Subtest: ownership rejects cross-area writes and accepts only enumerated exceptions or held locks
+ok 117 - ownership rejects cross-area writes and accepts only enumerated exceptions or held locks
+  ---
+  duration_ms: 30.747534
+  type: 'test'
+  ...
+# Subtest: hot-file growth budgets enforce both net lines and byte growth
+ok 118 - hot-file growth budgets enforce both net lines and byte growth
+  ---
+  duration_ms: 0.404515
+  type: 'test'
+  ...
+# Subtest: catalog has all 30 areas, explicit overlap accounting, deterministic CODEOWNERS
+ok 119 - catalog has all 30 areas, explicit overlap accounting, deterministic CODEOWNERS
+  ---
+  duration_ms: 94.80788
+  type: 'test'
+  ...
+# Subtest: path collisions require common declared lock, distinct siblings pass
+ok 120 - path collisions require common declared lock, distinct siblings pass
+  ---
+  duration_ms: 0.983324
+  type: 'test'
+  ...
+# Subtest: backlog lint names each violating issue and duplicate ID
+ok 121 - backlog lint names each violating issue and duplicate ID
+  ---
+  duration_ms: 1.367139
+  type: 'test'
+  ...
+# Subtest: bootstrap apply is idempotent and dry-run writes nothing; incompatible fields fail
+ok 122 - bootstrap apply is idempotent and dry-run writes nothing; incompatible fields fail
+  ---
+  duration_ms: 1.424403
+  type: 'test'
+  ...
+# Subtest: snapshot preserves merged evidence and deterministic order; graph yields critical path
+ok 123 - snapshot preserves merged evidence and deterministic order; graph yields critical path
+  ---
+  duration_ms: 8.65547
+  type: 'test'
+  ...
+# Subtest: dependency ancestors cannot bypass readiness; absent or cyclic parents fail closed
+ok 124 - dependency ancestors cannot bypass readiness; absent or cyclic parents fail closed
+  ---
+  duration_ms: 0.321823
+  type: 'test'
+  ...
+# Subtest: ready-label sync changes only mismatched current labels and second run is a no-op
+ok 125 - ready-label sync changes only mismatched current labels and second run is a no-op
+  ---
+  duration_ms: 1.688962
+  type: 'test'
+  ...
+# Subtest: directory ownership intersects children and live project lock fields serialize overlaps
+ok 126 - directory ownership intersects children and live project lock fields serialize overlaps
+  ---
+  duration_ms: 0.413207
+  type: 'test'
+  ...
+# Subtest: project item snapshot preserves numeric parity including zero
+ok 127 - project item snapshot preserves numeric parity including zero
+  ---
+  duration_ms: 0.832713
+  type: 'test'
+  ...
+# Subtest: ownership CLI checks deleted rename source and contracts must exist in default-branch tree
+ok 128 - ownership CLI checks deleted rename source and contracts must exist in default-branch tree
+  ---
+  duration_ms: 120.466796
+  type: 'test'
+  ...
+# Subtest: two actual Git branches each append a distinct contract at the same ID; combined tree fails
+ok 129 - two actual Git branches each append a distinct contract at the same ID; combined tree fails
+  ---
+  duration_ms: 48.767484
+  type: 'test'
+  ...
+# Subtest: released framework and bytecode IDs are unchanged
+ok 130 - released framework and bytecode IDs are unchanged
+  ---
+  duration_ms: 54.284101
+  type: 'test'
+  ...
+# Subtest: golden checker reports the first changed id and accepts appends
+ok 131 - golden checker reports the first changed id and accepts appends
+  ---
+  duration_ms: 103.540904
+  type: 'test'
+  ...
+# Subtest: reserved contributions have the same IDs in either load order
+ok 132 - reserved contributions have the same IDs in either load order
+  ---
+  duration_ms: 1.237559
+  type: 'test'
+  ...
+# Subtest: every catalog area has a stable public reservation in either load order
+ok 133 - every catalog area has a stable public reservation in either load order
+  ---
+  duration_ms: 4.373557
+  type: 'test'
+  ...
+# Subtest: an unreserved area rolls back contributions at the final reserved boundary
+ok 134 - an unreserved area rolls back contributions at the final reserved boundary
+  ---
+  duration_ms: 0.522477
+  type: 'test'
+  ...
+# Subtest: legacy contribution modules validate as a single transaction
+ok 135 - legacy contribution modules validate as a single transaction
+  ---
+  duration_ms: 15.988386
+  type: 'test'
+  ...
+# Subtest: duplicate type rolls back the entire contribution
+ok 136 - duplicate type rolls back the entire contribution
+  ---
+  duration_ms: 0.344536
+  type: 'test'
+  ...
+# Subtest: duplicate member rolls back the entire contribution
+ok 137 - duplicate member rolls back the entire contribution
+  ---
+  duration_ms: 0.281053
+  type: 'test'
+  ...
+# Subtest: unknown owner rolls back the entire contribution
+ok 138 - unknown owner rolls back the entire contribution
+  ---
+  duration_ms: 0.218701
+  type: 'test'
+  ...
+# Subtest: unknown parameter rolls back the entire contribution
+ok 139 - unknown parameter rolls back the entire contribution
+  ---
+  duration_ms: 0.327381
+  type: 'test'
+  ...
+# Subtest: block overflow rolls back the entire contribution
+ok 140 - block overflow rolls back the entire contribution
+  ---
+  duration_ms: 0.236638
+  type: 'test'
+  ...
+# Subtest: malformed member rolls back the entire contribution
+ok 141 - malformed member rolls back the entire contribution
+  ---
+  duration_ms: 0.163079
+  type: 'test'
+  ...
+# Subtest: cancellation rolls back and separate registries do not leak state
+ok 142 - cancellation rolls back and separate registries do not leak state
+  ---
+  duration_ms: 0.29242
+  type: 'test'
+  ...
+# Subtest: overlapping, negative, duplicate and exhausted reservations reject
+ok 143 - overlapping, negative, duplicate and exhausted reservations reject
+  ---
+  duration_ms: 0.307001
+  type: 'test'
+  ...
+# Subtest: builtin contributions append atomically and never shift framework offsets
+ok 144 - builtin contributions append atomically and never shift framework offsets
+  ---
+  duration_ms: 5.347017
+  type: 'test'
+  ...
+# Subtest: implementation regression gate detects either engine losing a handler
+ok 145 - implementation regression gate detects either engine losing a handler
+  ---
+  duration_ms: 0.368101
+  type: 'test'
+  ...
+# Subtest: every real source/CIL dispatch result meets the committed reachability baseline
+ok 146 - every real source/CIL dispatch result meets the committed reachability baseline
+  ---
+  duration_ms: 1903.966536
+  type: 'test'
+  ...
+# Subtest: released contribution order is pinned while new area order remains independent
+ok 147 - released contribution order is pinned while new area order remains independent
+  ---
+  duration_ms: 2.493254
+  type: 'test'
+  ...
+# Subtest: inventory obligations produce distinct fractions and unknown prevents parent complete
+ok 148 - inventory obligations produce distinct fractions and unknown prevents parent complete
+  ---
+  duration_ms: 12.408304
+  type: 'test'
+  ...
+# Subtest: reopen, stale commit and altered proof each invalidate previous pass
+ok 149 - reopen, stale commit and altered proof each invalidate previous pass
+  ---
+  duration_ms: 1.455659
+  type: 'test'
+  ...
+# Subtest: missing revision, duplicate identities, parent cycles and absent denominator fail closed
+ok 150 - missing revision, duplicate identities, parent cycles and absent denominator fail closed
+  ---
+  duration_ms: 1.395991
+  type: 'test'
+  ...
+# Subtest: report bytes are deterministic, numeric parity updates are changed-only and include zero
+ok 151 - report bytes are deterministic, numeric parity updates are changed-only and include zero
+  ---
+  duration_ms: 2.451923
+  type: 'test'
+  ...
+# Subtest: rollup reads relative inputs from the requested root and invalid artifact paths remain unknown
+ok 152 - rollup reads relative inputs from the requested root and invalid artifact paths remain unknown
+  ---
+  duration_ms: 16.061978
+  type: 'test'
+  ...
+# Subtest: publishing rejects impossible percentages and ambiguous epic targets before project writes
+ok 153 - publishing rejects impossible percentages and ambiguous epic targets before project writes
+  ---
+  duration_ms: 2.698836
+  type: 'test'
+  ...
+# Subtest: ABI fixture empty-array
+ok 154 - ABI fixture empty-array
+  ---
+  duration_ms: 5.510938
+  type: 'test'
+  ...
+# Subtest: ABI fixture identity-and-surrogates
+ok 155 - ABI fixture identity-and-surrogates
+  ---
+  duration_ms: 1.268925
+  type: 'test'
+  ...
+# Subtest: ABI fixture leases
+ok 156 - ABI fixture leases
+  ---
+  duration_ms: 1.017345
+  type: 'test'
+  ...
+# Subtest: ABI fixture million-array
+ok 157 - ABI fixture million-array
+  ---
+  duration_ms: 4913.788843
+  type: 'test'
+  ...
+# Subtest: ABI fixture nan-payloads
+ok 158 - ABI fixture nan-payloads
+  ---
+  duration_ms: 1.056433
+  type: 'test'
+  ...
+# Subtest: ABI fixture scalar-boundaries
+ok 159 - ABI fixture scalar-boundaries
+  ---
+  duration_ms: 2.050473
+  type: 'test'
+  ...
+# Subtest: ABI fixture stale-handle
+ok 160 - ABI fixture stale-handle
+  ---
+  duration_ms: 0.250158
+  type: 'test'
+  ...
+# Subtest: ABI malformed buffers and versions fail with typed diagnostics
+ok 161 - ABI malformed buffers and versions fail with typed diagnostics
+  ---
+  duration_ms: 0.769822
+  type: 'test'
+  ...
+# Subtest: schema scalar negatives agree with codec bounds
+ok 162 - schema scalar negatives agree with codec bounds
+  ---
+  duration_ms: 0.648744
+  type: 'test'
+  ...
+# Subtest: ABI nested structs fail with typed depth limit
+ok 163 - ABI nested structs fail with typed depth limit
+  ---
+  duration_ms: 0.756983
+  type: 'test'
+  ...
+# Subtest: ABI sparse slots and heap data fail before encoding instead of becoming null values
+ok 164 - ABI sparse slots and heap data fail before encoding instead of becoming null values
+  ---
+  duration_ms: 0.907885
+  type: 'test'
+  ...
+# Subtest: ABI floating width and signed zero apply inside structs and heap arrays
+ok 165 - ABI floating width and signed zero apply inside structs and heap arrays
+  ---
+  duration_ms: 0.37453
+  type: 'test'
+  ...
+# Subtest: ABI strong leases keep the retained identity across caller and roots mutations
+ok 166 - ABI strong leases keep the retained identity across caller and roots mutations
+  ---
+  duration_ms: 0.535707
+  type: 'test'
+  ...
+# Subtest: ABI weak leases keep the original identity without rooting a replacement
+ok 167 - ABI weak leases keep the original identity without rooting a replacement
+  ---
+  duration_ms: 0.206063
+  type: 'test'
+  ...
+# Subtest: ABI leases validate the captured tuple and preserve typed stale-handle rejection
+ok 168 - ABI leases validate the captured tuple and preserve typed stale-handle rejection
+  ---
+  duration_ms: 0.393808
+  type: 'test'
+  ...
+# Subtest: ABI fixture empty-array
+ok 169 - ABI fixture empty-array
+  ---
+  duration_ms: 3.599329
+  type: 'test'
+  ...
+# Subtest: ABI fixture identity-and-surrogates
+ok 170 - ABI fixture identity-and-surrogates
+  ---
+  duration_ms: 1.757212
+  type: 'test'
+  ...
+# Subtest: ABI fixture leases
+ok 171 - ABI fixture leases
+  ---
+  duration_ms: 0.820967
+  type: 'test'
+  ...
+# Subtest: ABI fixture million-array
+ok 172 - ABI fixture million-array
+  ---
+  duration_ms: 6378.931952
+  type: 'test'
+  ...
+# Subtest: ABI fixture nan-payloads
+ok 173 - ABI fixture nan-payloads
+  ---
+  duration_ms: 0.878541
+  type: 'test'
+  ...
+# Subtest: ABI fixture scalar-boundaries
+ok 174 - ABI fixture scalar-boundaries
+  ---
+  duration_ms: 2.615198
+  type: 'test'
+  ...
+# Subtest: ABI fixture stale-handle
+ok 175 - ABI fixture stale-handle
+  ---
+  duration_ms: 0.262656
+  type: 'test'
+  ...
+# Subtest: ABI malformed buffers and versions fail with typed diagnostics
+ok 176 - ABI malformed buffers and versions fail with typed diagnostics
+  ---
+  duration_ms: 1.476059
+  type: 'test'
+  ...
+# Subtest: schema scalar negatives agree with codec bounds
+ok 177 - schema scalar negatives agree with codec bounds
+  ---
+  duration_ms: 1.095049
+  type: 'test'
+  ...
+# Subtest: ABI nested structs fail with typed depth limit
+ok 178 - ABI nested structs fail with typed depth limit
+  ---
+  duration_ms: 0.91907
+  type: 'test'
+  ...
+# Subtest: ABI sparse slots and heap data fail before encoding instead of becoming null values
+ok 179 - ABI sparse slots and heap data fail before encoding instead of becoming null values
+  ---
+  duration_ms: 1.25178
+  type: 'test'
+  ...
+# Subtest: ABI floating width and signed zero apply inside structs and heap arrays
+ok 180 - ABI floating width and signed zero apply inside structs and heap arrays
+  ---
+  duration_ms: 0.597438
+  type: 'test'
+  ...
+# Subtest: ABI strong leases keep the retained identity across caller and roots mutations
+ok 181 - ABI strong leases keep the retained identity across caller and roots mutations
+  ---
+  duration_ms: 0.614533
+  type: 'test'
+  ...
+# Subtest: ABI weak leases keep the original identity without rooting a replacement
+ok 182 - ABI weak leases keep the original identity without rooting a replacement
+  ---
+  duration_ms: 0.365297
+  type: 'test'
+  ...
+# Subtest: ABI leases validate the captured tuple and preserve typed stale-handle rejection
+ok 183 - ABI leases validate the captured tuple and preserve typed stale-handle rejection
+  ---
+  duration_ms: 0.547074
+  type: 'test'
+  ...
+# Subtest: A00 inventory reproducible and all result carriers documented
+ok 184 - A00 inventory reproducible and all result carriers documented
+  ---
+  duration_ms: 2.294552
+  type: 'test'
+  ...
+# Subtest: A00 version registry equals public source constants
+ok 185 - A00 version registry equals public source constants
+  ---
+  duration_ms: 1.164211
+  type: 'test'
+  ...
+# Subtest: A00 source constant drift fails before version negotiation
+ok 186 - A00 source constant drift fails before version negotiation
+  ---
+  duration_ms: 1.080068
+  type: 'test'
+  ...
+# Subtest: A00 version reader follows explicit re-exports and rejects cycles
+ok 187 - A00 version reader follows explicit re-exports and rejects cycles
+  ---
+  duration_ms: 0.889026
+  type: 'test'
+  ...
+# Subtest: released framework and bytecode IDs are unchanged
+ok 188 - released framework and bytecode IDs are unchanged
+  ---
+  duration_ms: 65.687207
+  type: 'test'
+  ...
+# Subtest: golden checker reports the first changed id and accepts appends
+ok 189 - golden checker reports the first changed id and accepts appends
+  ---
+  duration_ms: 105.292206
+  type: 'test'
+  ...
+# Subtest: reserved contributions have the same IDs in either load order
+ok 190 - reserved contributions have the same IDs in either load order
+  ---
+  duration_ms: 1.275173
+  type: 'test'
+  ...
+# Subtest: every catalog area has a stable public reservation in either load order
+ok 191 - every catalog area has a stable public reservation in either load order
+  ---
+  duration_ms: 3.520583
+  type: 'test'
+  ...
+# Subtest: an unreserved area rolls back contributions at the final reserved boundary
+ok 192 - an unreserved area rolls back contributions at the final reserved boundary
+  ---
+  duration_ms: 0.61885
+  type: 'test'
+  ...
+# Subtest: legacy contribution modules validate as a single transaction
+ok 193 - legacy contribution modules validate as a single transaction
+  ---
+  duration_ms: 15.806017
+  type: 'test'
+  ...
+# Subtest: duplicate type rolls back the entire contribution
+ok 194 - duplicate type rolls back the entire contribution
+  ---
+  duration_ms: 0.281433
+  type: 'test'
+  ...
+# Subtest: duplicate member rolls back the entire contribution
+ok 195 - duplicate member rolls back the entire contribution
+  ---
+  duration_ms: 0.232351
+  type: 'test'
+  ...
+# Subtest: unknown owner rolls back the entire contribution
+ok 196 - unknown owner rolls back the entire contribution
+  ---
+  duration_ms: 0.239963
+  type: 'test'
+  ...
+# Subtest: unknown parameter rolls back the entire contribution
+ok 197 - unknown parameter rolls back the entire contribution
+  ---
+  duration_ms: 0.374691
+  type: 'test'
+  ...
+# Subtest: block overflow rolls back the entire contribution
+ok 198 - block overflow rolls back the entire contribution
+  ---
+  duration_ms: 0.283256
+  type: 'test'
+  ...
+# Subtest: malformed member rolls back the entire contribution
+ok 199 - malformed member rolls back the entire contribution
+  ---
+  duration_ms: 0.161267
+  type: 'test'
+  ...
+# Subtest: cancellation rolls back and separate registries do not leak state
+ok 200 - cancellation rolls back and separate registries do not leak state
+  ---
+  duration_ms: 0.298779
+  type: 'test'
+  ...
+# Subtest: overlapping, negative, duplicate and exhausted reservations reject
+ok 201 - overlapping, negative, duplicate and exhausted reservations reject
+  ---
+  duration_ms: 0.442541
+  type: 'test'
+  ...
+# Subtest: builtin contributions append atomically and never shift framework offsets
+ok 202 - builtin contributions append atomically and never shift framework offsets
+  ---
+  duration_ms: 5.454946
+  type: 'test'
+  ...
+# Subtest: implementation regression gate detects either engine losing a handler
+ok 203 - implementation regression gate detects either engine losing a handler
+  ---
+  duration_ms: 0.371987
+  type: 'test'
+  ...
+# Subtest: every real source/CIL dispatch result meets the committed reachability baseline
+ok 204 - every real source/CIL dispatch result meets the committed reachability baseline
+  ---
+  duration_ms: 1894.794156
+  type: 'test'
+  ...
+# Subtest: released contribution order is pinned while new area order remains independent
+ok 205 - released contribution order is pinned while new area order remains independent
+  ---
+  duration_ms: 2.710883
+  type: 'test'
+  ...
+# Subtest: two independent tools start and a failed third batch restores the container
+ok 206 - two independent tools start and a failed third batch restores the container
+  ---
+  duration_ms: 1.921664
+  type: 'test'
+  ...
+# Subtest: container preflights duplicates, reports disposal errors and rolls back cancellation
+ok 207 - container preflights duplicates, reports disposal errors and rolls back cancellation
+  ---
+  duration_ms: 0.390164
+  type: 'test'
+  ...
+# Subtest: commands preserve handler behavior and reject duplicate registrations
+ok 208 - commands preserve handler behavior and reject duplicate registrations
+  ---
+  duration_ms: 3.522175
+  type: 'test'
+  ...
+# Subtest: tools append menu items without global state or editing Studio
+ok 209 - tools append menu items without global state or editing Studio
+  ---
+  duration_ms: 0.971939
+  type: 'test'
+  ...
+# Subtest: each mount has independent state and DOM, and failed render cleans up
+ok 210 - each mount has independent state and DOM, and failed render cleans up
+  ---
+  duration_ms: 0.427278
+  type: 'test'
+  ...
+# Subtest: automation contributions preserve the complete pre-extraction key surface
+ok 211 - automation contributions preserve the complete pre-extraction key surface
+  ---
+  duration_ms: 10.70427
+  type: 'test'
+  ...
+# Subtest: automation duplicate batches roll back and namespaces dispose cleanly
+ok 212 - automation duplicate batches roll back and namespaces dispose cleanly
+  ---
+  duration_ms: 0.577168
+  type: 'test'
+  ...
+# Subtest: storage preserves v1 payloads, versions and quota failures
+ok 213 - storage preserves v1 payloads, versions and quota failures
+  ---
+  duration_ms: 0.595004
+  type: 'test'
+  ...
+# Subtest: every worker message has a handler seam and unknown messages fail structurally
+ok 214 - every worker message has a handler seam and unknown messages fail structurally
+  ---
+  duration_ms: 0.897149
+  type: 'test'
+  ...
+# Subtest: Studio has no command branches, direct persistence or inline automation literal
+ok 215 - Studio has no command branches, direct persistence or inline automation literal
+  ---
+  duration_ms: 18.762972
+  type: 'test'
+  ...
+# Subtest: real compiler and runtime workers dispatch known requests and return structured unknown errors
+ok 216 - real compiler and runtime workers dispatch known requests and return structured unknown errors
+  ---
+  duration_ms: 1143.72505
+  type: 'test'
+  ...
+# Subtest: A00 fault schema preserves default v1 projection and explicitly selects v2 recursively
+ok 217 - A00 fault schema preserves default v1 projection and explicitly selects v2 recursively
+  ---
+  duration_ms: 3.294852
+  type: 'test'
+  ...
+# Subtest: A00 fault schema v2 accepts complete nested causes and preserves root version rejection
+ok 218 - A00 fault schema v2 accepts complete nested causes and preserves root version rejection
+  ---
+  duration_ms: 0.888977
+  type: 'test'
+  ...
+# Subtest: A00 fault schema v2 rejects malformed nested records, handles and frames
+ok 219 - A00 fault schema v2 rejects malformed nested records, handles and frames
+  ---
+  duration_ms: 8.29551
+  type: 'test'
+  ...
+# Subtest: A00 fault schema v2 bounds recursive cause validation
+ok 220 - A00 fault schema v2 bounds recursive cause validation
+  ---
+  duration_ms: 1.032166
+  type: 'test'
+  ...
+# Subtest: A00 force GC at safepoints in both actual VMs
+ok 221 - A00 force GC at safepoints in both actual VMs
+  ---
+  duration_ms: 211.87007
+  type: 'test'
+  ...
+# Subtest: A00 root provider manifest guards new sites
+not ok 222 - A00 root provider manifest guards new sites
+  ---
+  duration_ms: 2.904268
+  type: 'test'
+  location: '/dev/shm/sharpforge-p4/tests/a00-04-execution.test.js:49:1'
+  failureType: 'testCodeFailure'
+  error: 'Undocumented root site execution/frame-roots.js:roots:1'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    checkRootProviders (file:///dev/shm/sharpforge-p4/scripts/planning/check-root-providers.js:4:217)
+    TestContext.<anonymous> (file:///dev/shm/sharpforge-p4/tests/a00-04-execution.test.js:49:64)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: A00 source snapshot projection, owner isolation and stable frame IDs
+ok 223 - A00 source snapshot projection, owner isolation and stable frame IDs
+  ---
+  duration_ms: 8.197616
+  type: 'test'
+  ...
+# Subtest: A00 source faults, nested finally and fatal budget transfer
+ok 224 - A00 source faults, nested finally and fatal budget transfer
+  ---
+  duration_ms: 17.18978
+  type: 'test'
+  ...
+# Subtest: A00 source actual host callback roots and rejection
+ok 225 - A00 source actual host callback roots and rejection
+  ---
+  duration_ms: 9.009219
+  type: 'test'
+  ...
+# Subtest: A00 source cancel, dispose and late completion boundaries
+ok 226 - A00 source cancel, dispose and late completion boundaries
+  ---
+  duration_ms: 4.066676
+  type: 'test'
+  ...
+# Subtest: A00 source ignored abort currently permits late success
+ok 227 - A00 source ignored abort currently permits late success
+  ---
+  duration_ms: 2.840745
+  type: 'test'
+  ...
+# Subtest: A00 cil snapshot projection, owner isolation and stable frame IDs
+ok 228 - A00 cil snapshot projection, owner isolation and stable frame IDs
+  ---
+  duration_ms: 7.470778
+  type: 'test'
+  ...
+# Subtest: A00 cil faults, nested finally and fatal budget transfer
+ok 229 - A00 cil faults, nested finally and fatal budget transfer
+  ---
+  duration_ms: 13.726451
+  type: 'test'
+  ...
+# Subtest: A00 cil actual host callback roots and rejection
+ok 230 - A00 cil actual host callback roots and rejection
+  ---
+  duration_ms: 12.416716
+  type: 'test'
+  ...
+# Subtest: A00 cil cancel, dispose and late completion boundaries
+ok 231 - A00 cil cancel, dispose and late completion boundaries
+  ---
+  duration_ms: 4.06298
+  type: 'test'
+  ...
+# Subtest: A00 cil ignored abort currently permits late success
+ok 232 - A00 cil ignored abort currently permits late success
+  ---
+  duration_ms: 3.043923
+  type: 'test'
+  ...
+# Subtest: source roots a resumed async exception through forced collection before dispatch
+ok 233 - source roots a resumed async exception through forced collection before dispatch
+  ---
+  duration_ms: 150.384353
+  type: 'test'
+  ...
+# Subtest: cil roots a resumed async exception through forced collection before dispatch
+ok 234 - cil roots a resumed async exception through forced collection before dispatch
+  ---
+  duration_ms: 59.686774
+  type: 'test'
+  ...
+# Subtest: A00 all golden schemas regenerate byte-identically
+ok 235 - A00 all golden schemas regenerate byte-identically
+  ---
+  duration_ms: 196.481917
+  type: 'test'
+  ...
+# Subtest: A00 forty type/signature identities and every canonical registered type
+ok 236 - A00 forty type/signature identities and every canonical registered type
+  ---
+  duration_ms: 32.697589
+  type: 'test'
+  ...
+# Subtest: A00 generic identities preserve array ranks and explicit or inferred arity
+ok 237 - A00 generic identities preserve array ranks and explicit or inferred arity
+  ---
+  duration_ms: 0.593062
+  type: 'test'
+  ...
+# Subtest: A00 nested generic identities retain canonical aliases and compound arguments
+ok 238 - A00 nested generic identities retain canonical aliases and compound arguments
+  ---
+  duration_ms: 0.812054
+  type: 'test'
+  ...
+# Subtest: A00 compound identities reject mismatched delimiters and generic arities
+ok 239 - A00 compound identities reject mismatched delimiters and generic arities
+  ---
+  duration_ms: 0.471813
+  type: 'test'
+  ...
+# Subtest: A00 symbols resolve overloads, generics, explicit members and scoped declarations
+ok 240 - A00 symbols resolve overloads, generics, explicit members and scoped declarations
+  ---
+  duration_ms: 0.451824
+  type: 'test'
+  ...
+# Subtest: A00 both engines export three example bodies and source spans
+ok 241 - A00 both engines export three example bodies and source spans
+  ---
+  duration_ms: 23.529646
+  type: 'test'
+  ...
+# Subtest: A00 external Portable PDB and UTF-16 source spans share schema
+ok 242 - A00 external Portable PDB and UTF-16 source spans share schema
+  ---
+  duration_ms: 2.08254
+  type: 'test'
+  ...
+# Subtest: A00 actual PE \#SF stream follows includeDebug contract
+ok 243 - A00 actual PE \#SF stream follows includeDebug contract
+  ---
+  duration_ms: 10.678486
+  type: 'test'
+  ...
+# Subtest: A00 schema malformed/version/unknown-keyword errors remain distinct
+ok 244 - A00 schema malformed/version/unknown-keyword errors remain distinct
+  ---
+  duration_ms: 0.893453
+  type: 'test'
+  ...
+# Subtest: A00 examples corpus produced images satisfy schema; flow errors remain verifier-only
+ok 245 - A00 examples corpus produced images satisfy schema; flow errors remain verifier-only
+  ---
+  duration_ms: 762.839034
+  type: 'test'
+  ...
+# Subtest: A00 schema const and enum compare unordered JSON objects and ordered arrays
+ok 246 - A00 schema const and enum compare unordered JSON objects and ordered arrays
+  ---
+  duration_ms: 0.83704
+  type: 'test'
+  ...
+# Subtest: A00 schema uniqueItems uses JSON equality without serialization collisions
+ok 247 - A00 schema uniqueItems uses JSON equality without serialization collisions
+  ---
+  duration_ms: 0.87795
+  type: 'test'
+  ...
+# Subtest: A00 schema composition supports object-valued discriminator constants and enums
+ok 248 - A00 schema composition supports object-valued discriminator constants and enums
+  ---
+  duration_ms: 0.874965
+  type: 'test'
+  ...
+# Subtest: A00 schema equality traversal consumes the depth and node budgets
+ok 249 - A00 schema equality traversal consumes the depth and node budgets
+  ---
+  duration_ms: 0.738785
+  type: 'test'
+  ...
+# Subtest: A00 schema input rejects array holes even without an item constraint
+ok 250 - A00 schema input rejects array holes even without an item constraint
+  ---
+  duration_ms: 0.773877
+  type: 'test'
+  ...
+# Subtest: A00 schema input rejects non-JSON values throughout unconstrained documents
+ok 251 - A00 schema input rejects non-JSON values throughout unconstrained documents
+  ---
+  duration_ms: 0.922206
+  type: 'test'
+  ...
+# Subtest: A00 schema items false forbids every nonempty array
+ok 252 - A00 schema items false forbids every nonempty array
+  ---
+  duration_ms: 0.422571
+  type: 'test'
+  ...
+# Subtest: A00 schema input walk is bounded and retains newer-version error precedence
+ok 253 - A00 schema input walk is bounded and retains newer-version error precedence
+  ---
+  duration_ms: 1.178572
+  type: 'test'
+  ...
+# Subtest: A00 schema string bounds count Unicode characters across inclusive boundaries
+ok 254 - A00 schema string bounds count Unicode characters across inclusive boundaries
+  ---
+  duration_ms: 0.478353
+  type: 'test'
+  ...
+# Subtest: A00 schema Unicode string bounds compose with patterns and nested paths
+ok 255 - A00 schema Unicode string bounds compose with patterns and nested paths
+  ---
+  duration_ms: 0.340911
+  type: 'test'
+  ...
+# Subtest: A00 typed neutral IR resolves both engines: native-callback
+ok 256 - A00 typed neutral IR resolves both engines: native-callback
+  ---
+  duration_ms: 116.972594
+  type: 'test'
+  ...
+# Subtest: A00 typed neutral IR resolves both engines: nested-finally
+ok 257 - A00 typed neutral IR resolves both engines: nested-finally
+  ---
+  duration_ms: 21.058916
+  type: 'test'
+  ...
+# Subtest: A00 typed neutral IR resolves both engines: parked-frame
+ok 258 - A00 typed neutral IR resolves both engines: parked-frame
+  ---
+  duration_ms: 26.050881
+  type: 'test'
+  ...
+# Subtest: A00 normalized loop operations and declared types do not depend on encoding
+ok 259 - A00 normalized loop operations and declared types do not depend on encoding
+  ---
+  duration_ms: 11.984632
+  type: 'test'
+  ...
+# Subtest: A00 source type propagation rejects conflicting branch joins
+ok 260 - A00 source type propagation rejects conflicting branch joins
+  ---
+  duration_ms: 1.093617
+  type: 'test'
+  ...
+# Subtest: A00 CIL type propagation rejects conflicting branch joins
+ok 261 - A00 CIL type propagation rejects conflicting branch joins
+  ---
+  duration_ms: 5.847773
+  type: 'test'
+  ...
+# Subtest: A00 malformed branches, handlers, signatures and unsupported instructions fail closed
+ok 262 - A00 malformed branches, handlers, signatures and unsupported instructions fail closed
+  ---
+  duration_ms: 5.242073
+  type: 'test'
+  ...
+# Subtest: A00 serialized executable IR rejects falsified types and flow edges
+ok 263 - A00 serialized executable IR rejects falsified types and flow edges
+  ---
+  duration_ms: 5.590785
+  type: 'test'
+  ...
+# Subtest: A00 null/reference joins resolve and incorrect stores/calls are rejected
+ok 264 - A00 null/reference joins resolve and incorrect stores/calls are rejected
+  ---
+  duration_ms: 1.424854
+  type: 'test'
+  ...
+# Subtest: A00 floating constant hints and signature-directed widening stay typed
+ok 265 - A00 floating constant hints and signature-directed widening stay typed
+  ---
+  duration_ms: 19.585331
+  type: 'test'
+  ...
+# Subtest: A00 serialized returns preserve explicit source and CIL conventions
+ok 266 - A00 serialized returns preserve explicit source and CIL conventions
+  ---
+  duration_ms: 4.85191
+  type: 'test'
+  ...
+# Subtest: A00 serialized returns reject retained stack values and synthesized outputs
+ok 267 - A00 serialized returns reject retained stack values and synthesized outputs
+  ---
+  duration_ms: 4.509156
+  type: 'test'
+  ...
+# Subtest: A00 serialized returns reject missing values and inconsistent void padding
+ok 268 - A00 serialized returns reject missing values and inconsistent void padding
+  ---
+  duration_ms: 7.537897
+  type: 'test'
+  ...
+# Subtest: A00 serialized returns require an explicit well-formed padding operand
+ok 269 - A00 serialized returns require an explicit well-formed padding operand
+  ---
+  duration_ms: 18.266041
+  type: 'test'
+  ...
+# Subtest: A00 serialized method entry rejects a return value without a producer
+ok 270 - A00 serialized method entry rejects a return value without a producer
+  ---
+  duration_ms: 6.162626
+  type: 'test'
+  ...
+# Subtest: A00 serialized method entry stays empty while catch entries retain their conventions
+ok 271 - A00 serialized method entry stays empty while catch entries retain their conventions
+  ---
+  duration_ms: 5.687528
+  type: 'test'
+  ...
+# Subtest: A00 serialized addresses preserve declared first and last slots and stack prefixes
+ok 272 - A00 serialized addresses preserve declared first and last slots and stack prefixes
+  ---
+  duration_ms: 8.564596
+  type: 'test'
+  ...
+# Subtest: A00 serialized addresses reject absent or malformed declared slots
+ok 273 - A00 serialized addresses reject absent or malformed declared slots
+  ---
+  duration_ms: 18.651398
+  type: 'test'
+  ...
+# Subtest: A00 serialized addresses reject falsified consumption and result effects
+ok 274 - A00 serialized addresses reject falsified consumption and result effects
+  ---
+  duration_ms: 4.459723
+  type: 'test'
+  ...
+# Subtest: A00 T06 strict schema validates all thirty manifests and rejects unknown fields and invalid boundaries
+ok 275 - A00 T06 strict schema validates all thirty manifests and rejects unknown fields and invalid boundaries
+  ---
+  duration_ms: 234.69528
+  type: 'test'
+  ...
+# Subtest: A00 T06 discovery assigns files once and includes nested contract/conformance suites
+ok 276 - A00 T06 discovery assigns files once and includes nested contract/conformance suites
+  ---
+  duration_ms: 266.39359
+  type: 'test'
+  ...
+# Subtest: A00 T06 missing, duplicate, stale, unsafe and mismatched manifest entries fail with offending paths
+ok 277 - A00 T06 missing, duplicate, stale, unsafe and mismatched manifest entries fail with offending paths
+  ---
+  duration_ms: 22.705515
+  type: 'test'
+  ...
+# Subtest: A00 T06 overlapping globs in one area are duplicate ownership and helpers are not runnable suites
+ok 278 - A00 T06 overlapping globs in one area are duplicate ownership and helpers are not runnable suites
+  ---
+  duration_ms: 6.457478
+  type: 'test'
+  ...
+# Subtest: A00 T06 runner executes only the selected area, propagates failures, and handles empty areas
+ok 279 - A00 T06 runner executes only the selected area, propagates failures, and handles empty areas
+  ---
+  duration_ms: 9364.923748
+  type: 'test'
+  ...
+# Subtest: A00 T06 schema-checked CI matrix is consumed by a dry-run workflow fixture for each nonempty area
+ok 280 - A00 T06 schema-checked CI matrix is consumed by a dry-run workflow fixture for each nonempty area
+  ---
+  duration_ms: 361.006518
+  type: 'test'
+  ...
+# Subtest: A00 T06 every historical npm name dispatches to its original commands with literal arguments
+ok 281 - A00 T06 every historical npm name dispatches to its original commands with literal arguments
+  ---
+  duration_ms: 3806.376914
+  type: 'test'
+  ...
+# Subtest: A00 T06 new tasks need no root script edit and reject duplicate tasks, cycles and malformed commands
+ok 282 - A00 T06 new tasks need no root script edit and reject duplicate tasks, cycles and malformed commands
+  ---
+  duration_ms: 7.357912
+  type: 'test'
+  ...
+# Subtest: A00 T06 contributions retain reviewed CSS bytes and historical worker ordering
+ok 283 - A00 T06 contributions retain reviewed CSS bytes and historical worker ordering
+  ---
+  duration_ms: 17.803011
+  type: 'test'
+  ...
+# Subtest: A00 T06 build contributions discover new styles/assets and reject duplicate and escaping paths
+ok 284 - A00 T06 build contributions discover new styles/assets and reject duplicate and escaping paths
+  ---
+  duration_ms: 16.755042
+  type: 'test'
+  ...
+# Subtest: A00 T06 workspace discovery accepts the next package without a verifier edit and validates exact tarball identities
+ok 285 - A00 T06 workspace discovery accepts the next package without a verifier edit and validates exact tarball identities
+  ---
+  duration_ms: 91.284421
+  type: 'test'
+  ...
+# Subtest: A00 T06 twenty-six contributed packages pack, install offline, and run their own smoke modules
+ok 286 - A00 T06 twenty-six contributed packages pack, install offline, and run their own smoke modules
+  ---
+  duration_ms: 1477.238933
+  type: 'test'
+  ...
+# Subtest: A00 serial Node policy preserves script arguments and rejects concurrent overrides
+ok 287 - A00 serial Node policy preserves script arguments and rejects concurrent overrides
+  ---
+  duration_ms: 0.805203
+  type: 'test'
+  ...
+# Subtest: A00 manifest runner prevents overlapping test files
+ok 288 - A00 manifest runner prevents overlapping test files
+  ---
+  duration_ms: 732.952923
+  type: 'test'
+  ...
+# Subtest: 50 seeded concurrent claim races have exactly one owner and no loser field writes
+ok 289 - 50 seeded concurrent claim races have exactly one owner and no loser field writes
+  ---
+  duration_ms: 1201.491493
+  type: 'test'
+  ...
+# Subtest: project pagination reads/writes items beyond 100 and clears all lease fields
+ok 290 - project pagination reads/writes items beyond 100 and clears all lease fields
+  ---
+  duration_ms: 13.012462
+  type: 'test'
+  ...
+# Subtest: unknown project fields, choices and invalid lease inputs fail without acquiring ownership
+ok 291 - unknown project fields, choices and invalid lease inputs fail without acquiring ownership
+  ---
+  duration_ms: 0.960432
+  type: 'test'
+  ...
+# Subtest: parents, closed tasks, and tasks not Ready cannot be claimed
+ok 292 - parents, closed tasks, and tasks not Ready cannot be claimed
+  ---
+  duration_ms: 0.780226
+  type: 'test'
+  ...
+# Subtest: owner-only heartbeat extends exact expiry; comments are throttled per hour
+ok 293 - owner-only heartbeat extends exact expiry; comments are throttled per hour
+  ---
+  duration_ms: 2.005778
+  type: 'test'
+  ...
+# Subtest: shared lock races name holder, release frees locks and branch remains untouched
+ok 294 - shared lock races name holder, release frees locks and branch remains untouched
+  ---
+  duration_ms: 129.800484
+  type: 'test'
+  ...
+# Subtest: expired lease remains owned; reaper is idempotent; reconciler must provide audit reason
+ok 295 - expired lease remains owned; reaper is idempotent; reconciler must provide audit reason
+  ---
+  duration_ms: 3.77683
+  type: 'test'
+  ...
+# Subtest: partial project update keeps claim reserved and explicit release recovers
+ok 296 - partial project update keeps claim reserved and explicit release recovers
+  ---
+  duration_ms: 1.578138
+  type: 'test'
+  ...
+# Subtest: failed lock field update is recovered by scanning lock refs on release
+ok 297 - failed lock field update is recovered by scanning lock refs on release
+  ---
+  duration_ms: 1.439175
+  type: 'test'
+  ...
+# Subtest: secondary rate limit retry is bounded and hard failures preserve distinct exit code
+ok 298 - secondary rate limit retry is bounded and hard failures preserve distinct exit code
+  ---
+  duration_ms: 0.826144
+  type: 'test'
+  ...
+# Subtest: audit reconstructs complete claim-heartbeat-lock-unlock-release and flags missing claim
+ok 299 - audit reconstructs complete claim-heartbeat-lock-unlock-release and flags missing claim
+  ---
+  duration_ms: 3.061549
+  type: 'test'
+  ...
+# Subtest: fake REST/GraphQL transport also exposes an actual HTTP server
+ok 300 - fake REST/GraphQL transport also exposes an actual HTTP server
+  ---
+  duration_ms: 28.679925
+  type: 'test'
+  ...
+# Subtest: GraphQL resource limits shrink page size and surface permanent node overflow
+ok 301 - GraphQL resource limits shrink page size and surface permanent node overflow
+  ---
+  duration_ms: 1.19089
+  type: 'test'
+  ...
+# Subtest: recorded live Project 4 fields support text, date and single-select projections
+ok 302 - recorded live Project 4 fields support text, date and single-select projections
+  ---
+  duration_ms: 2.718425
+  type: 'test'
+  ...
+# Subtest: reaper discovers an expired authoritative claim after the first Agent field write failed
+ok 303 - reaper discovers an expired authoritative claim after the first Agent field write failed
+  ---
+  duration_ms: 1.561806
+  type: 'test'
+  ...
+# Subtest: ambiguous DELETE response never deletes a replacement mutex owner
+ok 304 - ambiguous DELETE response never deletes a replacement mutex owner
+  ---
+  duration_ms: 2.107667
+  type: 'test'
+  ...
+# Subtest: transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed
+ok 305 - transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed
+  ---
+  duration_ms: 2.155087
+  type: 'test'
+  ...
+# Subtest: partial GraphQL mutation data with rate-limit errors is never replayed
+ok 306 - partial GraphQL mutation data with rate-limit errors is never replayed
+  ---
+  duration_ms: 1.412456
+  type: 'test'
+  ...
+# Subtest: dependency grammar accepts legacy Markdown and multiline requirements, rejects malformed IDs
+ok 307 - dependency grammar accepts legacy Markdown and multiline requirements, rejects malformed IDs
+  ---
+  duration_ms: 3.350274
+  type: 'test'
+  ...
+# Subtest: dependency IDs retain malformed suffixes instead of resolving a valid prefix
+ok 308 - dependency IDs retain malformed suffixes instead of resolving a valid prefix
+  ---
+  duration_ms: 0.801608
+  type: 'test'
+  ...
+# Subtest: dependency delimiters preserve Markdown, prose punctuation and child IDs
+ok 309 - dependency delimiters preserve Markdown, prose punctuation and child IDs
+  ---
+  duration_ms: 0.397474
+  type: 'test'
+  ...
+# Subtest: dependency link destinations do not contribute work-ID candidates
+ok 310 - dependency link destinations do not contribute work-ID candidates
+  ---
+  duration_ms: 0.348332
+  type: 'test'
+  ...
+# Subtest: diamond readiness requires actual merged evidence; cycles and unresolved IDs block
+ok 311 - diamond readiness requires actual merged evidence; cycles and unresolved IDs block
+  ---
+  duration_ms: 1.553893
+  type: 'test'
+  ...
+# Subtest: leaf readiness inherits parent requirements; explicit contracts require qualified versions
+ok 312 - leaf readiness inherits parent requirements; explicit contracts require qualified versions
+  ---
+  duration_ms: 0.935495
+  type: 'test'
+  ...
+# Subtest: task identity cross-checks branch, body, and project field; missing identity fails
+ok 313 - task identity cross-checks branch, body, and project field; missing identity fails
+  ---
+  duration_ms: 0.783902
+  type: 'test'
+  ...
+# Subtest: ownership rejects cross-area writes and accepts only enumerated exceptions or held locks
+ok 314 - ownership rejects cross-area writes and accepts only enumerated exceptions or held locks
+  ---
+  duration_ms: 44.431001
+  type: 'test'
+  ...
+# Subtest: hot-file growth budgets enforce both net lines and byte growth
+ok 315 - hot-file growth budgets enforce both net lines and byte growth
+  ---
+  duration_ms: 0.55102
+  type: 'test'
+  ...
+# Subtest: catalog has all 30 areas, explicit overlap accounting, deterministic CODEOWNERS
+ok 316 - catalog has all 30 areas, explicit overlap accounting, deterministic CODEOWNERS
+  ---
+  duration_ms: 128.181992
+  type: 'test'
+  ...
+# Subtest: path collisions require common declared lock, distinct siblings pass
+ok 317 - path collisions require common declared lock, distinct siblings pass
+  ---
+  duration_ms: 1.397774
+  type: 'test'
+  ...
+# Subtest: backlog lint names each violating issue and duplicate ID
+ok 318 - backlog lint names each violating issue and duplicate ID
+  ---
+  duration_ms: 1.439785
+  type: 'test'
+  ...
+# Subtest: bootstrap apply is idempotent and dry-run writes nothing; incompatible fields fail
+ok 319 - bootstrap apply is idempotent and dry-run writes nothing; incompatible fields fail
+  ---
+  duration_ms: 3.156048
+  type: 'test'
+  ...
+# Subtest: snapshot preserves merged evidence and deterministic order; graph yields critical path
+ok 320 - snapshot preserves merged evidence and deterministic order; graph yields critical path
+  ---
+  duration_ms: 12.503664
+  type: 'test'
+  ...
+# Subtest: dependency ancestors cannot bypass readiness; absent or cyclic parents fail closed
+ok 321 - dependency ancestors cannot bypass readiness; absent or cyclic parents fail closed
+  ---
+  duration_ms: 0.339228
+  type: 'test'
+  ...
+# Subtest: ready-label sync changes only mismatched current labels and second run is a no-op
+ok 322 - ready-label sync changes only mismatched current labels and second run is a no-op
+  ---
+  duration_ms: 1.953801
+  type: 'test'
+  ...
+# Subtest: directory ownership intersects children and live project lock fields serialize overlaps
+ok 323 - directory ownership intersects children and live project lock fields serialize overlaps
+  ---
+  duration_ms: 0.533203
+  type: 'test'
+  ...
+# Subtest: project item snapshot preserves numeric parity including zero
+ok 324 - project item snapshot preserves numeric parity including zero
+  ---
+  duration_ms: 0.86455
+  type: 'test'
+  ...
+# Subtest: ownership CLI checks deleted rename source and contracts must exist in default-branch tree
+ok 325 - ownership CLI checks deleted rename source and contracts must exist in default-branch tree
+  ---
+  duration_ms: 190.782341
+  type: 'test'
+  ...
+# Subtest: critical-path diagrams contain only the longest chain and report its task count
+ok 326 - critical-path diagrams contain only the longest chain and report its task count
+  ---
+  duration_ms: 3.199091
+  type: 'test'
+  ...
+# Subtest: input ordering and equal-length branches produce byte-identical diagrams
+ok 327 - input ordering and equal-length branches produce byte-identical diagrams
+  ---
+  duration_ms: 1.630847
+  type: 'test'
+  ...
+# Subtest: CLI writes all, per-area and critical-path Mermaid/DOT files and prints length
+ok 328 - CLI writes all, per-area and critical-path Mermaid/DOT files and prints length
+  ---
+  duration_ms: 114.38349
+  type: 'test'
+  ...
+# Subtest: area-only export keeps its external prerequisites and the global critical path
+ok 329 - area-only export keeps its external prerequisites and the global critical path
+  ---
+  duration_ms: 91.84509
+  type: 'test'
+  ...
+# Subtest: empty, isolated and inherited-dependency graphs retain explicit boundaries
+ok 330 - empty, isolated and inherited-dependency graphs retain explicit boundaries
+  ---
+  duration_ms: 0.630467
+  type: 'test'
+  ...
+# Subtest: duplicate IDs, cycles and unresolved dependencies still fail before any output is written
+ok 331 - duplicate IDs, cycles and unresolved dependencies still fail before any output is written
+  ---
+  duration_ms: 271.446852
+  type: 'test'
+  ...
+# Subtest: unknown or unsafe areas do not create output files
+ok 332 - unknown or unsafe areas do not create output files
+  ---
+  duration_ms: 1.244379
+  type: 'test'
+  ...
+# Subtest: release-overlay areas retain their own diagram pair
+ok 333 - release-overlay areas retain their own diagram pair
+  ---
+  duration_ms: 97.592595
+  type: 'test'
+  ...
+# Subtest: two actual Git branches each append a distinct contract at the same ID; combined tree fails
+ok 334 - two actual Git branches each append a distinct contract at the same ID; combined tree fails
+  ---
+  duration_ms: 74.408362
+  type: 'test'
+  ...
+# Subtest: V8 parses escaped, multiline and re-export imports without executing modules or matching comments
+ok 335 - V8 parses escaped, multiline and re-export imports without executing modules or matching comments
+  ---
+  duration_ms: 229.327116
+  type: 'test'
+  ...
+# Subtest: graph resolves workspaces, recursive outside-root-directory dependencies and every JS including package bins
+ok 336 - graph resolves workspaces, recursive outside-root-directory dependencies and every JS including package bins
+  ---
+  duration_ms: 578.409053
+  type: 'test'
+  ...
+# Subtest: reverse consumer selection covers transitive compiler runtime debugger, docs none, deleted modules conservative
+ok 337 - reverse consumer selection covers transitive compiler runtime debugger, docs none, deleted modules conservative
+  ---
+  duration_ms: 1.98038
+  type: 'test'
+  ...
+# Subtest: real impacted-test CLI awaits asynchronous manifest discovery and selects actual consumers
+ok 338 - real impacted-test CLI awaits asynchronous manifest discovery and selects actual consumers
+  ---
+  duration_ms: 4036.715057
+  type: 'test'
+  ...
+# Subtest: contract removal needs label and relevant version bump; append passes; duplicate IDs never pass
+ok 339 - contract removal needs label and relevant version bump; append passes; duplicate IDs never pass
+  ---
+  duration_ms: 1.26541
+  type: 'test'
+  ...
+# Subtest: schema constraints cannot hide as additive keys or exclusive-union array appends; revisions cannot be repointed
+ok 340 - schema constraints cannot hide as additive keys or exclusive-union array appends; revisions cannot be repointed
+  ---
+  duration_ms: 0.505543
+  type: 'test'
+  ...
+# Subtest: string-pattern unions preserve complete task predicates without a label or version bump
+ok 341 - string-pattern unions preserve complete task predicates without a label or version bump
+  ---
+  duration_ms: 1.076081
+  type: 'test'
+  ...
+# Subtest: string-pattern union proofs reject altered branches, constraints, references and invalid patterns
+ok 342 - string-pattern union proofs reject altered branches, constraints, references and invalid patterns
+  ---
+  duration_ms: 1.634151
+  type: 'test'
+  ...
+# Subtest: gate emits every check including failure and stops on prior cancellation
+ok 343 - gate emits every check including failure and stops on prior cancellation
+  ---
+  duration_ms: 159.653554
+  type: 'test'
+  ...
+# Subtest: evidence task contracts retain legacy area IDs and accept release task and bug IDs
+ok 344 - evidence task contracts retain legacy area IDs and accept release task and bug IDs
+  ---
+  duration_ms: 3.379857
+  type: 'test'
+  ...
+# Subtest: release default capture requires an explicit area before running a command
+ok 345 - release default capture requires an explicit area before running a command
+  ---
+  duration_ms: 88.190408
+  type: 'test'
+  ...
+# Subtest: release capture CLI records the explicitly selected area and verifies its real TAP evidence
+ok 346 - release capture CLI records the explicitly selected area and verifies its real TAP evidence
+  ---
+  duration_ms: 350.783891
+  type: 'test'
+  ...
+# Subtest: release task handoff recaptures explicit commands and replays from a clean clone
+ok 347 - release task handoff recaptures explicit commands and replays from a clean clone
+  ---
+  duration_ms: 698.105042
+  type: 'test'
+  ...
+# Subtest: digest binds TAP bytes, commit, command and exact target/status proof
+ok 348 - digest binds TAP bytes, commit, command and exact target/status proof
+  ---
+  duration_ms: 0.780758
+  type: 'test'
+  ...
+# Subtest: capture refuses dirty passing changes over a failing committed tree before running any command
+ok 349 - capture refuses dirty passing changes over a failing committed tree before running any command
+  ---
+  duration_ms: 25.683045
+  type: 'test'
+  ...
+# Subtest: capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+ok 350 - capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+  ---
+  duration_ms: 269.562682
+  type: 'test'
+  ...
+# Subtest: only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+ok 351 - only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+  ---
+  duration_ms: 475.416541
+  type: 'test'
+  ...
+# Subtest: skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+ok 352 - skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+  ---
+  duration_ms: 908.718366
+  type: 'test'
+  ...
+# Subtest: unknown and unsupported proofs retain their reasons and never verify as pass
+ok 353 - unknown and unsupported proofs retain their reasons and never verify as pass
+  ---
+  duration_ms: 459.353487
+  type: 'test'
+  ...
+# Subtest: fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+ok 354 - fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+  ---
+  duration_ms: 1650.556367
+  type: 'test'
+  ...
+# Subtest: resume detects command mutations and stops before later commands
+ok 355 - resume detects command mutations and stops before later commands
+  ---
+  duration_ms: 707.435359
+  type: 'test'
+  ...
+# Subtest: a real failed target remains verified failure and cannot be relabeled pass
+ok 356 - a real failed target remains verified failure and cannot be relabeled pass
+  ---
+  duration_ms: 224.222476
+  type: 'test'
+  ...
+# Subtest: incomplete or contradictory TAP statistics never qualify a passing target
+ok 357 - incomplete or contradictory TAP statistics never qualify a passing target
+  ---
+  duration_ms: 0.609776
+  type: 'test'
+  ...
+# Subtest: inventory obligations produce distinct fractions and unknown prevents parent complete
+ok 358 - inventory obligations produce distinct fractions and unknown prevents parent complete
+  ---
+  duration_ms: 10.981122
+  type: 'test'
+  ...
+# Subtest: reopen, stale commit and altered proof each invalidate previous pass
+ok 359 - reopen, stale commit and altered proof each invalidate previous pass
+  ---
+  duration_ms: 1.296325
+  type: 'test'
+  ...
+# Subtest: missing revision, duplicate identities, parent cycles and absent denominator fail closed
+ok 360 - missing revision, duplicate identities, parent cycles and absent denominator fail closed
+  ---
+  duration_ms: 1.298458
+  type: 'test'
+  ...
+# Subtest: report bytes are deterministic, numeric parity updates are changed-only and include zero
+ok 361 - report bytes are deterministic, numeric parity updates are changed-only and include zero
+  ---
+  duration_ms: 2.294141
+  type: 'test'
+  ...
+# Subtest: rollup reads relative inputs from the requested root and invalid artifact paths remain unknown
+ok 362 - rollup reads relative inputs from the requested root and invalid artifact paths remain unknown
+  ---
+  duration_ms: 9.381801
+  type: 'test'
+  ...
+# Subtest: publishing rejects impossible percentages and ambiguous epic targets before project writes
+ok 363 - publishing rejects impossible percentages and ambiguous epic targets before project writes
+  ---
+  duration_ms: 1.520064
+  type: 'test'
+  ...
+# Subtest: golden comparison reports precise assembly bytecode syntax and distribution drift including removals
+ok 364 - golden comparison reports precise assembly bytecode syntax and distribution drift including removals
+  ---
+  duration_ms: 2.982734
+  type: 'test'
+  ...
+# Subtest: seam label rejects rewritten lock even when a newly generated lock matches the new output
+ok 365 - seam label rejects rewritten lock even when a newly generated lock matches the new output
+  ---
+  duration_ms: 39.754669
+  type: 'test'
+  ...
+# Subtest: lossless syntax golden retains tree structure without red parent cycles or allocation IDs
+ok 366 - lossless syntax golden retains tree structure without red parent cycles or allocation IDs
+  ---
+  duration_ms: 109.952197
+  type: 'test'
+  ...
+# Subtest: A00 T20 contributed CSS matches the reviewed stylesheet snapshot and both sorted and ordered rules
+ok 367 - A00 T20 contributed CSS matches the reviewed stylesheet snapshot and both sorted and ordered rules
+  ---
+  duration_ms: 64.422156
+  type: 'test'
+  ...
+# Subtest: A00 T20 sorted equality alone cannot hide reversed overrides, missing or changed rules
+ok 368 - A00 T20 sorted equality alone cannot hide reversed overrides, missing or changed rules
+  ---
+  duration_ms: 0.743713
+  type: 'test'
+  ...
+# Subtest: A00 T20 CSS rule boundaries preserve nested media, quoted punctuation, escaped selectors, functions and at-rules
+ok 369 - A00 T20 CSS rule boundaries preserve nested media, quoted punctuation, escaped selectors, functions and at-rules
+  ---
+  duration_ms: 0.696894
+  type: 'test'
+  ...
+# Subtest: A00 T20 contribution separators preserve fragment boundaries and reject non-formatting insertion
+ok 370 - A00 T20 contribution separators preserve fragment boundaries and reject non-formatting insertion
+  ---
+  duration_ms: 12.84153
+  type: 'test'
+  ...
+# Subtest: default builtin snapshots retain array shape, holes, identity and append isolation
+ok 371 - default builtin snapshots retain array shape, holes, identity and append isolation
+  ---
+  duration_ms: 7.314208
+  type: 'test'
+  ...
+# Subtest: default builtin snapshots remain unchanged after rejection and late cancellation
+ok 372 - default builtin snapshots remain unchanged after rejection and late cancellation
+  ---
+  duration_ms: 6.646016
+  type: 'test'
+  ...
+# Subtest: custom array bases preserve nonenumerable slots, explicit undefined and trailing holes
+ok 373 - custom array bases preserve nonenumerable slots, explicit undefined and trailing holes
+  ---
+  duration_ms: 0.806605
+  type: 'test'
+  ...
+# Subtest: custom array accessors and inherited numeric slots retain slice behavior
+ok 374 - custom array accessors and inherited numeric slots retain slice behavior
+  ---
+  duration_ms: 0.211571
+  type: 'test'
+  ...
+# Subtest: custom array species and slice overrides retain their existing result shape
+ok 375 - custom array species and slice overrides retain their existing result shape
+  ---
+  duration_ms: 0.281835
+  type: 'test'
+  ...
+# Subtest: custom array proxies can supply virtual numeric slots through HasProperty
+ok 376 - custom array proxies can supply virtual numeric slots through HasProperty
+  ---
+  duration_ms: 0.223218
+  type: 'test'
+  ...
+# Subtest: builtin registry preserves reserved holes, explicit undefined slots and immutable snapshots
+ok 377 - builtin registry preserves reserved holes, explicit undefined slots and immutable snapshots
+  ---
+  duration_ms: 83.420595
+  type: 'test'
+  ...
+# Subtest: builtin registry rejected and cancelled contributions leave sparse entries unchanged
+ok 378 - builtin registry rejected and cancelled contributions leave sparse entries unchanged
+  ---
+  duration_ms: 1.186233
+  type: 'test'
+  ...
+# Subtest: builtin registry retains iterable bases and every released or extension identifier
+ok 379 - builtin registry retains iterable bases and every released or extension identifier
+  ---
+  duration_ms: 4.292838
+  type: 'test'
+  ...
+# Subtest: A00-T13 absent nodes keep statement, inference and expression recovery behavior
+ok 380 - A00-T13 absent nodes keep statement, inference and expression recovery behavior
+  ---
+  duration_ms: 1.614412
+  type: 'test'
+  ...
+# Subtest: A00-T13 inherited and non-string kinds keep the unknown-node diagnostic fallback
+ok 381 - A00-T13 inherited and non-string kinds keep the unknown-node diagnostic fallback
+  ---
+  duration_ms: 0.917267
+  type: 'test'
+  ...
+# Subtest: A00-T13 framework hooks keep precedence and receive the composed compiler instance
+ok 382 - A00-T13 framework hooks keep precedence and receive the composed compiler instance
+  ---
+  duration_ms: 0.304807
+  type: 'test'
+  ...
+# Subtest: A00-T13 checked aliases restore the surrounding context on success and exceptions
+ok 383 - A00-T13 checked aliases restore the surrounding context on success and exceptions
+  ---
+  duration_ms: 0.712537
+  type: 'test'
+  ...
+# Subtest: A00-T13 grouped control flow, calls, properties and cleanup execute through both pipelines and VMs
+ok 384 - A00-T13 grouped control flow, calls, properties and cleanup execute through both pipelines and VMs
+  ---
+  duration_ms: 279.087068
+  type: 'test'
+  ...
+# Subtest: A00-T13 legacy diagnostics survive dispatch for invalid assignment, loop control and arithmetic
+ok 385 - A00-T13 legacy diagnostics survive dispatch for invalid assignment, loop control and arithmetic
+  ---
+  duration_ms: 23.737091
+  type: 'test'
+  ...
+# Subtest: A00-T15 conversion seam preserves public entry points and legacy helper identities
+ok 386 - A00-T15 conversion seam preserves public entry points and legacy helper identities
+  ---
+  duration_ms: 1.117703
+  type: 'test'
+  ...
+# Subtest: A00-T15 conversion seam retains widening, reference and recovery assignments
+ok 387 - A00-T15 conversion seam retains widening, reference and recovery assignments
+  ---
+  duration_ms: 0.405155
+  type: 'test'
+  ...
+# Subtest: A00-T15 default values retain numeric zero, false and null boundaries
+ok 388 - A00-T15 default values retain numeric zero, false and null boundaries
+  ---
+  duration_ms: 0.188487
+  type: 'test'
+  ...
+# Subtest: A00-T15 declaration seam collects namespace and partial types before their members
+ok 389 - A00-T15 declaration seam collects namespace and partial types before their members
+  ---
+  duration_ms: 75.667151
+  type: 'test'
+  ...
+# Subtest: A00-T15 declaration seam preserves subclass hooks including synthetic accessors
+ok 390 - A00-T15 declaration seam preserves subclass hooks including synthetic accessors
+  ---
+  duration_ms: 1.468488
+  type: 'test'
+  ...
+# Subtest: A00-T15 declaration diagnostics retain duplicate and unresolved-type spans
+ok 391 - A00-T15 declaration diagnostics retain duplicate and unresolved-type spans
+  ---
+  duration_ms: 7.615451
+  type: 'test'
+  ...
+# Subtest: A00-T15 declaration seam preserves empty and local-function-only program boundaries
+ok 392 - A00-T15 declaration seam preserves empty and local-function-only program boundaries
+  ---
+  duration_ms: 1.315664
+  type: 'test'
+  ...
+# Subtest: A00-T14 literal scanning inspects code without interpreting documentation or regular expressions
+ok 393 - A00-T14 literal scanning inspects code without interpreting documentation or regular expressions
+  ---
+  duration_ms: 1.941042
+  type: 'test'
+  ...
+# Subtest: A00-T14 the diagnostic seam shares the existing catalog and every descriptor id
+ok 394 - A00-T14 the diagnostic seam shares the existing catalog and every descriptor id
+  ---
+  duration_ms: 2.97405
+  type: 'test'
+  ...
+# Subtest: A00-T14 identifier constants are frozen and prototype-safe
+ok 395 - A00-T14 identifier constants are frozen and prototype-safe
+  ---
+  duration_ms: 0.714891
+  type: 'test'
+  ...
+# Subtest: A00-T14 inspected parser ids do not acquire compiler message descriptors
+ok 396 - A00-T14 inspected parser ids do not acquire compiler message descriptors
+  ---
+  duration_ms: 0.232913
+  type: 'test'
+  ...
+# Subtest: A00-T14 identifiers preserve formatting, missing arguments and profile mappings
+ok 397 - A00-T14 identifiers preserve formatting, missing arguments and profile mappings
+  ---
+  duration_ms: 0.237138
+  type: 'test'
+  ...
+# Subtest: A00-T14 every compiler identifier reference resolves to the exact catalog id
+ok 398 - A00-T14 every compiler identifier reference resolves to the exact catalog id
+  ---
+  duration_ms: 13.247658
+  type: 'test'
+  ...
+# Subtest: A00-T14 compiler diagnostic id literals are confined to the existing catalog
+ok 399 - A00-T14 compiler diagnostic id literals are confined to the existing catalog
+  ---
+  duration_ms: 359.26323
+  type: 'test'
+  ...
+# Subtest: integrated Int64 GC builtin rejects images carrying its former Int32 contract
+ok 400 - integrated Int64 GC builtin rejects images carrying its former Int32 contract
+  ---
+  duration_ms: 109.089344
+  type: 'test'
+  ...
+# Subtest: compiler checks lossless syntax features for text and reused trees per file
+ok 401 - compiler checks lossless syntax features for text and reused trees per file
+  ---
+  duration_ms: 63.062469
+  type: 'test'
+  ...
+# Subtest: resource limits: local defaults scale with memory and CI is unlimited
+ok 402 - resource limits: local defaults scale with memory and CI is unlimited
+  ---
+  duration_ms: 2.294181
+  type: 'test'
+  ...
+# Subtest: resource limits: environment overrides win and invalid values are ignored
+ok 403 - resource limits: environment overrides win and invalid values are ignored
+  ---
+  duration_ms: 0.30654
+  type: 'test'
+  ...
+# Subtest: resource limits: node --test arguments get a concurrency cap unless one is given
+ok 404 - resource limits: node --test arguments get a concurrency cap unless one is given
+  ---
+  duration_ms: 0.365226
+  type: 'test'
+  ...
+# Subtest: resource limits: heap cap is appended to NODE_OPTIONS and never overrides an explicit cap
+ok 405 - resource limits: heap cap is appended to NODE_OPTIONS and never overrides an explicit cap
+  ---
+  duration_ms: 0.257799
+  type: 'test'
+  ...
+# Subtest: resource limits: run slots are counted, released and reclaimed from dead owners
+ok 406 - resource limits: run slots are counted, released and reclaimed from dead owners
+  ---
+  duration_ms: 42.011304
+  type: 'test'
+  ...
+# Subtest: core runs the lightweight review on PRs and reruns when labels are removed
+ok 407 - core runs the lightweight review on PRs and reruns when labels are removed
+  ---
+  duration_ms: 1.241705
+  type: 'test'
+  ...
+# Subtest: committed additive IDs and unchanged seam locks pass without a build or label declaration
+ok 408 - committed additive IDs and unchanged seam locks pass without a build or label declaration
+  ---
+  duration_ms: 181.794813
+  type: 'test'
+  ...
+# Subtest: actual removal requires both the event label and a strictly larger relevant version
+    # Subtest: neither
+    ok 1 - neither
+      ---
+      duration_ms: 188.252683
+      type: 'test'
+      ...
+    # Subtest: label only
+    ok 2 - label only
+      ---
+      duration_ms: 195.073702
+      type: 'test'
+      ...
+    # Subtest: bump only
+    ok 3 - bump only
+      ---
+      duration_ms: 183.943986
+      type: 'test'
+      ...
+    # Subtest: wrong component
+    ok 4 - wrong component
+      ---
+      duration_ms: 176.042982
+      type: 'test'
+      ...
+    # Subtest: both
+    ok 5 - both
+      ---
+      duration_ms: 182.407123
+      type: 'test'
+      ...
+    1..5
+ok 409 - actual removal requires both the event label and a strictly larger relevant version
+  ---
+  duration_ms: 927.284305
+  type: 'test'
+  ...
+# Subtest: removing the contract-change label reruns the same SHA and rejects its breaking diff
+ok 410 - removing the contract-change label reruns the same SHA and rejects its breaking diff
+  ---
+  duration_ms: 357.48636
+  type: 'test'
+  ...
+# Subtest: schema tightening uses its component version and duplicate IDs still fail with declarations
+    # Subtest: schema
+    ok 1 - schema
+      ---
+      duration_ms: 434.560639
+      type: 'test'
+      ...
+    # Subtest: duplicate
+    ok 2 - duplicate
+      ---
+      duration_ms: 177.557302
+      type: 'test'
+      ...
+    1..2
+ok 411 - schema tightening uses its component version and duplicate IDs still fail with declarations
+  ---
+  duration_ms: 612.673828
+  type: 'test'
+  ...
+# Subtest: a seam golden change fails even with contract-change and version bump; reviewed non-seam passes
+ok 412 - a seam golden change fails even with contract-change and version bump; reviewed non-seam passes
+  ---
+  duration_ms: 353.3721
+  type: 'test'
+  ...
+# Subtest: seam comparison preserves exact bytes including formatting and fails for a deleted lock
+    # Subtest: formatting
+    ok 1 - formatting
+      ---
+      duration_ms: 174.210529
+      type: 'test'
+      ...
+    # Subtest: deletion
+    ok 2 - deletion
+      ---
+      duration_ms: 184.217113
+      type: 'test'
+      ...
+    1..2
+ok 413 - seam comparison preserves exact bytes including formatting and fails for a deleted lock
+  ---
+  duration_ms: 358.975347
+  type: 'test'
+  ...
+# Subtest: review reads pinned commits even when worktree locks are edited after checkout
+ok 414 - review reads pinned commits even when worktree locks are edited after checkout
+  ---
+  duration_ms: 199.955311
+  type: 'test'
+  ...
+# Subtest: real merge checkout verifies the exact head and excludes unrelated additions on the base branch
+ok 415 - real merge checkout verifies the exact head and excludes unrelated additions on the base branch
+  ---
+  duration_ms: 424.162154
+  type: 'test'
+  ...
+# Subtest: advanced merge base excludes contract changes that have already landed on the target branch
+ok 416 - advanced merge base excludes contract changes that have already landed on the target branch
+  ---
+  duration_ms: 195.716642
+  type: 'test'
+  ...
+# Subtest: a merge checkout with a rewound or divergent base cannot borrow the PR event labels
+    # Subtest: rewound
+    ok 1 - rewound
+      ---
+      duration_ms: 194.123481
+      type: 'test'
+      ...
+    # Subtest: divergent
+    ok 2 - divergent
+      ---
+      duration_ms: 235.258683
+      type: 'test'
+      ...
+    1..2
+ok 417 - a merge checkout with a rewound or divergent base cannot borrow the PR event labels
+  ---
+  duration_ms: 429.989967
+  type: 'test'
+  ...
+# Subtest: missing labels, mutable refs, stale workflow SHAs and non-PR event snapshots fail closed
+    # Subtest: missing labels
+    ok 1 - missing labels
+      ---
+      duration_ms: 139.394266
+      type: 'test'
+      ...
+    # Subtest: invalid labels
+    ok 2 - invalid labels
+      ---
+      duration_ms: 115.635559
+      type: 'test'
+      ...
+    # Subtest: mutable base
+    ok 3 - mutable base
+      ---
+      duration_ms: 85.919682
+      type: 'test'
+      ...
+    # Subtest: missing head
+    ok 4 - missing head
+      ---
+      duration_ms: 101.675099
+      type: 'test'
+      ...
+    # Subtest: stale SHA
+    ok 5 - stale SHA
+      ---
+      duration_ms: 128.647655
+      type: 'test'
+      ...
+    # Subtest: wrong event
+    ok 6 - wrong event
+      ---
+      duration_ms: 95.748926
+      type: 'test'
+      ...
+    1..6
+ok 418 - missing labels, mutable refs, stale workflow SHAs and non-PR event snapshots fail closed
+  ---
+  duration_ms: 668.239198
+  type: 'test'
+  ...
+# Subtest: malformed committed JSON and version removal fail rather than skipping review
+    # Subtest: malformed
+    ok 1 - malformed
+      ---
+      duration_ms: 137.469473
+      type: 'test'
+      ...
+    # Subtest: version removal
+    ok 2 - version removal
+      ---
+      duration_ms: 147.003308
+      type: 'test'
+      ...
+    1..2
+ok 419 - malformed committed JSON and version removal fail rather than skipping review
+  ---
+  duration_ms: 285.102477
+  type: 'test'
+  ...
+# Subtest: A00 runner preserves SIGINT failure after graceful zero exit
+ok 420 - A00 runner preserves SIGINT failure after graceful zero exit
+  ---
+  duration_ms: 331.461195
+  type: 'test'
+  ...
+# Subtest: A00 runner preserves SIGTERM failure after graceful zero exit
+ok 421 - A00 runner preserves SIGTERM failure after graceful zero exit
+  ---
+  duration_ms: 273.458241
+  type: 'test'
+  ...
+# Subtest: A00 runner timeout remains a failure after graceful zero exit
+ok 422 - A00 runner timeout remains a failure after graceful zero exit
+  ---
+  duration_ms: 1693.155678
+  type: 'test'
+  ...
+# Subtest: A00 runner preserves the first cancellation when later signals arrive
+ok 423 - A00 runner preserves the first cancellation when later signals arrive
+  ---
+  duration_ms: 532.776018
+  type: 'test'
+  ...
+# Subtest: A00 runner preserves normal exits and clears its pending deadline
+ok 424 - A00 runner preserves normal exits and clears its pending deadline
+  ---
+  duration_ms: 668.326987
+  type: 'test'
+  ...
+# Subtest: A00 runner spawn errors clear listeners and pending deadlines
+ok 425 - A00 runner spawn errors clear listeners and pending deadlines
+  ---
+  duration_ms: 58.59924
+  type: 'test'
+  ...
+# Subtest: A00 runner rejects invalid timeouts before starting a child
+ok 426 - A00 runner rejects invalid timeouts before starting a child
+  ---
+  duration_ms: 1.371745
+  type: 'test'
+  ...
+# Subtest: A00 runner keeps a short area deadline when a slower area is also selected
+ok 427 - A00 runner keeps a short area deadline when a slower area is also selected
+  ---
+  duration_ms: 1313.795134
+  type: 'test'
+  ...
+# Subtest: A00 runner preserves each successful area timeout and serial reporter output
+ok 428 - A00 runner preserves each successful area timeout and serial reporter output
+  ---
+  duration_ms: 1111.329887
+  type: 'test'
+  ...
+# Subtest: A00 runner keeps separate reporter files for multiple areas
+ok 429 - A00 runner keeps separate reporter files for multiple areas
+  ---
+  duration_ms: 1048.574828
+  type: 'test'
+  ...
+# Subtest: A00 runner rejects shared reporter files before running or truncating them
+ok 430 - A00 runner rejects shared reporter files before running or truncating them
+  ---
+  duration_ms: 77.560804
+  type: 'test'
+  ...
+# Subtest: A00 runner preserves ordinary reporter destinations for a single selected area
+ok 431 - A00 runner preserves ordinary reporter destinations for a single selected area
+  ---
+  duration_ms: 831.200832
+  type: 'test'
+  ...
+# Subtest: A00 runner rejects area placeholders that normalize to a shared reporter file
+ok 432 - A00 runner rejects area placeholders that normalize to a shared reporter file
+  ---
+  duration_ms: 74.027097
+  type: 'test'
+  ...
+# Subtest: A00 runner rejects missing reporter destinations before starting suites
+ok 433 - A00 runner rejects missing reporter destinations before starting suites
+  ---
+  duration_ms: 165.372906
+  type: 'test'
+  ...
+# Subtest: named builtin groups are frozen functions and prototype names retain managed missing-method faults
+ok 434 - named builtin groups are frozen functions and prototype names retain managed missing-method faults
+  ---
+  duration_ms: 1.503839
+  type: 'test'
+  ...
+# Subtest: framework delegation precedes rooting/value evaluation and keeps lazy result metadata per VM
+ok 435 - framework delegation precedes rooting/value evaluation and keeps lazy result metadata per VM
+  ---
+  duration_ms: 0.372378
+  type: 'test'
+  ...
+# Subtest: legacy BCL runs inside roots without an extra fallback value conversion and hosts remain VM-local
+ok 436 - legacy BCL runs inside roots without an extra fallback value conversion and hosts remain VM-local
+  ---
+  duration_ms: 0.729082
+  type: 'test'
+  ...
+# Subtest: rooted prefixes and named handlers retain first-value timing even for no-argument calls
+ok 437 - rooted prefixes and named handlers retain first-value timing even for no-argument calls
+  ---
+  duration_ms: 0.290958
+  type: 'test'
+  ...
+# Subtest: object and string handlers preserve standalone services, type hints and managed identities
+ok 438 - object and string handlers preserve standalone services, type hints and managed identities
+  ---
+  duration_ms: 5.628101
+  type: 'test'
+  ...
+# Subtest: collection and allocation handlers preserve argument roots and mutation behavior without an image
+ok 439 - collection and allocation handlers preserve argument roots and mutation behavior without an image
+  ---
+  duration_ms: 2.83809
+  type: 'test'
+  ...
+# Subtest: output and managed faults retain their values, messages and root cleanup
+ok 440 - output and managed faults retain their values, messages and root cleanup
+  ---
+  duration_ms: 0.774488
+  type: 'test'
+  ...
+# Subtest: A00 source dispatch maps every released opcode to an immutable handler
+ok 441 - A00 source dispatch maps every released opcode to an immutable handler
+  ---
+  duration_ms: 1.153915
+  type: 'test'
+  ...
+# Subtest: A00 grouped dispatcher distinguishes no-op handlers from unknown instructions
+ok 442 - A00 grouped dispatcher distinguishes no-op handlers from unknown instructions
+  ---
+  duration_ms: 0.381681
+  type: 'test'
+  ...
+# Subtest: A00 grouped source dispatch retains array loops, calls, arithmetic and finally order
+ok 443 - A00 grouped source dispatch retains array loops, calls, arithmetic and finally order
+  ---
+  duration_ms: 102.392774
+  type: 'test'
+  ...
+# Subtest: A00 source stores preserve the assigned stack value and notify after mutation
+ok 444 - A00 source stores preserve the assigned stack value and notify after mutation
+  ---
+  duration_ms: 1.494686
+  type: 'test'
+  ...
+# Subtest: A00 source dispatch pauses at a sequence point before consuming its instruction
+ok 445 - A00 source dispatch pauses at a sequence point before consuming its instruction
+  ---
+  duration_ms: 3.772433
+  type: 'test'
+  ...
+# Subtest: A00 source dispatch keeps invalid opcodes and arithmetic boundaries as managed faults
+ok 446 - A00 source dispatch keeps invalid opcodes and arithmetic boundaries as managed faults
+  ---
+  duration_ms: 8.807232
+  type: 'test'
+  ...
+1..446
+# tests 465
+# suites 0
+# pass 464
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 87905.88352

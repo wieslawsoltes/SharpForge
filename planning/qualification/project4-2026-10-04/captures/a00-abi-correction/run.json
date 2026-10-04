@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-04T15:02:20.273105Z",
+  "finishedAt": "2026-10-04T15:02:26.284636Z",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a00-01-value-abi.test.js"
+  ],
+  "sourceBefore": {
+    "commit": "52bde3173ae86e01cd9fb1d1a8cb01764eb024cb",
+    "tree": "874fca7633c61df1f28817db1a6aefae3b0acbf2",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "52bde3173ae86e01cd9fb1d1a8cb01764eb024cb",
+    "tree": "874fca7633c61df1f28817db1a6aefae3b0acbf2",
+    "clean": true
+  },
+  "exitCode": 0,
+  "summary": {
+    "tests": 19,
+    "suites": 0,
+    "pass": 19,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "status": "passed"
+}

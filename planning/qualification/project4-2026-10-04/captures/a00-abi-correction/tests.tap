@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: ABI fixture empty-array
+ok 1 - ABI fixture empty-array
+  ---
+  duration_ms: 3.061429
+  type: 'test'
+  ...
+# Subtest: ABI fixture identity-and-surrogates
+ok 2 - ABI fixture identity-and-surrogates
+  ---
+  duration_ms: 1.573563
+  type: 'test'
+  ...
+# Subtest: ABI fixture leases
+ok 3 - ABI fixture leases
+  ---
+  duration_ms: 0.624518
+  type: 'test'
+  ...
+# Subtest: ABI fixture million-array
+ok 4 - ABI fixture million-array
+  ---
+  duration_ms: 5618.616364
+  type: 'test'
+  ...
+# Subtest: ABI fixture nan-payloads
+ok 5 - ABI fixture nan-payloads
+  ---
+  duration_ms: 0.650767
+  type: 'test'
+  ...
+# Subtest: ABI fixture scalar-boundaries
+ok 6 - ABI fixture scalar-boundaries
+  ---
+  duration_ms: 1.662504
+  type: 'test'
+  ...
+# Subtest: ABI fixture stale-handle
+ok 7 - ABI fixture stale-handle
+  ---
+  duration_ms: 0.215547
+  type: 'test'
+  ...
+# Subtest: ABI malformed buffers and versions fail with typed diagnostics
+ok 8 - ABI malformed buffers and versions fail with typed diagnostics
+  ---
+  duration_ms: 0.776572
+  type: 'test'
+  ...
+# Subtest: schema scalar negatives agree with codec bounds
+ok 9 - schema scalar negatives agree with codec bounds
+  ---
+  duration_ms: 0.625059
+  type: 'test'
+  ...
+# Subtest: ABI nested structs fail with typed depth limit
+ok 10 - ABI nested structs fail with typed depth limit
+  ---
+  duration_ms: 0.572331
+  type: 'test'
+  ...
+# Subtest: ABI sparse slots and heap data fail before encoding instead of becoming null values
+ok 11 - ABI sparse slots and heap data fail before encoding instead of becoming null values
+  ---
+  duration_ms: 0.987578
+  type: 'test'
+  ...
+# Subtest: ABI floating width and signed zero apply inside structs and heap arrays
+ok 12 - ABI floating width and signed zero apply inside structs and heap arrays
+  ---
+  duration_ms: 0.57812
+  type: 'test'
+  ...
+# Subtest: ABI strong leases keep the retained identity across caller and roots mutations
+ok 13 - ABI strong leases keep the retained identity across caller and roots mutations
+  ---
+  duration_ms: 0.500686
+  type: 'test'
+  ...
+# Subtest: ABI weak leases keep the original identity without rooting a replacement
+ok 14 - ABI weak leases keep the original identity without rooting a replacement
+  ---
+  duration_ms: 0.162368
+  type: 'test'
+  ...
+# Subtest: ABI leases validate the captured tuple and preserve typed stale-handle rejection
+ok 15 - ABI leases validate the captured tuple and preserve typed stale-handle rejection
+  ---
+  duration_ms: 0.576218
+  type: 'test'
+  ...
+# Subtest: A00 inventory reproducible and all result carriers documented
+ok 16 - A00 inventory reproducible and all result carriers documented
+  ---
+  duration_ms: 1.428851
+  type: 'test'
+  ...
+# Subtest: A00 version registry equals public source constants
+ok 17 - A00 version registry equals public source constants
+  ---
+  duration_ms: 0.936998
+  type: 'test'
+  ...
+# Subtest: A00 source constant drift fails before version negotiation
+ok 18 - A00 source constant drift fails before version negotiation
+  ---
+  duration_ms: 1.007611
+  type: 'test'
+  ...
+# Subtest: A00 version reader follows explicit re-exports and rejects cycles
+ok 19 - A00 version reader follows explicit re-exports and rejects cycles
+  ---
+  duration_ms: 2.3904
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5786.028053

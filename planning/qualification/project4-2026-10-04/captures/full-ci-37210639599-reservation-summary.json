@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "kind": "project4-full-ci-first-failure-triage",
+  "observedFrom": "2026-10-04 14:54:26 UTC",
+  "observedThrough": "2026-10-04 14:57:49 UTC",
+  "rawEvidence": "full-ci-37210639599-reservation-raw.json",
+  "source": {
+    "checkoutCommit": "33c30d7361feaca46642c833e6f9394996b09e1e",
+    "checkoutTree": "e081cf2c538baa5d049b1a422fd77c1be26809d0",
+    "pullRequestHead": "c9bda180705db8d4efebdec0023df3d31667a2a7"
+  },
+  "run": {
+    "id": 37210639599,
+    "attempt": 1,
+    "coreJobId": 111460940659,
+    "coreConclusion": "failure",
+    "failedStep": "Run npm test",
+    "executedArea": "A00",
+    "tests": 465,
+    "passed": 462,
+    "failed": 3,
+    "cancelled": 0,
+    "skipped": 0,
+    "remainingSubstantiveFamilies": "skipped after core prerequisite failure"
+  },
+  "reservationCoverage": {
+    "claimsRead": 98,
+    "lockRecordsRead": 13,
+    "operationRefs": 0,
+    "startEndRefIdentityStable": {
+      "claims": true,
+      "locks": true,
+      "operations": true
+    },
+    "projectFieldOnlyOwnership": "not available through these repository-ref reads"
+  },
+  "files": [
+    {
+      "paths": [
+        "planning/contracts/gc-roots.md",
+        "planning/contracts/gc-roots-sites.json"
+      ],
+      "area": "A00",
+      "reservation": "preserved legacy path matches",
+      "owners": [
+        "codex-p4-abi"
+      ],
+      "tasks": [
+        "SF-A00-T01.4",
+        "SF-A00-T05.1",
+        "SF-A00-T05.5",
+        "SF-A00-T05.7"
+      ],
+      "pattern": "planning/contracts/gc-*",
+      "decision": "Owner handoff/coordination; no implicit release from narrowed activePaths.",
+      "correction": "Review current extracted source root categories and refresh exact literal-site document/inventory; complete fix also requires the actively reserved test below."
+    },
+    {
+      "paths": [
+        "tests/a00-04-execution.test.js"
+      ],
+      "area": "A00",
+      "reservation": "explicit activePaths/paths",
+      "owner": "codex-p4-abi",
+      "task": "SF-A00-T01.4",
+      "issue": 1035,
+      "claimCommit": "d659289e3d34951f4cb44f5f0818c08a3648bb6a",
+      "expires": "2026-10-05T06:08:14.662Z",
+      "decision": "Owner handoff required.",
+      "correction": "Replace obsolete >=13 count after extraction with agreement against reviewed exact site inventory, preserving new-site rejection. Current source contains12 literal sites; adding missing doc entries alone exposes this further stale assertion."
+    },
+    {
+      "paths": [
+        "scripts/planning/inventory-values.js",
+        "scripts/planning/check-root-providers.js",
+        "tests/a00-01-value-abi.test.js"
+      ],
+      "area": "A00",
+      "reservation": "preserved legacy path matches",
+      "owners": [
+        "codex-p4-abi"
+      ],
+      "tasks": [
+        "SF-A00-T01.4",
+        "SF-A00-T05.1",
+        "SF-A00-T05.5",
+        "SF-A00-T05.7"
+      ],
+      "decision": "Do not edit these reserved seams. The observed inventory drift does not require a generator/scanner/test exemption."
+    },
+    {
+      "paths": [
+        "planning/contracts/value-abi/current-js-inventory.json"
+      ],
+      "area": "A00",
+      "reservation": "no explicit or legacy glob file match among all98 claims/13lockrecords",
+      "logicalTask": {
+        "task": "SF-A00-T01.1",
+        "issue": 1032,
+        "observedState": "open",
+        "labels": [
+          "area:A00",
+          "priority:P0",
+          "state:ready",
+          "kind:subtask"
+        ],
+        "claimRef": "absent"
+      },
+      "decision": "Narrow artifact-only correction candidate, but not a declaration of fully unowned work: unobserved Project field-only ownership and legacy value-abi subtree interpretation still need resolution.",
+      "correction": "Review four changed source files, then regenerate only the committed inventory data with the existing generator. Logged resultKinds/additionalShapes/evidence/unsupported are unchanged; do not weaken the hash assertion.",
+      "legacyCaveat": "Retained legacy value-abi* does not cross slash under repository glob semantics; it is not an exact match for the nested artifact. The broader preserved ABI ownership still exists."
+    },
+    {
+      "paths": [
+        "packages/compiler/src/binder/body/calls.js"
+      ],
+      "area": "A02",
+      "reservation": "no explicit/legacy claim path or held lock match",
+      "correction": "At the delegate invocation count comparison, replace only the two string literals with existing DiagnosticId.CS1593 and DiagnosticId.CS7036. DiagnosticId is already imported and both catalog entries exist; no descriptor/ID or diagnostic-output change is needed.",
+      "decision": "Narrow caller-only correction candidate from exact file reservations. Do not assume ownership of the separately claimed A00-T14 task or its catalog. Project field-only ownership is unverified."
+    },
+    {
+      "paths": [
+        "packages/compiler/src/diagnostics.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/diagnostics/roslyn-codes.js",
+        "tests/a00-diagnostic-ids.test.js"
+      ],
+      "area": "A02 source / A00 contract evidence",
+      "reservation": "task-level claim SF-A00-T14; no explicit path array in record",
+      "owner": "codex-a00-diagnostic-ids",
+      "task": "SF-A00-T14",
+      "issue": 432,
+      "claimCommit": "6cb577d2f33bbae5c0dd19d5427d67e318cb4024",
+      "expires": "2026-10-04T20:37:25.725Z",
+      "issueOwns": "packages/compiler/src/diagnostics.js",
+      "decision": "Leave catalog, IDs, tests, task ownership and status unchanged. Handoff if changing this owned contract; caller literal fix does not need catalog changes."
+    }
+  ],
+  "inventoryDelta": [
+    {
+      "path": "packages/runtime/src/heap.js",
+      "expected": "01e841268240a757b9213744cf64d6b6c814baa1a76113adacd3c601f0708cb5",
+      "actual": "18f9201ba7964579158a26671359ac34aa2f5ba97ec56ee601e0ee102ec6408e"
+    },
+    {
+      "path": "packages/runtime/src/execution/source-ops/call.js",
+      "expected": "9bbfce817cc8962140bccfcc03c290c42471904cb0cc2ef41239c707ac015f30",
+      "actual": "d0d3e2081c184ad70f6e7f604cc1c58b6da4cb2efe6a9c9b080f705ade75566e"
+    },
+    {
+      "path": "packages/runtime/src/execution/source-builtins/objects.js",
+      "expected": "1c48decebb5ca2803409afa097f610e201d0b1556d7e46461dd444dfe03a3d3a",
+      "actual": "f2306439247e38ec164c1a2ec832423ac34e0c6281d514abf5f9f34b42f5244a"
+    },
+    {
+      "path": "packages/runtime/src/execution/storage.js",
+      "expected": "b8f507a4dbbeaec8e12a9779bfafd1bfa53aeaabbf7b5a78d9517e5dfc582d39",
+      "actual": "3499a41895b9e5ddc83b8225857ef73a2eaaa4d62ba4713020bc89f7a70b8d46"
+    }
+  ],
+  "interpretation": "These three failures are source-contract integration defects. They are not browser/native/toolchain unavailability. Later families did not execute. At least the full GC-root fix needs the existing owner; this audit does not declare every remaining path reserved or every unmatched path free.",
+  "actionsPerformed": "Read-only GitHub and local source/metadata inspection; wrote only requested scratch evidence JSON. No repo source edits, tests, builds, claims, locks, issue comments, labels or workflows."
+}

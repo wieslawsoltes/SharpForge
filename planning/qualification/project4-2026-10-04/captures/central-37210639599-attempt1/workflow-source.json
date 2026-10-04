@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "source": "33c30d7361feaca46642c833e6f9394996b09e1e",
+  "originalPath": ".github/workflows/ci.yml",
+  "blob": "edd217608d5a5f56b31b693f4f39d53b18dd02d9",
+  "bytes": 15667,
+  "sha256": "dcfb6f5724726edb470c21f0fda50fa61097c146cc0ca503f29c5b3519fce18c",
+  "note": "Workflow file retained from the exact checkout attested by job logs and environment artifacts. The API run path and observed job graph agree; an independent GITHUB_WORKFLOW_SHA field was not captured."
+}
