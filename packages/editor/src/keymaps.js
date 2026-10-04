@@ -6,6 +6,7 @@ import { visualStudioBindings } from './keymaps/visual-studio.js';
 export const EDITOR_KEYMAPS = Object.freeze([
   { id: 'visual-studio', label: 'Visual Studio (default)' },
   { id: 'vscode', label: 'Visual Studio Code' },
+  { id: 'resharper', label: 'ReSharper-like (IntelliJ)' },
   { id: 'vim', label: 'Vim' },
   { id: 'emacs', label: 'Emacs' },
   { id: 'sublime', label: 'Sublime Text' }

@@ -3,5 +3,7 @@
   "struct-assignment/cs0171-branches-and-loops-csharp-10": ["diagnostics", "warnings"],
   "struct-assignment/cs0171-cs0843-constructors-csharp-10": ["diagnostics", "warnings"],
   "struct-assignment/cs0171-nested-struct-field-csharp-10": ["diagnostics", "warnings"],
-  "struct-assignment/cs0188-this-before-assignment-csharp-10": ["diagnostics", "warnings"]
+  "struct-assignment/cs0188-this-before-assignment-csharp-10": ["diagnostics", "warnings"],
+  "struct-assignment/valid-nested-struct-local": ["directCil"],
+  "struct-assignment/valid-struct-constructors-csharp-10": ["directCil"]
 }

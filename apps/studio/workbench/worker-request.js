@@ -19,7 +19,7 @@ export function workerRequest(payload, {createWorker, signal, timeoutMs = 5000, 
     worker.onmessage = event => {
       const message = event.data;
       if (message.type === 'progress') onProgress(message.progress);
-      if (message.type === 'error') finish(Object.assign(new Error(message.error.message), {name: message.error.name}));
+      if (message.type === 'error') finish(Object.assign(new Error(message.error.message), {name: message.error.name, code: message.error.code}));
       if (message.type === 'result') finish(null, message.result);
     };
     worker.onerror = event => finish(new Error(event.message ?? 'Workspace worker failed'));

@@ -16,8 +16,9 @@ null name; real rows preserve their tokens and can have empty names. Plain
 method and return parameters now expose `member` equal to `method`.
 
 This is raw accessor metadata. Type resolution, generic substitution, property
-versus accessor signature compatibility, property-signature custom modifier
-reflection, attribute-based defaults and invocation are separate services.
+versus accessor signature compatibility, attribute-based defaults and invocation
+are separate services. [Custom modifier token queries](CUSTOM-MODIFIERS.md) use
+the property signature, independently of the accessor-derived `signatureType`.
 No getter/setter signature is read before requesting index parameters, and the
 unselected setter's signature is not decoded when a getter exists. No executable
 body is loaded. The chosen accessor's existing signature, Param ownership, name

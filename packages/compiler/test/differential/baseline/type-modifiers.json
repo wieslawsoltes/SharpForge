@@ -3,7 +3,7 @@
   "type-modifiers/accessor-accessibility-at-use": ["diagnostics", "warnings"],
   "type-modifiers/partial-declarations": ["diagnostics", "warnings"],
   "type-modifiers/partial-modifier-position": ["diagnostics", "warnings"],
-  "type-modifiers/static-class-and-partial-type": ["diagnostics", "warnings", "bytecode", "cil"],
+  "type-modifiers/static-class-and-partial-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "type-modifiers/static-class-as-a-type": ["diagnostics", "warnings"],
   "type-modifiers/static-class-declaration": ["diagnostics", "warnings"],
   "type-modifiers/static-class-members": ["diagnostics", "warnings"]

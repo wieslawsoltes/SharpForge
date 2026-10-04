@@ -43,10 +43,15 @@ saved frames remain ordinary arrays and shared local-array aliases are preserved
 This is a partial product increment for #1397, limited to direct CIL. Source and
 reloaded-source interpreters retain their existing representation. The required
 10-million-operation differential run, all-platform qualification and at-least-3x
-counter-loop benchmark remain pending. Focused boundary/lifecycle tests are authored
-but were not executed in the implementation slot; no builds or benchmarks ran.
+counter-loop benchmark remain pending. All 97 focused boundary, lifecycle, float/Int64 coexistence,
+frame-pool, root-visitor and quota tests passed at `f32fde87`. Required PR checks
+follow this serial local validation; no builds or benchmarks ran in implementation.
 
 No zero-allocation or throughput claim is made. Plan/plane/proxy setup allocates;
 BigInt is materialized at public boundaries and generic fallback. The focused loop
 regression inspects private lane use as a functional storage invariant, not as an
 allocation measurement or benchmark result.
+
+The Int32-widening increment passed all 42 focused conversion, small-long, Int64
+and typed-float tests at `a2904830`. Required PR checks follow serial local validation;
+this does not replace the deferred differential or performance qualification.

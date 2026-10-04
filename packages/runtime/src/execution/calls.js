@@ -1,4 +1,6 @@
-import {rejectValueInstance} from './value-types.js';
+import {userValueCallType, prepareValueReceiver, constructUserValue} from './value-calls.js';
+import {boxedInterfaceReceiver} from './value-dispatch.js';
+import {invokeConstrainedInterface} from './constrained-call.js';
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {constructIntrinsicValue} from './value-intrinsics.js';
@@ -19,8 +21,8 @@ import {resolveVirtualTarget} from './inline-cache.js';
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]);
-  if(!method.signature.isStatic)rejectValueInstance(vm,extra.genericIdentity??method.ownerToken);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
+  prepareValueReceiver(vm,method,args[0]);
   vm.frames.push(cilCallFrame(vm,method,args,extra));
   enterCilMethod(vm, vm.top);
 }
@@ -40,11 +42,12 @@ export function prepareCall(vm,frame=vm.top) {
 }
 export function invoke(vm,instruction) {
   const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
+  if(invokeConstrainedInterface(vm,caller,instruction,descriptor))return;
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.genericIdentity??descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
   const trigger=instruction.name==='newobj'||descriptor.name==='.ctor'?'constructor':descriptor.signature.isStatic?'static-method':'instance-method';
-  if(target&&!descriptor.signature.isStatic)rejectValueInstance(vm,genericIdentity??descriptor.ownerToken);
+  const valueType=target?userValueCallType(vm,descriptor,instruction.name):null;
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   const delegate = supportedDelegateCall(vm.inspector, descriptor);
   const intrinsic = intrinsicDefinition(descriptor), contract = intrinsic?.contract;
@@ -65,6 +68,7 @@ export function invoke(vm,instruction) {
     }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
+    if(instruction.name==='newobj'&&valueType){constructUserValue(vm,descriptor,valueType,args);return;}
     if(instruction.name==='newobj') {
       let ref;
       if(target){const layout=vm.layout(genericIdentity??descriptor.ownerToken);ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));}
@@ -79,7 +83,8 @@ export function invoke(vm,instruction) {
     const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?resolveVirtualTarget(vm,caller,instruction,descriptor,args[0]):target;
     if(dispatch) {
       if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
-      const owner=descriptor.signature.isStatic?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
+      const owner=descriptor.signature.isStatic||valueType?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
+      if(instruction.name==='callvirt')args[0]=boxedInterfaceReceiver(vm,descriptor,dispatch,args[0]);
       vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
     } else {
       const value=invokeIntrinsic(vm,descriptor,args,instruction.name==='callvirt');
