@@ -1,6 +1,6 @@
 {
   "array-ranks/creation-indexing-and-conversion-rules": ["diagnostics", "warnings"],
-  "array-ranks/jagged-arrays": ["diagnostics", "warnings", "bytecode", "cil"],
+  "array-ranks/jagged-arrays": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "array-ranks/length-rank-and-bounds": ["diagnostics", "warnings", "bytecode", "cil"],
   "array-ranks/multi-dimensional-arrays": ["diagnostics", "warnings", "bytecode", "cil"],
   "array-ranks/multi-dimensional-arrays-in-members": ["diagnostics", "warnings", "bytecode", "cil"]

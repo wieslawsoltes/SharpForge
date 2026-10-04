@@ -4,10 +4,11 @@ import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
+import {initializeFloatFrame} from './typed-float-frame.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
-  admitCilStack(vm, method);
+  const capacity = admitCilStack(vm, method);
   const ticket = reserveStackFrame(vm, method, args.length);
   let pool, frame;
   try {
@@ -27,6 +28,7 @@ export function cilCallFrame(vm, method, args, extra) {
       frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
     }
     Object.assign(frame, extra);
+    initializeFloatFrame(vm, frame, capacity);
     commitStackFrame(ticket, frame);
     return frame;
   } catch (error) {

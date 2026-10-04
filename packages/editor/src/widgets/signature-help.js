@@ -51,7 +51,7 @@ export class SignatureHelpWidget {
     if (!help?.signatures?.length) return this.close();
     this.signatures = help.signatures;
     this.index = Math.max(0, Math.min(help.activeSignature ?? this.index, this.signatures.length - 1));
-    this.parameter = call.argument;
+    this.parameter = help.activeParameter ?? call.argument;
     this.callStart = call.start;
     this.render();
     this.popup.show();

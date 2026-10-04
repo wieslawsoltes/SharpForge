@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+  "sourceTree": "367b277c5016e1172da3b19ec858c9d7c0045030",
+  "startedAt": "2026-10-04T01:21:31.380498+00:00",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a00-03-studio-registries.test.js",
+    "tests/a19-studio-composition.test.js",
+    "tests/a19-studio-reveal-policy.test.js"
+  ],
+  "files": [
+    "tests/a00-03-studio-registries.test.js",
+    "tests/a19-studio-composition.test.js",
+    "tests/a19-studio-reveal-policy.test.js"
+  ],
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T01:21:33.204302+00:00"
+}

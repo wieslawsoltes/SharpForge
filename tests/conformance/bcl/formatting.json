@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "family": "formatting",
+  "source": "Formatting.cs",
+  "cases": [
+    {
+      "id": "formatting-integer-decimal",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-zero-padding",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-negative-padding",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-hex",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-negative-hex",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-number-culture",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-minimum",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-integer-invalid-specifier",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "formatting-double-fixed-culture",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-number-culture",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-exponent",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-roundtrip",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-negative-zero",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-nan",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-infinity",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-double-negative-infinity",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-single-roundtrip",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-decimal-scale",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-decimal-currency-culture",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-decimal-percent-culture",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-custom-positive-section",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-custom-negative-section",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-custom-zero-section",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-composite-alignment",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-composite-left-alignment",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-composite-escaped-braces",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-composite-null-argument",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-composite-missing-argument",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "formatting-composite-unclosed-brace",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "formatting-composite-null-format",
+      "category": "negative",
+      "exception": "System.ArgumentNullException"
+    },
+    {
+      "id": "formatting-parse-int-signed",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-parse-int-hex",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-parse-int-overflow",
+      "category": "negative",
+      "exception": "System.OverflowException"
+    },
+    {
+      "id": "formatting-parse-int-invalid",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "formatting-parse-int-empty",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "formatting-try-parse-int-empty",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "formatting-parse-decimal-culture-roundtrip",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-parse-double-exponent",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-guid-lowercase",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "formatting-builder-composite-culture",
+      "category": "positive",
+      "exception": null
+    }
+  ]
+}

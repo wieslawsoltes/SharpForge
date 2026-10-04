@@ -1,5 +1,7 @@
 {
   "interfaces/cs0144-instantiate-interface": ["diagnostics", "warnings"],
   "interfaces/cs0535-not-implemented": ["diagnostics", "warnings"],
-  "interfaces/cs0738-wrong-return-type": ["diagnostics", "warnings"]
+  "interfaces/cs0738-wrong-return-type": ["diagnostics", "warnings"],
+  "interfaces/implement-and-dispatch": ["directCil"],
+  "interfaces/multiple-and-explicit": ["directCil"]
 }

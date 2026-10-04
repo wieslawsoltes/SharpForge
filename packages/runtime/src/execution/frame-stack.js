@@ -68,8 +68,8 @@ export function admitCilAssemblyStacks(vm) {
   for (const token of vm.report.methods) admitCilStack(vm, vm.inspector.getMethod(token));
 }
 
-/** Admitted CIL code is bounded by verification; no global comparison on its push path. */
-export function pushStackValue(vm, value) {
+/** Shared admission for ordinary and raw-plane pushes; verified code omits the global comparison. */
+export function admitStackPush(vm) {
   const frame = vm.top;
   const admitted = frameAdmissions.get(frame);
   const limit = vm.options.maxStackValues ?? 65536;
@@ -82,7 +82,11 @@ export function pushStackValue(vm, value) {
     throw new ManagedFault('ExecutionLimitException', 'Evaluation stack budget exceeded');
   }
   if (!verified || admitted.byteLimit !== vm.options.maxStackBytes) admitStackBytes(vm, frame);
-  frame.stack.push(value);
+}
+
+export function pushStackValue(vm, value) {
+  admitStackPush(vm);
+  vm.top.stack.push(value);
 }
 
 /** Preflight active and parked stacks without changing live VM, scheduler or heap state. */

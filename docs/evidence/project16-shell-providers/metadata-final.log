@@ -1,0 +1,20 @@
+✔ PE metadata exposes actual generic List members, names, parameter signatures, properties and namespaces (13.006876ms)
+✔ metadata source carries the exact PE identity, source version and matching overload selection (7.19411ms)
+✔ metadata versions never collapse same-name assemblies or infer an ambiguous owner (1.878443ms)
+✔ framework member caret resolves Console.WriteLine rather than treating it as a type name (56.59952ms)
+✔ core intrinsic metadata uses accepted arities, canonical owners, instance parameters and property shape (24.425367ms)
+✔ bound assembly simple identity selects actual PE metadata and rejects multiple matching versions (30.340858ms)
+✔ reference sources use authorized HintPath bytes, transitive project visibility and no source text getters (32.318001ms)
+✔ unavailable, ambiguous and invalid PE references return explicit Object Browser diagnostic rows (30.722455ms)
+✔ metadata inspection rejects byte and declaration limits before returning a partial model (1.255143ms)
+✔ catalog cancellation terminates its dedicated metadata worker and does not cache late replies (28.122663ms)
+✔ Code Definition reads only a bounded caret fragment and prioritizes structured bound owners (27.685174ms)
+✔ Code Definition source definitions bypass metadata and retain exact selection (0.568067ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 456.834718

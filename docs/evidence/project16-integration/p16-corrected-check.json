@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "89ba34436db4f8aa56fc529a49a797dba93540a7",
+  "sourceTree": "3a0ed24019c04354d5085e3686d5208890d4624b",
+  "startedAt": "2026-10-04T01:25:37.993016+00:00",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "npm",
+    "run",
+    "check"
+  ],
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T01:25:41.767098+00:00"
+}
