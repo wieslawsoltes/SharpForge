@@ -23,7 +23,7 @@ function marker(writer, context, type, checked = false, from = null) {
 }
 
 function constant(writer, context, wire) {
-  const type = wire.scalar, value = decodeScalar(wire, {nativeIntBits: 64});
+  const type = numericTypeName(wire.scalar), value = decodeScalar(wire, {nativeIntBits: 64});
   if (type === 'decimal') {
     const bits = decimalBits(value);
     for (let index = 0; index < 3; index++) writer.integer(bits[index]);
@@ -31,7 +31,10 @@ function constant(writer, context, wire) {
       .op('newobj', context.external('System.Decimal', '.ctor', 'void', ['int', 'int', 'int', 'bool', 'byte'], false));
   } else if (type === 'long' || type === 'ulong') writer.op('ldc.i8', value);
   else if (type === 'float' || type === 'double') writer.op(type === 'float' ? 'ldc.r4' : 'ldc.r8', value.value);
-  else if (type === 'nint' || type === 'nuint') writer.op('ldc.i8', BigInt(wire.value)).op(type === 'nint' ? 'conv.i' : 'conv.u');
+  else if (type === 'nint' || type === 'nuint') {
+    // A literal must fit the executing ABI, just as decodeScalar requires; casts have their own policy.
+    writer.op('ldc.i8', BigInt(wire.value)).op(type === 'nint' ? 'conv.ovf.i' : 'conv.ovf.u.un');
+  }
   else writer.integer(value);
   marker(writer, context, type);
 }
