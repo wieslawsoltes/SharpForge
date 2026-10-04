@@ -674,8 +674,11 @@ Registered families: <code>builder</code>.
 | 524288 | <code>System.Text.StringBuilder System.Text.StringBuilder::AppendFormat(string, object[])</code> | implemented |
 | 524309 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char)</code> | implemented |
 | 524310 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char, int)</code> | implemented |
+| 524312 | <code>char System.Text.StringBuilder::get_Chars(int)</code> | implemented |
+| 524313 | <code>void System.Text.StringBuilder::set_Chars(int, char)</code> | implemented |
+| 524315 | <code>void System.Text.StringBuilder::CopyTo(int, char[], int, int)</code> | implemented |
 
-Pinned reference: 33 implemented and 75 missing exact metadata rows.
+Pinned reference: 36 implemented and 72 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -688,8 +691,8 @@ Pinned reference: 33 implemented and 75 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::.ctor``0(System.String,System.Int32,System.Int32,System.Int32):System.Void instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::get_Capacity``0():System.Int32 instance</code> | implemented | 801 |
 | method | <code>System.Text.StringBuilder::set_Capacity``0(System.Int32):System.Void instance</code> | implemented | 802 |
-| method | <code>System.Text.StringBuilder::get_Chars``0(System.Int32):System.Char instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::set_Chars``0(System.Int32,System.Char):System.Void instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::get_Chars``0(System.Int32):System.Char instance</code> | implemented | 524312 |
+| method | <code>System.Text.StringBuilder::set_Chars``0(System.Int32,System.Char):System.Void instance</code> | implemented | 524313 |
 | method | <code>System.Text.StringBuilder::get_Length``0():System.Int32 instance</code> | implemented | 799 |
 | method | <code>System.Text.StringBuilder::set_Length``0(System.Int32):System.Void instance</code> | implemented | 800 |
 | method | <code>System.Text.StringBuilder::get_MaxCapacity``0():System.Int32 instance</code> | implemented | 803 |
@@ -749,7 +752,7 @@ Pinned reference: 33 implemented and 75 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::AppendLine``0(System.String):System.Text.StringBuilder instance</code> | implemented | 810 |
 | method | <code>System.Text.StringBuilder::AppendLine``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Clear``0():System.Text.StringBuilder instance</code> | implemented | 811 |
-| method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Void instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Void instance</code> | implemented | 524315 |
 | method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Span`1&lt;System.Char&gt;,System.Int32):System.Void instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::EnsureCapacity``0(System.Int32):System.Int32 instance</code> | implemented | 817 |
 | method | <code>System.Text.StringBuilder::Equals``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Boolean instance</code> | missing | — |
@@ -844,8 +847,10 @@ Registered families: <code>string</code>.
 | 524306 | <code>int System.String::IndexOf(string, System.StringComparison)</code> | implemented |
 | 524307 | <code>int System.String::LastIndexOf(string, System.StringComparison)</code> | implemented |
 | 524308 | <code>int System.String::IndexOf(string, int, System.StringComparison)</code> | implemented |
+| 524311 | <code>int System.String::IndexOf(string, int, int, System.StringComparison)</code> | implemented |
+| 524314 | <code>int System.String::LastIndexOf(string, int, System.StringComparison)</code> | implemented |
 
-Pinned reference: 47 implemented and 139 missing exact metadata rows.
+Pinned reference: 49 implemented and 137 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -940,7 +945,7 @@ Pinned reference: 47 implemented and 139 missing exact metadata rows.
 | method | <code>System.String::IndexOf``0(System.String):System.Int32 instance</code> | implemented | 1259 |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32):System.Int32 instance</code> | implemented | 1260 |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
-| method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
+| method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524311 |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524308 |
 | method | <code>System.String::IndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | implemented | 524306 |
 | method | <code>System.String::IndexOfAny``0(System.Char[]):System.Int32 instance</code> | missing | — |
@@ -973,7 +978,7 @@ Pinned reference: 47 implemented and 139 missing exact metadata rows.
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
-| method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
+| method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | implemented | 524314 |
 | method | <code>System.String::LastIndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | implemented | 524307 |
 | method | <code>System.String::LastIndexOfAny``0(System.Char[]):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOfAny``0(System.Char[],System.Int32):System.Int32 instance</code> | missing | — |

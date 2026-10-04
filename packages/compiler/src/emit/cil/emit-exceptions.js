@@ -42,12 +42,15 @@ export const ExceptionEmission = Base =>
     /**
      * @param {() => void} emitBody the protected statements  @param {object[]} catches bound catch clauses
      * @param {(() => void)|null} emitFinally the finally block, or null
+     * @param [outerStart] the label to place at the first instruction of the protected region
      */
-    tryRegions(emitBody, catches, emitFinally) {
+    tryRegions(emitBody, catches, emitFinally, outerStart = this.il.newLabel()) {
       const il = this.il,
         end = il.newLabel(),
-        outerStart = il.newLabel(),
         afterCatches = emitFinally && catches.length ? il.newLabel() : end;
+      // A label before the statement is outside the region: a jump to it from inside leaves the region (and runs its
+      // finally block), so the region must not begin at the instruction the label names.
+      if (il.isJustPastLabel) il.emit('nop');
       il.mark(outerStart);
       this.protect(() => {
         if (catches.length) this.catchRegions(emitBody, catches, afterCatches);
@@ -99,7 +102,7 @@ export const ExceptionEmission = Base =>
           if (clause.local) this.initializeLocal(clause.local);
           else il.emit('pop');
         }
-        this.statement(clause.block);
+        this.catchBlock(clause);
         if (il.isReachable) il.emit('leave', exit);
         il.addRegion(region);
         handlerStart = handlerEnd;
@@ -107,6 +110,10 @@ export const ExceptionEmission = Base =>
       // The end of the last handler: a boundary only, nothing falls into it.
       il.mark(handlerStart);
       return undefined;
+    }
+    /** The statements of a handler; the exception is already in the clause's variable. */
+    catchBlock(clause) {
+      return this.statement(clause.block);
     }
     /**
      * The filter block of `catch (T e) when (condition)` (ECMA-335 II.19.4): it runs during the first pass of exception

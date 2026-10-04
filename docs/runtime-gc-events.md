@@ -28,5 +28,7 @@ instrumentation initialization is similarly extracted without changing profiler
 or tiering option order. This is a partial #1403 increment; allocation, exception
 and scheduler events and broad platform/performance qualification remain separate.
 
-Focused tests are authored in `tests/a05-gc-events.test.js`; execution is queued
-serially. No allocation, pause-time or throughput improvement is claimed.
+All 77 focused tests passed at `0177b881`: the six new GC event cases plus GC
+correctness, runtime/method events, instruction profiling, Wasm call tiering and
+ABI inventory coverage. The run used Node 24, one worker and a 512 MB old-space
+limit. No allocation, pause-time or throughput improvement is claimed.

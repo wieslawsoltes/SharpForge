@@ -51,14 +51,14 @@ function maximalSuffix(needle, beginning, length, reverse) {
   return {cut: suffix, period};
 }
 
-function searchCore(source, needle, startIndex, findLast) {
+function searchCore(source, needle, startIndex, endIndex, findLast) {
   const leading = isLow(needle.charCodeAt(0)) ? 1 : 0;
   const trailing = isHigh(needle.charCodeAt(needle.length - 1)) ? 1 : 0;
   // Only these two units can pair outside a candidate. Match them raw around the stable folded core.
   const length = needle.length - leading - trailing;
-  if (length === 0) return searchRawEndpoints(source, needle, startIndex, findLast);
+  if (length === 0) return searchRawEndpoints(source, needle, startIndex, endIndex, findLast);
   let start = startIndex + leading;
-  const last = source.length - needle.length + leading;
+  const last = endIndex - needle.length + leading;
   if (leading) {
     // Skip only impossible initial windows; later endpoint rejections keep the existing period state.
     const firstUnit = needle.charCodeAt(0);
@@ -104,8 +104,8 @@ function searchCore(source, needle, startIndex, findLast) {
   return result;
 }
 
-function searchRawEndpoints(source, needle, startIndex, findLast) {
-  const last = source.length - needle.length;
+function searchRawEndpoints(source, needle, startIndex, endIndex, findLast) {
+  const last = endIndex - needle.length;
   let result = -1;
   for (let start = startIndex; start <= last; start++) {
     if (source.charCodeAt(start) === needle.charCodeAt(0) &&
@@ -117,18 +117,18 @@ function searchRawEndpoints(source, needle, startIndex, findLast) {
   return result;
 }
 
-function searchOrdinalIgnoreCase(source, needle, startIndex, findLast) {
-  if (needle.length === 0) return findLast ? source.length : startIndex;
-  if (needle.length > source.length - startIndex) return -1;
-  return searchCore(source, needle, startIndex, findLast);
+function searchOrdinalIgnoreCase(source, needle, startIndex, endIndex, findLast) {
+  if (needle.length === 0) return findLast ? endIndex : startIndex;
+  if (needle.length > endIndex - startIndex) return -1;
+  return searchCore(source, needle, startIndex, endIndex, findLast);
 }
 
-/** First UTF-16 match at/after a validated offset: linear folded reads, constant space, no transformed strings. */
-export function indexOfOrdinalIgnoreCase(source, needle, startIndex = 0) {
-  return searchOrdinalIgnoreCase(source, needle, startIndex, false);
+/** First match in a validated UTF-16 window: linear folded reads, constant space, no transformed strings. */
+export function indexOfOrdinalIgnoreCase(source, needle, startIndex = 0, endIndex = source.length) {
+  return searchOrdinalIgnoreCase(source, needle, startIndex, endIndex, false);
 }
 
-/** Last UTF-16 match with one continuing Two-Way scan; overlapping matches retain period memory. */
-export function lastIndexOfOrdinalIgnoreCase(source, needle) {
-  return searchOrdinalIgnoreCase(source, needle, 0, true);
+/** Last match before a validated exclusive end; overlapping matches retain the continuing scan's period memory. */
+export function lastIndexOfOrdinalIgnoreCase(source, needle, endIndex = source.length) {
+  return searchOrdinalIgnoreCase(source, needle, 0, endIndex, true);
 }

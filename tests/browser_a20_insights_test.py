@@ -86,7 +86,11 @@ try:
         page.wait_for_selector(".sf-tooltip:not(.hidden)")
         assert "CS0001" in page.locator(".sf-quick-info").inner_text()
         assert page.locator(".sf-quick-info img").count() == 0
-        assert page.get_by_role("button", name="Show potential fixes").count() == 1
+        fixes = page.locator(".sf-quick-info").get_by_role("button", name="Show potential fixes", exact=True)
+        assert fixes.count() == 1
+        fixes.click()
+        page.wait_for_selector(".sf-code-actions:not(.hidden)")
+        assert page.locator(".sf-quick-info").is_hidden()
         passed.append("Quick Info combines signature, safe documentation and diagnostic quick fix")
 
         setup("F(1, ")

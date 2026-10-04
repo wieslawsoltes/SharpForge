@@ -176,7 +176,8 @@ export const PropertySymbolBuilder = Base =>
         returnType: this.core.void,
         parameters,
         containingSymbol: type,
-        declaredAccessibility: Accessibility.Public,
+        // The primary constructor of an abstract record is protected.
+        declaredAccessibility: type.isRecord && type.isAbstract ? Accessibility.Protected : Accessibility.Public,
         modifiers: 0,
         locations: [{ uri, ...spanOf(syntax.identifier) }],
         syntax: syntax.parameterList,
@@ -232,6 +233,17 @@ export const PropertySymbolBuilder = Base =>
           });
           property.isAutoProperty = true;
           property.isPositional = true;
+          // The storage of the property, as for a declared auto-property (it is not a member of its own).
+          property.backingField = new FieldSymbol({
+            name: `<${p.name}>k__BackingField`,
+            type: p.typeWithAnnotations,
+            containingSymbol: type,
+            declaredAccessibility: Accessibility.Private,
+            modifiers: property.setMethod.isInitOnly ? DeclarationModifiers.ReadOnly : 0,
+            associatedSymbol: property,
+            isImplicitlyDeclared: true,
+          });
+          for (const accessor of [property.getMethod, property.setMethod]) accessor.associatedSymbol = property;
           members.push(property);
         }
     }
@@ -259,15 +271,15 @@ export const PropertySymbolBuilder = Base =>
       if (
         type.isRecord &&
         type.typeKind === TypeKind.Class &&
-        !declared.some(c => c.parameters.length === 1 && c.parameters[0].type === type)
+        !declared.some(c => c.parameters.length === 1 && (c.parameters[0].type.originalDefinition ?? c.parameters[0].type) === type)
       ) {
         const copy = new MethodSymbol({
           name: '.ctor',
           methodKind: MethodKind.Constructor,
           returnType: this.core.void,
-          parameters: [new ParameterSymbol({ name: 'original', type })],
+          parameters: [new ParameterSymbol({ name: 'original', type: type.typeParameters?.length ? type.construct(type.typeParameters) : type })],
           containingSymbol: type,
-          declaredAccessibility: Accessibility.Protected,
+          declaredAccessibility: type.isSealed ? Accessibility.Private : Accessibility.Protected,
           modifiers: 0,
           isImplicitlyDeclared: true,
         });
