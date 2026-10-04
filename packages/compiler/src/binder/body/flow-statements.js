@@ -175,7 +175,8 @@ export const FlowStatementBinding = Base =>
       for (let owner = type; owner; owner = owner.baseType) {
         for (const operator of owner.getMembers('op_Implicit')) {
           const target = operator.returnType && stripNullable(operator.returnType);
-          if (operator.kind === SymbolKind.Method && operator.parameters?.length === 1 && classicSwitchTypes.has(target?.specialType)) targets.push(operator.returnType);
+          const isConversion = operator.kind === SymbolKind.Method && operator.parameters?.length === 1;
+          if (isConversion && classicSwitchTypes.has(target?.specialType)) targets.push(operator.returnType);
         }
       }
       return targets.length === 1 ? this.convert(value, targets[0], syntax) : value;

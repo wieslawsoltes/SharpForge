@@ -1,5 +1,7 @@
 {"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
   "reduced-tuples/literal-of-lambdas":{"hash":"5011d8dbe521170b","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1104 1106 1208 even UserCreated,tick 3,even Tick,tick 4\n"},
   "reduced-tuples/names-through-generic-types":{"hash":"e59a15b12b38fdd7","kind":"output","langVersion":"14.0","diagnostics":[],"output":"a0 b1\n2 a 1\nbanana 4 5 False\n0x 2z a:2:1.5 b:0:0 \n2 2 -1 True\n"},
-  "reduced-tuples/target-typed-elements":{"hash":"9c870869d8da9df7","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 next=1\n2 next=2\n3 next=none\nnull null String\npositive 1 String\npositive 20 List`1\n1||yes|0|2.5|null\n5 True\n"}
+  "reduced-tuples/target-typed-elements":{"hash":"9c870869d8da9df7","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 next=1\n2 next=2\n3 next=none\nnull null String\npositive 1 String\npositive 20 List`1\n1||yes|0|2.5|null\n5 True\n"},
+  "reduced-tuples/best-type-of-differently-named-tuples":{"hash":"51fe5086e1987399","kind":"output","langVersion":"14.0","diagnostics":[],"output":"(0, 1) 0,1 34 00 1zero\n(4, 0) 4,0 34 00 9-\n(2, 1) 2,1 12 1819 18-\n"},
+  "reduced-tuples/names-in-array-and-variance-conversions":{"hash":"29e77a806495d651","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4 test 7 10 3\ndeploy,test a,b 2 a\n"}
 }}
