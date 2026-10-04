@@ -1,5 +1,6 @@
 import { decodeCoded } from '../../metadata/indices.js';
 import { rejectMember, requireMemberToken, metadataOperation } from './budget.js';
+import { snapshotNesting } from './nesting.js';
 
 function heapCopies(metadata, budget) {
   const names = new Map();
@@ -48,12 +49,18 @@ export function snapshotMembers(inspector, budget) {
     const counts = Object.fromEntries([1, 2, 3, 4, 5, 6, 10, 26, 27, 43].map(table => [table, metadata.rows[table]?.length ?? 0]));
     if (counts[4] + counts[6] + counts[10] > budget.maxMembers ||
         counts[3] > budget.maxMembers || counts[5] > budget.maxMembers) rejectMember('CILVM0002', 'member rows');
+    if ((metadata.rows[41]?.length ?? 0) > counts[2]) rejectMember('CILVM0002', 'nested type rows');
     const copies = heapCopies(metadata, budget);
+    // The composed type adapter preflights TypeDef count before this bounded allocation.
+    const visibility = new Uint8Array(counts[2]);
     const definitions = new Map();
     const references = new Map();
     const index = new Map();
     for (let row = 1; row <= counts[2]; row++) {
       budget.check();
+      const flags = metadata.rows[2][row - 1][0];
+      if (!Number.isInteger(flags) || flags < 0 || flags > 0xffffffff) rejectMember('CILVM0001', 'type visibility');
+      visibility[row - 1] = flags & 7;
       const ownerToken = 0x02000000 + row;
       for (const [column, kind] of [['FieldList', 'field'], ['MethodList', 'method']]) {
         for (const token of metadata.list(ownerToken, column)) {
@@ -76,6 +83,7 @@ export function snapshotMembers(inspector, budget) {
       const ownerToken = requireMemberToken(decodeCoded('MemberRefParent', data[0]), counts, [1, 2, 6, 26, 27]);
       references.set(token, { token, ownerToken, name: copies.name(data[1]), signature: copies.signature(data[2]) });
     }
-    return { counts, definitions, references, index };
+    const nesting = snapshotNesting(metadata.rows[41] ?? [], visibility, budget);
+    return { counts, definitions, references, index, visibility, nesting };
   });
 }

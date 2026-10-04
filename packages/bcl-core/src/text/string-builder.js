@@ -6,6 +6,10 @@ import {copyBuilderCharacters} from './string-builder-copy.js';
 import {appendBuilderRange} from './string-builder-append-range.js';
 import {appendBuilderArray} from './string-builder-append-array.js';
 import {appendBuilderValue} from './string-builder-append-builder.js';
+import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
+import {builderEquals} from './string-builder-equality.js';
+import {replaceBuilderCharacters, insertBuilderCharacter} from './string-builder-edit.js';
+import {removeBuilderRange} from './string-builder-remove.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -122,6 +126,14 @@ function construct(platform, descriptor, scalars) {
   return reference;
 }
 
+function insertText(platform, reference, index, value) {
+  const previous = bufferText(platform, reference);
+  const start = integer(platform, index, 0, previous.length);
+  capacity(platform, previous.length + (value?.length ?? 0));
+  setBuffer(platform, reference, previous.slice(0, start) + (value ?? '') + previous.slice(start));
+  return reference;
+}
+
 function mutateBuffer(platform, reference, name, values, scalars) {
   switch (name) {
     case 'Clear':
@@ -135,20 +147,7 @@ function mutateBuffer(platform, reference, name, values, scalars) {
         : previous.slice(0, length));
       return null;
     }
-    case 'Insert': {
-      const previous = bufferText(platform, reference);
-      const start = integer(platform, scalars[0], 0, previous.length);
-      capacity(platform, previous.length + (scalars[1]?.length ?? 0));
-      setBuffer(platform, reference, previous.slice(0, start) + (scalars[1] ?? '') + previous.slice(start));
-      return reference;
-    }
-    case 'Remove': {
-      const previous = bufferText(platform, reference);
-      const start = integer(platform, scalars[0], 0, previous.length);
-      const length = integer(platform, scalars[1], 0, previous.length - start);
-      setBuffer(platform, reference, previous.slice(0, start) + previous.slice(start + length));
-      return reference;
-    }
+    case 'Remove': return removeBuilderRange(platform, reference, scalars, bufferText, setBuffer);
     case 'Replace': {
       const previous = string(platform, values[0]);
       if (!previous) fail(platform, 'ArgumentException', 'Old value cannot be empty');
@@ -196,7 +195,9 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       return null;
     case 'Append':
       if (descriptor.parameters[0] === 'char[]') return appendBuilderArray(platform, reference, values, scalars, appendText);
-      if (descriptor.parameters[0] === owner) return appendBuilderValue(platform, reference, values[0], bufferText, appendText);
+      if (descriptor.parameters[0] === owner) return descriptor.parameters.length === 3
+        ? appendBuilderValueRange(platform, reference, values, scalars, appendText)
+        : appendBuilderValue(platform, reference, values[0], bufferText, appendText);
       if (descriptor.parameters.length === 3) return appendBuilderRange(platform, reference, scalars, appendText);
       return descriptor.parameters[0] === 'char'
         ? appendBuilderCharacter(platform, reference, scalars, appendText)
@@ -213,6 +214,13 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       const length = values.length ? integer(platform, scalars[1], 0, value.length - start) : value.length;
       return platform.heap.string(value.slice(start, start + length));
     }
+    case 'Equals': return builderEquals(platform, reference, values[0]);
+    case 'Insert': return descriptor.parameters[1] === 'char'
+      ? insertBuilderCharacter(platform, reference, scalars, insertText)
+      : insertText(platform, reference, scalars[0], scalars[1]);
+    case 'Replace':
+      if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
+      return mutateBuffer(platform, reference, descriptor.name, values, scalars);
     default: return mutateBuffer(platform, reference, descriptor.name, values, scalars);
   }
 }

@@ -7,13 +7,15 @@ import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../sy
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
-import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
+import { extensionScopes, isValidReceiverConversion, couldTakeReceiver } from '../../overload/extension-methods.js';
+import { findConstruction } from '../../symbols/substitution.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter, staticVirtualAccess } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
+import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 /** A member that can be invoked: a method or event, or a field or property of a delegate type or `dynamic`. */
@@ -23,6 +25,8 @@ const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly || s.isAnonymousType) return true;
   return false;
 };
+
+const nativeIntegerKeywords = new Set(['nint', 'nuint']);
 
 /** Class mixin: Simple names and member access: locals, parameters, members of enclosing types, types, namespaces, */
 export const NameBinding = Base =>
@@ -90,6 +94,10 @@ export const NameBinding = Base =>
         }
         if (members.length)
           return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
+      }
+      // `nint` and `nuint` are contextual keywords: types wherever nothing else has the name (`nint.Size`).
+      if (!symbol && !arity && nativeIntegerKeywords.has(name)) {
+        return this.node('TypeExpression', syntax, null, { referencedType: this.bindType(syntax).type });
       }
       if (!symbol && !arity) {
         const builtin = this.d.executionBuiltin?.(name);
@@ -238,6 +246,7 @@ export const NameBinding = Base =>
         }
         case SymbolKind.Property: {
           const n = this.node('PropertyAccess', syntax, first.type, { property: first, receiver: r });
+          if (r?.kind === 'Base' && isAbstractBaseAccess(first, r.type)) this.report(syntax, DiagnosticId.CS0205, [first.toDisplayString()]);
           if (virtualAccess?.constrainedTo) n.constrainedTo = virtualAccess.constrainedTo;
           if (first.type?.isErrorType?.()) n.hasErrors = true;
           return n;
@@ -410,7 +419,12 @@ export const NameBinding = Base =>
         takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
       // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
       if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
-      const group = this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes });
+      // A name that is not invoked is a method group only when an extension method could take the receiver;
+      // an invoked one always is, and the call reports why no candidate applies (CS0411, CS1929).
+      const construction = (from, definition) => findConstruction(from, definition, this.core),
+        fits = method => method.name === name && couldTakeReceiver(this.conversions, left, method.parameters[0].type, construction),
+        isCandidate = options.invoked || isOpen || isSpan || scopes.some(scope => scope.methods.some(fits)),
+        group = isCandidate ? this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes }) : null;
       if (group) return group;
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, DiagnosticId.CS1061);

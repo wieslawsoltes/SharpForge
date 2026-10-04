@@ -2,19 +2,27 @@ import {Builtins, numericTypeId, numericTypeName} from '@sharpforge/bytecode';
 import {frameworkType} from '@sharpforge/framework';
 import {CilError} from './binary.js';
 import {emitObjectBuiltin} from './object-builtin-mapping.js';
+import {decodeMathBuiltin, emitMathBuiltin} from './math-builtin-mapping.js';
 
 const isValue = type => numericTypeId(type) !== undefined || type === 'bool' ||
   ['enum', 'value'].includes(frameworkType(type)?.kind);
 const decimalBuiltins = Object.values(Builtins).filter(builtin => builtin.decimal);
 
+/** Keep exact typed families ahead of the released name-based source mappings. */
+export function decodeProfileBuiltin(target, span) {
+  return decodeMathBuiltin(target, span) ?? decodeDecimalBuiltin(target);
+}
+
 /** Recognize only the source-visible Decimal overload with its complete CLI signature. */
 export function decodeDecimalBuiltin(target) {
   const signature = target.sig;
-  if (target.owner !== 'System.Decimal' || signature?.kind !== 'method' || signature.isStatic !== true || signature.genericArity ||
+  if ((target.owner !== 'System.Decimal' && target.owner !== 'System.Math') ||
+      signature?.kind !== 'method' || signature.isStatic !== true || signature.genericArity ||
       signature.callingConvention || signature.explicitThis || signature.sentinel != null) return null;
   return decimalBuiltins.find(builtin => {
     const descriptor = builtin.decimal;
-    return target.name === descriptor.name && numericTypeName(signature.returnType) === builtin.result &&
+    return target.owner === descriptor.owner && target.name === descriptor.name &&
+      numericTypeName(signature.returnType) === builtin.result &&
       signature.parameters.length === builtin.params.length &&
       signature.parameters.every((type, index) => numericTypeName(type) === builtin.params[index]);
   }) ?? null;
@@ -78,6 +86,7 @@ function stringTarget(member, count) {
 export function emitBuiltin(context, writer, id, types, adapt) {
   const count = types.length;
   const builtin = Builtins[id], name = builtin.name;
+  if (emitMathBuiltin(context, writer, builtin, types, adapt)) return;
   if (builtin.decimal) {
     const descriptor = builtin.decimal;
     adapt(types, builtin.params);

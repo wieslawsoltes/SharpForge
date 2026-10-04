@@ -11,6 +11,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { bindReferences, unificationCodes } from './reference-manager.js';
 import { coreTypeDescriptor } from '../symbols/special-types.js';
 import { readCompilationReferences } from './reference-input.js';
+import { boundReferenceSet } from './reference-set.js';
 
 /** The registry as the core library: every predefined type comes from the bridge. */
 class RegistryCoreLibrary {
@@ -84,8 +85,10 @@ export function bindCompilationReferences(references, bridge) {
       isUnification: () => false,
     };
   }
-  const imported = readCompilationReferences(references);
-  const manager = bindReferences(imported.references);
+  const { imported, manager } = boundReferenceSet(references, () => {
+    const decoded = readCompilationReferences(references);
+    return { imported: decoded, manager: bindReferences(decoded.references) };
+  });
   const referenced = manager.globalNamespace;
   const coreAssembly = manager.corLibrary;
   const globalNamespaces = [];

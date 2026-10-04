@@ -1,0 +1,3 @@
+{
+  "base-access/cs0205-only-when-the-nearest-override-is-abstract": ["diagnostics", "warnings"]
+}

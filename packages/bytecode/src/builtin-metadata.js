@@ -13,6 +13,7 @@ const properties = new Set(['Exception.Message', 'Environment.TickCount', 'Type.
 
 /** Describe the source-visible member without changing its stable runtime ID or receiver-inclusive parameter table. */
 export function builtinMemberShape(builtin) {
+  if (builtin.math) return {name: builtin.math.name, instance: false, property: false};
   if (builtin.decimal) return {name: builtin.decimal.name, instance: false, property: false};
   const separator = builtin.name.lastIndexOf('.');
   const name = builtin.name.slice(separator + 1);

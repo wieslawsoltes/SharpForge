@@ -3,7 +3,8 @@ import { cpus } from 'node:os';
 import { readFileSync } from 'node:fs';
 import { baseContext } from '../../../tests/clr-methods-base-fixtures.js';
 
-const native = JSON.parse(readFileSync(new URL('../../../tests/fixtures/clr-method-base-definition/native-method-bases.json', import.meta.url)));
+const fixture = process.argv[2] ?? new URL('../../../tests/fixtures/clr-method-base-definition/native-method-bases.json', import.meta.url);
+const native = JSON.parse(readFileSync(fixture));
 const image = Buffer.from(native.image, 'base64');
 const load = async () => (await baseContext().loadFromStream(image)).manifestModule;
 function summary(name, samples) {

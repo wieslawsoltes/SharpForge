@@ -4,6 +4,7 @@
  */
 import { RefKind } from '../../symbols/types.js';
 import { compressUnsigned, ElementType, typeDefOrRefEncoded } from '../generics.js';
+import { inheritedSignatureModifiers } from './inherited-modifiers.js';
 
 const FIELD = 0x06;
 const PROPERTY = 0x08;
@@ -51,9 +52,9 @@ function returned(types, type, refKind, modifier = null, modifiers = null) {
   return [...named, ...passed(types, type, refKind, modifiers)];
 }
 
-/** FieldSig: `FIELD type`. */
-export function fieldSignature(types, type) {
-  return Uint8Array.from([FIELD, ...types.signature(type)]);
+/** FieldSig: `FIELD [BYREF] type`; a `ref` field (C# 11) of a ref struct holds a managed pointer. */
+export function fieldSignature(types, type, refKind = null) {
+  return Uint8Array.from([FIELD, ...(isByReference(refKind) ? [BY_REFERENCE] : []), ...types.signature(type)]);
 }
 
 /**
@@ -76,6 +77,11 @@ export function methodSignature(types, shape) {
 
 /** The MethodDefSig of a method symbol. */
 export function methodSymbolSignature(types, method) {
+  // A source method repeats the custom modifiers of the imported member it overrides or implements.
+  const inherited = method.returnCustomModifiers ? null : inheritedSignatureModifiers(method),
+    parameters = inherited
+      ? method.parameters.map((parameter, index) => ({ type: parameter.type, refKind: parameter.refKind, customModifiers: inherited.parameters[index] }))
+      : method.parameters;
   return methodSignature(types, {
     isStatic: method.isStatic,
     arity: method.typeParameters?.length ?? 0,
@@ -83,8 +89,8 @@ export function methodSymbolSignature(types, method) {
     refKind: method.refKind,
     // An `init` accessor is a setter only compilers that know the feature may call.
     returnModifier: method.isInitOnly ? IS_EXTERNAL_INIT : null,
-    returnCustomModifiers: method.returnCustomModifiers ?? null,
-    parameters: method.parameters,
+    returnCustomModifiers: method.returnCustomModifiers ?? inherited?.returned ?? null,
+    parameters,
   });
 }
 

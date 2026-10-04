@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "engine": "chromium",
+  "passed": 9,
+  "checks": [
+    "native keydown/beforeinput edits the authoritative model and preserves graphemes",
+    "500000 lines render bounded source-faithful rows with a bounded native input",
+    "wrap, whitespace and zoom retain source while sharing layout metrics",
+    "outlining hides logical ranges, navigation reveals them and margins track edits",
+    "split views share undo/text, preserve independent carets and publish each edit once",
+    "synthetic DOM composition stays transient and commits once",
+    "native DOM bidi geometry supplies visual selections and caret movement",
+    "ARIA diagnostics, forced colors, reduced motion and read-only state are wired",
+    "complete disposal removes view/input/widgets with no uncaught browser errors"
+  ],
+  "failure": null,
+  "nativeImeCertified": false,
+  "screenReaderCertified": false
+}

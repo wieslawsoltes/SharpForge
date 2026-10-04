@@ -28,9 +28,10 @@ claim; a future portable restore must explicitly recreate ownership.
 
 Four focused tests were authored for equal-coordinate foreign/copied handles,
 GC and handle reuse, heap rollback, and real CIL frame/static/array/stack aliases
-across snapshot replay. No tests or builds were executed during implementation.
-The root-owned serial queue can run:
+across snapshot replay. All 33 focused ownership, snapshot and ABI checks
+passed at `865ab597d`, using Node 24.21.0, one worker and a 512 MB
+old-space limit. Broad qualification remains deferred:
 
 ```sh
-node scripts/limited.js node --test --test-concurrency=1 tests/a05-heap-reference-ownership.test.js tests/a05-seams-snapshot.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-heap-reference-ownership.test.js tests/a05-seams-snapshot.test.js tests/a00-01-value-abi.test.js
 ```

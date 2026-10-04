@@ -2,6 +2,7 @@ import { createMetadataVerificationTypeSystem } from './type-system.js';
 import { memberBudget } from './metadata-members/budget.js';
 import { snapshotMembers } from './metadata-members/snapshot.js';
 import { memberQueries } from './metadata-members/resolve.js';
+import { metadataAccess } from './metadata-members/access.js';
 
 export { verificationMemberDiagnosticCatalog } from './metadata-members/budget.js';
 
@@ -12,6 +13,8 @@ export { verificationMemberDiagnosticCatalog } from './metadata-members/budget.j
 export function createMetadataVerificationContext(inspector, options = {}) {
   const types = createMetadataVerificationTypeSystem(inspector, options);
   const budget = memberBudget(options);
-  const members = memberQueries(snapshotMembers(inspector, budget), types, budget);
-  return Object.freeze({ ...types, resolveMember: members.resolveMember });
+  const snapshot = snapshotMembers(inspector, budget);
+  const members = memberQueries(snapshot, types, budget);
+  return Object.freeze({ ...types, resolveMember: members.resolveMember,
+    ...metadataAccess(snapshot, members, types, budget) });
 }

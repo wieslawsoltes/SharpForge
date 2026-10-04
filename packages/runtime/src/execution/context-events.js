@@ -7,7 +7,7 @@ const suspended = new WeakMap();
 /** Record committed scheduler transitions; a queued context's first activation is not a resume. */
 export function observeContextTransition(scheduler, previous, next) {
   const vm = scheduler.vm;
-  const log = vm.inspector ? vm.runtimeEvents : null;
+  const log = vm.runtimeEvents;
   if (!log || previous === next) return;
   let observed = suspended.get(scheduler);
   if (previous?.frames.length && !terminal.has(previous.status) && !observed?.has(previous)) {
