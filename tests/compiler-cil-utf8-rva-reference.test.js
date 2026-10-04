@@ -12,6 +12,8 @@ const options = { name: 'Utf8Literals', outputKind: 'library', langVersion: '11'
 const source = readFileSync(new URL('./fixtures/utf8-rva/Utf8Literals.cs', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const errors = result => result.diagnostics.filter(item => item.severity === 'error');
 const settings = { skip: pack ? false : 'no .NET reference pack installed' };
+const locations = result => errors(result).map(item => ({ code: item.code, message: item.message, file: item.uri, range: item.range }));
+const oracleLocations = name => JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/' + name + '.locations.json', import.meta.url), 'utf8'));
 
 function projectedReferences(kind) {
   return createReferenceSet(pack.pack.files.map(path => ({ display: path, bytes: basename(path) === 'System.Runtime.dll'
@@ -48,6 +50,7 @@ test('A02-T77 a missing required array constructor reports Roslyn CS0656 even wh
   const expected = JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/missing-constructor.json', import.meta.url), 'utf8'));
   assert.equal(result.assembly, null);
   assert.deepEqual(errors(result).map(item => [item.code, item.message]), expected);
+  assert.deepEqual(locations(result), oracleLocations('missing-constructor'));
   assert.equal(probe.slice(errors(result)[0].start, errors(result)[0].start + errors(result)[0].length), '"x"u8');
   const reference = compileToReferenceAssembly(probe, { ...options, references });
   assert.deepEqual(errors(reference), []);
@@ -61,6 +64,7 @@ test('A02-T77 repeated literal sites preserve the actual missing-constructor dia
   const expected = JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/repeated-missing-constructor.json', import.meta.url), 'utf8'));
   assert.equal(result.assembly, null);
   assert.deepEqual(errors(result).map(item => [item.code, item.message]), expected);
+  assert.deepEqual(locations(result), oracleLocations('repeated-missing-constructor'));
   for (const item of errors(result)) assert.equal(probe.slice(item.start, item.start + item.length), '"x"u8');
 });
 

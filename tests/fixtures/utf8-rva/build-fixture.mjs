@@ -4,7 +4,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { sha256 } from '../../../../scripts/conformance/oracle/toolchain.js';
+import { sha256 } from '../../../scripts/conformance/oracle/toolchain.js';
 import {
   compileNative, compilerOptions, projectedNativeReferences, requireNativeSuccess, resolveToolchain, runNative, runtimeConfig,
 } from './native.mjs';
@@ -55,9 +55,10 @@ try {
   });
   if (result.exitCode === 0 || !result.diagnostics.some(([code]) => code === 'CS0656')) throw new Error('Missing required constructor probe did not fail');
   artifacts.set('missing-constructor.json', JSON.stringify(result.diagnostics, null, 2) + '\n');
+  artifacts.set('missing-constructor.locations.json', JSON.stringify(result.locations, null, 2) + '\n');
   requireNativeSuccess(await compileNative(toolchain, { source: inputMissing, output: join(directory, 'Missing.ref.dll'),
     references: projected.references, referenceOnly: true }));
-  provenance.modes.missingRequired = { sourceSha256: sha256(missing), diagnostics: result.diagnostics,
+  provenance.modes.missingRequired = { sourceSha256: sha256(missing), diagnostics: result.diagnostics, locations: result.locations,
     methodToken: projected.projection.methodToken, offset: projected.projection.offset,
     originalFlags: projected.projection.originalFlags, projectedFlags: projected.projection.projectedFlags,
     originalSha256: sha256(projected.originalBytes), projectedSha256: sha256(projected.projection.bytes), referenceOnly: 'succeeded' };
@@ -71,7 +72,9 @@ try {
     throw new Error('Repeated missing-constructor probe did not fail');
   }
   artifacts.set('repeated-missing-constructor.json', JSON.stringify(repeatedResult.diagnostics, null, 2) + '\n');
-  provenance.modes.missingRequired.repeated = { sourceSha256: sha256(repeated), diagnostics: repeatedResult.diagnostics };
+  artifacts.set('repeated-missing-constructor.locations.json', JSON.stringify(repeatedResult.locations, null, 2) + '\n');
+  provenance.modes.missingRequired.repeated = { sourceSha256: sha256(repeated), diagnostics: repeatedResult.diagnostics,
+    locations: repeatedResult.locations };
   artifacts.set('provenance.json', JSON.stringify(provenance, null, 2) + '\n');
   // A failed probe must not partially replace the previous checked-in oracle capture.
   for (const [name, data] of artifacts) writeFileSync(join(here, name), data);

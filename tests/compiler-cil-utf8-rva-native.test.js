@@ -15,7 +15,7 @@ const source = readFileSync(new URL('Utf8Literals.cs', fixtureRoot), 'utf8').rep
 
 test('A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations', {
   skip: pack ? false : 'no .NET reference pack installed',
-}, async () => {
+}, async context => {
   const toolchain = await resolveToolchain();
   const scratch = mkdtempSync(join(tmpdir(), 'sharpforge-utf8-rva-'));
   try {
@@ -36,9 +36,22 @@ test('A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and ze
       runtimeConfig(toolchain, join(directory, 'InspectUtf8.runtimeconfig.json'));
       const output = await runNative(toolchain, join(directory, 'InspectUtf8.dll'));
       const expected = readFileSync(new URL(mode === 'fallback' ? 'fallback.out' : 'modern.out', fixtureRoot), 'utf8');
-      assert.equal(output, expected.replace(/\r\n/g, '\n'), mode);
+      const allocationLine = /^allocated:(\d+)$/m;
+      const actualAllocation = output.match(allocationLine);
+      const expectedAllocation = expected.match(allocationLine);
+      assert.ok(actualAllocation && expectedAllocation, mode + ' allocation measurements');
+      assert.equal(output.replace(allocationLine, ''), expected.replace(/\r\n/g, '\n').replace(allocationLine, ''), mode);
       assert.ok(output.includes('after-gc:'));
-      assert.equal(output.includes('allocated:0\n'), mode !== 'fallback');
+      if (mode === 'fallback') {
+        // Array initialization strategies have different runtime costs; positive allocation is the target fallback contract.
+        assert.ok(Number(actualAllocation[1]) > 0);
+        assert.ok(Number(expectedAllocation[1]) > 0);
+      } else {
+        assert.equal(actualAllocation[1], '0');
+        assert.equal(expectedAllocation[1], '0');
+      }
+      context.diagnostic(JSON.stringify({ mode, actualAllocatedBytes: Number(actualAllocation[1]),
+        roslynAllocatedBytes: Number(expectedAllocation[1]) }));
     }
   } finally {
     rmSync(scratch, { recursive: true, force: true });

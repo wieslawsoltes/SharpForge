@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 public static class Utf8Literals
 {
     public static ReadOnlySpan<byte> Empty() => ""u8;
-    [MethodImpl(MethodImplOptions.NoInlining)]
     public static ReadOnlySpan<byte> Ascii() => "SharpForge"u8;
     public static ReadOnlySpan<byte> Duplicate() => "SharpForge"u8;
     public static ReadOnlySpan<byte> Unicode() => "héλ😀"u8;

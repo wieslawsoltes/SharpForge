@@ -1,0 +1,51 @@
+✖ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (1652.636838ms)
+✔ A02-T77 actual references select RVA lowering and preserve Roslyn UTF-8 bytes (205.952129ms)
+✔ A02-T77 a missing optional pointer constructor uses the real array/start/length fallback (311.447117ms)
+✔ A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists (195.416031ms)
+✔ A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count (221.302942ms)
+✔ A02-T77 a constructor initializer retains its literal file in required-member diagnostics (260.083432ms)
+✔ A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays (76.353217ms)
+✔ A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout (86.177469ms)
+✔ A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data (30.33275ms)
+✔ A02-T77 executable assemblies retain literal data; reference assemblies omit body-only storage (21.158713ms)
+✔ A02-T77 malformed UTF-16, language gates and non-literal operators remain C# diagnostics (14.293971ms)
+✔ A02-T77 the bytecode execution profile reports its unsupported span contract explicitly (17.641888ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6060.193198
+
+✖ failing tests:
+
+test at tests/compiler-cil-utf8-rva-native.test.js:16:1
+✖ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (1652.636838ms)
+  AssertionError [ERR_ASSERTION]: fallback
+  + actual - expected
+  ... Skipped lines
+  
+    'empty:0::0\n' +
+      'ascii:10:5368617270466F726765:0\n' +
+      'unicode:9:68C3A9CEBBF09F9880:0\n' +
+      'embedded:6:004100C3BF00:0\n' +
+      'concat:9:68C3A9CEBBF09F9880:0\n' +
+  ...
+      'after-gc:9:68C3A9CEBBF09F9880:0\n' +
+  +   'allocated:400000\n' +
+  -   'allocated:1120000\n' +
+      'checksum:1009000\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva-native.test.js:39:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'empty:0::0\nascii:10:5368617270466F726765:0\nunicode:9:68C3A9CEBBF09F9880:0\nembedded:6:004100C3BF00:0\nconcat:9:68C3A9CEBBF09F9880:0\nraw:26:6669727374202271756F746564220A7365636F6E6420F09F9880:0\none:1:61:0\nthree:3:616263:0\nseven:7:61626364656667:0\neight:8:6162636465666768:0\ngeneric:7:67656E65726963:0\nsame:False\nlocal:111\ninitializer:105\nctor:98\nstack:7\niterator:105\niterator:4\nafter-gc:9:68C3A9CEBBF09F9880:0\nallocated:400000\nchecksum:1009000\n',
+    expected: 'empty:0::0\nascii:10:5368617270466F726765:0\nunicode:9:68C3A9CEBBF09F9880:0\nembedded:6:004100C3BF00:0\nconcat:9:68C3A9CEBBF09F9880:0\nraw:26:6669727374202271756F746564220A7365636F6E6420F09F9880:0\none:1:61:0\nthree:3:616263:0\nseven:7:61626364656667:0\neight:8:6162636465666768:0\ngeneric:7:67656E65726963:0\nsame:False\nlocal:111\ninitializer:105\nctor:98\nstack:7\niterator:105\niterator:4\nafter-gc:9:68C3A9CEBBF09F9880:0\nallocated:1120000\nchecksum:1009000\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

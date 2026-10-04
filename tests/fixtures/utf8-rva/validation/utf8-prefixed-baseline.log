@@ -1,0 +1,59 @@
+✖ A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays (107.057795ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1139.715219
+
+✖ failing tests:
+
+test at tests/compiler-cil-utf8-rva.test.js:18:1
+✖ A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays (107.057795ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'ldsflda',
+      'ldc.i4.3',
+  +   'newarr',
+  +   'dup',
+  +   'ldc.i4.0',
+  +   'ldc.i4.s',
+  +   'stelem.i1',
+  +   'dup',
+  +   'ldc.i4.1',
+  +   'ldc.i4.s',
+  +   'stelem.i1',
+  +   'dup',
+  +   'ldc.i4.2',
+  +   'ldc.i4.s',
+  +   'stelem.i1',
+  +   'call',
+  -   'newobj',
+      'ret'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/utf8-baseline/tests/compiler-cil-utf8-rva.test.js:21:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'ldc.i4.3', 'newarr',
+      'dup',      'ldc.i4.0',
+      'ldc.i4.s', 'stelem.i1',
+      'dup',      'ldc.i4.1',
+      'ldc.i4.s', 'stelem.i1',
+      'dup',      'ldc.i4.2',
+      'ldc.i4.s', 'stelem.i1',
+      'call',     'ret'
+    ],
+    expected: [ 'ldsflda', 'ldc.i4.3', 'newobj', 'ret' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

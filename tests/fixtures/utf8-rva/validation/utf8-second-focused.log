@@ -1,0 +1,47 @@
+✖ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (1638.288831ms)
+✔ A02-T77 actual references select RVA lowering and preserve Roslyn UTF-8 bytes (178.333906ms)
+✔ A02-T77 a missing optional pointer constructor uses the real array/start/length fallback (213.848543ms)
+✔ A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists (198.442833ms)
+✔ A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count (218.638596ms)
+✔ A02-T77 a constructor initializer retains its literal file in required-member diagnostics (213.652385ms)
+✔ A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays (82.883872ms)
+✔ A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout (81.223855ms)
+✔ A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data (25.454105ms)
+✔ A02-T77 executable assemblies retain literal data; reference assemblies omit body-only storage (17.746007ms)
+✔ A02-T77 malformed UTF-16, language gates and non-literal operators remain C# diagnostics (13.660128ms)
+✔ A02-T77 the bytecode execution profile reports its unsupported span contract explicitly (27.410167ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5680.589989
+
+✖ failing tests:
+
+test at tests/compiler-cil-utf8-rva-native.test.js:16:1
+✖ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (1638.288831ms)
+  Error: empty:0::0
+  ascii:10:5368617270466F726765:0
+  unicode:9:68C3A9CEBBF09F9880:0
+  embedded:6:004100C3BF00:0
+  concat:9:68C3A9CEBBF09F9880:0
+  raw:26:6669727374202271756F746564220A7365636F6E6420F09F9880:0
+  one:1:61:0
+  three:3:616263:0
+  seven:7:61626364656667:0
+  eight:8:6162636465666768:0
+  generic:7:67656E65726963:0
+  same:True
+  Unhandled exception. System.MissingMethodException: Method not found: '!0 ByRef System.ReadOnlySpan`1.get_Item(Int32)'.
+     at Utf8Literals.Local()
+     at InspectUtf8.Main()
+  
+      at requireNativeSuccess (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/fixtures/utf8-rva/native.mjs:21:36)
+      at runNative (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/fixtures/utf8-rva/native.mjs:33:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva-native.test.js:37:22)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
