@@ -1,6 +1,6 @@
 import {storage,storageKeys} from './settings/storage.js';
 import {TreeModel,TreeView} from '../../packages/controls/src/index.js';
-import {buildSolutionTree} from '../../packages/project-system/src/index.js';
+import {renderSolutionExplorer} from './solution-explorer-render.js';
 
 /** View-only explorer. All changes go through the workspace command boundary. */
 export class SolutionExplorer {
@@ -31,14 +31,7 @@ export class SolutionExplorer {
  selected(){return this.model.selectionRoots().map(id=>this.model.nodes.get(id));}
  context(node,nodes,event){this.onCommand('context',node,nodes,event);}
  saveState(){if(!this.key||this.restoring)return;try{storage.setItem(storageKeys.explorer+this.key,JSON.stringify({version:1,tree:this.model.snapshot(),view:this.view,showAll:this.showAll,track:this.track}));}catch{}}
- render(force=false){const data=this.getData(),key=data.identity??data.name;let saved;
-  if(key!==this.key){this.restoring=true;this.key=key;this.scope=null;this.search.value='';try{saved=JSON.parse(storage.getItem(storageKeys.explorer+key));}catch{}this.showAll=saved?.showAll??false;this.view=saved?.view??(data.mode==='folder'?'folders':'solution');this.track=saved?.track??true;this.model.expanded.clear();this.model.selected.clear();this.model.seen=new Set();}
-  let nodes=buildSolutionTree({...data,showAll:this.showAll,view:this.view});if(this.scope){const find=n=>n.id===this.scope?n:(n.children??[]).map(find).find(Boolean);const scoped=nodes.map(find).find(Boolean);if(scoped)nodes=[scoped];else this.scope=null;}
-  this.tree.setAttribute('aria-busy',String(!!data.fileBusy));this.toolbar.querySelector('[data-explorer-action="add"]').disabled=!!data.fileBusy||!!data.readOnly;
-  this.model.setNodes(nodes);this.model.setFilter(this.search.value);if(saved?.tree){try{this.model.restore(saved.tree);}catch{}}this.restoring=false;
-  this.allButton.setAttribute('aria-pressed',String(this.showAll));this.viewButton.setAttribute('aria-pressed',String(this.view==='folders'));
-  if(this.track&&data.active!==this.lastActive)this.reveal(data.active,false);this.lastActive=data.active;this.updateCaption();this.saveState();
- }
+ render(force=false){return renderSolutionExplorer(this,force);}
  updateCaption(){const data=this.getData(),matches=this.model.query?this.model.rows().filter(r=>r.match).length:null;this.caption.textContent=(data.native?'Native disk workspace':'Browser workspace')+(this.scope?' · scoped':'')+(matches!==null?' · '+matches+' matches':'');this.caption.title=data.native?'File changes are conflict-checked on disk. Native build evaluation requires separate trust.':'File membership changes are saved in browser recovery. Export the workspace or use the native host for disk file operations.';}
  reveal(path,focus=false){const node=[...this.model.nodes.values()].find(n=>n.path===path&&n.kind==='source')??[...this.model.nodes.values()].find(n=>n.path===path&&!n.branch);if(!node)return false;if(this.model.query){this.search.value='';this.model.setFilter('');}this.model.reveal(node.id);this.onProperties?.([node]);this.control.ensureVisible();if(focus)this.tree.focus();return true;}
  scopeTo(node){this.scope=node.id;this.render(true);this.tree.focus();}
