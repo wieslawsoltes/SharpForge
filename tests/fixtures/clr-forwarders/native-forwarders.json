@@ -1,0 +1,125 @@
+{
+  "sdk": "10.0.201",
+  "images": [
+    {
+      "name": "ForwardTarget",
+      "sha256": "bb20146a3ebe8124a927dca889a5a3940392cbfd9575fd845362a66efe4f3cdc"
+    },
+    {
+      "name": "ForwardBridge",
+      "sha256": "33b25c1a5362b51414fa6b40bcbe1b6fe509e250ca90fbe2ca5d046347d38345"
+    },
+    {
+      "name": "ForwardFacade",
+      "sha256": "b6889cdfdb2d5054dccc9118d6d3d53be7be7b77d9dbc38cf6608d9136863cfe"
+    },
+    {
+      "name": "ForwardConsumer",
+      "sha256": "e8e6323c3525b8bccfd5b474cd8559ff3d019bdc5e1ff8391a84ca1042d5b7b8"
+    },
+    {
+      "name": "CycleA",
+      "sha256": "fc45006db7840c5cdc1efa0cdf6a69213e7f38fc881ce9ebaec4d14c6f75bc61"
+    },
+    {
+      "name": "CycleB",
+      "sha256": "327189ef49e283f6205ad9f339316822fb98f6b4534f098d057a2080b3fb892c"
+    }
+  ],
+  "runtime": ".NET 10.0.5",
+  "results": [
+    {
+      "request": {
+        "assembly": "ForwardFacade",
+        "name": "Fixture.Widget",
+        "token": null
+      },
+      "name": "Fixture.Widget",
+      "assembly": "ForwardTarget",
+      "token": 33554435,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "ForwardFacade",
+        "name": "Fixture.Outer",
+        "token": null
+      },
+      "name": "Fixture.Outer",
+      "assembly": "ForwardTarget",
+      "token": 33554436,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "ForwardFacade",
+        "name": "Fixture.Outer+Inner",
+        "token": null
+      },
+      "name": "Fixture.Outer+Inner",
+      "assembly": "ForwardTarget",
+      "token": 33554437,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "ForwardBridge",
+        "name": "Fixture.Widget",
+        "token": null
+      },
+      "name": "Fixture.Widget",
+      "assembly": "ForwardTarget",
+      "token": 33554435,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "CycleA",
+        "name": "Fixture.Widget",
+        "token": null
+      },
+      "error": "System.TypeLoadException"
+    },
+    {
+      "request": {
+        "assembly": "ForwardFacade",
+        "name": "Fixture.Missing",
+        "token": null
+      },
+      "error": "System.TypeLoadException"
+    },
+    {
+      "request": {
+        "assembly": "ForwardConsumer",
+        "name": null,
+        "token": 16777218
+      },
+      "name": "Fixture.Widget",
+      "assembly": "ForwardTarget",
+      "token": 33554435,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "ForwardConsumer",
+        "name": null,
+        "token": 16777219
+      },
+      "name": "Fixture.Outer",
+      "assembly": "ForwardTarget",
+      "token": 33554436,
+      "canonical": true
+    },
+    {
+      "request": {
+        "assembly": "ForwardConsumer",
+        "name": null,
+        "token": 16777220
+      },
+      "name": "Fixture.Outer+Inner",
+      "assembly": "ForwardTarget",
+      "token": 33554437,
+      "canonical": true
+    }
+  ]
+}

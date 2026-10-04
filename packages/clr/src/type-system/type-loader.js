@@ -3,6 +3,7 @@ import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-des
 import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
 import { TypeAssignability } from './casting.js';
 import { MethodBaseDefinitions } from './method-base-definition.js';
+import { TypeForwarders } from '../resolve/forwarders.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -21,7 +22,11 @@ export class TypeLoader {
   #methodBases;
   #maxConstructedTypes;
   #specMarkers = new WeakMap();
-  constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000, maxConstructedTypes = 100000 } = {}) {
+  #forwarders;
+  #forwarderOptions;
+  #lookupDefinition = (module, fullName) => this.#index(module).names.get(fullName);
+  constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000,
+    maxConstructedTypes = 100000, maxForwarderHops = 128 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
     if (!Number.isInteger(maxDepth) || maxDepth < 1 || maxDepth > 512 ||
         !Number.isInteger(maxMetadataRows) || maxMetadataRows < 1 || maxMetadataRows > 1000000) throw new RangeError('Invalid type graph limits');
@@ -29,6 +34,10 @@ export class TypeLoader {
     this.#resolveExternal = resolveExternalType;
     this.#maxDepth = maxDepth;
     this.#maxRows = maxMetadataRows;
+    if (!Number.isSafeInteger(maxForwarderHops) || maxForwarderHops < 1 || maxForwarderHops > 1024) {
+      throw loadError(LoadErrorCode.InvalidConfiguration, 'Invalid type forwarder hop limit');
+    }
+    this.#forwarderOptions = { maxMetadataRows, maxForwarderHops, maxDepth };
     if (!Number.isSafeInteger(maxConstructedTypes) || maxConstructedTypes < 1 || maxConstructedTypes > 1000000) {
       throw new RangeError('Invalid constructed type limit');
     }
@@ -111,13 +120,20 @@ export class TypeLoader {
   async find(module, fullName, options = {}) {
     checkCancellation(options.signal);
     try {
-      const token = this.#index(module).names.get(fullName);
-      if (!token) throw fail(`Type ${fullName} was not found`);
-      return await this.load(module, token, options);
+      if (typeof fullName !== 'string' || !fullName || fullName.length > 4096) throw fail('Invalid metadata type name');
+      return await this.#find(module, fullName, { signal: options.signal, path: new Set(), references: new Map() });
     } catch (error) {
       if (error.code?.startsWith('SFCLR')) throw error;
       throw loadError(LoadErrorCode.InvalidImage, `Invalid type metadata: ${error.message}`);
     }
+  }
+
+  async #find(module, fullName, operation) {
+    const token = this.#lookupDefinition(module, fullName);
+    if (token) return this.#load(module, token, operation);
+    this.#forwarders ??= new TypeForwarders(this.#forwarderOptions);
+    const target = await this.#forwarders.resolve(module, fullName, this.#lookupDefinition, operation);
+    return this.#load(target.module, target.token, operation);
   }
 
   /** Complete a canonical descriptor's base/interface graph without reading executable bodies. */
@@ -205,10 +221,8 @@ export class TypeLoader {
         return external;
       }
       target = (await module.assembly.resolveReference(rid, operation)).manifestModule;
-    } else if (tag !== 0 || rid !== 1) throw fail('ModuleRef and exported-type resolution require a later loader batch');
-    const targetToken = this.#index(target).names.get(targetName);
-    if (!targetToken) throw fail(`Type ${targetName} was not found; exported-type forwarding is not implemented`);
-    return this.#load(target, targetToken, nested);
+    } else if (tag !== 0 || rid !== 1) throw fail('ModuleRef and null-scoped TypeRef resolution require a later loader batch');
+    return this.#find(target, targetName, nested);
   }
 
   #enumUnderlying(module, token) {
