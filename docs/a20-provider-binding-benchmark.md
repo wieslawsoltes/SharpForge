@@ -5,8 +5,9 @@ bound invocation and adds a source-model invocation index. This is a binder
 allocation change, so CONTRIBUTING requires measured before/after evidence.
 The first complete measurement found two binding medians above the 5% budget.
 The source correction below removes avoidable retention and defers document
-index construction. **Its follow-up measurement is pending.** The revised
-harness exposes first and repeated signature-query costs separately; moving
+index construction. Completed follow-ups are recorded below, including the
+final source-model median budget exceedance and deferred post-build query cost.
+The revised harness exposes first and repeated signature-query costs separately; moving
 work out of binding must not hide its cost when a user requests parameter info.
 
 ## Recorded first measurement and corrective decision
@@ -47,8 +48,9 @@ and sorts them in O(n log n). Later exact-opening queries use O(log n) lookup;
 caret queries use O(log n + d), where d is containing-invocation depth. Indexes
 belong to the captured source model and are never shared across revisions.
 The focused `tests/a20-signature-query-index.test.js` covers document ownership,
-exact lookup, nesting boundaries and revision replacement. Its run and the
-new matched benchmark are pending at this source checkpoint.
+exact lookup, nesting boundaries and revision replacement. The synchronized
+provider/metadata cohort passed 50/50 at `1699e53a`; its matched benchmark and
+subsequent capture-policy measurements are recorded below.
 
 ## Revisions and small source exports
 
@@ -226,8 +228,9 @@ side. Its nearest-rank p95 is the 96th ordered sample, rather than the maximum.
 It retains compile, bind, first-query and repeated-query phases, including
 candidate-only query costs when the baseline API is absent. This is a focused
 investigation of that concrete tail, not another four-family qualification.
-The filter and command are source-ready; this diagnostic is **not yet run** at
-this checkpoint. Stop after this capture unless it identifies a stable issue.
+The coordinator completed this diagnostic; its original result and concrete
+compile-capture finding are retained below. The command describes that
+historical source pair, not the later corrected candidate.
 
 Run the current exporter so both captured source revisions receive the same
 new harness; previously exported runners do not include the case filter.
@@ -274,7 +277,8 @@ claim or attribution of the entire difference to record allocation is made.
 Compile retained-heap median fell by 4,688 bytes, which does not disprove
 transient allocation while the temporary compilation was alive.
 
-The subsequent ownership correction is source-ready:
+The subsequent ownership correction is implemented in `bee4b124` and
+integrated at `48472269`:
 
 - Ordinary semantic analysis and compilation fallback allocate no invocation
   map or candidate records. The binder still performs the same resolution and
@@ -290,15 +294,59 @@ This policy removes unused compile-only retention. It deliberately pays a
 separate bind and retains its graph when a later signature request follows a
 capture-free compilation. `compiled-model-first-query` now measures that
 specific cost; it must not be inferred from the much smaller direct-model
-first-query timing above. Neither the ownership correction nor this new phase
-has been executed at this source checkpoint.
+first-query timing above. Both the ownership correction and this new phase
+were subsequently exercised in the completed scope below.
 
 `tests/a20-invocation-capture-ownership.test.js` supplies four focused cases for
 compile-only retention, reused queries, private once-only capture, direct-model
-capture and invalid requests. The coordinator owns the affected semantic
-cohort and the same focused generic comparison with the new identical harness.
-That follow-up must use a newly captured corrected candidate; `1699e53a` above
-identifies the historical observation before this ownership correction.
+capture and invalid requests. The complete ten-file affected cohort passed
+65/65 with no skips in 7.027788 seconds at `48472269`; its exact command and
+raw output are archived with the integration history. `1699e53a` above remains
+the historical source before this ownership correction.
+
+## Completed capture-policy measurement
+
+Candidate `48472269ec106049debc0d448985882463365215` was compared against
+matched-main baseline `ceced1c2ad0b7acead2333609d8568ab41f2f902`, both containing
+captured main `9ac2d74d`. Both exports used harness SHA-256
+`40b22884b7ddc8df546140890ad861b4692bea894dfe179596d0918a514ed90b`, 96 call
+sites, 101 samples and ten warmups on the same shared Linux/x64 Node v24.19.0
+host. Corpus and shared public observations matched.
+
+| Phase | Median before → corrected candidate (ms) | p95 before → corrected candidate (ms) | Median change | Retained heap median difference (bytes) |
+| --- | --- | --- | --- | --- |
+| Compile, profile-rejection result | 43.719739 → 40.895091 | 67.302406 → 48.185120 | −6.46% | −1,712 |
+| Source-model construction | 22.197639 → 24.410655 | 31.018274 → 32.235009 | **+9.97%** | **+117,112** |
+
+The source-model median exceeds the 5% contribution budget. Lower compile
+measurements do not offset it; this is not an overall performance-budget pass.
+The intentional bound-candidate capture supports correct signature help and
+its cost remains explicit. The root integration agent explicitly accepts this measured SF-A20-T14
+correctness tradeoff, with the provider owner's recommendation: bound-candidate
+retention supports correct signature information, unused compilation capture is
+disabled, and direct/deferred query costs are measured. This is integration
+review acceptance, not human approval or an overall 5% performance pass. No
+statistical-significance or noise explanation is inferred.
+
+| Candidate-only query | Median (ms) | p95 (ms) | Retained heap median (bytes) |
+| --- | ---: | ---: | ---: |
+| Direct-model first query | 0.344359 | 0.425181 | −16,056 |
+| Primed repeated query, per query over 64 | 0.004783 | 0.007328 | −28,952 for the batch and retained final result |
+| Compiled-model first query | **9.594653** | **14.425250** | **399,704** |
+
+The last row includes the additional capture-enabled bind and retained analysis
+when reusing a completed compilation. It is not interchangeable with the direct
+model's smaller first-query cost. The baseline lacks the public signature API,
+so no comparative query percentage is fabricated. Heap deltas remain observed
+post-GC values and are not total allocation counts.
+
+Exact raw reports, settings, environment, export manifests and invocation
+metadata are retained in
+[evidence/project16-integration/p16-provider-bench-48472269](evidence/project16-integration/p16-provider-bench-48472269/).
+The [qualification history](project16-qualification-history.json) records all
+four comparison captures, their exact source/tree identities and report
+SHA-256 digests. Earlier compile and bind budget exceedances remain recorded;
+no additional optional capture is planned.
 
 No browser, native CLR, Visual Studio or performance qualification success is
 implied by the presence of this harness.

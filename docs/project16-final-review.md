@@ -2,8 +2,20 @@
 
 ## Review boundary and stack
 
-Publish one complete final implementation closure after review 04. The source
-boundary for this draft is the committed integration tree
+Final product source is `48472269ec106049debc0d448985882463365215`, tree
+`8ad180ab94fb21a57e6e9a5c3b17cf553015a717`; its equivalent published commit is
+`2a19543ba43ef16cf73dc2c81834265f74d4ac0c`. Against captured main
+`9ac2d74d2b3992e80eb697474178e58269b17ce5`, the final product net diff is
+**444 files, 41,901 insertions and 1,825 deletions**, excluding this evidence-only
+closure. The detailed earlier counts below are retained as historical snapshots.
+Final local checks and packaging succeeded individually, but checkout integrity
+failed on a recurring untracked file absent from the committed tree. Required
+hosted PR core remains pending. The integration owner explicitly accepts the
+measured source-model performance tradeoff described below; no overall
+performance-budget, browser, native or oracle pass is claimed.
+
+Publish one complete final implementation closure after review 04. The original source
+boundary captured for this review is the committed integration tree
 `789339fe1c5a05259dfd4be1395f2e849fe42fe9`. Its local review base is
 `eec216696f4c1f73a5be541bfa2fac3a1f8ea42f`, the completed docking/workbench/shell
 review, published as [PR #3533](https://github.com/wieslawsoltes/SharpForge/pull/3533).
@@ -19,12 +31,29 @@ or corrections. The reachable history above the local base contains **258
 commits: 108 merges and 150 non-merge commits**. Of the non-merge subjects, 144
 start with a Work-ID. Five original Studio `feat(studio)` commits and the
 initial semantic-provider commit retain their original subjects. No existing
-commit is renamed or rewritten to make the history appear more uniform.
+local commit is renamed or rewritten to make the history appear more uniform.
 
 Commit reachability and new code are different measures here. Earlier review
 layers incorporated scoped committed-source snapshots while the final
-integration retains the owners' original branch histories. The net tree diff,
+integration retains the owners' original local branch histories. The net tree diff,
 not the number of reachable commits, defines the remaining code for review.
+
+Measured source identifiers in this document and the qualification archive are
+**local commit IDs plus exact Git tree IDs**. Publication through the GitHub
+Git-data connector preserves each tree, commit message and ordered mapped
+parent graph, while GitHub sets commit metadata. A published commit can
+therefore have a different SHA from its local source commit. This is not a
+squash, rebase or force-push, and this review does not claim identical public
+commit metadata or SHAs. The exact integration-owner
+[publication map](project16-publication-map.json) pairs local and published
+commits with their identical tree IDs. The qualification history repeats the
+published equivalent beside each mapped measured source. For example,
+`4b1c0291` maps to public `a3e431a3bdfffdb2f9a80977802fe2e8b03b9bb4`, and
+`40bbdea7` maps to public `01c0c052fb30bbe447dc43bdaab85df45f06160f`.
+A reviewer can check out those public commits and reproduce the recorded tree
+without access to local-only commit objects. The archived checkpoint contains 441 mappings, including all measured source
+identities and the final product source. The evidence commit itself is not
+circularly required to appear inside its own map.
 
 | Captured history point | Role in the final closure |
 | --- | --- |
@@ -43,6 +72,38 @@ MethodIndex improvements and CIL native ABI. Released
 `Environment.GetEnvironmentVariable` remains 524289. The source-argument,
 environment and semantic-provider work is preserved alongside those upstream
 contracts. These were merge decisions, not newly invented replacement APIs.
+
+## Later synchronized source boundary
+
+The original history and size inventory above remain pinned to `789339fe`.
+The later source `1699e53a664bb54752a216a98f59a9f947da5eeb` has tree
+`5f95b2569f1d37e14108ca865cb39de33872320e` and includes the completed provider
+optimization plus captured `main` at
+`9ac2d74d2b3992e80eb697474178e58269b17ce5`. Against that captured main, the
+source net diff is **443 files, 41,696 insertions and 1,824 deletions**. These
+figures exclude later evidence changes. Already-landed work brought in by main
+is not presented as newly authored Project 16 changes.
+
+The exact [merge-decision record](evidence/project16-integration/p16-main-conflict-decisions.json)
+retains all 59 reported conflicts: 52 files where main matched review 04 kept
+the integrated owner changes; six where our source matched review 04 accepted
+main; `compilation.js` combined both sides against the reviewed base. No
+unresolved conflict is recorded.
+
+For the next performance comparison, the
+[matched baseline construction](evidence/project16-integration/p16-matched-baseline.json)
+combines pre-signature source `3f7e51a6` with the same captured main, producing
+`ceced1c2ad0b7acead2333609d8568ab41f2f902`, tree
+`5a805282c2662f09047b75d7a43c191b06956ea9`. Its public equivalent is
+`45319b4df1f8364b387a66db90acf33b434d03f7`, retained on
+[`codex/project16/benchmark-baseline-9ac2d74d`](https://github.com/wieslawsoltes/SharpForge/tree/codex/project16/benchmark-baseline-9ac2d74d).
+Both revisions use the same revised harness. The revised harness measures first-query and repeated-query
+cost separately from binding; moving index construction into a first query is
+not treated as eliminating its cost. The original reports remain archived and
+are not paired with reports from the revised harness. The matched measurements and later core/packaging attempt are recorded below;
+the final compiler capture correction is recorded below. A narrow checkout
+retry passed at the earlier source, but the final local attempt failed again
+on the recurring file; required hosted core remains pending.
 
 ## Why one final closure
 
@@ -68,8 +129,8 @@ observer, core-intrinsic metadata and measured execution-interval corrections.
 | `c7c80de4`: `a19-studio-workspace-inputs.test.js` | `eb0294bb`: loader/source imports/fixture; `4f061fa2`: workspace input adapter | This test is absent at `6bc2a388`, then enters history before its helper sources |
 | `5fccae3b`: `a19-studio-import-composition.test.js` | `eb0294bb`: loader/fixture; `4f061fa2`: file and built-in import adapters; `ec4b890b`: metadata reference adapter | This test also arrives after `6bc2a388` and before all its imports |
 
-A newly constructed merge-only component branch could retain original commit
-identities, but it would need another set of integration/conflict decisions and
+A newly constructed merge-only component branch could retain original local
+commit identities, but it would need another set of integration/conflict decisions and
 an intermediate source tree with older Studio wiring and a separately assembled
 manifest. It would not be the already completed source scope being qualified.
 Taking snapshots or replaying commits to manufacture a smaller diff would also
@@ -199,23 +260,137 @@ git diff --stat \
   789339fe1c5a05259dfd4be1395f2e849fe42fe9
 ```
 
-## Qualification status at this draft boundary
+## Recorded qualification history
 
-This document was prepared by reading committed history, source paths and the
-existing evidence. Its author did not run tests, a build or static gates. The
-integration owner supplies the final combined results and source revision.
+The [machine-readable qualification history](project16-qualification-history.json)
+retains each source commit and tree, exact invocation where captured, raw log
+path and SHA-256 digest. The raw outputs are under
+[evidence/project16-integration](evidence/project16-integration/). Preparing
+this archive ran no test, build, benchmark or static gate. Results below are
+completed integration-owner executions; every result applies to its recorded
+source rather than automatically qualifying later changes.
 
-| Evidence | Status and attribution |
+| Evidence | Recorded result and source |
 | --- | --- |
-| Completed integration build | Integration owner reports success at `96c7bc79` |
-| Combined syntax and module linking | Integration owner reports 2,504 syntax files and 2,500 linked files passed at `96c7bc79` |
-| Scope manifest assignment | Integration owner reports 617 Node and 32 browser manifest entries assigned at `96c7bc79` |
-| Complete initial static gate | Not an all-pass claim: that attempt found two legitimate source/inventory hash mismatches |
-| Hash correction | Reviewed in `5deb1074`, merged in `789339fe`; only exact inventory bytes/rationale changed. The affected gate result must be recorded by the integration owner |
-| Complete A19/A20 Node scope | Initial combined runs completed. A20 reports no failures with explicit environment skips; A19 found failures and the owners are correcting the affected cases. Final correction-aware evidence remains pending; provisional totals are not promoted to an aggregate pass |
-| Owner-focused qualifications | Retained in the linked ledgers, including original failures and affected reruns; they are not relabeled as one uninterrupted aggregate run |
-| Actual browser/OS/native-editor/oracle matrix | No pass is inferred from authored fixtures, Node adapters, manifests or a successful build |
-| Browser and workbench performance comparison | Requires actual captures and a reviewed compatible baseline; capture-only output is not a regression verdict |
+| Initial normal build | Passed at `96c7bc79`; a built distribution is not browser execution or standalone qualification |
+| Initial full static check | At `96c7bc79`, manifest assignment covered 617 Node files and 32 browser scripts; 2,504 syntax modules and 2,500 linked modules had no errors. The attempt failed four reviewed-byte policy messages across two files |
+| Initial static correction | Exact source inventory corrections were followed by the static-import-only retry at `6d5b033f`: 2,500 modules, zero errors. Contract and quarantine checks also passed at that source |
+| Initial A19 complete scope | At `96c7bc79`: 592 cases, 579 passed, 13 failed. The nine-file correction at `dacdd697` ran 83 cases, 81 passed, two failed; the final affected Explorer retry at `6d5b033f` passed 5/5. All 13 initial failures have observed affected passes; the full 592 cases were not rerun |
+| Initial A20 complete scope | At `96c7bc79`: 610 cases, 601 passed, zero failed, nine skipped. Eight are explicit unsupported Vim/host targets; one is an unavailable pinned Unicode 16 native Intl oracle. None is a passing acceptance target |
+| Later acceptance/host corrective cohort | At `4b1c0291`: 33 files, 305 cases, 302 passed, three failed, zero skipped, 12.237 seconds |
+| Targeted corrective retry | At `40bbdea7`: exactly the three failing files, 36/36 passed, zero skipped, 1.674 seconds. All 305 distinct corrective cases now have passing observations across the two runs; this is neither 341 distinct cases nor a full 305-case rerun at the corrected source |
+| Later complete static check | At `89ba3443`: 30 areas, 632 Node files, 32 browser scripts, zero unassigned or duplicate entries; 2,542 syntax modules and 2,538 linked modules, zero errors |
+| First provider-binding comparison | Candidate `40bbdea7` against baseline `3f7e51a6`, same harness SHA, matched compiler/model observations. Two bind medians exceeded 5%: instance overloads +5.66%, local functions +12.03%. The exact initial costs remain archived; the subsequent concrete source correction has its own matched-main capture |
+| Synchronized complete A19 scope | At `1699e53a`: 662/662 passed, zero failed or skipped, 35.785 seconds |
+| Synchronized complete A20 scope | At the same `1699e53a`: 674 cases, 665 passed, zero failed, nine explicit skips, 33.763 seconds. The skip split remains eight unsupported Vim/host targets and one unavailable pinned Unicode 16 Intl oracle |
+| Provider/upstream affected scope | At `1699e53a`: eight files, 50/50 passed, zero skipped, 5.857 seconds. This is a separate overlapping scope, not 50 additional cases added to earlier totals |
+| Matched-main provider comparison | At `1699e53a` against `ceced1c2`, identical revised harness and matched compiler/model observations. None of eight shared compile/bind medians exceeds +5%; constructed-generic bind p95 increased from 27.546 to 36.100 ms (+31.05%) and retained heap median increased 110,136 bytes. These costs remain explicit, with no unconditional performance-budget pass |
+| Targeted 101-sample generic capture | Same product snapshots, new matched case-filter harness. Compile median 38.704→41.498 ms (+7.22%), p95 46.736→59.549 ms (+27.42%); bind median 22.992→21.984 ms (-4.39%), p95 33.709→27.128 ms (-19.52%), retained bind heap +109,104 bytes. The compile budget exceedance remains flagged; no aggregate performance pass or causal explanation is claimed |
+| Capture-policy affected scope | At `48472269`, tree `8ad180ab94fb21a57e6e9a5c3b17cf553015a717`: ten files, 65/65 passed, zero skipped, 7.028 seconds, including four new capture-ownership cases. Focused measurement and the final local core attempt are recorded below |
+| Final capture-policy measurement | At `48472269` against matched baseline `ceced1c2`, 101 samples after ten warmups. Compile median/p95 43.720/67.302→40.895/48.185 ms (-6.46%/-28.41%). Source-model construction median/p95 22.198/31.018→24.411/32.235 ms (+9.97%/+3.92%), retained heap +117,112 bytes. Source-model median exceeds the 5% budget; no overall performance pass is claimed |
+| Synchronized core/packaging attempt | At `756ff0cb`: check passed with 728 Node files, 32 browser scripts, 2,880 syntax modules and 2,876 linked modules, zero errors; local immutable contract/seam review and quarantine passed. This is a local snapshot review, not a hosted PR event |
+| Synchronized normal/standalone packaging | At `756ff0cb`: normal build passed; direct standalone build produced 14,599,540 bytes with five embedded worker graphs. No browser execution is implied |
+| Checkout integrity in that attempt | Failed: the upstream-deleted `packages/clr/src/type-system/metadata-method-definitions.js` reappeared as untracked after its preexisting copy was preserved outside checkout. The overall core attempt remains a recorded failure; a separate narrow retry is described below |
+| Checkout diagnostic retry | At unchanged `756ff0cb`, the exact unexpected file was preserved outside checkout. Both `npm check` and clean-checkout passed, and the file did not regenerate. This is an affected retry, not a rerun of the complete six-step core attempt |
+| Changed-source structure comparison | At `756ff0cb` versus captured main: 256 changed source files, zero introduced metric violations. Two inherited maximum line lengths remain unchanged (`tools/core.js` 1,952; `compilation.js` 684). This is not a strict global structure-gate pass |
+| Final product-source static/review/package steps | At `48472269`: 729 Node files, 32 browser scripts, 2,881 syntax modules and 2,877 linked modules, zero errors; local snapshot contract/seam review, quarantine, normal build and direct standalone build passed. Standalone output is 14,600,248 bytes with five embedded worker graphs |
+| Final product-source checkout and hosted gate | Local checkout failed again on the same 3,324-byte upstream-deleted file, absent from the committed tree. The exact original file was preserved repeatedly; no cause is invented. No further local retry is planned. Required hosted PR core on its fresh Git checkout is **pending**, so final core is not reported all-pass |
+| Actual browser/OS/native-editor/oracle matrix | No pass is inferred from authored fixtures, Node adapters, manifests, workflow definitions or a successful build |
+| Browser and workbench performance comparison | Requires actual captures and a compatible reviewed baseline; capture-only output is not a regression verdict |
+
+The later complete source includes caret-aware and incremental search,
+lossless Surround With indentation and source endings, line-ending-aware tab
+conversion, bound method completion and signature help, project-owned Call
+Hierarchy, startup/instance/stop-all menus and selected-profile routing,
+navigation reveal ownership, diagnostic producers, captured build cancellation,
+Explorer decorations and the explicit qualification-trigger fallback. The
+305-case cohort exercised this combined scope after implementation.
+
+Two failures in that cohort were stale fixture expectations: the worker
+protocol's handler count and the now-intentional forwarded `projectId`. The
+third exposed a real portability/lifecycle bug in capture-phase navigation
+listener removal during document unload. The original failed run remains visible; corrected fixtures and the
+listener source then passed the three-file retry. Older and newer cohorts
+overlap, so their counts are never added into a fabricated aggregate pass total.
+The later full A19/A20 executions at synchronized source `1699e53a` include
+the completed corrections and their expanded case inventories; they are new
+recorded runs, not rewritten versions of those earlier failures.
+
+The first binder run used Node v24.19.0 on Linux/x64, an AMD EPYC 9V74 host,
+15 measured samples after five warmups, 96 call sites and explicit GC. The
+same-host baseline/candidate reports retain every compile and source-model bind
+median, p95 and heap observation. Retained live-result heap increased by 74,176
+bytes for instance-overload binding and 52,368 bytes for local-function binding
+in that run. Uncollected heap is a GC-dependent proxy, not total allocations.
+No speedup, noise explanation or statistical-significance claim is inferred
+from these descriptive shared-host results. Comparison exit zero establishes
+compatible observations; it is not a performance-budget pass.
+
+The synchronized performance source defers each document's signature index until
+its first query and retains compact bound invocation records. Both sides of the
+revised comparison include the same captured main, use 15 samples after five
+warmups, and share harness SHA
+`f654fedb21cf64751ef8ba4bbb1b5fa91c42afab43d406f5af3fc911fd1f55e8`.
+The generic bind p95 increase remains recorded even though no shared median
+exceeded 5%; it is not dismissed as noise. At 15 samples the reported p95 is
+the maximum observation. A single targeted 101-sample, 10-warmup capture examined that cost on the
+same source snapshots with its own identical baseline/candidate harness; the
+original reports remain intact. The first query's measured cost is
+explicit rather than hidden by the binding-only measurement:
+
+| Candidate-only signature query | First query median / p95 (ms) | Repeated-query median / p95 per query (ms) |
+| --- | ---: | ---: |
+| Instance overloads | 0.261 / 0.392 | 0.00768 / 0.00966 |
+| Constructed generic receiver | 0.271 / 0.371 | 0.00488 / 0.00586 |
+| Local functions | 0.172 / 0.253 | 0.00623 / 0.02777 |
+| Incomplete instance call | 0.255 / 0.297 | 0.00812 / 0.01280 |
+
+The baseline has no public `signatureHelp` API, so those rows establish actual
+candidate costs, not before/after speedups. Repeated-query numbers divide a
+64-query batch after priming. First-query and binding phases use separate fresh
+models, so their medians are not added into an unmeasured total. Retained-heap
+and uncollected-heap values, including negative values, remain in the raw
+reports without clipping or allocation-count claims.
+
+The one targeted larger-sample diagnostic retained the same product source
+snapshots and measured only the constructed generic case. The compile median
+increased **7.22%** and p95 **27.42%**, so the result does not qualify as an
+unconditional contribution-budget pass. Lower bind timings in that capture do
+not offset the compile cost. First-query p95 was 0.415637 ms; the primed
+64-query batch's p95 divided per query was 0.007167 ms. The source-path review found that public compile/Compilation/pipeline/fallback
+files were byte-identical, but generic fallback called the changed
+`BodyBinder.invocation` and allocated editor records. Identical entry files did
+not establish an identical dependency path. The concrete correction in
+`bee4b124` defaults capture off for compilation and opts in for source-model
+binding. A model reusing fallback analysis retains its existing query indexes;
+its first signature query privately captures once. A new candidate-only
+compiled-model first-query phase must measure that extra full binding and
+retained analysis. The complete affected ten-file scope passed 65/65 at `48472269`; its focused
+capture and final local core attempt are recorded below.
+The source finding does not attribute the entire measured 2.7937 ms median
+compile difference to records or remove the earlier budget exceedance. No
+additional broad capture is planned as part of this evidence update.
+
+The constructed-generic compile benchmark's actual result is an execution-
+profile rejection: four `SF1012` diagnostics and `SF2200`, with no emitted
+image. Matching that result across revisions is not successful generic code
+emission. The source-model and signature phases have their own actual query
+results in the reports.
+
+The completed capture-policy measurement retains the cost of the intentional
+bound-candidate records used for signature help. Source-model construction's
+**+9.97% median** exceeds the contribution budget, even though the compile
+measurements are lower. Direct-model first-query p95 is 0.425181 ms; primed
+repeated-query p95 is 0.007328 ms per query. A model reusing completed compilation
+pays a distinct first-query cost: **9.594653 ms median, 14.425250 ms p95 and
+399,704 bytes retained heap median** for its private capture analysis. The
+baseline has no equivalent signature API, so no before/after query percentage
+is invented. The root integration agent **explicitly accepts this measured SF-A20-T14
+correctness tradeoff**: bound candidates support correct signature information,
+compilation capture is disabled, and both direct and deferred query costs are
+measured. The provider owner recommended that disposition. This is integration
+review acceptance, **not human approval or an overall 5% performance pass**. All earlier
+reports remain available, and no optional benchmark loop is planned.
 
 `tests/manifests/A19.json` includes the A19 Node glob and actual workbench
 browser drivers. `tests/manifests/A20.json` includes A20/editor/text cases and
@@ -227,12 +402,19 @@ run selected Node, browser and performance stages serially, reuse the completed
 build and retain results on failure. Scheduling follows
 [serial validation](../planning/qualification/serial-validation.md).
 
-The language-provider ledger records the initial 138/141 result, the 26/26
-affected correction and the final 63/63 corrective cohort. The resource ledger
-retains its 72/73 run followed by the affected 6/6 save-file result. Reload and
-observer ledgers similarly distinguish their real runs and fixture corrections.
-These histories must remain visible when the final complete-scope result is
-added; passing a later run does not turn an earlier failure into a pass.
+The explicit [qualification branch trigger](project16-qualification-trigger.md)
+retains manual dispatch and permits one selected platform/engine/stage from a
+strictly validated branch name at an immutable checkout SHA. Its resolver tests
+passed within the later corrective cohort. No hosted workflow execution is
+claimed by the source or those tests; the integration owner schedules actual
+qualification after the required PR/main checks pass.
+
+Owner-focused histories also remain distinct. The language-provider ledger
+records its initial 138/141 result, 26/26 affected correction and final 63/63
+corrective cohort. The resource ledger retains its 72/73 run followed by the
+affected 6/6 save-file result. Reload and observer ledgers preserve their own
+real runs and fixture corrections. Passing a later run never turns an earlier
+failed execution into a pass.
 
 ## Explicit product and evidence limits
 
@@ -254,6 +436,9 @@ added; passing a later run does not turn an earlier failure into a pass.
 - The Diagnostics CPU view explicitly measures **worker execution occupancy**
   in the Studio source/direct-CIL JavaScript workers. It does not claim an OS
   process CPU counter, native hardware sampling or a CLR call-stack profiler.
+- Built-in replacement/preview plans cap edited document text at 32,000,000
+  UTF-16 units. The same preparation path applies to Replace Current, Replace
+  All and Preview; it is not a preview-only limit. Find remains independent.
 - Large-source ingress supports the documented 256 MiB per-file and 320 MiB
   workspace byte budgets. Automatic recovery has a separate 8 MiB budget;
   automatic observation/reload is bounded to 8,000,000 UTF-16 units. Explicit
