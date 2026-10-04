@@ -44,9 +44,27 @@ the group decoder (16 MiB, one million, one million and 64). Lowerable
 pass is O(instructions + prefixes), uses a scalar duplicate mask per group and
 allocates no new successful-path records beyond the existing decoded groups.
 
-Eight focused tests, an eight-method pinned ILVerify capture and a bounded
-grouping/validation timing harness are prepared. Local tests, native capture and
-checks have not run for this draft; they await the serial validation slot. The
-source VM, browser, Rust and other platforms are not newly qualified by this API.
+Validation: nine focused cases and existing prefix/opcode/CIL compatibility pass
+209/209. Pinned ILVerify 10.0.5 (SDK/reference pack 10.0.201/10.0.5) agrees with all
+eight captured decisions: four valid chains accepted, two forbidden targets
+rejected, a repeated volatile rejected and no. reported unverifiable. The raw
+capture is retained with tool/source/image hashes. No new runtime execution
+semantics are claimed; source VM/browser/Rust/platform qualification stays staged. Required checks pass
+2678 syntax modules and 2674 static modules with zero errors. Structure reports
+269 existing findings, none in this batch's files.
+
+The unchanged grouping API and the opt-in validator were measured with two warmups
+and seven chronological samples on Apple M3 Pro / macOS ARM64, Node 24.21.0:
+
+| Prefix groups | Grouping median / p95 ms | Validation median / p95 ms |
+|---|---:|---:|
+| 1000 | 0.859958 / 1.071125 | 0.944375 / 1.058375 |
+| 5000 | 2.291333 / 3.173833 | 2.734834 / 3.307042 |
+
+This measures added semantic work, not an old/new regression; existing grouping
+source is unchanged. [Raw samples](benchmarks/prefix-memory.json) retain heapUsed
+deltas, provenance and the command. Heap deltas are not allocation totals, peak
+memory or RSS. The process ran alone in the team's serial slot on a shared host,
+with no claim of significance, general speedup or memory reduction.
 
 Reference: [ECMA-335 sixth edition](https://www.ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).

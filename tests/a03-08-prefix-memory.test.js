@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { CilOpcodes, CilWriter, decodeInstructionGroups, memoryPrefixDiagnosticCatalog, validateMemoryPrefixes } from '@sharpforge/cil';
 
 const memory = new Set(['ldfld', 'stfld', 'ldobj', 'stobj', 'initblk', 'cpblk']);
@@ -129,4 +130,27 @@ test('strict duplicate checking is deliberately separate from captured CoreCLR e
   const bytes = new Uint8Array(Buffer.from(fixture.code, 'base64'));
   assert.equal(decodeInstructionGroups(bytes)[1].prefixes.length, 3);
   rejects(bytes, 'CILPM0001', 7);
+});
+
+test('eight pinned ILVerify observations agree with accepted and rejected memory-prefix validation', () => {
+  const fixture = JSON.parse(readFileSync(new URL('./fixtures/a03-prefix-memory/native.json', import.meta.url), 'utf8'));
+  const source = readFileSync(new URL('./fixtures/a03-prefix-memory/input.js', import.meta.url));
+  assert.equal(createHash('sha256').update(source).digest('hex'), fixture.sourceSHA256);
+  assert.equal(fixture.version, '10.0.5');
+  assert.equal(fixture.observations.length, 8);
+  assert.equal(fixture.observations.filter(value => value.oracle.accepted).length, 4);
+  for (const observation of fixture.observations) {
+    const bytes = new Uint8Array(Buffer.from(observation.code, 'base64'));
+    if (observation.oracle.accepted) {
+      assert.doesNotThrow(() => validateMemoryPrefixes(bytes));
+      assert.deepEqual(observation.oracle.errors, []);
+    } else {
+      rejects(bytes, observation.diagnostic);
+      assert(observation.oracle.errors.length > 0);
+    }
+    if (observation.name === 'NoArray') {
+      assert.deepEqual(observation.oracle.errors, ['Unverifiable']);
+      assert.doesNotThrow(() => validateMemoryPrefixes(bytes, { allowUnverifiable: true }));
+    }
+  }
 });
