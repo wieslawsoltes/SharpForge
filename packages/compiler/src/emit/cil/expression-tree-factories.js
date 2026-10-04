@@ -10,11 +10,12 @@
  *
  * A member of a generic type needs the handle of its declaring type as well (the two-argument `GetMethodFromHandle`).
  */
-import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { needsTypeSpec } from '../../codegen/generics.js';
 import { frameworkType, methodTypeParameter } from './framework-types.js';
 import { needsBox, primitiveOf, representationOf } from './type-facts.js';
+import { expressionTreeCreationFactories } from './expression-tree-creation-factories.js';
+import { anonymousMemberToken } from './anonymous-type-members.js';
 
 const EXPRESSIONS = 'System.Linq.Expressions';
 const REFLECTION = 'System.Reflection';
@@ -78,11 +79,19 @@ export class ExpressionTreeFactories {
   }
   /** Pushes the MethodInfo of a method (the ConstructorInfo of a constructor). */
   methodOf(method) {
+    if (method.containingType?.isAnonymousType) return this.anonymousMethodOf(method.containingType, method.name);
     const { methodBase, methodHandle, methodInfo, constructorInfo } = this.types,
       isConstructor = method.methodKind === MethodKind.Constructor;
     this.il.emit('ldtoken', this.tokens.method(method));
     this.fromHandle(methodBase, 'GetMethodFromHandle', methodHandle, methodBase, method.containingType);
     return this.il.emit('castclass', this.tokens.type(isConstructor ? constructorInfo : methodInfo));
+  }
+  /** Anonymous members use their planned generic template, with the constructed type handle. */
+  anonymousMethodOf(type, name) {
+    const { methodBase, methodHandle, methodInfo, constructorInfo } = this.types;
+    this.il.emit('ldtoken', anonymousMemberToken(this.tokens, type, name));
+    this.fromHandle(methodBase, 'GetMethodFromHandle', methodHandle, methodBase, type.metadataForm());
+    return this.il.emit('castclass', this.tokens.type(name === '.ctor' ? constructorInfo : methodInfo));
   }
   fieldOf(token, declaringType) {
     this.il.emit('ldtoken', token);
@@ -106,7 +115,7 @@ export class ExpressionTreeFactories {
   }
   /** Emits the factory calls of one node of the tree; its expression object is left on the stack. */
   emit(node) {
-    const handler = this['emit' + node.factory];
+    const handler = expressionTreeCreationFactories[node.factory] ?? this['emit' + node.factory];
     if (handler) return handler.call(this, node);
     if (node.operands?.length === 2) return this.binary(node);
     if (node.operands?.length === 1) return this.unary(node);
@@ -134,6 +143,7 @@ export class ExpressionTreeFactories {
       parameter,
       node.parameters.map(declared => () => il.emit('ldloc', this.parameterSlots.get(declared))),
     );
+    if (!node.type) return this.factory('Lambda', [this.expression, this.arrayOf(parameter)], this.core.lambdaExpression);
     return il.emit('call', this.tokens.externalGeneric(this.expression, 'Lambda', shape, [node.type]), { pops: 2, pushes: 1 });
   }
   emitParameter(node) {
@@ -144,8 +154,15 @@ export class ExpressionTreeFactories {
   emitConstant(node) {
     const { il, core, emitter } = this,
       constant = this.result('ConstantExpression');
-    if (node.isThis) {
+    if (node.methodValue) this.methodOf(node.methodValue);
+    else if (node.typeValue) {
+      if (node.valueExpression) emitter.exprTypeOf(node.valueExpression);
+      else this.typeOf(node.typeValue);
+    } else if (node.isThis) {
       emitter.exprThis({ syntax: null });
+      if (needsBox(node.type)) il.emit('box', this.tokens.type(node.type));
+    } else if (node.isDefault) {
+      emitter.defaultValue(node.type);
       if (needsBox(node.type)) il.emit('box', this.tokens.type(node.type));
     } else if (node.value === null || node.value === undefined) il.emit('ldnull');
     else {
@@ -170,8 +187,7 @@ export class ExpressionTreeFactories {
     this.emit(node.operands[1]);
     if (!node.method && node.factory === 'Add' && node.type?.specialType === 'System_String') return this.concatenation(node, result);
     if (!node.method) return this.factory(node.factory, [expression, expression], result);
-    // A user-defined comparison says whether a lifted form yields null: never, in a tree the binder accepted.
-    if (comparisons.has(node.factory)) this.il.emit('ldc.i4', 0);
+    if (comparisons.has(node.factory)) this.il.emit('ldc.i4', node.liftToNull ? 1 : 0);
     this.methodOf(node.method);
     const parameters = comparisons.has(node.factory) ? [expression, expression, this.core.bool, methodInfo] : [expression, expression, methodInfo];
     return this.factory(node.factory, parameters, result);
@@ -208,6 +224,12 @@ export class ExpressionTreeFactories {
     for (const operand of node.operands) this.emit(operand);
     return this.factory('Condition', [expression, expression, expression], this.result('ConditionalExpression'));
   }
+  emitCoalesce(node) {
+    if (!node.conversion) return this.binary(node);
+    for (const operand of node.operands) this.emit(operand);
+    this.emit(node.conversion);
+    return this.factory('Coalesce', [this.expression, this.expression, this.core.lambdaExpression], this.result('BinaryExpression'));
+  }
   /** The object a member is read from: the expression, or null for a static member. */
   instance(expression) {
     if (expression) return this.emit(expression);
@@ -216,8 +238,10 @@ export class ExpressionTreeFactories {
   emitField(node) {
     const member = this.result('MemberExpression');
     if (node.isCapturedVariable) return this.capturedVariable(node, member);
+    const token = node.isEvent ? this.tokens.eventField(node.member) : this.tokens.field(node.member);
+    if (!token) return this.emitter.unsupported(`the field '${node.member.toDisplayString()}' in an expression tree`);
     this.instance(node.expression);
-    this.fieldOf(this.tokens.field(node.member), node.member.containingType);
+    this.fieldOf(token, node.member.containingType);
     return this.factory('Field', [this.expression, this.types.fieldInfo], member);
   }
   /** A variable of the enclosing method lives in a cell; the tree reads the cell's field. */
@@ -249,52 +273,5 @@ export class ExpressionTreeFactories {
     this.emit(node.expression);
     this.expressions(node.arguments);
     return this.factory('Invoke', [expression, this.arrayOf(expression)], this.result('InvocationExpression'));
-  }
-  emitNew(node) {
-    const { newExpression, constructorInfo } = this.types,
-      constructor = node.constructor;
-    if (!constructor || (constructor.isImplicitlyDeclared && node.type.typeKind === TypeKind.Struct)) {
-      this.typeOf(node.type);
-      return this.factory('New', [this.core.type], newExpression);
-    }
-    this.methodOf(constructor);
-    this.expressions(node.arguments);
-    return this.factory('New', [constructorInfo, this.arrayOf(this.expression)], newExpression);
-  }
-  emitMemberInit(node) {
-    const { memberBinding, memberInfo, methodInfo, newExpression } = this.types,
-      assignment = this.result('MemberAssignment'),
-      bind = binding => () => {
-        const setter = binding.member.setMethod ?? null;
-        if (setter) this.methodOf(setter);
-        else this.fieldOf(this.tokens.field(binding.member), binding.member.containingType);
-        this.emit(binding.expression);
-        this.factory('Bind', [setter ? methodInfo : memberInfo, this.expression], assignment);
-      };
-    this.emit(node.newExpression);
-    this.array(memberBinding, node.bindings.map(bind));
-    return this.factory('MemberInit', [newExpression, this.arrayOf(memberBinding)], this.result('MemberInitExpression'));
-  }
-  emitListInit(node) {
-    const { elementInit, methodInfo, newExpression } = this.types,
-      element = initializer => () => {
-        this.methodOf(initializer.addMethod);
-        this.expressions(initializer.arguments);
-        this.factory('ElementInit', [methodInfo, this.arrayOf(this.expression)], elementInit);
-      };
-    this.emit(node.newExpression);
-    this.array(elementInit, node.initializers.map(element));
-    return this.factory('ListInit', [newExpression, this.arrayOf(elementInit)], this.result('ListInitExpression'));
-  }
-  newArray(node) {
-    this.typeOf(node.elementType);
-    this.expressions(node.expressions);
-    return this.factory(node.factory, [this.core.type, this.arrayOf(this.expression)], this.result('NewArrayExpression'));
-  }
-  emitNewArrayInit(node) {
-    return this.newArray(node);
-  }
-  emitNewArrayBounds(node) {
-    return this.newArray(node);
   }
 }

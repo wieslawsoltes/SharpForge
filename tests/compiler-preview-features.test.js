@@ -59,14 +59,10 @@ test('A02-T90 closed class: implicitly abstract; sealed, static and an explicit 
   assert.match(message, /provisional: csharplang\/proposals\/csharp-15\.0\/closed-hierarchies\.md revision 1/);
 });
 
-test('A02-E12 features that are not bound report SF2202 with the pinned proposal, never a guess', () => {
-  const rows = [
-    [`union Shape(int, string); ${main}`, 'SF2202:Shape', /unions\.md revision 1/],
-  ];
-  for (const [source, expected, proposal] of rows) {
-    const result = compile(source, preview);
-    assert(diagnostics(source).includes(expected), source);
-    assert.equal(result.success, false, source);
-    assert.match(result.diagnostics.find(d => d.code === 'SF2202').message, proposal);
-  }
+test('A02-T89 union declarations require the framework contracts specified by the pinned proposal', () => {
+  const source = `union Shape(int, string); ${main}`;
+  const result = compile(source, preview);
+  assert.equal(result.success, false);
+  assert.equal(result.diagnostics.filter(diagnostic => diagnostic.code === 'CS0518').length, 2);
+  assert.equal(result.diagnostics.some(diagnostic => diagnostic.code === 'SF2202'), false);
 });

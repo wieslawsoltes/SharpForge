@@ -1,0 +1,79 @@
+[
+  {
+    "target": "TupleMetadata.Carrier`1",
+    "names": [
+      "Id",
+      "Name"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::add_Changed(System.Action`1<System.ValueTuple`2<int, string>>):parameter:1",
+    "names": [
+      "Code",
+      "Message"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::add_Custom(System.Action`1<System.ValueTuple`2<string, int>>):parameter:1",
+    "names": [
+      "Name",
+      "Count"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::event:Changed",
+    "names": [
+      "Code",
+      "Message"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::event:Custom",
+    "names": [
+      "Name",
+      "Count"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::field:Changed",
+    "names": [
+      "Code",
+      "Message"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::remove_Changed(System.Action`1<System.ValueTuple`2<int, string>>):parameter:1",
+    "names": [
+      "Code",
+      "Message"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1::remove_Custom(System.Action`1<System.ValueTuple`2<string, int>>):parameter:1",
+    "names": [
+      "Name",
+      "Count"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1:generic:0:T:constraint:TupleMetadata.IContract`1<System.ValueTuple`2<string, int>>",
+    "names": [
+      "Key",
+      "Value"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Carrier`1:interface:TupleMetadata.IContract`1<System.ValueTuple`2<int, string>>",
+    "names": [
+      "Count",
+      "Label"
+    ]
+  },
+  {
+    "target": "TupleMetadata.Outer`1+Nested",
+    "names": [
+      "Value",
+      "Label"
+    ]
+  }
+]

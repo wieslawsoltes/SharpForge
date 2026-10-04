@@ -9,42 +9,22 @@
  *   { factory: 'Constant', nodeType: 'Constant', type, value }               Expression.Constant(value, typeof(T))
  *   { factory: 'Lambda', nodeType: 'Lambda', type, body, parameters }        Expression.Lambda<TDelegate>(body, parameters)
  *
- * and so on for members, calls, creation and initializers (see the `visit*` functions below). The tree is what
- * code generation will turn into calls once the runtime has System.Linq.Expressions; today it is checked against
- * .NET through its text and node-type walk (lowering/expression-tree-text.js).
+ * and so on for members, calls, creation and initializers. The direct CIL emitter writes these factory calls for
+ * execution on .NET. The source-image translator retains its explicit boundary until that runtime provides
+ * System.Linq.Expressions. The textual helper in expression-tree-text.js also checks the older shape fixtures.
  *
  * A construct with no factory call makes the lowering return `{ unsupported: <what>, syntax }` instead of guessing.
  */
-import { TypeKind, ArrayTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
+import { expressionTreeCreationVisitors } from './expression-tree-creation.js';
+import { expressionTreeConversionVisitors } from './expression-tree-conversions.js';
+import { expressionTreeOperatorVisitors } from './expression-tree-operators.js';
+import { expressionTreeDelegateVisitors } from './expression-tree-delegates.js';
 
-const binaryFactories = Object.freeze({
-  '+': ['Add', 'AddChecked'],
-  '-': ['Subtract', 'SubtractChecked'],
-  '*': ['Multiply', 'MultiplyChecked'],
-  '/': ['Divide'],
-  '%': ['Modulo'],
-  '&': ['And'],
-  '|': ['Or'],
-  '^': ['ExclusiveOr'],
-  '<<': ['LeftShift'],
-  '>>': ['RightShift'],
-  '==': ['Equal'],
-  '!=': ['NotEqual'],
-  '<': ['LessThan'],
-  '<=': ['LessThanOrEqual'],
-  '>': ['GreaterThan'],
-  '>=': ['GreaterThanOrEqual'],
-  '&&': ['AndAlso'],
-  '||': ['OrElse'],
+const visitors = Object.freeze({
+  ...expressionTreeCreationVisitors, ...expressionTreeConversionVisitors, ...expressionTreeOperatorVisitors, ...expressionTreeDelegateVisitors,
 });
-const unaryFactories = Object.freeze({ '-': ['Negate', 'NegateChecked'], '+': ['UnaryPlus'], '!': ['Not'], '~': ['Not'] });
-const integralTypes = new Set(
-  ['Int32', 'UInt32', 'Int64', 'UInt64', 'Int16', 'UInt16', 'Byte', 'SByte'].map(name => 'System_' + name),
-);
-/** Conversions that leave the operand as it is in the tree. */
-const transparentConversions = new Set(['Identity', 'InterpolatedString']);
 
 class Unsupported extends Error {
   constructor(what, syntax) {
@@ -81,7 +61,7 @@ class TreeBuilder {
   visit(node) {
     if (node.hasErrors) this.fail('an expression with errors', node);
     if (node.constantValue && node.kind !== 'Lambda') return this.constant(node.constantValue.isNull ? null : node.constantValue.value, node.type);
-    const handler = this['visit' + node.kind];
+    const handler = visitors[node.kind] ?? this['visit' + node.kind];
     if (!handler) this.fail(`'${node.kind}' in an expression tree`, node);
     return handler.call(this, node);
   }
@@ -93,7 +73,10 @@ class TreeBuilder {
     return this.fail('this literal', node);
   }
   visitDefault(node) {
-    return this.node('Default', node.type, {});
+    return this.node('Constant', node.type, { isDefault: true });
+  }
+  visitTypeOf(node) {
+    return this.node('Constant', node.type, { typeValue: node.operandType, valueExpression: node });
   }
   visitParameter(node) {
     return this.parameters.get(node.parameter) ?? this.captured(node.parameter, node);
@@ -109,30 +92,6 @@ class TreeBuilder {
   visitThis(node) {
     return this.node('Constant', node.type, { value: undefined, isThis: true });
   }
-  visitBinary(node) {
-    if (node.isLifted) this.fail('lifted operators', node);
-    if (node.isLogical && node.method) this.fail('user-defined conditional logical operators', node);
-    const [plain, checkedName] = binaryFactories[node.operator] ?? [];
-    if (!plain) this.fail(`operator '${node.operator}'`, node);
-    const useChecked = node.isChecked && checkedName && !node.method && integralTypes.has(node.type?.specialType);
-    const factory = useChecked ? checkedName : plain;
-    return this.node(factory, node.type, { operands: [this.visit(node.left), this.visit(node.right)], method: node.method ?? null });
-  }
-  visitUnary(node) {
-    if (node.isLifted) this.fail('lifted operators', node);
-    const [plain, checkedName] = unaryFactories[node.operator] ?? [];
-    if (!plain) this.fail(`operator '${node.operator}'`, node);
-    const useChecked = node.isChecked && checkedName && !node.method && integralTypes.has(node.type?.specialType);
-    return this.node(useChecked ? checkedName : plain, node.type, { operands: [this.visit(node.operand)], method: node.method ?? null });
-  }
-  visitConversion(node) {
-    const kind = node.conversion?.kind;
-    if (kind === 'AnonymousFunction') return this.nestedLambda(node);
-    if (kind === 'NullLiteral' || kind === 'DefaultLiteral') return this.constant(null, node.type);
-    if (transparentConversions.has(kind)) return this.visit(node.operand);
-    if (kind === 'MethodGroup') this.fail('a method group conversion', node);
-    return this.node('Convert', node.type, { operands: [this.visit(node.operand)], method: node.conversion?.method ?? null });
-  }
   /** A lambda inside the tree: a Lambda node, quoted when it is itself converted to an expression tree. */
   nestedLambda(node) {
     const delegateType = expressionTreeDelegate(node.type, this.core),
@@ -145,24 +104,14 @@ class TreeBuilder {
   visitIs(node) {
     return this.node('TypeIs', this.core.bool, { expression: this.visit(node.operand), typeOperand: node.testedType });
   }
-  visitConditional(node) {
-    return this.node(
-      'Condition',
-      node.type,
-      { operands: [this.visit(node.condition), this.visit(node.whenTrue), this.visit(node.whenFalse)] },
-      'Conditional',
-    );
-  }
-  visitCoalesce(node) {
-    if (node.right.form === 'throw') this.fail('a throw expression', node.right);
-    if (node.leftConversion && !node.leftConversion.isIdentity) this.fail('a coalescing conversion', node);
-    return this.node('Coalesce', node.type, { operands: [this.visit(node.left), this.visit(node.right)] });
-  }
   visitFieldAccess(node) {
     return this.member('Field', node, node.field);
   }
   visitPropertyAccess(node) {
     return this.member('Property', node, node.property);
+  }
+  visitEventAccess(node) {
+    return { ...this.member('Field', node, node.event), isEvent: true };
   }
   member(factory, node, symbol) {
     const expression = symbol.isStatic || !node.receiver ? null : this.visit(node.receiver);
@@ -172,20 +121,13 @@ class TreeBuilder {
     if (node.member !== 'Length') this.fail(`'${node.member}' of an array`, node);
     return this.node('ArrayLength', node.type, { operands: [this.visit(node.array)] });
   }
-  visitArrayAccess(node) {
-    if (node.indices.length !== 1) this.fail('a multi-dimensional array access', node);
-    return this.node('ArrayIndex', node.type, { operands: [this.visit(node.array), this.visit(node.indices[0])] });
-  }
   visitIndexerAccess(node) {
     const getter = node.property.getMethod;
     if (!getter?.name) this.fail('this indexer', node);
     return this.node('Call', node.type, { object: this.visit(node.receiver), method: getter, arguments: this.arguments(node) });
   }
   arguments(node) {
-    return (node.args ?? []).map(argument => {
-      if (argument.refKind) this.fail('by-reference arguments', node);
-      return this.visit(argument.expression ?? argument);
-    });
+    return (node.args ?? []).map(argument => this.visit(argument.expression ?? argument));
   }
   visitCall(node) {
     const method = node.method;
@@ -194,33 +136,6 @@ class TreeBuilder {
     if (method.methodKind === MethodKind.LocalFunction) this.fail('a reference to a local function', node);
     const object = method.isStatic || node.isExtension || !node.receiver ? null : this.visit(node.receiver);
     return this.node('Call', node.type, { object, method, arguments: this.arguments(node), isExtension: !!node.isExtension });
-  }
-  visitObjectCreation(node) {
-    if (node.type?.typeKind === TypeKind.Delegate) this.fail('a delegate creation', node);
-    const creation = this.node('New', node.type, { constructor: node.constructor ?? null, arguments: this.arguments(node) });
-    if (node.initializers?.length) {
-      const bindings = node.initializers.map(entry => this.binding(entry));
-      return this.node('MemberInit', node.type, { newExpression: creation, bindings });
-    }
-    if (node.collectionInitializers?.length)
-      return this.node('ListInit', node.type, { newExpression: creation, initializers: node.collectionInitializers.map(call => this.elementInit(call)) });
-    return creation;
-  }
-  binding(entry) {
-    const member = entry.target.field ?? (entry.target.kind === 'PropertyAccess' ? entry.target.property : null);
-    if (!member) this.fail('an index initializer', entry.target);
-    if (entry.value.kind === 'ObjectInitializer') this.fail('a nested initializer', entry.value);
-    return { member, expression: this.visit(entry.value) };
-  }
-  elementInit(call) {
-    if (call.isExtension) this.fail('an extension Add method', call);
-    return { addMethod: call.method, arguments: this.arguments(call) };
-  }
-  visitArrayCreation(node) {
-    if (!(node.type instanceof ArrayTypeSymbol) || node.type.rank !== 1) this.fail('a multi-dimensional array creation', node);
-    const elementType = node.type.elementType;
-    if (node.elements) return this.node('NewArrayInit', node.type, { elementType, expressions: node.elements.map(element => this.visit(element)) });
-    return this.node('NewArrayBounds', node.type, { elementType, expressions: node.sizes.map(size => this.visit(size)) });
   }
 }
 
@@ -240,8 +155,7 @@ export function lowerExpressionTree(lambda, delegateType, core) {
 }
 
 /**
- * Translator mixin: a lambda converted to an expression tree cannot be generated yet. The tree is known (see
- * `lowerExpressionTree`); the factory methods it calls are not in the runtime.
+ * Source-image translator boundary: this runtime does not provide the expression-tree factory methods.
  */
 export const ExpressionTreeTranslation = Base =>
   class extends Base {

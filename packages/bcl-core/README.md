@@ -3,7 +3,25 @@
 This package owns BCL family contracts and managed implementations. It has no
 runtime or framework dependency. Hosts supply `bclHost.fault(type, message)`,
 `bclHost.isReference(value)` and `bclHost.frameworkType(name)` on each platform.
+The optional `bclHost.isExecutionStopped(platform)` query distinguishes explicit
+VM shutdown from ordinary completion of Main. Runtime hosts return true while
+the platform is disposed and execution remains terminated; active or restored
+execution and naturally completed programs return false. A BCL operation can
+query this after a synchronous host callback to cancel its pending continuation
+without writing into a stopped VM. The query reads per-platform lifecycle state,
+adds no managed state, and does not change normal post-completion inspection.
 The fault service must throw the host's managed exception.
+
+The optional `bclHost.invokeSynchronousHostCallback(platform, callback, receiver,
+inspectResult)` service invokes a zero-argument callback with the supplied
+receiver. An optional synchronous result observer runs before the boundary ends;
+its return value is ignored. The runtime rejects execution snapshot and restore
+while either callback is active, since the pending JavaScript continuation cannot
+be captured. Each platform owns its depth independently, and all exits release
+the boundary. The callback's result is returned; errors from either callback
+propagate unchanged. Callers apply their own validation and cancellation policy.
+Between-call snapshot and restore remain available. Hosts without this service
+invoke their callback directly.
 
 `createHostStringOrdering({Collator})` creates a synchronous nullable-string
 comparer with immutable host provenance. `Collator` defaults to `Intl.Collator`;
@@ -1046,8 +1064,8 @@ and limiting the complete result. Nonempty work keeps the existing full-buffer
 storage path: O(original text + repeated text + backing slots), host temporary
 strings, and one managed result string (plus backing growth when needed). Native
 capacity/chunk topology and host-observer partial progress remain the established
-runtime profile; the released string, character and Boolean overloads retain
-their behavior.
+runtime profile. Nonempty string, character and Boolean insertion share this
+bounded storage commit.
 
 The unchanged [native reference](reference/string-builder-insert-repeat/README.md)
 contains 206 .NET 10.0.5 / SDK 10.0.201 rows plus an evaluation-order control.
@@ -1060,3 +1078,61 @@ runner reports released Length/string Insert controls separately from new repeat
 insertion costs using prepared builders, one warmup and five samples. Managed
 counters exclude host temporary text. Validation is scheduled by root; the other
 Insert/Replace overloads in #2638 remain outside this batch.
+
+### Complete non-span StringBuilder insertion
+
+The remaining numeric, object and character-array Insert signatures append at
+A07 IDs 524340–524353 without changing any earlier contract. The order is SByte,
+Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, Object,
+Char[] and Char[] with startIndex/charCount. Numeric conversion reuses the typed
+scalar formatters, including unsigned high-bit values, exact 64-bit integers,
+Single shortest text, negative zero and Decimal scale.
+
+The existing `Insert(int, string)` contract 814 now checks the native index before
+reading builder chunks and returns unchanged for null/empty text. Char[] insertion
+checks index before its null-array shortcut. The ranged overload then checks null
+array (only startIndex=charCount=0 is accepted), negative startIndex, negative
+charCount and the upper array bound, whose native parameter name is startIndex.
+Empty ranges do not inspect elements. Nonempty ranges use the shared bounded
+4096-unit character decoder also used by Append, retaining raw UTF-16 without
+per-character managed allocations.
+
+Object insertion preserves its distinct native behavior: a null object returns
+unchanged even for an otherwise invalid index. A non-null object converts once
+through the runtime's virtual `invokeObjectToString` host service before validating
+the insertion index against the current builder. A callback's append/clear edits
+and exceptions remain visible. Managed conversion results stay rooted throughout
+the insertion commit. Primitive and enum fallback formatting retains the original
+box so Char, UInt32, Single and other declared representations are preserved.
+
+The [546-row pinned native capture](reference/string-builder-insert-values/README.md)
+was produced with .NET 10.0.5 / SDK 10.0.201. Typed source fixtures cover both
+compiler pipelines and both JavaScript VMs; 516 non-probe rows also use independent
+CIL MemberRefs, and 30 probe rows exercise real virtual callbacks. Storage tests
+cover no-op counters, named validation errors, exact host limits, allocation
+failure, observer collection/faults, returned-string roots and snapshot restoration.
+StringBuilder has no disposal contract; test VMs are stopped and temporary roots
+are checked after execution. Serial qualification passed all 157 Insert tests,
+284 constructor/metadata/readonly-field controls, and 84 existing Remove/Replace
+tests. The latter include separate seeded 10,000-step Remove, character Replace
+and ranged string Replace traces on both JavaScript VM platforms. They are not
+one combined edit trace. Managed callback support is supplied by the merged
+runtime prerequisite.
+
+Nonempty insertion retains O(builder text + inserted text + backing slots) time,
+bounded host temporary strings and one managed result allocation, plus backing
+growth and any virtual conversion work. `scripts/benchmarks/a07-string-builder-insert-values.mjs`
+measures released controls separately from all new value families using prepared
+builders, one warmup and five samples. Both engines' released controls run before
+changed or new operations; optional engine/case arguments isolate a workload in
+its own process. Copy the identical runner to baseline 8df7304f for serial
+median/p95 and managed-allocation comparisons. The PR retains raw measurements
+and the earlier mixed-order experiment. Exact native capacity/chunk topology
+remains the existing runtime profile.
+
+`Insert(int, ReadOnlySpan<char>)` remains an explicit dependency on span execution,
+which the compiler currently diagnoses as unsupported with SF2200. It is not
+registered as executable. The named non-span Insert/Remove/Replace deliverable
+and edit-trace acceptance in #2638 are complete. Span support remains broader
+StringBuilder work under #111. Browser and native/Wasm qualification were not
+run for this batch and are not claimed as passing.

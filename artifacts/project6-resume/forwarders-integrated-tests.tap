@@ -1,0 +1,16 @@
+✔ bounded forwarder cache publication does not retain a partial path after capacity failure (1.722703ms)
+✔ facade, nested, cyclic and consumer TypeRef forwarding agree with native CoreCLR (32.167699ms)
+✔ facade and nested ExportedType chains resolve canonical definitions without executable body reads (17.257374ms)
+✔ concurrent forwarder resolutions share load contexts and preserve cross-context descriptor identity after unload (5.275207ms)
+✔ forwarder cycles, missing names and unsupported linked netmodules fail explicitly (3.930549ms)
+✔ forwarder metadata rejects malformed flags, nested scopes, duplicate names and nested ownership cycles (7.702396ms)
+✔ forwarder hop, row, nested-depth and heap limits are enforced before unbounded expansion (9.116785ms)
+✔ cancelled and failed forwarder lookups do not poison success caches (3.16913ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1038.984391

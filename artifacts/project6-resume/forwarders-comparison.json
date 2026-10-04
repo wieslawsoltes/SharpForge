@@ -1,0 +1,41 @@
+[
+  {
+    "name": "warm token lookup",
+    "before": {
+      "median": 0.36691199999999924,
+      "p95": 0.4722140000000081
+    },
+    "after": {
+      "median": 0.6029214999999937,
+      "p95": 0.6762445000000241
+    },
+    "medianChangePercent": 64.32318921158068,
+    "p95ChangePercent": 43.20721113732597
+  },
+  {
+    "name": "warm name lookup",
+    "before": {
+      "median": 0.5035127500000129,
+      "p95": 0.779175500000008
+    },
+    "after": {
+      "median": 0.5408350000000155,
+      "p95": 0.9297869999999762
+    },
+    "medianChangePercent": 7.412374363906693,
+    "p95ChangePercent": 19.32959904411351
+  },
+  {
+    "name": "cold context and inheritance graph",
+    "before": {
+      "median": 273.63929999999925,
+      "p95": 326.87855000000354
+    },
+    "after": {
+      "median": 285.45315000000073,
+      "p95": 330.9635500000013
+    },
+    "medianChangePercent": 4.317307492016509,
+    "p95ChangePercent": 1.2496996208523736
+  }
+]

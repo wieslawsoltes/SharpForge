@@ -1,0 +1,701 @@
+{
+  "startedAt": "2026-10-04T15:29:13.560Z",
+  "finishedAt": "2026-10-04T15:29:31.071Z",
+  "harnessSha256": "8ed551f7f2714711b0a7a5155edf2d9cbb0d5877dbfd838b917f9318dc5a0da1",
+  "graphs": [
+    {
+      "role": "baseline",
+      "root": "/workspace/scratch/1692a10afba9/p5-expression-benchmark-baseline",
+      "head": "4da7eede5f3e732169e850b9f81c365c7b10e23f"
+    },
+    {
+      "role": "candidate",
+      "root": "/workspace/scratch/1692a10afba9/p5-expression-replay",
+      "head": "53486b05f79ce63c7d50339fc661655385bdc59c"
+    }
+  ],
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "memoryBytes": 10451464192,
+  "warmupPerWorkloadAndSide": 80,
+  "measuredRounds": 20,
+  "gcAvailable": true,
+  "pipeline": "compileToAssembly with framework registry; parse, bind, lower and direct CIL emit",
+  "notes": "Shared host; both compiler graphs remain loaded. Heap deltas may include GC and are not allocation counts. RSS is process-wide.",
+  "comparisons": [
+    {
+      "name": "ordinary-delegates",
+      "source": "using System; using System.Linq.Expressions; class Program { static Func<int, int> Make0() => value => value * 2 + 0;\nstatic Func<int, int> Make1() => value => value * 2 + 1;\nstatic Func<int, int> Make2() => value => value * 2 + 2;\nstatic Func<int, int> Make3() => value => value * 2 + 3;\nstatic Func<int, int> Make4() => value => value * 2 + 4;\nstatic Func<int, int> Make5() => value => value * 2 + 5;\nstatic Func<int, int> Make6() => value => value * 2 + 6;\nstatic Func<int, int> Make7() => value => value * 2 + 7;\nstatic Func<int, int> Make8() => value => value * 2 + 8;\nstatic Func<int, int> Make9() => value => value * 2 + 9;\nstatic Func<int, int> Make10() => value => value * 2 + 10;\nstatic Func<int, int> Make11() => value => value * 2 + 11;\nstatic Func<int, int> Make12() => value => value * 2 + 12;\nstatic Func<int, int> Make13() => value => value * 2 + 13;\nstatic Func<int, int> Make14() => value => value * 2 + 14;\nstatic Func<int, int> Make15() => value => value * 2 + 15; static void Main() { } }",
+      "sourceSha256": "6424e12cdecfc5cb84c9461c50dd7b9e6c82a0654fcdf80799ca44e4c7f0ed78",
+      "baseline": {
+        "elapsedMs": {
+          "median": 11.680913000001965,
+          "p95": 16.194088000000193,
+          "min": 9.648525000000518,
+          "max": 17.089555000000473
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 3648112,
+          "p95": 3660200,
+          "min": 3568264,
+          "max": 3706792
+        },
+        "rssBytes": {
+          "median": 189995008,
+          "p95": 190713856,
+          "min": 189681664,
+          "max": 190717952
+        },
+        "assemblyBytes": 3072,
+        "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177",
+        "samples": [
+          {
+            "elapsedMs": 14.905582999999751,
+            "uncollectedHeapDeltaBytes": 3706792,
+            "rssBytes": 189734912,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 12.818094000000201,
+            "uncollectedHeapDeltaBytes": 3658632,
+            "rssBytes": 189734912,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.176241000001028,
+            "uncollectedHeapDeltaBytes": 3641392,
+            "rssBytes": 189902848,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.786367999999129,
+            "uncollectedHeapDeltaBytes": 3660200,
+            "rssBytes": 190443520,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 13.59686000000147,
+            "uncollectedHeapDeltaBytes": 3656016,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 9.648525000000518,
+            "uncollectedHeapDeltaBytes": 3656944,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.179704999998648,
+            "uncollectedHeapDeltaBytes": 3650192,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.106528000000253,
+            "uncollectedHeapDeltaBytes": 3652464,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 9.804845000000569,
+            "uncollectedHeapDeltaBytes": 3643632,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 17.089555000000473,
+            "uncollectedHeapDeltaBytes": 3637808,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 9.954335000000356,
+            "uncollectedHeapDeltaBytes": 3643328,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 14.600534999999581,
+            "uncollectedHeapDeltaBytes": 3646624,
+            "rssBytes": 190087168,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 15.566984999999477,
+            "uncollectedHeapDeltaBytes": 3568264,
+            "rssBytes": 190464000,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 12.518825000002835,
+            "uncollectedHeapDeltaBytes": 3637992,
+            "rssBytes": 190717952,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 16.194088000000193,
+            "uncollectedHeapDeltaBytes": 3635024,
+            "rssBytes": 190496768,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.24384000000282,
+            "uncollectedHeapDeltaBytes": 3649600,
+            "rssBytes": 190263296,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.187658000002557,
+            "uncollectedHeapDeltaBytes": 3656136,
+            "rssBytes": 190316544,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 12.11798600000111,
+            "uncollectedHeapDeltaBytes": 3635832,
+            "rssBytes": 190259200,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.147347999998601,
+            "uncollectedHeapDeltaBytes": 3651888,
+            "rssBytes": 190676992,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 13.784255000002304,
+            "uncollectedHeapDeltaBytes": 3635136,
+            "rssBytes": 190713856,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          }
+        ]
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 11.437589499999376,
+          "p95": 15.349976999999853,
+          "min": 9.75708400000076,
+          "max": 18.841189999999187
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 3618888,
+          "p95": 3639384,
+          "min": 3612824,
+          "max": 3640616
+        },
+        "rssBytes": {
+          "median": 190054400,
+          "p95": 190820352,
+          "min": 189681664,
+          "max": 191021056
+        },
+        "assemblyBytes": 3072,
+        "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177",
+        "samples": [
+          {
+            "elapsedMs": 15.349976999999853,
+            "uncollectedHeapDeltaBytes": 3620976,
+            "rssBytes": 189734912,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 14.560526000001119,
+            "uncollectedHeapDeltaBytes": 3627184,
+            "rssBytes": 189734912,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 9.97154000000046,
+            "uncollectedHeapDeltaBytes": 3620504,
+            "rssBytes": 189902848,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 9.75708400000076,
+            "uncollectedHeapDeltaBytes": 3618888,
+            "rssBytes": 190820352,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 15.115130999998655,
+            "uncollectedHeapDeltaBytes": 3630832,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.118246,
+            "uncollectedHeapDeltaBytes": 3625472,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.248966999999539,
+            "uncollectedHeapDeltaBytes": 3613528,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.191874000000098,
+            "uncollectedHeapDeltaBytes": 3635080,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.343847000000096,
+            "uncollectedHeapDeltaBytes": 3618888,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 18.841189999999187,
+            "uncollectedHeapDeltaBytes": 3612824,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 12.837142999998832,
+            "uncollectedHeapDeltaBytes": 3613960,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 9.887174999999843,
+            "uncollectedHeapDeltaBytes": 3619160,
+            "rssBytes": 190205952,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.626211999999214,
+            "uncollectedHeapDeltaBytes": 3617072,
+            "rssBytes": 190464000,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 12.988104000000021,
+            "uncollectedHeapDeltaBytes": 3613216,
+            "rssBytes": 190717952,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 12.923029000001407,
+            "uncollectedHeapDeltaBytes": 3617440,
+            "rssBytes": 190496768,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.142880999999761,
+            "uncollectedHeapDeltaBytes": 3613216,
+            "rssBytes": 191021056,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.006191000000399,
+            "uncollectedHeapDeltaBytes": 3614400,
+            "rssBytes": 190316544,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 11.75471099999777,
+            "uncollectedHeapDeltaBytes": 3613768,
+            "rssBytes": 190259200,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 10.126867000002676,
+            "uncollectedHeapDeltaBytes": 3639384,
+            "rssBytes": 190808064,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          },
+          {
+            "elapsedMs": 14.34537999999884,
+            "uncollectedHeapDeltaBytes": 3640616,
+            "rssBytes": 190713856,
+            "assemblyBytes": 3072,
+            "assemblySha256": "2fad27ae1282f17da127f1489765bf5116aa8931ef7191b5081669965be0c177"
+          }
+        ]
+      },
+      "medianChangePercent": -2.0830863135659627,
+      "p95ChangePercent": -5.212463955983992,
+      "assemblySizeChangePercent": 0
+    },
+    {
+      "name": "existing-expression-trees",
+      "source": "using System; using System.Linq.Expressions; class Program { static Expression<Func<int, int>> Make0() => value => value * 2 + 0;\nstatic Expression<Func<int, int>> Make1() => value => value * 2 + 1;\nstatic Expression<Func<int, int>> Make2() => value => value * 2 + 2;\nstatic Expression<Func<int, int>> Make3() => value => value * 2 + 3;\nstatic Expression<Func<int, int>> Make4() => value => value * 2 + 4;\nstatic Expression<Func<int, int>> Make5() => value => value * 2 + 5;\nstatic Expression<Func<int, int>> Make6() => value => value * 2 + 6;\nstatic Expression<Func<int, int>> Make7() => value => value * 2 + 7;\nstatic Expression<Func<int, int>> Make8() => value => value * 2 + 8;\nstatic Expression<Func<int, int>> Make9() => value => value * 2 + 9;\nstatic Expression<Func<int, int>> Make10() => value => value * 2 + 10;\nstatic Expression<Func<int, int>> Make11() => value => value * 2 + 11;\nstatic Expression<Func<int, int>> Make12() => value => value * 2 + 12;\nstatic Expression<Func<int, int>> Make13() => value => value * 2 + 13;\nstatic Expression<Func<int, int>> Make14() => value => value * 2 + 14;\nstatic Expression<Func<int, int>> Make15() => value => value * 2 + 15; static void Main() { } }",
+      "sourceSha256": "8f2e31b9c2c401ebb11cff5c639c9a6fddbfe17fa9b31780d44b2f17ed644344",
+      "baseline": {
+        "elapsedMs": {
+          "median": 13.693246000000727,
+          "p95": 17.310508999999,
+          "min": 12.42325400000118,
+          "max": 19.000593999999182
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 5128520,
+          "p95": 5151768,
+          "min": 5112768,
+          "max": 5153952
+        },
+        "rssBytes": {
+          "median": 189884416,
+          "p95": 190980096,
+          "min": 189681664,
+          "max": 191807488
+        },
+        "assemblyBytes": 3584,
+        "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6",
+        "samples": [
+          {
+            "elapsedMs": 13.711568000000625,
+            "uncollectedHeapDeltaBytes": 5140464,
+            "rssBytes": 189734912,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.639783000000534,
+            "uncollectedHeapDeltaBytes": 5142272,
+            "rssBytes": 189865984,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.757856000000174,
+            "uncollectedHeapDeltaBytes": 5151768,
+            "rssBytes": 189902848,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.762492999998358,
+            "uncollectedHeapDeltaBytes": 5124768,
+            "rssBytes": 189902848,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.525630000000092,
+            "uncollectedHeapDeltaBytes": 5121832,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.049204000000827,
+            "uncollectedHeapDeltaBytes": 5123224,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.957008999999744,
+            "uncollectedHeapDeltaBytes": 5120472,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.961767000000691,
+            "uncollectedHeapDeltaBytes": 5126528,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.42325400000118,
+            "uncollectedHeapDeltaBytes": 5133584,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.674924000000829,
+            "uncollectedHeapDeltaBytes": 5119664,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.666051999998672,
+            "uncollectedHeapDeltaBytes": 5124384,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.86113800000021,
+            "uncollectedHeapDeltaBytes": 5131808,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 19.000593999999182,
+            "uncollectedHeapDeltaBytes": 5144168,
+            "rssBytes": 190586880,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 16.969937999998365,
+            "uncollectedHeapDeltaBytes": 5135504,
+            "rssBytes": 190849024,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.636937999999645,
+            "uncollectedHeapDeltaBytes": 5130056,
+            "rssBytes": 190980096,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 17.310508999999,
+            "uncollectedHeapDeltaBytes": 5117664,
+            "rssBytes": 190496768,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.228058000000601,
+            "uncollectedHeapDeltaBytes": 5112768,
+            "rssBytes": 190316544,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.93418599999859,
+            "uncollectedHeapDeltaBytes": 5137488,
+            "rssBytes": 190676992,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.318059999997786,
+            "uncollectedHeapDeltaBytes": 5126984,
+            "rssBytes": 190676992,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 16.815110999999888,
+            "uncollectedHeapDeltaBytes": 5153952,
+            "rssBytes": 191807488,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          }
+        ]
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 14.18525949999912,
+          "p95": 17.60225899999932,
+          "min": 12.101631999999881,
+          "max": 19.240547000001243
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 5124348,
+          "p95": 5130840,
+          "min": 5107568,
+          "max": 5130904
+        },
+        "rssBytes": {
+          "median": 189884416,
+          "p95": 190717952,
+          "min": 189681664,
+          "max": 191070208
+        },
+        "assemblyBytes": 3584,
+        "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6",
+        "samples": [
+          {
+            "elapsedMs": 14.231932999999117,
+            "uncollectedHeapDeltaBytes": 5130904,
+            "rssBytes": 189734912,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.515188000001217,
+            "uncollectedHeapDeltaBytes": 5129408,
+            "rssBytes": 189865984,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 15.97067000000061,
+            "uncollectedHeapDeltaBytes": 5130840,
+            "rssBytes": 189902848,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.587064999999711,
+            "uncollectedHeapDeltaBytes": 5116360,
+            "rssBytes": 189902848,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 16.198824999999488,
+            "uncollectedHeapDeltaBytes": 5116232,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.273024000000078,
+            "uncollectedHeapDeltaBytes": 5112208,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.519376000000193,
+            "uncollectedHeapDeltaBytes": 5110232,
+            "rssBytes": 189767680,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.138585999999123,
+            "uncollectedHeapDeltaBytes": 5114576,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.296398000000409,
+            "uncollectedHeapDeltaBytes": 5107568,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 15.71107800000027,
+            "uncollectedHeapDeltaBytes": 5112064,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.101631999999881,
+            "uncollectedHeapDeltaBytes": 5109768,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.35816899999918,
+            "uncollectedHeapDeltaBytes": 5125840,
+            "rssBytes": 189681664,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 17.60225899999932,
+            "uncollectedHeapDeltaBytes": 5129072,
+            "rssBytes": 190717952,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 17.360372000002826,
+            "uncollectedHeapDeltaBytes": 5125792,
+            "rssBytes": 190717952,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.377126999999746,
+            "uncollectedHeapDeltaBytes": 5127808,
+            "rssBytes": 190496768,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 19.240547000001243,
+            "uncollectedHeapDeltaBytes": 5122904,
+            "rssBytes": 190496768,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 12.599063000001479,
+            "uncollectedHeapDeltaBytes": 5120320,
+            "rssBytes": 190128128,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 13.971710999998322,
+            "uncollectedHeapDeltaBytes": 5128400,
+            "rssBytes": 190259200,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 14.514037999997527,
+            "uncollectedHeapDeltaBytes": 5127096,
+            "rssBytes": 190676992,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          },
+          {
+            "elapsedMs": 16.791565999999875,
+            "uncollectedHeapDeltaBytes": 5127720,
+            "rssBytes": 191070208,
+            "assemblyBytes": 3584,
+            "assemblySha256": "4e5f58935ded36be95dfa7dc741052413c8f295ce2493118e30753fe1e3da7e6"
+          }
+        ]
+      },
+      "medianChangePercent": 3.593110793440557,
+      "p95ChangePercent": 1.685392382167028,
+      "assemblySizeChangePercent": 0
+    }
+  ]
+}

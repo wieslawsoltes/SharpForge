@@ -6,6 +6,7 @@
  * assembly; a declaration metadata cannot hold gets SF3001.
  */
 import { CilError } from '@sharpforge/cil';
+import { SymbolError } from '@sharpforge/symbols';
 import { diagnostic } from '@sharpforge/text';
 import { DiagnosticId, formatMessage } from '../../diagnostics/codes.js';
 import { parseCompilerInput } from '../../parse-input.js';
@@ -33,9 +34,10 @@ function emissionFailure(error, files, location = error) {
 /**
  * Compiles source to an assembly with real method bodies.
  * @param {string|object|object[]} input what `compile` accepts
- * @param {object} [options] compilation options, `name`, and `outputKind` ('library' for an assembly without entry point)
- * @returns {{success: boolean, assembly: Uint8Array|null, diagnostics: object[], format: 'cil'}} `assembly` is null
- *   when the program has errors or cannot be emitted (SF2200, SF3001)
+ * @param {object} [options] compilation options, `name`, `outputKind` ('library' for no entry point), and optional
+ *   `portablePdb`, `embeddedPdb`, `embedSources`, and `sourceLink`; symbols are disabled unless explicitly requested
+ * @returns {{success: boolean, assembly: Uint8Array|null, pdb: Uint8Array|null, diagnostics: object[], format: 'cil'}}
+ *   `assembly` and `pdb` are null when the program has errors or cannot be emitted (SF2200, SF3001)
  */
 export function compileToAssembly(input, options = {}) {
   const files = parseCompilerInput(input, options),
@@ -43,12 +45,13 @@ export function compileToAssembly(input, options = {}) {
     // The files also carry the execution profile's diagnostics (SFxxxx); only the syntax errors apply here.
     syntax = files.flatMap(file => (file.diagnostics ?? []).filter(isSyntaxError)),
     diagnostics = [...syntax, ...analysis.run().diagnostics],
-    failed = extra => ({ success: false, assembly: null, diagnostics: [...diagnostics, ...extra], format: 'cil' });
+    failed = extra => ({ success: false, assembly: null, pdb: null, diagnostics: [...diagnostics, ...extra], format: 'cil' });
   if (diagnostics.some(entry => entry.severity === 'error')) return failed([]);
   try {
-    return { success: true, assembly: emitAssemblyFromAnalysis(analysis, options).bytes, diagnostics, format: 'cil' };
+    const emitted = emitAssemblyFromAnalysis(analysis, options);
+    return { success: true, assembly: emitted.bytes, pdb: emitted.pdb, diagnostics, format: 'cil' };
   } catch (error) {
-    const known = [UnsupportedInCil, MetadataEmitError, CilError, IlBuilderError].some(kind => error instanceof kind);
+    const known = [UnsupportedInCil, MetadataEmitError, CilError, IlBuilderError, SymbolError].some(kind => error instanceof kind);
     if (!known) throw error;
     const locations = error.diagnosticLocations?.length ? error.diagnosticLocations : [error];
     return failed(locations.map(location => emissionFailure(error, files, location)));

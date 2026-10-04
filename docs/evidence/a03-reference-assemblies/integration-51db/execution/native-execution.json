@@ -1,0 +1,255 @@
+{
+  "label": "native",
+  "head": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/capture-reference-assemblies.mjs",
+    "--dotnet",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "--output",
+    "artifacts/a03-reference-assemblies-integrated-51db5c5ff"
+  ],
+  "preparationSha256": "0a3df83f2dfe461055100f81729df012d1071415b4e739c2c4bc8b18af2e41f5",
+  "sourceSha256": {
+    "packages/compiler/src/codegen/metadata/custom-attributes.js": "1e782b1d0088bf1ad55cfae37f014613d573d5a79fe0bb3991ccbdda3ab22778",
+    "packages/compiler/src/codegen/metadata/member-plan.js": "40f0e094681a143a1356aedbeaa08bcd09aa4c4f4ffa019e352e78855b0e6ac2",
+    "packages/compiler/src/codegen/metadata/symbol-metadata.js": "a3b39046e5d4abf27d200e8cd235031a961cc68f3ecbf8f7b20c0a1de28754ce",
+    "packages/compiler/src/codegen/metadata/serialized-type-names.js": "d8607e603fbd4907c76c05dd57cde20a4926296b392cd08028d17f742a40bf38",
+    "packages/compiler/src/codegen/metadata/fixed-buffer-type-name.js": "d41ab24df907f88bf55c480a6f1f2e4efbe13807c3312edbc26f5af64ba28a91",
+    "packages/cil/tools/benchmark-reference-assemblies.mjs": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+    "packages/cil/tools/capture-reference-assemblies.mjs": "df431204fb80b90e8d8d78766491b2a31e2d2bf12f9693c7a033cb86116f23c9",
+    "packages/cil/tools/reference-consumers.mjs": "ec64cc2fc956da94df526729173b4746142e288be391c21ec9fb02a2af1afcad",
+    "tests/fixtures/a03-reference-assemblies/surface.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88"
+  },
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "CI": null,
+    "NODE_OPTIONS": null,
+    "NODE_PATH": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules",
+    "NODE_ENV": null,
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "Europe/Berlin",
+    "SHARPFORGE_TEST_CONCURRENCY": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": null,
+    "SHARPFORGE_MAX_OLD_SPACE_MB": null,
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "environmentNote": "Relevant execution variables; unrelated values/secrets omitted. SDK environment used for correctness only.",
+  "nodeExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+  "resourceWrapper": "scripts/limited.js with its default 2048 MiB V8 cap and serial resource slot.",
+  "log": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-native.log",
+  "output": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff",
+  "startedUtc": "2026-10-04T14:56:14.656364+00:00",
+  "status": "passed",
+  "scheduling": "Exclusive team heavy slot; sequential frozen commands, no retries.",
+  "exitCode": 0,
+  "finishedUtc": "2026-10-04T14:56:28.008445+00:00",
+  "logSha256": "ba2a0b10be8fc4dc2aaeabccc754726d75b4e6141badd3a8eebf072d9d529636",
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/capture-inputs.json",
+      "bytes": 830,
+      "sha256": "bc5531468d65a9f8e44e0270e9dc7cfafc2887cc843033ea718201b223fc6b77"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-expected.json",
+      "bytes": 26972,
+      "sha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-fixed-buffers-roslyn-diagnostics.json",
+      "bytes": 25964,
+      "sha256": "fb003fb36b0a5fdca02114d9c480962f1161e997f3b59d1643ef7420489713f8"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-fixed-buffers-roslyn-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-fixed-buffers-sharpforge-diagnostics.json",
+      "bytes": 25976,
+      "sha256": "69c2c30650706d36fbbe47feb18f205c8e1697e0d141ab326b3b033f14b015de"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-fixed-buffers-sharpforge-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-friend-access-roslyn-diagnostics.json",
+      "bytes": 23937,
+      "sha256": "5ed0b1c0c7d6fabc7f28b6a4c66ce821df7998b5a47a8de90a73fdb70447905a"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-friend-access-roslyn-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-friend-access-sharpforge-diagnostics.json",
+      "bytes": 23949,
+      "sha256": "c655692ef04423d81db3f97f3db4d1708ec60f381c3e7ff7f352a38ff8a65e94"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-friend-access-sharpforge-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-observed.json",
+      "bytes": 26972,
+      "sha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-positive-roslyn-diagnostics.json",
+      "bytes": 23995,
+      "sha256": "2270332344d638fcbf4e615716bb5e762be3b654ab2cff9b13e0519f647ac9ef"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-positive-roslyn-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-positive-sharpforge-diagnostics.json",
+      "bytes": 24007,
+      "sha256": "73cc9ff94b757c69be99749aa98d79410cb1361b354e62dad95e734365d7b574"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-positive-sharpforge-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-roslyn.dll",
+      "bytes": 7680,
+      "sha256": "c8edaefecbd87dc584e5159a6ee62b99c5f11b0cfbff9d20654de7179f33527e"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-sharpforge.dll",
+      "bytes": 4096,
+      "sha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/friend-source.cs",
+      "bytes": 2509,
+      "sha256": "8b862890765ad17317881406aace738ed71ab7d5beb5032e17e3e059335d7498"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/metadata-control.dll",
+      "bytes": 4096,
+      "sha256": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/metadata-control.json",
+      "bytes": 29972,
+      "sha256": "1657b35b272bbc582c85c286dd0d9b6e425f090ba90d0da9f0414f09b7ea0f18"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/observer-enums.dll",
+      "bytes": 5632,
+      "sha256": "f88f092413a2e654459fa84e483d648eafebd55a0803a134a2e7e731be61716b"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/observer-enums.json",
+      "bytes": 7883,
+      "sha256": "5d39c9af7359c9685567596d169579b2ca0c8685199af0199f0b7fc07dae9757"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-expected.json",
+      "bytes": 24103,
+      "sha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-fixed-buffers-roslyn-diagnostics.json",
+      "bytes": 25964,
+      "sha256": "3f0831d3946a03c6c32d7035615fb9954eac11a6d34422faa88a842c6aee106e"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-fixed-buffers-roslyn-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-fixed-buffers-sharpforge-diagnostics.json",
+      "bytes": 25976,
+      "sha256": "12f205e8cc19a8b64cf02d9be6dbb92cd017f9e6760c79140bb369f5c9d0996a"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-fixed-buffers-sharpforge-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-friend-access-roslyn-diagnostics.json",
+      "bytes": 24811,
+      "sha256": "67d3695c6afb11dee1487051898f247d3875f800888f05a44eb1a56585c12e52"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-friend-access-roslyn-diagnostics.sarif",
+      "bytes": 1777,
+      "sha256": "b85453a08b6098aff8519eacb76cae0f716c1ea3d2c83a73de71b30c1ee00470"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-friend-access-sharpforge-diagnostics.json",
+      "bytes": 24823,
+      "sha256": "9842444a228191d9f3b6d001b78a676d6534a6d3cf89af22734b4752c307ccfc"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-friend-access-sharpforge-diagnostics.sarif",
+      "bytes": 1777,
+      "sha256": "b85453a08b6098aff8519eacb76cae0f716c1ea3d2c83a73de71b30c1ee00470"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-observed.json",
+      "bytes": 24103,
+      "sha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-positive-roslyn-diagnostics.json",
+      "bytes": 23995,
+      "sha256": "d2f2667ed1181b8fc2ce2d6672c1d8361c37d8a2c9456e4646c4169cd3ded843"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-positive-roslyn-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-positive-sharpforge-diagnostics.json",
+      "bytes": 24007,
+      "sha256": "ec14028984efa968d08896ba5ba1b47d0143c38260e4972cff3116021f7a776e"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-positive-sharpforge-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-roslyn.dll",
+      "bytes": 7168,
+      "sha256": "b5cacbfe214c0a4d8cb0124dc160ea8fdb4f5ca9f4901255f4bf18b84cbe90a8"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-sharpforge.dll",
+      "bytes": 4096,
+      "sha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/public-source.cs",
+      "bytes": 2436,
+      "sha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-integrated-51db5c5ff/reference.json",
+      "bytes": 65069,
+      "sha256": "0a7e34e754df6748428f68bf4921abd9d4c2871cabb0ce1a04f8fa99e60f9318"
+    }
+  ]
+}

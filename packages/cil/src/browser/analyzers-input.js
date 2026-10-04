@@ -1,8 +1,8 @@
 import { CilError } from '../binary.js';
-import { readMethodHeader } from '../pe.js';
+import { readMethodHeader, methodCodeKind } from '../pe.js';
 
 const maxima = { maxMethods: 16384, maxCodeBytes: 4 * 1024 * 1024, maxMethodCodeBytes: 1024 * 1024,
-  maxInstructions: 250000, maxUsages: 100000 };
+  maxInstructions: 250000, maxUsages: 100000, maxDeclarationRelations: 100000, maxDeclarationDiagnostics: 16384 };
 export const invalidUsage = detail => { throw new CilError(`Invalid usage analysis: ${detail}`); };
 export const usageLimit = detail => { throw new CilError(`Usage analysis limit exceeded: ${detail}`); };
 export function usageCancelled(signal) {
@@ -35,7 +35,7 @@ export function usageHeaders(inspector, limits, signal) {
     usageCancelled(signal);
     const token = 0x06000000 + rid, row = metadata.row(token), implementation = row[1];
     if (!Number.isInteger(implementation) || implementation < 0 || implementation > 0xffff) invalidUsage('method implementation');
-    if (implementation & 3) {
+    if (methodCodeKind(implementation) !== 'CIL') {
       diagnostics.push({ token, reason: 'non-cil-method' });
       continue;
     }

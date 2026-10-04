@@ -33,6 +33,7 @@ export const ConversionKind = Object.freeze(
       'Boxing',
       'ImplicitConstant',
       'ImplicitUserDefined',
+      'ImplicitUnion',
       'ImplicitTuple',
       'ImplicitTupleLiteral',
       'InterpolatedString',
@@ -77,6 +78,7 @@ const implicitKinds = new Set([
   'Boxing',
   'ImplicitConstant',
   'ImplicitUserDefined',
+  'ImplicitUnion',
   'ImplicitTuple',
   'ImplicitTupleLiteral',
   'InterpolatedString',
@@ -133,7 +135,11 @@ export class Conversion {
     return this.kind === ConversionKind.ImplicitNullable || this.kind === ConversionKind.ExplicitNullable;
   }
   get isUserDefined() {
-    return this.kind === ConversionKind.ImplicitUserDefined || this.kind === ConversionKind.ExplicitUserDefined;
+    return (
+      this.kind === ConversionKind.ImplicitUserDefined ||
+      this.kind === ConversionKind.ExplicitUserDefined ||
+      this.kind === ConversionKind.ImplicitUnion
+    );
   }
   get isStandard() {
     return this.exists && !this.isUserDefined;

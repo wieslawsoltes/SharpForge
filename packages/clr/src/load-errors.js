@@ -13,6 +13,8 @@ export const LoadErrorCode = Object.freeze({
   RecursiveResolution: 'SFCLR011',
   TypeLoad: 'SFCLR012',
   UnsupportedFeature: 'SFCLR013',
+  MissingFile: 'SFCLR014',
+  FileLoad: 'SFCLR015',
 });
 
 const exceptionTypes = Object.freeze({
@@ -22,6 +24,8 @@ const exceptionTypes = Object.freeze({
   SFCLR009: 'System.OperationCanceledException',
   SFCLR012: 'System.TypeLoadException',
   SFCLR013: 'System.NotSupportedException',
+  SFCLR014: 'System.IO.FileNotFoundException',
+  SFCLR015: 'System.IO.FileLoadException',
 });
 
 /** A managed exception descriptor carried by a JavaScript Error with deterministic diagnostics. */

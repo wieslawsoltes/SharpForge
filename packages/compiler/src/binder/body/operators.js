@@ -41,12 +41,7 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       if (c.isAmbiguous) {
-        this.report(syntax, DiagnosticId.CS0457, [
-          c.candidates[0].toDisplayString(),
-          c.candidates[1]?.toDisplayString() ?? '',
-          this.display(e.type),
-          this.display(type),
-        ]);
+        this.reportConversionFailure(e, type, syntax, c);
         return this.bad(syntax);
       }
       return this.applyConversion(e, type, this.checkedConversion(c), syntax, true);
@@ -74,7 +69,7 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       if (r.kind === 'user') {
-        const node = this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted }),
+        const node = this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted, isChecked: this.checked }),
           constant = operand.constantValue;
         // `-Price` over a decimal constant is a constant, also when the operator is the method of System.Decimal.
         if (r.method.containingType?.specialType === 'System_Decimal' && constant?.type === 'decimal' && !r.isLifted) {
@@ -193,6 +188,7 @@ export const OperatorBinding = Base =>
           right: args[1],
           method: r.method,
           isLifted: r.isLifted,
+          isChecked: this.checked,
           isLogical: !!r.isLogical,
           shortCircuit: r.shortCircuitOperator ?? null,
         });

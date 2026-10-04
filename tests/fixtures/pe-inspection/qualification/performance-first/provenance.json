@@ -1,0 +1,271 @@
+{
+  "format": "sharpforge.pe-inspection.first-cohort-retention",
+  "schemaVersion": 1,
+  "status": "original-cohort-retained-unmodified",
+  "artifacts": [
+    {
+      "path": "benchmark.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-first.json",
+      "bytes": 453398,
+      "sha256": "3bd921de526e52d1b343b4f820c2993e97d917c4964765dd49cb7d87682688db"
+    },
+    {
+      "path": "benchmark.log",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-first.log",
+      "bytes": 6067,
+      "sha256": "df00418b4688be826cc31b9b1ee29f0315536cbba118800ce9fa18d7e9d62a49"
+    },
+    {
+      "path": "execution.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-first-execution.json",
+      "bytes": 1240,
+      "sha256": "66c1088a16e07abb2d72953efbd9d84c32385d18ebd62ef058118c917e65150a"
+    },
+    {
+      "path": "original-native.json",
+      "originalPath": "tests/fixtures/pe-inspection/native.json",
+      "bytes": 231303,
+      "sha256": "bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4"
+    },
+    {
+      "path": "original-native-command.json",
+      "originalPath": "tests/fixtures/pe-inspection/qualification/native-command.json",
+      "bytes": 2441,
+      "sha256": "915a5714fb1e32a1636273846b8d327ee8bed3ecea4c7e004dc59eab7f837861"
+    },
+    {
+      "path": "original-native-capture.log",
+      "originalPath": "tests/fixtures/pe-inspection/qualification/native-capture.log",
+      "bytes": 255,
+      "sha256": "8f174b4f07d2e498d6746c06b61dfada898b578fa62507c6bd0ca030cdac1526"
+    },
+    {
+      "path": "original-focused-command.json",
+      "originalPath": "tests/fixtures/pe-inspection/qualification/focused-command.json",
+      "bytes": 2966,
+      "sha256": "77f9dcda2e13c6287707382e0b8f4d8998cf14cf9b6215aa49b3c6398f0085eb"
+    },
+    {
+      "path": "original-focused-node.tap",
+      "originalPath": "tests/fixtures/pe-inspection/qualification/focused-node.tap",
+      "bytes": 11011,
+      "sha256": "d98d2f28b24a9549e552a4f4512753b4c882e11cc2aafa93cdfbbe7b1f3a5f61"
+    },
+    {
+      "path": "original-qualification-summary.json",
+      "originalPath": "tests/fixtures/pe-inspection/qualification/summary.json",
+      "bytes": 10130,
+      "sha256": "e3e7bcb65d25a327db2ab904e50e824284b00ec0e619aa5aabba3e89709873f1"
+    }
+  ],
+  "revisions": {
+    "baseline": {
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-pe-baseline-d64188af",
+      "head": "d64188af91f03d02041316bdde2ee64fd0634be0",
+      "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+      "productRevision": "d64188af91f03d02041316bdde2ee64fd0634be0"
+    },
+    "candidate": {
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+      "head": "40561f093648ea6cc5f840c0a19b3d8fb512b34b",
+      "tree": "29bcb3ede4b9b7bdb5f517038307ac27b44a3a7d",
+      "productRevision": "26d4808350116a2ae95c5216393bd690032c6034"
+    }
+  },
+  "sourceSha256": {
+    "baseline": {
+      "packages/cil/src/inspector-pe.js": null,
+      "packages/cil/src/inspector.js": "bf8ada54bbe24b30b38dfdf5c3d34a6457dd0f4aba4d85be150004ffaa003745",
+      "packages/cil/src/inspector-method.js": "6f781e34355ed34b2767d4a9371eec3d21ff1576fb78dca9a2d2e148acfd232c",
+      "packages/cil/src/browser/summary.js": "ad9720ec2f13b84163e868807c79022a5de0e8a15e44edbbfc83c6417a3fc397",
+      "packages/cil/src/pe/reader.js": "171b62004c90528328a3a5a0e65bd383bdcc7242ccb049e13ccc21c926c4e2d2",
+      "packages/cil/src/pe/optional-header.js": null,
+      "packages/cil/src/pe/debug-directory.js": null,
+      "packages/cil/src/pe/method-code.js": null,
+      "packages/cil/src/pe/method-header.js": "50bc95a25c356efc0a77a663522064695b635f192cb2fcb579d065218f1190e7",
+      "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+      "packages/cil/src/pe/headers.js": "1777a84dc77e99d60a9c01fbaed4beefc9ba6b53f5500406aa1af0014c1377c2",
+      "tests/fixtures/pe-inspection/comparison.mjs": null,
+      "tests/fixtures/pe-inspection/Program.cs": null,
+      "tests/fixtures/pe-inspection/capture.mjs": null,
+      "packages/cil/src/index.js": "c0cccf5e4a31e2535cf4d31838ad420bd7d0e75b0fca17a8b975e348b628f280",
+      "packages/symbols/src/debug-directory-reader.js": "4255e01e1da549332c86a6dda814d020ec09989bef7ef5527acfc111ac21b5a0",
+      "packages/symbols/src/local-signatures.js": "0029274aa836053a32ed41976bdf0b1eebaedba108b56aedacadd03bfdaa88ce",
+      "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+    },
+    "candidate": {
+      "packages/cil/src/inspector-pe.js": "759dad1c08c5dabb99b3188f4193d4bcf6c6754e0cb0a02c860897ce2df4a709",
+      "packages/cil/src/inspector.js": "e494966c52ba1c3f50943847c5568b6803b6ee287ef07d9374c6186f008b2055",
+      "packages/cil/src/inspector-method.js": "39b3dd4fe16d812c8a374b56d0052e03b9413788c6156348433bd0f5e0491730",
+      "packages/cil/src/browser/summary.js": "d28dd5e805fa8dc3b5e0991a07c1d9c3b196ecf71ad4ae470b96cd8b8e85bc8e",
+      "packages/cil/src/pe/reader.js": "aea8ec59504a333f05c8ff78d34a7023bf3bc57a27cbbc4c99ab88c25d1c9967",
+      "packages/cil/src/pe/optional-header.js": "8996dd48b4614057a2adaee80152e6a3669e420b1663d8b2a7c8ca5f682a7fa4",
+      "packages/cil/src/pe/debug-directory.js": "c30f489d9f4394f7bc39e617d518da73f633ec710638bb9d03ed0b6c4ded14a9",
+      "packages/cil/src/pe/method-code.js": "0463d7e207a1c5a9a056778b5292fa4be4777b97e49b063053eaad577da26c1c",
+      "packages/cil/src/pe/method-header.js": "ebc4e51c9102ee07f4f565c11cdeb39d470940afe8d495b345027b59d8b1f62c",
+      "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+      "packages/cil/src/pe/headers.js": "aab2f458c9d281418f51f1d94a38b0e0b68cd444c7eebf4bf1d93b3bf3b51eb4",
+      "tests/fixtures/pe-inspection/comparison.mjs": "bc34a9a8b0d9f76e9c9531f718a0af33aebc23de7959f2fb35cce7e7b0019316",
+      "tests/fixtures/pe-inspection/Program.cs": "88e65e09949ed19e188f43d984f8cad3ba5b9d3fe75bdfa947d8cfe3b6f9c5d7",
+      "tests/fixtures/pe-inspection/capture.mjs": "642d3426023b355e8aa3c9ff7849120ef2358281611f48eb6b67e327b4c43b0a",
+      "packages/cil/src/index.js": "0a9c2b7568663ed102719832c49e9a7a9927e3bd9a926c530012bab041f096fb",
+      "packages/symbols/src/debug-directory-reader.js": "f1c9b380c3411a054a4b42afb2f931014bde865c70478e2c3d3144114105eb6e",
+      "packages/symbols/src/local-signatures.js": "ba711b0fee6da35465d50ae62cb9b6d398f1e1bdcb9ddaf8d1aa60117abd8c04",
+      "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+    }
+  },
+  "toolSha256": {
+    "packages/cil/tools/benchmark-pe-inspection.mjs": "aba99974dcba471f0dedbad18054719b9eb56d083817bca1d0d567c4d9955d58",
+    "packages/cil/tools/pe-benchmark-facts.mjs": "45aeb9d95dd340ec346ebf422bad1550d3139eaebe198b2b502b7ff30083daaf",
+    "scripts/conformance/perf/core.js": "090c25bdb79f97b464b51f1d7bfa55eda9c5104b78ff6d756f684b0f6bfcf1b5",
+    "scripts/planning/schema/validate.js": "5c82f261c4ce311fe563c14ed55b0f5496fed007ef2b8ba25a85cf1ff7853989",
+    "scripts/conformance/static/allowlist.json": "e527005c22d47593f9ec723062ea4be98d78c7436a588ed64f0810d34ee56af5",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7"
+  },
+  "nativeEvidence": {
+    "sha256": "bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4",
+    "manifestSha256": "9e56632f1210f44eedf55b9652b719932511c82fddf519cda615ae3386b18760",
+    "toolchain": {
+      "sdk": "10.0.201",
+      "runtime": "10.0.5",
+      "referencePack": "10.0.5",
+      "roslyn": {
+        "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+      },
+      "referenceAssemblies": {
+        "count": 167,
+        "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      }
+    }
+  },
+  "reviewScope": "Read-only source, raw sample, guard, statistics and provenance review. No benchmark or test rerun.",
+  "sampleAudit": {
+    "total": 960,
+    "warmup": 160,
+    "measured": 800,
+    "allGuardsPassed": true,
+    "allCallCountsMatch": true,
+    "exactChronologicalOrderMatchesProtocol": true,
+    "statisticsRecomputedExactly": true,
+    "unit": "nanoseconds per call, normalized from each entire batch; percentiles describe batch means"
+  },
+  "statisticsReview": [
+    {
+      "workload": "readPE",
+      "iterationsPerBatch": 200,
+      "statisticsNanosecondsPerCall": {
+        "baseline": {
+          "count": 100,
+          "median": 17625.7875000033,
+          "p95": 36880.010000004404,
+          "p99": 52899.40999999999,
+          "min": 15131.799999999204,
+          "max": 65173.60499999995
+        },
+        "candidate": {
+          "count": 100,
+          "median": 20027.74000000045,
+          "p95": 46639.610000001994,
+          "p99": 50757.86000000334,
+          "min": 16923.57500000071,
+          "max": 53372.80499999906
+        }
+      },
+      "changePercent": {
+        "median": 13.62749040289235,
+        "p95": 26.463116468776505,
+        "p99": -4.048343828403089
+      },
+      "candidateSlowerPairedRounds": 74
+    },
+    {
+      "workload": "coldSummary",
+      "iterationsPerBatch": 100,
+      "statisticsNanosecondsPerCall": {
+        "baseline": {
+          "count": 100,
+          "median": 42150.06500000072,
+          "p95": 100121.07000000469,
+          "p99": 192653.8900000014,
+          "min": 32683.739999993122,
+          "max": 206357.33999999502
+        },
+        "candidate": {
+          "count": 100,
+          "median": 51392.900000000736,
+          "p95": 121540.65999999148,
+          "p99": 180414.39999999967,
+          "min": 39947.920000013255,
+          "max": 1291435.8299999912
+        }
+      },
+      "changePercent": {
+        "median": 21.928400347662237,
+        "p95": 21.393688661123768,
+        "p99": -6.353097775498662
+      },
+      "candidateSlowerPairedRounds": 78
+    },
+    {
+      "workload": "warmMetadataSummary",
+      "iterationsPerBatch": 500,
+      "statisticsNanosecondsPerCall": {
+        "baseline": {
+          "count": 100,
+          "median": 1019.5679999997083,
+          "p95": 1754.639999999199,
+          "p99": 1941.214000002219,
+          "min": 956.7260000003444,
+          "max": 1948.5439999989467
+        },
+        "candidate": {
+          "count": 100,
+          "median": 1296.0650000004534,
+          "p95": 2096.3019999999233,
+          "p99": 2656.705999999758,
+          "min": 1196.458000002167,
+          "max": 7719.16599999895
+        }
+      },
+      "changePercent": {
+        "median": 27.119034728514848,
+        "p95": 19.471914466835383,
+        "p99": 36.85796620036334
+      },
+      "candidateSlowerPairedRounds": 92
+    },
+    {
+      "workload": "inspectPE-r2r",
+      "iterationsPerBatch": 25,
+      "statisticsNanosecondsPerCall": {
+        "candidate": {
+          "count": 100,
+          "median": 176436.16000001202,
+          "p95": 376357.08000001614,
+          "p99": 613406.959999993,
+          "min": 141596.15999997186,
+          "max": 813244.3600000261
+        }
+      }
+    },
+    {
+      "workload": "inspectPE-mixed",
+      "iterationsPerBatch": 25,
+      "statisticsNanosecondsPerCall": {
+        "candidate": {
+          "count": 100,
+          "median": 126853.09999997116,
+          "p95": 280221.08000001026,
+          "p99": 324154.5600000245,
+          "min": 94338.28000001085,
+          "max": 581463.9999999781
+        }
+      }
+    }
+  ],
+  "performanceAcceptance": "All three ordinary median regressions exceed 5%; guard pass is not performance acceptance.",
+  "optimizationRecommendation": "Three narrow construction changes, focused qualification, then one unchanged fixed cohort; no speedup prediction or waiver.",
+  "nativeCaptureBinding": "Original capture source hashes are retained unchanged; any optimized replay must have a separately pinned source identity.",
+  "subsequentQualificationDecision": "Keep strict live-source assertions unchanged. Schedule a fresh two-image native capture after the three product edits, then the unchanged 130-test scope and one unchanged benchmark cohort. Original native capture and source receipts remain archived byte-for-byte."
+}

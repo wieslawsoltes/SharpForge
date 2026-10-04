@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "encoding": "utf-8",
+  "rawSHA256": "6a2bef829d0ecb1bc20888bbd36624de83358a9e4c7dd6081146e8d16db5b020",
+  "rawBytes": 1014,
+  "text": "\u2714 known harmless and byref-like constructor identities produce distinct policies; names convey no authority (21.878366ms)\n\u2714 missing, throwing, async and malformed annotation providers retain stable unknown diagnostics (24.487431ms)\n\u2714 each distinct annotation constructor is classified once across tokens, aliases and duplicate rows (3.642794ms)\n\u2714 classification snapshots scalar facts and reads one provider result per constructor (3.975122ms)\n\u2714 nonboxing ref-like conversions stay unknown until the missing lifetime authority is implemented (3.758394ms)\n\u2714 attribute constructor metadata is checked before any host classification can grant boxing (4.690835ms)\n\u2714 pinned object observations retain exact CLI bytes, tool identity and one selected caller (48.179413ms)\n\u2714 an unmatched or ambiguous method filter and process errors cannot become native rejection observations (0.626771ms)\n\u2139 tests 8\n\u2139 suites 0\n\u2139 pass 8\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 751.250347\n"
+}

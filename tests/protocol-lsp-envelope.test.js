@@ -58,6 +58,34 @@ test('LSP preserves request IDs and the optional jsonrpc field at the public ada
   }
 });
 
+test('LSP rejects missing, non-string and empty method names while preserving request correlation', async () => {
+  const server = new LanguageServer();
+  for (const id of [0, 7, '', 'request-7', null]) {
+    for (const version of [{}, { jsonrpc: '2.0' }]) {
+      assert.deepEqual(await server.handle({ ...version, id }), { ...invalidRequestResponse, id });
+      for (const method of [undefined, null, false, 0, '', [], {}]) {
+        assert.deepEqual(await server.handle({ ...version, id, method }), { ...invalidRequestResponse, id });
+      }
+    }
+  }
+  const initialized = await server.handle({ id: 'after-invalid-method', method: 'initialize' });
+  assert.equal(initialized.result.capabilities.positionEncoding, 'utf-16');
+});
+
+test('LSP malformed methods are invalid requests even without an ID or after shutdown', async () => {
+  const events = [];
+  const server = new LanguageServer({ send: event => events.push(event) });
+  assert.deepEqual(await server.handle({}), invalidRequestResponse);
+  assert.deepEqual(await server.handle({ method: '' }), invalidRequestResponse);
+  assert.deepEqual(await server.handle({ id: {}, method: null }), invalidRequestResponse);
+  assert.deepEqual(await server.handle({ id: Infinity }), invalidRequestResponse);
+  await server.handle({ id: 1, method: 'shutdown' });
+  assert.deepEqual(await server.handle({ id: 'invalid-after-shutdown' }), {
+    ...invalidRequestResponse, id: 'invalid-after-shutdown'
+  });
+  assert.deepEqual(events, []);
+});
+
 test('LSP retains initialization capabilities and the semantic token wire legend', async () => {
   const server = new LanguageServer();
   const response = await server.handle({

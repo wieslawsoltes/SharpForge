@@ -1,0 +1,63 @@
+{
+  "format": "sharpforge.pe-inspection.qualification-command",
+  "version": 1,
+  "phase": "native-capture-optimized",
+  "attempt": 1,
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-inspection/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-native-optimized-jdth9p_6/native.json",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe"
+  ],
+  "sourceCommit": "b29dd68de7d0d20eea64ef9b3ce29c80ebefabac",
+  "productRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "sourceStatus": "",
+  "sourceSha256": {
+    "packages/cil/src/inspector-pe.js": "759dad1c08c5dabb99b3188f4193d4bcf6c6754e0cb0a02c860897ce2df4a709",
+    "packages/cil/src/inspector.js": "e494966c52ba1c3f50943847c5568b6803b6ee287ef07d9374c6186f008b2055",
+    "packages/cil/src/inspector-method.js": "47955a5bba8529264aa9c4bf6e31c44a314549400494a62736d1c5625c62fdf7",
+    "packages/cil/src/browser/summary.js": "b525605a68fd3e4347a28ab47470cf8fffff2826486d93730ff0e85055de58d1",
+    "packages/cil/src/pe/reader.js": "aea8ec59504a333f05c8ff78d34a7023bf3bc57a27cbbc4c99ab88c25d1c9967",
+    "packages/cil/src/pe/optional-header.js": "2a4a81921ee4f377a92cb48b91ab251f9c8e60cc355ae5e7949fcfe48bdc8db6",
+    "packages/cil/src/pe/debug-directory.js": "c30f489d9f4394f7bc39e617d518da73f633ec710638bb9d03ed0b6c4ded14a9",
+    "packages/cil/src/pe/method-code.js": "0463d7e207a1c5a9a056778b5292fa4be4777b97e49b063053eaad577da26c1c",
+    "packages/cil/src/pe/method-header.js": "ebc4e51c9102ee07f4f565c11cdeb39d470940afe8d495b345027b59d8b1f62c",
+    "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+    "packages/cil/src/pe/headers.js": "aab2f458c9d281418f51f1d94a38b0e0b68cd444c7eebf4bf1d93b3bf3b51eb4",
+    "tests/fixtures/pe-inspection/comparison.mjs": "bc34a9a8b0d9f76e9c9531f718a0af33aebc23de7959f2fb35cce7e7b0019316",
+    "tests/fixtures/pe-inspection/Program.cs": "88e65e09949ed19e188f43d984f8cad3ba5b9d3fe75bdfa947d8cfe3b6f9c5d7",
+    "tests/fixtures/pe-inspection/capture.mjs": "642d3426023b355e8aa3c9ff7849120ef2358281611f48eb6b67e327b4c43b0a"
+  },
+  "originalCaptureSha256": "bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4",
+  "environment": {
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "osRelease": "6.18.44",
+    "sharedMachine": true,
+    "teamHeavySlot": "exclusive; root granted after refout588f completion",
+    "resourceWrapper": "node scripts/limited.js"
+  },
+  "startedAt": "2026-10-04T15:24:14.126085+00:00",
+  "status": "passed",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T15:24:20.673396+00:00",
+  "sourceStatusAfter": "",
+  "sourceUnchanged": true,
+  "artifacts": [
+    {
+      "path": "native.json",
+      "bytes": 231303,
+      "sha256": "8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1"
+    },
+    {
+      "path": "native-capture.log",
+      "bytes": 359,
+      "sha256": "7d35e2de69be3e1be90615f5effeae7688cd0bef9423094ed6a28b9dafdfaee8"
+    }
+  ]
+}

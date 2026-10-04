@@ -66,10 +66,30 @@ test('DAP sequences: the current null-envelope product defect is surfaced as a f
     error instanceof TypeError && /null/.test(error.message));
 });
 
-test('protocol sequences: caught native exceptions from malformed parameters remain findings', async () => {
+test('LSP sequences: malformed parameters require explicit validation diagnostics', async () => {
   for (const operation of [lsp.nullParameters, lsp.missingDocument]) {
-    await assert.rejects(runProtocolSequence(input('lsp', [operation]), context), /Unexpected LSP error response/);
+    assert.deepEqual(await runProtocolSequence(input('lsp', [operation]), context), accepted('lsp'));
   }
+});
+
+test('LSP sequences: missing methods require the precise correlated Invalid Request diagnostic', async () => {
+  assert.deepEqual(await runProtocolSequence(input('lsp', [lsp.missingMethod]), context), accepted('lsp'));
+  const driver = createLspSequence(new ProtocolSequenceOutput('lsp', context), context);
+  try {
+    const step = driver.step(lsp.missingMethod, 7);
+    checkLspResponse(step, { jsonrpc: '2.0', id: 7, error: { code: -32600, message: 'Invalid Request' } });
+    assert.throws(() => checkLspResponse(step, {
+      jsonrpc: '2.0', id: 7, error: { code: -32601, message: "Method 'undefined' is not implemented" }
+    }), /Unexpected LSP error response/);
+    assert.throws(() => checkLspResponse(step, {
+      jsonrpc: '2.0', id: 7, error: { code: -32600, message: 'Unexpected internal exception' }
+    }), /Unexpected LSP error response/);
+  } finally {
+    driver.dispose();
+  }
+});
+
+test('DAP sequences: caught native exceptions from malformed parameters remain findings', async () => {
   await assert.rejects(runProtocolSequence(input('dap', [dap.nullArguments]), context), /Unexpected DAP error response/);
 });
 
@@ -77,6 +97,17 @@ test('protocol sequences: only precise owned diagnostics qualify as expected neg
   const lspDriver = createLspSequence(new ProtocolSequenceOutput('lsp', context), context);
   const dapDriver = createDapSequence(new ProtocolSequenceOutput('dap', context), context);
   try {
+    for (const [operation, message] of [
+      [lsp.nullParameters, 'params must be an object'],
+      [lsp.missingDocument, 'params.textDocument must be an object']
+    ]) {
+      const malformedStep = lspDriver.step(operation, 1);
+      checkLspResponse(malformedStep, { jsonrpc: '2.0', id: 1, error: { code: -32602, message } });
+      for (const unexpected of ['Unexpected internal exception', "Cannot read properties of null (reading 'textDocument')"]) {
+        assert.throws(() => checkLspResponse(malformedStep, { jsonrpc: '2.0', id: 1,
+          error: { code: -32602, message: unexpected } }), /Unexpected LSP error response/);
+      }
+    }
     const step = lspDriver.step(lsp.formatting + Object.keys(lsp).length, 1);
     checkLspResponse(step, { jsonrpc: '2.0', id: 1,
       error: { code: -32602, message: 'tabSize must be between 1 and 16' } });
