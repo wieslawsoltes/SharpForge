@@ -28,8 +28,8 @@ bounded to 100,000 rows, as is each owner table queried directly through
 `module.constant`. Field names are limited to 4,096 UTF-8 bytes; field
 signature and Constant blobs to 1 MiB, checked before decoding or copying.
 Malformed signatures, ownership or defaults produce `SFCLR005`; limits produce
-`SFCLR007`. Signature nesting uses existing CIL decoder bounds. Public module
-queries honor context disposal; this synchronous service introduces no async
+`SFCLR007`. Signature nesting uses existing CIL decoder bounds. Retained metadata
+remains usable during cooperative unloading; this synchronous service introduces no async
 cancellation operation.
 
 The native fixture covers classes, a generic class, an enum and a struct with

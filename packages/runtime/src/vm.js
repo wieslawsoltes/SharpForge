@@ -1,4 +1,5 @@
 import {callSourceFrame,callSourceFromStack} from './execution/call-frames.js';
+import {rootValues} from './execution/frame-roots.js';
 import {executionProfiler} from './execution/profiler.js';
 import {flushFramePool} from './execution/frame-pool.js';
 import {stopExecution} from './execution/stop.js';
@@ -11,14 +12,13 @@ import { ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {sourceValue} from './execution/source-values.js';
 import {initializeSourceVM} from './execution/initialize-source.js';
-import {stringRoots} from './execution/strings.js';
-import {binary,convert,unary,defaultValue,sourceEnum,checkSourceArrayStore,runtimeTypeRoots} from './execution/source-ops.js';
-import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
+import {binary,convert,unary,defaultValue,sourceEnum,checkSourceArrayStore} from './execution/source-ops.js';
+import {makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
     initializeSourceVM(this,image,options);
   }
-  *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames)yield* f.locals;yield* exceptionRoots(this);}
+  *roots(){yield* rootValues(this);}
   call(methodId,args){return callSourceFrame(this,methodId,args);}
   notifyWrite(write){this.writeRevision++;if(['field','array'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
