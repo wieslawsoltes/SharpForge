@@ -44,15 +44,20 @@ test('unreachable try entries do not invent heights, and finally still begins wi
   assert.ok(underflow.issues.some(issue => issue.code === 'IL_STACK' && issue.message.includes('underflow')));
 });
 
-test('nested try entry consumes the enclosing catch exception before entering the try', () => {
-  const seed = entryFixture({ nestedCatch: true, nonempty: true });
-  const rejected = verifyCilAssembly(seed.bytes);
-  assert.ok(rejected.issues.some(issue => issue.code === 'IL_EH_ENTRY' && issue.offset === seed.entryOffset));
-  const accepted = verifyCilAssembly(entryFixture({ nestedCatch: true }).bytes);
-  assert.equal(accepted.success, true, JSON.stringify(accepted.issues));
+test('nested try accepts catch injection but rejects nonempty ordinary arrivals', () => {
+  for (const nonempty of [false, true]) {
+    const accepted = verifyCilAssembly(entryFixture({ nestedCatch: true, nonempty }).bytes);
+    assert.equal(accepted.success, true, JSON.stringify(accepted.issues));
+  }
+  for (const options of [{ delayed: true }, { reentry: true }]) {
+    const fixture = entryFixture({ nestedCatch: true, nonempty: true, ...options });
+    const rejected = verifyCilAssembly(fixture.bytes);
+    assert.equal(rejected.success, false);
+    assert.ok(rejected.issues.some(issue => issue.code === 'IL_EH_ENTRY' && issue.offset === fixture.entryOffset));
+  }
 });
 
-test('twelve retained ILVerify cases agree with reachable try-entry admission', () => {
+test('fourteen retained ILVerify cases agree with reachable try-entry admission', () => {
   const capture = JSON.parse(readFileSync(new URL('./fixtures/a03-handler-entry/native.json', import.meta.url), 'utf8'));
   const hash = bytes => createHash('sha256').update(bytes).digest('hex');
   assert.equal(capture.inputSHA256, hash(readFileSync(new URL('./fixtures/a03-handler-entry/input.js', import.meta.url))));
@@ -77,4 +82,15 @@ test('invalid shared or wide try families have a bounded distinct-entry diagnost
   validateHandlerEntryHeights(method, offsets, heights, (...args) => issues.push(args));
   assert.equal(issues.length, 200);
   assert.equal(new Set(issues.map(args => args[1].offset)).size, 200);
+});
+
+test('exception-seeded candidates do not exhaust the diagnostic budget', () => {
+  const instructions = Array.from({ length: 202 }, (_, offset) => ({ offset, name: 'throw', operandKind: '' }));
+  const handlers = instructions.map(({ offset }) => ({ start: offset, target: offset, flags: offset < 201 ? 0 : 2 }));
+  const offsets = new Map(instructions.map(({ offset }) => [offset, offset]));
+  const heights = new Map(instructions.map(({ offset }) => [offset, 1]));
+  const issues = [];
+  validateHandlerEntryHeights({ instructions, handlers }, offsets, heights, (...args) => issues.push(args));
+  assert.equal(issues.length, 1);
+  assert.equal(issues[0][1].offset, 201);
 });

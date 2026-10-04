@@ -1,9 +1,13 @@
 import { managedFixture } from '../../managed-fixtures.js';
 
-function nestedCatchBody(writer, nonempty) {
+function nestedCatchBody(writer, nonempty, delayed, reentry) {
   writer.mark('outer').op('ldnull').op('throw').mark('outerEnd').mark('outerHandler');
   if (!nonempty) writer.op('pop');
-  writer.mark('try').op(nonempty ? 'pop' : 'nop').op('leave', 'afterInner').mark('tryEnd');
+  if (delayed) writer.op('nop');
+  writer.mark('try').op(nonempty ? 'pop' : 'nop');
+  if (reentry) writer.op('ldnull').op('br', 'try');
+  else writer.op('leave', 'afterInner');
+  writer.mark('tryEnd');
   writer.mark('handler').op('pop').op('leave', 'afterInner').mark('handlerEnd').mark('afterInner');
   writer.op('leave', 'done').mark('outerHandlerEnd').mark('done').op('ret');
   return writer.labels.get('try');
@@ -11,12 +15,12 @@ function nestedCatchBody(writer, nonempty) {
 
 /** Author entry heights independently of the compiler and the execution verifier. */
 export function entryFixture({ nonempty = false, branch = false, flags = 0, shared = false,
-  dead = false, handlerPop = false, noHandlers = false, nestedCatch = false } = {}) {
+  dead = false, handlerPop = false, noHandlers = false, nestedCatch = false, delayed = false, reentry = false } = {}) {
   let entryOffset;
   const bytes = managedFixture({ name: 'HandlerEntry', methods: [{ name: 'Main',
     body(writer) {
       if (noHandlers) { writer.op('ret'); return; }
-      if (nestedCatch) { entryOffset = nestedCatchBody(writer, nonempty); return; }
+      if (nestedCatch) { entryOffset = nestedCatchBody(writer, nonempty, delayed, reentry); return; }
       if (dead) writer.op('br', 'done');
       if (nonempty) writer.op('ldc.i4.1');
       if (branch) writer.op('br', 'try');
@@ -56,5 +60,7 @@ export const nativeCases = [
   { name: 'shared-empty', options: { shared: true }, accepted: true },
   { name: 'shared-nonempty', options: { shared: true, nonempty: true }, accepted: false },
   { name: 'nested-catch-consumed', options: { nestedCatch: true }, accepted: true },
-  { name: 'nested-catch-seed', options: { nestedCatch: true, nonempty: true }, accepted: false },
+  { name: 'nested-catch-seed', options: { nestedCatch: true, nonempty: true }, accepted: true },
+  { name: 'nested-catch-delayed', options: { nestedCatch: true, nonempty: true, delayed: true }, accepted: false },
+  { name: 'nested-catch-reentry', options: { nestedCatch: true, nonempty: true, reentry: true }, accepted: false },
 ];
