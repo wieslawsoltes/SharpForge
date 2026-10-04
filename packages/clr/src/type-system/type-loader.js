@@ -4,10 +4,10 @@ import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
 import { TypeAssignability } from './casting.js';
 import { MethodBaseDefinitions } from './method-base-definition.js';
 import { TypeForwarders } from '../resolve/forwarders.js';
-import { GenericTypeInstantiations, requireUnconstrainedParameter } from '../generics/instantiation.js';
+import { GenericTypeInstantiations } from '../generics/instantiation.js';
 import { copyResolutionContext, copyTypeArguments, GenericResolutionContext } from '../generics/resolution-context.js';
 import { genericSignatureTypes } from '../generics/signature-types.js';
-import { InstantiationTypeSubstitution } from '../generics/type-substitution.js';
+import { GenericTypeCompletion, isGenericCompletionKind } from '../generics/type-completion.js';
 import { GenericContextLifetime } from '../generics/context-lifetime.js';
 import { TypeSpecifications } from './type-specifications.js';
 import { awaitContextBinding } from '../binding-wait.js';
@@ -43,6 +43,7 @@ export class TypeLoader {
   #maxGenericWork;
   #maxTypeSignatureBytes;
   #genericLifetime;
+  #completion;
   constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000,
     maxConstructedTypes = 100000, maxForwarderHops = 128, maxGenericWork = 100000, maxTypeSignatureBytes = 65536 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
@@ -279,8 +280,7 @@ export class TypeLoader {
     if (owner !== this) return owner.#complete(type, operation);
     if (operation.path.has(type)) throw fail(`Circular inheritance involving ${type.fullName}`);
     if (type.isLoaded) return type;
-    if (type.kind === TypeKind.Instantiation) return this.#instance(type, operation);
-    if (type.kind === TypeKind.GenericParameter) return this.#parameter(type, operation);
+    if (isGenericCompletionKind(type.kind)) return this.#genericCompletion.complete(type, operation);
     return this.#definition(type, operation);
   }
 
@@ -366,32 +366,16 @@ export class TypeLoader {
     });
   }
 
-  async #instance(type, operation) {
-    const nested = { ...operation, path: new Set([...operation.path, type]), identityOnly: false, rootResult: false };
-    const definition = await this.#complete(type.genericDefinition, nested);
-    const work = this.#genericOperation(operation);
-    const substitution = new InstantiationTypeSubstitution(definition, type.genericArguments, {
-      signal: operation.signal, visit: () => work.visit(),
-      instantiate: (owner, arguments_) => this.#intern(owner, arguments_),
+  get #genericCompletion() {
+    return this.#completion ??= new GenericTypeCompletion({
+      complete: (type, operation) => this.#complete(type, operation),
+      work: operation => this.#genericOperation(operation),
+      instantiate: (definition, arguments_) => this.#intern(definition, arguments_),
       element: (kind, element, rank) => this.constructElement(kind, element, rank),
       functionPointer: signature => this.functionPointer(signature),
+      intrinsic: name => this.intrinsic(name),
+      publish: (type, state, operation) => this.#publish(type, state, operation),
     }, this.#maxDepth);
-    const baseType = substitution.apply(definition.baseType);
-    if (baseType) await this.#complete(baseType, nested);
-    const interfaces = new Set();
-    for (const template of definition.interfaces) {
-      const contract = substitution.apply(template);
-      await this.#complete(contract, nested);
-      interfaces.add(contract);
-    }
-    this.#publish(type, { baseType, interfaces: Object.freeze([...interfaces]), loaded: true }, operation);
-    return type;
-  }
-
-  #parameter(type, operation) {
-    requireUnconstrainedParameter(type);
-    this.#publish(type, { baseType: this.intrinsic('System.Object'), interfaces: Object.freeze([]), loaded: true }, operation);
-    return type;
   }
 
   async #reference(module, token, operation) {
