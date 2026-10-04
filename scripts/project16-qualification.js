@@ -9,6 +9,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const directory = resolve(root, process.env.SHARPFORGE_RESULTS_DIR || 'artifacts/results/project16');
 const engine = process.env.SHARPFORGE_BROWSER_ENGINE || 'chromium';
 const python = process.env.PYTHON || 'python';
+const browserSupervisorTimeout = 1_320_000;
 const stages = new Set(['node', 'browser', 'performance', 'all']);
 const suites = ['workbench-docking', 'workbench-shell', 'workbench-sessions', 'workbench-lazy',
   'workbench-workflows', 'editor-insights', 'editor-providers', 'editor-view'];
@@ -53,7 +54,7 @@ async function performance() {
     assessment.regressionVerdict = assessment.comparison.passed;
   }
   await writeReport(resolve(directory, 'editor-assessment.json'), assessment);
-  await run(python, ['tests/conformance/browser/run_suite.py', 'workbench-performance', '--timeout', '1200']);
+  await run(python, ['tests/conformance/browser/run_suite.py', 'workbench-performance', '--timeout', '1200'], browserSupervisorTimeout);
   if (!assessment.absolutePassed || assessment.regressionVerdict === false) throw new Error('Editor latency budget failed');
 }
 
@@ -66,7 +67,9 @@ async function main() {
     for (const area of ['A19', 'A20']) await run(process.execPath, ['scripts/planning/run-tests.js', '--area', area]);
   }
   if (stage === 'browser' || stage === 'all') {
-    for (const suite of suites) await run(python, ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200']);
+    for (const suite of suites) {
+      await run(python, ['tests/conformance/browser/run_suite.py', suite, '--timeout', '1200'], browserSupervisorTimeout);
+    }
   }
   if (stage === 'performance' || stage === 'all') await performance();
 }
