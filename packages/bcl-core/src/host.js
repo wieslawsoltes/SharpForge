@@ -1,11 +1,16 @@
 import {formatDoubleDefault} from './formatting/double-format.js';
+const numericTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'int', 'uint', 'long', 'ulong',
+  'nint', 'nuint', 'char', 'float', 'double', 'decimal', 'System.SByte', 'System.Byte', 'System.Int16',
+  'System.UInt16', 'System.Int32', 'System.UInt32', 'System.Int64', 'System.UInt64', 'System.IntPtr',
+  'System.UIntPtr', 'System.Char', 'System.Single', 'System.Double', 'System.Decimal']);
+
 
 /** The legacy managed text/collection limit, measured in UTF-16 units or items. */
 export const MAX = 1_000_000;
 
-/** Raise the engine's managed fault without importing a runtime implementation. */
-export function fail(platform, type, message) {
-  platform.bclHost.fault(type, message);
+/** Raise a managed fault, optionally retaining an already-rooted managed exception reference. */
+export function fail(platform, type, message, reference = null) {
+  platform.bclHost.fault(type, message, reference);
   throw new Error('BCL host fault service must throw');
 }
 
@@ -42,6 +47,9 @@ export function text(platform, value, type) {
   const native = bclScalar(platform, value);
   if (native == null) return '';
   if (type === 'bool' || type === 'System.Boolean' || typeof native === 'boolean') return native ? 'True' : 'False';
+  if (numericTypes.has(type)) {
+    return platform.vm.format(value, type);
+  }
   if (typeof native === 'number') return formatDoubleDefault(native);
   if (typeof native === 'string') return native;
   return platform.vm.format(value);

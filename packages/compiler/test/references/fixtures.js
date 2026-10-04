@@ -15,6 +15,21 @@ const consumer =
 const forwarded = type => `[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(${type}))]\n`;
 const forwarders = forwarded('Lib.Widget') + forwarded('Lib.Gadget') + 'namespace Facade { public class Marker { } }\n';
 
+/**
+ * A library with closed classes as the pinned proposal emits them (csharp-15.0/closed-hierarchies.md revision 1,
+ * "Lowering"): abstract and marked `[IsClosedType]`. Roslyn 5.3 has no `closed` modifier, so the attribute is written
+ * out; the `[CompilerFeatureRequired("ClosedClasses")]` of the constructors cannot be written in source (CS8335).
+ */
+const closedLibrary =
+  'namespace System.Runtime.CompilerServices { public sealed class IsClosedTypeAttribute : System.Attribute { } }\n' +
+  'namespace Shapes {\n' +
+  '  [System.Runtime.CompilerServices.IsClosedType] public abstract class Shape { protected Shape() { } public int Sides; }\n' +
+  '  public class Circle : Shape { }\n' +
+  '  public sealed class Square : Shape { }\n' +
+  '  [System.Runtime.CompilerServices.IsClosedType] public abstract class Solid : Shape { }\n' +
+  '  public abstract class Open { }\n' +
+  '}\n';
+
 /** `file` is the checked-in name; `name` the assembly name; `build: false` assemblies only exist while generating. */
 export const assemblies = [
   { file: 'Lib.1.0.0.0.dll', name: 'Lib', strong: true, source: version('1.0.0.0') + library },
@@ -25,6 +40,7 @@ export const assemblies = [
   { file: 'Consumer.Lib2.dll', name: 'Consumer', strong: true, source: version('1.0.0.0') + consumer, references: ['Lib.2.0.0.0.dll'] },
   { file: 'Weak.1.0.0.0.dll', name: 'Weak', strong: false, source: version('1.0.0.0') + 'namespace Weak { public class Thing { } }\n' },
   { file: 'Weak.2.0.0.0.dll', name: 'Weak', strong: false, source: version('2.0.0.0') + 'namespace Weak { public class Thing { } }\n' },
+  { file: 'Closed.dll', name: 'Closed', strong: false, source: version('1.0.0.0') + closedLibrary },
   { file: 'Facade.old.dll', name: 'Facade', strong: true, build: false, source: version('1.0.0.0') + library },
   { file: 'Facade.dll', name: 'Facade', strong: true, source: version('1.0.0.0') + forwarders, references: ['Lib.2.0.0.0.dll'] },
   {

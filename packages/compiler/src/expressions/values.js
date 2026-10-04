@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { enumTypes, frameworkType, findContracts } from '@sharpforge/framework';
 import { Op, Binary, frameworkBuiltin, EnumConvertBase } from '@sharpforge/bytecode';
 import { numeric, defaultValue, typeText } from '../type-utils.js';
@@ -11,11 +12,11 @@ export function emitInterpolatedString(node) {
     else {
       const type = this.expr(part.expression);
       if (type === 'void')
-        this.c.report(part.expression, 'CS0029', ['void', 'object']);
+        this.c.report(part.expression, DiagnosticId.CS0029, ['void', 'object']);
       if (part.alignmentExpression) {
         const width = this.constant(part.alignmentExpression);
         if (!width || width.type !== 'int')
-          this.c.report(part.alignmentExpression, 'CS0150');
+          this.c.report(part.alignmentExpression, DiagnosticId.CS0150);
       }
       this.emitConstant(part.format);
       this.emitConstant(part.alignment);
@@ -29,11 +30,11 @@ export function emitInterpolatedString(node) {
 
 export function emitAwait(node) {
   if (!this.m.node.asyncBody && !this.m.name.startsWith('<startup>'))
-    this.c.report(node, 'CS4032', [typeText(this.m.returnType)]);
+    this.c.report(node, DiagnosticId.CS4032, [typeText(this.m.returnType)]);
   const type = this.expr(node.expression);
   const d = findContracts('SharpForge.Runtime.Async', 'Await', true).find(x => x.parameters[0] === type);
   if (!d) {
-    this.c.report(node, 'CS1061', [typeText(type), 'GetAwaiter']);
+    this.c.report(node, DiagnosticId.CS1061, [typeText(type), 'GetAwaiter']);
     return 'error';
   }
   const builtin = frameworkBuiltin(d);
@@ -44,7 +45,7 @@ export function emitAwait(node) {
 export function emitDefault(node) {
   const type = this.c.resolveType(node.type, node, false, this.m);
   if (type === 'void')
-    this.c.report(node, 'CS1547');
+    this.c.report(node, DiagnosticId.CS1547);
   this.emitConstant(defaultValue(type), type);
   return type;
 }
@@ -65,7 +66,7 @@ export function emitCast(node) {
   const to = this.c.resolveType(node.type, node, false, this.m);
   const enumTarget = enumTypes.indexOf(to);
   if ((!numeric(from) && frameworkType(from)?.kind !== 'enum') || (!numeric(to) && enumTarget < 0))
-    this.c.report(node, 'CS0030', [typeText(from), typeText(to)]);
+    this.c.report(node, DiagnosticId.CS0030, [typeText(from), typeText(to)]);
   const folded = this.constant(node);
   if (folded && numeric(to)) {
     this.emit(Op.POP);
@@ -83,15 +84,15 @@ export function emitError(node) {
 
 export function emitLiteral(node) {
   if (node.type === 'char')
-    this.c.report(node, 'SF2003');
-  if (node.type === 'int' && node.value > 2147483647 && !this.c.reportedAt(node, 'SF1004'))
-    this.c.report(node, 'SF2004');
+    this.c.report(node, DiagnosticId.SF2003);
+  if (node.type === 'int' && node.value > 2147483647 && !this.c.reportedAt(node, DiagnosticId.SF1004))
+    this.c.report(node, DiagnosticId.SF2004);
   this.emitConstant(node.value, node.type);
   return node.type;
 }
 
 export function emitUnknown(node) {
-  this.c.report(node, 'SF2098', [node.kind]);
+  this.c.report(node, DiagnosticId.SF2098, [node.kind]);
   this.emitConstant(null);
   return 'error';
 }
