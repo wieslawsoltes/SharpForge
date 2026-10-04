@@ -4,6 +4,7 @@
   "nodeGlobs": [
     "tests/templates-archive.test.js",
     "tests/template-examples.test.js",
+    "tests/template-qualification.test.js",
     "tests/workspace-io.test.js",
     "tests/workspace-grammar-options.test.js",
     "tests/release08-explorer.test.js",
