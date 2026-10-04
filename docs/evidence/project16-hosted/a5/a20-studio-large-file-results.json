@@ -1,0 +1,30 @@
+{
+  "status": "failed",
+  "issue": 1513,
+  "engine": "chromium",
+  "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "sourceSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+  "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+  "input": "synthetic File/Blob assigned through DataTransfer to the real Studio file-input change handler",
+  "limits": [
+    "No OS file chooser or native file permission claim",
+    "No physical disk throughput claim",
+    "No cross-application clipboard claim",
+    "Functional case; latency budgets belong to the existing editor benchmark"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "browserVersion": "153.0.8010.12",
+  "fixture": {
+    "sizeBytes": 209715200,
+    "originalSourceCount": 2,
+    "expectedSourceCount": 3,
+    "expectedLines": 204803,
+    "reusedChunkBytes": 262144,
+    "blobPartCount": 802
+  },
+  "failure": {
+    "type": "Error",
+    "message": "Page.evaluate: Error: Studio import: Document exceeds the source size limit\n    at eval (eval at evaluate (:311:30), <anonymous>:4:24)\n    at UtilityScript.evaluate (<anonymous>:318:18)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  }
+}

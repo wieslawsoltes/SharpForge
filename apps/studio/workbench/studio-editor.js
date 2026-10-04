@@ -25,7 +25,7 @@ export function remapBreakpointChanges(breakpoints, change) {
 /** Editors share one document model and workspace transaction adapter, with independent view state. */
 export function createStudioEditorFactory({ services, state, requestCompiler, requestHost, onFocus, onCursor,
   onKeymapState, onBreakpoint, onBreakpointEdit, onError, openDocument,
-  providers = {}, applyResourceTransaction, supportsResourceRename,
+  providers = {}, applyResourceTransaction, supportsResourceRename, getLanguageAvailability,
   getConfigurationRecords = () => [], getLanguageOptions = () => ({}), document = globalThis.document }) {
   const session = { models: services.documents.models, views: new Set(), foldingState: new FoldingStateStore() };
   const workspace = new EditorModelWorkspace(session.models, { applyResourceTransaction, supportsResourceRename });
@@ -56,6 +56,7 @@ export function createStudioEditorFactory({ services, state, requestCompiler, re
     root.append(host);
     const editor = new CodeEditor(host, {
       model, session, workspace, services: language, keymap: state().keymap, request: requestHost, openDocument,
+      languageAvailability: getLanguageAvailability,
       onKeymapState: value => onKeymapState?.(record.uri, value),
       onCursor: position => onCursor?.(record.uri, position),
       onBreakpoint: line => onBreakpoint(record.uri, line),
@@ -73,7 +74,7 @@ export function createStudioEditorFactory({ services, state, requestCompiler, re
     return { editor, element: root };
   };
   return {
-    create, workspace, language, session,
+    create, workspace, language, session, languageAvailability: getLanguageAvailability,
     configure(editor, languageOptions = getLanguageOptions(editor.options.language)) {
       return configureDocumentEditor(editor, {
         records: getConfigurationRecords(), languageOptions

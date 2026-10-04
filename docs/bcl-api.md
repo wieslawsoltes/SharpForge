@@ -696,8 +696,9 @@ Registered families: <code>builder</code>.
 | 524335 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char, int, int)</code> | implemented |
 | 524336 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char)</code> | implemented |
 | 524337 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(string, string, int, int)</code> | implemented |
+| 524338 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, bool)</code> | implemented |
 
-Pinned reference: 54 implemented and 54 missing exact metadata rows.
+Pinned reference: 55 implemented and 53 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -777,7 +778,7 @@ Pinned reference: 54 implemented and 54 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Equals``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Boolean instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Equals``0(System.Text.StringBuilder):System.Boolean instance</code> | implemented | 524331 |
 | method | <code>System.Text.StringBuilder::GetChunks``0():System.Text.StringBuilder+ChunkEnumerator instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Boolean):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Boolean):System.Text.StringBuilder instance</code> | implemented | 524338 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Byte):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char):System.Text.StringBuilder instance</code> | implemented | 524336 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[]):System.Text.StringBuilder instance</code> | missing | — |

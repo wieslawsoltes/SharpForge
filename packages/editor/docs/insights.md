@@ -258,6 +258,21 @@ items. Hints and lenses are capped at 5,000. Semantic provider requests are
 suspended above `maxSemanticCharacters` (default 2,000,000), unless the embedding
 host explicitly enables `languageServicesInLargeFiles`; Find remains available.
 
+An embedding host can additionally pass the synchronous, instance-owned CodeEditor
+option `languageAvailability({method, uri, ...parameters})`. It runs after provider
+registration/preview-lifetime checks and before workspace-version capture or provider
+invocation, including custom rename/code-action providers. `uri` is always the current
+editor URI. Return `{available: false, code?, reason}` to refuse a request with an
+accessible insight status; no provider is invoked and `onError` is not called. Return
+`{available: true}` or `undefined` to retain the normal provider, size, cancellation
+and stale-response checks. The callback does not authorize bypassing preview ownership
+or the per-editor semantic bound. It must be synchronous and must not materialize
+source merely to decide eligibility. Hosts should exempt local `readDocument` and
+`projects` providers; those methods also bypass the per-editor semantic-size gate.
+Local Find/edit/undo/save and host commands do not use this semantic eligibility gate.
+Direct `EditorLanguageServices.invoke` is a lower-level API and still requires the
+host's own source-publication boundary checks.
+
 ## Controller and display seams
 
 The controller exposes `complete`, `acceptCompletion`, `closeCompletion`,

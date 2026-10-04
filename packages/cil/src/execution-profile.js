@@ -13,6 +13,7 @@ import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 import {executionStackHeights} from './verify/stack-heights.js';
+import {executionHandlerOffsets} from './verify/execution-handlers.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
 const simple = new Set(('calli constrained. volatile. ldtoken ldftn ldvirtftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
@@ -41,8 +42,8 @@ export function stackEffect(inspector,m,i){
   if(arithmetic.test(n)&&!['neg','not'].includes(n))return [2,1];
   return [1,1];
 }
-/** Whole reachable-method stack-height verification plus explicit unsupported-operation diagnostics.
- * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
+/** Reachable-method stack heights and lexical EH admission, with an explicit managed-operation allowlist.
+ * Broad decoding is separate; this constrained runtime profile is not the CLR verifier/type system. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
   const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector,dispatch),pointers=new FunctionPointerProfile(inspector,dispatch);
@@ -64,9 +65,9 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(m.signature.callingConvention)throw new CilError('Non-default calling conventions are inspection-only');
       for(const type of m.signature.parameters.concat(m.locals,m.signature.returnType))verifyGenericType(inspector,type,context);
     } catch(error) {issue(m,null,'IL_SIGNATURE',error.message);continue;}
-    const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
+    const map = executionHandlerOffsets(m, options, issue);
+    if (!map) continue;
     prefixes.verify(m,context,issue,pending);
-    for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
       for(const target of pointers.verifyOperand(m,i,context,issue,verifyGenericType)??[])pending.push(target);

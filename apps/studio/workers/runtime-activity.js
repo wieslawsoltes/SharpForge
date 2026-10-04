@@ -1,4 +1,5 @@
 import {ExecutionOccupancy} from './execution-occupancy.js';
+import {setHostTimer, clearHostTimer} from './host-timers.js';
 
 const measuredRequests = Object.freeze({resume: 'debugger', stepBack: 'debugger', reverseContinue: 'debugger',
   evaluateFunction: 'debugger', collect: 'debugger', uiEvent: 'ui', uiAnimationAdvance: 'ui', uiLayout: 'ui', applyDesign: 'ui'});
@@ -7,7 +8,7 @@ const runnable = new Set(['ready', 'running', 'waiting']);
 /** Explicit owner of worker pump, animation and activity timers. Every callback checks the committed launch serial. */
 export class RuntimeActivity {
   constructor({getSession, getSerial, flush, publishState, onError, clock = () => performance.now(),
-    setTimer = setTimeout, clearTimer = clearTimeout, intervalMs = 250, sampleLimit = 2000}) {
+    setTimer = setHostTimer, clearTimer = clearHostTimer, intervalMs = 250, sampleLimit = 2000}) {
     Object.assign(this, {getSession, getSerial, flush, publishState, onError, clock, setTimer, clearTimer});
     this.execution = new ExecutionOccupancy({clock, intervalMs, limit: sampleLimit});
     this.pumpTimer = null;

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "kind": "recorded-static-inspection-invocation",
+  "sourceSha": "e89257052957f4c736512e9c2b46162bb6f23eae",
+  "sourceTree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+  "workingDirectory": "/workspace/scratch/6b99131ca908/p16-editor-view",
+  "shellCommand": "python docs/evidence/project16-a5-changed-source/inspect.py > docs/evidence/project16-a5-changed-source/inspection.log 2>&1",
+  "startedAt": "2026-10-04T06:10:35.219080+00:00",
+  "finishedAt": "2026-10-04T06:10:35.643899+00:00",
+  "exitCode": 1,
+  "timingScope": "Inside the inspection script, immediately before its first Git read through completion of the Python AST parse.",
+  "scriptSha256": "e189b744a42854193d43d884c2c99a7fa3d0b178c688a7dfae1f361284479451",
+  "stdoutAndStderr": "inspection.log",
+  "result": "Official changed-root dimension gate has zero findings; stricter introduced-line comparison flags three modified legacy lines."
+}

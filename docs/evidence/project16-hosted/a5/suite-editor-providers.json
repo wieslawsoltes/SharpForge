@@ -1,0 +1,10 @@
+{
+  "suite": "editor-providers",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_a20_language_providers_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 3.47519352300003
+}

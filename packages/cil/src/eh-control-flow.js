@@ -44,6 +44,13 @@ export function validateTailPlacement(instruction, cursor) {
 const placementChecks = Object.freeze({ rethrow, ret: returnInstruction, jmp: jump, endfinally: endFinally,
   endfilter: endFilter, 'tail.': validateTailPlacement });
 
+const outsideRegions = Object.freeze({ region: null, catches: 0 });
+
+/** Internal no-clause seam: reuse placement rules without constructing a lexical tree or cursor. */
+export function validateInstructionOutsideRegions(instruction) {
+  if (Object.hasOwn(placementChecks, instruction.name)) placementChecks[instruction.name](instruction, outsideRegions);
+}
+
 /** Check EH-sensitive instruction placement, returning an immutable lexical tree; branch/leave edges are separate. */
 export function validateExceptionInstructionPlacement(code, handlers, options = {}) {
   const tree = buildExceptionRegionTree(code, handlers, options);

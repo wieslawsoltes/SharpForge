@@ -31,11 +31,11 @@ traversal uses one context per assembly and one small result per method; its
 existing queue, height map and stack-proof behavior are preserved. An unsuccessful
 report cannot produce a verified stack-capacity proof.
 
-This is a reachable height-only admission check. Unreachable tries remain
-unvisited. Typed catch/filter entry values, filter execution, general EH control
-flow, member access and cross-assembly private access remain separate; #2407
-stays open. Standalone `validateExceptionControlFlow` is not newly composed into
-this runtime admission API. Existing unsupported-operation diagnostics remain.
+This entry check is reachable and height-only. Unreachable tries remain unvisited
+by stack propagation. Runtime admission separately applies the existing
+[lexical EH control-flow rules](VERIFIER-EH-ADMISSION.md) to methods with clauses.
+Typed catch/filter entry values, filter execution, member access and cross-assembly
+private access remain separate; #2407 stays open. Existing unsupported-operation diagnostics remain.
 No broad engine or platform qualification is claimed.
 
 Eight focused tests and fifteen ILVerify cases passed. They cover

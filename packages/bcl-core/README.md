@@ -292,6 +292,35 @@ five samples cover ordinary inputs plus 1024-unit repeated-prefix misses, late
 hits and all overlapping matches with 64-unit needles, reporting median/p95 and
 managed allocation counts outside setup and result checks.
 
+`StringBuilder.Insert(int, bool)` appends A07 contract `524338`, after ranged
+string Replace `524337`. It validates the index in `0..Length`, formats typed
+Boolean values as `True` or `False` through the existing scalar formatter, then
+uses the released string insertion helper. Both source Boolean carriers and CIL
+integer Boolean carriers retain their declared formatting. Null receivers fault
+first; invalid indices report ArgumentOutOfRangeException naming `index`. Actual
+aliased getter arguments are evaluated before the method validates the index.
+The receiver, arguments and mixed fluent operations retain native evaluation order.
+
+Its pinned SDK 10.0.201/runtime 10.0.5 snapshot records 71 rows plus a fluent
+control: null/empty/segmented receivers, both values, endpoints and Int32 bounds,
+NUL and surrogate cuts, aliased reads and capacity observations. Invariant,
+French and Turkish native rows produce the same Boolean text; this adds no
+configurable culture API. Tests retain typed source locals and exact contract
+selection on both compiler pipelines/VMs, plus independently assembled CIL.
+Managed controls cover collection during writes, snapshot restore, first-allocation
+OOM, the million-unit text ceiling and released observer partial progress.
+
+Boolean insertion inherits the current string insertion storage profile:
+O(builder text length + backing/chunk storage), host flattening/copy temporaries,
+one managed replacement string and possible new backing storage. It does not
+claim native capacity/chunk transitions or rollback on a throwing observer.
+Repeated insertion into a growing builder can be quadratic; #2636 tracks that
+storage redesign. The static `scripts/benchmarks/a07-string-builder-insert-bool.mjs`
+runner uses fresh prepared builders with one warmup and five samples, reporting
+median/p95 and managed allocations for released Length/string/char controls and
+new Boolean cases. Validation and measurements are pending in the root serial
+queue. #2638 remains open for other insertion overloads and remaining edits.
+
 `StringBuilder.Insert(int, char)` occupies A07 slot `524336`, after the two
 character Replace contracts. It validates index in `0..Length` (inclusive), then
 converts the Char carrier into exactly one UTF-16 unit and calls the released

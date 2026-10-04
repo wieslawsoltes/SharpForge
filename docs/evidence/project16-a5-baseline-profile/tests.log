@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: independent areas, browsers and performance all finish after earlier failures without downgrading them
+ok 1 - independent areas, browsers and performance all finish after earlier failures without downgrading them
+  ---
+  duration_ms: 6.760321
+  type: 'test'
+  ...
+# Subtest: stage selection runs only the selected scopes and preserves browser deadlines and capture-only results
+ok 2 - stage selection runs only the selected scopes and preserves browser deadlines and capture-only results
+  ---
+  duration_ms: 15.602251
+  type: 'test'
+  ...
+# Subtest: a scope settles and is checkpointed before the next independent scope starts
+ok 3 - a scope settles and is checkpointed before the next independent scope starts
+  ---
+  duration_ms: 0.638263
+  type: 'test'
+  ...
+# Subtest: setup errors remain fatal before any scope starts
+ok 4 - setup errors remain fatal before any scope starts
+  ---
+  duration_ms: 0.779165
+  type: 'test'
+  ...
+# Subtest: a thrown error carrying exit zero remains a failed outcome and a nonzero aggregate
+ok 5 - a thrown error carrying exit zero remains a failed outcome and a nonzero aggregate
+  ---
+  duration_ms: 0.433574
+  type: 'test'
+  ...
+# Subtest: an unsupported lazy-evaluation engine remains an independent failure after all earlier scopes finish
+ok 6 - an unsupported lazy-evaluation engine remains an independent failure after all earlier scopes finish
+  ---
+  duration_ms: 0.553905
+  type: 'test'
+  ...
+# Subtest: malformed editor JSON fails before any capture starts
+ok 7 - malformed editor JSON fails before any capture starts
+  ---
+  duration_ms: 8.315846
+  type: 'test'
+  ...
+# Subtest: both baseline schemas are checked before any capture starts
+ok 8 - both baseline schemas are checked before any capture starts
+  ---
+  duration_ms: 4.526795
+  type: 'test'
+  ...
+# Subtest: known editor browser, OS, architecture, Node and CPU mismatches fail before capture
+ok 9 - known editor browser, OS, architecture, Node and CPU mismatches fail before capture
+  ---
+  duration_ms: 7.060183
+  type: 'test'
+  ...
+# Subtest: model-only or another browser backend cannot be used as the editor baseline
+ok 10 - model-only or another browser backend cannot be used as the editor baseline
+  ---
+  duration_ms: 2.63348
+  type: 'test'
+  ...
+# Subtest: known workbench runner mismatches fail before editor captures
+ok 11 - known workbench runner mismatches fail before editor captures
+  ---
+  duration_ms: 5.481293
+  type: 'test'
+  ...
+# Subtest: Python OS and architecture aliases match corresponding known Node runner facts
+ok 12 - Python OS and architecture aliases match corresponding known Node runner facts
+  ---
+  duration_ms: 3.422881
+  type: 'test'
+  ...
+# Subtest: missing and outside-checkout baseline files fail before capture
+ok 13 - missing and outside-checkout baseline files fail before capture
+  ---
+  duration_ms: 1.614514
+  type: 'test'
+  ...
+# Subtest: empty inputs retain capture mode and the 22-minute outer browser deadline
+ok 14 - empty inputs retain capture mode and the 22-minute outer browser deadline
+  ---
+  duration_ms: 1.860245
+  type: 'test'
+  ...
+# Subtest: compatible baselines are read once before capture and reused for comparison
+ok 15 - compatible baselines are read once before capture and reused for comparison
+  ---
+  duration_ms: 3.624393
+  type: 'test'
+  ...
+# Subtest: both permitted comparative stages require verification before baseline paths become active
+ok 16 - both permitted comparative stages require verification before baseline paths become active
+  ---
+  duration_ms: 15.836314
+  type: 'test'
+  ...
+# Subtest: ordinary create nonces keep empty baselines and perform no profile file reads
+ok 17 - ordinary create nonces keep empty baselines and perform no profile file reads
+  ---
+  duration_ms: 0.335185
+  type: 'test'
+  ...
+# Subtest: reserved profile requests reject other runners, engines and non-performance stages
+ok 18 - reserved profile requests reject other runners, engines and non-performance stages
+  ---
+  duration_ms: 0.429407
+  type: 'test'
+  ...
+# Subtest: unknown and malformed compare prefixes never fall back to capture-only
+ok 19 - unknown and malformed compare prefixes never fall back to capture-only
+  ---
+  duration_ms: 0.393113
+  type: 'test'
+  ...
+# Subtest: each pinned report and source envelope rejects same-length altered bytes
+ok 20 - each pinned report and source envelope rejects same-length altered bytes
+  ---
+  duration_ms: 5.367652
+  type: 'test'
+  ...
+# Subtest: missing and changed-size pinned files reject activation instead of dropping a baseline
+ok 21 - missing and changed-size pinned files reject activation instead of dropping a baseline
+  ---
+  duration_ms: 4.655919
+  type: 'test'
+  ...
+# Subtest: activation also rejects unsupported direct profile requests and manual-event substitution
+ok 22 - activation also rejects unsupported direct profile requests and manual-event substitution
+  ---
+  duration_ms: 0.325461
+  type: 'test'
+  ...
+# Subtest: pinned schemas activate independently of this machine; existing preflight rejects incompatible live hosts
+ok 23 - pinned schemas activate independently of this machine; existing preflight rejects incompatible live hosts
+  ---
+  duration_ms: 9.599642
+  type: 'test'
+  ...
+# Subtest: performance host rejection remains an independent scope failure after other all-stage scopes
+ok 24 - performance host rejection remains an independent scope failure after other all-stage scopes
+  ---
+  duration_ms: 4.288314
+  type: 'test'
+  ...
+# Subtest: the original comparators still reject changed browser versions, fixtures and relative regressions
+ok 25 - the original comparators still reject changed browser versions, fixtures and relative regressions
+  ---
+  duration_ms: 4.082785
+  type: 'test'
+  ...
+# Subtest: each explicit platform, engine and stage resolves without running a capture
+ok 26 - each explicit platform, engine and stage resolves without running a capture
+  ---
+  duration_ms: 6.260638
+  type: 'test'
+  ...
+# Subtest: default create events discard baseline and dispatch-style overrides
+ok 27 - default create events discard baseline and dispatch-style overrides
+  ---
+  duration_ms: 0.671232
+  type: 'test'
+  ...
+# Subtest: manual dispatch preserves defaults and exact supplied baseline paths
+ok 28 - manual dispatch preserves defaults and exact supplied baseline paths
+  ---
+  duration_ms: 0.907889
+  type: 'test'
+  ...
+# Subtest: unrelated creates, tag creates and unsupported event types cannot qualify
+ok 29 - unrelated creates, tag creates and unsupported event types cannot qualify
+  ---
+  duration_ms: 1.431388
+  type: 'test'
+  ...
+# Subtest: the complete branch grammar rejects malformed selection and unsafe or oversized nonces
+ok 30 - the complete branch grammar rejects malformed selection and unsafe or oversized nonces
+  ---
+  duration_ms: 1.119739
+  type: 'test'
+  ...
+# Subtest: event and full ref identity must agree for created and manually selected refs
+ok 31 - event and full ref identity must agree for created and manually selected refs
+  ---
+  duration_ms: 0.411381
+  type: 'test'
+  ...
+# Subtest: a mutable name, missing SHA or different checked-out commit cannot pass immutable source validation
+ok 32 - a mutable name, missing SHA or different checked-out commit cannot pass immutable source validation
+  ---
+  duration_ms: 0.468096
+  type: 'test'
+  ...
+# Subtest: allocated runner and manual choice values are validated before output
+ok 33 - allocated runner and manual choice values are validated before output
+  ---
+  duration_ms: 0.426343
+  type: 'test'
+  ...
+# Subtest: baseline data cannot inject Actions environment records
+ok 34 - baseline data cannot inject Actions environment records
+  ---
+  duration_ms: 0.682059
+  type: 'test'
+  ...
+# Subtest: oversized or malformed event files fail before writing any Actions environment output
+ok 35 - oversized or malformed event files fail before writing any Actions environment output
+  ---
+  duration_ms: 17.012217
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 510.205138

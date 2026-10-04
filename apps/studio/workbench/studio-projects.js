@@ -1,4 +1,5 @@
 import { StudioDiagnostics } from './studio-diagnostics.js';
+import { compilerSourceAvailability, compilerSourceError } from './compiler-source-policy.js';
 
 /** Maps the loaded project system onto isolated compiler services without selecting background work. */
 export class StudioProjects {
@@ -38,14 +39,32 @@ export class StudioProjects {
       : state.files.map(file => file.uri);
   }
 
+  sourceRecords(projectId) {
+    const uris = new Set(this.sourceUris(projectId));
+    return this.state().files.filter(file => uris.has(file.uri));
+  }
+
+  sourceAvailability(projectId = this.selectedId) {
+    return compilerSourceAvailability(this.services.documents, this.sourceRecords(projectId), projectId);
+  }
+
+  languageAvailability({ method, uri, projectId } = {}) {
+    if (method === 'readDocument' || method === 'projects') return { available: true };
+    const memberships = uri ? this.services.documents.projectsFor(uri) : [];
+    const id = projectId ?? (memberships.includes(this.selectedId) ? this.selectedId : memberships[0]) ?? this.selectedId;
+    return this.sourceAvailability(id);
+  }
+
   snapshot(projectId) {
     const state = this.state();
     const project = state.projectSystem?.projects.get(projectId);
-    const uris = new Set(this.sourceUris(projectId));
+    const records = this.sourceRecords(projectId);
+    const availability = compilerSourceAvailability(this.services.documents, records, projectId);
+    if (!availability.available) throw compilerSourceError(availability);
     const compilationOptions = project ? state.projectSystem.compilationOptions(projectId)
       : { outputKind: 'exe', langVersion: state.langVersion };
     return {
-      files: state.files.filter(file => uris.has(file.uri)).map(file => ({ uri: file.uri, text: file.text, version: file.version })),
+      files: records.map(file => ({ uri: file.uri, text: file.text, version: file.version })),
       compilationOptions, assemblyName: project?.name ?? state.name, extensions: state.extensionConfig,
       outputKind: project?.outputType?.toLowerCase() === 'library' ? 'library' : 'exe',
       loadingDiagnostics: this.diagnostics.forProject(projectId)

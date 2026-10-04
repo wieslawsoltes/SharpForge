@@ -1,0 +1,15 @@
+✔ CLI requires explicit checkouts or both reports and preserves paths containing spaces (2.232296ms)
+✔ nearest-rank raw batch summaries divide by operations without mutating input (0.41743ms)
+✔ matching captures retain different revisions and unrelated untracked inventory (1.928147ms)
+✔ strict greater-than-five-percent review boundary applies to median and p95 (1.481685ms)
+✔ missing, duplicate, partial or failed scopes cannot become passing baselines (2.77824ms)
+✔ invalid raw numbers, forged summaries, missing identities and zero baselines fail closed (1.965484ms)
+✔ changed workload, correctness, harness, Node, CPU, OS or flags are incompatible (3.020104ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.129886

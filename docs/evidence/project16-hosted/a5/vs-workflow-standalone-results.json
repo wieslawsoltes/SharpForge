@@ -1,0 +1,60 @@
+{
+  "suite": "browser_vs_workflows_standalone_test",
+  "mode": "file",
+  "engine": "chromium",
+  "passed": false,
+  "sourceSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+  "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+  "checks": [
+    {
+      "scenario": "create-console-project",
+      "passed": true,
+      "emptyNameRejected": true
+    },
+    {
+      "scenario": "edit-and-build-shared-document",
+      "passed": true
+    }
+  ],
+  "navigation": {
+    "mode": "file",
+    "url": "file:///home/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "offline": true,
+    "artifact": "/home/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "artifactSha256": "b3b1de7419ab7a3ffe6b12d444e39b9d214c9a87309bc01cc5836948d06310d4",
+    "bytes": 16106722,
+    "policy": {
+      "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-uYuGyYDHYQMNUudaj8ZPkm+8vYOahrcMuOsrLg81EvI='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+      "transport": "meta"
+    }
+  },
+  "httpAttempts": [],
+  "pageErrors": [
+    "Workbench event listeners failed"
+  ],
+  "browser": "153.0.8010.12",
+  "lazyTools": [
+    {
+      "tool": "assembly",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true
+    },
+    {
+      "tool": "disassembly",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true
+    },
+    {
+      "tool": "msbuild",
+      "passed": true,
+      "mountedHosts": 1,
+      "reopened": true
+    }
+  ],
+  "failure": {
+    "type": "TimeoutError",
+    "message": "Browser predicate remained false: sharpforge.getState().debug?.state === \"paused\""
+  }
+}

@@ -1,0 +1,29 @@
+✔ startup toolbar selection changes the explicit compiler project while background work retains it (21.80879ms)
+✔ Studio routes language requests by document membership without selecting background projects (2.096902ms)
+✔ workspace replacement clears former project memberships, sessions and launch profiles (4.657134ms)
+✔ Studio language providers preserve originating versions and resolve the requested target document (2.36072ms)
+✔ workspace record metadata does not read source text and explicit reads retain the captured snapshot (2.577527ms)
+✔ partial disk saves acknowledge only written snapshots and keep edits made during I/O dirty (3.616384ms)
+✔ start new instance keeps existing applications and launches the selected profile (3.922054ms)
+✔ silent Studio builds leave large documents available without sending them to the compiler (58.168965ms)
+✔ Studio source policy admits 501 files and a 200 MiB buffer and rejects bounded overflow (0.781649ms)
+✔ launch fields preserve literal arguments and equals signs and reject invalid or duplicate environment entries (0.603109ms)
+✔ breakpoint remapping applies several ordered source changes against their captured versions (2.010792ms)
+✔ Studio source VM launch delivers UI reset, breakpoint, step and capture with browser timer receivers (574.377017ms)
+✔ Studio source VM timers preserve two live applications across targeted stop and restart (905.785741ms)
+✔ Studio direct CIL launch delivers UI reset, breakpoint, step and capture with browser timer receivers (449.398511ms)
+✔ Studio direct CIL timers preserve two live applications across targeted stop and restart (853.126675ms)
+✔ 200 MiB File reaches the actual Studio workspace model through chunked ingress with automatic work bounded (2321.553784ms)
+✔ rejected settings and cancelled selection release new prepared models without changing the current workspace (7.783196ms)
+✔ adding prepared files retains current projects, dirty models and private launch settings (8.558656ms)
+✔ committed document callback errors still install matching project metadata and retain adopted models (3.816985ms)
+✔ bulk Studio save passes captured roots and preserves newer edits after partial disk completion (2.310984ms)
+✔ Save As download outcome retains dirty state and a replaced workspace cannot receive a late saved marker (1.718652ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7228.429758

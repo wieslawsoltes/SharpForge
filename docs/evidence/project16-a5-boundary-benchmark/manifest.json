@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-a5-correction-boundary-evidence",
+  "sourceRoot": "/workspace/scratch/6b99131ca908/p16-integration",
+  "baselineSource": {
+    "revision": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+    "tree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+    "trackedClean": true,
+    "untrackedPaths": [
+      "docs/project16-keymap-timer-receiver.md",
+      "tests/a20-keymap-host-timers.test.js"
+    ]
+  },
+  "candidateSource": {
+    "revision": "e89257052957f4c736512e9c2b46162bb6f23eae",
+    "tree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+    "trackedClean": true,
+    "untrackedPaths": [
+      "packages/clr/src/type-system/metadata-method-definitions.js",
+      "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs",
+      "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs.json",
+      "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs",
+      "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs.roslyn.json",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs.json",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs.roslyn.json"
+    ]
+  },
+  "harnessSha256": "cfd2b13e84cd5fcadccfb242b762875634e19c224a2867413c802565863ca27d",
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "execArgv": [],
+    "nodeOptions": "--max-old-space-size=2048"
+  },
+  "captureOrder": [
+    "baseline",
+    "candidate"
+  ],
+  "sharedHost": true,
+  "capturePassed": {
+    "baseline": true,
+    "candidate": true
+  },
+  "exitCodes": {
+    "baseline": 0,
+    "candidate": 0,
+    "comparison": 2
+  },
+  "comparison": {
+    "comparable": true,
+    "reviewRequired": true,
+    "flaggedCases": 3,
+    "flaggedMetrics": 5,
+    "thresholdPercent": 5,
+    "thresholdChanged": false
+  },
+  "harnessTests": {
+    "sourceRevision": "e89257052957f4c736512e9c2b46162bb6f23eae",
+    "sourceTree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+    "exitCode": 0,
+    "summary": {
+      "tests": "7",
+      "suites": "0",
+      "pass": "7",
+      "fail": "0",
+      "cancelled": "0",
+      "skipped": "0",
+      "todo": "0",
+      "duration_ms": "111.129886"
+    },
+    "evidence": "harness/summary.json",
+    "addedToOtherCohortTotals": false
+  },
+  "measurement": {
+    "samplesPerCasePerCapture": 101,
+    "warmupBatchesPerCasePerCapture": 10,
+    "firstOperationsPerCasePerCapture": 1,
+    "sampleUnit": "batch elapsed nanoseconds normalized by fixed operations per batch",
+    "individualCallTailMeasurement": false,
+    "browserMeasurement": false,
+    "allocationMeasurement": false,
+    "rawSampleValuesModified": false,
+    "recapturePerformedForArchive": false
+  },
+  "review": {
+    "reviewer": "root integration agent (/root)",
+    "decision": "accepted_observed_correctness_costs",
+    "authority": "Explicit parent-agent review instruction in this session; no human/user approval inferred.",
+    "comparisonExitCodeRetained": 2,
+    "performanceBudgetPassClaimed": false,
+    "causalAttributionClaimed": false,
+    "reviewDocument": "../../project16-correction-performance-review.md"
+  },
+  "pendingAtArchive": [
+    "follow-up core",
+    "post-merge main core",
+    "hosted qualification"
+  ],
+  "archiveIntegrity": {
+    "rawFileCount": 9,
+    "rawBytes": 36108,
+    "verification": "Every copied file was read back and compared byte for byte with its retained source; SHA-256 recorded."
+  },
+  "files": [
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/baseline.json",
+      "archivePath": "capture/baseline.json",
+      "bytes": 13894,
+      "sha256": "c5f5e6b491842b2d257143b1864669c2980d84924114bdf80ce82309cb17082b"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/candidate.json",
+      "archivePath": "capture/candidate.json",
+      "bytes": 14496,
+      "sha256": "22b1a5ed5508dcf67c0f96de7947ac783f8e18e25d73f0dc34115294b4d1a501"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/comparison.json",
+      "archivePath": "capture/comparison.json",
+      "bytes": 3566,
+      "sha256": "6a534a73e85435cc12635a1244fa23c6deaaf1c806b2ab303e4459262fdcffed"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/baseline.log",
+      "archivePath": "capture/baseline.log",
+      "bytes": 133,
+      "sha256": "837bb33ed53d470b75a4253a97ac249613151f2f8cf103202db0c3d8e23f659a"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/candidate.log",
+      "archivePath": "capture/candidate.log",
+      "bytes": 134,
+      "sha256": "36b81cffb8ea09e3015b52caf689cc072ddca9f2db3079e168f748edc72af13b"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/comparison.log",
+      "archivePath": "capture/comparison.log",
+      "bytes": 161,
+      "sha256": "1c7d9d718357de8b4c14bb47077c927452740709f12e734bd03f3aff4f80afe2"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-boundary-benchmark/run.json",
+      "archivePath": "capture/run.json",
+      "bytes": 2346,
+      "sha256": "35430d1d5bf4e0c46f8cec78fccc86ce04c3468a262ce6b8b80424ba5690ffe6"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-harness/harness.log",
+      "archivePath": "harness/harness.log",
+      "bytes": 795,
+      "sha256": "e36017d82069d878477f3616e1deb6edab618a8d2042324c98c9567983daf9a1"
+    },
+    {
+      "sourcePath": "artifacts/results/p16-a5-harness/summary.json",
+      "archivePath": "harness/summary.json",
+      "bytes": 583,
+      "sha256": "7ef5d258a03abb35a205ebc24cbe3cb1e9e39a5e93cbd34c61835e57a8661b28"
+    }
+  ]
+}

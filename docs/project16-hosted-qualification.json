@@ -65,6 +65,34 @@
           "conclusion": "success",
           "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172677101/job/111348698282"
         }
+      },
+      {
+        "number": 4297,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/4297",
+        "status": "merged",
+        "localCommit": "cce2bdc93e1348c24e0116817e584906f669472c",
+        "publishedCommit": "c391430a44e99f08e1a698361e1161536e0425e5",
+        "sourceTree": "3992444851da294daf5ab3d098b78376444457dc",
+        "mergeSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "mergeTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+        "ownCore": {
+          "runId": 37178720477,
+          "jobId": 111366725424,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178720477/job/111366725424"
+        },
+        "earlierOwnCore": {
+          "runId": 37178705406,
+          "jobId": 111366653948,
+          "conclusion": "cancelled",
+          "note": "Automatic cancellation, not a passing execution."
+        },
+        "mainCore": {
+          "runId": 37178789347,
+          "jobId": 111366905289,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178789347/job/111366905289"
+        }
       }
     ],
     "qualificationSnapshotNote": "The publication-state record still says a3 in_progress; the completed a3 summary supersedes that stale status only in this derived ledger."
@@ -520,7 +548,7 @@
             "sizeBytes": 209715200,
             "measuredP95Ms": 32.29999999998836,
             "budgetMs": 50,
-            "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+            "measurement": "Typing event to two requestAnimationFrame callbacks; the 50 ms gate applies to typing only"
           },
           "regressionVerdict": null
         },
@@ -552,6 +580,256 @@
         "detail": "Register existing Watch v1 key in production storage and consume canonical entry. Four production-storage/loader regressions authored; 200 MiB browser fixture unchanged.",
         "evidence": "docs/project16-watch-storage-correction.md"
       }
+    },
+    {
+      "id": "a5",
+      "runId": 37178840757,
+      "jobId": 111367060633,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757",
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757/job/111367060633",
+      "source": {
+        "sourceSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+        "trigger": "create",
+        "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-all-20261004-a5",
+        "triggerNonce": "20261004-a5",
+        "captureOnly": true,
+        "workflowRunId": "37178840757",
+        "stage": "all",
+        "engine": "chromium",
+        "runner": "Linux",
+        "runnerLabel": "ubuntu-latest",
+        "editorBaseline": null,
+        "workbenchBaseline": null
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "startedAt": "2026-10-04T05:05:33.618Z",
+      "finishedAt": "2026-10-04T05:18:27.966Z",
+      "counts": {
+        "selected": 16,
+        "passed": 11,
+        "failed": 5
+      },
+      "countInterpretation": "Sixteen qualification outcomes, not test cases. Historical a4 had fifteen scopes; no counts are added across runs or overlapping scenarios.",
+      "artifact": {
+        "id": 11294751991,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178840757/artifacts/11294751991",
+        "bytes": 13381803,
+        "sha256": "32adec6a970df1e08e44620bb4b7bb5b1067ce91b941dd004275bfdecdf2d9c9",
+        "name": "p16-hosted-a5.zip",
+        "storage": {
+          "kind": "ordered-binary-parts",
+          "manifest": "docs/evidence/project16-hosted/a5/p16-hosted-a5.zip.parts.json",
+          "parts": [
+            "docs/evidence/project16-hosted/a5/p16-hosted-a5.zip.part001",
+            "docs/evidence/project16-hosted/a5/p16-hosted-a5.zip.part002"
+          ]
+        }
+      },
+      "node": [
+        {
+          "area": "A19",
+          "tests": 748,
+          "passed": 748,
+          "failed": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "durationMs": 44364.531153,
+          "logLine": 1373
+        },
+        {
+          "area": "A20",
+          "tests": 712,
+          "passed": 703,
+          "failed": 0,
+          "skipped": 9,
+          "cancelled": 0,
+          "durationMs": 37837.181419,
+          "logLine": 2104
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "node:A19",
+          "phase": "node",
+          "status": "passed"
+        },
+        {
+          "id": "node:A20",
+          "phase": "node",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-docking",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-shell",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-sessions",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Solution import and per-project profile retention checks passed; two live UI sessions never satisfied the completion predicate. Two Workbench event listeners failed page errors were recorded."
+        },
+        {
+          "id": "browser:workbench-lazy",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:workbench-workflows",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Project creation and shared-document edit/build checks passed; waiting for paused debugging timed out, with a Workbench event listeners failed page error."
+        },
+        {
+          "id": "browser:workbench-workflows-standalone",
+          "phase": "browser",
+          "status": "failed",
+          "boundary": "Offline file-mode startup, three recorded lazy-tool activations/reopens, project creation and edit/build succeeded; waiting for paused debugging timed out, with a Workbench event listeners failed page error."
+        },
+        {
+          "id": "browser:editor-insights",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:editor-providers",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "browser:editor-view",
+          "phase": "browser",
+          "status": "passed"
+        },
+        {
+          "id": "performance",
+          "phase": "performance",
+          "status": "passed"
+        },
+        {
+          "id": "performance:editor-budgets",
+          "phase": "performance",
+          "status": "failed",
+          "boundary": "Both stages captured, but the validator rejected missing actual workspace or definition boundary checks. The combined assessment remains failed."
+        },
+        {
+          "id": "performance:studio-large-file",
+          "phase": "performance",
+          "status": "failed",
+          "boundary": "The actual 209715200-byte File-input import reported Document exceeds the source size limit. No successful File ingress/open/scroll/edit is established."
+        },
+        {
+          "id": "performance:instrumentation",
+          "phase": "performance",
+          "status": "passed"
+        },
+        {
+          "id": "performance:lazy-evaluation",
+          "phase": "performance",
+          "status": "passed"
+        }
+      ],
+      "browser": {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "runner": "ubuntu-latest",
+        "modes": [
+          "http",
+          "file"
+        ],
+        "editorInsights": {
+          "status": "passed",
+          "scenarioChecks": 12,
+          "evidence": "docs/evidence/project16-hosted/a5/a20-editor-insights.json"
+        },
+        "standalone": {
+          "status": "failed",
+          "startupReached": true,
+          "offline": true,
+          "successfulWorkflowChecks": [
+            "create-console-project",
+            "edit-and-build-shared-document"
+          ],
+          "successfulRecordedLazyTools": [
+            "assembly",
+            "disassembly",
+            "msbuild"
+          ],
+          "httpAttempts": [],
+          "remainingBoundary": "Debug pause was not observed; full offline workflow, later designer/export and complete offline first use are not passing claims.",
+          "evidence": "docs/evidence/project16-hosted/a5/vs-workflow-standalone-results.json"
+        }
+      },
+      "performance": {
+        "editorCapture": {
+          "mode": "capture",
+          "absolutePassed": true,
+          "largeFile": {
+            "sizeBytes": 209715200,
+            "measuredP95Ms": 32.40000000002328,
+            "budgetMs": 50,
+            "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+          },
+          "regressionVerdict": null
+        },
+        "editorCaptureInterpretation": "Generated-model typing event-to-paint capture is distinct from actual File/Blob ingestion; no relative baseline verdict exists. Other operation timings remain in the raw report and do not inherit the typing gate.",
+        "instrumentation": {
+          "passed": true,
+          "budgetPercent": 1,
+          "overheadPercent": -0.23874095989473437,
+          "enabledMs": 24277.89999999758,
+          "disabledMs": 24335.999999997555,
+          "deltaMs": -58.09999999997672,
+          "gate": "ratio of paired sums of the identical measured workload; strictly less than 1%",
+          "interpretation": "One bounded shared-host observation; not statistical proof. All raw samples retained."
+        },
+        "instrumentationPairCount": 12,
+        "instrumentationEvidence": "docs/evidence/project16-hosted/a5/instrumentation-overhead.json",
+        "lazyEvaluation": {
+          "passed": true,
+          "gate": "paired aggregate eager ScriptDuration is strictly greater than lazy ScriptDuration",
+          "eagerMs": 1529.039,
+          "lazyMs": 1492.013,
+          "savedMs": 37.02600000000007,
+          "reductionPercent": 2.4215209683991104,
+          "dispersion": {
+            "positivePairs": 9,
+            "zeroPairs": 0,
+            "negativePairs": 3,
+            "minMs": -7.487999999999985,
+            "maxMs": 14.433000000000007,
+            "meanMs": 3.0855000000000055,
+            "medianMs": 3.065500000000007,
+            "populationStandardDeviationMs": 5.767523031307866
+          },
+          "uncertainty": "Untrimmed single shared-host observation; positive aggregate is not statistical proof. CDP/OS clock quantization is unknown; no zero/noise observations are discarded. No historical, worker CPU, paint, or wall-startup speedup claim."
+        },
+        "lazyEvaluationPairCount": 12,
+        "lazyEvaluationMeasurement": {
+          "scope": "Same-source eager-entry counterfactual versus shipped lazy module graph with equal wrapper scaffolding",
+          "metric": "CDP main-thread ScriptDuration in threadTicks seconds, baseline before navigation to synchronous entry console.timeStamp",
+          "excludes": "Network/wall startup, worker CPU, compile duration (reported separately), layout, paint and first tool activation",
+          "controls": "Unchanged production assets/settings/CSP; fixed overlays differ only by five static module imports before studio.js",
+          "limits": "One shared-host point observation; unknown OS clock quantization, shared filesystem cache, no historical speedup claim"
+        },
+        "lazyEvaluationEvidence": "docs/evidence/project16-hosted/a5/lazy-evaluation.json",
+        "editorUiBudgetAssessment": {
+          "absolutePassed": false,
+          "error": "Missing actual workspace or definition boundary checks",
+          "regressionVerdict": null
+        }
+      },
+      "summaryEvidence": "docs/evidence/project16-hosted/a5/qualification-summary.json",
+      "sourceEvidence": "docs/evidence/project16-hosted/a5/source.json",
+      "jobEvidence": "docs/evidence/project16-hosted/a5/job.log",
+      "interpretation": "This completed run remains failed. Source corrections in progress and partial scenario checks are not substituted for later successful executions."
     }
   ],
   "sourceKnownCorrections": [
@@ -1056,6 +1334,288 @@
       "kind": "original artifact JSON",
       "bytes": 29344,
       "sha256": "da39cb454e54b63b38477e71cbcba86b756600b5c5643a54863c72e9ed1ffa3a"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/p16-hosted-a5.zip.part001",
+      "kind": "exact downloaded artifact ZIP part 1 of 2",
+      "bytes": 7864320,
+      "sha256": "b1f9431cba4ecf3c18e74ce7ddd54e3a3a82be12d6771e288d6b017a96ef659b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/p16-hosted-a5.zip.part002",
+      "kind": "exact downloaded artifact ZIP part 2 of 2",
+      "bytes": 5517483,
+      "sha256": "6695745325f07ff92ec5b3253bc0a0fd276af1e84a2365f768d8e9e51777bb5c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/p16-hosted-a5.zip.parts.json",
+      "kind": "ordered artifact-part reconstruction manifest",
+      "bytes": 1026,
+      "sha256": "5e086c4e2932f74dba4b057b43f70697bc1a54486ba43737bc9c71d34d21bf53"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/job.log",
+      "kind": "original hosted job log",
+      "bytes": 304466,
+      "sha256": "dc81ec7210511e830360c381e44cab06b71aa352c855047a02cebebe1a4041ce"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/a19-multi-session-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 955,
+      "sha256": "778ebb23e49733a0c73cdc7421fc1e21c036aeb4de36c537be2313fc3ce51b10"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/a19-shell-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 3053,
+      "sha256": "d59f6db9c5aa08179176b75f0da1a1ed97427f29e694a385f8a126d7ec705aa4"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/a20-editor-insights.json",
+      "kind": "original artifact JSON",
+      "bytes": 1001,
+      "sha256": "eb5e93864e856bf261813874a1c6d8c8b82d8643af7d753de8c622f03d4939ff"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/a20-editor-view.json",
+      "kind": "original artifact JSON",
+      "bytes": 905,
+      "sha256": "72cc67c52f5264de2ca6e4a3b50895ce16e185e7f99d0a3b2b19247a07b97093"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/a20-language-providers.json",
+      "kind": "original artifact JSON",
+      "bytes": 376,
+      "sha256": "f179ec3b9150fed5f05b7f6eebf5f5ca2d55c90c398f28707b6f4393d82caf6a"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/a20-studio-large-file-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 1167,
+      "sha256": "ba5c77784a669cb6e31ef6b23a6179c0cfa855724972a6dcc77f87ce649e3f55"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a19_docking_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 252,
+      "sha256": "67761378d0942f326e70cbb2fa128d14a4361863e68c59c3eb11affbd261b37c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a19_lazy_tools_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 254,
+      "sha256": "71075f46e4775a15ef1719275a43e1bdc1bd4d072a92cba3cbd710368b9e2759"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a19_shell_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "e19c28e24e8592885d0cbad90ac1f294bf900a26996215980f5ac473b5f065ac"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a20_insights_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 253,
+      "sha256": "330a312e30ac63fa57e5dd4551a412c988d5926ec9c4dcbe2e4cb9e7abe527d9"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a20_language_providers_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 263,
+      "sha256": "8d375c0f815f6c690d3812c3412cf7e669204612c2ca7c7f7156b66bc2312104"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a20_studio_large_file_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 262,
+      "sha256": "112c177597ddd5ba1217658a97a4873d33288b17bcdeee11ecf4a2adb932b49a"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_a20_view_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "19cdf843ffaa7c911128d139ba73bd455ede4c692cbfc8ac11a0284b3fef221c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_editor_budgets_test_definition/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 266,
+      "sha256": "91a320fe8dd8ccddae28da9025bb3b078ed8e33037a3170e036c9938f51422c2"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_editor_budgets_test_overview/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 263,
+      "sha256": "cab5da4a7b52338a5e4150974c62762f10a8c6f076f51c9f146f9bf3a1eb8389"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_multi_session_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 254,
+      "sha256": "6bb4136d93cd4cfb6303f6505144a72192e0aabc569393b6644c883154fa1090"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_vs_workflows_standalone_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 265,
+      "sha256": "156e6b31b2cf5e7ca4e127ff2d6ff314c326a6a3ebdd7339a887fb967d7b5f07"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_vs_workflows_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 254,
+      "sha256": "5f71dc4e9301ee4d117c771e1031f6b1e808cebfe32f115995cb73a91bf9bd75"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/browser_workbench_perf_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 255,
+      "sha256": "bd64af3c64b19ba3bc2511d97db9d0d995ccded6f591e84a7f5f7c463b023ac7"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/editor-assessment.json",
+      "kind": "original artifact JSON",
+      "bytes": 276,
+      "sha256": "f743354f1ba9c358a243ff0564cadcd700b97b4efca03636387dde16502a9453"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/editor-browser.json",
+      "kind": "original artifact JSON",
+      "bytes": 38079,
+      "sha256": "d514882e71ede3ec24fabec5337a3a89381d0ca0ced192aac0bdac4aacee42b8"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/editor-memory.json",
+      "kind": "original artifact JSON",
+      "bytes": 19200,
+      "sha256": "7169a227beb3ce620ba14f8f228c40f5bf6dce91543c9b7d16d28ae06bdd256e"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/editor-model.json",
+      "kind": "original artifact JSON",
+      "bytes": 24136,
+      "sha256": "c102dc4631b2c15e3b2105f201122b83ef78b073b65c4ed2d8260be299c3c546"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/editor-ui-budgets.json",
+      "kind": "original artifact JSON",
+      "bytes": 330360,
+      "sha256": "2b71efbd43ce821c751f51edd02bd2a2b32d954143d4906ea469353d2d9bbe8f"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/instrumentation-overhead.json",
+      "kind": "original artifact JSON",
+      "bytes": 2789896,
+      "sha256": "4cdc37615907020ad7b90fa5d6f43a0631b27d4a188e39dd6dd5cbc0f04fdb1b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/lazy-evaluation.json",
+      "kind": "original artifact JSON",
+      "bytes": 5750396,
+      "sha256": "287500c77d77a92fa414ec6dd42613fcb67e966066d273c4fe5945a7dc323274"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/qualification-summary.json",
+      "kind": "original artifact JSON",
+      "bytes": 8655,
+      "sha256": "27d8a83e16c63857e82e8d861e341142404f8af26fe9bf5dbb942daf6e7158af"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/source.json",
+      "kind": "original artifact JSON",
+      "bytes": 473,
+      "sha256": "96a4d8ab7806700ec9539048a6eb8b2b71483fb79bcb013b3c06086475378237"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-editor-budgets.json",
+      "kind": "original artifact JSON",
+      "bytes": 224,
+      "sha256": "c734f94ff5fd538cae0086a0ba4b80b463ab95897bcfc30905618365174961f6"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-editor-insights.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "1a8beb08cc9da9f9b1b795085b11335966dda35fe3020140ec0a523da9a58b8b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-editor-providers.json",
+      "kind": "original artifact JSON",
+      "bytes": 232,
+      "sha256": "62b4368b902d501d5714ccfad976156251711f0fed94f86c55d92316cec45c01"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-editor-view.json",
+      "kind": "original artifact JSON",
+      "bytes": 214,
+      "sha256": "84724277ce9c49e0f3b1596676cee0a674a711d82e5c5b6838b511477b63bf0b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-studio-large-file.json",
+      "kind": "original artifact JSON",
+      "bytes": 234,
+      "sha256": "854aaada6d502c6f5196302fd3593cc4ea3e53a915891b199cf34f6a9f0bc404"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-docking.json",
+      "kind": "original artifact JSON",
+      "bytes": 224,
+      "sha256": "7eb26898722d14cf8bcf9ac4300ad701a9e83b473bddbdce11572f112310702a"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-lazy.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "ceeb6bf681cf78f2ef7975387dcdbad2403ebe290c46c57cfd2339289cc01f9f"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-performance.json",
+      "kind": "original artifact JSON",
+      "bytes": 231,
+      "sha256": "1db771cde1c6edade5c3dada39d583769a85f491110e2effa8712f4f05547821"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-sessions.json",
+      "kind": "original artifact JSON",
+      "bytes": 226,
+      "sha256": "f18dd3e62177bdc3626e4c5145a8ec9fcce41c638ab9b03e96450fa6174ea43d"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-shell.json",
+      "kind": "original artifact JSON",
+      "bytes": 219,
+      "sha256": "b67d2264d3c024babff6008c6f2f67fe4a560a9151022c73b52015253067574b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-workflows-standalone.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "0e6ba98d1d258c58aae5d7754ec5e5ededee46cc657bf4a0c5448acbd2d8556b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/suite-workbench-workflows.json",
+      "kind": "original artifact JSON",
+      "bytes": 226,
+      "sha256": "892512c0ddfb124be39343ce5306912f12a7e6856753fa7514f7f5309cc49a49"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/vs-workflow-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 803,
+      "sha256": "ea583d4abeb068928bd983f791af599ac5f8c8113984b14937a749dd87a4a89d"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/vs-workflow-standalone-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 1773,
+      "sha256": "db0740a8830e6a0b33b7e82233bbb7fdc5f56f253b32c6379621c00d40608be7"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a5/workbench-large-trace.json",
+      "kind": "original artifact JSON",
+      "bytes": 29341,
+      "sha256": "4f0c0583e184d63ff58ff1972ed833383d151d3e9aacdb4259900526fe523d83"
     }
   ],
   "appendices": [
@@ -1070,6 +1630,19 @@
         "The 12-pair instrumentation observation passes its specified aggregate below-1% gate on this Ubuntu/Chromium host; it does not establish other platforms or statistical certainty.",
         "Windows/macOS and Firefox/WebKit, physical keyboard/clipboard, native permissions, IME/assistive behavior and external oracles remain separate qualification."
       ]
+    },
+    {
+      "id": "a5",
+      "recordedDate": "2026-10-04",
+      "historyNote": "Original a1\u2013a4 outcomes and their source-known correction cutoffs are retained. The supplied publication-state a5 in_progress snapshot is superseded by this completed archived summary.",
+      "remainingQualification": [
+        "Five failed scopes require corrected execution: sessions, HTTP and standalone workflows, editor UI budgets and actual Studio 200 MiB File ingress.",
+        "Standalone startup and three recorded offline lazy-tool activations do not establish the entire offline workflow or all required first-use paths.",
+        "No compatible baseline was supplied for relative regression comparison.",
+        "Instrumentation and lazy-evaluation gate results are single-host observations; lazy evaluation is a same-source eager-entry counterfactual, not a historical speedup.",
+        "Other OS/browser coverage, native permissions, physical keyboard/clipboard, IME/assistive behavior and external oracles remain separate evidence."
+      ]
     }
-  ]
+  ],
+  "latestAttempt": "a5"
 }
