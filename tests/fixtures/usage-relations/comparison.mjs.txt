@@ -1,0 +1,68 @@
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+import { join } from 'node:path';
+import os from 'node:os';
+const config = JSON.parse(readFileSync(process.argv[2], 'utf8')), output = process.argv[3];
+const modules = {};
+for (const [name, variant] of Object.entries(config.variants))
+  modules[name] = await import(pathToFileURL(join(variant.directory, 'packages/cil/src/index.js')));
+const root = config.variants.after.directory;
+const { usageFixture } = await import(pathToFileURL(join(root, 'tests/fixtures/usage-relations/input.mjs')));
+const fixture = usageFixture(), operations = {};
+let consumed = 0;
+let expected;
+for (const [name, cil] of Object.entries(modules)) {
+  const warm = new cil.AssemblyInspector(fixture.bytes), edges = warm.callGraph();
+  if (expected) assert.deepEqual(edges, expected); else expected = edges;
+  operations[name] = {
+    cold: () => { consumed += new cil.AssemblyInspector(fixture.bytes).callGraph().length; },
+    warm: () => { consumed += warm.callGraph().length; },
+  };
+}
+const cil = modules.after, inspector = new cil.AssemblyInspector(fixture.bytes);
+const graph = new cil.AssemblyUsageAnalysis(inspector);
+operations.after.construct = () => { consumed += new cil.AssemblyUsageAnalysis(inspector).storage.usages; };
+operations.after.query = () => {
+  const result = graph.query('used-by', fixture.tokens.read, { limit: 1 });
+  assert.equal(result.total, 2); consumed += result.entries.length;
+};
+const iterations = { cold: 100, warm: 1000, construct: 100, query: 1000 };
+const report = { configuration: config, host: { platform: process.platform, arch: process.arch, release: os.release(),
+  cpu: os.cpus()[0].model, node: process.version }, sharedHost: true,
+  inputSha256: createHash('sha256').update(fixture.bytes).digest('hex'),
+  protocol: { pairs: 20, warmupsPerVariantAndCase: 3, iterations, order: 'before/after reversed on odd rounds; fixed case order',
+    existing: 'cold inspector+legacy callGraph; warm cached legacy callGraph. Exact edge/error compatibility checked before timing.',
+    new: 'analysis over prebuilt inspector; indexed one-result page with two total aliases. No decorated method cache.',
+    limits: 'Logical counters are not process heap/allocation measurements; no causality/significance claim.' },
+  logicalStorage: graph.storage, samples: [], summary: {} };
+const cases = ['cold', 'warm', 'construct', 'query'];
+for (const kind of cases) for (const name of ['before', 'after']) {
+  if (!operations[name][kind]) continue;
+  for (let warm = 0; warm < 3; warm++) for (let iteration = 0; iteration < iterations[kind]; iteration++) operations[name][kind]();
+}
+const start = performance.now();
+for (let round = 0; round < 20; round++) for (const kind of cases) {
+  for (const name of round % 2 ? ['after', 'before'] : ['before', 'after']) {
+    const operation = operations[name][kind];
+    if (!operation) continue;
+    global.gc?.();
+    const began = performance.now();
+    for (let iteration = 0; iteration < iterations[kind]; iteration++) operation();
+    const elapsedMs = performance.now() - began;
+    report.samples.push({ round, kind, variant: name, iterations: iterations[kind], elapsedMs,
+      perOperationMs: elapsedMs / iterations[kind], startOffsetMs: began - start });
+  }
+}
+for (const kind of cases) {
+  report.summary[kind] = {};
+  for (const variant of ['before', 'after']) {
+    const values = report.samples.filter(sample => sample.kind === kind && sample.variant === variant)
+      .map(sample => sample.perOperationMs).sort((a, b) => a - b);
+    if (values.length) report.summary[kind][variant] = { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+  }
+}
+report.consumed = consumed;
+writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+console.log(JSON.stringify(report.summary, null, 2));

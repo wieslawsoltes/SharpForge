@@ -1,0 +1,45 @@
+✔ framework Object.ToString: pinned source hash and exact override opt-ins (2.337125ms)
+✔ framework Object.ToString bound: emitted calls and profile round trip keep Convert distinct (74.985875ms)
+✔ framework Object.ToString bound: null faults after the emitted profile round trip (4.528958ms)
+✔ framework Object.ToString legacy: emitted calls and profile round trip keep Convert distinct (7.765333ms)
+✔ framework Object.ToString legacy: null faults after the emitted profile round trip (2.634916ms)
+✔ framework Object.ToString source: object references invoke only opted-in framework overrides (4.433ms)
+✔ framework Object.ToString source: primitive, Convert and Console profiles remain unchanged (4.310333ms)
+✔ framework Object.ToString source: null receiver faults (1.963ms)
+✔ framework Object.ToString source: GC, snapshot and allocation faults preserve builder state (2.341ms)
+✔ framework Object.ToString source: unmarked framework methods stay on the fallback profile (1.398708ms)
+✔ framework Object.ToString cil: object references invoke only opted-in framework overrides (6.868083ms)
+✔ framework Object.ToString cil: primitive, Convert and Console profiles remain unchanged (4.657792ms)
+✔ framework Object.ToString cil: null receiver faults (3.316584ms)
+✔ framework Object.ToString cil: GC, snapshot and allocation faults preserve builder state (1.975291ms)
+✔ framework Object.ToString cil: unmarked framework methods stay on the fallback profile (1.50425ms)
+✔ framework Object.ToString CIL: call empty-builder matches native (0.914083ms)
+✔ framework Object.ToString CIL: callvirt empty-builder matches native (0.600209ms)
+✔ framework Object.ToString CIL: call builder matches native (0.669625ms)
+✔ framework Object.ToString CIL: callvirt builder matches native (0.649833ms)
+✔ framework Object.ToString CIL: call mutated-builder matches native (0.580375ms)
+✔ framework Object.ToString CIL: callvirt mutated-builder matches native (0.610166ms)
+✔ framework Object.ToString CIL: call uri matches native (0.47775ms)
+✔ framework Object.ToString CIL: callvirt uri matches native (0.458916ms)
+✔ framework Object.ToString CIL: call null matches native (0.522083ms)
+✔ framework Object.ToString CIL: callvirt null matches native (0.3995ms)
+✔ framework Object.ToString CIL: hidden user method is not an override (0.747208ms)
+✔ framework Object.ToString CIL: call retains released primitive formatting (0.513209ms)
+✔ framework Object.ToString CIL: callvirt retains released primitive formatting (0.4705ms)
+✔ framework Object.ToString metadata rejects invalid override opt-ins (0.513917ms)
+✔ four instruction relations resolve exact local aliases and preserve occurrence order (7.703084ms)
+✔ external targets stay explicit instead of binding to guessed display names (1.151041ms)
+✔ owned pages and scalar indexes survive destruction of caller PE and metadata (0.764333ms)
+✔ aggregate body, instruction and occurrence budgets reject exact excess before expansion (1.048584ms)
+✔ invalid options/tokens, cancellation and metadata budget boundaries remain explicit (0.825417ms)
+✔ malformed IL or operand kinds reject; native method bodies are explicit incomplete input (1.329333ms)
+✔ legacy callGraph keeps exact calls, per-method errors and normal cache behavior (1.417917ms)
+✔ native reflection IL/token observations agree with all four usage relations (1.957791ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 844.163875
