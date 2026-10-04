@@ -6,6 +6,18 @@ and ordered `TypeDesc` argument handles. It completes the requested type's base
 and interface graph without reading method bodies or executing managed code.
 This is the host JavaScript metadata service for SF-A04-T05.1 (#2460).
 
+Run the standalone [example](examples/instantiate.mjs) from the repository root:
+
+```sh
+node scripts/limited.js node packages/clr/examples/instantiate.mjs
+```
+
+It loads the retained native `Fixture.dll`, registers an explicit host framework
+policy, and demonstrates closed identity, own-formal normalization and partial
+construction without reading method bodies. It needs no SDK or new fixture.
+The example is newly authored; its execution is pending review and a validation
+slot. Existing qualification below predates the example and does not qualify it.
+
 ```js
 const module = assembly.manifestModule;
 const box = module.typeDefinition(boxTypeDefToken);
@@ -418,9 +430,45 @@ product acceptance of a native-rejected request. Native error stages and
 HResults remain provenance; this batch expects TypeLoad rejection for the
 finite-closure defects and flags any new native category for investigation.
 
-The finite-closure correction, new native capture and focused replay remain
-pending the serial validation slot. No corrected passing result or benchmark
-speedup is claimed. The benchmark audit found no timed request reaching the
-invalid Node fixture, so the original drivers, fixture bytes and prescribed
-cohorts remain unchanged. Source VM, direct CIL, Rust native/Wasm and browser
-execution qualification remain separate.
+## Current qualification
+
+Candidate `b3e97c09b70a915e72a78d53830475b42106937c` retains the corrected
+`a5150472` focused gate: 30 files, **126 passed**, zero failures, cancellations,
+skips or todo tests. The original `5be28e30` CoreCLR capture has **34 cases,
+71 requests, 38 identity observations and 14 images**: 43 returned requests and
+28 TypeLoadException outcomes. Strict replay consumed that unchanged capture;
+the correction did not recapture or translate native results. See the
+[focused correction receipt and retained failure history](../../tests/fixtures/clr-generic-closure/qualification-correction-a5150472/README.md).
+
+All three prescribed benchmark phases completed once: baseline controls,
+candidate controls and new-service measurements. Their 22 cohorts each contain
+10 warmups and 100 measured batches, with **53,482,000 validated operations**.
+The original driver and workloads remain unchanged. All seven control medians
+decreased, but warm TypeDef graph lookup p95 increased from 0.33074094 to
+0.37118188 microseconds/operation (**12.2274%**). An additive nearest-rank p99
+calculation from those same 100 batch means gives 0.38474266 to 0.49604636
+(**28.9294%**). These percentiles describe batch means, not individual calls.
+Allocation counts and retained-heap deltas were not measured. A passing recorder
+does not approve the regression or establish a speedup on another host.
+
+Benchmark retention and performance disposition are coordinator-owned and
+pending. Their reserved destination is
+`tests/fixtures/clr-generic-closure/qualification-benchmark-b3e97c09/`, with
+`performance-root-review.json` for the disposition. Required integration core
+and the newly authored example's execution also remain pending; no completed
+receipt for these steps is claimed here. Historical failed attempts and frozen
+preparation records remain unchanged.
+
+| Target or observation | Qualified scope or explicit limit |
+| --- | --- |
+| Host JavaScript, Node 24.19.0, Linux x64 | Corrected focused gate and three benchmark phases; metadata service only |
+| CoreCLR 10.0.5 / SDK 10.0.201 | Independent native/SRM reference observations; not SharpForge engine execution |
+| Browser and other host platforms | This candidate has no qualification claim on these targets |
+| Source VM and direct CIL execution | No generic execution integration supplied by this metadata-only API |
+| Rust native and Wasm execution | No adapter or execution qualification supplied by this API |
+
+The two consumer assemblies' `List<int>` identity is replayed against an explicit
+host intrinsic definition. Complete CoreLib graphs, executable methods and full
+reflection naming are not inferred from that result. Parent [#64](https://github.com/wieslawsoltes/SharpForge/issues/64)
+remains open for allocation evidence and the separate method-instantiation,
+constraint, variance and dictionary services listed above.

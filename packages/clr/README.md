@@ -59,6 +59,7 @@ diagnostics. Restore and downloading remain separate responsibilities.
 | Ordered offline resolver | Positive, mismatch, ambiguity, cancellation and disposal regressions pass |
 | deps/runtimeconfig and RID fallback | Application paths match native `dotnet exec --depsfile` host trace; RID/cycle regressions pass |
 | NuGet asset selection | 30 fixture package layouts match native NuGet FrameworkReducer; in-memory archive selection passes |
+| Canonical generic type metadata | [Identity, scoped binding, finite closure and current qualification](INSTANTIATION.md#current-qualification) |
 | Execution targets | Host JavaScript services only; source VM, direct CIL, Rust native and Rust Wasm integration pending |
 
 Reference grammar: [.NET v10.0.5 AssemblyNameParser](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/Common/src/System/Reflection/AssemblyNameParser.cs).
