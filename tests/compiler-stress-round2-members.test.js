@@ -40,7 +40,8 @@ test('A02-T30 a mutating call on a struct in a read-only variable acts on a copy
       static int Read(in Tally t) => t.Peek();
       static void Main() { }
     }`;
-  const copies = body => body.some((name, index) => /^stloc/.test(name) && /^ldloca/.test(body[index + 1] ?? '') && /Increment|Peek/.test(body[index + 2] ?? ''));
+  const isCopiedCall = (body, index) => /^ldloca/.test(body[index + 1] ?? '') && /Increment|Peek/.test(body[index + 2] ?? ''),
+    copies = body => body.some((name, index) => /^stloc/.test(name) && isCopiedCall(body, index));
   assert.equal(copies(instructionsOf(source, 'P', 'In')), true, 'an `in` parameter is copied before a mutating call');
   assert.equal(copies(instructionsOf(source, 'P', 'Own')), false, 'a value parameter is the variable');
   assert.equal(copies(instructionsOf(source, 'P', 'Read')), false, 'a readonly member needs no copy');
@@ -60,7 +61,8 @@ test('A02-T30 variables a case guard assigns are assigned in the section (reduce
   const shared = `class P { static int M(object o) {
       switch (o) { case int a when a is var x: case string s when s.Length is var x2: return 0; default: return 1; } } }`;
   assert.deepEqual(errorsOf(shared), []);
-  assert.deepEqual(errorsOf('class P { static int M(object o) { switch (o) { case string s when s.Length > 0 || s.Length is var n: return n; } return 0; } }'), ['CS0165']);
+  const maybe = 'switch (o) { case string s when s.Length > 0 || s.Length is var n: return n; } return 0;';
+  assert.deepEqual(errorsOf(`class P { static int M(object o) { ${maybe} } }`), ['CS0165']);
 });
 
 test('A02-T30 a relational pattern narrows a nullable input for the pattern after `and`', () => {
