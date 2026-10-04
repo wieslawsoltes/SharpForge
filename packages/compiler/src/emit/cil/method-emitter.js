@@ -36,6 +36,8 @@ import { IndexValueEmission } from './emit-index-values.js';
 import { ListPatternEmission } from './emit-list-patterns.js';
 import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
+import { AsyncEmission } from './emit-async.js';
+import { AsyncTryEmission } from './emit-async-try.js';
 
 const families = [
   ConstantEmission,
@@ -71,6 +73,8 @@ const families = [
   ListPatternEmission,
   StateMachineEmission,
   IteratorEmission,
+  AsyncEmission,
+  AsyncTryEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

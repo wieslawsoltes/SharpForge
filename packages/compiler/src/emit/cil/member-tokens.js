@@ -8,17 +8,15 @@
  */
 import { compressUnsigned, methodSpecBlob, needsMethodSpec, needsTypeSpec } from '../../codegen/generics.js';
 import { SymbolKind, NamedTypeSymbol, substituteType } from '../../symbols/types.js';
-import { declaringInterfaceOf } from './framework-declarations.js';
+import { declaringInterfaceOf, genericFrameworkMethod } from './framework-declarations.js';
+import { methodTypeParameter } from './framework-types.js';
 import { fieldSignature, methodSignature, methodSymbolSignature } from '../../codegen/metadata/member-signatures.js';
 
 const LOCAL_SIGNATURE = 0x07;
 const BY_REFERENCE = 0x10;
 const PINNED = 0x45;
 const USER_STRING = 0x70000000;
-const GENERIC_METHOD = 0x10;
-const GENERIC_INSTANTIATION = 0x0a;
-const SZ_ARRAY = 0x1d;
-const METHOD_TYPE_PARAMETER = 0x1e;
+const GENERIC_METHOD_INSTANCE = 0x0a;
 
 /**
  * The declaration a member of a constructed framework type stands for. The framework registry lists closed
@@ -74,7 +72,9 @@ export class MemberTokens {
   method(method) {
     const definition = method.originalDefinition ?? method,
       owner = method.containingType,
-      defined = this.writer.methodTokens.get(definition);
+      defined = this.writer.methodTokens.get(definition),
+      generic = defined ? null : genericFrameworkMethod(this.writer.core, method, methodTypeParameter);
+    if (generic) return this.externalGeneric(owner, generic.name, generic.shape, generic.typeArguments);
     const parent = defined && !isInstantiation(owner) ? defined : this.memberReference(owner, definition);
     if (!needsMethodSpec(method)) return parent;
     const instantiation = methodSpecBlob(method, this.types.tokenOf),
@@ -109,15 +109,13 @@ export class MemberTokens {
     return this.builder.member(this.type(owner), name, methodSignature(this.types, shape));
   }
   /**
-   * MethodSpec token of `RuntimeHelpers.GetSubArray<T>(T[], Range)` for an element type: the generic framework
-   * method behind `array[range]`, which the symbol table does not model.
+   * MethodSpec token of a generic framework method named by its signature (`shape.arity` type parameters, written
+   * `methodTypeParameter(n)` in the shape) and instantiated over `typeArguments`.
    */
-  subArrayMethod(elementType, rangeType) {
-    const owner = this.builder.typeRef('System.Runtime.CompilerServices.RuntimeHelpers'),
-      vector = [SZ_ARRAY, METHOD_TYPE_PARAMETER, 0],
-      signature = Uint8Array.from([GENERIC_METHOD, 1, 2, ...vector, ...vector, ...this.types.signature(rangeType)]),
-      parent = this.builder.member(owner, 'GetSubArray', signature),
-      instantiation = [GENERIC_INSTANTIATION, 1, ...this.types.signature(elementType)],
+  externalGeneric(owner, name, shape, typeArguments) {
+    const parent = this.external(owner, name, shape),
+      encoded = typeArguments.flatMap(argument => this.types.signature(argument)),
+      instantiation = [GENERIC_METHOD_INSTANCE, ...compressUnsigned(typeArguments.length), ...encoded],
       key = parent + ':' + instantiation.join(',');
     let token = this.methodSpecs.get(key);
     if (!token) {

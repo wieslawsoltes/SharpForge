@@ -66,7 +66,7 @@ export const ListPatternEmission = Base =>
           il.emit('ldc.i4', after);
           this.newIndex(true);
           il.emit('newobj', this.tokens.external(this.rangeType, '.ctor', shape), { pops: 2, pushes: 1 });
-          il.emit('call', this.tokens.subArrayMethod(type.elementType, this.rangeType), { pops: 2, pushes: 1 });
+          il.emit('call', this.subArrayMethod(type.elementType), { pops: 2, pushes: 1 });
         },
         slot = this.readOnce(input.slot, 'slice:' + start + ':' + after, type, read);
       return this.patternMatch(slice.pattern, { slot, type }, fail);

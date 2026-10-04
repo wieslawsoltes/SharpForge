@@ -10,6 +10,7 @@
  * The forms written with constants or `int` operands keep the arithmetic of emit-index-range.js.
  */
 import { ArrayTypeSymbol } from '../../symbols/types.js';
+import { frameworkType, methodTypeParameter } from './framework-types.js';
 
 const isInt = type => type?.specialType === 'System_Int32';
 /** True for an operand whose offset emit-index-range.js computes without an `Index` value. */
@@ -50,6 +51,13 @@ export const IndexValueEmission = Base =>
       }
       return this.il.emit('newobj', this.tokens.external(this.rangeType, '.ctor', shape), { pops: 2, pushes: 1 });
     }
+    /** The token of `RuntimeHelpers.GetSubArray<T>(T[], Range)` for an element type. */
+    subArrayMethod(elementType) {
+      const helpers = frameworkType(this.core, 'System.Runtime.CompilerServices', 'RuntimeHelpers'),
+        vector = this.core.arrayOf(methodTypeParameter(0)),
+        shape = { isStatic: true, arity: 1, returnType: vector, parameters: [{ type: vector }, { type: this.rangeType }] };
+      return this.tokens.externalGeneric(helpers, 'GetSubArray', shape, [elementType]);
+    }
     /** Replaces the `Index` on the stack by its offset in a collection of the length `pushLength` pushes. */
     indexOffset(pushLength) {
       const index = this.indexType,
@@ -77,7 +85,7 @@ export const IndexValueEmission = Base =>
         result = { kind: 'SubArray', syntax: node.syntax, type: arrayType, constantValue: null };
       this.expression(node.receiver);
       this.expression(range);
-      il.emit('call', this.tokens.subArrayMethod(arrayType.elementType, this.rangeType), { pops: 2, pushes: 1 });
+      il.emit('call', this.subArrayMethod(arrayType.elementType), { pops: 2, pushes: 1 });
       il.emit('stloc', slot);
       this.substitutions.set(result, { value: () => il.emit('ldloc', slot) });
       return result;

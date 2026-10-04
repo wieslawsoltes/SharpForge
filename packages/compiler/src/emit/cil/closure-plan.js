@@ -126,7 +126,7 @@ export class ClosurePlan extends SynthesizedTypes {
       function: plan,
     });
     const machine = program.stateMachines.of(plan);
-    if (machine) return emitter.iteratorKickoff(machine);
+    if (machine) return emitter.kickoffBody(machine);
     if (plan.isLambda ? plan.key.isAsync : plan.symbol.isAsync) emitter.unsupported('async lambdas and local functions', plan.key.syntax);
     return emitter.body(plan.body);
   }

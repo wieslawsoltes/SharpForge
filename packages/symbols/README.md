@@ -48,6 +48,31 @@ decoding and 1,024 UTF-16 units afterward. These options also apply through
 `loadSymbols`. Native C# examples and offline reference data are in
 `interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
 
+`symbols.effectiveImports(importScopeId)` returns fresh import records for a
+LocalScope's `importScope`, ordered from the outermost parent to the selected
+scope, retaining each blob's recorded order. Zero returns an empty list; invalid
+ids fail explicitly. All nine Portable PDB import kinds retain their original
+fields and gain `scopeId`, `resolved` and `reason`. Bound `loadSymbols` results
+also add `assemblyName` for AssemblyRef row ids and `typeName` for TypeDef,
+TypeRef and TypeSpec handles (including nested and constructed types). Names
+describe declared metadata; referenced assemblies are not loaded. Standalone
+and explicitly unbound PDBs leave handle-bearing entries `resolved: false` with
+`reason: 'type-metadata-required'`; namespace/XML/alias-only records need no PE.
+
+The list preserves alias declarations/references and duplicates so the expression
+language can apply its own lookup and shadowing rules. It does not reconstruct
+source ordering discarded by a compiler. Import scopes are capped at 100,000,
+parent depth at 256 and aggregate definitions at 100,000; graph validation is
+linear and queries take O(depth + returned entries), without caching flattened
+copies of every ancestor list. Names are bounded before UTF-8 decoding (4 KiB
+each / 4 MiB aggregate). Bound name resolution caps distinct type/assembly
+handles at 4,096, TypeSpec blobs at 4 KiB each / 1 MiB aggregate, ASTs at depth
+32 / 256 nodes, and resulting type names at 4,096 characters / 1 MiB aggregate.
+Existing metadata-name bounds apply; a referenced local type permits at most
+65,536 NestedClass rows. Public import arrays, metadata and returned records
+cannot mutate later queries. The native nested C# namespace fixture and SRM
+reference are captured by `scripts/validate-pdb-effective-imports.mjs`.
+
 For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
 framework `System.Enum` base and exactly one special `value__` instance field.
 Its scalar signature must match the constant's encoded kind; mismatches,
