@@ -1,0 +1,26 @@
+{
+  "baselineCommit": "88bd931abaa1dcf435145cc51e45ef98d8d733b9",
+  "candidateSourceCommit": "15e0ed5ee0ad4055845dbaa7feadde3b1051fb5e",
+  "command": "node scripts/limited.js node --expose-gc packages/compiler/bench/attribute-metadata.bench.js /absolute/path/to/88bd931a-checkout",
+  "comparisonMode": "Final comparison loads both compiler module graphs in one process and alternates warmed workload order. The host was shared. Earlier separate-process pilot reports are retained, not pooled into final statistics.",
+  "measurementScope": "compileToAssembly through registry references on two fixed library programs. The fixture was not supported equivalently by the baseline because return attributes were omitted there.",
+  "memoryScope": "The final paired process retains both compiler graphs; retainedHeapAfter minus heapBefore is the aggregate post-GC delta, not allocations per compilation or per-implementation attribution.",
+  "aggregateRetainedHeapDeltaBytes": 84200,
+  "comparison": [
+    {
+      "fixture": "plain",
+      "medianChangePercent": 11.07087347287874,
+      "p95ChangePercent": 12.131868111850764,
+      "assemblyBytesBefore": 1536,
+      "assemblyBytesAfter": 1536
+    },
+    {
+      "fixture": "attributes",
+      "medianChangePercent": 1.81083770053716,
+      "p95ChangePercent": -17.612928367170998,
+      "assemblyBytesBefore": 2048,
+      "assemblyBytesAfter": 2048
+    }
+  ],
+  "performanceException": "Implementation-author sign-off: accept the observed plain-control median +11.07% and p95 +12.13% for this correctness batch. Required return/target attributes and complete interop metadata are preserved; generated sizes are unchanged. Shared-host variance prevents a causal or platform-wide regression claim; no speedup is claimed. Indexed layout/module lookup and lazy pseudo-attribute initialization remove avoidable repeated work."
+}
