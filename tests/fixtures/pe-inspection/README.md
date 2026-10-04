@@ -136,7 +136,12 @@ The post-run receipt parser expected TAP summary markers and failed on Node's
 default reporter; read-only extraction of the existing output confirmed the
 counts. The test command exited 0 and was not rerun. The
 [optimized qualification summary](qualification/optimized/summary.json) records
-that bookkeeping error and the pending benchmark/browser/build qualification.
+that bookkeeping error and the one completed benchmark cohort. The
+[two-cohort performance review](qualification/optimized/performance-review.md)
+retains all 960 rows from each run, exact statistics, and unfavorable tails.
+The optimized cold-summary median and all ordinary p95 comparisons remain over
+5%; explicit quantified PR performance sign-off is required. Browser and build
+qualification remain pending.
 
 The original qualification below remains historical evidence. The strict
 live-source identity assertions are unchanged. All original native and Node

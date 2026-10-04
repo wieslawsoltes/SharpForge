@@ -9,6 +9,14 @@ retain the receipt, log, hashes, exact raw samples, unfavorable tails, source
 analysis, and recommendation for three narrow construction changes followed by
 one new unchanged cohort.
 
+**The scheduled construction cohort is also retained; a performance exception
+remains required.** Its cold-summary median is +18.23703%; its ordinary p95
+changes are +9.34332%, +13.55892%, and +130.99414% respectively. The
+[complete two-cohort review](../../tests/fixtures/pe-inspection/qualification/optimized/performance-review.md)
+reports medians, p95, p99, absolute changes, provenance, and all unfavorable
+tails. Both runs retained 960 rows and passed all output guards. Their `pass`
+status does not waive these costs or the repository budget.
+
 | Ordinary workload | Median change | p95 change |
 | --- | ---: | ---: |
 | `readPE` | +13.62749% | +26.46312% |
@@ -30,8 +38,8 @@ Product revision `d72a9fe1684ba28064f83f4307721a1d00b13137` contains only the
 three reviewed construction changes: build each directory record once, append
 the optional summary PE field conditionally, and populate implementation facts
 into fresh method destinations. Field order, fresh nested disassembly records,
-classification, cancellation, and bounds remain intact. No performance effect
-has been measured for this candidate.
+classification, cancellation, and bounds remain intact. The second cohort below
+measures this candidate; it does not isolate a causal effect for each edit.
 
 One fresh two-image native capture passed with the unchanged pinned observer,
 tools, images, and comparison helper. The [complete comparison of original and
@@ -48,13 +56,27 @@ also retain a post-run receipt parser error: it expected TAP summary lines while
 the unchanged command used Node's default reporter. The original receipt/output
 were preserved; reading the existing summary confirmed the pass without a rerun.
 
-The second benchmark cohort remains pending. Its source/fixture pin is
+The second benchmark cohort passed all output guards at
+`6c3e8a7ecfcf2df8148b1ed25ef4796d43139eba`, retaining 960 rows. Its source/fixture pin is
 `135c4c0b151acc92b28b724b410e9db54066b29e`, whose product source is exactly
 `d72a9fe1684ba28064f83f4307721a1d00b13137`. Its native fixture hash is
 `8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1`.
 The offline test and benchmark retain strict current source-hash checks. Only
 the driver source/native pins and exact allowlist source hash changed. All
 workload definitions, counts, order, guards, baseline, and inputs are unchanged.
+
+| Ordinary workload | Median change | p95 change | p99 change |
+| --- | ---: | ---: | ---: |
+| `readPE` | -3.74812% | +9.34332% | -1.18631% |
+| `coldSummary` | +18.23703% | +13.55892% | +9.84558% |
+| `warmMetadataSummary` | +3.03557% | +130.99414% | +25.84697% |
+
+The warm metadata p95 moved from 1.907806 to 4.406920 microseconds per
+batch-normalized call, an absolute +2.499114 microseconds. It is retained as an
+unfavorable observation. Shared-host/JIT/GC possibilities do not establish its
+cause. Both candidate and unchanged baseline medians moved between the two
+cohorts; do not infer an isolated speedup from that comparison. Explicit quantified
+PR sign-off remains necessary; no additional cohort or optimization was run.
 
 ## Source review before measurement
 
@@ -150,7 +172,7 @@ node scripts/limited.js node packages/cil/tools/benchmark-pe-inspection.mjs \
   --output /workspace/scratch/7e3d2a445c44/project6-pe-performance-first.json
 ```
 
-The one scheduled construction-candidate cohort uses the same command with a
+The one scheduled construction-candidate cohort used the same command with a
 new output file, after the frozen driver and native fixture pins above:
 
 ```sh
