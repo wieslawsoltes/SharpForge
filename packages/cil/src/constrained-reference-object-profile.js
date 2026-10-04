@@ -15,6 +15,9 @@ export class ConstrainedReferenceObjectProfile {
     this.reachable = new Map();
     this.parents = new Map();
     this.children = new Map();
+    this.parameters = null;
+    this.constraints = null;
+    this.bounds = new Map();
     this.remaining = 262_144;
     this.charge(inspector.types.length);
     const names = new Map(inspector.types.map(type => [type.name, type.token]));
@@ -80,6 +83,61 @@ export class ConstrainedReferenceObjectProfile {
 
   select(token, descriptor) {
     return this.objects.types.has(token) && this.objects.declaration(descriptor) ? this.plan(token) : null;
+  }
+
+  indexParameters() {
+    const parameters = this.inspector.metadata.rows[42] ?? [];
+    const constraints = this.inspector.metadata.rows[44] ?? [];
+    this.charge(parameters.length + constraints.length);
+    this.parameters = new Map();
+    this.constraints = new Map();
+    for (let index = 0; index < parameters.length; index++) {
+      const row = parameters[index], owner = decodeCoded('TypeOrMethodDef', row[2]);
+      let entries = this.parameters.get(owner);
+      if (!entries) this.parameters.set(owner, entries = new Map());
+      if (entries.has(row[0])) throw new CilError('Duplicate generic parameter ordinal');
+      entries.set(row[0], {row: index + 1, flags: row[1], bound: undefined});
+    }
+    for (const row of constraints) {
+      if (!this.constraints.has(row[0])) this.constraints.set(row[0], []);
+      this.constraints.get(row[0]).push(decodeCoded('TypeDefOrRef', row[1]));
+    }
+  }
+
+  /** Resolve one !n/!!n to a concrete internal base bound, or null outside this leaf.
+   * Existing generic validation still owns ordinal, arity and closed-argument constraints.
+   */
+  genericBound(method, token) {
+    let cached = this.bounds.get(method.token);
+    if (!cached) this.bounds.set(method.token, cached = new Map());
+    if (cached.has(token)) return cached.get(token);
+    this.charge();
+    const variable = token >>> 24 === 27 && /^(!!?)(\d+)$/.exec(this.inspector.metadata.typeName(token));
+    const definition = this.inspector.methods.get(method.token);
+    if (!variable || !definition) return null;
+    if (!this.parameters) this.indexParameters();
+    const owner = variable[1] === '!!' ? definition.token : definition.ownerToken;
+    const parameter = this.parameters.get(owner)?.get(Number(variable[2]));
+    if (parameter && parameter.bound === undefined) {
+      parameter.bound = parameter.flags & 8 ? null : this.parameterBase(parameter.row);
+    }
+    const bound = parameter?.bound ?? null;
+    cached.set(token, bound);
+    return bound;
+  }
+
+  parameterBase(row) {
+    let bound = null;
+    for (const token of this.constraints.get(row) ?? []) {
+      this.charge();
+      const type = this.objects.types.get(token);
+      // Interface bounds remain enforced by generic admission; a class bound is mandatory.
+      if (!type || this.objects.genericOwners.has(token)) return null;
+      if (type.flags & 0x20) continue;
+      if (bound !== null || !this.plan(token)) return null;
+      bound = token;
+    }
+    return bound;
   }
 
   targets(token) {

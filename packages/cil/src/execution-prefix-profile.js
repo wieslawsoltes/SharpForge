@@ -18,7 +18,7 @@ export class ExecutionPrefixProfile {
     this.references = null;
   }
 
-  constrained(prefix, next, context, reachable) {
+  constrained(prefix, next, context, reachable, method) {
     if (next?.name !== 'callvirt') return 'constrained. must immediately precede callvirt';
     const name = this.inspector.metadata.typeName(prefix.operand);
     const parameter = prefix.operand >>> 24 === 27 && /^!!?\d+$/.test(name);
@@ -36,12 +36,14 @@ export class ExecutionPrefixProfile {
       reachable.push(...object.initializers);
       return null;
     }
-    if (!parameter && this.objects.declaration(declaration)) {
+    if (this.objects.declaration(declaration)) {
       this.references ??= new ConstrainedReferenceObjectProfile(this.inspector, this.objects, this.dispatch);
-      if (this.references.select(prefix.operand, declaration)) {
-        for (const target of this.references.targets(prefix.operand)) reachable.push(target);
+      const bound = parameter ? this.references.genericBound(method, prefix.operand) : prefix.operand;
+      if (bound && this.references.select(bound, declaration)) {
+        for (const target of this.references.targets(bound)) reachable.push(target);
         return null;
       }
+      if (parameter) return 'Generic Object.ToString requires one concrete nongeneric internal base-class bound';
     }
     const owner = this.types.get(declaration.ownerToken);
     if (!owner || this.genericOwners.has(owner.token) ||
@@ -77,7 +79,7 @@ export class ExecutionPrefixProfile {
       if (next) tails.add(next.offset);
       try {
         let error;
-        if (prefix.name === 'constrained.') error = this.constrained(prefix, next, context, reachable);
+        if (prefix.name === 'constrained.') error = this.constrained(prefix, next, context, reachable, method);
         else if (!next || !memoryTargets.has(next.name) && !next.name.startsWith('ldind.') && !next.name.startsWith('stind.')) {
           error = 'volatile. must precede a supported memory instruction';
         }

@@ -9,7 +9,7 @@ export function initializeSourceRuntimeEvents(vm, option) {
   if (option !== true && (!option || typeof option !== 'object' || Array.isArray(option))) {
     throw new TypeError('runtimeEvents must be a boolean or event-log options');
   }
-  observers.set(vm, {log: new RuntimeEventLog(option === true ? {} : option), active: new Map()});
+  observers.set(vm, {log: new RuntimeEventLog(option === true ? {} : option), loaded: new WeakSet(), active: new Map()});
 }
 
 /** Optional host log. Reading it neither enables instrumentation nor allocates. */
@@ -21,6 +21,12 @@ export function sourceRuntimeEvents(vm) {
 export function enterSourceMethod(vm, frame, reason = 'call') {
   const observer = observers.get(vm);
   if (!observer || observer.active.has(frame.id)) return;
+  const method = vm.image.methods[frame.methodId];
+  if (!observer.loaded.has(method)) {
+    const name = method.qualifiedName ?? method.owner + '::' + method.name;
+    observer.log.emit(RuntimeEventName.MethodLoad, {method: frame.methodId, name: name.slice(0, 4096)}, vm.instructions);
+    observer.loaded.add(method);
+  }
   const active = {method: frame.methodId, frame: frame.id};
   observer.active.set(frame.id, active);
   observer.log.emit(RuntimeEventName.MethodEnter, {...active, reason}, vm.instructions);
