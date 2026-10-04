@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compileToIL} from '@sharpforge/compiler';
-import {disassemble} from '@sharpforge/bytecode';
+import {disassemble, Op, verifyImage} from '@sharpforge/bytecode';
 import {disassembleAssembly} from '@sharpforge/cil';
 import {createToolRegistry} from '../apps/studio/tools/registry.js';
 import {registerCompilerResultTools} from '../apps/studio/tools/compiler-result-views.js';
@@ -60,7 +60,7 @@ function fixture({hidden = false, result = build()} = {}) {
   const calls = [];
   const fallback = [];
   const registry = createToolRegistry();
-  registerCompilerResultTools(registry, [...panels.keys()].map(id => ({id, title: id})), {
+  const tools = registerCompilerResultTools(registry, [...panels.keys()].map(id => ({id, title: id})), {
     state, docking, empty: title => title, hydrate() {}, formatBytes: bytes => bytes + ' bytes',
     openFile: (...args) => calls.push(args)
   }, (...args) => fallback.push(args));
@@ -68,7 +68,7 @@ function fixture({hidden = false, result = build()} = {}) {
   const emit = (panel, name, target) => {
     for (const listener of panels.get(panel).listeners.get(name) ?? []) listener({target});
   };
-  return {document, observers, writes, group, panels, listeners, state, calls, fallback, registry, show, emit};
+  return {document, observers, writes, group, panels, listeners, state, calls, fallback, registry, tools, show, emit};
 }
 
 test('hidden result tools retain the latest build and generated files without producing DOM or disassembly', () => {
@@ -261,4 +261,107 @@ test('tool disposal releases observers, docking subscribers and source handlers;
   assert.equal(host.panels.get('bytecode').listeners.get('click').length, 0);
   assert.deepEqual(host.writes, before);
   assert.deepEqual(host.calls, []);
+});
+
+test('mutable generated-source aliases refresh URI, text and membership even when their array identity is unchanged', () => {
+  const host = fixture();
+  const files = [{uri: 'Before.g.cs', text: '// before'}];
+  host.state.result = {generatedSources: files};
+  const panel = host.panels.get('generated');
+  const mount = host.registry.mount('generated', panel);
+  panel.querySelector('details').open = false;
+  files[0].uri = 'After.g.cs';
+  files[0].text = '// after';
+  files.push({uri: 'Added.g.cs', text: '// added'});
+  host.tools.refresh('generated');
+  mount.render();
+  assert.deepEqual(panel.querySelectorAll('summary').map(element => element.textContent), ['After.g.cs', 'Added.g.cs']);
+  assert.deepEqual(panel.querySelectorAll('pre').map(element => element.textContent), ['// after', '// added']);
+  assert.equal(panel.querySelector('details').open, true, 'a different URI begins with the default expanded state');
+  files[0].text = '// visible update';
+  files.pop();
+  mount.render();
+  assert.equal(panel.querySelector('pre').textContent, '// visible update');
+  assert.equal(panel.querySelectorAll('details').length, 1);
+  host.registry.dispose();
+});
+
+test('mutable method names, instruction words and source maps refresh without changing the image identity', () => {
+  const original = build();
+  const host = fixture({result: {...original, image: structuredClone(original.image)}});
+  const method = host.state.image.methods.find(value => value.name === 'Method0');
+  host.state.selectedMethod = method.id;
+  const panel = host.panels.get('bytecode');
+  const mount = host.registry.mount('bytecode', panel);
+  const select = panel.querySelector('#bytecode-method');
+  const options = [...select.children];
+  method.name = 'Renamed';
+  method.qualifiedName = 'Program.Renamed';
+  const constant = method.code.findIndex((value, index) => index % 3 === 0 && value === Op.CONST);
+  assert.ok(constant >= 0);
+  method.code[constant + 1] = method.code[constant + 1] === 0 ? 1 : 0;
+  const sequence = method.code.findIndex((value, index) => index % 3 === 0 && value === Op.SEQ);
+  assert.ok(sequence >= 0);
+  const point = host.state.image.sequencePoints[method.code[sequence + 1]];
+  point.uri = 'Latest.cs';
+  point.line = 77;
+  point.start = 901;
+  point.end = 909;
+  mount.render();
+  assert.deepEqual(select.children, options);
+  assert.equal(select.children.find(option => option.value === String(method.id)).textContent, 'Program.Renamed');
+  const rows = panel.querySelector('tbody').children;
+  assert.equal(rows[constant / 3].children[2].textContent, `${method.code[constant + 1]}, ${method.code[constant + 2]}`);
+  assert.equal(rows[sequence / 3].children[3].textContent, 'Latest.cs:77');
+  host.emit('bytecode', 'click', rows[sequence / 3].children[0]);
+  assert.deepEqual(host.calls, [['Latest.cs', 901, 909]]);
+  host.registry.dispose();
+});
+
+test('explicit tool activation re-inspects an assembly mutated through its existing public byte-array alias', () => {
+  const emit = word => {
+    const result = compileToIL([{uri: 'Alias.cs', text: `Console.WriteLine("${word}");`}]);
+    assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+    return result;
+  };
+  const before = emit('old');
+  const after = emit('new');
+  assert.equal(before.assembly.length, after.assembly.length, 'equal-length literal fixtures retain equal PE lengths');
+  const host = fixture({result: before});
+  host.state.disassemblyFormat = 'cil';
+  const panel = host.panels.get('bytecode');
+  const mount = host.registry.mount('bytecode', panel);
+  const options = [...panel.querySelector('#bytecode-method').children];
+  const oldDump = host.state.ilDump;
+  host.state.assembly.set(after.assembly);
+  host.tools.refresh('bytecode');
+  mount.render();
+  assert.notEqual(host.state.ilDump, oldDump);
+  assert.deepEqual(panel.querySelector('#bytecode-method').children, options);
+  const operands = panel.querySelector('tbody').children.map(row => row.children[2].textContent);
+  assert.ok(operands.some(value => value.includes('new')));
+  assert.ok(operands.every(value => !value.includes('old')));
+  host.registry.dispose();
+});
+
+test('methods beyond the instruction-cache bound retain full content and observe later mutable words', () => {
+  const original = build();
+  const host = fixture({result: {...original, image: structuredClone(original.image)}});
+  const method = host.state.image.methods.find(value => value.name === 'Method0');
+  const prefix = new Int32Array(4100 * 3);
+  for (let index = 0; index < prefix.length; index += 3) prefix[index] = Op.NOP;
+  const code = new Int32Array(prefix.length + method.code.length);
+  code.set(prefix);
+  code.set(method.code, prefix.length);
+  method.code = code;
+  assert.deepEqual(verifyImage(host.state.image), [], 'the enlarged public bytecode image remains valid');
+  host.state.selectedMethod = method.id;
+  const panel = host.panels.get('bytecode');
+  const mount = host.registry.mount('bytecode', panel);
+  assert.equal(panel.querySelector('tbody').children.length, code.length / 3);
+  code[1] = 7;
+  mount.render();
+  assert.equal(panel.querySelector('tbody').children[0].children[2].textContent, '7, 0');
+  assert.equal(panel.querySelector('tbody').children.length, code.length / 3);
+  host.registry.dispose();
 });

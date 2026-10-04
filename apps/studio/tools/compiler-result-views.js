@@ -3,6 +3,7 @@ import {disassembleAssembly} from '@sharpforge/cil';
 import {sourcePanelVisible} from '../source-symbol-presentation.js';
 
 const noFiles = Object.freeze([]);
+const maximumCachedWords = 12_288;
 
 function node(document, tag, className = '', text = '') {
   const element = document.createElement(tag);
@@ -21,9 +22,11 @@ class BytecodeResultView {
     this.element = element;
     this.context = context;
     this.options = [];
-    this.methods = null;
-    this.methodsById = new Map();
+    this.methodLabels = [];
+    this.methodIndices = new Map();
     this.instructionRows = new Map();
+    this.codeSnapshot = null;
+    this.pointSnapshot = [];
     this.onChange = event => {
       if (event.target === this.format) context.state.disassemblyFormat = event.target.value;
       else if (event.target === this.method) context.state.selectedMethod = Number(event.target.value);
@@ -48,9 +51,11 @@ class BytecodeResultView {
     this.context.hydrate(this.element);
     this.mode = mode;
     this.options = [];
-    this.methods = null;
-    this.methodsById.clear();
+    this.methodLabels = [];
+    this.methodIndices.clear();
     this.instructionRows.clear();
+    this.codeSnapshot = null;
+    this.pointSnapshot = [];
     this.image = null;
     this.currentRow = null;
     this.cilDump = null;
@@ -89,13 +94,18 @@ class BytecodeResultView {
   }
 
   updateMethods(methods) {
-    if (this.methods === methods) return;
-    this.methods = methods;
-    this.methodsById = new Map();
+    const unchanged = methods.length === this.methodLabels.length && methods.every((method, index) => {
+      const previous = this.methodLabels[index];
+      return method.id === previous.id && method.name === previous.name && method.qualifiedName === previous.qualifiedName;
+    });
+    if (unchanged) return;
+    this.methodLabels = [];
+    this.methodIndices = new Map();
     const document = this.element.ownerDocument;
     for (let index = 0; index < methods.length; index++) {
       const method = methods[index];
-      this.methodsById.set(method.id, method);
+      this.methodIndices.set(method.id, index);
+      this.methodLabels.push({id: method.id, name: method.name, qualifiedName: method.qualifiedName});
       let option = this.options[index];
       if (!option) {
         option = node(document, 'option');
@@ -119,20 +129,38 @@ class BytecodeResultView {
     return this.cilMethods.get(selected.id)?.instructions ?? [];
   }
 
+  unchangedInstructions(selected, image) {
+    if (!this.codeSnapshot || selected.code.length !== this.codeSnapshot.length) return false;
+    for (let index = 0; index < selected.code.length; index++) {
+      if (selected.code[index] !== this.codeSnapshot[index]) return false;
+    }
+    for (const previous of this.pointSnapshot) {
+      const point = image.sequencePoints[previous.index];
+      if (!point || point.id !== previous.id || point.uri !== previous.uri || point.line !== previous.line) return false;
+    }
+    return true;
+  }
+
   renderInstructions(selected, cil) {
     const state = this.context.state;
-    if (this.image === state.image && this.assembly === state.assembly && this.selected === selected.id && this.cil === cil) return;
+    const unchanged = this.image === state.image && this.assembly === state.assembly && this.selected === selected.id && this.cil === cil;
+    if (!this.refreshRequested && unchanged && (cil || this.unchangedInstructions(selected, state.image))) return;
     const instructions = this.instructions(selected, cil);
     const headings = cil ? ['IL offset', 'Opcode', 'Operand / metadata symbol', 'Source'] : ['VM offset', 'Opcode', 'Operands', 'Source'];
     headings.forEach((heading, index) => text(this.headings[index], heading));
     const document = this.element.ownerDocument;
     const rows = [];
     this.instructionRows = new Map();
+    this.codeSnapshot = !cil && selected.code.length <= maximumCachedWords ? selected.code.slice() : null;
+    this.pointSnapshot = [];
     for (const instruction of instructions) {
       const row = node(document, 'tr');
       const point = instruction.point;
       row.dataset.offset = String(instruction.offset);
       if (point) row.dataset.point = String(point.id);
+      if (point && this.codeSnapshot) {
+        this.pointSnapshot.push({index: selected.code[instruction.offset * 3 + 1], id: point.id, uri: point.uri, line: point.line});
+      }
       const offset = cil ? instruction.label : instruction.offset.toString(16).padStart(4, '0');
       const operands = cil ? instruction.operandText : `${instruction.a}, ${instruction.b}`;
       const location = point ? (cil ? 'SEQ ' : '') + point.uri + ':' + point.line : '';
@@ -148,6 +176,7 @@ class BytecodeResultView {
     this.selected = selected.id;
     this.cil = cil;
     this.currentRow = null;
+    this.refreshRequested = false;
   }
 
   render() {
@@ -155,7 +184,7 @@ class BytecodeResultView {
     if (!state.image?.methods.length) return this.empty(state.image);
     if (this.mode !== 'assembly') this.create();
     this.updateMethods(state.image.methods);
-    const selected = this.methodsById.get(Number(state.selectedMethod)) ?? state.image.methods[0];
+    const selected = state.image.methods[this.methodIndices.get(Number(state.selectedMethod)) ?? 0];
     const cil = state.disassemblyFormat === 'cil';
     const format = cil ? 'cil' : 'ir';
     if (this.format.value !== format) this.format.value = format;
@@ -171,13 +200,21 @@ class BytecodeResultView {
     }
   }
 
+  refresh() {
+    this.refreshRequested = true;
+    // The public build result exposes mutable assembly bytes. Explicit activation must re-read them.
+    this.context.state.ilDump = null;
+  }
+
   dispose() {
     this.element.removeEventListener('change', this.onChange);
     this.element.removeEventListener('click', this.onClick);
     this.options = [];
-    this.methods = null;
-    this.methodsById.clear();
+    this.methodLabels = [];
+    this.methodIndices.clear();
     this.instructionRows.clear();
+    this.codeSnapshot = null;
+    this.pointSnapshot = [];
     this.image = null;
     this.assembly = null;
     this.cilDump = null;
@@ -189,13 +226,11 @@ class GeneratedResultView {
   constructor(element, context) {
     this.element = element;
     this.context = context;
-    this.files = null;
     this.rows = [];
   }
 
   render() {
     const files = this.context.state.result?.generatedSources ?? noFiles;
-    if (files === this.files) return;
     if (!files.length) {
       if (this.mode !== 'empty') {
         this.element.innerHTML = this.context.empty('No generated sources',
@@ -203,7 +238,6 @@ class GeneratedResultView {
         this.mode = 'empty';
         this.rows = [];
       }
-      this.files = files;
       return;
     }
     const document = this.element.ownerDocument;
@@ -227,6 +261,7 @@ class GeneratedResultView {
         this.element.append(details);
       }
       if (row.uri !== file.uri) {
+        row.details.open = true;
         row.summary.textContent = file.uri;
         row.uri = file.uri;
       }
@@ -236,11 +271,9 @@ class GeneratedResultView {
       }
     }
     while (this.rows.length > files.length) this.rows.pop().details.remove();
-    this.files = files;
   }
 
   dispose() {
-    this.files = null;
     this.rows = [];
   }
 }
@@ -268,7 +301,15 @@ class DeferredResultTool {
     }
     if (!sourcePanelVisible(this.element)) return;
     this.view ??= new this.View(this.element, this.context);
+    if (this.refreshRequested) {
+      this.view.refresh?.();
+      this.refreshRequested = false;
+    }
     this.view.render();
+  }
+
+  refresh() {
+    if (!this.disposed) this.refreshRequested = true;
   }
 
   dispose() {
@@ -285,15 +326,25 @@ const resultViews = new Map([['bytecode', BytecodeResultView], ['generated', Gen
 
 /** Register the two owned result views through the existing per-mount tool lifecycle. Other tools retain their renderer. */
 export function registerCompilerResultTools(registry, definitions, context, renderOther) {
+  const mounted = new Map();
   for (const {id, title} of definitions) {
     const View = resultViews.get(id);
     if (!View) {
       registry.registerTool(id, title, element => renderOther(id, element));
       continue;
     }
+    const instances = new Set();
+    mounted.set(id, instances);
     registry.registerTool(id, title, (element, {state}) => {
-      state.presentation ??= new DeferredResultTool(element, context, View);
+      if (!state.presentation) {
+        state.presentation = new DeferredResultTool(element, context, View);
+        instances.add(state.presentation);
+      }
       state.presentation.render();
-    }, (element, {state}) => state.presentation?.dispose());
+    }, (element, {state}) => {
+      instances.delete(state.presentation);
+      state.presentation?.dispose();
+    });
   }
+  return {refresh(id) { for (const instance of mounted.get(id) ?? noFiles) instance.refresh(); }};
 }
