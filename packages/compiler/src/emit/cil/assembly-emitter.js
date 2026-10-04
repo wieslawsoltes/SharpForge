@@ -159,7 +159,10 @@ export class AssemblyEmitter {
   }
   /** The entry point: the top-level statements, else the single static `Main`. */
   entryPointToken(writer, synthesized) {
-    if (synthesized.entryPoint) return synthesized.entryPoint.token;
+    if (synthesized.entryPoint) {
+      this.debugInformation?.entryPoint(synthesized.topLevel.body);
+      return synthesized.entryPoint.token;
+    }
     // A `Main` that returns a task is the entry point only when no other `Main` is; `<Main>` then waits for it.
     const all = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method)),
       synchronous = all.filter(([method]) => !synthesized.asyncEntryPoints.has(method)),
@@ -168,6 +171,7 @@ export class AssemblyEmitter {
       throw new UnsupportedInCil(candidates.length ? 'several Main methods' : 'a program without an entry point');
     }
     const [method, token] = candidates[0];
+    this.debugInformation?.entryPoint(method);
     return synthesized.asyncEntryPoints.get(method)?.token ?? token;
   }
 }
