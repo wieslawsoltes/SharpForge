@@ -1,0 +1,8 @@
+{
+  "nullable-constraints/constructed-types-in-bodies": ["diagnostics", "warnings"],
+  "nullable-constraints/constructed-types-in-declarations": ["diagnostics", "warnings"],
+  "nullable-constraints/method-type-arguments": ["diagnostics", "warnings"],
+  "nullable-constraints/oblivious-constraints-and-disabled-context": ["diagnostics", "warnings"],
+  "nullable-constraints/signatures-of-methods": ["diagnostics", "warnings"],
+  "nullable-constraints/signatures-of-properties-and-events": ["diagnostics", "warnings"]
+}

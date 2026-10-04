@@ -1,10 +1,45 @@
-html[data-theme=light] :is(.design-mode-bar,.design-sync-bar,.design-breadcrumbs,.design-toolbar,.design-status,.design-side,.design-resource-select,.design-source-link,.design-property-help){background:#edf2f7;color:#263b51;border-color:#c6d1df}
-html[data-theme=light] :is(.design-mode-tabs button,.design-sync-bar button,.design-source-link button,.design-breadcrumbs button,.design-property-row label,.design-auto-sync,.design-device-label,.design-side button){color:#29435e}
-html[data-theme=light] .design-mode-tabs button[aria-selected=true]{background:#dceaf6;color:#104e7a}
-html[data-theme=light] :is(.design-property-category>summary,.design-toolbox-category>summary,.design-side>.panel-tools){background:#dfe7f0;color:#3b536d!important}
-html[data-theme=light] .design-property-row{background:#f4f7fb;border-color:#dee5ef}html[data-theme=light] .design-property-row:nth-child(odd){background:#edf2f8}
-html[data-theme=light] :is(.design-property-row input,.design-property-row select,.design-device-label select,.design-side>input,.design-property-search,.design-side textarea.design-code){background:#fff!important;color:#213a52;border-color:#bbcbdc!important}
-html[data-theme=light] :is(.design-source-link p,.design-breadcrumbs small,.design-selection-count){color:#49637f}
-html[data-theme=light] .design-scroll{background-color:#dfe5ed;background-image:radial-gradient(#71869f88 .65px,transparent .65px)}
-html[data-theme=light] :is(.design-ruler.horizontal,.design-ruler.vertical){background-color:#e9eff6;border-color:#aebed0}html[data-theme=light] .design-ruler.horizontal span{color:#516b86}
-html[data-theme=light] .design-sync-state.synced{color:#236844}html[data-theme=light] .design-sync-state.conflict,html[data-theme=light] .design-sync-state.blocked{color:#985616}
+html[data-theme=light] :is(.design-mode-bar, .design-sync-bar, .design-breadcrumbs, .design-toolbar, .design-status, .design-side, .design-resource-select,
+  .design-source-link, .design-property-help) {
+  background: var(--designer-mode-bar-light-background);
+  color: var(--designer-mode-bar-light-foreground);
+  border-color: var(--designer-mode-bar-light-border);
+}
+html[data-theme=light] :is(.design-mode-tabs button, .design-sync-bar button, .design-source-link button, .design-breadcrumbs button,
+  .design-property-row label, .design-auto-sync, .design-device-label, .design-side button) {
+  color: var(--designer-mode-tabs-button-light-foreground);
+}
+html[data-theme=light] .design-mode-tabs button[aria-selected=true] {
+  background: var(--designer-mode-tabs-button-selected-light-background);
+  color: var(--designer-mode-tabs-button-selected-light-foreground);
+}
+html[data-theme=light] :is(.design-property-category>summary,.design-toolbox-category>summary,.design-side>.panel-tools) {
+  background: var(--designer-property-category-summary-light-background);
+  color: var(--designer-property-category-summary-light-foreground)!important;
+}
+html[data-theme=light] .design-property-row {
+  background: var(--designer-property-row-light-background);
+  border-color: var(--designer-property-row-light-border);
+}
+html[data-theme=light] .design-property-row:nth-child(odd) { background: var(--designer-property-row-nth-child-odd-light-background); }
+html[data-theme=light] :is(.design-property-row input, .design-property-row select, .design-device-label select, .design-side>input,
+  .design-property-search, .design-side textarea.design-code) {
+  background: var(--designer-property-row-input-light-background)!important;
+  color: var(--designer-property-row-input-light-foreground);
+  border-color: var(--designer-property-row-input-light-border)!important;
+}
+html[data-theme=light] :is(.design-source-link p,.design-breadcrumbs small,.design-selection-count) {
+  color: var(--designer-source-link-p-light-foreground);
+}
+html[data-theme=light] .design-scroll {
+  background-color: var(--designer-scroll-light-background);
+  background-image: radial-gradient(var(--designer-scroll-light-pattern) .65px,transparent .65px);
+}
+html[data-theme=light] :is(.design-ruler.horizontal,.design-ruler.vertical) {
+  background-color: var(--designer-ruler-horizontal-light-background);
+  border-color: var(--designer-ruler-horizontal-light-border);
+}
+html[data-theme=light] .design-ruler.horizontal span { color: var(--designer-ruler-horizontal-span-light-foreground); }
+html[data-theme=light] .design-sync-state.synced { color: var(--designer-sync-state-synced-light-foreground); }
+html[data-theme=light] .design-sync-state.conflict,html[data-theme=light] .design-sync-state.blocked {
+  color: var(--designer-sync-state-conflict-light-foreground);
+}

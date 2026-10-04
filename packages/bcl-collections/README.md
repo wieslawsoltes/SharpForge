@@ -112,8 +112,10 @@ ordinal profile. **#829 remains open** for the invariant-culture default, and
 increment does not use a host locale heuristic or claim complete culture support.
 The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
 ordinal results qualify this implementation. Both VM platforms consume the full
-capture. Compiled source exercises direct StringComparer calls; source interface
-locals/conversions and custom implementations remain explicitly diagnosed.
+capture. Compiled source supports direct StringComparer calls and registered
+interface upcasts, including `values.Sort(StringComparer.Ordinal)` and comparer
+locals/parameters/returns. Custom implementations, interface type tests and casts
+needing runtime checks remain explicitly diagnosed.
 Independently assembled CIL exercises interface Compare/List.Sort and runtime
 casts. Unsupported custom comparer objects are checked through both platforms,
 including an empty List. Browser and Rust native/Wasm qualification is pending.
@@ -125,3 +127,22 @@ by default, one warmup and five samples for each VM platform. It times only the
 default Sort dispatch and reports median/p95 plus managed allocation counts and
 bytes; compilation, input setup and output checks are excluded. This measures
 the existing default path, not explicit-comparer overhead or culture collation.
+
+List Sort now copies and roots only the live prefix, sorts that copy through the
+existing ordering helper, and writes it into the same backing array through the
+shared write-notification seam. Capacity and backing identity stay unchanged;
+comparer failures leave values/version unchanged. Fresh empty Sort succeeds and
+increments the version, matching the pinned .NET 10.0.5 fixture. Every pending
+managed value remains rooted across observer-triggered collection during
+writeback; temporary roots are released even when an observer throws. Observer
+exceptions may expose completed writes, like other observed collection writes.
+
+The temporary copy and root set use O(Count) space, comparison retains the
+existing sort complexity, and writeback visits Count slots rather than Capacity.
+`tests/a08-list-sort-storage.test.js` covers both VM platforms, native results,
+snapshots, fault cleanup, notifications and forced GC. Run the identical
+`node --expose-gc scripts/benchmarks/a08-list-sort-storage.mjs` in the ordinal
+parent and this branch, serially, to measure default/ordinal Sort with spare
+capacity. It reports one warmup and five samples per workload, median/p95,
+observed host heap deltas, backing replacements and managed allocation counts.
+No culture behavior or comparer-callback support changes in this storage batch.

@@ -1,3 +1,4 @@
+import {flushFramePool} from './frame-pool.js';
 import {ManagedFault} from '../heap.js';
 import {prepareCall} from './calls.js';
 import {getDecodePlan} from './decode-plan.js';
@@ -19,5 +20,6 @@ export function executeCilStep(vm) {
   if (!handler) {
     throw new ManagedFault('NotSupportedException', `Opcode '${instruction.name}' is not executable`);
   }
-  handler(vm, frame, instruction);
+  try { handler(vm, frame, instruction); }
+  finally { flushFramePool(vm); }
 }

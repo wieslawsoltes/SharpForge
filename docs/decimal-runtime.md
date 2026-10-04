@@ -19,3 +19,30 @@ This change reuses the assembled A05 E01 arithmetic implementation. It does not
 establish new platform or performance evidence. Focused tests and native reference
 replay are staged for the serial qualification queue; source frontend integration
 is paired with T01.8, and #1350 remains open until both engines are qualified.
+
+## CIL integration
+
+The closed Decimal member profile includes constructors, arithmetic/operators,
+comparison, rounding, Parse/TryParse, integer/floating conversions, ToString,
+GetBits and matching Math overloads. Member identity includes staticness and the
+complete return/parameter signature. Provider/culture and generic-math interface
+members outside this profile remain verifier errors.
+
+CIL locals, fields, arrays, arguments, returns, ldobj/stobj/cpobj/initobj, and boxes
+use the same immutable Decimal record. Boxing retains the existing System.Decimal
+method table; unboxing requires that exact type. Readonly external Decimal constants
+are recognized individually; arbitrary external field storage is still rejected.
+Host arguments accept Decimal records or invariant strings, never a JavaScript
+Number that could have already lost decimal precision. Snapshot copies retain the
+immutable record and its scale. There is no new snapshot or portable wire format.
+
+The saved fixture in `tests/fixtures/a05/decimal/native-reference.json` retains the
+source, stdout and hashes of an existing .NET 10.0.5/osx-arm64 run from assembled
+E01. It has not been regenerated or replayed in this batch. Tests independently
+assemble CLI-valuetype signatures; they do not rely on source lowering.
+
+The reference policy is the [.NET 10.0.5 Decimal implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs)
+and its [Decimal arithmetic implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.DecCalc.cs).
+Source VM execution and emitted/reloaded source qualification depend on the paired
+T01.8 numeric-mode integration. No browser, native-platform, Rust or Wasm qualification
+or performance measurement is claimed here.

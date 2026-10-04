@@ -2,8 +2,47 @@ import {lowerMethodBody,IR_OPERATIONS,mergeType,stackType} from './lower-method-
 import {canonicalType} from '../../../packages/framework/src/index.js';
 import {SchemaError} from './validate.js';
 const aliases={void:'System.Void',bool:'System.Boolean',char:'System.Char',sbyte:'System.SByte',byte:'System.Byte',short:'System.Int16',ushort:'System.UInt16',int:'System.Int32',uint:'System.UInt32',long:'System.Int64',ulong:'System.UInt64',nint:'System.IntPtr',nuint:'System.UIntPtr',float:'System.Single',double:'System.Double',decimal:'System.Decimal',string:'System.String',object:'System.Object'};
-function splitArguments(text){let depth=0,start=0,result=[];for(let i=0;i<text.length;i++){if(text[i]==='<')depth++;if(text[i]==='>')depth--;if(depth<0)throw new SchemaError('SCHEMA_INVALID','Unbalanced generic type');if(text[i]===','&&!depth){result.push(text.slice(start,i).trim());start=i+1;}}if(depth)throw new SchemaError('SCHEMA_INVALID','Unbalanced generic type');result.push(text.slice(start).trim());return result;}
-export function typeIdentity(text,assembly='SharpForge'){if(typeof text!=='string'||!text.trim())throw new SchemaError('SCHEMA_INVALID','Type name required');text=text.trim();const explicitArity=/`(\d+)<(.+)>$/.exec(text);if(explicitArity&&Number(explicitArity[1])!==splitArguments(explicitArity[2]).length)throw new SchemaError('SCHEMA_INVALID','Generic arity mismatch');text=canonicalType(text);const suffix=text.match(/(\[(,*)\]|[&*])$/);if(suffix)return {kind:suffix[1][0]==='['?'array':suffix[1]==='&'?'byref':'pointer',element:typeIdentity(text.slice(0,-suffix[1].length),assembly),rank:suffix[2]===undefined?1:suffix[2].length+1};const parameter=/^(!{1,2})(\d+)$/.exec(text);if(parameter)return {kind:'parameter',owner:parameter[1]==='!!'?'method':'type',index:Number(parameter[2])};const at=text.indexOf('<');let args=[],name=text;if(at>=0){if(!text.endsWith('>'))throw new SchemaError('SCHEMA_INVALID','Unbalanced generic type');name=text.slice(0,at);args=splitArguments(text.slice(at+1,-1)).map(t=>typeIdentity(t,assembly));}name=aliases[name]??name;const arity=Number(/`(\d+)$/.exec(name)?.[1]??args.length);if(args.length&&arity!==args.length)throw new SchemaError('SCHEMA_INVALID','Generic arity mismatch');if(arity&&!/`\d+$/.test(name))name+='`'+arity;return {kind:'named',assembly:name.startsWith('System.')?'System.Runtime':assembly,name,arity,arguments:args};}
+function splitArguments(text){
+  const delimiters=[],result=[];let start=0;
+  for(let i=0;i<text.length;i++){
+    const character=text[i];
+    if(character==='<'||character==='[')delimiters.push(character);
+    else if(character==='>'||character===']'){
+      if(delimiters.pop()!==(character==='>'?'<':'['))throw new SchemaError('SCHEMA_INVALID','Unbalanced generic type');
+    }else if(character===','&&!delimiters.length){result.push(text.slice(start,i).trim());start=i+1;}
+  }
+  if(delimiters.length)throw new SchemaError('SCHEMA_INVALID','Unbalanced generic type');
+  result.push(text.slice(start).trim());return result;
+}
+export function typeIdentity(text,assembly='SharpForge'){
+  if(typeof text!=='string'||!text.trim())throw new SchemaError('SCHEMA_INVALID','Type name required');
+  text=text.trim();
+  const suffix=text.match(/(\[(,*)\]|[&*])$/);
+  if(suffix)return {kind:suffix[1][0]==='['?'array':suffix[1]==='&'?'byref':'pointer',element:typeIdentity(text.slice(0,-suffix[1].length),assembly),rank:suffix[2]===undefined?1:suffix[2].length+1};
+  const parameter=/^(!{1,2})(\d+)$/.exec(text);
+  if(parameter)return {kind:'parameter',owner:parameter[1]==='!!'?'method':'type',index:Number(parameter[2])};
+  const at=text.indexOf('<');let args=[],name=text,arity;
+  if(at>=0){
+    if(!text.endsWith('>'))throw new SchemaError('SCHEMA_INVALID','Unbalanced generic type');
+    name=text.slice(0,at).trim();
+    if(!name||/[>\[\]]/.test(name))throw new SchemaError('SCHEMA_INVALID','Invalid generic type name');
+    const argumentsText=splitArguments(text.slice(at+1,-1));
+    arity=Number(/`(\d+)$/.exec(name)?.[1]??argumentsText.length);
+    if(arity!==argumentsText.length)throw new SchemaError('SCHEMA_INVALID','Generic arity mismatch');
+    args=argumentsText.map(argument=>typeIdentity(argument,assembly));
+    // Resolve framework aliases with scalar placeholders: its legacy comma splitter
+    // must not reinterpret commas in the original nested arguments or array ranks.
+    const canonical=canonicalType(name+'<'+argumentsText.map(()=>'object').join(',')+'>');
+    name=canonicalType(canonical.slice(0,canonical.indexOf('<'))).replace(/`\d+$/,'');
+    name=aliases[name]??name;
+    if(arity)name+='`'+arity;
+  }else{
+    if(/[>\[\]]/.test(text))throw new SchemaError('SCHEMA_INVALID','Unbalanced type delimiters');
+    name=canonicalType(text);name=aliases[name]??name;
+    arity=Number(/`(\d+)$/.exec(name)?.[1]??0);
+  }
+  return {kind:'named',assembly:name.startsWith('System.')?'System.Runtime':assembly,name,arity,arguments:args};
+}
 export function validateTypeSemantics(type){if(['byref','pointer'].includes(type.kind)&&type.rank!==1)throw new SchemaError('SCHEMA_INVALID','Byref/pointer rank must be one');if(type.kind==='named'){if(type.arguments.length&&type.arguments.length!==type.arity)throw new SchemaError('SCHEMA_INVALID','Generic argument count');type.arguments.forEach(validateTypeSemantics);}else if(type.element)validateTypeSemantics(type.element);else if(type.kind==='functionPointer')validateSignature(type.signature);if(type.modifier)validateTypeSemantics(type.modifier);return type;}
 export function validateSignature(s){if(s.explicitThis&&!s.hasThis||s.sentinel!==null&&(s.callingConvention!=='vararg'||s.sentinel>s.parameters.length))throw new SchemaError('SCHEMA_INVALID','Invalid signature convention');validateTypeSemantics(s.returnType);s.parameters.forEach(validateTypeSemantics);return s;}
 export function sourceSpan(point,source,documentId=point.uri??String(point.document??'')){

@@ -77,3 +77,4 @@ export {
   decimalCompare, decimalNegate, decimalAbs, decimalAdd, decimalMultiply, decimalDivide, decimalRemainder,
   decimalRound, decimalBinary, decimalFormat
 } from './numeric/decimal-ops.js';
+export {decimalIntrinsicDefinitions, isDecimalConstantField} from './decimal-intrinsic-profile.js';

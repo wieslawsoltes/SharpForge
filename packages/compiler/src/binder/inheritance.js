@@ -12,7 +12,7 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { isDynamicType, containsDynamic } from '../symbols/dynamic-types.js';
-import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
+import { TypeKind, SymbolKind, Accessibility, SymbolDisplayFormat } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf, membersInHierarchy } from '../symbols/substitution.js';
 import { isAccessible } from './accessibility.js';
@@ -254,8 +254,8 @@ export function sameParameters(a, b, conversions = null) {
   });
 }
 const typeText = (m, t) => {
-  // `dynamic` is `object` in a signature.
-  let text = t.toDisplayString().replace(/\bdynamic\b/g, 'object');
+  // `dynamic` is `object` in a signature, and nullable annotations of reference types are not part of one.
+  let text = t.toDisplayString(SymbolDisplayFormat.Signature).replace(/\bdynamic\b/g, 'object');
   (m.typeParameters ?? []).forEach((p, i) => {
     text = text.replace(new RegExp('\\b' + p.name + '\\b', 'g'), '!!' + i);
   });
