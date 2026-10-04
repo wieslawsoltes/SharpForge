@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-62d755dfa1fd757369fe",
+  "kind": "spec",
+  "sourceText": "class R1 : IEquatable<R1>\n{\n    public T1 P1 { get; init; }\n    protected virtual Type EqualityContract => typeof(R1);\n    public override bool Equals(object? obj) => Equals(obj as R1);\n    public virtual bool Equals(R1? other)\n    {\n        return !(other is null) &&\n            EqualityContract == other.EqualityContract &&\n            EqualityComparer<T1>.Default.Equals(P1, other.P1);\n    }\n    public static bool operator==(R1? left, R1? right)\n        => (object)left == right || (left?.Equals(right) ?? false);\n    public static bool operator!=(R1? left, R1? right)\n        => !(left == right);\n    public override int GetHashCode()\n    {\n        return HashCode.Combine(EqualityComparer<Type>.Default.GetHashCode(EqualityContract),\n            EqualityComparer<T1>.Default.GetHashCode(P1));\n    }\n}\n\nclass R2 : R1, IEquatable<R2>\n{\n    public T2 P2 { get; init; }\n    protected override Type EqualityContract => typeof(R2);\n    public override bool Equals(object? obj) => Equals(obj as R2);\n    public sealed override bool Equals(R1? other) => Equals((object?)other);\n    public virtual bool Equals(R2? other)\n    {\n        return base.Equals((R1?)other) &&\n            EqualityComparer<T2>.Default.Equals(P2, other.P2);\n    }\n    public static bool operator==(R2? left, R2? right)\n        => (object)left == right || (left?.Equals(right) ?? false);\n    public static bool operator!=(R2? left, R2? right)\n        => !(left == right);\n    public override int GetHashCode()\n    {\n        return HashCode.Combine(base.GetHashCode(),\n            EqualityComparer<T2>.Default.GetHashCode(P2));\n    }\n}\n\nclass R3 : R2, IEquatable<R3>\n{\n    public T3 P3 { get; init; }\n    protected override Type EqualityContract => typeof(R3);\n    public override bool Equals(object? obj) => Equals(obj as R3);\n    public sealed override bool Equals(R2? other) => Equals((object?)other);\n    public virtual bool Equals(R3? other)\n    {\n        return base.Equals((R2?)other) &&\n            EqualityComparer<T3>.Default.Equals(P3, other.P3);\n    }\n    public static bool operator==(R3? left, R3? right)\n        => (object)left == right || (left?.Equals(right) ?? false);\n    public static bool operator!=(R3? left, R3? right)\n        => !(left == right);\n    public override int GetHashCode()\n    {\n        return HashCode.Combine(base.GetHashCode(),\n            EqualityComparer<T3>.Default.GetHashCode(P3));\n    }\n}",
+  "sourceSHA256": "609800f614917a40144fdce2799a5b53451bdbdb57cdd5708fc16793430f0216",
+  "target": "library",
+  "featureId": "csharp-9-0-records",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/records.md",
+    "sha256": "a3198542cb3ddbad72e522fdf5442c5762254d2e6d571bf1dfba2a11110f15e6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/records.md",
+    "license": "NOASSERTION",
+    "offset": 7414
+  }
+}

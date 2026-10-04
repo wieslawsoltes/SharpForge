@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-40e1217c3944cc1cd2f0",
+  "kind": "spec",
+  "sourceText": "class Base\n{\n    public virtual int Property { get; init; }\n}\n\nclass C1 : Base\n{\n    public override int Property { get; init; }\n}\n\nclass C2 : Base\n{\n    // Error: Property must have init to override Base.Property\n    public override int Property { get; set; }\n}",
+  "sourceSHA256": "83645f84fb87f672e44a540e0c411eee8a865140a7bea56ff936f7fd6d03d08d",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 5282
+  }
+}

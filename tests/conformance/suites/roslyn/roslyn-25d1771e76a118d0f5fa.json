@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-25d1771e76a118d0f5fa",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C<T>\n{\n    public class Nested { }\n}\n\n[System.Serializable]\npublic class CS<T>\n{\n    [System.Serializable]\n    public class NestedS { }\n}\n\npublic class SubstitutedNested : C<int>.Nested { }\npublic class SubstitutedNestedS : CS<int>.NestedS { }\n\npublic class Constructed : C<int> { }\npublic class ConstructedS : CS<int> { }\n\npublic class MissingTopLevel : TopLevel { }\npublic class MissingNested : TopLevel.Nested { }\npublic class MissingConstructed : Constructed<int> { }\n\npublic class MissingSubstitutedNested<T, U> : TopLevel<T>.Nested<U> { }\n\nnamespace System\n{\n    [System.Serializable]\n    public struct ValueTuple<T1, T2> { }\n}\n\npublic class ValueTupleS\n{\n    (int, int) M() => throw null;\n}\n",
+  "sourceSHA256": "42517885db389d5692a6eb9154953da3685af7494d109216e5e7a5b614f197c1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestIsSerializableProperty",
+    "offset": 190170
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { lib.EmitToImageReference() })",
+  "options": "(source, references: new[] { lib.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

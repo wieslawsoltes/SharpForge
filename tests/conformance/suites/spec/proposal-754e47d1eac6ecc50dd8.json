@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-754e47d1eac6ecc50dd8",
+  "kind": "spec",
+  "sourceText": "stackalloc int[3]\t\t\t\t// currently allowed\nstackalloc int[3] { 1, 2, 3 }\nstackalloc int[] { 1, 2, 3 }\nstackalloc[] { 1, 2, 3 }",
+  "sourceSHA256": "792ee442fdb786210cf9554fbb655bcdb748f82e1c99d9c3476d1f2599366e05",
+  "target": "library",
+  "featureId": "csharp-7-3-stackalloc-initializers",
+  "langVersion": "7.3",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.3/stackalloc-array-initializers.md",
+    "sha256": "85fc8a4e3f4654fc9634392b3fe15e93936344ce2b95ba7dede024093a49175a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/stackalloc-array-initializers.md",
+    "license": "NOASSERTION",
+    "offset": 766
+  }
+}

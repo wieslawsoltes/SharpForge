@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f3cb7c8be75331d7bedc",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable CS0169 // The field is never used\nstruct E\n{}\n\nstruct X<T>\n{\n    T _t;\n}\n\nstruct Y\n{\n    X<Z> xz;\n}\n\nstruct Z\n{\n    X<E> xe;\n    X<Y> xy;\n}\n",
+  "sourceSHA256": "b50079c13423744d4f1e58d4e3a535677d6c1f3a086255add68834fe9c2aed02",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "InstanceMemberExplosion_03",
+    "offset": 8607
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0523",
+        "severity": "error"
+      },
+      {
+        "code": "CS0523",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,10): error CS0523: Struct member 'Y.xz' of type 'X<Z>' causes a cycle in the struct layout\n                //     X<Z> xz;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"xz\").WithArguments(\"Y.xz\", \"X<Z>\").WithLocation(12, 10),\n                // (18,10): error CS0523: Struct member 'Z.xy' of type 'X<Y>' causes a cycle in the struct layout\n                //     X<Y> xy;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"xy\").WithArguments(\"Z.xy\", \"X<Y>\").WithLocation(18, 10)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-fd21e046f8d9304c2fa2",
+  "kind": "spec",
+  "sourceText": "readonly struct S1\n{\n    readonly object _p1;\n    object P1 { get => _p1; set { } }   // ok\n    object P2 { get; set; }             // error: auto-prop in readonly struct must be readonly\n    object P3 { get => field; set { } } // ok?\n}\n\nstruct S2\n{\n    readonly object _p1;\n    readonly object P1 { get => _p1; set { } }   // ok\n    readonly object P2 { get; set; }             // error: auto-prop with set marked readonly\n    readonly object P3 { get => field; set { } } // ok?\n}\n ```\n\n#### Answer\n\nThere could be scenarios for this where you're implementing a `set` accessor on a `readonly` struct and either passing it through, or throwing. We will allow this.\n\n### `[Conditional]` code\n\nShould the synthesized field be generated when `field` is used only in omitted calls to [*conditional methods*](https://github.com/dotnet/csharpstandard/blob/standard-v7/standard/attributes.md#22532-conditional-methods)?\n\nFor instance, should a backing field be generated for the following in a non-DEBUG build?",
+  "sourceSHA256": "a4b76a03023270193dca6c9e44d984d3292bb9213905cfeaf3edb4e0caa5a011",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 37742
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-dffb0b2dd8b9da76c626",
+  "kind": "spec",
+  "sourceText": "public static void Extension(ref this Guid self)\n{\n    // do something\n}",
+  "sourceSHA256": "b0c49fd9656d504e62451f40b7bd1a6cccba3f0f543b46d805f0dab455359b39",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 23092
+  }
+}

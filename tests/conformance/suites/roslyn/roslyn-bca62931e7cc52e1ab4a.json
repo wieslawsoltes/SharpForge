@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bca62931e7cc52e1ab4a",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing unmanaged = Legacy1;\nusing notnull = Legacy2;\n\npublic class C1<T> where T : unmanaged\n{\n}\n\npublic class C2<T> where T : notnull\n{\n}\n\n[Obsolete(\"error\", true)]\npublic class Legacy1\n{\n}\n\n[Obsolete(\"error\", true)]\npublic class Legacy2\n{\n}",
+  "sourceSHA256": "7d4fb4a61adb6723e36bd87aba1f506d6cc79e9b08068a3b070b3c8ab441b34c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteUnmanagedAndNotNullAliases",
+    "offset": 505821
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8981",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8981",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,7): warning CS8981: The type name 'unmanaged' only contains lower-cased ascii characters. Such names may become reserved for the language.\n                // using unmanaged = Legacy1;\n                Diagnostic(ErrorCode.WRN_LowerCaseTypeName, \"unmanaged\").WithArguments(\"unmanaged\").WithLocation(2, 7),\n                // (3,7): warning CS8981: The type name 'notnull' only contains lower-cased ascii characters. Such names may become reserved for the language.\n                // using notnull = Legacy2;\n                Diagnostic(ErrorCode.WRN_LowerCaseTypeName, \"notnull\").WithArguments(\"notnull\").WithLocation(3, 7),\n                // (5,30): error CS0619: 'Legacy1' is obsolete: 'error'\n                // public class C1<T> where T : unmanaged\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"unmanaged\").WithArguments(\"Legacy1\", \"error\").WithLocation(5, 30),\n                // (5,30): error CS0619: 'Legacy1' is obsolete: 'error'\n                // public class C1<T> where T : unmanaged\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"unmanaged\").WithArguments(\"Legacy1\", \"error\").WithLocation(5, 30),\n                // (9,30): error CS0619: 'Legacy2' is obsolete: 'error'\n                // public class C2<T> where T : notnull\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"notnull\").WithArguments(\"Legacy2\", \"error\").WithLocation(9, 30),\n                // (9,30): error CS0619: 'Legacy2' is obsolete: 'error'\n                // public class C2<T> where T : notnull\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"notnull\").WithArguments(\"Legacy2\", \"error\").WithLocation(9, 30)\n            ",
+  "unsupported": []
+}

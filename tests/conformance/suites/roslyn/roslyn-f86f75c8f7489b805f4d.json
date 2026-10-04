@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f86f75c8f7489b805f4d",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class B\n{\n    public string field = \"field\";\n}",
+  "sourceSHA256": "7c882c9482685578513424210de1d6c84191fc251395321d26b365d52c7e0fee",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "sha256": "44af3a2b3a9902d6a7259ce0c742c45e4a6948fa26f70a2cd52f9e39ce49587c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "TestNoDuplicateCallbacksForFieldDeclaration",
+    "offset": 35337
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
