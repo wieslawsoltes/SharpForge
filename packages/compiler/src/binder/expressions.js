@@ -202,7 +202,6 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   bindSwitchExpression(node){
     const type=this.switchType(node),dispatch=this.bindSwitchDispatch(node,node.arms.map(a=>[a.pattern]));
     const arms=node.arms.map((arm,i)=>{const value=this.bindExpression(arm.expression);this.checkAssign(type,value.legacyType,arm);return this.node(BoundSwitchExpressionArm,arm,{pattern:dispatch.labels[i][0],value},value.legacyType);});
-    if(!dispatch.hasDefault)this.c.report(node,DiagnosticId.CS8509,['_']);
     return this.node(BoundSwitchExpression,node,{expression:dispatch.expression,arms},type);
   }
   bindCollectionExpression(node,target){

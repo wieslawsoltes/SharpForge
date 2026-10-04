@@ -16,6 +16,7 @@
  */
 import { n } from './node-factory.js';
 import { typeNameText } from '../../lowering/generics/instantiation-names.js';
+import { isScalarType, scalarDefault } from '../scalar-values.js';
 
 export class DelegateClasses {
   /** @param generator `{program, types}`: the program model and the type mapper */
@@ -302,5 +303,5 @@ export class DelegateClasses {
 }
 
 function defaultOf(type) {
-  return type === 'int' || type === 'double' ? 0 : type === 'bool' ? false : null;
+  return isScalarType(type) ? scalarDefault(type) : type === 'bool' ? false : null;
 }

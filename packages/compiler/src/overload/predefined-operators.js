@@ -7,6 +7,7 @@
  * module is consulted only after they found nothing, so it does not change how predefined operands resolve.
  * Signatures are built once per set of core types.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
 import { MethodSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from '../symbols/members.js';
 import { stripNullable } from '../conversions/nullable.js';
@@ -81,7 +82,7 @@ export function resolvePredefinedOperator(resolver, operator, operands) {
   const candidates = (operands.length === 1 ? table.unary : table.binary).get(operator);
   if (!candidates) return null;
   const result = resolver.overloads.resolve(candidates, operands, { name: operator });
-  if (!result.succeeded) return result.error?.code === 'CS0121' ? { ambiguous: true } : null;
+  if (!result.succeeded) return result.error?.code === DiagnosticId.CS0121 ? { ambiguous: true } : null;
   const method = result.method;
   return {
     kind: 'builtin',

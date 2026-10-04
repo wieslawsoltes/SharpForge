@@ -2,6 +2,8 @@ import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} 
 import {compositeFormat} from '../formatting/composite-format.js';
 import {isNullOrWhiteSpace, trimWhiteSpace} from './whitespace.js';
 import {invariantCase} from './casing.js';
+import {compareOrdinalRange} from './string-compare.js';
+import {equalsWithComparison, registerStringEqualityExtensions} from './string-equality.js';
 
 const owner = 'System.String';
 
@@ -51,6 +53,13 @@ export function registerString({define, member, prop}) {
   member(owner, 'Format', ['string', 'object[]'], 'string', {isStatic: true});
 }
 
+/** Append comparison overloads only from the ordered A07 tail, preserving released String IDs. */
+export function registerStringComparisonExtensions(registry) {
+  const {member} = registry;
+  member(owner, 'CompareOrdinal', ['string', 'int', 'string', 'int', 'int'], 'int', {isStatic: true});
+  registerStringEqualityExtensions(registry);
+}
+
 function splitString(platform, receiver, values, scalars) {
   const separator = string(platform, values[0], true);
   const limit = scalars.length === 2 ? integer(platform, scalars[1]) : MAX;
@@ -87,8 +96,10 @@ function staticString(platform, descriptor, values, scalars) {
       const elementType = descriptor.parameters[1].slice(0, -2);
       return array(platform, values[1]).map(value => text(platform, value, elementType)).join(scalars[0] ?? '');
     }
-    case 'Equals': return scalars[0] === scalars[1];
+    case 'Equals': return scalars.length === 2 ? scalars[0] === scalars[1]
+      : equalsWithComparison(platform, scalars[0], scalars[1], scalars[2]);
     case 'CompareOrdinal':
+      if (scalars.length === 5) return compareOrdinalRange(platform, scalars);
       if (scalars[0] === scalars[1]) return 0;
       if (scalars[0] === null) return -1;
       if (scalars[1] === null) return 1;
@@ -105,6 +116,7 @@ function instanceString(platform, name, receiver, values, scalars) {
   switch (name) {
     case 'get_Length': return receiver.length;
     case 'ToString': return receiver;
+    case 'Equals': return equalsWithComparison(platform, receiver, scalars[0], scalars[1]);
     case 'Substring': {
       const start = integer(platform, scalars[0], 0, receiver.length);
       const length = values.length === 1 ? receiver.length - start : integer(platform, scalars[1], 0, receiver.length - start);

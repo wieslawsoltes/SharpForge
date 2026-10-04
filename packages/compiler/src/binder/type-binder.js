@@ -23,8 +23,9 @@ import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
 import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
-import { maxTupleElements, tupleNameProblems, tupleTypeOf } from './tuples.js';
+import { tupleNameProblems, tupleTypeOf } from './tuples.js';
 import { bindFunctionPointerType } from './function-pointers.js';
+import { isRefLike } from './ref-struct.js';
 
 export class Scope {
   /** @param {'unit'|'namespace'|'type'|'typeParameters'} kind */
@@ -361,7 +362,9 @@ export class TypeBinder {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
         }
-        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
+        // 'dynamic' is a type from C# 4; before that it is an ordinary name (CS0246 unless something declares it).
+        const hasDynamic = (this.host.languageVersionAt?.(scope.uri) ?? 4) >= 4;
+        if (name === 'dynamic' && hasDynamic && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
       }
       // falls through
       case 'GenericName':
@@ -378,6 +381,8 @@ export class TypeBinder {
         let element = this.bindType(syntax.elementType, scope, elementOptions(options));
         if (element.type.isStatic && element.type.kind === SymbolKind.NamedType)
           this.report(scope, syntax.elementType, DiagnosticId.CS0719, [element.type.toDisplayString()]);
+        // A ref struct lives on the stack: it cannot be the element of an array, wherever the array type is written.
+        if (isRefLike(element.type)) this.report(scope, syntax.elementType, DiagnosticId.CS0611, [element.type.toDisplayString()]);
         // Rank specifiers read left to right from the outside in: int[][,] is an array of int[,].
         for (const rank of [...syntax.rankSpecifiers].reverse()) element = plain(this.core.arrayOf(element, rank.sizes.length || 1));
         return element;
@@ -405,7 +410,7 @@ export class TypeBinder {
       case 'TupleType': {
         const elements = syntax.elements.map(e => this.bindType(e.type, scope, options)),
           names = syntax.elements.map(e => e.identifier?.valueText ?? null);
-        if (elements.length < 2 || elements.length > maxTupleElements) return twa(error('ValueTuple', elements.length));
+        if (elements.length < 2) return twa(error('ValueTuple', elements.length));
         if (!options.quiet)
           for (const problem of tupleNameProblems(names)) this.report(scope, syntax.elements[problem.index].identifier, problem.code, problem.args);
         return twa(tupleTypeOf(this.core.bridge, elements, names));

@@ -4,6 +4,8 @@ import {bclModules} from './modules.js';
 export {createBclRegistry} from './registry.js';
 export {bclModules} from './modules.js';
 export {MAX, fail, integer, bclScalar, typeOf, text, string, bounded, array, makeArray, equal, nativeEqual} from './host.js';
+export {resolveStringComparer} from './system/string-comparer.js';
+export {createHostStringOrdering, defaultStringOrdering} from './globalization/string-ordering.js';
 export {formatBclValue} from './formatting/index.js';
 export {formatDoubleDefault} from './formatting/index.js';
 export {compositeFormat} from './formatting/index.js';

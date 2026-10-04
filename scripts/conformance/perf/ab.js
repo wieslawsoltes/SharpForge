@@ -9,7 +9,8 @@ import {adapters} from './workloads.js';
 import {readBaseline} from './update-baseline.js';
 import {committedJson} from './size-budget.js';
 import {compare,summary} from './compare.js';
-import {args,integer,isMain,repository,git,clean,report,benchmark,writeJson,json,pinCheckouts} from './core.js';
+import {combineMeasurements} from './combine.js';
+import {args,integer,isMain,repository,git,clean,report,writeJson,json,pinCheckouts} from './core.js';
 export async function ab({root=repository,base,head='HEAD',ids,registry=null,pairs=20,warmups=3,output=join(root,'artifacts/results/performance/ab'),signal,timeoutMs=120000,threshold=.05,quarantine=[]}={}){
  if(!base)throw new Error('An explicit baseline commit is required');
  const capturedHarness=pinCheckouts(root);
@@ -37,7 +38,7 @@ export async function ab({root=repository,base,head='HEAD',ids,registry=null,pai
    captured[side].push(raw);order.push({side,id,pair,started,command:[process.execPath,...argv],artifact:name+'.json'});
   }
   for(const side of ['base','head'])if(clean(trees[side])!==commits[side])throw new Error('Checkout changed during benchmark');
-  const combine=side=>report(ids.map(id=>{const selected=captured[side].flatMap(x=>x.benchmarks).filter(x=>x.id===id),first=selected[0];if(selected.some(x=>x.correctness.checksum!==first.correctness.checksum))throw new Error('Nondeterministic correctness '+id);return benchmark({...first,samples:selected.flatMap(x=>x.samples),coldSamples:selected.flatMap(x=>x.coldSamples),checksum:first.correctness.checksum,metrics:{samples:selected.flatMap(x=>x.metrics?.samples??[])}});}),captured[side][0].environment,{registry:pinnedRegistry.identity});
+  const combine=side=>report(ids.map(id=>combineMeasurements(captured[side].flatMap(x=>x.benchmarks).filter(x=>x.id===id))),captured[side][0].environment,{registry:pinnedRegistry.identity});
   capturedHarness.verify();pinnedRegistry.verify();
   const before=combine('base'),after=combine('head'),result=compare(before,after,{threshold,minSamples:pairs,quarantine});
   writeJson(join(output,'base.json'),before);writeJson(join(output,'head.json'),after);writeJson(join(output,'comparison.json'),result);await writeFile(join(output,'summary.md'),summary(result));completed=true;return result;

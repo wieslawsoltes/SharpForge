@@ -18,6 +18,7 @@ export function cilRuntimeEvents(vm) {
 }
 
 export function enterCilMethod(vm, frame, reason = 'call') {
+  if (reason === 'call') vm.profiler?.enter(frame);
   const observer = observers.get(vm);
   if (!observer) return;
   const method = frame.method;

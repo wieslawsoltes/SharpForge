@@ -53,6 +53,12 @@ const rules = [
     codes: [DiagnosticId.CS0029, DiagnosticId.CS0266, DiagnosticId.CS0037],
   },
   {
+    // A switch expression (flow/pattern-exhaustiveness.js): arms that can never be chosen and values no arm handles.
+    text: /\bswitch\s*\{/,
+    applies: node => node.kind === 'SwitchExpression',
+    codes: [DiagnosticId.CS8509, DiagnosticId.CS8510, DiagnosticId.CS8524, DiagnosticId.CS8846],
+  },
+  {
     // C# 15 preview `closed` types (binder/preview-features.js): the provisional rules of the pinned proposals.
     text: /\bclosed\s+(?:class|enum)\b/,
     applies: node => (node.kind === 'ClassDeclaration' || node.kind === 'EnumDeclaration') && (node.modifiers ?? []).some(token => token.text === 'closed'),
@@ -60,10 +66,31 @@ const rules = [
   },
 ];
 const typeDeclarationKinds = new Set(['ClassDeclaration', 'StructDeclaration', 'InterfaceDeclaration', 'EnumDeclaration', 'DelegateDeclaration']);
+const nullableWarningContexts = new Set(['enable', 'warnings']);
 const reservedNames = new Set(['record', 'required', 'scoped', 'file', 'extension']);
 
-/** Rules decided from the compilation unit alone: `{ applies(file), codes }`. */
+/** The warnings of the nullable flow analysis and of the nullable signature checks (packages/compiler/src/nullable). */
+const nullableWarnings = [
+  DiagnosticId.CS8597,
+  DiagnosticId.CS8600,
+  DiagnosticId.CS8601,
+  DiagnosticId.CS8602,
+  DiagnosticId.CS8603,
+  DiagnosticId.CS8604,
+  DiagnosticId.CS8605,
+  DiagnosticId.CS8618,
+  DiagnosticId.CS8625,
+];
+const enablesNullable = /^[ \t]*#[ \t]*nullable[ \t]+(?:enable|restore)\b/m;
+
+/** Rules decided from the compilation unit alone: `{ applies(file, options), codes }`. */
 const unitRules = [
+  {
+    // A nullable warning context: the execution pipeline has no null-state analysis, so a program without a single
+    // annotation (`string t = o.ToString();`) would compile without the warnings it has.
+    applies: (file, options) => enablesNullable.test(file.source.text) || nullableWarningContexts.has(options.nullableContext),
+    codes: nullableWarnings,
+  },
   {
     // Top-level statements: placement, the Program type, the `args` parameter, unused local functions (binder/top-level.js).
     applies: needsTopLevelRules,
@@ -84,13 +111,14 @@ function contains(node, applies) {
  * The diagnostic codes to take from the semantic analysis for these files: those of the rules whose construct one of
  * the files has. Empty for almost every program, which is then not analysed at all.
  * @param {object[]} files parsed files `{ source: { text }, syntax }`
+ * @param {{nullableContext?: string}} [options] the compilation options the rules depend on
  * @returns {Set<string>}
  */
-export function applicableRuleCodes(files) {
+export function applicableRuleCodes(files, options = {}) {
   const codes = new Set(),
     take = rule => rule.codes.forEach(code => codes.add(code));
   for (const file of files) {
-    for (const rule of unitRules) if (rule.applies(file)) take(rule);
+    for (const rule of unitRules) if (rule.applies(file, options)) take(rule);
     for (const rule of rules) if (rule.text.test(file.source.text) && contains(file.syntax, rule.applies)) take(rule);
   }
   return codes;

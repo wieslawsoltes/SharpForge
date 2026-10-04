@@ -1,0 +1,37 @@
+{
+  "runtime": ".NET 10.0.5",
+  "cases": {
+    "wide": {
+      "Main": 5,
+      "Echo": 5,
+      "Literal0": -2147483648,
+      "Literal1": -129,
+      "Literal2": -128,
+      "Literal3": -1,
+      "Literal4": 0,
+      "Literal5": 8,
+      "Literal6": 9,
+      "Literal7": 127,
+      "Literal8": 128,
+      "Literal9": 2147483647,
+      "Literal10": -2147483648,
+      "Literal11": -1
+    },
+    "compact": {
+      "Main": 5,
+      "Echo": 5,
+      "Literal0": -2147483648,
+      "Literal1": -129,
+      "Literal2": -128,
+      "Literal3": -1,
+      "Literal4": 0,
+      "Literal5": 8,
+      "Literal6": 9,
+      "Literal7": 127,
+      "Literal8": 128,
+      "Literal9": 2147483647,
+      "Literal10": -2147483648,
+      "Literal11": -1
+    }
+  }
+}
