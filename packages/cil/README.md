@@ -125,3 +125,11 @@ with one reusable 256-byte schedule and 32-byte state, so scratch storage is ind
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
 
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
+
+### Type-handle admission
+
+`verifyCilAssembly` accepts `ldtoken` for nominal TypeDef/TypeRef identities,
+including open generic definitions. A metadata handle does not instantiate
+that type or allocate its storage. TypeSpec handles retain signature arity and
+declaring-context variable checks; open generic locals, allocations and other
+storage operations remain subject to their existing restrictions.
