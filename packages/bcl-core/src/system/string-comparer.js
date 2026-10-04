@@ -1,0 +1,72 @@
+import {compareObjects} from './object-comparison.js';
+import {compareOrdinalIgnoreCase} from './string-compare.js';
+import {fail, string} from '../host.js';
+
+const comparerType = 'System.StringComparer';
+const stringInterface = 'System.Collections.Generic.IComparer`1<string>';
+const comparisons = Object.freeze({ordinal: compareOrdinal, ordinalIgnoreCase: compareOrdinalIgnoreCase});
+const getters = Object.freeze({get_Ordinal: 'ordinal', get_OrdinalIgnoreCase: 'ordinalIgnoreCase'});
+
+/** Compare nullable native strings by UTF-16 code units; only the sign is specified. */
+export function compareOrdinal(first, second) {
+  if (first === second) return 0;
+  if (first === null) return -1;
+  if (second === null) return 1;
+  return first < second ? -1 : 1;
+}
+
+/** Resolve a managed built-in comparer once per operation, rejecting unsupported implementations. */
+export function resolveStringComparer(platform, reference) {
+  if (reference === null) fail(platform, 'NullReferenceException', 'A comparer instance is required');
+  const record = platform.heap.get(reference);
+  const mode = record.type === comparerType ? platform.get(reference, '$comparison') : null;
+  if (Object.hasOwn(comparisons, mode)) return comparisons[mode];
+  fail(platform, 'NotSupportedException', 'This profile supports ordinal StringComparers; custom comparers are tracked by #2655');
+}
+
+/** Register the new getter only at the current A07 tail; released comparer IDs must not move. */
+export function registerStringComparerExtensions(registry) {
+  registry.prop(comparerType, 'OrdinalIgnoreCase', comparerType, null, true, true);
+}
+
+/** Invoke Compare through either StringComparer or its IComparer<string> contract. */
+function invokeStringCompare(platform, args) {
+  const compare = resolveStringComparer(platform, args[0]);
+  return {handled: true, value: compare(string(platform, args[1], true), string(platform, args[2], true))};
+}
+
+function registerStringComparer(registry) {
+  // Two closed signatures seed the bridge's existing open generic projection.
+  for (const element of ['string', 'object']) {
+    const name = `System.Collections.Generic.IComparer\`1<${element}>`;
+    registry.define(name, {
+      kind: 'bcl', typeKind: 'interface', family: 'orderingComparer', base: null, variance: ['in']
+    });
+    registry.member(name, 'Compare', [element, element], 'int', {isAbstract: true});
+  }
+  registry.define(comparerType, {
+    kind: 'bcl', family: 'stringComparer', isAbstract: true, interfaces: [stringInterface, 'System.Collections.IComparer']
+  });
+  registry.prop(comparerType, 'Ordinal', comparerType, null, true, true);
+  registry.member(comparerType, 'Compare', ['string', 'string'], 'int', {isAbstract: true});
+}
+
+function invokeStringComparer(platform, descriptor, args) {
+  if (Object.hasOwn(getters, descriptor.name)) {
+    const key = comparerType + '.' + descriptor.name.slice(4);
+    const value = platform.singleton(key, () => platform.make(comparerType, {'$comparison': getters[descriptor.name]}));
+    return {handled: true, value};
+  }
+  if (descriptor.name === 'Compare') {
+    if (descriptor.parameters[0] === 'object') {
+      const compare = resolveStringComparer(platform, args[0]);
+      return {handled: true, value: compareObjects(platform, args[1], args[2], compare)};
+    }
+    return invokeStringCompare(platform, args);
+  }
+  fail(platform, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
+}
+
+export const stringComparerModule = Object.freeze({
+  name: 'stringComparer', families: ['stringComparer', 'orderingComparer'], contracts: registerStringComparer, invoke: invokeStringComparer
+});

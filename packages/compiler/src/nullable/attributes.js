@@ -10,6 +10,8 @@
  * helper functions answer the questions the flow walker asks. `x!` (the null-forgiving operator) simply makes the
  * expression not-null and silences the warnings it would have caused.
  */
+import { SymbolKind } from '../symbols/types.js';
+
 const attributeNames = new Set([
   'AllowNull',
   'DisallowNull',
@@ -133,7 +135,8 @@ export function argumentStateAfterCall(parameter, returned) {
   const notNullWhen = find(attributes, 'NotNullWhen');
   if (notNullWhen && returned !== null && notNullWhen.arguments[0] === returned) return 'notNull';
   const maybeNullWhen = find(attributes, 'MaybeNullWhen');
-  if (maybeNullWhen && returned !== null) return maybeNullWhen.arguments[0] === returned ? 'maybeNull' : 'notNull';
+  // Without a known result the worst case applies: the argument may be null.
+  if (maybeNullWhen) return returned === null || maybeNullWhen.arguments[0] === returned ? 'maybeNull' : 'notNull';
   return null;
 }
 
@@ -152,7 +155,10 @@ export function notNullIfNotNullParameters(method) {
  */
 export function membersNotNullAfterCall(method, returned) {
   const names = [];
-  for (const attribute of nullableAttributesOf(method)) {
+  // On a property the attributes may sit on the property or on its get accessor.
+  const getter = method.kind === SymbolKind.Property ? method.getMethod : null,
+    attributes = getter ? [...nullableAttributesOf(method), ...nullableAttributesOf(getter)] : nullableAttributesOf(method);
+  for (const attribute of attributes) {
     if (attribute.name === 'MemberNotNull') names.push(...attribute.arguments.filter(value => typeof value === 'string'));
     if (attribute.name === 'MemberNotNullWhen' && returned !== null && attribute.arguments[0] === returned) {
       names.push(...attribute.arguments.slice(1).filter(value => typeof value === 'string'));

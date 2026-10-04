@@ -6,7 +6,9 @@
  * The same rules serve deconstructing assignments and declarations (binder/body/deconstruction.js) and positional
  * patterns.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { extensionScopes, isValidReceiverConversion } from '../overload/extension-methods.js';
 import { lookupMembers } from './inheritance.js';
 
@@ -55,15 +57,15 @@ export function findDeconstruct(binder, type, count, receiver) {
 export function deconstructionOf(binder, type, count, receiver) {
   const display = binder.display(type);
   if (type.isTupleType && !type.isDefinition) {
-    const partTypes = type.typeArguments.map(argument => argument.type);
-    if (partTypes.length !== count) return { isArity: true, error: [{ code: 'CS8132', args: [partTypes.length, count] }] };
+    const partTypes = tupleElements(type).map(argument => argument.type);
+    if (partTypes.length !== count) return { isArity: true, error: [{ code: DiagnosticId.CS8132, args: [partTypes.length, count] }] };
     return { kind: 'tuple', partTypes };
   }
-  if (type.typeKind === 'dynamic') return { error: [{ code: 'CS8133', args: [] }] };
+  if (type.typeKind === 'dynamic') return { error: [{ code: DiagnosticId.CS8133, args: [] }] };
   const found = findDeconstruct(binder, type, count, receiver);
   if (found) return { kind: 'method', ...found };
   // No method of that name at all is CS1061; one with another number of parameters is CS1501.
   const declared = lookupMembers(type, 'Deconstruct', binder.core, { within: binder.c.containingType }).members.length > 0;
-  const error = [declared ? { code: 'CS1501', args: ['Deconstruct', count] } : { code: 'CS1061', args: [display, 'Deconstruct'] }];
-  return { error: [...error, { code: 'CS8129', args: [display, count] }] };
+  const error = [declared ? { code: DiagnosticId.CS1501, args: ['Deconstruct', count] } : { code: DiagnosticId.CS1061, args: [display, 'Deconstruct'] }];
+  return { error: [...error, { code: DiagnosticId.CS8129, args: [display, count] }] };
 }

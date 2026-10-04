@@ -1,1 +1,65 @@
-.runtime-page{max-width:960px;margin:0 auto;padding:16px 20px}.runtime-page section{padding:12px 0;border-bottom:1px solid var(--border,#454545)}.runtime-page p{line-height:1.55;color:var(--text-muted,#9d9d9d);margin:8px 0}.runtime-page h2{margin:0}.runtime-page h3{margin:0 0 10px;font-size:13px}.runtime-header,.runtime-grid{display:flex;gap:18px;align-items:start;justify-content:space-between}.runtime-grid>.tool-field{flex:1;min-width:0}.runtime-header>div{flex:1}.runtime-page .tool-field{display:flex;flex-direction:column;gap:6px;margin:8px 0}.runtime-page input[type=number],.runtime-page select,.runtime-page textarea{box-sizing:border-box;width:100%;padding:7px}.runtime-grant{display:flex;align-items:center;gap:8px;font-weight:600}.runtime-page pre{padding:12px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:360px;overflow:auto;border:1px solid var(--border,#454545)}#runtime-status{font-size:12px;padding:6px}@media(max-width:700px){.runtime-grid{display:block}.runtime-page{padding:12px}.runtime-header{flex-wrap:wrap}}
+.runtime-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+.runtime-page section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.runtime-page p {
+  line-height: 1.55;
+  color: var(--text-muted,var(--runtime-settings-runtime-page-p-foreground));
+  margin: 8px 0;
+}
+.runtime-page h2 { margin: 0; }
+.runtime-page h3 {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+.runtime-header,.runtime-grid {
+  display: flex;
+  gap: 18px;
+  align-items: start;
+  justify-content: space-between;
+}
+.runtime-grid>.tool-field {
+  flex: 1;
+  min-width: 0;
+}
+.runtime-header>div { flex: 1; }
+.runtime-page .tool-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0;
+}
+.runtime-page input[type=number],.runtime-page select,.runtime-page textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 7px;
+}
+.runtime-grant {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.runtime-page pre {
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  max-height: 360px;
+  overflow: auto;
+  border: 1px solid var(--border);
+}
+#runtime-status {
+  font-size: 12px;
+  padding: 6px;
+}
+@media(max-width:700px) {
+  .runtime-grid { display: block; }
+  .runtime-page { padding: 12px; }
+  .runtime-header { flex-wrap: wrap; }
+}

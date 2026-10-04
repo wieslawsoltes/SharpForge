@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-10-03T21:31:12.299Z",
+  "implementationRevision": "57d69326c6717600da812cc13f2211adc6e1b592",
+  "command": "node tests/bench/a20-editor-search.mjs 100 57d69326c6717600da812cc13f2211adc6e1b592",
+  "machine": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "cores": 9
+  },
+  "source": {
+    "bytes": 104857600,
+    "utf16Units": 104857600,
+    "marker": "UNIQUE_END_MARKER",
+    "expectedOffset": 104857583,
+    "fixtureLine": "// literal search payload 0123456789\n"
+  },
+  "fullRuns": 1,
+  "baseline": {
+    "status": "budget-exhausted",
+    "code": "SEARCH_LIMIT",
+    "milliseconds": 12.515630000000101
+  },
+  "after": {
+    "backend": "cooperative-kmp",
+    "scheduler": "Node setImmediate",
+    "milliseconds": 1809.1425909999998,
+    "matches": 1,
+    "actualOffset": 104857583,
+    "slices": 6407,
+    "yields": 6406,
+    "sliceMedianMs": 0.24062400000002526,
+    "sliceP95Ms": 0.42672400000003563,
+    "sliceMaxMs": 3.1149190000001
+  },
+  "browserQualification": {
+    "status": "not-run",
+    "reason": "Node search benchmark; no browser input or paint latency is measured"
+  },
+  "speedup": null,
+  "comparisonNote": "The bounded synchronous baseline did not finish; no completion speedup is claimed."
+}
