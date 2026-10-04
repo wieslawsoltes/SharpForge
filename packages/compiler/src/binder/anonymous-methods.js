@@ -14,6 +14,7 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, SymbolKind } from '../symbols/types.js';
+import { isRefLike } from './ref-struct.js';
 
 const refWords = { ref: RefKind.Ref, out: RefKind.Out, in: RefKind.In };
 const byReference = kind => !!kind && kind !== RefKind.None;
@@ -65,6 +66,14 @@ export const AnonymousMethodBinding = Base =>
         mismatch = isTyped && converted.hasErrors && !value.hasErrors && !this.conversions.classifyFromExpression(value, type).isImplicit;
       if (this.c.isLambda && mismatch) this.report(node, DiagnosticId.CS1662, [this.c.isAnonymousMethod ? 'anonymous method' : 'lambda expression']);
       return converted;
+    }
+    /**
+     * A local or parameter of a ref struct type lives on the stack of the function that declares it: an anonymous
+     * function or a local function cannot capture it (CS8175 for a local, CS9108 for a parameter).
+     */
+    reportCapturedRefLike(symbol, syntax) {
+      if (!isRefLike(symbol.type) || this.scopes.some(scope => scope.get(symbol.name) === symbol)) return;
+      this.report(syntax, symbol.kind === SymbolKind.Parameter ? DiagnosticId.CS9108 : DiagnosticId.CS8175, [symbol.name]);
     }
     isOuterByRefParameter(symbol) {
       if (symbol.kind !== SymbolKind.Parameter || !byReference(symbol.refKind)) return false;
