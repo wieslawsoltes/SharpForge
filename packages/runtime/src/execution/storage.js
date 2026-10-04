@@ -5,10 +5,10 @@ import {defaults,storage as numericStorage} from './numeric-ops.js';
 import {enumInfo,enumUnderlying} from './enums.js';
 
 /** Physical static keys can include a closed generic owner and a thread identity. */
-export function staticStorageType(vm, key) {
+export function staticStorageType(vm, key, write = true) {
   const [token, owner] = typeof key === 'string' ? JSON.parse(key) : [key, null];
   const field = vm.typeSystem.fieldCache.resolve(token, null, owner).field;
-  if (field.decimalConstant) throw new ManagedFault('InvalidProgramException', 'Decimal constants are readonly');
+  if (write && field.decimalConstant) throw new ManagedFault('InvalidProgramException', 'Decimal constants are readonly');
   return field.signature.type;
 }
 
