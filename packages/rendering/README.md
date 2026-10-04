@@ -42,6 +42,34 @@ Bounded parsers preserve palette bytes, foreground layers, bitmap strike metrics
 
 `PortableFontRegistry` owns loaded faces and bounded variation instances. Complete grapheme coverage determines fallback; script, language and bidi levels determine shaping items. `HarfBuzzShaper` reuses a bounded UTF-16 allocation and returns real glyph IDs/offsets while releasing all transient input after each shaping request.
 
+## Retained delegates and transforms
+
+`RenderDelegateRegistry` resolves contributions through declared base types. `DisplayListTreeBuilder` preserves content through placement changes and reports unsupported visuals. Released rectangles, elliptical radii, stroke-only shapes and line commands lower into the same drawing list. Affine helpers define composition order and singular-inverse handling.
+
+## Path geometry
+
+`parsePath` normalizes relative and absolute SVG-style commands, arcs and smooth controls into immutable geometry. Geometry bounds include transformed curve extrema. Flattening uses target-space error tolerance; fill hit testing preserves winding rules and rejects malformed or cyclic descriptors.
+
+## Fills, strokes and painted bounds
+
+Scanbeam tessellation preserves holes and self-intersections. Strokes preserve dash seams, cap dots, joins and explicit work/vertex budgets. Painted bounds include transforms, stroke extent, glyph overhang and conservative shadow/effect expansion.
+
+## Brushes and images
+
+Solid, linear and radial brushes share explicit color, opacity, transform, interpolation and spread rules. `ImageCache` owns decoded images through cancellation and eviction. `WriteableBitmap` snapshots its exact pixel storage and publishes invalidation. Image fitting and nine-grid placement preserve the requested source rectangle and alignment.
+
+## Device lifetime
+
+`GpuDevice` coalesces acquisition for surfaces owned by one app, publishes loss/recovery epochs and owns per-epoch pipeline caches. Buffer and texture pools publish reusable leases only after submission retirement has cleared. Borrowing surfaces do not dispose the shared device.
+
+## Glyph and texture residency
+
+`GlyphAtlas` bounds live glyph metadata and raster pages, preserves pages pinned by retained plans, and distinguishes font version, size, density and subpixel phase. Dirty shelves upload incrementally; first residency and recovery upload the full texture. Empty glyphs preserve advances and pending decodes are retried.
+
+## Portable glyph rasterization
+
+`PortableGlyphRasterizer` uses actual loaded glyph outlines or OpenType color assets. It retains phase-adjusted DIP bounds, intrinsic colors and bounded pending-image ownership. Whole-run paint and atlas consumers share these glyphs; neither path reconstructs text from character codes.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.

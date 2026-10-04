@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import {DrawingContext} from '../packages/rendering/src/drawing/context.js';
 import {DisplayList, diffDisplayLists} from '../packages/rendering/src/drawing/display-list.js';
 import {DrawOp, DrawingError, radii} from '../packages/rendering/src/drawing/commands.js';
+import {RenderDelegateRegistry, DisplayListTreeBuilder} from '../packages/rendering/src/drawing/delegates.js';
+import {drawingPrimitives, primitivesToDisplayList} from '../packages/rendering/src/drawing/legacy.js';
+import {displayListBounds} from '../packages/rendering/src/drawing/bounds.js';
 import {ResourceTable} from '../packages/rendering/src/resources/resource-table.js';
 
 const diagnostic = code => error => error instanceof DrawingError && error.code === code;
@@ -60,4 +63,44 @@ test('opaque images stay local and session handles are the explicit wire boundar
   assert.equal(replay.image, image);
   assert.equal(replay.options.dpr, 2);
   resources.dispose();
+});
+
+test('retained lists diff by owner/version and composition-only layout retains encoded content', () => {
+  const first = rectangleList('a', 1), second = rectangleList('b', 1), changed = rectangleList('a', 2);
+  const diff = diffDisplayLists([first, second], [changed, rectangleList('c', 1)]);
+  assert.deepEqual(diff.changed.map(list => list.elementId), ['a', 'c']);
+  assert.deepEqual(diff.removed, [second]);
+  assert.deepEqual(diffDisplayLists([first], [first]).retained, [first]);
+  const registry = new RenderDelegateRegistry({resolveType: type => type === 'Custom.Box' ? {base: 'Rectangle'} : null});
+  registry.register('Rectangle', (node, layout, drawing) => drawing.DrawRectangle(layout.bounds, node.properties.Fill));
+  assert.throws(() => registry.register('Rectangle', () => {}), diagnostic('SFRENDER016'));
+  const builder = new DisplayListTreeBuilder(registry), node = {id: 'a', type: 'Custom.Box', version: 1, properties: {Fill: 'red'}};
+  const layout = {version: 1, contentVersion: 1, bounds: [0, 0, 10, 10]};
+  const initial = builder.build([node], () => layout)[0];
+  layout.version++;
+  assert.equal(builder.build([node], () => layout)[0], initial);
+  assert.equal(builder.metrics.retained, 1);
+  node.version++;
+  assert.notEqual(builder.build([node], () => layout)[0], initial);
+  builder.build([], () => layout);
+  assert.equal(builder.cache.size, 0);
+});
+
+test('released primitives preserve stroke-only, elliptical radii and reachable ellipse behavior', () => {
+  const list = primitivesToDisplayList([{x: 0, y: 0, w: 40, h: 20, fill: null, stroke: 'red', radiusX: 8, radiusY: 3},
+    {x: 50, y: 0, w: 20, h: 30, kind: 1, color: 'blue'}]);
+  assert.equal(list.commands[0].brush, null);
+  assert.deepEqual(list.commands[0].radii, [8, 3, 8, 3, 8, 3, 8, 3]);
+  assert.equal(list.commands[1].op, DrawOp.Ellipse);
+  radii([50, 30], [0, 0, 20, 10]).forEach((value, index) => assert.ok(Math.abs(value - (index % 2 ? 5 : 25 / 3)) < 1e-12));
+  assert.throws(() => drawingPrimitives([{op: 'ExecuteScript'}]), diagnostic('SFRENDER120'));
+  assert.equal(drawingPrimitives([{op: 'FillRectangle', args: [0, 0, 2, 2, 'red']}, {op: 'Clear'}]).length, 0);
+});
+
+test('painted bounds include transformed content, wide blur and native glyph overhangs', () => {
+  const child = rectangleList('a', 1), drawing = new DrawingContext();
+  drawing.PushTransform([1, 0, 0, 1, 20, 30]).DrawLayer({displayList: child, effect: {type: 'GaussianBlur', blurAmount: 100}}).Pop();
+  assert.deepEqual(displayListBounds(drawing.finish()), [-280, -270, 610, 620]);
+  const text = new DrawingContext().DrawGlyphRun({width: 10, height: 16, inkBounds: [-2, -3, 15, 20]}, [10, 10], 'black').finish();
+  assert.deepEqual(displayListBounds(text), [8, 7, 15, 20]);
 });
