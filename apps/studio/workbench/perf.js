@@ -1,6 +1,7 @@
 /** Bounded per-session traces; disabled instruments take one branch and allocate nothing. */
 export class WorkbenchPerformance {
   constructor({clock = () => performance.now(), limit = 4096, enabled = true} = {}) {
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) throw new RangeError('Invalid performance trace limit');
     this.clock = clock;
     this.limit = limit;
     this.enabled = enabled;
@@ -11,7 +12,10 @@ export class WorkbenchPerformance {
   start(name, sessionId = 'workbench') {
     if (!this.enabled) return null;
     let names = this.seen.get(sessionId);
-    if (!names) this.seen.set(sessionId, names = new Set());
+    if (!names) {
+      if (this.seen.size >= this.limit) this.seen.delete(this.seen.keys().next().value);
+      this.seen.set(sessionId, names = new Set());
+    }
     const cold = !names.has(name);
     names.add(name);
     return {name, sessionId, start: this.clock(), cold};
@@ -26,6 +30,7 @@ export class WorkbenchPerformance {
     return sample;
   }
   record(name, duration, sessionId = 'workbench') {
+    if (!this.enabled) return;
     return this.end({name, sessionId, start: this.clock() - duration, cold: false});
   }
   summary() {
