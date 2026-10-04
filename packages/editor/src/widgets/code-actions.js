@@ -9,6 +9,8 @@ export class CodeActionsWidget {
     this.popup = new EditorPopup(context, 'code-actions');
     this.bulb = button(context.document, '💡', () => context.safe(() => this.open()),
       {className: 'sf-action-bulb', 'aria-label': 'Show potential fixes and refactorings', hidden: true});
+    this.inlineBulb = button(context.document, '💡', () => context.safe(() => this.open()),
+      {className: 'sf-inline-action-bulb', 'aria-label': 'Inline potential fixes and refactorings'});
     context.editor.element.append(this.bulb);
     this.items = [];
   }
@@ -22,6 +24,7 @@ export class CodeActionsWidget {
     this.items = serviceItems(result.value);
     this.versions = result.versions;
     this.bulb.hidden = !this.items.length;
+    editor.setInlineWidgets?.('code-actions', this.items.length ? [{offset, node: this.inlineBulb, placement: 'inline'}] : []);
     this.position();
     if (open) this.showMenu(this.items);
   }
@@ -101,6 +104,6 @@ export class CodeActionsWidget {
     this.preview = null;
   }
 
-  changed() { this.close(); this.bulb.hidden = true; }
-  dispose() { this.close(); this.bulb.remove(); this.popup.dispose(); }
+  changed() { this.close(); this.bulb.hidden = true; this.context.editor.setInlineWidgets?.('code-actions', []); }
+  dispose() { this.changed(); this.bulb.remove(); this.inlineBulb.remove(); this.popup.dispose(); }
 }

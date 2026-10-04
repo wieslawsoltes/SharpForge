@@ -1,5 +1,6 @@
 import {EditorPopup, node} from './dom.js';
 import {findTextMatches} from '@sharpforge/text';
+import {cooperativeLiteralSearch} from '../features/cooperative-search.js';
 
 export class IncrementalSearchWidget {
   constructor(context) {
@@ -31,9 +32,22 @@ export class IncrementalSearchWidget {
     this.input.focus();
   }
 
-  search(repeat = false) {
+  async search(repeat = false) {
+    this.searchController?.abort();
+    const controller = new AbortController();
+    this.searchController = controller;
     const editor = this.context.editor;
-    const result = findTextMatches([editor.sourceSnapshot()], this.input.value, {maxMatches: 10_000});
+    const source = editor.sourceSnapshot();
+    const query = this.input.value;
+    let result;
+    try {
+      result = source.length > 131_072 ? await cooperativeLiteralSearch([source], query, {signal: controller.signal}) :
+        findTextMatches([source], query, {maxMatches: 10_000, signal: controller.signal});
+    } catch (error) {
+      if (!controller.signal.aborted) this.status.textContent = error.message;
+      return;
+    }
+    if (controller.signal.aborted || !this.origin || editor.sourceSnapshot().version !== source.version) return;
     const origin = repeat ? this.direction > 0 ? editor.input.selectionEnd : editor.offset : this.origin.start;
     const candidates = result.matches.filter(match => this.direction > 0 ? match.start >= origin : match.end <= origin);
     const match = (this.direction > 0 ? candidates[0] : candidates.at(-1)) ??
@@ -44,11 +58,12 @@ export class IncrementalSearchWidget {
   }
 
   close(cancel) {
+    this.searchController?.abort();
     if (cancel && this.origin) this.context.navigate(this.origin, {preserveFocus: true});
     this.origin = null;
     this.popup.close();
     this.context.editor.focus();
   }
 
-  dispose() { this.popup.dispose(); }
+  dispose() { this.searchController?.abort(); this.popup.dispose(); }
 }
