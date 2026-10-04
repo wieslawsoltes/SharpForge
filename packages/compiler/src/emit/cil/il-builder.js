@@ -78,6 +78,10 @@ export class IlBuilder {
     this.instructions.splice(position, 0, ...instructions);
     this.maxDepth += 1;
   }
+  /** True when a label was placed here: a branch to it lands on the next instruction. */
+  get isJustPastLabel() {
+    return this.instructions.at(-1)?.label !== undefined;
+  }
   /** True when the next instruction can be reached by falling through. */
   get isReachable() {
     return this.depth !== null;
