@@ -219,7 +219,9 @@ export class SymbolMetadataWriter {
     }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
-    if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
+    // `plan.classSize`: the size code generation gives a struct (the buffer struct of a fixed-size buffer).
+    if (plan.classSize) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: plan.classSize, Parent: self });
+    else if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
     this.writeGenericParameters(self, this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);

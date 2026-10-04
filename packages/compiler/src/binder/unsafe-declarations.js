@@ -173,6 +173,8 @@ function checkFixedBuffer(field, type, isUnsafe, { evaluate, add }) {
   if (size) {
     const bound = evaluate(size, field.scope);
     if (!bound.errors && bound.constant?.isIntegral && bound.constant.bigint <= 0n) add(DiagnosticId.CS1665, [], size);
+    // The number of elements, for the layout of the buffer in metadata.
+    else if (!bound.errors && bound.constant?.isIntegral) field.fixedBufferLength = Number(bound.constant.bigint);
   }
   // Naming the buffer yields a pointer to its first element.
   if (element && !isPointerType(element)) {
