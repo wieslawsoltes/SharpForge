@@ -22,6 +22,7 @@ export * from './repository.js';
 export * from './history.js';
 export * from './blame.js';
 export * from './graph-layout.js';
+export * from './service.js';
 export * from './diff/lines.js';
 export * from './diff/patch.js';
 export * from './diff/tree.js';
