@@ -2,7 +2,17 @@
 export class FoldingProvider {
   constructor(editor) { this.editor = editor; this.generation = 0; this.disposed = false; }
 
+  /** Any edit may change syntax ownership, indentation or a region directive, including same-line deletions. */
+  schedule() {
+    clearTimeout(this.timer);
+    this.controller?.abort();
+    if (this.disposed || this.editor.largeFile.active) return;
+    this.timer = setTimeout(() => this.refresh(), 180);
+  }
+
   async refresh() {
+    clearTimeout(this.timer);
+    if (this.disposed) return;
     this.controller?.abort();
     this.controller = new AbortController();
     const generation = ++this.generation;
@@ -32,7 +42,7 @@ export class FoldingProvider {
     }
   }
 
-  dispose() { this.disposed = true; this.generation++; this.controller?.abort(); }
+  dispose() { this.disposed = true; this.generation++; clearTimeout(this.timer); this.controller?.abort(); }
 }
 
 export function fallbackFolding(model, highlightIndex = null) {
