@@ -48,6 +48,7 @@ jobs:
           python-version: '3.12'
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Static consistency and completed application build
+        shell: bash
         run: |
           npm run check
           npm run build
