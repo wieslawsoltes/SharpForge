@@ -1,5 +1,5 @@
 {
   "member-arguments/argument-errors": ["diagnostics", "warnings"],
-  "member-arguments/named-optional-and-params-evaluation-order": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-arguments/named-optional-and-params-evaluation-order": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-arguments/parameter-declaration-errors": ["diagnostics", "warnings"]
 }

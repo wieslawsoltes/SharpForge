@@ -1,8 +1,5 @@
 import {sizeOfType} from '../value-layout.js';
-import {primitiveSizes} from '@sharpforge/cil';
-import {ManagedFault} from '../../heap.js';
 import {storageDefault} from '../storage.js';
-import {enumInfo} from '../enums.js';
 import {finishMemoryAccess} from '../statics.js';
 
 const handlers=new Map([
@@ -12,7 +9,6 @@ const handlers=new Map([
   ['stobj',(vm,frame,instruction)=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));}],
   ['initobj',(vm,frame,instruction)=>{
     const address=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
-    if(table.flags.valueType&&!table.flags.primitive&&!primitiveSizes[type]&&!enumInfo(vm,type))throw new ManagedFault('NotSupportedException','Value-type initobj requires T03 value storage');
     vm.dereference(address,true,storageDefault(vm,type));
   }]
 ]);

@@ -20,6 +20,9 @@ import {ToolboxProviders} from './tools/toolbox.js';
 import {ConfigurationManager} from './configuration-manager.js';
 import {Toolbars} from './toolbars.js';
 import {FileWatch, showDiskCompare} from './file-watch.js';
+import {MetadataCatalog} from './metadata/catalog.js';
+import {createStudioMetadataSources} from './metadata/source-provider.js';
+import {ExecutionCapture} from './tools/execution-capture.js';
 
 /** Services are explicit dependencies; each shell has independent tool state and result windows. */
 export function createShellModels(shell) {
@@ -37,6 +40,9 @@ export function createShellModels(shell) {
   shell.search = new SearchService({documents, context, applyEdits: options.applyEdits, createWorker: options.createSearchWorker,
     sessionProject: id => shell.services.sessions?.get(id)?.projectId});
   shell.symbols = new WorkspaceSymbolIndex({request, documents});
+  shell.metadata = new MetadataCatalog({sources: options.metadataSources ?? createStudioMetadataSources({
+    state: options.state, additional: options.assemblies, readReference: options.readAssemblyReference}),
+    createWorker: options.createMetadataWorker});
   shell.optionsDialog = new OptionsDialog({dialogs, settings: shell.settings});
   registerGeneralOptions(shell.optionsDialog);
   shell.optionsDialog.register(keyboardOptionsPage({registry: commands, keybindings: options.keybindings}));
@@ -66,6 +72,10 @@ export function createShellModels(shell) {
   shell.references = new ReferenceResults();
   shell.tests = new TestProviders();
   shell.timeline = new DiagnosticTimeline();
+  if (shell.services.sessions?.list) {
+    shell.executionCapture = new ExecutionCapture({sessions: shell.services.sessions, model: shell.timeline, onError});
+    shell.executionCapture.start();
+  }
   shell.commandWindow = new CommandWindow({registry: commands});
   shell.explorerViews = new SolutionExplorerViews({getData: options.projectData ?? (() => ({files: documents.list(), name: options.state().name})),
     documents, context, search: shell.search});

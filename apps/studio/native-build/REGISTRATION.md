@@ -16,3 +16,13 @@ The original three registration/automation/facade assertions are preserved over
 the actual published controller and renderer. They passed in the completed
 106-test Node 22 and Node 26 native UI scopes. Core tool rendering and the protected
 Studio constructor/callback integration belong to their separate owner batches.
+
+## Native operation ownership
+
+The updated controller dependency composes the workbench's captured native job
+ownership, cancellation and disposal. Automation continues to call that same
+controller, so an operation keeps its original owner while tool selection or
+workspace state changes. This forward merge preserves the four registration
+modules and their three original assertions byte for byte. The completed source
+qualification remains recorded above; the root integration run covers the final
+pinned-main composition without repeating a separate local matrix.

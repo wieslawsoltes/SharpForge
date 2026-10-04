@@ -77,3 +77,18 @@ coverage. A controller test is not a browser or native host qualification result
 This projection composes the complete controller with the published context, profile,
 view and testing modules. Application tool registration and the protected Studio entry
 are separate dependent integration steps.
+
+
+## Native operation ownership
+
+Build jobs use the workbench's existing `native-operation` lifecycle. Accepted job
+snapshots retain their actual client owner. `onJob(snapshot, {owner, cancel,
+selected})` exposes a cancellation callback bound to that job and owner; a late
+reply for a background job does not replace the selected job. Observed transport
+failures call `onJobFailure(jobId, error, {owner})`.
+
+`dispose()` is idempotent and returns a promise. It marks the controller disposed,
+closes its test sessions, cancels captured native operations and releases client
+credentials after their cancellation work settles. Existing profile and Test
+Explorer operations retain their own bounded abort paths. The native context,
+profile and source APIs remain available through the same `MSBuildTools` facade.
