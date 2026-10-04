@@ -1,5 +1,6 @@
 import { WorkerClient } from './worker-client.js';
 import { WorkbenchEvents, abortError, requireIdentifier, workbenchError } from './state-events.js';
+import { BuildAnalysis } from './build-analysis.js';
 
 /** A compiler worker, artifact cache and cancellation domain belong to exactly one project. */
 export class BuildService {
@@ -22,6 +23,7 @@ export class BuildService {
     this.analyzing = false;
     this.buildEpoch = 0;
     this.analysisEpoch = 0;
+    this.analysis = new BuildAnalysis(this);
     this.disposed = false;
     this.worker = new WorkerClient(compilerUrl ?? new URL('../compiler.worker.js', import.meta.url), {
       kind: 'compiler', workerFactory, name: `compiler:${this.id}`, onError
@@ -51,6 +53,7 @@ export class BuildService {
   invalidate(reason = 'source') {
     this.dirty = true;
     this.revision++;
+    this.analysis.cancel('Project changed during analysis', { superseded: true });
     this.events.emit({ type: 'invalidated', projectId: this.id, revision: this.revision, reason });
   }
 
@@ -100,20 +103,11 @@ export class BuildService {
     }
   }
 
-  async analyze({ signal } = {}) {
-    const epoch = ++this.analysisEpoch;
-    const revision = this.revision;
-    this.analyzing = true;
-    try {
-      const result = await this.request('analyze', {}, { signal });
-      if (epoch !== this.analysisEpoch || revision !== this.revision) return null;
-      this.applyResult(result, 'analysis');
-      this.events.emit({ type: 'analysis', projectId: this.id, result, revision, background: true });
-      return result;
-    } finally {
-      if (epoch === this.analysisEpoch) this.analyzing = false;
-    }
-  }
+  analyze(options) { return this.analysis.run(options); }
+
+  get analysisOperation() { return this.analysis.snapshot; }
+
+  cancelAnalysis(reason, options) { return this.analysis.cancel(reason, options); }
 
   applyResult(result, source = 'build') {
     if (!result || !Array.isArray(result.diagnostics)) throw new TypeError('Malformed compiler result');
@@ -132,15 +126,15 @@ export class BuildService {
   cancel(reason = 'Project build cancelled') {
     if (this.disposed) return;
     this.buildEpoch++;
-    this.analysisEpoch++;
+    this.analysis.cancel(reason);
     this.busy = false;
-    this.analyzing = false;
     this.worker.restart(abortError(reason));
     this.events.emit({ type: 'cancelled', projectId: this.id, reason });
   }
 
   dispose() {
     if (this.disposed) return;
+    this.analysis.cancel('Build service disposed');
     this.disposed = true;
     this.worker.dispose();
     this.events.dispose();
