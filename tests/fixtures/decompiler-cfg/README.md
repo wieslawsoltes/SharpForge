@@ -122,9 +122,23 @@ inside the fallback remains part of the operation.
 
 The comparison reports the cost of adding CFG output to an existing API. It is not
 a same-result speedup comparison. The shared-host caveat is recorded; there is no
-allocation counter, forced GC or isolated opcode measurement. The driver is prepared,
-but no benchmark measurements are retained yet. Node test durations are not
-performance evidence.
+allocation counter, forced GC or isolated opcode measurement. The completed single
+cohort is retained in [benchmark.json](benchmark.json), with all 600 chronological
+measured batches and byte-exact output in [benchmark-output.txt](benchmark-output.txt).
+The run used Node 24.19.0 on Linux x64, AMD EPYC 9V74, on a shared host.
+
+| Workload | Baseline median / p95, microseconds per call | CFG median / p95 | Median change |
+| --- | --- | --- | --- |
+| Arithmetic Add | 2.884545 / 5.717910 | 5.143637 / 9.817140 | +78.317% |
+| Native Loop | 6.692468 / 15.151085 | 10.482545 / 20.409215 | +56.632% |
+| Native Finally fallback | 1297.793962 / 1582.885535 | 1271.563163 / 1650.063910 | -2.021% |
+
+The first two medians exceed the unchanged 5% regression policy; publication
+requires explicit performance justification and sign-off in the PR. The added
+owned CFG costs about 2.26 and 3.79 microseconds per call on these fixtures. The
+comparison preserves all old output fields but adds the graph, so it is a feature
+cost measurement. No speedup is claimed for the fallback result. Node test
+durations are not performance evidence.
 
 Graph splitting/projection uses O(I + E + C) time and storage; existing EH geometry
 validation additionally sorts O(C log C) intervals and uses a bounded instruction

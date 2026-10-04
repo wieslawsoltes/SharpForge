@@ -86,7 +86,7 @@
     "status": "prepared; no passing browser result retained"
   },
   "performance": {
-    "status": "driver prepared; measurement pending",
+    "status": "measured once; added-output cost; explicit PR performance exception review required",
     "driver": "packages/cil/tools/benchmark-decompiler-cfg.mjs",
     "driverSha256": "991308fe80164c4fd7efd012a4dded700a8d73c47044d7678936a3b6249bfe53",
     "baselineCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
@@ -101,7 +101,119 @@
     ],
     "scope": "Cached decompileMethod feature cost for added CFG output, with untimed exact legacy-output equality guards.",
     "allocationCounter": null,
-    "speedupClaim": false
+    "speedupClaim": false,
+    "file": "benchmark.json",
+    "sha256": "bea0092f2b8268625d99e1cc67e54a44000b87e2bda2634d7cb40cf83427061a",
+    "output": "benchmark-output.txt",
+    "outputSha256": "3140f18d72aadbceac61b6521fe38b95c8bb7ea0ff4ed7cce38bbad731d014c8",
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "packages/cil/tools/benchmark-decompiler-cfg.mjs",
+      "--baseline",
+      "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "--output",
+      "/workspace/scratch/7e3d2a445c44/decompiler-cfg-benchmark.json"
+    ],
+    "environment": {
+      "node": "v24.19.0",
+      "platform": "linux",
+      "architecture": "x64",
+      "osRelease": "6.18.44",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 9,
+      "totalMemoryBytes": 10451464192,
+      "sharedHost": true
+    },
+    "candidateCommit": "c3d5c4c6f136c5544fa1cf41baa3032610353d88",
+    "results": [
+      {
+        "name": "ArithmeticAdd",
+        "token": 100663297,
+        "imageSha256": "8d17b75da73afa2031fb40903cbdbe88e7d9cf42df65c6aab5a8f3d7c8506c15",
+        "language": "csharp",
+        "complete": true,
+        "sourceSha256": "2a465627f6cfb526c818363c28c5c24abb6212bf3f09b5fe5784e41907002ea3",
+        "sourceCharacters": 247,
+        "legacyEqualityBeforeAndAfter": true,
+        "candidateGraph": {
+          "codeBytes": 4,
+          "instructions": 4,
+          "blocks": 1,
+          "edges": 0,
+          "exceptionClauses": 0
+        },
+        "baseline": {
+          "samples": 100,
+          "medianNanosecondsPerCall": 2884.5449999971606,
+          "p95NanosecondsPerCall": 5717.91000002122
+        },
+        "candidate": {
+          "samples": 100,
+          "medianNanosecondsPerCall": 5143.637499986653,
+          "p95NanosecondsPerCall": 9817.140000013751
+        },
+        "medianFeatureCostPercent": 78.31711760404903
+      },
+      {
+        "name": "NativeLoop",
+        "token": 100663327,
+        "imageSha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+        "language": "csharp",
+        "complete": true,
+        "sourceSha256": "8b1859d0d9ff68652b984f30e72d19d47abcc1a76c826f311f9a0db9508a5b26",
+        "sourceCharacters": 491,
+        "legacyEqualityBeforeAndAfter": true,
+        "candidateGraph": {
+          "codeBytes": 19,
+          "instructions": 16,
+          "blocks": 4,
+          "edges": 4,
+          "exceptionClauses": 0
+        },
+        "baseline": {
+          "samples": 100,
+          "medianNanosecondsPerCall": 6692.467500015482,
+          "p95NanosecondsPerCall": 15151.084999997693
+        },
+        "candidate": {
+          "samples": 100,
+          "medianNanosecondsPerCall": 10482.545000013488,
+          "p95NanosecondsPerCall": 20409.214999999676
+        },
+        "medianFeatureCostPercent": 56.631989621006575
+      },
+      {
+        "name": "NativeFinally",
+        "token": 100663329,
+        "imageSha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+        "language": "cil",
+        "complete": false,
+        "sourceSha256": "29a79e93529a4a40893efd8c305bcaeb07c8fd2e04d4c42f77a9b7f16bb00e28",
+        "sourceCharacters": 637,
+        "legacyEqualityBeforeAndAfter": true,
+        "candidateGraph": {
+          "codeBytes": 21,
+          "instructions": 12,
+          "blocks": 3,
+          "edges": 1,
+          "exceptionClauses": 1
+        },
+        "baseline": {
+          "samples": 100,
+          "medianNanosecondsPerCall": 1297793.9624999817,
+          "p95NanosecondsPerCall": 1582885.5349999957
+        },
+        "candidate": {
+          "samples": 100,
+          "medianNanosecondsPerCall": 1271563.162500006,
+          "p95NanosecondsPerCall": 1650063.90999999
+        },
+        "medianFeatureCostPercent": -2.0211836977147457
+      }
+    ],
+    "rawMeasuredSamples": 600
   },
   "hashScope": "Changed implementation/tests plus focused dependencies and capture configuration; implementationTree identifies remaining repository sources.",
   "sourceSha256": {
