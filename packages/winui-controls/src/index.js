@@ -3,6 +3,7 @@ export * from './layout/index.js';
 export * from './input/index.js';
 export * from './virtualization/index.js';
 export * from './contracts/layout.js';
+export * from './app/index.js';
 export * from './automation/index.js';
 export * from './contracts/automation.js';
 export * from './policy/default-templates.js';
