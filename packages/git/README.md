@@ -10,6 +10,9 @@ Published Git modules for SharpForge. Each stacked layer exposes only its implem
 - [conformance](docs/conformance.md)
 - [objects](docs/objects.md)
 - [protocol](docs/protocol.md)
+- [service-adjuncts](docs/service-adjuncts.md)
+- [storage](docs/storage.md)
+- [workflows](docs/workflows.md)
 
 ## Revision graph and history
 
