@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { CilError } from '@sharpforge/cil';
 import { PEAssemblySymbol, importAssembly } from './pe-symbols.js';
 
@@ -12,7 +13,7 @@ export function readCompilationReferences(references) {
       prepared.push({ ...reference, assembly });
     } catch (error) {
       if (!(error instanceof CilError || error instanceof RangeError || error instanceof TypeError)) throw error;
-      diagnostics.push({ code: 'CS0009', args: [display, error.message] });
+      diagnostics.push({ code: DiagnosticId.CS0009, args: [display, error.message] });
     }
   }
   return { references: prepared, diagnostics };

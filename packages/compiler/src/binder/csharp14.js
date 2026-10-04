@@ -15,6 +15,7 @@
  * `++x` is used, Roslyn also calls the instance operator and then reads `x`; here that use falls back to the static
  * operator and is an error when there is none (never a wrong call).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { compoundOperatorNames } from '../symbols/source/compound-operators.js';
 import { lookupMembers } from './inheritance.js';
@@ -37,11 +38,11 @@ export const CSharp14Rules = Base =>
           at = method.syntax.operatorToken,
           isUnary = method.operatorToken === '++' || method.operatorToken === '--';
         if (method.isStatic && !isUnary) {
-          this.report(uri, at, 'CS0106', ['static']);
+          this.report(uri, at, DiagnosticId.CS0106, ['static']);
           continue;
         }
-        if (!method.syntax.modifiers.some(token => token.text === 'public')) this.report(uri, at, 'CS9308', [method.toDisplayString()]);
-        if (!method.returnsVoid) this.report(uri, at, 'CS9310');
+        if (!method.syntax.modifiers.some(token => token.text === 'public')) this.report(uri, at, DiagnosticId.CS9308, [method.toDisplayString()]);
+        if (!method.returnsVoid) this.report(uri, at, DiagnosticId.CS9310);
       }
     }
   };
@@ -86,7 +87,7 @@ export const CSharp14Binding = Base =>
         this.quiet = saved;
       }
       for (const row of collected) {
-        if (row.code === 'CS0019') this.report(syntax.operatorToken, 'CS9340', [row.args[1], row.args[2], candidate.toDisplayString()]);
+        if (row.code === DiagnosticId.CS0019) this.report(syntax.operatorToken, DiagnosticId.CS9340, [row.args[1], row.args[2], candidate.toDisplayString()]);
         else this.report(row.node, row.code, row.args);
       }
       return result;

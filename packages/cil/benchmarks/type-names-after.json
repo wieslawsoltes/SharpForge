@@ -1,0 +1,123 @@
+{
+  "label": "indexed-d00d2aa2",
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "scope": "Cold first naming pass after metadata parsing; seven serial samples",
+  "observations": [
+    {
+      "count": 1000,
+      "metadataBytes": 27153,
+      "medianMs": 0.5436249999999916,
+      "p95Ms": 1.125833,
+      "medianHeapDelta": 824128,
+      "underOneSecondEverySample": true,
+      "samples": [
+        {
+          "durationMs": 1.125833,
+          "heapDelta": 1079400
+        },
+        {
+          "durationMs": 0.808125000000004,
+          "heapDelta": 832640
+        },
+        {
+          "durationMs": 0.5204999999999984,
+          "heapDelta": 824016
+        },
+        {
+          "durationMs": 0.5155419999999964,
+          "heapDelta": 824064
+        },
+        {
+          "durationMs": 0.5238330000000104,
+          "heapDelta": 826648
+        },
+        {
+          "durationMs": 0.5498750000000001,
+          "heapDelta": 824128
+        },
+        {
+          "durationMs": 0.5436249999999916,
+          "heapDelta": 820856
+        }
+      ]
+    },
+    {
+      "count": 5000,
+      "metadataBytes": 139153,
+      "medianMs": 1.7860419999999806,
+      "p95Ms": 2.117666000000014,
+      "medianHeapDelta": 3271704,
+      "underOneSecondEverySample": true,
+      "samples": [
+        {
+          "durationMs": 2.117666000000014,
+          "heapDelta": 3112792
+        },
+        {
+          "durationMs": 1.9320410000000265,
+          "heapDelta": 3195032
+        },
+        {
+          "durationMs": 1.7860419999999806,
+          "heapDelta": 3113024
+        },
+        {
+          "durationMs": 2.0388749999999902,
+          "heapDelta": 3649168
+        },
+        {
+          "durationMs": 1.7259159999999838,
+          "heapDelta": 3272912
+        },
+        {
+          "durationMs": 1.687749999999994,
+          "heapDelta": 3271704
+        },
+        {
+          "durationMs": 1.6919579999999996,
+          "heapDelta": 3271704
+        }
+      ]
+    },
+    {
+      "count": 200000,
+      "metadataBytes": 7889165,
+      "medianMs": 99.49204200000003,
+      "p95Ms": 109.81012499999997,
+      "medianHeapDelta": 73907832,
+      "underOneSecondEverySample": true,
+      "samples": [
+        {
+          "durationMs": 99.49204200000003,
+          "heapDelta": 62597280
+        },
+        {
+          "durationMs": 109.81012499999997,
+          "heapDelta": 74202360
+        },
+        {
+          "durationMs": 102.74725000000001,
+          "heapDelta": 74085736
+        },
+        {
+          "durationMs": 97.92774999999995,
+          "heapDelta": 74011680
+        },
+        {
+          "durationMs": 96.31375000000003,
+          "heapDelta": 73718680
+        },
+        {
+          "durationMs": 98.36362499999996,
+          "heapDelta": 73907832
+        },
+        {
+          "durationMs": 100.06258400000002,
+          "heapDelta": 73829608
+        }
+      ]
+    }
+  ]
+}

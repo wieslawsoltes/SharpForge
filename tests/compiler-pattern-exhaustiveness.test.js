@@ -53,6 +53,7 @@ test('SF-A02-T08.3 the example in CS8509 names an uncovered value; opaque patter
   assert.deepEqual(messageOf('Color c) => c switch { Color.Red => 1 }'), ['CS8509 Color.Green']);
   assert.deepEqual(messageOf('Color c) => c switch { Color.Red => 1, Color.Green => 2 }'), ['CS8524 (Color)2']);
   assert.deepEqual(messageOf('int n) => n switch { > 0 when n > 1 => 1, <= 0 => 2 }'), ['CS8846 1']);
-  assert.deepEqual(messageOf('object o) => o switch { string s => 1, int n => 2 }'), [], 'run-time type tests are not enumerated');
+  assert.deepEqual(messageOf('object o) => o switch { string s => 1, int n => 2 }'), ['CS8509 _'], 'type tests for part of the input');
+  assert.deepEqual(messageOf('object o) => o switch { string s => 1, not string => 2 }'), [], 'a complement is not enumerated');
   assert.deepEqual(messageOf('int[] a) => a switch { [] => 1, [_, ..] => 2 }'), [], 'list patterns are not enumerated');
 });

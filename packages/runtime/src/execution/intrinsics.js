@@ -1,3 +1,6 @@
+import {invokeDecimal} from './decimal-intrinsics.js';
+import {invokeBitConverter} from './bit-converter.js';
+import {nativeSize} from './native-int.js';
 import {invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
@@ -37,6 +40,9 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  decimal:({vm,descriptor,self,parameters})=>invokeDecimal(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
+  bitConverter:({descriptor,parameters})=>invokeBitConverter(descriptor,parameters),
+  nativeSize:({vm})=>nativeSize(vm.options),
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
@@ -116,7 +122,7 @@ const implementations={
 
 };
 
-const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString']);
+const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString', 'decimal']);
 
 /** Closed owner::name(signature) registry shared with verifier acceptance. */
 export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
