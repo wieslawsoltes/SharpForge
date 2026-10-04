@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "recordedUtc": "2026-10-04T18:05:53.254238+00:00",
+  "sourceCommit": "ddbbbd1925ba1d458cb35c44f6491d3fb2be2a04",
+  "productCommit": "edafb8018be5b75916c8655e9ff1147b38035a24",
+  "source": "/workspace/scratch/7e3d2a445c44/metadata-qualification-ordinal-edafb801-first",
+  "destination": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations/tests/fixtures/metadata-generations/qualification/execution-ordinal-first",
+  "files": [
+    {
+      "path": "focused.execution.json",
+      "bytes": 252793,
+      "sourceSha256": "5e240c852f994765f774c6c8f68b5a758c79f5208ab09e6c1d6e83d29e02f02c",
+      "retainedSha256": "5e240c852f994765f774c6c8f68b5a758c79f5208ab09e6c1d6e83d29e02f02c"
+    },
+    {
+      "path": "focused.stderr.txt",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused.stdout.txt",
+      "bytes": 5281,
+      "sourceSha256": "5b87a8e05b6cdfd7c35ce6432fd6184cbde58268cc81a8aa93c5dc6a01719e94",
+      "retainedSha256": "5b87a8e05b6cdfd7c35ce6432fd6184cbde58268cc81a8aa93c5dc6a01719e94"
+    },
+    {
+      "path": "native.execution.json",
+      "bytes": 252452,
+      "sourceSha256": "6a084efa46bfaf1a24abc6b865fb8c3cd58b58bd732ed4e3f9bb68816ab991d9",
+      "retainedSha256": "6a084efa46bfaf1a24abc6b865fb8c3cd58b58bd732ed4e3f9bb68816ab991d9"
+    },
+    {
+      "path": "native.stderr.txt",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native.stdout.txt",
+      "bytes": 664,
+      "sourceSha256": "f89bacf8e5fc7942311a4612f0bb47eea7c7034fbdcb62c2ed2717d2f85db9ce",
+      "retainedSha256": "f89bacf8e5fc7942311a4612f0bb47eea7c7034fbdcb62c2ed2717d2f85db9ce"
+    },
+    {
+      "path": "retain-native.execution.json",
+      "bytes": 257265,
+      "sourceSha256": "e6d9c265b2a986788d337ffc16113d26fb25009c7bd96fdc3ef7837fe63ab4ce",
+      "retainedSha256": "e6d9c265b2a986788d337ffc16113d26fb25009c7bd96fdc3ef7837fe63ab4ce"
+    },
+    {
+      "path": "verify-external.execution.json",
+      "bytes": 252458,
+      "sourceSha256": "4944d8522267b19cf6c9099fcb8fa56ffcfaf2a73486db2fdf27d3db235caf9f",
+      "retainedSha256": "4944d8522267b19cf6c9099fcb8fa56ffcfaf2a73486db2fdf27d3db235caf9f"
+    },
+    {
+      "path": "verify-external.stderr.txt",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "verify-external.stdout.txt",
+      "bytes": 146,
+      "sourceSha256": "e4f3e0fadf70e01c92e70e5d095cdc70179193714b66b5c874d80b0bcbc2db48",
+      "retainedSha256": "e4f3e0fadf70e01c92e70e5d095cdc70179193714b66b5c874d80b0bcbc2db48"
+    },
+    {
+      "path": "verify-retained.execution.json",
+      "bytes": 252420,
+      "sourceSha256": "96fab20c83af545dd456604e203b0da94b1a7931e82d7bac4e734a63bc9b4dc8",
+      "retainedSha256": "96fab20c83af545dd456604e203b0da94b1a7931e82d7bac4e734a63bc9b4dc8"
+    },
+    {
+      "path": "verify-retained.stderr.txt",
+      "bytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "verify-retained.stdout.txt",
+      "bytes": 146,
+      "sourceSha256": "e4f3e0fadf70e01c92e70e5d095cdc70179193714b66b5c874d80b0bcbc2db48",
+      "retainedSha256": "e4f3e0fadf70e01c92e70e5d095cdc70179193714b66b5c874d80b0bcbc2db48"
+    }
+  ],
+  "bytes": 1273625,
+  "phases": [
+    {
+      "step": "native",
+      "startedUtc": "2026-10-04T17:59:10.654652+00:00",
+      "finishedUtc": "2026-10-04T17:59:16.503085+00:00",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true
+    },
+    {
+      "step": "verify-external",
+      "startedUtc": "2026-10-04T17:59:37.262721+00:00",
+      "finishedUtc": "2026-10-04T17:59:37.611225+00:00",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true
+    },
+    {
+      "step": "retain-native",
+      "startedUtc": "2026-10-04T17:59:44.204685+00:00",
+      "finishedUtc": "2026-10-04T17:59:44.260476+00:00",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true
+    },
+    {
+      "step": "verify-retained",
+      "startedUtc": "2026-10-04T17:59:49.984892+00:00",
+      "finishedUtc": "2026-10-04T17:59:50.272263+00:00",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true
+    },
+    {
+      "step": "focused",
+      "startedUtc": "2026-10-04T17:59:59.283061+00:00",
+      "finishedUtc": "2026-10-04T18:00:05.587020+00:00",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true
+    }
+  ],
+  "focused": {
+    "files": 11,
+    "tests": 51,
+    "passed": 51,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "reporter": "actual Node spec output"
+  },
+  "native": {
+    "bytes": 422327,
+    "sha256": "d8500a48fe75ae1583d3d8670b1bbf13c38c7befca3a47cbe971cee36ba7b9b9",
+    "sourceCommit": "ddbbbd1925ba1d458cb35c44f6491d3fb2be2a04",
+    "sourceFiles": 376,
+    "referenceCopyInventory": "execution-ordinal-first/retain-native.execution.json",
+    "retainedFiles": 20
+  },
+  "rawNativeProvenance": "Four workload commands only; toolchain version probe raw outputs are not retained.",
+  "firstEvidence": "All prior evidence and original Portable PDB corpus remain byte-exact; recorder verifies immutable inventories before and after every phase.",
+  "retentionScriptSha256": "363f95f32394e4737308059495f480a4d279fa44475e00991411704f3e2dfdbb",
+  "performance": "Not run at this retention point."
+}
