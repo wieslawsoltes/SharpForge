@@ -123,6 +123,9 @@ try:
         checked('mode switches preserve dock layout/caret/scroll and split ratios are keyboard accessible', mode_and_caret)
 
         def routing_and_shortcuts():
+            page.evaluate('sharpforge.openTool("designer-properties")')
+            properties = page.locator('[data-tool="designer-properties"]')
+            truth(properties.is_visible(), 'Design Properties did not open in the dock')
             page.evaluate('sharpforge.openFile("A.cs")')
             page.keyboard.press('Shift+F7')
             page.wait_for_function('sharpforge.designerDocuments.get("A.cs").mode === "design"')
@@ -130,10 +133,13 @@ try:
             page.wait_for_function('sharpforge.designerDocuments.get("A.cs").mode === "code"')
             truth(page.locator('[data-source-uri="A.cs"]').count() == 1, 'View Designer duplicated the source tab')
             page.evaluate('sharpforge.openFile("B.cs")')
-            truth(page.locator('[data-tool="designer-properties"]').get_attribute('data-designer-uri') == 'B.cs')
+            truth(properties.is_visible(), 'Design Properties closed while focusing B')
+            truth(properties.get_attribute('data-designer-uri') == 'B.cs')
             page.evaluate('sharpforge.openFile("Program.cs")')
-            truth(page.locator('[data-tool="designer-properties"]').get_attribute('aria-disabled') == 'true')
-            truth('compatible C#' in page.locator('[data-tool="designer-properties"]').inner_text())
+            truth(properties.is_visible(), 'Design Properties closed while focusing incompatible source')
+            truth(properties.get_attribute('data-designer-uri') is None)
+            truth(properties.get_attribute('aria-disabled') == 'true')
+            truth('compatible C#' in properties.inner_text())
 
         checked('F7 targets the same document and side tools follow focused documents or show a neutral state', routing_and_shortcuts)
 

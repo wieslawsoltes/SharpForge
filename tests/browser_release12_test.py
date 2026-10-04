@@ -1,5 +1,6 @@
 """Designer and edit/continue end-to-end acceptance. Production modules and two real workers."""
 import os,json,time,traceback
+from math import floor
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from conformance.browser.launch import launch_browser, results_dir
@@ -36,7 +37,19 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    select('canvas');tool('designer-toolbox');ui.search_controls('NumberBox');truth(ui.side('toolbox').locator('[data-control]').count()==1);ui.side('toolbox').locator('[data-control]').click();truth(node(ds()['selection'][0])['type'].endswith('NumberBox'));truth(ui.host.locator('.design-preview input[type=number]').count()==1);action('undo');truth(not any(n['type'].endswith('NumberBox') for n in ds()['document']['nodes']));ui.side('toolbox').get_by_role('searchbox',name='Search toolbox').fill('')
   check('searchable toolbox inserts a real NumberBox into the selected parent and supports undo',toolbox)
   def pixel():
-   new();select('action');before=node('action')['properties'];z=ds()['zoom'];drag(ui.host.locator('.design-preview [data-sf-id="action"]'),32*z,24*z);truth(node('action')['properties']['Left']==before['Left']+32,str(node('action')));truth(node('action')['properties']['Top']==before['Top']+24);action('undo');truth(node('action')['properties']['Left']==before['Left']);action('redo');truth(node('action')['properties']['Left']==before['Left']+32)
+   new()
+   select('action')
+   before = node('action')['properties']
+   zoom = ds()['zoom']
+   grid = ds()['document'].get('designer', {}).get('guides', {}).get('gridSize', 8)
+   # Snap absolute Canvas coordinates, including an initially off-grid control.
+   expected = {key: floor((before[key] + delta) / grid + .5) * grid for key, delta in [('Left', 32), ('Top', 24)]}
+   drag(ui.host.locator('.design-preview [data-sf-id="action"]'), 32 * zoom, 24 * zoom)
+   truth(all(node('action')['properties'][key] == value for key, value in expected.items()), str(node('action')))
+   action('undo')
+   truth(node('action')['properties'] == before)
+   action('redo')
+   truth(all(node('action')['properties'][key] == value for key, value in expected.items()), str(node('action')))
   check('actual mouse dragging uses snapped Canvas coordinates and a single undo/redo transaction',pixel)
   def resize():
    select('action');before=node('action')['properties'];z=ds()['zoom'];drag(ui.host.locator('[data-control-id="action"][data-resize="se"]'),40*z,16*z);truth(node('action')['properties']['Width']==before['Width']+40,str(node('action')));truth(node('action')['properties']['Height']==before['Height']+16)
