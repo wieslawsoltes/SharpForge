@@ -693,6 +693,7 @@ export const roslynCodes=Object.freeze({
  CS8648:["ERR_GoToForwardJumpOverUsingVar","error",0,"A goto cannot jump to a location after a using declaration."],
  CS8649:["ERR_GoToBackwardJumpOverUsingVar","error",0,"A goto cannot jump to a location before a using declaration within the same block."],
  CS8652:["ERR_FeatureInPreview","error",0,"The feature '{0}' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version."],
+ CS8655:["WRN_SwitchExpressionNotExhaustiveForNull","warning",1,"The switch expression does not handle some null inputs (it is not exhaustive). For example, the pattern '{0}' is not covered."],
  CS8656:["WRN_ImplicitCopyInReadOnlyMember","warning",1,"Call to non-readonly member '{0}' from a 'readonly' member results in an implicit copy of '{1}'."],
  CS8657:["ERR_StaticMemberCantBeReadOnly","error",0,"Static member '{0}' cannot be marked 'readonly'."],
  CS8658:["ERR_AutoSetterCantBeReadOnly","error",0,"Auto-implemented 'set' accessor '{0}' cannot be marked 'readonly'."],
