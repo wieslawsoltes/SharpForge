@@ -1,7 +1,7 @@
 import {CommandRegistry} from '@sharpforge/controls';
 
-/** Compatibility facade: every invocation is checked by the shared controls registry. */
-export function createCommandRegistry({context = () => ({})} = {}) {
+/** Shared registry facade; onExecute(id, invocation) observes an enabled, non-aborted user action before its handler runs. */
+export function createCommandRegistry({context = () => ({}), onExecute = () => {}} = {}) {
   const registry = new CommandRegistry();
   const listeners = new Set();
   let disposed = false;
@@ -61,12 +61,16 @@ export function createCommandRegistry({context = () => ({})} = {}) {
     },
     async execute(id, ...args) {
       assertOpen();
-      return registry.execute(id, {...contextProvider(), args});
+      const invocation = {...contextProvider(), args};
+      if (registry.describe(id, invocation)?.enabled) onExecute(id, invocation);
+      return registry.execute(id, invocation);
     },
     async invoke(id, invocation = {}) {
       assertOpen();
       invocation.signal?.throwIfAborted();
-      return registry.execute(id, {...contextProvider(), ...invocation});
+      const current = {...contextProvider(), ...invocation};
+      if (registry.describe(id, current)?.enabled) onExecute(id, current);
+      return registry.execute(id, current);
     },
     search(query = '', overrides = {}) {
       return registry.search(query, {...contextProvider(), ...overrides}).filter(command => command.visible !== false);

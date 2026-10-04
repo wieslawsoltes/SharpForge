@@ -40,7 +40,8 @@ function instructionLabels(method) {
   };
 }
 
-function readOperand(instruction, target, relaxBranches) {
+function readOperand(instruction, target, options) {
+  const { relaxBranches, userStrings } = options;
   const kind = CilOpcodes[instruction.name].operand;
   if (!kind) {
     if (instruction.operand) throw new CilError(`${instruction.name} has no operand`);
@@ -69,6 +70,7 @@ function readOperand(instruction, target, relaxBranches) {
     if (!instruction.operand || Number.isNaN(value) && instruction.operand !== 'NaN') throw new CilError('Invalid floating literal');
     return value;
   }
+  if (instruction.name === 'ldstr' && instruction.operand.startsWith('"')) return userStrings.literalToken(instruction.operand);
   return parseILInteger(instruction.operand, kind === 'i8' ? -128 : kind === 'i32' ? -2147483648 : 0,
     kind === 'u8' ? 255 : kind === 'i8' ? 127 : kind === 'u16' ? 65535 : kind === 'i32' ? 2147483647 : 4294967295);
 }
@@ -90,11 +92,12 @@ function encodeBody(method, code, handlers) {
 }
 
 /** Compile visible IL body text; optional layout maps this body's existing EH labels explicitly. */
-export function compileILBody(method, { relaxBranches = false } = {}) {
+export function compileILBody(method, options = {}) {
+  const { relaxBranches = false } = options;
   const target = instructionLabels(method), writer = new CilWriter();
   for (const instruction of method.instructions) {
     if (relaxBranches) writer.mark(instruction.label);
-    writer.op(instruction.name, readOperand(instruction, target, relaxBranches));
+    writer.op(instruction.name, readOperand(instruction, target, options));
   }
   const layout = relaxBranches ? writer.finishWithLayout() : { code: writer.finish(), offsetMap: null };
   decodeInstructions(layout.code);

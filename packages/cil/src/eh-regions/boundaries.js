@@ -12,14 +12,19 @@ export function instructionBoundaries(code, options) {
     if (!(error instanceof CilError)) throw error;
     regionFailure('CILR0029', error.message);
   }
-  const bits = new Uint8Array(Math.floor(code.length / 8) + 1);
+  return decodedInstructionBoundaries(code.length, instructions, options.signal);
+}
+
+/** Reuse instruction-group boundaries when another validator already owns the decoded instruction array. */
+export function decodedInstructionBoundaries(codeSize, instructions, signal) {
+  const bits = new Uint8Array(Math.floor(codeSize / 8) + 1);
   let prefix = false;
   for (const instruction of instructions) {
-    checkRegionCancellation(options.signal);
+    checkRegionCancellation(signal);
     if (!prefix) bits[instruction.offset >> 3] |= 1 << (instruction.offset & 7);
     prefix = CilOpcodes[instruction.name].opCodeType === 'Prefix';
   }
   if (prefix) regionFailure('CILR0030');
-  bits[code.length >> 3] |= 1 << (code.length & 7);
+  bits[codeSize >> 3] |= 1 << (codeSize & 7);
   return offset => Boolean(bits[offset >> 3] & (1 << (offset & 7)));
 }

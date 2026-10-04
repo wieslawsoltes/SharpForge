@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "SRM-built metadata and CLR boxed defaults",
+    "sourceSha256": {
+      "Program.cs": "3c5a7b14a0ce45fae157300e76b5b2e90dfe307e24754d66bb004e408b9af857",
+      "TypeNames.cs": "c49e5cf23431c01d7fcb037b2a66d976c3c8996b64f448e49e1f63cf83425cd5"
+    },
+    "assemblySha256": "cb45796cd60e92beb9fda8def1fc80b81685e175c6f6629fcc2798d1b355bc65",
+    "pdbSha256": "eb3a07d5e30669e99a04e90967875b7ea072f185ca616b11c0211eed2e6c69eb"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "origin": "SRM MetadataBuilder; not C# const declarations",
+    "constants": [
+      {
+        "name": "Boolean",
+        "typeToken": 452984833,
+        "typeSignature": "System.Nullable`1<System.Boolean>",
+        "signature": "1106",
+        "typeSpec": "1511090102",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Char",
+        "typeToken": 452984834,
+        "typeSignature": "System.Nullable`1<System.Char>",
+        "signature": "110A",
+        "typeSpec": "1511090103",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "SByte",
+        "typeToken": 452984835,
+        "typeSignature": "System.Nullable`1<System.SByte>",
+        "signature": "110E",
+        "typeSpec": "1511090104",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Byte",
+        "typeToken": 452984836,
+        "typeSignature": "System.Nullable`1<System.Byte>",
+        "signature": "1112",
+        "typeSpec": "1511090105",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Int16",
+        "typeToken": 452984837,
+        "typeSignature": "System.Nullable`1<System.Int16>",
+        "signature": "1116",
+        "typeSpec": "1511090106",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "UInt16",
+        "typeToken": 452984838,
+        "typeSignature": "System.Nullable`1<System.UInt16>",
+        "signature": "111A",
+        "typeSpec": "1511090107",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Int32",
+        "typeToken": 452984839,
+        "typeSignature": "System.Nullable`1<System.Int32>",
+        "signature": "111E",
+        "typeSpec": "1511090108",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "UInt32",
+        "typeToken": 452984840,
+        "typeSignature": "System.Nullable`1<System.UInt32>",
+        "signature": "1122",
+        "typeSpec": "1511090109",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Int64",
+        "typeToken": 452984841,
+        "typeSignature": "System.Nullable`1<System.Int64>",
+        "signature": "1126",
+        "typeSpec": "151109010A",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "UInt64",
+        "typeToken": 452984842,
+        "typeSignature": "System.Nullable`1<System.UInt64>",
+        "signature": "112A",
+        "typeSpec": "151109010B",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Single",
+        "typeToken": 452984843,
+        "typeSignature": "System.Nullable`1<System.Single>",
+        "signature": "112E",
+        "typeSpec": "151109010C",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Double",
+        "typeToken": 452984844,
+        "typeSignature": "System.Nullable`1<System.Double>",
+        "signature": "1132",
+        "typeSpec": "151109010D",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "IntPtr",
+        "typeToken": 452984845,
+        "typeSignature": "System.Nullable`1<System.IntPtr>",
+        "signature": "1136",
+        "typeSpec": "1511090118",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "UIntPtr",
+        "typeToken": 452984846,
+        "typeSignature": "System.Nullable`1<System.UIntPtr>",
+        "signature": "113A",
+        "typeSpec": "1511090119",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "Decimal",
+        "typeToken": 452984847,
+        "typeSignature": "System.Nullable`1<System.Decimal>",
+        "signature": "113E",
+        "typeSpec": "15110901110D",
+        "boxedDefaultIsNull": true
+      },
+      {
+        "name": "DateTime",
+        "typeToken": 452984848,
+        "typeSignature": "System.Nullable`1<System.DateTime>",
+        "signature": "1142",
+        "typeSpec": "151109011111",
+        "boxedDefaultIsNull": true
+      }
+    ]
+  }
+}

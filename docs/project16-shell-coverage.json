@@ -136,15 +136,50 @@
       "workId": "SF-A19-T17",
       "title": "[SF-A19-T17] Add Object Browser window",
       "owner": "shell",
-      "implementation": "implemented-with-explicit-limits",
+      "implementation": "implemented",
       "files": [
+        "apps/studio/workbench/metadata/assembly-model.js",
+        "apps/studio/workbench/metadata/catalog.js",
+        "apps/studio/workbench/metadata/definition.js",
+        "apps/studio/workbench/metadata/framework-model.js",
+        "apps/studio/workbench/metadata/intrinsic-model.js",
+        "apps/studio/workbench/metadata/legacy-summary.js",
+        "apps/studio/workbench/metadata/limits.js",
+        "apps/studio/workbench/metadata/metadata.worker.js",
+        "apps/studio/workbench/metadata/source-provider.js",
+        "apps/studio/workbench/metadata/tree.js",
         "apps/studio/workbench/tools/object-browser.js",
-        "apps/studio/workbench/tools/tree-host.js"
+        "apps/studio/workbench/tools/tree-host.js",
+        "packages/bytecode/src/builtin-metadata.js",
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/symbols/registry-builtins.js"
       ],
       "focusedTests": [
+        "tests/a19-builtin-metadata.test.js",
+        "tests/a19-metadata-providers.test.js",
         "tests/a19-shell-tools.test.js"
       ],
       "focusedValidation": {
+        "status": "passed",
+        "revision": "3b3f6546",
+        "batch": "12/12 final metadata-provider cases; 2/2 unchanged shared-builtin cases passed in the preceding affected batch",
+        "passed": 12,
+        "failed": 0,
+        "runtime": "Node.js v24.19.0",
+        "command": "node scripts/limited.js node --test tests/a19-metadata-providers.test.js",
+        "evidence": [
+          "docs/evidence/project16-shell-providers/metadata-final.log",
+          "docs/evidence/project16-shell-providers/metadata-correction.log"
+        ],
+        "pendingSourceRevision": "d46e8993",
+        "pendingEquivalentChange": "Iterate existing public BuiltinMap entries instead of sparse Builtins ID ranges; root integrated test gate owns this final source revision."
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [],
+      "previousFocusedValidation": {
         "status": "passed",
         "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
@@ -155,12 +190,20 @@
         "stylesheetContractCases": 4,
         "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
-      "browserTests": [
-        "tests/browser_a19_shell_test.py"
+      "implementationDescription": "Project-aware referenced PE declarations, real namespaces/types/member signatures, bounded cancellable worker inspection, actual assembly/MVID/source version, searchable tree, registered framework and core intrinsic metadata.",
+      "sourceRevision": "d46e8993",
+      "implementationLimits": [
+        "Only authorized project references/handles/host readers are inspected; missing, ambiguous and invalid references are explicit diagnostics.",
+        "Inspection reads ECMA-335 declaration tables and signatures without executing or decoding method bodies. Default reference limit 32 MiB; 50,000 declarations per assembly; 100,000 catalog declarations."
       ],
-      "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": [
-        "Registered framework metadata is available; external assembly inspection requires the supplied root metadata adapter."
+      "rootIntegration": {
+        "sourceObserved": "96c7bc79",
+        "workerEntry": "workbench/metadata/metadata.worker.js",
+        "note": "Root integrated 3b3f6546 and supplies the metadata worker registration and authorized binary reader; final graph/format/index corrections through d46e8993 are handed off for its integrated gate."
+      },
+      "evidenceDocuments": [
+        "docs/project16-shell-provider-evidence.json",
+        "docs/project16-metadata-providers.md"
       ]
     },
     {
@@ -232,15 +275,37 @@
       "workId": "SF-A19-T20",
       "title": "[SF-A19-T20] Complete Document Outline for code and design documents",
       "owner": "shell",
-      "implementation": "implemented-with-explicit-limits",
+      "implementation": "implemented",
       "files": [
+        "apps/studio/workbench/tools/outline-reorder.js",
         "apps/studio/workbench/tools/outline.js",
-        "apps/studio/workbench/tools/tree-host.js"
+        "apps/studio/workbench/tools/tree-host.js",
+        "packages/refactoring/src/outline-reorder.js"
       ],
       "focusedTests": [
+        "tests/a19-outline-host.test.js",
+        "tests/a19-outline-reorder.test.js",
         "tests/a19-shell-tools.test.js"
       ],
       "focusedValidation": {
+        "status": "passed",
+        "revision": "364023a3",
+        "batch": "22/22 Outline cases (14 planner, 8 host) passed inside the 136-case complete provider scope; its two failures were in metadata and are corrected.",
+        "passed": 22,
+        "failed": 0,
+        "runtime": "Node.js v24.19.0",
+        "command": "node scripts/limited.js node --test tests/a19-outline-reorder.test.js tests/a19-outline-host.test.js tests/a19-metadata-providers.test.js tests/a19-execution-occupancy.test.js tests/a19-execution-capture.test.js tests/a19-execution-worker.test.js tests/a19-shell-tools.test.js tests/a19-runtime-worker-launch.test.js tests/animation13.test.js",
+        "evidence": [
+          "docs/evidence/project16-shell-providers/complete-scope.log"
+        ]
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [],
+      "previousFocusedValidation": {
         "status": "passed",
         "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
@@ -251,13 +316,20 @@
         "stylesheetContractCases": 4,
         "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
-      "browserTests": [
-        "tests/browser_a19_shell_test.py",
-        "tests/browser_vs_workflows_test.py"
+      "implementationDescription": "Lossless versioned same-container callable/storage-free member moves preserve trivia and initializer ordering, reject directives/recovered syntax/generated sources, and apply through one undoable editor edit. Drag before/after, Alt+Up/Down and buttons share cancellable stale-checked host.",
+      "sourceRevision": "d46e8993",
+      "implementationLimits": [
+        "Fields, automatic/storage-bearing properties, module-initializer-shaped methods and invalid/directive-crossing moves are rejected as unsafe.",
+        "Pure language/worker registration is supplied by editor_insight 3f1d57b8/4ffe976e and merged into the validated source."
       ],
-      "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": [
-        "Code drag reorder requires a semantic reorder provider and is explicitly rejected without one; designer reparent uses DesignDocument validation."
+      "rootIntegration": {
+        "sourceObserved": "96c7bc79",
+        "workerEntry": null,
+        "note": "Root integrated 3b3f6546 and supplies the metadata worker registration and authorized binary reader; final graph/format/index corrections through d46e8993 are handed off for its integrated gate."
+      },
+      "evidenceDocuments": [
+        "docs/project16-shell-provider-evidence.json",
+        "packages/refactoring/outline-reorder.md"
       ]
     },
     {
@@ -329,17 +401,55 @@
       "workId": "SF-A19-T23",
       "title": "[SF-A19-T23] Add Code Definition window",
       "owner": "shell",
-      "implementation": "implemented-with-explicit-limits",
+      "implementation": "implemented",
       "files": [
+        "apps/studio/workbench/document-size.js",
+        "apps/studio/workbench/metadata/assembly-model.js",
+        "apps/studio/workbench/metadata/catalog.js",
+        "apps/studio/workbench/metadata/definition.js",
+        "apps/studio/workbench/metadata/framework-model.js",
+        "apps/studio/workbench/metadata/intrinsic-model.js",
+        "apps/studio/workbench/metadata/legacy-summary.js",
+        "apps/studio/workbench/metadata/limits.js",
+        "apps/studio/workbench/metadata/metadata.worker.js",
+        "apps/studio/workbench/metadata/source-provider.js",
+        "apps/studio/workbench/metadata/tree.js",
+        "apps/studio/workbench/tools/code-definition-provider.js",
         "apps/studio/workbench/tools/code-definition.js",
-        "apps/studio/workbench/document-size.js"
+        "packages/bytecode/src/builtin-metadata.js",
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/symbols/registry-builtins.js"
       ],
       "focusedTests": [
+        "tests/a19-builtin-metadata.test.js",
+        "tests/a19-metadata-providers.test.js",
+        "tests/a19-shell-boundaries.test.js",
         "tests/a19-shell-search.test.js",
-        "tests/a19-shell-tools.test.js",
-        "tests/a19-shell-boundaries.test.js"
+        "tests/a19-shell-tools.test.js"
       ],
       "focusedValidation": {
+        "status": "passed",
+        "revision": "3b3f6546",
+        "batch": "12/12 final metadata-provider cases, including Console member, structured owner, source precedence, bound assembly identity and read boundaries; 2/2 shared-builtin cases passed earlier.",
+        "passed": 12,
+        "failed": 0,
+        "runtime": "Node.js v24.19.0",
+        "command": "node scripts/limited.js node --test tests/a19-metadata-providers.test.js",
+        "evidence": [
+          "docs/evidence/project16-shell-providers/metadata-final.log",
+          "docs/evidence/project16-shell-providers/metadata-correction.log"
+        ],
+        "pendingSourceRevision": "d46e8993",
+        "pendingEquivalentChange": "Iterate existing public BuiltinMap entries instead of sparse Builtins ID ranges; root integrated test gate owns this final source revision."
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "The required 300 ms follow-caret and no-focus-steal behavior still needs integrated browser measurement; no browser timing pass is claimed."
+      ],
+      "previousFocusedValidation": {
         "status": "passed",
         "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
@@ -350,13 +460,20 @@
         "stylesheetContractCases": 4,
         "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
-      "browserTests": [
-        "tests/browser_a19_shell_test.py"
+      "implementationDescription": "Source-first caret definitions fall back to structured bound owner/member/assembly identity and actual core/framework/referenced PE metadata. Read-only previews include assembly/MVID/input version and matching signature selection; async results are guarded by project, workspace epoch, document identity/version and caret.",
+      "sourceRevision": "d46e8993",
+      "implementationLimits": [
+        "Caret extraction reads at most 1,024 UTF-16 units; definition display uses a bounded 64 KiB excerpt.",
+        "Compiler simple assembly identities select only unambiguous matching referenced assemblies; output always retains the actual full PE identity/MVID/source version."
       ],
-      "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": [
-        "The 300 ms definition-update threshold requires integrated browser timing; unresolved metadata definitions remain explicit.",
-        "Large definitions display bounded 64 KiB excerpts; full-source editing remains available through normal document navigation."
+      "rootIntegration": {
+        "sourceObserved": "96c7bc79",
+        "workerEntry": "workbench/metadata/metadata.worker.js",
+        "note": "Root integrated 3b3f6546 and supplies the metadata worker registration and authorized binary reader; final graph/format/index corrections through d46e8993 are handed off for its integrated gate."
+      },
+      "evidenceDocuments": [
+        "docs/project16-shell-provider-evidence.json",
+        "docs/project16-metadata-providers.md"
       ]
     },
     {
@@ -428,15 +545,49 @@
       "workId": "SF-A19-T26",
       "title": "[SF-A19-T26] Extend Diagnostic Tools with timeline and session selector",
       "owner": "shell",
-      "implementation": "implemented-with-explicit-limits",
+      "implementation": "implemented",
       "files": [
+        "apps/studio/runtime.worker.js",
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/shell-models.js",
+        "apps/studio/workbench/shell-tools.js",
+        "apps/studio/workbench/shell.js",
+        "apps/studio/workbench/tools/diagnostic-graphs.js",
+        "apps/studio/workbench/tools/diagnostic-timeline-model.js",
         "apps/studio/workbench/tools/diagnostic-timeline.js",
-        "apps/studio/workbench/shell-events.js"
+        "apps/studio/workbench/tools/execution-capture.js",
+        "apps/studio/workers/execution-occupancy.js",
+        "apps/studio/workers/protocol.js",
+        "apps/studio/workers/runtime-activity.js"
       ],
       "focusedTests": [
+        "tests/a19-execution-capture.test.js",
+        "tests/a19-execution-occupancy.test.js",
+        "tests/a19-execution-worker.test.js",
         "tests/a19-shell-tools.test.js"
       ],
       "focusedValidation": {
+        "status": "passed-before-final-render-correction",
+        "revision": "364023a3",
+        "batch": "23/23 CPU/capture/real-worker cases passed (10 measurement/activity, 9 capture/graphs, 4 actual source/direct-CIL worker), plus existing launch and animation regression files.",
+        "passed": 23,
+        "failed": 0,
+        "runtime": "Node.js v24.19.0",
+        "command": "node scripts/limited.js node --test tests/a19-outline-reorder.test.js tests/a19-outline-host.test.js tests/a19-metadata-providers.test.js tests/a19-execution-occupancy.test.js tests/a19-execution-capture.test.js tests/a19-execution-worker.test.js tests/a19-shell-tools.test.js tests/a19-runtime-worker-launch.test.js tests/animation13.test.js",
+        "evidence": [
+          "docs/evidence/project16-shell-providers/complete-scope.log"
+        ],
+        "pendingSourceRevision": "379321a3",
+        "pendingTest": "tests/a19-execution-capture.test.js: CPU graph uses actual time, bounded percent and weighted intervals with accessible event detail"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "The final single-interval graph correction 379321a3 is source-complete; its updated existing graph case is pending the root integrated gate."
+      ],
+      "previousFocusedValidation": {
         "status": "passed",
         "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
@@ -447,12 +598,21 @@
         "stylesheetContractCases": 4,
         "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
-      "browserTests": [
-        "tests/browser_a19_shell_test.py"
+      "implementationDescription": "Actual source/direct-CIL worker execution occupancy intervals, per-app and per-launch histories, visible CPU/event/memory graphs, weighted interval summary, bounded capture polling, pause updates, actual census stamps/diffs, and stale/cancel/dispose guards.",
+      "sourceRevision": "d46e8993",
+      "implementationLimits": [
+        "Metric is measured synchronous managed/UI/debugger worker wall time divided by actual interval wall time; it is not OS/process CPU utilization or native/CLR profiling.",
+        "Worker ring 2,000 samples; host 128 histories with 2,000 CPU/event/memory entries each; 20 heap snapshots; serial capture up to 64 sessions and 256 samples per reply.",
+        "Browser rendering/interaction qualification is separate from the real Node-transport worker execution evidence."
       ],
-      "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": [
-        "Actual JS source-VM/direct-CIL worker heap census is supported. Process CPU utilization is unavailable unless reported by a provider; no native backend is claimed."
+      "rootIntegration": {
+        "sourceObserved": "96c7bc79",
+        "workerEntry": null,
+        "note": "Root integrated 3b3f6546 and supplies the metadata worker registration and authorized binary reader; final graph/format/index corrections through d46e8993 are handed off for its integrated gate."
+      },
+      "evidenceDocuments": [
+        "docs/project16-shell-provider-evidence.json",
+        "docs/project16-execution-timeline.md"
       ]
     },
     {
@@ -1788,16 +1948,16 @@
     }
   ],
   "validation": {
-    "focusedNodeTests": "74/74 passed in one combined 9-file completed-scope batch at d5b1d153: 70 shell cases plus 4 stylesheet contracts; zero failures/skips.",
+    "focusedNodeTests": "Earlier complete shell/theme cohort 74/74 at d5b1d153 remains separate. Provider followup: 136 cases at 364023a3 (134 passed,2 metadata failures), affected14-case correction (13 passed,1 signature failure), final12/12 metadata. Across these overlapping runs 140 distinct cases have a passing observed outcome; final 379321a3 changes one existing graph regression, pending root integrated validation.",
     "repositoryCheck": "Root owns canonical test manifests and full repository qualification; the new eighth shell suite is tests/a19-shell-themes.test.js.",
-    "structure": "Historical check: exit 0 with 260 pre-existing findings. Current theme source scope has zero size/line findings; frozen studio.css shrinks from 49,885 to 37,644 bytes.",
+    "structure": "Provider followup source audit at 379321a3: 32 source files, zero findings against repository structure limits/baseline; runtime.worker.js shrinks 13,996 to 12,626 bytes from required integration base 4a57dc45. Whitespace diff check passed before final formatting; final scoped check is recorded in the evidence file.",
     "browser": "Drivers authored against production harness; execution pending integrated root build",
     "native": "No native backend or pixel parity qualification claimed"
   },
   "validationSummary": {
-    "sourceRevision": "d5b1d153",
-    "testCasesPresent": 70,
-    "qualification": "One current combined completed-scope Node cohort, 74/74; no shell-owned browser, native or Visual Studio oracle execution.",
+    "sourceRevision": "d46e8993",
+    "testCasesPresent": 129,
+    "qualification": "Earlier74/74 shell/theme cohort and current provider runs are separate. Final graph-only source correction awaits root integrated verification; no browser/native/Visual Studio oracle pass is inferred.",
     "latestBatches": [
       {
         "revision": "2a35c28c",
@@ -1818,6 +1978,43 @@
         "shellCases": 70,
         "stylesheetContractCases": 4,
         "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      {
+        "id": "provider-complete-scope",
+        "revision": "364023a3",
+        "cases": 136,
+        "passed": 134,
+        "failed": 2,
+        "skipped": 0,
+        "command": "node scripts/limited.js node --test tests/a19-outline-reorder.test.js tests/a19-outline-host.test.js tests/a19-metadata-providers.test.js tests/a19-execution-occupancy.test.js tests/a19-execution-capture.test.js tests/a19-execution-worker.test.js tests/a19-shell-tools.test.js tests/a19-runtime-worker-launch.test.js tests/animation13.test.js",
+        "evidence": "docs/evidence/project16-shell-providers/complete-scope.log",
+        "failures": [
+          "Console.WriteLine core intrinsic metadata missing",
+          "Structured bound Console owner metadata missing"
+        ]
+      },
+      {
+        "id": "metadata-correction",
+        "revision": "555b600e",
+        "cases": 14,
+        "passed": 13,
+        "failed": 1,
+        "skipped": 0,
+        "command": "node scripts/limited.js node --test tests/a19-metadata-providers.test.js tests/a19-builtin-metadata.test.js",
+        "evidence": "docs/evidence/project16-shell-providers/metadata-correction.log",
+        "failures": [
+          "Overlapping framework/core string signature rendering; fixed in 3b3f6546"
+        ]
+      },
+      {
+        "id": "metadata-final",
+        "revision": "3b3f6546",
+        "cases": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0,
+        "command": "node scripts/limited.js node --test tests/a19-metadata-providers.test.js",
+        "evidence": "docs/evidence/project16-shell-providers/metadata-final.log"
       }
     ],
     "notes": [
@@ -1825,12 +2022,19 @@
       "The initial native recorder mismatch was fixed by editor commit 7870600d; the current combined cohort includes its canonical key recorder regression.",
       "The Studio color gate finds zero out-of-place literals, and source fixtures preserve 955 ordered paint plus 2,421 other declarations across 26 original files.",
       "Browser drivers parse successfully but have not executed in this lane. Static/standalone timing, visual/DPI, forced-color rendering and screen-reader claims remain unqualified.",
-      "The status adapter tests cover the exact cancellable model-column protocol; integrated browser qualification of the text lane native index remains with root."
-    ]
+      "The status adapter tests cover the exact cancellable model-column protocol; integrated browser qualification of the text lane native index remains with root.",
+      "Provider runs overlap:136 initial cases, 14 corrective cases and 12 final metadata cases cover140 distinct observed test names, not162 separate cases.",
+      "The final graph correction makes single-sample app captures visible and draws actual start/end intervals; its modified existing case is pending root integrated validation.",
+      "Execution benchmark at 3b3f6546 records nine alternating matched samples per backend on a shared Linux AMD EPYC host. Source median 9.287\u21928.652ms,p95 14.830\u219212.557ms; direct JavaScript CIL median 102.835\u2192101.068ms,p95 107.781\u2192109.537ms. No measured median regression, speedup claim, allocation profile or native CPU verdict.",
+      "Final source d46e8993 enumerates only real intrinsic descriptors through the existing public name index. It preserves projected metadata; root integrated validation owns this final source revision."
+    ],
+    "baseShellCasesPresent": 70,
+    "providerCasesPresent": 59
   },
   "ownedPaths": [
     "apps/studio/build.contrib.json",
     "apps/studio/commands/registry.js",
+    "apps/studio/runtime.worker.js",
     "apps/studio/studio.css",
     "apps/studio/styles/context-menus.css",
     "apps/studio/styles/debugger-effects.css",
@@ -1862,6 +2066,16 @@
     "apps/studio/workbench/inventory.js",
     "apps/studio/workbench/lazy-tools.js",
     "apps/studio/workbench/menus.js",
+    "apps/studio/workbench/metadata/assembly-model.js",
+    "apps/studio/workbench/metadata/catalog.js",
+    "apps/studio/workbench/metadata/definition.js",
+    "apps/studio/workbench/metadata/framework-model.js",
+    "apps/studio/workbench/metadata/intrinsic-model.js",
+    "apps/studio/workbench/metadata/legacy-summary.js",
+    "apps/studio/workbench/metadata/limits.js",
+    "apps/studio/workbench/metadata/metadata.worker.js",
+    "apps/studio/workbench/metadata/source-provider.js",
+    "apps/studio/workbench/metadata/tree.js",
     "apps/studio/workbench/notifications.js",
     "apps/studio/workbench/options-dialog.js",
     "apps/studio/workbench/options/general-pages.js",
@@ -1893,12 +2107,17 @@
     "apps/studio/workbench/tools/bookmarks.js",
     "apps/studio/workbench/tools/call-hierarchy.js",
     "apps/studio/workbench/tools/class-view.js",
+    "apps/studio/workbench/tools/code-definition-provider.js",
     "apps/studio/workbench/tools/code-definition.js",
     "apps/studio/workbench/tools/command-window.js",
+    "apps/studio/workbench/tools/diagnostic-graphs.js",
+    "apps/studio/workbench/tools/diagnostic-timeline-model.js",
     "apps/studio/workbench/tools/diagnostic-timeline.js",
     "apps/studio/workbench/tools/error-list.js",
+    "apps/studio/workbench/tools/execution-capture.js",
     "apps/studio/workbench/tools/find-results.js",
     "apps/studio/workbench/tools/object-browser.js",
+    "apps/studio/workbench/tools/outline-reorder.js",
     "apps/studio/workbench/tools/outline.js",
     "apps/studio/workbench/tools/output.js",
     "apps/studio/workbench/tools/properties.js",
@@ -1914,14 +2133,33 @@
     "apps/studio/workbench/unified-search.js",
     "apps/studio/workbench/workbench-shell.css",
     "apps/studio/workbench/worker-request.js",
+    "apps/studio/workers/execution-occupancy.js",
+    "apps/studio/workers/protocol.js",
+    "apps/studio/workers/runtime-activity.js",
+    "docs/project16-execution-timeline.md",
+    "docs/project16-metadata-providers.md",
     "docs/project16-shell-coverage.json",
+    "docs/project16-shell-provider-evidence.json",
     "docs/vs-workbench-inventory.json",
     "docs/vs-workflow-matrix.md",
+    "packages/bytecode/README.md",
+    "packages/bytecode/src/builtin-metadata.js",
+    "packages/bytecode/src/index.js",
+    "packages/compiler/src/symbols/registry-builtins.js",
+    "packages/refactoring/outline-reorder.md",
+    "packages/refactoring/src/outline-reorder.js",
     "planning/contracts/fixtures/css/studio-baseline.json",
     "planning/contracts/fixtures/css/studio-theme-migration.json",
     "scripts/benchmark-workbench.js",
     "scripts/quality/theme-colors.js",
     "tests/a00-20-styles.test.js",
+    "tests/a19-builtin-metadata.test.js",
+    "tests/a19-execution-capture.test.js",
+    "tests/a19-execution-occupancy.test.js",
+    "tests/a19-execution-worker.test.js",
+    "tests/a19-metadata-providers.test.js",
+    "tests/a19-outline-host.test.js",
+    "tests/a19-outline-reorder.test.js",
     "tests/a19-shell-boundaries.test.js",
     "tests/a19-shell-commands.test.js",
     "tests/a19-shell-inventory.test.js",
@@ -1930,6 +2168,7 @@
     "tests/a19-shell-settings.test.js",
     "tests/a19-shell-themes.test.js",
     "tests/a19-shell-tools.test.js",
+    "tests/bench/a19-execution-occupancy.mjs",
     "tests/browser_a19_shell_test.py",
     "tests/browser_vs_workflows_test.py",
     "tests/browser_workbench_perf_test.py",

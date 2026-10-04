@@ -1,5 +1,6 @@
 import {createNativeBuildSettings} from '../workbench/lazy-features/native-settings.js';
 import {MSBuildClient, inspectSlnx} from '@sharpforge/msbuild';
+import {runNativeOperation, acceptNativeJob, cancelNativeJob, disposeNativeOperations} from '../workbench/native-operation.js';
 import {nativeBuildRequest, terminalBuild, delay, downloadNativeArtifact} from './settings.js';
 import {NativeProjectContexts} from './project-context.js';
 import {NativeProjectProfiles} from './profiles.js';
@@ -12,7 +13,7 @@ import {renderTestExplorer} from '../test-explorer/view.js';
 /** Native build UI owns an explicit host session; rendering and semantic hydration are separate contributions. */
 export class MSBuildTools {
   constructor(options = {}) {
-    const callbacks = ['onAttach', 'onOpenSource', 'getSourceChanges', 'onSaved', 'onJob', 'onAssembly', 'onSelectPanel',
+    const callbacks = ['onAttach', 'onOpenSource', 'getSourceChanges', 'onSaved', 'onJob', 'onJobFailure', 'onAssembly', 'onSelectPanel',
       'onError', 'onWorkspace', 'onProjectContext', 'getTestSources', 'getTestInput', 'getTestProject', 'onOpenTestSource', 'download'];
     for (const name of callbacks) this[name] = options[name];
     this.testAdapters = options.testAdapters;
@@ -189,9 +190,7 @@ export class MSBuildTools {
     return this.job;
   }
 
-  run(action = 'build') {
-    return this.operation(action.toUpperCase(), async signal => this.monitorJob(await this.client.start(this.request(action)), signal));
-  }
+  run(action = 'build') { return runNativeOperation(this, action); }
 
   runProject() {
     return this.operation('Run project', async signal => {
@@ -211,18 +210,11 @@ export class MSBuildTools {
     });
   }
 
-  accept(job) {
-    for (const event of job.events ?? []) if (event.cursor > this.cursor) this.log += event.text;
-    this.cursor = job.nextCursor;
-    this.log = this.log.slice(-1048576);
-    this.job = {...job, events: []};
-    this.onJob?.(this.job);
-    this.renderBuild();
-  }
+  accept(job, options) { return acceptNativeJob(this, job, options); }
 
-  async cancel() {
+  cancel() {
     this.operationController?.abort();
-    if (this.job && !terminalBuild(this.job.status)) this.accept(await this.client.cancel(this.job.id));
+    return cancelNativeJob(this);
   }
 
   inspectSolution() {
@@ -253,10 +245,12 @@ export class MSBuildTools {
   renderTests() { renderTestExplorer(this.tests, this.hosts.get('tests')); }
   renderTree(element, query = '') { renderNativeTree(this, element, query); }
 
-  async dispose() {
+  dispose() {
+    if (this.disposal) return this.disposal;
     this.disposed = true;
-    await this.cancel();
-    await this.tests.close();
-    this.client?.disconnect();
+    this.operationController?.abort();
+    // Test adapters may need the same authenticated client to cancel their sessions.
+    this.disposal = this.tests.close().finally(() => disposeNativeOperations(this));
+    return this.disposal;
   }
 }

@@ -29,7 +29,7 @@ export function createWorkbenchServices(options = {}) {
   const diagnostics = new DiagnosticsStore(options.diagnosticLimits);
   const documents = new DocumentService({
     records: options.records, createEditor: options.createEditor, createModel: options.createModel ?? options.modelFactory,
-    saveDocument: options.saveDocument
+    saveDocument: options.saveDocument, coordinateSave: options.coordinateDocumentSave
   });
   const defaultSnapshot = (projectId, project) => {
     const snapshot = project.snapshot ?? project;
