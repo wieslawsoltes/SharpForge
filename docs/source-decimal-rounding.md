@@ -255,7 +255,8 @@ keep the shared signed CLI bit-pattern carriers; their declared types govern
 widening and display. Each wire name is `decimal.ToName#1`, with append-only IDs
 and exact return-type validation. No new implicit operand or result conversions
 are admitted. The floating family below adds ToSingle/ToDouble separately;
-GetBits and other unregistered Decimal members remain separate work.
+The separate GetBits family below returns a managed array; other unregistered
+Decimal members remain separate work.
 
 `tests/a05-source-decimal-integral-conversions.test.js` authors three-engine
 coverage for every signed/unsigned width, fractional boundary truncation,
@@ -295,3 +296,33 @@ All 30 focused floating-conversion, integral-conversion, and Decimal-operation
 checks passed at `7a06ec21`, using Node 24, one worker, and a 512 MB old-space
 limit. Native/platform/performance evidence remains deferred; #1350/#1351 stay
 open.
+
+## GetBits array result
+
+`int[] decimal.GetBits(decimal d)` appends as `decimal.GetBits#1`. It uses the
+existing descriptor and managed intrinsic, with the result type and parameter
+name preserved through source binding, CIL emission and reload. No additional
+constructor, conversion algorithm or heap adapter is introduced.
+
+The returned array contains four signed Int32 words: low, middle and high
+coefficient limbs, then flags. The flags retain the decimal scale in bits 16–23
+and sign in bit 31, including for zero. This follows the pinned .NET 10.0.5
+[GetBits implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L523-L536).
+Each call creates a fresh ordinary managed `int[]`. Changing it does not change
+the immutable Decimal or an array returned by another call. Ordinary managed
+references retain the result through garbage collection.
+
+```csharp
+using System;
+int[] words = decimal.GetBits(d: -1.2300m);
+Console.WriteLine(words[0]); // 12300
+Console.WriteLine(words[3]); // -2147221504: negative, scale 4
+```
+
+`tests/a05-source-decimal-getbits.test.js` authors three-engine cases for limb
+boundaries, full coefficient range, signed zero, scale 28, array identity,
+mutation isolation, named evaluation, GC retention and exact signature rejection.
+Span/destination overloads and TryGetBits are not admitted. All 15 focused GetBits,
+floating-conversion, and Decimal-operation checks passed at `36be18bb`, using
+Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+qualification remains staged; #1350/#1351 remain open.
