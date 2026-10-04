@@ -41,5 +41,5 @@ export function defaultOrderingAssembly() {
       writer.op('call', writeInt);
     }
     writer.op('ret');
-  }]});
+  }}]});
 }
