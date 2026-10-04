@@ -8,11 +8,13 @@ test('composition keyframe definitions capture values and parameters and preserv
   const owner = compositionOwner();
   const animation = new KeyFrameAnimation(owner, 'Vector2');
   const input = [2, 4];
+  const destination = [6, 12];
   animation.InsertKeyFrame(0, input);
-  animation.SetVector2Parameter('destination', [6, 12]);
+  animation.SetVector2Parameter('destination', destination);
   animation.InsertExpressionKeyFrame(1, 'destination');
   const definition = animation.definition([0, 0]);
   input[0] = 100;
+  destination[0] = 600;
   animation.SetVector2Parameter('destination', [10, 20]);
   assert.deepEqual(sampleValueAnimation(prepareValueAnimation(definition, [0, 0]), 0.5), [4, 8]);
   animation.InsertKeyFrame(0, [0, 2]);

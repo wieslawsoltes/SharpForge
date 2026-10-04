@@ -9,7 +9,7 @@ function fixture() {
   }});
   const writes = [];
   const context = {
-    services: {}, unwrapModel: value => value, wrapModel: value => value, managed: value => value,
+    services: {}, unwrapModel: value => value?.model ?? value, wrapModel: value => ({model: value}), managed: value => value,
     native(value) { if (value?.array) throw new Error('The managed array must use array hooks'); return value; },
     writeReference: (holder, value) => { holder.value = value; },
     arrayLength: holder => holder.array.length,
@@ -20,7 +20,7 @@ function fixture() {
     const generic = ['Microsoft.UI.Composition.' + owner, 'method', name, '*'].join('|');
     const callback = callbacks.get(key) ?? callbacks.get(generic);
     assert.ok(callback, owner + '.' + name);
-    return callback({context, receiver, args, descriptor: {parameters, result}});
+    return callback({context, receiver: context.wrapModel(receiver), args, descriptor: {parameters, result}});
   };
   return {invoke, writes};
 }
