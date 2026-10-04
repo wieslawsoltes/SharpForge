@@ -19,11 +19,11 @@ const ELEMENT_FIELD = 'FixedElementField';
 /**
  * The buffer struct of every fixed-size buffer field of the given types.
  * @param {object[]} types source type definitions  @param core the core types
- * @returns {{types: object[], byField: Map<object, object>}} the structs in declaration order and, by field symbol,
+ * @returns {{types: object[], byField: Map<object, object>, byType: Map<object, object>}} the structs and indexed facts:
  *   `{type, elementType, length, elementField}`
  */
 export function planFixedBuffers(types, core) {
-  const plan = { types: [], byField: new Map() };
+  const plan = { types: [], byField: new Map(), byType: new Map() };
   for (const owner of types) {
     // A buffer of a generic struct would need a generic buffer struct; it is left undeclared and its use is refused.
     if (allTypeParameters(owner).length) continue;
@@ -42,7 +42,9 @@ export function planFixedBuffers(types, core) {
       type.isFixedBufferType = true;
       const elementField = { symbol: null, name: ELEMENT_FIELD, flags: FieldAttributes.Public, type: elementType, constant: null };
       plan.types.push(type);
-      plan.byField.set(field, { type, elementType, length: field.fixedBufferLength ?? null, elementField });
+      const buffer = { type, elementType, length: field.fixedBufferLength ?? null, elementField };
+      plan.byField.set(field, buffer);
+      plan.byType.set(type, buffer);
     }
   }
   return plan;
@@ -65,7 +67,7 @@ export function extendWithFixedBuffers(buffers, type, plan) {
     field.fixedBuffer = { elementType: buffer.elementType, length: buffer.length };
   }
   if (!type.isFixedBufferType) return;
-  const buffer = [...buffers.byField.values()].find(entry => entry.type === type);
+  const buffer = buffers.byType.get(type);
   plan.fields.push(buffer.elementField);
   plan.classSize = bufferSize(buffer);
 }

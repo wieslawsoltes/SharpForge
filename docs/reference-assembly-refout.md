@@ -27,6 +27,7 @@ the assembly declares `InternalsVisibleTo`. The following semantic exceptions al
 
 - Virtual methods and explicit interface implementations, with their MethodImpl rows.
 - All struct fields, including private, static and auto-property backing fields.
+- Fixed-buffer nested types and layout, and captured primary-constructor fields, through the executable emitter's existing planners.
 - Constructors of attribute classes, including internal constructors needed by applied attributes.
 - Properties and events with retained accessors. A removed private setter has no dangling MethodSemantics row.
 
@@ -36,10 +37,12 @@ using the default framework symbol registry, or resolved from supplied metadata 
 
 Every concrete managed method shares one `ldnull; throw` body. Abstract methods and runtime delegate methods have no
 body. A removed static constructor still determines the type's `BeforeFieldInit` flag. Body edits and edits confined to
-removed declarations leave the emitted bytes unchanged. Changes to a retained constant or public signature change the
+removed declarations leave the emitted bytes unchanged. A primary-constructor capture edit that changes struct storage
+also changes the contract's layout. Changes to a retained constant or public signature change the
 contract bytes. The existing deterministic PE finalizer computes the content-derived MVID and timestamp.
 
 `refout` must be a boolean when supplied. A netmodule request fails with `SF3001`; an assembly manifest is required.
+A fixed buffer in a generic type also fails with `SF3001`, matching the executable planner's existing unsupported boundary.
 Source diagnostics still apply, including errors in method bodies. There is no tolerate-errors mode or implicit change
 to executable compilation. Reference output contains no source debug data, PDB, managed resources or native resources.
 `compileToIL` remains the executable compiler API. This option produces one reference output and does not add a CLI
@@ -69,10 +72,12 @@ node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-
 ```
 
 The native capture uses the installed SDK's Roslyn `csc.dll` and reference pack directly, without package restore. It
-compares public and friend-assembly metadata through System.Reflection.Metadata, checks all concrete method bodies,
-compiles an independent consumer against the SharpForge image, verifies friend access, and checks that CoreCLR refuses
-execution loading of both reference images. Every retained observation records SDK, compiler, runtime, platform and
-input hashes. Node tests, native capture and performance measurement are pending at the implementation commit.
+compares public and friend-assembly metadata through System.Reflection.Metadata: declarations, signatures, constants,
+layout, base/interface relations, custom attributes, MethodImpl and accessor associations. It checks concrete method
+bodies, compiles an independent consumer against the SharpForge image, verifies friend access, and compares CoreCLR's
+reference-loading HRESULT against Roslyn while a marker-free control loads successfully. Serialized `typeof` values
+are compared by type name because the reference contract versions differ. Every retained observation records SDK,
+compiler, runtime, platform and input hashes. Tests, native capture and performance are pending at the implementation commit.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
@@ -80,4 +85,6 @@ assembly and its marker deliberately prevents execution loading.
 
 The compiler's reference-emission adapter applies the policy, registers the two framework attribute descriptors and
 preserves the static-constructor fact when filtering its member plan. These are narrow integration changes in existing
-metadata modules; no compiler entry point, parser, executable lowering or runtime dispatcher changes.
+metadata modules. Existing fixed-buffer and primary-capture planners supply required struct storage. Fixed-buffer
+type lookup now uses the planner's `byType` index rather than a scan per generated buffer. No compiler entry point,
+parser, executable instruction lowering or runtime dispatcher changes.

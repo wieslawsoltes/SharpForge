@@ -3,9 +3,19 @@ import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { attributesNamed } from '../../binder/bound-attributes.js';
 import { explicitInterfaceOf } from './member-plan.js';
+import { sourceTypesInMetadataOrder } from './symbol-metadata.js';
+import { planFixedBuffers, extendWithFixedBuffers } from '../../emit/cil/fixed-buffers.js';
+import { planPrimaryCaptures } from '../../emit/cil/primary-constructor-captures.js';
 
 const friendAttribute = 'System.Runtime.CompilerServices.InternalsVisibleToAttribute';
 const markerAttribute = 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute';
+
+function hasAssemblyAttribute(assembly, name) {
+  return attributesNamed(assembly, name).some(attribute => {
+    const definition = attribute.attributeClass.originalDefinition ?? attribute.attributeClass;
+    return attribute.location === 'assembly' && !definition.containingType && !definition.isFileLocal && definition.arity === 0;
+  });
+}
 
 /** Validate the opt-in before table allocation. Metadata-only emission retains its historical default surface. */
 export function refoutEnabled(options) {
@@ -23,9 +33,20 @@ export function refoutEnabled(options) {
  */
 export class RefoutPlan {
   constructor(analysis) {
-    this.includesInternals = attributesNamed(analysis.assembly, friendAttribute).some(attribute => attribute.location === 'assembly');
-    this.hasMarker = attributesNamed(analysis.assembly, markerAttribute).some(attribute => attribute.location === 'assembly');
+    this.includesInternals = hasAssemblyAttribute(analysis.assembly, friendAttribute);
+    this.hasMarker = hasAssemblyAttribute(analysis.assembly, markerAttribute);
     this.attributeKinds = new Map([[analysis.core.attribute, true]]);
+    const declared = sourceTypesInMetadataOrder(analysis.assembly);
+    this.fixedBuffers = planFixedBuffers(declared, analysis.core);
+    this.primaryCaptures = planPrimaryCaptures(analysis);
+    this.types = this.fixedBuffers.types;
+    for (const type of declared) {
+      for (const field of type.getMembers()) {
+        if (field.isFixedSizeBuffer && !this.fixedBuffers.byField.has(field)) {
+          throw new CilError('Reference emission of a fixed buffer in a generic type is unsupported');
+        }
+      }
+    }
   }
 
   isAttributeType(type) {
@@ -46,6 +67,8 @@ export class RefoutPlan {
   }
 
   filter(type, plan) {
+    extendWithFixedBuffers(this.fixedBuffers, type, plan);
+    plan.fields.push(...(this.primaryCaptures.byType.get(type) ?? []));
     const context = { includesInternals: this.includesInternals, isStruct: type.typeKind === TypeKind.Struct };
     const isAttribute = this.isAttributeType(type);
     // Removing a private .cctor must not change the declaration's BeforeFieldInit bit.

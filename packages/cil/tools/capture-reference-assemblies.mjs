@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -12,7 +12,7 @@ const args = process.argv.slice(2);
 const option = name => args.includes(name) ? args[args.indexOf(name) + 1] : undefined;
 const dotnetInput = option('--dotnet') ?? process.env.DOTNET;
 assert.ok(dotnetInput, 'Provide --dotnet with the path of an installed SDK host');
-const dotnet = resolve(dotnetInput);
+const dotnet = realpathSync(resolve(dotnetInput));
 const dotnetRoot = dirname(dotnet);
 const output = resolve(option('--output') ?? 'artifacts/a03-reference-assemblies');
 const fixture = fileURLToPath(new URL('../../../tests/fixtures/a03-reference-assemblies/', import.meta.url));
@@ -32,13 +32,20 @@ try {
   assert.ok(pack, 'Installed .NET reference pack is required');
   const compiler = run([csc, '-version']).trim();
   const references = pack.files.map(path => '-r:' + path);
-  const common = [csc, '-nologo', '-noconfig', '-nostdlib+', '-warn:0', '-deterministic+', '-langversion:latest', ...references];
+  const common = [csc, '-nologo', '-noconfig', '-nostdlib+', '-warn:0', '-unsafe+', '-deterministic+', '-langversion:latest', ...references];
   const oracle = join(temporary, 'Oracle.dll');
-  run([...common, '-target:exe', '-out:' + oracle, join(fixture, 'Program.cs')]);
+  run([...common, '-target:exe', '-out:' + oracle, join(fixture, 'Program.cs'), join(fixture, 'SignatureNames.cs')]);
   writeJson(join(temporary, 'Oracle.runtimeconfig.json'), {
     runtimeOptions: { tfm: pack.targetFramework, framework: { name: 'Microsoft.NETCore.App', version: pack.version } },
   });
   const source = readFileSync(join(fixture, 'surface.cs'), 'utf8');
+  const control = compileToReferenceAssembly(source, { name: 'MetadataControl', allowUnsafe: true });
+  assert.equal(control.success, true, JSON.stringify(control.diagnostics));
+  const controlPath = join(temporary, 'MetadataControl.dll');
+  writeFileSync(controlPath, control.assembly);
+  const controlObservation = JSON.parse(run([oracle, controlPath]));
+  assert.equal(controlObservation.markerCount, 0);
+  assert.equal(controlObservation.loadRejection, 'none', 'Marker-free metadata-only control must load successfully');
   const consumer = join(fixture, 'consumer.cs');
   const cases = [];
   for (const friends of [false, true]) {
@@ -53,7 +60,7 @@ try {
     mkdirSync(dirname(emitted), { recursive: true });
     writeFileSync(sourcePath, text);
     run([...common, '-target:library', '-refonly', '-out:' + native, sourcePath]);
-    const compiled = compileToReferenceAssembly(text, { name: 'RefSurface', refout: true });
+    const compiled = compileToReferenceAssembly(text, { name: 'RefSurface', refout: true, allowUnsafe: true });
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
     writeFileSync(emitted, compiled.assembly);
     const expected = JSON.parse(run([oracle, native]));
@@ -81,8 +88,9 @@ try {
       consumerCompiled: true, friendConsumerCompiled: friends, ...expected });
   }
   const result = { schemaVersion: 1, sdk, compiler, runtime: cases[0].runtime, referencePack: pack.version,
-    platform: process.platform, architecture: process.arch,
-    sourceSha256: hash(source), oracleSha256: hash(readFileSync(join(fixture, 'Program.cs'))), cases };
+    platform: process.platform, architecture: process.arch, metadataControlLoads: true,
+    sourceSha256: hash(source), oracleSha256: hash(readFileSync(join(fixture, 'Program.cs'))),
+    signatureNamesSha256: hash(readFileSync(join(fixture, 'SignatureNames.cs'))), cases };
   writeJson(join(output, 'reference.json'), result);
   console.log(JSON.stringify({ sdk, compiler, runtime: result.runtime, cases: cases.length, output }, null, 2));
 } finally {

@@ -13,4 +13,6 @@ public class Consumer : Contract
     private void OnChanged() { }
 
     public static int Create<T>() where T : IFactory { return T.Create() + T.Value; }
+    public static unsafe int Buffer(Packet packet) { return packet.Data[0]; }
+    public static object CapturedValue(object value) { return new Captured(value).Read(); }
 }

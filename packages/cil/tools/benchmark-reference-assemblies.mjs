@@ -11,7 +11,7 @@ const { compileToReferenceAssembly } = await import(compilerPath ? pathToFileURL
 const source = readFileSync(new URL('../../../tests/fixtures/a03-reference-assemblies/surface.cs', import.meta.url), 'utf8');
 const requested = option('--mode') ?? 'refout';
 assert.ok(['refout', 'metadata'].includes(requested), 'Mode is refout or metadata');
-const options = { name: 'RefSurface', ...(requested === 'refout' ? { refout: true } : {}) };
+const options = { name: 'RefSurface', allowUnsafe: true, ...(requested === 'refout' ? { refout: true } : {}) };
 const coldStart = performance.now();
 const cold = compileToReferenceAssembly(source, options);
 const coldMs = performance.now() - coldStart;

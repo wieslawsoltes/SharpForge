@@ -42,7 +42,7 @@ export function emitReferenceAssembly(analysis, options = {}) {
   const bodyRva = TEXT_RVA + section.length;
   section.bytes(writeMethodBody(THROW_NULL, 0, 1, []));
   const records = new RecordPlan(analysis.core),
-    synthesized = { types: [], extend: (type, plan) => {
+    synthesized = { types: refout?.types ?? [], extend: (type, plan) => {
       records.extend(type, plan);
       refout?.filter(type, plan);
     } },

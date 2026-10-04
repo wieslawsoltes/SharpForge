@@ -70,4 +70,7 @@ namespace RefSurface
         static int IFactory.Value { get { return 2; } }
         static event Action IFactory.Changed { add { } remove { } }
     }
+
+    public unsafe struct Packet { public fixed int Data[4]; }
+    public struct Captured(object value) { public object Read() { return value; } }
 }

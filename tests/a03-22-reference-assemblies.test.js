@@ -9,7 +9,7 @@ const markerName = 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute';
 const friend = '[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Friend")]\n';
 
 function emit(text = source, options = {}) {
-  const result = compileToReferenceAssembly(text, { name: 'RefSurface', refout: true, ...options });
+  const result = compileToReferenceAssembly(text, { name: 'RefSurface', refout: true, allowUnsafe: true, ...options });
   assert.equal(result.success, true, JSON.stringify(result.diagnostics));
   const inspector = new AssemblyInspector(result.assembly);
   return { bytes: result.assembly, inspector, metadata: inspector.metadata };
@@ -132,6 +132,22 @@ test('A03-T22 explicit static interface methods and accessors survive without a 
   assert.equal(metadata.rows[25].filter(([owner]) => owner === (factory.token & 0xffffff)).length, 4);
 });
 
+test('A03-T22 fixed buffers and captured primary-constructor parameters retain struct layout metadata', () => {
+  const { inspector, metadata } = emit();
+  const packet = declared(inspector, 'RefSurface.Packet');
+  assert.equal(packet.fields[0].type, 'RefSurface.Packet+<Data>e__FixedBuffer');
+  const buffer = declared(inspector, 'RefSurface.Packet+<Data>e__FixedBuffer');
+  assert.deepEqual(names(buffer, 'fields'), ['FixedElementField']);
+  assert.ok(metadata.rows[15].some(([, size, parent]) => size === 16 && parent === (buffer.token & 0xffffff)));
+  const captured = declared(inspector, 'RefSurface.Captured');
+  assert.deepEqual(names(captured, 'fields'), ['<value>P']);
+  const invalid = compileToReferenceAssembly('public unsafe struct S<T> { public fixed int Data[4]; }',
+    { refout: true, allowUnsafe: true });
+  assert.equal(invalid.success, false);
+  assert.equal(invalid.assembly, null);
+  assert.ok(invalid.diagnostics.some(diagnostic => diagnostic.code === 'SF3001' && /generic type/.test(diagnostic.message)));
+});
+
 test('A03-T22 body and stripped declaration edits leave the complete reference bytes unchanged', () => {
   const original = emit().bytes;
   const bodyEdit = source.replace('return 42;', 'int value = 21; return value + value;').replace('return 1;', 'return 100;');
@@ -148,6 +164,35 @@ test('A03-T22 metadata-only default remains unchanged and an explicit reference 
   const explicit = source.replace('using System;', 'using System;\n[assembly: System.Runtime.CompilerServices.ReferenceAssembly]');
   assert.equal(markers(emit(explicit).metadata).length, 1);
   assert.deepEqual(emit('').inspector.types.map(type => type.name), ['<Module>']);
+});
+
+test('A03-T22 generic marker and friend lookalikes do not suppress the real marker or expose internals', () => {
+  const text = `
+    [assembly: System.Runtime.CompilerServices.ReferenceAssembly<int>]
+    [assembly: System.Runtime.CompilerServices.InternalsVisibleTo<int>("Friend")]
+    namespace System.Runtime.CompilerServices {
+      public class ReferenceAssemblyAttribute<T> : System.Attribute { public ReferenceAssemblyAttribute() { } }
+      public class InternalsVisibleToAttribute<T> : System.Attribute { public InternalsVisibleToAttribute(string name) { } }
+    }
+    public class Contract { internal int Hidden() { return 1; } }`;
+  const { inspector, metadata } = emit(text);
+  assert.equal(markers(metadata).length, 1);
+  assert.equal(names(declared(inspector, 'Contract'), 'methods').includes('Hidden'), false);
+});
+
+test('A03-T22 file-local attribute lookalikes retain mangled identities alongside the standard marker', () => {
+  const text = `
+    [assembly: System.Runtime.CompilerServices.ReferenceAssembly]
+    [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Friend")]
+    namespace System.Runtime.CompilerServices {
+      file class ReferenceAssemblyAttribute : System.Attribute { public ReferenceAssemblyAttribute() { } }
+      file class InternalsVisibleToAttribute : System.Attribute { public InternalsVisibleToAttribute(string name) { } }
+    }
+    public class Contract { internal int Hidden() { return 1; } }`;
+  const { inspector, metadata } = emit(text);
+  assert.equal(markers(metadata).length, 1);
+  assert.equal(names(declared(inspector, 'Contract'), 'methods').includes('Hidden'), false);
+  assert.equal(inspector.types.filter(type => type.name.includes('__ReferenceAssemblyAttribute')).length, 1);
 });
 
 test('A03-T22 invalid refout options and source errors report diagnostics with no assembly', () => {
