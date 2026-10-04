@@ -177,7 +177,7 @@ export function planMembers(type, core, constantOf) {
     if (member.kind === SymbolKind.Field) addField(member);
     else if (member.kind === SymbolKind.Method) {
       // A struct has no parameterless constructor in metadata unless the program declares one.
-      const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor;
+      const implicitStructConstructor = isStruct && member.isImplicitlyDeclared && member.methodKind === MethodKind.Constructor && !member.parameters.length;
       // A partial method that no part implements is removed from the type, with every call of it (C# 3).
       if (!implicitStructConstructor && !member.isUnimplementedPartial) addMethod(member);
     }

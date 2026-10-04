@@ -253,7 +253,7 @@ export class ExpressionTreeFactories {
   emitNew(node) {
     const { newExpression, constructorInfo } = this.types,
       constructor = node.constructor;
-    if (!constructor || (constructor.isImplicitlyDeclared && node.type.typeKind === TypeKind.Struct)) {
+    if (!constructor || (constructor.isImplicitlyDeclared && !constructor.parameters.length && node.type.typeKind === TypeKind.Struct)) {
       this.typeOf(node.type);
       return this.factory('New', [this.core.type], newExpression);
     }
