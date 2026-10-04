@@ -50,6 +50,10 @@ The framework continues to export `AnimationClock` through its existing entry po
 
 `ElementCompositionPreview` keeps visual state relative to the arranged element and owns explicit hand-in/hand-out leases. Theme and implicit coordinators use stable owner identities, obey reduced motion and restore the underlying base on completion/cancellation. They reuse the compositor clock and do not replace managed local-value slots.
 
+## Connected navigation
+
+`ConnectedAnimationService` owns at most 32 prepared captures and releases each on completion, cancellation or expiry. Navigation transitions use destination layout and reduced-motion policy; capture and overlay services are explicit requirements, and unavailable retained captures fail clearly.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.

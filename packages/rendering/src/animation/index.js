@@ -4,4 +4,6 @@ export {parseAnimationPropertyPath, resolveAnimationTarget} from './property-pat
 export {buildTimelineDefinition, readEasing} from './timeline-definition.js';
 export {CompositionAnimationEngine} from './composition-engine.js';
 export {ThemeTransition, ThemeTransitionCoordinator, themeTransitionKinds} from './theme-transitions.js';
+export {ConnectedAnimationService, ConnectedAnimation, NavigationTransitionInfo} from './connected-animation.js';
 export {ImplicitTransition, ImplicitTransitionCoordinator} from './implicit-transitions.js';
+export {NavigationTransitionCoordinator} from './navigation-transitions.js';
