@@ -1,9 +1,11 @@
 import {executionCodeState} from '../code-version.js';
 import {prepareWasmMethod, preparedWasmDispatch, disposeWasmMethod} from './manual-runtime.js';
 import {installWasmCallTier, wasmCallTierOwner} from './call-tier-state.js';
+import {wasmBackedgeStatistics} from './backedge-counters.js';
 
 const bounds = Object.freeze({
   callThreshold: [32, 1, 1000000000], maxMethods: [64, 1, 1024], maxConcurrentCompilations: [1, 1, 4],
+  backedgeThreshold: [256, 1, 1000000000], maxBackedgesPerMethod: [64, 1, 1024],
   maxMethodInstructions: [4096, 1, 65536], maxAnalysisSlots: [262144, 1, 16777216],
   maxBytes: [262144, 1, 16777216], maxCompiledBytes: [4194304, 1, 67108864]
 });
@@ -120,7 +122,8 @@ export function wasmTieringStatistics(vm) {
     compiledBytes: state?.compiledBytes ?? 0,
     methods: Object.freeze([...(state?.records.values() ?? [])].map(record => Object.freeze({
       token: record.token, name: record.name, calls: record.calls, status: record.status,
-      bytes: record.bytes, reason: record.reason ? Object.freeze({...record.reason}) : null
+      bytes: record.bytes, reason: record.reason ? Object.freeze({...record.reason}) : null,
+      ...wasmBackedgeStatistics(record)
     })))
   });
 }

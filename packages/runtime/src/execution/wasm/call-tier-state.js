@@ -1,4 +1,5 @@
 import {executionCodeState} from '../code-version.js';
+import {executedBackedge, countWasmBackedge} from './backedge-counters.js';
 
 // Only this leaf is imported by the call/step envelopes. The compiling driver
 // depends on those envelopes through the manual bridge, never the reverse.
@@ -39,22 +40,34 @@ function generation(vm, owner) {
   return state;
 }
 
+function methodRecord(state, method) {
+  let record = state.records.get(method);
+  if (!record) {
+    if (state.records.size >= state.owner.options.maxMethods) return null;
+    record = {method, token: method.token, name: (method.owner + '::' + method.name).slice(0, 4096),
+      calls: 0, status: 'cold', reason: null, prepared: null, bytes: 0, backedges: null};
+    state.records.set(method, record);
+  }
+  return record;
+}
+
+function queue(state, record) {
+  if (record.status !== 'cold') return;
+  record.status = 'queued';
+  state.queue.push(record);
+  state.owner.schedule();
+}
+
 /** Observe a real call, never a restored frame or an instruction/back edge. */
 export function observeWasmCall(vm, frame) {
   const owner = owners.get(vm);
   if (!owner?.enabled) return;
   const state = generation(vm, owner);
   state.calls = increment(state.calls);
-  let record = state.records.get(frame.method);
+  const record = methodRecord(state, frame.method);
   if (!record) {
-    if (state.records.size >= owner.options.maxMethods) {
-      state.overflowCalls = increment(state.overflowCalls);
-      return;
-    }
-    record = {method: frame.method, token: frame.method.token,
-      name: (frame.method.owner + '::' + frame.method.name).slice(0, 4096),
-      calls: 0, status: 'cold', reason: null, prepared: null, bytes: 0};
-    state.records.set(frame.method, record);
+    state.overflowCalls = increment(state.overflowCalls);
+    return;
   }
   record.calls = increment(record.calls);
   if (record.status === 'ready') {
@@ -77,11 +90,16 @@ export function observeWasmCall(vm, frame) {
       selected.record = record;
     }
     state.selectedCalls = increment(state.selectedCalls);
-  } else if (record.status === 'cold' && record.calls >= owner.options.callThreshold) {
-    record.status = 'queued';
-    state.queue.push(record);
-    owner.schedule();
-  }
+  } else if (record.calls >= owner.options.callThreshold) queue(state, record);
+}
+
+/** Observe successful dispatch only. A restored running method may become hot without becoming a new call. */
+export function observeWasmBackedge(vm, frame, instruction, index, frameId) {
+  const owner = owners.get(vm);
+  if (!owner?.enabled || !executedBackedge(vm, frame, instruction, index, frameId)) return;
+  const state = generation(vm, owner);
+  const record = methodRecord(state, frame.method);
+  if (record && countWasmBackedge(vm, record, index, frame.pc, owner.options)) queue(state, record);
 }
 
 /** A selection belongs to this call's fresh frame id; readiness never changes a running frame. */

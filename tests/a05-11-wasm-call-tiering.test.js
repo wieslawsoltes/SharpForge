@@ -245,7 +245,7 @@ test('manual selection takes precedence over automatic selection and live quotas
 
 test('invalid host tiering limits reject deliberately', () => {
   for (const option of [null, 1, {callThreshold: 0}, {callThreshold: 1.5}, {maxMethods: 1025},
-    {maxConcurrentCompilations: 0}, {maxCompiledBytes: -1}, {maxBytes: Infinity}, {backedgeThreshold: 1}]) {
+    {maxConcurrentCompilations: 0}, {maxCompiledBytes: -1}, {maxBytes: Infinity}, {osrThreshold: 1}]) {
     assert.throws(() => new CilVirtualMachine(callsFixture(), {wasmTiering: option}), /wasm|Wasm/);
   }
 });
