@@ -1,0 +1,8 @@
+/* Loaded only by the explicit Canvas reference harness through the production same-origin stylesheet policy. */
+[data-a18-canvas-transform="identity"] [data-sf-id="target"] {
+  transform: none !important;
+}
+
+[data-a18-canvas-transform="rotate"] [data-sf-id="target"] {
+  transform: rotate(31deg) !important;
+}
