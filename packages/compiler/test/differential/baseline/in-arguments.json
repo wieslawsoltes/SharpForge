@@ -1,4 +1,4 @@
 {
-  "in-arguments/a-by-value-parameter-is-better-than-in-without-a-modifier": ["diagnostics", "warnings", "bytecode", "cil"],
+  "in-arguments/a-by-value-parameter-is-better-than-in-without-a-modifier": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "in-arguments/in-arguments-are-readonly-variables": ["diagnostics", "warnings"]
 }

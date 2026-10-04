@@ -4,9 +4,10 @@
  *   fixtures/<name>.cs    a program
  *   fixtures/<name>.out   what it prints when Roslyn builds it and .NET runs it (pinned by verify-dotnet.mjs --update)
  *   fixtures/<name>.vm    present only when the direct-CIL runtime cannot run the emitted assembly: the reason, one
- *                         line per verifier issue (or `fault: <message>` for a run-time fault). The test asserts the
- *                         reason exactly, so a fixture is never counted as passing while it does not run, and the
- *                         file goes stale - and the test fails - as soon as the runtime gains the capability.
+ *                         line per verifier issue (`fault: <message>` for a run-time fault, `output differs` for a
+ *                         wrong result). A fixture that does not print the .NET output must fail for exactly that
+ *                         reason, so it is never counted as running; once the runtime gains the capability the
+ *                         output is compared as usual and `verify-dotnet.mjs --update` removes the file.
  *
  * `checkFixture` verifies an emitted assembly on the two levels that need no .NET SDK: the image is read back and
  * validated by `@sharpforge/cil`, and it runs on the direct-CIL runtime. verify-dotnet.mjs is the third level.

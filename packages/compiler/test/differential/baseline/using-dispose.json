@@ -1,8 +1,8 @@
 {
   "using-dispose/cs1656-assign-using-variable": ["warnings"],
   "using-dispose/cs1674-not-disposable": ["diagnostics", "warnings"],
-  "using-dispose/dispose-on-exception": ["diagnostics", "warnings", "bytecode", "cil"],
-  "using-dispose/nested-and-null": ["diagnostics", "warnings", "bytecode", "cil"],
-  "using-dispose/using-declaration": ["diagnostics", "warnings", "bytecode", "cil"],
-  "using-dispose/using-statement": ["diagnostics", "warnings", "bytecode", "cil"]
+  "using-dispose/dispose-on-exception": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "using-dispose/nested-and-null": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "using-dispose/using-declaration": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "using-dispose/using-statement": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

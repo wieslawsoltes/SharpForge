@@ -7,7 +7,7 @@
  * with `!0`, as ECMA-335 II.22.25 requires). A constructed generic method is a MethodSpec over either.
  */
 import { compressUnsigned, methodSpecBlob, needsMethodSpec, needsTypeSpec } from '../../codegen/generics.js';
-import { SymbolKind, substituteType } from '../../symbols/types.js';
+import { SymbolKind, NamedTypeSymbol, substituteType } from '../../symbols/types.js';
 import { fieldSignature, methodSignature, methodSymbolSignature } from '../../codegen/metadata/member-signatures.js';
 
 const LOCAL_SIGNATURE = 0x07;
@@ -34,6 +34,15 @@ function openDeclarationOf(owner, method) {
   return definition.getMembers(method.name).find(matches) ?? method;
 }
 
+/**
+ * True for a type whose members cannot be named by their definition tokens: a constructed type, and a generic
+ * definition seen from its own code (`Box<T>` inside `Box<T>`), which is the instantiation over its own type
+ * parameters (ECMA-335 II.9.4: a member of a generic type is always referenced through a TypeSpec).
+ */
+function isInstantiation(type) {
+  return needsTypeSpec(type) || (type instanceof NamedTypeSymbol && type.isDefinition && type.isGenericType);
+}
+
 export class MemberTokens {
   /** @param writer the SymbolMetadataWriter whose definition tokens are allocated */
   constructor(writer) {
@@ -46,7 +55,7 @@ export class MemberTokens {
   }
   /** TypeDef, TypeRef or TypeSpec token of a type (the operand of `newarr`, `box`, `isinst`, a catch clause, ...). */
   type(type) {
-    if (!needsTypeSpec(type)) return this.types.definitionToken(type);
+    if (!isInstantiation(type)) return this.types.definitionToken(type);
     const signature = this.types.signature(type),
       key = signature.join(',');
     let token = this.typeSpecs.get(key);
@@ -61,7 +70,7 @@ export class MemberTokens {
     const definition = method.originalDefinition ?? method,
       owner = method.containingType,
       defined = this.writer.methodTokens.get(definition);
-    const parent = defined && !needsTypeSpec(owner) ? defined : this.memberReference(owner, definition);
+    const parent = defined && !isInstantiation(owner) ? defined : this.memberReference(owner, definition);
     if (!needsMethodSpec(method)) return parent;
     const instantiation = methodSpecBlob(method, this.types.tokenOf),
       key = parent + ':' + instantiation.join(',');
@@ -81,7 +90,7 @@ export class MemberTokens {
     const definition = field.originalDefinition ?? field,
       owner = field.containingType,
       defined = this.writer.fieldTokens.get(definition);
-    if (defined && !needsTypeSpec(owner)) return defined;
+    if (defined && !isInstantiation(owner)) return defined;
     return this.builder.member(this.type(owner), definition.name, fieldSignature(this.types, definition.type));
   }
   /**
@@ -92,6 +101,33 @@ export class MemberTokens {
    */
   external(owner, name, shape) {
     return this.builder.member(this.type(owner), name, methodSignature(this.types, shape));
+  }
+  /** The token of `D::.ctor(object, native int)`, which the runtime implements for every delegate type. */
+  delegateConstructor(type) {
+    const planned = needsTypeSpec(type) ? null : this.writer.plans.get(type.originalDefinition ?? type);
+    if (planned) return planned.methods.find(method => method.name === '.ctor').token;
+    const core = this.writer.core,
+      shape = { isStatic: false, returnType: core.void, parameters: [{ type: core.object }, { type: core.intPtr }] };
+    return this.external(type, '.ctor', shape);
+  }
+  /** The planned event of a source event symbol: `{adder, remover}` and, for a field-like event, its field. */
+  plannedEvent(event) {
+    const definition = event.originalDefinition ?? event,
+      plan = this.writer.plans.get(definition.containingType);
+    return plan?.events.find(entry => entry.symbol === definition) ?? null;
+  }
+  /** The token of the add or remove accessor of a source event, or null for an event the compilation does not define. */
+  eventAccessor(event, isAdd) {
+    const planned = this.plannedEvent(event);
+    if (!planned || needsTypeSpec(event.containingType)) return null;
+    return (isAdd ? planned.adder : planned.remover).token;
+  }
+  /** The token of the delegate field of a field-like source event, or null when the event has none. */
+  eventField(event) {
+    const definition = event.originalDefinition ?? event,
+      plan = this.writer.plans.get(definition.containingType),
+      field = plan?.fields.find(entry => !entry.symbol && entry.name === definition.name);
+    return field && !needsTypeSpec(event.containingType) ? field.token : null;
   }
   /** The operand of `ldstr`. */
   string(text) {

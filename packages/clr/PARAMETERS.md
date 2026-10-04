@@ -8,7 +8,8 @@ Each ParameterDesc retains its `method`, `module` and immutable `signatureType`
 AST. Its `member` is the method, or the owning property for a
 [property index-parameter projection](PROPERTY-PARAMETERS.md). The `method`
 always remains the defining accessor. No type references or executable bodies
-are loaded.
+are loaded. Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) expose
+required and optional outer modifiers, including return parameters.
 
 Param rows are optional. Missing rows receive canonical positional descriptors
 with name `null`, flags 0 and metadata token 0. A zero token is this metadata API's

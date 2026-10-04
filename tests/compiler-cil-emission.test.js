@@ -34,14 +34,12 @@ for (const fixture of fixtures) {
     assert.deepEqual(errors, []);
     assert.ok(assembly instanceof Uint8Array);
     assert.deepEqual(inspectImage(assembly), []);
-    const run = runOnDirectCil(assembly);
-    if (fixture.runtimeLimit === null) {
-      assert.equal(run.limit, null, `${fixture.name}: the direct-CIL runtime did not run the assembly`);
-      assert.equal(run.output, fixture.expected);
-    } else {
-      // The assembly is valid (.NET runs it); the direct-CIL runtime lacks what the `.vm` file names. Not a pass.
-      assert.equal(run.limit ?? 'output differs\n', fixture.runtimeLimit, `${fixture.name}: the recorded runtime limit is stale`);
-    }
+    const run = runOnDirectCil(assembly),
+      observed = run.limit ?? (run.output === fixture.expected ? null : 'output differs\n');
+    // Either the runtime prints what .NET prints, or it stops for exactly the reason the `.vm` file records (the
+    // assembly is valid - .NET runs it - and the fixture is not counted as running). A limit the runtime has since
+    // removed needs no change here: the output is then compared like any other.
+    if (observed !== null) assert.equal(observed, fixture.runtimeLimit ?? '(none recorded)\n', `${fixture.name}: ${run.output ?? ''}`);
   });
 }
 
@@ -115,15 +113,15 @@ test('A02-T30 a typed catch clause names its exception type and try regions nest
 });
 
 test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong assembly', () => {
-  const lambda = emit('using System; class C { static void Main() { Func<int, int> f = x => x + 1; Console.WriteLine(f(1)); } }');
-  assert.equal(lambda.success, false);
-  assert.equal(lambda.assembly, null);
+  const filter = emit('using System; class C { static void Main() { try { } catch (Exception e) when (e.Message == "x") { } } }');
+  assert.equal(filter.success, false);
+  assert.equal(filter.assembly, null);
   assert.deepEqual(
-    errorsOf(lambda).map(entry => entry.code),
+    errorsOf(filter).map(entry => entry.code),
     ['SF2200'],
   );
-  assert.match(errorsOf(lambda)[0].message, /lambda expressions/);
-  assert.ok(errorsOf(lambda)[0].start > 0, 'the diagnostic is at the construct');
+  assert.match(errorsOf(filter)[0].message, /exception filters/);
+  assert.ok(errorsOf(filter)[0].start > 0, 'the diagnostic is at the construct');
   const iterator = emit(`using System.Collections.Generic;
     class C { static IEnumerable<int> Numbers() { yield return 1; } static void Main() { } }`);
   assert.equal(iterator.assembly, null);

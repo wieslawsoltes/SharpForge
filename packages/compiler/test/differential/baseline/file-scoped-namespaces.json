@@ -5,5 +5,5 @@
   "file-scoped-namespaces/cs8956-after-a-member": ["diagnostics", "warnings"],
   "file-scoped-namespaces/cs8956-after-top-level-statements": ["diagnostics", "warnings"],
   "file-scoped-namespaces/file-scoped-namespace-in-csharp-9": ["diagnostics", "warnings"],
-  "file-scoped-namespaces/types-and-usings-inside": ["diagnostics", "warnings", "bytecode", "cil"]
+  "file-scoped-namespaces/types-and-usings-inside": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

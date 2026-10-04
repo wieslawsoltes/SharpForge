@@ -1,9 +1,9 @@
 {
-  "statement-lowering/checked-and-unchecked-blocks": ["diagnostics", "warnings", "bytecode", "cil"],
+  "statement-lowering/checked-and-unchecked-blocks": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "statement-lowering/checked-constant-overflow": ["diagnostics", "warnings"],
-  "statement-lowering/checked-context-is-lexical": ["diagnostics", "warnings", "bytecode", "cil"],
+  "statement-lowering/checked-context-is-lexical": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "statement-lowering/embedded-statement-rules": ["diagnostics", "warnings"],
   "statement-lowering/lock-requires-a-reference-type": ["diagnostics", "warnings"],
   "statement-lowering/using-requires-idisposable": ["diagnostics", "warnings"],
-  "statement-lowering/using-statement-forms": ["diagnostics", "warnings", "bytecode", "cil"]
+  "statement-lowering/using-statement-forms": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
