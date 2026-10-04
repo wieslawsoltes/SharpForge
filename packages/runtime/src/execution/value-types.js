@@ -8,7 +8,7 @@ const plans = new WeakMap();
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 const unsupported = name => { throw new ManagedFault('NotSupportedException', 'Struct storage is not implemented: ' + name); };
 export const isValueRecord = value => !!value?.valueType && Array.isArray(value.fields);
-export const isAggregateType = table => table.flags.valueType && !table.flags.primitive && !table.flags.enum &&
+export const isAggregateType = table => table.flags.valueType && !table.flags.dynamic && !table.flags.primitive && !table.flags.enum &&
   table.name !== 'System.Decimal';
 
 function cacheFor(vm) {
