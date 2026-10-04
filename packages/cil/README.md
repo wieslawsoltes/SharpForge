@@ -206,6 +206,13 @@ Embedded data emission and bounded inspection are documented in [RESOURCES.md](.
 Paged named metadata rows, token references, physical file offsets and standard
 heap records are available through [MetadataTableInspector](./METADATA-TABLES.md).
 
+`readMetadata(bytes, { maxRows, signal })` optionally lowers the existing
+one-million-row limit before row allocation. `maxRows` is an integer from zero
+through one million. Cancellation is checked before reading, at stream and row
+boundaries, and before return; it throws `CilError` with code `MD_READ_CANCELED`.
+Parsing remains synchronous. Omitting options preserves the existing physical
+reader and borrowed input/heap views.
+
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
 Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
