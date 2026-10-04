@@ -1,12 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { AssemblyLoadSession } from '../packages/clr/src/index.js';
 
 const fixture = new URL('./fixtures/clr-method-display-nested/native.json', import.meta.url);
-test('CLR nested argument displays match independent native MethodInfo strings',
-  { skip: !existsSync(fixture) && 'Native capture pending serial validation' }, async () => {
+test('CLR nested argument displays match independent native MethodInfo strings', async () => {
     const native = JSON.parse(readFileSync(fixture));
     const source = readFileSync(new URL('./fixtures/clr-method-display-nested/Program.cs', import.meta.url));
     const image = Buffer.from(native.image, 'base64');
