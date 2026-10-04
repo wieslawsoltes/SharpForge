@@ -1,0 +1,305 @@
+{
+  "node": "v24.19.0",
+  "platform": "linux x64",
+  "calibrationMs": 9.46,
+  "processPeakRssMB": 1581.77,
+  "memorySemantics": {
+    "retainedHeapMB": "Live V8 heap growth after explicit GC while retaining the syntax tree; null without --expose-gc.",
+    "peakHeapMB": "Maximum V8 heap growth sampled after each synchronous parse; not the unsampled allocation peak.",
+    "processPeakRssMB": "Process lifetime maximum resident set, including corpus, runtime and benchmark harness.",
+    "allocationCount": "Not measured."
+  },
+  "cases": {
+    "small": {
+      "characters": 13720,
+      "parseMs": 12.53,
+      "firstParseMs": 25.94,
+      "parseP95Ms": 25.94,
+      "parseP99Ms": 25.94,
+      "samplesMs": [
+        25.94,
+        12.53,
+        9.67
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 1.04,
+      "relativeToCalibration": 1.32,
+      "retainedHeapMB": 2.18,
+      "peakHeapMB": 12.84,
+      "parseWithLegacyAstMs": 21.08
+    },
+    "oneMegabyte": {
+      "characters": 1012931,
+      "parseMs": 383.1,
+      "firstParseMs": 497.21,
+      "parseP95Ms": 497.21,
+      "parseP99Ms": 497.21,
+      "samplesMs": [
+        497.21,
+        383.1,
+        350.3
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 2.52,
+      "relativeToCalibration": 40.49,
+      "retainedHeapMB": 85,
+      "peakHeapMB": 336.08,
+      "parseWithLegacyAstMs": 643.16
+    },
+    "hugeString": {
+      "characters": 1120064,
+      "parseMs": 21.95,
+      "firstParseMs": 21.95,
+      "parseP95Ms": 73.82,
+      "parseP99Ms": 73.82,
+      "samplesMs": [
+        21.95,
+        73.82,
+        11.46
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 48.66,
+      "relativeToCalibration": 2.32,
+      "retainedHeapMB": 34.02,
+      "peakHeapMB": 106.6,
+      "parseWithLegacyAstMs": 14.44
+    },
+    "hugeVerbatimString": {
+      "characters": 1040065,
+      "parseMs": 10.32,
+      "firstParseMs": 10.32,
+      "parseP95Ms": 84.42,
+      "parseP99Ms": 84.42,
+      "samplesMs": [
+        10.32,
+        9.54,
+        84.42
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 96.13,
+      "relativeToCalibration": 1.09,
+      "retainedHeapMB": 34.74,
+      "peakHeapMB": 102.32,
+      "parseWithLegacyAstMs": 12.84
+    },
+    "hugeRawString": {
+      "characters": 1120081,
+      "parseMs": 16.76,
+      "firstParseMs": 20.75,
+      "parseP95Ms": 20.75,
+      "parseP99Ms": 20.75,
+      "samplesMs": [
+        20.75,
+        16.76,
+        13.46
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 63.74,
+      "relativeToCalibration": 1.77,
+      "retainedHeapMB": 6.93,
+      "peakHeapMB": 56.29,
+      "parseWithLegacyAstMs": 16.33
+    },
+    "hugeInterpolatedString": {
+      "characters": 440065,
+      "parseMs": 454.96,
+      "firstParseMs": 454.96,
+      "parseP95Ms": 494.86,
+      "parseP99Ms": 494.86,
+      "samplesMs": [
+        454.96,
+        494.86,
+        364.4
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 0.92,
+      "relativeToCalibration": 48.09,
+      "retainedHeapMB": 48.92,
+      "peakHeapMB": 220.05,
+      "parseWithLegacyAstMs": 712.85
+    },
+    "hugeNumber": {
+      "characters": 100062,
+      "parseMs": 10.06,
+      "firstParseMs": 10.06,
+      "parseP95Ms": 13.72,
+      "parseP99Ms": 13.72,
+      "samplesMs": [
+        10.06,
+        13.72,
+        8.56
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 9.48,
+      "relativeToCalibration": 1.06,
+      "retainedHeapMB": 0,
+      "peakHeapMB": 17.13,
+      "parseWithLegacyAstMs": 10.42
+    },
+    "hugeArrayInitializer": {
+      "characters": 1050077,
+      "parseMs": 414.22,
+      "firstParseMs": 414.22,
+      "parseP95Ms": 473.13,
+      "parseP99Ms": 473.13,
+      "samplesMs": [
+        414.22,
+        403.67,
+        473.13
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 2.42,
+      "relativeToCalibration": 43.78,
+      "retainedHeapMB": 97.58,
+      "peakHeapMB": 174.26,
+      "parseWithLegacyAstMs": 572.19
+    },
+    "hugeComment": {
+      "characters": 1040058,
+      "parseMs": 0.84,
+      "firstParseMs": 1.72,
+      "parseP95Ms": 1.72,
+      "parseP99Ms": 1.72,
+      "samplesMs": [
+        1.72,
+        0.84,
+        0.8
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 1187.44,
+      "relativeToCalibration": 0.09,
+      "retainedHeapMB": 2.74,
+      "peakHeapMB": 7.08,
+      "parseWithLegacyAstMs": 2.18
+    },
+    "longBinaryChain": {
+      "characters": 400063,
+      "parseMs": 334.23,
+      "firstParseMs": 334.23,
+      "parseP95Ms": 366.84,
+      "parseP99Ms": 366.84,
+      "samplesMs": [
+        334.23,
+        366.84,
+        293.79
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 1.14,
+      "relativeToCalibration": 35.33,
+      "retainedHeapMB": 100.65,
+      "peakHeapMB": 279.23,
+      "parseWithLegacyAstMs": 342.34
+    },
+    "tenMegabytes": {
+      "characters": 10008264,
+      "parseMs": 4383.4,
+      "firstParseMs": 4383.4,
+      "parseP95Ms": 4383.4,
+      "parseP99Ms": 4383.4,
+      "samplesMs": [
+        4383.4
+      ],
+      "warmupRuns": 0,
+      "megabytesPerSecond": 2.18,
+      "relativeToCalibration": 463.29,
+      "retainedHeapMB": 832.22,
+      "peakHeapMB": 1172.49,
+      "parseWithLegacyAstMs": null
+    }
+  },
+  "environment": {
+    "source": {
+      "commit": "60e000787912434100cb7dac83c4fdb0893c13d9",
+      "trackedChanges": []
+    },
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64",
+    "osRelease": "6.18.44",
+    "cpuModel": "AMD EPYC 9V74 80-Core Processor",
+    "logicalProcessors": 9,
+    "totalMemoryBytes": 10451464192,
+    "hostContext": "Shared Linux execution host with concurrent project agents; no quiet-host isolation established.",
+    "loadAverage": [
+      1.59,
+      1.21,
+      0.81
+    ],
+    "gcExposed": true
+  },
+  "gate": {
+    "baselinePath": "packages/syntax/bench/parse.baseline.json",
+    "baselineSha256": "816f4875798f97551fe42d3dcfa0488b277691f249d9fde3f696266f6838aeb2",
+    "tolerance": 0.15,
+    "passed": false,
+    "failures": [
+      {
+        "name": "small",
+        "baseline": 0.65,
+        "current": 1.32,
+        "change": 103.08
+      },
+      {
+        "name": "oneMegabyte",
+        "baseline": 18.85,
+        "current": 40.49,
+        "change": 114.8
+      },
+      {
+        "name": "hugeString",
+        "baseline": 0.83,
+        "current": 2.32,
+        "change": 179.52
+      },
+      {
+        "name": "hugeVerbatimString",
+        "baseline": 0.64,
+        "current": 1.09,
+        "change": 70.31
+      },
+      {
+        "name": "hugeRawString",
+        "baseline": 0.99,
+        "current": 1.77,
+        "change": 78.79
+      },
+      {
+        "name": "hugeInterpolatedString",
+        "baseline": 20.28,
+        "current": 48.09,
+        "change": 137.13
+      },
+      {
+        "name": "hugeNumber",
+        "baseline": 0.45,
+        "current": 1.06,
+        "change": 135.56
+      },
+      {
+        "name": "hugeArrayInitializer",
+        "baseline": 18.16,
+        "current": 43.78,
+        "change": 141.08
+      },
+      {
+        "name": "hugeComment",
+        "baseline": 0.02,
+        "current": 0.09,
+        "change": 350
+      },
+      {
+        "name": "longBinaryChain",
+        "baseline": 15.15,
+        "current": 35.33,
+        "change": 133.2
+      },
+      {
+        "name": "tenMegabytes",
+        "baseline": 202.85,
+        "current": 463.29,
+        "change": 128.39
+      }
+    ]
+  }
+}
