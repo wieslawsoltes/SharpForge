@@ -58,6 +58,24 @@ function memoryMetrics(before, elapsedMs) {
   };
 }
 
+function timeoutFinding(metrics, maximum, deadlineAborted) {
+  if (!deadlineAborted && metrics.elapsedMs <= maximum) return null;
+  return {
+    status: 'finding', finding: { kind: 'case-timeout', detail: 'Fixture completed after its local case deadline' }, metrics,
+  };
+}
+
+/** Pure completion boundary: a target cannot turn its local deadline into a controlled outcome. */
+export function classifyCompletion(raw, mode, budgets, metrics, deadlineAborted) {
+  const timeout = timeoutFinding(metrics, budgets.caseTimeoutMs, deadlineAborted);
+  if (timeout) return timeout;
+  const result = mode === 'seeds' ? raw : normalizedOutcome(raw);
+  if (metrics.observedGrowthBytes > budgets.heapGrowthBytes) {
+    return { status: 'finding', finding: { kind: 'memory-growth', detail: 'Measured heap/external growth exceeds limit' }, metrics };
+  }
+  return { ...result, metrics };
+}
+
 async function execute(request, target) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(new DOMException('Case deadline', 'AbortError')), request.budgets.caseTimeoutMs);
@@ -70,17 +88,16 @@ async function execute(request, target) {
     const raw = request.mode === 'seeds' ? await seedResult(target, request.budgets.maxInputBytes)
       : await target.run(decodeInput(request.inputBase64, context.maxInputBytes), context);
     const metrics = memoryMetrics(before, performance.now() - started);
-    const result = request.mode === 'seeds' ? raw : normalizedOutcome(raw);
-    if (metrics.observedGrowthBytes > request.budgets.heapGrowthBytes) {
-      return { status: 'finding', finding: { kind: 'memory-growth', detail: 'Measured heap/external growth exceeds limit' }, metrics };
-    }
-    return { ...result, metrics };
+    return classifyCompletion(raw, request.mode, request.budgets, metrics, controller.signal.aborted);
   } catch (error) {
+    const metrics = memoryMetrics(before, performance.now() - started);
+    const timeout = timeoutFinding(metrics, request.budgets.caseTimeoutMs, controller.signal.aborted);
+    if (timeout) return timeout;
     return {
       status: 'finding', finding: {
         kind: error?.name === 'AbortError' ? 'case-timeout' : 'unexpected-error',
         detail: `${error?.name ?? 'Error'}: ${error?.message ?? 'Unknown target failure'}`.slice(0, 2048),
-      }, metrics: memoryMetrics(before, performance.now() - started),
+      }, metrics,
     };
   } finally {
     clearTimeout(timer);
