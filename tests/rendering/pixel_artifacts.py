@@ -9,6 +9,7 @@ import zlib
 from pathlib import Path
 
 from png_pixels import dimensions as validate_dimensions
+from native_provenance import validate_native_xaml, compare_shape_defaults
 
 
 def png_bytes(width, height, pixels):
@@ -93,7 +94,7 @@ def golden_result(directory, fixture, pixels, dimensions, metadata, *, update=Fa
     return {'status': 'passed' if result['passed'] else 'failed', **result}, difference
 
 
-def native_result(directory, fixture, pixels, dimensions, *, windows_app_sdk):
+def native_result(directory, fixture, pixels, dimensions, *, windows_app_sdk, browser_environment=None, browser_defaults=None):
     """Read only provider-owned references; update-goldens can never produce a native reference."""
     if directory is None:
         return {'status': 'pending-native', 'passed': False, 'reason': 'No native WinUI reference provider'}, None
@@ -107,6 +108,9 @@ def native_result(directory, fixture, pixels, dimensions, *, windows_app_sdk):
         raise ValueError('Native WinUI reference SDK does not match the repository oracle pin')
     if not metadata.get('toolVersion') or not metadata.get('captureCommand') or not metadata.get('operatingSystem'):
         raise ValueError('Native reference tool and capture provenance are required')
+    validate_native_xaml(metadata, fixture, expected, browser_environment)
+    defaults = compare_shape_defaults(metadata.get('nativeDefaults', {}).get('shapeDefaults'), browser_defaults)
     result, difference = compare_pixels(pixels, expected, fixture['tolerance'])
-    return {'status': 'passed' if result['passed'] else 'failed', **result, 'provider': metadata,
-            'sha256': hashlib.sha256(expected).hexdigest()}, difference
+    passed = result['passed'] and defaults['status'] != 'failed'
+    return {'status': 'passed' if passed else 'failed', **result, 'passed': passed, 'provider': metadata,
+            'nativeShapeDefaults': defaults, 'sha256': hashlib.sha256(expected).hexdigest()}, difference
