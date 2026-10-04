@@ -19,7 +19,10 @@ function storage(descriptor, instruction, state) {
   const index = descriptor.index ?? instruction.operand;
   if (!Number.isInteger(index) || index < 0 || index >= slots.length)
     state.fail(descriptor.argument ? 'UnrecognizedArgumentNumber' : 'UnrecognizedLocalNumber');
-  if (!descriptor.argument && descriptor.operation !== 'store' && !state.method.initLocals) state.fail('InitLocals');
+  if (!descriptor.argument && descriptor.operation !== 'store' && !state.method.initLocals) {
+    if (!state.initialization) state.fail('InitLocals');
+    if (!state.initialization.assigned(index)) state.fail('UninitializedLocal');
+  }
   return slots[index];
 }
 
@@ -30,6 +33,7 @@ const handlers = Object.freeze({
   store(descriptor, instruction, state) {
     const target = storage(descriptor, instruction, state).value;
     if (!assignable(state.pop(), target)) state.fail('StackUnexpected');
+    if (!descriptor.argument && state.initialization) state.initialization.assign(descriptor.index ?? instruction.operand);
   },
   address(descriptor, instruction, state) {
     const target = storage(descriptor, instruction, state);

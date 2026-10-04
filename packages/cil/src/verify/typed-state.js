@@ -2,6 +2,7 @@ import { CilError } from '../binary.js';
 import { mergeVerificationStacks } from './type-relations.js';
 import { sameVerificationType } from './types.js';
 import { primitiveRelations } from './typed-signatures.js';
+import { localInitialization } from './initialization.js';
 
 const empty = Object.freeze([]);
 
@@ -22,6 +23,21 @@ function mergeStacks(incoming, stored, state, options) {
 
 /** Internal state-composition seam over the existing bounded worklist and reusable transfer stack. */
 export function createTypedFlowState(state, options) {
+  const initialization = localInitialization(state.method, state.signature.locals.length, options);
+  state.initialization = initialization;
+  if (initialization) return {
+    entry: Object.freeze({ stack: empty, locals: null }),
+    restore(incoming) {
+      state.restore(incoming.stack);
+      initialization.restore(incoming.locals);
+    },
+    snapshot() { return Object.freeze({ stack: state.snapshot(), locals: initialization.snapshot() }); },
+    merge(incoming, stored) {
+      const stack = mergeStacks(incoming.stack, stored.stack, state, options);
+      const locals = initialization.merge(incoming.locals, stored.locals);
+      return stack === stored.stack && locals === stored.locals ? stored : Object.freeze({ stack, locals });
+    },
+  };
   return {
     entry: empty,
     restore(values) { state.restore(values); },
