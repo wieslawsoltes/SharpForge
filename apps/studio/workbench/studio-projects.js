@@ -14,6 +14,11 @@ export class StudioProjects {
     return state.projectSystem?.projects.has(state.startupProject) ? state.startupProject : '$workspace';
   }
 
+  get currentProjectId() {
+    const memberships = this.services.documents.projectsFor(this.state().active);
+    return memberships.includes(this.selectedId) ? this.selectedId : memberships[0] ?? this.selectedId;
+  }
+
   definitions() {
     const state = this.state();
     if (state.projectSystem?.projects.size) return [...state.projectSystem.projects.values()].map(project => ({
@@ -51,16 +56,23 @@ export class StudioProjects {
     if (this.workspace !== identity || this.epoch !== epoch) {
       for (const session of this.services.sessions.list()) this.services.sessions.remove(session.id);
       for (const service of this.services.builds.list()) this.services.builds.remove(service.id);
-      this.services.documents.projectMembership.clear();
+      for (const id of this.services.documents.projectMembership.keys()) this.removeMembership(id);
+      if (this.workspace !== null) {
+        this.services.profiles.projects.clear();
+        this.services.profiles.selected.clear();
+        this.services.startup.configure({ mode: 'single', entries: [] });
+      }
       this.signatures.clear();
       this.workspace = identity;
       this.epoch = epoch;
     }
     const definitions = this.definitions();
     const valid = new Set(definitions.map(project => project.id));
+    const removedProfiles = [];
     for (const old of this.services.builds.list()) if (!valid.has(old.id)) {
+      if (this.services.profiles.removeProject(old.id, { notify: false })) removedProfiles.push(old.id);
       this.services.builds.remove(old.id);
-      this.services.documents.projectMembership.delete(old.id);
+      this.removeMembership(old.id);
       this.services.breakpoints.removeProject(old.id);
       this.signatures.delete(old.id);
     }
@@ -79,7 +91,13 @@ export class StudioProjects {
       ?? definitions.find(project => project.outputType.toLowerCase() !== 'library');
     if (!existing.length && runnable) this.services.startup.select(runnable.id);
     else if (existing.length !== this.services.startup.entries.length) this.services.startup.configure({ entries: existing });
+    if (removedProfiles.length) this.services.profiles.notifyRemoved(removedProfiles);
     this.services.locks.refresh();
+  }
+
+  removeMembership(id) {
+    this.services.documents.setProjectMembership(id, []);
+    this.services.documents.projectMembership.delete(id);
   }
 
   serviceFor(uri, explicitProject) {

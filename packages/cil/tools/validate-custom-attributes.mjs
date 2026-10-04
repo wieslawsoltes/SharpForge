@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
-import { encodeCustomAttribute, readPE } from '@sharpforge/cil';
+import { encodeCustomAttribute, decodeCustomAttribute, readPE } from '@sharpforge/cil';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const source = join(root, 'tests/fixtures/attributes/AttributeOracle');
@@ -32,6 +32,10 @@ try {
     assert.deepEqual(encoded, expected, `${item.id} constructor-token encoder bytes`);
     assert.deepEqual(bytes.subarray(item.blobOffset, item.blobOffset + encoded.length), expected, 'native blob offset');
     bytes.set(encoded, item.blobOffset);
+    const decoded = decodeCustomAttribute(encoded, item.constructor, options);
+    assert.equal(decoded.success, true, JSON.stringify(decoded.diagnostics));
+    assert.deepEqual(decoded.constructorArguments, item.decodedConstructorArguments);
+    assert.deepEqual(decoded.namedArguments, item.decodedNamedArguments);
   }
   const patched = join(scratch, 'patched.dll');
   await writeFile(patched, bytes);
@@ -49,7 +53,7 @@ try {
     assert.deepEqual(data, pinned, 'reference fixture matches the committed inputs');
   }
   console.log(JSON.stringify({ runtime: data.runtime, cases: data.cases.length,
-    comparison: 'Roslyn bytes, constructor-token encoding and native GetCustomAttributes; corrupt-prolog negative passed' }));
+    comparison: 'Roslyn bytes, constructor-token encoding/decoding and native GetCustomAttributes; corrupt-prolog negative passed' }));
 } finally {
   await rm(scratch, { recursive: true, force: true });
 }

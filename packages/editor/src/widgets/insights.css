@@ -274,3 +274,6 @@ html[data-theme=light] .sf-semantic-property { color: #674492; }
   .sf-peek-definition header span { display: none; }
   .sf-diff-toolbar { flex-wrap: wrap; }
 }
+
+.sf-semantic-field, .sf-semantic-event { color: var(--syntax-variable, #9cdcfe); }
+.sf-semantic-namespace { color: var(--syntax-type, #4ec9b0); }

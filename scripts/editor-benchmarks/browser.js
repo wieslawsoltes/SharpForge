@@ -4,8 +4,11 @@ import { resolve } from 'node:path';
 import { createBenchmarkServer } from './server.js';
 import { distribution, environment, schemaVersion, validateOptions } from './common.js';
 import { searchMarker } from './fixtures.js';
+import { waitForBenchmarkReady } from './browser-ready.js';
 
 export function loadPlaywright() {
+  const explicit = process.env.SHARPFORGE_PLAYWRIGHT_MODULE;
+  if (explicit) return createRequire(import.meta.url)(resolve(explicit));
   const roots = [process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES, process.cwd()].filter(Boolean);
   for (const root of roots) {
     try { return createRequire(resolve(root, 'sharpforge-benchmark.cjs'))('playwright'); }
@@ -34,7 +37,7 @@ export async function benchmarkEditorBrowser(options = {}) {
     const failures = [];
     page.on('pageerror', error => failures.push(error.message));
     await page.goto(server.url);
-    await page.waitForFunction(() => Boolean(window.editorBenchmark));
+    await waitForBenchmarkReady(page, { signal: options.signal });
     const rows = [];
     for (const sizeBytes of settings.sizes) {
       options.onProgress?.(`${engineName} DOM ${sizeBytes} bytes`);

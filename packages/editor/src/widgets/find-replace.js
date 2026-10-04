@@ -48,18 +48,25 @@ export class FindReplaceWidget {
   open(replace = false) {
     const editor = this.context.editor;
     this.selection = {start: editor.offset, end: editor.input.selectionEnd};
-    if (this.selection.start !== this.selection.end && !editor.value.slice(this.selection.start, this.selection.end).includes('\n')) {
-      this.find.input.value = editor.value.slice(this.selection.start, this.selection.end);
+    if (this.selection.start !== this.selection.end && this.selection.end - this.selection.start <= 1024) {
+      const source = editor.sourceSnapshot();
+      const selected = source.getText?.(this.selection.start, this.selection.end) ?? source.text.slice(this.selection.start, this.selection.end);
+      if (!/[\r\n]/.test(selected)) this.find.input.value = selected;
     }
     this.replaceRow.hidden = !replace;
     this.scope.querySelector('[value="selection"]').disabled = this.selection.start === this.selection.end;
     this.popup.show();
     this.find.input.focus();
     this.find.input.select();
-    this.search(false);
+    return this.search(false);
   }
 
-  async search(select = false) {
+  search(select = false) {
+    this.pendingSearch = this.runSearch(select);
+    return this.pendingSearch;
+  }
+
+  async runSearch(select = false) {
     this.searchController?.abort();
     const controller = new AbortController();
     this.searchController = controller;
@@ -69,6 +76,7 @@ export class FindReplaceWidget {
     this.previewDiff = null;
     this.previewHost.hidden = true;
     const editor = this.context.editor;
+    editor.setDecorations?.('find', this.scope.value === 'selection' ? [{...this.selection, className: 'sf-search-scope'}] : []);
     try {
       const settings = {uri: editor.uri, regex: this.regex.input.checked,
         matchCase: this.case.input.checked, wholeWord: this.word.input.checked, preserveCase: this.preserve.input.checked,
@@ -93,6 +101,7 @@ export class FindReplaceWidget {
       editor.setDecorations?.('find', decorations);
       this.status.textContent = `${result.matches.length}${result.truncated ? '+' : ''} matches`;
       if (select && result.matches.length) this.next(true);
+      return result;
     } catch (error) {
       if (controller.signal.aborted || error.name === 'AbortError') return;
       this.session.matches = [];
@@ -102,8 +111,10 @@ export class FindReplaceWidget {
     }
   }
 
-  next(reset = false, direction = 1) {
-    if (!this.popup.visible) this.open(false);
+  async next(reset = false, direction = 1) {
+    if (!this.popup.visible) await this.open(false);
+    if (this.popup.element.dataset.searchState === 'searching') await this.pendingSearch;
+    if (!this.popup.visible || this.popup.element.dataset.searchState !== 'complete') return;
     const matches = this.session.matches;
     if (!matches.length) return;
     if (reset || this.index < 0) {
@@ -118,12 +129,13 @@ export class FindReplaceWidget {
     this.status.textContent = `${this.index + 1} of ${matches.length}${this.session.truncated ? '+' : ''} matches`;
     this.session.remember();
     this.history.replaceChildren(...this.session.history.map(query => node(this.context.document, 'option', {value: query})));
+    return match;
   }
 
   async replace(all = false) {
     if (this.context.editor.input.readOnly) return;
     if (this.popup.element.dataset.searchState !== 'complete') return this.context.status('Wait for the current search to finish.');
-    if (!all && this.index < 0) this.next(true);
+    if (!all && this.index < 0) await this.next(true);
     const matches = all ? this.session.matches : this.session.matches[this.index] ? [this.session.matches[this.index]] : [];
     const plan = this.session.prepareReplacement(this.replacement.input.value, matches);
     await commitWorkspaceEdit(this.context.workspace, plan);

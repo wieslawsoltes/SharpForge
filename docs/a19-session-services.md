@@ -130,17 +130,54 @@ retains its launch policy. Revocation stops that worker session immediately.
 Exports contain neither network grants nor environment values. Browser CSP and
 server CORS still determine whether an otherwise granted request can complete.
 
-The current runtime worker does not implement live policy replacement, native
-process attachment, or operating-system environment injection. Managed IL supports
-profile arguments. Source VM arguments and per-app environments require an explicit
-`launchCapabilities(projectId, profile, built, launch)` host callback returning the
-supported `arguments` and `environment` flags. Unsupported nonempty options fail
-with `LAUNCH_CAPABILITY` before application launch. `launchOptions` supplies the
-actual target settings; capability flags must match that implementation.
+Both source and direct CIL launches support profile arguments and isolated,
+read-only application environments. `LaunchProfiles.launchOptions()` emits
+`programArguments` for Main's flat argv; `arguments` remains reserved for raw
+explicit CIL method parameters. The compiler's startup wrapper forwards argv after
+module initializers, including across async Main. Applications read supplied values
+using `System.Environment.GetEnvironmentVariable(string)`; missing names return
+null, empty strings are preserved, and names are case-sensitive. Values are copied
+when the runtime is created and are never inherited from the host OS.
+
+The built-in capability record enables `arguments` and `environment` and disables
+`environmentMutation`. A different target can override
+`launchCapabilities(projectId, profile, built, launch)` with its actual capability
+record. Unsupported nonempty options fail with `LAUNCH_CAPABILITY` before launch.
+Both the profile editor and runtime use the exported runtime validators and bounds;
+malformed replacements preserve an already paused session. `launchOptions` supplies
+the actual target settings; capability flags must match that implementation.
+
+The worker does not implement live policy replacement, native process attachment,
+environment mutation or OS/user/machine environment injection.
 Detach disables source/data/exception break
 handling and continues the selected managed browser process; it is not OS process
 detachment. Renderer metrics identify the actual backend rather than claiming that
 a fallback rendered through WebGPU.
+
+### Active application inspection
+
+`DebuggerExtensions` accepts `sessions` and
+`getApplicationWindows: () => applicationWindows` from the Studio composition.
+The getter may return `null` before application windows are mounted. With these
+services, renderer selection, metrics and `uiSettled()` use the selected session's
+existing `ApplicationWindows` host; the debugger does not construct another host
+or apply the runtime's command stream twice. Opening the legacy WinUI tool brings
+the selected application's document window forward. Background tool refreshes
+preserve the focused document.
+
+Live Visual Tree requests capture both the application object and its complete
+worker/runtime identity. Selection, restart, stop and disposal invalidate pending
+requests and clear the old snapshot, including selected object IDs that may be
+reused by another application. `DebuggerExtensions.dispose()` releases inspection
+subscriptions and requests without disposing application-owned windows. The
+composition must call it when releasing the debugger. An embedding that supplies
+no SessionManager retains the existing standalone, single-host behavior.
+
+`tests/a19-application-inspector.test.js` exercises the actual debugger automation,
+session manager and worker-client contracts with controlled protocol replies and
+renderer boundaries. It covers late scenes, equal runtime serials, restart,
+disposal, background focus preservation and the standalone host. These focused
+unit boundaries do not claim browser layout, rendering or CSP qualification.
 
 ## Validation
 
@@ -152,8 +189,32 @@ The focused Node files are `a19-worker-client.test.js`,
 shared undo, save races and locks on unopened documents. Their fake Worker
 is explicitly a protocol/lifetime test, not compiler or native parity evidence.
 
-`tests/browser_multi_session_test.py` builds two actual C# WinUI applications with
-separate real compiler and runtime workers, checks their rendered panels and output,
-closes only one, and verifies diagnostic isolation while the other remains alive.
-It requires the HTTP harness. The in-memory Blob loader must instead receive
-rewritten worker URLs from the host; this script does not claim to qualify it.
+`tests/browser_multi_session_test.py` loads `TwoApps.slnx` and two C# projects
+through the running Studio's `loadDiskRecords` API. It uses Studio's existing
+workbench services and application windows. The fixture selects distinct profiles
+through the startup toolbar, starts both projects with the actual Start button,
+checks their rendered docking panels and exact argv/environment output, switches
+the shared debugger through its Process selector, and stops only that application.
+It then checks a failing background build in the other project, starts another
+instance through the registered command, and stops all sessions. These checks also
+cover selected-project preservation, independent document locks and panel disposal.
+The fixture uses the shared supported browser launcher and production HTTP/CSP;
+the in-memory Blob loader is explicitly rejected. Its result JSON records the
+selected engine and failure or completion, including checks completed before a
+failure. Browser execution remains pending until run on an installed supported
+engine; authoring or syntax-checking this fixture is not browser qualification.
+
+`tests/a19-multi-session-fixture.test.js` uses the same C# window source with real
+compiler output and two real runtime worker modules in each JavaScript engine. It
+checks the combined WinUI scene, argv, environment and stop-isolation behavior.
+Its Node message transport adapter does not qualify Studio DOM, toolbar routing,
+docking or browser CSP; those are the separate browser fixture's responsibilities.
+
+`a19-runtime-arguments.test.js`, `a19-runtime-environment.test.js` and
+`a19-runtime-worker-launch.test.js` execute real compiler output in both JavaScript
+runtimes. Independent CIL fixtures cover the argv and environment ABI without a
+SharpForge debug payload. The production worker is adapted only at the Node message
+transport; tests cover two simultaneous workers, equal local serials, stop isolation
+and malformed replacement launches. Runtime option boundaries and existing builtin
+ID locks are checked separately. Native and Wasm execution are not represented by
+these tests.

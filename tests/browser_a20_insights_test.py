@@ -1,44 +1,34 @@
-"""Standalone provider/widget acceptance using real Chromium DOM and the real EditorModel.
+"""Standalone provider/widget acceptance using real browser DOM and the real EditorModel.
 
 Run against the repository static server with SHARPFORGE_INSIGHTS_URL, or let the test
-start a temporary local-only HTTP server. No Studio, compiler or network service is required.
+serve built modules through the production HTTP server and CSP. No Studio, compiler or network service is required.
 """
-import functools
-import http.server
+from contextlib import nullcontext
 import json
 import os
-from pathlib import Path
-import threading
 from playwright.sync_api import sync_playwright
+from conformance.browser.launch import launch_browser, results_dir, selected_engine
+from conformance.browser.editor_fixture import editor_fixture
+from conformance.browser.matrix_common import policy, wait
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
-class QuietHandler(http.server.SimpleHTTPRequestHandler):
-    def log_message(self, format, *args):
-        pass
-
-
-server = None
-url = os.environ.get("SHARPFORGE_INSIGHTS_URL")
-if not url:
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(QuietHandler, directory=str(ROOT)))
-    threading.Thread(target=server.serve_forever, daemon=True).start()
-    url = f"http://127.0.0.1:{server.server_port}/tests/fixtures/a20-editor-insights.html"
 
 passed = []
+failure = None
+url = os.environ.get("SHARPFORGE_INSIGHTS_URL")
 try:
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
+    with nullcontext(url) if url else editor_fixture('a20-editor-insights') as address, \
+            sync_playwright() as playwright, launch_browser(playwright, __file__) as browser:
         page = browser.new_page(viewport={"width": 1200, "height": 900})
         page_errors = []
         page.on("pageerror", lambda error: page_errors.append(str(error)))
-        page.goto(url)
-        page.wait_for_function("window.insights !== undefined")
+        response = page.goto(address)
+        assert response and response.status == 200
+        policy(response.headers)
+        wait(page, "window.insights !== undefined")
 
         def setup(text):
             page.evaluate("text => setup(text)", text)
-            page.wait_for_function("editor.zones.get('code-lens')?.length === 1")
+            wait(page, "editor.zones.get('code-lens')?.length === 1")
 
         setup("Re")
         page.evaluate("editor.goto(2); insights.complete()")
@@ -70,15 +60,15 @@ try:
         page.evaluate("editor.goto(2); insights.rename()")
         name = page.get_by_role("textbox", name="New symbol name")
         name.fill("renamed")
-        page.wait_for_function("editor.value === 'renamed + renamed'")
+        wait(page, "editor.value === 'renamed + renamed'")
         name.press("Escape")
         assert page.evaluate("editor.value") == "value + value"
         assert page.evaluate("editor.model.canUndo") is False
         page.evaluate("editor.goto(2); insights.rename()")
         name.fill("renamed")
-        page.wait_for_function("editor.value === 'renamed + renamed'")
+        wait(page, "editor.value === 'renamed + renamed'")
         name.press("Enter")
-        page.wait_for_function("models.get('b.cs').value === 'renamed target'")
+        wait(page, "models.get('b.cs').value === 'renamed target'")
         assert page.evaluate("models.get('c.cs').value") == "renamed third"
         passed.append("inline rename previews/cancels exactly and commits across three real models")
 
@@ -88,7 +78,7 @@ try:
         page.wait_for_selector(".sf-action-preview .sf-diff-row")
         assert page.evaluate("editor.value") == "value + value"
         page.get_by_role("button", name="Apply", exact=True).click()
-        page.wait_for_function("editor.value === 'fixed + value'")
+        wait(page, "editor.value === 'fixed + value'")
         passed.append("code action preview is exact and does not mutate until Apply")
 
         setup("value + value")
@@ -111,7 +101,7 @@ try:
         page.evaluate("insights.peekDefinition()")
         target = page.get_by_role("textbox", name="Definition in b.cs")
         target.fill("edited target")
-        page.wait_for_function("models.get('b.cs').value === 'edited target'")
+        wait(page, "models.get('b.cs').value === 'edited target'")
         page.evaluate("insights.peekForward()")
         page.wait_for_selector('[aria-label="Definition in c.cs"]')
         passed.append("Peek Definition edits the target model and navigates multiple results")
@@ -122,7 +112,7 @@ try:
         page.get_by_role("textbox", name="Find in current file").fill("(\\w+)=(\\d+)")
         page.get_by_role("textbox", name="Replace in current file").fill("$1($2)")
         page.get_by_role("button", name="Replace all", exact=True).click()
-        page.wait_for_function("editor.value === 'one(12); two(34);'")
+        wait(page, "editor.value === 'one(12); two(34);'")
         passed.append("regex replace captures use the shared safe search engine")
 
         setup("alpha beta alpha")
@@ -135,7 +125,7 @@ try:
         passed.append("incremental search restores its original caret on Escape")
 
         setup("value + value")
-        page.wait_for_function("window.resolves === 1")
+        wait(page, "window.resolves === 1")
         page.evaluate("insights.render(); insights.render()")
         assert page.evaluate("window.resolves") == 1
         assert page.evaluate("editor.widgets.get('inlay-hints')[0].node.contentEditable") == "false"
@@ -149,9 +139,11 @@ try:
         assert page.locator(".sf-insight-popup").count() == 0
         assert not page_errors, page_errors
         passed.append("disposal removes every popup and produces no uncaught browser errors")
-        browser.close()
+except BaseException as error:
+    failure = {"type": type(error).__name__, "message": str(error)}
+    raise
 finally:
-    if server:
-        server.shutdown()
-
-print(json.dumps({"passed": len(passed), "checks": passed}, indent=2))
+    report = {"status": "failed" if failure else "passed", "engine": selected_engine(),
+              "passed": len(passed), "checks": passed, "failure": failure}
+    (results_dir() / 'a20-editor-insights.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
+    print(json.dumps(report, indent=2))

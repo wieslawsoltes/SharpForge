@@ -24,7 +24,7 @@ export function advancedCommands(editor) {
 
 function transformSelections(editor, operation, wholeLines = false) {
   if (editor.input.readOnly) return;
-  const edits = [];
+  const ranges = [];
   for (const selection of editor.getSelections()) {
     let start = Math.min(selection.anchor, selection.active);
     let end = Math.max(selection.anchor, selection.active);
@@ -34,9 +34,10 @@ function transformSelections(editor, operation, wholeLines = false) {
       start = editor.model.offsetAt({line: from, character: 0});
       end = editor.model.offsetAt({line: to, character: editor.model.getLine(to).length});
     }
-    const text = editor.model.getText(start, end);
-    edits.push({start, end, text: operation(text)});
+    ranges.push({start, end});
   }
+  const edits = (wholeLines ? mergedRanges(ranges) : ranges).map(range => ({...range,
+    text: operation(editor.model.getText(range.start, range.end))}));
   editor.applyEdits(mergeEdits(edits), {source: 'advanced', undoStop: true});
 }
 
@@ -142,6 +143,16 @@ function mergeEdits(edits) {
   return result;
 }
 
+function mergedRanges(ranges) {
+  const result = [];
+  for (const range of ranges.sort((left, right) => left.start - right.start || left.end - right.end)) {
+    const previous = result.at(-1);
+    if (previous && range.start <= previous.end) previous.end = Math.max(previous.end, range.end);
+    else result.push({...range});
+  }
+  return result;
+}
+
 function transformAtCarets(editor, transform, kind) {
   if (editor.input.readOnly) return false;
   const edits = editor.getSelections().map(selection => {
@@ -168,7 +179,7 @@ function reorderLines(text, operation) {
 
 function joinLines(editor) {
   if (editor.input.readOnly) return false;
-  const edits = [];
+  const ranges = [];
   for (const selection of editor.getSelections()) {
     const first = editor.model.positionAt(Math.min(selection.anchor, selection.active)).line;
     const end = Math.max(selection.anchor, selection.active);
@@ -176,8 +187,9 @@ function joinLines(editor) {
       : editor.model.positionAt(end - 1).line;
     const start = editor.model.getLineStart(first);
     const finish = editor.model.getLineEnd(last);
-    const text = editor.model.getText(start, finish).replace(/[\t ]*(?:\r\n|\r|\n)[\t ]*/g, ' ');
-    edits.push({start, end: finish, text});
+    ranges.push({start, end: finish});
   }
-  editor.applyEdits(mergeEdits(edits), {source: 'join-lines', undoStop: true});
+  const edits = mergedRanges(ranges).map(range => ({...range,
+    text: editor.model.getText(range.start, range.end).replace(/[\t ]*(?:\r\n|\r|\n)[\t ]*/g, ' ')}));
+  editor.applyEdits(edits, {source: 'join-lines', undoStop: true});
 }

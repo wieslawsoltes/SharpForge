@@ -1,5 +1,6 @@
 import { WorkbenchEvents, requireIdentifier } from './state-events.js';
 import { validateSessionSettings, sessionLaunchSettings } from './session-settings.js';
+import { validateProgramArguments, validateLaunchEnvironment } from '@sharpforge/runtime';
 
 /** Profiles are project-scoped. Export strips environment values and all runtime grants. */
 export class LaunchProfiles {
@@ -13,20 +14,15 @@ export class LaunchProfiles {
 
   validate(profile) {
     const id = requireIdentifier(profile.id ?? 'default', 'Launch profile id');
-    const args = profile.arguments ?? [];
-    if (!Array.isArray(args) || args.length > 1024 || args.some(value => typeof value !== 'string' || value.length > 65_536)) {
-      throw new TypeError('Launch arguments must be a bounded string array');
-    }
-    const environment = profile.environment ?? {};
-    if (!environment || typeof environment !== 'object' || Array.isArray(environment)) throw new TypeError('Invalid launch environment');
-    if (Object.keys(environment).length > 256) throw new RangeError('Launch environment is too large');
-    for (const [key, value] of Object.entries(environment)) {
-      if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key) || typeof value !== 'string' || value.length > 65_536) throw new TypeError('Invalid environment entry');
-    }
+    if (id.length > 512) throw new RangeError('Launch profile ID limit reached');
+    const name = requireIdentifier(profile.name ?? id, 'Launch profile name');
+    if (name.length > 200) throw new RangeError('Launch profile name limit reached');
+    const args = validateProgramArguments(profile.arguments);
+    const environment = validateLaunchEnvironment(profile.environment);
     const renderer = profile.renderer ?? 'auto';
     if (!['auto', 'webgpu', 'canvas2d', 'dom'].includes(renderer)) throw new TypeError('Unknown application renderer');
     return {
-      id, name: profile.name ?? id, arguments: [...args], environment: { ...environment },
+      id, name, arguments: [...args], environment: { ...environment },
       stopOnEntry: profile.stopOnEntry === true, renderer, runtimeSettings: validateSessionSettings(profile.runtimeSettings)
     };
   }
@@ -61,10 +57,19 @@ export class LaunchProfiles {
     this.events.emit({ type: 'selected', projectId, profileId: id });
   }
 
+  removeProject(projectId, { notify = true } = {}) {
+    const profiles = this.projects.delete(projectId);
+    const selected = this.selected.delete(projectId);
+    if (notify && (profiles || selected)) this.notifyRemoved([projectId]);
+    return profiles || selected;
+  }
+
+  notifyRemoved(projectIds) { this.events.emit({ type: 'profiles-removed', projectIds: [...projectIds] }); }
+
   launchOptions(projectId, id) {
     const profile = this.get(projectId, id);
     return {
-      ...sessionLaunchSettings(profile.runtimeSettings), arguments: [...profile.arguments],
+      ...sessionLaunchSettings(profile.runtimeSettings), programArguments: [...profile.arguments],
       environment: { ...profile.environment }, stopOnEntry: profile.stopOnEntry
     };
   }
@@ -81,5 +86,17 @@ export class LaunchProfiles {
     return { version: 1, projects };
   }
 
-  dispose() { this.projects.clear(); this.events.dispose(); }
+  /** Commit a validated staging model; recovery may notify after all related owners are consistent. */
+  replaceFrom(staged, { notify = true } = {}) {
+    if (!(staged instanceof LaunchProfiles)) throw new TypeError('Expected staged launch profiles');
+    const projects = structuredClone(staged.projects);
+    const selected = new Map(staged.selected);
+    this.projects = projects;
+    this.selected = selected;
+    if (notify) this.notifyRestored();
+  }
+
+  notifyRestored() { this.events.emit({ type: 'profiles-restored' }); }
+
+  dispose() { this.projects.clear(); this.selected.clear(); this.events.dispose(); }
 }

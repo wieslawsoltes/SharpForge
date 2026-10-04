@@ -31,6 +31,8 @@ export const profileCodes=Object.freeze({
   SF2143:profile('The supported with(...) form supplies one capacity argument to List<T> or HashSet<T>'),
   SF2200:profile('The program is valid C# but is not executable on this runtime profile: it uses {0}'),
   SF2201:profile('Semantic analysis failed internally ({0}); only the profile diagnostics are reported'),
+  SF2202:profile("The preview feature '{0}' is parsed and gated but not bound yet (provisional: {1})"),
+  SF2203:profile('Preview rule: {0} (provisional: {1})'),
   SF3001:profile('CIL emission failed: {0}')
 });
 /** Number of distinct `{n}` placeholders a message format consumes. */

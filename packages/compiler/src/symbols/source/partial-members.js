@@ -1,5 +1,6 @@
 /**
- * Partial members (C# 3 partial methods, C# 9 extended partial methods, C# 13 partial properties and indexers).
+ * Partial members (C# 3 partial methods, C# 9 extended partial methods, C# 13 partial properties and indexers;
+ * C# 14 partial constructors and events are merged by ./partial-constructors-events.js).
  *
  * A partial member has a defining part (no body) and an implementing part (a body). The type keeps ONE symbol per
  * member - the implementing part, which carries the body - with the optional-parameter defaults of the defining
@@ -18,6 +19,7 @@
  */
 import { SymbolKind, RefKind } from '../types.js';
 import { MethodKind, DeclarationModifiers } from '../members.js';
+import { mergePartialConstructorsAndEvents } from './partial-constructors-events.js';
 
 const accessWords = new Set(['public', 'private', 'protected', 'internal']);
 const virtualWords = ['virtual', 'override', 'sealed', 'new'];
@@ -161,6 +163,8 @@ export function mergePartialMembers(type, members) {
   for (const parts of groupBy(members.filter(isPartialMethod), method => method.signatureKey)) apply(mergeMethod(parts, type));
   const propertyKey = property => property.name + '[' + property.parameters.map(p => p.type?.toDisplayString() ?? '?').join(',') + ']';
   for (const parts of groupBy(members.filter(isPartialProperty), propertyKey)) apply(mergeProperty(parts));
+  // C# 14: partial constructors and events.
+  apply(mergePartialConstructorsAndEvents(type, members));
   if (!removed.size) return rows;
   const kept = members.filter(member => !removed.has(member) && !removed.has(member.associatedSymbol));
   members.length = 0;

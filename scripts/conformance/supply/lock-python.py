@@ -40,6 +40,11 @@ def render_lock(packages):
     return '\n'.join(lines) + '\n'
 
 
+def resolved_roots(resolution):
+    return [item['metadata']['name'] + '==' + item['metadata']['version']
+            for item in resolution['install'] if item['requested']]
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--resolution', type=Path, required=True)
@@ -47,7 +52,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     resolution = json.loads(args.resolution.read_text())
     packages = sorted((package_record(item) for item in resolution['install']), key=lambda item: item['name'].lower())
-    report = {'schemaVersion': 1, 'roots': ['playwright==1.57.0', 'jsonschema==4.26.0', 'PyYAML==6.0.3'],
+    report = {'schemaVersion': 1, 'roots': resolved_roots(resolution),
               'resolvedOn': args.date,
               'metadata': 'PyPI version endpoints; hashes cover official wheels; execution qualifies only measured targets',
               'packages': packages}

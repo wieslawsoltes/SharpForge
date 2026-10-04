@@ -58,6 +58,15 @@ static object? Input(AttributeType type, object? value, Type declaredType)
     return Scalar(value);
 }
 
+static object WireConstant(AttributeType type, object? value)
+{
+    var kind = type.Element is not null ? "array" : type.RuntimeType.IsEnum ? "enum" : type.RuntimeType == typeof(Type) ? "type" : "primitive";
+    object? decoded = value is ImmutableArray<CustomAttributeTypedArgument<AttributeType>> items
+        ? items.Select(item => WireConstant(item.Type, item.Value)).ToArray()
+        : value is AttributeType serialized ? serialized.Name : Scalar(value);
+    return new { kind, type = type.Element is not null ? null : type.Name, value = decoded };
+}
+
 static object Actual(PayloadAttribute attribute) => new
 {
     values = attribute.Values.Select(Scalar).ToArray(),
@@ -114,6 +123,9 @@ foreach (var type in assembly.GetTypes().Where(type => type.Name.StartsWith("Cas
             constructor = MetadataTokens.GetToken(attribute.Constructor), parameters, blobOffset,
             values = wire.FixedArguments.Select((argument, ordinal) => Input(argument.Type, argument.Value, constructorParameters[ordinal].ParameterType)).ToArray(),
             constructorArguments = data[index].ConstructorArguments.Select(Constant).ToArray(),
+            decodedConstructorArguments = wire.FixedArguments.Select(argument => WireConstant(argument.Type, argument.Value)).ToArray(),
+            decodedNamedArguments = wire.NamedArguments.Select(argument => new { name = argument.Name,
+                isField = argument.Kind == CustomAttributeNamedArgumentKind.Field, value = WireConstant(argument.Type, argument.Value) }).ToArray(),
             namedArguments = wire.NamedArguments.Select(argument =>
             {
                 var native = data[index].NamedArguments.Single(value => value.MemberName == argument.Name

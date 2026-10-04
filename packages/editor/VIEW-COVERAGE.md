@@ -1,6 +1,6 @@
 # A20 editor view implementation and evidence
 
-Source and integration: `codex/p16-editor-view`, qualification commit `ccdd6894`.
+Source and integration: `codex/p16-editor-view`, qualification checkpoints `ccdd6894` and `66f56d88`.
 The view implementation composes the text-engine, native-keymap and editor-insight contributions from their separate worktrees.
 
 ## Executed validation
@@ -14,7 +14,7 @@ All implementation source for this scope was completed before the first focused 
 ## Qualification limits
 
 The actual-CodeEditor browser fixture is `tests/browser_a20_view_test.py`; its browser execution is pending.
-The editor-insight agent is aligning it with the shared production-server/CSP fixture and browser launch helper.
+It uses the shared built-package production-server/CSP fixture and browser launch helper.
 No native Japanese/Chinese/Korean IME, NVDA/JAWS/VoiceOver, OS high-contrast or native permission-dialog certification is claimed.
 Synthetic composition and pure layout fixtures are identified as such. Their success does not establish native platform behavior.
 A20 T12 owns browser latency/retained-heap benchmarks. The 100/200 MB latency targets and scrollbar-map frame budget remain unmeasured here.
@@ -268,6 +268,44 @@ Evidence: Browser fixture: forced-colors/reduced-motion emulation; execution pen
 
 ## Large-file disk integration follow-up (SF-A20-T44, #1513)
 
+The prepared-ingress follow-up adds `src/source-loader.js`,
+`apps/studio/workbench/studio-source-reader.js`, project-system source reader and
+snapshot writer contributions, descriptor-preserving project membership and
+explicit manifest/prefix rebasing. `tests/a20-source-loader.test.js`,
+`tests/a20-prepared-source-workspace.test.js` and
+`tests/a20-prepared-source-paths.test.js` cover actual Node File/Blob chunk decoding,
+UTF-8/UTF-16 BOM and byte boundaries, cancellation, failed preparations, snapshot
+saves, disk conflicts and URI/handle rebasing. These follow-up fixtures are
+qualified at source `acdf945d`: all 28 new cases passed. Across the complete I/O
+scope and its targeted environment repair, 196 distinct cases passed. The first
+invocation reported 90 passes and two setup failures because this worktree lacked
+the local `@sharpforge/bcl-collections` link; adding that untracked workspace link
+unblocked the 105 release04 cases and one CLI ZIP case, all 106 of which passed.
+No source changes occurred during qualification. Test execution took 2.182 seconds
+for the initial invocation and 5.830 seconds for the targeted retry on Node
+24.19.0/Linux; those durations are not editor latency measurements.
+Browser timing, physical File System Access and 200 MB interaction budgets remain
+unqualified until actual captures exist. See `docs/source-loading.md` and
+`packages/project-system/docs/disk-limits.md` for the ownership/public contracts.
+
+Exact completed ingress qualification commands (run only after the full source
+batch was frozen, through the shared serial limiter):
+
+```sh
+node scripts/limited.js node --test --test-concurrency=1 \
+  tests/a20-source-loader.test.js tests/a20-prepared-source-workspace.test.js \
+  tests/a20-prepared-source-paths.test.js tests/a20-large-file-disk.test.js \
+  tests/project-system.test.js tests/workspace-io.test.js tests/release04.test.js
+node scripts/limited.js node --test --test-concurrency=1 \
+  --test-name-pattern='0.4|CLI ZIP/extraction' tests/release04.test.js tests/workspace-io.test.js
+```
+
+| New source-ingress fixture | Passed cases |
+| --- | ---: |
+| `a20-source-loader.test.js` | 9 |
+| `a20-prepared-source-workspace.test.js` | 12 |
+| `a20-prepared-source-paths.test.js` | 7 |
+
 The disk seam lives in `packages/project-system/src/disk/` behind the existing `disk.js` public exports.
 It preserves the 2,000,000 default source limit and carries explicit read limits through to saves.
 Encoded-byte limits include UTF-8/UTF-16 and BOMs. Total size, baselines, permission rechecks and optional
@@ -277,3 +315,36 @@ session versions preflight every write. `packages/project-system/docs/disk-limit
 that file, `project-system.test.js`, `workspace-io.test.js`, `release04.test.js` and `a20-view-input.test.js`
 passed **172 tests, 0 failed**, in approximately 4.53 seconds. File System Access handles are explicit test
 doubles, so native browser permission prompts and physical 100 MB disk latency are not qualified by this result.
+
+## Acceptance audit follow-up (qualified at `66f56d88`)
+
+All source was complete before the focused qualification run. On Node 24.19.0/Linux the combined run
+passed **66 tests, 0 failed, 0 skipped**, including all **11** new correction fixtures, in approximately
+2.182 seconds. The wrapper was reused read-only from the integration worktree because this older
+implementation worktree did not yet contain `scripts/limited.js`; its child retained the editor worktree cwd.
+
+```sh
+node /workspace/scratch/6b99131ca908/p16-integration/scripts/limited.js node --test --test-concurrency=1 \
+  tests/a20-editor-integration-corrections.test.js \
+  tests/a20-view-layout.test.js tests/a20-view-incremental-folding.test.js \
+  tests/a20-view-editing-options.test.js tests/a20-view-input.test.js \
+  tests/editor-model-selections.test.js tests/a20-editor-services.test.js \
+  tests/a20-editor-snippets-intelligence.test.js tests/a20-editor-formatting.test.js
+```
+
+`tests/a20-editor-integration-corrections.test.js` covers:
+
+- SF-A20-T02 / SF-A20-T34 (#276, #1503): shared-model read-only state, all-pane input/ARIA updates,
+  prepared-commit rejection, unchanged version/history, and rollback under a lock.
+- SF-A20-T31 (#1500): offscreen wrap invalidation updates row and view-zone geometry without scrolling;
+  large ranges remain chunked, and disposal clears queued work.
+- SF-A20-T05.2 (#1610): deleting a brace or region marker on one line refreshes actual folding ranges.
+- SF-A20-T45 (#1514): a bounded workbench helper reads actual ancestor `.editorconfig` records through
+  shared models, applies per-language overlays, resets earlier path settings, rejects malformed/oversized
+  input atomically, supports actual project/disk `{path,...}` records without flattening source getters,
+  and preserves existing EOLs until explicit normalization is requested.
+- SF-A20-T06 / SF-A20-T41 (#280, #1510): deletion retains a caret blocked at the document boundary,
+  overlapping word deletions merge, and overlapping whole-line expansions transform every selected line once.
+- SF-A20-T44 (#1513): invalid chunk sizes reject before any read or model replacement.
+
+This follow-up does not claim browser, native IME, physical-disk or 200 MB p95 qualification.

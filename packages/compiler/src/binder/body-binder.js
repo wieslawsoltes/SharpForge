@@ -45,6 +45,7 @@ import { CSharp6Binding } from './csharp6.js';
 import { CallerInfoBinding } from './caller-info.js';
 import { AnonymousTypeBinding } from './anonymous-types.js';
 import { ExtensionMethodBinding } from './extension-methods.js';
+import { DynamicBinding } from './dynamic.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -78,6 +79,7 @@ const statementFamilies = [
   CallerInfoBinding,
   AnonymousTypeBinding,
   ExtensionMethodBinding,
+  DynamicBinding,
   UnsafeBinding,
   ProtectedAccessBinding,
 ];

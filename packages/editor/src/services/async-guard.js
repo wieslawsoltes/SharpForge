@@ -1,11 +1,15 @@
-/** Captures a document identity. Text is retained by reference, not copied. */
+/** Captures a persistent document identity without flattening model-backed source text. */
 export function editorRevision(editor) {
-  const source = editor.model?.snapshot?.() ?? editor.sourceSnapshot?.();
-  return {uri: editor.uri, version: editor.model?.version ?? source?.version ?? 0, text: editor.value};
+  const snapshot = editor.model?.snapshot?.();
+  const source = snapshot ?? editor.sourceSnapshot?.();
+  const text = source ? undefined : editor.value;
+  return {uri: editor.uri, version: editor.model?.version ?? source?.version ?? 0, model: editor.model,
+    snapshot, get text() { return source?.text ?? text; }};
 }
 
 export function sameRevision(left, right) {
-  return left.uri === right.uri && left.version === right.version && left.text === right.text;
+  return left.uri === right.uri && left.version === right.version && left.model === right.model &&
+    (left.snapshot && right.snapshot ? left.snapshot === right.snapshot : left.text === right.text);
 }
 
 /** One independently cancellable generation per feature; stale results are never published. */
@@ -30,7 +34,7 @@ export class AsyncRequestGuard {
       const result = await provider({...parameters, uri: revision.uri, version: revision.version, signal: controller.signal});
       if (this.disposed || controller.signal.aborted || this.requests.get(key) !== request) return undefined;
       if (!sameRevision(revision, this.snapshot())) return undefined;
-      if (result?.version !== undefined && result.version !== revision.version) return undefined;
+      if (options.validateResponseVersion !== false && result?.version !== undefined && result.version !== revision.version) return undefined;
       return {value: result, revision};
     } catch (error) {
       if (controller.signal.aborted || error?.name === 'AbortError') return undefined;
