@@ -64,9 +64,8 @@ Pinned .NET 10.0.5 fixtures and focused tests cover both JavaScript VMs, includi
 ordinary CIL base dispatch and IDisposable assignability. The writer's captured native
 source runs unchanged, including semantic method-body `using` with inherited TextWriter
 Dispose. Top-level `using` has separate coverage through the existing direct Dispose
-lowering. Write(char) uses independent
-CIL and platform coverage because source Char remains outside the compiler execution
-profile. External `IDisposable.Dispose` invocation
+lowering. Write(char) has bound/legacy source coverage on both VMs plus independent
+CIL and platform coverage. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
 Rust native/Wasm execution is not qualified by this batch.
 
