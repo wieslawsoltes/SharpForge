@@ -130,3 +130,27 @@ mutation or user/machine overload is implemented. Runtime capability records
 reject unsupported nonempty options. Exported recovery data omits argv,
 environment values and network grants. Native process attachment/detachment,
 native permission dialogs and browser render/latency targets remain unqualified.
+
+## Main synchronization after the editor dependency merged
+
+This branch merges public main
+`1645ff4ffeaf18a47206219d8abed8aea8f95bc8` with both parents preserved.
+The four conflicts were resolved by keeping main's extracted sparse builtin
+registry and equivalent occupied-slot assertions; retaining the argument-aware
+compiler startup extraction while using main's `DiagnosticId` constants; and
+retaining launch argument/environment initialization alongside main's CIL native
+numeric ABI, event and cache changes. No released ID was reassigned, and no
+dynamic-code allowance was added. The original source-scope evidence above is
+historical; this synchronization does not claim a new runtime test or build pass.
+
+Main now registers `StringBuilder.AppendFormat(string, object[])` at extension ID
+524288. Its existing order and released ID are retained. The unpublished
+environment contribution automatically appends at 524289 through that registry;
+its generated BCL documentation row was corrected to match. No dispatch code or
+released golden fixture required an ID change.
+
+After the complete conflict resolution, `node scripts/limited.js npm run check`
+passed once: 30 areas, 539 Node files, 25 browser scripts, zero unassigned or
+duplicate tests; 2,177 syntax-checked JavaScript modules with zero errors; and
+2,173 modules passing the import/dynamic-code audit. Runtime tests and builds
+were not repeated for this synchronization.

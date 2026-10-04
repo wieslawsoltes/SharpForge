@@ -11,6 +11,7 @@
  * A bound `Goto` carries its target: `{ label }` for a label, `{ switchTargets, section }` for a switch section, where
  * `switchTargets` is the object the bound `Switch` carries as `gotoTargets`.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { LabelSymbol } from '../symbols/members.js';
 
 const jump = (syntax, completes, target = {}) => ({ kind: 'Goto', syntax, completes, ...target });
@@ -36,10 +37,10 @@ export const JumpBinding = Base =>
       const name = syntax.identifier.valueText,
         scope = this.labelScopes.at(-1);
       if (scope.has(name)) {
-        this.report(syntax.identifier, 'CS0140', [name]);
+        this.report(syntax.identifier, DiagnosticId.CS0140, [name]);
         return;
       }
-      if (this.labelScopes.some(outer => outer !== scope && outer.has(name))) this.report(syntax.identifier, 'CS0158', [name]);
+      if (this.labelScopes.some(outer => outer !== scope && outer.has(name))) this.report(syntax.identifier, DiagnosticId.CS0158, [name]);
       const label = new LabelSymbol({ name, syntax });
       label.uses = 0;
       label.finallyDepth = this.finallyDepth;
@@ -76,13 +77,13 @@ export const JumpBinding = Base =>
       if (syntax.kind === 'GotoStatement') return this.gotoLabel(syntax);
       const enclosing = [...(this.loops ?? [])].reverse().find(target => !target.isLoop);
       if (!enclosing) {
-        this.report(syntax, 'CS0153');
+        this.report(syntax, DiagnosticId.CS0153);
         return jump(syntax, true);
       }
       enclosing.hasGotoCase = true;
       const section = this.gotoSection(syntax, enclosing);
       if (section === null) return jump(syntax, true);
-      if (this.finallyDepth > enclosing.finallyDepth) this.report(syntax.gotoKeyword, 'CS0157');
+      if (this.finallyDepth > enclosing.finallyDepth) this.report(syntax.gotoKeyword, DiagnosticId.CS0157);
       return jump(syntax, false, { switchTargets: enclosing.gotoTargets, section });
     }
     gotoLabel(syntax) {
@@ -90,15 +91,15 @@ export const JumpBinding = Base =>
       const name = syntax.expression.identifier.valueText,
         found = this.findLabel(name);
       if (!found) {
-        this.report(syntax.expression, 'CS0159', [name]);
+        this.report(syntax.expression, DiagnosticId.CS0159, [name]);
         return jump(syntax, false);
       }
       if (found.outside) {
-        this.report(syntax.gotoKeyword, 'CS0159', [name]);
+        this.report(syntax.gotoKeyword, DiagnosticId.CS0159, [name]);
         return jump(syntax, false);
       }
       found.label.uses++;
-      if (this.finallyDepth > found.label.finallyDepth) this.report(syntax.gotoKeyword, 'CS0157');
+      if (this.finallyDepth > found.label.finallyDepth) this.report(syntax.gotoKeyword, DiagnosticId.CS0157);
       return jump(syntax, false, { label: found.label });
     }
     /** The index of the section a `goto case` / `goto default` targets, or null after reporting why there is none. */
@@ -106,7 +107,7 @@ export const JumpBinding = Base =>
       const targets = (enclosing.gotoTargets ??= this.switchTargets(enclosing));
       if (syntax.kind === 'GotoDefaultStatement') {
         if (targets.defaultSection < 0) {
-          this.report(syntax, 'CS0159', ['default:']);
+          this.report(syntax, DiagnosticId.CS0159, ['default:']);
           return null;
         }
         return targets.defaultSection;
@@ -115,21 +116,21 @@ export const JumpBinding = Base =>
         type = enclosing.governing?.type;
       if (value.hasErrors || !type || enclosing.governing.hasErrors) return null;
       if (!value.constantValue) {
-        this.report(syntax, 'CS0150');
+        this.report(syntax, DiagnosticId.CS0150);
         return null;
       }
       let conversion = this.conversions.classifyFromExpression(value, type);
       if (!conversion.exists || !conversion.isImplicit) conversion = this.conversions.classifyCastFromExpression(value, type);
       if (!conversion.exists) {
-        this.report(syntax, 'CS0029', [this.display(value.type), this.display(type)]);
+        this.report(syntax, DiagnosticId.CS0029, [this.display(value.type), this.display(type)]);
         return null;
       }
-      if (!conversion.isImplicit) this.report(syntax, 'CS0469', [this.display(type)]);
+      if (!conversion.isImplicit) this.report(syntax, DiagnosticId.CS0469, [this.display(type)]);
       const constant = this.quietly(() => this.applyConversion(value, type, conversion, syntax.expression, !conversion.isImplicit)).constantValue;
       if (!constant) return null;
       const section = targets.cases.get(constant.toString());
       if (section === undefined) {
-        this.report(syntax, 'CS0159', [`case ${constant.isNull ? 'null' : constant.displayValue}:`]);
+        this.report(syntax, DiagnosticId.CS0159, [`case ${constant.isNull ? 'null' : constant.displayValue}:`]);
         return null;
       }
       return section;

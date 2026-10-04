@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9a47e3d4b8b6b689395e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\n#nullable enable\n\npublic class Person {\n    public string? Name { get;}\n}\n\npublic class Student : Person {\n}\n\npublic class C {\n    public void M(Person p) {\n        switch (p) {\n            case { Name: var name } when name is null:\n                Console.WriteLine($\"Hey { name }\");\n            break;\n            case Student { Name: var name } when name != null:\n                Console.WriteLine($\"Student has name of length { name.Length }!\");\n            break;\n        }\n    }\n}",
+  "sourceSHA256": "556dffba57dbe6febe03da3ec903dabb219f7d04fa9c2f97da6cdc7dc9ba50bf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "CombiningRedundantPropertyReadsDoesNotChangeNullabilityAnalysis02",
+    "offset": 57167
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

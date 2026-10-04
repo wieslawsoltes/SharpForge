@@ -22,6 +22,13 @@
   "timeout": 1200000,
   "tags": [
     "workbench",
-    "scope-qualification"
+    "scope-qualification",
+    "sessions",
+    "runtime",
+    "completed-scope",
+    "staged-validation",
+    "docking",
+    "shell",
+    "themes"
   ]
 }

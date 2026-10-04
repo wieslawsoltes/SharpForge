@@ -95,9 +95,12 @@ history group, so intervening edits made with another profile stay separate.
 
 ## Runnable example and validation
 
-Open `packages/editor/examples/keymaps.html` through the repository's browser
-harness. The example creates one editor and switches all five profiles over that
-same document. Named commands can be invoked independently of keybindings.
+Build the complete scope once, run `node scripts/serve.js`, and open
+`/packages/editor/examples/keymaps.html` on the displayed origin. The
+[example instructions](../packages/editor/examples/README.md) explain the built
+module-worker graph and production CSP. The example creates one editor and
+switches all five profiles over that same document. Named commands can be
+invoked independently of keybindings.
 
 The focused suites are `tests/a20-07-keybindings.test.js`,
 `tests/a20-09-profiles.test.js`, `tests/editor-vim.test.js`, and

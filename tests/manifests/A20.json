@@ -26,6 +26,8 @@
   "timeout": 1200000,
   "tags": [
     "editor",
-    "scope-qualification"
+    "scope-qualification",
+    "completed-scope",
+    "staged-validation"
   ]
 }

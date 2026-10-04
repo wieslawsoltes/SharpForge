@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-49fbf78c625a2996db0f",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(Test1<object>(null));\n        Console.WriteLine(Test1<int>(1));\n        Console.WriteLine(Test1<int?>(null));\n        Console.WriteLine(Test1<int?>(1));\n\n        Console.WriteLine(Test2<object>(0));\n        Console.WriteLine(Test2<int>(1));\n        Console.WriteLine(Test2<int?>(0));\n        Console.WriteLine(Test2<string>(\"frog\"));\n\n        Console.WriteLine(Test3<object>(\"frog\"));\n        Console.WriteLine(Test3<int>(1));\n        Console.WriteLine(Test3<string>(\"frog\"));\n        Console.WriteLine(Test3<int?>(1));\n    }\n\n    public static bool Test1<T>(T t)\n    {\n        return t is null;\n    }\n    public static bool Test2<T>(T t)\n    {\n        return t is 0;\n    }\n    public static bool Test3<T>(T t)\n    {\n        return t is \"frog\";\n    }\n}",
+  "sourceSHA256": "fb5f5c42be1d051312bad68803633e73a9c3a52bd51d961fba0d781fbeb44247",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "ConstantPatternVsUnconstrainedTypeParameter01",
+    "offset": 80380
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

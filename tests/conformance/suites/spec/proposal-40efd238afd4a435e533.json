@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-40efd238afd4a435e533",
+  "kind": "spec",
+  "sourceText": "struct R1 : IEquatable<R1>\n{\n    public T1 P1 { get; set; }\n    public T2 P2 { get; set; }\n    public override bool Equals(object? obj) => obj is R1 temp && Equals(temp);\n    public bool Equals(R1 other)\n    {\n        return\n            EqualityComparer<T1>.Default.Equals(P1, other.P1) &&\n            EqualityComparer<T2>.Default.Equals(P2, other.P2);\n    }\n    public static bool operator==(R1 r1, R1 r2)\n        => r1.Equals(r2);\n    public static bool operator!=(R1 r1, R1 r2)\n        => !(r1 == r2);    \n    public override int GetHashCode()\n    {\n        return Combine(\n            EqualityComparer<T1>.Default.GetHashCode(P1),\n            EqualityComparer<T2>.Default.GetHashCode(P2));\n    }\n}",
+  "sourceSHA256": "f6e58cba327ac993e7c9113407d3509a96a988df7282fbcb38f3a688b8bf1941",
+  "target": "library",
+  "featureId": "csharp-10-0-record-structs",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/record-structs.md",
+    "sha256": "6648b21cf551cda46a37801f487f82de1b87eb9ee39f08904ad5b5707ee0ae58",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md",
+    "license": "NOASSERTION",
+    "offset": 4898
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c4319b7c489ef800e438",
+  "kind": "spec",
+  "sourceText": "/// <summary>\n/// My type\n/// </summary>\npartial class C\n{\n    /// <summary>Definition part comment</summary>\n    /// <returns>Return value comment</returns>\n    public partial int Prop { get; set; }\n    \n    /// <summary>Implementation part comment</summary>\n    public partial int Prop { get => 1; set { } }\n}",
+  "sourceSHA256": "238e40ecae5439410a18d74184e8922ce20786062e081930459a6333f7b376a7",
+  "target": "library",
+  "featureId": "csharp-13-0-partial-properties",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/partial-properties.md",
+    "sha256": "743e4ee38f66cc2149a2117435ea0179d508e3e253074e4f91240212206590ae",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/partial-properties.md",
+    "license": "NOASSERTION",
+    "offset": 9785
+  }
+}

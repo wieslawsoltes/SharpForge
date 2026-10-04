@@ -11,14 +11,14 @@ for(const suffix of ['', '.s']) {
   handlers.set('leave'+suffix,(vm,frame,instruction)=>continueUnwind(vm,frame,instruction));
   handlers.set('br'+suffix,(vm,frame,instruction)=>{frame.pc=frame.offsets.get(instruction.operand);});
   for(const truthy of [true,false])handlers.set((truthy?'brtrue':'brfalse')+suffix,(vm,frame,instruction)=>{
-    const value=vm.pop(),truth=value!==null&&value!==0&&value!==0n;
+    const value=number(vm.pop()),truth=value!==null&&value!==0&&value!==0n;
     if(truth===truthy)frame.pc=frame.offsets.get(instruction.operand);
   });
   for(const op of ['eq','ge','gt','le','lt','ne'])for(const unsigned of [false,true]) {
     if(op==='eq'&&unsigned||op==='ne'&&!unsigned)continue;
     handlers.set('b'+op+(unsigned?'.un':'')+suffix,(vm,frame,instruction)=>{
       const right=vm.pop(),left=vm.pop();
-      if(vm.compare(left,right,op,unsigned))frame.pc=frame.offsets.get(instruction.operand);
+      if(vm.compare(left,right,op,unsigned,true))frame.pc=frame.offsets.get(instruction.operand);
     });
   }
 }

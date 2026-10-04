@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7b213b873b9d148d45ce",
+  "kind": "diagnostics",
+  "sourceText": "class D\n{\n    unsafe void M(C c)\n    {\n        int x = 6;\n        c.D(x);\n        c.D(ref x);\n        c.D(in x);\n    }\n}",
+  "sourceSHA256": "608fa05c82060a9b44fda29706eb967e319c09a6f0bfde85e6c4311f343f6290",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "FunctionPointer_CrossAssembly",
+    "offset": 77313
+  },
+  "langVersion": "11",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, new[] { comp1Ref }, parseOptions: TestOptions.Regular11, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9058",
+        "severity": "error"
+      },
+      {
+        "code": "CS9058",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (6,13): error CS9058: Feature 'ref readonly parameters' is not available in C# 11.0. Please use language version 12.0 or greater.\n            //         c.D(x);\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion11, \"x\").WithArguments(\"ref readonly parameters\", \"12.0\").WithLocation(6, 13),\n            // (8,16): error CS9058: Feature 'ref readonly parameters' is not available in C# 11.0. Please use language version 12.0 or greater.\n            //         c.D(in x);\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion11, \"x\").WithArguments(\"ref readonly parameters\", \"12.0\").WithLocation(8, 16)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

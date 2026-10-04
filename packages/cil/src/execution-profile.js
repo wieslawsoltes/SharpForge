@@ -1,4 +1,5 @@
 import {resolveExecutionField} from './field-profile.js';
+import {supportedDelegateCall} from './delegate-profile.js';
 import {frameworkType} from '@sharpforge/framework';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
@@ -62,7 +63,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
-      if(['sizeof','cpobj','unbox'].includes(i.name)){try{const type=inspector.metadata.typeName(i.operand);const definition=inspector.types.find(definition=>definition.token===i.operand),isEnum=definition?.baseToken&&inspector.metadata.typeName(definition.baseToken)==='System.Enum'||frameworkType(type)?.kind==='enum';if(!primitiveSizes[type]&&!(i.name==='unbox'&&isEnum))issue(m,i,'IL_TYPE',`${i.name} is implemented only for fixed-width primitive types${i.name==='unbox'?' and enums':''}`);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['sizeof','cpobj','unbox'].includes(i.name)){try{const type=inspector.metadata.typeName(i.operand);const definition=inspector.types.find(definition=>definition.token===i.operand),isEnum=definition?.baseToken&&inspector.metadata.typeName(definition.baseToken)==='System.Enum'||frameworkType(type)?.kind==='enum';if(!primitiveSizes[type]&&type!=='System.IntPtr'&&type!=='System.UIntPtr'&&!(i.name==='unbox'&&isEnum))issue(m,i,'IL_TYPE',`${i.name} is implemented only for primitive types${i.name==='unbox'?' and enums':''}`);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(i.name==='volatile.') {
         const next=m.instructions[m.instructions.indexOf(i)+1];
         if(!next||!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))issue(m,i,'IL_PREFIX','volatile. must precede a supported memory instruction');
@@ -76,6 +77,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(['call','callvirt','newobj'].includes(i.name)){
         try{const d=inspector.resolveToken(i.operand);if(d.kind!=='method')throw new CilError('Call operand is not a method');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
           if(d.genericArguments)issue(m,i,'IL_GENERIC','Generic method instantiations are inspection-only');
+          else if(supportedDelegateCall(inspector,d)) { /* Delegate runtime methods have no IL body. */ }
           else if(target) {
             if(i.name==='callvirt'&&(inspector.methods.get(target)?.flags&0x40)) {
               const targets=dispatch.targets(target);

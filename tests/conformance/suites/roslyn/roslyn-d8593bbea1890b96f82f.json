@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d8593bbea1890b96f82f",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A : System.Attribute { }\n \npartial class C\n{\n    static partial void Goo<T,[A] S>();\n    static partial void Goo<[A]>() { }\n}",
+  "sourceSHA256": "5bd23309cf528a937b4e099322c0c46f462470b3e8e9cb3cda1639c2e82fabcf",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "Bug9958",
+    "offset": 306861
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, null, options: opt)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1001",
+        "severity": "error"
+      },
+      {
+        "code": "CS0759",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,32): error CS1001: Identifier expected\n                //     static partial void Goo<[A]>() { }\n                Diagnostic(ErrorCode.ERR_IdentifierExpected, \">\"),\n                // (7,25): error CS0759: No defining declaration found for implementing declaration of partial method 'C.Goo<>()'\n                //     static partial void Goo<[A]>() { }\n                Diagnostic(ErrorCode.ERR_PartialMethodMustHaveLatent, \"Goo\").WithArguments(\"C.Goo<>()\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

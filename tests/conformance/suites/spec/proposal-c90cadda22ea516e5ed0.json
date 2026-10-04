@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c90cadda22ea516e5ed0",
+  "kind": "spec",
+  "sourceText": "Collection x = [1L, 2L];\n\n// error CS1640: foreach statement cannot operate on variables of type 'Collection' because it implements multiple instantiations of 'IEnumerable<T>'; try casting to a specific interface instantiation\nforeach (var x in new Collection) { }\n\nstatic class Builder\n{\n    public Collection Create(ReadOnlySpan<long> items) => throw null;\n}\n\n[CollectionBuilder(...)]\nclass Collection : IEnumerable<int>, IEnumerable<string>\n{\n    IEnumerator<int> IEnumerable<int>.GetEnumerator() => throw null;\n    IEnumerator<string> IEnumerable<string>.GetEnumerator() => throw null;\n    IEnumerator IEnumerable.GetEnumerator() => throw null;\n}",
+  "sourceSHA256": "b7578f26a23abed506f7b4a43250b986717463bbbf5c88d5270314a2bf808b43",
+  "target": "library",
+  "featureId": "csharp-12-0-collection-expressions",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/collection-expressions.md",
+    "sha256": "20d62bfc544dcdb95590930444205d98f916f935f7ce72834dddddddf33ad78b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/collection-expressions.md",
+    "license": "NOASSERTION",
+    "offset": 55013
+  }
+}

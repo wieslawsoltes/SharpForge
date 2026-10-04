@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2ce61fb312193edbb940",
+  "kind": "spec",
+  "sourceText": "class MyClass\n{\n    private IEnumerable<string> _fields;\n    public bool HasNotNullField\n    {\n        get => _fields.Any(field => field is { }); // 'field' binds to synthesized backing field\n    }\n    public IEnumerable<string> Fields\n    {\n        get { return _fields; }\n        set { _fields = value.Where(value => Filter(value)); } // 'value' binds to setter parameter\n    }\n}",
+  "sourceSHA256": "bd428882aadbd8aab319078b1bf794b2c2dd6124797837bfc942272ef724cef8",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 30202
+  }
+}

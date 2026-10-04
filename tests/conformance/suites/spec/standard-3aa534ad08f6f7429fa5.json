@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3aa534ad08f6f7429fa5",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Shape : ICloneable\n{\n    object ICloneable.Clone() {...}\n    int IComparable.CompareTo(object other) {...} // invalid\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0540",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "680227cecade86284ad1f55d44da0cdc3f7cfc6fbabcbad25eae456742bd1d6a",
+  "originalSource": "class Shape : ICloneable\n{\n    object ICloneable.Clone() {...}\n    int IComparable.CompareTo(object other) {...} // invalid\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "ExplicitInterfaceMemberImplementations3",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return default;",
+      "return default;"
+    ],
+    "expectedErrors": [
+      "CS0540"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "ExplicitInterfaceMemberImplementations3",
+    "offsetInUnquotedMarkdown": 45942
+  }
+}

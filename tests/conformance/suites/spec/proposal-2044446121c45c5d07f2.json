@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2044446121c45c5d07f2",
+  "kind": "spec",
+  "sourceText": "void Log(string s) { ... }\nvoid Log(TraceLoggerParamsInterpolatedStringHandler p) { ... }\n\nLog($\"\"); // Calls Log(string s), because $\"\" is a constant expression\nLog($\"{\"test\"}\"); // Calls Log(string s), because $\"{\"test\"}\" is a constant expression\nLog($\"{1}\"); // Calls Log(TraceLoggerParamsInterpolatedStringHandler p), because $\"{1}\" is not a constant expression",
+  "sourceSHA256": "1630368316bc8dd1281787e3abec7176b358672772b2fb8bde48487f0e48d2e6",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 13389
+  }
+}

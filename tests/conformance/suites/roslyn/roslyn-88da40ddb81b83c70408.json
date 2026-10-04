@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-88da40ddb81b83c70408",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass C1\n{\n    public int this[int index] { [Obsolete] get => 1; set {} }\n}\n\nclass C2\n{\n    public int this[int index] { get => 1; [Obsolete] set {} }\n}\n\npublic class Program\n{\n    public void Main()\n    {\n        var c1 = new C1();\n        c1[0] = c1[0];\n        var c2 = new C2();\n        c2[0] = c2[0];\n    }\n}\n",
+  "sourceSHA256": "43221ef870532f13c82442ef94f299fb64308aef55cba2513614cbb3e2167cea",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnIndexerAccessors",
+    "offset": 275304
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (19,17): warning CS0612: 'C1.this[int].get' is obsolete\n                //         c1[0] = c1[0];\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c1[0]\").WithArguments(\"C1.this[int].get\").WithLocation(19, 17),\n                // (21,9): warning CS0612: 'C2.this[int].set' is obsolete\n                //         c2[0] = c2[0];\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c2[0]\").WithArguments(\"C2.this[int].set\").WithLocation(21, 9)",
+  "unsupported": []
+}

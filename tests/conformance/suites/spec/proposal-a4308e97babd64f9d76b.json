@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a4308e97babd64f9d76b",
+  "kind": "spec",
+  "sourceText": "> outer: for (int i = 0; i < 10; i++)\n> {\n>     for (int j = 0; j < 10; j++)\n>     {\n>         if (i * j > 20)\n>             break outer; // exits the outer for-loop\n>     }\n> }\n> ```\n>\n> ***end example***\n\n### [§13.10.3 The continue statement](https://github.com/dotnet/csharpstandard/blob/standard-v7/standard/statements.md#13103-the-continue-statement)\n",
+  "sourceSHA256": "2120626176582f186d081296e1e2ebac412d85db84e1c0a608dea50daf44260f",
+  "target": "library",
+  "featureId": "csharp-15-0-labeled-break-and-continue",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/labeled-break-continue.md",
+    "sha256": "6f7a0240e013201a78340bec20e3835e55470cb1e9942eaa6fb84bffab6e632e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/labeled-break-continue.md",
+    "license": "NOASSERTION",
+    "offset": 9756
+  }
+}
