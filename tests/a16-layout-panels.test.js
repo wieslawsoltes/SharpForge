@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createTracks, resolveTracks, distributeSpan, rect } from '../packages/winui-controls/src/layout/index.js';
+import { createTracks, resolveTracks, distributeSpan, rect, twoPaneGeometry, computeWorldLayout, parallaxOffset } from '../packages/winui-controls/src/layout/index.js';
 import { element, panel, layoutFixture } from './helpers/a16-layout.js';
 
 test('Grid distributes constrained stars after fixed and Auto demand, including spans', () => {
@@ -48,4 +48,16 @@ test('VariableSizedWrapGrid uses spans without probing first-child DOM geometry'
   assert.deepEqual(fixture.state('a').slot, rect(0, 0, 60, 20));
   assert.deepEqual(fixture.state('b').slot, rect(60, 0, 30, 20));
   assert.deepEqual(fixture.state('c').slot, rect(0, 20, 30, 20));
+});
+
+test('TwoPaneView thresholds and render-only transforms preserve layout sizes', () => {
+  assert.equal(twoPaneGeometry({}, { width: 320, height: 568 }).mode, 'SinglePane');
+  assert.equal(twoPaneGeometry({}, { width: 800, height: 568 }).mode, 'Wide');
+  assert.equal(parallaxOffset(50, 200, 100, 20), -10);
+  const fixture = layoutFixture([element('root', { Width: 20, Height: 10, Translation: { X: 10, Y: 20 }, Rotation: 90 })]);
+  fixture.update();
+  const world = computeWorldLayout(fixture.engine).get('root');
+  assert.deepEqual(world.renderSize, { width: 20, height: 10 });
+  assert.ok(Math.abs(world.bounds.width - 10) < 1e-9);
+  assert.ok(Math.abs(world.bounds.height - 20) < 1e-9);
 });

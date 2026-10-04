@@ -29,6 +29,7 @@ export function createLayoutRegistry(options) {
 export * from './geometry.js';
 export * from './layout-engine.js';
 export * from './framework-element-layout.js';
+export * from './measure-provider.js';
 export * from './custom-layout.js';
 export * from './stackpanel.js';
 export * from './canvas.js';
@@ -41,5 +42,10 @@ export * from './wrapgrid.js';
 export * from './annotated-scrollbar.js';
 export * from './expander.js';
 export * from './twopaneview.js';
+export * from './render-properties.js';
+export * from './dom-applier.js';
+export { XamlRootMetrics } from './dpi.js';
+export * from './text-scale.js';
 export * from './parallaxview.js';
 export * from './button-layout.js';
+export * from './text-format.js';
