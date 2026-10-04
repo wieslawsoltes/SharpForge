@@ -4,6 +4,7 @@ export const verificationMemberDiagnosticCatalog = Object.freeze({
   CILVM0001: 'Invalid verification member metadata',
   CILVM0002: 'Verification member metadata limit exceeded',
   CILVM0003: 'Verification member query cancelled',
+  CILVM0004: 'Member identity does not belong to this verification context',
 });
 
 export function rejectMember(code, detail = '') {
