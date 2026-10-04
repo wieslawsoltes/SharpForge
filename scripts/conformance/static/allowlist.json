@@ -362,7 +362,7 @@
       "path": "tests/a00-03-studio-registries.test.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "8c06f5de014f18b14d1e99e819b0c95ba2d497bef474620188f4bff8fbb5d724",
+      "sha256": "283ec426fd4bf434a1da40ad0675cf21166837c4db36e27582f8caa283f0af5d",
       "reason": "Registry test enumerates trusted checked-in Studio automation modules and imports the fixed Node worker module."
     },
     {
