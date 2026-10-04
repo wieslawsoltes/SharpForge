@@ -10,6 +10,9 @@ Canonical [property metadata](PROPERTIES.md) adds index signatures and accessor 
 Canonical [event metadata](EVENTS.md) adds raw event-type tokens and add/remove/raise method links.
 Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
 tokens and open caller scopes without parsing display names.
+[Canonical generic instantiation](INSTANTIATION.md) binds ordered type handles,
+resolves scoped TypeSpecs and completes substituted base/interface graphs with
+explicit constraint and execution boundaries.
 [Prepared CIL core authority](VERIFICATION-CORE-TYPES.md) binds an explicit token
 selection through the loader for synchronous verification category queries.
 [ExportedType forwarding](FORWARDERS.md) resolves facade and nested exported
