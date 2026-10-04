@@ -1,8 +1,9 @@
 # Historical evidence migration (SF-A29-T37)
 
-The reviewed inventory in `evidence-archive.json` selects 88 generated JSON,
+The reviewed inventory in `evidence-archive.json` selects 89 generated JSON,
 TAP, text and DLL reports from `docs/`. It retains authored API/reference data,
-the A05 planning scope, Markdown and screenshot illustrations. The archive
+the A05 planning scope, the A20 capability ledger, the keyboard-shortcut reference,
+Markdown and screenshot illustrations. The archive
 preserves every selected byte, including old filenames, timestamps, embedded
 source references and qualification claims. It does not infer tested revisions,
 repair old reports or qualify any target. The snapshot commit identifies the
@@ -26,7 +27,7 @@ node scripts/conformance/archive-evidence.js --mode prepare \
 ```
 
 This reads committed Git blobs and checks the current originals still match. It
-stages 91 upload assets: 88 individual reports, `HISTORICAL-EVIDENCE.json`,
+stages 92 upload assets: 89 individual reports, `HISTORICAL-EVIDENCE.json`,
 `historical-evidence.zip` and `SHA256SUMS`. The ZIP uses the existing bounded,
 deterministic archive package and preserves original `docs/` paths. The
 manifest contains the snapshot commit, original Git blob IDs, policy digest,
@@ -39,11 +40,23 @@ and `UPLOAD-PLAN.json`; the latter contains an exact `gh` argument array and
 prepublication checks, not a shell command. Preparation never edits originals
 and refuses an existing staging directory or evidence index.
 
-The inventory includes the PDB interoperability and performance reports added
-after the initial 86-report proposal. That earlier staging directory retains its
+A local Markdown link that names a selected evidence path but climbs outside
+the repository is rejected with its document path and target. Correct that link
+in its owning document before preparing or migrating; the tool does not guess
+the intended destination. Unrelated links outside the repository are unchanged.
+
+The inventory includes the PDB interoperability and performance reports and the
+A20 search benchmark added after the initial 86-report proposal. That earlier staging directory retains its
 original snapshot and must not be relabeled or reused with the expanded policy.
-Prepare a new directory from a published commit containing all 88 reports and
+Prepare a new directory from a published commit containing all 89 reports and
 this policy; review the newly generated consumer rewrites against that checkout.
+
+The A20 search benchmark contains recorded command, machine and timing data;
+archive its original bytes without rerunning or reinterpreting the measurements.
+The A20 coverage file is an authored capability/acceptance ledger with historical
+validation context and deferred integration. The Visual Studio inventory is an
+authored shortcut reference. Both remain in `docs/` with explicit preservation
+reasons; their inclusion does not claim fresh validation.
 
 ## Publish, verify, then migrate
 

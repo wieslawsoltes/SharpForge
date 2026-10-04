@@ -95,3 +95,52 @@ is a separate capability; this regression uses direct BCL object arguments.
 `tests/bcl13.test.js` cover both JavaScript execution engines and assembly reload
 paths. Browser and Rust native/Wasm qualification remains a separate gate;
 JavaScript test results must not be reported as those targets passing.
+
+`List<string>.Sort(IComparer<string>)` is appended in reserved A08 slot `589824`.
+The existing module's `extensionContracts(registry)` registers this addition;
+released registration selects `group: 'bcl-collections'`, and appended contracts
+select `group: 'extensions'`. The explicit `StringComparer.Ordinal` path supports
+nulls, empty strings, duplicates, embedded NUL and isolated/supplementary UTF-16
+surrogates. The interface signature allows later comparer implementations without
+changing this ABI. Unsupported custom implementations currently raise
+`NotSupportedException`, including when the list is empty. A null comparer keeps
+the released default behavior. Sort commits one collection version change.
+
+The default string comparator and `Array.BinarySearch` still use the released
+ordinal profile. **#829 remains open** for the invariant-culture default, and
+#2619/#2621/#2655 track culture comparison and general comparer dispatch. This
+increment does not use a host locale heuristic or claim complete culture support.
+The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
+ordinal results qualify this implementation. Both VM platforms consume the full
+capture. Compiled source exercises direct StringComparer calls; source interface
+locals/conversions and custom implementations remain explicitly diagnosed.
+Independently assembled CIL exercises interface Compare/List.Sort and runtime
+casts. Unsupported custom comparer objects are checked through both platforms,
+including an empty List. Browser and Rust native/Wasm qualification is pending.
+
+Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs` serially in
+the candidate and metadata baseline `85917302`, copying the identical runner to
+the baseline first. The bounded control uses 8,192 deterministic nullable strings
+by default, one warmup and five samples for each VM platform. It times only the
+default Sort dispatch and reports median/p95 plus managed allocation counts and
+bytes; compilation, input setup and output checks are excluded. This measures
+the existing default path, not explicit-comparer overhead or culture collation.
+
+List Sort now copies and roots only the live prefix, sorts that copy through the
+existing ordering helper, and writes it into the same backing array through the
+shared write-notification seam. Capacity and backing identity stay unchanged;
+comparer failures leave values/version unchanged. Fresh empty Sort succeeds and
+increments the version, matching the pinned .NET 10.0.5 fixture. Every pending
+managed value remains rooted across observer-triggered collection during
+writeback; temporary roots are released even when an observer throws. Observer
+exceptions may expose completed writes, like other observed collection writes.
+
+The temporary copy and root set use O(Count) space, comparison retains the
+existing sort complexity, and writeback visits Count slots rather than Capacity.
+`tests/a08-list-sort-storage.test.js` covers both VM platforms, native results,
+snapshots, fault cleanup, notifications and forced GC. Run the identical
+`node --expose-gc scripts/benchmarks/a08-list-sort-storage.mjs` in the ordinal
+parent and this branch, serially, to measure default/ordinal Sort with spare
+capacity. It reports one warmup and five samples per workload, median/p95,
+observed host heap deltas, backing replacements and managed allocation counts.
+No culture behavior or comparer-callback support changes in this storage batch.

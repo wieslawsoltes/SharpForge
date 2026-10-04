@@ -17,6 +17,9 @@ signature AST. A malformed blob, a non-method signature or a receiver/static fla
 mismatch produces `SFCLR005` only when the signature is requested. The original
 VAR/MVAR slots are preserved. No generic method instantiation is implied.
 
+Canonical [parameter metadata](PARAMETERS.md) adds positional and return
+descriptors, raw Param flags and lazy ECMA Constant values.
+
 `method.genericParameters` and `module.methodGenericParameters(methodToken)` add
 canonical MethodDef-owned GenericParam descriptors. The shared generic metadata
 index supplies names, positions, attributes and raw constraint tokens. A parameter

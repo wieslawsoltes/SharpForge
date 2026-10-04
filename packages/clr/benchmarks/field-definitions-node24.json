@@ -1,0 +1,20 @@
+{
+  "machine": {
+    "node": "v24.21.0",
+    "cpu": "Apple M3 Pro",
+    "platform": "darwin",
+    "arch": "arm64",
+    "allocationCount": "not measured",
+    "sharedHost": true
+  },
+  "methodFixtureSha256": "6c3b00fa31af1ca66753fa64cc042f50b6dcd0a939c913a8d3fcffbea2d05fa4",
+  "previousEquivalentFieldImplementation": false,
+  "methodCostReview": "Root reviewer accepted +3.884 ns median / +8.417 ns p95 cached method+signature cost; no statistical significance or speedup claim.",
+  "measurements": [
+    {"scope": "fields", "stage": "initial", "sourceHead": "a8e4d07d3664f9d1dcb93a72722af439d100d5a9", "results": [{"name": "cold fixture fields, signatures and constants", "unit": "microseconds/operation", "median": 47.66599999999244, "p95": 123.87499999999818, "p99": 1036.041999999995}, {"name": "cached field identity and signature", "unit": "microseconds/operation", "median": 0.014670799999998962, "p95": 0.03460419999999971, "p99": 0.10842080000000037}], "uncommittedProductionPatch": "MetadataConstants.get owner-table 100000-row preflight, as committed in 3a36e4b0; member-cache implementation is a8e4d07d."},
+    {"scope": "fields", "stage": "final", "sourceHead": "3a36e4b0661f1dcbda99a0b4a48f4137a406a50a", "results": [{"name": "cold fixture fields, signatures and constants", "unit": "microseconds/operation", "median": 97.70900000000893, "p95": 233.33299999998758, "p99": 1421.9580000000037}, {"name": "cached field identity and signature", "unit": "microseconds/operation", "median": 0.015529200000000288, "p95": 0.04538330000000031, "p99": 0.1797165999999976}]},
+    {"scope": "methods", "stage": "baseline", "sourceHead": "0bfff15e76868e5098424413616a899edaa06718", "results": [{"name": "cold all fixture method identities", "unit": "microseconds/operation", "median": 26.2079999999969, "p95": 68.74999999999432, "p99": 509.79199999997604}, {"name": "cached method and signature lookup", "unit": "microseconds/operation", "median": 0.006612499999999954, "p95": 0.02683749999999918, "p99": 0.06868749999999864}]},
+    {"scope": "methods", "stage": "initial", "sourceHead": "a8e4d07d3664f9d1dcb93a72722af439d100d5a9", "results": [{"name": "cold all fixture method identities", "unit": "microseconds/operation", "median": 27.04199999999446, "p95": 86.6670000000056, "p99": 483.0830000000077}, {"name": "cached method and signature lookup", "unit": "microseconds/operation", "median": 0.01022920000000056, "p95": 0.03157500000000084, "p99": 0.11096250000000225}], "uncommittedProductionPatch": "MetadataConstants.get owner-table 100000-row preflight, as committed in 3a36e4b0; member-cache implementation is a8e4d07d."},
+    {"scope": "methods", "stage": "final", "sourceHead": "3a36e4b0661f1dcbda99a0b4a48f4137a406a50a", "results": [{"name": "cold all fixture method identities", "unit": "microseconds/operation", "median": 25.417000000004464, "p95": 59.08300000000111, "p99": 596.6250000000031}, {"name": "cached method and signature lookup", "unit": "microseconds/operation", "median": 0.010495800000001054, "p95": 0.03525419999999997, "p99": 0.0654875000000004}]}
+  ]
+}

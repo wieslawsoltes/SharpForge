@@ -1,3 +1,4 @@
+import {finishContext,cancelContexts} from './execution/frame-retirement.js';
 import {TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {boundDelegateCall} from './execution/delegate-targets.js';
 import {ManagedFault} from './heap.js';
@@ -120,7 +121,7 @@ export class CooperativeScheduler {
       else if(t.dependencies){const ds=t.dependencies.map(r=>this.taskRecord(r)),done=ds.filter(x=>terminal.has(x.status));if(t.any&&done.length)this.complete(t,done[0].ref);else if(!t.any&&done.length===ds.length){const fault=ds.find(x=>x.status!=='completed');this.complete(t,null,fault?this.failure(fault):null);}}
     }
   }
-  finish(c){if(terminal.has(c.status))return;c.status=this.vm.state==='faulted'?'faulted':'completed';Object.assign(c,this.capture());if(c.task){const t=this.taskRecord(c.task);this.complete(t,c.returnValue,c.fault);}c.frames=[];c.stack=[];c.delegate=null;if(c.eagerParent){this.preferred=c.eagerParent;c.eagerParent=null;}}
+  finish(c){return finishContext(this,c);}
   choose(){
     const preferred=this.contexts.get(this.preferred);this.preferred=null;
     if(preferred&&preferred.status==='ready'&&!preferred.frozen)return preferred;
@@ -151,7 +152,7 @@ export class CooperativeScheduler {
   snapshot(){if(!this.enabled)return null;this.save();return {parked:this.parked,currentId:this.currentId,nextId:this.nextId,nextTaskId:this.nextTaskId,clock:this.now(),turn:this.turn,steps:this.steps,preferred:this.preferred,contexts:[...this.contexts].map(([id,c])=>[id,cloneContext(c)]),tasks:[...this.tasks].map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:[...t.waiters],dependencies:t.dependencies?[...t.dependencies]:null}])};}
   restore(s){if(!s){this.parked=false;this.enabled=false;this.contexts.clear();this.tasks.clear();return;}this.enabled=true;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;this.contexts=new Map(s.contexts.map(([id,c])=>[id,cloneContext(c)]));this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:new Set(t.waiters),dependencies:t.dependencies?[...t.dependencies]:null}]));this.save();}
   prune(){if(!this.enabled)return;for(const [id,t]of this.tasks)if(terminal.has(t.status)){let alive=true;try{this.vm.heap.get(t.ref);}catch{alive=false;}if(!alive)this.tasks.delete(id);}if(this.contexts.size>=this.maxContexts)for(const [id,c]of this.contexts)if(id!==1&&terminal.has(c.status))this.contexts.delete(id);}
-  cancelAll(){if(!this.enabled)return;for(const c of this.contexts.values())if(!terminal.has(c.status)){c.status='canceled';c.frames=[];c.stack=[];c.wait=null;}for(const t of this.tasks.values())if(!terminal.has(t.status))this.complete(t,null,null,true);}
+  cancelAll(){return cancelContexts(this);}
   async runAsync({signal=null,onSlice=null}={}){while(['ready','running','waiting'].includes(this.vm.state)){
       if(signal?.aborted){this.vm.stop();throw new ManagedFault('OperationCanceledException','Execution canceled');}
       this.vm.runSlice({instructionBudget:10000,timeBudgetMs:8});onSlice?.(this.vm);

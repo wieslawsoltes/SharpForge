@@ -3,7 +3,7 @@
  * parameter it replaces?
  *   class        CS0452     struct      CS0453     new()        CS0310     unmanaged   CS8377
  *   base type / interface:  CS0311 (reference type argument), CS0315 (value type), CS0312/CS0313 (nullable value
- *   type), CS0314 (type parameter argument)                    notnull     CS8714 (warning)
+ *   type), CS0314 (type parameter argument)                    notnull     a warning: nullable/constraint-checks.js
  *   ref struct argument without `allows ref struct`: CS9244;   System.Enum / System.Delegate are ordinary base-type
  *   constraints, `default` only disambiguates overrides.
  * Constraint types are substituted with the full argument list first, so `where T : IComparable<T>` is checked as
@@ -72,8 +72,6 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
       if (!isUnmanagedType(argument) || isNullableType(argument)) push(DiagnosticId.CS8377, [display, parameter.name, name]);
     } else if (parameter.hasValueTypeConstraint && (argument.isValueType !== true || isNullableType(argument)))
       push(DiagnosticId.CS0453, [display, parameter.name, name]);
-    if (parameter.hasNotNullConstraint && (isNullableType(argument) || argument.isAnnotatedReference))
-      push(DiagnosticId.CS8714, [display, parameter.name, name], { severity: 'warning' });
     for (const constraint of parameter.constraintTypes) {
       const wanted = typeOf(map.substituteType(constraint));
       if (!wanted || wanted.isErrorType()) continue;

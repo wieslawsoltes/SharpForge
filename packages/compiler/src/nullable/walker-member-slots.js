@@ -40,6 +40,14 @@ export const NullableMemberSlots = Base =>
       return owner ? this.slotOf(owner, symbol) : null;
     }
 
+    /** The variable of `member` of the object `receiver` denotes: for the MemberNotNull attributes of a call on it. */
+    memberOf(receiver, member) {
+      const own = super.memberOf(null, member);
+      if (member.isStatic || !receiver || receiver.kind === 'This' || receiver.kind === 'Base') return own;
+      const owner = receiver.kind === 'ConditionalReceiver' ? this.conditionalReceiver : this.variableOf(receiver);
+      return owner ? this.slotOf(owner, own) : null;
+    }
+
     slotOf(owner, member) {
       let members = this.slots.get(owner);
       if (!members) this.slots.set(owner, (members = new Map()));
