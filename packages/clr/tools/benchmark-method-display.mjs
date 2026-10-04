@@ -3,7 +3,8 @@ import { cpus } from 'node:os';
 import { readFileSync } from 'node:fs';
 import { AssemblyLoadSession } from '../src/index.js';
 
-const native = JSON.parse(readFileSync(new URL('../../../tests/fixtures/clr-method-display/native.json', import.meta.url)));
+const fixture = process.argv[2] ?? new URL('../../../tests/fixtures/clr-method-display/native.json', import.meta.url);
+const native = JSON.parse(readFileSync(fixture));
 const records = JSON.parse(native.execution.stdout).records;
 const image = Buffer.from(native.image, 'base64');
 const load = async () => (await new AssemblyLoadSession().createContext().loadFromStream(image)).manifestModule;

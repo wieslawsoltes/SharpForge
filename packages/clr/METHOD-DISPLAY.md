@@ -15,7 +15,10 @@ Primitive element encodings use names such as `Int32`; Object and String remain
 `System.Object` and `System.String`. Named metadata types retain namespaces,
 while an outermost nested type uses its simple name. Generic methods use their
 metadata parameter names, and constructed signatures use square brackets with
-fully qualified arguments. Pointer/vector/default-bound multidimensional array
+fully qualified arguments. Nested types inside generic arguments retain their
+enclosing `Outer+Inner` spelling and any inherited/own generic argument positions;
+outermost nested signatures still use Reflection's historical simple-name rule.
+Pointer/vector/default-bound multidimensional array
 suffixes are retained. Byref parameters use ` ByRef`, return values retain `&`,
 vararg declarations append `...`, and custom modifiers do not appear in the text.
 Valid constructors display `Void .ctor(...)` or `Void .cctor()`.
@@ -27,8 +30,8 @@ existence or provide assembly-qualified reflection names. TypeSpec input rejects
 Its token extent, string and nesting failures remain explicit.
 
 Forms needing additional runtime identity/formatting services fail with
-`SFCLR012`: named aliases of CLI primitives, TypeSpec indirection, nested types
-inside generic arguments, escaped type identifiers, function pointers, explicitly
+`SFCLR012`: named aliases of CLI primitives, TypeSpec indirection,
+escaped type identifiers, function pointers, explicitly
 sized/nonzero-bound arrays, explicit-this/unmanaged method conventions and
 call-site vararg sentinels. General signature/MethodDef validity and equivalence
 of alternative metadata encodings remain separate. No unsupported form silently
@@ -68,6 +71,17 @@ the cached query uses 10,000 iterations per sample after 10 warmup samples.
 are retained. There is no prior equivalent implementation, before/after speed
 claim or statistical significance claim. Allocations and retained display-string
 footprint were not measured; existing descriptor reads add no display lookup.
+
+The nested-argument extension reuses the bounded metadata full-name query.
+Qualified nested names validate all ancestors through existing TypeDef identities
+or raw TypeRef scopes, up to 64 nesting edges; reserved ancestor identifiers reject
+instead of being confused with metadata nesting separators. Validated names are
+cached only for the current format query. No referenced assembly, base/interface
+graph or method body is loaded. Outermost simple nested names do not expose their
+ancestors and keep their existing behavior. This extension's three authored tests
+and eight-method native C# source are prepared, with capture, focused tests,
+paired/new-capability measurements and checks pending the serial slot. The earlier
+18-record/200-sample evidence above qualifies the initial display API only.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-method-display.mjs tests/fixtures/clr-method-display/native.json
