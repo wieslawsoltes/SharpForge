@@ -19,6 +19,7 @@ export {normalizeCallType, substituteCallType, instantiateSignature, callSignatu
   resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
 export { sha256 } from './binary/hash.js';
 export { sha1 } from './binary/sha1.js';
+export { assemblyReferenceIdentity } from './metadata/assembly-references.js';
 export { win32VersionFromAssembly } from './pe/version-attributes.js';
 export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
 export { linkAssemblyModules } from './pe/module-linker.js';
