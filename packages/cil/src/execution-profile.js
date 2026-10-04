@@ -9,7 +9,7 @@ import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
-// Broad decoding is deliberately separate from this managed execution allowlist.
+// Broad decoding is separate from the managed execution allowlist.
 const simple = new Set(('constrained. volatile. ldtoken ldftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
 const indexed = /^(ldarg|ldarga|starg|ldloc|ldloca|stloc)(\.[0-3s])?$/;
@@ -66,7 +66,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       for(const type of m.signature.parameters.concat(m.locals,m.signature.returnType))verifyGenericType(inspector,type,context);
     } catch(error) {issue(m,null,'IL_SIGNATURE',error.message);continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
-    prefixes.verify(m,context,issue);
+    prefixes.verify(m,context,issue,pending);
     for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
