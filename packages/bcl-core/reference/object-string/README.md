@@ -16,3 +16,5 @@ dotnet bin/Release/net10.0/ObjectString.dll ../object-string-net10.json
 The runtime change qualifies explicit framework overrides only. Primitive
 nonvirtual formatting retains SharpForge's released profile; native rows expose
 that distinction rather than extending the implementation to primitive dispatch.
+Relative Uri is retained as native evidence without claiming the unsupported
+Uri(string, UriKind) constructor. The executable constructor cases use absolute Uri.

@@ -33,3 +33,10 @@ export function hiddenStringAssembly() {
     }}
   ]});
 }
+
+export function primitiveStringAssembly(kind) {
+  return managedFixture({name: 'PrimitiveObjectString', methods: [{name: 'Main', result: 'string', body(w, context) {
+    w.op('ldc.i4', 42).op('box', context.resolve('System.Int32'))
+      .op(kind, context.member('System.Object', 'ToString', 'string', [], false)).op('ret');
+  }}]});
+}

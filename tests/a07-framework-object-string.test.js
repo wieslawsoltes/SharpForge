@@ -7,7 +7,7 @@ import {contracts, findContracts, createRegistry} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {invokeIntrinsic} from '../packages/runtime/src/execution/intrinsics.js';
-import {objectStringInputs, objectStringAssembly, hiddenStringAssembly} from './fixtures/object-string.js';
+import {objectStringInputs, objectStringAssembly, hiddenStringAssembly, primitiveStringAssembly} from './fixtures/object-string.js';
 
 const directory = new URL('../packages/bcl-core/reference/', import.meta.url);
 const reference = JSON.parse(readFileSync(new URL('object-string-net10.json', directory), 'utf8'));
@@ -61,13 +61,14 @@ for (const [engine, create] of Object.entries(engines)) {
   });
 
   test(`framework Object.ToString ${engine}: primitive, Convert and Console profiles remain unchanged`, () => {
-    const vm = create(compile('object number = 42;Console.WriteLine(number.ToString());' +
+    const vm = create(compile('object number = 42;Console.WriteLine(number.ToString() == Convert.ToString(number));' +
       'object value = new StringBuilder("text");Console.WriteLine(Convert.ToString(value));Console.WriteLine(value);' +
       'object empty = null;Console.WriteLine(Convert.ToString(empty));'));
     try {
       const result = vm.run();
       assert.equal(result.state, 'terminated', result.fault?.stack);
-      assert.equal(result.output, '42\nSystem.Text.StringBuilder\nSystem.Text.StringBuilder\n\n');
+      assert.equal(result.output, 'True\nSystem.Text.StringBuilder\nSystem.Text.StringBuilder\n\n');
+      assert.equal(vm.value(render(vm, engine, 42)), '42');
     } finally { vm.stop(); }
   });
 
@@ -103,6 +104,18 @@ for (const [engine, create] of Object.entries(engines)) {
       });
     } finally { vm.stop(); }
   });
+
+  test(`framework Object.ToString ${engine}: unmarked framework methods stay on the fallback profile`, () => {
+    const vm = create(compile('Console.WriteLine(0);'));
+    try {
+      vm.heap.withRoots([], () => {
+        const value = vm.platform.invoke(member('System.Net.Http.HttpMethod', '.ctor', ['string']), [vm.heap.string('GET')]);
+        vm.heap.pins.push(value);
+        assert.equal(vm.value(vm.platform.invoke(member('System.Net.Http.HttpMethod', 'ToString'), [value])), 'GET');
+        assert.equal(vm.value(render(vm, engine, value)), 'System.Net.Http.HttpMethod');
+      });
+    } finally { vm.stop(); }
+  });
 }
 
 for (const input of objectStringInputs) {
@@ -130,13 +143,30 @@ test('framework Object.ToString CIL: hidden user method is not an override', () 
   } finally { vm.stop(); }
 });
 
+for (const kind of ['call', 'callvirt']) {
+  test(`framework Object.ToString CIL: ${kind} retains released primitive formatting`, () => {
+    const vm = new CilVirtualMachine(primitiveStringAssembly(kind));
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', result.fault?.stack);
+      assert.equal(vm.value(vm.returnValue), '42');
+      // Native nonvirtual Int32 returns System.Int32; changing that old profile is outside this batch.
+      assert.equal(reference.rows.find(row => row.name === 'int' && row.kind === kind).value,
+        kind === 'call' ? 'System.Int32' : '42');
+    } finally { vm.stop(); }
+  });
+}
+
 test('framework Object.ToString metadata rejects invalid override opt-ins', () => {
-  for (const options of [{isStatic: true}, {result: 'int'}, {parameters: ['string']}, {name: 'Other'}, {objectToStringOverride: false}]) {
+  const invalid = [{isStatic: true}, {result: 'int'}, {parameters: ['string']}, {name: 'Other'},
+    {objectToStringOverride: false}, {isAbstract: true}, {kind: 'constructor'}];
+  for (const options of invalid) {
     const registry = createRegistry({reservations: [{name: 'example', start: 0, size: 4}]});
     assert.throws(() => registry.register({name: 'example', register(api) {
       api.define('Example');
       api.member('Example', options.name ?? 'ToString', options.parameters ?? [], options.result ?? 'string',
-        {objectToStringOverride: options.objectToStringOverride ?? true, isStatic: options.isStatic ?? false});
+        {objectToStringOverride: options.objectToStringOverride ?? true, isStatic: options.isStatic ?? false,
+          isAbstract: options.isAbstract ?? false, kind: options.kind ?? 'method'});
     }}), /Object.ToString override/);
   }
 });

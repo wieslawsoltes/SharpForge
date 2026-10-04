@@ -1,6 +1,7 @@
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {invokeDecimal} from './decimal-intrinsics.js';
+import {invokeIntrinsic} from './intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
 import {framePool} from './frame-pool.js';
@@ -75,7 +76,7 @@ export function invoke(vm,instruction) {
       const owner=descriptor.signature.isStatic?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
       vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
     } else {
-      const value=vm.intrinsic(descriptor,args);
+      const value=invokeIntrinsic(vm,descriptor,args,instruction.name==='callvirt');
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
     }
   });
