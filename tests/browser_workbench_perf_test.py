@@ -89,6 +89,11 @@ def capture_round(browser, records, fixture, round_index, errors):
           await shell.activateTool(id);
           await painted();
           if (!shell.mounts.has(id) || !shell.isToolVisible(id)) throw new Error('Tool activation did not finish: ' + id);
+          if (id === 'object-browser') {
+            const host = shell.mounts.get(id).host;
+            while (!host.querySelector('[role="treeitem"]') && performance.now() - start < 10000) await painted();
+            if (!host.querySelector('[role="treeitem"]')) throw new Error('Framework metadata did not finish loading');
+          }
           samples.push({name: 'tool-activation', sessionId: 'workbench', round, duration: performance.now() - start,
             metadata: {tool: id, pass, cold: pass === 0}});
         }
