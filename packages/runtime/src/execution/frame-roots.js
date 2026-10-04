@@ -1,3 +1,4 @@
+import {visitAsyncTaskRoots, visitAsyncFrameRoots} from './async-continuations.js';
 import {scalarStorageGuard} from './scalar-storage-plan.js';
 import {isReference} from '../heap.js';
 import {visitRetiredFrames} from './frame-pool.js';
@@ -89,6 +90,7 @@ export function visitFrameRoots(vm, frame, visit, precise = true, parked = false
     slots(vm, frame, false, visit, precise);
   }
   offer(frame.returnObject, visit);
+  visitAsyncFrameRoots(frame, visit);
   visitFrameContinuations(frame, visit);
 }
 
@@ -121,6 +123,7 @@ export function visitSchedulerRoots(scheduler, visit, precise = true) {
   for (const task of scheduler.tasks.values()) {
     if (terminal.has(task.status)) continue;
     offer(task.ref, visit);
+    visitAsyncTaskRoots(task, visit);
     values(task.dependencies, visit);
     offer(task.error?.reference, visit);
   }

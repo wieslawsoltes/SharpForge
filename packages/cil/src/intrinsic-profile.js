@@ -1,3 +1,4 @@
+import {asyncMethodDefinition} from './async-profile.js';
 import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {nullableMethodDefinition} from './nullable-profile.js';
 import {canonicalType,contracts,types,memberSignatureType} from '@sharpforge/framework';
@@ -114,6 +115,7 @@ export const intrinsicDefinitions=Object.freeze([...definitions.values()]);
 export function intrinsicDefinition(descriptor) {
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const signature=descriptor.signature;
+  const async = descriptor.ownerToken && asyncMethodDefinition(descriptor); if (async) return async;
   // Framework canonical aliases and built-in CLI aliases intentionally differ.
   // This preserves the verifier's previous contract-first selection policy.
   const contract=frameworkDefinitions.get(frameworkKey(descriptor));

@@ -66,7 +66,7 @@ export function createManagedAddress(vm, kind, index, owner) {
     return address;
   }
   return Object.freeze({byref: true, vmOwner: vm.snapshotOwner, kind, index, owner,
-    frameId: vm.top.id, path: Object.freeze([])});
+    frameId: vm.top?.id ?? 0, path: Object.freeze([])});
 }
 
 function replace(vm, value, path, position, replacement) {

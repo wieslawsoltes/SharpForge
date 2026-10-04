@@ -1,3 +1,4 @@
+import {isAsyncValue, asyncValue} from './async-values.js';
 import {decodeCoded} from '@sharpforge/cil';
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault, isReference} from '../heap.js';
@@ -79,6 +80,7 @@ function record(vm, table, source, budget) {
 /** Reference-free values have immutable owned fields; copies never expose mutable host aliases. */
 export function createValue(vm, table, source = null) {
   if (table.registry !== vm.heap.methodTables) invalid('Struct type belongs to another VM');
+  if (isAsyncValue(vm, table)) return asyncValue(vm, table, source, createValue);
   return record(vm, table, source, {fields: 65_536});
 }
 

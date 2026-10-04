@@ -1,0 +1,6 @@
+16df61cd9c97e4d2e2462ad01814e0cb890c8a1489daebbe10c828946cfebd7e  packages/cil/src/async-profile.js
+f9aefd0b64df797d7999cc97ce32302a4fa9c28d22220c835a6448479fc3c24f  packages/runtime/bench/cil-async.mjs
+d96b609f43e40edb2cac20910674bf9982b5f1a095b0c88277f8c29b84602ad6  packages/runtime/bench/cil-async-paired.py
+4f71052ef34370f35aa19dde267e10b16f84fa6a030359fabb102d5edfae0160  tests/a05-cil-async-profile.test.js
+aba07fd1f9ab68292806b10c4de1cd653f482e31872c88eea9ad10027c1a07bd  tests/a05-cil-async-native.test.js
+41c525101931f5fcc56ed2bb784f98e7838ebd6301d127a4e547c160fb1932c5  tests/a05-cil-async-continuation-roots.test.js

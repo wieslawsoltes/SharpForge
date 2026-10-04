@@ -1,3 +1,4 @@
+import {asyncStateMachine} from '@sharpforge/cil';
 import {genericTypeParts, instantiateSignature, substituteCallType, isSizeOfOnlyMethod} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
@@ -39,7 +40,7 @@ function makeMethod(vm, entry) {
   const arity = original.signature.genericArity ?? 0;
   if (arity !== methodArguments.length) invalid('Generic method requires a complete instantiation');
   const layoutOnly = isSizeOfOnlyMethod(vm.inspector, token);
-  if (owner?.flags.valueType && !owner.flags.primitive && !owner.flags.enum) {
+  if (owner?.flags.valueType && !owner.flags.primitive && !owner.flags.enum && !asyncStateMachine(vm.inspector, owner.name)) {
     if (!layoutOnly) throw new ManagedFault('NotSupportedException', 'Generic aggregate owners require T03 value storage');
     valueLayout(vm, owner);
   }

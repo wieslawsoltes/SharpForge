@@ -1,0 +1,33 @@
+✔ fault completion retains a managed delegate through every allocation and delivers it once (23.327382ms)
+✔ managed TaskAwaiter.OnCompleted owns its callback through fault-completion collection (9.22794ms)
+✔ direct CIL async native reference: Completed (2463.4855ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Suspended (1972.216579ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Exceptions (2120.64066ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Retention (2305.953885ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: WaitAndDelay (2461.783655ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async native reference: Mutation (2433.903787ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async snapshot roots and exactly-once continuation: Retention (2316.477542ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async snapshot roots and exactly-once continuation: Mutation (2312.796969ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async builder reachability rejects invalid MoveNext before execution (1150.639085ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ CIL async ABI matcher requires complete generic and byref member signatures (5.840275ms)
+✔ CIL async ABI generic awaiter result and real Yield type are exact (0.548576ms)
+✔ CIL async callbacks require trusted reference scope and matching MethodImpl declarations (26.331081ms)
+✔ CIL dispatch admits proved async callback implementations and still rejects malformed declarations (7.558027ms)
+✔ CIL async callback-only bodies remain mandatory verifier roots (1.88001ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21732.304142

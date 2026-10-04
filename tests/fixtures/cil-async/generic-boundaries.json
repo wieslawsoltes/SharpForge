@@ -1,0 +1,32 @@
+{
+  "status": "source-only; no compiler, native or VM execution recorded",
+  "modes": ["Roslyn optimize-", "Roslyn optimize+"],
+  "controls": [
+    {
+      "source": "GenericMethod.cs",
+      "purpose": "A generic Task<T> method suspends through Yield with primitive, string and user-class payloads; the class result must retain reference identity.",
+      "intendedBoundary": "Required runtime qualification within the bounded Task/Task<T>/Yield scope.",
+      "seams": ["MethodSpec substitution", "generic state-machine callback proof", "closed async value storage", "Task<T> reference identity"]
+    },
+    {
+      "source": "GenericOwner.cs",
+      "purpose": "Generic declaring types and nested generic owners preserve enclosing type arguments and callback owner identity after suspension.",
+      "intendedBoundary": "Required runtime qualification; no success is presumed.",
+      "seams": ["constructed owner context", "nested VAR ordinals", "captured receiver fields", "Debug class versus Release struct storage"]
+    },
+    {
+      "source": "GenericAggregateBoundary.cs",
+      "purpose": "A native-valid user-struct payload probes the documented ordinary aggregate generic-argument restriction.",
+      "intendedBoundary": "Capture the actual explicit rejection without weakening ordinary aggregate admission or inventing a diagnostic result.",
+      "seams": ["ordinary genericArgument restriction", "Task<T> value payload storage"]
+    }
+  ],
+  "additionalMetadataControlsNeeded": [
+    "Out-of-range state-machine generic variable must fail verification before invocation.",
+    "Builder Start supplied a generic state-machine instantiation with incorrect arity must fail verification.",
+    "Constructed MethodImpl callback signatures and trusted interface identity must remain exact under substitution."
+  ],
+  "excluded": ["ValueTask", "custom task-like builders", "custom awaiters", "async void", "async iterators"],
+  "captureCommand": "node scripts/limited.js node tests/fixtures/cil-async/capture.mjs <output-directory> GenericMethod GenericOwner GenericAggregateBoundary --execute",
+  "captureSemantics": "The driver records real native output plus verification and VM outcome. It deliberately does not call recorded outcomes passing before reviewing the boundary expectations."
+}
