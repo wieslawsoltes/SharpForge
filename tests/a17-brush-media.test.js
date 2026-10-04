@@ -5,6 +5,10 @@ import {Colors, parseColor, cssColor, colorFromArgb, colorEquals, colorDisplayNa
 import {normalizeBrush, gradientColor, sampleBrush, brushMatrix} from '../packages/rendering/src/brushes/brushes.js';
 import {ImageCache, WriteableBitmap, imageRectangle, nineGridPatches} from '../packages/rendering/src/media/images.js';
 import {decodeSrgbPixels, encodeSrgbPixels, compositeLinear, halfToNumber} from '../packages/rendering/src/media/working-color.js';
+import {normalizeShadow, shadowBounds, themeShadow} from '../packages/rendering/src/brushes/shadows.js';
+import {systemBackdropPolicy, XamlCompositionBrushBase} from '../packages/rendering/src/brushes/effects.js';
+import {DrawingModel, DrawingCollection, serializeRenderingValue} from '../packages/rendering/src/media/models.js';
+import {materializeRenderingResource} from '../packages/rendering/src/media/materializer.js';
 
 const near = (actual, expected, tolerance = 1e-6) => assert.ok(Math.abs(actual - expected) < tolerance, `${actual} != ${expected}`);
 const gradient = extras => normalizeBrush({kind: 'linear', start: [0, 0], end: [1, 0],
@@ -121,4 +125,35 @@ test('bitmap invalidation and premultiplied linear blending preserve typed bytes
   bitmap.dispose();
   assert.throws(() => bitmap.Invalidate(), error => error.code === 'SFRENDER060');
   assert.throws(() => new WriteableBitmap(0.5, 1));
+});
+
+test('resource materialization preserves typed geometry/brush identity and native connection policy', () => {
+  const references = new WeakMap(), context = {managed: value => value, allocate: (type, data) => ({valueType: type, ...data}),
+    wrapModel(model, type) { if (!references.has(model)) references.set(model, {type, model}); return references.get(model); }};
+  const descriptor = Object.freeze({kind: 'SolidColorBrush', color: '#8000ff00', opacity: 0.5});
+  const first = materializeRenderingResource(context, descriptor, 'Microsoft.UI.Xaml.Media.Brush');
+  assert.equal(materializeRenderingResource(context, descriptor, 'Microsoft.UI.Xaml.Media.Brush'), first);
+  assert.equal(first.type, 'Microsoft.UI.Xaml.Media.SolidColorBrush');
+  assert.deepEqual(parseColor(serializeRenderingValue(first.model).Color), [0, 1, 0, 128 / 255]);
+  const path = materializeRenderingResource(context, 'M0 0L4 4Z', 'Microsoft.UI.Xaml.Media.Geometry');
+  assert.ok(path.model.get('Figures') instanceof DrawingCollection);
+  const geometry = new DrawingModel('Microsoft.UI.Xaml.Media.RectangleGeometry', {Rect: [0, 0, 10, 20]});
+  geometry.set('Transform', geometry);
+  assert.throws(() => serializeRenderingValue(geometry), error => error.code === 'SFRENDER130');
+  const brush = new XamlCompositionBrushBase(), events = [];
+  brush.OnConnected = () => events.push('connected'); brush.OnDisconnected = () => events.push('disconnected');
+  const firstOwner = brush.connect(), secondOwner = brush.connect();
+  firstOwner(); assert.deepEqual(events, ['connected']); secondOwner();
+  assert.deepEqual(events, ['connected', 'disconnected']);
+});
+
+test('portable shadow bounds and system backdrop approximation are explicit policies', () => {
+  const shadow = normalizeShadow({blurRadius: 2, offset: [3, -4], color: '#80000000', opacity: 0.5});
+  assert.deepEqual(shadowBounds([0, 0, 10, 10], shadow), [-3, -10, 22, 22]);
+  assert.equal(themeShadow(0).opacity, 0);
+  assert.ok(themeShadow(24, {theme: 'dark'}).opacity > themeShadow(24).opacity);
+  const material = systemBackdropPolicy('MicaBackdrop', {theme: 'dark'});
+  assert.equal(material.support, 'approximated'); assert.match(material.reason, /desktop compositor/);
+  assert.equal(systemBackdropPolicy('DesktopAcrylicBackdrop', {highContrast: true}).blur, 0);
+  assert.throws(() => normalizeShadow({blurRadius: 251}));
 });
