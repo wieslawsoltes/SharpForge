@@ -89,3 +89,62 @@ execution budget. Every `CILR0001` / `IL_EH_FLOW` issue is resolved in this repl
 `qualification-results.json` retains every complete new observation, the totals,
 the original PE-identity comparison and the EH diagnostic comparison. The six
 remaining failures are independent follow-up work and remain failures.
+
+## Standalone publication qualification
+
+The four commits were cherry-picked with provenance onto qualified main
+`41ebd76987aa912659310d4015607f46110358ab`. The standalone publication source
+checkpoint is `b0285acf9d21205870c7f45f7d8a2ee65f917f25`, tree
+`192e3f938bdc7c68fe13190f8d3b8ac77d643369`.
+
+The same four focused files passed **30/30**, with zero failures or skips:
+2.353947751 seconds test duration and 2.504477308 seconds wall time. The before
+and after checks retained the same clean head, tree, 2,299 materialized tracked
+inputs and 1,543-module static/literal import graph. All three DOTNET variables
+remained pinned. `publication-focused-run.json` records the exact command and
+environment. The raw log SHA-256 is
+`dd7c4d083d96ab398306969c2291930e2af3583bd855d67f83b8c069fbb27783`.
+
+The seven canonical/direct replay outcomes above belong to the original
+integration source. They are not claimed as a new replay of the standalone
+publication tree.
+
+## Standalone performance comparison
+
+The reviewed comparison ran once against the no-fix publication parent. All
+eight serial processes completed in 6.707739147 seconds wall time. Each side
+contributed 48 measured samples per workload after the unchanged 80-warmup,
+24-sample-per-process policy, in A/B/B/A order. Every timing and managed allocation
+measurement passed the finite, numeric and nonnegative guards. Every execution
+matched its expected result, and the callback retained fresh verification,
+authentic stack proofs, paused caller state and scope cleanup.
+
+| Workload / phase | Baseline median ms | Candidate median ms | Median change | Baseline p95 ms | Candidate p95 ms | p95 change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Ordinary admission | 0.403859 | 0.536026 | +32.73% | 0.726447 | 0.884559 | +21.77% |
+| Ordinary execution | 1.642366 | 2.290307 | +39.45% | 2.963081 | 3.108795 | +4.92% |
+| Ordinary total | 2.107520 | 2.994504 | +42.09% | 3.510575 | 3.759901 | +7.10% |
+| Callback fixture admission | 0.265540 | 0.294342 | +10.85% | 0.493825 | 0.544900 | +10.34% |
+| Fresh callback invocation | 0.380059 | 0.418234 | +10.04% | 0.706778 | 0.761408 | +7.73% |
+| Callback fixture total | 0.666108 | 0.709577 | +6.53% | 1.511980 | 1.283525 | -15.11% |
+
+Both workloads retained identical PE hashes on both sides, and both reported
+zero managed heap allocations and allocated bytes. Those heap counters do not
+measure JavaScript option-copy allocations. Exported runtime source bytes grew
+from 2,800,260 to 2,800,894; this is a source inventory, not a build-size result.
+
+The single shared-host run exceeds the timing budget. Per-process ordinary
+total medians were A1 2.143537 ms, B1 1.997263 ms, B2 3.184295 ms and A2 2.057435 ms.
+The execution phase also varies substantially. This evidence does not establish
+a stable regression estimate or isolate the cause of the change. No automatic
+repeat was performed. Timing-budget disposition awaits explicit review.
+
+`publication-performance.json.gz` retains the complete 413,374-byte raw report,
+including every sample, child stdout/stderr, per-process summaries and exact
+Git-export inventories. Its uncompressed SHA-256 is
+`7e7a32902de801c6fa743c161d28479b6fd740739755581d507411c7c0014ba3`.
+`publication-performance-review.json` lists all ten timing threshold breaches.
+The launcher records unchanged worktree, source, graph and reviewed packet
+hashes before/after execution. The temporary exports were removed afterward.
+`performance-tools/` preserves the exact reviewed source packet; its preparation
+status predates the completed run recorded here.
