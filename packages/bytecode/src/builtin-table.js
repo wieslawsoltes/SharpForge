@@ -1,4 +1,18 @@
 import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
+import {decimalIntrinsicDefinitions} from './decimal-intrinsic-profile.js';
+
+// A closed source-visible subset of the existing CIL profile. Unique wire names
+// distinguish overloads; the descriptor retains the actual CLR member identity.
+const sourceDecimals = [
+  ['Truncate', ['System.Decimal'], ['d']], ['Round', ['System.Decimal'], ['d']],
+  ['Round', ['System.Decimal', 'int'], ['d', 'decimals']], ['Parse', ['string'], ['s']]
+].map(([name, parameters, parameterNames]) => {
+  const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === 'System.Decimal' &&
+    candidate.isStatic && candidate.name === name && candidate.returnType === 'System.Decimal' &&
+    candidate.parameters.length === parameters.length && candidate.parameters.every((type, index) => type === parameters[index]));
+  if (!descriptor) throw new TypeError('Missing source Decimal contract');
+  return {descriptor, parameterNames: Object.freeze(parameterNames)};
+});
 
 /** Build the frozen dispatch table, retaining contract IDs across reserved sparse ranges. */
 export function createBuiltinTable(definitions, contracts, releasedRanges) {
@@ -19,6 +33,15 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
   for (const [name, min, max, result, params] of runtimeBuiltinDefinitions) {
     const id = runtimeId++;
     entries[id] = Object.freeze({id, name, min, max, result, params: Object.freeze(params)});
+  }
+  for (const {descriptor, parameterNames} of sourceDecimals) {
+    const id = runtimeId++;
+    const params = Object.freeze(descriptor.parameters.map(type => type === 'System.Decimal' ? 'decimal' : type));
+    entries[id] = Object.freeze({
+      id, name: 'decimal.' + descriptor.name + '#' + params.length,
+      min: params.length, max: params.length, result: 'decimal', params, decimal: descriptor,
+      parameterNames
+    });
   }
   return Object.freeze(entries);
 }

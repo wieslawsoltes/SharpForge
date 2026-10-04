@@ -131,3 +131,4 @@ Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no
 Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.
 
 The source-image emitter uses [nested exception-region layout](EMITTER-EXCEPTION-REGIONS.md) for catch/finally clause ordering and indexed transfers.
+The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves bounded local hierarchy relations and reports missing metadata as unknown.

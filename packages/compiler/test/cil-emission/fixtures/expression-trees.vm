@@ -1,0 +1,42 @@
+External member 'System.Linq.Expressions.Expression::Add' is not implemented
+External member 'System.Linq.Expressions.Expression::AddChecked' is not implemented
+External member 'System.Linq.Expressions.Expression::AndAlso' is not implemented
+External member 'System.Linq.Expressions.Expression::ArrayIndex' is not implemented
+External member 'System.Linq.Expressions.Expression::ArrayLength' is not implemented
+External member 'System.Linq.Expressions.Expression::Bind' is not implemented
+External member 'System.Linq.Expressions.Expression::Call' is not implemented
+External member 'System.Linq.Expressions.Expression::Coalesce' is not implemented
+External member 'System.Linq.Expressions.Expression::Condition' is not implemented
+External member 'System.Linq.Expressions.Expression::Constant' is not implemented
+External member 'System.Linq.Expressions.Expression::Convert' is not implemented
+External member 'System.Linq.Expressions.Expression::Divide' is not implemented
+External member 'System.Linq.Expressions.Expression::ElementInit' is not implemented
+External member 'System.Linq.Expressions.Expression::Equal' is not implemented
+External member 'System.Linq.Expressions.Expression::Field' is not implemented
+External member 'System.Linq.Expressions.Expression::GreaterThan' is not implemented
+External member 'System.Linq.Expressions.Expression::Invoke' is not implemented
+External member 'System.Linq.Expressions.Expression::Lambda' is not implemented
+External member 'System.Linq.Expressions.Expression::LessThanOrEqual' is not implemented
+External member 'System.Linq.Expressions.Expression::ListInit' is not implemented
+External member 'System.Linq.Expressions.Expression::MemberInit' is not implemented
+External member 'System.Linq.Expressions.Expression::Modulo' is not implemented
+External member 'System.Linq.Expressions.Expression::Multiply' is not implemented
+External member 'System.Linq.Expressions.Expression::New' is not implemented
+External member 'System.Linq.Expressions.Expression::NewArrayInit' is not implemented
+External member 'System.Linq.Expressions.Expression::OrElse' is not implemented
+External member 'System.Linq.Expressions.Expression::Parameter' is not implemented
+External member 'System.Linq.Expressions.Expression::Property' is not implemented
+External member 'System.Linq.Expressions.Expression::Subtract' is not implemented
+External member 'System.Linq.Expressions.Expression::TypeAs' is not implemented
+External member 'System.Linq.Expressions.Expression::TypeIs' is not implemented
+External member 'System.Linq.Expressions.Expression::get_NodeType' is not implemented
+External member 'System.Linq.Expressions.ExpressionVisitor::.ctor' is not implemented
+External member 'System.Linq.Expressions.ExpressionVisitor::Visit' is not implemented
+External member 'System.Linq.Expressions.Expression`1<System.Func`2<Point, int>>::Compile' is not implemented
+External member 'System.Linq.Expressions.Expression`1<System.Func`2<int, Point>>::Compile' is not implemented
+External member 'System.Linq.Expressions.Expression`1<System.Func`2<int, System.Func`2<int, int>>>::Compile' is not implemented
+External member 'System.Linq.Expressions.Expression`1<System.Func`2<int, int>>::Compile' is not implemented
+External member 'System.Linq.Expressions.Expression`1<System.Func`2<string, string>>::Compile' is not implemented
+External member 'System.Linq.Expressions.Expression`1<System.Func`3<int, int, int>>::Compile' is not implemented
+External member 'System.Reflection.FieldInfo::GetFieldFromHandle' is not implemented
+External member 'System.Reflection.MethodBase::GetMethodFromHandle' is not implemented

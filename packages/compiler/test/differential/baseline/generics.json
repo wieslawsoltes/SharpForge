@@ -9,5 +9,5 @@
   "generics/cs0452-cs0453-constraints": ["diagnostics", "warnings"],
   "generics/cs1961-variance": ["diagnostics", "warnings"],
   "generics/generic-class": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
-  "generics/generic-method": ["diagnostics", "warnings", "bytecode", "cil"]
+  "generics/generic-method": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

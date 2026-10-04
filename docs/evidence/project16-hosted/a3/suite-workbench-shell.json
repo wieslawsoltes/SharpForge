@@ -1,0 +1,10 @@
+{
+  "suite": "workbench-shell",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_a19_shell_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 5.1350310130000025
+}

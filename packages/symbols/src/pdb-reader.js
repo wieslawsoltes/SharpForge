@@ -7,6 +7,9 @@ import { readLocalConstants } from './constant-rows.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
 import { createAsyncInfoLookup } from './async-info.js';
+import { createImportLookup } from './imports.js';
+import { createScopeTree } from './scope-tree.js';
+import { metadataName } from './metadata-facts.js';
 export function readPortablePdb(
   input,
   {
@@ -58,29 +61,22 @@ export function readPortablePdb(
   }));
   if (methods.length && methods.length !== (md.externalCounts[6] ?? 0))
     fail('PDB method row count does not match MethodDef count');
-  const variables = (md.rows[51] ?? []).map((r, i) => ({
-    id: i + 1,
-    attributes: r[0],
-    index: r[1],
-    name: md.string(r[2]),
-    hidden: !!(r[0] & 1),
-  }));
+  if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > 100000) fail('Scope tree entry limit exceeded');
+  let localNameCharacters = 0;
+  const variables = (md.rows[51] ?? []).map((r, i) => {
+    const name = metadataName(md, r[2], 'Scope local');
+    if ((localNameCharacters += name.length) > 1024 * 1024) fail('Scope tree name limit exceeded');
+    return { id: i + 1, attributes: r[0], index: r[1], name, hidden: !!(r[0] & 1) };
+  });
   const constants = readLocalConstants(md, { maxConstantBytes, maxConstantEntries, maxConstantModifiers });
+  if ((md.rows[53]?.length ?? 0) > 100000) fail('Import scope count limit exceeded');
+  const importBudget = { entries: 0, bytes: 0 };
   const imports = (md.rows[53] ?? []).map((r, i) => ({
     id: i + 1,
     parent: r[0],
-    definitions: readImports(md.blob(r[1]), md),
+    definitions: readImports(md.blob(r[1]), md, importBudget),
   }));
-  for (const scope of imports) {
-    let cur = scope,
-      seen = new Set();
-    while (cur) {
-      if (seen.has(cur.id)) fail('Import scope cycle');
-      seen.add(cur.id);
-      if (cur.parent > imports.length) fail('Invalid parent import scope');
-      cur = imports[cur.parent - 1];
-    }
-  }
+  const effectiveImports = createImportLookup(imports);
   const scopes = (md.rows[50] ?? []).map((r, i, all) => {
     const next = all[i + 1];
     if (
@@ -111,20 +107,7 @@ export function readPortablePdb(
       constants: constants.slice(r[3] - 1, constantEnd),
     };
   });
-  for (let i = 0; i < scopes.length; i++) {
-    const s = scopes[i],
-      prev = scopes[i - 1];
-    if (
-      prev &&
-      (s.methodToken < prev.methodToken ||
-        (s.methodToken === prev.methodToken && (s.start < prev.start || (s.start === prev.start && s.end > prev.end))))
-    )
-      fail('Unsorted local scopes');
-    for (let j = i - 1; j >= 0 && scopes[j].methodToken === s.methodToken; j--) {
-      const o = scopes[j];
-      if (s.start < o.end && s.end > o.end) fail('Partially overlapping local scopes');
-    }
-  }
+  const scopeTree = createScopeTree(scopes, md.externalCounts[6] ?? 0);
   const stateMachines = (md.rows[54] ?? []).map((r) => ({ moveNext: token(6, r[0]), kickoff: token(6, r[1]) }));
   for (let i = 0; i < stateMachines.length; i++) {
     const s = stateMachines[i];
@@ -172,7 +155,9 @@ export function readPortablePdb(
     variables,
     constants,
     scopes,
+    scopeTree,
     imports,
+    effectiveImports,
     stateMachines,
     custom,
     sourceLink: custom.find((c) => c.sourceLink)?.sourceLink ?? null,

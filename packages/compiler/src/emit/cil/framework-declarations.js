@@ -13,6 +13,7 @@ const declaredElsewhere = Object.freeze({
     Reset: { type: 'ienumerator' },
     Dispose: { type: 'idisposable' },
   },
+  iasyncEnumeratorT: { DisposeAsync: { type: 'iasyncDisposable' } },
   icollectionT: { GetEnumerator: { type: 'ienumerableT', isGeneric: true } },
   ilistT: {
     GetEnumerator: { type: 'ienumerableT', isGeneric: true },
@@ -24,6 +25,25 @@ const declaredElsewhere = Object.freeze({
     get_Count: { type: 'ireadOnlyCollectionT', isGeneric: true },
   },
 });
+
+/**
+ * The generic method a framework method really is. The symbol table lists `Task.FromResult` and `Task.Run` once per
+ * result type; .NET declares `FromResult<TResult>(TResult)` and `Run<TResult>(Func<TResult>)`.
+ * @param core the CoreTypes  @param method a method symbol  @param {(ordinal: number) => object} typeParameter the
+ *   symbol of the method type parameter `!!ordinal`
+ * @returns {{name: string, shape: object, typeArguments: object[]}|null} null for a method that is what it seems
+ */
+export function genericFrameworkMethod(core, method, typeParameter) {
+  const owner = method.containingType?.originalDefinition ?? method.containingType,
+    parameter = method.parameters?.length === 1 ? method.parameters[0].type : null;
+  if (owner !== core.task || !method.isStatic || !parameter) return null;
+  const result = typeParameter(0),
+    shapeOver = parameterType => ({ isStatic: true, arity: 1, returnType: core.taskT.construct(result), parameters: [{ type: parameterType }] });
+  if (method.name === 'FromResult') return { name: 'FromResult', shape: shapeOver(result), typeArguments: [parameter] };
+  const isFunction = parameter.originalDefinition?.name === 'Func' && parameter.typeArguments?.length === 1;
+  if (method.name !== 'Run' || !isFunction) return null;
+  return { name: 'Run', shape: shapeOver(parameter.originalDefinition.construct(result)), typeArguments: [parameter.typeArguments[0].type] };
+}
 
 /**
  * The interface that declares member `name` of the framework interface `owner`.

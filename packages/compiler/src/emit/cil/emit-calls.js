@@ -15,6 +15,12 @@ const isByReference = refKind => !!refKind && refKind !== RefKind.None;
 /** Members every value inherits from `object`; on a value type they are called on a boxed copy. */
 const objectMembers = new Set(['ToString', 'GetHashCode', 'Equals', 'GetType']);
 
+/** True for a static abstract or virtual member of an interface (C# 11). */
+function isStaticVirtual(method) {
+  if (!method.isStatic || method.containingType?.typeKind !== TypeKind.Interface) return false;
+  const declared = method.associatedSymbol ?? method;
+  return !!(method.isAbstract || method.isVirtual || declared.isAbstract || declared.isVirtual);
+}
 const occupiesVirtualSlot = method =>
   !!(method.isVirtual || method.isAbstract || method.isOverride) || method.containingType?.typeKind === TypeKind.Interface;
 
@@ -23,12 +29,13 @@ export const CallEmission = Base =>
   class extends Base {
     exprCall(node) {
       // An omitted call to a [Conditional] method evaluates nothing, not even its arguments.
-      if (node.isOmitted) return false;
+      // So does a call of a partial method that no part implements (C# 3): the method does not exist.
       const method = node.method;
+      if (node.isOmitted || (method.originalDefinition ?? method).isUnimplementedPartial) return false;
       if (method.methodKind === MethodKind.LocalFunction) return this.localFunctionCall(node);
       if (method.isStatic) {
         this.arguments(node, method);
-        return this.callMethod(method, { syntax: node.syntax });
+        return this.callMethod(method, { syntax: node.syntax, constrainedTo: node.constrainedTo ?? null });
       }
       const receiver = node.receiver;
       if (!receiver) return this.unsupported('an instance call without a receiver', node.syntax);
@@ -106,12 +113,16 @@ export const CallEmission = Base =>
      * @param {{receiver?: object, syntax?: object}} options `receiver` is the bound receiver (its kind and type decide
      *   the instruction); absent for a static method
      */
-    callMethod(method, { receiver = null, syntax = null } = {}) {
+    callMethod(method, { receiver = null, syntax = null, constrainedTo = null } = {}) {
       if (!method?.parameters || !method.containingType) return this.unsupported(`'${method?.name ?? 'a member'}' (no metadata signature)`, syntax);
       const il = this.il,
         effect = { pops: method.parameters.length + (method.isStatic ? 0 : 1), pushes: isVoid(method.returnType) ? 0 : 1 },
         token = this.tokens.method(method);
-      if (method.isStatic) return il.emit('call', token, effect);
+      if (method.isStatic) {
+        // C# 11: a static abstract or virtual interface member is called on the type argument (`constrained. T call`).
+        if (isStaticVirtual(method)) il.emit('constrained.', this.tokens.type(constrainedTo ?? this.typeParameterOf(method, syntax)));
+        return il.emit('call', token, effect);
+      }
       const type = receiver?.type;
       if (type?.typeKind === TypeKind.TypeParameter) {
         il.emit('constrained.', this.tokens.type(type));
@@ -121,9 +132,18 @@ export const CallEmission = Base =>
         isDirect = receiver?.kind === 'Base' || isValueReceiver || (receiver?.kind === 'This' && !occupiesVirtualSlot(method));
       return il.emit(isDirect ? 'call' : 'callvirt', token, effect);
     }
+    /**
+     * The type parameter a static virtual interface member is called on when the call does not say: the one its
+     * signature mentions (the operand of an operator declared as `static abstract T operator +(T, T)`).
+     */
+    typeParameterOf(method, syntax) {
+      const types = [...method.parameters.map(parameter => parameter.type), method.returnType],
+        found = types.find(type => type?.typeKind === TypeKind.TypeParameter);
+      return found ?? this.unsupported(`the static interface member '${method.name}' called without a type parameter`, syntax);
+    }
     /** Calls a property accessor whose receiver (and arguments, and value) are on the stack. */
-    callAccessor(accessor, receiverNode) {
-      this.callMethod(accessor, { receiver: receiverNode });
+    callAccessor(accessor, receiverNode, constrainedTo = null) {
+      this.callMethod(accessor, { receiver: receiverNode, constrainedTo });
     }
     /**
      * Pushes the arguments of a call in parameter order. Arguments are evaluated in the order they are written, so
@@ -195,7 +215,8 @@ export const CallEmission = Base =>
       if (callerInfo !== undefined) {
         if (typeof callerInfo === 'number') {
           this.il.emit('ldc.i4', callerInfo);
-          return this.numericConversion(this.core.int, parameter.type, { syntax: node.syntax });
+          // [CallerLineNumber] on a parameter of another type that an `int` converts to (`long`, `double`, `object`).
+          return this.implicitStandardConversion(this.core.int, parameter.type, node.syntax);
         }
         return this.il.emit('ldstr', this.tokens.string(callerInfo));
       }
@@ -232,12 +253,23 @@ export const CallEmission = Base =>
       if (node.kind === 'PropertyAccess' && !property.setMethod && definition.backingField && this.isBeingAssigned(node)) {
         return this.fieldLocation(definition.backingField, node.receiver, node.type);
       }
-      const list = this.argumentList(node, property);
-      return new PropertyLocation(
-        this,
-        { property, receiver: node.receiver, args: list.map(entry => entry.emit), argumentTypes: list.map(entry => entry.type) },
-        node.type,
-      );
+      const list = this.argumentList(node, property),
+        access = {
+          property,
+          receiver: node.receiver,
+          args: list.map(entry => entry.emit),
+          argumentTypes: list.map(entry => entry.type),
+          constrainedTo: node.constrainedTo ?? null,
+        };
+      // A property of a C# 14 extension block: its accessors are static methods that take the receiver first.
+      const accessor = property.getMethod ?? property.setMethod,
+        receiverParameter = accessor?.extensionBlock && accessor.extensionReceiver && node.receiver ? accessor.parameters[0] : null;
+      if (receiverParameter) {
+        access.receiver = null;
+        access.args = [() => this.argument({ expression: node.receiver }, receiverParameter), ...access.args];
+        access.argumentTypes = [receiverParameter.type, ...access.argumentTypes];
+      }
+      return new PropertyLocation(this, access, node.type);
     }
     /** True while `node` is the target of the assignment being emitted. */
     isBeingAssigned(node) {

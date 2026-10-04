@@ -51,6 +51,20 @@ Typing/deletion coalesces only when command identity, selection continuity, time
 
 The direct `.buffer` API bypasses editor history. User editing commands should use `model.applyEdits` or the editor facade's transaction method. Several views can share one `EditorModel`; each view can additionally keep a `SelectionSet` for independent local caret/scroll state. Disposing an injected model buffer remains the owner's responsibility.
 
+### View-state ownership during replacement
+
+`CodeEditor` binds models through its constructor and `setModel`. The supplied
+`session.models` registry remains authoritative when its owner removes a document
+or replaces a model at the same URI. `saveViewState` and view disposal never add
+models back to that registry. They save folding, selection and scroll state only
+while the registry still contains the exact model displayed by that view.
+
+Cached view state is associated with a model identity as well as its URI. Switching
+back to the same retained model restores its local caret, scroll, folding,
+bookmarks and change tracking. Binding a different model at the same URI starts
+from the replacement model's selections and new view services. Disposing a
+standalone view retains its registered models for the session owner to dispose.
+
 ### Cooperative prepared transactions
 
 `buffer.prepareEditsAsync(edits, options)` and `model.prepareEditsAsync` accept
