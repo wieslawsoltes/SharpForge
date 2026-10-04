@@ -12,3 +12,4 @@ export * from './sdk-discovery.js';
 export * from './global-json.js';
 export * from './service-registry.js';
 export * from './services-sdk.js';
+export * from './project-context.js';
