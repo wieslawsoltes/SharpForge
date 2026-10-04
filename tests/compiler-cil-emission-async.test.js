@@ -277,12 +277,6 @@ test('A02-T30 an await in a finally block moves the block behind a catch-all; an
 test('A02-T30 async constructs the emitter has no shape for yet are SF2200', () => {
   assert.match(
     refused(`using System.Threading.Tasks;
-      class Box<T> { public async Task<T> Later(T value) { await Task.Delay(1); return value; } }
-      class C { static void Main() { } }`)[0],
-    /^SF2200 .*async methods in generic types or methods/,
-  );
-  assert.match(
-    refused(`using System.Threading.Tasks;
       struct Counter { public int Count; public void Add(int amount) { Count += amount; } }
       class C {
         static async Task Run(Task<int> source) { Counter counter = new Counter(); counter.Add(await source); }

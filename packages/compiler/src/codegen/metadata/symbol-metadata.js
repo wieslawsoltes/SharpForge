@@ -94,6 +94,13 @@ export class SymbolMetadataWriter {
   typeToken(type) {
     return this.tokens.definitionToken(type);
   }
+  /**
+   * The tokens that encode the signatures a type declares. A synthesized generic class (emit/cil/generic-context.js)
+   * reads the type parameters of the method it was made for as its own; a synthesized generic method likewise.
+   */
+  tokensOf(type, method = null) {
+    return this.tokens.within(method?.substitution ?? type.typeSubstitution ?? null);
+  }
   /** Writes every table; the builder can then be finished or extended by the caller. */
   write() {
     this.allocateTokens();
@@ -150,7 +157,7 @@ export class SymbolMetadataWriter {
         // A constant the Constant table cannot hold (decimal) is a static readonly field set by its initializer.
         const unencodable = isLiteral && constantType === undefined,
           flags = unencodable ? (field.flags & ~LITERAL_FLAGS) | FieldAttributes.InitOnly : field.flags & ~FieldAttributes.HasDefault;
-        this.builder.addRow('Field', { Flags: flags, Name: field.name, Signature: fieldSignature(this.tokens, field.type) });
+        this.builder.addRow('Field', { Flags: flags, Name: field.name, Signature: fieldSignature(this.tokensOf(type), field.type) });
         if (constantType === undefined) continue;
         const value = constantType === NULL_REFERENCE_CONSTANT ? null : field.constant.value;
         // The writer marks the field HasDefault.
@@ -162,7 +169,7 @@ export class SymbolMetadataWriter {
     let nextParameter = 1;
     for (const type of this.types) {
       for (const method of this.plans.get(type).methods) {
-        const signature = method.symbol ? methodSymbolSignature(this.tokens, method.symbol) : methodSignature(this.tokens, method.shape);
+        const signature = method.symbol ? methodSymbolSignature(this.tokens, method.symbol) : methodSignature(this.tokensOf(type, method), method.shape);
         this.builder.addRow('MethodDef', {
           RVA: method.hasBody ? this.bodyRvaOf(method) : 0,
           ImplFlags: method.implFlags,
@@ -188,24 +195,27 @@ export class SymbolMetadataWriter {
   writeTypeRelations(type) {
     const builder = this.builder,
       self = this.tokens.definitionToken(type),
-      plan = this.plans.get(type);
+      plan = this.plans.get(type),
+      ownTokens = this.tokensOf(type);
     // `plan.interfaces`: interfaces code generation adds to the ones the type lists (a record's `IEquatable<R>`).
     for (const implemented of [...(type.interfaces ?? []), ...(plan.interfaces ?? [])]) {
-      builder.addRow('InterfaceImpl', { Class: self, Interface: this.tokens.typeToken(implemented) });
+      builder.addRow('InterfaceImpl', { Class: self, Interface: ownTokens.typeToken(implemented) });
     }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
     if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
-    this.writeGenericParameters(self, this.allTypeParameters(type));
+    this.writeGenericParameters(self, this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
+      // A synthesized generic method declares copies of the type parameters it was written over.
+      if (method.typeParameters?.length) this.writeGenericParameters(method.token, method.typeParameters, this.tokensOf(type, method));
       // A covariant override (a record's clone) has a slot of its own and names the method it overrides.
       if (method.overrides) {
         builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(method.overrides) });
       }
       // A synthesized method names the interface slots it fills: `{owner, name, shape}`.
       for (const slot of method.interfaceSlots ?? []) {
-        const declaration = builder.member(this.tokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
+        const declaration = builder.member(ownTokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
         builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: declaration });
       }
     }
@@ -247,7 +257,7 @@ export class SymbolMetadataWriter {
     const outer = type.containingType ? this.allTypeParameters(type.containingType) : [];
     return [...outer, ...(type.typeParameters ?? [])];
   }
-  writeGenericParameters(owner, parameters) {
+  writeGenericParameters(owner, parameters, tokens = this.tokens) {
     parameters.forEach((parameter, number) => {
       const row = this.builder.addRow('GenericParam', { Number: number, Flags: genericParameterFlags(parameter), Owner: owner, Name: parameter.name });
       // `struct` is also written as a constraint to System.ValueType, as Roslyn writes it.
@@ -257,7 +267,7 @@ export class SymbolMetadataWriter {
       for (const constraint of parameter.constraintTypes ?? []) {
         const type = constraint.type ?? constraint;
         if (type.specialType === 'System_Object') continue;
-        this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.tokens.typeToken(type) });
+        this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: tokens.typeToken(type) });
       }
     });
   }

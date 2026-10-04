@@ -6,6 +6,7 @@
 import { MethodAttributes, FieldAttributes, MethodImplAttributes } from '@sharpforge/cil';
 import { NamedTypeSymbol, TypeKind, Accessibility } from '../../symbols/types.js';
 import { IlBuilder } from './il-builder.js';
+import { classTypeParameterCopies, substitutionOver, selfTypeOf } from './generic-context.js';
 
 export const CONSTRUCTOR_FLAGS =
   MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -55,12 +56,16 @@ export class SynthesizedTypes {
   }
   /**
    * A synthesized sealed class nested in `owner`.
-   * @param {{interfaces?: object[], hasDefaultConstructor?: boolean}} [options] without a default constructor the caller
-   *   adds one of its own
-   * @returns {{type: object, constructor: object|null}} the type symbol and its planned parameterless constructor
+   * @param {{interfaces?: object[], hasDefaultConstructor?: boolean, typeParameters?: object[]}} [options] without a
+   *   default constructor the caller adds one of its own; `typeParameters` are the method type parameters the code
+   *   of the class is written over - the class declares copies of them (generic-context.js)
+   * @returns {{type: object, definition: object, constructor: object|null}} the class as code names it (constructed
+   *   over `typeParameters` when it has any), its definition - the key of its members - and its planned
+   *   parameterless constructor
    */
-  nestedClass(owner, name, { interfaces = [], hasDefaultConstructor = true } = {}) {
+  nestedClass(owner, name, { interfaces = [], hasDefaultConstructor = true, typeParameters = [] } = {}) {
     const core = this.core,
+      copies = classTypeParameterCopies(typeParameters),
       type = new NamedTypeSymbol({
         name,
         typeKind: TypeKind.Class,
@@ -70,14 +75,17 @@ export class SynthesizedTypes {
         interfaces,
         isSealed: true,
         isImplicitlyDeclared: true,
+        typeParameters: copies,
       }),
       shape = { isStatic: false, returnType: core.void, parameters: [] },
       constructor = hasDefaultConstructor ? synthesizedMethod('.ctor', CONSTRUCTOR_FLAGS, shape, [], objectConstructorBody) : null;
     type.isSource = true;
+    type.typeSubstitution = substitutionOver(typeParameters, copies);
+    type.selfType = selfTypeOf(type, typeParameters);
     this.types.push(type);
     if (constructor) this.additionsTo(type).methods.push(constructor);
     else this.additionsTo(type);
-    return { type, constructor };
+    return { type: type.selfType, definition: type, constructor };
   }
   field(type, name, fieldType, flags = FieldAttributes.Public) {
     const field = { symbol: null, name, flags, type: fieldType, constant: null, isCompilerGenerated: true };

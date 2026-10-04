@@ -259,15 +259,12 @@ test('A02-T30 an iterator that returns an enumerator starts in state 0 and has n
 
 test('A02-T30 iterators the emitter has no shape for yet are SF2200', () => {
   assert.match(
-    refused(`using System.Collections.Generic;
-      class Box<T> { public IEnumerable<T> Twice(T value) { yield return value; yield return value; } }
-      class C { static void Main() { } }`)[0],
-    /^SF2200 .*iterators in generic types or methods/,
-  );
-  assert.match(
-    refused(`using System.Collections.Generic;
-      class C { static IEnumerable<T> Twice<T>(T value) { yield return value; yield return value; } static void Main() { } }`)[0],
-    /^SF2200 .*iterators in generic types or methods/,
+    refused(`using System.Collections.Generic; using System.Threading.Tasks;
+      class C {
+        static async IAsyncEnumerable<int> Numbers() { yield return 1; await Task.Delay(1); }
+        static void Main() { }
+      }`)[0],
+    /^SF2200 .*async iterators/,
   );
 });
 

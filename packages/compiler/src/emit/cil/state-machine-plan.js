@@ -25,9 +25,11 @@ const THIS_FIELD_NAME = '<>4__this';
 
 /** One state machine: its class, its fixed fields and the kickoff it was made from. */
 export class StateMachine {
-  constructor(kind, kickoff, type) {
+  /** @param type the class as code names it  @param definition its definition, the key of its members */
+  constructor(kind, kickoff, type, definition) {
     /** 'iterator' or 'async' */
     this.kind = kind;
+    this.definition = definition;
     /** `{key, owner, name, uri, isStatic, parameters, returnType, body, receiverType, function, method}` */
     this.kickoff = kickoff;
     this.type = type;
@@ -45,10 +47,11 @@ export class StateMachine {
    * @returns {{token: number}} the planned field
    */
   lateField(program, name, type) {
-    const plan = program.tokens.writer.plans.get(this.type),
+    const plan = program.tokens.writer.plans.get(this.definition),
       field = { symbol: null, name, flags: FieldAttributes.Private, type, constant: null, isCompilerGenerated: true };
     field.token = token(FIELD_TABLE, plan.fieldStart + plan.fields.length);
     plan.fields.push(field);
+    program.synthesizedIndex.byToken = null;
     return field;
   }
 }
@@ -77,19 +80,19 @@ export class StateMachinePlan extends SynthesizedTypes {
       };
     if (!isIterator && !kickoff.isAsync) return;
     if (isIterator && kickoff.isAsync) refuse('async iterators');
-    if (kickoff.owner.isGenericType || kickoff.isGeneric) refuse(`${isIterator ? 'iterators' : 'async methods'} in generic types or methods`);
     const returned = kickoff.returnType.toDisplayString(),
       shape = isIterator ? (iteratorShapeOf(kickoff.returnType, this.core) ?? refuse(`an iterator returning '${returned}'`)) : null,
       builder = isIterator ? null : (asyncBuilderOf(kickoff.returnType, this.core) ?? refuse(`an async method returning '${returned}'`)),
       name = `<${kickoff.name}>d__${this.closures.nextOrdinal(kickoff.owner)}`,
       interfaces = isIterator ? shape.interfaces : [asyncStateMachineInterface(this.core)],
-      { type, constructor } = this.nestedClass(kickoff.owner, name, { interfaces, hasDefaultConstructor: !isIterator }),
-      machine = new StateMachine(isIterator ? 'iterator' : 'async', kickoff, type);
+      classOptions = { interfaces, hasDefaultConstructor: !isIterator, typeParameters: kickoff.typeParameters },
+      { type, definition, constructor } = this.nestedClass(kickoff.owner, name, classOptions),
+      machine = new StateMachine(isIterator ? 'iterator' : 'async', kickoff, type, definition);
     machine.instanceConstructor = constructor;
-    machine.fields.state = this.field(type, STATE_FIELD_NAME, this.core.int);
+    machine.fields.state = this.field(definition, STATE_FIELD_NAME, this.core.int);
     if (isIterator) declareIterator(this, machine, shape);
     else declareAsync(this, machine, builder);
-    if (kickoff.receiverType) machine.fields.receiver = this.field(type, THIS_FIELD_NAME, kickoff.receiverType);
+    if (kickoff.receiverType) machine.fields.receiver = this.field(definition, THIS_FIELD_NAME, kickoff.receiverType);
     this.machines.set(kickoff.key, machine);
   }
 }
@@ -103,7 +106,7 @@ function kickoffOfMethod(method, body, uri) {
     syntax: method.locations?.[0] ?? null,
     isStatic: !!method.isStatic,
     isAsync: !!method.isAsync,
-    isGeneric: !!method.typeParameters?.length,
+    typeParameters: method.typeParameters ?? [],
     parameters: method.parameters,
     returnType: method.returnType,
     body,
@@ -123,7 +126,7 @@ function kickoffOfFunction(plan) {
     syntax: plan.key.syntax ?? plan.symbol?.locations?.[0] ?? null,
     isStatic: plan.isStatic,
     isAsync: plan.isLambda ? !!plan.key.isAsync : !!plan.symbol.isAsync,
-    isGeneric: false,
+    typeParameters: [...plan.contextTypeParameters, ...(plan.symbol?.typeParameters ?? [])],
     parameters: plan.parameters,
     returnType: plan.returnType,
     body: plan.body,
@@ -142,7 +145,7 @@ function kickoffOfFunction(plan) {
 export function planStateMachines(analysis, closures, topLevel = null) {
   const plan = new StateMachinePlan(analysis, closures);
   if (topLevel) {
-    const statements = { name: '<Main>$', syntax: null, isStatic: true, isAsync: true, isGeneric: false };
+    const statements = { name: '<Main>$', syntax: null, isStatic: true, isAsync: true, typeParameters: [] };
     plan.plan({ ...topLevel, ...statements, receiverType: null, function: null, method: null });
   }
   for (const [key, body] of analysis.bound) {
