@@ -28,11 +28,26 @@ metadata/constant reads add no display work or eager cache storage. Metadata rem
 through cooperative unloading. This synchronous operation adds no cancellation
 contract. Default-value evaluation and generic instantiation remain separate.
 
-Six authored tests and a mandatory native fixture for 16 parameter displays are
-prepared. The C# source covers arguments, missing/empty return names, constructor
-arguments, generic/nested types, ref/in/out and property index parameters.
-Capture, focused tests, new-API timings and static/structure checks are pending
-the shared serial slot. No passing qualification is claimed for this extension.
+SDK 10.0.201/CoreCLR 10.0.5 captured all 16 ParameterInfo displays, covering
+arguments, missing/empty return names, constructor arguments, generic/nested types,
+ref/in/out and property index parameters. All 24 affected tests pass with zero
+skips, including mandatory source/image provenance. Syntax/static checks pass
+(3,484/3,480 modules), manifests pass, and structure reports 271 existing findings,
+none in changed files. Local jobs ran serially under one limiter, concurrency 1
+and a 1 GiB heap cap.
+
+The new 16-display fixture measured cold median 100.791 µs / p95 239.625 µs and
+cached median 2.7708 ns / p95 13.2875 ns. The exact-parent control (`e905566c` →
+`e3a4617d`) retained the prior three-method parameter/constant workload: cold
+median 42.792 → 42.125 µs, p95 157.583 → 101.250 µs; cached median
+8.9666 → 8.6625 ns, p95 41.2333 → 23.4416 ns. No median or p95 regression
+exceeded the budget. [All 600 raw samples, p99, commands and exact sources](benchmarks/parameter-display-node24.json)
+and the [control harness](benchmarks/parameter-display-control.mjs.txt) are retained.
+Each control imports its own CLR directly; only byte-identical CIL/archive
+dependencies are shared. Runs used a shared Apple M3 Pro/darwin-arm64 host and
+Node 24.21.0. There is no prior equivalent parameter-display baseline or causal,
+noise, significance or speed claim; allocations and retained strings were not
+measured.
 
 Param rows are optional. Missing rows receive canonical positional descriptors
 with name `null`, flags 0 and metadata token 0. A zero token is this metadata API's
