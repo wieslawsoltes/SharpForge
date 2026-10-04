@@ -119,6 +119,7 @@ export class AppSession {
       this.emit('output', { event, text: event.text });
     } else if (event.event === 'state') this.receiveState(event);
     else if (event.event === 'ui') this.emit('ui', { event, commands: event.commands ?? [] });
+    else if (['uiComposition', 'uiPrivateValues', 'uiHostRequest', 'uiHostCancel'].includes(event.event)) this.emit('uiHost', { event });
     else if (event.event === 'error' || event.event === 'runtimeerror') {
       this.emit('error', { event, error: workbenchError('RUNTIME_ERROR', event.message ?? 'Application runtime error') });
     }

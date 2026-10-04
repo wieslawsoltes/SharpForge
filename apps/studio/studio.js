@@ -346,7 +346,7 @@ function renderPanelSoon(){if(panelFrame)return;panelFrame=requestAnimationFrame
 function runtimeEvent(event){
  if(event.event==='state'&&!event.stats){updateDebugButtons();setEditorDecorations();return;}
  if(event.appId&&event.appId!==workbenchServices.sessions.activeId)return;if(event.event==='state'&&event.sessionId!==undefined){if(event.sessionId!==(state.runtimeSession??0)){lastDebugKey='';state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;}state.runtimeSession=event.sessionId;}
- if(event.event==='ui'){advancedTools?.onUI(event.commands);return;}
+ if(advancedTools?.onHostEvent(event))return;
  if(event.event==='loaded'){state.runtimeSession=event.sessionId;state.debugSources=new Map(event.sources.filter(s=>typeof s.text==='string').map(s=>[s.uri,s.text]));state.immediateHistory=[];return;}
  if(event.event==='output'){renderPanelSoon();return;}
  if(event.event==='error'||event.event==='runtimeerror'){toast(event.message,'error');return;}

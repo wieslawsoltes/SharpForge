@@ -1,4 +1,4 @@
-import { WinUIHost } from '@sharpforge/winui';
+import {StudioUIHostBridge, isStudioUIHostEvent} from '../ui-host-bridge.js';
 import { element, actionButton, selectField, replaceOptions } from './session-dom.js';
 import { workbenchError } from './state-events.js';
 
@@ -174,6 +174,8 @@ export class ActiveApplicationInspector extends VisualTreeInspector {
     if (this.sessions.active) this.updateStatus(this.sessions.active);
   }
 
+  onHostEvent(event) { return isStudioUIHostEvent(event); }
+
   onUI(commands = []) {
     if (commands.some(command => command.op === 'reset')) this.clear();
     this.queueRefresh();
@@ -205,6 +207,7 @@ export class LegacyApplicationInspector extends VisualTreeInspector {
   constructor(owner) {
     super(owner);
     this.host = null;
+    this.bridge = null;
     this.status = null;
     this.metrics = new Map();
     this.renderer = 'auto';
@@ -228,24 +231,22 @@ export class LegacyApplicationInspector extends VisualTreeInspector {
     const content = element(document, 'div', null, { class: 'winui-app-root' });
     const metrics = element(document, 'div', null, { class: 'winui-renderer-status' });
     root.replaceChildren(tools, this.status, content, metrics);
-    this.host = new WinUIHost(content, {
-      backend: this.renderer,
-      onEvent: (id, event, payload) => this.owner.run(() => this.owner.request('uiEvent', { id, event, payload })),
-      onLayout: changes => {
-        if (this.owner.state.debug && this.owner.state.debug.state !== 'paused') {
-          this.owner.run(() => this.owner.request('uiLayout', { changes }));
-        }
-      },
-      onMetrics: value => {
+    this.bridge = new StudioUIHostBridge(content, {
+      sessionId: this.identity ?? this.owner.state.debug?.sessionId ?? 0,
+      paused: this.owner.state.debug?.state === 'paused',
+      request: (method, args) => this.owner.request?.(method, args),
+      hostCapabilities: this.owner.uiCapabilities ?? {}, onError: error => this.owner.error(error),
+      hostOptions: {backend: this.renderer, onMetrics: value => {
         this.metrics.set(value.id, value);
         metrics.textContent = [...this.metrics.values()].map(item =>
           `${item.backend} · ${item.primitives} primitives · ${Number(item.submitMs ?? 0).toFixed(2)} ms`).join(' | ');
-      },
-      onError: error => this.owner.error(error)
+      }}
     });
+    this.host = this.bridge.host;
     renderer.select.addEventListener('change', () => {
       this.host.setBackend(renderer.select.value);
       this.renderer = renderer.select.value;
+      this.bridge.hostOptions.backend = this.renderer;
     });
     return this.host;
   }
@@ -265,22 +266,38 @@ export class LegacyApplicationInspector extends VisualTreeInspector {
       this.clear();
       this.queueRefresh();
     }
+    if (this.bridge && Number.isSafeInteger(state.sessionId)) {
+      this.bridge.setSession(state.sessionId);
+      this.host = this.bridge.host;
+      this.bridge.setPaused(state.state === 'paused' || state.state === 'faulted' || state.state === 'terminated' && !state.uiActive);
+    }
     this.host?.root.classList.toggle('debug-paused', state.state === 'paused');
     if (this.status) this.status.textContent = state.state === 'paused' ? 'Paused — Continue to interact' :
       state.uiActive ? 'Application running · managed callbacks' : 'No active application';
   }
 
   onUI(commands) {
-    this.ensure().apply(commands);
-    if (commands.some(command => command.op === 'activate')) this.owner.docking.activate('winui');
-    if (commands.some(command => command.op === 'reset')) this.metrics.clear();
-    this.queueRefresh();
+    return this.onHostEvent({event: 'ui', commands, sessionId: this.identity ?? this.owner.state.debug?.sessionId ?? 0});
+  }
+
+  onHostEvent(event) {
+    if (!isStudioUIHostEvent(event)) return false;
+    this.ensure();
+    this.bridge.receive(event);
+    this.host = this.bridge.host;
+    if (event.event === 'ui') {
+      if (event.commands.some(command => command.op === 'activate')) this.owner.docking.activate('winui');
+      if (event.commands.some(command => command.op === 'reset')) this.metrics.clear();
+      this.queueRefresh();
+    }
+    return true;
   }
 
   renderApplication() { this.ensure(); }
   dispose() {
     super.dispose();
-    this.host?.dispose();
+    this.bridge?.dispose();
+    this.bridge = null;
     this.host = null;
     this.metrics.clear();
   }
@@ -303,6 +320,7 @@ export class ApplicationInspectorHost {
   get selectedVisual() { return this.applicationInspector.selectedVisual; }
   ensureApp() { return this.applicationInspector.ensure(); }
   onUI(commands) { return this.applicationInspector.onUI(commands); }
+  onHostEvent(event) { return this.applicationInspector.onHostEvent(event); }
   refreshVisual() { return this.applicationInspector.refresh(); }
   renderVisual(root) { return this.applicationInspector.renderVisual(root); }
   renderApplication(root) { return this.applicationInspector.renderApplication(root); }

@@ -54,7 +54,7 @@ export function mountStudioSessions(options) {
   const { services, docking, commands, document, onError } = options;
   const disposers = [];
   const applications = new ApplicationWindows({
-    sessions: services.sessions, document,
+    sessions: services.sessions, document, hostCapabilities: options.uiCapabilities ?? {},
     registerPanel: panel => {
       const unregister = docking.registerPanel({ ...panel, activate: false });
       const sessionId = panel.element.dataset.appSession;

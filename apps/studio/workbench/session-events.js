@@ -3,12 +3,14 @@ export function routeSessionEvents(sessions, {
   onActiveState,
   onActiveOutput,
   onApplicationUI,
+  onApplicationHostEvent,
   onSessionEvent,
   onError
 } = {}) {
   return sessions.subscribe(event => {
     onSessionEvent?.(event);
     if (event.type === 'ui') onApplicationUI?.(event.session, event.commands, event);
+    if (event.type === 'uiHost') onApplicationHostEvent?.(event.session, event.event, event);
     if (event.type === 'error') onError?.(event.error, event.session);
     if (event.type === 'selected') onActiveState?.(event.session?.debug ?? null, event.session, event);
     if (!event.active) return;
