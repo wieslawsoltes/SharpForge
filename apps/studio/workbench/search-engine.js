@@ -25,15 +25,17 @@ export function searchDocuments(documents, query, options = {}) {
         const point = text.codePointAt(pattern.lastIndex);
         pattern.lastIndex += point > 0xffff ? 2 : 1;
       }
-      if (options.wholeWord && (word.test(text.slice(Math.max(0, start - 1), start)) || word.test(text.slice(end, end + 1)))) continue;
+      const before = start > 1 && /[\uDC00-\uDFFF]/u.test(text[start - 1]) ? text.slice(start - 2, start) : text[start - 1] ?? '';
+      const after = end < text.length ? String.fromCodePoint(text.codePointAt(end)) : '';
+      if (options.wholeWord && (word.test(before) || word.test(after))) continue;
       if (matches.length === maximum) return {matches, scannedFiles, truncated: true};
       for (let index = scanned; index < start; index++) {
         if (text[index] === '\n') { line++; lineStart = index + 1; }
       }
       scanned = start;
       const lineEnd = text.indexOf('\n', start);
-      const replacement = options.replacement === undefined ? undefined : match[0].replace(
-        new RegExp(options.regex ? query : escape(query), options.matchCase ? 'u' : 'iu'), options.replacement);
+      const replacement = options.replacement === undefined ? undefined : options.regex ?
+        expandReplacement(String(options.replacement), match, text) : String(options.replacement);
       matches.push({id: document.uri + ':' + document.version + ':' + start, uri: document.uri,
         projectId: document.projectId, version: document.version, start, end, line, character: start - lineStart,
         preview: text.slice(lineStart, Math.min(lineEnd < 0 ? text.length : lineEnd, lineStart + 400)),
@@ -42,6 +44,22 @@ export function searchDocuments(documents, query, options = {}) {
     options.onProgress?.({scannedFiles, matches: matches.length});
   }
   return {matches, scannedFiles, truncated: false};
+}
+
+/** Native replacement substitutions use the original match context, including lookarounds and named groups. */
+export function expandReplacement(replacement, match, source) {
+  return replacement.replace(/\$(\$|&|`|'|\d{1,2}|<[^>]*>)/gu, (token, part) => {
+    if (part === '$') return '$';
+    if (part === '&') return match[0];
+    if (part === '`') return source.slice(0, match.index);
+    if (part === "'") return source.slice(match.index + match[0].length);
+    if (part[0] === '<') return match.groups ? match.groups[part.slice(1, -1)] ?? '' : token;
+    const capture = Number(part);
+    if (capture > 0 && capture < match.length) return match[capture] ?? '';
+    const first = Number(part[0]);
+    if (part.length === 2 && first > 0 && first < match.length) return (match[first] ?? '') + part[1];
+    return token;
+  });
 }
 
 /** Glob matching compiles wildcard path components, independent of source language. */

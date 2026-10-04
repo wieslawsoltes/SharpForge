@@ -3,7 +3,7 @@ import {compileWhen} from './context-keys.js';
 export const commandAliases = Object.freeze({
   'Debug.Start': 'debug', 'Debug.StartWithoutDebugging': 'run', 'Debug.StopDebugging': 'stop',
   'Debug.StepOver': 'next', 'Debug.StepInto': 'stepIn', 'Debug.StepOut': 'stepOut',
-  'Build.BuildSolution': 'build', 'File.SaveAll': 'save', 'File.OpenFile': 'open',
+  'Build.BuildSolution': 'build', 'File.SaveAll': 'document.saveAll', 'File.OpenFile': 'open',
   'Edit.Find': 'find', 'Edit.FindInFiles': 'findFiles', 'Tools.Options': 'workbench.options',
   'View.ErrorList': 'tool:problems', 'View.Output': 'tool:output',
   'View.CommandWindow': 'tool:command-window', 'Window.CloseAllDocuments': 'window.closeAllDocuments'

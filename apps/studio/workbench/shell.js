@@ -47,6 +47,7 @@ export class WorkbenchShell {
     this.mounts = new Map();
     this.loading = new Map();
     this.registeredPanels = new Set();
+    this.instanceScopes = new Map();
     this.disposers = [];
     this.disposed = false;
     this.taskListDirty = true;
@@ -54,6 +55,7 @@ export class WorkbenchShell {
     this.updateContext();
     this.disposers.push(installCommandContext(this.commands, this.contextKeys));
     this.disposers.push(registerShellCommands(this));
+    this.registerToolFactories();
     if (options.docking?.windows?.descriptors) this.registerContributions(options.docking.windows.descriptors());
     this.disposers.push(subscribeShellServices(this));
     if (this.storageFailure) this.onError(this.storageFailure);
@@ -65,7 +67,8 @@ export class WorkbenchShell {
     const uri = state.active ?? this.documents.active;
     const file = this.documents.get(uri);
     const session = this.services.sessions?.active;
-    if (state.panel === 'designer' || state.panel?.startsWith('designer-')) this.lastDocumentKind = 'designer';
+    if (this.document.activeElement?.closest('.sf-editor')) this.lastDocumentKind = 'code';
+    else if (state.panel === 'designer' || state.panel?.startsWith('designer-')) this.lastDocumentKind = 'designer';
     const designer = this.lastDocumentKind === 'designer';
     return {uri, offset: editor?.offset ?? 0, selectionLength: editor?.selectionLength ??
       Math.abs((editor?.input?.selectionEnd ?? 0) - (editor?.input?.selectionStart ?? 0)),
@@ -131,6 +134,20 @@ export class WorkbenchShell {
 
   hasTool(id) { return this.toolDefinitions.some(tool => tool.id === shellToolId(id)); }
 
+  registerToolFactories() {
+    const docking = this.options.docking;
+    if (!docking?.registerToolKind) return;
+    for (const [kind, title] of [['output', 'Output'], ['problems', 'Error List'], ['find-results', 'Find Results']]) {
+      if (docking.factories?.factories.has(kind)) continue;
+      this.disposers.push(docking.registerToolKind(kind, record => {
+        if (record.sessionId) this.instanceScopes.set(record.id, 'session:' + record.sessionId);
+        const host = element(this.document, 'div', {className: 'panel-content dock-tool-content wb-tool', 'data-tool': record.id});
+        this.registeredPanels.add(record.id);
+        return host;
+      }, {limit: 20, title}));
+    }
+  }
+
   registerPanel(id) {
     const docking = this.options.docking;
     if (!docking || docking.layout.panels.has(id)) return;
@@ -167,6 +184,7 @@ export class WorkbenchShell {
     if (!this.hasTool(id)) throw new Error('Unknown workbench tool ' + id);
     const existing = this.mounts.get(id);
     if (existing) { this.scheduler.invalidate(id); return; }
+    if (!this.isToolVisible(id)) return;
     if (this.loading.has(id)) return this.loading.get(id);
     const load = async () => {
       const mark = this.metrics.start('tool-activation', this.context().sessionId);
@@ -290,6 +308,8 @@ export class WorkbenchShell {
     this.fileWatch.dispose();
     for (const dispose of this.disposers.reverse()) dispose();
     for (const {view, remove} of this.mounts.values()) { remove(); view.dispose(); }
+    for (const id of this.registeredPanels) this.options.docking?.unregisterPanel?.(id);
+    this.registeredPanels.clear();
     this.mounts.clear(); this.scheduler.dispose(); this.dialogs.dispose(); this.statusBar?.dispose(); this.announcer?.dispose();
     for (const model of [this.tasks, this.notifications, this.search, this.symbols, this.taskList, this.bookmarks,
       this.calls, this.tests, this.timeline, this.references, this.recent, this.toolbars, this.configuration]) model.dispose?.();

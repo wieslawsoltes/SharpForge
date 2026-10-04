@@ -7,13 +7,14 @@ export class ReferenceResults extends WorkbenchEvents {
   set(rows, {id = 'references', keep = false, definition = ''} = {}) {
     if (keep || this.windows.get(id)?.locked) id = 'references:' + ++this.serial;
     if (rows.length > 100000) throw new RangeError('Reference result limit exceeded');
+    if (!this.windows.has(id) && this.windows.size >= 20) {
+      const oldest = [...this.windows.values()].find(item => !item.locked);
+      if (!oldest) throw new Error('All 20 reference windows are locked; unlock one before keeping another result');
+      this.windows.delete(oldest.id);
+    }
     const result = {id, rows: rows.map((row, index) => ({...row, id: row.id ?? id + ':' + index,
       kind: row.kind ?? (row.declaration ? 'definition' : row.write ? 'write' : row.read ? 'read' : 'reference')})), definition, locked: false};
     this.windows.set(id, result);
-    if (this.windows.size > 20) {
-      const oldest = [...this.windows.values()].find(item => !item.locked && item.id !== id);
-      if (oldest) this.windows.delete(oldest.id);
-    }
     this.emit({type: 'results', result});
     return result;
   }

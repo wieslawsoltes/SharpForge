@@ -1,4 +1,5 @@
 import {WorkbenchEvents} from './events.js';
+import {EDITOR_KEYMAPS} from '@sharpforge/editor';
 
 export const settingsVersion = 2;
 export const settingsKey = 'sharpforge.workbench.settings.v2';
@@ -17,6 +18,7 @@ export const settingsDefaults = Object.freeze({
   tasks: {tokens: [{token: 'TODO', priority: 'normal'}, {token: 'HACK', priority: 'high'}, {token: 'UNDONE', priority: 'normal'}]},
   layouts: {current: null, named: {}},
   explorer: {showAllFiles: false, followActive: true},
+  tools: {scopes: {}},
   toolbars: {rows: []}
 });
 
@@ -58,7 +60,7 @@ export function validateSettings(input, {partial = false} = {}) {
   const choices = {
     theme: ['dark', 'light', 'blue', 'high-contrast', 'system'],
     density: ['compact', 'comfortable'],
-    keymap: ['visual-studio', 'vscode', 'vs-code', 'resharper', 'vim', 'emacs', 'sublime', 'default']
+    keymap: EDITOR_KEYMAPS.map(item => item.id)
   };
   for (const [key, values] of Object.entries(choices)) {
     if (environment[key] !== undefined && !values.includes(environment[key])) throw new TypeError('Invalid ' + key);

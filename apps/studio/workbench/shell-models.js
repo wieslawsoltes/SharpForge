@@ -34,7 +34,8 @@ export function createShellModels(shell) {
   shell.settings.load();
   const onError = error => shell.onError(error);
   shell.recent = new RecentItems({storage: options.storage, onError});
-  shell.search = new SearchService({documents, context, applyEdits: options.applyEdits, createWorker: options.createSearchWorker});
+  shell.search = new SearchService({documents, context, applyEdits: options.applyEdits, createWorker: options.createSearchWorker,
+    sessionProject: id => shell.services.sessions?.get(id)?.projectId});
   shell.symbols = new WorkspaceSymbolIndex({request, documents});
   shell.optionsDialog = new OptionsDialog({dialogs, settings: shell.settings});
   registerGeneralOptions(shell.optionsDialog);
@@ -53,7 +54,8 @@ export function createShellModels(shell) {
   });
   shell.unifiedSearch = new UnifiedSearch({registry: commands, options: shell.optionsDialog, symbols: shell.symbols,
     documents, recent: shell.recent, context, navigate, execute: id => shell.execute(id)});
-  shell.taskList = new TaskListModel({documents, settings: shell.settings, storage: options.storage, workspaceId: options.workspaceId});
+  shell.taskList = new TaskListModel({documents, settings: shell.settings, storage: options.storage,
+    workspaceId: options.workspaceId, createWorker: shell.search.createWorker});
   shell.bookmarks = new Bookmarks({documents, storage: options.storage, workspaceId: options.workspaceId, onError});
   shell.calls = new CallHierarchyModel({request, documents});
   shell.references = new ReferenceResults();
@@ -82,6 +84,14 @@ export function createShellModels(shell) {
       if (!designer) throw new Error('No designer document is active');
       designer.ensure?.();
       return designer.insert(item.type);
+    }});
+  shell.toolbox.register('clipboard-ring', {title: 'Clipboard Ring', matches: current => current.activeDocumentKind === 'code',
+    items: () => (options.getEditor?.()?.clipboardRing?.entries ?? []).map((text, index) => ({
+      id: String(index), label: text.slice(0, 80), description: text.length + ' characters', text
+    })), insert: item => {
+      const editor = options.getEditor?.();
+      if (!editor?.insert || editor.input?.readOnly) throw new Error('A writable source editor is required');
+      return editor.insert(item.text, editor.input.selectionStart, editor.input.selectionEnd);
     }});
   shell.configuration = new ConfigurationManager({projects: () => shell.projects(), settings: shell.settings,
     applyConfiguration: options.applyConfiguration});
