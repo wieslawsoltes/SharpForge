@@ -26,4 +26,5 @@ export * from './pack/delta.js';
 export * from './pack/index.js';
 export * from './pack/accessor.js';
 export * from './transport/http.js';
+export * from './transport/rest.js';
 export * from './refspec.js';
