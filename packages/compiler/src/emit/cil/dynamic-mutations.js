@@ -13,7 +13,7 @@ export const DynamicMutationEmission = Base =>
     }
     exprCoalesceAssignment(node, isUsed) {
       if (!isDynamicLocation(node.left)) return super.exprCoalesceAssignment(node, isUsed);
-      const location = new DynamicLocation(this, node.left);
+      const location = new DynamicLocation(this, node.left, node);
       const end = this.il.newLabel();
       location.capture();
       location.load();

@@ -19,13 +19,15 @@ export class DynamicLocation {
     this.storeOperands = [];
     this.operands = this.getter.arguments.map((getterArgument, index) => {
       const setterArgument = this.setter.arguments[index];
-      const argument = setterArgument.refKind !== RefKind.None ? setterArgument : getterArgument;
+      const argument = setterArgument.captureByValue ? getterArgument
+        : setterArgument.refKind !== RefKind.None ? setterArgument : getterArgument;
       const isByReference = argument.refKind && argument.refKind !== RefKind.None;
       const slot = emitter.temp(argument.type, { isByReference });
       emitDynamicArgument(emitter, argument);
       emitter.il.emit('stloc', slot);
       const load = target => () => {
-        emitter.il.emit('ldloc', slot);
+        const addressOfCopy = setterArgument.captureByValue && target.refKind && target.refKind !== RefKind.None;
+        emitter.il.emit(addressOfCopy ? 'ldloca' : 'ldloc', slot);
         if (isByReference && (!target.refKind || target.refKind === RefKind.None)) emitter.loadIndirect(argument.type);
       };
       this.storeOperands.push(load(setterArgument));

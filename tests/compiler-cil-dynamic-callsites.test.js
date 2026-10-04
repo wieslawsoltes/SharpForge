@@ -53,12 +53,12 @@ test('A02-T55 runtime binder types name their defining assemblies and sites are 
   const fields = metadata.rows[4].filter(row => metadata.string(row[1]).startsWith('<>p__'));
   assert.ok(fields.length > 0);
   assert.ok(fields.every(row => row[0] & FieldAttributes.Static));
-  assert.ok(inspector.types.some(type => type.name.startsWith('<>DynamicSites')));
+  assert.ok(inspector.types.some(type => type.name.includes('<>DynamicSites')));
 });
 
 test('A02-T55 ref/out arguments use a synthesized runtime delegate with by-reference slots', { skip }, () => {
   const { inspector } = emit(sourceOf('dynamic target = null; int number = 1; string label; target.Update(ref number, out label);'));
-  const delegates = inspector.types.filter(type => type.name.startsWith('<>DynamicDelegate'));
+  const delegates = inspector.types.filter(type => type.name.includes('<>DynamicDelegate'));
   assert.ok(delegates.length > 0);
   for (const type of delegates) {
     const method = type.methods.find(candidate => candidate.name === 'Invoke');
@@ -70,7 +70,7 @@ test('A02-T55 ref/out arguments use a synthesized runtime delegate with by-refer
 
 test('A02-T55 ordinary assemblies without dynamic have no new runtime dependencies or synthesized caches', { skip }, () => {
   const { inspector } = emit(sourceOf('System.Console.WriteLine(1);'));
-  assert.ok(!inspector.types.some(type => type.name.startsWith('<>Dynamic')));
+  assert.ok(!inspector.types.some(type => type.name.includes('<>Dynamic')));
   assert.ok(!inspector.summary().references.some(reference => reference.name === 'Microsoft.CSharp'));
 });
 

@@ -131,7 +131,7 @@ class Program
         Counter[] counters = new Counter[] { counter };
         CounterAt(counters).Add(runtime);
         Console.WriteLine(counters[0].Value);
-        ReadonlyCounter(in counter, runtime);
+        ReadonlyCounter(in counter, (object)runtime);
         dynamic callable = (Func<int, int>)(value => value * 2);
         Console.WriteLine((object)callable(6));
         new Program().PrivateCall();

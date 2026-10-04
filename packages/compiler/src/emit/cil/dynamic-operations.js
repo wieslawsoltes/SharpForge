@@ -3,6 +3,7 @@ import {
   DynamicBinderFlags as Flags, dynamicArgument, dynamicArguments, dynamicGroupReceiver, dynamicReceiver,
   isDynamicType, isDynamicBinary, isDynamicConversion, isDynamicLocation, dynamicAssignmentValue,
 } from './dynamic-arguments.js';
+import { RefKind } from '../../symbols/types.js';
 
 // System.Linq.Expressions.ExpressionType values form the public runtime binder ABI.
 const binaryOperations = Object.freeze({
@@ -15,12 +16,16 @@ const compoundOperations = Object.freeze({
 });
 
 /** Description of a property/indexer store; its value retains its original static type. */
-export function dynamicStore(target, value, core, { flags = 0 } = {}) {
+export function dynamicStore(target, value, core, { flags = 0, captureReceiver = false } = {}) {
   const index = target.kind === 'DynamicElementAccess';
+  // Compound dynamic indexer lowering captures a struct value in a writable temporary. `this` keeps its storage.
+  const captureByValue = captureReceiver && index && target.receiver.type?.isValueType
+    && target.receiver.kind !== 'This' && target.receiver.kind !== 'Base';
+  const receiver = dynamicReceiver(target.receiver, core, captureByValue ? RefKind.Ref : target.receiverRefKind);
   return {
     operation: index ? 'SetIndex' : 'SetMember', flags,
     name: index ? null : target.name,
-    arguments: [dynamicReceiver(target.receiver, core, target.receiverRefKind), ...(index ? dynamicArguments(target.args, core) : []), value],
+    arguments: [{ ...receiver, captureByValue }, ...(index ? dynamicArguments(target.args, core) : []), value],
     returnType: core.object,
   };
 }
@@ -34,7 +39,7 @@ function compound(node, core) {
   }]];
   if (isDynamicLocation(node.left)) {
     descriptions.push(['set', dynamicStore(node.left, dynamicArgument(null, core), core, {
-      flags: flags | Flags.ValueFromCompoundAssignment,
+      flags: flags | Flags.ValueFromCompoundAssignment, captureReceiver: true,
     })]);
     if (node.left.kind === 'DynamicMemberAccess' && ['+', '-'].includes(node.operator)) {
       descriptions.push(['event', {
@@ -124,7 +129,7 @@ export function dynamicOperations(node, core, context) {
     case 'Assignment':
     case 'CoalesceAssignment':
       return isDynamicLocation(node.left) ? [['set', dynamicStore(node.left,
-        dynamicArgument(dynamicAssignmentValue(node.right), core), core)]] : [];
+        dynamicArgument(dynamicAssignmentValue(node.right), core), core, { captureReceiver: node.kind === 'CoalesceAssignment' })]] : [];
     case 'CompoundAssignment':
       return compound(node, core);
     case 'Increment': {
@@ -133,7 +138,7 @@ export function dynamicOperations(node, core, context) {
         operator: unaryOperations[node.operator], flags: checked,
       })]];
       if (isDynamicLocation(node.operand)) descriptions.push(['set', dynamicStore(node.operand, dynamicArgument(null, core), core, {
-        flags: checked | Flags.ValueFromCompoundAssignment,
+        flags: checked | Flags.ValueFromCompoundAssignment, captureReceiver: true,
       })]);
       return descriptions;
     }
