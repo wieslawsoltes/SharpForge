@@ -10,3 +10,4 @@ export * from './contracts/property.js';
 export * from './styles/index.js';
 export * from './adapters/context-resources.js';
 export * from './visual-states/index.js';
+export * from './items/index.js';

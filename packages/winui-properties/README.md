@@ -73,3 +73,7 @@ The approved object writer, serializer, markup extensions and registered namespa
 ## Typed XAML host boundary
 
 `createContextXamlLoader` connects approved constructors, native collections, registered properties, compiled/deferred bindings, localization and namescopes. Literal conversion reuses the binding converter before allocating typed value records or materializing renderer brushes. The closed schema admits registered Xaml rendering types and explicit xamlCollection metadata without widening external namespace activation. Loader failures retain their registered exception type and source position.
+
+## Item models in the XAML branch
+
+The reviewed item-model branch is joined before the final container adapters, keeping the integration patch bounded. Only item-specific files are carried; already integrated resource, style and binding modules retain their current versions.
