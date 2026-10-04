@@ -23,8 +23,9 @@ export const smokeSteps = [
   {id: 'editor:keymaps-classic-css', order: 1120, async run(context) {
     const {readFileSync} = context;
     const {EDITOR_KEYMAPS}=await import('@sharpforge/editor');
-    assert.equal(EDITOR_KEYMAPS.length,5);
+    assert.equal(EDITOR_KEYMAPS.length,6);
     assert.equal(EDITOR_KEYMAPS[0].id,'visual-studio');
+    assert(EDITOR_KEYMAPS.some(profile=>profile.id==='resharper'));
     assert(readFileSync(new URL(import.meta.resolve('@sharpforge/editor/classic.css')),'utf8').includes('.CodeMirror'));
   }},
 ];
