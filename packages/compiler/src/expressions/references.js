@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op, BuiltinMap } from '@sharpforge/bytecode';
 import { pathOf, typeText } from '../type-utils.js';
 
@@ -5,7 +6,7 @@ export function emitName(node) {
   const l = this.lookup(node.name);
   if (l) {
     if (!this.assigned.has(l.slot))
-      this.c.report(node, 'CS0165', [l.name]);
+      this.c.report(node, DiagnosticId.CS0165, [l.name]);
     if (l.symbol)
       this.c.reference(node, l.symbol);
     this.emit(Op.LDLOC, l.slot);
@@ -22,13 +23,13 @@ export function emitName(node) {
     else {
       const self = this.lookup('this');
       if (!self)
-        this.c.report(node, 'CS0120', [node.name]);
+        this.c.report(node, DiagnosticId.CS0120, [node.name]);
       this.emit(Op.LDLOC, self?.slot ?? 0);
       this.emit(Op.LDFLD, f.index);
     }
     return f.type;
   }
-  this.c.report(node, 'CS0103', [node.name]);
+  this.c.report(node, DiagnosticId.CS0103, [node.name]);
   this.emitConstant(null);
   return 'error';
 }
@@ -68,7 +69,7 @@ export function emitMember(node) {
     }
     return f.type;
   }
-  this.c.report(node, 'CS1061', [typeText(type), node.name]);
+  this.c.report(node, DiagnosticId.CS1061, [typeText(type), node.name]);
   this.emitConstant(null);
   return 'error';
 }
@@ -78,7 +79,7 @@ export function emitIndex(node) {
   const index = this.expr(node.index);
   this.checkAssign('int', index, node.index);
   if (!type.endsWith('[]'))
-    this.c.report(node, 'SF2005', [typeText(type)]);
+    this.c.report(node, DiagnosticId.SF2005, [typeText(type)]);
   this.emit(Op.LDELEM);
   return type.endsWith('[]') ? type.slice(0, -2) : 'error';
 }

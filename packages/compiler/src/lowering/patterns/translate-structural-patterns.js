@@ -3,7 +3,7 @@
  * decision (lowering/decision-dag.js): the elements of a tuple, the results of one `Deconstruct` call, the length and
  * the elements of an array. Each input is evaluated at most once however many arms test it.
  */
-import { tupleTypeOf, maxTupleElements } from '../../binder/tuples.js';
+import { tupleTypeOf } from '../../binder/tuples.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 import { ArraySlices } from './array-slices.js';
 
@@ -46,7 +46,6 @@ export const StructuralPatternTranslation = Base =>
         method = this.g.methodOf(positional.method, syntax),
         types = positional.parts.map(part => part.type),
         cells = types.map(type => this.g.cellClass(this.imageType(type, syntax)));
-      if (types.length > maxTupleElements) return this.unsupported('a positional pattern with more than seven parts', syntax);
       const call = temps => {
         const args = temps.map(temp => n.local(temp)),
           allocate = temps.map((temp, index) => n.assign(n.local(temp), n.allocate(cells[index].record)));

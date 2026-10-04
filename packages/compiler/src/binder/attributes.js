@@ -16,6 +16,7 @@
  * Attributes are metadata: nothing is executed for them. Reading them back at run time needs reflection, which the
  * runtime profile does not have.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { AttributeTargets } from '../symbols/attribute-types.js';
@@ -106,7 +107,7 @@ export const AttributeBinding = Base =>
           const word = specifier.text;
           if (!Object.hasOwn(locations.targets, word)) {
             const valid = Object.keys(locations.targets).join(', ');
-            this.report(site.uri, specifier, knownLocations.has(word) ? 'CS0657' : 'CS0658', [word, valid]);
+            this.report(site.uri, specifier, knownLocations.has(word) ? DiagnosticId.CS0657 : DiagnosticId.CS0658, [word, valid]);
             continue;
           }
           location = word;
@@ -121,9 +122,9 @@ export const AttributeBinding = Base =>
         applied = (site.symbol.boundAttributes ??= []);
       if (!attributeClass) return;
       const usage = this.attributeUsageOf(attributeClass);
-      if (!(usage.validOn & target)) this.report(site.uri, syntax.name, 'CS0592', [written, describeTargets(usage.validOn)]);
+      if (!(usage.validOn & target)) this.report(site.uri, syntax.name, DiagnosticId.CS0592, [written, describeTargets(usage.validOn)]);
       else if (!usage.allowMultiple && applied.some(other => other.location === location && other.attributeClass === attributeClass))
-        this.report(site.uri, syntax.name, 'CS0579', [written]);
+        this.report(site.uri, syntax.name, DiagnosticId.CS0579, [written]);
       const bound = { attributeClass, location, syntax, attributeConstructor: null, arguments: [], named: [] };
       applied.push(bound);
       this.bindAttributeArguments(site, bound);
@@ -157,7 +158,7 @@ export const AttributeBinding = Base =>
         suffixed = simple.identifier.text.startsWith('@') ? null : find(text + 'Attribute');
       if (plain?.ambiguous || suffixed?.ambiguous) {
         const [first, second] = (plain?.ambiguous ?? suffixed.ambiguous).map(type => type.toDisplayString());
-        this.report(uri, simple, 'CS0104', [plain?.ambiguous ? text : text + 'Attribute', first, second]);
+        this.report(uri, simple, DiagnosticId.CS0104, [plain?.ambiguous ? text : text + 'Attribute', first, second]);
         return null;
       }
       const named = found => (found?.kind === SymbolKind.NamedType ? found : null),
@@ -166,13 +167,13 @@ export const AttributeBinding = Base =>
         plainFits = this.isAttributeClass(plainType),
         suffixedFits = this.isAttributeClass(suffixedType);
       if (plainFits && suffixedFits) {
-        this.report(uri, simple, 'CS1614', [text, plainType.toDisplayString(), suffixedType.toDisplayString()]);
+        this.report(uri, simple, DiagnosticId.CS1614, [text, plainType.toDisplayString(), suffixedType.toDisplayString()]);
         return null;
       }
       if (plainFits || suffixedFits) return this.checkAttributeClass(plainFits ? plainType : suffixedType, simple, uri);
       const other = plainType ?? suffixedType;
       if (other) {
-        if (isSourceSymbol(other) || this.closedHierarchy(other)) this.report(uri, simple, 'CS0616', [other.toDisplayString()]);
+        if (isSourceSymbol(other) || this.closedHierarchy(other)) this.report(uri, simple, DiagnosticId.CS0616, [other.toDisplayString()]);
         else this.incomplete = true;
         return null;
       }
@@ -183,7 +184,7 @@ export const AttributeBinding = Base =>
         return null;
       }
       if (this.reportAttributeArity?.(simple, text, scope, container, uri)) return null;
-      const missing = container ? ['CS0234', container.toDisplayString()] : ['CS0246'];
+      const missing = container ? [DiagnosticId.CS0234, container.toDisplayString()] : [DiagnosticId.CS0246];
       for (const candidate of [text + 'Attribute', text]) this.report(uri, simple, missing[0], [candidate, ...missing.slice(1)]);
       return null;
     }
@@ -195,11 +196,11 @@ export const AttributeBinding = Base =>
     }
     checkAttributeClass(type, node, uri) {
       if (!this.isAttributeClass(type)) {
-        this.report(uri, node, 'CS0616', [type.toDisplayString()]);
+        this.report(uri, node, DiagnosticId.CS0616, [type.toDisplayString()]);
         return null;
       }
       if (type.isAbstract) {
-        this.report(uri, node, 'CS0653', [type.toDisplayString()]);
+        this.report(uri, node, DiagnosticId.CS0653, [type.toDisplayString()]);
         return null;
       }
       return type;
@@ -231,7 +232,7 @@ export const AttributeBinding = Base =>
       });
       const all = syntax.argumentList?.arguments ?? [],
         positional = all.filter(argument => !argument.nameEquals).map(argument => binder.argument(argument));
-      for (const argument of positional) if (!isValidArgument(argument)) binder.report(argument.syntax, 'CS0182');
+      for (const argument of positional) if (!isValidArgument(argument)) binder.report(argument.syntax, DiagnosticId.CS0182);
       const constructors = attributeClass.getMembers('.ctor').filter(member => member.methodKind === MethodKind.Constructor),
         accessible = constructors.filter(c => isAccessible(c.originalDefinition ?? c, within, { throughType: attributeClass.originalDefinition }));
       if (!constructors.length) this.incomplete = true;
@@ -243,7 +244,7 @@ export const AttributeBinding = Base =>
         } else if (!isSourceSymbol(attributeClass) && !attributeClass.attributeUsage) this.incomplete = true;
         else {
           const error = result.error,
-            args = error.code === 'CS1729' ? [attributeClass.toDisplayString(), positional.length] : error.args;
+            args = error.code === DiagnosticId.CS1729 ? [attributeClass.toDisplayString(), positional.length] : error.args;
           binder.report(binder.errorNode(error, positional, syntax.name), error.code, args);
         }
       }
@@ -254,7 +255,7 @@ export const AttributeBinding = Base =>
       const nameNode = argument.nameEquals.name,
         name = nameNode.identifier.valueText,
         value = binder.value(argument.expression);
-      if (seen.has(name)) binder.report(argument, 'CS0643', [name]);
+      if (seen.has(name)) binder.report(argument, DiagnosticId.CS0643, [name]);
       seen.add(name);
       let member = null,
         closed = true;
@@ -263,7 +264,7 @@ export const AttributeBinding = Base =>
         if (!isSourceSymbol(t) && !t.attributeUsage && t !== this.core.attribute && t.specialType !== 'System_Object') closed = false;
       }
       if (!member) {
-        if (closed) binder.report(nameNode, 'CS0246', [name]);
+        if (closed) binder.report(nameNode, DiagnosticId.CS0246, [name]);
         else this.incomplete = true;
         return;
       }
@@ -275,7 +276,7 @@ export const AttributeBinding = Base =>
         field.nonConstantWrite = true;
       }
       if (!isAccessible(member.originalDefinition ?? member, binder.c.containingType?.originalDefinition ?? null)) {
-        binder.report(nameNode, 'CS0122', [member.toDisplayString()]);
+        binder.report(nameNode, DiagnosticId.CS0122, [member.toDisplayString()]);
         return;
       }
       const isPublic = member.declaredAccessibility === Accessibility.Public,
@@ -284,11 +285,11 @@ export const AttributeBinding = Base =>
             ? !member.isReadOnly && !member.isConst
             : !!member.setMethod && member.setMethod.declaredAccessibility === Accessibility.Public && !member.setMethod.isInitOnly && !member.isIndexer;
       if (!isPublic || member.isStatic || !writable) {
-        binder.report(nameNode, 'CS0617', [name]);
+        binder.report(nameNode, DiagnosticId.CS0617, [name]);
         return;
       }
       const converted = member.type ? binder.convert(value, member.type, argument.expression) : value;
-      if (!isValidArgument(converted)) binder.report(argument.expression, 'CS0182');
+      if (!isValidArgument(converted)) binder.report(argument.expression, DiagnosticId.CS0182);
       bound.named.push({ name, member, value: converted });
     }
     /** `{message, isError}` of a bound `[Obsolete]`, the shape imported symbols carry. */
@@ -299,7 +300,7 @@ export const AttributeBinding = Base =>
     decodeTypeAttributes(type) {
       const usage = attributesNamed(type, 'System.AttributeUsageAttribute')[0];
       if (usage) {
-        if (!this.isAttributeClass(type)) this.report(this.at(type).uri, usage.syntax.name, 'CS0641', [usage.syntax.name.toString().trim()]);
+        if (!this.isAttributeClass(type)) this.report(this.at(type).uri, usage.syntax.name, DiagnosticId.CS0641, [usage.syntax.name.toString().trim()]);
         else {
           const validOn = constantOf(usage.arguments[0]),
             named = key => constantOf(usage.named.find(entry => entry.name === key)?.value);

@@ -7,6 +7,7 @@
  * The rule itself is `checkAccess` in ./accessibility.js; this mixin reports it at the places the body binder finds
  * an inaccessible member: member access, assignment through a less accessible set accessor, and indexer access.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { checkAccess } from './accessibility.js';
 
 /** Class mixin of the body binder: diagnostics for members that are not accessible from the code being bound. */
@@ -19,13 +20,13 @@ export const ProtectedAccessBinding = Base =>
     /** Reports an inaccessible member found by a lookup through a value of `throughType`. */
     reportInaccessible(member, throughType, node) {
       const problem = this.accessProblem(member, throughType);
-      this.report(node, problem?.code ?? 'CS0122', problem?.args ?? [member.toDisplayString()]);
+      this.report(node, problem?.code ?? DiagnosticId.CS0122, problem?.args ?? [member.toDisplayString()]);
     }
     /** Reports a write through a set accessor that is not accessible here: CS1540 through the wrong type, else CS0272. */
     reportInaccessibleSetter(target, node) {
       const problem = this.accessProblem(target.property.setMethod, target.receiver?.type ?? null);
-      if (problem?.code === 'CS1540') this.report(node, problem.code, problem.args);
-      else this.report(node, 'CS0272', [target.property.toDisplayString()]);
+      if (problem?.code === DiagnosticId.CS1540) this.report(node, problem.code, problem.args);
+      else this.report(node, DiagnosticId.CS0272, [target.property.toDisplayString()]);
     }
     /** Reports a member that overload resolution chose although it is not accessible through `throughType`; true when reported. */
     reportIfInaccessible(member, throughType, node) {

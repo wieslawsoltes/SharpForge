@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "diagnostic-spans/cs1593-cs7036-delegate-invocation":{"hash":"a5b2f2e09cacd112","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1593",287,1,"error"],["CS7036",323,1,"error"],["CS1593",357,1,"error"],["CS1593",393,5,"error"],["CS1593",433,6,"error"]]},
+  "diagnostic-spans/cs1501-library-method-name":{"hash":"5edf7bc59ddbb00f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1501",38,9,"error"],["CS1501",83,9,"error"]]},
+  "diagnostic-spans/cs8025-async-forms-at-4":{"hash":"f40ebcb996545bc2","kind":"diagnostics","langVersion":"4","diagnostics":[["CS8025",82,1,"error"],["CS8025",119,1,"error"],["CS8025",154,1,"error"],["CS8025",230,5,"error"],["CS8025",275,5,"error"],["CS8025",314,5,"error"]]},
+  "diagnostic-spans/cs8370-discard-pattern-at-7-3":{"hash":"2d0f1080f20f78e7","kind":"diagnostics","langVersion":"7.3","diagnostics":[["CS8370",48,6,"error"],["CS8370",81,1,"error"],["CS8370",133,20,"error"]]},
+  "diagnostic-spans/cs0246-dynamic-at-3":{"hash":"534a9a0425d48460","kind":"diagnostics","langVersion":"3","diagnostics":[["CS0246",27,7,"error"],["CS0246",37,7,"error"],["CS0246",87,7,"error"]]}
+}}
