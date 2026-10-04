@@ -3,7 +3,7 @@ import {writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {assert, createGate} from './browser_designer_gate_harness.mjs';
 
-const gate = await createGate();
+const gate = await createGate({resultsSubdirectory: 'canvas-translations'});
 const evidence = {tolerance: .5, renderer: 'WinUIHost DOM', cases: []};
 const save = () => writeFile(resolve(gate.results, 'browser-designer-canvas-translations.json'), JSON.stringify(evidence, null, 2));
 
@@ -78,10 +78,43 @@ async function qualify(name, theme) {
   return record;
 }
 
+async function qualifyStylesheetOwnership(theme) {
+  const rows = await gate.page.evaluate(async theme => {
+    const fixture = window.__a18CanvasTranslation;
+    const rows = [];
+    for (const mode of ['identity', 'rotate']) {
+      await fixture.load(mode === 'identity' ? 'identity' : 'rotate', theme);
+      fixture.overrideTransform(mode);
+      rows.push(fixture.patch({Left: 118.25, Top: 90.5}, {label: `initial ${mode} !important override`}));
+    }
+    await fixture.load('composite', theme);
+    rows.push(fixture.patch({Left: 110, Top: 80}, {label: 'owned before stylesheet change'}));
+    fixture.overrideTransform('rotate');
+    rows.push(fixture.patch({Left: 125, Top: 85}, {label: 'stylesheet takes ownership after retained move'}));
+    return rows;
+  }, theme);
+  const record = {name: 'stylesheet-ownership', theme, rows};
+  evidence.cases.push(record);
+  await save();
+  for (const row of rows) {
+    equivalent(row);
+    assert.equal(row.retained.translated, row.label === 'owned before stylesheet change', row.label);
+  }
+  return record;
+}
+
 let failure;
 try {
   await gate.page.evaluate(async () => {
     const {DesignerCanvasTranslationReference} = await import('./designer-canvas-translation-reference.js');
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = new URL('./designer-canvas-translation-reference.css', location.href).href;
+    await new Promise((resolve, reject) => {
+      stylesheet.addEventListener('load', resolve, {once: true});
+      stylesheet.addEventListener('error', () => reject(new Error('The same-origin reference stylesheet did not load.')), {once: true});
+      document.head.append(stylesheet);
+    });
     const root = document.createElement('div');
     root.dataset.a18CanvasTranslationReference = '';
     Object.assign(root.style, {position: 'fixed', inset: '0', zIndex: '2147483647', overflow: 'auto'});
@@ -92,6 +125,8 @@ try {
     for (const name of ['identity', 'translate', 'rotate', 'scale', 'skew', 'composite', 'parent-affine']) {
       await gate.check(`Canvas ${name} translation matches a complete ${theme} render and native interaction`, () => qualify(name, theme));
     }
+    await gate.check(`Canvas positions retain actual geometry under ${theme} !important stylesheet overrides`,
+      () => qualifyStylesheetOwnership(theme));
   }
   assert.deepEqual(gate.report.errors, [], 'Browser page errors occurred.');
   assert.deepEqual(await gate.page.evaluate(() => window.__a18CspViolations), [], 'The production CSP was violated.');

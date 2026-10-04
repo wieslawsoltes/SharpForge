@@ -334,7 +334,7 @@
       "path": "tests/browser_designer_canvas_translation_test.mjs",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "fa9743e8d11ddf2b4a7b7d34b89e5560ecb473ec6273d1d10c6bc627945b3752",
+      "sha256": "43ce849c6934259a68a2ab286acd76490cbdae3aa04ba1242396e52702435282",
       "reason": "Browser qualification loads the fixed same-origin production Canvas translation reference module to compare actual retained and complete DOM geometry and native interaction; no user-selected or remote JavaScript."
     },
     {

@@ -48,7 +48,7 @@ def wait_server(url, server):
     raise TimeoutError('The production Studio server did not become ready')
 
 
-def main(driver='tests/browser_designer_integrated_gate.mjs'):
+def main(driver='tests/browser_designer_integrated_gate.mjs', server_log='designer-integrated-server.log'):
     node = os.getenv('NODE') or os.getenv('CODEX_PRIMARY_RUNTIME_NODE') or 'node'
     environment = dict(os.environ)
     module = playwright_module()
@@ -59,7 +59,7 @@ def main(driver='tests/browser_designer_integrated_gate.mjs'):
     environment['SHARPFORGE_RESULTS_DIR'] = str(results.resolve())
     server = None
     try:
-        with (results / 'designer-integrated-server.log').open('w', encoding='utf-8') as log:
+        with (results / server_log).open('w', encoding='utf-8') as log:
             if not environment.get('SHARPFORGE_BROWSER_URL'):
                 port = available_port()
                 environment['SHARPFORGE_BROWSER_URL'] = f'http://127.0.0.1:{port}'

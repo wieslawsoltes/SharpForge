@@ -110,6 +110,7 @@ export class DesignerCanvasTranslationReference {
     this.events.length = 0;
     this.inputs.length = 0;
     this.errors.length = 0;
+    this.overrideTransform(null);
     for (const [kind, host] of Object.entries(this.hosts)) {
       host.root.dataset.theme = theme;
       host.load(this.scene);
@@ -149,6 +150,14 @@ export class DesignerCanvasTranslationReference {
   reload(label = 'complete reload') {
     this.hosts.retained.load(this.scene);
     return this.flush(label);
+  }
+
+  overrideTransform(mode) {
+    if (![null, 'identity', 'rotate'].includes(mode)) throw new TypeError('Unknown reference stylesheet override.');
+    for (const host of Object.values(this.hosts)) {
+      if (mode === null) delete host.root.dataset.a18CanvasTransform;
+      else host.root.dataset.a18CanvasTransform = mode;
+    }
   }
 
   read(label) {
