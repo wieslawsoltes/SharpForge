@@ -1,5 +1,8 @@
 /** Standard single-disk ZIP (stored / deflate). All input is untrusted data. */
 import {inflateRaw} from './deflate.js';
+import {portablePath} from './path-policy.js';
+export * from './path-policy.js';
+export * from './text-encoding.js';
 export * from './deflate.js';
 export const ZIP_LIMITS=Object.freeze({maxEntries:20000,maxFileBytes:64*1024*1024,maxTotalBytes:128*1024*1024,maxArchiveBytes:160*1024*1024,maxPathLength:1024,maxDepth:48});
 const encoder=new TextEncoder(),decoder=new TextDecoder('utf-8',{fatal:true});
@@ -8,14 +11,6 @@ const ibm437='ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥₧ƒ�
 const table=Uint32Array.from({length:256},(_,n)=>{for(let i=0;i<8;i++)n=n&1?0xedb88320^(n>>>1):n>>>1;return n>>>0;});
 export function crc32(bytes){let c=0xffffffff;for(const b of bytes)c=table[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0;}
 function limitOptions(options={}){const limits={...ZIP_LIMITS,...options};for(const k of Object.keys(ZIP_LIMITS))if(!Number.isSafeInteger(limits[k])||limits[k]<1||limits[k]>0x7fffffff)throw new Error('Invalid archive limit: '+k);return limits;}
-export function portablePath(value,{directory=false,...options}={}){
-  const limits=limitOptions(options);
-  if(typeof value!=='string'||!value||value.length>limits.maxPathLength||/[\x00-\x1f\x7f]/.test(value)||/^[\\/]|^[a-zA-Z]:/.test(value))throw new Error('Unsafe archive path: '+String(value).slice(0,120));
-  const path=value.replaceAll('\\','/').replace(directory?/\/$/:/$^/,'');
-  const parts=path.split('/');
-  if(parts.length>limits.maxDepth||parts.some(p=>!p||p==='.'||p==='..'||/[<>:"|?*]/.test(p)||/[. ]$/.test(p)||/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(p)))throw new Error('Non-portable or traversing archive path: '+value);
-  return path;
-}
 function view(bytes){return new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);}
 function verifyNames(entries,limits){const paths=new Map(),identities=new Map();for(const e of entries){const key=e.path.normalize('NFC').toLowerCase();if(paths.has(key))throw new Error('Duplicate or case-colliding path: '+e.path);paths.set(key,e.directory);}
  for(const e of entries){let spelling=e.path;while(spelling){const key=spelling.normalize('NFC').toLowerCase(),old=identities.get(key);if(old&&old!==spelling)throw new Error('Case-colliding parent path: '+spelling);identities.set(key,spelling);const slash=spelling.lastIndexOf('/');spelling=slash<0?'':spelling.slice(0,slash);}const parts=e.path.normalize('NFC').toLowerCase().split('/');parts.pop();while(parts.length){const p=parts.join('/');if(paths.has(p)&&paths.get(p)===false)throw new Error('File/directory path collision: '+e.path);parts.pop();}}
@@ -61,16 +56,4 @@ export function writeZip(files,options={}){
  for(const e of entries){v.setUint32(p,0x04034b50,true);v.setUint16(p+4,20,true);v.setUint16(p+6,0x800,true);v.setUint16(p+12,33,true);v.setUint32(p+14,e.crc,true);v.setUint32(p+18,e.bytes.length,true);v.setUint32(p+22,e.bytes.length,true);v.setUint16(p+26,e.name.length,true);out.set(e.name,p+30);out.set(e.bytes,p+30+e.name.length);p+=30+e.name.length+e.bytes.length;}
  for(const e of entries){v.setUint32(p,0x02014b50,true);v.setUint16(p+4,0x314,true);v.setUint16(p+6,20,true);v.setUint16(p+8,0x800,true);v.setUint16(p+14,33,true);v.setUint32(p+16,e.crc,true);v.setUint32(p+20,e.bytes.length,true);v.setUint32(p+24,e.bytes.length,true);v.setUint16(p+28,e.name.length,true);v.setUint32(p+38,e.directory?0x41ed0010:0x81a40000,true);v.setUint32(p+42,e.offset,true);out.set(e.name,p+46);p+=46+e.name.length;}
  v.setUint32(p,0x06054b50,true);v.setUint16(p+8,entries.length,true);v.setUint16(p+10,entries.length,true);v.setUint32(p+12,centralSize,true);v.setUint32(p+16,localSize,true);return out;
-}
-const textPath=/(?:\.(?:cs|csproj|slnx|sln|props|targets|proj|json|xml|config|resx|resw|txt|md|il|css|html?|js|mjs|ts|svg|yml|yaml|editorconfig|gitignore|gitattributes|ruleset|runsettings|rsp|csv)|(?:^|\/)(?:LICENSE|NOTICE|README|\.editorconfig|\.gitignore|\.gitattributes|NuGet.Config))$/i;
-export function decodeWorkspaceFile(path,bytes){
- portablePath(path);if(!(bytes instanceof Uint8Array))throw new Error('Expected file bytes');const record={path,bytes:bytes.slice()};if(!textPath.test(path))return record;
- let encoding='utf-8',bom=false;if(bytes[0]===255&&bytes[1]===254){encoding='utf-16le';bom=true;}else if(bytes[0]===254&&bytes[1]===255){encoding='utf-16be';bom=true;}else bom=bytes[0]===239&&bytes[1]===187&&bytes[2]===191;
- try{const text=new TextDecoder(encoding,{fatal:true}).decode(bytes);if(text.includes('\0'))return record;return {...record,text,originalText:text,encoding,bom};}catch{return record;}
-}
-export function encodeWorkspaceFile(record){
- if(typeof record.text!=='string'){if(!(record.bytes instanceof Uint8Array))throw new Error('Missing file data: '+record.path);return record.bytes.slice();}
- if(record.bytes instanceof Uint8Array&&record.text===record.originalText)return record.bytes.slice();const {text,encoding='utf-8',bom=false}=record;
- if(encoding==='utf-8'){const b=encoder.encode(text),out=new Uint8Array(b.length+(bom?3:0));if(bom)out.set([239,187,191]);out.set(b,bom?3:0);return out;}
- if(!['utf-16le','utf-16be'].includes(encoding))throw new Error('Unsupported text encoding');const out=new Uint8Array(text.length*2+(bom?2:0)),v=view(out);if(bom)out.set(encoding==='utf-16le'?[255,254]:[254,255]);for(let i=0;i<text.length;i++)v.setUint16((bom?2:0)+i*2,text.charCodeAt(i),encoding==='utf-16le');return out;
 }

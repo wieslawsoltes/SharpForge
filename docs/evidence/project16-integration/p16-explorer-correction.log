@@ -1,0 +1,13 @@
+✔ an Explorer host commit retains unchanged models and their saved baselines, including unsaved siblings (29.887366ms)
+✔ dirty Explorer rename and undo preserve source roots, baseline history, active tabs and breakpoints (12.364778ms)
+✔ document reset subscribers observe the same project XML, membership and active source as the Explorer commit (6.752906ms)
+✔ Explorer opening guard preserves edits made during asynchronous workspace preflight (6.819774ms)
+✔ Explorer host rejects a superseding workspace revision before adopting its staged source models (4.706808ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 408.472194

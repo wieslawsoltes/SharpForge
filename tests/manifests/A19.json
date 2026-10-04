@@ -2,45 +2,18 @@
   "schemaVersion": 1,
   "area": "A19",
   "nodeGlobs": [
-    "tests/a19-03-document-tabs.test.js",
-    "tests/a19-04-docking-model.test.js",
-    "tests/a19-app-sessions.test.js",
-    "tests/a19-build-output.test.js",
-    "tests/a19-builtin-extensions.test.js",
-    "tests/a19-document-models.test.js",
-    "tests/a19-documents-state.test.js",
-    "tests/a19-multi-session-fixture.test.js",
-    "tests/a19-profile-selection.test.js",
-    "tests/a19-runtime-arguments.test.js",
-    "tests/a19-runtime-environment.test.js",
-    "tests/a19-runtime-launch-options.test.js",
-    "tests/a19-runtime-settings-bridge.test.js",
-    "tests/a19-runtime-worker-launch.test.js",
-    "tests/a19-session-recovery.test.js",
-    "tests/a19-session-state-ownership.test.js",
-    "tests/a19-session-tools.test.js",
-    "tests/a19-shell-boundaries.test.js",
-    "tests/a19-shell-commands.test.js",
-    "tests/a19-shell-inventory.test.js",
-    "tests/a19-shell-recents.test.js",
-    "tests/a19-shell-search.test.js",
-    "tests/a19-shell-settings.test.js",
-    "tests/a19-shell-themes.test.js",
-    "tests/a19-shell-tools.test.js",
-    "tests/a19-startup-orchestration.test.js",
-    "tests/a19-studio-docking-sync.test.js",
-    "tests/a19-studio-keyboard.test.js",
-    "tests/a19-studio-lazy-features.test.js",
-    "tests/a19-studio-navigation.test.js",
-    "tests/a19-watch-windows.test.js",
-    "tests/a19-window-layouts-navigation.test.js",
-    "tests/a19-worker-client.test.js",
     "tests/docking.test.js",
-    "tests/release08-commands.test.js"
+    "tests/release08-commands.test.js",
+    "tests/a19-*.test.js"
   ],
   "browserScripts": [
+    "tests/browser_test.py",
     "tests/browser_a19_docking_test.py",
-    "tests/browser_test.py"
+    "tests/browser_a19_shell_test.py",
+    "tests/browser_multi_session_test.py",
+    "tests/browser_a19_lazy_tools_test.py",
+    "tests/browser_vs_workflows_test.py",
+    "tests/browser_workbench_perf_test.py"
   ],
   "requiredServices": [
     "studio-http",
@@ -48,13 +21,14 @@
   ],
   "timeout": 1200000,
   "tags": [
+    "workbench",
+    "scope-qualification",
     "sessions",
     "runtime",
     "completed-scope",
     "staged-validation",
     "docking",
     "shell",
-    "themes",
-    "workbench"
+    "themes"
   ]
 }

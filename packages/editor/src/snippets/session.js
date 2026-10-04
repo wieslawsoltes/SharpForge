@@ -1,10 +1,8 @@
-import {expandSnippet} from './parser.js';
+import {prepareSnippetInsertion} from './indentation.js';
 import {CSHARP_SNIPPETS} from './builtins.js';
 import {EditorPopup, node, button} from '../widgets/dom.js';
 
-export function indentSnippet(template, indentation, lineEnding = '\n') {
-  return template.replace(/\r?\n/g, lineEnding + indentation);
-}
+export {indentSnippet} from './indentation.js';
 
 function eventEdits(change) {
   const items = change?.changes ?? change?.edits ?? [];
@@ -33,14 +31,7 @@ export class SnippetSession {
   insert(template, options = {}) {
     const editor = this.context.editor;
     if (editor.input.readOnly) return false;
-    const start = options.start ?? editor.offset;
-    const end = options.end ?? editor.input.selectionEnd;
-    const lineStart = editor.value.lastIndexOf('\n', start - 1) + 1;
-    const indentation = editor.value.slice(lineStart, start).match(/^[\t ]*/)?.[0] ?? '';
-    const selected = options.selected ?? editor.value.slice(start, end);
-    const lineEnding = editor.value.includes('\r\n') ? '\r\n' : '\n';
-    const expanded = expandSnippet(indentSnippet(template, indentation, lineEnding), {TM_SELECTED_TEXT: selected,
-      TM_FILENAME: editor.uri.split(/[\\/]/).at(-1), ...options.variables});
+    const {start, end, expanded} = prepareSnippetInsertion(editor, template, options);
     this.stop();
     editor.applyEdits([{start, end, text: expanded.text}], {source: 'snippet', undoStop: true});
     this.active = {uri: editor.uri, order: expanded.order, index: 0,
@@ -130,11 +121,7 @@ export class SnippetSession {
     const items = this.catalog.filter(item => !surround || item.surround);
     this.popup.element.replaceChildren(node(this.context.document, 'strong', {}, surround ? 'Surround With' : 'Insert Snippet'));
     for (const item of items) this.popup.element.append(button(this.context.document, `${item.prefix} — ${item.label}`, () => {
-      const selected = editor.value.slice(selection.start, selection.end);
-      const lines = selected.split(/\r?\n/);
-      const minimum = Math.min(...lines.filter(line => line.trim()).map(line => line.match(/^[ \t]*/)[0].length));
-      const normalized = lines.map(line => line.slice(Number.isFinite(minimum) ? minimum : 0)).join('\n    ');
-      this.insert(item.body, {...selection, selected: surround ? normalized : selected});
+      this.insert(item.body, {...selection, surround, templateIndentSize: item.indentSize});
     }));
     this.popup.show();
     this.popup.element.querySelector('button')?.focus();
@@ -154,7 +141,7 @@ export class SnippetSession {
     if (!snippet) { this.pendingPrefix = null; return false; }
     if (this.pendingPrefix === prefix) {
       this.pendingPrefix = null;
-      return this.insert(snippet.body, {start: editor.offset - prefix.length, end: editor.offset});
+      return this.insert(snippet.body, {start: editor.offset - prefix.length, end: editor.offset, templateIndentSize: snippet.indentSize});
     }
     this.pendingPrefix = prefix;
     this.context.status(`Press Tab again to expand ${prefix}`);
