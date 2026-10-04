@@ -27,3 +27,14 @@ adapter, driver and browser; an absent or incompatible baseline fails rather tha
 `tests/a17-rendering-budget.test.js` covers finite measurements, thresholds, environment mismatch, missing values,
 non-finite/negative readings, mocks and incomplete baselines. Exact-draft core and real measurement qualification
 remain pending; the earlier completed A17 gate is recorded separately in the publication manifest.
+
+
+## Browser adapters
+
+`gpu_browsers.py` adapts actual Playwright Chromium, Firefox and WebKit, and actual Safari WebDriver separately.
+Safari requires macOS or an explicit endpoint and reachable fixture URL. The software configuration requests a
+fallback adapter, but qualification must record the adapter actually selected. Driver versions remain explicit
+inventory input because WebGPU has no standard portable driver-version field.
+
+This stage supplies browser lifecycle adapters and the hardware evidence checklist. The fixture server and runner
+are installed in a dependent stage. No browser process or driver was executed while preparing this publication.
