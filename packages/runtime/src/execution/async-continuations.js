@@ -24,7 +24,7 @@ function invokeContinuation(scheduler, continuation) {
 /** Registration owns only frozen managed call data; no host function survives this boundary. */
 export function registerAsyncContinuation(scheduler, task, continuation) {
   if (terminal.has(task.status)) {
-    invokeContinuation(scheduler, continuation);
+    scheduler.vm.heap.withRoots([task.ref, continuation.receiver], () => invokeContinuation(scheduler, continuation));
     return;
   }
   task.continuations ??= [];
@@ -39,7 +39,10 @@ export function completeAsyncContinuations(scheduler, task) {
   const pending = task.continuations;
   if (!pending?.length) return;
   task.continuations = [];
-  for (const continuation of pending) invokeContinuation(scheduler, continuation);
+  // Detaching prevents duplicate delivery; the temporary roots keep every pending receiver alive while admission allocates.
+  scheduler.vm.heap.withRoots([task.ref, ...pending.map(continuation => continuation.receiver)], () => {
+    for (const continuation of pending) invokeContinuation(scheduler, continuation);
+  });
 }
 
 /** A first struct suspension registers only after its managed SetStateMachine call returns. */

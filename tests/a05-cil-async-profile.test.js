@@ -34,7 +34,8 @@ test('CIL async ABI generic awaiter result and real Yield type are exact', () =>
   assert.equal(asyncMethodDefinition({...yieldCall, signature: {...yieldCall.signature, returnType: asyncTypes.task}}), null);
 });
 
-function machineFixture({assembly = 'System.Runtime', badDeclaration = false, invalidBody = false, wrongKey = false} = {}) {
+function machineFixture({assembly = 'System.Runtime', badDeclaration = false, invalidBody = false,
+  wrongKey = false, localContract = false} = {}) {
   return managedFixture({methods: [
     {name: 'Main', locals: [asyncTypes.builder, 'Fixture.Program'], body(writer, context) {
       const {md, resolve} = context;
@@ -47,7 +48,8 @@ function machineFixture({assembly = 'System.Runtime', badDeclaration = false, in
     {name: 'SetStateMachine', static: false, flags: 0xc6, parameters: [asyncTypes.machine], body: writer => writer.op('ret')}
   ], decorate(context) {
     const {md, type, methods, resolve} = context;
-    const contract = md.typeRef(asyncTypes.machine);
+    const contract = localContract ? md.add(2, [0xa1, md.string('IAsyncStateMachine'), md.string('System.Runtime.CompilerServices'),
+      0, (md.rows[4]?.length ?? 0) + 1, md.rows[6].length + 1]) : md.typeRef(asyncTypes.machine);
     md.add(9, [type & 0xffffff, codedIndex('TypeDefOrRef', contract)]);
     if (wrongKey) md.rows[35][0][5] = md.blob(new Uint8Array(8));
     if (badDeclaration) {
@@ -59,10 +61,10 @@ function machineFixture({assembly = 'System.Runtime', badDeclaration = false, in
 
 test('CIL async callbacks require trusted reference scope and matching MethodImpl declarations', () => {
   assert.equal(verifyCilAssembly(machineFixture()).success, true);
-  for (const options of [{assembly: 'Impostor.Runtime'}, {wrongKey: true}, {badDeclaration: true}]) {
+  for (const options of [{assembly: 'Impostor.Runtime'}, {wrongKey: true}, {badDeclaration: true}, {localContract: true}]) {
     const result = verifyCilAssembly(machineFixture(options));
     assert.equal(result.success, false);
-    assert.ok(result.issues.some(issue => issue.code === 'IL_TOKEN' && /identity|MethodImpl/.test(issue.message)), result.issues);
+    assert.ok(result.issues.some(issue => issue.code === 'IL_TOKEN' && /identity|MethodImpl|admitted/.test(issue.message)), result.issues);
   }
 });
 

@@ -70,12 +70,12 @@ for (const name of fixtures) test('direct CIL async native reference: ' + name, 
   } finally { native.close(); }
 });
 
-test('direct CIL async snapshot roots and exactly-once continuation', context => {
+for (const fixture of ['Retention', 'Mutation']) test('direct CIL async snapshot roots and exactly-once continuation: ' + fixture, context => {
   const native = contextFor(context);
   if (!native) return;
   try {
     for (const optimize of [false, true]) {
-      const {bytes, expected} = native.build(sourceOf('Retention'), 'Snapshot' + optimize, optimize);
+      const {bytes, expected} = native.build(sourceOf(fixture), 'Snapshot' + fixture + optimize, optimize);
       const vm = new CilVirtualMachine(bytes, {virtualTime: true});
       assert.equal(vm.run().state, 'waiting');
       vm.heap.collect();
