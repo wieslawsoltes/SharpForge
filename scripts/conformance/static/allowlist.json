@@ -107,6 +107,13 @@
       "reason": "Reviewed developer-only CFG benchmark imports fixed CIL package entry points from operator-selected trusted local baseline/current checkouts. Before import it verifies exact baseline commit, candidate source identity and local workspace aliases; paths never come from CIL, metadata or product input. No generated JavaScript or product dynamic-code surface is added."
     },
     {
+      "path": "packages/cil/tools/metadata-generations-benchmark-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "dc8e825b11d00d928453647cf8f72fa630dd74b0853d5f5bdbd16343a929b917",
+      "reason": "Developer-only metadata reader comparison imports the verified public CIL entry and the fixed existing structural fixture helper from an operator-selected trusted local checkout. It checks exact baseline/product commits, clean source hashes and own public dependency aliases before import. Baseline children never import candidate CIL or generation feature modules. This exact count/hash adds no runtime product dynamic-code surface; assembly bytes never choose modules."
+    },
+    {
       "path": "packages/cil/tools/benchmark-pe-inspection.mjs",
       "operation": "dynamic-import",
       "count": 2,
@@ -532,6 +539,20 @@
       "count": 1,
       "sha256": "6aa324809e5b796f72a36b7ba972cc67754880600c285977e9f9e2978b435312",
       "reason": "Operator-selected trusted clean exact-SHA checkouts supply only fixed public compiler, runtime and CIL exports plus optional compiler/node. Every transitive workspace alias is verified inside its checkout before loading and again before reporting, with physical links and resolved entries checked. Exact production source/package/manifest Git objects record intentional whole-revision runtime and CIL changes. Program source never forms a module specifier."
+    },
+    {
+      "path": "scripts/benchmarks/a02-extension-metadata-paired.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "0e29a734fa90447e87e509d44387cff738b8ec30b2014035df72ae6976610476",
+      "reason": "Developer benchmark imports an explicit operator-selected local compiler entry from a trusted checkout. The entry is supplied only by the developer running the benchmark; managed source and metadata cannot choose JavaScript modules. Historical benchmark bytes and hashes are preserved."
+    },
+    {
+      "path": "scripts/benchmarks/a02-extension-metadata.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "5cbc987ea93b50396182046631c39c97a0956f2cbfebda9ed4a3fae4cbc8dc0b",
+      "reason": "Developer benchmark imports an explicit operator-selected local compiler entry from a trusted checkout. The entry is supplied only by the developer running the benchmark; managed source and metadata cannot choose JavaScript modules. Historical benchmark bytes and hashes are preserved."
     },
     {
       "path": "packages/cil/tools/pe-bounds-benchmark-worker.mjs",

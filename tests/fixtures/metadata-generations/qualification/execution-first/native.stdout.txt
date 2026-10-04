@@ -1,0 +1,25 @@
+{
+  "output": "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.first",
+  "sourceCommit": "8b9b74f6b7b8faf1692409987da2af4ab4e8b3d5",
+  "status": "native-and-node-replay-completed",
+  "corpora": {
+    "original": {
+      "generations": 3,
+      "rows": 77,
+      "historicalRows": 49,
+      "entityMappings": 72,
+      "heapMappings": 137,
+      "heapValues": 105,
+      "strictUserStringBoundaries": 18
+    },
+    "mixed": {
+      "generations": 3,
+      "rows": 77,
+      "historicalRows": 48,
+      "entityMappings": 75,
+      "heapMappings": 148,
+      "heapValues": 122,
+      "strictUserStringBoundaries": 12
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "workItem": "SF-A03-T24 / #693",
+  "status": "prepared-source-only; none of these scheduled commands has run for this batch",
+  "candidateCheckout": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations",
+  "productCommit": "02df6354e3152beac511d29b20272050ae03f486",
+  "nativePreparationCommit": "bf92ee445f6e3c1658fcd9adeb8d7e74309d0f9a",
+  "toolIdentity": "The final tools-only commit is supplied in the handoff. Every capture records its clean HEAD and exact executable source hashes; no future HEAD is guessed here.",
+  "ownershipObservation": "At task admission the task/mutex refs and matching PR observations were empty. Project-only reservation fields were unavailable; no reservation or lease was claimed, reconciled or taken over.",
+  "schedule": {
+    "authorization": "Root must assign the sole team heavy slot before any native, test or benchmark execution.",
+    "order": [
+      "Review and freeze tool source, exact dynamic-import count/hash and this plan",
+      "Verify disk, existing SDK, own package aliases and unchanged original corpus without running product code",
+      "One fresh native capture, retaining any first failure",
+      "Strict provenance verification of the external capture",
+      "Retain only the allowed native evidence and verify the retained layout",
+      "One explicit eleven-file focused and adjacent Node gate",
+      "Commit successful reference and actual gate evidence so benchmark checkouts are clean",
+      "Prepare a minimal sparse baseline at the exact pre-change commit without installation",
+      "One quiet, serial, predetermined performance cohort",
+      "Retain all raw performance evidence, independently recompute statistics and review regressions"
+    ],
+    "environment": {
+      "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+      "SHARPFORGE_TEST_CONCURRENCY": "1",
+      "SHARPFORGE_MAX_OLD_SPACE_MB": "2048"
+    },
+    "environmentNotes": [
+      "CI must be unset for the local wrapper to acquire a machine-wide slot; record its actual value.",
+      "Record actual inherited NODE_OPTIONS. The wrapper adds the heap cap only if an existing max-old-space-size option is absent.",
+      "No forced GC, --expose-gc, install, unrelated heavy process, concurrent child or adaptive repeat is part of this protocol.",
+      "The machine is shared. Scheduling one team job does not prove an otherwise idle host; retain load and memory observations."
+    ]
+  },
+  "prerequisites": {
+    "dotnet": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "compiler": "5.3.0.0",
+    "compilerSha256": "2e29a995bcee2351d2cc1bb1d3187b1a5d9170e300ef1c15a47a5e4d64c1bb1d",
+    "policy": "planning/qualification/oracle-toolchain.json",
+    "originalManifest": {
+      "path": "tests/fixtures/portable-pdb-generations/reference.json",
+      "sha256": "22e8ad452e64a73c1eea722a9c3e4dcc366d946175241c68d081cc922bbd6f52",
+      "rule": "Verify every listed artifact before and after capture. Never regenerate or modify the original corpus."
+    },
+    "candidatePublicAliases": ["cil", "bytecode", "framework", "bcl-core", "bcl-collections", "symbols", "archive"],
+    "baselinePublicAliases": ["cil", "bytecode", "framework", "bcl-core", "bcl-collections"],
+    "aliasRule": "Each node_modules/@sharpforge/<name> resolves to packages/<name> in that same checkout. Use existing workspace links or create only missing local symlinks; do not install or reuse another checkout's package entries. The CIL benchmark/capture verifies its entire declared five-package source closure before import. Symbols/archive are additionally required by adjacent metadata/PDB fixture tests."
+  },
+  "native": {
+    "destination": "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.first",
+    "command": {
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations",
+      "environment": {
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048"
+      },
+      "argv": [
+        "node", "scripts/limited.js", "node", "tests/fixtures/metadata-generations/capture.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.first"
+      ]
+    },
+    "strictExternalVerificationArgv": [
+      "node", "scripts/limited.js", "node", "tests/fixtures/metadata-generations/verify.mjs",
+      "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.first", "--strict-source"
+    ],
+    "retainedDirectory": "tests/fixtures/metadata-generations/reference",
+    "retainRelativePaths": [
+      "native.json",
+      "build.stdout.log", "build.stderr.log", "create-mixed.stdout.log", "create-mixed.stderr.log",
+      "observe-original.stdout.log", "observe-original.stderr.log", "observe-mixed.stdout.log", "observe-mixed.stderr.log",
+      "mixed/baseline.cs", "mixed/baseline.dll", "mixed/baseline.pdb",
+      "mixed/delta1.cs", "mixed/delta1.dmeta", "mixed/delta1.dil", "mixed/delta1.pdb",
+      "mixed/delta2.cs", "mixed/delta2.dmeta", "mixed/delta2.dil", "mixed/delta2.pdb"
+    ],
+    "retentionProcedure": [
+      "Require capture status native-and-node-replay-completed, all four commands exit 0 with null signal, and strict external verification success.",
+      "Create a new reference directory and copy the twenty explicit paths byte-for-byte, preserving the mixed subdirectory. Do not copy the entire capture directory.",
+      "Hash retained files and compare to source files and native.json; run strict verification against the retained default location.",
+      "Record the copy inventory, actual commands, environment, UTC timestamps, statuses and output hashes under qualification. Commit the successful retained reference before performance.",
+      "Keep all failed first capture records and raw logs in qualification. A later necessary retry gets a distinct directory and documented source/failure disposition."
+    ],
+    "strictRetainedVerificationArgv": [
+      "node", "scripts/limited.js", "node", "tests/fixtures/metadata-generations/verify.mjs", "--strict-source"
+    ],
+    "excludedPayloads": ["project/", "output/", "obj/", "SDK/Roslyn/runtime binaries", "NuGet caches"],
+    "claimsBoundary": "The observer compiles fixture edits and reads metadata with SRM/MetadataAggregator; it never executes fixture methods, calls ApplyUpdate or reconstructs full list ownership. Both original and new mixed corpora need actual native observations and Node replay."
+  },
+  "nodeGate": {
+    "focusedFiles": [
+      "tests/a03-24-reader-budgets.test.js",
+      "tests/a03-24-minimal-delta.test.js",
+      "tests/a03-24-metadata-generations.test.js",
+      "tests/a03-24-metadata-generation-boundaries.test.js",
+      "tests/a03-24-metadata-generations-native.test.js"
+    ],
+    "adjacentFiles": [
+      "tests/cil-table-widths.test.js",
+      "tests/a03-03-pe-reader.test.js",
+      "tests/a13-14-metadata-tables.test.js",
+      "tests/a13-14-metadata-heaps.test.js",
+      "tests/a13-14-metadata-native.test.js",
+      "tests/a13-05-pdb-generations.test.js"
+    ],
+    "argv": [
+      "node", "scripts/limited.js", "node", "--test", "--test-concurrency=1",
+      "tests/a03-24-reader-budgets.test.js",
+      "tests/a03-24-minimal-delta.test.js",
+      "tests/a03-24-metadata-generations.test.js",
+      "tests/a03-24-metadata-generation-boundaries.test.js",
+      "tests/a03-24-metadata-generations-native.test.js",
+      "tests/cil-table-widths.test.js",
+      "tests/a03-03-pe-reader.test.js",
+      "tests/a13-14-metadata-tables.test.js",
+      "tests/a13-14-metadata-heaps.test.js",
+      "tests/a13-14-metadata-native.test.js",
+      "tests/a13-05-pdb-generations.test.js"
+    ],
+    "risks": [
+      "Default reader return fields/order and borrowed heaps, explicit row admission and synchronous cancellation",
+      "Compressed, uncompressed, minimal-delta and external-PDB column widths and table bounds",
+      "PE envelope metadata option forwarding without duplicate parsing or altered body behavior",
+      "Aggregate introduction mapping versus latest physical row; Module identity, EncMap order and nil/future/control handles",
+      "GUID holes/nonrebasing, trimmed Strings extents, Blob/#US boundaries, scalar/reference facts against actual SRM",
+      "Transactional appends, option/signal getter reentrancy, intrinsic input extents, bounds, owned snapshots and disposal",
+      "Existing metadata table/heap inspector and PortablePdbGenerations consumers of the shared physical reader"
+    ],
+    "evidence": "Retain complete TAP/stdout/stderr, exact argv/cwd/environment, commit, native reference hash, tested-file/source-tool hashes, exit/signal and UTC times. Record actual test counts/failures/skips only after execution. No broad or wildcard run is implied."
+  },
+  "baselinePreparation": {
+    "destination": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+    "status": "not created; no full checkout or install authorized by this preparation",
+    "steps": [
+      {
+        "argv": [
+          "git", "-C", "/workspace/scratch/7e3d2a445c44/SharpForge", "worktree", "add", "--detach", "--no-checkout",
+          "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+          "31900dce5c1454c1f9c244c9ac14e1798eac3e5f"
+        ]
+      },
+      { "cwd": "baseline destination", "argv": ["git", "config", "--worktree", "core.sparseCheckout", "true"] },
+      { "cwd": "baseline destination", "argv": ["git", "config", "--worktree", "core.sparseCheckoutCone", "false"] },
+      {
+        "cwd": "baseline destination",
+        "writeFileResolvedByArgv": ["git", "rev-parse", "--git-path", "info/sparse-checkout"],
+        "contents": "/package.json\n/packages/cil/\n/packages/bytecode/\n/packages/framework/\n/packages/bcl-core/\n/packages/bcl-collections/\n/tests/fixtures/a03-metadata/fixture.js\n/tests/fixtures/decompiler-cfg/native.json\n!/planning/qualification/inventory/\n!/docs/evidence/\n!/docs/screenshots/\n"
+      },
+      { "cwd": "baseline destination", "argv": ["git", "read-tree", "-mu", "HEAD"] }
+    ],
+    "notes": [
+      "The shared repository already has extensions.worktreeConfig=true. Verify that setting before preparing the sparse worktree.",
+      "Use the five declared local public package aliases and keep node_modules ignored; do not alter tracked manifests or product source.",
+      "The sparse patterns retain all three established exclusions. Only the small dependency closure and two common fixture inputs are needed.",
+      "The benchmark refuses a dirty baseline, a different baseline commit, source drift or aliases to another checkout."
+    ]
+  },
+  "performance": {
+    "status": "source prepared; no measured result or performance acceptance",
+    "baselineCommit": "31900dce5c1454c1f9c244c9ac14e1798eac3e5f",
+    "productCommit": "02df6354e3152beac511d29b20272050ae03f486",
+    "warmupBatches": 20,
+    "measuredBatches": 100,
+    "controls": [
+      { "id": "readMetadata-small", "fixture": "small", "api": "metadata", "operations": 128 },
+      { "id": "readMetadata-real", "fixture": "real", "api": "metadata", "operations": 64 },
+      { "id": "readPE-small", "fixture": "small", "api": "pe", "operations": 128 },
+      { "id": "readPE-real", "fixture": "real", "api": "pe", "operations": 64 }
+    ],
+    "features": [
+      { "id": "generation-construct", "operations": 25 },
+      { "id": "generation-append-first", "operations": 25 },
+      { "id": "generation-append-second", "operations": 25 },
+      { "id": "generation-map-entity", "operations": 1000 },
+      { "id": "generation-map-heap", "operations": 1000 },
+      { "id": "generation-row-latest", "operations": 1000 },
+      { "id": "generation-row-historical", "operations": 1000 },
+      { "id": "generation-heap-entry", "operations": 400 }
+    ],
+    "argv": [
+      "node", "scripts/limited.js", "node", "packages/cil/tools/benchmark-metadata-generations.mjs",
+      "--baseline", "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "--output", "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-performance.first"
+    ],
+    "inputPins": {
+      "structuralFixtureSha256": "be9d1a02714df408b052a266fccd97df547f62b1199d734088439940b77c7594",
+      "retainedNativeCFGSha256": "bfcaf0f930c76cdfd133565ffd5779f5e85258034f1fd2f21051a868d6a3cfc1",
+      "retainedNativePEBytes": 11776,
+      "retainedNativePESha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+      "newMixedCorpus": "The native reference must be committed in the clean candidate before launch. Its exact git blob, SHA-256, capture/source/toolchain identities and all artifact hashes are frozen before the first child; workers reject changes. No uncaptured artifact hash is invented."
+    },
+    "processOrder": [
+      "prepare-baseline", "prepare-candidate",
+      "readMetadata-small-baseline", "readMetadata-small-candidate",
+      "readMetadata-real-candidate", "readMetadata-real-baseline",
+      "readPE-small-baseline", "readPE-small-candidate",
+      "readPE-real-candidate", "readPE-real-baseline",
+      "readMetadata-small-candidate-bounded", "readMetadata-real-candidate-bounded",
+      "readPE-small-candidate-bounded", "readPE-real-candidate-bounded",
+      "generation-features-candidate"
+    ],
+    "guardProtocol": [
+      "Both preparation children generate identical structural bytes, decode the same pinned real image and compare complete reader fields, field order, scalar rows, all heap bytes, referenced heap values, list/type callbacks and owned/borrowed contracts before any timing.",
+      "Default readPE method-body outcomes and section RVA conversions are compared outside timing. Inspection-only reads additionally check all five retained native method CIL byte sequences; expected default unsupported outcomes remain explicit.",
+      "Every timed reader result is consumed and compared outside timing, including all returned data fields, field order, borrowed stream buffers and PE input identity. Full callback/ownership facts are rechecked after timing.",
+      "All four candidate-only bounded controls use maxRows equal to the actual physical row total; readPE forwards that value in metadataOptions. One less must reject with MD_READ_ROW_LIMIT before timing. Signal is omitted in both default and bounded controls.",
+      "The candidate-only feature child first replays every retained mixed native fact. Construction and append returns are guarded by complete history snapshots; all mapping, latest/historical row and four-heap query returns are checked against the replay-qualified expectations.",
+      "No feature module is imported by baseline reader children or the parent. Two fixed worker dynamic imports are bound to a single exact source hash/count allowlist entry and checked before loading public aliases."
+    ],
+    "measurement": {
+      "unit": "microseconds/operation",
+      "statistics": "True median; nearest-rank p95 and p99 of the 100 chronological batch means, never individual-call latency percentiles",
+      "counts": "Four default controls on each side, four separately labeled candidate row-budget controls, eight new-feature workloads: 20 workloads and 2400 total warm/measured batches.",
+      "timed": "Synchronous public invocation plus one assignment of its returned value into a preallocated array",
+      "outsideTiming": "Imports/startup, input preparation, native replay, prerequisite history construction, correctness guards, disposal, output serialization, statistics and I/O",
+      "memory": "Signed net heapUsed deltas and process memory observations; GC can make deltas negative and ArrayBuffer/native allocation is not fully represented. No total allocation counter or peak-RSS claim.",
+      "features": "Construction uses the mixed baseline PE. Appends use fresh preceding histories prepared outside timing. Four named entity probes and four heap probes use fixed equal round-robin mixes. Latest/historical rows target Added at generations 2/1."
+    },
+    "retention": [
+      "Retain the entire new benchmark destination: report.json, inputs.json, all fifteen job/result records, and every stdout/stderr log, including failed attempts and partial worker records.",
+      "The report records exact Node argv/cwd, job/source/tool/native/fixture hashes, own package entries, process statuses/times, node/V8/CPU/OS/environment and raw chronological warm/measured samples.",
+      "Retain the outer limited-wrapper command, raw log, environment, status/signal and artifact SHA-256 inventory separately under qualification.",
+      "Copy evidence byte-for-byte into qualification/performance-first only after capture finishes; do not write evidence into either measured checkout during the run.",
+      "Independently recompute all statistics from raw samples. Preserve original figures, absolute costs and every regression. More than 5% existing median regression needs quantified justification and explicit PR sign-off; the driver never grants acceptance.",
+      "An interrupted process may not have written its current in-memory samples. Preserve its raw exit/log/result absence honestly; never fill missing observations or silently replace the cohort."
+    ]
+  },
+  "diskBudgetMiB": {
+    "observedFreeDuringPreparation": 326,
+    "measurementMethod": "Read-only df -m; capacity is shared and must be checked again immediately before scheduling",
+    "alreadyPresentSdkApproximately": 629,
+    "alreadyPresentSparseCandidateApproximately": 112,
+    "estimatedAdditionalBaselineIncludingGitIndex": 20,
+    "estimatedNativeBuildAndCaptureScratchAllowance": 80,
+    "estimatedRetainedNativeAndGateEvidenceAllowance": 20,
+    "estimatedPerformanceOutputAndRetentionAllowance": 40,
+    "safetyMargin": 64,
+    "recommendedFreeBeforeStarting": 256,
+    "qualification": "Incremental sizes are conservative planning estimates, not measured output sizes. The existing SDK is reused; no installation, copied SDK payload or full baseline checkout is included. Reclaim only owned temporary observer build outputs after preserving failures and hashing retained evidence."
+  },
+  "deferredTargets": [
+    "Chromium, Firefox and WebKit execution of browser.mjs requires separate actual browser observations",
+    "Windows/macOS native hosts and other SDK/runtime versions remain unverified",
+    "Source VM, direct CIL, and Rust/Wasm implementations are not supplied by this JavaScript metadata API",
+    "No runtime ApplyUpdate, merged list-ownership reconstruction or delta IL body execution is claimed",
+    "Build-size/core/publishing gates remain root-owned and are not represented as completed by this plan"
+  ]
+}

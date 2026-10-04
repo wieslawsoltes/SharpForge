@@ -15,6 +15,7 @@ import { SymbolKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { SymbolMetadataWriter } from '../../codegen/metadata/symbol-metadata.js';
 import { installCompilerAttributeBodies } from './compiler-attribute-bodies.js';
+import { installExtensionBlockBodies } from './extension-block-bodies.js';
 import { CustomAttributeWriter } from '../../codegen/metadata/custom-attributes.js';
 import { referenceIdentitiesOf } from '../../codegen/metadata/reference-identities.js';
 import { MemberTokens } from './member-tokens.js';
@@ -50,6 +51,7 @@ export class AssemblyEmitter {
       synthesized = new SynthesizedMembers(this.analysis),
       writer = new SymbolMetadataWriter(builder, this.analysis, { bodyRva: method => this.bodyAddresses.get(method), synthesized });
     writer.allocateTokens();
+    installExtensionBlockBodies(writer);
     installCompilerAttributeBodies(writer);
     this.tokens = new MemberTokens(writer);
     /** The synthesized members by definition token; rebuilt when tokens move or a field is added. */

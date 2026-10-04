@@ -4,10 +4,11 @@ import { compactNullableFlags, encodeNullableFlags, nullableContextFlag } from '
 import { nullableConstraintType, nullableMethodSignature, nullableTypeParameterFlag, nullableTypeUse } from './nullable-signatures.js';
 
 const compact = type => type ? compactNullableFlags(encodeNullableFlags(type)) : [];
-const scope = (owner, kind) => ({ owner, kind, children: [], entries: [], context: null, contextAttribute: null });
+const scope = (owner, kind) => ({ owner, kind, children: [], entries: [], context: null, contextAttribute: null, emitsContext: true });
 const entry = (scope, target, flags) => {
+  if (!flags.length) return null;
   const result = { ...target, flags };
-  if (flags.length) scope.entries.push(result);
+  scope.entries.push(result);
   return result;
 };
 
@@ -23,7 +24,11 @@ export class NullableMetadataPlan {
     this.roots = [];
     this.returns = new Map();
     this.uriByRoot = new Map(analysis.files.map(file => [file.syntax, file.source.uri]));
-    for (const type of writer.types) this.scopes.set(type, scope(type, 'type'));
+    for (const type of writer.types) {
+      const current = scope(type, 'type');
+      current.emitsContext = writer.plans.get(type).emitsNullableTypeAttributes !== false;
+      this.scopes.set(type, current);
+    }
     for (const type of writer.types) {
       const current = this.scopes.get(type), parent = this.scopes.get(type.containingType);
       (parent ? parent.children : this.roots).push(current);
@@ -47,17 +52,18 @@ export class NullableMetadataPlan {
   }
   typeEntries(type, current) {
     const plan = this.writer.plans.get(type), core = this.writer.core;
+    const ownTypeMetadata = plan.emitsNullableTypeAttributes !== false;
     const events = new Map(), eventFields = new Map();
     for (const planned of plan.events) {
       events.set(planned.adder, planned.symbol);
       events.set(planned.remover, planned.symbol);
       eventFields.set(planned.symbol.name, planned.symbol);
     }
-    if (type.typeKind !== TypeKind.Interface && type.baseType) {
+    if (ownTypeMetadata && type.typeKind !== TypeKind.Interface && type.baseType) {
       const base = type.baseSyntax?.typeWithAnnotations ?? nullableTypeUse(type.baseType, core);
       entry(current, { kind: 'base', type }, compact(base.withAnnotation(NullableAnnotation.Oblivious)));
     }
-    for (const implemented of [...(type.interfaces ?? []), ...(plan.interfaces ?? [])]) {
+    for (const implemented of ownTypeMetadata ? [...(type.interfaces ?? []), ...(plan.interfaces ?? [])] : []) {
       const use = type.interfaceSyntax?.get(implemented)?.typeWithAnnotations ?? nullableTypeUse(implemented, core);
       entry(current, { kind: 'interface', type, interface: implemented }, compact(use.withAnnotation(NullableAnnotation.Oblivious)));
     }
@@ -67,18 +73,20 @@ export class NullableMetadataPlan {
     }
     for (const { symbol } of plan.properties) entry(current, { kind: 'property', symbol }, compact(symbol.typeWithAnnotations));
     for (const { symbol } of plan.events) entry(current, { kind: 'event', symbol }, compact(symbol.typeWithAnnotations));
-    this.typeParameters(current, this.writer.allTypeParameters(type));
+    if (ownTypeMetadata) this.typeParameters(current, this.writer.allTypeParameters(type));
     for (const method of plan.methods) this.methodEntries(type, method, current, events);
   }
   methodEntries(type, method, parent, events) {
     const current = scope(method, 'method');
-    this.scopes.set(method, current);
-    parent.children.push(current);
     const signature = nullableMethodSignature(type, method, events, this.writer.core);
     const returned = entry(current, { kind: 'return', method }, compact(signature.returned));
-    this.returns.set(method, returned);
     signature.parameters.forEach((parameter, index) => entry(current, { kind: 'parameter', method, index }, compact(parameter)));
     this.typeParameters(current, method.symbol?.typeParameters ?? method.typeParameters ?? []);
+    // Empty scopes cannot vote for a context or emit attributes; retain all nonempty vectors, including [0].
+    if (!current.entries.length) return;
+    this.scopes.set(method, current);
+    parent.children.push(current);
+    if (returned) this.returns.set(method, returned);
   }
   typeParameters(current, parameters) {
     for (const parameter of parameters) {
@@ -92,9 +100,10 @@ export class NullableMetadataPlan {
     }
   }
   chooseContexts(current) {
+    for (const child of current.children) this.chooseContexts(child);
+    if (!current.emitsContext) return;
     const candidates = current.entries.filter(item => item.flags.length === 1).map(item => item.flags);
     for (const child of current.children) {
-      this.chooseContexts(child);
       if (child.context !== null) candidates.push([child.context]);
     }
     current.context = candidates.length ? nullableContextFlag(candidates) : null;
