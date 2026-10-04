@@ -30,6 +30,7 @@ export * from './pack/index.js';
 export * from './pack/accessor.js';
 export * from './transport/http.js';
 export * from './transport/rest.js';
+export * from './fetch.js';
 export * from './refspec.js';
 export * from './shallow.js';
 export * from './promisor.js';
