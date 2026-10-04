@@ -558,6 +558,45 @@ the new ordinal and ignore-case prefix routes separately. It includes 8/9/64-uni
 needles, excluded suffixes and all-overlap inputs. Other LastIndexOf overloads,
 culture support and native/Wasm execution remain outside this batch under #2621.
 
+`String.LastIndexOf(string, int startIndex, int count, StringComparison)` appends
+contract `524318` after signed/unsigned Int64 StringBuilder Append `524316`/`524317`.
+It preserves backward-search normalization captured from .NET: an empty receiver
+accepts starts -1/0 and ignores every count, including negative integer extremes;
+a nonempty receiver accepts `0..Length`, and the `Length` alias decrements a
+positive count by one. The effective exclusive end is `min(startIndex + 1, Length)`.
+After normalization, count must be within `0..end`, and the searched window is
+`[end - count, end)`. Empty values return the effective end, even for count zero.
+
+Receiver/value null, invalid enum, invalid start and invalid normalized count
+retain that precedence; otherwise valid culture modes 0–3 reach the explicit
+unsupported guard. The [pinned .NET 10.0.5 reference](reference/string-lastindexof-comparison-window/README.md)
+contains 1,402 unchanged native rows, including arbitrary empty counts, Length
+aliases, every small backward window, overlaps and surrogate cuts at either bound.
+All 246 whole-string controls and actual native culture outputs remain recorded.
+
+The dispatcher reuses its scalar array for arguments, and the existing last-match
+Two-Way helper receives an optional lower bound without changing its fold, raw
+endpoint handling, prescan or period-memory loop. Ordinal-ignore-case takes
+O(window.Length + value.Length) folded reads and O(1) space, with the existing two
+host factorization records. Surrogate classification may inspect adjacent units
+outside the window, while candidate matches remain entirely inside it. Ordinal
+uses native `lastIndexOf` from the final complete candidate and rejects results
+below the lower bound. It may scan the excluded prefix, so its cost is bounded by
+the total receiver instead of the selected window. Neither route copies a
+substring or adds per-call options objects/closures; successful calls allocate
+no managed strings or arrays.
+
+Focused tests cover both compiler pipelines and VMs, independent CIL, managed
+collection, exhaustive windows, exact exception parameters and counted overlapping
+matches between large excluded BMP regions. The static benchmark
+`scripts/benchmarks/a07-string-lastindexof-comparison-window.mjs` reports existing
+first/last/prefix controls and the new ordinal/ignore-case window separately with
+8/9/64-unit needles, excluded hits and all-overlap workloads. The comparison
+baseline is Int64 parent `2ca53c88`, with the identical runner copied into it,
+so builder prerequisite costs are excluded. Culture
+implementations, other search APIs and native/Wasm execution remain open under
+#2621 and are not qualified by this batch.
+
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
 first, then compares exact UTF-16 code units without normalization, case folding
