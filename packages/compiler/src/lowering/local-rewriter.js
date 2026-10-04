@@ -1,5 +1,6 @@
 import {BoundTreeRewriter} from '../bound/rewriter.js';
 import {BoundBlock,BoundTryStatement,BoundIfStatement,BoundWhileStatement,BoundLiteral,BoundCall,BoundBinaryOperator} from '../bound/nodes.js';
+import {registeredFieldDescriptor} from '../symbols/registry-fields.js';
 /**
  * The local rewriter: lowers statement and expression forms that have a direct expansion in terms of simpler
  * bound nodes. Framework members it needs come from the well-known member table (CS0656 when one is missing).
@@ -17,6 +18,11 @@ import {BoundBlock,BoundTryStatement,BoundIfStatement,BoundWhileStatement,BoundL
 export class LocalRewriter extends BoundTreeRewriter {
   /** @param {object} context `{types(legacyName) -> TypeSymbol, wellKnown: WellKnownMembers, report(node,code,args)}`. */
   constructor(context){super();this.context=context;}
+  visitFieldAccess(node) {
+    const field = registeredFieldDescriptor(node.field);
+    return field ? new BoundLiteral(node.syntax, {value: field.value}, node.type, {legacyType: field.type})
+      : super.visitFieldAccess(node);
+  }
   literal(value,legacyType){return new BoundLiteral(null,{value},this.context.types(legacyType),{legacyType});}
   /** A static call to a well-known runtime helper; null (after CS0656) when the helper is missing. */
   helperCall(id,syntax,args,legacyType){const method=this.context.wellKnown.get(id,syntax);return method?new BoundCall(null,{receiver:null,method,args,intrinsic:null},this.context.types(legacyType),{legacyType}):null;}

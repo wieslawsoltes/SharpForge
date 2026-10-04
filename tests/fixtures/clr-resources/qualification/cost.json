@@ -1,0 +1,41 @@
+{
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "imageBytes": 1799,
+  "entries": 38,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "checksum": -2147526592911360,
+  "results": [
+    {
+      "name": "cold index including owned input copy",
+      "unit": "microseconds/operation",
+      "median": 20.58386999999982,
+      "p95": 35.78111999999976,
+      "p99": 45.46965
+    },
+    {
+      "name": "cold index and complete value enumeration",
+      "unit": "microseconds/operation",
+      "median": 41.198779999999715,
+      "p95": 52.35867999999982,
+      "p99": 80.24247999999943
+    },
+    {
+      "name": "warm scalar lookup",
+      "unit": "microseconds/operation",
+      "median": 0.040621699999996964,
+      "p95": 0.07357520000000477,
+      "p99": 0.2833987999999977
+    },
+    {
+      "name": "owned byte-array lookup",
+      "unit": "microseconds/operation",
+      "median": 0.09194119999999657,
+      "p95": 0.12079169999999521,
+      "p99": 0.12455919999999879
+    }
+  ]
+}

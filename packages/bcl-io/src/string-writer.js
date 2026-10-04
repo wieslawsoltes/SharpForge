@@ -44,25 +44,29 @@ function appendNewLine(platform, builder, reference) {
 
 function write(platform, descriptor, reference, value) {
   const builder = platform.get(reference, '$builder');
-  if (descriptor.parameters[0] === 'char') {
+  const line = descriptor.name === 'WriteLine';
+  if (descriptor.parameters.length === 0) {
+    if (line) appendNewLine(platform, builder, reference);
+    return null;
+  }
+  const parameter = descriptor.parameters[0];
+  if (parameter === 'char') {
     const unit = integer(platform, bclScalar(platform, value), 0, 65535);
     appendWriterBuilder(platform, builder, String.fromCharCode(unit));
-    // TextWriter.WriteLine(char) re-enters the parameterless newline gate after Write(char).
-    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
-  } else if (descriptor.parameters[0] === 'string') {
+  } else if (parameter === 'string') {
     string(platform, value, true);
     if (value !== null) appendWriterBuilder(platform, builder, value);
-    // Inherited WriteLine(string) enters a second virtual string write for the current newline.
-    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
-  } else if (isWriterScalar(descriptor.parameters[0])) {
-    appendWriterScalar(platform, builder, value, descriptor.parameters[0]);
-    // Inherited scalar WriteLine calls typed Write first, then the current parameterless newline gate.
-    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
-  } else if (descriptor.parameters.length) {
+  } else if (isWriterScalar(parameter)) {
+    appendWriterScalar(platform, builder, value, parameter);
+  } else {
     fail(platform, 'MissingMethodException', descriptor.name + '(' + descriptor.parameters.join(',') + ')');
   }
-  // Keep these separate: a failed newline append retains an already-written value, as TextWriter does.
-  if (descriptor.name === 'WriteLine') appendNewLine(platform, builder, reference);
+  if (line) {
+    // Inherited value overloads enter a second write gate, including null and empty strings.
+    // Read the current newline after value callbacks; a failure retains the already-written value.
+    requireOpen(platform, reference);
+    appendNewLine(platform, builder, reference);
+  }
   return null;
 }
 

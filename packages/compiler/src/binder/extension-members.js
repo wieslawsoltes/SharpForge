@@ -1,7 +1,7 @@
 /**
  * Lookup of C# 14 extension members (SF-A02-T83).
  *
- * The symbols come from symbols/source/extension-blocks.js: every member of an `extension(...)` block is a static
+ * The symbols come from source blocks or imported grouping/marker metadata: every extension block member is a static
  * implementation method of its class. Instance extension methods need nothing here - they are classic extension
  * methods and the existing lookup finds them. This module adds what a classic extension method cannot express:
  *
@@ -32,8 +32,7 @@ import { lookupMembers } from './inheritance.js';
 
 /** The extension members a class declares (building its members on first use). */
 function extensionMembersOf(type) {
-  // Extension blocks are read from source only: a class from metadata has none, and its members stay undecoded.
-  if (type.mightContainExtensionMethods !== undefined || !canDeclareExtensions(type)) return [];
+  if (type.mightContainExtensionMethods === false || !canDeclareExtensions(type)) return [];
   type.getMembers();
   return type.extensionMembers ?? [];
 }

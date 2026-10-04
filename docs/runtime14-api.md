@@ -299,6 +299,7 @@ keys as property names in collection enumeration order, including numeric-lookin
 string keys. Declared boolean dictionary values and boxed Boolean/Char values
 retain their JSON types. Dictionary traversal is shared with the collection
 package so removed entries and reused slots follow its enumeration policy.
-The source compiler still rejects `char` values with `SF2003`; boxed Char
-serialization is qualified through independently assembled CIL.
+Boxed Char serialization retains the genuine `System.Char` payload through both
+compiler pipelines and both JavaScript VMs, with additional independently
+assembled CIL coverage against the same native dictionary output.
 Custom encoders and arbitrary object reflection are not supported.

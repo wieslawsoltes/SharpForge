@@ -1,0 +1,4108 @@
+{
+  "runtime": {
+    "framework": ".NET 10.0.5",
+    "version": "10.0.5",
+    "os": "Ubuntu 24.04.3 LTS",
+    "architecture": "X64"
+  },
+  "metadata": [
+    {
+      "name": "get_Capacity",
+      "returnType": "System.Int32",
+      "parameterTypes": [],
+      "isStatic": false,
+      "declaringType": "System.Collections.Generic.HashSet\u003CSystem.Int32\u003E"
+    },
+    {
+      "name": "EnsureCapacity",
+      "returnType": "System.Int32",
+      "parameterTypes": [
+        "System.Int32"
+      ],
+      "isStatic": false,
+      "declaringType": "System.Collections.Generic.HashSet\u003CSystem.Int32\u003E"
+    },
+    {
+      "name": "TrimExcess",
+      "returnType": "System.Void",
+      "parameterTypes": [],
+      "isStatic": false,
+      "declaringType": "System.Collections.Generic.HashSet\u003CSystem.Int32\u003E"
+    },
+    {
+      "name": "TrimExcess",
+      "returnType": "System.Void",
+      "parameterTypes": [
+        "System.Int32"
+      ],
+      "isStatic": false,
+      "declaringType": "System.Collections.Generic.HashSet\u003CSystem.Int32\u003E"
+    }
+  ],
+  "rows": [
+    {
+      "name": "fresh-empty",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": -1,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 12,
+          "result": null,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": -1,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-0",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 0
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-1",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 1
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-2",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 2
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-3",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 3
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-4",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 4
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-7",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 7
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-8",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 8
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 11,
+          "fault": null,
+          "capacity": 11,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-11",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 11
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 11,
+          "fault": null,
+          "capacity": 11,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-12",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 12
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 17,
+          "fault": null,
+          "capacity": 17,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-17",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 17
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 17,
+          "fault": null,
+          "capacity": 17,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-18",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 18
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-23",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 23
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-24",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 24
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 29,
+          "fault": null,
+          "capacity": 29,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-29",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 29
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 29,
+          "fault": null,
+          "capacity": 29,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-30",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 30
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 37,
+          "fault": null,
+          "capacity": 37,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "constructor-capacity-37",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 37
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 37,
+          "fault": null,
+          "capacity": 37,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-empty",
+      "constructor": {
+        "kind": "array",
+        "items": []
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-unique-eight",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 11,
+          "fault": null,
+          "capacity": 11,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-three-repeated-singleton",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          1,
+          1
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 1,
+          "values": [
+            1
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-four-repeated-singleton",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 1,
+          "values": [
+            1
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-seven-two-distinct",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 2,
+          "values": [
+            1,
+            2
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-eight-two-distinct",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 2,
+          "values": [
+            1,
+            2
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-eleven-three-distinct",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          3,
+          1,
+          2,
+          3,
+          1,
+          2,
+          3,
+          1,
+          2
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 11,
+          "fault": null,
+          "capacity": 11,
+          "count": 3,
+          "values": [
+            1,
+            2,
+            3
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-twelve-four-distinct",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          3,
+          4,
+          1,
+          2,
+          3,
+          4,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "array-twelve-five-distinct",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          1,
+          2,
+          3,
+          4,
+          5,
+          1,
+          2
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 17,
+          "fault": null,
+          "capacity": 17,
+          "count": 5,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "capacity-zero-initialization",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 0
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 1,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "allocated-empty-prime-floor",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 7
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 4,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "add-growth",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 1,
+          "result": true,
+          "fault": null,
+          "capacity": 3,
+          "count": 1,
+          "values": [
+            1
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 2,
+          "result": true,
+          "fault": null,
+          "capacity": 3,
+          "count": 2,
+          "values": [
+            1,
+            2
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 3,
+          "result": true,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 3,
+          "result": false,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 4,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 5,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 6,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 7,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 7,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 8,
+          "result": true,
+          "fault": null,
+          "capacity": 17,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 17,
+          "result": 17,
+          "fault": null,
+          "capacity": 17,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 23,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 8,
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 12,
+          "result": 17,
+          "fault": null,
+          "capacity": 17,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 12,
+          "result": null,
+          "fault": null,
+          "capacity": 17,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 100,
+          "result": null,
+          "fault": null,
+          "capacity": 17,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "capacity-errors-preserve-state",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          10,
+          20,
+          30
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 3,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": -1,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": -1,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 2,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 3,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 4,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 2,
+          "result": null,
+          "fault": "System.ArgumentOutOfRangeException",
+          "capacity": 23,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 3,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ensure-preserves-holes",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 7,
+          "values": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Remove",
+          "argument": 20,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            60,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 60,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            70
+          ]
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 7,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 8,
+          "result": 11,
+          "fault": null,
+          "capacity": 11,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 80,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 6,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 90,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 7,
+          "values": [
+            10,
+            90,
+            30,
+            40,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 40,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 6,
+          "values": [
+            10,
+            90,
+            30,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 24,
+          "result": 29,
+          "fault": null,
+          "capacity": 29,
+          "count": 6,
+          "values": [
+            10,
+            90,
+            30,
+            50,
+            80,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 100,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 7,
+          "values": [
+            10,
+            90,
+            30,
+            100,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 7,
+          "values": [
+            10,
+            90,
+            30,
+            100,
+            50,
+            80,
+            70
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        }
+      ]
+    },
+    {
+      "name": "rounded-trim-preserves-holes",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 7,
+          "values": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Remove",
+          "argument": 20,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            60,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 40,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            50,
+            60,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 60,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            10,
+            30,
+            50,
+            70
+          ]
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 4,
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            10,
+            30,
+            50,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 80,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 90,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            10,
+            30,
+            90,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            10,
+            30,
+            90,
+            50,
+            80,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "trim-compacts-survivors",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 29
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 29,
+          "fault": null,
+          "capacity": 29,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 10,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 1,
+          "values": [
+            10
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 20,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 2,
+          "values": [
+            10,
+            20
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 30,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 3,
+          "values": [
+            10,
+            20,
+            30
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 40,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 4,
+          "values": [
+            10,
+            20,
+            30,
+            40
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 50,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 5,
+          "values": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ]
+        },
+        {
+          "operation": "Add",
+          "argument": 60,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 6,
+          "values": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 20,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            60
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 40,
+          "result": true,
+          "fault": null,
+          "capacity": 29,
+          "count": 4,
+          "values": [
+            10,
+            30,
+            50,
+            60
+          ]
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 4,
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            10,
+            30,
+            50,
+            60
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 70,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            50,
+            60,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 30,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            10,
+            50,
+            60,
+            70
+          ]
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 4,
+          "values": [
+            10,
+            50,
+            60,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 80,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            80,
+            50,
+            60,
+            70
+          ]
+        }
+      ]
+    },
+    {
+      "name": "empty-after-removes-and-clear",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 11,
+          "fault": null,
+          "capacity": 11,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 1,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Remove",
+          "argument": 1,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 7,
+          "values": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 2,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 6,
+          "values": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 3,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 5,
+          "values": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 4,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 4,
+          "values": [
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 5,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 3,
+          "values": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 6,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 2,
+          "values": [
+            7,
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 7,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 1,
+          "values": [
+            8
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 8,
+          "result": true,
+          "fault": null,
+          "capacity": 11,
+          "count": 0,
+          "values": []
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 99,
+          "result": true,
+          "fault": null,
+          "capacity": 3,
+          "count": 1,
+          "values": [
+            99
+          ]
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 12,
+          "result": 17,
+          "fault": null,
+          "capacity": 17,
+          "count": 1,
+          "values": [
+            99
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 99,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Clear",
+          "result": null,
+          "fault": null,
+          "capacity": 17,
+          "count": 0,
+          "values": []
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "Add",
+          "argument": 100,
+          "result": true,
+          "fault": null,
+          "capacity": 3,
+          "count": 1,
+          "values": [
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "name": "union-empty-input",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [],
+          "result": null,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "union-empty-distinct-eight",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "result": null,
+          "fault": null,
+          "capacity": 17,
+          "count": 8,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "name": "union-empty-duplicates",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+          ],
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 2,
+          "values": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "union-reuses-holes-and-grows",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 7,
+          "values": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70
+          ],
+          "iterator": {
+            "moved": true,
+            "current": 10,
+            "fault": null
+          }
+        },
+        {
+          "operation": "Remove",
+          "argument": 20,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            60,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 60,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            70
+          ]
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [],
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            10,
+            30,
+            40,
+            50,
+            70
+          ]
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [
+            80,
+            90,
+            80,
+            10
+          ],
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 7,
+          "values": [
+            10,
+            90,
+            30,
+            40,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "Remove",
+          "argument": 40,
+          "result": true,
+          "fault": null,
+          "capacity": 7,
+          "count": 6,
+          "values": [
+            10,
+            90,
+            30,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [
+            100,
+            110,
+            120,
+            130,
+            140
+          ],
+          "result": null,
+          "fault": null,
+          "capacity": 17,
+          "count": 11,
+          "values": [
+            10,
+            90,
+            30,
+            100,
+            50,
+            80,
+            70,
+            110,
+            120,
+            130,
+            140
+          ]
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 11,
+          "values": [
+            10,
+            90,
+            30,
+            100,
+            50,
+            80,
+            70,
+            110,
+            120,
+            130,
+            140
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        }
+      ]
+    },
+    {
+      "name": "union-crosses-multiple-growth-boundaries",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
+          ],
+          "result": null,
+          "fault": null,
+          "capacity": 197,
+          "count": 90,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
+          ]
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [
+            0,
+            44,
+            89
+          ],
+          "result": null,
+          "fault": null,
+          "capacity": 197,
+          "count": 90,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
+          ]
+        },
+        {
+          "operation": "UnionWith",
+          "argument": [],
+          "result": null,
+          "fault": null,
+          "capacity": 197,
+          "count": 90,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
+          ]
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 107,
+          "count": 90,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        }
+      ]
+    },
+    {
+      "name": "native-prime-boundary-968897",
+      "constructor": {
+        "kind": "capacity",
+        "capacity": 968897
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 968897,
+          "fault": null,
+          "capacity": 968897,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "native-prime-boundary-968898",
+      "constructor": {
+        "kind": "empty"
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 0,
+          "fault": null,
+          "capacity": 0,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 968898,
+          "result": 1162687,
+          "fault": null,
+          "capacity": 1162687,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 0,
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 0,
+          "values": [],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        }
+      ]
+    }
+  ],
+  "typedObservations": [
+    {
+      "elementType": "System.Int32",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          {
+            "type": "System.Int32",
+            "value": 1
+          },
+          {
+            "type": "System.Int32",
+            "value": 2
+          },
+          {
+            "type": "System.Int32",
+            "value": 3
+          },
+          {
+            "type": "System.Int32",
+            "value": 1
+          }
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Int32",
+              "value": 2
+            },
+            {
+              "type": "System.Int32",
+              "value": 3
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Int32",
+              "value": 1
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Int32",
+              "value": 2
+            },
+            {
+              "type": "System.Int32",
+              "value": 3
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Int32",
+              "value": 1
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 8,
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Int32",
+              "value": 2
+            },
+            {
+              "type": "System.Int32",
+              "value": 3
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Int32",
+              "value": 2
+            },
+            {
+              "type": "System.Int32",
+              "value": 3
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Int32",
+              "value": 2
+            },
+            {
+              "type": "System.Int32",
+              "value": 3
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Int32",
+              "value": 1
+            },
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "elementType": "System.Double",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          {
+            "type": "System.Double",
+            "value": 0
+          },
+          {
+            "type": "System.Double",
+            "value": -0
+          },
+          {
+            "type": "System.Double",
+            "value": 1.5
+          },
+          {
+            "type": "System.Double",
+            "value": 2.5
+          },
+          {
+            "type": "System.Double",
+            "value": 1.5
+          }
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Double",
+              "value": 0
+            },
+            {
+              "type": "System.Double",
+              "value": 1.5
+            },
+            {
+              "type": "System.Double",
+              "value": 2.5
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Double",
+              "value": 0
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Double",
+              "value": 0
+            },
+            {
+              "type": "System.Double",
+              "value": 1.5
+            },
+            {
+              "type": "System.Double",
+              "value": 2.5
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Double",
+              "value": 0
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 8,
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Double",
+              "value": 0
+            },
+            {
+              "type": "System.Double",
+              "value": 1.5
+            },
+            {
+              "type": "System.Double",
+              "value": 2.5
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Double",
+              "value": 0
+            },
+            {
+              "type": "System.Double",
+              "value": 1.5
+            },
+            {
+              "type": "System.Double",
+              "value": 2.5
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            {
+              "type": "System.Double",
+              "value": 0
+            },
+            {
+              "type": "System.Double",
+              "value": 1.5
+            },
+            {
+              "type": "System.Double",
+              "value": 2.5
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Double",
+              "value": 0
+            },
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "elementType": "System.Boolean",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          {
+            "type": "System.Boolean",
+            "value": true
+          },
+          {
+            "type": "System.Boolean",
+            "value": false
+          },
+          {
+            "type": "System.Boolean",
+            "value": true
+          },
+          {
+            "type": "System.Boolean",
+            "value": false
+          }
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 2,
+          "values": [
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.Boolean",
+              "value": false
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Boolean",
+              "value": true
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 2,
+          "values": [
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.Boolean",
+              "value": false
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Boolean",
+              "value": true
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 8,
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 2,
+          "values": [
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.Boolean",
+              "value": false
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 2,
+          "values": [
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.Boolean",
+              "value": false
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 2,
+          "values": [
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.Boolean",
+              "value": false
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Boolean",
+              "value": true
+            },
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "elementType": "System.String",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          {
+            "type": "null",
+            "value": null
+          },
+          {
+            "type": "System.String",
+            "value": "a"
+          },
+          {
+            "type": "System.String",
+            "value": "b"
+          },
+          {
+            "type": "null",
+            "value": null
+          },
+          {
+            "type": "System.String",
+            "value": "a"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 3,
+          "values": [
+            {
+              "type": "null",
+              "value": null
+            },
+            {
+              "type": "System.String",
+              "value": "a"
+            },
+            {
+              "type": "System.String",
+              "value": "b"
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "null",
+              "value": null
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 3,
+          "values": [
+            {
+              "type": "null",
+              "value": null
+            },
+            {
+              "type": "System.String",
+              "value": "a"
+            },
+            {
+              "type": "System.String",
+              "value": "b"
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "null",
+              "value": null
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 8,
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 3,
+          "values": [
+            {
+              "type": "null",
+              "value": null
+            },
+            {
+              "type": "System.String",
+              "value": "a"
+            },
+            {
+              "type": "System.String",
+              "value": "b"
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            {
+              "type": "null",
+              "value": null
+            },
+            {
+              "type": "System.String",
+              "value": "a"
+            },
+            {
+              "type": "System.String",
+              "value": "b"
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 3,
+          "count": 3,
+          "values": [
+            {
+              "type": "null",
+              "value": null
+            },
+            {
+              "type": "System.String",
+              "value": "a"
+            },
+            {
+              "type": "System.String",
+              "value": "b"
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "null",
+              "value": null
+            },
+            "fault": null
+          }
+        }
+      ]
+    },
+    {
+      "elementType": "System.Object",
+      "constructor": {
+        "kind": "array",
+        "items": [
+          {
+            "type": "System.Int32",
+            "value": 1
+          },
+          {
+            "type": "System.Double",
+            "value": 1
+          },
+          {
+            "type": "System.Boolean",
+            "value": true
+          },
+          {
+            "type": "System.String",
+            "value": "1"
+          },
+          {
+            "type": "null",
+            "value": null
+          },
+          {
+            "type": "System.Int32",
+            "value": 1
+          },
+          {
+            "type": "System.Double",
+            "value": 1
+          }
+        ]
+      },
+      "steps": [
+        {
+          "operation": "EnsureCapacity",
+          "argument": 0,
+          "result": 7,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Double",
+              "value": 1
+            },
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.String",
+              "value": "1"
+            },
+            {
+              "type": "null",
+              "value": null
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Int32",
+              "value": 1
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "EnsureCapacity",
+          "argument": 18,
+          "result": 23,
+          "fault": null,
+          "capacity": 23,
+          "count": 5,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Double",
+              "value": 1
+            },
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.String",
+              "value": "1"
+            },
+            {
+              "type": "null",
+              "value": null
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Int32",
+              "value": 1
+            },
+            "fault": null
+          }
+        },
+        {
+          "operation": "TrimExcessCapacity",
+          "argument": 8,
+          "result": null,
+          "fault": null,
+          "capacity": 11,
+          "count": 5,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Double",
+              "value": 1
+            },
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.String",
+              "value": "1"
+            },
+            {
+              "type": "null",
+              "value": null
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Double",
+              "value": 1
+            },
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.String",
+              "value": "1"
+            },
+            {
+              "type": "null",
+              "value": null
+            }
+          ],
+          "iterator": {
+            "moved": false,
+            "current": null,
+            "fault": "System.InvalidOperationException"
+          }
+        },
+        {
+          "operation": "TrimExcess",
+          "result": null,
+          "fault": null,
+          "capacity": 7,
+          "count": 5,
+          "values": [
+            {
+              "type": "System.Int32",
+              "value": 1
+            },
+            {
+              "type": "System.Double",
+              "value": 1
+            },
+            {
+              "type": "System.Boolean",
+              "value": true
+            },
+            {
+              "type": "System.String",
+              "value": "1"
+            },
+            {
+              "type": "null",
+              "value": null
+            }
+          ],
+          "iterator": {
+            "moved": true,
+            "current": {
+              "type": "System.Int32",
+              "value": 1
+            },
+            "fault": null
+          }
+        }
+      ]
+    }
+  ]
+}

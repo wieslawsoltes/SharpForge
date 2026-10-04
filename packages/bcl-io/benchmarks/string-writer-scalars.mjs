@@ -1,5 +1,6 @@
-// Copy this exact runner to the same relative path at bac87e4f; execute both checkouts serially.
+// Copy this exact runner to the same relative path at integrated #4517 726fbd83; execute both checkouts serially.
 // node --expose-gc packages/bcl-io/benchmarks/string-writer-scalars.mjs [calls=64] [length=1024] [baseline.json]
+// Optional filters: --engine source|cil and repeatable --case exact-workload-name.
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -10,10 +11,36 @@ import {decimal} from '@sharpforge/bytecode';
 import {findContracts} from '@sharpforge/framework';
 import {writerPlatform, writerType} from '../../../tests/fixtures/text-writer/engines.js';
 
-const comparisonBase = 'bac87e4fcb3264886d6eeb6fff4c8089c29865c4';
-const calls = Number(process.argv[2] ?? 64);
-const length = Number(process.argv[3] ?? 1024);
-assert(process.argv.length <= 5, 'Expected calls, length and an optional baseline JSON path');
+function parseArguments(args) {
+  const positional = [];
+  const cases = new Set();
+  let engine = null;
+  for (let index = 0; index < args.length; index++) {
+    const argument = args[index];
+    if (argument === '--engine' || argument === '--case') {
+      const value = args[++index];
+      assert(value && !value.startsWith('--'), 'Missing value for ' + argument);
+      if (argument === '--engine') {
+        assert(engine === null, 'Specify --engine only once');
+        assert(['source', 'cil'].includes(value), 'Engine must be source or cil');
+        engine = value;
+      } else {
+        assert(!cases.has(value), 'Duplicate workload selector: ' + value);
+        cases.add(value);
+      }
+    } else {
+      assert(!argument.startsWith('--'), 'Unknown option: ' + argument);
+      positional.push(argument);
+    }
+  }
+  assert(positional.length <= 3, 'Expected calls, length and an optional baseline JSON path');
+  return {positional, engine, cases};
+}
+
+const comparisonBase = '726fbd8303042c7634a057807b51adeaddffa9a8';
+const selection = parseArguments(process.argv.slice(2));
+const calls = Number(selection.positional[0] ?? 64);
+const length = Number(selection.positional[1] ?? 1024);
 assert(Number.isInteger(calls) && calls >= 1 && calls <= 1024, 'Calls must be an integer from 1 to 1024');
 assert(Number.isInteger(length) && length >= 1 && length <= 4096, 'Length must be an integer from 1 to 4096');
 assert(calls * (length + 1) <= 262144, 'Keep each buffer writer at or below 262144 output units');
@@ -50,6 +77,12 @@ const workloads = [
       value: scalar.value, text: scalar.text, separate: true, added: true}
   ])
 ];
+for (const name of selection.cases) assert(workloads.some(workload => workload.name === name), 'Unknown workload: ' + name);
+const selectedWorkloads = workloads.filter(workload => !selection.cases.size || selection.cases.has(workload.name));
+// Finish controls on every selected engine before a candidate-only path can change execution history.
+const orderedWorkloads = [...selectedWorkloads.filter(workload => !workload.added), ...selectedWorkloads.filter(workload => workload.added)];
+const selectedEngines = selection.engine ? [selection.engine] : ['source', 'cil'];
+const selectedCases = orderedWorkloads.map(workload => workload.name);
 const find = (name, parameters) => findContracts(writerType, name)
   .find(member => member.parameters.join(',') === parameters.join(','));
 const newline = find('WriteLine', []);
@@ -61,8 +94,9 @@ const configuration = {schemaVersion: 1,
     encoding: 'utf8', timeout: 5000}).trim(),
   comparisonBase, runnerSha256: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),
   node: process.version, platform: process.platform, arch: process.arch, cpu: cpus()[0]?.model,
-  calls, length, warmups: 1, samples: 5, hostGc: typeof globalThis.gc === 'function'};
-const baseline = process.argv[4] ? JSON.parse(readFileSync(process.argv[4], 'utf8')) : null;
+  calls, length, warmups: 1, samples: 5, hostGc: typeof globalThis.gc === 'function',
+  selectedEngines, selectedCases, workloadOrder: 'released-controls-first'};
+const baseline = selection.positional[2] ? JSON.parse(readFileSync(selection.positional[2], 'utf8')) : null;
 if (baseline) validateComparison(baseline, configuration);
 
 function summary(samples, key) {
@@ -101,8 +135,8 @@ function sample(engine, workload, descriptor) {
   } finally { vm.onWrite = null; if (root !== null) heap.releaseHandle(root); writer.stop(); }
 }
 
-const engines = {source: {}, cil: {}};
-for (const workload of workloads) {
+const engines = Object.fromEntries(selectedEngines.map(engine => [engine, {}]));
+for (const workload of orderedWorkloads) {
   const descriptor = find(workload.method, workload.parameters);
   const outputUnits = calls * (workload.text.length + (workload.method === 'WriteLine' || workload.separate ? 1 : 0));
   assert(outputUnits <= 262144, 'Scalar and control writers must stay within the output bound');
@@ -125,8 +159,9 @@ for (const workload of workloads) {
 }
 
 function validateComparison(baseline, current) {
-  assert.equal(baseline.commit, comparisonBase, 'Use the exact final #4517 baseline commit');
-  for (const key of ['schemaVersion', 'runnerSha256', 'node', 'platform', 'arch', 'cpu', 'calls', 'length', 'warmups', 'samples', 'hostGc']) {
+  assert.equal(baseline.commit, comparisonBase, 'Use the exact integrated #4517 baseline commit');
+  for (const key of ['schemaVersion', 'runnerSha256', 'node', 'platform', 'arch', 'cpu', 'calls', 'length', 'warmups', 'samples',
+    'hostGc', 'selectedEngines', 'selectedCases', 'workloadOrder']) {
     assert.deepEqual(baseline[key], current[key], 'Comparison configuration differs: ' + key);
   }
 }

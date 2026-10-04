@@ -1,7 +1,10 @@
 # StringWriter scalar benchmark
 
-`string-writer-scalars.mjs` prepares a bounded comparison with final draft #4517,
-commit `bac87e4fcb3264886d6eeb6fff4c8089c29865c4`. It follows the measurement
+`string-writer-scalars.mjs` prepares a bounded comparison with integrated draft #4517,
+commit `726fbd8303042c7634a057807b51adeaddffa9a8`. Both comparison checkouts
+include main `00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad`, sharing the merged
+Stopwatch and allocation-observer prerequisites. The original draft head was
+`bac87e4fcb3264886d6eeb6fff4c8089c29865c4`; its older captures retain that identity. It follows the measurement
 conventions of `scripts/benchmarks/a09-string-writer-line-buffer.mjs`. Preparation
 does not establish performance results: run both revisions during the integration
 owner's single scheduled validation lane before reporting measurements.
@@ -19,6 +22,14 @@ preformatted string controls; sixteen typed scalar operations; and eight typed
 scalar writes followed by a separate parameterless newline call. The latter 24
 paths are explicitly skipped on #4517, which has none of the scalar contracts.
 Their current-revision timings are qualification data, with no invented baseline.
+
+All selected released controls run on every selected engine before any new scalar
+workload runs. The workload loop remains outside the engine loop, so new source
+scalar work cannot precede CIL controls. Within each group, cases retain their
+original workload order. This removes the earlier runner's unequal execution
+history caused by interleaving candidate-only work with later controls. Existing
+captures from that runner remain historical evidence; they are not corrected by
+changing the runner and cannot be compared directly with its new output.
 
 Every workload has one excluded warmup and five retained samples. Setup, argument
 preparation, explicit host GC and final `ToString` materialization are excluded.
@@ -49,7 +60,7 @@ From the scalar implementation checkout, prepare a separate detached baseline
 and copy the exact runner to its same repository-relative location:
 
 ```sh
-git worktree add --detach ../SharpForge-p9-writer-scalars-benchmark-base bac87e4fcb3264886d6eeb6fff4c8089c29865c4
+git worktree add --detach ../SharpForge-p9-writer-scalars-benchmark-base 726fbd8303042c7634a057807b51adeaddffa9a8
 mkdir -p ../SharpForge-p9-writer-scalars-benchmark-base/packages/bcl-io/benchmarks
 cp packages/bcl-io/benchmarks/string-writer-scalars.mjs ../SharpForge-p9-writer-scalars-benchmark-base/packages/bcl-io/benchmarks/
 mkdir -p ../project9-writer-scalar-benchmarks
@@ -73,10 +84,46 @@ node scripts/limited.js node --expose-gc packages/bcl-io/benchmarks/string-write
 
 The comparison checks the baseline commit, exact runner SHA-256, Node version,
 operating system, architecture, CPU model, calls, input length, warmups, samples,
-and explicit GC mode before taking measurements. For each unchanged workload it
+explicit GC mode, selected engines, selected cases and control ordering before
+taking measurements. For each unchanged workload it
 reports median/p95 percent differences and managed allocation/byte/store deltas.
 The JSON records the actual current commit. Retain both reports with the
 integration evidence and identify their exact tested revisions in the PR.
+
+## Targeted comparisons
+
+The three positional arguments keep their existing meaning and defaults. Add
+`--engine source` or `--engine cil` to select one adapter; omitting it selects both.
+Use repeatable `--case NAME` options for exact workload names from the array in
+the runner. Omitting them selects every workload. Case order follows the original
+array within the control/scalar groups, independently of option order. Unknown
+options, engines or names, duplicate selectors and missing option values fail
+before sampling. There are no substring or wildcard selectors.
+
+For example, from the prepared baseline checkout:
+
+```sh
+node scripts/limited.js node --expose-gc packages/bcl-io/benchmarks/string-writer-scalars.mjs \
+  256 256 --engine source --case whole-buffer-line-control \
+  > ../project9-writer-scalar-benchmarks/source-buffer-line-A1.json
+```
+
+From the candidate checkout, use exactly the same selectors and pass that baseline:
+
+```sh
+node scripts/limited.js node --expose-gc packages/bcl-io/benchmarks/string-writer-scalars.mjs \
+  256 256 ../project9-writer-scalar-benchmarks/source-buffer-line-A1.json \
+  --engine source --case whole-buffer-line-control \
+  > ../project9-writer-scalar-benchmarks/source-buffer-line-B1.json
+```
+
+For a scheduled ABBA comparison, retain baseline A1, candidate B1, candidate B2 and
+baseline A2 as separate outputs in that order. Keep the same runner, selectors and
+configuration for every process. Analyze all four retained results; do not replace
+an earlier sample or treat a changed sign as proof of noise. New scalar workloads
+can be selected in a separate candidate run, retaining their absent-baseline status.
+Filtering changes only the selected workloads and engines, not their input values,
+sampling policy, host GC, timers, correctness checks or allocation/store counters.
 
 A slowdown exceeding the repository's 5% existing-benchmark budget requires a
 concrete investigation and the justification/sign-off required by CONTRIBUTING.

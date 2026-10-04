@@ -15,6 +15,7 @@ import { walk } from '../../bound/semantic-walker.js';
 import { sourceTypesInMetadataOrder } from '../../codegen/metadata/symbol-metadata.js';
 import { MethodEmitter } from './method-emitter.js';
 import { planClosures } from './closure-plan.js';
+import { planDynamicSites } from './dynamic-plan.js';
 import { planStateMachines } from './state-machine-plan.js';
 import { completeFieldLikeEvent } from './synthesized-events.js';
 import { planPrimaryCaptures } from './primary-constructor-captures.js';
@@ -50,6 +51,7 @@ export class SynthesizedMembers {
       declared = sourceTypesInMetadataOrder(analysis.assembly);
     this.topLevel = topLevel ? this.topLevelProgram(topLevel[0], topLevel[1], programType) : null;
     this.closures = planClosures(analysis, this.topLevel);
+    this.dynamicSites = planDynamicSites(analysis, this.closures, this.topLevel);
     this.primaryCaptures = planPrimaryCaptures(analysis);
     this.records = new RecordPlan(analysis.core);
     this.stateMachines = planStateMachines(analysis, this.closures, this.topLevel?.isAsync ? this.topLevelKickoff() : null);
@@ -66,6 +68,7 @@ export class SynthesizedMembers {
       ...synthesizedDelegates,
       ...anonymousTemplates,
       ...this.closures.types,
+      ...this.dynamicSites.types,
       ...this.stateMachines.types,
     ];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
@@ -113,7 +116,7 @@ export class SynthesizedMembers {
     for (const event of plan.events) completeFieldLikeEvent(type, event, plan);
     this.records.extend(type, plan);
     plan.fields.push(...(this.primaryCaptures.byType.get(type) ?? []));
-    for (const additions of [this.closures.additions.get(type), this.stateMachines.additions.get(type)]) {
+    for (const additions of [this.closures.additions.get(type), this.dynamicSites.additions.get(type), this.stateMachines.additions.get(type)]) {
       if (!additions) continue;
       plan.fields.push(...additions.fields);
       plan.methods.push(...additions.methods);

@@ -168,12 +168,23 @@ transition observations, consumed by source-platform and independent CIL tests.
 Its exact source/runtime provenance is recorded there. These overloads implement the existing invariant formatting and LF
 execution profile. Culture/provider constructors, custom formatters, object and
 composite-format overloads, and native/Wasm execution remain outside this batch.
-No new performance measurement is claimed before scheduled qualification.
-The bounded runner at `benchmarks/string-writer-scalars.mjs` compares unchanged
-string, character, buffer and separate-newline controls against final #4517
-(`bac87e4f`), and exercises all sixteen scalar contracts. The adjacent benchmark
-README gives serial commands, exact revision/configuration checks and measurement
-limits. New scalar paths are explicitly absent from the baseline comparison.
+Scheduled qualification at scalar product revision `f8414bfc` passed 278 integrated
+tests. The bounded runner at `benchmarks/string-writer-scalars.mjs` measured 27
+released controls on each JavaScript platform against integrated #4517
+(`726fbd830`), with both revisions sharing the merged compiler/runtime prerequisites.
+The comparison used fresh ABBA processes, 256 calls, 256 input units, one excluded
+warmup and five retained samples per process. New scalar costs were captured
+separately because those overloads are absent from the baseline.
+
+All measured allocation, allocated-byte and slot-write counts matched on existing
+controls. After removing repeated dispatch checks, 15 of 54 median comparisons
+still exceeded the 5% timing budget. The remaining exceptions and observed tails
+received explicit independent agent review; their causes are not fully attributed.
+The complete qualification and retained before/after samples are recorded in
+[PR #4542](https://github.com/wieslawsoltes/SharpForge/pull/4542). These direct
+platform-call measurements do not establish interpreter throughput, managed GC
+counts, host allocation volume, or native/Wasm execution parity. The adjacent
+benchmark README gives the serial commands and exact provenance checks.
 
 The builder remains available and mutable after disposal. String/character writes
 and every WriteLine throw ObjectDisposedException, including null/empty values;

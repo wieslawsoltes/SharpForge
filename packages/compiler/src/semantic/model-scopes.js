@@ -8,6 +8,7 @@
  */
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
+import { DiagnosticId } from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { BodyBinder } from '../binder/body-binder.js';
 import { lookupMembers } from '../binder/inheritance.js';
@@ -114,7 +115,7 @@ export const ScopeQueries = Base =>
       const entry = this.index.bodyAt(uri, position),
         diagnostics = [];
       const unbound = { bound: null, type: null, symbol: null, constantValue: noConstant };
-      if (!entry?.body.binder) return { ...unbound, diagnostics: [{ code: 'CS0103', args: [String(text)] }] };
+      if (!entry?.body.binder) return { ...unbound, diagnostics: [{ code: DiagnosticId.CS0103, args: [String(text)] }] };
       const wrapper = `class __Speculative { object __Value() => ${text}\n; }`,
         parsed = parse(new SourceText(wrapper, uri)),
         syntax = parsed.syntax.members?.[0]?.members?.[0]?.expressionBody?.expression;

@@ -27,7 +27,8 @@ export function modernAttributes(T) {
     [codeAnalysis, 'DoesNotReturnAttribute', T.Method, false, [[]], []],
     [codeAnalysis, 'DoesNotReturnIfAttribute', T.Parameter, false, [[['parameterValue', 'b']]], []],
     // C# 9
-    ['System.Runtime.InteropServices', 'UnmanagedCallersOnlyAttribute', T.Method, false, [[]], [['EntryPoint', 's', 'field']]],
+    ['System.Runtime.InteropServices', 'UnmanagedCallersOnlyAttribute', T.Method, false, [[]],
+      [['EntryPoint', 's', 'field'], ['CallConvs', 'ta', 'field']]],
     [compilerServices, 'ModuleInitializerAttribute', T.Method, false, [[]], []],
     [compilerServices, 'SkipLocalsInitAttribute', skipLocalsInit, false, [[]], []],
     // The table has no `params` constructors: `params string[] members` is declared as the overloads with one to four names.

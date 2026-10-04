@@ -143,9 +143,12 @@ export const ReferenceEmission = Base =>
     stmtReturn(node) {
       const byReference = node.isRef || frameReturnsByReference(this.frame);
       if (!byReference || !node.expression) return super.stmtReturn(node);
-      if (this.protectedDepth) return this.unsupported('return ref inside a protected region', node.syntax);
       this.address(node.expression);
-      return this.il.emit('ret', undefined, { pops: 1, pushes: 0 });
+      if (!this.protectedDepth) return this.il.emit('ret', undefined, { pops: 1, pushes: 0 });
+      // Out of a protected region the address travels in a by-reference slot to the `ret` after the regions.
+      this.returnLabel ??= this.il.newLabel();
+      this.returnSlot ??= this.temp(this.frame.returnType, { isByReference: true });
+      return this.il.emit('stloc', this.returnSlot).emit('leave', this.returnLabel);
     }
     expressionBody(expression, isReturn) {
       if (!isReturn || !frameReturnsByReference(this.frame)) return super.expressionBody(expression, isReturn);
