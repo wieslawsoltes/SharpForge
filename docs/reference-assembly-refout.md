@@ -140,6 +140,16 @@ The completed performance comparison is recorded below.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
+The subsequent merge of main `fbb0b086e05720eeacb954800a4a690a644313cd` was qualified at integrated source
+`51db5c5ffbf870a3c2efd195477732d3e6861829`. The focused refout/shared-attribute gate passed **66 tests, zero failures
+and zero skips**. The unchanged complete public/friend native capture passed again on the same pinned SDK/runtime.
+The two affected main fixtures, `attribute-targets` and `pseudo-attributes`, also produced their pinned genuine Roslyn
+outputs on CoreCLR; these checks used existing expected outputs and did not rebuild or replace the Roslyn fixtures.
+The public/friend SharpForge DLLs, their complete SRM observations and the metadata-control DLL were byte-identical
+to the original b40 capture. This establishes the manually reconciled fixed-buffer type qualification while retaining
+main's attribute-target and pseudo-attribute behavior. Exact commands, outputs, source hashes and full observations
+are retained separately in [integration-51db](evidence/a03-reference-assemblies/integration-51db/README.md).
+
 ## Benchmark protocol
 
 The benchmark driver uses this same rich source fixture for every selected compiler checkout. It records compiler and
@@ -199,6 +209,37 @@ exact command/environment/status records and frozen preparation manifest. It als
 native `reference.json`, both image pairs, all SRM observations and consumer diagnostics, and the 45-test TAP at b40.
 The benchmark's refout image hash matches that qualified public image. Historical failed captures and the independent
 both-image consumer probe have separate directories and remain labelled as failures or probes.
+
+## Performance after the attribute-emission merge
+
+The main merge changed shared attribute serialization and per-method token bookkeeping inside the timed compilation
+path. After all integrated correctness checks passed, each integrated output mode was measured exactly once with the
+unchanged driver and fixture. The historical baseline was not rerun. These observations compare the whole main merge
+against the saved `7c73` results, including unrelated compiler/package changes; they do not isolate the manual conflict
+resolution or establish a general speedup. All 120 samples per run remain recorded, with the first 20 excluded.
+
+| Mode | 7c73 median (ms) | 51db median (ms) | Change | 7c73 p95 (ms) | 51db p95 (ms) | Change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Metadata | 15.544988 | 19.001903 | **+22.2381%** | 20.191166 | 21.198717 | +4.9901% |
+| Refout | 15.166682 | 13.762756 | -9.2566% | 19.360906 | 18.920035 | -2.2771% |
+
+The ordinary-metadata median exceeds the 5% review threshold. Its single first-compilation observation also increased
+from 113.958974 ms to 133.244493 ms (**+16.9232%**). These recorded regressions require coordinator review; no
+performance-budget pass is claimed and no retry or optimization was attempted to improve the reported figures.
+The metadata p99 changed by -4.7681%, while refout p99 changed by -15.4041%. Refout's first-compilation observation
+changed from 127.934818 ms to 108.198931 ms (-15.4265%); import timing remains subject to the harness limits above.
+
+Within the integrated revision, refout versus metadata changed median by -27.5717% and p95 by -10.7492%; these output
+modes have different contracts. Both modes retained their exact pre-integration assembly SHA-256 and 4,096-byte PE
+length, so no output-byte or measured file-size increase occurred. Median heap-used deltas were 4,014,220 bytes for
+metadata and 3,937,796 bytes for refout, changes of +0.7968% and +0.6180% from their respective prior runs. These are
+temporary-inclusive heap observations, not allocation or retained-heap measurements. The host, resource wrapper,
+source and benchmark driver were unchanged; it remained a shared hosted machine with an exclusive team heavy slot.
+The [integrated comparison](evidence/a03-reference-assemblies/integration-51db/comparison.json) retains exact values,
+raw samples, output-hash equality and review thresholds alongside the original results.
+The [source inspection](evidence/a03-reference-assemblies/integration-51db/source-findings.json) records concrete new
+attribute-dispatch and return-attribute allocations without attributing the measured regression to them. Native
+byte equality does not waive review of ordinary metadata performance.
 
 ## Changes outside A03
 
