@@ -50,7 +50,8 @@ test('A02-T30 a record class declares its synthesized members with the flags Ros
     sealed record Tag(string Text);
     class C { static int Main() { return new Point(1, 2).X + new Tag("t").Text.Length; } }`);
   const point = type('Point');
-  for (const expected of ['get_EqualityContract', 'PrintMembers', '<Clone>$', 'Equals', 'GetHashCode', 'ToString', 'op_Equality', 'op_Inequality', 'Deconstruct']) {
+  const synthesized = ['get_EqualityContract', 'PrintMembers', '<Clone>$', 'Equals', 'GetHashCode', 'ToString', 'op_Equality', 'op_Inequality', 'Deconstruct'];
+  for (const expected of synthesized) {
     assert.ok(names(point.methods).includes(expected), `Point declares ${expected}`);
   }
   assert.deepEqual(names(point.fields), ['<X>k__BackingField', '<Y>k__BackingField']);
@@ -86,7 +87,8 @@ test('A02-T30 record equality, hashing and text follow the Roslyn shapes', () =>
   assert.deepEqual(lines('Point', 'get_EqualityContract'), ['ldtoken Point', 'call System.Type::GetTypeFromHandle', 'ret']);
   assert.deepEqual(lines('Point', '<Clone>$'), ['ldarg.0', 'newobj Point::.ctor', 'ret']);
   // The primary constructor stores the positional parameters, then calls object().
-  assert.deepEqual(lines('Point', '.ctor').slice(0, 6), ['ldarg.0', 'ldarg.1', 'stfld Point::<X>k__BackingField', 'ldarg.0', 'ldarg.2', 'stfld Point::<Name>k__BackingField']);
+  const stores = ['ldarg.0', 'ldarg.1', 'stfld Point::<X>k__BackingField', 'ldarg.0', 'ldarg.2', 'stfld Point::<Name>k__BackingField'];
+  assert.deepEqual(lines('Point', '.ctor').slice(0, 6), stores);
 });
 
 test('A02-T30 a derived record reuses the positional properties of its base and overrides the virtual members', () => {
@@ -133,7 +135,8 @@ test('A02-T30 an init accessor returns void modreq(IsExternalInit); required mem
     account = type('Account');
   assert.deepEqual(attributes(account.token), [REQUIRED]);
   assert.deepEqual(attributes(account.fields.find(field => field.name === 'Balance').token), [REQUIRED]);
-  assert.deepEqual(attributes(method('Account', '.ctor', 0).token), ['System.ObsoleteAttribute', 'System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute']);
+  const guarded = ['System.ObsoleteAttribute', 'System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute'];
+  assert.deepEqual(attributes(method('Account', '.ctor', 0).token), guarded);
   assert.deepEqual(attributes(method('Account', '.ctor', 1).token), ['System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute']);
 });
 

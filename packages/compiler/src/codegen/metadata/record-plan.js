@@ -29,8 +29,11 @@ export const RecordBody = Object.freeze({
 
 const isMethod = member => member.kind === SymbolKind.Method;
 /** True for `bool Equals(R other)` declared in the record `type`. */
-const isTypedEquals = (method, type) =>
-  !!method && method.name === 'Equals' && !method.isStatic && method.parameters.length === 1 && (method.parameters[0].type.originalDefinition ?? method.parameters[0].type) === type;
+function isTypedEquals(method, type) {
+  if (!method || method.name !== 'Equals' || method.isStatic || method.parameters.length !== 1) return false;
+  const parameterType = method.parameters[0].type;
+  return (parameterType.originalDefinition ?? parameterType) === type;
+}
 const isInstance = member => !member.isStatic && !member.isConst;
 
 /** A member of a constructed type that stands for `symbol` of its definition: what a call on that type names. */
@@ -105,7 +108,8 @@ export class RecordPlan {
         modifiers: slot,
       });
     if (!isClass) return { printMembers, equalityContract: null, clone: null, equalsBase: null, synthesized };
-    const equalityContract = type.getMembers('EqualityContract').find(member => member.kind === SymbolKind.Property) ?? this.contract(type, method, slot, hidden);
+    const declaredContract = type.getMembers('EqualityContract').find(member => member.kind === SymbolKind.Property),
+      equalityContract = declaredContract ?? this.contract(type, method, slot, hidden);
     // A derived record's clone returns the derived type: a covariant override of the base's clone (C# 9), which
     // metadata states with a new slot and a MethodImpl row.
     const self = type.typeParameters?.length ? type.construct(type.typeParameters) : type,
