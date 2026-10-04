@@ -1,4 +1,5 @@
 import {liveReference, sameReference, noteLifetimeMutation, lifetimeFault} from './lifetime-state.js';
+import {RootCategory} from './roots.js';
 
 /** Counted movement exclusion. Every outstanding lease is also a precise strong root. */
 export class PinManager {
@@ -13,6 +14,7 @@ export class PinManager {
 
   acquire(reference, {owner = null, reason = 'host'} = {}) {
     const record = this.heap.get(reference);
+    this.heap.spaces.synchronizePayload(record);
     const id = this.nextId;
     if (!Number.isSafeInteger(id)) throw lifetimeFault('Pin lease identity exhausted');
     let object = this.objects.get(reference.h);
@@ -64,7 +66,7 @@ export class PinManager {
   }
 
   visitRoots(visitor) {
-    for (const entry of this.objects.values()) visitor(entry.reference, 'pin', `Pinned object (${entry.count} leases)`);
+    for (const entry of this.objects.values()) visitor(entry.reference, RootCategory.Pinned, `Pinned object (${entry.count} leases)`);
   }
 
   releaseOwner(owner) {

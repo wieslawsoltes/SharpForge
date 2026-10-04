@@ -44,6 +44,7 @@ export const fixtures = feature('language-version', [
   gated('gate-with-on-structs-at-9', 'WithOnStructs', '9'),
   gated('gate-with-on-anonymous-types-at-9', 'WithOnAnonymousTypes', '9'),
   gated('gate-span-char-constant-pattern-at-10', 'SpanCharConstantPattern', '10'),
+  gated('gate-inline-arrays-at-11', 'InlineArrays', '11'),
   // Rows Roslyn reports with a diagnostic of their own.
   dedicated('cs8314-generic-pattern-matching-at-7', 'GenericPatternMatching', '7'),
   dedicated('cs8904-static-member-variance-at-8', 'VarianceSafetyForStaticInterfaceMembers', '8'),

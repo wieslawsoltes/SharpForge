@@ -26,6 +26,7 @@ import { TupleBinding } from './body/tuples.js';
 import { DeconstructionBinding } from './body/deconstruction.js';
 import { WithBinding } from './with-expression.js';
 import { LambdaBinding } from './body/lambdas.js';
+import { LambdaSignatureBinding } from './lambda-signatures.js';
 import { PatternBinding } from './body/patterns.js';
 import { StructuralPatternBinding } from './body/structural-patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
@@ -46,6 +47,7 @@ import { CallerInfoBinding } from './caller-info.js';
 import { AnonymousTypeBinding } from './anonymous-types.js';
 import { ExtensionMethodBinding } from './extension-methods.js';
 import { DynamicBinding } from './dynamic.js';
+import { ComInteropBinding } from './com-interop.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -59,6 +61,7 @@ const expressionFamilies = [
   DeconstructionBinding,
   WithBinding,
   LambdaBinding,
+  LambdaSignatureBinding,
   PatternBinding,
   StructuralPatternBinding,
   StackAllocBinding,
@@ -80,6 +83,7 @@ const statementFamilies = [
   AnonymousTypeBinding,
   ExtensionMethodBinding,
   DynamicBinding,
+  ComInteropBinding,
   UnsafeBinding,
   ProtectedAccessBinding,
 ];

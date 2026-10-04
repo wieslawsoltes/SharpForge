@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "name": "roslyn",
+      "repository": "dotnet/roslyn",
+      "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+      "archiveURL": "https://codeload.github.com/dotnet/roslyn/tar.gz/0f557e63420dc3e3791f8f5273f8f8d853d80092",
+      "archiveSHA256": "e5e552b2094ad97672236762b2d27c75fa2ce80462041c5f8337aa2ef08d0c28",
+      "licensePath": "License.txt",
+      "license": "MIT",
+      "licenseSHA256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b"
+    },
+    {
+      "name": "runtime",
+      "repository": "dotnet/runtime",
+      "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+      "archiveURL": "https://codeload.github.com/dotnet/runtime/tar.gz/081d220c0a773ffb7c6bea6b48727833576a65ef",
+      "archiveSHA256": "93242079321adda6ef2b9f4a285573000479cf1d452bc1a72b5de02dfe25ff99",
+      "licensePath": "LICENSE.TXT",
+      "license": "MIT",
+      "licenseSHA256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310"
+    },
+    {
+      "name": "csharpstandard",
+      "repository": "dotnet/csharpstandard",
+      "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+      "archiveURL": "https://codeload.github.com/dotnet/csharpstandard/tar.gz/107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+      "archiveSHA256": "1226129de592ecef4fcdcb5829ba4d6b6c66eefa525a1393aa91b2431e0099a0",
+      "licensePath": "LICENSE-CODE",
+      "license": "MIT",
+      "licenseSHA256": "0cb0e46bfe131f96c9c805679802659af9268482011e00957116bb29d36ad625"
+    },
+    {
+      "name": "csharplang",
+      "repository": "dotnet/csharplang",
+      "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+      "archiveURL": "https://codeload.github.com/dotnet/csharplang/tar.gz/05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+      "archiveSHA256": "50ca09d059a4cd7531e59f681ce76e6085a57a7663063b941b61fa6d4de9125b",
+      "licensePath": "spec/LICENSE.md",
+      "license": "NOASSERTION",
+      "licenseScope": "Upstream notice explicitly governs spec; proposals have no repository-wide license assertion. Only code examples are extracted; no prose relicensed.",
+      "licenseSHA256": "d800769202b654e60ff8bc04799feff50f73b5d6dda86d291c791105d6210150"
+    }
+  ],
+  "compilerPin": "../oracle-toolchain.json"
+}

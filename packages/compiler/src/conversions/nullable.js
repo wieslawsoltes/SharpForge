@@ -17,10 +17,15 @@ export const canBeNull = type =>
   type.isReferenceType === true ||
   isNullableType(type) ||
   type.typeKind === 'pointer' ||
+  type.typeKind === 'functionPointer' ||
   (type.typeKind === 'typeParameter' && type.isValueType !== true && type.isReferenceType === true);
 /** True when null can be assigned (null literal conversion): reference types, T?, and pointers. */
 export const acceptsNullLiteral = type =>
-  type.isReferenceType === true || isNullableType(type) || type.typeKind === 'pointer' || type.typeKind === 'dynamic';
+  type.isReferenceType === true ||
+  isNullableType(type) ||
+  type.typeKind === 'pointer' ||
+  type.typeKind === 'functionPointer' ||
+  type.typeKind === 'dynamic';
 /**
  * @param from,to TypeSymbols, at least one of them nullable
  * @param {(from,to)=>'identity'|'implicit'|'explicit'|null} underlying classification of the non-nullable conversion

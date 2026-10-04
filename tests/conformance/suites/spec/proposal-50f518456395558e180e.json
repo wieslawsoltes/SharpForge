@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-50f518456395558e180e",
+  "kind": "spec",
+  "sourceText": "record struct Pos(int X) // definite assignment error in primary constructor\n{\n    private int x;\n    public int X { get { return x; } set { x = value; } } = X;\n}",
+  "sourceSHA256": "5cccf1efaa3d2527a03d78dfb26b5ac0f4779d77bc3081b6d8f2395dc7382a50",
+  "target": "library",
+  "featureId": "csharp-10-0-record-structs",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/record-structs.md",
+    "sha256": "6648b21cf551cda46a37801f487f82de1b87eb9ee39f08904ad5b5707ee0ae58",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md",
+    "license": "NOASSERTION",
+    "offset": 10556
+  }
+}

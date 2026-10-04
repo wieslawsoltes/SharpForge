@@ -32,13 +32,15 @@ export const CollectionExpressionBinding = Base =>
   class extends Base {
     collectionExpression(syntax) {
       const elements = [];
-      for (const element of syntax.elements) {
+      let withArguments = null;
+      for (const [index, element] of syntax.elements.entries()) {
         if (element.kind === 'ExpressionElement') elements.push({ value: this.value(element.expression), syntax: element });
         else if (element.kind === 'SpreadElement') elements.push({ spread: this.value(element.expression), syntax: element });
-        // `with(...)` arguments (a preview feature) are not bound here: the execution pipeline's own rules stand.
+        // `with(...)` arguments (C# 15 preview): ./collection-arguments.js.
+        else if (element.kind === 'WithElement' && this.collectionArguments) withArguments = this.collectionArguments(element, index) ?? withArguments;
         else return this.lenient(syntax);
       }
-      const node = this.node('CollectionExpression', syntax, null, { elements, form: 'collection' });
+      const node = this.node('CollectionExpression', syntax, null, { elements, form: 'collection', withArguments });
       node.convert = to => {
         const target = this.collectionTarget(to);
         return target && elements.every(element => this.elementConverts(element, target.elementType))
@@ -70,11 +72,14 @@ export const CollectionExpressionBinding = Base =>
       if (to.specialType === 'System_String') return null;
       // The registry does not list the interfaces of framework collections: there, an `Add` method marks one.
       const isEnumerable = implementsInterface(to, this.core.ienumerable, this.core),
-        add = isSourceSymbol(to) ? null : to.getMembers('Add').find(member => member.kind === SymbolKind.Method && member.parameters.length === 1);
-      if (!isEnumerable && !add) return null;
+        adds = isSourceSymbol(to) ? [] : to.getMembers('Add').filter(member => member.kind === SymbolKind.Method),
+        add = adds.find(member => member.parameters.length === 1);
+      if (!isEnumerable && !adds.length) return null;
       const generic = findConstruction(to, this.core.ienumerableT, this.core),
         elementType = generic ? generic.typeArguments[0].type : (add?.parameters[0].type ?? this.core.object);
-      return { kind: attributesNamed(definition, collectionBuilderAttribute).length ? 'builder' : 'collection', elementType };
+      // A framework collection whose `Add` takes two arguments (a dictionary) can be created empty, not filled (CS9215).
+      const lacksElementAdd = !isSourceSymbol(to) && adds.length > 0 && !add;
+      return { kind: attributesNamed(definition, collectionBuilderAttribute).length ? 'builder' : 'collection', elementType, lacksElementAdd };
     }
     /** The iteration type of a spread operand, or null when it cannot be enumerated (or is not known). */
     spreadElementType(spread) {
@@ -117,6 +122,12 @@ export const CollectionExpressionBinding = Base =>
       const syntax = node.syntax,
         target = this.collectionTarget(to),
         hasSpread = node.elements.some(element => element.spread);
+      // Arguments the target does not take are reported and then left out of the construction.
+      if (node.withArguments && !this.checkCollectionArguments(node, to, target)) node = { ...node, withArguments: null };
+      if (target.lacksElementAdd && node.elements.length) {
+        this.report(syntax, 'CS9215', [this.display(to)]);
+        return this.bad(syntax);
+      }
       for (const element of node.elements)
         if (element.spread && !element.spread.hasErrors && !this.spreadElementType(element.spread) && element.spread.type)
           this.report(element.syntax.expression, 'CS9212', [this.display(element.spread.type), 'GetEnumerator']);
@@ -145,7 +156,9 @@ export const CollectionExpressionBinding = Base =>
       if (!isSourceSymbol(type)) return true;
       const constructors = type.getMembers('.ctor').filter(member => member.methodKind === MethodKind.Constructor),
         adds = lookupMembers(type, 'Add', this.core, { within: this.c.containingType }).members.filter(m => m.kind === SymbolKind.Method);
-      if (constructors.length && !constructors.some(constructor => constructor.parameters.every(p => p.isOptional || p.isParams))) {
+      // With a `with(...)` element any accessible constructor will do: overload resolution on its arguments decides.
+      const needsParameterless = !node.withArguments;
+      if (needsParameterless && constructors.length && !constructors.some(constructor => constructor.parameters.every(p => p.isOptional || p.isParams))) {
         this.report(node.syntax, 'CS9214');
         return false;
       }
@@ -160,7 +173,8 @@ export const CollectionExpressionBinding = Base =>
      * @returns the creation, a node with errors, or null when a spread cannot be appended this way
      */
     collectionCreation(type, node, target) {
-      const creation = this.create(type, [], node.syntax, node.syntax, null);
+      const withArguments = node.withArguments,
+        creation = this.create(type, withArguments?.args ?? [], node.syntax, withArguments?.syntax ?? node.syntax, null);
       if (creation.hasErrors || creation.kind !== 'ObjectCreation') return creation.hasErrors ? creation : null;
       const receiver = this.implicitReceiver(node.syntax, type),
         argument = value => Object.assign(value.hasErrors ? { ...value } : value, { refKind: null, name: null }),

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c3e74748c787acdb69ec",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class C\n{\n    public static void Main()\n    {\n        fixed (void* p = new Fixable(1))\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "f8c36924910611671267665d5791c45c45f42724d0740d43b2cc3ada728e5dbe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "CustomFixedStructVariousErr06_UseSite",
+    "offset": 138669
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { lib.EmitToImageReference() }, options: TestOptions.UnsafeDebugDll)",
+  "options": "(source, references: new[] { lib.EmitToImageReference() }, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0012",
+        "severity": "error"
+      },
+      {
+        "code": "CS8385",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,26): error CS0012: The type 'Missing' is defined in an assembly that is not referenced. You must add a reference to assembly 'missing, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         fixed (void* p = new Fixable(1))\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"new Fixable(1)\").WithArguments(\"Missing\", \"missing, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(6, 26),\n                // (6,26): error CS9385: The given expression cannot be used in a fixed statement\n                //         fixed (void* p = new Fixable(1))\n                Diagnostic(ErrorCode.ERR_ExprCannotBeFixed, \"new Fixable(1)\").WithLocation(6, 26)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

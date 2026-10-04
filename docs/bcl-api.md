@@ -671,8 +671,9 @@ Registered families: <code>builder</code>.
 | 818 | <code>System.Text.StringBuilder System.Text.StringBuilder::AppendFormat(string, object)</code> | implemented |
 | 819 | <code>System.Text.StringBuilder System.Text.StringBuilder::AppendFormat(string, object, object)</code> | implemented |
 | 820 | <code>System.Text.StringBuilder System.Text.StringBuilder::AppendFormat(string, object, object, object)</code> | implemented |
+| 524288 | <code>System.Text.StringBuilder System.Text.StringBuilder::AppendFormat(string, object[])</code> | implemented |
 
-Pinned reference: 30 implemented and 78 missing exact metadata rows.
+Pinned reference: 31 implemented and 77 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -726,7 +727,7 @@ Pinned reference: 30 implemented and 78 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.String,System.Object):System.Text.StringBuilder instance</code> | implemented | 818 |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.String,System.Object,System.Object):System.Text.StringBuilder instance</code> | implemented | 819 |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.String,System.Object,System.Object,System.Object):System.Text.StringBuilder instance</code> | implemented | 820 |
-| method | <code>System.Text.StringBuilder::AppendFormat``0(System.String,System.Object[]):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::AppendFormat``0(System.String,System.Object[]):System.Text.StringBuilder instance</code> | implemented | 524288 |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.String,System.ReadOnlySpan`1&lt;System.Object&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::AppendFormat``1(System.IFormatProvider,System.Text.CompositeFormat,!!0):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::AppendFormat``2(System.IFormatProvider,System.Text.CompositeFormat,!!0,!!1):System.Text.StringBuilder instance</code> | missing | — |

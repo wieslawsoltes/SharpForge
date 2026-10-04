@@ -5,7 +5,7 @@ import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnot
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
 import {attachOpenMembers} from './registry-open-members.js';
-import {contractParameters} from './registry-params.js';
+import {registryParameter,registryContractMethod} from './registry-contracts.js';
 import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor,specialTypeIds} from './special-types.js';
 /**
  * Bridges the closed framework registry (packages/framework) and the bytecode builtin table to read-only,
@@ -82,10 +82,11 @@ export class RegistryBridge {
   }
   /** The registry (legacy) name of a bridged type, or null. */
   registryName(type){if(type instanceof ArrayTypeSymbol){const element=this.registryName(type.elementType);return element?element+'[]':null;}return this.keywords.get(type)??this.names.get(type)??null;}
+  parameter(typeName,index,isParams=false){return registryParameter(this,typeName,index,isParams);}
   /** Builds the member symbols of a registry type from its contracts, registry properties and builtins. */
   membersOf(registryName,owner){
     const entry=this.types.get(registryName),members=[...(owner._nested??[])],properties=new Map(),events=new Map(),pub={declaredAccessibility:Accessibility.Public,containingSymbol:owner};
-    const method=(c,kind)=>{const m=new MethodSymbol({...pub,name:c.name,methodKind:kind,returnType:c.kind==='constructor'?this.byName.get('void'):this.typeFromName(c.result)??this.objectType,parameters:contractParameters(this,c),modifiers:c.isStatic?DeclarationModifiers.Static:0});m.contract=c;this.contractSymbols.set(c.id,m);return m;};
+    const method=(contract,kind)=>registryContractMethod(this,contract,kind,pub);
     for(const c of this.byOwner.get(registryName)??[]){
       if(c.kind==='constructor')members.push(method(c,MethodKind.Constructor));
       else if(c.kind==='get'||c.kind==='set'){const p=properties.get(c.property)??{};p[c.kind]=method(c,c.kind==='get'?MethodKind.PropertyGet:MethodKind.PropertySet);p.isStatic=c.isStatic;properties.set(c.property,p);}

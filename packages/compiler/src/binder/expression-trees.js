@@ -15,6 +15,7 @@
  */
 import { walk } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
+import { dynamicOperation } from '../bound/dynamic-operations.js';
 import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
 
 const assignmentKinds = new Set(['Assignment', 'CompoundAssignment', 'Increment', 'CoalesceAssignment', 'RefAssignment', 'EventAssignment']);
@@ -42,10 +43,13 @@ function argumentProblem(node, languageVersion) {
 }
 
 function nodeProblem(node, languageVersion) {
+  if (dynamicOperation(node)) return 'CS1963';
   if (assignmentKinds.has(node.kind)) return 'CS0832';
   if (codeByKind[node.kind]) return codeByKind[node.kind];
   if (node.kind === 'Call') {
     if (node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
+    // A call that is removed: a partial method without an implementing part, or an omitted [Conditional] method.
+    if ((node.method?.originalDefinition ?? node.method)?.isUnimplementedPartial || node.isOmitted) return 'CS0765';
     const before14 = argumentProblem(node, languageVersion);
     if (before14) return before14;
     if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return 'CS9307';

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-37f60643179b389c5ba8",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    void M(in readonly int p) => throw null;\n}",
+  "sourceSHA256": "0b60bdcdd3e7ae8497d858b8ddf2ef9167cafa68b9751d60180a185fa07c3ce1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "Modifier_Invalid_02",
+    "offset": 82382
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9190",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,15): error CS9190: 'readonly' modifier must be specified after 'ref'.\n            //     void M(in readonly int p) => throw null;\n            Diagnostic(ErrorCode.ERR_RefReadOnlyWrongOrdering, \"readonly\").WithLocation(3, 15)",
+  "unsupported": []
+}

@@ -14,6 +14,7 @@ export function modernAttributes(T) {
     skipLocalsInit = T.Module | T.Class | T.Struct | T.Interface | T.Constructor | T.Method | T.Property | T.Event;
   return [
     // C# 9
+    ['System.Runtime.InteropServices', 'UnmanagedCallersOnlyAttribute', T.Method, false, [[]], [['EntryPoint', 's', 'field']]],
     [compilerServices, 'ModuleInitializerAttribute', T.Method, false, [[]], []],
     [compilerServices, 'SkipLocalsInitAttribute', skipLocalsInit, false, [[]], []],
     // The `params string[]` constructors are not declared: one member name per attribute, and the attributes may repeat.

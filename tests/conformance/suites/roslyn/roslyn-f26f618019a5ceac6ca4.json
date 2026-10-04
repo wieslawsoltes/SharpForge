@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f26f618019a5ceac6ca4",
+  "kind": "diagnostics",
+  "sourceText": "\ndelegate ref int D(int x);\n\nclass C\n{\n    static void MD(D d) { }\n\n    static int i = 0;\n    static void M()\n    {\n        MD((x) => ref i);\n        MD(x => ref i);\n    }\n}\n",
+  "sourceSHA256": "26c996786cbe9b475a1caabe5579361b9075112e860ab1a7bc05251ba3b1b768",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReturnTests.cs",
+    "sha256": "06c585a83ea9a3bdd973b143522b47b5c4199d08d69f6b72739028ca8be96dc6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReturnTests.cs",
+    "license": "MIT",
+    "method": "RefLambdaInferenceMethodArgument",
+    "offset": 57476
+  },
+  "langVersion": "6",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, parseOptions: TestOptions.Regular.WithLanguageVersion(LanguageVersion.CSharp6))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,10): error CS8059: Feature 'byref locals and returns' is not available in C# 6. Please use language version 7.0 or greater.\n                // delegate ref int D(int x);\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"ref\").WithArguments(\"byref locals and returns\", \"7.0\").WithLocation(2, 10),\n                // (11,19): error CS8059: Feature 'byref locals and returns' is not available in C# 6. Please use language version 7.0 or greater.\n                //         MD((x) => ref i);\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"ref\").WithArguments(\"byref locals and returns\", \"7.0\").WithLocation(11, 19),\n                // (12,17): error CS8059: Feature 'byref locals and returns' is not available in C# 6. Please use language version 7.0 or greater.\n                //         MD(x => ref i);\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"ref\").WithArguments(\"byref locals and returns\", \"7.0\").WithLocation(12, 17)\n                ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

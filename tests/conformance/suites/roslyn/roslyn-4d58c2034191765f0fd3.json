@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4d58c2034191765f0fd3",
+  "kind": "diagnostics",
+  "sourceText": "I3 i3 = null;\nC.M(i3);",
+  "sourceSHA256": "5c35159e2e224352bb670510a6240f018ee4e9b48c2980c2b3b89577011ab6ce",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "sha256": "b7cd10d8113409d1540951461d416c8c03a4ed3ec777d51b4cb13d685c96d7a8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/OverloadResolutionPriorityTests.cs",
+    "license": "MIT",
+    "method": "ZeroIsTreatedAsDefault",
+    "offset": 6150
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: [AsReference(comp, useMetadataReference)])",
+  "options": "(executable, references: [AsReference(comp, useMetadataReference)])",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,3): error CS0121: The call is ambiguous between the following methods or properties: 'C.M(I1)' and 'C.M(I2)'\n            // C.M(i3);\n            Diagnostic(ErrorCode.ERR_AmbigCall, \"M\").WithArguments(\"C.M(I1)\", \"C.M(I2)\").WithLocation(2, 3)\n        ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

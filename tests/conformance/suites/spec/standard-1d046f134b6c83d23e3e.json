@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-1d046f134b6c83d23e3e",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n#nullable enable\npublic class X\n{\n    [DisallowNull]\n    public string? ReviewComment\n    {\n        get => _comment;\n        set => _comment = value ?? throw new ArgumentNullException(nameof(value),\n           \"Cannot set to null\");\n    }\n    private string? _comment = default;\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "0ab1e428d3c62930556620e0f3939bfd464faedc5e3a6380a47c8f97010f4935",
+  "originalSource": "#nullable enable\npublic class X\n{\n    [DisallowNull]\n    public string? ReviewComment\n    {\n        get => _comment;\n        set => _comment = value ?? throw new ArgumentNullException(nameof(value),\n           \"Cannot set to null\");\n    }\n    private string? _comment = default;\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "DisallowNullAttribute"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "DisallowNullAttribute",
+    "offsetInUnquotedMarkdown": 48117
+  }
+}

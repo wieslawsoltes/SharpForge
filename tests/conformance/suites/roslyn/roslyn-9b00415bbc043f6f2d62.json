@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9b00415bbc043f6f2d62",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System\n{\n    public struct ValueTuple<T1>\n        where T1 : class\n    {\n        public T1 Item1;\n\n        public ValueTuple(T1 item1)\n        {\n            this.Item1 = item1;\n        }\n    }\n\n    public struct ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>\n        where TRest : class\n    {\n        public T1 Item1;\n        public T2 Item2;\n        public T3 Item3;\n        public T4 Item4;\n        public T5 Item5;\n        public T6 Item6;\n        public T7 Item7;\n        public TRest Rest;\n\n        public ValueTuple(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, TRest rest)\n        {\n            Item1 = item1;\n            Item2 = item2;\n            Item3 = item3;\n            Item4 = item4;\n            Item5 = item5;\n            Item6 = item6;\n            Item7 = item7;\n            Rest = rest;\n        }\n    }\n}\nclass C\n{\n    void M((int, int, int, int, int, int, int, int) p)\n    {\n        var t0 = (1, 2, 3, 4, 5, 6, 7, 8);\n        (int, int, int, int, int, int, int, int) t1 = t0;\n    }\n}",
+  "sourceSHA256": "e1774b6b6558c88c1327fc8ef01de5799da8fe9dae497eec815257b64e5f4647",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "Constraints_06",
+    "offset": 412108
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (42,53): error CS0452: The type 'ValueTuple<int>' must be a reference type in order to use it as parameter 'TRest' in the generic type or method 'ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>'\n                //     void M((int, int, int, int, int, int, int, int) p)\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"p\").WithArguments(\"System.ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>\", \"TRest\", \"System.ValueTuple<int>\").WithLocation(42, 53),\n                // (42,53): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T1' in the generic type or method 'ValueTuple<T1>'\n                //     void M((int, int, int, int, int, int, int, int) p)\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"p\").WithArguments(\"System.ValueTuple<T1>\", \"T1\", \"int\").WithLocation(42, 53),\n                // (44,18): error CS0452: The type 'ValueTuple<int>' must be a reference type in order to use it as parameter 'TRest' in the generic type or method 'ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>'\n                //         var t0 = (1, 2, 3, 4, 5, 6, 7, 8);\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"(1, 2, 3, 4, 5, 6, 7, 8)\").WithArguments(\"System.ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>\", \"TRest\", \"System.ValueTuple<int>\").WithLocation(44, 18),\n                // (44,40): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T1' in the generic type or method 'ValueTuple<T1>'\n                //         var t0 = (1, 2, 3, 4, 5, 6, 7, 8);\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"8\").WithArguments(\"System.ValueTuple<T1>\", \"T1\", \"int\").WithLocation(44, 40),\n                // (45,9): error CS0452: The type 'ValueTuple<int>' must be a reference type in order to use it as parameter 'TRest' in the generic type or method 'ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>'\n                //         (int, int, int, int, int, int, int, int) t1 = t0;\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"(int, int, int, int, int, int, int, int)\").WithArguments(\"System.ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>\", \"TRest\", \"System.ValueTuple<int>\").WithLocation(45, 9),\n                // (45,45): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T1' in the generic type or method 'ValueTuple<T1>'\n                //         (int, int, int, int, int, int, int, int) t1 = t0;\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"int\").WithArguments(\"System.ValueTuple<T1>\", \"T1\", \"int\").WithLocation(45, 45)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

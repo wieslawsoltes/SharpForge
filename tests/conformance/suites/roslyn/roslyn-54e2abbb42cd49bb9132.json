@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-54e2abbb42cd49bb9132",
+  "kind": "diagnostics",
+  "sourceText": "\n[IsUnmanaged]\npublic class Test\n{\n}\n",
+  "sourceSHA256": "07a85678a7a38d3066af5107e958b788560f6f5245b00969c85656ab205b7301",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "sha256": "c8792e369226130bbbac808179535c1e1aa84e843c9cb3691e3e7502042372c6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "license": "MIT",
+    "method": "UserReferencingIsUnmanagedAttributeShouldResultInAnError",
+    "offset": 23383
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0246: The type or namespace name 'IsUnmanagedAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // [IsUnmanaged]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"IsUnmanaged\").WithArguments(\"IsUnmanagedAttribute\").WithLocation(2, 2),\n                // (2,2): error CS0246: The type or namespace name 'IsUnmanaged' could not be found (are you missing a using directive or an assembly reference?)\n                // [IsUnmanaged]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"IsUnmanaged\").WithArguments(\"IsUnmanaged\").WithLocation(2, 2)",
+  "unsupported": []
+}
