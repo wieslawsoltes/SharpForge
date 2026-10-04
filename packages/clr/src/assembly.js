@@ -1,5 +1,5 @@
 import { readPE } from '@sharpforge/cil';
-import { readIdentity } from './assembly-identity-reader.js';
+import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
@@ -8,6 +8,20 @@ import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataPropertyParameters } from './type-system/metadata-property-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
+import { ManifestResources } from './resources/manifest.js';
+
+function namedIdentityRow(row, reference) {
+  if (!reference) return { MajorVersion: row[1], MinorVersion: row[2], BuildNumber: row[3], RevisionNumber: row[4],
+    Flags: row[5], PublicKey: row[6], Name: row[7], Culture: row[8] };
+  return { MajorVersion: row[0], MinorVersion: row[1], BuildNumber: row[2], RevisionNumber: row[3],
+    Flags: row[4], PublicKeyOrToken: row[5], Name: row[6], Culture: row[7] };
+}
+
+function readIdentity(metadata, row, reference, signal) {
+  return assemblyIdentityFromRow(namedIdentityRow(row, reference), {
+    reference, signal, readString: index => metadata.string(index), readBlob: index => metadata.blob(index),
+  });
+}
 
 function guidText(bytes) {
   const hex = index => bytes[index].toString(16).padStart(2, '0');
@@ -322,6 +336,12 @@ export class RuntimeAssembly {
   get referenceCount() { this.ensureUsable(); return this.#pe.metadata.counts[35] ?? 0; }
 
   ensureUsable() { this.#context.ensureUsable(); }
+
+  /** Independent, disposable manifest-resource reader with explicit linked-file input and configurable byte/work budgets. */
+  openManifestResources(options = {}) {
+    this.ensureUsable();
+    return new ManifestResources(this, this.#pe, options);
+  }
 
   /** Decode one AssemblyRef identity, without resolving or loading the referenced assembly. */
   async reference(index, { signal } = {}) {
