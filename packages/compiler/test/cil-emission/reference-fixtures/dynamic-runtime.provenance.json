@@ -35,5 +35,20 @@
       "outputLines": 25,
       "directDotnet": "equal"
     }
-  ]
+  ],
+  "isolatedQualification": {
+    "date": "2026-10-04",
+    "baseCommit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "testedCommit": "4cbae619078ec5f72fdc0aa18c006416e2e1431f",
+    "command": "node scripts/limited.js node --test tests/compiler-cil-dynamic-callsites.test.js tests/compiler-cil-emission-dynamic.test.js tests/compiler-binder-dynamic.test.js",
+    "tests": 30,
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0,
+    "nativeFixtures": [
+      "dynamic-callsites",
+      "dynamic-control-flow"
+    ],
+    "logSha256": "756374b030f8ecf048eb309bf66cc4b3f1c8d4901309d5741b5a2729e8f001a9"
+  }
 }
