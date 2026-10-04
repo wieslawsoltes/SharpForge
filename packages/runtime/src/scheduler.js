@@ -1,7 +1,7 @@
 import {loadContext,parkContext} from './execution/context-transitions.js';
 import {forgetContextSuspension} from './execution/context-events.js';
 import {finishContext,cancelContexts} from './execution/frame-retirement.js';
-import {rebuildFrameIndex} from './execution/frame-lifetimes.js';
+import {enqueueContext} from './execution/enqueue-context.js';
 import {schedulerRootValues} from './execution/frame-roots.js';
 import {TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {boundDelegateCall} from './execution/delegate-targets.js';
@@ -46,20 +46,7 @@ export class CooperativeScheduler {
     }t.waiters.clear();
   }
   failure(t){return t.error??new ManagedFault(t.status==='canceled'?'TaskCanceledException':'Exception',this.vm.native?.(this.vm.platform.get(t.ref,'$error'))??this.vm.platform.native(this.vm.platform.get(t.ref,'$error'))??'Task failed');}
-  enqueue(delegate,args=[],{name=null,kind='task',task=null,parentId=this.currentId,eager=false,thread=null}={}){
-    this.ensure();this.prune();const live=[...this.contexts.values()].filter(c=>!terminal.has(c.status));if(live.length>=this.maxContexts)throw new ManagedFault('ExecutionLimitException','Managed context limit exceeded');
-    const {method,arguments:values}=boundDelegateCall(this.vm,delegate,args);
-    this.save();const previous=this.capture(),previousState=this.vm.state;
-    this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];this.vm.currentPoint=null;this.vm.pendingFault=null;this.vm.fault=null;this.vm.returnValue=null;this.vm.exitCode=0;
-    try{this.vm.call(method,values);}
-    catch(error){for(const k of contextFields)if(k in previous)this.vm[k]=previous[k];this.vm.state=previousState;rebuildFrameIndex(this.vm);throw error;}
-    const id=this.nextId++,c={id,name:name??(this.vm.inspector?(this.vm.inspector.debug?.methods?.find(m=>m.token===method)?.asyncOrigin??this.vm.top.method.name):(this.vm.image.methods[method].asyncOrigin??this.vm.image.methods[method].name)),kind,status:'ready',frozen:false,parentId,task:task?.ref??null,taskId:task?.id??null,thread,delegate,wait:null,eagerParent:eager?parentId:null,...this.capture()};
-    this.contexts.set(id,c);if(task)task.contextId=id;
-    for(const k of contextFields)if(k in previous)this.vm[k]=previous[k];this.vm.state=previousState;
-    if(eager)this.preferred=id;
-    if(['terminated','waiting'].includes(previousState)&&!this.vm.frames.length){this.load(c);}
-    return id;
-  }
+  enqueue(delegate,args=[],options={}){return enqueueContext(this,delegate,args,options,contextFields);}
   callDelegate(delegate,args){const {method,arguments:values}=boundDelegateCall(this.vm,delegate,args);
     this.vm.call(method,values);return SUSPENDED; // The callee supplies the result on return, without suspending this context.
   }

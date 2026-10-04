@@ -25,6 +25,20 @@ export function variableOf(expression) {
   return current;
 }
 
+/** True for `a[^1]` over an array: an element, which lives on the heap. */
+const isHeapElement = e => e.accessKind === 'index' && (!e.access || e.access.kind === 'ArrayAccess');
+
+/**
+ * The by-reference indexer call `a[^1]` stands for, on the real receiver (the access is bound over a placeholder; the
+ * offset is an `int` and holds no reference); null for an array element, a slice and a by-value indexer.
+ */
+export function implicitIndexInvocation(e) {
+  if (e.accessKind !== 'index' || isHeapElement(e)) return null;
+  const access = e.access;
+  if (!isByReference(access.property?.refKind ?? access.method?.refKind)) return null;
+  return { ...access, receiver: e.receiver, args: [] };
+}
+
 export class EscapeContexts {
   /**
    * @param {object} [options]
@@ -116,9 +130,30 @@ export class EscapeContexts {
       }
       case 'RefConditional':
         return narrowest([this.refSafeContext(e.whenTrue), this.refSafeContext(e.whenFalse)]);
+      case 'ImplicitIndexerAccess':
+        return this.implicitIndexRefSafe(e);
       default:
         return EscapeScope.CurrentMethod;
     }
+  }
+  /**
+   * `a[^1]` denotes what `a[a.Length - 1]` does: an array element lives on the heap, the result of a by-reference
+   * indexer escapes like a call on the receiver; a slice (`a[1..]`) and a by-value indexer are values.
+   */
+  implicitIndexRefSafe(e) {
+    if (isHeapElement(e)) return EscapeScope.CallingMethod;
+    const invocation = implicitIndexInvocation(e);
+    return invocation ? this.invocationContext(invocation) : EscapeScope.CurrentMethod;
+  }
+  /**
+   * The ref safe context of the iteration variable of `foreach (ref T item in collection)`: `item` is the result of
+   * the enumerator's by-reference `Current`, so it escapes like what the enumerator holds - for a ref struct
+   * collection (a span) the value of the collection; any other enumerator can only refer to the heap.
+   */
+  iterationRefSafe(collection, loopScope) {
+    const type = collection?.type;
+    if (!type) return loopScope;
+    return isRefLike(type) ? this.safeContext(collection) : EscapeScope.CallingMethod;
   }
   /** How far the value of `e` may escape. Values of types that cannot hold references always escape freely. */
   safeContext(e) {

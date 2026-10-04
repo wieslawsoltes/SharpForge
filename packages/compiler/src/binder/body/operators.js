@@ -270,7 +270,9 @@ export const OperatorBinding = Base =>
         this.value(syntax.right);
         return this.bad(syntax);
       }
-      const writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', this.variableContext);
+      // `f = ref x` re-targets a ref field: `readonly` on the field decides, not the kind of reference it holds.
+      const variableContext = isRefAssign ? { ...this.variableContext, isRefAssignment: true } : this.variableContext,
+        writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', variableContext);
       // A ref iteration variable of a foreach denotes the current element for the whole iteration (CS1656).
       if (isRefAssign && left.kind === 'Local' && left.local.isForEach) {
         this.report(syntax.left, DiagnosticId.CS1656, [left.local.name, left.local.readOnlyReason]);

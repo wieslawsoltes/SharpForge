@@ -1,12 +1,26 @@
 import {admitCilStack} from './frame-stack.js';
-import {reserveStackFrame, commitStackFrame, cancelStackFrame} from './stack-budget.js';
+import {reserveStackFrame, commitStackFrame, cancelStackFrame, releaseStackFrame} from './stack-budget.js';
 import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
 import {initializeFloatFrame} from './typed-float-frame.js';
 import {enterSourceMethod} from './source-runtime-events.js';
-import {registerFrame} from './frame-lifetimes.js';
+import {nextFrameId, registerFrame, releaseFrame} from './frame-lifetimes.js';
+
+/** Admission is atomic with respect to the frame index, stack budget and pool. */
+export function admitCallFrame(vm, frame) {
+  vm.frames.push(frame);
+  try {
+    registerFrame(vm, frame);
+  } catch (error) {
+    vm.frames.pop();
+    releaseFrame(vm, frame);
+    releaseStackFrame(vm, frame);
+    framePool(vm).retire(frame);
+    throw error;
+  }
+}
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
@@ -16,7 +30,7 @@ export function cilCallFrame(vm, method, args, extra) {
   try {
     pool = framePool(vm);
     frame = pool.acquire(method, args.length);
-    frame.id = ++vm.frameId;
+    frame.id = nextFrameId(vm);
     frame.method = method;
     frame.offsets = methodOffsets(method);
     frame.needsInitialization = method.name !== '.cctor';
@@ -50,12 +64,11 @@ export function callSourceFrame(vm, methodId, args) {
   try {
     pool = framePool(vm);
     frame = pool.acquire(method, args.length);
-    frame.id = ++vm.frameId;
+    frame.id = nextFrameId(vm);
     frame.methodId = methodId;
     frame.base = vm.stack.length;
     for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
-    vm.frames.push(frame);
-    registerFrame(vm, frame);
+    admitCallFrame(vm, frame);
     commitStackFrame(ticket, frame);
   } catch (error) {
     cancelStackFrame(ticket);

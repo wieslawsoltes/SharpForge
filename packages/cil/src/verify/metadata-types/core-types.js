@@ -60,6 +60,8 @@ export function coreTypeAuthority(input, budget) {
   if (!input || typeof input !== 'object' || typeof input.resolveType !== 'function' ||
       typeof context?.resolveType !== 'function' || typeof context.baseType !== 'function')
     rejectTypeSystem('CILVT0001', 'core type authority');
+  if (input.sameModule !== undefined && typeof input.sameModule !== 'boolean')
+    rejectTypeSystem('CILVT0001', 'core module relation');
   const { record, base, invoke } = coreSnapshot(context, budget);
   const bindings = new Map();
   const roles = new Map();
@@ -106,6 +108,7 @@ export function coreTypeAuthority(input, budget) {
     return record(type).category;
   }
   return {
+    sameModule: input.sameModule,
     role: type => roles.get(type),
     depth: type => record(type).depth,
     classify,
