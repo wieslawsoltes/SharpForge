@@ -1,5 +1,5 @@
 import {DiskWorkspace} from './disk-workspace.js';
-export {DiskWorkspace} from './disk-workspace.js';
+export * from './disk-api.js';
 import {portablePath,decodeWorkspaceFile} from '@sharpforge/archive';
 const defaults={maxFiles:20000,maxFileBytes:2_000_000,maxAssemblyBytes:64*1024*1024,maxTotalBytes:128*1024*1024};
 const ignored=new Set(['.git','node_modules','.vs','.sharpforge']);
@@ -18,5 +18,3 @@ export async function readDirectory(handle,options={}){
  }
  await visit(handle);return new DiskWorkspace(records,handles,handle.name,folders,skipped);
 }
-export {scanDirectory, DISK_WORKSPACE_LIMITS} from './disk-scan.js';
-export {WorkspaceImportReport, GitIgnoreMatcher} from './import-report.js';
