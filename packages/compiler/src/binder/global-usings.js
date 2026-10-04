@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Global using directives (SF-A02-T74, C# 10): the `global using` directives of every compilation unit apply to all
  * of them. This module merges them across trees, checks where they are written and produces the implicit usings of
@@ -38,12 +39,12 @@ export function checkGlobalUsingPlacement(file) {
   const usings = [...(file.syntax?.usings ?? [])],
     firstPlain = usings.findIndex(directive => !directive.globalKeyword),
     misplaced = firstPlain < 0 ? null : usings.slice(firstPlain).find(directive => directive.globalKeyword);
-  if (misplaced) rows.push({ node: misplaced.globalKeyword, code: 'CS8915', args: [] });
+  if (misplaced) rows.push({ node: misplaced.globalKeyword, code: DiagnosticId.CS8915, args: [] });
   const visit = container => {
     for (const member of container.members ?? []) {
       if (!isNamespace(member)) continue;
       for (const directive of member.usings ?? [])
-        if (directive.globalKeyword) rows.push({ node: directive.globalKeyword, code: 'CS8914', args: [] });
+        if (directive.globalKeyword) rows.push({ node: directive.globalKeyword, code: DiagnosticId.CS8914, args: [] });
       visit(member);
     }
   };

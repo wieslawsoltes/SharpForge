@@ -1,24 +1,79 @@
 name: Queued area manifests
 on:
   workflow_dispatch:
+    inputs:
+      head_sha:
+        description: Exact queued combined-tree commit
+        required: true
+        type: string
+      base_sha:
+        description: Exact target base commit
+        required: true
+        type: string
+      head_ref:
+        description: Full refs/heads/gh-readonly-queue/... ref
+        required: true
+        type: string
+      base_ref:
+        description: Full target refs/heads/... ref
+        required: true
+        type: string
 permissions:
   contents: read
+  pull-requests: read
 jobs:
   matrix:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
+      head_sha: ${{ steps.context.outputs.head_sha }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check out the trusted qualification harness
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          path: planning-tools
+          persist-credentials: false
+      - name: Check out the pinned combined tree
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.head_sha }}
+          path: qualified-group
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
+      - name: Resolve every actual queue constituent
+        id: context
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PLANNING_HEAD_SHA: ${{ inputs.head_sha }}
+          PLANNING_BASE_SHA: ${{ inputs.base_sha }}
+          PLANNING_HEAD_REF: ${{ inputs.head_ref }}
+          PLANNING_BASE_REF: ${{ inputs.base_ref }}
+        run: node planning-tools/scripts/conformance/ci-planning/merge-group-context.js --root qualified-group --output "$RUNNER_TEMP/merge-group.json"
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - id: plan
-        run: node scripts/conformance/ci-planning/impact.js
+        working-directory: qualified-group
+      - name: Gate the combined tree before selecting all area consumers
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROJECT_READ_TOKEN: ${{ secrets.PLANNING_PROJECT_READ_TOKEN }}
+        run: >-
+          node planning-tools/scripts/conformance/ci-planning/merge-group-gates.js
+          --root qualified-group --context "$RUNNER_TEMP/merge-group.json"
+          --output "$RUNNER_TEMP/merge-group-gates.json" --plan "$RUNNER_TEMP/merge-group-plan.json"
+      - name: Retain exact queue context and gate outcomes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: merge-group-planning
+          path: |
+            ${{ runner.temp }}/merge-group.json
+            ${{ runner.temp }}/merge-group-gates.json
+            ${{ runner.temp }}/merge-group-plan.json
+          if-no-files-found: warn
   areas:
     needs: matrix
     runs-on: ubuntu-latest
@@ -30,6 +85,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ needs.matrix.outputs.head_sha }}
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:

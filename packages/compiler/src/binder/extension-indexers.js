@@ -27,6 +27,7 @@
  * A write-only extension indexer is not found (the candidates are matched through the get accessor), as for
  * extension properties. List patterns do not look for extension indexers.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { previewStampText } from '@sharpforge/syntax';
 import { ArrayTypeSymbol, SymbolKind, TypeKind } from '../symbols/types.js';
 import { PropertySymbol } from '../symbols/members.js';
@@ -89,7 +90,7 @@ export const ExtensionIndexerBinding = Base =>
       };
       if (!normal.hasErrors) return replay();
       const notBound = what => {
-        this.report(syntax, 'SF2202', [what, previewStampText('ExtensionIndexers')]);
+        this.report(syntax, DiagnosticId.SF2202, [what, previewStampText('ExtensionIndexers')]);
         return this.bad(syntax);
       };
       const found = this.extensionIndexerAccess(scopes, target, args, syntax);
@@ -118,7 +119,7 @@ export const ExtensionIndexerBinding = Base =>
       if (!first || !lambda.body || !expressionTreeDelegate(delegateType, this.core)) return;
       walk(lambda.body, node => {
         if (node.kind === 'IndexerAccess' && node.property?.isExtensionIndexer)
-          this.report(node.syntax, 'SF2203', ['an extension indexer cannot be captured in an expression tree', previewStampText('ExtensionIndexers')]);
+          this.report(node.syntax, DiagnosticId.SF2203, ['an extension indexer cannot be captured in an expression tree', previewStampText('ExtensionIndexers')]);
         return !node.hasErrors;
       });
     }
@@ -146,7 +147,7 @@ export const ExtensionIndexerBinding = Base =>
         const getters = applicable.map(indexer => indexer.getMethod),
           result = this.d.overloads.resolve(getters, combined, { name: 'this' });
         if (!result.succeeded) {
-          this.report(syntax, 'CS9339', applicable.slice(0, 2).map(indexer => indexer.getMethod.toDisplayString()));
+          this.report(syntax, DiagnosticId.CS9339, applicable.slice(0, 2).map(indexer => indexer.getMethod.toDisplayString()));
           return { node: null };
         }
         return { node: this.extensionIndexerNode(applicable, getters, result, target, args, syntax) };

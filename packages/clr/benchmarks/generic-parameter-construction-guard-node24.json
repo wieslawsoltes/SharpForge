@@ -1,0 +1,26 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": true,
+  "results": [
+    {
+      "name": "cold vector descriptors with pre-registered BCL",
+      "unit": "microseconds/operation",
+      "median": 12.249999999994543,
+      "p95": 24.666999999993777,
+      "p99": 339.0420000000063
+    },
+    {
+      "name": "warm vector lookup",
+      "unit": "microseconds/operation",
+      "median": 0.0846541000000002,
+      "p95": 0.09136249999999961,
+      "p99": 0.10547920000000063
+    }
+  ],
+  "comparisonStage": "final generic parameter cache-miss guard",
+  "note": "Existing constructed-type benchmark used as a regression control on a shared machine; no speedup claim."
+}

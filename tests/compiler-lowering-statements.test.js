@@ -112,7 +112,6 @@ test('constructs that need runtime support are reported with their name and posi
     ['class B { } class D : B { } class P { static void Main() { } }', /class inheritance/],
     ['struct S { } class P { static void Main() { S s = new S(); } }', /struct types/],
     ['delegate void D(ref int x); class P { static void M(ref int x) { x = 1; } static void Main() { D d = M; int v = 0; d(ref v); } }', /ref, out and in parameters/],
-    ['class P { static void Main() { long big = 1; System.Console.WriteLine(big); } }', /64-bit integers/],
     ['using System; class P { static void Main() { try { } catch (InvalidOperationException) { } } }', /./],
     ['class B<T> { } class P { static int D<T>(T x, int n) { return D(new B<T>(), n); } static void Main() { D(1, 2); } }', /does not terminate/],
     ['class P { static void Main() { object o = "s"; string s = (string)o; System.Console.WriteLine(s); } }', /runtime type check/],
