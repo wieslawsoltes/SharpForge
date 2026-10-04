@@ -3,6 +3,13 @@
 This package owns BCL family contracts and managed implementations. It has no
 runtime or framework dependency. Hosts supply `bclHost.fault(type, message)`,
 `bclHost.isReference(value)` and `bclHost.frameworkType(name)` on each platform.
+The optional `bclHost.isExecutionStopped(platform)` query distinguishes explicit
+VM shutdown from ordinary completion of Main. Runtime hosts return true while
+the platform is disposed and execution remains terminated; active or restored
+execution and naturally completed programs return false. A BCL operation can
+query this after a synchronous host callback to cancel its pending continuation
+without writing into a stopped VM. The query reads per-platform lifecycle state,
+adds no managed state, and does not change normal post-completion inspection.
 The fault service must throw the host's managed exception.
 
 `createHostStringOrdering({Collator})` creates a synchronous nullable-string
