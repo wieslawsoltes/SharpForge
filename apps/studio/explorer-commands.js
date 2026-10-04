@@ -3,6 +3,7 @@ import {renameSolutionFolder,removeSolutionFolder,moveSolutionProject,addSolutio
  createCsproj,createSlnx} from '@sharpforge/project-system';
 import {performExplorerOperation,undoExplorerOperation} from './explorer-operations.js';
 import {addExistingExplorerItems} from './explorer-existing.js';
+import { projectContextActions, projectContextMenu } from './workbench/startup-commands.js';
 const base=p=>p?.includes('/')?p.slice(0,p.lastIndexOf('/')):'';
 const name=p=>p?.split('/').at(-1)??'';
 const within=(p,root)=>p===root||p.startsWith(root+'/');
@@ -37,13 +38,9 @@ export class ExplorerCommands {
   const items=[];
   if(single&&node?.kind==='source'||single&&['file','assembly','project-file','generated','project-reference','symbol'].includes(node?.kind))items.push(action(node.kind==='assembly'?'Open in Decompiler':'Open','open','Enter'));
   if(node?.kind==='source')items.push(action('Open in New Vertical Tab Group','split'),action('Open in Separate Window','popout'));
-  if(node?.kind==='project'||node?.kind==='solution'){
-   const nativeReady=()=>!c.native||!!c.nativeAvailable&&!!c.trusted&&!c.buildBusy?true:'Connect an available MSBuild engine and explicitly trust this workspace';
-   items.push(action('Build','build','Ctrl+Shift+B',nativeReady),action('Rebuild','rebuild','',nativeReady),action('Clean','clean','',nativeReady));
-   if(c.native)items.push(action('Restore Packages','restore','',nativeReady),action('Evaluate Project','evaluate','',nativeReady));
-   if(node.kind==='project')items.push(action('Set as Startup Project','startup','',canChange),action('Edit Project File','edit-project','',!!node.path));else if(node.path)items.push(action('Edit Solution File','open'));
-   items.push(null);
-  }
+  items.push(...projectContextMenu({
+    node, context: () => this.context(), action, canChange, commandState: this.host.projectCommandState
+  }));
   if(['solution','project','workspace','folder','solution-folder'].includes(node?.kind))items.push({label:'Add',enabled:canChange,children:[action('New Item…','new-file','Ctrl+Shift+A',canChange),action('Existing Item…','add-existing','Shift+Alt+A',canChange),action('New Folder…','new-folder','',canChange),null,action('New Project…','new-project','',canChange),action('Existing Project…','add-project','',()=>this.context().solutionPath?canChange():'Open a .slnx solution first'),action('Solution Folder…','solution-folder','',()=>this.context().solutionPath?canChange():'Open a .slnx solution first')]});
   if(node?.kind==='dependencies'||node?.kind==='project'||node?.kind==='dependency-group')items.push(action('Add Project Reference…','add-reference','',()=>node.project?canChange():'Open an SDK project first'));
   if(node?.kind==='project'&&node.path&&c.solutionPath)items.push(action('Move to Solution Folder…','project-folder','',canChange),action('Remove from Solution…','remove-project','',canChange));
@@ -72,7 +69,7 @@ export class ExplorerCommands {
   if(action==='expand'||action==='collapse')return this.host.explorer.model.expandAll(action==='expand',node.id);
   if(action==='split'||action==='popout'){await this.host.open(node);return this.host.document(action,node.path);}
   if(action==='refresh'){await this.host.refresh();return;}
-  if(['build','rebuild','clean','restore','evaluate','startup','edit-project'].includes(action))return this.host.project(action,node);
+  if (projectContextActions.includes(action)) return this.host.project(action, node);
   if(action==='copy'||action==='cut'){if(action==='cut'&&this.editable()!==true)throw new Error(this.editable());const files=this.files(nodes);if(files.length!==nodes.length||!files.length)throw new Error('Select files or physical folders to copy or move');this.clipboard={identity:c.identity,cut:action==='cut',nodes:files.map(n=>({...n,children:undefined}))};this.host.notice(`${files.length} item(s) ${action==='cut'?'cut':'copied'}. Choose a destination and Paste.`);return;}
   if(this.editable()!==true)throw new Error(this.editable());
   if(this.runningMutation)throw new Error('Complete or cancel the active file dialog first');

@@ -49,8 +49,10 @@ function mountSessionUi(context) {
     docking: context.docking,
     commands: context.commands,
     document: context.document,
+    state: () => context.state,
     stopAll: () => context.execution.stop({ all: true }),
-    startNewInstance: () => context.execution.startNewInstance(),
+    startNewInstance: (projectId, options) => context.execution.startNewInstance(projectId, options),
+    revealApplication: (sessionId, reveal) => context.execution.reveals.application(sessionId, reveal),
     onError: error => context.toast(error.message, 'error'),
     navigate: frame => {
       if (frame?.source) context.openFile(frame.source);
@@ -187,6 +189,7 @@ function installLifecycle(context, owners, disconnectTestLenses, disconnectStart
     clearTimeout(context.state.analyzeTimer);
     clearTimeout(context.state.saveTimer);
     const disposers = [
+      () => context.execution.dispose(),
       () => context.workspaceInputs.dispose(),
       () => context.workspaceLoads.dispose(),
       () => context.diskObserver.dispose(),
@@ -225,7 +228,7 @@ function installLifecycle(context, owners, disconnectTestLenses, disconnectStart
 function registerCommands(context, owners) {
   context.commands.configure('stop', { execute: () => context.stopActiveSession() });
   context.commands.configure('restart', {
-    execute: () => context.services.sessions.active?.restart() ?? context.launch(true)
+    execute: () => context.execution.restart()
   });
   context.commands.configure('save', { title: 'Save Selected Items', label: 'Save Selected Items' });
   context.commands.register({

@@ -87,3 +87,56 @@ compatible baseline; capture-only runs do not manufacture a regression compariso
 At this source assembly commit, the final combined host qualification is pending. The aggregate
 `project16-implementation.json` ledger records issue-specific limits and qualification status; it does
 not automatically close issues whose platform acceptance has not been executed.
+
+
+## Startup commands and captured reveals (SF-A19-T02 / SF-A19-T06.3)
+
+The Project menu and solution context menu expose `solutionSetStartupProjects`
+(the existing `startup-projects` action). The Debug menu exposes
+`start-new-instance` and `stop-all`; a project context menu exposes
+`projectDebugStartNewInstance`. An explicit project is passed through
+`commands.invoke(id, { projectId })`, or as an object/string argument to
+`commands.execute`. The new-instance action forwards that project to
+`StudioExecution.startNewInstance` without modifying startup selection or either
+project's selected launch profile. The Explorer Set as Startup Project route uses
+`selectStudioStartupProject`, which preserves the same selected profile as the
+toolbar. Native process execution remains unavailable and is explained by the
+command's disabled reason.
+
+`LaunchOrchestrator.start(options)` accepts the optional synchronous predicate
+`shouldActivate(session)`. Its default returns true, preserving the existing
+service behavior. When `activate` is true, the predicate runs after the first
+application has launched, immediately before selecting it. Returning false keeps
+the successfully launched application available without changing the selected
+session; it does not cancel the application. The callback is removed from launch
+overrides and is never sent to a worker. Studio supplies a predicate that checks
+the captured user intent, selected project, and initiating session object so a
+late launch cannot override a later selection.
+
+`RevealPolicy.request(panelId, options)` checks `userInitiated`, the captured
+`intent`, and optional project/session identities. `allows(options)` exposes the
+same check without changing the UI. The optional synchronous `onReveal(panelId)`
+callback groups source navigation and panel activation into one checked action.
+Focus/activation caused by that callback does not count as new user navigation.
+Deferred work must perform another request with the original captured intent
+before changing the UI. Background builds never receive a reveal grant.
+
+`StudioReveals` records user input in the main document and detached tools, and
+records explicit programmatic navigation through Studio's open-file/panel routes.
+The command registry's optional `onExecute(id, invocation)` callback runs before
+an enabled, non-aborted command handler, allowing debug commands to capture a new
+follow action. Launches and restarts bind that action to the application's worker
+generation and launch epoch. Runtime events must additionally match the active
+application's complete app/worker/runtime identity. Pause source navigation,
+verified embedded-source navigation, completion/fault output, and initial
+application-window activation all use this policy. Disposal removes input and
+session subscriptions.
+
+Focused regressions are authored in `tests/a19-startup-menus.test.js` (11),
+`tests/a19-studio-reveal-policy.test.js` (14), and
+`tests/a19-startup-project-profile.test.js` (3), using the small fake-worker fixture
+`tests/support/studio-reveal-fixture.js`. They cover late completion, background
+work, foreign/old identities, restart, cancellation, command availability, native
+limitations, explicit project forwarding and profile preservation. These 28 cases
+are pending the root agent's consolidated affected-scope validation; no new
+browser or native qualification is claimed by this source handoff.
