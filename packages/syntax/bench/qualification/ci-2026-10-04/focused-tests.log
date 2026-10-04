@@ -1,0 +1,16 @@
+✔ parse bench: the committed baseline covers small, 1 MB, 10 MB and huge-literal inputs (63.709127ms)
+✔ parse bench: the regression check fails beyond 15 percent and passes within it (57.414635ms)
+✔ parse bench: the quick measurement runs every case and produces comparable figures (4847.611928ms)
+✔ syntax parse qualification checks the 15 percent boundary even for sub-two-millisecond regressions (1.296904ms)
+✔ syntax parse qualification rejects missing, additional and changed input cases (0.302003ms)
+✔ syntax parse qualification rejects malformed metrics instead of silently passing NaN comparisons (0.523578ms)
+✔ syntax parse qualification cannot update its own baseline or silently skip the ten-megabyte case (0.383873ms)
+✔ syntax parse qualification preserves a failed verdict and the exact baseline digest in its artifact (0.963594ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5233.932519
