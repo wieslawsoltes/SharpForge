@@ -39,7 +39,8 @@
     "tests/project-evaluation-contexts.test.js",
     "tests/a23-cil-project-graph-contract.test.js",
     "tests/a23-project-plan-artifacts.test.js",
-    "tests/a23-worker-emission-cache.test.js"
+    "tests/a23-worker-emission-cache.test.js",
+    "tests/a23-compiler-worker-entry.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
