@@ -32,6 +32,7 @@ export * from './transport/http.js';
 export * from './transport/rest.js';
 export * from './fetch.js';
 export * from './clone.js';
+export * from './push-policy.js';
 export * from './refspec.js';
 export * from './shallow.js';
 export * from './promisor.js';
