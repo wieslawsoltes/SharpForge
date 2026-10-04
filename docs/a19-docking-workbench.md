@@ -88,6 +88,45 @@ commandRegistry.registerContributions(services.windows.descriptors());
 
 The document adapter contract is `get`, `open`, `activate`, `save`, `close`, `subscribe`, `getViewState`, `restoreViewState` and optional `setTabs`. Buffer records provide `uri`, `text`, `version` and `dirty`. `close(uri,{discard:true})` represents an explicit user's discard choice. `createDocument(uri,{viewId,panelId})` must create a view over the service's existing buffer; multiple views have independent caret/scroll state and a common editing/undo model.
 
+### Watch instances
+
+Install `installWatchWindows({docking,sessions,commands,storage,onError})` from
+`workbench/watch-windows/index.js` after `attachDocuments` and before the first
+`docking.sync`. That registers the actual Watch factory before persisted layout
+identities are restored. `window.watch1` through `window.watch4` are registered
+user commands; `open(2,{sessionId})` can create a session-bound Watch 2. A normal
+Watch window follows the active application, and its labeled selector can pin
+it to another application without changing the global active process.
+
+Each window owns its expression list, result map, input nodes and request
+generation. It calls the captured `AppSession.request('evaluate',...)` with the
+captured application identity and stack frame. A changed application/frame,
+restart, hidden panel or disposal aborts or discards stale results. Evaluation
+is sequential and limited to 128 expressions of at most 4096 characters. It
+uses the runtime's existing side-effect-free evaluator; it never executes host
+JavaScript or aliases the legacy shared watch-results map.
+
+Only expressions and the chosen scope are persisted, under a versioned,
+2 MiB/256-window bound. Evaluated values, network grants and runtime capabilities
+are not serialized. Closing and reopening retains the same controller; removing
+its panel disposes it, and a later explicit open restores the saved expressions.
+Saved factory IDs retain their layout geometry. The installer returns `open`,
+`get`, `descriptors` and `dispose`; dispose it during Studio teardown.
+
+`tests/a19-watch-windows.test.js` exercises the actual command registry, docking
+model/factories, controller DOM events and AppSession/WorkerClient boundaries.
+Those controlled-worker tests do not claim actual browser or native-debugger
+qualification.
+
+The complete Watch scope passed 7/7 tests through
+`node scripts/limited.js node --test tests/a19-watch-windows.test.js` on Node
+24.19.0. Seven existing Window/layout tests also passed in the first scope run.
+After synchronizing upstream, the local workspace required an offline npm link
+refresh for the newly declared BCL collections package. The first Watch run then
+identified a test's incorrect `locate().kind` expectation; the documented API
+returns a group plus `floatingId`. The corrected assertion compares that exact
+ID and the full restored floating geometry. No product assertion was weakened.
+
 `docking.registerPanel({id,title,kind,element,onClose})` registers a dynamic application panel and returns a disposer. An asynchronous `onClose` returning false cancels closing. `registerToolKind(kind,factory,{limit,title})` and `createTool(kind,instance,{sessionId})` create independent tool instances. Tool factories receive the exact persistent record and must return a fresh DOM element for each new identity.
 
 The host offers `menuProvider`, `requestClose`, `onPopoutDocument` and `onWindowFocus` callbacks. Studio uses these seams rather than replacing host methods. Global popout shortcuts are forwarded only if the event was not already handled locally.
