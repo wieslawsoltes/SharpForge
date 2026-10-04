@@ -68,23 +68,31 @@ export function responsiveSourceSignature(base, document, names, targetIds) {
     const name = variables.get(id);
     return shadowed.has(names.get(id)) ? ownerName(base.owner) + '.' + name : name;
   };
-  return {methodName, widthName, parameters, symbol};
+  const root = nodes.get(document.root);
+  const viewport = !parameters.length && root?.type === 'Microsoft.UI.Xaml.Window' && (!existing || existing.viewport)
+    ? {window: names.get(root.id), handlerName: existing?.viewport?.handlerName ?? allocateName('OnAdaptiveSizeChanged', taken)} : null;
+  return {methodName, widthName, parameters, symbol, viewport};
 }
 
 /** Before removing or changing a helper signature, every call must belong to its proved initializer. */
 export function assertResponsiveReferencesOwned(base) {
   const adaptive = base.responsiveSource;
-  const owns = sourceSpanLookup([adaptive.method, adaptive.initializer], base.uri);
-  const span = adaptive.method.nameSpan;
-  const symbol = span && base.context.symbolsByLocation.get(adaptive.uri + ':' + span.start + ':' + adaptive.method.name);
-  let references;
-  if (symbol) references = base.context.referencesBySymbol.get(symbol.id) ?? [];
-  else references = base.context.parsedFiles.flatMap(parsed => parsed.tokens
-    .filter(token => token.kind === 'identifier' && token.value === adaptive.method.name)
-    .map(token => ({uri: parsed.source.uri, start: token.start, end: token.end})));
-  const outside = references.filter(reference => !reference.declaration && !owns(reference));
-  if (outside.length) failSource('Adaptive helper is referenced outside its owned construction initializer', adaptive.method,
-    'SFSYNC_REFERENCE', {references: outside});
+  const regions = [adaptive.method, adaptive.initializer,
+    ...(adaptive.viewport ? [adaptive.viewport.method, adaptive.viewport.statement] : [])];
+  const owns = sourceSpanLookup(regions, base.uri);
+  for (const method of [adaptive.method, ...(adaptive.viewport ? [adaptive.viewport.method] : [])]) {
+    const span = method.nameSpan;
+    const uri = method.uri ?? adaptive.uri;
+    const symbol = span && base.context.symbolsByLocation.get(uri + ':' + span.start + ':' + method.name);
+    let references;
+    if (symbol) references = base.context.referencesBySymbol.get(symbol.id) ?? [];
+    else references = base.context.parsedFiles.flatMap(parsed => parsed.tokens
+      .filter(token => token.kind === 'identifier' && token.value === method.name)
+      .map(token => ({uri: parsed.source.uri, start: token.start, end: token.end})));
+    const outside = references.filter(reference => !reference.declaration && !owns(reference));
+    if (outside.length) failSource('Adaptive helper is referenced outside its owned construction or viewport adapter', method,
+      'SFSYNC_REFERENCE', {references: outside});
+  }
 }
 
 /** Generate through the shared emitter and parse its method boundary; no source-pattern replacement is used. */
@@ -93,11 +101,13 @@ export function emitResponsiveSource(document, signature, signal) {
   const emission = generateResponsiveMethods(document, {...signature, csharpValue});
   const text = 'class AdaptiveSource {\n' + emission.methods.join('\n') + '\n}';
   const parsed = parse(new SourceText(text), undefined, {cancellationToken: sourceSyntaxCancellationToken(signal)});
-  const method = sourceMethods([parsed])[0]?.method;
+  const methods = sourceMethods([parsed]);
+  const method = methods[0]?.method;
   if (!method || parsed.diagnostics.some(diagnostic => diagnostic.severity === 'error')) {
     failSource('Adaptive source generator could not represent this helper', null, 'SFSYNC_OWNERSHIP');
   }
-  return {text, method, initializer: emission.initialize[0].trim(), diagnostics: emission.diagnostics};
+  return {text, method, viewportMethod: methods[1]?.method ?? null,
+    initializer: emission.initialize[0].trim(), initializers: emission.initialize.map(line => line.trim()), diagnostics: emission.diagnostics};
 }
 
 /** Structural changes retain every non-marker comment while adapting indentation to the containing source. */
