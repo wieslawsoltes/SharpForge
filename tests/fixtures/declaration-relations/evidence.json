@@ -27,7 +27,8 @@
       "tests/a13-11-declaration-reference.test.js",
       "tests/a13-11-declaration-relations.test.js",
       "tests/a13-11-usage-relations.test.js",
-      "tests/clr-methods-interface-impl.test.js"
+      "tests/clr-methods-interface-impl.test.js",
+      "tests/clr-methods-interface-impl-reference.test.js"
     ],
     "replayCommand": [
       "node",
@@ -38,9 +39,10 @@
       "tests/a13-11-declaration-reference.test.js",
       "tests/a13-11-declaration-relations.test.js",
       "tests/a13-11-usage-relations.test.js",
-      "tests/clr-methods-interface-impl.test.js"
+      "tests/clr-methods-interface-impl.test.js",
+      "tests/clr-methods-interface-impl-reference.test.js"
     ],
-    "replayCommandProvenance": "Replay invocation for these five suites; the retained output has no command preamble.",
+    "replayCommandProvenance": "Replay invocation for six suites identified from the retained test names; the original output has no command preamble. The earlier five-suite list omitted the independent CoreCLR GetBaseDefinition reference suite.",
     "recordedEnvironment": null,
     "configurationNote": "The retained Node output does not record environment or resource-limit overrides. Replay uses scripts/limited.js.",
     "durationNote": "Diagnostic test-run duration only; not a benchmark or throughput measurement."
@@ -126,5 +128,36 @@
     "tests/fixtures/declaration-relations/capture.mjs": "a2840c4aa1b222e912ada13085575fa797a9fe9c6ab9f12a3b9bd171c596d6d7",
     "tests/fixtures/declaration-relations/input.mjs": "8332d27834a91492ba6d4e05a9d497bdb8acb04295359ce264e77ac4f4f44114",
     "tests/manifests/A13.json": "a784649b44bd02c808d6f45ccf4be4a181738681fa662699f8e1d4366f893815"
+  },
+  "integration": {
+    "commit": "d345a29b97732d920e087789def09702db2bbffc",
+    "tree": "b30d6ea73f47f0d6e9bf79ecf08b569112d46c57",
+    "file": "integration-node-results.txt",
+    "sha256": "a98a3eedb2b17b388806cc896101aff7105f61f09e2a95831083e47c68f6d22a",
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/a13-11-declaration-provider.test.js",
+      "tests/a13-11-declaration-reference.test.js",
+      "tests/a13-11-declaration-relations.test.js",
+      "tests/a13-11-usage-relations.test.js",
+      "tests/clr-methods-interface-impl.test.js"
+    ],
+    "environment": {
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "result": {
+      "tests": 32,
+      "pass": 32,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "scope": "Post-merge check of declaration provider/native relation parity, usage relations and CLR interface implementation. The sixth independent GetBaseDefinition reference suite remains covered by the retained earlier 33-test run."
   }
 }
