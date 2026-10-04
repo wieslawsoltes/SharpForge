@@ -9,6 +9,7 @@
   },
   "files": [
     "src",
+    "docs",
     "README.md",
     "THIRD-PARTY-NOTICES.md",
     "LICENSE"
