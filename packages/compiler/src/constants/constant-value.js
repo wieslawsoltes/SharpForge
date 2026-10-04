@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Typed compile-time constant values (SF-A02-T32).
  *
@@ -253,15 +254,15 @@ export function literalConstant(text){
   const raw=String(text).replaceAll('_','');let m;
   if((m=/^(0[xX][\da-fA-F]+|0[bB][01]+|\d+)([uU][lL]?|[lL][uU]?)?$/.exec(raw))){
     const suffix=(m[2]??'').toLowerCase(),value=BigInt(m[1]);
-    if(value>integralRanges.ulong[1])return foldError('CS1021');
+    if(value>integralRanges.ulong[1])return foldError(DiagnosticId.CS1021);
     const candidates=suffix===''?['int','uint','long','ulong']:suffix==='u'?['uint','ulong']:suffix==='l'?['long','ulong']:['ulong'];
     return ConstantValue.integral(candidates.find(t=>value<=integralRanges[t][1]),value);
   }
   if((m=/^((?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)([fFdDmM])?$/.exec(raw))){
     const suffix=(m[2]??'d').toLowerCase();
-    if(suffix==='m'){const d=Decimal.parse(m[1]);return d?new ConstantValue('decimal',d):foldError('CS0594',['decimal']);}
+    if(suffix==='m'){const d=Decimal.parse(m[1]);return d?new ConstantValue('decimal',d):foldError(DiagnosticId.CS0594,['decimal']);}
     const value=suffix==='f'?parseFloat32(m[1]):Number(m[1]);
-    return Number.isFinite(value)?new ConstantValue(suffix==='f'?'float':'double',value):foldError('CS0594',[suffix==='f'?'float':'double']);
+    return Number.isFinite(value)?new ConstantValue(suffix==='f'?'float':'double',value):foldError(DiagnosticId.CS0594,[suffix==='f'?'float':'double']);
   }
   return null;
 }

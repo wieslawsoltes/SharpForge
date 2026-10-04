@@ -1,0 +1,6 @@
+{
+  "nullable-conditional-access/boolean-members-and-coalesce": ["diagnostics", "warnings"],
+  "nullable-conditional-access/chains-and-short-circuits": ["diagnostics", "warnings"],
+  "nullable-conditional-access/patterns": ["diagnostics", "warnings"],
+  "nullable-conditional-access/relational-and-equality-comparisons": ["diagnostics", "warnings"]
+}

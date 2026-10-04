@@ -1,4 +1,7 @@
+import {validateCilStackSnapshot} from './execution/frame-stack.js';
+import {clearFramePool} from './execution/frame-pool.js';
 import {ManagedFault} from './heap.js';
+import {invalidateExecutionCode} from './execution/code-version.js';
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -130,7 +133,9 @@ export function restoreVM(vm, snapshot, engine) {
       throw new TypeError(`Snapshot is missing '${item.name}'`);
   }
   if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
+  if (engine === 'cil') validateCilStackSnapshot(vm, snapshot);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
+  vm.profiler?.boundary();
   // Copy before changing the VM; the same memo preserves frame/fault aliases.
   const memo = new Map(), values = new Map();
   for (const item of selected.fields) {
@@ -146,4 +151,6 @@ export function restoreVM(vm, snapshot, engine) {
   if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
   vm.scheduler.restore(snapshot.scheduler);
   vm.platform.restore(snapshot.platform);
+  if (engine === 'cil') invalidateExecutionCode(vm, 'snapshot-restore');
+  clearFramePool(vm);
 }

@@ -1,3 +1,4 @@
+import {ScalarTranslation} from './scalar-translation.js';
 /**
  * Lowers one semantic bound body (binder/body-binder.js) to the nodes the IR emitter consumes. The translator owns
  * the per-body state: where each variable lives (a slot, a parameter or a closure cell), the locals of the block
@@ -226,6 +227,7 @@ const families = [
   StructuralPatternTranslation,
   ...languageLowerings,
   // Last: what depends on a type argument is decided before any other family sees the node.
+  ScalarTranslation,
   GenericTranslation,
 ];
 

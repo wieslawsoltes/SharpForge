@@ -51,7 +51,8 @@ Unchanged source files retain their ASTs, but changed files are reparsed and bin
 
 ```sh
 npm ci --ignore-scripts --offline --no-audit --no-fund
-BENCH_REPORT=docs/my-il-benchmark.json npm run bench:il
+mkdir -p artifacts/results
+BENCH_REPORT=artifacts/results/my-il-benchmark.json npm run bench:il
 ```
 
 The environment variable prevents overwriting the recorded pilot report. Script: `scripts/benchmark-il.js`. Inputs: `il-benchmark.json`, `il-benchmark-run2.json`, `il-benchmark-run3.json`. Aggregate: `il-benchmark-summary.json`. Raw pairs are included in runs 2 and 3. Historical pre-IL measurements remain in `performance.md` / `benchmark-results.json` and should not be substituted for current IL startup results.
