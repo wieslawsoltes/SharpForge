@@ -487,3 +487,14 @@ the bounded 3,072-byte/1,024-UTF-16-unit metadata scan used by hoisted locals.
 Relevant facts are owned at load, the query index is lazy, and results are fresh;
 input-byte and returned-record mutations cannot alter subsequent queries.
 Naming follows Roslyn's [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs).
+
+`readPortablePdb` preflights all debug-table row/heap handles before projecting
+names, scopes or custom records. MethodDebugInformation documents are checked
+even for empty sequence blobs; local-signature prefixes reference declared
+external StandAloneSig rows. CDI parents must select an existing declared
+external/local row, including unknown CDI kinds whose payloads stay opaque.
+Import and constant payload references continue through their existing decoders.
+Malformed CLI binary extents/coded indexes are reported as `SymbolError` by the
+PDB reader, including invalid heap handles and truncated constant signatures.
+This validates declared metadata extents without resolving external assemblies
+or claiming every semantic rule, delta generation or execution backend.

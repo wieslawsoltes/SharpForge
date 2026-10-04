@@ -1,4 +1,4 @@
-import { Reader, readMetadata, token, text, decodeCoded } from '@sharpforge/cil';
+import { Reader, CilError, readMetadata, token, text, decodeCoded } from '@sharpforge/cil';
 import { PdbGuids, fail, guidString } from './contracts.js';
 import { hex } from './hash.js';
 import { readCustomDebugInformation } from './custom-debug.js';
@@ -12,7 +12,19 @@ import { createScopeTree } from './scope-tree.js';
 import { unavailableLocalSlots } from './unnamed-slots.js';
 import { metadataName } from './metadata-facts.js';
 import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
-export function readPortablePdb(
+import { validatePdbReferences, validateLocalSignatureRows } from './pdb-validate.js';
+
+/** Read standalone debug metadata; malformed CLI binary references surface as SymbolError. */
+export function readPortablePdb(input, options) {
+  try {
+    return parsePortablePdb(input, options);
+  } catch (error) {
+    if (error instanceof CilError) fail(`Invalid Portable PDB: ${error.message}`);
+    throw error;
+  }
+}
+
+function parsePortablePdb(
   input,
   {
     maxBytes = 64 * 1024 * 1024,
@@ -35,6 +47,7 @@ export function readPortablePdb(
     entryPoint = pr.u32(),
     guids = md.streams.get('#GUID') ?? new Uint8Array();
   if (guids.length % 16) fail('Invalid GUID heap');
+  validatePdbReferences(md, entryPoint);
   const guid = (i) =>
     i === 0
       ? null
@@ -61,6 +74,7 @@ export function readPortablePdb(
     document: row[0],
     ...readSequencePoints(md.blob(row[1]), row[0], { documents: documents.length }),
   }));
+  validateLocalSignatureRows(methods, md.externalCounts);
   if (methods.length && methods.length !== (md.externalCounts[6] ?? 0))
     fail('PDB method row count does not match MethodDef count');
   if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > 100000) fail('Scope tree entry limit exceeded');
