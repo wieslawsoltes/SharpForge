@@ -2,6 +2,7 @@
 from urllib.parse import urlsplit
 import sys
 
+import browser_harness
 from browser_harness import wait_condition
 from a25_clone_diagnostics import clone_submission
 from a25_clone_events import CloneNetworkEvents, expected_authentication_cancellations
@@ -86,11 +87,18 @@ class CloneWorkflow:
         require(self.metadata['remote'] in policy, 'Production CSP did not grant the exact loopback Git remote')
         events['csp'] = policy
         wait_condition(page, 'Boolean(window.sharpforge && sharpforge.getState().metrics)', timeout=60000)
+        complete_startup = getattr(browser_harness, 'complete_startup', None)
+        if complete_startup is not None:
+            complete_startup(page)
         page.evaluate('sharpforge.execute("stop")')
         return context, page, events
 
     def dialog(self, page, url):
-        page.locator('.menubar [data-menu="git"]').click()
+        native_menu = page.locator('.menubar [role="menubar"]')
+        if native_menu.count():
+            native_menu.get_by_role('menuitem', name='Git', exact=True).click()
+        else:
+            page.locator('.menubar [data-menu="git"]').click()
         page.get_by_role('menuitem', name='Clone Repository…', exact=True).click()
         dialog = page.get_by_role('dialog', name='Clone Repository', exact=True)
         dialog.get_by_label('Repository HTTPS URL', exact=True).fill(url)
@@ -129,7 +137,14 @@ class CloneWorkflow:
         }, 'Clone did not adopt the exact native C# source')
         page.evaluate('path => sharpforge.openFile(path)', self.metadata['source'])
         editor = page.locator('[data-source-uri="' + self.metadata['source'] + '"] .sf-input')
-        require(editor.input_value() == self.metadata['records'][self.metadata['source']], 'Visible source differs from native Git')
+        editor.focus()
+        editor.press('ControlOrMeta+a')
+        expected = self.metadata['records'][self.metadata['source']]
+        selection = editor.evaluate('''(input, text) => ({
+            start: input.selectionStart, end: input.selectionEnd, length: text.length
+        })''', expected)
+        require(selection['start'] == 0 and selection['end'] == selection['length'], 'The editor did not select the complete cloned source')
+        require(editor.input_value() == expected, 'Selected editor input context differs from native Git')
         cloned = page.evaluate(READ_CLONE)
         require(cloned['opened']['backend'] == 'indexeddb', 'Clone did not persist through actual IndexedDB')
         require(cloned['head'] == {'ref': 'refs/heads/main', 'oid': self.metadata['oid']}, 'Clone changed the native canonical commit ID')
