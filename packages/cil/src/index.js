@@ -48,3 +48,4 @@ export {ConstrainedReferenceObjectProfile} from './constrained-reference-object-
 export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';
 
 export { AssemblySymbolIndex } from './browser/index.js';
+export { AssemblyTypeHierarchy } from './browser/hierarchy.js';

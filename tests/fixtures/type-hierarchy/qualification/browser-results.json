@@ -1,0 +1,116 @@
+{
+  "revision": "2f51cbc0c24c307f7bcade794087338f64ea3689",
+  "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "playwright": "1.63.0",
+  "moduleSha256": "ae0e1bc6bfc179c3d54392be7f9e1eebcc4bf39f2debf5b397a8f9b6dff2fba9",
+  "mode": "HTTP source modules/import map, CSP enabled",
+  "engines": [
+    {
+      "engine": "chromium",
+      "passed": true,
+      "version": "153.0.8010.12",
+      "checks": [
+        "Shared SHA-1 contract and seven independent WebCrypto vectors",
+        "Authored cross-image tree, iterator/map boundary, caps, cancellation and ownership",
+        "Two native images: eight type identities, cross-image/nested bases, implementer sets and absent assembly"
+      ],
+      "reference": {
+        "toolchain": {
+          "sdk": "10.0.201",
+          "runtime": "10.0.5",
+          "referencePack": "10.0.5",
+          "roslyn": {
+            "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+            "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+          },
+          "referenceAssemblies": {
+            "count": 167,
+            "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+          }
+        },
+        "images": [
+          {
+            "name": "Hierarchy.A",
+            "sha256": "98465fddaa0c725e5f3fbfd30929198a4b6b70f4ca5ede5bae1edb3c6f938d74"
+          },
+          {
+            "name": "Hierarchy.B",
+            "sha256": "5ef193484635ce26483270776e4c4593e3ae8580f684d185a91658b66bf8abbe"
+          }
+        ]
+      }
+    },
+    {
+      "engine": "firefox",
+      "passed": true,
+      "version": "155.0",
+      "checks": [
+        "Shared SHA-1 contract and seven independent WebCrypto vectors",
+        "Authored cross-image tree, iterator/map boundary, caps, cancellation and ownership",
+        "Two native images: eight type identities, cross-image/nested bases, implementer sets and absent assembly"
+      ],
+      "reference": {
+        "toolchain": {
+          "sdk": "10.0.201",
+          "runtime": "10.0.5",
+          "referencePack": "10.0.5",
+          "roslyn": {
+            "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+            "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+          },
+          "referenceAssemblies": {
+            "count": 167,
+            "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+          }
+        },
+        "images": [
+          {
+            "name": "Hierarchy.A",
+            "sha256": "98465fddaa0c725e5f3fbfd30929198a4b6b70f4ca5ede5bae1edb3c6f938d74"
+          },
+          {
+            "name": "Hierarchy.B",
+            "sha256": "5ef193484635ce26483270776e4c4593e3ae8580f684d185a91658b66bf8abbe"
+          }
+        ]
+      }
+    },
+    {
+      "engine": "webkit",
+      "passed": true,
+      "version": "26.6",
+      "checks": [
+        "Shared SHA-1 contract and seven independent WebCrypto vectors",
+        "Authored cross-image tree, iterator/map boundary, caps, cancellation and ownership",
+        "Two native images: eight type identities, cross-image/nested bases, implementer sets and absent assembly"
+      ],
+      "reference": {
+        "toolchain": {
+          "sdk": "10.0.201",
+          "runtime": "10.0.5",
+          "referencePack": "10.0.5",
+          "roslyn": {
+            "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+            "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+          },
+          "referenceAssemblies": {
+            "count": 167,
+            "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+          }
+        },
+        "images": [
+          {
+            "name": "Hierarchy.A",
+            "sha256": "98465fddaa0c725e5f3fbfd30929198a4b6b70f4ca5ede5bae1edb3c6f938d74"
+          },
+          {
+            "name": "Hierarchy.B",
+            "sha256": "5ef193484635ce26483270776e4c4593e3ae8580f684d185a91658b66bf8abbe"
+          }
+        ]
+      }
+    }
+  ],
+  "passed": true
+}

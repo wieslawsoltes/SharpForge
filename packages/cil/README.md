@@ -118,7 +118,7 @@ desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data dire
 It accepts a `Uint8Array` of at most 128 MiB, preserves the input (including subarray boundaries), and returns
 an independent 32-byte digest. Invalid input types throw `TypeError`; oversized input throws `RangeError`.
 The browser/worker implementation uses no host crypto or asynchronous work. `@sharpforge/symbols` retains
-its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
+its existing `sha256` export as a reexport of this function; shared `sha1` is documented below.
 Hashing reads complete 64-byte blocks directly from the input. Padding uses at most 128 bytes,
 with one reusable 256-byte schedule and 32-byte state, so scratch storage is independent of input size.
 
@@ -310,3 +310,59 @@ space; bounded callers must preflight their inputs. The cross-assembly browser
 binder uses it to derive declared strong-name tokens; hashing a key does not verify
 an assembly signature. This extraction is implementation-ready, with focused
 vectors, padding boundaries and symbols compatibility tests pending the serial slot.
+
+### Cross-assembly type hierarchy
+
+`new AssemblyTypeHierarchy(index, inspectors, options)` builds an opt-in graph over
+an existing `AssemblySymbolIndex` and the same set of loaded `AssemblyInspector`
+modules. It reuses the index's MVID/token IDs and display records, while owning only
+resolved hierarchy edges and scalar diagnostics. No bodies are decoded, assemblies
+loaded, code executed, or PE/metadata views retained. Later inspector mutations do
+not change queries. The existing verifier's bounded exact UTF-8 name index and
+NestedClass validation are reused only during binding and then discarded.
+
+Assembly references match declared name/culture (case insensitive), exact four-part
+version, content type and public-key token. Full keys are bounded before deriving
+tokens with the shared SHA-1 helper. This is nominal metadata binding, not signature
+verification, weak-name version unification or a runtime loader policy. Duplicate
+matching assembly identities are ambiguous. Type names/namespaces use exact bytes
+and lexical enclosing tokens, not display-name concatenation; nested references
+can cross assembly boundaries. Duplicate candidate type names remain ambiguous.
+
+`hierarchy.tree(typeId, { direction: 'base' | 'derived' | 'implementers',
+maxQueryNodes, maxDepth, signal })` returns a fresh tree or null for an unknown ID.
+Each node has `{ symbol, relation, diagnostic, repeated, children }`. Known symbols
+are owned index records; unresolved nodes have `symbol: null` and an owned diagnostic
+`{ referenceId, name, reason }`. Base trees follow the direct base followed by direct
+interfaces; derived trees follow class bases or subinterfaces. Implementer trees
+require an interface root and include subinterfaces, implementing classes and their
+subclasses. Order follows input modules/TypeDefs and InterfaceImpl rows. A repeated
+DAG node retains its identity but has no expanded children; cycles are malformed.
+
+Missing assemblies, ambiguous identities/names and unresolved names produce dead
+nodes. Retargetable references, ModuleRef/netmodule binding, nil resolution scopes,
+ExportedType forwarding and TypeSpec/constructed-base substitution require policies
+not supplied here and remain explicit unresolved results. Open TypeDef declarations
+can appear as nodes; this graph does not claim constructed generic assignability,
+variance, access checks or whole-type validity. Malformed indices, ownership,
+cycles and class/interface edge kinds throw `CilError`.
+
+Construction budgets default to/hard-cap at 256 `maxAssemblies`, 100,000 `maxTypes`,
+300,000 `maxRows` across relevant tables, 200,000 `maxEdges` (one potential base per
+type plus every InterfaceImpl), 16 MiB `maxNameBytes` and 1 MiB `maxKeyBytes`.
+All row/count and every name/key occurrence charges are checked before retained
+records, names or digests are created, including aliased heap handles. Individual
+name components are limited to 1 KiB UTF-8 and keys to 16 KiB. The shared name index
+also bounds lexical nesting and reference scope chains to 64 levels. These budgets
+exclude earlier inspector/index construction and engine overhead.
+
+Query budgets default to/hard-cap at 10,000 `maxQueryNodes` and depth 256; both may
+be lowered at construction and again per query. Every returned occurrence, including
+a repeated or dead node, consumes the node budget. A query builds children one at
+a time with an iterative work stack and fails before exceeding its limit. `signal`
+cancels construction or a query. Invalid lowerable limits throw `CilError`.
+`hierarchy.storage` returns owned input count/byte charges, not retained heap size.
+Construction is linear in bounded metadata/name bytes plus resolved edges; queries
+visit each expanded type once and are bounded by returned occurrences. The feature
+and retained native reference are prepared but unvalidated; see
+`tests/fixtures/type-hierarchy/README.md` for the scheduled evidence plan.
