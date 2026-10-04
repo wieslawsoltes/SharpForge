@@ -158,3 +158,16 @@ test('A02-T30 an index from the end is length minus value; a captured primary co
   assert.deepEqual(lines('Counter', '.ctor').slice(0, 3), ['ldarg.0', 'ldarg.1', 'stfld Counter::<step>P']);
   assert.ok(lines('Counter', 'Next').includes('ldfld Counter::<step>P'));
 });
+
+test('A02-T30 ref reassignment stores an address; a struct constructor can assign this and chain to the implicit constructor', () => {
+  const { lines } = emit(`struct P { public int X, Y; public P(int x) : this() { X = x; } public void Reset() { this = new P(9); } }
+    class C {
+      static int Pick(bool first) { int a = 1, b = 2; ref int r = ref a; if (!first) r = ref b; r += 10; return a * 100 + b; }
+      static void Main() { }
+    }`);
+  assert.deepEqual(lines('P', '.ctor').slice(0, 2), ['ldarg.0', 'initobj P'], '`: this()` zero-initializes: a struct has no parameterless .ctor');
+  assert.deepEqual(lines('P', 'Reset'), ['ldarg.0', 'ldc.i4.s', 'newobj P::.ctor', 'stobj P', 'ret']);
+  const pick = lines('C', 'Pick');
+  assert.equal(pick.filter(line => line.startsWith('ldloca')).length, 2, 'the ref local is set to the address of a, then of b');
+  assert.ok(pick.includes('ldind.i4') && pick.includes('stind.i4'));
+});
