@@ -163,3 +163,17 @@ test('A02-T83 an invalid explicitly provided marker constructor produces a metad
   assert.ok(errors(result).some(error => error.includes('ExtensionMarkerAttribute') && error.includes('string')), errors(result).join('\n'));
   assert.equal(result.assembly, null);
 });
+
+test('A02-T83 a marker contract must be a concrete attribute class', () => {
+  for (const declaration of [
+    'public sealed class ExtensionMarkerAttribute { public ExtensionMarkerAttribute(string name) { } }',
+    'public abstract class ExtensionMarkerAttribute : System.Attribute { public ExtensionMarkerAttribute(string name) { } }',
+  ]) {
+    const source = `namespace System.Runtime.CompilerServices { ${declaration} }
+      public static class E { extension(int number) { public int P => number; } }`;
+    const result = compileToReferenceAssembly(source, { langVersion: '14' });
+    assert.equal(result.success, false);
+    assert.ok(errors(result).some(error => error.includes('ExtensionMarkerAttribute') && error.includes('attribute')), errors(result).join('\n'));
+    assert.equal(result.assembly, null);
+  }
+});
