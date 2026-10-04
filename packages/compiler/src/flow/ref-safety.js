@@ -17,12 +17,13 @@
 import { EscapeContexts, EscapeScope, localScope } from './escape/contexts.js';
 import { EscapeChecks } from './escape/checks.js';
 import { RefSafetyWalker } from './escape/walker.js';
+import { InlineArrayEscape } from './escape/inline-arrays.js';
 
 export { EscapeScope, localScope };
 
 const withoutNode = problems => (problems.length ? { code: problems[0].code, args: problems[0].args } : null);
 
-export class RefSafety extends EscapeChecks(EscapeContexts) {
+export class RefSafety extends InlineArrayEscape(EscapeChecks(EscapeContexts)) {
   /** `return value;` - the first problem as `{ code, args }`, or null. */
   checkReturn(value) {
     return withoutNode(this.valueEscapeProblems(value, EscapeScope.ReturnOnly));

@@ -12,6 +12,7 @@ import { reportAwaitOutsideAsync } from '../async.js';
 import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 import { extensionEnumeratorMethod } from '../foreach-extension.js';
 import { inlineArrayShape } from '../inline-arrays.js';
+import { classifyVariable } from '../ref-kinds.js';
 import { stripNullable } from '../../conversions/nullable.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -82,6 +83,7 @@ export const FlowStatementBinding = Base =>
                 // C# 12: the elements of an inline array.
                 this.d.gate(this.c.uri, syntax.expression, 'InlineArrays');
                 element = inlineArrayShape(type).elementType;
+                currentRefKind = classifyVariable(collection, this.variableContext).isWritable ? RefKind.Ref : RefKind.RefReadOnly;
               } else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
                 // C# 9: the enumerator comes from an extension method; its result supplies MoveNext and Current.
                 this.d.gate(this.c.uri, syntax.expression, 'ExtensionGetEnumerator');
