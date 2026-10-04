@@ -51,5 +51,14 @@ Debugger reverse-history restoration explicitly marks the resulting paused stack
 Scope: JavaScript direct-CIL Wasm only; no source-VM or Rust backend change.
 Focused regression cases are authored in `tests/a05-11-wasm-deopt.test.js` for
 manual/automatic selection, sequence points, live restore, parked contexts,
-pool reuse, reentrant callbacks and zero-time slices. Validation and performance
-measurement are pending the shared serial queue; no speedup is claimed.
+pool reuse, reentrant callbacks and zero-time slices. The initial integrated run
+passed 165 of 170 tests, including all ten deoptimization cases. Five existing
+debugger variable-edit tests exposed an outdated managed-address adapter. The
+adapter now obtains the VM-owned address before selecting the requested frame;
+strict owner and path validation remain enabled. A new nested-frame regression
+covers editing caller arguments and locals while stopped in its callee.
+
+After this repair, all 48 tests in the deoptimization, owned-edit and release
+0.5/0.6 debugger suites passed at `9e8c0806`, using Node 24 with one test worker
+and a 512 MB old-space limit. Broad platform and performance qualification is
+deferred; no speedup is claimed.
