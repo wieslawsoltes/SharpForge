@@ -1,23 +1,11 @@
 import { xmlEscape } from '@sharpforge/project-system';
-import { definition, joinPath, TemplateError } from '../common.js';
+import { joinPath, TemplateError } from '../common.js';
 import { templateLogo } from './assets.js';
 import { packageReferences, testPackages } from './tests.js';
 import { winuiTestApplication, winuiTestSource } from './winui-test-host.js';
 import { xamlPair } from '../item/winui-xaml.js';
 
 export const windowsAppSdkVersion = '1.8.260921001';
-const description = 'Windows App SDK project with real XAML compilation. Requires Windows, the Windows SDK, and package restore.';
-export const nativeWinuiTemplates = Object.freeze([
-  ['winui-native-unpackaged', 'WinUI 3 App (unpackaged)'],
-  ['winui-native-packaged', 'WinUI 3 App (MSIX)'],
-  ['winui-native-library', 'WinUI 3 Class Library'],
-  ['winui-native-tests', 'WinUI 3 Test App']
-].map(([id, name]) => definition(id, name, description, 'WinUI Native', {
-  kind: 'project', nativeOnly: true, nativeCompatible: true, winui: true, windowsOnly: true,
-  platform: 'Windows', targets: ['windows-native'], qualification: { 'windows-native': 'pending' },
-  prerequisites: ['Windows 10 build 19041 or newer', '.NET SDK for selected framework', 'Windows SDK 10.0.19041.0+',
-    'Microsoft.WindowsAppSDK ' + windowsAppSdkVersion], generate: generateNativeWinui
-})));
 
 function projectSource(template, options) {
   const library = template.id === 'winui-native-library';
