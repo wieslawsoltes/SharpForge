@@ -154,7 +154,7 @@ export function hasExplicitReferenceConversion(from, to, core) {
   if (!isInterface(from) && isInterface(to)) return from.typeKind === TypeKind.Class && !from.isSealed;
   // Interface to class: allowed unless the class is sealed and does not implement the interface.
   if (isInterface(from) && !isInterface(to))
-    return to.typeKind === TypeKind.Class && (!to.isSealed || allInterfacesOf(to, core).some(i => i.equals(from)));
+    return to.typeKind === TypeKind.Class && (!to.isSealed || hasImplicitReferenceConversion(to, from, core));
   // Interface to interface that is not a base interface.
   return true;
 }

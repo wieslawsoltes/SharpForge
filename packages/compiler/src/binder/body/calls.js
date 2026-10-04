@@ -295,6 +295,8 @@ export const CallBinding = Base =>
           } else {
             const w = checkWritable(a, a.refKind === RefKind.Ref ? 'ref' : 'out', this.variableContext);
             if (w) this.report(a.syntax, w.code, w.args);
+            // `Interlocked.Increment(ref count)`: the callee may write the field through the reference (no CS0649).
+            else if (a.refKind === RefKind.Ref) this.markAliased?.(a);
           }
           return { expression: a, parameter: p, refKind: a.refKind };
         }
@@ -338,6 +340,8 @@ export const CallBinding = Base =>
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;
+        // A member called on the field itself may assign it (`counter.Increment()` over a struct field): no CS0649.
+        if (passing.mode === 'address' && receiver.kind === 'FieldAccess') this.markAliased?.(receiver);
         if (passing.warning) this.report(nameNode, passing.warning.code, passing.warning.args);
       }
       if (type.isErrorType?.()) n.hasErrors = true;
