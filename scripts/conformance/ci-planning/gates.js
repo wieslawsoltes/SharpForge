@@ -2,21 +2,15 @@ import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
-import { GitHubProject } from '../../planning/lib/github-project.js';
 import { resolveTask } from '../../planning/lib/task-ref.js';
 import { checkOwnership } from '../../planning/check-ownership.js';
 import { checkHotFiles } from '../../planning/check-hot-files.js';
 import { git, isMain } from '../../planning/lib/io.js';
 import { validatePlanningContext } from './context.js';
+import { planningClient, qualificationEnvironment } from './qualification-client.js';
+export { qualificationEnvironment } from './qualification-client.js';
 
 const load = (root, ref, path) => JSON.parse(git(['show', `${ref}:${path}`], root));
-
-/** PR-controlled qualification commands do not inherit API credentials. */
-export function qualificationEnvironment(environment = process.env) {
-  const result = { ...environment };
-  for (const name of ['GH_TOKEN', 'GITHUB_TOKEN', 'GH_ENTERPRISE_TOKEN', 'GITHUB_ENTERPRISE_TOKEN', 'PROJECT_READ_TOKEN']) delete result[name];
-  return result;
-}
 
 /** Resolve claims from authoritative refs, never from a PR's self-declared lock list. */
 export async function claimedIdentity(client, pullRequest, now = Date.now()) {
@@ -60,7 +54,7 @@ export function reviewOwnership({ root, base, head, mergeBase, identity, execute
     task: identity.task, errors: [...ownership.errors, ...hot.errors], error: [...ownership.errors, ...hot.errors].join('\n') };
 }
 
-export async function runGates({ root = process.cwd(), context, repository, client, execute = spawnSync } = {}) {
+export async function runGates({ root = process.cwd(), context, repository, client, environment = process.env, execute = spawnSync } = {}) {
   const results = [], errors = [];
   const record = (name, result) => {
     results.push({ name, ...result });
@@ -74,11 +68,12 @@ export async function runGates({ root = process.cwd(), context, repository, clie
     return { schemaVersion: 1, passed: false, results, errors };
   }
   try {
-    const identity = await claimedIdentity(client, verified.pull_request);
+    const identity = await claimedIdentity(client ?? planningClient(environment), verified.pull_request);
     record('ownership and hot-file budget', reviewOwnership({ root, ...verified, identity, execute }));
   } catch (error) {
     record('ownership and hot-file budget', { passed: false, error: error.message });
   }
+  if (errors.length) return { schemaVersion: 1, passed: false, context: verified, results, errors };
   const commands = [
     ['DAG', 'scripts/planning/dag.js'],
     ['test manifests', 'scripts/planning/check-test-manifests.js'],
@@ -87,7 +82,7 @@ export async function runGates({ root = process.cwd(), context, repository, clie
   ];
   for (const [name, ...args] of commands) {
     const child = execute(process.execPath, args, { cwd: root, encoding: 'utf8', timeout: 180000,
-      maxBuffer: 16 * 1024 * 1024, env: qualificationEnvironment() });
+      maxBuffer: 16 * 1024 * 1024, env: qualificationEnvironment(environment) });
     record(name, { passed: child.status === 0, exitCode: child.status, stdout: child.stdout ?? '', stderr: child.stderr ?? '',
       error: child.error?.message ?? (child.status ? child.stderr?.trim() || `exit ${child.status}` : null) });
   }
@@ -102,7 +97,7 @@ if (isMain(import.meta.url)) {
   try {
     const context = values.context ? JSON.parse(readFileSync(values.context, 'utf8')) : undefined;
     const [owner, repo] = (process.env.GITHUB_REPOSITORY ?? 'wieslawsoltes/SharpForge').split('/');
-    const result = await runGates({ root: resolve(values.root), context, repository: `${owner}/${repo}`, client: new GitHubProject({ owner, repo }) });
+    const result = await runGates({ root: resolve(values.root), context, repository: `${owner}/${repo}` });
     mkdirSync(dirname(values.output), { recursive: true });
     writeFileSync(values.output, JSON.stringify(result, null, 2) + '\n');
     if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY,
