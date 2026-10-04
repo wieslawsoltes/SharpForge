@@ -100,3 +100,9 @@ concurrency 1 and a 1,024 MiB Node heap cap. Static checks passed 3,091 syntax /
 files. Structure reported 268 existing findings and none in changed files.
 Browser, source/direct-CIL execution and native/Wasm engine qualification remain
 staged; this feature does not execute methods in those engines.
+
+The nested local-reference batch adds 85/85 focused/affected tests and pinned
+CoreCLR observations for 25 TypeRefs, including 12 supported nested/top-level
+aliases with canonical identity agreement. Its [retained qualification](../../tests/fixtures/a03-nested-type-references/README.md)
+records the isolated baseline, original fixture/test failures, all 96 timing
+samples and explicit acceptance of the existing local-alias construction cost.

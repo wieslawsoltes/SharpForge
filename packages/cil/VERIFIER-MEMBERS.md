@@ -136,3 +136,10 @@ MemberRef tokens as ArgumentOutOfRangeException. This is a semantic correction,
 not unavailable oracle evidence. Product lookup now keeps fields direct-only;
 tests require all three derived-owner field references to remain unknown.
 No accessibility, receiver typing or dispatch support is implied.
+
+The local TypeRef-owner extension is covered by the [nested-reference qualification](../../tests/fixtures/a03-nested-type-references/README.md):
+85/85 focused/affected tests and eight pinned CoreCLR ResolveMember observations,
+with five canonical declaration agreements and three native errors/adapter
+unknowns. TypeRef aliases preserve the same inherited-method and declaration-only
+field/constructor policy. Original failed fixture evidence and corrected hashes
+are retained; no generated fixture methods were executed.
