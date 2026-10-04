@@ -114,7 +114,11 @@ test('aggregate generic values and external generic methods keep explicit unsupp
       {name: 'Use', genericParameters: [{}], body: writer => writer.op('ret')}
     ]}
   ]);
-  assert(verifyCilAssembly(bytes).issues.some(issue => /T03 value storage/.test(issue.message)));
+  const report = verifyCilAssembly(bytes);
+  assert.equal(report.success, false);
+  assert.ok(report.issues.some(issue => issue.code === 'IL_TOKEN' &&
+    issue.message === 'Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder'),
+  JSON.stringify(report.issues));
   const external = genericCallFixture([{name: 'Program', methods: [{name: 'Main', body(writer, context) {
     writer.op('newobj', context.member(context.typeSpec('Unsupported.Collection`1<int>'), '.ctor', 'void', [], false));
     writer.op('pop').op('ret');

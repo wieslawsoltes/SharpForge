@@ -1,13 +1,36 @@
-/** Split a CLI display signature without confusing nested generic arguments. */
+import {CilError} from './binary.js';
+
+/** Split only a trailing constructed suffix; angle fragments inside metadata names stay opaque. */
 export function genericTypeParts(name) {
-  const open = name.indexOf('<');
-  if (open < 0 || !name.endsWith('>')) return {definition: name, arguments: []};
-  const argumentsList = []; let depth = 0, start = open + 1;
-  for (let i = start; i < name.length - 1; i++) {
-    if (name[i] === '<' || name[i] === '[') depth++;
-    if (name[i] === '>' || name[i] === ']') depth--;
-    if (name[i] === ',' && depth === 0) { argumentsList.push(name.slice(start, i).trim()); start = i + 1; }
+  if (!name.endsWith('>')) return {definition: name, arguments: []};
+  let open = -1;
+  let depth = 0;
+  for (let index = name.length - 1; index >= 0; index--) {
+    if (name[index] === '>') depth++;
+    else if (name[index] === '<' && --depth === 0) {
+      open = index;
+      break;
+    }
+    if (depth > 64) throw new CilError('Generic signature nesting limit exceeded');
   }
+  // A whole name such as <Module> has no declaring definition before the angle fragment.
+  if (open === 0) return {definition: name, arguments: []};
+  if (open < 0) throw new CilError('Unbalanced generic type name');
+  const argumentsList = [];
+  const delimiters = [];
+  let start = open + 1;
+  for (let index = start; index < name.length - 1; index++) {
+    const character = name[index];
+    if (character === '<' || character === '[') delimiters.push(character);
+    else if (character === '>' || character === ']') {
+      if (delimiters.pop() !== (character === '>' ? '<' : '[')) throw new CilError('Unbalanced generic type name');
+    } else if (character === ',' && !delimiters.length) {
+      argumentsList.push(name.slice(start, index).trim());
+      start = index + 1;
+    }
+    if (delimiters.length > 64) throw new CilError('Generic signature nesting limit exceeded');
+  }
+  if (delimiters.length) throw new CilError('Unbalanced generic type name');
   argumentsList.push(name.slice(start, -1).trim());
   return {definition: name.slice(0, open), arguments: argumentsList};
 }

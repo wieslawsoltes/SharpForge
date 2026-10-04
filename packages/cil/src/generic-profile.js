@@ -7,6 +7,7 @@ import {methodGenericParameters, normalizeCallType} from './call-profile.js';
 import {parseFunctionPointerType} from './function-pointer-signature.js';
 import {isByrefStructForwarder} from './generic-struct-forwarder.js';
 import {isSizeOfOnlyMethod} from './generic-sizeof-method.js';
+import {localGenericType} from './generic-type-inventory.js';
 
 /** Symbolic context used to qualify one canonical body shared by its instantiations. */
 export function genericDefinitionContext(inspector, method) {
@@ -38,7 +39,8 @@ function genericArgument(inspector, type, context, methodToken = null, layoutOnl
 /** Validate variable bounds and closed type arity without pretending to verify aggregate storage. */
 export function verifyGenericType(inspector, input, context, depth = 0) {
   if (depth > 64) throw new CilError('Generic signature nesting limit exceeded');
-  const type = normalizeCallType(input);
+  // Validate each component before alias normalization can rewrite an opaque declared name.
+  const type = input;
   if (type.startsWith('method ')) {
     const signature = parseFunctionPointerType(type);
     if (!signature || !signature.isStatic || signature.callingConvention || /!\d/.test(type)) {
@@ -56,6 +58,11 @@ export function verifyGenericType(inspector, input, context, depth = 0) {
   }
   const suffix = type.match(/(?:\[[,]*\]|&)$/);
   if (suffix) return verifyGenericType(inspector, type.slice(0, -suffix[0].length), context, depth + 1);
+  const declared = localGenericType(inspector, type);
+  if (declared) {
+    if (declared.arity) throw new CilError('Open generic storage requires a complete instantiation');
+    return;
+  }
   const parts = genericTypeParts(type);
   if (!parts.arguments.length) {
     if (/`\d+$/.test(parts.definition) && !frameworkType(parts.definition)) {
@@ -63,11 +70,12 @@ export function verifyGenericType(inspector, input, context, depth = 0) {
     }
     return;
   }
-  const definition = inspector.types.find(candidate => candidate.name === parts.definition);
-  const arity = definition ? methodGenericParameters(inspector, definition.token).length : Number(/`(\d+)$/.exec(parts.definition)?.[1]);
+  const definition = localGenericType(inspector, parts.definition);
+  const arity = definition ? definition.arity : Number(/`(\d+)$/.exec(parts.definition)?.[1]);
   if (parts.arguments.length !== arity) throw new CilError('Generic type argument count mismatch');
   for (const argument of parts.arguments) {
-    if (argument === 'void' || /[&*]$/.test(argument)) throw new CilError('Generic arguments must be managed non-void types');
+    const isVoid = !localGenericType(inspector, argument) && normalizeCallType(argument) === 'void';
+    if (isVoid || /[&*]$/.test(argument)) throw new CilError('Generic arguments must be managed non-void types');
     verifyGenericType(inspector, argument, context, depth + 1);
   }
 }

@@ -12,6 +12,7 @@ export class AssemblyInspector {
   constructor(bytes,options={}) {
     this.pe=readPE(bytes,{...options,inspection:true});this.metadata=this.pe.metadata;
     this.options=options;this.cache=new Map();this.owners=new Map();this.fields=new Map();this.methods=new Map();this.types=[];this.diagnostics=[];
+    this.genericTypeInventory = null;
     const md=this.metadata,rows=md.rows[2]??[];this.debug=null;
     try{if(md.streams.has('#SF'))this.debug=JSON.parse(text(md.streams.get('#SF')));}catch{this.diagnostics.push({message:'Malformed optional #SF debug metadata'});}
     for(let i=0;i<rows.length;i++){

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "publicationBase": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+  "run": {
+    "sourceRevision": "5d73d386a5516be6dd808ff7386a92b297e667e5",
+    "group": "focused",
+    "environment": {
+      "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+      "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+      "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+    },
+    "runnerSha256": "9cabc3880cca7746b714568a94fceb633ab94304d4a20b26f74ffc80708ca9f0",
+    "exporterSha256": "ebc6798e2a450fd12da9819cbea40aff4b1a48beeb40c63d8fdf13df783106e9",
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "python3",
+      "/workspace/scratch/1692a10afba9/cil-generic-owner-publication-qualification/run.py",
+      "--child",
+      "/workspace/scratch/1692a10afba9/cil-generic-owner-publication-qualification/focused-5d73d386a551/child-plan.json"
+    ],
+    "materializedFiles": 753,
+    "graphModules": 736,
+    "aliases": 11,
+    "exitCode": 0,
+    "child": {
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 3.181823658000212
+    },
+    "outerSeconds": 3.3693014290038263,
+    "limiterAndStartupSeconds": 0.18747777100361418,
+    "sourcesAndAliasesUnchanged": true,
+    "stdoutBytes": 5963,
+    "stdoutSha256": "12db6996b22de6929167a5e226d96dbd8b3e05243c211b3e5383d85d4775dd5f",
+    "stderrBytes": 0,
+    "nodeSummary": [
+      "\u2139 tests 56",
+      "\u2139 suites 0",
+      "\u2139 pass 56",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0",
+      "\u2139 duration_ms 3050.145593"
+    ]
+  },
+  "counts": {
+    "tests": 56,
+    "passed": 56,
+    "failed": 0,
+    "skipped": 0
+  },
+  "archive": {
+    "path": "focused-5d73d386a.tar.gz",
+    "bytes": 790989,
+    "sha256": "313f939db393b6a860654f1ed4592e7152b8a3dcbd0b968bef3472951069bd00",
+    "files": [
+      {
+        "path": "run.py",
+        "bytes": 7948,
+        "sha256": "9cabc3880cca7746b714568a94fceb633ab94304d4a20b26f74ffc80708ca9f0"
+      },
+      {
+        "path": "focused-5d73d386a551/child-plan.json",
+        "bytes": 536,
+        "sha256": "d24ccd362e3bf6f6431e4acb8e6bd79252d75804a6c3b9a3eed43bfc9ccd746a"
+      },
+      {
+        "path": "focused-5d73d386a551/child-result.json",
+        "bytes": 73,
+        "sha256": "930d87e7bb0fdb8f2721a9e68dcfe3baab63ce48f319f539ebdca475d371ebf0"
+      },
+      {
+        "path": "focused-5d73d386a551/child-start.json",
+        "bytes": 342,
+        "sha256": "b0a3e16c135dc102e656b52abb31876859451e85bf5b135eb69b6ea5f5bdc29d"
+      },
+      {
+        "path": "focused-5d73d386a551/inputs.json",
+        "bytes": 291395,
+        "sha256": "b70281f469b278da3825db5d062769e95223942baa459c0c699a59effe72dec9"
+      },
+      {
+        "path": "focused-5d73d386a551/qualified-source.tar.gz",
+        "bytes": 730488,
+        "sha256": "140f3e3f80d5191e46f981e9317a1fca10629f967b5d78579972b823641639cc"
+      },
+      {
+        "path": "focused-5d73d386a551/result.json",
+        "bytes": 1473,
+        "sha256": "be98272096cfed90bda7e9fd7b8e660f7add090aa048949c2b3fe4ed591bbaae"
+      },
+      {
+        "path": "focused-5d73d386a551/stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "focused-5d73d386a551/stdout.log",
+        "bytes": 5963,
+        "sha256": "12db6996b22de6929167a5e226d96dbd8b3e05243c211b3e5383d85d4775dd5f"
+      }
+    ]
+  },
+  "scope": "JavaScript direct CIL metadata, generic calls/dispatch and method tables. No source compiler/native generation, browser or Rust/Wasm execution in this focused run."
+}

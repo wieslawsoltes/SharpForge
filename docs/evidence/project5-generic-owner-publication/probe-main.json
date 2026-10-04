@@ -1,0 +1,123 @@
+{
+  "purpose": "Observe the existing aggregate generic argument diagnostic on unchanged main before correcting the stale T03 wording assertion.",
+  "run": {
+    "sourceRevision": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+    "group": "probe",
+    "environment": {
+      "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+      "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+      "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+    },
+    "runnerSha256": "9cabc3880cca7746b714568a94fceb633ab94304d4a20b26f74ffc80708ca9f0",
+    "exporterSha256": "ebc6798e2a450fd12da9819cbea40aff4b1a48beeb40c63d8fdf13df783106e9",
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "python3",
+      "/workspace/scratch/1692a10afba9/cil-generic-owner-publication-qualification/run.py",
+      "--child",
+      "/workspace/scratch/1692a10afba9/cil-generic-owner-publication-qualification/probe-aa74558ccae4/child-plan.json"
+    ],
+    "materializedFiles": 745,
+    "graphModules": 373,
+    "aliases": 11,
+    "exitCode": 0,
+    "child": {
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.41516645299998345
+    },
+    "outerSeconds": 0.5698075050022453,
+    "limiterAndStartupSeconds": 0.15464105200226186,
+    "sourcesAndAliasesUnchanged": true,
+    "stdoutBytes": 602,
+    "stdoutSha256": "f68b3bc372b7133de431ccb46fd1ba8d33456e67aeb7727099cd16a08f9774ca",
+    "stderrBytes": 0,
+    "nodeSummary": []
+  },
+  "observed": {
+    "fixtureSha256": "5850b2f90b53c56c9da2a53fe20b1e7c8a973378f48b7e8965b0a28dce76260c",
+    "report": {
+      "stackHeights": {
+        "100663297": {
+          "0": 0,
+          "1": 0
+        }
+      },
+      "success": false,
+      "entryPoint": 100663297,
+      "methods": [
+        100663297
+      ],
+      "issues": [
+        {
+          "methodToken": 100663297,
+          "method": "Program::Main",
+          "offset": 0,
+          "code": "IL_TOKEN",
+          "message": "Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder"
+        }
+      ],
+      "profile": "SharpForge.ManagedIL/1"
+    }
+  },
+  "originalAssertion": "/T03 value storage/",
+  "disposition": "The existing negative test will retain its fixture and external IL_REFERENCE assertion, assert rejection explicitly, and require the actual IL_TOKEN constrained-forwarder diagnostic.",
+  "archive": {
+    "path": "probe-main.tar.gz",
+    "bytes": 771089,
+    "sha256": "37aee9e43049e20ab35e9fd7e26cd38431f475328d31277b24b421c16530bd18",
+    "files": [
+      {
+        "path": "probe.mjs",
+        "bytes": 704,
+        "sha256": "13791c6c7b0139b0332813ad2587befd3be586e6359dc90ac9816130662e5621"
+      },
+      {
+        "path": "run.py",
+        "bytes": 7948,
+        "sha256": "9cabc3880cca7746b714568a94fceb633ab94304d4a20b26f74ffc80708ca9f0"
+      },
+      {
+        "path": "probe-aa74558ccae4/child-plan.json",
+        "bytes": 287,
+        "sha256": "bbf785908b1997c8eb40370c83c06e843c634edd13fa2806ffdec5a895a8a81a"
+      },
+      {
+        "path": "probe-aa74558ccae4/child-result.json",
+        "bytes": 75,
+        "sha256": "61673d31ffc4efdf27250e5a7f1b625d259a484f68667630ce9dbe574088263c"
+      },
+      {
+        "path": "probe-aa74558ccae4/child-start.json",
+        "bytes": 97,
+        "sha256": "46b44c296b95d9f80123eac8df5a719c2ec021fb5791371b1ec580221b4a93f7"
+      },
+      {
+        "path": "probe-aa74558ccae4/inputs.json",
+        "bytes": 215741,
+        "sha256": "884dbdb0a5ecf2ae56989a63d0b7346ef87bbea7b6f8bd572867523bc8ffa320"
+      },
+      {
+        "path": "probe-aa74558ccae4/qualified-source.tar.gz",
+        "bytes": 718276,
+        "sha256": "64e12991442fdd9fa05384b6e5a39368d89e51eaa071b477bc4b3c7cf6ec0091"
+      },
+      {
+        "path": "probe-aa74558ccae4/result.json",
+        "bytes": 1270,
+        "sha256": "cf7dc30debcd26c15d79b3716dfd17030eeddb7760b4d1a85a7c3cfa38d7d9be"
+      },
+      {
+        "path": "probe-aa74558ccae4/stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "probe-aa74558ccae4/stdout.log",
+        "bytes": 602,
+        "sha256": "f68b3bc372b7133de431ccb46fd1ba8d33456e67aeb7727099cd16a08f9774ca"
+      }
+    ]
+  }
+}
