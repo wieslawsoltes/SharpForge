@@ -122,8 +122,20 @@ test('A02-T80 ref returns and span returns follow local, value-parameter and ref
   assert.deepEqual(codes(program('', members)), []);
   assert.deepEqual(codes(program('', 'static Span<int> Bad() { Quad value = default; return value; }')), ['CS8168']);
   assert.deepEqual(codes(program('', 'static Span<int> Bad(Quad value) { return value[..]; }')), ['CS8166']);
-  assert.deepEqual(codes(program('', 'static ref int Bad() { Quad value = default; return ref value[0]; }')), ['CS8169']);
+  assert.deepEqual(codes(program('', 'static ref int Bad() { Quad value = default; return ref value[0]; }')), ['CS8168']);
   assert.deepEqual(codes(program('', 'static Span<int> Bad(scoped ref Quad value) { return value; }')), ['CS9075']);
+});
+
+test('A02-T80 escapes blame the borrowed variable at the same location as a ref/in helper argument', () => {
+  for (const [member, code] of [
+    ['static ref int Bad() { Quad value = default; return ref value[0]; }', 'CS8168'],
+    ['static Span<int> Bad(Quad value) { return value[..]; }', 'CS8166'],
+    ['static ref int Bad(scoped ref Quad value) { return ref value[^1]; }', 'CS9075'],
+  ]) {
+    const source = program('', member);
+    const errors = bind(source).diagnostics.filter(row => row.severity === 'error');
+    assert.deepEqual(errors.map(row => `${row.code}:${source.slice(row.start, row.start + row.length)}`), [`${code}:value`]);
+  }
 });
 
 test('A02-T80 views over inner locals cannot be stored into an outer span', () => {

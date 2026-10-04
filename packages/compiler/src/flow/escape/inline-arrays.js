@@ -24,11 +24,12 @@ export const InlineArrayEscape = Base =>
     }
     refEscapeProblems(expression, escapeTo, node, checkingReceiver = false) {
       const variable = variableOf(expression);
-      if (variable?.kind === 'InlineArrayAccess') return this.refEscapeProblems(variable.receiver, escapeTo, node, true);
+      // An inline access has a synthetic static helper's ref/in argument, not an instance field receiver.
+      if (variable?.kind === 'InlineArrayAccess') return this.refEscapeProblems(variable.receiver, escapeTo);
       return super.refEscapeProblems(expression, escapeTo, node, checkingReceiver);
     }
     valueEscapeProblems(expression, escapeTo, node = expression?.syntax) {
       const receiver = viewReceiver(expression);
-      return receiver ? this.refEscapeProblems(receiver, escapeTo, node) : super.valueEscapeProblems(expression, escapeTo, node);
+      return receiver ? this.refEscapeProblems(receiver, escapeTo) : super.valueEscapeProblems(expression, escapeTo, node);
     }
   };
