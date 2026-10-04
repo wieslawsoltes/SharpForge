@@ -11,4 +11,6 @@ public class Consumer : Contract
     }
 
     private void OnChanged() { }
+
+    public static int Create<T>() where T : IFactory { return T.Create() + T.Value; }
 }

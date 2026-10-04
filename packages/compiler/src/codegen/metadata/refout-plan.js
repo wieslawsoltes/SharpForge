@@ -2,6 +2,7 @@ import { CilError, TableId, referenceAssemblyMemberIncluded } from '@sharpforge/
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { attributesNamed } from '../../binder/bound-attributes.js';
+import { explicitInterfaceOf } from './member-plan.js';
 
 const friendAttribute = 'System.Runtime.CompilerServices.InternalsVisibleToAttribute';
 const markerAttribute = 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute';
@@ -53,6 +54,7 @@ export class RefoutPlan {
     plan.methods = plan.methods.filter(method => referenceAssemblyMemberIncluded(TableId.MethodDef, method.flags, {
       includesInternals: this.includesInternals,
       isAttributeConstructor: isAttribute && method.symbol?.methodKind === MethodKind.Constructor,
+      isExplicitImplementation: !!method.symbol && !!explicitInterfaceOf(method.symbol),
     }));
     const methods = new Set(plan.methods);
     plan.properties = plan.properties.flatMap(property => {

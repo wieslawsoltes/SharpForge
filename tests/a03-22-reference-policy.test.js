@@ -18,6 +18,8 @@ test('A03-T22 reference visibility policy distinguishes every CLI accessibility'
   assert.equal(referenceAssemblyMemberIncluded(TableId.Field, FieldAttributes.Private | FieldAttributes.Static, { isStruct: true }), true);
   assert.equal(referenceAssemblyMemberIncluded(TableId.MethodDef, MethodAttributes.Private | MethodAttributes.Virtual), true);
   assert.equal(referenceAssemblyMemberIncluded(TableId.MethodDef, MethodAttributes.Assembly, { isAttributeConstructor: true }), true);
+  assert.equal(referenceAssemblyMemberIncluded(TableId.MethodDef, MethodAttributes.Private | MethodAttributes.Static,
+    { isExplicitImplementation: true }), true);
   assert.equal(referenceAssemblyMemberIncluded(TableId.MethodDef, MethodAttributes.Private, { isStruct: true }), false);
 });
 
@@ -29,7 +31,8 @@ test('A03-T22 reference member policy rejects unsupported tables, corrupt flags 
     assert.throws(() => referenceAssemblyMemberIncluded(TableId.MethodDef, flags), CilError);
   }
   assert.equal(referenceAssemblyMemberIncluded(TableId.MethodDef, 65534), true);
-  for (const context of [null, 1, { includesInternals: 1 }, { isStruct: 'true' }, { isAttributeConstructor: null }]) {
+  for (const context of [null, 1, { includesInternals: 1 }, { isStruct: 'true' },
+    { isAttributeConstructor: null }, { isExplicitImplementation: 'true' }]) {
     assert.throws(() => referenceAssemblyMemberIncluded(TableId.Field, 6, context), CilError);
   }
 });

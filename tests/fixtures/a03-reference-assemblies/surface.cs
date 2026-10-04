@@ -56,4 +56,18 @@ namespace RefSurface
 
     public enum Choice : byte { First = 1, Second = 2 }
     public delegate int Callback(int value);
+
+    public interface IFactory
+    {
+        static abstract int Create();
+        static abstract int Value { get; }
+        static abstract event Action Changed;
+    }
+
+    public class Factory : IFactory
+    {
+        static int IFactory.Create() { return 1; }
+        static int IFactory.Value { get { return 2; } }
+        static event Action IFactory.Changed { add { } remove { } }
+    }
 }

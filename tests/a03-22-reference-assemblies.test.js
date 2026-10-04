@@ -115,6 +115,23 @@ test('A03-T22 InternalsVisibleTo keeps internal members while private accessors 
   assert.equal(names(contract, 'methods').includes('set_Value'), false);
 });
 
+test('A03-T22 explicit static interface methods and accessors survive without a Virtual method flag', () => {
+  const { inspector, metadata } = emit();
+  const factory = declared(inspector, 'RefSurface.Factory');
+  assert.deepEqual(names(factory, 'methods'), [
+    '.ctor', 'RefSurface.IFactory.Create', 'RefSurface.IFactory.add_Changed',
+    'RefSurface.IFactory.get_Value', 'RefSurface.IFactory.remove_Changed',
+  ]);
+  assert.deepEqual(names(factory, 'properties'), ['RefSurface.IFactory.Value']);
+  assert.deepEqual(names(factory, 'events'), ['RefSurface.IFactory.Changed']);
+  for (const method of factory.methods.filter(method => method.name !== '.ctor')) {
+    assert.equal(method.flags & MethodAttributes.Virtual, 0);
+    assert.equal(method.flags & MethodAttributes.MemberAccessMask, MethodAttributes.Private);
+    assert.ok(method.flags & MethodAttributes.Static);
+  }
+  assert.equal(metadata.rows[25].filter(([owner]) => owner === (factory.token & 0xffffff)).length, 4);
+});
+
 test('A03-T22 body and stripped declaration edits leave the complete reference bytes unchanged', () => {
   const original = emit().bytes;
   const bodyEdit = source.replace('return 42;', 'int value = 21; return value + value;').replace('return 1;', 'return 100;');

@@ -17,11 +17,12 @@ export function referenceAssemblyMemberIncluded(table, flags, context = {}) {
   if (table !== TableId.Field && table !== TableId.MethodDef) throw new CilError('Reference member must be Field or MethodDef');
   if (!Number.isInteger(flags) || flags < 0 || flags > 0xffff) throw new CilError('Reference member flags must be unsigned 16-bit');
   if (!context || typeof context !== 'object') throw new CilError('Reference member context must be an object');
-  for (const name of ['includesInternals', 'isStruct', 'isAttributeConstructor']) {
+  for (const name of ['includesInternals', 'isStruct', 'isAttributeConstructor', 'isExplicitImplementation']) {
     if (context[name] !== undefined && typeof context[name] !== 'boolean') throw new CilError(`${name} must be boolean`);
   }
   if (table === TableId.Field && context.isStruct) return true;
-  if (table === TableId.MethodDef && ((flags & MethodAttributes.Virtual) || context.isAttributeConstructor)) return true;
+  if (table === TableId.MethodDef
+    && ((flags & MethodAttributes.Virtual) || context.isAttributeConstructor || context.isExplicitImplementation)) return true;
   const access = flags & FieldAttributes.FieldAccessMask;
   return access === FieldAttributes.Public || access === FieldAttributes.Family || access === FieldAttributes.FamORAssem
     || (!!context.includesInternals && (access === FieldAttributes.Assembly || access === FieldAttributes.FamANDAssem));
