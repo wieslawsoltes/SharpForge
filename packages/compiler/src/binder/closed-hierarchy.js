@@ -18,6 +18,7 @@ import { ArrayTypeSymbol, NamedTypeSymbol, TypeParameterSymbol, TypeKind } from 
 import { constructType, containsTypeParameter, effectiveBaseClass } from '../symbols/substitution.js';
 import { isAccessible } from './accessibility.js';
 import { checkConstraints } from './constraints.js';
+import { isImportedClosedClass } from './closed-metadata.js';
 
 const bare = argument => argument?.type ?? argument;
 
@@ -83,6 +84,8 @@ function constructionOf(declaration, closedType, context) {
 export function closedHierarchyOf(type, context) {
   const closedType = type instanceof TypeParameterSymbol ? effectiveBaseClass(type, context.core) : type,
     definition = closedType?.originalDefinition;
+  // A closed class of a referenced assembly is recognised by its attribute, with the subtypes of its own assembly.
+  isImportedClosedClass(definition);
   if (!definition?.isClosedClass || closedType.typeKind !== TypeKind.Class) return null;
   const subtypes = [];
   let isOpen = false;

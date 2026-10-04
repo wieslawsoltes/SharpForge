@@ -9,6 +9,7 @@
  *   CS0828  a value without a type: null, a lambda, a method group, a void call
  *   CS0833  two members with the same name
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { anonymousTypeOf, inferredMemberName } from '../symbols/synthesized/anonymous-types.js';
 
@@ -26,7 +27,7 @@ export const AnonymousTypeBinding = Base =>
           continue;
         }
         if (names.has(member.name)) {
-          this.report(declarator, 'CS0833');
+          this.report(declarator, DiagnosticId.CS0833);
           hasErrors = true;
           continue;
         }
@@ -44,11 +45,11 @@ export const AnonymousTypeBinding = Base =>
       const expression = declarator.expression,
         name = declarator.nameEquals ? declarator.nameEquals.name.identifier.valueText : inferredMemberName(expression),
         value = this.value(expression);
-      if (name === null) this.report(expression, 'CS0746');
+      if (name === null) this.report(expression, DiagnosticId.CS0746);
       if (value.hasErrors) return null;
       const isVoid = value.type?.specialType === 'System_Void';
       if (!value.type || isVoid) {
-        this.report(declarator, 'CS0828', [isVoid ? 'void' : this.operandDisplay(value)]);
+        this.report(declarator, DiagnosticId.CS0828, [isVoid ? 'void' : this.operandDisplay(value)]);
         return null;
       }
       return name === null ? null : { name, type: value.type, value };

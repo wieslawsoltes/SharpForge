@@ -10,6 +10,7 @@
  * instance members (assignable unless the member or struct is readonly), and `default(S)` zero-initialises without
  * running a constructor.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isNullableType } from '../conversions/nullable.js';
@@ -46,7 +47,7 @@ export function checkStructLayout(type) {
     if (!field.type) continue;
     if (reaches(field.type, new Set()))
       results.push({
-        code: 'CS0523',
+        code: DiagnosticId.CS0523,
         args: [(field.associatedSymbol ?? field).toDisplayString(), field.type.toDisplayString()],
         field: field.associatedSymbol ?? field,
       });
@@ -68,12 +69,12 @@ export function checkStructDeclaration(type, languageVersion) {
   if (parameterless) {
     if (languageVersion < 10) results.push({ member: parameterless, feature: { name: 'parameterless struct constructors', version: 10 } });
     else if (parameterless.declaredAccessibility !== Accessibility.Public)
-      results.push({ code: 'CS8958', args: [], member: parameterless });
+      results.push({ code: DiagnosticId.CS8958, args: [], member: parameterless });
   }
   if (initialized.length) {
     if (languageVersion < 10)
       for (const m of initialized) results.push({ member: m, feature: { name: 'struct field initializers', version: 10 } });
-    else if (!ctors.length && !type.primaryConstructor) results.push({ code: 'CS8983', args: [], member: type });
+    else if (!ctors.length && !type.primaryConstructor) results.push({ code: DiagnosticId.CS8983, args: [], member: type });
   }
   return results;
 }

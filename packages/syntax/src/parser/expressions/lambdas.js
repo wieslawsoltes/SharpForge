@@ -92,18 +92,17 @@ export const lambdaMethods = {
   /** Consumes the modifiers up to token index `end`, recording `static` (C# 9) and `async` (C# 5). */
   lambdaModifiers(end) {
     const list = [];
-    let isAsync = false;
     while (this.i < end) {
       const token = this.current;
       if (token.kind === 'async') {
-        isAsync = true;
+        // Roslyn reports an async lambda or anonymous method at its `async` modifier.
+        this.feature('Async', token);
         list.push(this.takeWord('async'));
         continue;
       }
       if (token.kind === 'static') this.feature('StaticAnonymousFunction', token);
       list.push(this.take());
     }
-    if (isAsync) this.feature('Async', this.tokens[end]);
     return list;
   },
   lambdaParameterList() {
