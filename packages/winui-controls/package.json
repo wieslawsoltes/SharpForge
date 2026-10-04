@@ -9,14 +9,16 @@
   },
   "files": [
     "src",
-    "README.md",
+    "*.md",
+    "examples",
+    "parity/METADATA.md",
     "LICENSE"
   ],
   "license": "MIT",
-  "engines": {
-    "node": ">=22"
-  },
   "dependencies": {
     "@sharpforge/rendering": "0.14.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

@@ -1,13 +1,15 @@
 import {initializeBindingContext, registerPropertyAdapters, registerObjectModelAdapters, getResourceServices,
-  UIObjectTree, ValueSource, EffectiveValueEmitter, visualStateManagerModel,
+  UIObjectTree, ValueSource, EffectiveValueEmitter, visualStateManagerModel, installDefaultTemplateCatalog,
   initializeItemsContext, initializeContentPresentation, ItemContainerGenerator} from '@sharpforge/winui-properties';
-import {registerControlFamilyAdapters, createControlServices, createLayoutTemplateServices,
-  RoutedEventRouter} from '@sharpforge/winui-controls';
-import {registerRenderingAdapters, materializeRenderingResource, typeOfRenderingModel,
-  FrameScheduler, syncRenderingModelProperty, createRenderingBrushConnections} from '@sharpforge/rendering';
+import {registerControlFamilyAdapters, createControlServices, registerLayoutAdapters, materializeDefaultControlStyle,
+  registerAutomationMemberAdapters, createAutomationMemberServices, DragServices,
+  createLayoutTemplateServices} from '@sharpforge/winui-controls';
+import {registerRenderingAdapters, registerCompositionAdapters, materializeRenderingResource, serializeRenderingValue,
+  typeOfRenderingModel, createCompositionServices, FrameScheduler, syncRenderingModelProperty,
+  createRenderingBrushConnections} from '@sharpforge/rendering';
 import {AnimationClock} from '@sharpforge/framework';
 import {initializeJavaScriptWindowLifetimes} from './app-lifetimes.js';
-import {facadeRoutedEventArgs, completeFacadeRoute} from './events.js';
+import {facadeRoutedEventArgs} from './events.js';
 
 export function createJavaScriptFrameScheduler(root, options) {
   const view = root.ownerDocument.defaultView;
@@ -17,7 +19,7 @@ export function createJavaScriptFrameScheduler(root, options) {
   });
 }
 
-/** A15 application services on the released host. Retained layout/input/automation and composition are activated by later stacks. */
+/** Share renderer services by explicit projection; resource strings and GPU resource tables remain distinct. */
 export function initializeJavaScriptServices(context) {
   const {host, options} = context;
   const view = host.document.defaultView;
@@ -27,25 +29,29 @@ export function initializeJavaScriptServices(context) {
   context.controlServices = createControlServices({...options.uiCapabilities, document: host.document, window: view,
     services: context.services});
   Object.assign(context.services, context.controlServices, options.uiServices);
-  host.services ??= context.services;
+  for (const name of ['environment', 'textScale', 'inputPane', 'systemColors']) context.services[name] = host.services[name];
   initializeJavaScriptWindowLifetimes(context);
   context.services.stringResourceLoader ??= context.controlServices.resources;
   context.services.scheduler ??= scheduler;
   context.services.clockFactory ??= values => new AnimationClock(values);
+  context.services.text ??= host.services.text;
+  context.services.layout ??= {getLayout: value => host.getLayout(typeof value === 'string' ? value : context.id(value)),
+    invoke: (value, name, args) => {
+      const result = host.invoke(value ? context.id(value) : null, name, args);
+      return ['GetFocusedElement', 'FindNextElement', 'TryGetElement'].includes(name) && result != null ? context.reference(result) : result;
+    }};
+  context.services.controls ??= {invoke: (value, name, args) => {
+    return host.invoke(value ? context.id(value) : null, name, args.map(item => context.value(item)));
+  }};
   context.services.visualStates ??= {apply: (node, states) => {
     const owner = node?.$node ? node : context.objects.get(node.id);
     if (owner) for (const state of states) visualStateManagerModel(context, owner).goToState(state, true);
   }};
   host.services.visualStates = context.services.visualStates;
-  const router = new RoutedEventRouter({
-    parentOf: id => context.parents.get(id) ?? null,
-    contains: id => context.objects.has(id),
-    onDispatch: (id, event, payload) => completeFacadeRoute(context, id, event, payload)
-  });
-  context.routedEventRouter = router;
-  const disposeServices = context.controlServices.dispose;
-  context.controlServices.dispose = () => { router.dispose(); disposeServices(); };
-  host.services.scheduler = scheduler;
+  context.services.automation ??= createAutomationMemberServices(context, {tree: host.automation, synchronize: () => host.flush()});
+  context.services.drag ??= new DragServices(context, {send: command => host.apply(command),
+    readFiles: (token, request) => host.input.dragDrop.files.read(token, request)});
+  context.routedEventRouter = host.eventRouter;
   context.routedEventArgs = payload => facadeRoutedEventArgs(context, payload);
   context.dispatcherServices = {schedule: callback => queueMicrotask(callback), currentThread: () => 'ui',
     uiThread: 'ui', enterThread: action => action()};
@@ -66,7 +72,12 @@ export function initializeJavaScriptServices(context) {
   registerPropertyAdapters(context.registry);
   registerObjectModelAdapters(context.registry);
   registerControlFamilyAdapters(context.registry);
+  registerLayoutAdapters(context.registry);
+  registerAutomationMemberAdapters(context.registry);
   registerRenderingAdapters(context.registry);
+  registerCompositionAdapters(context.registry);
+  installDefaultTemplateCatalog(context, materializeDefaultControlStyle);
+  initializeComposition(context, scheduler);
   context.brushConnections = createRenderingBrushConnections(context);
   initializeValueDependencies(context);
 }
@@ -81,6 +92,37 @@ export function javascriptObjectTree(context) {
     if (event === 'Unloaded') context.brushConnections?.detach(owner);
     context.emit(owner, event, payload);
   }});
+}
+
+function initializeComposition(context, scheduler) {
+  const {host, services} = context;
+  const composition = createCompositionServices({clockFactory: services.clockFactory, scheduler,
+    environment: services.environment,
+    onInvalidate: () => host.scheduleRender(),
+    elementId: value => context.id(value), preview: {
+      isElement: value => context.isVisual(value), getLayout: value => host.getLayout(context.id(value)),
+      getOpacity: value => context.read(value, 'Opacity') ?? 1,
+      setComposition: (value, entry) => host.setElementComposition(context.id(value), entry),
+      keyFor: value => context.id(value), ownerReference: value => new WeakRef(value),
+      resolveAlive: reference => reference.deref(),
+      registerOwner: (owner, lease) => context.state(owner, 'composition-preview-lease', () => lease)
+    },
+    themes: {transitionsFor: (owner, name) => {
+      const values = context.read(owner, name);
+      return values ? context.items(values).map(value => context.unwrapModel(value)) : [];
+    }, ...services.themeTransitionsOptions},
+    implicit: {getTransition: (owner, name) => context.unwrapModel(context.read(owner, name)),
+      setBrush: (owner, property, brush) => host.setCompositionBrush(context.id(owner), property, brush),
+      getColorBrush: value => {
+        const brush = serializeRenderingValue(context.unwrapModel(value));
+        return brush?.Color ?? brush?.color ?? brush;
+      }, ...services.implicitTransitionsOptions},
+    connected: {getBounds: value => host.getLayout(context.id(value))?.rect, ...services.connectedAnimationsOptions}
+  });
+  context.composition = composition;
+  services.onCompositionInvalidate ??= () => host.scheduleRender();
+  for (const name of ['createCompositionTransport', 'compositionPreview', 'elementCompositionPreview',
+    'themeTransitions', 'implicitTransitions', 'connectedAnimations', 'navigationTransitions']) services[name] ??= composition[name];
 }
 
 function initializeValueDependencies(context) {
@@ -100,7 +142,7 @@ function initializeValueDependencies(context) {
     mutated(owner) {
       emitter.mutated(owner);
       emitter.mutated(context.unwrapModel(owner));
-      if (context.isVisual(owner) && context.suppressedSceneProperty?.owner !== owner) context.host.schedule();
+      if (context.isVisual(owner) && context.suppressedSceneProperty?.owner !== owner) context.host.invalidate(context.id(owner), 'render');
     },
     remove: owner => emitter.remove(owner)
   };
@@ -113,6 +155,9 @@ function initializeValueDependencies(context) {
     context.brushConnections.propertyChanged(change);
     context.presentationChanged(change);
     context.layoutTemplates.changed(change);
+    if (context.storeFor(change.owner).getValueSource(change.property) !== ValueSource.Animation) {
+      context.composition.propertyChanged(change.owner, change.property.name, change.oldValue, change.newValue);
+    }
   };
 }
 
