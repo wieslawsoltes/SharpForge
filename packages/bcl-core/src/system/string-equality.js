@@ -1,5 +1,5 @@
-import {fail} from '../host.js';
 import {compareOrdinalIgnoreCase} from './string-compare.js';
+import {validateStringComparison} from './string-comparison.js';
 
 const comparisonType = 'System.StringComparison';
 
@@ -19,13 +19,7 @@ export function registerStringEqualityExtensions({define, member}) {
 
 /** Mode validation precedes equality/null shortcuts; culture modes are explicitly unsupported. */
 export function equalsWithComparison(platform, first, second, mode) {
-  if (!Number.isInteger(mode) || mode < 0 || mode > 5) {
-    fail(platform, 'ArgumentException', "Invalid string comparison type. (Parameter 'comparisonType')");
-  }
-  if (mode < 4) {
-    fail(platform, 'NotSupportedException',
-      'String.Equals supports only StringComparison.Ordinal and OrdinalIgnoreCase; culture modes are not implemented');
-  }
+  validateStringComparison(platform, mode, 'Equals');
   if (first === second) return true;
   if (first === null || second === null) return false;
   if (mode === 4 || first.length !== second.length) return false;

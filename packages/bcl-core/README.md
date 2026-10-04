@@ -72,6 +72,25 @@ Setup is excluded; one warmup and five samples report median/p95 and managed
 allocations on both real VM platforms. #2621 remains open for culture modes, other
 comparison overloads, comparer equality/hash and factories.
 
+`String.Compare(string, string, StringComparison)` occupies A07 slot `524301`,
+after the two Equals overloads. It reuses the same mode validation and existing
+Ordinal/OrdinalIgnoreCase comparers. Invalid enum values raise `ArgumentException`
+naming `comparisonType` before null/identity shortcuts; culture modes 0–3 explicitly
+raise `NotSupportedException` in the same position. Nulls precede non-null strings.
+Only the result sign is specified, including supplementary and malformed UTF-16
+ordering; the two-string CompareOrdinal contract and Equals IDs are unchanged.
+
+The [122-row .NET 10.0.5 reference](reference/string-compare-comparison/README.md)
+retains native raw results and signs separately. Tests cover both compiler
+pipelines/VMs, independent CIL, all captured faults, collection of pinned inputs,
+and zero managed text allocation. Comparison takes O(n) time in the inspected
+prefix and constant auxiliary space. Run the identical bounded
+`scripts/benchmarks/a07-string-compare-comparison.mjs` runner serially on baseline
+`9838196d` and the candidate: existing CompareOrdinal and both mode-aware Equals
+controls are separate from the new Compare costs, with one warmup, five samples,
+median/p95 and managed allocation counts. This completes only this three-argument
+overload; #2621 remains open for culture support and the other comparison APIs.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
