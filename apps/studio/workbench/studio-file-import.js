@@ -1,4 +1,5 @@
-import { importWorkspaceZip } from '@sharpforge/project-system';
+import { importWorkspaceZipFromBlob } from '@sharpforge/project-system';
+import { ZIP_LIMITS } from '@sharpforge/archive';
 import { prepareStudioSourceFiles, prepareLegacyStudioProject, readStudioFiles } from './source-imports.js';
 import { restoreRecentWorkspace } from './recent-workspaces.js';
 
@@ -77,10 +78,12 @@ export function importStudioFiles(input, options, context) {
 
 export function openStudioWorkspaceZip(file, options, context) {
   return context.withLoad(async load => {
-    if (file.size > 160 * 1024 * 1024) throw new Error('ZIP exceeds the 160 MiB input limit');
-    const bytes = new Uint8Array(await file.arrayBuffer());
+    if (file.size > ZIP_LIMITS.maxArchiveBytes) throw new Error('ZIP exceeds the 160 MiB input limit');
     load.check();
-    const input = importWorkspaceZip(bytes);
+    const input = await importWorkspaceZipFromBlob(file, {
+      ...ZIP_LIMITS, signal: load.signal, preserveMetadata: true, onProgress: () => load.check()
+    });
+    load.check();
     return context.loadRecords(input.records, {
       load, select: true, folders: input.folders, name: input.settings.name ?? file.name.replace(/\.zip$/i, ''),
       startup: input.settings.startup, configuration: input.settings.configuration ?? 'Debug',

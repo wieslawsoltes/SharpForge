@@ -1,7 +1,7 @@
 /** Connects synchronous Studio file activation to the docking service's one shared navigation history. */
 export class StudioNavigation {
-  constructor({ docking, getEditor, onChanged = () => {} }) {
-    if (!docking?.navigation || typeof getEditor !== 'function') {
+  constructor({ docking, getEditor, onChanged = () => {}, prepareDocument }) {
+    if (!docking?.navigation || typeof getEditor !== 'function' || typeof onChanged !== 'function') {
       throw new TypeError('Studio navigation needs docking navigation and an active editor accessor');
     }
     this.docking = docking;
@@ -9,6 +9,7 @@ export class StudioNavigation {
     this.getEditor = getEditor;
     this.pending = new Map();
     this.disposed = false;
+    this.releasePreparation = prepareDocument === undefined ? null : this.navigation.registerDocumentPreparation(prepareDocument);
     this.unsubscribe = this.navigation.subscribe(onChanged);
   }
 
@@ -75,5 +76,6 @@ export class StudioNavigation {
     this.disposed = true;
     this.pending.clear();
     this.unsubscribe();
+    this.releasePreparation?.();
   }
 }
