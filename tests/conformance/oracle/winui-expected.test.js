@@ -218,6 +218,7 @@ test('WinUI expected store retains legacy smoke records and separates measuremen
 test('WinUI adoption CLI requires explicit reviewed inputs and rejects unknown/repeated options', async () => {
   for (const args of [[], ['adopt'], ['verify', '--capture', 'report.json'], ['adopt', '--unknown', 'x'],
     ['adopt', '--capture', 'a', '--capture', 'b'], ['adopt', '--capture']]) await assert.rejects(main(args));
+  await assert.rejects(main(['adopt', '--capture', 'unused.json', '--reviewed-commit', reviewedCommit, '--reviewed-sha256', 'a'.repeat(64), 'constructor', 'x']), /Unknown, repeated or incomplete/);
   const fixture = await loadWinuiExpectedFixture();
   const report = capture(fixture), environment = report.toolchain.environment;
   environment.imageOS = pin.images.windows.imageOS; environment.imageVersion = pin.images.windows.imageVersion;

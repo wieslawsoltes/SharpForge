@@ -102,7 +102,7 @@ export async function main(args = process.argv.slice(2)) {
   const names = { '--capture': 'capture', '--reviewed-commit': 'reviewedCommit', '--reviewed-sha256': 'reviewedSHA256', '--store': 'directory' };
   require(['adopt', 'verify'].includes(mode) && pairs.length % 2 === 0, 'Usage: winui-expected.js adopt|verify --capture REPORT --reviewed-commit SHA --reviewed-sha256 SHA256 [--store DIRECTORY]');
   for (let index = 0; index < pairs.length; index += 2) {
-    const name = names[pairs[index]], value = pairs[index + 1];
+    const name = Object.hasOwn(names, pairs[index]) ? names[pairs[index]] : null, value = pairs[index + 1];
     require(name && value && !value.startsWith('--') && !Object.hasOwn(options, name), 'Unknown, repeated or incomplete WinUI expected option');
     options[name] = value;
   }
