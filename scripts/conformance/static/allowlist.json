@@ -455,6 +455,13 @@
       "count": 3,
       "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "packages/compiler/bench/expression-trees.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "8ed551f7f2714711b0a7a5155edf2d9cbb0d5877dbfd838b917f9318dc5a0da1",
+      "reason": "Developer-run paired benchmark loads the fixed compiler public entry from two explicitly selected trusted local checkouts. Exact clean commit identities and checkout-local workspace aliases are verified before importing; managed source never selects JavaScript modules. The benchmark is not shipped in the product."
     }
   ]
 }
