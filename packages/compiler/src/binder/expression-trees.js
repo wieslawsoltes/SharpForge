@@ -7,6 +7,7 @@
  *   CS8072  a null-conditional access        CS8122  an `is` pattern
  *   CS8514  a switch expression              CS8188  a throw expression
  *   CS8074  an index initializer             CS8143  a tuple literal
+ *   CS0838  a rectangular array initializer
  *   CS8110  a call of a local function       CS9307  named arguments out of position
  *   below C# 14 only: CS0854 an invocation that omits optional arguments, CS0853 one that names arguments
  *
@@ -50,6 +51,7 @@ function nodeProblem(node, languageVersion) {
   if (dynamicOperation(node)) return DiagnosticId.CS1963;
   if (assignmentKinds.has(node.kind)) return DiagnosticId.CS0832;
   if (codeByKind[node.kind]) return codeByKind[node.kind];
+  if (node.kind === 'ArrayCreation' && node.type?.rank > 1 && node.syntax?.initializer) return DiagnosticId.CS0838;
   if (node.kind === 'Call') {
     if (node.method?.methodKind === MethodKind.LocalFunction) return DiagnosticId.CS8110;
     // A call that is removed: a partial method without an implementing part, or an omitted [Conditional] method.

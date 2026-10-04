@@ -8,6 +8,7 @@
  *   CS0746  a declarator without a name whose expression gives none (`new { 1 }`, `new { a + b }`)
  *   CS0828  a value without a type: null, a lambda, a method group, a void call
  *   CS0833  two members with the same name
+ *   CS0836  creation in a declaration context that cannot contain an anonymous type
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
@@ -20,6 +21,10 @@ export const AnonymousTypeBinding = Base =>
       const members = [],
         names = new Set();
       let hasErrors = false;
+      if (!this.c.method && (!this.c.initializerOf || this.c.initializerOf.isConst)) {
+        this.report(syntax.newKeyword, DiagnosticId.CS0836);
+        hasErrors = true;
+      }
       for (const declarator of syntax.initializers) {
         const member = this.anonymousMember(declarator);
         if (!member) {
