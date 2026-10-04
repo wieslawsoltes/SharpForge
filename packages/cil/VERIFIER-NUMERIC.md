@@ -18,7 +18,13 @@ The numeric policy covers constants, duplicate/pop, primitive argument/local loa
 stores and addresses, arithmetic, bitwise operations, shifts, comparisons,
 conversions, finite checks, branches, switch and returns. Signed/unsigned small
 storage types normalize to the existing stack kinds; address elements retain
-canonical declared primitive identities. Local loads/addresses require InitLocals.
+canonical declared primitive identities. Local loads/addresses require InitLocals
+under the default portable policy. Passing `localInitialization: 'definite-assignment'`
+enables ECMA's optional analysis for methods without that flag: each local must have
+been stored on every incoming path before its value or address is loaded. Unset
+loads fail with `UninitializedLocal`; a store must pass the usual type check first.
+Branches intersect assignment facts, and loops reuse the existing bounded solver.
+No value-sensitive constant propagation is used to discard a possible path.
 Generic/instance/vararg method signatures, nonprimitive storage, byref returns,
 exception handlers and opcodes without a registered policy return `unknown`.
 Byref element compatibility beyond identical primitive identities stays unknown.
@@ -40,6 +46,22 @@ ceiling. It is a work bound, not a JavaScript heap measurement. Existing
 `maxDataflowInstructions`, `maxDataflowEdges`, `maxDataflowSteps`, signature parser
 limits and `signal` apply. Exhausted budgets/cancellation return `unknown` and
 never a proof. Malformed metadata and incompatible stacks return `rejected`.
+
+Definite-assignment mode allocates local bitsets lazily on the first store, only
+for methods without InitLocals and with declared locals. Portable mode and
+InitLocals methods retain stack-only block states. `maxInitializationWords`
+(default/hard ceiling 1,000,000) bounds cumulative allocation, copy and scan work
+in 32-bit words, not measured heap bytes. A block without new stores reuses its
+incoming mask; joins allocate only when facts change. Storage is bounded by the
+same cumulative budget. Alias writes, EH and constructor-this transitions are
+not part of this batch and remain open under #2405/#52.
+
+The opt-in policy implements [ECMA-335 III.1.8.1.1, III.3.43 and III.3.44](https://www.ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).
+ILVerify 10.0.5 requires InitLocals for every local load/address and does not track
+prior stores. Its rejections of otherwise definitely assigned methods are an
+explicitly permitted implementation choice, not an oracle defect. The new native
+corpus records these predeclared differences; it does not claim universal CLR
+verification parity or change runtime admission.
 
 ## Reference rules and oracle differences
 
