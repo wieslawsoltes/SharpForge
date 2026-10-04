@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { CilError, MetadataBuilder, readMetadata } from '@sharpforge/cil';
+import { readFile } from 'node:fs/promises';
+import { CilError, MetadataBuilder, readMetadata, readPE } from '@sharpforge/cil';
 
 function input() {
   const builder = new MetadataBuilder('ReaderBudget');
@@ -34,4 +35,13 @@ test('physical metadata parsing checks cancellation before and during row decodi
   assert.throws(() => readMetadata(bytes, { signal }), { code: 'MD_READ_CANCELED' });
   assert.ok(checks > 8);
   assert.equal(readMetadata(bytes).row(0x1a00012c).length, 1);
+});
+
+test('PE envelope forwards the optional bounds to its existing single metadata decode', async () => {
+  const bytes = await readFile(new URL('./fixtures/portable-pdb-generations/baseline.dll', import.meta.url));
+  const ordinary = readPE(bytes);
+  const count = Object.values(ordinary.metadata.counts).reduce((sum, value) => sum + value, 0);
+  assert.deepEqual(readPE(bytes, { metadataOptions: { maxRows: count } }).metadata.rows, ordinary.metadata.rows);
+  assert.throws(() => readPE(bytes, { metadataOptions: { maxRows: count - 1 } }), /Metadata row limit exceeded/);
+  assert.throws(() => readPE(bytes, { metadataOptions: { signal: AbortSignal.abort() } }), { code: 'MD_READ_CANCELED' });
 });

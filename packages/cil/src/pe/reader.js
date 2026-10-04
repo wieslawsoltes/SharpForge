@@ -101,7 +101,9 @@ function readCliHeader(bytes, headers, offsetOf) {
 }
 
 /** Read PE/CLI binary structure; inspection never executes managed or native code. */
-export function readPortableExecutable(input, { maxBytes = 64 * 1024 * 1024, inspection = false } = {}) {
+export function readPortableExecutable(input, {
+  maxBytes = 64 * 1024 * 1024, inspection = false, metadataOptions,
+} = {}) {
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) throw new CilError('Invalid PE input or assembly exceeds size limit');
   const headers = readHeaders(bytes);
@@ -111,7 +113,7 @@ export function readPortableExecutable(input, { maxBytes = 64 * 1024 * 1024, ins
     throw new CilError('Only IL-only managed entry points are supported');
   }
   const metadataOffset = offsetOf(cli.metadataDirectory.rva, cli.metadataDirectory.size);
-  const metadata = readMetadata(bytes.subarray(metadataOffset, metadataOffset + cli.metadataDirectory.size));
+  const metadata = readMetadata(bytes.subarray(metadataOffset, metadataOffset + cli.metadataDirectory.size), metadataOptions);
   const result = { bytes, ...headers, ...cli, metadataOffset, metadata, offsetOf,
     isLibrary: !!(headers.characteristics & 0x2000) };
   result.methodBody = methodToken => readMethodBody(result, methodToken, inspection);

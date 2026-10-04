@@ -212,6 +212,8 @@ through one million. Cancellation is checked before reading, at stream and row
 boundaries, and before return; it throws `CilError` with code `MD_READ_CANCELED`.
 Parsing remains synchronous. Omitting options preserves the existing physical
 reader and borrowed input/heap views.
+`readPE(bytes, { metadataOptions: { maxRows, signal } })` forwards those same
+bounds to its single metadata decode; other PE options retain their behavior.
 
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
