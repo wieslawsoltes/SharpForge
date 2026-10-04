@@ -182,15 +182,20 @@ export class WorkspaceSearchIndex {
     const expression = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), caseSensitive ? 'gu' : 'giu');
     let results = 0;
     let count = 0;
-    for (const path of paths ?? this.entries.keys()) {
+    for (const path of paths ?? [...this.entries.keys()]) {
       this.check(signal);
+      const entry = this.entries.get(path);
+      const generation = entry?.generation;
+      const version = entry?.version;
       let text;
       try { text = await this.text(path, signal); }
       catch (error) {
-        if (error.code === 'Cancelled' || error.name === 'AbortError') throw error;
+        if (error.code === 'Cancelled' || error.code === 'Disposed' || error.name === 'AbortError') throw error;
         this.onDiagnostic({path, code: 'SFSEARCH001', severity: 'warning', message: error.message});
         continue;
       }
+      this.check(signal);
+      if (!this.#currentSearchRevision(path, entry, generation)) continue;
       if (text !== null) {
         this.metrics.searchedFiles++;
         expression.lastIndex = 0;
@@ -200,6 +205,7 @@ export class WorkspaceSearchIndex {
         let previous = 0;
         while ((match = expression.exec(text))) {
           this.check(signal);
+          if (!this.#currentSearchRevision(path, entry, generation)) break;
           const offset = match.index;
           const end = expression.lastIndex;
           let before = offset - 1;
@@ -211,7 +217,7 @@ export class WorkspaceSearchIndex {
             for (let index = previous; index < offset; index++) if (text[index] === '\n') { line++; lineStart = index + 1; }
             previous = offset;
             const lineEnd = text.indexOf('\n', end);
-            yield {path, offset, length: match[0].length, line, column: offset - lineStart + 1,
+            yield {path, version, offset, length: match[0].length, line, column: offset - lineStart + 1,
               preview: text.slice(lineStart, Math.min(lineEnd < 0 ? text.length : lineEnd, lineStart + 400)).replace(/\r$/, '')};
             if (++results >= limit) return;
           }
@@ -219,6 +225,12 @@ export class WorkspaceSearchIndex {
       }
       if (++count % this.yieldEvery === 0) await nextTurn();
     }
+  }
+
+  #currentSearchRevision(path, entry, generation) {
+    if (this.entries.get(path) === entry && entry?.generation === generation) return true;
+    this.onDiagnostic({path, code: 'SFSEARCH001', severity: 'warning', message: 'File changed while its search results were streaming'});
+    return false;
   }
 
   /** LanguageService.findInFiles result shape; offsets and columns are UTF-16 and lines are zero based. */
@@ -233,7 +245,7 @@ export class WorkspaceSearchIndex {
     for await (const match of this.findText(query, {caseSensitive: matchCase, wholeWord, limit: maxMatches + 1, signal, paths})) {
       if (matches.length === maxMatches) { truncated = true; break; }
       matches.push({uri: match.path, start: match.offset, end: match.offset + match.length,
-        version: this.entries.get(match.path)?.version, line: match.line - 1, character: match.column - 1, preview: match.preview.slice(0, 240)});
+        version: match.version, line: match.line - 1, character: match.column - 1, preview: match.preview.slice(0, 240)});
     }
     return {matches, truncated, scannedFiles: this.metrics.searchedFiles - started};
   }
