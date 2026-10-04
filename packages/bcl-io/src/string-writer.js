@@ -1,5 +1,6 @@
 import {bclScalar, fail, integer, string} from '@sharpforge/bcl-core';
 import {appendWriterBuilder, createWriterBuilder, writerBuilderText} from './string-writer-builder.js';
+import {writeStringBuffer} from './string-writer-buffer.js';
 
 const writerType = 'System.IO.StringWriter';
 const builderType = 'System.Text.StringBuilder';
@@ -51,6 +52,9 @@ export function invokeStringWriter(platform, descriptor, args) {
   if (descriptor.kind === 'constructor') return construct(platform, args);
   const reference = args[0];
   requireWriter(platform, reference);
+  if (descriptor.name === 'Write' && descriptor.parameters[0] === 'char[]') {
+    return writeStringBuffer(platform, reference, args, descriptor.parameters.length === 1);
+  }
   switch (descriptor.name) {
     case 'get_NewLine': return platform.get(reference, '$newLine');
     case 'set_NewLine': return setNewLine(platform, reference, args[1]);

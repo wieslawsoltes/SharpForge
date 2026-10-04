@@ -29,8 +29,9 @@
     },
     {
       "id": "package:@sharpforge/bcl-io",
-      "maxBytes": 8192,
-      "reason": "Reviewed unmeasured cap for the initial synchronous StringReader package; capture actual size during qualification."
+      "observedBytes": 8412,
+      "maxBytes": 10240,
+      "reason": "Synchronous readers, writers and buffer overloads measured at 31f92ab5da1aac7f2ba85c633a8527a9849ac7f7; 15 percent headroom rounded up to 1 KiB. Replaces the unmeasured reader-only cap."
     },
     {
       "id": "package:@sharpforge/bytecode",

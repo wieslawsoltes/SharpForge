@@ -9,7 +9,8 @@
     "tests/a09-string-reader.test.js",
     "tests/a09-string-writer.test.js",
     "tests/a09-string-reader-buffer.test.js",
-    "tests/a09-string-writer-object.test.js"
+    "tests/a09-string-writer-object.test.js",
+    "tests/a09-string-writer-buffer.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
