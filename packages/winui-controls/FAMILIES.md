@@ -30,6 +30,10 @@ These public models and injectable renderer contributions are imported through `
 
 `registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
 
+## Menus and interaction routing
+
+`registerCommandsRenderers` registers nested menus, command bars, text flyouts and gesture controls. `RefreshController` deduplicates outstanding requests and propagates rejected handlers. Context and access key bindings share owner-scoped teardown and wait for Handled before the native default action.
+
 ## Qualification
 
 The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
