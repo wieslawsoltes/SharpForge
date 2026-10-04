@@ -3,6 +3,8 @@
   "area": "A13",
   "nodeGlobs": [
     "tests/portable-pdb.test.js",
+    "tests/a13-07-cfg.test.js",
+    "tests/a13-07-cfg-reference.test.js",
     "tests/a13-01-*.test.js",
     "tests/a13-03-hoisted-locals.test.js",
     "tests/a13-03-async-writer.test.js",

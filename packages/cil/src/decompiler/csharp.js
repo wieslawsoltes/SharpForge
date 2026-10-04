@@ -4,6 +4,7 @@ import { ExpressionContext, identifier, typeName } from './expressions.js';
 import { valueInstructionHandler } from './value-instructions.js';
 import { memberInstructionHandler } from './member-instructions.js';
 import { controlInstructionHandler } from './control-instructions.js';
+import { controlFlowCancellation } from './cfg-contracts.js';
 
 const handlerProviders = Object.freeze([valueInstructionHandler, memberInstructionHandler, controlInstructionHandler]);
 const handlers = Object.create(null);
@@ -31,16 +32,20 @@ function render(context) {
 }
 
 /** Retain the existing conservative lowering; unsupported instructions or stack merges throw a fallback reason. */
-export function reconstructCSharp(inspector, method) {
+export function reconstructCSharp(inspector, method, graph, signal) {
   if (method.handlers.length) throw new Error('Exception-region structuring is not implemented; complete IL is shown.');
   const types = [method.signature.returnType, ...method.signature.parameters, ...method.locals];
   if (method.signature.genericArity || types.some(type => /[!*]|`[0-9]/.test(type))) {
     throw new Error('Generic and pointer signatures are preserved as IL.');
   }
   const context = new ExpressionContext(inspector, method);
-  const targets = new Set(method.instructions.flatMap(instruction => instruction.operandKind === 'switch' ? instruction.operand
-    : instruction.operandKind.startsWith('br') ? [instruction.operand] : []));
+  const targets = new Set();
+  for (const edge of graph.edges) {
+    controlFlowCancellation(signal);
+    if (edge.kind !== 'fall-through') targets.add(graph.blocks[edge.target].startOffset);
+  }
   for (const instruction of method.instructions) {
+    controlFlowCancellation(signal);
     if (targets.has(instruction.offset)) {
       if (context.stack.length) throw new Error('Non-empty evaluation stack at a branch target');
       context.statements.push(`  ${instruction.label}:`);

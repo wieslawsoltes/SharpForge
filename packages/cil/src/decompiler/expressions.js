@@ -1,4 +1,4 @@
-export const numericTypes = new Set([
+const numericTypes = new Set([
   'int', 'uint', 'long', 'ulong', 'short', 'ushort', 'byte', 'sbyte', 'nint', 'nuint', 'double', 'float', 'char',
 ]);
 
