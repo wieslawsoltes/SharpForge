@@ -4,6 +4,7 @@
   "nodeGlobs": [
     "tests/templates-archive.test.js",
     "tests/template-examples.test.js",
+    "tests/template-qualification.test.js",
     "tests/workspace-io.test.js",
     "tests/workspace-grammar-options.test.js",
     "tests/release08-explorer.test.js",
@@ -13,7 +14,8 @@
     "tests/browser_workspace_test.py",
     "tests/browser_release08_test.py",
     "tests/browser_native_explorer_test.py",
-    "tests/browser_release11_test.py"
+    "tests/browser_release11_test.py",
+    "tests/browser_a24_xaml_designer_test.py"
   ],
   "requiredServices": [
     "studio-http",

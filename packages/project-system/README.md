@@ -35,6 +35,27 @@ The portable evaluator adds bounded local imports/ImportGroup/Choose, final-prop
 
 Exports include `buildSolutionTree`, `validateItemPath`, `editProjectMembership`, `addSolutionProject`, `addSolutionFolder`, `removeSolutionProject`, `rewriteProjectPath` and `editNamedProjectItem`. These preserve unrelated XML and operate on supported literal path/item declarations. They do not reproduce native design-time MSBuild, wildcard/property-function path rewriting or arbitrary task semantics. Tree construction is separate from DOM controls in `@sharpforge/controls`.
 
+
+## Metadata-only disk inventory
+
+`scanDirectory(provider, options)` returns `{records, folders, report, limits}`
+only after its complete cancellable traversal. Records explicitly contain
+`lazy: true`, path, size and modification metadata; absent text is never an
+empty source file. It uses provider directory iteration and yields progress
+every 128 entries. Defaults are 20,000 files, depth 48, 2,000,000 bytes per file,
+64 MiB for assembly/PDB files and 128 MiB loaded content. The inventory does not
+read ordinary file contents; optional `.gitignore` rules are bounded exceptions.
+
+`WorkspaceImportReport` records every ignored, duplicate, non-portable, aliased
+or over-budget path with a reason. `GitIgnoreMatcher` supports ordered rules,
+negation, nested scopes, directory rules, `**`, character ranges and escapes.
+Apply ignore rules explicitly with `applyGitignore: true`; generated dependency
+folders are excluded by default. This inventory API leaves the existing eager
+`readDirectory` and its explicit-save behavior intact until the host adopts the
+lazy document lifecycle.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-disk-scan.test.js tests/workspace-io.test.js`.
+
 ## Prepared source record utilities
 
 The public `cloneWorkspaceRecord(record, path)` utility copies property descriptors without reading a lazy `text` getter. It sets the record's path (and URI, if present) and keeps `model`, `source` and `originalSource` nonenumerable. It does not transfer model ownership or rebase a model/snapshot URI; callers changing a prepared source path must use their source contribution's rebase operation first.
