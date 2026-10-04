@@ -1,5 +1,15 @@
 # @sharpforge/cil
 
+Reference-assembly member policy and marker emission are available through `referenceAssemblyMemberIncluded` and
+`addReferenceAssemblyAttribute`. The compiler's `{ refout: true }` adapter, example and qualification commands are in
+[Reference assembly output](../../docs/reference-assembly-refout.md).
+
+`assemblyReferenceIdentity(builder, name)` returns the exact configured or framework fallback identity used by
+`builder.assemblyRef(name)`: `{ name, version, culture, flags, publicKeyOrToken }`. It does not add a metadata row,
+and each result owns copies of its four-part version and key bytes. Invalid names and missing required `net9`/`net10`
+reference identities raise `CilError`, as emission does. This lets consumers serialize assembly-qualified attribute
+type names without duplicating framework identity defaults.
+
 Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js
@@ -22,6 +32,8 @@ The root source release includes the complete backend contract, public API examp
 The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
 graphs and the conservative source reconstruction pipeline, including explicit
 IL fallbacks and exception-boundary metadata.
+Assembly results include a [physical metadata inventory](DECOMPILER-INVENTORY.md)
+with exact row accounting and explicit limits on source reconstruction.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
 
@@ -43,6 +55,31 @@ classification. `readPEDebugDirectory(parsedPE, options)` returns owned raw debu
 entries; the symbols package reuses it for existing semantic PDB decoding.
 See [PE-INSPECTION.md](PE-INSPECTION.md) for exact fields, limits, ownership,
 cancellation, and reference-evidence boundaries.
+
+## Parameterless Object construction
+
+`compile` and `compileToIL` support `new object()` and `new System.Object()` through
+the source allocation builtin `object.new`, appended at wire ID 1848 after the
+released scalar families. It creates one ordinary managed `System.Object` with
+zero fields. Existing framework contract IDs and source builtin IDs retain their
+meaning. The emitted assembly uses the real instance MemberRef
+`System.Object::.ctor(): void` with `newobj`; the canonical loader reconstructs
+the allocation with zero arguments. Ordinary base-constructor `call` instructions
+keep the direct-CIL runtime's existing initialization behavior.
+
+Constructor decoding checks its opcode, complete admitted call shape, raw
+top-level type identity, and approved signing token and neutral culture before
+the full canonical assembly check. It shares the readonly-field identity helper;
+each consumer keeps its own allowed facade names. Object construction retains
+the existing `mscorlib4` emission profile. Canonical replay by itself can preserve
+an input AssemblyRef identity, so it does not replace the constructor's explicit
+identity check.
+
+Focused coverage is in `tests/a05-source-object-construction.test.js` and
+`tests/a05-object-constructor-metadata.test.js`: both compiler pipelines, source
+and CIL execution, canonical reload, distinct identities, GC and snapshot roots,
+allocation failure, stopping from an allocation observer, derived constructors,
+and forged metadata.
 
 ## Registered external readonly fields
 

@@ -19,6 +19,7 @@ import { needsTypeSpec } from '../generics.js';
 import { TypeTokens, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { assemblyResolverOf } from './reference-identities.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
+import { metadataMemberName, metadataPropertyName } from './explicit-interface-names.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -27,6 +28,7 @@ import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
+import { hasReturnAttributes, returnAttributeSource } from './attribute-targets.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
 const SEMANTICS = Object.freeze({ Setter: 1, Getter: 2, AddOn: 8, RemoveOn: 16 });
@@ -87,6 +89,9 @@ export class SymbolMetadataWriter {
     this.eventTokens = new Map();
     this.parameterTokens = new Map();
     this.returnParameterTokens = new Map();
+    this.genericParameterRows = [];
+    this.genericConstraintRows = [];
+    this.interfaceRows = [];
   }
   typeToken(type) {
     return this.tokens.definitionToken(type);
@@ -135,7 +140,7 @@ export class SymbolMetadataWriter {
     for (const type of this.types) {
       const plan = this.plans.get(type),
         // A type initializer that only runs field initializers leaves the type `beforefieldinit`, as Roslyn does.
-        hasStaticConstructor = plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
+        hasStaticConstructor = plan.hasStaticConstructor ?? plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
         Flags: typeFlags(type, { hasStaticConstructor }),
@@ -187,14 +192,17 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
-        const returned = method.symbol?.returnType;
-        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned))) {
+        const returnSource = returnAttributeSource(method), returned = returnSource?.returnType;
+        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) || hasReturnAttributes(returnSource))) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
-          this.returnParameterTokens.set(method.symbol, this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' }));
+          method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
+          if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
           nextParameter++;
         }
+        method.parameterTokens = [];
         method.parameters.forEach((parameter, index) => {
           const row = this.builder.addRow('Param', { Flags: parameter.flags, Sequence: index + 1, Name: parameter.name ?? '' });
+          method.parameterTokens.push(row);
           if (method.symbol) this.parameterTokens.set(method.symbol.parameters[index], row);
           writeParameterConstant(this.builder, row, method.symbol?.parameters[index]);
           nextParameter++;
@@ -210,7 +218,8 @@ export class SymbolMetadataWriter {
       ownTokens = this.tokensOf(type);
     // `plan.interfaces`: interfaces code generation adds to the ones the type lists (a record's `IEquatable<R>`).
     for (const implemented of [...(type.interfaces ?? []), ...(plan.interfaces ?? [])]) {
-      builder.addRow('InterfaceImpl', { Class: self, Interface: ownTokens.typeToken(implemented) });
+      const row = builder.addRow('InterfaceImpl', { Class: self, Interface: ownTokens.typeToken(implemented) });
+      this.interfaceRows.push({ type, interface: implemented, token: row });
     }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
@@ -287,7 +296,7 @@ export class SymbolMetadataWriter {
       defined = this.methodTokens.get(definition);
     // A member of a constructed type (`I<int>.M`) is named through the TypeSpec of the construction.
     if (defined && !needsTypeSpec(method.containingType)) return defined;
-    return this.builder.member(this.tokens.typeToken(method.containingType), definition.metadataName, methodSymbolSignature(this.tokens, definition));
+    return this.builder.member(this.tokens.typeToken(method.containingType), metadataMemberName(definition), methodSymbolSignature(this.tokens, definition));
   }
   /** The type parameters a TypeDef declares: those of its enclosing types first, as VAR numbers them. */
   allTypeParameters(type) {
@@ -297,14 +306,17 @@ export class SymbolMetadataWriter {
   writeGenericParameters(owner, parameters, tokens = this.tokens) {
     parameters.forEach((parameter, number) => {
       const row = this.builder.addRow('GenericParam', { Number: number, Flags: genericParameterFlags(parameter), Owner: owner, Name: parameter.name });
+      this.genericParameterRows.push({ symbol: parameter, token: row, owner });
       // `struct` is also written as a constraint to System.ValueType, as Roslyn writes it.
       if (parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint) {
-        this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.builder.typeRef('System.ValueType') });
+        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.builder.typeRef('System.ValueType') });
+        this.genericConstraintRows.push({ symbol: parameter, type: this.core.valueType, token: constraintRow, owner: row });
       }
       for (const constraint of parameter.constraintTypes ?? []) {
         const type = constraint.type ?? constraint;
         if (type.specialType === 'System_Object') continue;
-        this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: tokens.typeToken(type) });
+        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: tokens.typeToken(type) });
+        this.genericConstraintRows.push({ symbol: parameter, type, token: constraintRow, owner: row });
       }
     });
   }
@@ -317,7 +329,7 @@ export class SymbolMetadataWriter {
     for (const { symbol, getter, setter } of properties) {
       // An indexer is named by its accessors (`Item`, or the name [IndexerName] gives).
       const accessor = getter ?? setter,
-        name = symbol.parameters.length && accessor ? accessor.name.slice(4) : symbol.metadataName,
+        name = metadataPropertyName(symbol, accessor),
         row = builder.addRow('Property', { Flags: 0, Name: name, Type: propertySignature(this.tokens, symbol) });
       this.propertyTokens.set(symbol, row);
       if (getter) builder.addRow('MethodSemantics', { Semantics: SEMANTICS.Getter, Method: getter.token, Association: row });
@@ -331,7 +343,7 @@ export class SymbolMetadataWriter {
       first = (builder.rows[20]?.length ?? 0) + 1;
     builder.addRow('EventMap', { Parent: this.tokens.definitionToken(type), EventList: first });
     for (const { symbol, adder, remover } of events) {
-      const row = builder.addRow('Event', { EventFlags: 0, Name: symbol.name, EventType: this.tokens.typeToken(symbol.type) });
+      const row = builder.addRow('Event', { EventFlags: 0, Name: metadataMemberName(symbol), EventType: this.tokens.typeToken(symbol.type) });
       this.eventTokens.set(symbol, row);
       builder.addRow('MethodSemantics', { Semantics: SEMANTICS.AddOn, Method: adder.token, Association: row });
       builder.addRow('MethodSemantics', { Semantics: SEMANTICS.RemoveOn, Method: remover.token, Association: row });

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "comparisonRevisions": [
+    "7c73c877c841fa5d4d124edfab980f5896a7e485",
+    "51db5c5ffbf870a3c2efd195477732d3e6861829"
+  ],
+  "scope": "Read-only source inspection after once-only measurements; no profiling, extra execution, source modification or causal attribution.",
+  "benchmarkSemantics": {
+    "driverChanged": false,
+    "fixtureChanged": false,
+    "compileToReferenceAssemblyEntryChanged": false,
+    "refoutPlanChanged": false,
+    "fixedBufferQualifierChanged": false,
+    "recordedBenchmarkEnvironmentsEqual": true,
+    "sameModeOutputBytesEqual": true
+  },
+  "concreteChanges": [
+    {
+      "path": "packages/compiler/src/codegen/metadata/custom-attributes.js",
+      "finding": "An ordinary applied source attribute constructs PseudoAttributeWriter before apply determines that its name is outside the canonical pseudo-attribute set. The fixture LocalAttribute takes this path."
+    },
+    {
+      "path": "packages/compiler/src/codegen/metadata/pseudo-attributes.js",
+      "finding": "The helper constructor creates ModuleRef and ClassLayout index Maps. They are needed for recognized pseudo attributes but not for the fixture ordinary LocalAttribute."
+    },
+    {
+      "path": "packages/compiler/src/codegen/metadata/attribute-targets.js",
+      "finding": "hasReturnAttributes calls returnAttributeSymbols, which creates an array and uses some callbacks even for methods without return attributes."
+    },
+    {
+      "path": "packages/compiler/src/codegen/metadata/symbol-metadata.js",
+      "finding": "Each planned method gets a parameterTokens array while the older writer parameter/return-token Maps remain populated. Present package/test source has no readers of those maps, interfaceRows or genericConstraintRows after the new bookkeeping; these may be deliberate planning/output seams and no removal is proposed."
+    },
+    {
+      "path": "packages/compiler/src/binder/dynamic.js",
+      "finding": "Other merged binder changes include an expression-level dynamic-kind check. Such shared analysis changes remain whole-merge confounders."
+    }
+  ],
+  "retainedSurfaceCounts": {
+    "metadataMethods": 48,
+    "publicRefoutMethods": 32,
+    "source": "Existing retained metadata-control/public SRM observations, without new product execution."
+  },
+  "interpretation": "More retained metadata methods execute the added per-method paths, but the inspection does not establish that these changes caused the 3.4569145 ms median increase. Required new attribute target handling also adds legitimate work.",
+  "coordinatorConstraints": [
+    "Keep 51db source and all raw results intact.",
+    "Finish evidence commit before proposing any separate optimization.",
+    "Any subsequent proposal is limited to lazy pseudo-attribute helper construction via canonical recognition and allocation-free return-attribute classification.",
+    "Do not remove token Maps or relation-row collections; inspect concurrent compiler work before any map-cleanup proposal."
+  ],
+  "optimizationApplied": false
+}

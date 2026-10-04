@@ -1,0 +1,137 @@
+{
+  "status": "prepared only; no benchmark, test, build, install, compiler import or compilation executed during preparation",
+  "candidate": {
+    "checkout": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+    "revision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+    "trackedChanges": ""
+  },
+  "baseline": {
+    "checkout": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e",
+    "revision": "c1693a9e322295a43d90c3335885b5b5b3cf8daa",
+    "trackedChanges": "",
+    "sparsePaths": [
+      "packages"
+    ],
+    "aliases": "/workspace/scratch/7e3d2a445c44/refout-baseline-c169-aliases.json",
+    "compilerTree": "29c02a027ea0f4212acffe4b2ac4115458ce6bae",
+    "cilTree": "a9723af2ad34e1715bf378f7c3670376be30c4b2"
+  },
+  "qualifiedProductRevision": "b40e8f7b5b8f5d06ad992da4a0b7446d667a056e",
+  "inputHashes": {
+    "packages/cil/tools/benchmark-reference-assemblies.mjs": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+    "tests/fixtures/a03-reference-assemblies/surface.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88"
+  },
+  "commonAncestor": "a15f7c3dddc34434968489d8ce8eb19f2af90022",
+  "compilerApi": "compileToReferenceAssembly(source, {name: \"RefSurface\", allowUnsafe: true}) for both metadata runs; candidate refout additionally passes refout: true",
+  "scope": "Identical rich source, invocation API and benchmark driver for all three runs. Baseline versus candidate metadata compares whole compiler/package revisions; unrelated changes preclude per-feature attribution. Candidate metadata versus candidate refout measures two different output modes within one revision.",
+  "supportAssessment": "Source inspection only, pending runtime success guards in the once-only run. c1693a9e and d64188af have identical compiler trees; their package difference is restricted to eight CIL IL-document files.",
+  "timingProtocol": {
+    "firstCompilation": "excludes compiler import",
+    "chronologicalRepeatedSamples": 120,
+    "excludedSettlingSamples": 20,
+    "measuredSamples": 100,
+    "gc": "--expose-gc before each repeated compile",
+    "median": "mean of middle two sorted measured samples",
+    "p95": "nearest rank",
+    "guards": "success, marker/private-surface/generic-owner checks outside initial timing; success and exact output-byte determinism outside every repeated timing",
+    "memoryLimitation": "heapUsed deltas include temporaries and are neither total allocation nor retained-heap measurement"
+  },
+  "preconditions": [
+    "Root explicitly grants sole heavy validation slot and confirms quiet machine.",
+    "Both frozen revisions and tracked-clean states still match this manifest.",
+    "Run each command exactly once, sequentially; retain any failure and do not retry without a concrete diagnosis/fix.",
+    "Every output and log destination must be absent before its command."
+  ],
+  "commands": [
+    {
+      "label": "baseline-c1693a9e-metadata",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-reference-assemblies.mjs",
+        "--mode",
+        "metadata",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/compiler/src/index.js",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-baseline-c1693a9e-metadata.json"
+      ],
+      "stdoutAndStderr": "/workspace/scratch/7e3d2a445c44/refout-baseline-c1693a9e-metadata.log",
+      "output": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-baseline-c1693a9e-metadata.json"
+    },
+    {
+      "label": "candidate-7c73c877-metadata",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-reference-assemblies.mjs",
+        "--mode",
+        "metadata",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/index.js",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-candidate-7c73c877-metadata.json"
+      ],
+      "stdoutAndStderr": "/workspace/scratch/7e3d2a445c44/refout-candidate-7c73c877-metadata.log",
+      "output": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-candidate-7c73c877-metadata.json"
+    },
+    {
+      "label": "candidate-7c73c877-refout",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "packages/cil/tools/benchmark-reference-assemblies.mjs",
+        "--mode",
+        "refout",
+        "--compiler",
+        "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/index.js",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-candidate-7c73c877-refout.json"
+      ],
+      "stdoutAndStderr": "/workspace/scratch/7e3d2a445c44/refout-candidate-7c73c877-refout.log",
+      "output": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-candidate-7c73c877-refout.json"
+    }
+  ],
+  "supportEvidence": [
+    {
+      "path": "packages/compiler/src/index.js",
+      "finding": "Exports compileToReferenceAssembly through the same public API in baseline and candidate."
+    },
+    {
+      "path": "packages/compiler/src/codegen/metadata/reference-assembly.js",
+      "finding": "Both ordinary modes use the same parse/analysis path, name option, net8 framework default, RecordPlan seam, throw-null body and deterministic output default; candidate refout is explicit opt-in."
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/fixed-buffers.js",
+      "finding": "Baseline includes generic and nested-owner storage planning; the old generic rejection is absent. Ordinary metadata mode uses declaration fields rather than this refout synthesis planner in both revisions."
+    },
+    {
+      "path": "packages/compiler/src/binder/attributes.js; packages/compiler/src/binder/accessibility.js",
+      "finding": "Type attribute [Local(7)] binds within Contract and obtains its current module, so the baseline internal constructor accessibility path has source-level support. The candidate assembly-attribute/file-local fix is not required by this rich fixture."
+    },
+    {
+      "path": "packages/compiler/src/codegen/metadata/member-plan.js; packages/compiler/src/codegen/metadata/symbol-metadata.js",
+      "finding": "Candidate has shared explicit-interface naming and accessor flag correctness fixes. Both metadata runs exercise equivalent API modes on the identical source, but assembly byte equality across revisions is not expected or asserted."
+    }
+  ],
+  "readOnlyPeerReview": {
+    "agent": "review_refout",
+    "result": "No source-level compatibility blocker found for c1693a9e metadata mode; no execution performed.",
+    "details": [
+      "Generic and nested generic fixed-buffer binder and planner support present; fixture meets struct/unsafe/primitive/positive-length rules.",
+      "Internal attribute constructor access obtains Contract module from type attribute site.",
+      "Static abstract explicit method/property/event implementations and struct primary-constructor capture supported by existing binders.",
+      "Ordinary metadata mode retains private declarations, omits standard marker, and does not claim refout synthesized-storage correctness.",
+      "d64188af provides no relevant additional compiler, syntax or checked CIL metadata/emission/PE support."
+    ]
+  }
+}

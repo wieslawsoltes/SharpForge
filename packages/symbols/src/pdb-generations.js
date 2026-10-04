@@ -1,6 +1,7 @@
 import { readPortablePdb } from './pdb-reader.js';
 import { readPortablePdbDelta } from './pdb-delta-reader.js';
 import { generationError, generationRowCounts } from './pdb-delta-format.js';
+import { pdbGenerationId as identity } from './generation-identity.js';
 
 function limit(value, fallback, maximum, name) {
   value ??= fallback;
@@ -8,13 +9,6 @@ function limit(value, fallback, maximum, name) {
     generationError('PDB_GENERATION_LIMIT', `Invalid PDB generation ${name} limit`);
   }
   return value;
-}
-
-function identity(value, name) {
-  if (typeof value !== 'string' || !/^[\da-f]{40}$/i.test(value)) {
-    generationError('PDB_GENERATION_ID', `Invalid PDB generation ${name}`);
-  }
-  return value.toLowerCase();
 }
 
 function group(records, key) {
@@ -165,6 +159,18 @@ export class PortablePdbGenerations {
     return this.getMethod(methodToken, version - 1);
   }
 
+  /** Return scalar revision facts without cloning scopes, custom debug payloads or sequence points. */
+  getMethodRevision(methodToken, generation = this.generation) {
+    const method = this.#method(methodToken, generation);
+    return method ? { methodToken, generation: method.entry.generation, revision: method.revision,
+      pointCount: method.data.points.length } : null;
+  }
+
+  /** Return only owned sequence-point records, excluding other method debug payloads. */
+  getSequencePoints(methodToken, generation = this.generation) {
+    return this.#method(methodToken, generation)?.data.points.map((point) => ({ ...point })) ?? [];
+  }
+
   /** Resolve a byte offset without copying the entire method; hidden points return null. */
   location(methodToken, offset, generation = this.generation) {
     if (!Number.isInteger(offset) || offset < 0 || offset >= 0x20000000) {
@@ -177,12 +183,15 @@ export class PortablePdbGenerations {
   }
 
   /** Document ids are local to a symbol generation; returned hashes and embedded source are independent copies. */
-  getDocument(documentId, generation) {
+  getDocument(documentId, generation, { includeSource = true } = {}) {
     const documents = this.#entry(generation).pdb.documents;
     if (!Number.isInteger(documentId) || documentId < 1 || documentId > documents.length) {
       generationError('PDB_DOCUMENT_ID', 'Invalid PDB generation document id');
     }
-    return structuredClone(documents[documentId - 1]);
+    const document = documents[documentId - 1];
+    if (includeSource) return structuredClone(document);
+    const { embedded, ...metadata } = document;
+    return structuredClone(metadata);
   }
 
   /** Release retained generations. Repeated disposal is harmless; subsequent queries and appends fail explicitly. */

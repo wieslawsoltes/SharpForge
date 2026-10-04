@@ -1,0 +1,51 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { cpus } from 'node:os';
+import { performance } from 'node:perf_hooks';
+import { execFileSync } from 'node:child_process';
+
+const root = resolve(process.argv[2]);
+const output = resolve(process.argv[3]);
+const { graphContext } = await import(pathToFileURL(join(root, 'tests/clr-types-graph-fixtures.js')));
+const fixture = JSON.parse(await readFile(join(root, 'tests/fixtures/clr-type-graphs/native-graphs.json')));
+const bytes = Buffer.from(fixture.image, 'base64');
+const expected = fixture.definitions.find(type => type.name === 'Fixture.Child');
+const context = graphContext();
+const module = (await context.loadFromStream(bytes)).manifestModule;
+const canonical = await context.types.load(module, expected.token);
+if (canonical.metadataToken !== expected.token || canonical.fullName !== expected.name) {
+  throw new Error('Canonical benchmark fixture identity mismatch');
+}
+const operations = [
+  { name: 'warm token lookup', iterations: 2000, run: () => context.types.load(module, expected.token) },
+  { name: 'warm name lookup', iterations: 2000, run: () => context.types.find(module, expected.name) },
+  { name: 'cold context and inheritance graph', iterations: 20, run: async () => {
+    const local = graphContext();
+    const assembly = await local.loadFromStream(bytes);
+    return local.types.find(assembly.manifestModule, expected.name);
+  } },
+];
+const results = [];
+for (const operation of operations) {
+  const samples = [];
+  for (let sample = -3; sample < 12; sample++) {
+    globalThis.gc?.();
+    const started = performance.now();
+    let result;
+    for (let iteration = 0; iteration < operation.iterations; iteration++) result = await operation.run();
+    const duration = (performance.now() - started) * 1000 / operation.iterations;
+    if (!result || result.metadataToken !== canonical.metadataToken || result.fullName !== expected.name) {
+      throw new Error('Benchmark correctness guard failed');
+    }
+    if (sample >= 0) samples.push(duration);
+  }
+  const sorted = samples.toSorted((left, right) => left - right);
+  results.push({ name: operation.name, iterations: operation.iterations, unit: 'microseconds/lookup', samples,
+    median: (sorted[5] + sorted[6]) / 2, p95: sorted[Math.ceil(sorted.length * 0.95) - 1] });
+}
+const report = { node: process.version, platform: process.platform, arch: process.arch,
+  cpu: cpus()[0].model, source: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
+  sharedMachine: true, allocationCounts: 'not measured', results };
+await writeFile(output, JSON.stringify(report, null, 2) + '\n');
+console.log(JSON.stringify({ source: report.source, results: results.map(({ samples, ...rest }) => rest) }));

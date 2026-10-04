@@ -2,7 +2,7 @@ import { Reader, CilError, readMetadata, token, text, decodeCoded } from '@sharp
 import { PdbGuids, fail, guidString } from './contracts.js';
 import { hex } from './hash.js';
 import { readCustomDebugInformation } from './custom-debug.js';
-import { readSequencePoints } from './sequence-points.js';
+import { readSequencePoints, sequencePointAt } from './sequence-points.js';
 import { readLocalConstants } from './constant-rows.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
@@ -206,14 +206,7 @@ function parsePortablePdb(
     sourceLink: custom.find((c) => c.sourceLink)?.sourceLink ?? null,
     location(methodToken, offset) {
       const points = methodMap.get(methodToken)?.points ?? [];
-      let l = 0,
-        r = points.length;
-      while (l < r) {
-        const m = (l + r) >>> 1;
-        if (points[m].offset <= offset) l = m + 1;
-        else r = m;
-      }
-      const p = points[l - 1];
+      const p = sequencePointAt(points, offset);
       return p && !p.hidden ? { ...p, source: documents[p.document - 1]?.name } : null;
     },
     locals(methodToken, offset) {

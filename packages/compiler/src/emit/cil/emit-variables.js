@@ -19,6 +19,7 @@ export const VariableEmission = Base =>
       if (slot === undefined) {
         slot = this.il.declareLocal(local.type, { isByReference: isByReference(local.refKind) || !!local.isRef });
         this.slots.set(local, slot);
+        this.debug?.local(local, slot);
       }
       return slot;
     }

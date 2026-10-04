@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "envelope": {
+    "baselineId": "111b6e5d3344c345970e5a846fe218ec3efd0583",
+    "previousPdbId": "111b6e5d3344c345970e5a846fe218ec3efd0583",
+    "generation": 1,
+    "typeSystemRowCounts": {
+      "0": 1,
+      "1": 7,
+      "2": 2,
+      "6": 3,
+      "10": 4,
+      "12": 4,
+      "17": 2,
+      "32": 1,
+      "35": 2
+    },
+    "deltaRowCounts": {
+      "0": 1,
+      "1": 1,
+      "6": 1,
+      "17": 1,
+      "35": 1
+    }
+  },
+  "sha256": "8aa1d9b16d0dcad279fb9c63b416216f40ef367bdf30cf5ce456627bea64fae5",
+  "native": {
+    "id": "87fb77f9653f154b95beb6c76c7de82c3ef5b8ee",
+    "runtime": "10.0.5",
+    "mapping": [
+      822083586
+    ],
+    "documents": [
+      {
+        "id": 1,
+        "name": "/src/PdbGenerations/Fixture.cs"
+      },
+      {
+        "id": 2,
+        "name": "Generation.cs"
+      }
+    ],
+    "methods": [
+      {
+        "token": 100663298,
+        "localRow": 1,
+        "localSignature": 2,
+        "points": [
+          {
+            "offset": 0,
+            "document": 2,
+            "startLine": 121,
+            "startColumn": 5,
+            "endLine": 121,
+            "endColumn": 6,
+            "hidden": false
+          },
+          {
+            "offset": 1,
+            "document": 2,
+            "startLine": 122,
+            "startColumn": 9,
+            "endLine": 122,
+            "endColumn": 25,
+            "hidden": false
+          },
+          {
+            "offset": 4,
+            "document": 2,
+            "startLine": 123,
+            "startColumn": 9,
+            "endLine": 123,
+            "endColumn": 22,
+            "hidden": false
+          },
+          {
+            "offset": 8,
+            "document": 2,
+            "startLine": 124,
+            "startColumn": 5,
+            "endLine": 124,
+            "endColumn": 6,
+            "hidden": false
+          }
+        ],
+        "scopes": [
+          {
+            "start": 0,
+            "end": 10,
+            "names": [
+              "local"
+            ]
+          }
+        ]
+      }
+    ],
+    "custom": [
+      {
+        "parent": 100663297,
+        "kind": "00112233-4455-6677-8899-aabbccddeeff",
+        "bytes": "deadbeef"
+      }
+    ],
+    "constants": [
+      {
+        "name": "Answer",
+        "signature": "082a000000"
+      }
+    ]
+  },
+  "nativeSourceSha256": "1e426ad9dfb7a193a62fa038a42d8db71851aee435e871fe9b10b98510b003fd"
+}

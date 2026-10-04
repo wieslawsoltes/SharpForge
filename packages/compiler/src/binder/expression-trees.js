@@ -14,6 +14,7 @@
  * touched. Nested lambdas are part of the tree and are checked with it.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
+import { previewStampText } from '@sharpforge/syntax';
 import { walk } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
 import { dynamicOperation } from '../bound/dynamic-operations.js';
@@ -81,6 +82,13 @@ export function expressionTreeProblems(lambda, { languageVersion = 14 } = {}) {
     }
     walk(current.body, node => {
       if (node.hasErrors) return false;
+      if (node.kind === 'Conversion' && node.conversion?.kind === 'ImplicitUnion') {
+        // The pinned unions proposal leaves trees unspecified. Roslyn 8d2c75f24c88ea99a01a8579ecb67e303d566670
+        // DiagnosticsPass_ExpressionTrees.cs:902–907 also rejects Union conversions; it is not a pinned oracle.
+        rows.push({ code: DiagnosticId.SF2202, syntax: node.syntax,
+          args: ['implicit union conversions in expression trees', previewStampText('Unions')] });
+        return false;
+      }
       if (node.kind === 'Lambda') {
         check(node);
         return false;
@@ -105,6 +113,7 @@ export const ExpressionTreeBinding = Base =>
       super.finishLambda(lambda, delegateType);
       if (!first || !lambda.body || !expressionTreeDelegate(delegateType, this.core)) return;
       lambda.isExpressionTree = true;
-      for (const problem of expressionTreeProblems(lambda, { languageVersion: this.version.number })) this.report(problem.syntax, problem.code, []);
+      for (const problem of expressionTreeProblems(lambda, { languageVersion: this.version.number }))
+        this.report(problem.syntax, problem.code, problem.args ?? []);
     }
   };
