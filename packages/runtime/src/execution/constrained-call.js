@@ -5,7 +5,9 @@ import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {cachedTypeName, verifiedMethod} from './token-cache.js';
 import {resolveCallType} from './generic-calls.js';
-import {constrainedObjectPlan, constrainedReferenceObjectPlan, invokeConstrainedObject} from './constrained-object.js';
+import {
+  constrainedObjectPlan, constrainedReferenceObjectPlan, requireConstrainedObjectBound, invokeConstrainedObject
+} from './constrained-object.js';
 
 function closedConstraint(vm, caller, token) {
   if (token >>> 24 === 2) return vm.typeSystem.table(token);
@@ -31,7 +33,10 @@ export function constrainedCallType(vm, caller, instruction, descriptor) {
   if (prefix?.name !== 'constrained.') return null;
   const table = closedConstraint(vm, caller, prefix.operand);
   if (prefix.operand >>> 24 === 2 && table.flags.valueType && constrainedObjectPlan(vm, table, descriptor)) return table;
-  if (prefix.operand >>> 24 === 2 && constrainedReferenceObjectPlan(vm, table, descriptor)) return table;
+  if (constrainedReferenceObjectPlan(vm, table, descriptor)) {
+    if (prefix.operand >>> 24 === 27) requireConstrainedObjectBound(vm, caller, prefix.operand, table);
+    return table;
+  }
   const declaration = vm.typeSystem.table(descriptor.ownerInstance ?? descriptor.ownerToken ?? descriptor.owner);
   if (table.flags.interface || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
       !vm.typeSystem.types.has(table.definitionToken) || !vm.typeSystem.types.has(declaration.definitionToken) ||

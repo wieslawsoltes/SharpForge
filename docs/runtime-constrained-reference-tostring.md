@@ -25,9 +25,10 @@ limits hierarchy depth to 64 and total indexing/selection work to 262,144 entrie
 Runtime caches belong to the existing code epoch and contain metadata only.
 
 Calls preserve normal pooled frame admission, receiver roots, initialization
-gates, debugger offsets and ordinary same-VM snapshot/restore behavior. Existing
-generic parameter substitution remains unchanged: Object calls through !0/!!0
-TypeSpec constraints are still excluded, as are generic receiver classes/bases,
+gates, debugger offsets and ordinary same-VM snapshot/restore behavior.
+[Base-bound generic reference calls](runtime-constrained-generic-tostring.md)
+also reuse this selector. Unconstrained/class-only !0/!!0 parameters remain
+excluded, as do generic receiver classes/bases,
 external base chains other than System.Object, explicit Object MethodImpl,
 interface constraints, and other Object members. General ordinary callvirt on an
 external Object token is not broadened by this constrained-only leaf.

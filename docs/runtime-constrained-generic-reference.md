@@ -24,8 +24,10 @@ context and require no new schema fields.
 
 This extends the [reference constraint leaf](runtime-constrained-reference-calls.md)
 without admitting generic value receivers, closed generic receiver classes,
-generic member declarations, interface-typed constraints, external Object members,
-DIM, or source frontend lowering. Those parts of #1357 remain pending.
+generic member declarations or interface-typed constraints. The separate
+[base-bound Object.ToString leaf](runtime-constrained-generic-tostring.md) admits
+that one Object member with a concrete internal base bound. Other Object members,
+DIM and source frontend lowering remain pending parts of #1357.
 
 Prepared guest-CIL fixtures cover both parameter kinds, class/interface dispatch
 through multiple instantiations, GenericParam constraints, exact byref storage,
