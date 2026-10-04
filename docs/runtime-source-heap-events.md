@@ -25,12 +25,14 @@ Explicit `vm.runtimeEvents.flush()` remains available for host-driven heap work.
 
 The log and subscriptions belong to the VM's host lifetime through a private weak
 association and a prototype getter. They add no own VM, heap or snapshot fields.
-Same-VM restore retains event history and subscriber cursors without adding or
-replaying events. Guest heap statistics and instruction counts rewind, so they may
+Same-VM restore retains heap-event history and subscriber cursors without adding or
+replaying heap events. Guest heap statistics and instruction counts rewind, so they may
 repeat; monotonically increasing event sequence numbers identify observations.
 The existing drop-oldest count, replay option and subscription cancellation apply.
 
-Source method, exception and scheduler events are separate #1403 increments.
+[Source method lifecycle](runtime-source-method-events.md) uses the same log and
+explicitly restarts spans on successful restore. Source exception and scheduler
+events remain separate #1403 increments.
 This leaf does not claim native EventPipe transport or CLR sampling cadence.
 The source and reloaded-source tests in `tests/a05-source-heap-events.test.js`
 cover guest execution, initialization, weak collection, restore, disposal, host

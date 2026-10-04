@@ -7,6 +7,11 @@ const empty = 'class Program { static void Main() {} }';
 const guest = `class Program { static void Main() {
   int[] values = new int[2]; values[0] = 7; GC.Collect(); Console.WriteLine(values[0]);
 } }`;
+const isHeapEvent = event => ['AllocationTick', 'GCStart', 'GCEnd'].includes(event.name);
+const heapEvents = vm => vm.runtimeEvents.read().filter(isHeapEvent);
+const subscribeHeap = (vm, callback, options) => vm.runtimeEvents.subscribe(event => {
+  if (isHeapEvent(event)) callback(event);
+}, options);
 
 function artifact(source = empty) {
   const result = compileToIL(source);
@@ -28,14 +33,13 @@ for (const engine of ['source', 'reload']) {
       assert.equal(expected.output, '7\n');
       for (const profile of [false, true]) {
         const vm = make(engine, {runtimeEvents: true, profile}, guest), delivered = [];
-        const unsubscribe = vm.runtimeEvents.subscribe(event => delivered.push(event));
+        const unsubscribe = subscribeHeap(vm, event => delivered.push(event));
         try {
-          const actual = vm.run(), events = vm.runtimeEvents.read();
+          const actual = vm.run(), events = heapEvents(vm);
           assert.equal(actual.state, 'terminated', actual.fault?.message);
           assert.equal(actual.output, expected.output);
           assert.equal(actual.stats.instructions, expected.stats.instructions);
           assert.deepEqual(delivered, events);
-          assert(events.every(event => ['AllocationTick', 'GCStart', 'GCEnd'].includes(event.name)));
           const allocation = events.find(event => event.name === RuntimeEventName.AllocationTick);
           const start = events.find(event => event.name === RuntimeEventName.GCStart);
           const end = events.find(event => event.name === RuntimeEventName.GCEnd);
@@ -50,7 +54,7 @@ for (const engine of ['source', 'reload']) {
 
   test(`${engine}: host heap events are committed, scalar, deferred and do not retain objects`, () => {
     const vm = make(engine, {runtimeEvents: true, profile: true}), delivered = [];
-    const unsubscribe = vm.runtimeEvents.subscribe(event => delivered.push(event));
+    const unsubscribe = subscribeHeap(vm, event => delivered.push(event));
     try {
       const before = {...vm.heap.stats}, cursor = vm.runtimeEvents.sequence;
       const weak = vm.heap.createHandle(vm.heap.string('abc'), {weak: true});
@@ -73,9 +77,9 @@ for (const engine of ['source', 'reload']) {
   test(`${engine}: entry argv allocations use the same log before the first instruction`, () => {
     const vm = make(engine, {runtimeEvents: true, programArguments: ['entry']},
       'class Program { static void Main(string[] args) { Console.WriteLine(args[0]); } }');
-    const delivered = [], unsubscribe = vm.runtimeEvents.subscribe(event => delivered.push(event), {replay: true});
+    const delivered = [], unsubscribe = subscribeHeap(vm, event => delivered.push(event), {replay: true});
     try {
-      const initial = vm.runtimeEvents.read();
+      const initial = heapEvents(vm);
       assert.equal(initial.length, 2);
       assert(initial.every(event => event.name === 'AllocationTick' && event.instruction === 0));
       assert.deepEqual(initial.map(event => event.payload.bytes), [40, 34]);
@@ -88,17 +92,17 @@ for (const engine of ['source', 'reload']) {
   test(`${engine}: restore retains host history and subscriber cursors without guest schema fields`, () => {
     const vm = make(engine, {runtimeEvents: true}), delivered = [];
     const log = vm.runtimeEvents, keys = Object.keys(vm), heapKeys = Object.keys(vm.heap);
-    const unsubscribe = log.subscribe(event => delivered.push(event));
+    const unsubscribe = subscribeHeap(vm, event => delivered.push(event));
     try {
       const snapshot = vm.snapshot();
       assert.equal(Object.hasOwn(vm, 'runtimeEvents'), false);
       assert.equal(Object.hasOwn(snapshot, 'runtimeEvents'), false);
       vm.heap.string('one');
       vm.runSlice({instructionBudget: 0});
-      const first = delivered.at(-1), history = log.export();
+      const first = delivered.at(-1), history = heapEvents(vm);
       vm.restore(snapshot);
       assert.equal(vm.runtimeEvents, log);
-      assert.deepEqual(log.export(), history);
+      assert.deepEqual(heapEvents(vm), history);
       vm.runSlice({instructionBudget: 0});
       assert.deepEqual(delivered, [first], 'restore does not replay already delivered events');
       vm.heap.string('two');
@@ -115,7 +119,7 @@ for (const engine of ['source', 'reload']) {
     const vm = make(engine, {runtimeEvents: true}), failure = new Error('host observer');
     const snapshot = vm.snapshot();
     let stopping = false;
-    const unsubscribe = vm.runtimeEvents.subscribe(() => {
+    const unsubscribe = subscribeHeap(vm, () => {
       assert.equal(vm.state, 'terminated');
       assert.equal(vm.frames.length, 0);
       if (stopping) {
@@ -161,9 +165,10 @@ for (const engine of ['source', 'reload']) {
     const abort = new AbortController();
     const unsubscribe = vm.runtimeEvents.subscribe(event => delivered.push(event), {signal: abort.signal});
     try {
+      const before = vm.runtimeEvents.sequence;
       for (const text of ['a', 'b', 'c']) vm.heap.string(text);
-      assert.equal(vm.runtimeEvents.dropped, 1);
-      assert.deepEqual(vm.runtimeEvents.read().map(event => event.sequence), [2, 3]);
+      assert.equal(vm.runtimeEvents.dropped, before + 3 - vm.runtimeEvents.capacity);
+      assert.deepEqual(vm.runtimeEvents.read().map(event => event.sequence), [before + 2, before + 3]);
       abort.abort();
       vm.stop();
       assert.deepEqual(delivered, []);
