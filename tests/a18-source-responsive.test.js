@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {
-  analyzeDesignSources, CSharpDesignSession, generateDesignCode, planDesignSourceUpdate, validateDesign
+  analyzeDesignSources, CSharpDesignSession, DesignDocument, generateDesignCode, planDesignSourceUpdate, validateDesign
 } from '@sharpforge/designer';
 
 const marker = '// SharpForge adaptive states v1: ["Wide","Compact"]';
@@ -44,7 +44,7 @@ function planEdit(analysis, edit, current = analysis.sources) {
   return plan;
 }
 
-function execute(sources, body, expected) {
+function execute(sources, body, expected, inspect = () => {}) {
   const compilation = compileToIL([...sources, {uri: 'ResponsiveRunner.cs', text: `
     class ResponsiveRunner { static void Main() { ${body} } }`}]);
   assert.equal(compilation.success, true, JSON.stringify(compilation.diagnostics));
@@ -52,7 +52,9 @@ function execute(sources, body, expected) {
     const machine = new Machine(Machine === VirtualMachine ? compilation.image : compilation.assembly);
     const result = machine.run();
     assert.equal(result.state, 'terminated', Machine.name + ': ' + JSON.stringify(result.fault));
-    assert.equal(result.output.replace(/\r/g, ''), expected.flat().join('\n') + '\n', Machine.name);
+    const output = expected.flat();
+    assert.equal(result.output.replace(/\r/g, ''), output.length ? output.join('\n') + '\n' : '', Machine.name);
+    inspect(machine);
   }
 }
 
@@ -66,6 +68,20 @@ function fieldPlayback(sources, widths, expected, symbol = 'v_action') {
   const print = printGeometry('DesignedView.' + symbol);
   const steps = widths.map(width => `DesignedView.ApplyAdaptive(${width}); ${print}`).join('\n');
   execute(sources, `DesignedView.Create(); ${print} ${steps}`, expected);
+}
+
+function verifyControls(sources, expected) {
+  execute(sources, 'DesignedView.Create();', [], machine => {
+    const nodes = machine.platform.scene().nodes;
+    for (const [name, properties] of Object.entries(expected)) {
+      const node = nodes.find(item => item.properties.Name === name);
+      if (properties === null) assert.equal(node, undefined, name + ' was still attached');
+      else {
+        assert.ok(node, 'Missing runtime control ' + name);
+        for (const [property, value] of Object.entries(properties)) assert.deepEqual(node.properties[property], value, name + '.' + property);
+      }
+    }
+  });
 }
 
 const localConstruction = `
@@ -279,6 +295,57 @@ test('A18 adding and removing adaptive states owns only helper and initializer s
   const restored = planEdit(removed.analysis, document => { document.responsive = structuredClone(responsiveDesign().responsive); });
   assert.deepEqual(restored.document.responsive, analysis.document.responsive);
   fieldPlayback(restored.sources, [300], [[240, 50, 162], [100, 8, 24]]);
+});
+
+test('A18 control insertion and deletion keep responsive initialization after construction on both engines', context => {
+  const analysis = analyze(generatedSources());
+  const document = new DesignDocument(analysis.document);
+  context.after(() => document.dispose());
+  const secondary = document.add('Button', 'root', {Name: 'Secondary', Content: 'Side', Width: 90, Height: 30, Left: 12, Top: 70});
+  document.change('Extend adaptive targets', candidate => {
+    candidate.responsive.states[0].overrides[secondary] = {Width: 70, Left: 4, Top: 15};
+    candidate.responsive.states[1].overrides[secondary] = {Width: 260};
+  });
+  const added = planDesignSourceUpdate(analysis, document.value, analysis.sources, {requireCompilation: true});
+  assert.equal(added.compilationSucceeded, true, JSON.stringify(added.diagnostics));
+  assert.ok(added.document.nodes.some(node => node.id === secondary));
+  verifyControls(added.sources, {Action: {Width: 240, Left: 50, Top: 162}, Secondary: {Width: 260, Left: 12, Top: 70}});
+  const compact = planEdit(added.analysis, candidate => { candidate.width = 480; });
+  verifyControls(compact.sources, {Action: {Width: 100, Left: 8, Top: 24}, Secondary: {Width: 70, Left: 4, Top: 15}});
+  const removal = new DesignDocument(compact.document);
+  context.after(() => removal.dispose());
+  removal.change('Remove adaptive target', candidate => {
+    for (const state of candidate.responsive.states) delete state.overrides[secondary];
+  });
+  removal.remove([secondary]);
+  const removed = planDesignSourceUpdate(compact.analysis, removal.value, compact.sources, {requireCompilation: true});
+  assert.equal(removed.compilationSucceeded, true, JSON.stringify(removed.diagnostics));
+  assert.ok(!removed.document.nodes.some(node => node.id === secondary));
+  assert.equal(removed.analysis.detached.length, 0);
+  assert.deepEqual(removed.document.responsive, responsiveDesign().responsive);
+  verifyControls(removed.sources, {Action: {Width: 100, Left: 8, Top: 24}, Secondary: null});
+});
+
+test('A18 adaptive ownership cannot whitelist a true handwritten reference to a deleted control', context => {
+  const sources = generatedSources();
+  const source = sources[0].text;
+  sources[0].text = source.slice(0, source.lastIndexOf('}')) + '\n'
+    + 'public static double InspectAction() { return v_action.Width; }\n}\n';
+  const before = structuredClone(sources);
+  const analysis = analyze(sources);
+  const document = new DesignDocument(analysis.document);
+  context.after(() => document.dispose());
+  document.change('Remove adaptive target', candidate => {
+    for (const state of candidate.responsive.states) delete state.overrides.action;
+  });
+  document.remove(['action']);
+  assert.throws(() => planDesignSourceUpdate(analysis, document.value, sources, {requireCompilation: true}), error => {
+    assert.equal(error.code, 'SFSYNC_REFERENCE');
+    assert.ok(error.details.references.length > 0);
+    return true;
+  });
+  assert.deepEqual(sources, before);
+  assert.ok(analysis.document.nodes.some(node => node.id === 'action'));
 });
 
 test('A18 helper source snapshots support source undo/redo reads and reject stale partial versions', context => {
