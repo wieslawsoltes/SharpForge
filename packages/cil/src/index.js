@@ -35,3 +35,4 @@ export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
 export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
 export {ConstrainedObjectProfile} from './constrained-object-profile.js';
+export {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';

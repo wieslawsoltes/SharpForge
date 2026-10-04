@@ -1,4 +1,4 @@
-import {ConstrainedObjectProfile} from '@sharpforge/cil';
+import {ConstrainedObjectProfile, ConstrainedReferenceObjectProfile} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {verifiedMethod} from './token-cache.js';
@@ -11,16 +11,29 @@ import {framePool} from './frame-pool.js';
 const profiles = new WeakMap();
 
 /** Epoch-scoped metadata plans contain no managed receivers or handles. */
-export function constrainedObjectPlan(vm, table, descriptor) {
-  if (!isAggregateType(table) || table.flags.nullable || table.genericArity ||
-      table.typeArguments.length || table.containsGenericParameters) return null;
+function profileFor(vm) {
   const epoch = executionCodeState(vm);
   let profile = profiles.get(epoch);
   if (!profile) {
-    profile = new ConstrainedObjectProfile(vm.inspector);
+    profile = {objects: new ConstrainedObjectProfile(vm.inspector), references: null};
     profiles.set(epoch, profile);
   }
-  return profile.select(table.definitionToken, descriptor);
+  return profile;
+}
+
+export function constrainedObjectPlan(vm, table, descriptor) {
+  if (!isAggregateType(table) || table.flags.nullable || table.genericArity ||
+      table.typeArguments.length || table.containsGenericParameters) return null;
+  return profileFor(vm).objects.select(table.definitionToken, descriptor);
+}
+
+export function constrainedReferenceObjectPlan(vm, table, descriptor) {
+  if (table.flags.valueType || table.flags.interface || table.genericArity ||
+      table.typeArguments.length || table.containsGenericParameters) return null;
+  const profile = profileFor(vm);
+  if (!profile.objects.declaration(descriptor)) return null;
+  profile.references ??= new ConstrainedReferenceObjectProfile(vm.inspector, profile.objects, vm.typeSystem.dispatch);
+  return profile.references.select(table.definitionToken, descriptor);
 }
 
 /** Enter the exact override on its original byref, or root a copied box for the inherited intrinsic. */
