@@ -4,6 +4,7 @@ import { root, pin, platform, readJSON, requireTarget } from './toolchain.js';
 import { loadFixtures } from './fixtures.js';
 import { winuiInput } from './winui-run.js';
 import { loadBclExpectedFixtures, validateBclExpectedResult } from './bcl-expected-fixtures.js';
+import { loadWinuiExpectedFixture, validateWinuiExpectedResult } from './winui-expected-fixtures.js';
 
 export const expectedRoot = path.join(root, 'tests/conformance/expected');
 const schema = await readJSON(path.join(root, 'planning/qualification/expected.schema.json'));
@@ -74,7 +75,11 @@ export async function compareExpected(entry, directory = expectedRoot) {
 
 export async function verifyEntry(entry, fixtures, file) {
   validateSchema(entry);
-  const fixture = entry.oracleId === 'winui' ? await winuiInput() : fixtures.find(item => item.id === entry.fixtureId);
+  const fixture = entry.oracleId === 'winui'
+    ? entry.fixtureId === 'winui-measurements'
+      ? fixtures.find(item => item.id === entry.fixtureId) ?? await loadWinuiExpectedFixture()
+      : await winuiInput()
+    : fixtures.find(item => item.id === entry.fixtureId);
   if (!fixture || fixture.id !== entry.fixtureId) throw new Error(`Unknown fixture ${entry.fixtureId}`);
   if (fixture.oracleId && fixture.oracleId !== entry.oracleId) throw new Error(`Wrong oracle for ${entry.fixtureId}`);
   if (fixture.inputHash !== entry.inputHash) throw new Error(`Stale input hash for ${entry.fixtureId}: expected ${fixture.inputHash}, found ${entry.inputHash}`);
@@ -82,17 +87,19 @@ export async function verifyEntry(entry, fixtures, file) {
   if (JSON.stringify(entry.toolchain) !== JSON.stringify(envelope(entry.oracleId, fixture, entry.result).toolchain)) throw new Error(`Stale toolchain for ${entry.fixtureId}`);
   if (entry.langVersion !== (fixture.langVersion ?? null)) throw new Error(`LangVersion mismatch for ${entry.fixtureId}`);
   const resultKeys = Object.keys(entry.result);
-  const discriminator = { roslyn: 'diagnostics', coreclr: 'unhandledException', winui: 'dispatcherOrder' }[entry.oracleId];
+  const discriminator = { roslyn: 'diagnostics', coreclr: 'unhandledException',
+    winui: entry.fixtureId === 'winui-measurements' ? 'observations' : 'dispatcherOrder' }[entry.oracleId];
   if (!resultKeys.includes(discriminator)) throw new Error(`Wrong result shape for ${entry.oracleId}`);
   if (!requireTarget(entry.oracleId, entry.target).supported) throw new Error('Evidence target is unsupported by the pinned harness');
   if (entry.oracleId === 'coreclr' && !fixture.execute) throw new Error('Compile-negative fixtures cannot have CoreCLR execution evidence');
   if (fixture.culture) validateBclExpectedResult(fixture, entry.result);
+  if (fixture.id === 'winui-measurements') validateWinuiExpectedResult(fixture, entry.result);
   if (file && path.normalize(file).split(path.sep).slice(-4).join('/') !== expectedPath(entry).split(path.sep).slice(-4).join('/')) throw new Error(`Expected store path/key mismatch: ${file}`);
   return true;
 }
 
 export async function verifyStore(directory = expectedRoot) {
-  const fixtures = [...await loadFixtures(), ...await loadBclExpectedFixtures()];
+  const fixtures = [...await loadFixtures(), ...await loadBclExpectedFixtures(), await loadWinuiExpectedFixture()];
   const files = [];
   const visit = async current => {
     for (const item of await readdir(current, { withFileTypes: true })) {
