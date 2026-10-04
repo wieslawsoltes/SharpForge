@@ -15,7 +15,7 @@ export function nativeSource() {
     const operations = [...Array(item.padding).fill('nop'), ...Array(item.depth).fill('ldc.i4.0'),
       ...Array(Math.max(0, item.depth - 1)).fill('pop'), 'ret'];
     return `.method public static ${item.result === 'int' ? 'int32' : 'void'} ${item.name}() cil managed {
-      .maxstack ${item.depth}
+      .maxstack ${item.headerSize === 1 ? 8 : item.depth}
       ${item.local ? ".locals init (int32 'value')" : ''}
       ${operations.join('\n      ')}
     }`;
