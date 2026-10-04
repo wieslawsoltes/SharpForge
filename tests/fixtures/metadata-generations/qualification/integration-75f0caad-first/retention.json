@@ -1,0 +1,57 @@
+{
+  "recordedUtc": "2026-10-04T18:57:27.633590+00:00",
+  "gate": {
+    "tests": 51,
+    "suites": 0,
+    "pass": 51,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "files": [
+    {
+      "path": "execution.json",
+      "bytes": 1747,
+      "sha256": "3f407b1ed7908bb0370129336c6ef2d68347d42645d11724e4c6bad1d2df4181"
+    },
+    {
+      "path": "source-after.json",
+      "bytes": 283450,
+      "sha256": "ad4d4b24fa87d9866a838a409e6986b330cd6713c980a9477ff179cad01eda85"
+    },
+    {
+      "path": "source-before.json",
+      "bytes": 283450,
+      "sha256": "ad4d4b24fa87d9866a838a409e6986b330cd6713c980a9477ff179cad01eda85"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.log",
+      "bytes": 5270,
+      "sha256": "9fed62cd5ad2e4e9ddb2b4de69d87dac85c1f87458c832248202e1771bd92612"
+    },
+    {
+      "path": "recorder-preflight-original.py.txt",
+      "bytes": 4040,
+      "sha256": "486df004e9c0d2770349b315d97afa42c198add75d43a4c56863a0c81b0cdf7c"
+    },
+    {
+      "path": "recorder-corrected.py.txt",
+      "bytes": 4426,
+      "sha256": "1e9f62aebe84b3df94a55ea6469cf41dffc20f1a3df8a524cd024a71b1ad8e41"
+    },
+    {
+      "path": "preflight-failure.json",
+      "bytes": 565,
+      "sha256": "edb86bd248c3c82f538267e4f5650f0f0bd786081dcc0fa1194f044c91583545"
+    }
+  ],
+  "sourceUnchanged": true,
+  "preflightFailure": "Initial recorder assumed incorrect aliases and launched no product; preserved separately. Original eleven-file argv unchanged; one actual product gate executed.",
+  "performance": "Original edafb801/bc8d887de cohort remains unchanged. This current-main integration has27 inherited CIL paths and makes no exact-current timing claim."
+}

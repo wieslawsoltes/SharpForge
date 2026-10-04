@@ -1,0 +1,82 @@
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import time
+
+ROOT = Path('/workspace/scratch/7e3d2a445c44/sf6-metadata-generations')
+OUT = ROOT.parent / 'metadata-integration-75f0caad-first'
+OUT.mkdir()
+QUAL = ROOT / 'tests/fixtures/metadata-generations/qualification'
+ARGV = json.loads((QUAL / 'execution-ordinal-first/focused.execution.json').read_text())['argv']
+assert len(ARGV[5:]) == 11
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', '-C', str(ROOT), *args]).decode().strip()
+
+
+def snapshot():
+    result = {'head': git('rev-parse', 'HEAD'), 'tree': git('rev-parse', 'HEAD^{tree}'), 'sources': []}
+    assert git('status', '--porcelain', '--untracked-files=all') == ''
+    directories = [ROOT / 'packages' / name for name in ['cil', 'bytecode', 'framework', 'text', 'syntax']]
+    for directory in directories:
+        alias = ROOT / 'node_modules/@sharpforge' / directory.name
+        assert alias.resolve(strict=True) == directory
+        for path in sorted((directory / 'src').rglob('*')):
+            assert not path.is_symlink()
+            if path.is_file():
+                result['sources'].append({'path': path.relative_to(ROOT).as_posix(), 'sha256': sha(path.read_bytes())})
+        result['sources'].append({'path': str(directory.relative_to(ROOT) / 'package.json'),
+                                  'sha256': sha((directory / 'package.json').read_bytes())})
+    paths = [ROOT / p for p in ARGV[5:]]
+    paths += [ROOT / 'scripts/limited.js', ROOT / 'scripts/planning/lib/resource-limits.js']
+    paths += [p for p in (ROOT / 'tests/fixtures/metadata-generations').rglob('*')
+              if p.is_file() and 'qualification' not in p.parts]
+    for path in sorted(paths):
+        result['sources'].append({'path': path.relative_to(ROOT).as_posix(), 'sha256': sha(path.read_bytes())})
+    return result
+
+
+before = snapshot()
+(OUT / 'source-before.json').write_text(json.dumps(before, indent=2) + '\n')
+env = dict(os.environ)
+env.pop('CI', None)
+env.update(SHARPFORGE_MAX_PARALLEL_RUNS='1', SHARPFORGE_TEST_CONCURRENCY='1', SHARPFORGE_MAX_OLD_SPACE_MB='2048')
+record = {'status': 'running', 'argv': ARGV, 'cwd': str(ROOT),
+          'startedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'head': before['head'], 'tree': before['tree'],
+          'environment': {key: env.get(key) for key in ['CI', 'NODE_OPTIONS', 'SHARPFORGE_MAX_PARALLEL_RUNS',
+                          'SHARPFORGE_TEST_CONCURRENCY', 'SHARPFORGE_MAX_OLD_SPACE_MB']}}
+(OUT / 'execution.json').write_text(json.dumps(record, indent=2) + '\n')
+start = time.monotonic()
+with (OUT / 'stdout.log').open('xb') as stdout, (OUT / 'stderr.log').open('xb') as stderr:
+    process = subprocess.Popen(ARGV, cwd=ROOT, env=env, stdout=stdout, stderr=stderr, start_new_session=True)
+    try:
+        code = process.wait(timeout=600)
+    except subprocess.TimeoutExpired:
+        os.killpg(process.pid, signal.SIGTERM)
+        try:
+            code = process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            os.killpg(process.pid, signal.SIGKILL)
+            code = process.wait()
+        record['timedOut'] = True
+record.update(returnCode=code, finishedUtc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              elapsedSeconds=time.monotonic() - start)
+after = snapshot()
+(OUT / 'source-after.json').write_text(json.dumps(after, indent=2) + '\n')
+record['sourcesUnchanged'] = before == after
+record['outputs'] = {name: {'bytes': (OUT / name).stat().st_size, 'sha256': sha((OUT / name).read_bytes())}
+                     for name in ['stdout.log', 'stderr.log', 'source-before.json', 'source-after.json']}
+record['status'] = 'passed' if code == 0 and before == after and not record.get('timedOut') else 'failed'
+(OUT / 'execution.json').write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps(record))
+raise SystemExit(0 if record['status'] == 'passed' else 1)
