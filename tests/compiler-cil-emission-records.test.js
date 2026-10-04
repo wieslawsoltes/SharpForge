@@ -103,7 +103,8 @@ test('A02-T30 a derived record reuses the positional properties of its base and 
   assert.ok(equalsBase, 'Named seals Equals(Point)');
   // The clone of the derived record is a covariant override: its own slot plus a MethodImpl row.
   const clone = method('Named', '<Clone>$');
-  assert.deepEqual(attributes(clone.token), ['System.Runtime.CompilerServices.PreserveBaseOverridesAttribute']);
+  const onClone = ['System.Runtime.CompilerServices.PreserveBaseOverridesAttribute', 'System.Runtime.CompilerServices.CompilerGeneratedAttribute'];
+  assert.deepEqual(attributes(clone.token), onClone);
   assert.ok((metadata.rows[25] ?? []).some(row => decodeCoded('MethodDefOrRef', row[1]) === clone.token), 'a MethodImpl row names the overridden clone');
   const main = lines('C', 'Main');
   assert.ok(main.indexOf('callvirt Point::<Clone>$') >= 0 && main.indexOf('callvirt Point::<Clone>$') < main.indexOf('callvirt Point::set_X'));

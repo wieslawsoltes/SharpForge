@@ -2,18 +2,24 @@
  * Verifies direct CIL emission against real .NET (SF-A02-T30).
  *
  *   node packages/compiler/test/cil-emission/verify-dotnet.mjs [--update] [--only <name>] [--dotnet <path>] [--scratch <dir>]
+ *                                                             [--references]
  *
  * For every fixture: Roslyn builds the program and .NET runs it (the reference output, pinned in `<name>.out` with
  * `--update`); SharpForge emits the assembly with `compileToAssembly` and the same .NET runtime runs that. Both
  * outputs must equal the pinned one. `--update` also rewrites `<name>.vm` with what the direct-CIL runtime reports
  * for the emitted assembly (the file is removed when it runs there) and `<name>.image` with what the metadata validator
  * reports for it (removed when it reports nothing). Needs a .NET SDK; the unit tests do not.
+ *
+ * `--references` compiles against the reference pack of the installed SDK instead of the framework registry, so the
+ * emitted assembly names the members real .NET has; it then also runs `reference-fixtures/`, the programs that bind
+ * only against real references. The `.vm` / `.image` files describe the registry build and are left alone.
  */
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, existsSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { homedir } from 'node:os';
-import { loadFixtures, emitFixture, inspectImage, runOnDirectCil, fixtureDirectory } from './harness.js';
+import { loadReferencePack } from '@sharpforge/compiler/node';
+import { loadFixtures, emitFixture, inspectImage, runOnDirectCil, referenceFixtureDirectory } from './harness.js';
 
 const args = process.argv.slice(2);
 const option = name => (args.includes(name) ? args[args.indexOf(name) + 1] : null);
@@ -22,6 +28,10 @@ const dotnet = option('--dotnet') ?? process.env.DOTNET ?? (existsSync(home) ? h
 const scratch = resolve(option('--scratch') ?? 'node_modules/.sf/cil-emission');
 const update = args.includes('--update');
 const only = option('--only');
+const withReferences = args.includes('--references');
+const pack = withReferences ? loadReferencePack() : null;
+if (withReferences && !pack) throw new Error('No .NET reference pack (packs/Microsoft.NETCore.App.Ref) was found; set DOTNET_ROOT');
+const compileOptions = pack ? { references: pack.references } : {};
 const env = { ...process.env, DOTNET_CLI_TELEMETRY_OPTOUT: '1', DOTNET_NOLOGO: '1', DOTNET_SKIP_FIRST_TIME_EXPERIENCE: '1' };
 const run = (file, parameters) =>
   execFileSync(file, parameters, { env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
@@ -66,15 +76,33 @@ function referenceOutput(fixture) {
   return run(dotnet, [join(reference, 'out', 'Reference.dll')]);
 }
 
+/** Runs the registry build on the direct-CIL runtime; with `--update` pins its limits (`.vm`, `.image`). */
+function directCilAxis(fixture, assembly, expected) {
+  const directCil = runOnDirectCil(assembly),
+    limitFile = join(fixture.directory, fixture.name + '.vm'),
+    matches = directCil.limit === null && directCil.output === expected;
+  if (update) {
+    if (matches) rmSync(limitFile, { force: true });
+    else writeFileSync(limitFile, directCil.limit ?? 'output differs\n');
+    const problems = inspectImage(assembly),
+      imageFile = join(fixture.directory, fixture.name + '.image');
+    if (problems.length) writeFileSync(imageFile, problems.join('\n') + '\n');
+    else rmSync(imageFile, { force: true });
+  }
+  return matches ? 'equal' : `limited (${(directCil.limit ?? 'output differs').split('\n')[0]})`;
+}
+
 let failed = 0;
-const fixtures = loadFixtures().filter(fixture => !only || fixture.name === only);
+const fixtures = [...loadFixtures(), ...(withReferences ? loadFixtures(referenceFixtureDirectory) : [])].filter(
+  fixture => !only || fixture.name === only,
+);
 for (const fixture of fixtures) {
   let expected = fixture.expected;
   if (update || expected === null) {
     expected = referenceOutput(fixture);
-    writeFileSync(join(fixtureDirectory, fixture.name + '.out'), expected);
+    writeFileSync(join(fixture.directory, fixture.name + '.out'), expected);
   }
-  const { assembly, errors } = emitFixture(fixture);
+  const { assembly, errors } = emitFixture(fixture, compileOptions);
   if (!assembly) {
     failed++;
     console.log(`${fixture.name}: NOT EMITTED - ${errors.join('; ')}`);
@@ -87,23 +115,9 @@ for (const fixture of fixtures) {
   } catch (error) {
     actual = `${error.stdout ?? ''}\n<failed: ${String(error.stderr ?? error.message).split('\n')[0]}>`;
   }
-  const directCil = runOnDirectCil(assembly),
-    limitFile = join(fixtureDirectory, fixture.name + '.vm'),
-    directCilMatches = directCil.limit === null && directCil.output === expected;
-  if (update) {
-    if (directCilMatches) rmSync(limitFile, { force: true });
-    else writeFileSync(limitFile, directCil.limit ?? 'output differs\n');
-  }
-  if (update) {
-    const problems = inspectImage(assembly),
-      imageFile = join(fixtureDirectory, fixture.name + '.image');
-    if (problems.length) writeFileSync(imageFile, problems.join('\n') + '\n');
-    else rmSync(imageFile, { force: true });
-  }
-  const onDotnet = actual === expected ? 'equal' : 'DIFFERENT',
-    limit = (directCil.limit ?? 'output differs').split('\n')[0],
-    onDirectCil = directCilMatches ? 'equal' : `limited (${limit})`;
-  console.log(`${fixture.name}: .NET ${onDotnet}; direct-CIL runtime ${onDirectCil}`);
+  const onDotnet = actual === expected ? 'equal' : 'DIFFERENT';
+  if (withReferences) console.log(`${fixture.name}: .NET ${onDotnet} (compiled against the ${pack.pack.version} references)`);
+  else console.log(`${fixture.name}: .NET ${onDotnet}; direct-CIL runtime ${directCilAxis(fixture, assembly, expected)}`);
   if (actual !== expected) {
     failed++;
     console.log('  expected: ' + JSON.stringify(expected).slice(0, 400));
