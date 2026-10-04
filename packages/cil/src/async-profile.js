@@ -13,6 +13,18 @@ export const asyncTypes = Object.freeze({
 
 const generic = (type, element) => element === null ? type : type + '`1<' + element + '>';
 
+// This is only a rejection filter. Matching names still require the full member and metadata identity proof.
+const methodOwners = new Set([
+  asyncTypes.task, asyncTypes.task + '`1', asyncTypes.builder, asyncTypes.builder + '`1',
+  asyncTypes.awaiter, asyncTypes.awaiter + '`1', asyncTypes.yieldable, asyncTypes.yieldAwaiter
+]);
+
+function hasAsyncOwner(input) {
+  if (typeof input !== 'string') return false;
+  const genericStart = input.indexOf('<');
+  return methodOwners.has(genericStart < 0 ? input : input.slice(0, genericStart));
+}
+
 /** Intrinsic ABI value identity, including open generic definitions used by MethodTables. */
 export function asyncValueType(input) {
   const type = normalizeCallType(input), parts = genericTypeParts(type);
@@ -71,7 +83,9 @@ export function asyncMethodDefinition(descriptor) {
   const signature = descriptor?.signature;
   if (descriptor?.kind !== 'method' || !signature || signature.callingConvention || descriptor.resolvedToken ||
       descriptor.token >>> 24 === 6 || descriptor.definitionToken >>> 24 === 6) return null;
-  const owner = normalizeCallType(descriptor.ownerInstance ?? descriptor.owner);
+  const ownerName = descriptor.ownerInstance ?? descriptor.owner;
+  if (!hasAsyncOwner(ownerName)) return null;
+  const owner = normalizeCallType(ownerName);
   const ownerArguments = genericTypeParts(owner).arguments;
   if (!ownerArguments.length && owner.endsWith('`1')) return null;
   const arguments_ = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
