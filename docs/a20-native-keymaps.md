@@ -21,10 +21,12 @@ Commands execute once; a pending chord consumes an invalid second stroke and
 reports it. Escape cancels a prefix. Timeouts and disposal release timers.
 Composition, dead keys and AltGraph do not trigger bindings.
 
+`eventStroke`, `normalizeStroke`, and `normalizeSequence` are public utilities for shortcut recorders and persisted bindings. They normalize modifiers and observed shifted punctuation without treating IME or AltGraph input as a shortcut.
+
 The service exposes bindings per command, commands per sequence and exact/prefix
 conflicts including Global versus Text Editor shadowing. `setBindings` validates
 the whole proposed table before replacing the active table. Context predicates
-use a bounded parser, with no dynamic code evaluation.
+use a bounded parser, with no dynamic code evaluation. `addFilter(predicate)` returns a disposable host filter and removes matching bindings from resolution without consuming unrelated chord prefixes. Filters survive binding-table replacement and are cleared on disposal.
 
 `docs/vs-inventory.json` pins the reference, registered defaults, known unbound
 commands, retained compatibility choices and platform alternatives. The reference

@@ -2,7 +2,7 @@ export {CodeEditor} from './core/code-editor.js';
 export {EDITOR_KEYMAPS, ClassicKeymapAdapter, handleVisualStudioKey} from './keymaps.js';
 export {NativeKeymapAdapter, getProfileBindings} from './keymaps/native.js';
 export {KeybindingService} from './keymaps/resolve.js';
-export {platformBindingInventory} from './keymaps/platform.js';
+export {platformBindingInventory, eventStroke, normalizeStroke, normalizeSequence} from './keymaps/platform.js';
 export * from './commands/index.js';
 export {SyntaxHighlightIndex} from './highlight.js';
 export {NavigationHistory} from './navigation.js';

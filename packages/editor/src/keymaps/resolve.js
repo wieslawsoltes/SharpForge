@@ -24,6 +24,7 @@ export class KeybindingService {
     this.timeout = timeout;
     this.bindings = new Map();
     this.prefixes = new Map();
+    this.filters = new Set();
     this.sequence = 0;
     this.pending = null;
     this.disposed = false;
@@ -63,6 +64,21 @@ export class KeybindingService {
     return true;
   }
 
+  /** Hosts can remove a binding from resolution without intercepting other chords sharing its prefix. */
+  addFilter(predicate) {
+    if (this.disposed) throw new Error('KeybindingService is disposed');
+    if (typeof predicate !== 'function') throw new TypeError('A keybinding filter must be a function');
+    if (this.filters.size >= 32) throw new RangeError('Keybinding filter limit exceeded');
+    this.filters.add(predicate);
+    this.cancel();
+    return () => { this.filters.delete(predicate); this.cancel(); };
+  }
+
+  allows(binding, context) {
+    for (const predicate of this.filters) if (!predicate(binding, context)) return false;
+    return true;
+  }
+
   setBindings(bindings) {
     if (this.disposed) throw new Error('KeybindingService is disposed');
     if (!Array.isArray(bindings)) throw new TypeError('Bindings must be an array');
@@ -80,7 +96,8 @@ export class KeybindingService {
   candidates(keys, { scope = 'Text Editor', context = this.readContext() } = {}) {
     const values = this.prefixes.get(keys.join(' '));
     if (!values) return [];
-    return [...values].filter(binding => (binding.scope === 'Global' || binding.scope === scope) && binding.predicate(context))
+    return [...values].filter(binding => (binding.scope === 'Global' || binding.scope === scope)
+      && binding.predicate(context) && this.allows(binding, context))
       .sort((left, right) => right.priority - left.priority ||
         Number(right.scope === scope) - Number(left.scope === scope) || right.ordinal - left.ordinal);
   }
@@ -168,5 +185,5 @@ export class KeybindingService {
     }
     return result;
   }
-  dispose() { this.cancel(); this.bindings.clear(); this.prefixes.clear(); this.disposed = true; }
+  dispose() { this.cancel(); this.bindings.clear(); this.prefixes.clear(); this.filters.clear(); this.disposed = true; }
 }
