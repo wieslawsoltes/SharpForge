@@ -1,4 +1,4 @@
-// Copy this identical runner to the final 524322 parent; execute baseline and candidate serially.
+// Copy this identical runner to 697e7636 (524322 product parent); execute baseline and candidate serially.
 import assert from 'node:assert/strict';
 import {cpus} from 'node:os';
 import {performance} from 'node:perf_hooks';
