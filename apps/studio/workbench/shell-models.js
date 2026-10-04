@@ -45,9 +45,14 @@ export function createShellModels(shell) {
     render: (host, {draft, update}) => {
       const editor = options.getEditor?.();
       if (!editor) { host.textContent = 'Open a source document to configure its editor.'; return; }
-      const page = options.editorOptionsPage({element: editor.element, options: {...editor.options, ...draft.editor},
+      const preferences = {...draft.editor};
+      if (!preferences.normalizeLineEndings) delete preferences.endOfLine;
+      const page = options.editorOptionsPage({element: editor.element, options: {...editor.options, ...preferences},
         updateOptions: changes => { for (const [key, value] of Object.entries(changes)) update('editor', key, value); },
         accessibility: {announce() {}}});
+      page.addEventListener('change', event => {
+        if (event.target?.name === 'endOfLine') update('editor', 'normalizeLineEndings', true);
+      });
       host.append(page);
       return () => page.remove();
     }

@@ -244,7 +244,11 @@ export class WorkbenchShell {
     this.restoreEnvironment?.();
     this.restoreEnvironment = applyEnvironment(this.document.documentElement, settings);
     if (this.options.applySettings) this.options.applySettings(settings);
-    else this.options.getEditor?.()?.updateOptions?.(settings.editor);
+    else {
+      const preferences = {...settings.editor};
+      if (!preferences.normalizeLineEndings) delete preferences.endOfLine;
+      this.options.getEditor?.()?.updateOptions?.(preferences);
+    }
     if (settings.environment.keymap !== this.context().keymap) this.options.setKeymap?.(settings.environment.keymap);
     if (this.options.applyKeybindings) this.options.applyKeybindings(settings.keyboard.bindings);
     this.services.sessions && (this.services.sessions.maxSessions = settings.runtime.maxSessions);

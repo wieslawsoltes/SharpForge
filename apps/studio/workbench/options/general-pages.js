@@ -31,7 +31,10 @@ export function registerGeneralOptions(options) {
     page('Text Editor', 'General', [
       ['Font size', 'editor', 'fontSize', 'number'], ['Tab size', 'editor', 'tabSize', 'number'],
       ['Insert spaces', 'editor', 'insertSpaces', 'boolean'], ['Word wrap', 'editor', 'wordWrap', 'boolean'],
-      ['Line numbers', 'editor', 'lineNumbers', 'boolean'], ['Zoom percent', 'editor', 'zoom', 'number']
+      ['Line numbers', 'editor', 'lineNumbers', 'boolean'], ['Zoom percent', 'editor', 'zoom', 'number'],
+      ['Normalize line endings on save', 'editor', 'normalizeLineEndings', 'boolean'],
+      ['Normalized line endings', 'editor', 'endOfLine', 'select',
+        [{value: '\n', label: 'LF'}, {value: '\r\n', label: 'CRLF'}, {value: '\r', label: 'CR'}]]
     ]),
     page('Debugging', 'General', [
       ['Stop on entry', 'debugging', 'stopOnEntry', 'boolean'],

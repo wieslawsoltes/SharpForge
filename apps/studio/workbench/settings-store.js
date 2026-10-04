@@ -9,7 +9,8 @@ export const settingsDefaults = Object.freeze({
     showStartWindow: true, firstRunComplete: false, keymap: 'visual-studio'
   },
   editor: {fontSize: 14, tabSize: 4, indentSize: 4, insertSpaces: true, wordWrap: false, lineNumbers: true, zoom: 100,
-    endOfLine: '\n', renderWhitespace: false, trimTrailingWhitespace: false, insertFinalNewline: false, virtualSpace: false},
+    endOfLine: '\n', normalizeLineEndings: false, renderWhitespace: false,
+    trimTrailingWhitespace: false, insertFinalNewline: false, virtualSpace: false},
   keyboard: {bindings: []},
   debugging: {stopOnEntry: true, breakOnUnhandled: true, recordHistory: true},
   designer: {snapToGrid: true, gridSize: 8},
@@ -71,6 +72,8 @@ export function validateSettings(input, {partial = false} = {}) {
   for (const [key, values] of Object.entries(choices)) {
     if (environment[key] !== undefined && !values.includes(environment[key])) throw new TypeError('Invalid ' + key);
   }
+  const ending = output.editor?.endOfLine;
+  if (ending !== undefined && !['\n', '\r\n', '\r'].includes(ending)) throw new RangeError('Invalid editor line ending');
   for (const [category, key, minimum, maximum] of [
     ['environment', 'fontSize', 9, 32], ['editor', 'fontSize', 8, 72], ['editor', 'tabSize', 1, 16],
     ['editor', 'indentSize', 1, 16], ['editor', 'zoom', 25, 400], ['runtime', 'maxSessions', 1, 32],
