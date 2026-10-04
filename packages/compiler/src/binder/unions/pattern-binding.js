@@ -3,6 +3,7 @@ import { previewStampText } from '@sharpforge/syntax';
 import { DiagnosticId } from '../../diagnostics/codes.js';
 import { ConversionKind } from '../../conversions/classify.js';
 import { isUnionConversion } from '../../conversions/unions.js';
+import { rememberUnionContext } from '../../conversions/union-context.js';
 import { stripNullable } from '../../conversions/nullable.js';
 import { typeTestOutcome } from '../../conversions/reference.js';
 import { RefKind, TypeKind } from '../../symbols/types.js';
@@ -59,11 +60,14 @@ function accessPlan(binder, shape, pattern) {
 export const UnionBinding = Base => class extends Base {
   constructor(...args) {
     super(...args);
-    this.unionConversionContext = this.version.preview ? { within: this.c.containingType, module: this.d.assembly.module } : null;
+    const preview = this.version.preview === true;
+    this.unionConversionContext = this.d.conversions.options?.unionPreview
+      ? { within: this.c.containingType, module: this.d.assembly.module, preview } : null;
+    this.conversions = this.d.conversions.forPreview?.(preview) ?? this.conversions;
   }
   node(...args) {
     const result = super.node(...args);
-    if (this.unionConversionContext) result.unionConversionContext = this.unionConversionContext;
+    if (this.unionConversionContext) rememberUnionContext(result, this.unionConversionContext);
     return result;
   }
   unionShape(type, syntax) {

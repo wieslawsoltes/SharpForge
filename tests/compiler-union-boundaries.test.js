@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { compileToAssembly } from '@sharpforge/compiler';
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 import { SemanticAnalysis } from '../packages/compiler/src/semantic-analysis.js';
-import { unionInputs, unionPreviewOptions } from './fixtures/compiler-unions/contracts.js';
+import { unionContracts, unionInputs, unionPreviewOptions } from './fixtures/compiler-unions/contracts.js';
 import { runUnion, unionNativeSkip } from './fixtures/compiler-unions/native-test.js';
 
 const diagnostics = source => {
@@ -82,4 +83,46 @@ class C
     }
 }`;
   assert.deepEqual(diagnostics(source).filter(row => row.code === 'CS8602'), []);
+});
+
+test('union conversions and overload choice follow each file version in either input order', () => {
+  const sources = [
+    { uri: 'Preview.cs', text: `union U(int);
+class Preview { static U Convert() => 1; static int Choose() => Api.Pick(1); }
+class Api { public static int Pick(U value) => 1; public static int Pick(long value) => 2; }` },
+    { uri: 'Stable.cs', text: 'class Stable { static U Convert() => 1; static int Choose() => Api.Pick(1); }' },
+  ];
+  for (const order of [sources, [...sources].reverse()]) {
+    const input = [...order, { uri: 'UnionContracts.cs', text: unionContracts }];
+    const options = { ...unionPreviewOptions, outputKind: 'library', langVersion: '14', langVersionByUri: { 'Preview.cs': 'preview' } };
+    const files = input.map(file => parse(new SourceText(file.text, file.uri), undefined,
+      { languageVersion: options.langVersionByUri[file.uri] ?? options.langVersion }));
+    const analysis = new SemanticAnalysis(files, options);
+    analysis.run();
+    assert.deepEqual(analysis.diagnostics.filter(row => row.severity === 'error').map(row => [row.uri, row.code]).sort(),
+      [['Preview.cs', 'CS0121'], ['Stable.cs', 'CS0029']]);
+  }
+});
+
+test('implicit union conversions in expression trees keep the unresolved proposal boundary explicit', () => {
+  const source = `union U(int);
+class C { System.Linq.Expressions.Expression<System.Func<int, U>> Tree() => value => value; }`;
+  const result = compileToAssembly(unionInputs(source), { ...unionPreviewOptions, outputKind: 'library' });
+  assert.equal(result.success, false);
+  assert.equal(result.assembly, null);
+  assert.ok(result.diagnostics.some(row => row.code === 'SF2202' && /implicit union conversions in expression trees/.test(row.message)));
+});
+
+test('explicit union construction remains available in an expression tree', { skip: unionNativeSkip }, () => {
+  assert.equal(runUnion(`using System;
+using System.Linq.Expressions;
+union U(int);
+class Program
+{
+    static void Main()
+    {
+        Expression<Func<int, U>> tree = value => new U(value);
+        Console.WriteLine(tree.Compile()(8).Value);
+    }
+}`), '8\n');
 });

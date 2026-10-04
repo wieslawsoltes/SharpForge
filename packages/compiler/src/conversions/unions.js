@@ -8,6 +8,7 @@ import { OverloadResolver } from '../overload/resolution.js';
 import { unionShapeOf } from '../symbols/union-shape.js';
 import { Accessibility } from '../symbols/types.js';
 import { checkConstructorAccess, isAccessible } from '../binder/accessibility.js';
+import { unionContextOf } from './union-context.js';
 
 /** The argument-to-case stage must contain only standard conversions, including within tuples. */
 class UnionArgumentConversions extends Conversions {
@@ -25,9 +26,21 @@ export class UnionConversions extends Conversions {
     super(core, options);
     this.unionArguments = null;
     this.unionOverloads = null;
+    this.previewVariants = new Map([[options.unionPreview === true, this]]);
+  }
+  forPreview(preview) {
+    const enabled = preview === true;
+    let conversions = this.previewVariants.get(enabled);
+    if (!conversions) {
+      conversions = new UnionConversions(this.core, { ...this.options, unionPreview: enabled });
+      conversions.previewVariants = this.previewVariants;
+      this.previewVariants.set(enabled, conversions);
+    }
+    return conversions;
   }
   unionConversion(expression, to) {
-    if (!this.options.unionPreview || !to || to.isErrorType?.()) return Conversions.noConversion;
+    const context = unionContextOf(expression);
+    if (!(context?.preview ?? this.options.unionPreview) || !to || to.isErrorType?.()) return Conversions.noConversion;
     const shape = unionShapeOf(to, this.core);
     if (!shape?.valid) return Conversions.noConversion;
     this.unionArguments ??= new UnionArgumentConversions(this.core, this.options);
@@ -35,7 +48,6 @@ export class UnionConversions extends Conversions {
     const applicable = shape.creationMembers.filter(member =>
       standardOnly(this.unionArguments.classifyFromExpression(expression, member.parameters[0].type)));
     if (!applicable.length) return Conversions.noConversion;
-    const context = expression.unionConversionContext;
     const candidates = shape.candidates.filter(member => {
       if (!context) return member.declaredAccessibility === Accessibility.Public;
       const options = { withinModule: context.module };
@@ -58,6 +70,9 @@ export class UnionConversions extends Conversions {
     return conversion.exists || !this.options.unionPreview ? conversion : this.unionConversion({ type: from }, to);
   }
   classifyFromExpression(expression, to) {
+    const context = unionContextOf(expression);
+    const conversions = context ? this.forPreview(context.preview) : this;
+    if (conversions !== this) return conversions.classifyFromExpression(expression, to);
     const conversion = super.classifyFromExpression(expression, to);
     return conversion.exists ? conversion : this.unionConversion(expression, to);
   }
@@ -73,6 +88,9 @@ export class UnionConversions extends Conversions {
     return explicitOperator.exists ? explicitOperator : this.unionConversion({ type: from }, to);
   }
   classifyCastFromExpression(expression, to) {
+    const context = unionContextOf(expression);
+    const conversions = context ? this.forPreview(context.preview) : this;
+    if (conversions !== this) return conversions.classifyCastFromExpression(expression, to);
     if (!this.options.unionPreview || !unionShapeOf(to, this.core)) return super.classifyCastFromExpression(expression, to);
     const implicit = super.classifyFromExpression(expression, to);
     if (implicit.exists) return implicit;

@@ -13,7 +13,7 @@ import { SourceAssembly } from '../symbols/source/syntax-symbols.js';
 import { baseTypeChain } from '../symbols/substitution.js';
 import { TypeBinder } from '../binder/type-binder.js';
 import { UnionConversions as Conversions } from '../conversions/unions.js';
-import { OverloadResolver } from '../overload/resolution.js';
+import { UnionOverloadResolver as OverloadResolver } from '../conversions/union-context.js';
 import { OperatorResolver } from '../overload/operators.js';
 import { resolveBases } from '../binder/inheritance.js';
 import { checkConstructedMethod } from '../binder/constraints.js';
@@ -46,7 +46,7 @@ export class AnalysisCore {
     this.conversions = new Conversions(this.core, {
       numericIntPtr: latest >= 11,
       firstClassSpans: latest >= 14,
-      unionPreview: this.versionOf(this.files[0]?.source.uri).preview === true,
+      unionPreview: this.files.some(file => this.versionOf(file.source.uri).preview === true),
     });
     this.overloads = new OverloadResolver(this.conversions, this.core);
     // C# 7.3: the constraints of a generic candidate take part in overload resolution (overload/resolution.js).
