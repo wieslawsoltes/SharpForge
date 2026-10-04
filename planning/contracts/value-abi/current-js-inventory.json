@@ -1,33 +1,53 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "18f9201ba7964579158a26671359ac34aa2f5ba97ec56ee601e0ee102ec6408e",
-    "packages/runtime/src/vm.js": "754934d348b4633eb91748707e41c9a174806007d0530d7559400a79ea2145a2",
-    "packages/runtime/src/cil-vm.js": "99aa08b03322c37d0ac94328a9dd961a135a75044ca21887691e3e9ccca1d7b1",
-    "packages/runtime/src/execution/delegate-targets.js": "4580a64b46678535791363c9a8e593134b6c264daf6960017c88c23ea988893e",
-    "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
-    "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
-    "packages/runtime/src/execution/source-ops/arithmetic.js": "658d004672bd71fdd1ab7b6a7747daf319d8fcb24217b925f33531336e9a1762",
-    "packages/runtime/src/execution/source-ops/control.js": "103ed7f7ec218785b9cbbe1dc12cfa956ca7302ea135cf90a8fe2a8a293d8aeb",
-    "packages/runtime/src/execution/source-ops/call.js": "d0d3e2081c184ad70f6e7f604cc1c58b6da4cb2efe6a9c9b080f705ade75566e",
-    "packages/runtime/src/execution/source-ops/object.js": "2a7564083417592455ef5753a4ab759c5a59ef54676f2bb6de779260c51ae872",
-    "packages/runtime/src/execution/source-ops/index.js": "893e36bfd952bd80a09dfa248ed9c0b4052bb0a0cea48a4b6aafdebde0f8cca0",
-    "packages/runtime/src/execution/source-builtins.js": "2066eda1d6ad7a048d19a94b67fa7bb6abf9cc031034cffeacb1245208c571cf",
-    "packages/runtime/src/execution/source-builtins/objects.js": "f2306439247e38ec164c1a2ec832423ac34e0c6281d514abf5f9f34b42f5244a",
+    "packages/runtime/src/heap.js": "1127bff63bfa0d34f3804e8d23e81d8eac4d1300dc1402002be74d27a8787b4e",
+    "packages/runtime/src/vm.js": "fcece20a49cbd5b4f249a5b2acc8c1c314460a450a2b0bdcd7ed918f0195c45d",
+    "packages/runtime/src/cil-vm.js": "b2e9aaf3ade48c2b284d114c12c36502b1a5831a120dd9da37535604395c74e1",
+    "packages/runtime/src/execution/delegate-targets.js": "06110c0963d08fbf1e9cf21b70dc2cea86b1d8b30f975edc10e740a7148a1fe0",
+    "packages/runtime/src/execution/source-ops.js": "bf5636aad3938a4a9a1ef7148540fa847fdcad8f6ee1ba8290b0f1103d0e2ffa",
+    "packages/runtime/src/execution/source-ops/load-store.js": "e823c75343ffbf96f380aaeff5825a7d3909e8403c160c9f2c90bd2f6d8b3bbe",
+    "packages/runtime/src/execution/source-ops/arithmetic.js": "f04278f6bdf598b6565bde156ad86517bc9440259b858da0efd38d80377bf15b",
+    "packages/runtime/src/execution/source-ops/control.js": "1f4d94e700e4a5a6a5629d25c87983bd5c69641bd62a3210650292afb5200b6e",
+    "packages/runtime/src/execution/source-ops/call.js": "90ec39d2383e6ef7906f173c2772011087f4d5268c8317149e57c474062b2cc5",
+    "packages/runtime/src/execution/source-ops/object.js": "e5a3143347d1b8bf6f9e985370e94412a3ca04144838378ad11530b45425d100",
+    "packages/runtime/src/execution/source-ops/index.js": "1714e9ce2c1597f11f8cbaee0205e434ecefc996163d9a0355bc1ef5170985e9",
+    "packages/runtime/src/execution/source-builtins.js": "542b8c23cdff68568bb754f79f82dfc36a59fd47bba44c2341af2fa3c1bd4e72",
+    "packages/runtime/src/execution/source-builtins/objects.js": "817790f1dd23c7a86de6cd8863a6149868fc6904334e1d3ad7224be982f905da",
     "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
     "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
     "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
-    "packages/runtime/src/execution/storage.js": "3499a41895b9e5ddc83b8225857ef73a2eaaa4d62ba4713020bc89f7a70b8d46",
-    "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
+    "packages/runtime/src/execution/storage.js": "6d0f49a6b89a9c960d310fd4e2ee5ee73ec2a5931ed296b431e700bd9a6959ac",
+    "packages/runtime/src/execution/numeric-ops.js": "edc5c262740429448037b6e05ca04edda214a8012c9bd91e848733c90b212c30",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
-    "packages/bytecode/src/index.js": "0a4906fc6b51585ed9f8a9060f10d9de5cc5699e642ba91a71baa4188181b963",
+    "packages/bytecode/src/index.js": "903a44926e53cc637ec280966f4177ea948702c6422e7865b70ffe2806a21711",
     "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b",
     "packages/bytecode/src/numeric/conversions.js": "8ba60ff562911c7c11adb942a0d8b2793bd935cddadf5bc71bb52817b0f16b60",
     "packages/bytecode/src/numeric/float.js": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
     "packages/bytecode/src/numeric/native-int.js": "1f4075523774128359ff73c3c77c535381a91f09b24df74c7b867b30acfb4f14",
     "packages/bytecode/src/numeric/decimal-value.js": "d50f090d6e16eae12e2358e8ba45e857b942b3189dd1dbc8c908db8efc772c15",
     "packages/bytecode/src/numeric/scalar-codec.js": "fa1c28f952cf0482128e995d053b5bbc32e144f05823bd6d80ab78c94ca970fd",
-    "packages/runtime/src/execution/source-numbers.js": "a4314c4024599c99fee05220fa44b328f40e8adc8d823a5b100bb250920a4836"
+    "packages/runtime/src/execution/source-numbers.js": "a4314c4024599c99fee05220fa44b328f40e8adc8d823a5b100bb250920a4836",
+    "packages/runtime/src/execution/managed-fault.js": "ceb94f3fdc96435996cc9df2cbc64d106b280959a001513481016fa5aaed8ba4",
+    "packages/runtime/src/execution/heap-reference.js": "1abb85f3e6f5ea7704230e38193deb5da708950748d43cbd65fe339b733c9389",
+    "packages/runtime/src/execution/heap-storage.js": "2bd37498514ffae8d85d7f59d5184b8476fe2bbb9ec7c9270d5338b9d997ad4e",
+    "packages/runtime/src/execution/array-storage.js": "7491fb92fb54d9e5ccecd5c44712c3f8a1263a928e3e62f0b801c38ad740e2bb",
+    "packages/runtime/src/execution/value-types.js": "8bec11960e5d0a5323c0a8dfe1e8c45066912b805081317f25f220c90526a80f",
+    "packages/runtime/src/execution/explicit-values.js": "d337256b1fc526c545802524e81513d016d3e87f938315a910d7181396a578e9",
+    "packages/runtime/src/execution/nullable-value.js": "2d81c5579190a16ef3041a0ef179d7db26ea62f20a3303b5545a6216863ffff4",
+    "packages/runtime/src/execution/nullable-interior.js": "17774334ca5d596913819936fc70f71a904fb9c49723f0289aa74dc0c19904a1",
+    "packages/runtime/src/execution/managed-address.js": "bb3a17afe77ecbe56d78ebfb8032b49c2f0b7257266d906088dfa7d3c8d0923f",
+    "packages/runtime/src/execution/source-addresses.js": "3b0007761b0a5bf87532ed4554e08d352e94892fe6bf92a9d169e368d1a48eb3",
+    "packages/runtime/src/execution/stack-memory.js": "666be743091a0464a5b57afa3b5444d9308f5a5214cb7e7097a70c85eb159d12",
+    "packages/runtime/src/execution/pinned.js": "7214458040ba43df5a498222b03194c6b2329dff83de86b6e7d22a4304898f52",
+    "packages/runtime/src/execution/spans.js": "66c8e0200a7b5f37777d7156226d94114e57553abc837375a71f625444dcaeea",
+    "packages/runtime/src/execution/varargs.js": "dce4142da18312de4ba469fdc6ff56dc0448061bb51065cc8d58486b5235dd05",
+    "packages/runtime/src/execution/method-pointers.js": "cbf95069cdac3710aa37360d7b6bba398032ec8a8e24a6dc5abdc6a6d0a1c182",
+    "packages/runtime/src/execution/typed-stack.js": "3a2ccca8070b9174b7481c09208f0cbdb2d9926f8e60dffed0e4d26ef21b4247",
+    "packages/runtime/src/execution/snapshot-version.js": "31e6b88ba6d9f19783908e7a836b53d95a07aa7c651acaf56d035dcab72e3d53",
+    "packages/runtime/src/execution/snapshot-serialize.js": "2804f44a5656a603f5e409c383eb0a1162b053176c8d52531c936deb3e29e18a",
+    "packages/runtime/src/execution/snapshot-wire-values.js": "ba5039a20765dc4ca65270a9d0315b8c27b4f219b8d50cf84f331fe49d990a1a",
+    "packages/runtime/src/execution/snapshot-cow.js": "9983b0e3d319d91782c13f27d005bf5ba4b301e98969711d267cc80c93cf6c12"
   },
   "resultKinds": {
     "int": {
@@ -48,7 +68,7 @@
     },
     "numeric": {
       "source": "number | bigint | frozen float | nativeInt | Decimal",
-      "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}"
+      "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint} | Decimal"
     },
     "bool": {
       "source": "boolean",
@@ -67,37 +87,41 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable"
+      "source": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen struct | frozen Nullable | boolean | enum | Span | TypedReference | runtime handle | ArgIterator",
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen struct | frozen Nullable | Span | TypedReference | runtime handle | ArgIterator"
     }
   },
   "additionalShapes": [
     {
       "shape": "{nullableType:MethodTable,hasValue:boolean,value}",
-      "meaning": "immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe"
+      "meaning": "immutable source/CIL Nullable with an admitted copied payload, including nested managed references, or null; boxes as null or underlying T; portable snapshot serialization rebinds the owned type and references"
     },
     {
       "shape": "{valueType:MethodTable,fields:frozen array}",
-      "meaning": "immutable VM-owned direct-CIL reference-free struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+      "meaning": "immutable VM-owned admitted source/CIL struct; nested values are copied and owned reference fields retain identity; portable snapshot serialization rebinds the owned type and references"
     },
     {
-      "shape": "{valueType:MethodTable,fields:frozen array,explicitBytes:frozen byte array}",
-      "meaning": "reference-free explicit-layout value or nested view with immutable little-endian storage; overlapping fields alias within a value; copies preserve padding and scalar bits; not a portable snapshot or raw-memory API"
+      "shape": "{valueType:MethodTable,fields:frozen array,explicitBytes:frozen byte array,explicitReferences?:frozen array}",
+      "meaning": "admitted explicit-layout value with immutable little-endian bytes and a separate managed-reference sidecar; copies preserve padding and scalar bits; reference overlap requires validated layout"
     },
     {
-      "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}",
-      "meaning": "owned CIL address with immutable struct field indices; resolves live storage on access; rejects foreign VM and expired frames"
+      "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array,readonly?}",
+      "meaning": "owned immutable source/CIL address; paths contain struct field indices or the validated nullableValue step; access checks live storage, VM ownership, readonly state and frame lifetime"
     },
     {
-      "shape": "{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}",
-      "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value"
+      "shape": "{byref:true,memoryPointer:true,vmOwner,kind,index,baseType,frameId,regionId|leaseId|source,path,readonly}",
+      "meaning": "owned stack, pinned or reinterpreted memory capability with a bounded byte offset; region or pin lifetime is validated; never a native host address"
     },
     {
-      "shape": "{nativeInt: 32|64, value: number|bigint}",
-      "meaning": "immutable source/CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
+      "shape": "{decimal:true,coefficient:bigint,scale:0..28,negative:boolean}",
+      "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; the JS carrier is distinct from either portable codec encoding"
     },
     {
-      "shape": "{enumType, underlyingType, value}",
+      "shape": "{nativeInt:32|64,value:number|bigint}",
+      "meaning": "immutable source/CIL native-integer stack category at the configured ABI width; not a portable pointer"
+    },
+    {
+      "shape": "{enumType,underlyingType,value}",
       "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"
     },
     {
@@ -106,41 +130,67 @@
     },
     {
       "shape": "undefined",
-      "meaning": "unassigned local; not a portable value"
+      "meaning": "unassigned local; portable snapshots encode this explicitly, Portable Value ABI 1 does not"
     },
     {
       "shape": "{h,g}",
-      "meaning": "zero-based heap index, positive safe-integer generation; neither scoped epoch nor portable uint32 checked by isReference"
-    },
-    {
-      "shape": "{byref:true,kind,index,owner,frameId}",
-      "meaning": "CIL managed interior/frame address; never portable raw pointer"
+      "meaning": "zero-based heap index and positive safe-integer generation, with allocation provenance held outside the frozen object; isReference checks shape only; ownership and live generation require separate checks"
     },
     {
       "shape": "{methodPointer:true,vmOwner,token}",
-      "meaning": "immutable CIL ldftn pointer with resolved method token and opaque VM identity; delegate binding rejects a different VM owner; not a portable function pointer"
+      "meaning": "immutable owned method pointer with exact resolved method identity; delegate binding rejects a foreign VM; portable snapshots rebind an admitted method identity, never a raw function pointer"
     },
     {
       "shape": "host lease {id,owner}",
       "meaning": "heap-local opaque strong or weak handle"
+    },
+    {
+      "shape": "{span:true,vmOwner,elementType,pointer,length,readonly}",
+      "meaning": "immutable owned bounded view over array, readonly string or admitted raw storage; access validates element identity, bounds, lifetime and readonly state"
+    },
+    {
+      "shape": "{typedReference:true,vmOwner,pointer,type}",
+      "meaning": "immutable owned typed managed address; exact declared type and location lifetime are checked on access"
+    },
+    {
+      "shape": "{runtimeArgumentHandle:true,vmOwner,frameId} | {argIterator:true,vmOwner,frameId,index,ended}",
+      "meaning": "immutable owned managed varargs packet handle or cursor; the declaring frame must remain live"
+    },
+    {
+      "shape": "{runtimeHandle:type,owner,table,token}",
+      "meaning": "opaque owned runtime type identity, distinct from an allocated System.Type object and a native address"
+    },
+    {
+      "shape": "array record data: typed array | Array",
+      "meaning": "primitive elements use contiguous declared-width backing; reference and aggregate arrays use managed slots; snapshot backing is copied or retained through immutable copy-on-write buffers"
+    },
+    {
+      "shape": "NumericSlots numeric planes and reference slots",
+      "meaning": "internal typed frame storage can keep float and small Int64 values unboxed; reads materialize the public scalar carrier; this internal representation does not change Portable Value ABI 1 tags"
     }
   ],
   "evidence": [
     "execution/source-builtins.js and source-builtins/ groups preserve rooted intrinsic results and VM-local result/host metadata",
     "execution/source-ops/ groups preserve source opcode stack values, storage writes, arithmetic, control flow and object construction",
-    "ManagedHeap.allocate returns Object.freeze({h,g})",
-    "ManagedHeap.array caps length at 1000000",
-    "execution/storage.js storageValue and execution/numeric-ops.js storage apply narrow and BigInt integer categories through bytecode/numeric/conversions.js",
-    "execution/source-ops.js binary preserves legacy modes and delegates typed modes to shared scalar helpers",
-    "execution/enums.js enumValue freezes source enum identity and underlying storage",
-    "bytecode/numeric/float.js float and bytecode/numeric/native-int.js nativeInteger freeze numeric stack carriers",
-    "execution/delegate-targets.js delegateMethodPointer freezes the resolved token and VM owner; constructBoundDelegate requires the same owner",
-    "bytecode/numeric/decimal-value.js decimal freezes the unsigned 96-bit coefficient, scale and sign used by source/CIL Decimal arithmetic and storage"
+    "execution/heap-reference.js issues frozen {h,g} references and tracks allocation provenance separately from shape and liveness",
+    "execution/heap-storage.js derives array capacity from element width, maxBytes, maxArrayLength and the 0xffffffff addressing bound",
+    "execution/array-storage.js preserves declared primitive widths; reference and aggregate arrays retain managed slots",
+    "execution/storage.js and execution/numeric-ops.js normalize narrow and BigInt integer categories through shared scalar helpers",
+    "execution/enums.js, bytecode/numeric/float.js and bytecode/numeric/native-int.js freeze their scalar carriers",
+    "execution/value-types.js admits copied source/CIL values with owned assignable reference fields and validated managed layouts",
+    "execution/explicit-values.js preserves explicit bytes and managed-reference sidecars without exposing host pointers",
+    "execution/nullable-value.js copies admitted payloads and execution/nullable-interior.js validates writable payload aliases",
+    "execution/spans.js and execution/varargs.js keep views, typed references and packet cursors bound to owned storage lifetimes",
+    "execution/delegate-targets.js preserves exact method-pointer ownership during delegate construction",
+    "bytecode/numeric/decimal-value.js preserves unsigned 96-bit coefficient, scale and sign",
+    "execution/typed-stack.js numeric planes are an internal storage optimization; generic reads retain scalar semantics",
+    "execution/snapshot-serialize.js uses its own versioned graph format with exact code identity, native width and host-revision checks",
+    "execution/snapshot-version.js execution schema and the portable snapshot format are separate from Portable Value ABI 1"
   ],
   "unsupported": [
-    "Rust engine qualification",
-    "Wasm runtime qualification",
-    "Numeric source/direct-CIL cross-platform execution qualification",
-    "arbitrary value structs in source VM"
+    "Rust engine qualification by this JS representation inventory",
+    "Cross-platform or browser execution qualification by this JS representation inventory",
+    "Arbitrary CLR layouts or ref structs outside the explicit runtime admission profiles",
+    "Raw VM-owned JS objects as Portable Value ABI 1 wire data; the independent ABI codec requires its declared envelope"
   ]
 }

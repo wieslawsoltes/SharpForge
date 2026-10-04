@@ -1,0 +1,55 @@
+.NET SDK:
+ Version:           10.0.201
+ Commit:            4d3023de60
+ Workload version:  10.0.200-manifests.0793c108
+ MSBuild version:   18.3.0-release-26153-122+4d3023de6
+
+Runtime Environment:
+ OS Name:     Windows
+ OS Version:  10.0.26100
+ OS Platform: Windows
+ RID:         win-x86
+ Base Path:   D:\a\_temp\a05-dotnet-x86-10.0.201\sdk\10.0.201\
+
+.NET workloads installed:
+ [maui-windows]
+   Installation Source: VS 18.10.12217.157
+   Manifest Version:    10.0.0/10.0.100
+   Manifest Path:       D:\a\_temp\a05-dotnet-x86-10.0.201\sdk-manifests\10.0.100\microsoft.net.sdk.maui\10.0.0\WorkloadManifest.json
+   Install Type:        FileBased
+
+Configured to use workload sets when installing new manifests.
+No workload sets are installed. Run "dotnet workload restore" to install a workload set.
+
+Host:
+  Version:      10.0.5
+  Architecture: x86
+  Commit:       a612c2a105
+
+.NET SDKs installed:
+  10.0.201 [D:\a\_temp\a05-dotnet-x86-10.0.201\sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 10.0.5 [D:\a\_temp\a05-dotnet-x86-10.0.201\shared\Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 10.0.5 [D:\a\_temp\a05-dotnet-x86-10.0.201\shared\Microsoft.NETCore.App]
+  Microsoft.WindowsDesktop.App 10.0.5 [D:\a\_temp\a05-dotnet-x86-10.0.201\shared\Microsoft.WindowsDesktop.App]
+
+Other architectures found:
+  x64   [C:\Program Files\dotnet]
+    registered at [HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\x64\InstallLocation]
+
+Environment variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT              [1]
+  DOTNET_MULTILEVEL_LOOKUP                 [0]
+  DOTNET_NOLOGO                            [1]
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE        [1]
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT    [1]
+
+global.json file:
+  Not found
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download

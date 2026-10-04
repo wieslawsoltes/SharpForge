@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "kind": "SharpForge.RunSlotInheritanceValidation",
+  "revision": "c40e007469c60d3ad17e9756043eb5d37c904558",
+  "tree": "881ff57e62f79136c9a34245359ccfce0a1ffad3",
+  "cleanBeforeBothRuns": true,
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "artifacts": [
+    {
+      "path": "focused.log",
+      "bytes": 2722,
+      "sha256": "2c1fdb7c6ef6cc4555e9625fa6916159fd36485c0cbcd1cfe308dae193c755e1"
+    },
+    {
+      "path": "focused-journal.json",
+      "bytes": 742,
+      "sha256": "119f5a008ba2b13c6a3b786a3bd2ccd04583d5ed6c06b0be4f16737ae3c7696b"
+    },
+    {
+      "path": "registration.log",
+      "bytes": 400,
+      "sha256": "63de60be5256a9c7cd553d03e23af33d1c5856252e1d54899ce995ce9615a1f4"
+    },
+    {
+      "path": "registration-journal.json",
+      "bytes": 773,
+      "sha256": "a3ee2f575e64bf035646fff9c02eb3e05eb34b5574303ed728f4edb4a8eb836c"
+    }
+  ],
+  "sourceSha256": {
+    "scripts/limited.js": "7b36837aa62bdd6365d6d63d497b95d86de913ccbabc577ba082f4c092d1c883",
+    "scripts/planning/lib/resource-limits.js": "171e8919f26cb5c0626576db3ec16b6b8e90328f682fd0af07c65582b1357ee6",
+    "scripts/planning/lib/run-slot-lease.js": "2e90899de9b8dc662255ab4c7f581191297292d9a176a699dd6fac540469750d",
+    "scripts/planning/lib/run-slot-owner.js": "d7b65ad5b971cf8f85643bf182a3cc90de08ef71b0186ed0e7de7abed9c49372",
+    "scripts/planning/run-tests.js": "ebf8d09199ba23c77ded659fb97f34a7ed5a5bd2849e65036258ead51c6e3f22",
+    "tests/a00-resource-limits.test.js": "957b238b75c3beaa419dad80842074207cfdf1491d578e90e3c9e62fa13fdc58",
+    "tests/a00-run-slot-inheritance.test.js": "4d11f58f9b45cadd927bd64fce123187c2410267105af036f5ad07c3b8c2d11a",
+    "tests/a00-runner-cancellation.test.js": "d3dcded405ffe5dc47ed9cb47f2c989c9a59b253044c23186aeff7e1803c73af",
+    "tests/a00-06-registration.test.js": "1b652a276e68770cff8feeb0aa4a4506c5d36cfb5476cdd3143785b3aef8ebfe"
+  },
+  "results": [
+    {
+      "journal": "focused-journal.json",
+      "log": "focused.log",
+      "tests": 27,
+      "pass": 27,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 10668.217683,
+      "exitCode": 0
+    },
+    {
+      "journal": "registration-journal.json",
+      "log": "registration.log",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 1982.489559,
+      "exitCode": 0
+    }
+  ],
+  "limits": [
+    "Linux x64 validation only; portable ordinary-PID fallback is not a tested Windows/macOS result.",
+    "Selected registration cases only; no full A00, pack/install, build or product performance run.",
+    "The private fixture simulates contention inside the one outer heavy job; it does not change machine-wide concurrency.",
+    "The capability coordinates same-user commands; it is not a security boundary against that OS user."
+  ]
+}

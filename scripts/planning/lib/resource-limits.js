@@ -1,9 +1,10 @@
 // Local resource limits for builds, validation and tests. See CONTRIBUTING.md, "Resource limits".
 // Many agents share one developer machine; an unbounded `node --test` run starts one process per core.
 // CI is not limited: these defaults apply only when the CI environment variable is unset.
-import {mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {mkdirSync, readdirSync} from 'node:fs';
 import {tmpdir, totalmem} from 'node:os';
 import {join} from 'node:path';
+import {claimRunSlot, inheritedRunSlot, reclaimRunSlot} from './run-slot-lease.js';
 
 const GIB = 1024 ** 3;
 const positiveInteger = value => (/^[1-9]\d*$/.test(String(value ?? '')) ? Number(value) : null);
@@ -35,31 +36,27 @@ export function limitedEnv(env = process.env, limits = resourceLimits(env)) {
   return {...env, NODE_OPTIONS: `${env.NODE_OPTIONS ?? ''} --max-old-space-size=${limits.maxOldSpaceMb}`.trim()};
 }
 
-const isAlive = pid => {
-  try { process.kill(pid, 0); return true; } catch (error) { return error.code === 'EPERM'; }
-};
-
 /**
  * Machine-wide counting semaphore backed by one lock file per slot in the temp directory.
- * Returns a release function. A slot whose owner process has exited is reclaimed.
+ * Returns a release function with an environment capability for its child command.
+ * Children may borrow a live inherited lease; only its original owner releases it.
  */
 export async function acquireRunSlot(options = {}) {
-  const {limits = resourceLimits(), directory = join(tmpdir(), 'sharpforge-run-slots'), log = console.error, pollMs = 2000} = options;
+  const {env = process.env, limits = resourceLimits(env), directory = join(tmpdir(), 'sharpforge-run-slots'),
+    log = console.error, pollMs = 2000} = options;
   if (limits.parallelRuns === null) return () => {};
-  mkdirSync(directory, {recursive: true});
+  const inherited = inheritedRunSlot(env, directory);
+  if (inherited) return inherited;
+  mkdirSync(directory, {recursive: true, mode: 0o700});
   let announced = false;
   for (;;) {
     for (const name of readdirSync(directory)) {
-      const owner = Number(readFileSync(join(directory, name), 'utf8').trim() || 0);
-      if (!owner || !isAlive(owner)) rmSync(join(directory, name), {force: true});
+      if (!/^slot-\d+\.lock$/.test(name)) continue;
+      reclaimRunSlot(directory, Number(name.slice(5, -5)));
     }
     for (let slot = 0; slot < limits.parallelRuns; slot++) {
-      const path = join(directory, `slot-${slot}.lock`);
       try {
-        writeFileSync(path, String(process.pid), {flag: 'wx'});
-        const release = () => rmSync(path, {force: true});
-        process.once('exit', release);
-        return release;
+        return claimRunSlot(directory, slot);
       } catch (error) {
         if (error.code !== 'EEXIST') throw error;
       }

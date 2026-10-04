@@ -15,7 +15,8 @@ const rules = [
   {
     text: /\b__arglist\b/,
     applies: node => node.kind === 'ArgListExpression' || node.kind === 'Parameter' && node.identifier.valueText === '__arglist',
-    codes: ['CS0190', 'CS0224', 'CS0226', 'CS0257', 'CS1601', 'CS1636', 'CS1669', 'CS4006', 'CS8362', 'CS8378'],
+    codes: [DiagnosticId.CS0190, DiagnosticId.CS0224, DiagnosticId.CS0226, DiagnosticId.CS0257, DiagnosticId.CS1601,
+      DiagnosticId.CS1636, DiagnosticId.CS1669, DiagnosticId.CS4006, DiagnosticId.CS8362, DiagnosticId.CS8378],
   },
   {
     // Catch clauses after one that already catches everything: CS0160, CS1017 and the warning CS1058.

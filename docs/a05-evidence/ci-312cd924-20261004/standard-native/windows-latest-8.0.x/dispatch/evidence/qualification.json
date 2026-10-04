@@ -1,0 +1,89 @@
+{
+  "task": "SF-A05-B03",
+  "timestamp": "2026-10-04T18:54:33.028Z",
+  "revision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "qualification": "Roslyn-compiled assembly executed by native .NET and directly by CilVirtualMachine",
+  "platform": "win32",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "8.0.425",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 8.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 8.0.22 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 8.0.31 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 9.0.6 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 9.0.20 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.8 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.11 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]\nMicrosoft.WindowsDesktop.App 10.0.12 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]",
+  "targetFramework": "net8.0",
+  "source": "tests/fixtures/a05-dispatch/Program.cs",
+  "sourceSha256": "6eb14f6d07f674dac536879add4d9cadc578e4623e110c7acf07ff818102cc3a",
+  "assemblySha256": "dbae7e08290b95432a9759dd810e12ff45092ec131a837c83da41c0760a1367b",
+  "fixtureEvidence": {
+    "newslot": "B::F",
+    "override": "C::F",
+    "methodImplRows": 1
+  },
+  "native": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "1\n3\n3\n7\n"
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "1\n3\n3\n7\n",
+    "instructions": 35
+  },
+  "expectedOutput": "1\n3\n3\n7\n",
+  "passed": true,
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--version"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "--list-runtimes"
+      ],
+      "status": 0
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "VirtualDispatch.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "VirtualDispatch.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "status": 0
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>\\bin\\Release\\net8.0\\VirtualDispatch.dll"
+      ],
+      "status": 0
+    }
+  ]
+}

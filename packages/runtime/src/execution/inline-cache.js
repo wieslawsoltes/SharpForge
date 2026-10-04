@@ -8,19 +8,28 @@ function siteFor(vm, frame, instruction, target, owner) {
     if (!Number.isInteger(limit) || limit < 1 || limit > 16) {
       throw new RangeError('Inline cache size must be 1–16');
     }
-    state.inline = cache = {limit, methods: new WeakMap()};
+    state.inline = cache = {limit, methods: new WeakMap(), method: null, instructions: null, offset: null, site: null};
   }
-  let method = cache.methods.get(frame.method);
-  if (!method || method.instructions !== frame.method.instructions) {
-    method = {instructions: frame.method.instructions, sites: new Map()};
-    cache.methods.set(frame.method, method);
+  const currentMethod = frame.method, instructions = currentMethod.instructions;
+  let site = cache.site;
+  if (cache.method === currentMethod && cache.instructions === instructions && cache.offset === instruction.offset &&
+      site?.operand === instruction.operand && site.target === target && site.owner === owner) return site;
+  let method = cache.methods.get(currentMethod);
+  if (!method || method.instructions !== instructions) {
+    method = {instructions, sites: new Map()};
+    cache.methods.set(currentMethod, method);
   }
-  let site = method.sites.get(instruction.offset);
+  site = method.sites.get(instruction.offset);
   if (!site || site.operand !== instruction.operand || site.target !== target || site.owner !== owner) {
     site = {operand: instruction.operand, target, owner, limit,
       first: null, rest: [], megamorphic: false, hits: 0, misses: 0};
     method.sites.set(instruction.offset, site);
   }
+  // The cursor contains metadata only; changing any live site key returns to the indexed lookup.
+  cache.method = currentMethod;
+  cache.instructions = instructions;
+  cache.offset = instruction.offset;
+  cache.site = site;
   return site;
 }
 

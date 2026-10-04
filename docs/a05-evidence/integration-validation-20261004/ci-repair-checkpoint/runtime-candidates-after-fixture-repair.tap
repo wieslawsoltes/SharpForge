@@ -1,0 +1,1898 @@
+TAP version 13
+# Subtest: T04.2 filter frames share locals/arguments and release only their own lifetime
+ok 1 - T04.2 filter frames share locals/arguments and release only their own lifetime
+  ---
+  duration_ms: 19.875813
+  type: 'test'
+  ...
+# Subtest: T04.2 false and escaping-filter decisions resume the original search
+ok 2 - T04.2 false and escaping-filter decisions resume the original search
+  ---
+  duration_ms: 2.285995
+  type: 'test'
+  ...
+# Subtest: T04.2 non-Int32 endfilter decision is rejected atomically: 0.5
+ok 3 - T04.2 non-Int32 endfilter decision is rejected atomically: 0.5
+  ---
+  duration_ms: 1.882443
+  type: 'test'
+  ...
+# Subtest: T04.2 non-Int32 endfilter decision is rejected atomically: NaN
+ok 4 - T04.2 non-Int32 endfilter decision is rejected atomically: NaN
+  ---
+  duration_ms: 1.631124
+  type: 'test'
+  ...
+# Subtest: T04.2 non-Int32 endfilter decision is rejected atomically: 2147483648
+ok 5 - T04.2 non-Int32 endfilter decision is rejected atomically: 2147483648
+  ---
+  duration_ms: 1.763529
+  type: 'test'
+  ...
+# Subtest: T04.2 explicit filter admission failure leaves its declaring frame alive
+ok 6 - T04.2 explicit filter admission failure leaves its declaring frame alive
+  ---
+  duration_ms: 1.544036
+  type: 'test'
+  ...
+# Subtest: Pair locals use aligned layout bytes under ABI32
+ok 7 - Pair locals use aligned layout bytes under ABI32
+  ---
+  duration_ms: 22.745875
+  type: 'test'
+  ...
+# Subtest: Nested locals use aligned layout bytes under ABI32
+ok 8 - Nested locals use aligned layout bytes under ABI32
+  ---
+  duration_ms: 3.63832
+  type: 'test'
+  ...
+# Subtest: Small locals use aligned layout bytes under ABI32
+ok 9 - Small locals use aligned layout bytes under ABI32
+  ---
+  duration_ms: 3.126489
+  type: 'test'
+  ...
+# Subtest: Pair locals use aligned layout bytes under ABI64
+ok 10 - Pair locals use aligned layout bytes under ABI64
+  ---
+  duration_ms: 2.572586
+  type: 'test'
+  ...
+# Subtest: Nested locals use aligned layout bytes under ABI64
+ok 11 - Nested locals use aligned layout bytes under ABI64
+  ---
+  duration_ms: 2.853958
+  type: 'test'
+  ...
+# Subtest: Small locals use aligned layout bytes under ABI64
+ok 12 - Small locals use aligned layout bytes under ABI64
+  ---
+  duration_ms: 2.252406
+  type: 'test'
+  ...
+# Subtest: nested struct argument admission includes both caller and callee before allocating a frame
+ok 13 - nested struct argument admission includes both caller and callee before allocating a frame
+  ---
+  duration_ms: 7.66469
+  type: 'test'
+  ...
+# Subtest: nested layout snapshot rejection is atomic and the exact quota replays
+ok 14 - nested layout snapshot rejection is atomic and the exact quota replays
+  ---
+  duration_ms: 6.516244
+  type: 'test'
+  ...
+# Subtest: callback frame index source, precise=false: nested callbacks keep parent addresses and GC roots
+ok 15 - callback frame index source, precise=false: nested callbacks keep parent addresses and GC roots
+  ---
+  duration_ms: 136.518104
+  type: 'test'
+  ...
+# Subtest: callback frame index source, precise=true: nested callbacks keep parent addresses and GC roots
+ok 16 - callback frame index source, precise=true: nested callbacks keep parent addresses and GC roots
+  ---
+  duration_ms: 17.594767
+  type: 'test'
+  ...
+# Subtest: callback frame index cil, precise=false: nested callbacks keep parent addresses and GC roots
+ok 17 - callback frame index cil, precise=false: nested callbacks keep parent addresses and GC roots
+  ---
+  duration_ms: 33.72443
+  type: 'test'
+  ...
+# Subtest: callback frame index cil, precise=true: nested callbacks keep parent addresses and GC roots
+ok 18 - callback frame index cil, precise=true: nested callbacks keep parent addresses and GC roots
+  ---
+  duration_ms: 21.00395
+  type: 'test'
+  ...
+# Subtest: callback frame index retains disabled-scheduler storage and drops released scope membership
+ok 19 - callback frame index retains disabled-scheduler storage and drops released scope membership
+  ---
+  duration_ms: 0.554234
+  type: 'test'
+  ...
+# Subtest: typed function-pointer locals and arguments retain exact byte admission (32-bit ABI)
+ok 20 - typed function-pointer locals and arguments retain exact byte admission (32-bit ABI)
+  ---
+  duration_ms: 38.739037
+  type: 'test'
+  ...
+# Subtest: function-pointer quota preflight and replay preserve owned pointers (32-bit ABI)
+ok 21 - function-pointer quota preflight and replay preserve owned pointers (32-bit ABI)
+  ---
+  duration_ms: 15.203123
+  type: 'test'
+  ...
+# Subtest: typed function-pointer locals and arguments retain exact byte admission (64-bit ABI)
+ok 22 - typed function-pointer locals and arguments retain exact byte admission (64-bit ABI)
+  ---
+  duration_ms: 8.791955
+  type: 'test'
+  ...
+# Subtest: function-pointer quota preflight and replay preserve owned pointers (64-bit ABI)
+ok 23 - function-pointer quota preflight and replay preserve owned pointers (64-bit ABI)
+  ---
+  duration_ms: 6.599184
+  type: 'test'
+  ...
+# Subtest: prepared CIL storage authority is opaque, owned by metadata, and isolated between VM pools
+ok 24 - prepared CIL storage authority is opaque, owned by metadata, and isolated between VM pools
+  ---
+  duration_ms: 36.106149
+  type: 'test'
+  ...
+# Subtest: prepared CIL storage rejects stale shape, code owner and discarded pools
+ok 25 - prepared CIL storage rejects stale shape, code owner and discarded pools
+  ---
+  duration_ms: 5.043539
+  type: 'test'
+  ...
+# Subtest: prepared CIL retirement revokes memory leases and preserves deferred roots until scrub
+ok 26 - prepared CIL retirement revokes memory leases and preserves deferred roots until scrub
+  ---
+  duration_ms: 5.964572
+  type: 'test'
+  ...
+# Subtest: a new local shape discards cached storage and prevents late retirement into the old bucket
+ok 27 - a new local shape discards cached storage and prevents late retirement into the old bucket
+  ---
+  duration_ms: 4.191637
+  type: 'test'
+  ...
+# Subtest: prepared CIL scrub matches ordinary deletion, nonenumerability, inherited getters and setter order
+ok 28 - prepared CIL scrub matches ordinary deletion, nonenumerability, inherited getters and setter order
+  ---
+  duration_ms: 3.972275
+  type: 'test'
+  ...
+# Subtest: prepared CIL buckets preserve retention budgets and follow current stack capacity
+ok 29 - prepared CIL buckets preserve retention budgets and follow current stack capacity
+  ---
+  duration_ms: 21.784301
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit 0 is rejected at admission
+ok 30 - invalid stack byte limit 0 is rejected at admission
+  ---
+  duration_ms: 15.183024
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit 15 is rejected at admission
+ok 31 - invalid stack byte limit 15 is rejected at admission
+  ---
+  duration_ms: 1.519212
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit -1 is rejected at admission
+ok 32 - invalid stack byte limit -1 is rejected at admission
+  ---
+  duration_ms: 1.668872
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit 1.5 is rejected at admission
+ok 33 - invalid stack byte limit 1.5 is rejected at admission
+  ---
+  duration_ms: 1.115168
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit NaN is rejected at admission
+ok 34 - invalid stack byte limit NaN is rejected at admission
+  ---
+  duration_ms: 1.182937
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit Infinity is rejected at admission
+ok 35 - invalid stack byte limit Infinity is rejected at admission
+  ---
+  duration_ms: 0.929966
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit 24 is rejected at admission
+ok 36 - invalid stack byte limit 24 is rejected at admission
+  ---
+  duration_ms: 0.941743
+  type: 'test'
+  ...
+# Subtest: invalid stack byte limit null is rejected at admission
+ok 37 - invalid stack byte limit null is rejected at admission
+  ---
+  duration_ms: 0.706127
+  type: 'test'
+  ...
+# Subtest: zero-peak frames fit sixteen bytes, a single evaluation slot requires twenty-four
+ok 38 - zero-peak frames fit sixteen bytes, a single evaluation slot requires twenty-four
+  ---
+  duration_ms: 15.565706
+  type: 'test'
+  ...
+# Subtest: byte accounting follows reserved verified capacity, including inflated CLI headers
+ok 39 - byte accounting follows reserved verified capacity, including inflated CLI headers
+  ---
+  duration_ms: 2.192751
+  type: 'test'
+  ...
+# Subtest: rejected recursive call allocates no frame and leaves the caller inspectable
+ok 40 - rejected recursive call allocates no frame and leaves the caller inspectable
+  ---
+  duration_ms: 1.627521
+  type: 'test'
+  ...
+# Subtest: argument normalization failure rolls back its provisional reservation
+ok 41 - argument normalization failure rolls back its provisional reservation
+  ---
+  duration_ms: 3.62218
+  type: 'test'
+  ...
+# Subtest: Decimal, native integers and managed addresses use metadata storage widths (32-bit ABI)
+ok 42 - Decimal, native integers and managed addresses use metadata storage widths (32-bit ABI)
+  ---
+  duration_ms: 4.626476
+  type: 'test'
+  ...
+# Subtest: Decimal, native integers and managed addresses use metadata storage widths (64-bit ABI)
+ok 43 - Decimal, native integers and managed addresses use metadata storage widths (64-bit ABI)
+  ---
+  duration_ms: 2.863006
+  type: 'test'
+  ...
+# Subtest: concrete instantiated signatures determine Decimal argument and local charges
+ok 44 - concrete instantiated signatures determine Decimal argument and local charges
+  ---
+  duration_ms: 2.005786
+  type: 'test'
+  ...
+# Subtest: lowered and invalid live limits reject before dispatch or direct push
+ok 45 - lowered and invalid live limits reject before dispatch or direct push
+  ---
+  duration_ms: 2.07643
+  type: 'test'
+  ...
+# Subtest: turning on a byte limit accounts existing frames; removing it restores default admission
+ok 46 - turning on a byte limit accounts existing frames; removing it restores default admission
+  ---
+  duration_ms: 1.162547
+  type: 'test'
+  ...
+# Subtest: snapshot rejection precedes heap/frame mutation, and successful replay reconstructs live charges
+ok 47 - snapshot rejection precedes heap/frame mutation, and successful replay reconstructs live charges
+  ---
+  duration_ms: 8.74781
+  type: 'test'
+  ...
+# Subtest: parked contexts count against the VM total and parked snapshots are preflighted
+ok 48 - parked contexts count against the VM total and parked snapshots are preflighted
+  ---
+  duration_ms: 18.50963
+  type: 'test'
+  ...
+# Subtest: replaced unverified bodies reserve their checked fallback rather than stale verified capacity
+ok 49 - replaced unverified bodies reserve their checked fallback rather than stale verified capacity
+  ---
+  duration_ms: 1.445894
+  type: 'test'
+  ...
+# Subtest: exception unwind releases a callee before the next call uses the same byte budget
+ok 50 - exception unwind releases a callee before the next call uses the same byte budget
+  ---
+  duration_ms: 8.883751
+  type: 'test'
+  ...
+# Subtest: admission while enqueue switches frame arrays still accounts the parent context
+ok 51 - admission while enqueue switches frame arrays still accounts the parent context
+  ---
+  duration_ms: 2.923795
+  type: 'test'
+  ...
+# Subtest: host replacement of locals triggers byte admission before the next instruction
+ok 52 - host replacement of locals triggers byte admission before the next instruction
+  ---
+  duration_ms: 1.473245
+  type: 'test'
+  ...
+# Subtest: host replacement of signature triggers byte admission before the next instruction
+ok 53 - host replacement of signature triggers byte admission before the next instruction
+  ---
+  duration_ms: 1.323324
+  type: 'test'
+  ...
+# Subtest: host replacement of parameters triggers byte admission before the next instruction
+ok 54 - host replacement of parameters triggers byte admission before the next instruction
+  ---
+  duration_ms: 7.038299
+  type: 'test'
+  ...
+# Subtest: source: default byte admission executes 10,000 recursive calls plus entry frames
+ok 55 - source: default byte admission executes 10,000 recursive calls plus entry frames
+  ---
+  duration_ms: 206.80686
+  type: 'test'
+  ...
+# Subtest: source: the default byte limit overflows fatally before an enclosing catch can run
+ok 56 - source: the default byte limit overflows fatally before an enclosing catch can run
+  ---
+  duration_ms: 1162.997449
+  type: 'test'
+  ...
+# Subtest: source: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+ok 57 - source: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+  ---
+  duration_ms: 20.97159
+  type: 'test'
+  ...
+# Subtest: source: default admission preserves deep roots, snapshot replay and stop releases reservations
+ok 58 - source: default admission preserves deep roots, snapshot replay and stop releases reservations
+  ---
+  duration_ms: 121.657724
+  type: 'test'
+  ...
+# Subtest: reload: default byte admission executes 10,000 recursive calls plus entry frames
+ok 59 - reload: default byte admission executes 10,000 recursive calls plus entry frames
+  ---
+  duration_ms: 106.470128
+  type: 'test'
+  ...
+# Subtest: reload: the default byte limit overflows fatally before an enclosing catch can run
+ok 60 - reload: the default byte limit overflows fatally before an enclosing catch can run
+  ---
+  duration_ms: 1336.605329
+  type: 'test'
+  ...
+# Subtest: reload: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+ok 61 - reload: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+  ---
+  duration_ms: 18.800505
+  type: 'test'
+  ...
+# Subtest: reload: default admission preserves deep roots, snapshot replay and stop releases reservations
+ok 62 - reload: default admission preserves deep roots, snapshot replay and stop releases reservations
+  ---
+  duration_ms: 438.6366
+  type: 'test'
+  ...
+# Subtest: cil: default byte admission executes 10,000 recursive calls plus entry frames
+ok 63 - cil: default byte admission executes 10,000 recursive calls plus entry frames
+  ---
+  duration_ms: 502.306352
+  type: 'test'
+  ...
+# Subtest: cil: the default byte limit overflows fatally before an enclosing catch can run
+ok 64 - cil: the default byte limit overflows fatally before an enclosing catch can run
+  ---
+  duration_ms: 599.199792
+  type: 'test'
+  ...
+# Subtest: cil: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+ok 65 - cil: an explicit 512-frame ceiling still rejects atomically and bypasses catch
+  ---
+  duration_ms: 31.815365
+  type: 'test'
+  ...
+# Subtest: cil: default admission preserves deep roots, snapshot replay and stop releases reservations
+ok 66 - cil: default admission preserves deep roots, snapshot replay and stop releases reservations
+  ---
+  duration_ms: 200.860307
+  type: 'test'
+  ...
+# Subtest: source fusion modes share the same default quota and deep-call result
+ok 67 - source fusion modes share the same default quota and deep-call result
+  ---
+  duration_ms: 96.236848
+  type: 'test'
+  ...
+# Subtest: alternating methods and offsets retain independent receiver dispatch and counters
+ok 68 - alternating methods and offsets retain independent receiver dispatch and counters
+  ---
+  duration_ms: 41.2401
+  type: 'test'
+  ...
+# Subtest: a warm site still keys dispatch by operand, declaration and closed owner
+ok 69 - a warm site still keys dispatch by operand, declaration and closed owner
+  ---
+  duration_ms: 6.603451
+  type: 'test'
+  ...
+# Subtest: live capacity changes reset warm sites and still validate invalid capacities
+ok 70 - live capacity changes reset warm sites and still validate invalid capacities
+  ---
+  duration_ms: 5.301147
+  type: 'test'
+  ...
+# Subtest: prepared calls recheck epoch changes made by the initialization hook
+ok 71 - prepared calls recheck epoch changes made by the initialization hook
+  ---
+  duration_ms: 17.395493
+  type: 'test'
+  ...
+# Subtest: prepared calls recheck instructions changes made by the initialization hook
+ok 72 - prepared calls recheck instructions changes made by the initialization hook
+  ---
+  duration_ms: 8.025249
+  type: 'test'
+  ...
+# Subtest: prepared calls recheck capacity changes made by the initialization hook
+ok 73 - prepared calls recheck capacity changes made by the initialization hook
+  ---
+  duration_ms: 12.141215
+  type: 'test'
+  ...
+# Subtest: virtual cache preserves receivers 0,0,0,0
+ok 74 - virtual cache preserves receivers 0,0,0,0
+  ---
+  duration_ms: 52.388076
+  type: 'test'
+  ...
+# Subtest: virtual cache preserves receivers 0,1,2,0,1,2
+ok 75 - virtual cache preserves receivers 0,1,2,0,1,2
+  ---
+  duration_ms: 32.270253
+  type: 'test'
+  ...
+# Subtest: virtual cache preserves receivers 0,1,2,3,4,5,0
+ok 76 - virtual cache preserves receivers 0,1,2,3,4,5,0
+  ---
+  duration_ms: 37.318219
+  type: 'test'
+  ...
+# Subtest: interface cache preserves receivers 0,0,0,0
+ok 77 - interface cache preserves receivers 0,0,0,0
+  ---
+  duration_ms: 14.489544
+  type: 'test'
+  ...
+# Subtest: interface cache preserves receivers 0,1,2,0,1,2
+ok 78 - interface cache preserves receivers 0,1,2,0,1,2
+  ---
+  duration_ms: 14.888121
+  type: 'test'
+  ...
+# Subtest: interface cache preserves receivers 0,1,2,3,4,5,0
+ok 79 - interface cache preserves receivers 0,1,2,3,4,5,0
+  ---
+  duration_ms: 17.576168
+  type: 'test'
+  ...
+# Subtest: cache capacity 1 stops retaining entries after the next receiver type
+ok 80 - cache capacity 1 stops retaining entries after the next receiver type
+  ---
+  duration_ms: 20.68836
+  type: 'test'
+  ...
+# Subtest: cache capacity 16 stops retaining entries after the next receiver type
+ok 81 - cache capacity 16 stops retaining entries after the next receiver type
+  ---
+  duration_ms: 24.083749
+  type: 'test'
+  ...
+# Subtest: invalid capacities fail at the first virtual site without admitting an entry
+ok 82 - invalid capacities fail at the first virtual site without admitting an entry
+  ---
+  duration_ms: 19.852793
+  type: 'test'
+  ...
+# Subtest: warm hits validate null, unrelated and collected receivers and do not root their objects
+ok 83 - warm hits validate null, unrelated and collected receivers and do not root their objects
+  ---
+  duration_ms: 5.28274
+  type: 'test'
+  ...
+# Subtest: restored execution rebuilds call sites and preserves one-instruction budgets and results
+ok 84 - restored execution rebuilds call sites and preserves one-instruction budgets and results
+  ---
+  duration_ms: 16.674244
+  type: 'test'
+  ...
+# Subtest: body replacement, explicit invalidation and stop discard sites; VMs sharing metadata stay independent
+ok 85 - body replacement, explicit invalidation and stop discard sites; VMs sharing metadata stay independent
+  ---
+  duration_ms: 11.154416
+  type: 'test'
+  ...
+# Subtest: debugger Hot Reload invalidates warm targets only after committing new metadata
+ok 86 - debugger Hot Reload invalidates warm targets only after committing new metadata
+  ---
+  duration_ms: 9.87757
+  type: 'test'
+  ...
+# Subtest: source: profiling preserves execution, counts calls and attributes allocations without retaining frames
+ok 87 - source: profiling preserves execution, counts calls and attributes allocations without retaining frames
+  ---
+  duration_ms: 145.668032
+  type: 'test'
+  ...
+# Subtest: source: limits preserve totals and report discarded method, stack and allocation-site detail
+ok 88 - source: limits preserve totals and report discarded method, stack and allocation-site detail
+  ---
+  duration_ms: 13.979787
+  type: 'test'
+  ...
+# Subtest: source: snapshot replay keeps host counters cumulative and does not invent restored calls
+ok 89 - source: snapshot replay keeps host counters cumulative and does not invent restored calls
+  ---
+  duration_ms: 16.425551
+  type: 'test'
+  ...
+# Subtest: source: rejected options do not silently enable a different profiler capability
+ok 90 - source: rejected options do not silently enable a different profiler capability
+  ---
+  duration_ms: 64.651284
+  type: 'test'
+  ...
+# Subtest: reload: profiling preserves execution, counts calls and attributes allocations without retaining frames
+ok 91 - reload: profiling preserves execution, counts calls and attributes allocations without retaining frames
+  ---
+  duration_ms: 34.290101
+  type: 'test'
+  ...
+# Subtest: reload: limits preserve totals and report discarded method, stack and allocation-site detail
+ok 92 - reload: limits preserve totals and report discarded method, stack and allocation-site detail
+  ---
+  duration_ms: 10.94558
+  type: 'test'
+  ...
+# Subtest: reload: snapshot replay keeps host counters cumulative and does not invent restored calls
+ok 93 - reload: snapshot replay keeps host counters cumulative and does not invent restored calls
+  ---
+  duration_ms: 15.252662
+  type: 'test'
+  ...
+# Subtest: reload: rejected options do not silently enable a different profiler capability
+ok 94 - reload: rejected options do not silently enable a different profiler capability
+  ---
+  duration_ms: 77.650705
+  type: 'test'
+  ...
+# Subtest: cil: profiling preserves execution, counts calls and attributes allocations without retaining frames
+ok 95 - cil: profiling preserves execution, counts calls and attributes allocations without retaining frames
+  ---
+  duration_ms: 46.726646
+  type: 'test'
+  ...
+# Subtest: cil: limits preserve totals and report discarded method, stack and allocation-site detail
+ok 96 - cil: limits preserve totals and report discarded method, stack and allocation-site detail
+  ---
+  duration_ms: 13.356434
+  type: 'test'
+  ...
+# Subtest: cil: snapshot replay keeps host counters cumulative and does not invent restored calls
+ok 97 - cil: snapshot replay keeps host counters cumulative and does not invent restored calls
+  ---
+  duration_ms: 19.014626
+  type: 'test'
+  ...
+# Subtest: cil: rejected options do not silently enable a different profiler capability
+ok 98 - cil: rejected options do not silently enable a different profiler capability
+  ---
+  duration_ms: 53.552259
+  type: 'test'
+  ...
+# Subtest: CIL: manual stepping observes entered handlers and a faulting opcode exactly once
+ok 99 - CIL: manual stepping observes entered handlers and a faulting opcode exactly once
+  ---
+  duration_ms: 2.33409
+  type: 'test'
+  ...
+# Subtest: CIL: stack capacity overflow preserves weights in the reserved stack row
+ok 100 - CIL: stack capacity overflow preserves weights in the reserved stack row
+  ---
+  duration_ms: 13.072788
+  type: 'test'
+  ...
+# Subtest: CIL: generic method rows survive snapshot cache invalidation without merging different closed contexts
+ok 101 - CIL: generic method rows survive snapshot cache invalidation without merging different closed contexts
+  ---
+  duration_ms: 10.532255
+  type: 'test'
+  ...
+# Subtest: CIL: allocations before the first opcode are attributed to the method entry boundary
+ok 102 - CIL: allocations before the first opcode are attributed to the method entry boundary
+  ---
+  duration_ms: 1.731487
+  type: 'test'
+  ...
+# Subtest: CIL: profiler and method event observers remain independent through parked child cancellation
+ok 103 - CIL: profiler and method event observers remain independent through parked child cancellation
+  ---
+  duration_ms: 8.803511
+  type: 'test'
+  ...
+# Subtest: allocation growth adds managed bytes without inventing allocations; failed reserve adds neither
+ok 104 - allocation growth adds managed bytes without inventing allocations; failed reserve adds neither
+  ---
+  duration_ms: 5.789174
+  type: 'test'
+  ...
+# Subtest: prepared virtual calls preserve managed events, exact instruction counts and GC boundaries
+ok 105 - prepared virtual calls preserve managed events, exact instruction counts and GC boundaries
+  ---
+  duration_ms: 46.434569
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2}
+ok 106 - prepared call failure keeps ordinary quota and frame behavior {"maxFrames":2}
+  ---
+  duration_ms: 7.132763
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192}
+ok 107 - prepared call failure keeps ordinary quota and frame behavior {"maxStackBytes":192}
+  ---
+  duration_ms: 6.006832
+  type: 'test'
+  ...
+# Subtest: prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24}
+ok 108 - prepared call failure keeps ordinary quota and frame behavior {"maxInstructions":24}
+  ---
+  duration_ms: 14.454588
+  type: 'test'
+  ...
+# Subtest: one-instruction slices expose the prepared callee and restored execution rebuilds the call setup
+ok 109 - one-instruction slices expose the prepared callee and restored execution rebuilds the call setup
+  ---
+  duration_ms: 27.234101
+  type: 'test'
+  ...
+# Subtest: prepared direct frame entry normalizes arguments while the caller stack retains receiver roots
+ok 110 - prepared direct frame entry normalizes arguments while the caller stack retains receiver roots
+  ---
+  duration_ms: 34.081946
+  type: 'test'
+  ...
+# Subtest: a own host call hook continues to observe every prepared virtual target
+ok 111 - a own host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 13.623405
+  type: 'test'
+  ...
+# Subtest: a subclass host call hook continues to observe every prepared virtual target
+ok 112 - a subclass host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 12.894046
+  type: 'test'
+  ...
+# Subtest: a prototype host call hook continues to observe every prepared virtual target
+ok 113 - a prototype host call hook continues to observe every prepared virtual target
+  ---
+  duration_ms: 21.233948
+  type: 'test'
+  ...
+# Subtest: source: duration budget 1 includes each final dispatched instruction
+ok 114 - source: duration budget 1 includes each final dispatched instruction
+  ---
+  duration_ms: 100.346033
+  type: 'test'
+  ...
+# Subtest: source: duration budget 2 includes each final dispatched instruction
+ok 115 - source: duration budget 2 includes each final dispatched instruction
+  ---
+  duration_ms: 13.126356
+  type: 'test'
+  ...
+# Subtest: source: duration budget 256 includes each final dispatched instruction
+ok 116 - source: duration budget 256 includes each final dispatched instruction
+  ---
+  duration_ms: 17.028976
+  type: 'test'
+  ...
+# Subtest: source: default and explicitly disabled durations preserve the complete instruction-only view
+ok 117 - source: default and explicitly disabled durations preserve the complete instruction-only view
+  ---
+  duration_ms: 33.430156
+  type: 'test'
+  ...
+# Subtest: source: host slice gaps and snapshot idle time do not become guest duration
+ok 118 - source: host slice gaps and snapshot idle time do not become guest duration
+  ---
+  duration_ms: 12.733059
+  type: 'test'
+  ...
+# Subtest: source: recursion and stack capacity overflow retain complete exclusive duration
+ok 119 - source: recursion and stack capacity overflow retain complete exclusive duration
+  ---
+  duration_ms: 12.178177
+  type: 'test'
+  ...
+# Subtest: source: malformed duration options fail explicitly
+ok 120 - source: malformed duration options fail explicitly
+  ---
+  duration_ms: 35.218793
+  type: 'test'
+  ...
+# Subtest: source: clock callback failure stays outside guest dispatch and stop still cleans up
+ok 121 - source: clock callback failure stays outside guest dispatch and stop still cleans up
+  ---
+  duration_ms: 9.569544
+  type: 'test'
+  ...
+# Subtest: reload: duration budget 1 includes each final dispatched instruction
+ok 122 - reload: duration budget 1 includes each final dispatched instruction
+  ---
+  duration_ms: 12.790013
+  type: 'test'
+  ...
+# Subtest: reload: duration budget 2 includes each final dispatched instruction
+ok 123 - reload: duration budget 2 includes each final dispatched instruction
+  ---
+  duration_ms: 8.525424
+  type: 'test'
+  ...
+# Subtest: reload: duration budget 256 includes each final dispatched instruction
+ok 124 - reload: duration budget 256 includes each final dispatched instruction
+  ---
+  duration_ms: 7.666444
+  type: 'test'
+  ...
+# Subtest: reload: default and explicitly disabled durations preserve the complete instruction-only view
+ok 125 - reload: default and explicitly disabled durations preserve the complete instruction-only view
+  ---
+  duration_ms: 21.543691
+  type: 'test'
+  ...
+# Subtest: reload: host slice gaps and snapshot idle time do not become guest duration
+ok 126 - reload: host slice gaps and snapshot idle time do not become guest duration
+  ---
+  duration_ms: 8.05898
+  type: 'test'
+  ...
+# Subtest: reload: recursion and stack capacity overflow retain complete exclusive duration
+ok 127 - reload: recursion and stack capacity overflow retain complete exclusive duration
+  ---
+  duration_ms: 6.555297
+  type: 'test'
+  ...
+# Subtest: reload: malformed duration options fail explicitly
+ok 128 - reload: malformed duration options fail explicitly
+  ---
+  duration_ms: 34.632343
+  type: 'test'
+  ...
+# Subtest: reload: clock callback failure stays outside guest dispatch and stop still cleans up
+ok 129 - reload: clock callback failure stays outside guest dispatch and stop still cleans up
+  ---
+  duration_ms: 4.519593
+  type: 'test'
+  ...
+# Subtest: cil: duration budget 1 includes each final dispatched instruction
+ok 130 - cil: duration budget 1 includes each final dispatched instruction
+  ---
+  duration_ms: 17.794948
+  type: 'test'
+  ...
+# Subtest: cil: duration budget 2 includes each final dispatched instruction
+ok 131 - cil: duration budget 2 includes each final dispatched instruction
+  ---
+  duration_ms: 6.142731
+  type: 'test'
+  ...
+# Subtest: cil: duration budget 256 includes each final dispatched instruction
+ok 132 - cil: duration budget 256 includes each final dispatched instruction
+  ---
+  duration_ms: 5.511607
+  type: 'test'
+  ...
+# Subtest: cil: default and explicitly disabled durations preserve the complete instruction-only view
+ok 133 - cil: default and explicitly disabled durations preserve the complete instruction-only view
+  ---
+  duration_ms: 23.679647
+  type: 'test'
+  ...
+# Subtest: cil: host slice gaps and snapshot idle time do not become guest duration
+ok 134 - cil: host slice gaps and snapshot idle time do not become guest duration
+  ---
+  duration_ms: 10.100322
+  type: 'test'
+  ...
+# Subtest: cil: recursion and stack capacity overflow retain complete exclusive duration
+ok 135 - cil: recursion and stack capacity overflow retain complete exclusive duration
+  ---
+  duration_ms: 10.584201
+  type: 'test'
+  ...
+# Subtest: cil: malformed duration options fail explicitly
+ok 136 - cil: malformed duration options fail explicitly
+  ---
+  duration_ms: 33.04023
+  type: 'test'
+  ...
+# Subtest: cil: clock callback failure stays outside guest dispatch and stop still cleans up
+ok 137 - cil: clock callback failure stays outside guest dispatch and stop still cleans up
+  ---
+  duration_ms: 6.605209
+  type: 'test'
+  ...
+# Subtest: CIL: manual steps close intervals before control returns to the host
+ok 138 - CIL: manual steps close intervals before control returns to the host
+  ---
+  duration_ms: 6.710044
+  type: 'test'
+  ...
+# Subtest: CIL: non-finite, negative and regressing clock values are rejected at the host boundary
+ok 139 - CIL: non-finite, negative and regressing clock values are rejected at the host boundary
+  ---
+  duration_ms: 25.277673
+  type: 'test'
+  ...
+# Subtest: CIL: an existing guest exception remains visible when the host clock also fails
+ok 140 - CIL: an existing guest exception remains visible when the host clock also fails
+  ---
+  duration_ms: 2.692866
+  type: 'test'
+  ...
+# Subtest: CIL: stop preserves a debugger-pending guest exception while cleaning up a failed clock
+ok 141 - CIL: stop preserves a debugger-pending guest exception while cleaning up a failed clock
+  ---
+  duration_ms: 0.956232
+  type: 'test'
+  ...
+# Subtest: CIL: parked delegate duration excludes virtual waiting and host delay
+ok 142 - CIL: parked delegate duration excludes virtual waiting and host delay
+  ---
+  duration_ms: 7.519079
+  type: 'test'
+  ...
+# Subtest: source: the profiler handle is available to the initial entry call and subclass getter
+ok 143 - source: the profiler handle is available to the initial entry call and subclass getter
+  ---
+  duration_ms: 89.946384
+  type: 'test'
+  ...
+# Subtest: source: an own getter remains observable without replacing the host profiler
+ok 144 - source: an own getter remains observable without replacing the host profiler
+  ---
+  duration_ms: 13.699336
+  type: 'test'
+  ...
+# Subtest: source: changing options cannot create an observer after disabled construction
+ok 145 - source: changing options cannot create an observer after disabled construction
+  ---
+  duration_ms: 6.810621
+  type: 'test'
+  ...
+# Subtest: reload: the profiler handle is available to the initial entry call and subclass getter
+ok 146 - reload: the profiler handle is available to the initial entry call and subclass getter
+  ---
+  duration_ms: 17.718526
+  type: 'test'
+  ...
+# Subtest: reload: an own getter remains observable without replacing the host profiler
+ok 147 - reload: an own getter remains observable without replacing the host profiler
+  ---
+  duration_ms: 11.818319
+  type: 'test'
+  ...
+# Subtest: reload: changing options cannot create an observer after disabled construction
+ok 148 - reload: changing options cannot create an observer after disabled construction
+  ---
+  duration_ms: 9.466062
+  type: 'test'
+  ...
+# Subtest: cil: the profiler handle is available to the initial entry call and subclass getter
+ok 149 - cil: the profiler handle is available to the initial entry call and subclass getter
+  ---
+  duration_ms: 19.953952
+  type: 'test'
+  ...
+# Subtest: cil: an own getter remains observable without replacing the host profiler
+ok 150 - cil: an own getter remains observable without replacing the host profiler
+  ---
+  duration_ms: 10.495381
+  type: 'test'
+  ...
+# Subtest: cil: changing options cannot create an observer after disabled construction
+ok 151 - cil: changing options cannot create an observer after disabled construction
+  ---
+  duration_ms: 6.122923
+  type: 'test'
+  ...
+# Subtest: reference dependencies stay ignored while explicit hook-free runtime imports retain their own identity
+ok 152 - reference dependencies stay ignored while explicit hook-free runtime imports retain their own identity
+  ---
+  duration_ms: 362.069022
+  type: 'test'
+  ...
+# Subtest: reference dependency verification rejects changed copied entries and added paths
+ok 153 - reference dependency verification rejects changed copied entries and added paths
+  ---
+  duration_ms: 2.001863
+  type: 'test'
+  ...
+# Subtest: private construction handles and shared host allocation observers remain byte-identical
+ok 154 - private construction handles and shared host allocation observers remain byte-identical
+  ---
+  duration_ms: 4.019681
+  type: 'test'
+  ...
+# Subtest: profiler-free construction retains the exact callback with a null handle before guest entry
+ok 155 - profiler-free construction retains the exact callback with a null handle before guest entry
+  ---
+  duration_ms: 0.96862
+  type: 'test'
+  ...
+# Subtest: prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference
+ok 156 - prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference
+  ---
+  duration_ms: 1.404558
+  type: 'test'
+  ...
+# Subtest: reference removes only profiler eligibility from the integrated batching guards
+ok 157 - reference removes only profiler eligibility from the integrated batching guards
+  ---
+  duration_ms: 0.605076
+  type: 'test'
+  ...
+# Subtest: current instruction, continuation and method consumers produce syntactically valid reference modules
+ok 158 - current instruction, continuation and method consumers produce syntactically valid reference modules
+  ---
+  duration_ms: 522.411077
+  type: 'test'
+  ...
+# Subtest: option-only gates and direct profiler calls require explicit transformation review
+ok 159 - option-only gates and direct profiler calls require explicit transformation review
+  ---
+  duration_ms: 0.478101
+  type: 'test'
+  ...
+# Subtest: reference transformation deletes only reviewed consumers and preserves runtime cleanup
+ok 160 - reference transformation deletes only reviewed consumers and preserves runtime cleanup
+  ---
+  duration_ms: 23.441383
+  type: 'test'
+  ...
+# Subtest: reference creation refuses unknown hook sites and newly introduced profiler behavior
+ok 161 - reference creation refuses unknown hook sites and newly introduced profiler behavior
+  ---
+  duration_ms: 2.656653
+  type: 'test'
+  ...
+# Subtest: numeric block reference retains all non-profiler observation guards
+ok 162 - numeric block reference retains all non-profiler observation guards
+  ---
+  duration_ms: 0.329273
+  type: 'test'
+  ...
+# Subtest: object-value reference preserves reviewed CIL work and source fault/cleanup boundaries
+ok 163 - object-value reference preserves reviewed CIL work and source fault/cleanup boundaries
+  ---
+  duration_ms: 0.389161
+  type: 'test'
+  ...
+# Subtest: reviewed array continuation hooks preserve their exact resume/result and fault-cleanup semantics
+ok 164 - reviewed array continuation hooks preserve their exact resume/result and fault-cleanup semantics
+  ---
+  duration_ms: 0.505651
+  type: 'test'
+  ...
+# Subtest: profiler reference rejects oversized input before parsing or importing another runtime
+ok 165 - profiler reference rejects oversized input before parsing or importing another runtime
+  ---
+  duration_ms: 2.705395
+  type: 'test'
+  ...
+# Subtest: source dispatch reference removes only the exact reviewed profiling wrapper and keeps dispatch selection
+ok 166 - source dispatch reference removes only the exact reviewed profiling wrapper and keeps dispatch selection
+  ---
+  duration_ms: 0.60711
+  type: 'test'
+  ...
+# Subtest: source: real suspension counts once with runtime events disabled and waking does not add a count
+ok 167 - source: real suspension counts once with runtime events disabled and waking does not add a count
+  ---
+  duration_ms: 100.429745
+  type: 'test'
+  ...
+# Subtest: source: ordinary slices, debugger pauses and self-selected quanta are not suspensions
+ok 168 - source: ordinary slices, debugger pauses and self-selected quanta are not suspensions
+  ---
+  duration_ms: 16.378502
+  type: 'test'
+  ...
+# Subtest: source: a new child activation counts only its later suspension
+ok 169 - source: a new child activation counts only its later suspension
+  ---
+  duration_ms: 19.671609
+  type: 'test'
+  ...
+# Subtest: source: real context switches contribute without changing program output or instructions
+ok 170 - source: real context switches contribute without changing program output or instructions
+  ---
+  duration_ms: 6.455395
+  type: 'test'
+  ...
+# Subtest: source: restore preserves cumulative counts and does not replay a parked snapshot suspension
+ok 171 - source: restore preserves cumulative counts and does not replay a parked snapshot suspension
+  ---
+  duration_ms: 11.948744
+  type: 'test'
+  ...
+# Subtest: source: freezing parks once while cancellation and repeated stop do not invent counts
+ok 172 - source: freezing parks once while cancellation and repeated stop do not invent counts
+  ---
+  duration_ms: 3.680633
+  type: 'test'
+  ...
+# Subtest: source: profiling off leaves the observer absent through waiting and snapshot replay
+ok 173 - source: profiling off leaves the observer absent through waiting and snapshot replay
+  ---
+  duration_ms: 3.325585
+  type: 'test'
+  ...
+# Subtest: reload: real suspension counts once with runtime events disabled and waking does not add a count
+ok 174 - reload: real suspension counts once with runtime events disabled and waking does not add a count
+  ---
+  duration_ms: 14.326335
+  type: 'test'
+  ...
+# Subtest: reload: ordinary slices, debugger pauses and self-selected quanta are not suspensions
+ok 175 - reload: ordinary slices, debugger pauses and self-selected quanta are not suspensions
+  ---
+  duration_ms: 4.710767
+  type: 'test'
+  ...
+# Subtest: reload: a new child activation counts only its later suspension
+ok 176 - reload: a new child activation counts only its later suspension
+  ---
+  duration_ms: 4.952571
+  type: 'test'
+  ...
+# Subtest: reload: real context switches contribute without changing program output or instructions
+ok 177 - reload: real context switches contribute without changing program output or instructions
+  ---
+  duration_ms: 18.435976
+  type: 'test'
+  ...
+# Subtest: reload: restore preserves cumulative counts and does not replay a parked snapshot suspension
+ok 178 - reload: restore preserves cumulative counts and does not replay a parked snapshot suspension
+  ---
+  duration_ms: 7.641086
+  type: 'test'
+  ...
+# Subtest: reload: freezing parks once while cancellation and repeated stop do not invent counts
+ok 179 - reload: freezing parks once while cancellation and repeated stop do not invent counts
+  ---
+  duration_ms: 6.692601
+  type: 'test'
+  ...
+# Subtest: reload: profiling off leaves the observer absent through waiting and snapshot replay
+ok 180 - reload: profiling off leaves the observer absent through waiting and snapshot replay
+  ---
+  duration_ms: 7.005828
+  type: 'test'
+  ...
+# Subtest: cil: real suspension counts once with runtime events disabled and waking does not add a count
+ok 181 - cil: real suspension counts once with runtime events disabled and waking does not add a count
+  ---
+  duration_ms: 14.667594
+  type: 'test'
+  ...
+# Subtest: cil: ordinary slices, debugger pauses and self-selected quanta are not suspensions
+ok 182 - cil: ordinary slices, debugger pauses and self-selected quanta are not suspensions
+  ---
+  duration_ms: 4.122419
+  type: 'test'
+  ...
+# Subtest: cil: a new child activation counts only its later suspension
+ok 183 - cil: a new child activation counts only its later suspension
+  ---
+  duration_ms: 5.133064
+  type: 'test'
+  ...
+# Subtest: cil: real context switches contribute without changing program output or instructions
+ok 184 - cil: real context switches contribute without changing program output or instructions
+  ---
+  duration_ms: 11.12386
+  type: 'test'
+  ...
+# Subtest: cil: restore preserves cumulative counts and does not replay a parked snapshot suspension
+ok 185 - cil: restore preserves cumulative counts and does not replay a parked snapshot suspension
+  ---
+  duration_ms: 8.742013
+  type: 'test'
+  ...
+# Subtest: cil: freezing parks once while cancellation and repeated stop do not invent counts
+ok 186 - cil: freezing parks once while cancellation and repeated stop do not invent counts
+  ---
+  duration_ms: 8.624732
+  type: 'test'
+  ...
+# Subtest: cil: profiling off leaves the observer absent through waiting and snapshot replay
+ok 187 - cil: profiling off leaves the observer absent through waiting and snapshot replay
+  ---
+  duration_ms: 13.32225
+  type: 'test'
+  ...
+# Subtest: CIL: independent event and profiler observers agree on actual switches before ring eviction
+ok 188 - CIL: independent event and profiler observers agree on actual switches before ring eviction
+  ---
+  duration_ms: 5.698099
+  type: 'test'
+  ...
+# Subtest: CIL: cumulative suspension counts survive event loss and host subscriber errors
+ok 189 - CIL: cumulative suspension counts survive event loss and host subscriber errors
+  ---
+  duration_ms: 7.525117
+  type: 'test'
+  ...
+# Subtest: CIL: event transitions still work when profiling is disabled
+ok 190 - CIL: event transitions still work when profiling is disabled
+  ---
+  duration_ms: 3.022293
+  type: 'test'
+  ...
+# Subtest: qualification defaults retain the actual full acceptance counts and explicit runner
+ok 191 - qualification defaults retain the actual full acceptance counts and explicit runner
+  ---
+  duration_ms: 1.505098
+  type: 'test'
+  ...
+# Subtest: qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite
+ok 192 - qualification options reject unsafe sizes, duplicate flags and accidental reference overwrite
+  ---
+  duration_ms: 0.528341
+  type: 'test'
+  ...
+# Subtest: qualification never promotes unavailable, reduced-count or uncertain targets to completion
+ok 193 - qualification never promotes unavailable, reduced-count or uncertain targets to completion
+  ---
+  duration_ms: 0.410339
+  type: 'test'
+  ...
+# Subtest: one bounded source batch crosses real managed calls and returns with cleared retired storage
+ok 194 - one bounded source batch crosses real managed calls and returns with cleared retired storage
+  ---
+  duration_ms: 7.592445
+  type: 'test'
+  ...
+# Subtest: source batches retain exact intermediate frames and quotas at every call/return boundary
+ok 195 - source batches retain exact intermediate frames and quotas at every call/return boundary
+  ---
+  duration_ms: 20.63691
+  type: 'test'
+  ...
+# Subtest: a fault in a later batched callee retains its executing method, frame, PC and partial stack
+ok 196 - a fault in a later batched callee retains its executing method, frame, PC and partial stack
+  ---
+  duration_ms: 3.049272
+  type: 'test'
+  ...
+# Subtest: a batched exception exits before a protected caller resumes catch and finally work
+ok 197 - a batched exception exits before a protected caller resumes catch and finally work
+  ---
+  duration_ms: 130.119979
+  type: 'test'
+  ...
+# Subtest: unprepared calls end a batch before the callee body even when its blocks are eligible
+ok 198 - unprepared calls end a batch before the callee body even when its blocks are eligible
+  ---
+  duration_ms: 0.594047
+  type: 'test'
+  ...
+# Subtest: bounded batches preserve live caller stack roots across an allocating callee constant
+ok 199 - bounded batches preserve live caller stack roots across an allocating callee constant
+  ---
+  duration_ms: 3.125393
+  type: 'test'
+  ...
+# Subtest: successful scalar blocks omit only an empty retirement flush
+ok 200 - successful scalar blocks omit only an empty retirement flush
+  ---
+  duration_ms: 9.924559
+  type: 'test'
+  ...
+# Subtest: an initial pending retirement survives as a root and flushes at the scalar block boundary
+ok 201 - an initial pending retirement survives as a root and flushes at the scalar block boundary
+  ---
+  duration_ms: 2.677559
+  type: 'test'
+  ...
+# Subtest: scalar block host edits flush the actual current pool, replacement=false
+ok 202 - scalar block host edits flush the actual current pool, replacement=false
+  ---
+  duration_ms: 0.896289
+  type: 'test'
+  ...
+# Subtest: scalar block host edits flush the actual current pool, replacement=true
+ok 203 - scalar block host edits flush the actual current pool, replacement=true
+  ---
+  duration_ms: 0.724658
+  type: 'test'
+  ...
+# Subtest: a failed scalar block always flushes and preserves its exact fault address
+ok 204 - a failed scalar block always flushes and preserves its exact fault address
+  ---
+  duration_ms: 3.589661
+  type: 'test'
+  ...
+# Subtest: call and return blocks keep unconditional retirement boundaries
+ok 205 - call and return blocks keep unconditional retirement boundaries
+  ---
+  duration_ms: 1.359675
+  type: 'test'
+  ...
+# Subtest: retirement elision preserves quota, pooling statistics and custom adapter boundaries
+ok 206 - retirement elision preserves quota, pooling statistics and custom adapter boundaries
+  ---
+  duration_ms: 10.894836
+  type: 'test'
+  ...
+# Subtest: a custom adapter that stops execution keeps the ordinary disposal boundary
+ok 207 - a custom adapter that stops execution keeps the ordinary disposal boundary
+  ---
+  duration_ms: 0.991227
+  type: 'test'
+  ...
+# Subtest: source fusion preserves every bounded slice, retained store value and local write count
+ok 208 - source fusion preserves every bounded slice, retained store value and local write count
+  ---
+  duration_ms: 26.856549
+  type: 'test'
+  ...
+# Subtest: faulting fused loads and arithmetic preserve the failing PC, partial stack and charge
+ok 209 - faulting fused loads and arithmetic preserve the failing PC, partial stack and charge
+  ---
+  duration_ms: 7.949165
+  type: 'test'
+  ...
+# Subtest: source fusion neither crosses the instruction limit nor suppresses stack admission
+ok 210 - source fusion neither crosses the instruction limit nor suppresses stack admission
+  ---
+  duration_ms: 18.570141
+  type: 'test'
+  ...
+# Subtest: source fusion cannot skip the 256-instruction wall-clock polling boundary
+ok 211 - source fusion cannot skip the 256-instruction wall-clock polling boundary
+  ---
+  duration_ms: 2.316812
+  type: 'test'
+  ...
+# Subtest: a branch entering a candidate interior prevents its fusion
+ok 212 - a branch entering a candidate interior prevents its fusion
+  ---
+  duration_ms: 0.524956
+  type: 'test'
+  ...
+# Subtest: preparation reports real work, remains private and follows code/owner/epoch replacement and stop
+ok 213 - preparation reports real work, remains private and follows code/owner/epoch replacement and stop
+  ---
+  duration_ms: 2.560137
+  type: 'test'
+  ...
+# Subtest: source fusion resumes after ordinary in-memory snapshot replay without serializing a plan
+ok 214 - source fusion resumes after ordinary in-memory snapshot replay without serializing a plan
+  ---
+  duration_ms: 4.52764
+  type: 'test'
+  ...
+# Subtest: debugger, writes, runtime events, profiler and cooperative contexts retain individual dispatch
+ok 215 - debugger, writes, runtime events, profiler and cooperative contexts retain individual dispatch
+  ---
+  duration_ms: 5.502073
+  type: 'test'
+  ...
+# Subtest: current typed source arithmetic retains scalar width, IEEE bits, Decimal scale and store identity
+ok 216 - current typed source arithmetic retains scalar width, IEEE bits, Decimal scale and store identity
+  ---
+  duration_ms: 5.889829
+  type: 'test'
+  ...
+# Subtest: source execution preserves output and exact sequence stops
+ok 217 - source execution preserves output and exact sequence stops
+  ---
+  duration_ms: 155.986083
+  type: 'test'
+  ...
+# Subtest: reloaded execution preserves output and exact sequence stops
+ok 218 - reloaded execution preserves output and exact sequence stops
+  ---
+  duration_ms: 44.503072
+  type: 'test'
+  ...
+# Subtest: prepared recursive calls preserve frame identities at every slice, reload=false
+ok 219 - prepared recursive calls preserve frame identities at every slice, reload=false
+  ---
+  duration_ms: 208.568171
+  type: 'test'
+  ...
+# Subtest: prepared calls preserve failed depth and stack-byte admission, reload=false
+ok 220 - prepared calls preserve failed depth and stack-byte admission, reload=false
+  ---
+  duration_ms: 12.927333
+  type: 'test'
+  ...
+# Subtest: prepared recursive calls preserve frame identities at every slice, reload=true
+ok 221 - prepared recursive calls preserve frame identities at every slice, reload=true
+  ---
+  duration_ms: 46.264325
+  type: 'test'
+  ...
+# Subtest: prepared calls preserve failed depth and stack-byte admission, reload=true
+ok 222 - prepared calls preserve failed depth and stack-byte admission, reload=true
+  ---
+  duration_ms: 11.045355
+  type: 'test'
+  ...
+# Subtest: prepared call descriptors invalidate when a callee storage shape is replaced
+ok 223 - prepared call descriptors invalidate when a callee storage shape is replaced
+  ---
+  duration_ms: 7.965379
+  type: 'test'
+  ...
+# Subtest: aggregate targets retain ordinary call preparation
+ok 224 - aggregate targets retain ordinary call preparation
+  ---
+  duration_ms: 77.726037
+  type: 'test'
+  ...
+# Subtest: prepared frame authority cannot be forged or used with another source image
+ok 225 - prepared frame authority cannot be forged or used with another source image
+  ---
+  duration_ms: 11.512708
+  type: 'test'
+  ...
+# Subtest: shared prepared metadata binds to separate VM-owned storage
+ok 226 - shared prepared metadata binds to separate VM-owned storage
+  ---
+  duration_ms: 1.745087
+  type: 'test'
+  ...
+# Subtest: changed method shape and a discarded pool cannot reuse prepared storage
+ok 227 - changed method shape and a discarded pool cannot reuse prepared storage
+  ---
+  duration_ms: 1.031897
+  type: 'test'
+  ...
+# Subtest: prepared retirement preserves temporary roots, revokes leases and clears every late own field
+ok 228 - prepared retirement preserves temporary roots, revokes leases and clears every late own field
+  ---
+  duration_ms: 3.805867
+  type: 'test'
+  ...
+# Subtest: prepared cleanup skips inherited getters and allocates no Object.keys array
+ok 229 - prepared cleanup skips inherited getters and allocates no Object.keys array
+  ---
+  duration_ms: 1.163899
+  type: 'test'
+  ...
+# Subtest: prepared cleanup preserves ordinary deleted and nonenumerable factory-field behavior
+ok 230 - prepared cleanup preserves ordinary deleted and nonenumerable factory-field behavior
+  ---
+  duration_ms: 0.93854
+  type: 'test'
+  ...
+# Subtest: prepared storage keeps ordinary retention budgets and statistics
+ok 231 - prepared storage keeps ordinary retention budgets and statistics
+  ---
+  duration_ms: 2.009584
+  type: 'test'
+  ...
+# Subtest: source slices capture observer identity once but retain dynamic instruction-method lookup
+not ok 232 - source slices capture observer identity once but retain dynamic instruction-method lookup
+  ---
+  duration_ms: 141.34312
+  type: 'test'
+  location: '/workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-profiler-dispatch.test.js:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-profiler-dispatch.test.js:38:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: source sequence pause and exhausted slice budget do not emit instruction observations
+not ok 233 - source sequence pause and exhausted slice budget do not emit instruction observations
+  ---
+  duration_ms: 12.261571
+  type: 'test'
+  location: '/workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-profiler-dispatch.test.js:51:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'faulted'
+    - 'paused'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'paused'
+  actual: 'faulted'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-source-profiler-dispatch.test.js:64:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: an instruction observer failure retains fault accounting and slice finalization before opcode execution
+ok 234 - an instruction observer failure retains fault accounting and slice finalization before opcode execution
+  ---
+  duration_ms: 13.461301
+  type: 'test'
+  ...
+# Subtest: real source profiling counts each budget-one instruction and fault exactly as ordinary execution
+ok 235 - real source profiling counts each budget-one instruction and fault exactly as ordinary execution
+  ---
+  duration_ms: 27.208177
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit 0 before frame allocation
+ok 236 - source rejects invalid byte limit 0 before frame allocation
+  ---
+  duration_ms: 2.634462
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit 15 before frame allocation
+ok 237 - source rejects invalid byte limit 15 before frame allocation
+  ---
+  duration_ms: 0.218286
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit -1 before frame allocation
+ok 238 - source rejects invalid byte limit -1 before frame allocation
+  ---
+  duration_ms: 0.155245
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit NaN before frame allocation
+ok 239 - source rejects invalid byte limit NaN before frame allocation
+  ---
+  duration_ms: 0.145631
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit Infinity before frame allocation
+ok 240 - source rejects invalid byte limit Infinity before frame allocation
+  ---
+  duration_ms: 0.149667
+  type: 'test'
+  ...
+# Subtest: source rejects invalid byte limit 24 before frame allocation
+ok 241 - source rejects invalid byte limit 24 before frame allocation
+  ---
+  duration_ms: 0.190496
+  type: 'test'
+  ...
+# Subtest: source entry reserves its verified peak and source arguments are counted only in locals
+ok 242 - source entry reserves its verified peak and source arguments are counted only in locals
+  ---
+  duration_ms: 13.655512
+  type: 'test'
+  ...
+# Subtest: construction failure rolls back source reservation before a subsequent call
+ok 243 - construction failure rolls back source reservation before a subsequent call
+  ---
+  duration_ms: 1.547766
+  type: 'test'
+  ...
+# Subtest: a source catch cannot turn byte-budget overflow into successful execution
+ok 244 - a source catch cannot turn byte-budget overflow into successful execution
+  ---
+  duration_ms: 2.216857
+  type: 'test'
+  ...
+# Subtest: source scalar local widths include Decimal and configured native ABI32
+ok 245 - source scalar local widths include Decimal and configured native ABI32
+  ---
+  duration_ms: 1.533245
+  type: 'test'
+  ...
+# Subtest: source scalar local widths include Decimal and configured native ABI64
+ok 246 - source scalar local widths include Decimal and configured native ABI64
+  ---
+  duration_ms: 2.031988
+  type: 'test'
+  ...
+# Subtest: host limit edits reject before pc, instruction count and profiler dispatch advance
+ok 247 - host limit edits reject before pc, instruction count and profiler dispatch advance
+  ---
+  duration_ms: 3.903743
+  type: 'test'
+  ...
+# Subtest: re-enabling the quota includes a context enqueued while admission was disabled
+ok 248 - re-enabling the quota includes a context enqueued while admission was disabled
+  ---
+  duration_ms: 3.016346
+  type: 'test'
+  ...
+# Subtest: new source bodies are reverified, and in-place edits use explicit code invalidation
+ok 249 - new source bodies are reverified, and in-place edits use explicit code invalidation
+  ---
+  duration_ms: 1.147345
+  type: 'test'
+  ...
+# Subtest: active shared-stack snapshot preflight is atomic and replay reconstructs the same reservations
+ok 250 - active shared-stack snapshot preflight is atomic and replay reconstructs the same reservations
+  ---
+  duration_ms: 8.556033
+  type: 'test'
+  ...
+# Subtest: source: typed calls and finally returns preserve output with logical byte admission
+ok 251 - source: typed calls and finally returns preserve output with logical byte admission
+  ---
+  duration_ms: 113.731814
+  type: 'test'
+  ...
+# Subtest: reload: typed calls and finally returns preserve output with logical byte admission
+ok 252 - reload: typed calls and finally returns preserve output with logical byte admission
+  ---
+  duration_ms: 19.561291
+  type: 'test'
+  ...
+# Subtest: cil: typed calls and finally returns preserve output with logical byte admission
+ok 253 - cil: typed calls and finally returns preserve output with logical byte admission
+  ---
+  duration_ms: 24.77082
+  type: 'test'
+  ...
+# Subtest: source: parked async frames participate in restore quotas and release on cancellation
+ok 254 - source: parked async frames participate in restore quotas and release on cancellation
+  ---
+  duration_ms: 24.025188
+  type: 'test'
+  ...
+# Subtest: reload: parked async frames participate in restore quotas and release on cancellation
+ok 255 - reload: parked async frames participate in restore quotas and release on cancellation
+  ---
+  duration_ms: 20.762544
+  type: 'test'
+  ...
+# Subtest: source: warmed method quota includes an in-place declared local growth before frame allocation
+ok 256 - source: warmed method quota includes an in-place declared local growth before frame allocation
+  ---
+  duration_ms: 16.517936
+  type: 'test'
+  ...
+# Subtest: source: a live frame observes metadata-only growth before another instruction or counter update
+ok 257 - source: a live frame observes metadata-only growth before another instruction or counter update
+  ---
+  duration_ms: 1.597468
+  type: 'test'
+  ...
+# Subtest: CIL: a warmed method reserves widened locals at the exact byte boundary
+ok 258 - CIL: a warmed method reserves widened locals at the exact byte boundary
+  ---
+  duration_ms: 13.688561
+  type: 'test'
+  ...
+# Subtest: CIL: live locals growth is admitted again before step or direct push
+ok 259 - CIL: live locals growth is admitted again before step or direct push
+  ---
+  duration_ms: 2.521279
+  type: 'test'
+  ...
+# Subtest: CIL: a warmed method reserves widened parameters at the exact byte boundary
+ok 260 - CIL: a warmed method reserves widened parameters at the exact byte boundary
+  ---
+  duration_ms: 3.316261
+  type: 'test'
+  ...
+# Subtest: CIL: live parameters growth is admitted again before step or direct push
+ok 261 - CIL: live parameters growth is admitted again before step or direct push
+  ---
+  duration_ms: 3.471266
+  type: 'test'
+  ...
+# Subtest: source: retiring and reusing one frame keeps exact quota charges and idempotent release
+ok 262 - source: retiring and reusing one frame keeps exact quota charges and idempotent release
+  ---
+  duration_ms: 9.963917
+  type: 'test'
+  ...
+# Subtest: source: restore and epoch changes rebuild live charges after prior frame reuse
+ok 263 - source: restore and epoch changes rebuild live charges after prior frame reuse
+  ---
+  duration_ms: 6.518367
+  type: 'test'
+  ...
+# Subtest: source: a failed reentrant allocator releases only its own provisional reservation
+ok 264 - source: a failed reentrant allocator releases only its own provisional reservation
+  ---
+  duration_ms: 0.886817
+  type: 'test'
+  ...
+# Subtest: reloaded: retiring and reusing one frame keeps exact quota charges and idempotent release
+ok 265 - reloaded: retiring and reusing one frame keeps exact quota charges and idempotent release
+  ---
+  duration_ms: 10.725401
+  type: 'test'
+  ...
+# Subtest: reloaded: restore and epoch changes rebuild live charges after prior frame reuse
+ok 266 - reloaded: restore and epoch changes rebuild live charges after prior frame reuse
+  ---
+  duration_ms: 7.531217
+  type: 'test'
+  ...
+# Subtest: reloaded: a failed reentrant allocator releases only its own provisional reservation
+ok 267 - reloaded: a failed reentrant allocator releases only its own provisional reservation
+  ---
+  duration_ms: 4.657288
+  type: 'test'
+  ...
+# Subtest: cil: retiring and reusing one frame keeps exact quota charges and idempotent release
+ok 268 - cil: retiring and reusing one frame keeps exact quota charges and idempotent release
+  ---
+  duration_ms: 16.039923
+  type: 'test'
+  ...
+# Subtest: cil: restore and epoch changes rebuild live charges after prior frame reuse
+ok 269 - cil: restore and epoch changes rebuild live charges after prior frame reuse
+  ---
+  duration_ms: 4.305667
+  type: 'test'
+  ...
+# Subtest: cil: a failed reentrant allocator releases only its own provisional reservation
+ok 270 - cil: a failed reentrant allocator releases only its own provisional reservation
+  ---
+  duration_ms: 1.944902
+  type: 'test'
+  ...
+# Subtest: reservation scopes reuse inactive tickets with a bounded retained pool
+ok 271 - reservation scopes reuse inactive tickets with a bounded retained pool
+  ---
+  duration_ms: 1.944842
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after epoch
+ok 272 - an outstanding ticket cannot alter the replacement budget after epoch
+  ---
+  duration_ms: 1.692285
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after quota-disabled
+ok 273 - an outstanding ticket cannot alter the replacement budget after quota-disabled
+  ---
+  duration_ms: 1.175265
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after restore
+ok 274 - an outstanding ticket cannot alter the replacement budget after restore
+  ---
+  duration_ms: 2.002936
+  type: 'test'
+  ...
+# Subtest: an outstanding ticket cannot alter the replacement budget after stop
+ok 275 - an outstanding ticket cannot alter the replacement budget after stop
+  ---
+  duration_ms: 1.357459
+  type: 'test'
+  ...
+# Subtest: source: a failed root-pin setup also closes its reservation scope
+ok 276 - source: a failed root-pin setup also closes its reservation scope
+  ---
+  duration_ms: 0.683832
+  type: 'test'
+  ...
+# Subtest: reloaded: a failed root-pin setup also closes its reservation scope
+ok 277 - reloaded: a failed root-pin setup also closes its reservation scope
+  ---
+  duration_ms: 3.271406
+  type: 'test'
+  ...
+# Subtest: a post-commit registration failure cannot cancel a reentrant reservation
+ok 278 - a post-commit registration failure cannot cancel a reentrant reservation
+  ---
+  duration_ms: 8.335414
+  type: 'test'
+  ...
+# Subtest: source ABI32: optional Decimal retains its complete stack charge
+ok 279 - source ABI32: optional Decimal retains its complete stack charge
+  ---
+  duration_ms: 22.192609
+  type: 'test'
+  ...
+# Subtest: source ABI32: optional large struct retains its complete stack charge
+ok 280 - source ABI32: optional large struct retains its complete stack charge
+  ---
+  duration_ms: 6.884338
+  type: 'test'
+  ...
+# Subtest: source ABI32: optional large struct byref retains its complete stack charge
+ok 281 - source ABI32: optional large struct byref retains its complete stack charge
+  ---
+  duration_ms: 3.874642
+  type: 'test'
+  ...
+# Subtest: source ABI64: optional Decimal retains its complete stack charge
+ok 282 - source ABI64: optional Decimal retains its complete stack charge
+  ---
+  duration_ms: 2.638058
+  type: 'test'
+  ...
+# Subtest: source ABI64: optional large struct retains its complete stack charge
+ok 283 - source ABI64: optional large struct retains its complete stack charge
+  ---
+  duration_ms: 2.824448
+  type: 'test'
+  ...
+# Subtest: source ABI64: optional large struct byref retains its complete stack charge
+ok 284 - source ABI64: optional large struct byref retains its complete stack charge
+  ---
+  duration_ms: 2.567044
+  type: 'test'
+  ...
+# Subtest: cil ABI32: optional Decimal retains its complete stack charge
+ok 285 - cil ABI32: optional Decimal retains its complete stack charge
+  ---
+  duration_ms: 29.065432
+  type: 'test'
+  ...
+# Subtest: cil ABI32: optional large struct retains its complete stack charge
+ok 286 - cil ABI32: optional large struct retains its complete stack charge
+  ---
+  duration_ms: 6.687383
+  type: 'test'
+  ...
+# Subtest: cil ABI32: optional large struct byref retains its complete stack charge
+ok 287 - cil ABI32: optional large struct byref retains its complete stack charge
+  ---
+  duration_ms: 6.466131
+  type: 'test'
+  ...
+# Subtest: cil ABI32: optional closed generic struct retains its complete stack charge
+ok 288 - cil ABI32: optional closed generic struct retains its complete stack charge
+  ---
+  duration_ms: 8.790544
+  type: 'test'
+  ...
+# Subtest: cil ABI64: optional Decimal retains its complete stack charge
+ok 289 - cil ABI64: optional Decimal retains its complete stack charge
+  ---
+  duration_ms: 5.01047
+  type: 'test'
+  ...
+# Subtest: cil ABI64: optional large struct retains its complete stack charge
+ok 290 - cil ABI64: optional large struct retains its complete stack charge
+  ---
+  duration_ms: 35.248953
+  type: 'test'
+  ...
+# Subtest: cil ABI64: optional large struct byref retains its complete stack charge
+ok 291 - cil ABI64: optional large struct byref retains its complete stack charge
+  ---
+  duration_ms: 9.127643
+  type: 'test'
+  ...
+# Subtest: cil ABI64: optional closed generic struct retains its complete stack charge
+ok 292 - cil ABI64: optional closed generic struct retains its complete stack charge
+  ---
+  duration_ms: 8.691501
+  type: 'test'
+  ...
+# Subtest: source ABI32: System.ArgIterator reserves its exact logical stack width
+ok 293 - source ABI32: System.ArgIterator reserves its exact logical stack width
+  ---
+  duration_ms: 21.81686
+  type: 'test'
+  ...
+# Subtest: source ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width
+ok 294 - source ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width
+  ---
+  duration_ms: 1.868103
+  type: 'test'
+  ...
+# Subtest: source ABI32: System.TypedReference reserves its exact logical stack width
+ok 295 - source ABI32: System.TypedReference reserves its exact logical stack width
+  ---
+  duration_ms: 1.277035
+  type: 'test'
+  ...
+# Subtest: source ABI32: typedref reserves its exact logical stack width
+ok 296 - source ABI32: typedref reserves its exact logical stack width
+  ---
+  duration_ms: 1.03589
+  type: 'test'
+  ...
+# Subtest: source ABI64: System.ArgIterator reserves its exact logical stack width
+ok 297 - source ABI64: System.ArgIterator reserves its exact logical stack width
+  ---
+  duration_ms: 1.300279
+  type: 'test'
+  ...
+# Subtest: source ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width
+ok 298 - source ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width
+  ---
+  duration_ms: 0.900772
+  type: 'test'
+  ...
+# Subtest: source ABI64: System.TypedReference reserves its exact logical stack width
+ok 299 - source ABI64: System.TypedReference reserves its exact logical stack width
+  ---
+  duration_ms: 1.019517
+  type: 'test'
+  ...
+# Subtest: source ABI64: typedref reserves its exact logical stack width
+ok 300 - source ABI64: typedref reserves its exact logical stack width
+  ---
+  duration_ms: 0.969874
+  type: 'test'
+  ...
+# Subtest: cil ABI32: System.ArgIterator reserves its exact logical stack width
+ok 301 - cil ABI32: System.ArgIterator reserves its exact logical stack width
+  ---
+  duration_ms: 20.142792
+  type: 'test'
+  ...
+# Subtest: cil ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width
+ok 302 - cil ABI32: System.RuntimeArgumentHandle reserves its exact logical stack width
+  ---
+  duration_ms: 3.547348
+  type: 'test'
+  ...
+# Subtest: cil ABI32: System.TypedReference reserves its exact logical stack width
+ok 303 - cil ABI32: System.TypedReference reserves its exact logical stack width
+  ---
+  duration_ms: 3.033033
+  type: 'test'
+  ...
+# Subtest: cil ABI32: typedref reserves its exact logical stack width
+ok 304 - cil ABI32: typedref reserves its exact logical stack width
+  ---
+  duration_ms: 3.921797
+  type: 'test'
+  ...
+# Subtest: cil ABI64: System.ArgIterator reserves its exact logical stack width
+ok 305 - cil ABI64: System.ArgIterator reserves its exact logical stack width
+  ---
+  duration_ms: 6.652677
+  type: 'test'
+  ...
+# Subtest: cil ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width
+ok 306 - cil ABI64: System.RuntimeArgumentHandle reserves its exact logical stack width
+  ---
+  duration_ms: 5.119286
+  type: 'test'
+  ...
+# Subtest: cil ABI64: System.TypedReference reserves its exact logical stack width
+ok 307 - cil ABI64: System.TypedReference reserves its exact logical stack width
+  ---
+  duration_ms: 4.518684
+  type: 'test'
+  ...
+# Subtest: cil ABI64: typedref reserves its exact logical stack width
+ok 308 - cil ABI64: typedref reserves its exact logical stack width
+  ---
+  duration_ms: 3.752154
+  type: 'test'
+  ...
+1..308
+# tests 308
+# suites 0
+# pass 306
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37273.350056

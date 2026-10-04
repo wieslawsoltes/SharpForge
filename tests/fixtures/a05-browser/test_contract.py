@@ -1,13 +1,27 @@
 """No browser is simulated here: test only the evidence validator's rejection contract."""
 import tempfile
 import unittest
+import json
 from pathlib import Path
 
-from qualify import expected_csp
+from qualify import CASES, expected_csp, write_report
 from speedscope import assert_table, unpack_official
 
 
 class EvidenceContract(unittest.TestCase):
+    def test_compiled_heap_case_is_required_in_addition_to_the_original_seven_cases(self):
+        original = ('wasm-execution', 'debugger-deopt', 'profile-exports', 'csp-denied-fallback',
+                    'speedscope-source', 'speedscope-reload', 'speedscope-cil')
+        self.assertEqual(CASES, (*original, 'wasm-heap-bridge'))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'report.json'
+            report = {'cases': [{'id': name, 'passed': name in original} for name in CASES]}
+            write_report(path, report)
+            self.assertFalse(json.loads(path.read_text())['passed'])
+            report['cases'][-1]['passed'] = True
+            write_report(path, report)
+            self.assertTrue(json.loads(path.read_text())['passed'])
+
     def setUp(self):
         self.expected = {'instructions': 42, 'methods': [
             {'name': 'Program::Main', 'total': 42, 'self': 30},

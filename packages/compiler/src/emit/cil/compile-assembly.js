@@ -20,10 +20,10 @@ import { IlBuilderError } from './il-builder.js';
 const isSyntaxError = entry => /^CS\d{4}$/.test(entry.code) && !adapterPseudo(entry);
 
 /** The diagnostic for a failure of emission, at the construct when its position is known, else at the start of the program. */
-function emissionFailure(error, files) {
+function emissionFailure(error, files, location = error) {
   const unsupported = error instanceof UnsupportedInCil,
-    file = files.find(candidate => candidate.source.uri === error.uri) ?? files[0],
-    span = error.syntax?.span ?? error.syntax,
+    file = files.find(candidate => candidate.source.uri === location.uri) ?? files[0],
+    span = location.syntax?.span ?? location.syntax,
     start = span?.start ?? 0,
     length = span?.start === undefined ? 1 : Math.max(1, span.end - span.start),
     code = error.diagnosticCode ?? (unsupported ? DiagnosticId.SF2200 : DiagnosticId.SF3001),
@@ -53,6 +53,7 @@ export function compileToAssembly(input, options = {}) {
   } catch (error) {
     const known = [UnsupportedInCil, MetadataEmitError, CilError, IlBuilderError, SymbolError].some(kind => error instanceof kind);
     if (!known) throw error;
-    return failed([emissionFailure(error, files)]);
+    const locations = error.diagnosticLocations?.length ? error.diagnosticLocations : [error];
+    return failed(locations.map(location => emissionFailure(error, files, location)));
   }
 }

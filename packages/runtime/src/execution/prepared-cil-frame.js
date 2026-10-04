@@ -1,6 +1,6 @@
 import {ManagedFault} from '../heap.js';
 import {admitCilStack} from './frame-stack.js';
-import {reserveStackFrame, commitStackFrame, cancelStackFrame} from './stack-budget.js';
+import {reserveStackFrame, commitStackFrame, cancelStackFrame, releaseStackReservation} from './stack-budget.js';
 import {framePool} from './frame-pool.js';
 import {nextFrameId} from './frame-lifetimes.js';
 import {methodOffsets} from './method-offsets.js';
@@ -54,7 +54,8 @@ export function enterPreparedCilFrame(vm, prepared, stack, start, count, extra) 
     throw error;
   } finally {
     // Until admission succeeds these values are live evaluation-stack roots, including during normalization.
-    stack.length = start;
+    try { stack.length = start; }
+    finally { releaseStackReservation(ticket); }
   }
   enterCilMethod(vm, frame);
 }

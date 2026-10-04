@@ -1,0 +1,2 @@
+PASS A05 T21: native .NET and CIL outputs match ("A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n")
+Evidence: /Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/static-init/evidence/qualification.json

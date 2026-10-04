@@ -1,0 +1,28 @@
+{
+  "id": "default-interfaces",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/default-interfaces",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/default-interfaces/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "default-interfaces/evidence",
+  "report": "default-interfaces/result.json",
+  "startedAt": "2026-10-04T18:37:40.327Z",
+  "durationMs": 3004.170084999998,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "default-interfaces/stdout.log",
+  "stderr": "default-interfaces/stderr.log",
+  "finishedAt": "2026-10-04T18:37:43.333Z"
+}

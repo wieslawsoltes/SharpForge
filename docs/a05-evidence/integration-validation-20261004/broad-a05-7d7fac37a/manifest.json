@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "scope": "Explicit broad a05-*.test.js selection plus preemption and security limits; not full repository, fresh native/browser execution or prescribed performance qualification.",
+  "revision": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+  "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+  "nodeVersion": "v24.19.0",
+  "limits": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "testFiles": 315,
+  "a05TestFiles": 313,
+  "otherTestFiles": [
+    "tests/preemption.test.js",
+    "tests/conformance/security/limits.test.js"
+  ],
+  "result": {
+    "tests": 3369,
+    "passed": 3369,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "durationMs": 390352.526802
+  },
+  "started": 1791142066.4990425,
+  "finished": 1791142457.1364827,
+  "exitCode": 0,
+  "cleanBefore": true,
+  "cleanAfter": true,
+  "postRevision": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+  "files": [
+    {
+      "path": "broad-a05-final-candidate.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/broad-a05-final-candidate.tap",
+      "bytes": 754585,
+      "sha256": "092981e39489614b3cb69c74ec19c418535bd84bd47c3a244dfbcf27ea5a6ce0"
+    },
+    {
+      "path": "broad-a05-final-candidate-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/broad-a05-final-candidate-journal.json",
+      "bytes": 15318,
+      "sha256": "b9458ba616a6387048c548509d5c65ba99d8c734f3501c87eeefb25ed31316da"
+    }
+  ],
+  "journal": "broad-a05-final-candidate-journal.json"
+}

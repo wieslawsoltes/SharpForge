@@ -1,0 +1,795 @@
+{
+  "schemaVersion": 1,
+  "bodyProof": [
+    {
+      "file": "native-callback.bodies.json",
+      "onlyMemberRefIdsChanged": true,
+      "sites": [
+        {
+          "methodId": "100663298",
+          "offset": 3,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 25,
+          "old": {
+            "id": "167772163",
+            "isStatic": true,
+            "name": "Collect",
+            "owner": "System.GC",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772162",
+            "isStatic": true,
+            "name": "Collect",
+            "owner": "System.GC",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 45,
+          "old": {
+            "id": "167772164",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772163",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663300",
+          "offset": 1,
+          "old": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772164",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663301",
+          "offset": 1,
+          "old": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772164",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        }
+      ]
+    },
+    {
+      "file": "nested-finally.bodies.json",
+      "onlyMemberRefIdsChanged": true,
+      "sites": [
+        {
+          "methodId": "100663298",
+          "offset": 3,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 2,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 7,
+          "old": {
+            "id": "167772163",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772162",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 15,
+          "old": {
+            "id": "167772163",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772162",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 22,
+          "old": {
+            "id": "167772163",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772162",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663300",
+          "offset": 1,
+          "old": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772163",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663301",
+          "offset": 1,
+          "old": {
+            "id": "167772161",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772163",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        }
+      ]
+    },
+    {
+      "file": "parked-frame.bodies.json",
+      "onlyMemberRefIdsChanged": true,
+      "sites": [
+        {
+          "methodId": "100663298",
+          "offset": 3,
+          "old": {
+            "id": "167772163",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 15,
+          "old": {
+            "id": "167772164",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Action",
+            "parameterStorage": [
+              "System.Action",
+              "System.Object",
+              "System.IntPtr"
+            ],
+            "parameters": [
+              "ref:System.Action",
+              "ref:System.Object",
+              "nativeint"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772163",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Action",
+            "parameterStorage": [
+              "System.Action",
+              "System.Object",
+              "System.IntPtr"
+            ],
+            "parameters": [
+              "ref:System.Action",
+              "ref:System.Object",
+              "nativeint"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663299",
+          "offset": 16,
+          "old": {
+            "id": "167772165",
+            "isStatic": true,
+            "name": "Start",
+            "owner": "SharpForge.Runtime.Async",
+            "parameterStorage": [
+              "System.Action"
+            ],
+            "parameters": [
+              "ref:System.Action"
+            ],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772164",
+            "isStatic": true,
+            "name": "Start",
+            "owner": "SharpForge.Runtime.Async",
+            "parameterStorage": [
+              "System.Action"
+            ],
+            "parameters": [
+              "ref:System.Action"
+            ],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663300",
+          "offset": 16,
+          "old": {
+            "id": "167772166",
+            "isStatic": true,
+            "name": "Delay",
+            "owner": "System.Threading.Tasks.Task",
+            "parameterStorage": [
+              "System.Int32"
+            ],
+            "parameters": [
+              "i32"
+            ],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772165",
+            "isStatic": true,
+            "name": "Delay",
+            "owner": "System.Threading.Tasks.Task",
+            "parameterStorage": [
+              "System.Int32"
+            ],
+            "parameters": [
+              "i32"
+            ],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663300",
+          "offset": 21,
+          "old": {
+            "id": "167772167",
+            "isStatic": true,
+            "name": "Collect",
+            "owner": "System.GC",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772166",
+            "isStatic": true,
+            "name": "Collect",
+            "owner": "System.GC",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663300",
+          "offset": 28,
+          "old": {
+            "id": "167772168",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772167",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663301",
+          "offset": 1,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772168",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663302",
+          "offset": 1,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772168",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663304",
+          "offset": 1,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772168",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        },
+        {
+          "methodId": "100663305",
+          "offset": 1,
+          "old": {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          },
+          "new": {
+            "id": "167772168",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        }
+      ]
+    }
+  ],
+  "imageProof": {
+    "file": "nested-finally.image.json",
+    "onlyChanges": [
+      "catch handler type Exception -> System.Exception",
+      "temporary exception local type Exception -> System.Exception",
+      "catch handlerEnd absent -> 16"
+    ],
+    "sourceCommit": "dcff5a876",
+    "schemaReview": "handlerEnd was already optional in bytecode-image.v2 schema; exceptionRegionEntries validates it when supplied; source-eh retains old inference",
+    "compatibilityTest": "tests/a00-05-image-compatibility.test.js",
+    "target": 11,
+    "exclusiveEnd": 16
+  },
+  "tokenAllocationSourceCommit": "5b9b759dc",
+  "tokenAllocationSource": "packages/cil/src/emit/source-values.js initializeReceiver requests Object constructor only for receiver-initializing helpers; emitter metadata.member allocates MemberRefs in first-use order",
+  "abiReview": "Current-JS inventory changed; Portable Value ABI1 codec, versions, tags, negotiated64bit envelope and one-million-element bound unchanged."
+}

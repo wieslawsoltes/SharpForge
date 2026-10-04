@@ -1,0 +1,21 @@
+import datetime, hashlib, json, os, subprocess, sys, time
+from pathlib import Path
+root=Path('/workspace/scratch/42f7738360b9/a05-snapshots')
+base=Path('/workspace/scratch/42f7738360b9/a05-a00-contract-review')
+journal=base/'journal.json'
+def git(*args):return subprocess.check_output(['git',*args],cwd=root,text=True).strip()
+def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+env={'SHARPFORGE_MAX_PARALLEL_RUNS':'1','SHARPFORGE_TEST_CONCURRENCY':'1','SHARPFORGE_MAX_OLD_SPACE_MB':'512','NODE_OPTIONS':'--max-old-space-size=512'}
+if journal.exists():doc=json.loads(journal.read_text())
+else:
+ paths=[root/'planning/contracts/value-abi/current-js-inventory.json',root/'planning/contracts/gc-roots-sites.json',*sorted((root/'planning/contracts/fixtures/schema').glob('*.json'))]
+ doc={'revision':git('rev-parse','HEAD'),'tree':git('rev-parse','HEAD^{tree}'),'trackedStatusBefore':git('status','--short','--untracked-files=no'),'cwd':str(root),'node':subprocess.check_output(['node','--version'],text=True).strip(),'environment':env,'before':{str(p.relative_to(root)):digest(p) for p in paths},'runs':[]}
+name=sys.argv[1];args=sys.argv[2:];log=base/(name+'.log')
+entry={'name':name,'argv':args,'startedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'log':log.name}
+doc['runs'].append(entry);journal.write_text(json.dumps(doc,indent=2)+'\n')
+started=time.monotonic()
+with log.open('wb') as out:result=subprocess.run(args,cwd=root,env={**os.environ,**env},stdout=out,stderr=subprocess.STDOUT)
+entry.update(exitCode=result.returncode,durationSeconds=time.monotonic()-started,finishedAt=datetime.datetime.now(datetime.timezone.utc).isoformat(),sha256=digest(log),bytes=log.stat().st_size)
+journal.write_text(json.dumps(doc,indent=2)+'\n')
+print(json.dumps(entry))
+sys.exit(result.returncode)

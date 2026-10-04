@@ -6,6 +6,7 @@ import { primitiveRelations, knownMetadata } from './typed-storage.js';
 export function typedMetadataRelations(types, fail) {
   return Object.freeze({
     isAssignableTo(source, target) {
+      if (target.kind === VerificationKind.Boxed) return source.kind === VerificationKind.Boxed && source.type === target.type;
       if (target.type === signaturePrimitiveNodes.object) return true;
       if (source.type.kind === 'primitive' || target.type.kind === 'primitive') {
         if (source.type.kind === 'primitive' && target.type.kind === 'primitive')

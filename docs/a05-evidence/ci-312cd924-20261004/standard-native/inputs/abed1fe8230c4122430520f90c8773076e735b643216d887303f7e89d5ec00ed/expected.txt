@@ -1,0 +1,11 @@
+6
+7
+mixed
+19
+0
+4
+9
+Int32
+9
+type mismatch
+23

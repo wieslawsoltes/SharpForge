@@ -1,0 +1,13 @@
+🕰Time Order⬅️Left Heavy🥪Sandwich
+A05 browser reload
+⤴️Export⤵️Import🎨System❓Help
+Total	Self	Symbol Name
+10 (53%)
+	10 (53%)
+	Program.A05BrowserTwice
+17 (89%)
+	7 (37%)
+	Program.Main
+19 (100%)
+	2 (11%)
+	<startup>

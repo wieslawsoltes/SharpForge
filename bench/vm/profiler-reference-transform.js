@@ -18,6 +18,13 @@ const cilObjectProfilerBody = `  let succeeded = false;
     resumeObjectValueWork(vm, frame);
     succeeded = true;
   } finally { vm.profiler?.endInstruction(succeeded); }`;
+const sourceDispatcherBody = `function instructionDispatcher(profiler) {
+  if (profiler === null || profiler === undefined) return dispatchSourceOpcode;
+  return (vm, frame, opcode, first, second) => {
+    profiler.instruction(frame);
+    return dispatchSourceOpcode(vm, frame, opcode, first, second);
+  };
+}`;
 const hook = /\b(?:executionProfiler|initializeExecutionProfiler|allocationObserver)\b|\b(?:vm|this)\.profiler\b|\bprofiler\?\./;
 const unreviewedHook = /\b(?:vm|this)\.options\.profile\b|\bprofiler\.[A-Za-z_$][\w$]*\s*\(/;
 const standalone = new Set(['instruction(frame);', 'endInstruction(succeeded);', 'enter(frame);', 'suspend();',
@@ -41,6 +48,10 @@ export function stripProfilerConsumer(path, source) {
   if (!consumers.has(path)) {
     if (hasHook(source)) throw new Error('Unreviewed profiler consumer: ' + path);
     return {source, changes: 0};
+  }
+  if (path === 'execution/source-slice.js' && (source.split(sourceDispatcherBody).length !== 2 ||
+      source.split('const dispatch = instructionDispatcher(profiler);').length !== 2)) {
+    throw new Error('Unreviewed source profiling dispatcher in ' + path);
   }
   let changes = 0;
   const rewrite = (pattern, replacement = '') => {
@@ -72,7 +83,10 @@ export function stripProfilerConsumer(path, source) {
     rewrite(/^[ \t]*let succeeded = false;\r?\n/gm);
     rewrite(/^[ \t]*succeeded = true;\r?\n/gm);
   }
-  if (path === 'execution/source-slice.js') rewrite(/onSequence, profiler, started/g, 'onSequence, started');
+  if (path === 'execution/source-slice.js') {
+    rewrite(sourceDispatcherBody, 'function instructionDispatcher() {\n  return dispatchSourceOpcode;\n}');
+    rewrite('instructionDispatcher(profiler);', 'instructionDispatcher();');
+  }
   if (path === 'execution/source-fusion.js') rewrite(/ \|\| vm\.profiler \|\| vm\.options\.profile/g);
   if (path === 'execution/numeric-blocks.js') rewrite(/vm\.profiler \|\| vm\.options\.profile \|\| /g);
   if (path === 'execution/context-events.js') {

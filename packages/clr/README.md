@@ -12,6 +12,8 @@ Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
 tokens and open caller scopes without parsing display names.
 [Prepared CIL core authority](VERIFICATION-CORE-TYPES.md) binds an explicit token
 selection through the loader for synchronous verification category queries.
+[Manifest resource readers](MANIFEST-RESOURCES.md) expose bounded embedded,
+linked-file and AssemblyRef resource bytes with explicit host input and hash verification.
 [ExportedType forwarding](FORWARDERS.md) resolves facade and nested exported
 names to canonical definitions with bounded chains and explicit cycle errors.
 [Binary resource inspection](RESOURCES.md) reads bounded `.resources` v2 name

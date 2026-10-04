@@ -1,0 +1,23 @@
+{
+  "id": "numeric-capture",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/numeric/generate-oracle.js",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/numeric-capture/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 900000,
+  "evidence": "numeric-capture/evidence",
+  "report": "numeric-capture/result.json",
+  "startedAt": "2026-10-04T18:38:55.499Z",
+  "durationMs": 34878.062483,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "numeric-capture/stdout.log",
+  "stderr": "numeric-capture/stderr.log",
+  "finishedAt": "2026-10-04T18:39:30.378Z"
+}

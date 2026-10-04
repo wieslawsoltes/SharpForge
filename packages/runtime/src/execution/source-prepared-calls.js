@@ -5,7 +5,7 @@ import {admitCallFrame} from './call-frames.js';
 import {sourceTypedValue} from './source-value-storage.js';
 import {framePool} from './frame-pool.js';
 import {nextFrameId} from './frame-lifetimes.js';
-import {reserveStackFrame, commitStackFrame, cancelStackFrame} from './stack-budget.js';
+import {reserveStackFrame, commitStackFrame, cancelStackFrame, releaseStackReservation} from './stack-budget.js';
 
 const primitive = type => type === 'bool' || numericTypeName(type) === type && numericTypeId(type) !== undefined;
 
@@ -49,7 +49,8 @@ export function executePreparedSourceCall(vm, prepared) {
     if (frame) pool.retire(frame);
     throw error;
   } finally {
-    stack.length = base;
+    try { stack.length = base; }
+    finally { releaseStackReservation(ticket); }
   }
   return true;
 }

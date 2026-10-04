@@ -1,0 +1,21 @@
+✔ A02-T86 better conversion target: ReadOnlySpan<T> is preferred over Span<T> for an array argument (73.471491ms)
+✔ A02-T86 better conversion from expression: a span conversion is better than another implicit conversion (24.901853ms)
+✔ A02-T86 a span conversion is not considered for the receiver of a method group conversion (10.553401ms)
+✔ A02-T86 type inference through a span conversion: exact to Span<T>, lower bound to ReadOnlySpan<T> (17.807594ms)
+✔ A02-T86 an extension method takes a span receiver through the span conversion (5.717875ms)
+✔ A02-T86 a valid program with spans is bound and reported as not executable (SF2200), never run wrongly (16.606849ms)
+✔ SF-A02-T66 stackalloc is a Span of its element type, with and without an initializer (115.127769ms)
+✔ SF-A02-T66 a program that uses spans is reported as not executable, not as invalid C# (9.099405ms)
+✔ SF-A02-T66 shape rules: element type, size and initializer (CS0208, CS1586, CS0247, CS0847) (37.744789ms)
+✔ SF-A02-T66 a stackalloc converts to a span of its element type only (CS8346) (15.80467ms)
+✔ SF-A02-T66 the pointer form needs an unsafe context (CS0214) (5.016673ms)
+✔ SF-A02-T66 a span of stack memory cannot leave the method (CS8352) (3.964276ms)
+✔ SF-A02-T66 gates: initializers need C# 7.3, a nested stackalloc needs C# 8 (25.332114ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2258.918775

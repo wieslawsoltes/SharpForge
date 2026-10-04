@@ -22,7 +22,9 @@ test('A00 source dispatch maps every released opcode to an immutable handler', (
 
 test('A00 grouped dispatcher distinguishes no-op handlers from unknown instructions', () => {
   for (const op of [Op.SEQ, Op.NOP]) assert.equal(dispatchSourceOpcode(null, null, op, 0, 0), true);
-  for (const op of [-1, sourceOpcodeHandlers.length, '0', 'constructor']) {
+  const coercedOpcode = {toString() { throw new Error('Opcode must not be coerced'); }};
+  for (const op of [-1, sourceOpcodeHandlers.length, '0', 'constructor', 'map', '__proto__', 'toString',
+    0n, Object(0), 1.5, NaN, Infinity, undefined, null, Symbol('opcode'), coercedOpcode]) {
     assert.equal(dispatchSourceOpcode(null, null, op, 0, 0), false);
   }
 });
@@ -42,8 +44,10 @@ test('A00 grouped source dispatch retains array loops, calls, arithmetic and fin
 });
 
 test('A00 source stores preserve the assigned stack value and notify after mutation', () => {
-  const frame = {id: 7, locals: [1]}, writes = [];
-  const vm = {stack: [9], statics: [2], notifyWrite(write) {
+  const frame = {id: 7, methodId: 0, locals: [1]}, writes = [];
+  // Typed stores use the declared destination metadata before notifying observers.
+  const program = {methods: [{locals: [{type: 'int'}]}], statics: [{type: 'int'}]};
+  const vm = {image: program, stack: [9], statics: [2], notifyWrite(write) {
     assert.equal(write.kind === 'local' ? frame.locals[write.index] : this.statics[write.index], write.value);
     writes.push(write);
   }};

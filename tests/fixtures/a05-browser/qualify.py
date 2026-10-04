@@ -20,8 +20,9 @@ from speedscope import PIN, import_file, prepare, verify
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'tests'))
 CASES = ('wasm-execution', 'debugger-deopt', 'profile-exports', 'csp-denied-fallback',
-         'speedscope-source', 'speedscope-reload', 'speedscope-cil')
+         'speedscope-source', 'speedscope-reload', 'speedscope-cil', 'wasm-heap-bridge')
 MODULE = '/tests/fixtures/a05-browser/'
+SHARED_FIXTURES = ('tests/support/wasm-heap-fixture.js', 'tests/support/generic-call-fixture.js')
 
 
 def write_report(path, report):
@@ -41,6 +42,7 @@ def provenance(engine):
             'command': [sys.executable, *sys.argv], 'speedscope': PIN,
             'fixtureSha256': {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                               for path in sorted(Path(__file__).parent.glob('*')) if path.suffix in ('.py', '.mjs')},
+            'sharedFixtureSha256': {path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in SHARED_FIXTURES},
             'scope': 'Actual browser public source modules over HTTP with shipped CSP plus hashed fixture import map; '
                      'official Speedscope release UI imported using its real file input. No Studio or native CLR claim.',
             'cases': [{'id': name, 'passed': False, 'status': 'not-run'} for name in CASES]}
@@ -93,8 +95,9 @@ def runtime_case(playwright, engine, name, source_url, policies, output, *, head
     path = 'denied' if denied else 'allowed'
     url = source_url + '/' + path + '.html'
     function = {'wasm-execution': 'wasmExecution', 'debugger-deopt': 'debuggerDeopt',
-                'profile-exports': 'profileExports', 'csp-denied-fallback': 'cspDeniedFallback'}[name]
-    module = MODULE + ('profiles.mjs' if name == 'profile-exports' else 'runtime.mjs')
+                'profile-exports': 'profileExports', 'csp-denied-fallback': 'cspDeniedFallback',
+                'wasm-heap-bridge': 'wasmHeapBridge'}[name]
+    module = MODULE + ('profiles.mjs' if name == 'profile-exports' else 'heap.mjs' if name == 'wasm-heap-bridge' else 'runtime.mjs')
     result, events = None, []
     try:
         with launch_browser(playwright, name, engine=engine, headless=headless, mode='A05 public runtime / ' + path + ' CSP') as browser:

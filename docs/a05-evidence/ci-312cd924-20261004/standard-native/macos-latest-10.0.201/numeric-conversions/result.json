@@ -1,0 +1,22 @@
+{
+  "id": "numeric-conversions",
+  "status": "passed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-numeric-dotnet.js"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "numeric-conversions",
+  "report": "numeric-conversions/result.json",
+  "startedAt": "2026-10-04T19:18:43.342Z",
+  "durationMs": 1131.0621669999964,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "numeric-conversions/stdout.log",
+  "stderr": "numeric-conversions/stderr.log",
+  "finishedAt": "2026-10-04T19:18:44.474Z"
+}

@@ -5,7 +5,8 @@ import {
 import {
   reserveStackFrame,
   commitStackFrame,
-  cancelStackFrame
+  cancelStackFrame,
+  releaseStackReservation
 } from './stack-budget.js';
 import {
   popPooledFrame
@@ -32,6 +33,8 @@ export function pushControlFrame(vm, frame) {
     releaseFrame(vm, frame);
     cancelStackFrame(ticket);
     throw error;
+  } finally {
+    releaseStackReservation(ticket);
   }
 }
 

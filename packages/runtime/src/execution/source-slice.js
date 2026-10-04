@@ -9,7 +9,16 @@ import {flushSourceRuntimeEvents} from './source-runtime-events.js';
 import {selectSourceFusion} from './source-fusion.js';
 import {executeSourceFusionBatch} from './source-fusion-batch.js';
 
-function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, profiler, started}) {
+// Capture only the slice's observer identity; its method remains observable at each instruction.
+function instructionDispatcher(profiler) {
+  if (profiler === null || profiler === undefined) return dispatchSourceOpcode;
+  return (vm, frame, opcode, first, second) => {
+    profiler.instruction(frame);
+    return dispatchSourceOpcode(vm, frame, opcode, first, second);
+  };
+}
+
+function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, started}, dispatch) {
   let count = 0;
   while (vm.state === 'running' && vm.frames.length && count < instructionBudget) {
     if ((count & 255) === 0 && performance.now() - started >= timeBudgetMs) break;
@@ -52,8 +61,7 @@ function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, p
         if (vm.instructions > vm.options.maxInstructions) {
           throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');
         }
-        profiler?.instruction(frame);
-        if (!dispatchSourceOpcode(vm, frame, opcode, first, second)) {
+        if (!dispatch(vm, frame, opcode, first, second)) {
           throw new ManagedFault('InvalidProgramException', 'Unknown instruction');
         }
       }
@@ -72,6 +80,7 @@ function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, p
 /** Source instruction boundaries own quotas, sequence pauses and ordered observer delivery. */
 export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onSequence = null} = {}) {
   const profiler = vm.profiler;
+  const dispatch = instructionDispatcher(profiler);
   try {
     vm.scheduler.beforeSlice();
     if (vm.state === 'ready') vm.state = 'running';
@@ -83,7 +92,7 @@ export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8,
       pending.exceptionDebuggerResume = true;
       vm.handleFault(pending);
     }
-    executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, profiler, started});
+    executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, started}, dispatch);
     vm.currentPoint = vm.top?.point ?? null;
     vm.elapsedMs += performance.now() - started;
     return vm.state;

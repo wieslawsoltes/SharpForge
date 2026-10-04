@@ -70,6 +70,17 @@ count as passes; a cell with only passes and declared unsupported cases is `part
 generator writes fresh source/output/hash provenance under artifacts, then `SHARPFORGE_NUMERIC_ORACLE_DIR` directs all three
 VM routes to that evidence. A failed capture blocks its replay. Checked-in reference files are never overwritten by this workflow.
 
+The full numeric correctness replay has a 1,800-second process deadline. On pushed commit
+`312cd9242a492ce6f03e7e034a51cc17669a7edf`, Windows SDK 10 job
+[111502741130](https://github.com/wieslawsoltes/SharpForge/actions/runs/37225004330/job/111502741130)
+passed all 34 cases. Its numeric replay completed approximately 899 seconds after the preceding capture finished
+(18:58:48.973 to 19:13:47.893 UTC), leaving about 1.1 seconds under the original 900-second deadline.
+That was a passing execution, not an observed timeout. The increased correctness allowance avoids treating ordinary
+host variation as a failed full-corpus comparison. Corpus contents, case counts, sample counts and comparisons are unchanged.
+Native capture retains its 900-second limit, ordinary native cases retain their five-minute limits, and the standard
+SDK matrix retains its existing 60-minute job budget for replay plus the other 33 cases and setup.
+The targeted x86 and browser job budgets, all performance deadlines and all measured performance thresholds are unchanged.
+
 The runtime-fault, Decimal and unsigned-widening expected outputs were recovered from the existing native qualification
 scripts and committed reference trace. Adding the workflow does not establish new native results. Each OS/SDK claim remains
 pending until its current-revision report records an actual execution result. Generated assemblies, logs and fresh oracle

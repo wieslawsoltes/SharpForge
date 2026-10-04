@@ -1,0 +1,169 @@
+{
+  "format": "SharpForge.ProfilerReference/1",
+  "status": "created",
+  "sourceCommit": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "referenceCommit": "e5191e722647d6a37f034499c0e880765fed4dad",
+  "referenceDirectory": "/tmp/a05-profiler-reference-312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "publicEntryPoint": "packages/runtime/src/index.js",
+  "createdAt": "2026-10-04T18:39:34.092Z",
+  "dependencies": {
+    "source": "/tmp/a05-qualification-312cd9242a492ce6f03e7e034a51cc17669a7edf/node_modules",
+    "strategy": "real-directory-with-product-entry-links",
+    "entries": [
+      {
+        "name": "@sharpforge",
+        "kind": "directory-link",
+        "source": "/tmp/a05-qualification-312cd9242a492ce6f03e7e034a51cc17669a7edf/node_modules/@sharpforge"
+      }
+    ]
+  },
+  "sourceInputProof": {
+    "parent": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+    "runtimeTree": "125bb87afe2ddb14c05229c160881494210747c5",
+    "parentRuntimeTree": "bac43f237eeadff37c3200696cc3581e9166cc08",
+    "changedRuntimeOrBenchmarkPaths": [
+      "packages/runtime/src/execution/boxing.js",
+      "packages/runtime/src/execution/calls.js",
+      "packages/runtime/src/execution/constrained-call.js",
+      "packages/runtime/src/execution/constrained-nullable.js",
+      "packages/runtime/src/execution/constrained-object.js",
+      "packages/runtime/src/execution/delegate-calls.js",
+      "packages/runtime/src/execution/delegate-invocations.js",
+      "packages/runtime/src/execution/delegate-targets.js",
+      "packages/runtime/src/execution/eh.js",
+      "packages/runtime/src/execution/exception-event-failure.js",
+      "packages/runtime/src/execution/exception-events-snapshot.js",
+      "packages/runtime/src/execution/exception-events.js",
+      "packages/runtime/src/execution/frame-retirement.js",
+      "packages/runtime/src/execution/frame-roots.js",
+      "packages/runtime/src/execution/generic-constraints.js",
+      "packages/runtime/src/execution/generics.js",
+      "packages/runtime/src/execution/managed-state-machine-layout.js",
+      "packages/runtime/src/execution/memory-calls.js",
+      "packages/runtime/src/execution/method-table.js",
+      "packages/runtime/src/execution/nullable-methods.js",
+      "packages/runtime/src/execution/object-dispatch.js",
+      "packages/runtime/src/execution/scheduler-async-faults.js",
+      "packages/runtime/src/execution/scheduler-context-completion.js",
+      "packages/runtime/src/execution/snapshot-exception-validation.js",
+      "packages/runtime/src/execution/snapshot-strings.js",
+      "packages/runtime/src/execution/source-eh.js",
+      "packages/runtime/src/execution/source-object-slots.js",
+      "packages/runtime/src/execution/source-ops.js",
+      "packages/runtime/src/execution/stack-budget.js",
+      "packages/runtime/src/execution/value-layout.js",
+      "packages/runtime/src/execution/value-types.js",
+      "packages/runtime/src/launch-options.js",
+      "packages/runtime/src/snapshot.js"
+    ],
+    "unchangedRuntimeAndQualificationFromParent": false
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/tmp/a05-qualification-312cd9242a492ce6f03e7e034a51cc17669a7edf/bench/vm/profiler-reference.js",
+    "--dir",
+    "/tmp/a05-profiler-reference-312cd9242a492ce6f03e7e034a51cc17669a7edf",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-final-312cd9242a492ce6f03e7e034a51cc17669a7edf/profiler-reference.json"
+  ],
+  "changes": [
+    {
+      "path": "packages/runtime/src/execution/call-frames.js",
+      "before": "a37c217cec2a3b7f67830742f4b35260925cef0db22d20d8522a72a9ff794173",
+      "after": "4cc15ed8ce80b72c66686cfe3b8c88cbe954ef18cafaabc6063ba3d7d349ae89",
+      "edits": 1
+    },
+    {
+      "path": "packages/runtime/src/execution/cil-array-continuations.js",
+      "before": "83511c22247116d98741c07f8a0d5f430eadaeefa0011137c1eda834adb3e664",
+      "after": "9222a9cb4ad935a306717fadf308974eba6a0945ab3e2a6b4909ddde900b69f2",
+      "edits": 1
+    },
+    {
+      "path": "packages/runtime/src/execution/cil-instrumentation.js",
+      "before": "c20fad01941a6858d74443c9ff179df6e94ff0aa779b98634b11566900d2ed6e",
+      "after": "1219efcbd84230062904c25a2c91130a3ad940f68cc247a72f0d753664d27f62",
+      "edits": 4
+    },
+    {
+      "path": "packages/runtime/src/execution/cil-method-events.js",
+      "before": "4d23750dca274e3dfed4aa90b72ec731bc0b713cadecb9af1f92616e9a17c18e",
+      "after": "636b7ee6c59756c179f0bf652740fa0abd970d243f21aa0e487b34088273a6d1",
+      "edits": 1
+    },
+    {
+      "path": "packages/runtime/src/execution/cil-slice.js",
+      "before": "bfffe3f915f932c58a09f190e500898199ffbe1c14b58c648799523e3bb0137d",
+      "after": "681b886fb7663cb650d359a3dac3a6467be4f758d3bcaf0cda14c3f3282c7317",
+      "edits": 3
+    },
+    {
+      "path": "packages/runtime/src/execution/cil-step.js",
+      "before": "6c4352b8c5c06974b2432873d144a5c2d482fcb8cdaf17349bcdde43e65fbcc8",
+      "after": "7771106b8e5ea7a5bcc22455e130098492a18e1e1b18aa47d15431d052737b57",
+      "edits": 5
+    },
+    {
+      "path": "packages/runtime/src/execution/context-events.js",
+      "before": "1e6d5b12fabb9b656d62718f0d133d889c266bac83efe529da26fbba75f95b3b",
+      "after": "b1daa7aa01e9785582fb8daa9b0f82e099cda8ebaec2b7d92ad209856837e25c",
+      "edits": 4
+    },
+    {
+      "path": "packages/runtime/src/execution/initialize-source.js",
+      "before": "42ac6bae3e238774019149b1e269d8568e5259db2d822452100d13c75c47bb46",
+      "after": "02ab5efb24acd1d1bb239b04fa4dd37ab987d9e3fa3736b020c9237f7aa9bbea",
+      "edits": 4
+    },
+    {
+      "path": "packages/runtime/src/execution/numeric-blocks.js",
+      "before": "b94abca12d9c7851fdd0706523330f4e920a39516418497370701f7b38f422dc",
+      "after": "c31de73449bb1351574a22a81c564be0c1f6f85814053d2b7fa7ea4dda85bc3b",
+      "edits": 1
+    },
+    {
+      "path": "packages/runtime/src/execution/object-value-slice.js",
+      "before": "4f8c1488cc97c20cda937af3f45c3926687250d35f0ad8b356c347a486557015",
+      "after": "6d7908ebe1390c20b2e27c145eb93bcd7ea0e1a2330ca36ad2a1790acfef28e2",
+      "edits": 2
+    },
+    {
+      "path": "packages/runtime/src/execution/source-array-continuations.js",
+      "before": "7557cc8cfec2bbcea06f06646c0596fe62da531252cb1cc9eb4920dfe985efaf",
+      "after": "6c838e89ff49c89bbb059ea9db405480300a5b0440c5df168a557558c67bc73c",
+      "edits": 1
+    },
+    {
+      "path": "packages/runtime/src/execution/source-fusion.js",
+      "before": "f0ee554e177b5b726ceabed8b06fd230bf7b2d7dc09acd43524a578f62ed8e2c",
+      "after": "0ab42589e4c3102965acadbd6d856e642d6c5a97cb98986d0956675f157b18f2",
+      "edits": 1
+    },
+    {
+      "path": "packages/runtime/src/execution/source-slice.js",
+      "before": "737408db3c97deba6570ca5a165cdee469b1eef9f08985415ce898664140817d",
+      "after": "0ba536128670d0df1cf4d9da68a5a096152880faffa8fb77a37a3ae7b329af44",
+      "edits": 6
+    },
+    {
+      "path": "packages/runtime/src/execution/stop.js",
+      "before": "3e78ad8da68dda4b0db2647fa51a4343ff6e6844fdb1a3c6e3583d4fca0b6117",
+      "after": "eb441d47f5884d466725d57dd5cc3c12af2c19f6202fb63fb256fc45ba4657fc",
+      "edits": 3
+    },
+    {
+      "path": "packages/runtime/src/snapshot.js",
+      "before": "12530d9aeb3cd61d5411de6021edf970940b68c1c3debfe047ff59c4df092adf",
+      "after": "1e97f474a6f8d45d636a43990e5028e8d7473f789a08a986d33aaaa89fc8bc8b",
+      "edits": 1
+    }
+  ],
+  "sparseCheckout": {
+    "patterns": "/.gitignore\n/.gitattributes\n/package.json\n/package-lock.json\n/packages/\n/bench/vm/\n/scripts/limited.js\n/scripts/planning/lib/resource-limits.js\n/scripts/perf-gate.js\n",
+    "sha256": "d865214ae64992eddd26981995f217f4f0d0abd7dc8b0a0e309851566f813b99"
+  },
+  "patch": "diff --git a/packages/runtime/src/execution/call-frames.js b/packages/runtime/src/execution/call-frames.js\nindex cbe3a0c34..bfe0fca21 100644\n--- a/packages/runtime/src/execution/call-frames.js\n+++ b/packages/runtime/src/execution/call-frames.js\n@@ -101,7 +101,6 @@ export function callSourceFrame(vm, methodId, args, extra = {}) {\n     if (frame) pool.retire(frame);\n     throw error;\n   } finally { vm.heap.pins.length = pinCount; }\n-  vm.profiler?.enter(frame);\n   enterSourceMethod(vm, frame);\n }\n \ndiff --git a/packages/runtime/src/execution/cil-array-continuations.js b/packages/runtime/src/execution/cil-array-continuations.js\nindex 4f5c62bad..50e8e5def 100644\n--- a/packages/runtime/src/execution/cil-array-continuations.js\n+++ b/packages/runtime/src/execution/cil-array-continuations.js\n@@ -2,12 +2,6 @@ import {resumeArrayOperation} from './array-continuations.js';\n \n /** The CIL slice owns quota charging/fault dispatch; a resumed unit keeps the original call offset. */\n export function resumeCilArrayContinuation(vm, frame) {\n-  const profiler = vm.profiler;\n-  let succeeded = false;\n-  try {\n-    profiler?.instruction(frame);\n-    const result = resumeArrayOperation(vm, frame);\n-    if (result.done && result.returns) vm.push(result.value);\n-    succeeded = true;\n-  } finally { profiler?.endInstruction(succeeded); }\n+  const result = resumeArrayOperation(vm, frame);\n+  if (result.done && result.returns) vm.push(result.value);\n }\ndiff --git a/packages/runtime/src/execution/cil-instrumentation.js b/packages/runtime/src/execution/cil-instrumentation.js\nindex 1d2fa7d6b..668754143 100644\n--- a/packages/runtime/src/execution/cil-instrumentation.js\n+++ b/packages/runtime/src/execution/cil-instrumentation.js\n@@ -1,12 +1,9 @@\n-import {initializeExecutionProfiler} from './profiler.js';\n-import {executionProfiler} from './profiler.js';\n import {initializeWasmTiering} from './wasm/tiering.js';\n import {initializeHeapEvents} from './heap-events.js';\n \n /** Attach optional host instrumentation after heap creation and before entry arguments. */\n export function initializeCilInstrumentation(vm, options, profilerReady) {\n-  initializeExecutionProfiler(vm, options.profile);\n-  profilerReady?.(executionProfiler(vm));\n+  profilerReady?.(null);\n   initializeWasmTiering(vm, options.wasmTiering);\n   initializeHeapEvents(vm);\n }\ndiff --git a/packages/runtime/src/execution/cil-method-events.js b/packages/runtime/src/execution/cil-method-events.js\nindex 1963ad570..ca99c48a0 100644\n--- a/packages/runtime/src/execution/cil-method-events.js\n+++ b/packages/runtime/src/execution/cil-method-events.js\n@@ -21,7 +21,6 @@ export function cilRuntimeEvents(vm) {\n \n export function enterCilMethod(vm, frame, reason = 'call') {\n   if (reason === 'call') observeWasmCall(vm, frame);\n-  if (reason === 'call') vm.profiler?.enter(frame);\n   const observer = observers.get(vm);\n   if (!observer) return;\n   const method = frame.method;\ndiff --git a/packages/runtime/src/execution/cil-slice.js b/packages/runtime/src/execution/cil-slice.js\nindex 715131592..2f894fd24 100644\n--- a/packages/runtime/src/execution/cil-slice.js\n+++ b/packages/runtime/src/execution/cil-slice.js\n@@ -30,7 +30,6 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on\n   const nested = slicing.has(vm);\n   slicing.add(vm);\n   try {\n-    vm.profiler?.beginSlice();\n     vm.scheduler.beforeSlice();\n     if (vm.state === 'ready') vm.state = 'running';\n     if (vm.state !== 'running') return vm.state;\n@@ -86,9 +85,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on\n     try {\n       if (started !== undefined) vm.elapsedMs += performance.now() - started;\n       flushFramePool(vm);\n-      vm.profiler?.closeSlice();\n       flushCilMethodEvents(vm);\n-      vm.profiler?.reportClockFailure();\n     } finally {\n       if (!nested) slicing.delete(vm);\n     }\ndiff --git a/packages/runtime/src/execution/cil-step.js b/packages/runtime/src/execution/cil-step.js\nindex f959a84f6..b08557c59 100644\n--- a/packages/runtime/src/execution/cil-step.js\n+++ b/packages/runtime/src/execution/cil-step.js\n@@ -30,18 +30,13 @@ export function executeCilStep(vm, dispatcher = null) {\n     if (plan) frame.offsets = plan.offsets;\n     const handler = plan ? plan.handlers[index] : cilHandlers.get(instruction.name);\n     if (!handler) rejectCilOpcode(instruction.name);\n-    const profiler = vm.profiler;\n-    let succeeded = false;\n     try {\n-      profiler?.instruction(frame);\n       if (dispatcher) dispatcher(vm, frame, instruction, index, handler);\n       else dispatchWasmCall(vm, frame, instruction, index, handler);\n       const hotBackedge = observeWasmBackedge(vm, frame, instruction, index, frameId);\n       if (!dispatcher && hotBackedge) selectWasmOsr(vm, frame, hotBackedge, frameId);\n-      succeeded = true;\n     } finally {\n       flushFramePool(vm);\n-      profiler?.endInstruction(succeeded);\n     }\n   } finally {\n     if (!nested) dispatching.set(vm, false);\ndiff --git a/packages/runtime/src/execution/context-events.js b/packages/runtime/src/execution/context-events.js\nindex 9e0431e17..965fb09f0 100644\n--- a/packages/runtime/src/execution/context-events.js\n+++ b/packages/runtime/src/execution/context-events.js\n@@ -1,5 +1,4 @@\n import {RuntimeEventName} from './runtime-events.js';\n-import {executionProfiler} from './profiler.js';\n \n const terminal = new Set(['completed', 'faulted', 'canceled']);\n // Contexts are weakly held: observations cannot retain parked guest stacks.\n@@ -9,14 +8,12 @@ const suspended = new WeakMap();\n export function observeContextTransition(scheduler, previous, next) {\n   const vm = scheduler.vm;\n   const log = vm.runtimeEvents;\n-  const profiler = executionProfiler(vm);\n-  if ((!log && !profiler) || previous === next) return;\n+  if (!log || previous === next) return;\n   let observed = suspended.get(scheduler);\n   if (previous?.frames.length && !terminal.has(previous.status) && !observed?.has(previous)) {\n     // The transition has committed even if an optional event emission fails.\n     if (!observed) suspended.set(scheduler, observed = new WeakSet());\n     observed.add(previous);\n-    profiler?.suspend();\n     log?.emit(RuntimeEventName.Suspend,\n       {context: previous.id, frame: previous.frames.at(-1).id}, vm.instructions);\n   }\ndiff --git a/packages/runtime/src/execution/initialize-source.js b/packages/runtime/src/execution/initialize-source.js\nindex 4292bfd9e..a383b5a97 100644\n--- a/packages/runtime/src/execution/initialize-source.js\n+++ b/packages/runtime/src/execution/initialize-source.js\n@@ -6,8 +6,6 @@ import { CooperativeScheduler } from '../scheduler.js';\n import { normalizeRuntimeLaunchOptions } from '../launch-options.js';\n import { createSourceMethodTables } from './method-table.js';\n import { sourceEntryArguments } from './entry-arguments.js';\n-import { initializeExecutionProfiler } from './profiler.js';\n-import {executionProfiler} from './profiler.js';\n import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';\n import { installRootProvider } from './frame-roots.js';\n import { stackByteLimit } from './stack-budget.js';\n@@ -51,8 +49,7 @@ export function initializeSourceVM(vm, image, options, profilerReady) {\n   vm.onOutput = options.onOutput ?? (() => {});\n   vm.onException = null;\n   vm.onWrite = null;\n-  initializeExecutionProfiler(vm, options.profile);\n-  profilerReady?.(executionProfiler(vm));\n+  profilerReady?.(null);\n   initializeSourceRuntimeEvents(vm, options.runtimeEvents);\n   initializeHeapEvents(vm);\n   vm.platform = new ManagedPlatform(vm, options);\ndiff --git a/packages/runtime/src/execution/numeric-blocks.js b/packages/runtime/src/execution/numeric-blocks.js\nindex 49f1eccbe..e9775ed13 100644\n--- a/packages/runtime/src/execution/numeric-blocks.js\n+++ b/packages/runtime/src/execution/numeric-blocks.js\n@@ -16,7 +16,7 @@ function contextFor(frame, stack, locals, arguments_) {\n }\n \n function observed(vm, frame, onInstruction) {\n-  return onInstruction || vm.onWrite || vm.onException || vm.profiler || vm.options.profile || vm.runtimeEvents ||\n+  return onInstruction || vm.onWrite || vm.onException || vm.runtimeEvents ||\n     vm.options.gcStress === 'instruction' || vm.options.wasmTiering || vm.scheduler.enabled || vm.scheduler.suppressed ||\n     Object.hasOwn(vm.scheduler, 'beforeInstruction') || Object.hasOwn(vm.scheduler, 'afterInstruction') ||\n     Object.hasOwn(vm, 'step') || Object.hasOwn(vm, 'push') || Object.hasOwn(vm, 'pop') ||\ndiff --git a/packages/runtime/src/execution/object-value-slice.js b/packages/runtime/src/execution/object-value-slice.js\nindex c527bc803..0472015a9 100644\n--- a/packages/runtime/src/execution/object-value-slice.js\n+++ b/packages/runtime/src/execution/object-value-slice.js\n@@ -5,12 +5,7 @@ import {handleSourceInstructionFault} from './source-stack-admission.js';\n import {flushFramePool} from './frame-pool.js';\n \n export function resumeCilObjectValueWork(vm, frame) {\n-  let succeeded = false;\n-  try {\n-    vm.profiler?.instruction(frame);\n-    resumeObjectValueWork(vm, frame);\n-    succeeded = true;\n-  } finally { vm.profiler?.endInstruction(succeeded); }\n+  resumeObjectValueWork(vm, frame);\n }\n \n /** Shared equality also serves source array searches; each native quantum is an observable quota unit. */\n@@ -22,7 +17,6 @@ export function resumeSourceObjectValueWork(vm, frame, deadline = Infinity) {\n     if (vm.instructions > vm.options.maxInstructions) {\n       throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');\n     }\n-    vm.profiler?.instruction(frame);\n     resumeObjectValueWork(vm, frame);\n   } catch (error) {\n     handleSourceInstructionFault(vm, error, {frame, opcode: Op.BUILTIN, index: frame.pc - 1,\ndiff --git a/packages/runtime/src/execution/source-array-continuations.js b/packages/runtime/src/execution/source-array-continuations.js\nindex 3727c6afb..93d5ac2d6 100644\n--- a/packages/runtime/src/execution/source-array-continuations.js\n+++ b/packages/runtime/src/execution/source-array-continuations.js\n@@ -13,7 +13,6 @@ export function resumeSourceArrayContinuation(vm, frame, deadline = Infinity) {\n     if (vm.instructions > vm.options.maxInstructions) {\n       throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');\n     }\n-    vm.profiler?.instruction(frame);\n     const result = resumeArrayOperation(vm, frame);\n     if (result.done && result.returns) vm.stack.push(result.value);\n   } catch (error) {\ndiff --git a/packages/runtime/src/execution/source-fusion.js b/packages/runtime/src/execution/source-fusion.js\nindex 033e82891..598de181f 100644\n--- a/packages/runtime/src/execution/source-fusion.js\n+++ b/packages/runtime/src/execution/source-fusion.js\n@@ -50,7 +50,7 @@ export function selectSourceFrameFusion(vm, frame, method, remaining, state) {\n export function selectSourceFusion(vm, frame, method, remaining, onSequence) {\n   if (remaining < 2 || vm.options.sourceFusion === false ||\n       vm.scheduler.enabled || vm.scheduler.suppressed ||\n-      onSequence || vm.onWrite || vm.onException || vm.profiler || vm.options.profile || vm.runtimeEvents ||\n+      onSequence || vm.onWrite || vm.onException || vm.runtimeEvents ||\n       vm.options.gcStress === 'instruction' || !hasCanonicalSourceAdapters(vm)) return null;\n   return selectSourceFrameFusion(vm, frame, method, remaining);\n }\ndiff --git a/packages/runtime/src/execution/source-slice.js b/packages/runtime/src/execution/source-slice.js\nindex 7fc3d8ab5..626d509f4 100644\n--- a/packages/runtime/src/execution/source-slice.js\n+++ b/packages/runtime/src/execution/source-slice.js\n@@ -9,7 +9,7 @@ import {flushSourceRuntimeEvents} from './source-runtime-events.js';\n import {selectSourceFusion} from './source-fusion.js';\n import {executeSourceFusionBatch} from './source-fusion-batch.js';\n \n-function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, profiler, started}) {\n+function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, started}) {\n   let count = 0;\n   while (vm.state === 'running' && vm.frames.length && count < instructionBudget) {\n     if ((count & 255) === 0 && performance.now() - started >= timeBudgetMs) break;\n@@ -52,7 +52,6 @@ function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, p\n         if (vm.instructions > vm.options.maxInstructions) {\n           throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');\n         }\n-        profiler?.instruction(frame);\n         if (!dispatchSourceOpcode(vm, frame, opcode, first, second)) {\n           throw new ManagedFault('InvalidProgramException', 'Unknown instruction');\n         }\n@@ -71,7 +70,6 @@ function executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, p\n \n /** Source instruction boundaries own quotas, sequence pauses and ordered observer delivery. */\n export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onSequence = null} = {}) {\n-  const profiler = vm.profiler;\n   try {\n     vm.scheduler.beforeSlice();\n     if (vm.state === 'ready') vm.state = 'running';\n@@ -83,14 +81,12 @@ export function runSourceSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8,\n       pending.exceptionDebuggerResume = true;\n       vm.handleFault(pending);\n     }\n-    executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, profiler, started});\n+    executeInstructions(vm, {instructionBudget, timeBudgetMs, onSequence, started});\n     vm.currentPoint = vm.top?.point ?? null;\n     vm.elapsedMs += performance.now() - started;\n     return vm.state;\n   } finally {\n     flushFramePool(vm);\n-    profiler?.closeSlice();\n     flushSourceRuntimeEvents(vm);\n-    profiler?.reportClockFailure();\n   }\n }\ndiff --git a/packages/runtime/src/execution/stop.js b/packages/runtime/src/execution/stop.js\nindex e95e6942b..1ae3ad046 100644\n--- a/packages/runtime/src/execution/stop.js\n+++ b/packages/runtime/src/execution/stop.js\n@@ -9,8 +9,6 @@ import {cancelCallbackScopes} from './callback-frames.js';\n /** Dispose live and parked storage before dropping the VM's execution roots. */\n export function stopExecution(vm) {\n   cancelCallbackScopes(vm.scheduler);\n-  const hadGuestFault = vm.fault || vm.pendingFault;\n-  vm.profiler?.closeSlice();\n   invalidateExecutionCode(vm, 'stop');\n   clearStrings(vm);\n   clearRuntimeTypes(vm);\n@@ -26,5 +24,4 @@ export function stopExecution(vm) {\n     vm.currentPoint = null;\n     stopSourceRuntimeEvents(vm);\n   }\n-  if (!hadGuestFault) vm.profiler?.reportClockFailure();\n }\ndiff --git a/packages/runtime/src/snapshot.js b/packages/runtime/src/snapshot.js\nindex 77ae550fb..ede529108 100644\n--- a/packages/runtime/src/snapshot.js\n+++ b/packages/runtime/src/snapshot.js\n@@ -90,7 +90,6 @@ export function restoreVM(vm, snapshot, engine) {\n     if (engine === 'cil') bindRestoredGenericMethods(vm, prepared.values, generics);\n     return {generics, ...prepared, synchronization: prepareSynchronizationRestore(vm, prepared.values)};\n   });\n-  vm.profiler?.boundary();\n   const deopt = engine === 'cil' ? captureWasmDeopt(vm) : null;\n   releaseVMFrameMemory(vm);\n   vm.heap.restore(values.get('heap'), {prepared: true});\n",
+  "patchSha256": "53d3893d617b68ec1674fff69634d758cd2727246ae26541bd20d398a4236b8e",
+  "transformSha256": "ff28ac477c89f572da299916906a3404baed2b81221a510408069a5f9645c6e8",
+  "scope": "Removed reviewed profiling consumer hooks and initialization only; public getter returns null. Profiler exports remain loadable. Reference supports profiling off only; it is never a production candidate."
+}

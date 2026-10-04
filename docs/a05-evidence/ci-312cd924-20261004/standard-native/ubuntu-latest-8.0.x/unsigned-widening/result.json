@@ -1,0 +1,28 @@
+{
+  "id": "unsigned-widening",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/numeric-conversions",
+      "--framework",
+      "net8.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/unsigned-widening/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "unsigned-widening/evidence",
+  "report": "unsigned-widening/result.json",
+  "startedAt": "2026-10-04T18:36:22.864Z",
+  "durationMs": 1828.177085000003,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "unsigned-widening/stdout.log",
+  "stderr": "unsigned-widening/stderr.log",
+  "finishedAt": "2026-10-04T18:36:24.693Z"
+}

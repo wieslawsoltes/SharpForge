@@ -1,0 +1,29 @@
+{
+  "id": "byref-calls",
+  "status": "passed",
+  "command": {
+    "executable": "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05/byref-calls",
+      "--source-routes",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/home/runner/work/SharpForge/SharpForge/artifacts/a05-native/byref-calls/evidence"
+    ],
+    "cwd": "/home/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "byref-calls/evidence",
+  "report": "byref-calls/result.json",
+  "startedAt": "2026-10-04T18:37:29.898Z",
+  "durationMs": 5213.202859000001,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "byref-calls/stdout.log",
+  "stderr": "byref-calls/stderr.log",
+  "finishedAt": "2026-10-04T18:37:35.115Z"
+}

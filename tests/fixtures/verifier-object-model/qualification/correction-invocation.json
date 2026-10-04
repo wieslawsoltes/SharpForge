@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "31b186456584c588795aac03ea09d8f821c9bd84",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-objects",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a03-object-annotations.test.js",
+    "tests/a03-object-model-native.test.js"
+  ],
+  "files": 2,
+  "sourceHashes": {
+    "tests/a03-object-annotations.test.js": "008c7a9e1e68dc48aa5743ebda2af3f1f1a062d25b279f6009849afaef52c8ec",
+    "tests/a03-object-model-native.test.js": "de8c348d38267a432af765e65a9ef3f46e4aa36f2501b9b3e39ec17236c78eac"
+  },
+  "nativeFixtureSHA256": "038da3f3ca12b21f39c367f726b972b0b89ded606ed66f9157ebeab495996dbb",
+  "environmentOverrides": {},
+  "resourceWrapper": "scripts/limited.js; no limits overridden.",
+  "stdoutAndStderr": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/correction-node.log",
+  "startedAt": "2026-10-04T15:07:26.333832+00:00",
+  "reason": "Retest annotation fixture encoding correction plus strict unchanged object native replay; no unrelated focused tests repeated.",
+  "exitCode": 0,
+  "endedAt": "2026-10-04T15:07:27.219680+00:00"
+}

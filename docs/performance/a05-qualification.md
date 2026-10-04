@@ -121,3 +121,22 @@ Create a new reference after any product/harness commit; stale references are re
 Typed-float tests inspect actual adapter materialization counters before return and compare exact numeric results. Managed allocation counts and RSS cannot establish zero JavaScript float-carrier creation; retain focused counter/differential assertions and applicable allocation/GC evidence for [#1395](https://github.com/wieslawsoltes/SharpForge/issues/1395).
 
 Copy-on-write retention, 128-snapshot memory bounds and full-copy equivalence require the snapshot qualification workload. T12 separately measures capture/restore/export/import and validates replay. The fairness suite measures the one explicitly selected Node Wasm workload above; broader Wasm behavior, native CLR results, browser timing and architecture coverage retain their own qualification. Reports label the actual backend and leave unmeasured targets explicit.
+
+
+### Source dispatch selection with profiling disabled
+
+Source execution selects its plain or instrumented opcode dispatcher once per
+slice. A null or undefined observer selects the existing plain dispatcher,
+which has no profiling branch per instruction. An active observer remains
+captured for that slice, while its `instruction` method is read at every
+instruction boundary. Sequence pauses, quotas, managed faults, continuation
+paths, frame-pool cleanup, runtime event delivery and final clock reporting
+retain their existing order. CIL manual stepping is unchanged.
+
+The hook-free reference preserves the dispatch-selection call and common loop;
+it removes only the exact reviewed observer selection and wrapper. A changed
+wrapper body or selector argument fails reference generation. VM classes and
+shared host allocation callbacks remain byte-identical. This implementation
+change addresses the observed source-arithmetic off-overhead miss on published
+`312cd9242`; it does not claim a speedup or completion of the 1% requirement.
+Fresh complete profiling-off qualification is still required after validation.

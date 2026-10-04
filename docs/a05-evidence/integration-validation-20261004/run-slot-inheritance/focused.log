@@ -1,0 +1,36 @@
+✔ resource limits: local defaults scale with memory and CI is unlimited (1.408469ms)
+✔ resource limits: environment overrides win and invalid values are ignored (0.180966ms)
+✔ resource limits: node --test arguments get a concurrency cap unless one is given (0.279711ms)
+✔ resource limits: heap cap is appended to NODE_OPTIONS and never overrides an explicit cap (0.186023ms)
+✔ resource limits: run slots are counted, released and reject unsafe legacy stale recovery (48.625237ms)
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+✔ run-slot child reuses an exact live lease without releasing its owner (85.622108ms)
+✔ run-slot invalid, altered, expired and foreign-directory capabilities fail closed (2.321281ms)
+✔ run-slot release is idempotent and cannot delete a replacement inode or nonce (2004.344428ms)
+✔ run-slot independent contender waits until the original owner releases (80.962704ms)
+✔ run-slot normal owner exit releases its lease and abrupt exit is metadata-reclaimed (125.510586ms)
+✔ run-slot Linux identity rejects PID reuse and boot changes while numeric locks remain legacy-readable (1.341951ms)
+✔ run-slot exact inherited metadata still rejects a Linux process-start mismatch (1.314049ms)
+✔ run-slot wrapper to synchronous nested manifest runner completes with one serial slot (463.545177ms)
+✔ A00 runner preserves SIGINT failure after graceful zero exit (222.015177ms)
+✔ A00 runner preserves SIGTERM failure after graceful zero exit (235.612434ms)
+✔ A00 runner timeout remains a failure after graceful zero exit (1675.352541ms)
+✔ A00 runner preserves the first cancellation when later signals arrive (468.970816ms)
+✔ A00 runner preserves normal exits and clears its pending deadline (632.064598ms)
+✔ A00 runner spawn errors clear listeners and pending deadlines (60.283302ms)
+✔ A00 runner rejects invalid timeouts before starting a child (0.979859ms)
+✔ A00 runner keeps a short area deadline when a slower area is also selected (1210.403534ms)
+✔ A00 runner preserves each successful area timeout and serial reporter output (950.483999ms)
+✔ A00 runner keeps separate reporter files for multiple areas (954.636986ms)
+✔ A00 runner rejects shared reporter files before running or truncating them (74.281646ms)
+✔ A00 runner preserves ordinary reporter destinations for a single selected area (879.603738ms)
+✔ A00 runner rejects area placeholders that normalize to a shared reporter file (75.892692ms)
+✔ A00 runner rejects missing reporter destinations before starting suites (161.629911ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10668.217683

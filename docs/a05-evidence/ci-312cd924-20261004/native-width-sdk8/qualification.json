@@ -1,0 +1,22 @@
+{
+  "task": "SF-A05-E04",
+  "timestamp": "2026-10-04T18:36:39.452Z",
+  "revision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "platform": "win32",
+  "architecture": "x64",
+  "node": "v22.23.3",
+  "dotnetSdk": "8.0.425",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.31 [D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.31 [D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 8.0.31 [D:\\a\\_temp\\a05-dotnet-x86-8.0.425\\shared\\Microsoft.WindowsDesktop.App]",
+  "targetFramework": "net8.0",
+  "status": "passed",
+  "passed": true,
+  "fixtures": [
+    {
+      "fixture": "native-width",
+      "passed": true,
+      "status": "passed",
+      "qualification": "Same native source and output compared across Roslyn CIL and compiler source/reload/CIL routes",
+      "evidence": "native-width\\qualification.json"
+    }
+  ]
+}

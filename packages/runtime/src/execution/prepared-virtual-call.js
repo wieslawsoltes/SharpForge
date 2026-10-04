@@ -23,17 +23,28 @@ function build(vm, caller, instruction) {
 
 function planFor(vm, caller, instruction) {
   const epoch = executionCodeState(vm);
-  let methods = caches.get(epoch);
-  if (!methods) caches.set(epoch, methods = new WeakMap());
-  let cached = methods.get(caller.method);
-  if (!cached || cached.instructions !== caller.method.instructions) {
-    methods.set(caller.method, cached = {instructions: caller.method.instructions, sites: new Map()});
+  let cache = caches.get(epoch);
+  if (!cache) {
+    cache = {methods: new WeakMap(), method: null, instructions: null, offset: null, site: null};
+    caches.set(epoch, cache);
   }
-  let site = cached.sites.get(instruction.offset);
+  const method = caller.method, instructions = method.instructions;
+  let site = cache.site;
+  if (cache.method === method && cache.instructions === instructions && cache.offset === instruction.offset &&
+      site?.operand === instruction.operand) return site.plan;
+  let cached = cache.methods.get(method);
+  if (!cached || cached.instructions !== instructions) {
+    cache.methods.set(method, cached = {instructions, sites: new Map()});
+  }
+  site = cached.sites.get(instruction.offset);
   if (!site || site.operand !== instruction.operand) {
     site = {operand: instruction.operand, plan: build(vm, caller, instruction)};
     cached.sites.set(instruction.offset, site);
   }
+  cache.method = method;
+  cache.instructions = instructions;
+  cache.offset = instruction.offset;
+  cache.site = site;
   return site.plan;
 }
 

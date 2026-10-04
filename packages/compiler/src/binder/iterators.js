@@ -90,7 +90,7 @@ export function checkIteratorBody(method, body, report) {
     if (code) report(node.syntax.yieldKeyword ?? node.syntax, code, []);
   });
   if (!yields) return;
-  if (method.isVararg) report(method.locations?.[0] ?? method.syntax, 'CS1636', []);
+  if (method.isVararg) report(method.locations?.[0] ?? method.syntax, DiagnosticId.CS1636, []);
   const returnType = method.returnType;
   const location = method.locations?.[0] ?? method.syntax;
   if (isIteratorInterface(returnType) && returnType.name.startsWith('IAsync') && !method.isAsync) {

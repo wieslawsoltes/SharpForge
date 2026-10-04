@@ -15,7 +15,7 @@ export function qualificationAssembly({name = 'Qualification', parameters = [], 
   const method = metadata.add(6, [0, 0, 0x96, metadata.string('Main'),
     metadata.blob(methodSignature(result, parameters, true, resolve)), 1]);
   const instructions = new CilWriter();
-  body(instructions);
+  body(instructions, {resolve});
   const code = instructions.finish();
   const signature = locals.length ? metadata.add(17, [metadata.blob(localSignature(locals, resolve))]) : 0;
   const section = new Writer().zero(72);

@@ -1,6 +1,14 @@
-import {readFileSync,writeFileSync} from 'node:fs';import {createHash} from 'node:crypto';import {fileURLToPath} from 'node:url';import {resolve} from 'node:path';
-export const root=fileURLToPath(new URL('../../',import.meta.url));
-export function inventory(base=root){const files=[
+import {readFileSync, writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
+import {resultKinds, additionalShapes, evidence, unsupported} from './value-inventory-description.js';
+
+export const root = fileURLToPath(new URL('../../', import.meta.url));
+
+// These hashes identify the implementation reviewed by the descriptive inventory.
+// They do not version the independent Portable Value ABI 1 codec.
+const files = [
   'packages/runtime/src/heap.js',
   'packages/runtime/src/vm.js',
   'packages/runtime/src/cil-vm.js',
@@ -28,6 +36,42 @@ export function inventory(base=root){const files=[
   'packages/bytecode/src/numeric/decimal-value.js',
   'packages/bytecode/src/numeric/scalar-codec.js',
   'packages/runtime/src/execution/source-numbers.js',
-];const source=Object.fromEntries(files.map(p=>[p,readFileSync(resolve(base,p),'utf8')]));const carriers={int:{source:'number (Int32 narrowed by bitwise operations)',cil:'number (Int32 stack category)'},enum:{source:'frozen {enumType, underlyingType, value: number | bigint}',cil:'underlying stack integer or boxed managed enum'},long:{source:'bigint (signed Int64)',cil:'bigint (signed Int64)'},double:{source:'number | frozen {float: r8, value: number} (IEEE 754 binary64)',cil:'frozen {float: r8, value: number}'},numeric:{source:'number | bigint | frozen float | nativeInt | Decimal',cil:'number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}'},bool:{source:'boolean',cil:'number (0 or 1)'},string:{source:'frozen {h,g} to UTF-16 string record',cil:'frozen {h,g} to UTF-16 string record'},array:{source:'frozen {h,g} to array record',cil:'frozen {h,g} to array record'},exception:{source:'ManagedFault with optional reference, frames',cil:'ManagedFault with optional reference, frames'},any:{source:'number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal',cil:'number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable'}};return {schemaVersion:1,sources:Object.fromEntries(files.map(p=>[p,createHash('sha256').update(source[p]).digest('hex')])),resultKinds:carriers,additionalShapes:[{shape:'{nullableType:MethodTable,hasValue:boolean,value}',meaning:'immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe'},{shape:'{valueType:MethodTable,fields:frozen array}',meaning:'immutable VM-owned direct-CIL reference-free struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data'},{shape:'{valueType:MethodTable,fields:frozen array,explicitBytes:frozen byte array}',meaning:'reference-free explicit-layout value or nested view with immutable little-endian storage; overlapping fields alias within a value; copies preserve padding and scalar bits; not a portable snapshot or raw-memory API'},{shape:'{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}',meaning:'owned CIL address with immutable struct field indices; resolves live storage on access; rejects foreign VM and expired frames'},{shape:'{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}',meaning:'immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value'},{shape:'{nativeInt: 32|64, value: number|bigint}',meaning:'immutable source/CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer'},{shape:'{enumType, underlyingType, value}',meaning:'source enum identity with signed or unsigned integer storage; not a heap reference'},{shape:'null',meaning:'null reference and default reference storage'},{shape:'undefined',meaning:'unassigned local; not a portable value'},{shape:'{h,g}',meaning:'zero-based heap index, positive safe-integer generation; neither scoped epoch nor portable uint32 checked by isReference'},{shape:'{byref:true,kind,index,owner,frameId}',meaning:'CIL managed interior/frame address; never portable raw pointer'},{shape:'{methodPointer:true,vmOwner,token}',meaning:'immutable CIL ldftn pointer with resolved method token and opaque VM identity; delegate binding rejects a different VM owner; not a portable function pointer'},{shape:'host lease {id,owner}',meaning:'heap-local opaque strong or weak handle'}],evidence:['execution/source-builtins.js and source-builtins/ groups preserve rooted intrinsic results and VM-local result/host metadata','execution/source-ops/ groups preserve source opcode stack values, storage writes, arithmetic, control flow and object construction','ManagedHeap.allocate returns Object.freeze({h,g})','ManagedHeap.array caps length at 1000000','execution/storage.js storageValue and execution/numeric-ops.js storage apply narrow and BigInt integer categories through bytecode/numeric/conversions.js','execution/source-ops.js binary preserves legacy modes and delegates typed modes to shared scalar helpers','execution/enums.js enumValue freezes source enum identity and underlying storage','bytecode/numeric/float.js float and bytecode/numeric/native-int.js nativeInteger freeze numeric stack carriers','execution/delegate-targets.js delegateMethodPointer freezes the resolved token and VM owner; constructBoundDelegate requires the same owner','bytecode/numeric/decimal-value.js decimal freezes the unsigned 96-bit coefficient, scale and sign used by source/CIL Decimal arithmetic and storage'],unsupported:['Rust engine qualification','Wasm runtime qualification','Numeric source/direct-CIL cross-platform execution qualification','arbitrary value structs in source VM']};}
-export function inventoryText(base=root){return JSON.stringify(inventory(base),null,2)+'\n';}
-if(process.argv[1]===fileURLToPath(import.meta.url)){const path=resolve(root,'planning/contracts/value-abi/current-js-inventory.json'),text=inventoryText();if(process.argv.includes('--check')){if(readFileSync(path,'utf8')!==text)throw new Error('Value inventory drift; regenerate and review');}else writeFileSync(path,text);}
+  'packages/runtime/src/execution/managed-fault.js',
+  'packages/runtime/src/execution/heap-reference.js',
+  'packages/runtime/src/execution/heap-storage.js',
+  'packages/runtime/src/execution/array-storage.js',
+  'packages/runtime/src/execution/value-types.js',
+  'packages/runtime/src/execution/explicit-values.js',
+  'packages/runtime/src/execution/nullable-value.js',
+  'packages/runtime/src/execution/nullable-interior.js',
+  'packages/runtime/src/execution/managed-address.js',
+  'packages/runtime/src/execution/source-addresses.js',
+  'packages/runtime/src/execution/stack-memory.js',
+  'packages/runtime/src/execution/pinned.js',
+  'packages/runtime/src/execution/spans.js',
+  'packages/runtime/src/execution/varargs.js',
+  'packages/runtime/src/execution/method-pointers.js',
+  'packages/runtime/src/execution/typed-stack.js',
+  'packages/runtime/src/execution/snapshot-version.js',
+  'packages/runtime/src/execution/snapshot-serialize.js',
+  'packages/runtime/src/execution/snapshot-wire-values.js',
+  'packages/runtime/src/execution/snapshot-cow.js',
+];
+
+export function inventory(base = root) {
+  const sources = Object.fromEntries(files.map(path => [path,
+    createHash('sha256').update(readFileSync(resolve(base, path))).digest('hex')]));
+  return {schemaVersion: 1, sources, resultKinds, additionalShapes, evidence, unsupported};
+}
+
+export function inventoryText(base = root) {
+  return JSON.stringify(inventory(base), null, 2) + '\n';
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const path = resolve(root, 'planning/contracts/value-abi/current-js-inventory.json');
+  const text = inventoryText();
+  if (process.argv.includes('--check')) {
+    if (readFileSync(path, 'utf8') !== text) throw new Error('Value inventory drift; regenerate and review');
+  } else writeFileSync(path, text);
+}

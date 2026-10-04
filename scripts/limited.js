@@ -14,7 +14,8 @@ const limits = resourceLimits();
 const isNode = /(^|[\\/])node(\.exe)?$/.test(command);
 const args = isNode ? limitTestArgs(rest, limits) : rest;
 const release = await acquireRunSlot({limits});
-const options = {stdio: 'inherit', env: limitedEnv(process.env, limits), shell: !isNode && process.platform === 'win32'};
+const options = {stdio: 'inherit', env: limitedEnv({...process.env, ...release.environment}, limits),
+  shell: !isNode && process.platform === 'win32'};
 const child = spawn(isNode ? process.execPath : command, args, options);
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => child.kill(signal));
 child.once('error', error => { release(); console.error(error.message); process.exit(1); });

@@ -58,6 +58,7 @@ export function dispatchSourceOpcode(vm,frame,op,a,b) {
     case Op.DELEGATE: sourceOpcodeHandlers[Op.DELEGATE](vm,frame,a,b); return true;
     case Op.ENUM: sourceOpcodeHandlers[Op.ENUM](vm,frame,a,b); return true;
     default: {
+      if (!Number.isInteger(op) || !Object.hasOwn(sourceOpcodeHandlers, op)) return false;
       const handler = sourceOpcodeHandlers[op];
       if (!handler) return false;
       handler(vm, frame, a, b);

@@ -26,6 +26,7 @@ import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents} from 
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {normalizeRuntimeLaunchOptions} from './launch-options.js';
 import {cilEntryArguments} from './execution/entry-arguments.js';
+import {startCilEntry} from './execution/module-startup.js';
 import {initializeCilInstrumentation} from './execution/cil-instrumentation.js';
 import {executionOptions} from './execution/execution-options.js';
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
@@ -47,7 +48,7 @@ export class CilVirtualMachine {
     initializeCilInstrumentation(this,options, profiler => { this.#profiler = profiler; });
     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
     const args=cilEntryArguments(this,entry,options);
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
+    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);startCilEntry(this,entry,args);
   }
   *roots(){yield* rootValues(this);}
   get top(){return this.frames.at(-1);}

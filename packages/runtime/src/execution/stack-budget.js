@@ -10,6 +10,7 @@ import {isVarargsStorage} from './varargs-storage.js';
 const budgets = new WeakMap();
 const slotBytes = 8;
 const frameHeaderBytes = 16;
+const retainedReservations = 32;
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 
 /** VM-wide logical managed stack bytes; a host may remove the live option to disable this quota. */
@@ -48,7 +49,7 @@ function storageBytes(vm, type) {
 
 function newBudget(vm) {
   return {epoch: executionCodeState(vm), report: vm.report, valueLimit: vm.options.maxStackValues ?? 65536,
-    imageMethods: vm.image?.methods, methods: new WeakMap(), frames: new Map(), total: 0};
+    imageMethods: vm.image?.methods, methods: new WeakMap(), frames: new WeakMap(), total: 0, freeReservations: []};
 }
 
 function methodSize(vm, budget, method) {
@@ -151,7 +152,11 @@ export function reserveStackFrame(vm, method, argumentCount, optionalArguments) 
   const bytes = frameBytes(vm, budget, method, argumentCount, method.locals.length, optionalArguments);
   if (bytes > limit - budget.total) throw overflow();
   budget.total += bytes;
-  return {budget, bytes, active: true};
+  const ticket = budget.freeReservations.pop() ?? {budget: null, bytes: 0, active: false};
+  ticket.budget = budget;
+  ticket.bytes = bytes;
+  ticket.active = true;
+  return ticket;
 }
 
 export function commitStackFrame(ticket, frame) {
@@ -164,6 +169,16 @@ export function cancelStackFrame(ticket) {
   if (!ticket?.active) return;
   ticket.budget.total -= ticket.bytes;
   ticket.active = false;
+}
+
+/** End the reservation scope after every possible commit/rollback; callers must not retain a released ticket. */
+export function releaseStackReservation(ticket) {
+  if (!ticket?.budget) return;
+  const budget = ticket.budget;
+  cancelStackFrame(ticket);
+  ticket.budget = null;
+  ticket.bytes = 0;
+  if (budget.freeReservations.length < retainedReservations) budget.freeReservations.push(ticket);
 }
 
 /** Reconcile a restored/replaced frame, then observe the current host byte limit. */
@@ -185,9 +200,10 @@ export function admitStackBytes(vm, frame) {
 export function releaseStackFrame(vm, frame) {
   const budget = budgets.get(vm);
   const bytes = budget?.frames.get(frame);
-  if (bytes === undefined) return;
+  if (!bytes) return;
   budget.total -= bytes;
-  budget.frames.delete(frame);
+  // Pooled frames reuse the same weak entry; zero is retired, never a live charge.
+  budget.frames.set(frame, 0);
 }
 
 export function clearStackBudget(vm) {

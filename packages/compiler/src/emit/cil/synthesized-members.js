@@ -24,6 +24,7 @@ import { asyncEntryPoint } from './async-members.js';
 import { moduleTypeInitializer } from './module-initializers.js';
 import { planAnonymousTemplate } from './anonymous-type-members.js';
 import { planFixedBuffers, extendWithFixedBuffers } from './fixed-buffers.js';
+import { Utf8DataPlan } from './utf8-data-plan.js';
 
 const ENTRY_FLAGS = MethodAttributes.Private | MethodAttributes.Static | MethodAttributes.HideBySig;
 const TYPE_INITIALIZER_FLAGS = ENTRY_FLAGS | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -62,6 +63,7 @@ export class SynthesizedMembers {
       anonymousTemplates = (analysis.anonymousTemplates ?? []).map(entry => entry.symbol);
     /** Types to append after the source types. State machine classes come last: their field lists grow while bodies are emitted. */
     this.fixedBuffers = planFixedBuffers(declared, analysis.core);
+    this.utf8Literals = new Utf8DataPlan(analysis);
     this.types = [
       ...ownProgram,
       ...this.fixedBuffers.types,
@@ -69,6 +71,7 @@ export class SynthesizedMembers {
       ...anonymousTemplates,
       ...this.closures.types,
       ...this.dynamicSites.types,
+      ...this.utf8Literals.types,
       ...this.stateMachines.types,
     ];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
@@ -76,7 +79,7 @@ export class SynthesizedMembers {
     /** Async `Main` method symbol -> the planned `<Main>` that runs it, once `extend` has seen its type. */
     this.asyncEntryPoints = new Map();
     /** The planned methods of `<Module>`: its type initializer when the program has module initializers. */
-    this.moduleMethods = this.entryTypeHasInitializer(declared) ? moduleTypeInitializer(analysis, TYPE_INITIALIZER_FLAGS) : [];
+    this.moduleMethods = moduleTypeInitializer(analysis, TYPE_INITIALIZER_FLAGS);
   }
   /** The top-level statements as a method: `void`, `int`, or - when they await - `Task` or `Task<int>`. */
   topLevelProgram(file, body, type) {
@@ -92,6 +95,7 @@ export class SynthesizedMembers {
   }
   /** Adds the synthesized members of one type to its plan. */
   extend(type, plan) {
+    this.utf8Literals.extend(type, plan);
     if (type.isAnonymousTemplate) planAnonymousTemplate(type, plan, this.core);
     extendWithFixedBuffers(this.fixedBuffers, type, plan);
     if (this.topLevel?.type === type) {
@@ -122,13 +126,6 @@ export class SynthesizedMembers {
       plan.methods.push(...additions.methods);
     }
   }
-  /** True when the type that declares the entry point has a type initializer (a static constructor or initialized static members). */
-  entryTypeHasInitializer(declared) {
-    const declaresEntryPoint = type => type.getMembers().some(member => member.kind === SymbolKind.Method && isEntryPointMethod(member)),
-      entryTypes = this.topLevel ? [this.topLevel.type] : declared.filter(declaresEntryPoint),
-      hasStaticConstructor = type => type.getMembers().some(member => member.methodKind === MethodKind.StaticConstructor);
-    return entryTypes.some(type => hasStaticConstructor(type) || this.hasStaticInitializers(type));
-  }
   hasStaticInitializers(type) {
     return type.getMembers().some(member => {
       const initialized = member.kind === SymbolKind.Field || member.kind === SymbolKind.Property || member.kind === SymbolKind.Event;
@@ -150,8 +147,7 @@ export class SynthesizedMembers {
         const frame = { uri: file.source.uri, containingType: type, isStatic: true, parameters, returnType, method: null };
         const emitter = new MethodEmitter(program, frame),
           machine = program.stateMachines.of(body);
-        if (!machine) return emitter.body(body, () => emitter.moduleInitializers());
-        emitter.moduleInitializers();
+        if (!machine) return emitter.body(body);
         return emitter.kickoffBody(machine);
       },
     };

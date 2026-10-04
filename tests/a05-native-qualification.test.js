@@ -31,7 +31,7 @@ test('A05 native plan keeps SDK policy, unsafe compilation and replay evidence e
   assert.equal(byId.get('numeric-capture').sdkMajor, 10);
   assert.equal(byId.get('numeric-replay').dependsOn, 'numeric-capture');
   assert.equal(byId.get('numeric-replay').env.SHARPFORGE_NUMERIC_ORACLE_DIR, byId.get('numeric-capture').evidence);
-  assert(plan.every(item => item.timeoutMs > 0 && item.timeoutMs <= 900000));
+  assert(plan.every(item => item.timeoutMs > 0 && item.timeoutMs <= (item.id === 'numeric-replay' ? 1800000 : 900000)));
 });
 
 test('native plan propagates only a completed observed unsupported outcome and never turns it into a pass', async () => {

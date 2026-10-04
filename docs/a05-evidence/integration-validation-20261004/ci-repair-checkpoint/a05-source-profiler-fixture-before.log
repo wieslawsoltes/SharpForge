@@ -1,0 +1,56 @@
+✖ source slices capture observer identity once but retain dynamic instruction-method lookup (111.513381ms)
+✖ source sequence pause and exhausted slice budget do not emit instruction observations (11.852962ms)
+✔ an instruction observer failure retains fault accounting and slice finalization before opcode execution (8.641798ms)
+✔ real source profiling counts each budget-one instruction and fault exactly as ordinary execution (20.404397ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1803.618209
+
+✖ failing tests:
+
+test at tests/a05-source-profiler-dispatch.test.js:23:1
+✖ source slices capture observer identity once but retain dynamic instruction-method lookup (111.513381ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-performance/tests/a05-source-profiler-dispatch.test.js:38:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-source-profiler-dispatch.test.js:51:1
+✖ source sequence pause and exhausted slice budget do not emit instruction observations (11.852962ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'faulted'
+  - 'paused'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-performance/tests/a05-source-profiler-dispatch.test.js:64:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'paused',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

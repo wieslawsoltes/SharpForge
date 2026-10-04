@@ -3,7 +3,7 @@ import {appendSourceVarargs,prepareSourceVarargs} from './source-varargs.js';
 import {sourceInputTypes} from './source-input-types.js';
 import {attachVarargs} from './varargs.js';
 import {admitCilStack} from './frame-stack.js';
-import {reserveStackFrame, commitStackFrame, cancelStackFrame, releaseStackFrame} from './stack-budget.js';
+import {reserveStackFrame, commitStackFrame, cancelStackFrame, releaseStackFrame, releaseStackReservation} from './stack-budget.js';
 import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
@@ -60,6 +60,8 @@ export function cilCallFrame(vm, method, args, extra) {
     cancelStackFrame(ticket);
     if (frame) pool.retire(frame);
     throw error;
+  } finally {
+    releaseStackReservation(ticket);
   }
 }
 
@@ -77,10 +79,10 @@ export function callSourceFrame(vm, methodId, args, extra = {}) {
   const capacity = Math.max(args.length, method.locals.length + optional);
   const packet = prepareSourceVarargs(vm, method, args.length, extra.argumentTypes ?? [], fixed);
   const ticket = reserveStackFrame(vm, method, capacity, packet);
-  const pinCount = vm.heap.pins.length;
-  vm.heap.pins.push(...args);
-  let pool, frame;
+  let pool, frame, pinCount;
   try {
+    pinCount = vm.heap.pins.length;
+    vm.heap.pins.push(...args);
     pool = framePool(vm);
     frame = pool.acquire(method, capacity);
     frame.id = nextFrameId(vm);
@@ -100,7 +102,10 @@ export function callSourceFrame(vm, methodId, args, extra = {}) {
     cancelStackFrame(ticket);
     if (frame) pool.retire(frame);
     throw error;
-  } finally { vm.heap.pins.length = pinCount; }
+  } finally {
+    try { if (pinCount !== undefined) vm.heap.pins.length = pinCount; }
+    finally { releaseStackReservation(ticket); }
+  }
   vm.profiler?.enter(frame);
   enterSourceMethod(vm, frame);
 }

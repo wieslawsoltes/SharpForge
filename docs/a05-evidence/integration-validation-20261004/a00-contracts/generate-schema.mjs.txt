@@ -1,0 +1,9 @@
+import {mkdirSync, writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const [checkout, destination] = process.argv.slice(2);
+const {generate} = await import(pathToFileURL(resolve(checkout, 'scripts/planning/gen-schema-fixtures.js')));
+mkdirSync(destination, {recursive: true});
+const outputs = generate();
+for (const [name, text] of outputs) writeFileSync(resolve(destination, name), text);
+console.log(JSON.stringify({generated: [...outputs.keys()]}));

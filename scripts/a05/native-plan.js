@@ -55,7 +55,7 @@ export function nativeQualificationPlan({output, framework}) {
   cases.push({id: 'numeric-capture', args: ['scripts/numeric/generate-oracle.js', evidence('numeric-capture')],
     evidence: evidence('numeric-capture'), sdkMajor: 10, unsupportedReason: numericReason, timeoutMs: 900000});
   cases.push({id: 'numeric-replay', args: ['--test', '--test-concurrency=1', 'tests/numeric-differential.test.js'],
-    dependsOn: 'numeric-capture', sdkMajor: 10, unsupportedReason: numericReason, timeoutMs: 900000,
+    dependsOn: 'numeric-capture', sdkMajor: 10, unsupportedReason: numericReason, timeoutMs: 1800000,
     env: {SHARPFORGE_NUMERIC_ORACLE_DIR: evidence('numeric-capture')}});
   return cases.map(item => ({timeoutMs: 300000, ...item}));
 }

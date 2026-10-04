@@ -1,0 +1,3 @@
+*.tap -text
+*.log -text
+*-journal.json -text

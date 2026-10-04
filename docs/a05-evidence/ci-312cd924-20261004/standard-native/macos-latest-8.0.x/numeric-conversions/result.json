@@ -1,0 +1,17 @@
+{
+  "id": "numeric-conversions",
+  "status": "unsupported",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-numeric-dotnet.js"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "numeric-conversions",
+  "report": "numeric-conversions/result.json",
+  "reason": "The numeric conversion policy and generated oracle explicitly pin the .NET 10 JIT; .NET 8 is not qualified.",
+  "finishedAt": "2026-10-04T19:16:38.902Z"
+}

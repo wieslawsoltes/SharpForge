@@ -104,3 +104,22 @@ test('profiler reference rejects oversized input before parsing or importing ano
   await assert.rejects(loadProfilerReference(path), /at most 1 MiB/);
   await assert.rejects(loadProfilerReference(directory), /must be a file/);
 });
+
+
+test('source dispatch reference removes only the exact reviewed profiling wrapper and keeps dispatch selection', () => {
+  const path = 'execution/source-slice.js';
+  const source = readFileSync(new URL('../packages/runtime/src/' + path, import.meta.url), 'utf8');
+  const reference = stripProfilerConsumer(path, source).source;
+  assert.match(reference, /function instructionDispatcher\(\) \{\n  return dispatchSourceOpcode;/);
+  assert.match(reference, /const dispatch = instructionDispatcher\(\);/);
+  assert.match(reference, /if \(!dispatch\(vm, frame, opcode, first, second\)\)/);
+  assert.match(reference, /handleSourceInstructionFault\(vm, error, instruction\)/);
+  assert.match(reference, /flushSourceRuntimeEvents\(vm\)/);
+  assert.doesNotMatch(reference, /\bprofiler\b/);
+  for (const changed of [source.replace('profiler.instruction(frame);', 'profiler.instruction(other);'),
+    source.replace('return dispatchSourceOpcode(vm, frame, opcode, first, second);',
+      'return dispatchSourceOpcode(vm, frame, opcode, first, other);'),
+    source.replace('const dispatch = instructionDispatcher(profiler);', 'const dispatch = instructionDispatcher(other);')]) {
+    assert.throws(() => stripProfilerConsumer(path, changed), /Unreviewed/);
+  }
+});

@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals
+ok 1 - browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals
+  ---
+  duration_ms: 42.169752
+  type: 'test'
+  ...
+# Subtest: browser debugger fixture proves OSR, actual breakpoint, canonical step, and interpreted resume
+ok 2 - browser debugger fixture proves OSR, actual breakpoint, canonical step, and interpreted resume
+  ---
+  duration_ms: 15.746711
+  type: 'test'
+  ...
+# Subtest: browser profile fixtures export actual source/reload/CIL counts and named guest methods
+ok 3 - browser profile fixtures export actual source/reload/CIL counts and named guest methods
+  ---
+  duration_ms: 112.677286
+  type: 'test'
+  ...
+# Subtest: browser native arithmetic fixture fails when a required WebAssembly dependency is unavailable
+ok 4 - browser native arithmetic fixture fails when a required WebAssembly dependency is unavailable
+  ---
+  duration_ms: 4.082939
+  type: 'test'
+  ...
+# Subtest: denial fixture cannot pass when native compilation is actually allowed
+ok 5 - denial fixture cannot pass when native compilation is actually allowed
+  ---
+  duration_ms: 3.900302
+  type: 'test'
+  ...
+# Subtest: browser heap fixture executes native allocation/field/array imports with GC, write and profile parity
+ok 6 - browser heap fixture executes native allocation/field/array imports with GC, write and profile parity
+  ---
+  duration_ms: 24.040447
+  type: 'test'
+  ...
+# Subtest: browser heap fixture cannot qualify without the actual WebAssembly backend
+ok 7 - browser heap fixture cannot qualify without the actual WebAssembly backend
+  ---
+  duration_ms: 6.998217
+  type: 'test'
+  ...
+# Subtest: browser heap observer restores the incoming native property after compilation refusal
+ok 8 - browser heap observer restores the incoming native property after compilation refusal
+  ---
+  duration_ms: 6.732617
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1717.664294

@@ -34,22 +34,29 @@ fault cleanup retain the same observable active/inactive contract. Any host-allo
 benefit must be measured; the source edit itself is not evidence of a zero-allocation
 loop.
 
-Run serially on a clean integration commit:
+Run the original #1395 per-iteration assessment serially on a clean committed
+checkout, writing to a fresh path outside it:
 
 ```sh
-node bench/vm/float-allocation.js --runner a05-linux-x64-node24 \
-  --out artifacts/a05-float-allocation.json
+SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 \
+SHARPFORGE_MAX_OLD_SPACE_MB=512 \
+node scripts/limited.js node bench/vm/float-allocation.js \
+  --runner a05-linux-x64-node24 --warmup-slices 10 --warmup 100000 \
+  --iterations 1000000 --out /tmp/a05-final-evidence/REVISION/float-warm10.json
 ```
 
-The bounded protocol runs each typed variant with a warmed zero-iteration control,
-100,000 iterations and 1,000,000 iterations, then a 10,000-iteration generic control.
+The prescribed assessment warms each typed variant for 100,000 iterations in ten
+real slices, then measures separate zero-iteration, 100,000-iteration and
+1,000,000-iteration children. A seventh child is the generic positive control,
+with 10,000 warmup and 10,000 measured iterations, also using ten warmup slices.
 Each child has a 512 MiB heap and 120-second timeout. `--iterations` and `--warmup`
 allow smaller development probes; every report records the actual counts. Reports
-and raw traces use exclusive creation and refuse to overwrite existing evidence.
+and all seven raw traces use exclusive creation and refuse to overwrite existing
+evidence. Reduced counts do not qualify the prescribed per-iteration assessment.
 
 `--warmup-slices N` partitions the same total warmup iterations across N real
 `runSlice` calls, each ending at the same loop boundary. The default remains one
-slice, preserving the original protocol. This optional diagnostic separates host
+slice, preserving earlier driver behavior. The explicit ten-slice assessment above separates host
 tier-up at repeatedly entered slice functions from the measured guest iterations;
 it changes neither guest operations nor measured iteration counts. N is bounded
 by 10,000 and the warmup count. The command, protocol and every child record retain
@@ -64,12 +71,38 @@ prototype customization and capacity overflow materialize an ordinary array.
 This eliminates repeated backing allocation while retaining bounded storage and
 the snapshot/debugger contract; it is independently tested before qualification.
 
-Zero float carriers may satisfy the narrow representation requirement. The broader
-#1395 requirement of zero JS objects per iteration remains explicitly unqualified
-until all remaining host allocation sites are accounted for. The current report
-exits with status 2 for that partial qualification, even when the float counter is
-zero and trace growth is absent. Positive byte growth or collection activity is
-retained for follow-up, without subtracting noise or inventing a pass threshold.
+Issue #1395 explicitly permits a GC trace for the requirement of zero JavaScript
+objects **per iteration**. The report's
+`perIterationAllocationCriterion.acceptance` assesses that original clause for
+the two specified warmed loops. It requires matching engine and instrumentation
+identities, exact guest instruction counts and output, a detected generic
+allocation control, zero measured float-carrier/managed/frame/frame-array
+allocations, and no in-loop collections. Increasing work from 100,000 to 1,000,000
+iterations must add no observed interval allocation bytes in either variant.
+One additional byte makes the assessment inconclusive; a positive exact loop
+counter is a miss. No byte tolerance or subtraction of fixed entry costs is used.
+
+The trace totals include every in-loop collection's allocated bytes and the first
+closing collection's pre-collection allocation interval. They do not substitute
+post-GC retained heap size for allocations. Positive fixed marker and slice
+entry/exit costs remain visible in the report. A per-iteration `met` result does
+not claim zero objects during an entire run or enumerate every host allocation
+site. `allHostObjectsPerRun` and the older
+`assessment.totalJSObjectAcceptance` remain `unqualified` for those broader claims.
+
+A completed driver run deliberately keeps top-level `acceptance: partial` and
+exit status 2 because float differential evidence is separate. Neither that
+status nor zero float carriers alone decides the original allocation clause.
+Before interpreting a `met` clause, require top-level `status: measured`, no
+errors, matching start/end commits, clean start/end worktrees, and all recorded
+raw trace hashes. A failed or changed-worktree run cannot qualify a criterion.
+
+The [criterion protocol and historical interpretation](../a05-float-allocation-criterion.md)
+retain the earlier observations and their original statuses. Each new product
+revision needs fresh measurement; this documentation update records no new run
+or passing result. Passing float differential tests remain a separate condition
+of #1395, and the allocation observation is limited to its recorded Node/V8
+environment and warmed fixtures.
 
 The module-hook protocol follows the official
 [Node module customization documentation](https://nodejs.org/download/release/v24.19.0/docs/api/module.html#moduleregisterhooksoptions).

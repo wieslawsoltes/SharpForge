@@ -119,16 +119,6 @@ export const ObjectEmission = Base =>
         this.debug?.endExpression(point);
       }
     }
-    /**
-     * C# 9 module initializers run once, in declaration order, before any other code of the module. Roslyn calls
-     * them from the type initializer of `<Module>`; here they are called at the start of the entry point - which the
-     * direct-CIL runtime also runs - unless the entry point's type has a type initializer, which must not run before
-     * them: then `<Module>::.cctor` calls them (module-initializers.js).
-     */
-    moduleInitializers() {
-      if (this.program.moduleRunsInitializers) return;
-      for (const initializer of this.program.analysis.assembly.moduleInitializers ?? []) this.callMethod(initializer, {});
-    }
     /** The body of a type initializer starts with the static initializers, in declaration order. */
     staticInitializers(type) {
       for (const { field, bound } of this.program.initializersOf(type, true)) {

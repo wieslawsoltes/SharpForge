@@ -61,4 +61,7 @@ Source VM and Rust backends are outside this direct-CIL policy.
 All 70 focused tests passed serially on Node 24 at `1a709ad9`: back-edge
 counters, call-entry tiering, manual bridge, eligibility, method events and
 instruction profiling. Broad native/browser qualification and performance
-measurements remain deferred.
+measurements remain deferred for that historical run. See the additive
+[call-entry latency protocol](performance/a05-wasm-latency.md) for repeated
+preparation/compiled-execution distributions, and the existing tiered fairness
+workload for measured OSR slice boundaries.

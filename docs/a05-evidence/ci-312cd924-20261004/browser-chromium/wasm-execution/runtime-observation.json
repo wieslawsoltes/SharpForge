@@ -1,0 +1,20 @@
+{
+  "url": "http://127.0.0.1:33799/allowed.html",
+  "result": {
+    "passed": true,
+    "nativeProbe": {
+      "moduleHex": "0061736d01000000",
+      "compiled": true,
+      "nativeModule": true
+    },
+    "byteLength": 500,
+    "instructions": 46,
+    "referenceInstructions": 46,
+    "hostArithmeticCalls": 0,
+    "result": 6,
+    "browserVersion": "153.0.8010.12",
+    "csp": "default-src 'self'; script-src 'self' 'sha256-Bnx+fE5ybZKiaharypG3x0aMPpP2Q95zS8lRQB4zdd8=' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "blockedRequests": []
+  },
+  "cspEvents": []
+}

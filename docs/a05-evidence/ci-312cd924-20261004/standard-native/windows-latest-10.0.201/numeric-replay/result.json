@@ -1,0 +1,26 @@
+{
+  "id": "numeric-replay",
+  "status": "passed",
+  "command": {
+    "executable": "C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe",
+    "arguments": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/numeric-differential.test.js"
+    ],
+    "cwd": "D:\\a\\SharpForge\\SharpForge\\"
+  },
+  "environment": {
+    "SHARPFORGE_NUMERIC_ORACLE_DIR": "D:\\a\\SharpForge\\SharpForge\\artifacts\\a05-native\\numeric-capture\\evidence"
+  },
+  "timeoutMs": 900000,
+  "evidence": "numeric-replay",
+  "report": "numeric-replay\\result.json",
+  "startedAt": "2026-10-04T18:58:48.972Z",
+  "durationMs": 898913.3383999999,
+  "exitCode": 0,
+  "signal": null,
+  "stdout": "numeric-replay\\stdout.log",
+  "stderr": "numeric-replay\\stderr.log",
+  "finishedAt": "2026-10-04T19:13:47.889Z"
+}

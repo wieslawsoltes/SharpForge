@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "scope": "Seven completed gate commands on three recorded revisions; counts overlap and must not be summed. Earlier failures and the incomplete A00 run remain unchanged. Active broad-A05 output is deliberately excluded.",
+  "runtimeIdentity": "Node/Python version strings were not captured in these original journals; no version is inferred.",
+  "files": [
+    {
+      "path": "full-a00-after-lease-repair-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/full-a00-after-lease-repair-journal.json",
+      "bytes": 579,
+      "sha256": "face262423a5f5fe5581668d9159990c142a7cce5b9cf5a89516a301dc3344b2"
+    },
+    {
+      "path": "full-a00-after-lease-repair.tap",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/full-a00-after-lease-repair.tap",
+      "bytes": 106527,
+      "sha256": "97a7971922406bc3f34aaa5436ba53ddf4d0184e187ec1354138614990b23999"
+    },
+    {
+      "path": "browser-static-final-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/browser-static-final-journal.json",
+      "bytes": 1991,
+      "sha256": "1fd0165794078832981d6909a4e55c40069f1a65c0059a6b422fb240e12b3a86"
+    },
+    {
+      "path": "browser-heap-native-plan.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/browser-heap-native-plan.log",
+      "bytes": 6431,
+      "sha256": "025f65c1febe10718435c2500ca3979d44e07a56b78e12402a094c6872dec83b"
+    },
+    {
+      "path": "browser-python-contract.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/browser-python-contract.log",
+      "bytes": 104,
+      "sha256": "62cfbeb2911bb226088bfb0918eb4b05008ea70b20bce854ee2ca8a564bd37a5"
+    },
+    {
+      "path": "final-npm-check.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/final-npm-check.log",
+      "bytes": 382,
+      "sha256": "9d2904180a1fd5db45beb859534cf5f8e4664aef760601a4866d590d01ff028e"
+    },
+    {
+      "path": "final-build-license-journal.json",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/final-build-license-journal.json",
+      "bytes": 1893,
+      "sha256": "d441c50b61e4ccca57d63e85b444f482f5dd307bacd44fe351fc63a36d7787d1"
+    },
+    {
+      "path": "browser-observer-cleanup.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/browser-observer-cleanup.log",
+      "bytes": 2089,
+      "sha256": "5add4615aa0e90ce13014f65aaddb51d2857412b5d0e8149ef88b3bdbf6bfe24"
+    },
+    {
+      "path": "final-license-policy.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/final-license-policy.log",
+      "bytes": 88,
+      "sha256": "3fa0bba04868f0c2bf46fad62dade4754fb4ca8eaa7957089e20b6b43df3af5a"
+    },
+    {
+      "path": "final-strict-build.log",
+      "source": "/workspace/scratch/42f7738360b9/a05-ci-repairs-validation-20261004/final-strict-build.log",
+      "bytes": 206,
+      "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f"
+    }
+  ],
+  "runs": [
+    {
+      "id": "full-a00-after-lease-repair",
+      "journal": "full-a00-after-lease-repair-journal.json",
+      "revision": "c45e90c6a3882c87e67dbec37a445dd216801d17",
+      "tree": "d02d6310134dcbdce2a739f1b65cb58de41c93a2",
+      "exitCode": 0,
+      "log": "full-a00-after-lease-repair.tap",
+      "tests": 482,
+      "passed": 482,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 82790.508622,
+      "scope": "Full selected A00 area via the manifest runner after nested lease repair; not full A05 or repository core."
+    },
+    {
+      "id": "browser-heap-native-plan",
+      "journal": "browser-static-final-journal.json",
+      "revision": "0e27de9250478583c769d7daf59ed1fe721af242",
+      "tree": "2dd421039835fae7031375686a6455c89ad6b4b4",
+      "exitCode": 0,
+      "log": "browser-heap-native-plan.log",
+      "tests": 24,
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 2715.387749,
+      "scope": "Node tests for browser qualification, actual Node Wasm runtime bridge, and native plan contracts; not browser or CLR execution."
+    },
+    {
+      "id": "browser-python-contract",
+      "journal": "browser-static-final-journal.json",
+      "revision": "0e27de9250478583c769d7daf59ed1fe721af242",
+      "tree": "2dd421039835fae7031375686a6455c89ad6b4b4",
+      "exitCode": 0,
+      "log": "browser-python-contract.log",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "durationSeconds": 0.002,
+      "scope": "Python browser harness contracts, not an actual browser launch."
+    },
+    {
+      "id": "final-npm-check",
+      "journal": "browser-static-final-journal.json",
+      "revision": "0e27de9250478583c769d7daf59ed1fe721af242",
+      "tree": "2dd421039835fae7031375686a6455c89ad6b4b4",
+      "exitCode": 0,
+      "log": "final-npm-check.log",
+      "scope": "Static manifest, syntax and import checks.",
+      "nodeFiles": 1318,
+      "browserScripts": 38,
+      "unassigned": 0,
+      "duplicate": 0,
+      "syntaxModules": 4702,
+      "syntaxErrors": 0,
+      "importInspected": 4647,
+      "importModules": 4690,
+      "importErrors": 0
+    },
+    {
+      "id": "browser-observer-cleanup",
+      "journal": "final-build-license-journal.json",
+      "revision": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+      "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+      "exitCode": 0,
+      "log": "browser-observer-cleanup.log",
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1717.664294,
+      "scope": "Node browser-qualification contract selection, including restoring the host property after native compilation refusal."
+    },
+    {
+      "id": "final-license-policy",
+      "journal": "final-build-license-journal.json",
+      "revision": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+      "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+      "exitCode": 0,
+      "log": "final-license-policy.log",
+      "scope": "Oracle license-policy validation.",
+      "tools": 7,
+      "packages": 14,
+      "actions": 4,
+      "images": 3,
+      "trackedPaths": 15350
+    },
+    {
+      "id": "final-strict-build",
+      "journal": "final-build-license-journal.json",
+      "revision": "7d7fac37a672d0961fa82c457b64910c0c97a7d6",
+      "tree": "5a1db2dbc3fcbe948ac46553a73774260c98c8fd",
+      "exitCode": 0,
+      "log": "final-strict-build.log",
+      "scope": "Normal strict repository build produced dist; no before/after build-size or performance qualification."
+    }
+  ]
+}

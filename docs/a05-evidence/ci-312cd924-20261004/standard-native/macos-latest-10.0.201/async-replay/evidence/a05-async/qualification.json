@@ -1,0 +1,109 @@
+{
+  "task": "SF-A05-E04",
+  "fixture": "a05-async",
+  "timestamp": "2026-10-04T19:18:26.559Z",
+  "revision": "312cd9242a492ce6f03e7e034a51cc17669a7edf",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v22.23.2",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.AspNetCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 8.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 8.0.30 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.1 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.4 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 9.0.19 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.3 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.7 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.10 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.11 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]\nMicrosoft.NETCore.App 10.0.12 [/Users/runner/.dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net10.0",
+  "passed": true,
+  "status": "passed",
+  "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+  "sources": [
+    {
+      "path": "tests/fixtures/a05-async/Program.cs",
+      "sha256": "91e8dba775ebd78dd38a621ad9129ac5a8d92af8173b6eedb5adf133b4e4a048"
+    }
+  ],
+  "expectedOutput": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+  "assemblySha256": "33d1574c2efbb5bd26926c5a6478938ea26ad14b2b07794093c136a8f94654f5",
+  "native": {
+    "exitCode": 0,
+    "signal": null,
+    "output": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+    "stderr": ""
+  },
+  "asyncReplays": [
+    {
+      "await": 1,
+      "kind": "local",
+      "state": "terminated",
+      "exitCode": 0,
+      "output": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+      "instructions": 846
+    },
+    {
+      "await": 1,
+      "kind": "portable",
+      "state": "terminated",
+      "exitCode": 0,
+      "output": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+      "instructions": 846
+    },
+    {
+      "await": 2,
+      "kind": "local",
+      "state": "terminated",
+      "exitCode": 0,
+      "output": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+      "instructions": 846
+    },
+    {
+      "await": 2,
+      "kind": "portable",
+      "state": "terminated",
+      "exitCode": 0,
+      "output": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+      "instructions": 846
+    }
+  ],
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "first\nsecond\nfinally\n42\n1\nawaited-error\nfailure-finally\n7\nyielded\n9\n3\n4\niterator-finally\n3\niterator-finally\n",
+    "instructions": 846
+  },
+  "commands": [
+    {
+      "command": "dotnet",
+      "arguments": [
+        "restore",
+        "Qualification.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "build",
+        "Qualification.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    },
+    {
+      "command": "dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+      ],
+      "cwd": "<temporary-project>",
+      "status": 0,
+      "signal": null
+    }
+  ]
+}

@@ -14,6 +14,7 @@
  */
 import { ArrayTypeSymbol, SymbolKind } from '../../symbols/types.js';
 import { spanElementType } from '../../conversions/span.js';
+import { emitUtf8Literal } from './emit-utf8-strings.js';
 
 const spanKinds = new Set(['ImplicitSpan', 'ExplicitSpan']);
 
@@ -33,19 +34,9 @@ export const SpanConversionEmission = Base =>
       this.expression(node.operand);
       return this.spanConversion(node.operand.type, node.type, { syntax: node.syntax, isExplicit: node.conversion.kind === 'ExplicitSpan' });
     }
-    /**
-     * `"text"u8` (C# 11): a `ReadOnlySpan<byte>` over the UTF-8 encoding of the text. The bytes are written into a
-     * new array that the span wraps (Roslyn points the span at data of the assembly; the bytes and the length - the
-     * terminating zero is not part of it - are the same).
-     */
+    /** `"text"u8` wraps preplanned UTF-8 data; the terminal NUL is stored beyond the visible span length. */
     exprUtf8Literal(node) {
-      const il = this.il,
-        bytes = new TextEncoder().encode(node.text),
-        arrayType = new ArrayTypeSymbol(this.core.byte);
-      il.emit('ldc.i4', bytes.length).emit('newarr', this.tokens.type(this.core.byte));
-      bytes.forEach((value, index) => il.emit('dup').emit('ldc.i4', index).emit('ldc.i4', value).emit('stelem.i1'));
-      il.recordTop?.(arrayType);
-      return this.spanConversion(arrayType, node.type, { syntax: node.syntax });
+      return emitUtf8Literal(this, node);
     }
     /** Converts the array, string or span on the stack to the span type `to`. */
     spanConversion(from, to, { syntax = null, isExplicit = false } = {}) {

@@ -1,0 +1,24 @@
+{
+  "commit": "c45e90c6a3882c87e67dbec37a445dd216801d17",
+  "tree": "d02d6310134dcbdce2a739f1b65cb58de41c93a2",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "A00",
+    "--",
+    "--test-reporter=tap"
+  ],
+  "limits": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "started": 1791141610.0923743,
+  "finished": 1791141693.2404916,
+  "exitCode": 0,
+  "postCommit": "c45e90c6a3882c87e67dbec37a445dd216801d17",
+  "status": ""
+}

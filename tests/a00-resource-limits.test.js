@@ -37,15 +37,15 @@ test('resource limits: heap cap is appended to NODE_OPTIONS and never overrides 
   assert.equal(limitedEnv({}, {...limits, maxOldSpaceMb: null}).NODE_OPTIONS, undefined);
 });
 
-test('resource limits: run slots are counted, released and reclaimed from dead owners', async () => {
+test('resource limits: run slots are counted, released and reject unsafe legacy stale recovery', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'sf-slots-'));
   try {
     const limits = {testConcurrency: 1, parallelRuns: 2, maxOldSpaceMb: null};
-    const first = await acquireRunSlot({limits, directory, log: () => {}});
-    const second = await acquireRunSlot({limits, directory, log: () => {}});
+    const first = await acquireRunSlot({env: {}, limits, directory, log: () => {}});
+    const second = await acquireRunSlot({env: {}, limits, directory, log: () => {}});
     assert.equal(readdirSync(directory).length, 2);
     let waited = false;
-    const third = acquireRunSlot({limits, directory, pollMs: 10, log: () => { waited = true; }});
+    const third = acquireRunSlot({env: {}, limits, directory, pollMs: 10, log: () => { waited = true; }});
     await new Promise(resolve => setTimeout(resolve, 40));
     assert.equal(waited, true);
     first();
@@ -53,13 +53,17 @@ test('resource limits: run slots are counted, released and reclaimed from dead o
     assert.equal(readdirSync(directory).length, 2);
     second(); releaseThird();
     assert.equal(readdirSync(directory).length, 0);
-    // A lock left by a process that no longer exists does not block a new run.
+    // Old wrappers do not participate in inode-bound cleanup elections; legacy recovery is explicit.
     writeFileSync(join(directory, 'slot-0.lock'), '999999999');
     writeFileSync(join(directory, 'slot-1.lock'), '999999998');
-    const reclaimed = await acquireRunSlot({limits, directory, log: () => {}});
+    await assert.rejects(acquireRunSlot({env: {}, limits, directory, log: () => {}}), {code: 'RUN_SLOT_LEGACY_STALE'});
+    rmSync(join(directory, 'slot-0.lock'));
+    rmSync(join(directory, 'slot-1.lock'));
+    const reclaimed = await acquireRunSlot({env: {}, limits, directory, log: () => {}});
     reclaimed();
     assert.equal((await acquireRunSlot({limits: {...limits, parallelRuns: null}, directory}))(), undefined);
   } finally {
     rmSync(directory, {recursive: true, force: true});
+    rmSync(directory + '.leases', {recursive: true, force: true});
   }
 });

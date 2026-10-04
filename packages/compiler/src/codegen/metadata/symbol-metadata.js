@@ -154,7 +154,7 @@ export class SymbolMetadataWriter {
         hasStaticConstructor = plan.hasStaticConstructor ?? plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
-        Flags: typeFlags(type, { hasStaticConstructor }),
+        Flags: plan.typeFlags ?? typeFlags(type, { hasStaticConstructor }),
         Name: definitionNameOf(type),
         Namespace: namespaceOf(type),
         Extends: base ? this.tokens.typeToken(base) : 0,
@@ -236,7 +236,9 @@ export class SymbolMetadataWriter {
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
     // `plan.classSize`: the size code generation gives a struct (the buffer struct of a fixed-size buffer).
-    if (plan.classSize) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: plan.classSize, Parent: self });
+    if (plan.classSize) {
+      builder.addRow('ClassLayout', { PackingSize: plan.classPackingSize ?? 0, ClassSize: plan.classSize, Parent: self });
+    }
     else if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
     this.writeGenericParameters(self, this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {

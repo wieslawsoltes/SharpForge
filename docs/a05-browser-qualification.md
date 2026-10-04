@@ -27,6 +27,7 @@ cannot establish actual browser, CSP, or Speedscope UI behavior.
 | Case | Actual observation required |
 | --- | --- |
 | `wasm-execution` | A real prepared CIL method instantiates in browser WebAssembly and uses native arithmetic. Its output, full instruction profile, and instruction count equal interpreted CIL; a zero-time slice executes nothing. |
+| `wasm-heap-bridge` | The shared independent CIL fixture executes every selected instruction through an actual native module. Observed native allocation/field/array/return imports, managed writes, instruction/profile counts, allocation and GC counters match interpreted CIL; collection before every instruction and after return preserves the managed result. |
 | `debugger-deopt` | A hot loop enters Wasm through OSR, a real `CilDebugSession` instruction breakpoint deoptimizes it, and single stepping exposes the expected PC, locals, and operand stack. Resume uses canonical arithmetic and cannot silently select Wasm again. |
 | `profile-exports` | Source, reloaded source image, and CIL guest programs execute and export actual recorded instruction profiles. The profile files and exact VM method counts are retained. |
 | `csp-denied-fallback` | A separate real HTTP document omits `wasm-unsafe-eval`. The same valid native module compiles under the allowed policy and fails with a native CSP `CompileError` under denial. Actual generated-code compilation fails with `WASM_COMPILE`, and tiering records fallback while interpreted execution produces the correct result. Policy events are validated whenever delivered; WebKit may instead establish denial through the paired native compilation proof. |
@@ -39,6 +40,23 @@ pages exercise the runtime under HTTP CSP; they do not imply a Studio UI result.
 The official offline Speedscope assets use a separate local HTTP origin and do
 not stand in for the product's CSP. External requests are blocked and fail the
 case. No guest profile is uploaded to a third-party service.
+
+The heap bridge is the eighth independent case, added after the original seven
+case reports. Earlier seven-case successes retain their original scope; they do
+not qualify this addition. Its fixture is shared with
+`tests/a05-11-wasm-runtime-bridge.test.js`, and the report fingerprints both the
+shared input and its independent CLI metadata builder. A temporary observer
+forwards every `WebAssembly.instantiate` call to the unchanged native function
+and forwards each imported helper unchanged while recording actual invocations.
+It requires a real `WebAssembly.Module` and `WebAssembly.Instance`, the complete
+selected instruction sequence, three allocation imports, three field imports,
+two array imports and one return import. Preparing a handle followed by an
+interpreter-only fallback cannot pass. The observer restores the original native
+property after preparation; it does not supply a replacement interpreter or
+synthetic GC result. No host handle or pin is added to retain the guest result.
+Weak string interning keeps the literal pool from concealing a missing return
+root: the result must survive collection with the VM root, then become an expired
+managed reference after that root is cleared and collection runs again.
 
 The shared browser launcher rejects unexpected CSP events. Only the dedicated
 denial case accepts its expected negative launch result, after validating the

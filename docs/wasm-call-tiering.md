@@ -83,7 +83,10 @@ method-event, profiler, snapshot and typed-float tests. Two new fixtures left
 test-only observer methods on the VM at snapshot boundaries; `27b32613` removes
 them for capture/restore while preserving instruction and arithmetic assertions.
 All nine call-tiering tests then passed. Broad native/browser qualification and
-performance measurements remain deferred.
+performance measurements remain deferred for that historical run. The additive
+[Wasm latency protocol](performance/a05-wasm-latency.md) now defines repeated cold
+preparation, first compiled calls and warm compiled calls with exact allocation
+and backend checks; actual measurement remains pending its scheduled run.
 
 ## Optional on-stack replacement
 
