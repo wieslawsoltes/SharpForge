@@ -17,6 +17,7 @@ export class MarginLayer {
   render(rows) {
     const fragment = this.view.document.createDocumentFragment();
     const editor = this.view.editor;
+    this.diagnostics = diagnosticLines(editor);
     for (const row of rows) {
       if (row.continuation) continue;
       const element = this.view.document.createElement('div');
@@ -52,9 +53,13 @@ export class MarginLayer {
     button.classList.toggle('execution', editor.executionLine === line);
     button.classList.toggle('selected-frame', editor.selectedFrameLine === line);
     button.classList.toggle('current', editor.model.positionAt(editor.offset).line + 1 === line);
+    const diagnostics = this.diagnostics.get(line) ?? [];
+    button.classList.toggle('error', diagnostics.some(item => item.severity === 'error'));
+    button.classList.toggle('warning', diagnostics.some(item => item.severity === 'warning'));
     const bookmark = editor.bookmarks.has(row.line);
     button.classList.toggle('bookmark', bookmark);
-    button.title = `${bookmark ? 'Bookmark. ' : ''}${breakpoint?.message ?? button.getAttribute('aria-label')}`;
+    button.title = [bookmark ? 'Bookmark.' : '', breakpoint?.message ?? button.getAttribute('aria-label'),
+      ...diagnostics.map(item => item.message), editor.executionLine === line ? editor.executionDetails?.description : ''].filter(Boolean).join('\n');
     const glyph = this.view.document.createElement('i');
     button.prepend(glyph);
     button.addEventListener('click', event => {
@@ -78,4 +83,14 @@ export class MarginLayer {
   }
 
   dispose() { this.providers.clear(); this.layer.remove(); }
+}
+
+function diagnosticLines(editor) {
+  const lines = new Map();
+  for (const diagnostic of editor.diagnostics) {
+    const line = editor.model.positionAt(diagnostic.start).line + 1;
+    if (!lines.has(line)) lines.set(line, []);
+    lines.get(line).push(diagnostic);
+  }
+  return lines;
 }
