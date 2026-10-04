@@ -248,6 +248,10 @@
       ],
       "evidence": [
         "tests/a17-*.test.js",
+        "tests/rendering/**",
+        "tests/fixtures/rendering/**",
+        "docs/rendering-coverage.md",
+        "docs/rendering-acceptance.md",
         "tests/manifests/A17.json"
       ],
       "sourceIssue": 238

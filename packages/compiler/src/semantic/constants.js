@@ -7,6 +7,7 @@ import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { bindEnumMembers } from '../binder/enums.js';
 import { BodyBinder } from '../binder/body-binder.js';
 import { isSourceSymbol } from './analysis-helpers.js';
+import {registeredEnumConstant} from '../constants/registered-enum-constant.js';
 
 /** Class mixin: Constant evaluation in declaration contexts: const fields (with circularity detection), enum members */
 export const ConstantBinding = Base =>
@@ -40,8 +41,10 @@ export const ConstantBinding = Base =>
         }
         return field.constantValue ?? null;
       }
-      if (!field.isConst || (!isSourceSymbol(field) && !field.initializerSyntax))
-        return field.hasConstantValue && field.constantValue instanceof Object ? field.constantValue : null;
+      if (!field.isConst || (!isSourceSymbol(field) && !field.initializerSyntax)) {
+        const registered = registeredEnumConstant(field, this.core.bridge.bridge ?? this.core.bridge);
+        return registered ?? (field.hasConstantValue && field.constantValue instanceof Object ? field.constantValue : null);
+      }
       const state = this.constantState.get(field);
       if (state === 'done') return field.constantValueObject ?? null;
       if (state === 'active') {

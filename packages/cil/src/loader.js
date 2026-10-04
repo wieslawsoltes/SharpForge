@@ -1,5 +1,6 @@
 import {decodeScalarSpan,profileOpcodes} from './scalar-loading.js';
 import { canonicalEmissionOptions } from './pe/canonical-options.js';
+import { decodeObjectBuiltin } from './object-builtin-mapping.js';
 import { canonicalWithSymbols } from './pe/canonical-symbols.js';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
 import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, numericAliases, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
@@ -72,16 +73,15 @@ function decodeSpan(span,c) {
     if(owner==='string'&&target.name==='Concat'&&sig.parameters[0]==='object')return emit(Op.BINARY,Binary['+'],2);
     if(owner==='string'&&target.name.startsWith('op_')){if(!['op_Equality','op_Inequality'].includes(target.name))throw new CilError('Unsupported string operator');return emit(Op.BINARY,Binary[target.name==='op_Equality'?'==':'!=']);}
     if(owner==='string'&&target.name==='get_Length')return emit(Op.LENGTH);
-    let name,argc=count;
+    let name=decodeObjectBuiltin(target,call,span,c.metadata),argc=count;
+    if(name)return emit(Op.BUILTIN,BuiltinMap.get(name).id,argc);
     if(owner==='Exception'&&target.name==='.ctor'&&call.name==='newobj'){name='Exception.new';argc=sig.parameters.length;}
     else if(owner==='Exception'&&target.name==='get_Message')name='Exception.Message';
     else if(target.owner==='System.Math'){name='Math.'+target.name;if(target.name==='Abs'&&sig.parameters[0]==='int')name='$Math.Abs.Int32';}
     else if(target.owner==='System.Console')name='Console.'+target.name;
     else if(target.owner==='System.GC'){name='GC.'+target.name;if(target.name==='GetTotalMemory'&&span.some(i=>i.name.startsWith('ldc.i4')))argc=0;}
-    else if(target.owner==='System.Convert'){name='Convert.'+target.name;if(target.name==='ToString'&&sig.parameters[0]==='object')name='object.ToString';}
-    else if(target.owner==='System.Object'&&target.name==='GetType'){const box=span.find(i=>i.name==='box'),type=box?shortTypes[c.metadata.typeName(box.operand)]??c.metadata.typeName(box.operand):null;name=['int','double','bool','long'].includes(type)?'$type.'+type+'.GetType':'object.GetType';}
+    else if(target.owner==='System.Convert')name='Convert.'+target.name;
     else if(['System.Type','System.Reflection.MemberInfo'].includes(target.owner)&&['get_Name','get_FullName'].includes(target.name))name='Type.'+target.name.slice(4);
-    else if(target.owner==='System.Object'&&target.name==='ReferenceEquals')name='object.ReferenceEquals';
     else if(target.owner==='System.Enum'&&target.name==='HasFlag')name='Enum.HasFlag';
     else if(target.owner==='System.Environment'&&target.name==='get_TickCount')name='Environment.TickCount';
     else if(owner==='int'||owner==='double'||owner==='string'||owner==='Array')name=owner+'.'+target.name;
@@ -106,4 +106,3 @@ function decodeSpan(span,c) {
   if(span[0].name==='dup')return emit(Op.DUP);if(span[0].name==='pop')return emit(Op.POP);if(span[0].name==='conv.i4'||span[0].name==='conv.r8')return emit(Op.UNARY,Unary['+'],span[0].name==='conv.i4'?1:0);
   throw new CilError('CIL sequence is not a supported superinstruction',span[0]?.offset);
 }
-
