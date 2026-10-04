@@ -1,6 +1,7 @@
 export * from './heap.js';
 export * from './vm.js';
 export * from './cil-vm.js';
+export {withSourceLaunchArguments} from './launch-arguments.js';
 export {runtimeLaunchLimits, runtimeLaunchCapabilities, RuntimeLaunchError, validateProgramArguments,
   validateLaunchEnvironment, normalizeRuntimeLaunchOptions} from './launch-options.js';
 
