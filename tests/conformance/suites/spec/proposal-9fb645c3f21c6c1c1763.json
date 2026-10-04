@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9fb645c3f21c6c1c1763",
+  "kind": "spec",
+  "sourceText": "public static class Extensions\n{\n    extension(PrivateType p)\n    {\n        // We report inconsistent accessibility error, \n        //   because we generate a `public static void M(PrivateType p)` implementation in enclosing type\n        public void M() { } \n\n        public static void M2() { } // should we also report here, even though not technically necessary?\n    }\n\n    private class PrivateType { }\n}",
+  "sourceSHA256": "908e73a57319376a1b66b95230ca5a3181d9ad78fb140f59e161f8e3697cc7e5",
+  "target": "library",
+  "featureId": "csharp-14-0-extension-methods-and-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/extensions.md",
+    "sha256": "3fdd337fb3fb0c08967571801abae3b932a4928fba8d916303d296ef90bdf7d5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extensions.md",
+    "license": "NOASSERTION",
+    "offset": 51115
+  }
+}

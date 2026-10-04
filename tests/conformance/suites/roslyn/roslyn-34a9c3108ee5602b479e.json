@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-34a9c3108ee5602b479e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass M\n{\n    object a = Test((dynamic)2);\n\n    object Test(object obj) => obj;\n\n    static void Main()\n    {\n        Console.Write(new M().a);\n    }\n}\n",
+  "sourceSHA256": "dde2b3a623baffc96911ab193ad8f659f6eb849bef6bb89483f86fd1438e394e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "FieldInitializerDynamicInstance",
+    "offset": 394256
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0236",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS0236: A field initializer cannot reference the non-static field, method, or property 'M.Test(object)'\n                //     object a = Test((dynamic)2);\n                Diagnostic(ErrorCode.ERR_FieldInitRefNonstatic, \"Test\").WithArguments(\"M.Test(object)\").WithLocation(6, 16)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

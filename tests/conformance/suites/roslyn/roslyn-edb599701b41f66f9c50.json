@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-edb599701b41f66f9c50",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass A : Attribute\n{\n    public A(int x) { Console.WriteLine(x); }\n}\n\nclass C\n{\n    [A(qq)] // CS0103 - no 'qq' in scope\n    C(int qq) { }\n\n    [A(rr)] // CS0103 - no 'rr' in scope\n    void M(int rr) { }\n\n    int P { [A(value)]set { } } // CS0103 - no 'value' in scope\n\n    static void Main() { }\n}\n",
+  "sourceSHA256": "8595cdd4434185cbf21f49e29beef9b80b40b34adc797b0ed2c3b97d5063e0e9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "MethodParameterScope",
+    "offset": 295605
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,8): error CS0103: The name 'qq' does not exist in the current context\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"qq\").WithArguments(\"qq\"),\n                // (14,8): error CS0103: The name 'rr' does not exist in the current context\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"rr\").WithArguments(\"rr\"),\n                // (17,16): error CS0103: The name 'value' does not exist in the current context\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"value\").WithArguments(\"value\")",
+  "unsupported": []
+}

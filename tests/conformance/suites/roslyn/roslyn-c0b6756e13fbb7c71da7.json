@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c0b6756e13fbb7c71da7",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        var t = (1, 2);\n        System.Console.Write(t == (1, 2));\n    }\n}",
+  "sourceSHA256": "f6806e5dcd734321a4f065059bdd0e967930a831c375fcbcd54ab6c9f0a8040c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestCSharp7_2",
+    "offset": 832
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8320",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,30): error CS8320: Feature 'tuple equality' is not available in C# 7.2. Please use language version 7.3 or greater.\n                //         System.Console.Write(t == (1, 2));\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7_2, \"t == (1, 2)\").WithArguments(\"tuple equality\", \"7.3\").WithLocation(7, 30)\n                ",
+  "unsupported": []
+}

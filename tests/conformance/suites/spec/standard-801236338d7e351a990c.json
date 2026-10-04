@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-801236338d7e351a990c",
+  "kind": "spec",
+  "sourceText": "public class C\n{\n}\n\npublic static class  Extensions\n{\n    public static void M<T>(this T? arg) where T : notnull\n    {\n\n    }\n}\n\npublic class Test\n{\n    public void M()\n    {\n        C? mightBeNull = new C();\n        C notNull = new C();\n\n        int number = 5;\n        int? missing = null;\n\n        mightBeNull.M(); // arg is C?\n        notNull.M(); //  arg is C?\n        number.M(); // arg is int?\n        missing.M(); // arg is int?\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6a9839c6aab9c666f78556c55cb9d3296ff5844fd38a709cc41dcf3d01c48aeb",
+  "originalSource": "public class C\n{\n}\n\npublic static class  Extensions\n{\n    public static void M<T>(this T? arg) where T : notnull\n    {\n\n    }\n}\n\npublic class Test\n{\n    public void M()\n    {\n        C? mightBeNull = new C();\n        C notNull = new C();\n\n        int number = 5;\n        int? missing = null;\n\n        mightBeNull.M(); // arg is C?\n        notNull.M(); //  arg is C?\n        number.M(); // arg is int?\n        missing.M(); // arg is int?\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "RepeatedNullable"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "RepeatedNullable",
+    "offsetInUnquotedMarkdown": 25228
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "struct-defaults-and-scoped/csharp-10": ["diagnostics", "warnings"],
+  "struct-defaults-and-scoped/csharp-11": ["diagnostics", "warnings"]
+}

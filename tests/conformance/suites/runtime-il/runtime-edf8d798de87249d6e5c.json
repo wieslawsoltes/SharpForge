@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-edf8d798de87249d6e5c",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n// static method\n\nusing System;\n\nnamespace Test_precise1_simple_cs\n{\ninternal class measure\n{\n    public static int a = 0xCC;\n}\ninternal class test\n{\n    public static void f(ref byte b)\n    {\n        return;\n    }\n\n    static test()\n    {\n        if (measure.a != 0xCC)\n        {\n            Console.WriteLine(\"in .cctor(), measure.a is {0}\", measure.a);\n            Console.WriteLine(\"FAILED\");\n            throw new Exception();\n        }\n        Console.WriteLine(\"in .cctor(), measure.a is {0}\", measure.a);\n        measure.a = 8;\n        if (measure.a != 8)\n        {\n            Console.WriteLine(\"in .cctor() after measure.a=8, measure.a is {0}\", measure.a);\n            Console.WriteLine(\"FAILED\");\n            throw new Exception();\n        }\n        Console.WriteLine(\"in .cctor() after measure.a=8, measure.a is {0}\", measure.a);\n    }\n}\n\npublic class Driver\n{\n    \n    \n    public static int Main()\n    {\n        try\n        {\n            byte b = 0xF;\n            Console.WriteLine(\"Testing .cctor() invocation by calling static method\");\n            Console.WriteLine();\n            Console.WriteLine(\"Before calling static method\");\n            // .cctor should not run yet\n            if (measure.a != 0xCC)\n            {\n                Console.WriteLine(\"in Main(), measure.a is {0}\", measure.a);\n                Console.WriteLine(\"FAILED\");\n                return 1;\n            }\n            // the next line should trigger .cctor\n            test.f(ref b);\n            Console.WriteLine(\"After calling static method\");\n            if (measure.a != 8)\n            {\n                Console.WriteLine(\"in Main() after f(ref b), measure.a is {0}\", measure.a);\n                Console.WriteLine(\"FAILED\");\n                return -1;\n            }\n        }\n        catch (Exception e)\n        {\n            Console.WriteLine(e.StackTrace);\n            return -1;\n        }\n        Console.WriteLine();\n        Console.WriteLine(\"PASSED\");\n        return 100;\n    }\n}\n}\n",
+  "language": "csharp",
+  "unsupported": [],
+  "opcodeFamilies": [],
+  "sourceSHA256": "e169bd158589617de312d05b8046f3517bd9f1bdb544697c95c771d7b9041b1c",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n// static method\n\nusing System;\nusing Xunit;\nnamespace Test_precise1_simple_cs\n{\ninternal class measure\n{\n    public static int a = 0xCC;\n}\ninternal class test\n{\n    public static void f(ref byte b)\n    {\n        return;\n    }\n\n    static test()\n    {\n        if (measure.a != 0xCC)\n        {\n            Console.WriteLine(\"in .cctor(), measure.a is {0}\", measure.a);\n            Console.WriteLine(\"FAILED\");\n            throw new Exception();\n        }\n        Console.WriteLine(\"in .cctor(), measure.a is {0}\", measure.a);\n        measure.a = 8;\n        if (measure.a != 8)\n        {\n            Console.WriteLine(\"in .cctor() after measure.a=8, measure.a is {0}\", measure.a);\n            Console.WriteLine(\"FAILED\");\n            throw new Exception();\n        }\n        Console.WriteLine(\"in .cctor() after measure.a=8, measure.a is {0}\", measure.a);\n    }\n}\n\npublic class Driver\n{\n    [Fact]\n    [OuterLoop]\n    public static int TestEntryPoint()\n    {\n        try\n        {\n            byte b = 0xF;\n            Console.WriteLine(\"Testing .cctor() invocation by calling static method\");\n            Console.WriteLine();\n            Console.WriteLine(\"Before calling static method\");\n            // .cctor should not run yet\n            if (measure.a != 0xCC)\n            {\n                Console.WriteLine(\"in Main(), measure.a is {0}\", measure.a);\n                Console.WriteLine(\"FAILED\");\n                return 1;\n            }\n            // the next line should trigger .cctor\n            test.f(ref b);\n            Console.WriteLine(\"After calling static method\");\n            if (measure.a != 8)\n            {\n                Console.WriteLine(\"in Main() after f(ref b), measure.a is {0}\", measure.a);\n                Console.WriteLine(\"FAILED\");\n                return -1;\n            }\n        }\n        catch (Exception e)\n        {\n            Console.WriteLine(e.StackTrace);\n            return -1;\n        }\n        Console.WriteLine();\n        Console.WriteLine(\"PASSED\");\n        return 100;\n    }\n}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Methodical/cctor/simple/precise1.cs",
+    "sha256": "470b1eadaf5fc12302ff74ee2f80c54b134fbb5245c0a8be4ef6dd3b10b0e29a",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Methodical/cctor/simple/precise1.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a1037238ac84210aa9e6",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Main(string[] args)\n    {\n        foreach ((M(out var x1), args is var x2, _) in new[] { (1, 2, 3) })\n        {\n            System.Console.WriteLine(x1);\n            System.Console.WriteLine(x2);\n        }\n    }\n    static int _M;\n    static ref int M(out int x) { x = 2; return ref _M; }\n}",
+  "sourceSHA256": "d5aa1f0f0c9042f07d951c9e565313185d29a83815104c80d9aac97de0069826",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "MixedDeconstruction_05",
+    "offset": 252603
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0131",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS8186",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,34): error CS0131: The left-hand side of an assignment must be a variable, property or indexer\n                //         foreach ((M(out var x1), args is var x2, _) in new[] { (1, 2, 3) })\n                Diagnostic(ErrorCode.ERR_AssgLvalueExpected, \"args is var x2\").WithLocation(6, 34),\n                // (6,34): error CS0029: Cannot implicitly convert type 'int' to 'bool'\n                //         foreach ((M(out var x1), args is var x2, _) in new[] { (1, 2, 3) })\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"args is var x2\").WithArguments(\"int\", \"bool\").WithLocation(6, 34),\n                // (6,18): error CS8186: A foreach loop must declare its iteration variables.\n                //         foreach ((M(out var x1), args is var x2, _) in new[] { (1, 2, 3) })\n                Diagnostic(ErrorCode.ERR_MustDeclareForeachIteration, \"(M(out var x1), args is var x2, _)\").WithLocation(6, 18)\n                ",
+  "unsupported": []
+}

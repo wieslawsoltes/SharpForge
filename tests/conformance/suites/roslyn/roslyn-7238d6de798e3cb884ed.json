@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7238d6de798e3cb884ed",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class C\n{\n    public static void Main()\n    {\n        fixed (int* p = new S1())\n        {\n        }\n\n        fixed (int* p = new S1?())\n        {\n        }\n\n        fixed (int* p = new S2())\n        {\n        }\n\n        fixed (int* p = new S2?())\n        {\n        }\n    }\n}\n\nstruct S1\n{\n    public ref int GetPinnableReference()\n    {\n        return ref (new int[]{1,2,3})[0];\n    }\n}\n\nstruct S2\n{\n}\n\nstatic class FixAllExt\n{\n    public static ref int GetPinnableReference(this S2 dummy)\n    {\n        return ref (new int[]{1,2,3})[0];\n    }\n}\n",
+  "sourceSHA256": "78bda77697cdfd138fb277ea2b0c1e5c7df0bc941e10a85c43d50456974ef276",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "Issue66167_02",
+    "offset": 147903
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1929",
+        "severity": "error"
+      },
+      {
+        "code": "CS8385",
+        "severity": "error"
+      },
+      {
+        "code": "CS1929",
+        "severity": "error"
+      },
+      {
+        "code": "CS8385",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,25): error CS1929: 'S1?' does not contain a definition for 'GetPinnableReference' and the best extension method overload 'FixAllExt.GetPinnableReference(S2)' requires a receiver of type 'S2'\n                //         fixed (int* p = new S1?())\n                Diagnostic(ErrorCode.ERR_BadInstanceArgType, \"new S1?()\").WithArguments(\"S1?\", \"GetPinnableReference\", \"FixAllExt.GetPinnableReference(S2)\", \"S2\").WithLocation(10, 25),\n                // (10,25): error CS8385: The given expression cannot be used in a fixed statement\n                //         fixed (int* p = new S1?())\n                Diagnostic(ErrorCode.ERR_ExprCannotBeFixed, \"new S1?()\").WithLocation(10, 25),\n                // (18,25): error CS1929: 'S2?' does not contain a definition for 'GetPinnableReference' and the best extension method overload 'FixAllExt.GetPinnableReference(S2)' requires a receiver of type 'S2'\n                //         fixed (int* p = new S2?())\n                Diagnostic(ErrorCode.ERR_BadInstanceArgType, \"new S2?()\").WithArguments(\"S2?\", \"GetPinnableReference\", \"FixAllExt.GetPinnableReference(S2)\", \"S2\").WithLocation(18, 25),\n                // (18,25): error CS8385: The given expression cannot be used in a fixed statement\n                //         fixed (int* p = new S2?())\n                Diagnostic(ErrorCode.ERR_ExprCannotBeFixed, \"new S2?()\").WithLocation(18, 25)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

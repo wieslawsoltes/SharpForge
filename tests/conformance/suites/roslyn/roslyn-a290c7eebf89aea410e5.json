@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a290c7eebf89aea410e5",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M(object o)\n    {\n        o.M();\n    }\n}",
+  "sourceSHA256": "b51604ca8450d598d8f35fd92f320b12e3bf062578ec3b21d93fc6a269653d17",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "PEMethodSymbolExtensionAttribute3",
+    "offset": 343323
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, new[] { reference1 })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,11): error CS1061: 'object' does not contain a definition for 'M' and no extension method 'M' accepting a \n                // first argument of type 'object' could be found (are you missing a using directive or an assembly reference?)\n                //         o.M();\n                Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"M\").WithArguments(\"object\", \"M\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-084f4e88b54f5c73497d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        object o1, o2;\n        C c1 = new C();\n\n        GetRef(o1 = \"\") ??= GetObject(o1);\n        o1.ToString();\n\n\n        GetRef() ??= GetObject(o2 = \"\", o2);\n        o2.ToString();\n\n        GetRef() ??= OutVar(out var o3).GetObject(o3);\n        o3.ToString();\n    }\n\n    object o;\n    ref object GetRef(object param = null) => ref o;\n    object GetObject(object param1, object param2 = null) => null;\n    C OutVar(out object o3)\n    {\n        o3 = null;\n        return this;\n    }\n}",
+  "sourceSHA256": "ba65186edb2118d0f23c71890ea14313ec494c4e6664f1d3cce1f37fd72a149c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "DefiniteAssignment",
+    "offset": 79503
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,9): error CS0165: Use of unassigned local variable 'o2'\n                //         o2.ToString();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"o2\").WithArguments(\"o2\").WithLocation(14, 9),\n                // (17,9): error CS0165: Use of unassigned local variable 'o3'\n                //         o3.ToString();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"o3\").WithArguments(\"o3\").WithLocation(17, 9)\n            ",
+  "unsupported": []
+}

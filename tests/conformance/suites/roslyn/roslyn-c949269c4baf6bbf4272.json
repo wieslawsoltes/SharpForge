@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c949269c4baf6bbf4272",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class Generic<T>\n{\n    public enum Color { X0, X1, X2, Green, Blue, Red }\n}\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        Console.WriteLine(M1<Generic<int>.Color>(Generic<long>.Color.Red));                      // False\n        Console.WriteLine(M1<Generic<string>.Color>(Generic<object>.Color.Red));                 // False\n        Console.WriteLine(M1<Generic<(int x, int y)>.Color>(Generic<(int z, int w)>.Color.Red)); // True\n        Console.WriteLine(M1<Generic<object>.Color>(Generic<dynamic>.Color.Blue));               // True\n\n        Console.WriteLine(M2(Generic<long>.Color.Red));    // Generic<long>.Color.Red\n        Console.WriteLine(M2(Generic<object>.Color.Blue)); // Generic<dynamic>.Color.Blue\n        Console.WriteLine(M2(Generic<int>.Color.Red));     // None\n        Console.WriteLine(M2(Generic<dynamic>.Color.Red)); // Generic<object>.Color.Red\n    }\n    public static bool M1<T>(object o)\n    {\n        return o is T t;\n    }\n    public static string M2(object o)\n    {\n        switch (o)\n        {\n            case Generic<long>.Color c:\n                return \"Generic<long>.Color.\" + c;\n            case Generic<object>.Color.Red:\n                return \"Generic<object>.Color.Red\";\n            case Generic<dynamic>.Color.Blue:\n                return \"Generic<dynamic>.Color.Blue\";\n            default:\n                return \"None\";\n        }\n    }\n}\n",
+  "sourceSHA256": "7cfac55990df5a4fc45e862e7385d84966bddae8a816b9366fb982b7d316a196",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "sha256": "8a2559010768d72741326ab4614a72fc6d01c52c1dbef1652639b4fae3d66229",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "license": "MIT",
+    "method": "TestIgnoreDynamicVsObjectAndTupleElementNames_02",
+    "offset": 300315
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source,\n                    options: TestOptions.DebugDll.WithOutputKind(OutputKind.ConsoleApplication))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

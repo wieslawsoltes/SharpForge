@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-35c1ef8772a746b8c279",
+  "kind": "diagnostics",
+  "sourceText": "\n\nusing System;\n\nclass C\n{\n    static void Test(Func<(Func<short>, int)> d)\n    {\n        Console.WriteLine(\"short\");\n    }\n\n    static void Test(Func<(Func<byte>, int)> d)\n    {\n        Console.WriteLine(\"byte\");\n    }\n\n    static void Main()\n    {\n        // this works\n        Test(()=>(()=>(short)1, 1));\n\n        // this works\n        Test(()=>(()=>(byte)1, 1));\n\n        // this does not\n        Test(()=>(()=>1, 1));\n    }\n}\n",
+  "sourceSHA256": "71f40b74e57917dae814f45d29b0940b54aa5f7a7ae2025f3d55a4c56bf60964",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "TupleTargetTypeLambda1",
+    "offset": 313512
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (26,9): error CS0121: The call is ambiguous between the following methods or properties: 'C.Test(Func<(Func<short>, int)>)' and 'C.Test(Func<(Func<byte>, int)>)'\n                //         Test(()=>(()=>1, 1));\n                Diagnostic(ErrorCode.ERR_AmbigCall, \"Test\").WithArguments(\"C.Test(System.Func<(System.Func<short>, int)>)\", \"C.Test(System.Func<(System.Func<byte>, int)>)\").WithLocation(26, 9)\n            ",
+  "unsupported": []
+}

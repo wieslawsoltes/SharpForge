@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1481db752138d1ecd6f3",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    ref readonly int Test()\n    {\n        bool b = true;\n        int local = 42;\n\n        if (b)\n        {\n            return ref M(ref local);\n        }\n        else\n        {\n            return ref M1(out local).Alice;\n        }        \n    }\n\n    static ref readonly int M(ref int x) => throw null;\n    static ref readonly (int Alice, int Bob) M1(out int x) => throw null;\n}\n\n",
+  "sourceSHA256": "51973821e8608c3176381d5e75c25673380ef6cf15a8203f93bac7025ccde281",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "sha256": "87f31f30239082ac067728f573ca1d7b0ba9ae37f73b80e7f9236b308df7d195",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "license": "MIT",
+    "method": "ReadonlyReturnByRefReadonlyLocalSafety",
+    "offset": 30357
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8168",
+        "severity": "error"
+      },
+      {
+        "code": "CS8347",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,30): error CS8168: Cannot return local 'local' by reference because it is not a ref local\n                //             return ref M(ref local);\n                Diagnostic(ErrorCode.ERR_RefReturnLocal, \"local\").WithArguments(\"local\").WithLocation(11, 30),\n                // (11,24): error CS8347: Cannot use a result of 'Program.M(ref int)' in this context because it may expose variables referenced by parameter 'x' outside of their declaration scope\n                //             return ref M(ref local);\n                Diagnostic(ErrorCode.ERR_EscapeCall, \"M(ref local)\").WithArguments(\"Program.M(ref int)\", \"x\").WithLocation(11, 24)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
