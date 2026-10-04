@@ -129,8 +129,14 @@ export function checkUnionSwitchArms(shape, arms, site) {
   let hasOpaque = false;
   let hasDefault = false;
   const coveredTypes = [];
+  const constants = new Set();
   for (const arm of arms) {
     if (arm.isDefault) { hasDefault = true; continue; }
+    const constant = !site.isExpression && !arm.when && arm.pattern?.kind === 'ConstantPattern'
+      ? arm.pattern.value?.constantValue?.toString() : undefined;
+    // Duplicate statement labels already have CS0152 from the switch binder; expression arms use CS8510 here.
+    if (constant !== undefined && constants.has(constant)) continue;
+    if (constant !== undefined) constants.add(constant);
     const space = builder.of(arm.pattern);
     const subsumed = subsumedPayload(arm.pattern, coveredTypes, builder);
     if (alwaysMatches(arm)) coveredTypes.push(...coveredPayloadTypes(arm.pattern, builder.core.object));

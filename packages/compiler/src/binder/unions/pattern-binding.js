@@ -137,6 +137,26 @@ export const UnionBinding = Base => class extends Base {
     const pattern = super.tryConstantPattern(syntax, { ...operand, type: this.core.object });
     return pattern ? this.finishUnionPattern(pattern, shape, operand.type) : null;
   }
+  gotoSection(syntax, enclosing) {
+    const type = enclosing.governing?.type;
+    if (syntax.kind !== 'GotoCaseStatement' || !this.version.preview || !isUnionType(type)) return super.gotoSection(syntax, enclosing);
+    const value = this.value(syntax.expression);
+    if (value.hasErrors) return null;
+    if (!value.constantValue) {
+      this.report(syntax, DiagnosticId.CS0150);
+      return null;
+    }
+    const shape = this.unionShape(type, syntax.expression);
+    if (!shape) return null;
+    const pattern = this.finishUnionPattern({ kind: 'ConstantPattern', syntax: syntax.expression, value }, shape, type);
+    if (pattern.hasErrors) return null;
+    const targets = (enclosing.gotoTargets ??= this.switchTargets(enclosing));
+    const section = targets.cases.get(value.constantValue.toString());
+    if (section !== undefined) return section;
+    const label = value.constantValue.isNull ? 'null' : value.constantValue.displayValue;
+    this.report(syntax, DiagnosticId.CS0159, [`case ${label}:`]);
+    return null;
+  }
   propertySubpattern(syntax, inputType) {
     const result = super.propertySubpattern(syntax, inputType);
     if (this.version.preview && isUnionType(inputType) && result.member?.name === 'Value') {

@@ -159,6 +159,27 @@ test('case coverage, relational partitions, overlap and guarded-arm diagnostics 
   assert.equal(relevant('union U(object); class C { int Match(U value) => value switch { string => 1, string => 2 }; }', ['CS8510']).length, 1);
 });
 
+test('union switch statements and goto case use the same constant-pattern value space', () => {
+  assert.equal(run(`using System;
+union U(int, string);
+class Program
+{
+    static void Main()
+    {
+        U value = 1;
+        switch (value)
+        {
+            case 1: goto case 2;
+            case 2: Console.WriteLine("case"); break;
+            case string text: Console.WriteLine(text); break;
+        }
+    }
+}`), 'case\n');
+  const duplicate = 'union U(int); class C { void M(U value) { switch (value) { case 1: break; case 1: break; } } }';
+  assert.equal(relevant(duplicate, ['CS0152']).length, 1);
+  assert.deepEqual(relevant(duplicate, ['CS8120']), []);
+});
+
 test('direct non-boxing access is preferred and read only once across switch alternatives', () => {
   assert.equal(run(`using System;
 [System.Runtime.CompilerServices.Union]
