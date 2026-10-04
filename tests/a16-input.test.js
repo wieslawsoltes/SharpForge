@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { RoutedEventRouter, PointerCaptureManager, FocusManager, tabOrder, nextTabStop } from '../packages/winui-controls/src/input/index.js';
-import { element, panel } from './helpers/a16-layout.js';
+import { RoutedEventRouter, PointerCaptureManager, FocusManager, tabOrder, nextTabStop,
+  GestureRecognizer, ManipulationRecognizer, HitTestTree, virtualKey } from '../packages/winui-controls/src/input/index.js';
+import { computeWorldLayout } from '../packages/winui-controls/src/layout/index.js';
+import { element, panel, layoutFixture } from './helpers/a16-layout.js';
 
 test('routed events use original source, correct tunnel/bubble order, and handled-events-too', () => {
   const calls = [];
@@ -76,4 +78,63 @@ test('tab ordering honors Once and Cycle while canceled focus leaves current ele
   assert.equal(focus.focusedElement, 'first');
   focus.dispose();
   assert.equal(focus.focusedElement, null);
+});
+
+test('gesture cancellation and multi-touch suppress duplicate taps and release hold timers', () => {
+  const events = [];
+  const timers = new Map();
+  let sequence = 0;
+  let time = 0;
+  const gestures = new GestureRecognizer({ emit: (id, name, args) => events.push([name, args]), now: () => time,
+    setTimer: callback => { timers.set(++sequence, callback); return sequence; }, clearTimer: id => timers.delete(id) });
+  const point = { pointerId: 1, pointerType: 'touch', x: 10, y: 10, button: 0 };
+  gestures.down('button', point);
+  gestures.up(point);
+  time = 100;
+  gestures.down('button', point);
+  gestures.up(point);
+  assert.deepEqual(events.map(value => value[0]), ['Tapped', 'DoubleTapped']);
+  events.length = 0;
+  gestures.down('button', point);
+  gestures.down('button', { ...point, pointerId: 2 });
+  gestures.up(point);
+  gestures.up({ ...point, pointerId: 2 });
+  assert.equal(events.length, 0);
+  assert.equal(timers.size, 0);
+  gestures.down('button', point);
+  gestures.cancel(1);
+  assert.equal(timers.size, 0);
+  gestures.dispose();
+});
+
+test('manipulation rebases second contact and computes multi-touch scale and translation', () => {
+  const events = [];
+  const gestures = new ManipulationRecognizer({ emit: (id, name, args) => events.push([name, args]), now: () => 10 });
+  gestures.down('panel', { pointerId: 1, x: 0, y: 0 });
+  gestures.down('panel', { pointerId: 2, x: 10, y: 0 });
+  gestures.move('panel', { pointerId: 2, x: 20, y: 0 });
+  const delta = events.find(value => value[0] === 'ManipulationDelta')[1].Delta;
+  assert.equal(delta.Scale, 2);
+  assert.equal(delta.Translation.X, 5);
+  gestures.up('panel', 2);
+  gestures.up('panel', 1, true);
+  assert.equal(events.at(-1)[0], 'ManipulationCompleted');
+  assert.equal(events.at(-1)[1].Canceled, true);
+});
+
+test('hit testing respects world transforms, clipping, null panel backgrounds and independent roots', () => {
+  const fixture = layoutFixture([panel('root', 'Canvas', ['shape']),
+    element('shape', { Width: 20, Height: 20, Left: 10, Top: 10, Translation: { X: 5, Y: 0 } }, 'Rectangle')]);
+  fixture.update();
+  const tree = new HitTestTree();
+  tree.update(computeWorldLayout(fixture.engine), ['root']);
+  assert.equal(tree.hitTest({ x: 16, y: 16 }), 'shape');
+  assert.equal(tree.hitTest({ x: 1, y: 1 }), null);
+  fixture.nodes.get('root').properties.Background = { Color: 'transparent' };
+  fixture.engine.invalidate('root');
+  fixture.update();
+  tree.update(computeWorldLayout(fixture.engine), ['root']);
+  assert.equal(tree.hitTest({ x: 1, y: 1 }), 'root');
+  assert.equal(virtualKey({ code: 'KeyA', key: 'a' }), 65);
+  assert.equal(virtualKey({ key: 'ArrowLeft' }), 37);
 });
