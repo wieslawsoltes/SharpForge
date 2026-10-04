@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 // Reduced from stress-interfaces/constrained-calls-constraints: a mutating member called on a struct in a read-only
-// variable (`in` parameter, readonly field, `ref readonly` local) acts on a copy; `allows ref struct` is written to
+// variable (`in` parameter, readonly field, `ref readonly` local) acts on a copy - but not on a `using` or `foreach` variable; `allows ref struct` is written to
 // the type parameter; and overrides that differ only in `where T : struct` / `where T : default` match their bases.
 public interface ICounter
 {
@@ -16,6 +16,13 @@ public struct Tally : ICounter
     public int Count { get; private set; }
     public void Increment() => Count++;
     public readonly int Peek() => Count;
+}
+
+public struct Meter : IDisposable
+{
+    public int Uses;
+    public void Use() => Uses++;
+    public void Dispose() { }
 }
 
 public ref struct SlotCounter : ICounter
@@ -76,6 +83,17 @@ public static class Program
         Span<int> cell = stackalloc int[1];
         var slot = new SlotCounter(cell);
         Console.WriteLine(BumpRef(ref slot, 4) + " " + cell[0]);
+        // A `using` or `foreach` variable cannot be assigned, but members act on the variable itself.
+        using (var meter = new Meter())
+        {
+            meter.Use();
+            meter.Use();
+            foreach (var item in new[] { new Tally() })
+            {
+                item.Increment();
+                Console.WriteLine(meter.Uses + " " + item.Count);
+            }
+        }
         Lookup settings = new Settings();
         Console.WriteLine(settings.Find<string>("name", "none") + " " + settings.Find<int>("size", null) + " " + (settings.Find<int>("missing", null) ?? -1));
     }

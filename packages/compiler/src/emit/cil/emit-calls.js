@@ -73,8 +73,10 @@ export const CallEmission = Base =>
      * `ref readonly` local) called through a member that may mutate it is copied first: the call acts on the copy.
      */
     callReceiver(node) {
-      const receiver = node.receiver;
-      if (node.receiverPassing !== 'copy') return this.receiver(receiver);
+      const receiver = node.receiver,
+        // A `using` or `foreach` variable cannot be assigned, but it is a variable of its own: members act on it.
+        isOwnLocal = receiver.kind === 'Local' && (!receiver.local?.refKind || receiver.local.refKind === RefKind.None);
+      if (node.receiverPassing !== 'copy' || isOwnLocal) return this.receiver(receiver);
       const copy = this.temp(receiver.type);
       this.expression(receiver);
       return this.il.emit('stloc', copy).emit('ldloca', copy);
