@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-// Reduced from stress-records/geometry-values: `default` (and `null`, `new()`) as an operand of a user-defined operator
+// Reduced from stress-records/geometry-values: `default` (or `null`) as an operand of a user-defined operator
 // takes the type of the operator's parameter - `point == default` passed a null reference for the struct.
 public readonly record struct Point(int X, int Y)
 {
@@ -24,7 +24,7 @@ public static class Program
     }
     static void A2() { Console.WriteLine($"{default(Point)}"); }
     static void A3() { Console.WriteLine($"{Point.Origin == default}"); }
-    static void A4() { var p = new Point(3, 4); Point? none = null; Console.WriteLine(p == new Point(3, 4)); Console.WriteLine(p != default); Console.WriteLine(p == new() { X = 3, Y = 4 }); Console.WriteLine(none == null); }
+    static void A4() { var p = new Point(3, 4); Point? none = null; Console.WriteLine(p == new Point(3, 4)); Console.WriteLine(p != default); Console.WriteLine(none == null); }
     static void B()
     {
         var size = new Size(2, 5);

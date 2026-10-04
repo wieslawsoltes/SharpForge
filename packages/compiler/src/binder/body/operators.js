@@ -14,8 +14,8 @@ import { checkWritable } from '../ref-kinds.js';
 const unknown = ErrorTypeSymbol.unknown;
 
 /** Class mixin: Casts, unary and binary operators (with constant folding), assignment in all its forms, increment, */
-/** `default`, `null` and target-typed operands (`new()`, a switch expression) get their type from the operator's parameter. */
-const isTypelessValue = operand => operand.literal === 'default' || operand.literal === 'null' || !!operand.materialize;
+/** A `default` or `null` operand gets its type from the operator's parameter. */
+const isTypelessValue = operand => operand.literal === 'default' || operand.literal === 'null';
 
 export const OperatorBinding = Base =>
   class extends Base {
