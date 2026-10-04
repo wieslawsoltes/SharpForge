@@ -6,6 +6,7 @@ import { MetadataMemberDefinitions } from './type-system/metadata-member-definit
 import { MetadataConstants } from './type-system/metadata-constants.js';
 import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
+import { MetadataPropertyParameters } from './type-system/metadata-property-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
@@ -47,6 +48,7 @@ export class RuntimeModule {
   #accessors;
   #constants;
   #parameterDefinitions;
+  #propertyParameters;
   #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
@@ -180,6 +182,13 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#accessors ??= new MetadataAccessors(this);
     return this.#accessors.get(token);
+  }
+
+  /** Frozen index parameters projected from getter or setter Param metadata, with the Property as owning member. */
+  propertyParameters(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyParameters ??= new MetadataPropertyParameters(this);
+    return this.#propertyParameters.get(token);
   }
 
   /** Canonical Event metadata identity; the event type is an unresolved module-relative token. */

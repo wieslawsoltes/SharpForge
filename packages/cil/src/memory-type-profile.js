@@ -6,13 +6,15 @@ export const primitiveSizes = Object.freeze({
   'System.Int64': 8, 'System.UInt64': 8, 'System.Single': 4, 'System.Double': 8, 'System.Decimal': 16
 });
 
-/** Preserve existing primitive cpobj and primitive/enum unbox admission independently of sizeof layout. */
+/** Admit TypeDef cpobj for runtime value storage; unbox remains restricted to the existing scalar profile. */
 export function verifyPrimitiveStorageOperand(inspector, method, instruction, issue) {
   try {
     const type = inspector.metadata.typeName(instruction.operand);
     const definition = inspector.types.find(type => type.token === instruction.operand);
     const isEnum = definition?.baseToken && inspector.metadata.typeName(definition.baseToken) === 'System.Enum' ||
       frameworkType(type)?.kind === 'enum';
+    const isStruct = definition?.baseToken && inspector.metadata.typeName(definition.baseToken) === 'System.ValueType';
+    if (instruction.name === 'cpobj' && isStruct) return;
     if (!primitiveSizes[type] && type !== 'System.IntPtr' && type !== 'System.UIntPtr' &&
         !(instruction.name === 'unbox' && isEnum)) {
       issue(method, instruction, 'IL_TYPE', instruction.name + ' is implemented only for primitive types' +

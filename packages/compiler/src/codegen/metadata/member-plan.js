@@ -63,6 +63,7 @@ function synthesizedEventAccessor(type, event, prefix, core) {
     flags: memberAccessFlags(event) | ACCESSOR_FLAGS | slot,
     implFlags: MethodImplAttributes.IL,
     hasBody: true,
+    isCompilerGenerated: true,
     shape: { isStatic: event.isStatic, returnType: core.void, parameters: [{ type: event.type }] },
     parameters: [{ name: 'value', flags: 0 }],
   };
@@ -80,7 +81,7 @@ function fieldLikeEvent(type, event, core, plan) {
       accessor.flags |= DELEGATE_INVOKE_FLAGS | MethodAttributes.Abstract;
       accessor.hasBody = false;
     }
-  } else plan.fields.push({ symbol: null, name: event.name, flags: privateField(event), type: event.type, constant: null });
+  } else plan.fields.push({ symbol: null, name: event.name, flags: privateField(event), type: event.type, constant: null, isCompilerGenerated: true });
   plan.methods.push(adder, remover);
   return { adder, remover };
 }

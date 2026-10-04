@@ -75,10 +75,12 @@ subsequently executing an export propagate unchanged to its host caller.
 This avoids JavaScript eval/Function, but a browser's CSP must still permit
 WebAssembly compilation. There is no policy bypass or fallback to dynamic JS.
 
-Focused tests are authored for module validation, deterministic randomized
+Focused tests cover module validation, deterministic randomized
 i32/i64/f32/f64 comparisons against shared CIL arithmetic, high-bit values,
 guard-before-pop fallback, mixed precision, special floats, malformed IR,
-LEB128 and byte bounds, and unavailable/denied backends. Validation is pending
-the root's serial queue. Source VM and Rust integration are not implemented;
+LEB128 and byte bounds, and unavailable/denied backends. All 29 encoder and
+eligibility tests passed serially with Node 24.21.0 at `2f9dc572`, using actual
+Node WebAssembly execution, 512 MB and concurrency 1. Core static/build evidence
+is recorded on the PR. Source VM and Rust integration are not implemented;
 browser/native qualification is not claimed. The example is
 `node examples/runtime/wasm-encoder.mjs` after workspace installation.
