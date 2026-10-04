@@ -218,6 +218,16 @@ The reduction to fixed symbols is essential for UTF-16 correctness:
    match whose raw endpoint fails. Restarting search there would lose the linear
    bound. The returned core offset subtracts the excluded leading unit.
 
+For a nonempty core with a leading low surrogate, one initial raw scan now skips
+positions that cannot satisfy that required endpoint. It begins at the validated
+start index and stops at the last full-needle window, using the original low unit
+even when it belongs to a source pair whose scalar folds differently. If no raw
+prefix exists, it returns before factorization or folding. Otherwise Two-Way
+starts at the first possible window with zero overlap memory; all later endpoint
+checks and period transitions stay unchanged for both first and last searches.
+This adds at most one O(n) scan and constant counters. It never restarts the scan
+for a rejected core, and leaves empty/raw-only needles on their existing paths.
+
 This gives O(n+m) folded-unit accesses for receiver length n and needle length m,
 plus O(1) endpoint work per considered alignment. Each unit access uses bounded
 lookaround and the fixed pinned mapping table. Needles of at most eight UTF-16
@@ -231,13 +241,19 @@ matches while n and m grow together. Exhaustive small inputs, longer differentia
 cases and both unchanged native search oracles guard boundary and overlap behavior.
 The exhaustive cases also invoke Two-Way directly, independent of the cutoff;
 eight/nine-unit controls exercise dispatch, both compiler pipelines and direct CIL.
+Separate read counters assert that missing raw prefixes do not inspect the core
+or scan outside the eligible start range. Offset controls cover prefixes before
+the lower bound, after the last full window, within a surrogate pair, and before
+later successful or rejected periodic matches.
 
-`scripts/benchmarks/a07-string-search-linear.mjs` runs unchanged on baseline
-`40cf1975` and the candidate. It retains the measured ordinary and repeated-prefix
-inputs and adds raw endpoint rejection workloads. Both source/CIL platforms report
+`scripts/benchmarks/a07-string-search-linear.mjs` runs unchanged on the current
+prefix-filter baseline `72547446` and candidate. It retains the measured ordinary,
+repeated-prefix and raw endpoint rejection inputs, adds prefix-present/window-end
+controls, and includes start-index and LastIndexOf timings. Both source/CIL platforms report
 median/p95 and managed allocation counters after one warmup and five samples;
 setup, optional host GC and assertions are excluded. Host allocation counts and
-other globalization profiles are not claimed. Initial measurements reduced the
+other globalization profiles are not claimed. The original runner against
+`40cf1975` measured the initial Two-Way implementation and reduced the
 20-call Unicode repeated-prefix samples from about 80–83 ms to 1.0–1.1 ms and ASCII
 samples from 6–7 ms to 0.15–0.33 ms. The periodic leading-endpoint-miss workload was
 8–11% slower, a disclosed constant-factor tradeoff. These are measurements of the
@@ -329,6 +345,146 @@ qualifies binary64 default, general and round-trip output; it does not qualify
 Single or Decimal formatting. Runtime display adapters reuse this helper while
 retaining their engine-specific object, enum and typed integer handling.
 
+`formatSingleDefault(value)` formats invariant default Single text. Its input is
+a raw JavaScript number already rounded to IEEE binary32 (for example,
+`Math.fround(value)`); runtime callers unwrap their existing CLI carriers before
+calling it. It preserves signed zero and accepts NaNs and infinities. It does
+not coerce carriers or arbitrary binary64 values to Single. The helper retains
+the existing search over at most nine significant digits for the shortest
+binary32 round trip, then uses Single's nine-digit notation boundary instead
+of Double's seventeen-digit boundary. Thus exact Single `1e9` renders `1E+09`,
+while the explicitly widened Double remains `1000000000`.
+
+Single and Double share only pure default notation. Common fixed output avoids
+scientific digit records, and default formatting does not enter explicit-
+precision BigInt rounding. The forty exact-bit values plus four null-receiver
+controls in `reference/string-builder-append-single-net10.json` retain pinned
+.NET 10.0.5 output and source provenance. This prerequisite qualifies existing
+default Single display paths; adding `Append(float)` is a separate batch.
+Explicit Single format strings and configurable culture are not qualified here.
+The pure helper creates bounded host text and no managed objects.
+
+`StringBuilder.Append(char)` and `Append(char, int)` preserve individual UTF-16
+units, return the same builder, and append one managed chunk per nonzero call.
+Zero repeats perform no writes or managed allocations. Invalid repeat counts
+and growth beyond `Int32.MaxValue` fail with `ArgumentOutOfRangeException`
+identifying `repeatCount`; this check precedes the separate host allocation cap.
+The two contracts append at A07 IDs 524309–524310. The pinned .NET 10.0.5
+reference covers 37 character, null, repeat and capacity-boundary cases;
+focused source/CIL tests additionally cover GC, snapshots and host allocation
+faults. Existing chunk capacity growth and write-observer partial progress are
+preserved; exact native capacity transitions and remaining StringBuilder
+overloads stay tracked in #2636 and #2637. Repeat expansion costs O(count) time
+and temporary text, bounded by the host limit, with one chunk append afterward.
+
+The StringBuilder `Chars` indexer reads and writes one UTF-16 unit through native
+`get_Chars(int)` / `set_Chars(int, char)` signatures at IDs 524312–524313. Registered
+`defaultMember: 'Chars'` metadata enables source bracket syntax without aliases.
+Reads scan existing chunks with no managed allocations; writes replace only the
+affected string chunk, preserving backing storage, count, length and capacity.
+The displaced and replacement chunks remain rooted during write notifications.
+Getter bounds throw `IndexOutOfRangeException`; setter bounds throw
+`ArgumentOutOfRangeException` naming `index`, matching 44 pinned .NET 10.0.5 cases.
+The managed observer may see partial progress: a thrown array observer leaves
+the replacement installed and the heap revision updated, before the normal
+builder-version notification. Reentrant Clear/Append changes are retained.
+Reads cost O(chunk count); writes cost O(chunk count + affected chunk length).
+The generated reference inventory still reports indexed-property metadata rows
+separately from the implemented accessor signatures.
+
+`StringBuilder.CopyTo(int, char[], int, int)` appends at ID 524315. Its 50-case
+pinned .NET 10.0.5 reference includes null/negative/zero-count precedence and
+the native array overload's unchecked Int32 subtraction. Validation completes
+before any destination write; a valid zero count returns before snapshotting.
+Nonempty copies snapshot and root only the live source chunk references plus
+the destination, then scan the chunks once and write individual UTF-16 units.
+There is no whole-builder flattening or per-unit managed string allocation.
+The operation costs O(live chunks + copied units) time and O(live chunks) host
+references, with zero managed allocations. Every completed destination write
+increments the heap revision and emits an array notification. If an observer
+throws, the completed prefix remains. If it changes the builder, the original
+chunk snapshot supplies the remaining copied units. These callback rules are
+the explicit host profile, not a native concurrency guarantee. CopyTo itself
+does not mutate the builder; the Span overload and remaining APIs stay open.
+
+`StringBuilder.Append(long)` and `Append(ulong)` append at IDs 524316–524317.
+They reuse the existing typed scalar formatter and one bounded chunk append,
+preserving all 64 bits, same-builder identity, managed roots and allocation
+faults. No JavaScript Number conversion is introduced. The pinned .NET 10.0.5
+reference contains 26 cases and a mixed fluent control; inputs are decimal
+strings so the oracle retains signed limits and the full unsigned upper half.
+Independent CIL tests use real Int64 stack bit patterns, and compiled typed
+locals run through both compiler pipelines and VMs. Formatting follows the
+existing invariant host profile; configurable culture and the remaining builder
+overloads remain separate work under #2637. Each value needs at most 20 decimal
+units, with the existing amortized chunk-storage growth and host text budget.
+
+`StringBuilder.Append(sbyte)`, `Append(byte)`, `Append(short)`, `Append(ushort)`
+and `Append(uint)` append in that order at IDs 524324–524328. They register the
+remaining 8/16/32-bit integer signatures and reuse the existing typed scalar
+formatter without changing execution. UInt32 preserves unsigned I4 stack bits;
+the smaller integer types arrive sign- or zero-extended by the existing numeric
+pipeline. Formatting follows the invariant host profile and produces at most
+10 decimal units per value, with the existing bounded chunk append and backing
+growth policy.
+
+The pinned .NET 10.0.5 reference contains 53 cases plus a mixed fluent Int32/Char
+control. It covers each type's limits, zero, representative values, null
+receivers and same-builder identity. Independent CIL uses explicit narrow
+conversions and signed stack patterns for UInt32's upper half. Compiled typed
+locals assert selection of the exact new builtin IDs on both compiler pipelines
+and execute on both VMs. GC, snapshots and allocation-limit controls exercise
+the reused append path; no per-value formatter or new culture API is added.
+
+`StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
+.NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
+null validation. A null string is accepted only for `(0, 0)`. For non-null strings,
+zero count returns without checking the start against the string length, even
+at `Int32.MaxValue`; the helper preserves this native no-op with no writes or
+managed allocations. Nonempty invalid windows name `startIndex`. Valid windows
+copy the selected UTF-16 units into one existing chunk append, preserving NUL
+and isolated surrogates without flattening the builder or creating per-unit
+managed strings. The host output budget is checked before slicing; unselected
+input text does not count toward it. Work and temporary text are O(count), with
+existing amortized chunk growth. Observer faults retain the released partial
+chunk behavior and release roots; this host policy makes no rollback guarantee.
+
+`StringBuilder.Append(char[])` and `Append(char[], int, int)` append at IDs
+524320–524321. The pinned .NET 10.0.5 reference contains 61 cases covering
+null receivers/arrays, fluent identity, competing range faults and UTF-16
+surrogate cuts. Slice validation checks negative `startIndex`, negative
+`charCount`, null, then array bounds. Unlike string slices, array slices check
+the upper bound even for zero count; invalid windows name `charCount`.
+Full null arrays and valid empty slices return the original builder without
+conversion, writes or managed allocations. Host callers must supply an actual
+single-dimensional zero-based character array.
+
+Nonempty input is checked against the remaining host text budget before any
+unit conversion. Bounded 4096-unit host blocks preserve NUL and isolated
+surrogates, followed by one existing managed chunk append. The builder is
+never flattened, and no per-unit managed strings are created. Conversion takes
+O(charCount) work and temporary host text; those host buffers are distinct from
+the managed chunk allocation and existing amortized backing-array growth.
+Existing argument roots, snapshot behavior and append observer partial progress
+are retained. The array source is fully converted before write callbacks run.
+The unchanged native oracle runs through source-platform and independent CIL
+calls; compiled typed arrays cover both pipelines and both VMs. Other builder
+overloads remain separate work under #2637.
+
+`StringBuilder.Append(StringBuilder)` appends at ID 524323. Null and empty sources
+return the same destination without writes or managed allocations. Nonempty
+sources are validated as builders, then the combined length is checked against
+the host budget before materializing source text. The existing text reader walks
+only live source chunks; the destination's prior contents are never flattened.
+The captured source is appended once through the existing chunk helper, so self
+append duplicates exactly the original text. This costs O(source chunks + source
+text length) time and host temporaries, plus one managed text chunk and existing
+amortized destination chunk-storage growth. The pinned .NET 10.0.5 reference
+covers 21 cases, including source preservation, self append, UTF-16 units, nulls
+and fluent identity. Host observer tests additionally pin the captured source
+policy when callbacks edit a distinct source and force GC; existing destination
+partial-write behavior is unchanged and no native concurrency guarantee is made.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation
@@ -402,6 +558,175 @@ first/last/int-start controls against parent `b679f98d`, then reports the new
 ordinal and ignore-case overloads separately, with 8/9/64-unit repeated needles.
 Count overloads and culture implementations remain separate work under #2621;
 native/Wasm execution is not qualified by this batch.
+
+`String.IndexOf(string, int startIndex, int count, StringComparison)` appends
+contract `524311` after the character StringBuilder Append contracts `524309` and
+`524310`. It searches the half-open UTF-16 window `[startIndex, startIndex + count)`
+and returns an absolute offset, or -1. Empty values return `startIndex` even for
+zero-count/end windows. Receiver/value null, invalid enum, invalid start and
+invalid count retain that precedence; valid culture modes reach the explicit
+unsupported guard only after all argument checks. All prior IDs remain fixed.
+
+The [pinned .NET 10.0.5 fixture](reference/string-indexof-comparison-window/README.md)
+contains 988 unchanged native rows, with full-window controls, null/range faults,
+empty windows, every window in a small UTF-16 corpus, surrogate cuts at both bounds
+and periodic searches with hits inside/outside the window. Actual culture results
+remain in the oracle; modes 0–3 are not implemented by this partial profile.
+
+Ordinal-ignore-case reuses the bounded <=8-unit scan and fixed-fold Two-Way core,
+including the raw leading-low prescan. The last eligible candidate is derived
+from the exclusive window end. The full-input fold and raw endpoint checks retain
+pair-cut semantics without substring copies, new policy objects or per-call
+closures. Surrogate classification may inspect an immediately adjacent unit
+outside the window; no candidate can extend outside it. This route uses
+O(count + value.Length) folded reads and constant
+auxiliary space, retaining two host factorization records for eligible long cores.
+Ordinal uses the existing host `indexOf` and rejects a first match outside the
+window. It may inspect the excluded suffix and is bounded by the total receiver
+length plus value length, rather than the window size; this deliberate reuse
+avoids a new ordinal algorithm or indirect accessor in released ignore-case loops.
+Both routes avoid managed allocation on successful calls.
+
+Tests cover both compiler pipelines and VMs, independent CIL, collection safety,
+exhaustive windows, the new ordered ABI tail and counted ignore-case reads with
+large excluded prefixes/suffixes. The static benchmark
+`scripts/benchmarks/a07-string-indexof-comparison-window.mjs` compares released
+first/last/int-start controls against combined parent `57bc331b` and reports the
+new bounded overload separately. The parent includes builder contracts and the
+raw-prefix optimization so their effects are not attributed to this overload.
+Culture support and other search overloads remain tracked by #2621; this batch
+does not qualify native/Wasm execution.
+
+`String.LastIndexOf(string, int startIndex, StringComparison)` appends contract
+`524314` after the StringBuilder indexer accessors `524312`/`524313`. The start
+index is the last UTF-16 unit included in the searched prefix. A nonempty receiver
+accepts `0..Length`; `Length` aliases the final unit. An empty receiver accepts
+both -1 and 0. The normalized exclusive end is `min(startIndex + 1, Length)`;
+empty values return that end. Null receiver/value, invalid enum and invalid start
+retain native precedence before the explicit guard for culture modes 0–3.
+
+The [pinned .NET 10.0.5 capture](reference/string-lastindexof-comparison-start/README.md)
+contains 990 unchanged native rows, including the 246 whole-string controls,
+empty-receiver aliases, inclusive endpoints, every small prefix, overlapping
+matches, surrogate cuts and periodic clipped matches. Valid culture outputs
+remain in the oracle even though the profile deliberately rejects those modes.
+
+Ordinal limits its native `lastIndexOf` starting position to the final complete
+candidate (`end - value.Length`) after empty/length checks. Ordinal-ignore-case
+reuses the existing continuing Two-Way scan with the exclusive end; it retains
+period memory after matches and rejected raw endpoints. No substring, transformed
+copy, options object or callback is introduced. Both return absolute offsets;
+no candidate can cross the prefix end. The ignore-case fold can inspect adjacent
+surrogate units outside the prefix for classification, as in the existing window
+search. Its read bound is O(prefix.Length + value.Length), with constant space
+and two host factorization records for eligible nonempty folded cores. Successful
+calls allocate no managed strings or arrays.
+
+Tests cover both compiler pipelines and VMs, independent CIL, managed collection,
+exhaustive prefixes, empty/end normalization and counted overlap reads. The static
+benchmark `scripts/benchmarks/a07-string-lastindexof-comparison-start.mjs` compares
+unchanged first/last controls against merged indexer parent `1fe6e268`, then reports
+the new ordinal and ignore-case prefix routes separately. It includes 8/9/64-unit
+needles, excluded suffixes and all-overlap inputs. Other LastIndexOf overloads,
+culture support and native/Wasm execution remain outside this batch under #2621.
+
+`String.LastIndexOf(string, int startIndex, int count, StringComparison)` appends
+contract `524318` after signed/unsigned Int64 StringBuilder Append `524316`/`524317`.
+It preserves backward-search normalization captured from .NET: an empty receiver
+accepts starts -1/0 and ignores every count, including negative integer extremes;
+a nonempty receiver accepts `0..Length`, and the `Length` alias decrements a
+positive count by one. The effective exclusive end is `min(startIndex + 1, Length)`.
+After normalization, count must be within `0..end`, and the searched window is
+`[end - count, end)`. Empty values return the effective end, even for count zero.
+
+Receiver/value null, invalid enum, invalid start and invalid normalized count
+retain that precedence; otherwise valid culture modes 0–3 reach the explicit
+unsupported guard. The [pinned .NET 10.0.5 reference](reference/string-lastindexof-comparison-window/README.md)
+contains 1,402 unchanged native rows, including arbitrary empty counts, Length
+aliases, every small backward window, overlaps and surrogate cuts at either bound.
+All 246 whole-string controls and actual native culture outputs remain recorded.
+
+The dispatcher reuses its scalar array for arguments, and the existing last-match
+Two-Way helper receives an optional lower bound without changing its fold, raw
+endpoint handling, prescan or period-memory loop. Ordinal-ignore-case takes
+O(window.Length + value.Length) folded reads and O(1) space, with the existing two
+host factorization records. Surrogate classification may inspect adjacent units
+outside the window, while candidate matches remain entirely inside it. Ordinal
+uses native `lastIndexOf` from the final complete candidate and rejects results
+below the lower bound. It may scan the excluded prefix, so its cost is bounded by
+the total receiver instead of the selected window. Neither route copies a
+substring or adds per-call options objects/closures; successful calls allocate
+no managed strings or arrays.
+
+Focused tests cover both compiler pipelines and VMs, independent CIL, managed
+collection, exhaustive windows, exact exception parameters and counted overlapping
+matches between large excluded BMP regions. The static benchmark
+`scripts/benchmarks/a07-string-lastindexof-comparison-window.mjs` reports existing
+first/last/prefix controls and the new ordinal/ignore-case window separately with
+8/9/64-unit needles, excluded hits and all-overlap workloads. The comparison
+baseline is Int64 parent `2ca53c88`, with the identical runner copied into it,
+so builder prerequisite costs are excluded. Culture
+implementations, other search APIs and native/Wasm execution remain open under
+#2621 and are not qualified by this batch.
+
+`StringComparer.FromComparison(StringComparison)` appends A07 contract `524322`
+after the character-array StringBuilder Append overloads. Ordinal (4) and
+OrdinalIgnoreCase (5) return the exact existing getter singleton handles, using
+the same comparison, registered interface, List.Sort and Array.BinarySearch
+paths. Invalid enum values retain `ArgumentException` with parameter
+`comparisonType`; valid culture modes 0–3 explicitly raise `NotSupportedException`.
+No culture getter or collation backend is introduced by this factory.
+
+The [pinned native reference](reference/string-comparer-from-comparison/README.md)
+captures .NET 10.0.5 / SDK 10.0.201 factory/getter identities, invalid enum values,
+nullable/Unicode signs and ordering consumers under invariant and tr-TR cultures.
+All native culture results remain unchanged evidence; those modes are unsupported
+by this factory. In particular, the existing host-normalized default ordering
+profile is not exposed as a native InvariantCulture/CurrentCulture comparer.
+Thread culture, exact collation, comparer equality/hash and other factories
+remain tracked by #2616/#2619/#2621/#2655.
+
+The existing enum validator moves into a dependency leaf and is re-exported from
+its original module, avoiding an import cycle without changing validation order
+or messages for released String APIs. Both getters and the factory share a
+private singleton helper and the same platform snapshot/root storage. Successful
+factory calls allocate no new managed objects after their getter singleton is
+initialized. Existing dispatch result objects and the singleton factory callback
+remain host allocations; this is not a claim of zero host allocation.
+
+Focused tests cover both compiler pipelines/VMs, independent CIL, true comparer
+interface calls, exact identity, collection consumers, managed GC and snapshots.
+`scripts/benchmarks/a07-string-comparer-from-comparison.mjs` provides identical
+before/after getter, comparison and enum-validation controls against parent
+`16a13a16`, plus separate warmed factory measurements with one warmup and five samples. Validation and timing
+are queued serially; native/Wasm execution is outside this batch and #2621 remains open.
+
+`StringComparer.Equals(string, string)` appends A07 contract `524329` after
+integer StringBuilder Appends `524324`–`524328`. It operates on the existing
+Ordinal and OrdinalIgnoreCase instances from either getter or FromComparison.
+Comparer resolution happens before identity/null/length shortcuts: a null
+receiver still faults for null/null or equal arguments, and unsupported comparer
+records remain guarded. Non-null equal-length strings reuse the existing
+ordinal comparator and captured simple-uppercase fold. No normalization,
+expansion or transformed string is introduced; malformed UTF-16 is preserved.
+
+The [pinned .NET 10.0.5 / SDK 10.0.201 reference](reference/string-comparer-equals/README.md)
+records 172 getter/factory cases, including nullable arguments, distinct copies,
+true reference identity, difficult Unicode, surrogate boundaries and length
+differences. Every successful native Equals result also agrees with native
+Compare returning zero. Focused source/CIL tests cover both compiler pipelines,
+independent CIL, exact ABI, managed collection and allocation-free successful
+calls in the managed heap. Host dispatch result objects still allocate normally.
+
+The algorithm uses O(units compared) time and constant auxiliary space, with
+immediate identity/null/length exits. The static runner
+`scripts/benchmarks/a07-string-comparer-equals.mjs`, copied unchanged to baseline
+`0a39e7c9`, separates released
+getter/factory/Compare controls from the new equality route, including long
+equal-case, final-unit mismatch and differing-length cases. It reports one warmup,
+five samples and managed allocations; validation and timing are queued serially.
+Comparer equality interfaces, object overloads, hashing, culture comparers and
+native/Wasm execution remain outside this batch; #2621 stays open.
 
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null

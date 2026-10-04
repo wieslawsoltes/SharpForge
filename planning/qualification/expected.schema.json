@@ -290,6 +290,61 @@
             "cancelledWorkRan",
             "windowClosed"
           ]
+        },
+        {
+          "description": "One complete native WinUI measurement dump; store verification also applies the bounded visual and automation tree contract.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": { "const": 1 },
+            "inputHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "runtime": { "type": "string", "minLength": 1 },
+            "culture": { "const": "en-US" },
+            "theme": { "const": "Light" },
+            "winuiAssemblyVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$" },
+            "observations": {
+              "type": "array",
+              "minItems": 20,
+              "maxItems": 20,
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" },
+                      "status": { "const": "loaded" },
+                      "viewport": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "width": { "type": "integer", "minimum": 1, "maximum": 2048 },
+                          "height": { "type": "integer", "minimum": 1, "maximum": 2048 }
+                        },
+                        "required": ["width", "height"]
+                      },
+                      "rasterizationScale": { "type": "number", "minimum": 0 },
+                      "layout": { "type": "object" },
+                      "automation": { "type": "array", "maxItems": 2048, "items": { "type": "object" } }
+                    },
+                    "required": ["id", "status", "viewport", "rasterizationScale", "layout", "automation"]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" },
+                      "status": { "const": "load-error" },
+                      "exception": { "type": "string", "minLength": 1 },
+                      "hresult": { "type": "integer", "minimum": -2147483648, "maximum": 2147483647 }
+                    },
+                    "required": ["id", "status", "exception", "hresult"]
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["schemaVersion", "inputHash", "runtime", "culture", "theme", "winuiAssemblyVersion", "observations"]
         }
       ]
     }

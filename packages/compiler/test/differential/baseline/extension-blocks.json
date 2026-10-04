@@ -8,7 +8,7 @@
   "extension-blocks/cs9339-cs0176-cs0120-cs9316-cs0200-uses": ["diagnostics", "warnings"],
   "extension-blocks/generic-blocks": ["diagnostics", "warnings", "bytecode", "cil"],
   "extension-blocks/operators": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
-  "extension-blocks/properties-methods-and-static-members": ["diagnostics", "warnings", "bytecode", "cil"],
+  "extension-blocks/properties-methods-and-static-members": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "extension-blocks/property-assignment-forms": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "extension-blocks/scopes-and-precedence": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

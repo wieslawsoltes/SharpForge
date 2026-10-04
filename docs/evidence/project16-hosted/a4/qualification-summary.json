@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-qualification",
+  "stage": "all",
+  "engine": "chromium",
+  "sourceSha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+  "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+  "workflowRunId": "37175293552",
+  "startedAt": "2026-10-04T03:53:03.628Z",
+  "finishedAt": "2026-10-04T04:03:26.402Z",
+  "status": "failed",
+  "exitCode": 1,
+  "scopes": [
+    {
+      "id": "node:A19",
+      "phase": "node",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A19"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:53:03.629Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:53:44.704Z"
+    },
+    {
+      "id": "node:A20",
+      "phase": "node",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A20"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:53:44.704Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:54:22.827Z"
+    },
+    {
+      "id": "browser:workbench-docking",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-docking",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:54:22.828Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:54:24.894Z"
+    },
+    {
+      "id": "browser:workbench-shell",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-shell",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:54:24.895Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:54:30.629Z"
+    },
+    {
+      "id": "browser:workbench-sessions",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-sessions",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:54:30.630Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py workbench-sessions --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:54:34.916Z"
+    },
+    {
+      "id": "browser:workbench-lazy",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-lazy",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:54:34.917Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:54:40.504Z"
+    },
+    {
+      "id": "browser:workbench-workflows",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-workflows",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:54:40.505Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py workbench-workflows --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:54:44.839Z"
+    },
+    {
+      "id": "browser:workbench-workflows-standalone",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-workflows-standalone",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:54:44.840Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py workbench-workflows-standalone --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:55:17.030Z"
+    },
+    {
+      "id": "browser:editor-insights",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-insights",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:55:17.030Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py editor-insights --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:55:49.656Z"
+    },
+    {
+      "id": "browser:editor-providers",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-providers",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:55:49.657Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:55:53.235Z"
+    },
+    {
+      "id": "browser:editor-view",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-view",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:55:53.236Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:55:56.304Z"
+    },
+    {
+      "id": "performance",
+      "phase": "performance",
+      "status": "passed",
+      "startedAt": "2026-10-04T03:55:56.305Z",
+      "assessment": {
+        "mode": "capture",
+        "absolutePassed": true,
+        "largeFile": {
+          "sizeBytes": 209715200,
+          "measuredP95Ms": 32.29999999998836,
+          "budgetMs": 50,
+          "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+        },
+        "regressionVerdict": null
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T04:01:30.616Z"
+    },
+    {
+      "id": "performance:editor-budgets",
+      "phase": "performance",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-budgets",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T04:01:30.617Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py editor-budgets --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T04:01:40.909Z"
+    },
+    {
+      "id": "performance:studio-large-file",
+      "phase": "performance",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "studio-large-file",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T04:01:40.910Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py studio-large-file --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T04:01:44.482Z"
+    },
+    {
+      "id": "performance:instrumentation",
+      "phase": "performance",
+      "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+      "args": [
+        "scripts/limited.js",
+        "node",
+        "scripts/bench-workbench-overhead.js",
+        "--browser",
+        "chromium",
+        "--output",
+        "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/instrumentation-overhead.json"
+      ],
+      "timeoutMs": 1200000,
+      "status": "passed",
+      "startedAt": "2026-10-04T04:01:44.483Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T04:03:26.401Z"
+    }
+  ],
+  "counts": {
+    "selected": 15,
+    "passed": 9,
+    "failed": 6
+  }
+}

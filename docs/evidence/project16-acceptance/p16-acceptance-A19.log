@@ -1,0 +1,1316 @@
+Discovered 85 Node test files and 9 Python suites in 1 area manifests. Node reports executed test counts below.
+✔ five concurrent preview navigations leave one preview; edit promotes and retains it (4.749312ms)
+✔ document edits redraw tab chrome only when dirty or preview metadata changes across shared views (0.864754ms)
+✔ pinned tabs survive close others and pin state roundtrips (1.308113ms)
+✔ Cancel in a batch aborts the complete close without saving or closing any earlier tab (0.707527ms)
+✔ save failure, edited-during-prompt and explicit discard obey atomic close contracts (10.384781ms)
+✔ closing a shared secondary view does not discard or prompt for the remaining buffer (1.905653ms)
+✔ reopen restores the original caret and scroll; thirty tabs remain in the overflow model (6.06054ms)
+✔ context command enablement follows pinning, groups, side and host capabilities (1.016653ms)
+✔ disposing during dirty confirmation cancels without discarding buffers (0.389176ms)
+✔ v1 migrates without changing panel identities and v2 roundtrips metadata (8.21571ms)
+✔ unknown and duplicate persisted panels are dropped and reported without substitution (0.88164ms)
+✔ corrupt layouts recover valid closed identities and reject future versions in strict restore (0.936472ms)
+✔ all four auto-hide edges pin back to the exact previous tab group and index (1.656918ms)
+✔ Auto Hide All restores a removed tool group against its original document anchor (0.997194ms)
+✔ a floating tab group docks as one undoable operation retaining both tabs (1.09423ms)
+✔ nested floating splits retain topology on edge re-dock and flatten only on center (3.614671ms)
+✔ nested transaction failures and cancelled pointer transactions leave no partial history (0.786396ms)
+✔ monitor shrink clamps geometry and corrupt floating coordinates never escape viewport (0.602118ms)
+✔ nine explicit guide targets hit their own centers and execute the specified topology (1.780995ms)
+✔ pin and preview partition is deterministic and pin metadata survives tab moves (0.632364ms)
+✔ background app registration preserves every visible group and global activation in one transaction (0.871294ms)
+✔ background reopening auto-hidden tools and existing floating tabs cannot steal activation (0.629079ms)
+✔ complete format fixture recomputes raw percentiles without claiming a relative or physical-frame pass (7.428934ms)
+✔ first-visit and warmup budget violations remain failures even when all measured percentiles pass (3.416101ms)
+✔ rejects empty partial capture instead of qualifying incomplete or incorrect evidence (1.056393ms)
+✔ rejects missing first observation instead of qualifying incomplete or incorrect evidence (3.508541ms)
+✔ rejects duplicate sample instead of qualifying incomplete or incorrect evidence (0.592083ms)
+✔ rejects tampered percentile instead of qualifying incomplete or incorrect evidence (0.690612ms)
+✔ rejects focus stolen and restored instead of qualifying incomplete or incorrect evidence (0.502798ms)
+✔ rejects stale source target instead of qualifying incomplete or incorrect evidence (0.374214ms)
+✔ rejects model-only clock instead of qualifying incomplete or incorrect evidence (1.282344ms)
+✔ rejects hidden tab instead of qualifying incomplete or incorrect evidence (0.493554ms)
+✔ rejects missing compiler artifact instead of qualifying incomplete or incorrect evidence (0.397549ms)
+✔ rejects CSP violation instead of qualifying incomplete or incorrect evidence (0.279772ms)
+✔ rejects changed annotation line instead of qualifying incomplete or incorrect evidence (0.501066ms)
+✔ rejects empty map pixels instead of qualifying incomplete or incorrect evidence (0.772505ms)
+✔ rejects wrong annotation color instead of qualifying incomplete or incorrect evidence (0.671733ms)
+✔ rejects wrong pointer destination instead of qualifying incomplete or incorrect evidence (2.176923ms)
+✔ two runtime workers may use serial 1 without sharing output, debug state or legacy identity (9.659727ms)
+✔ legacy runtime facade translates matching identities and rejects app-switch races (2.146988ms)
+✔ restart replaces only its worker and stale callbacks cannot replace the new generation (1.136193ms)
+✔ ending the active application selects the most recently active remaining app with ordered events (1.268272ms)
+✔ resource limit refuses a new app without touching live workers (0.922551ms)
+✔ background events update their app while shared debugger callbacks remain on the selected app (2.45366ms)
+✔ state compatibility accessors follow the selected session without aliasing their mutable maps (1.006207ms)
+✔ breakpoint edits bind only to sessions belonging to the owning project (0.977254ms)
+✔ session grant edits never leak to another app and revocation stops only its owner (1.524209ms)
+✔ combined debug status reflects multiple applications and exact paused count (0.832926ms)
+✔ a ended active session can be retired at a one-session limit and releases retained output (0.829041ms)
+✔ worker failure clears stale live UI flags and unlocks only the failed app (0.880368ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-application-inspector.test.js (115.419169ms)
+✔ actual analysis events create separate tasks; cancelling one preserves same-project build and other project analysis (6.664851ms)
+✔ superseded analysis settles once, drops late worker replies and preserves the legacy successful analysis event (1.104476ms)
+✔ source invalidation cancels only that request and stale results cannot change diagnostics or task state (1.543928ms)
+✔ worker errors and malformed compiler results close failed analysis entries without losing future analyses (1.052958ms)
+✔ pre-aborted and malformed signals refuse before creating tasks; external cancellation is observable (1.188572ms)
+✔ a bridge attached after a request starts observes its real epoch and project removal disposes its task (0.595067ms)
+✔ TaskCenter quota refuses an untracked analysis while retaining the other running operation (0.851394ms)
+✔ synchronous cancellation from task notification and bridge disposal leave no orphan analysis (0.89531ms)
+✔ project builds run independently and only the edited project rejects its stale result (4.085952ms)
+✔ live analysis cannot replace the cached executable returned by a clean build (1.443356ms)
+✔ cancelling one project terminates only its worker and preserves other project diagnostics (1.047299ms)
+✔ dependency order is deterministic and rejects cycles before executing work (0.453073ms)
+✔ build queue cancellation skips remaining projects and reports exact counts (6.953577ms)
+✔ output panes isolate applications and use bounded viewport reads after ring eviction (0.837833ms)
+✔ diagnostics remain project/producer/version scoped and combine query filters (7.94423ms)
+✔ only current user intent may reveal panels; background work cannot steal focus (0.393383ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-builtin-extensions.test.js (78.926104ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-builtin-metadata.test.js (105.710206ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-call-hierarchy-ownership.test.js (285.517835ms)
+✔ A19 accepting an external baseline updates byte budget and disk version so a later save succeeds (18.470755ms)
+✔ A19 an old observation cannot bypass changed bytes, changed handles, or saved versions (5.734127ms)
+✔ A19 baseline acceptance joins the save queue and refuses a revision committed ahead of it (9.27034ms)
+✔ A19 cancellation and failed host preparation publish no baseline, while postcommit errors retain the accepted version (10.468787ms)
+✔ A19 observed encoded sizes and whole-workspace budgets are validated before host commit (3.392937ms)
+✔ A19 a rebased DiskWorkspace accepts only its mapped path and keeps the original queue and baseline independent (14.287375ms)
+✔ captured DocumentService→DiskWorkspace utf-8 saves stream the written source while newer model edits remain dirty (44.663164ms)
+✔ captured DocumentService→DiskWorkspace utf-16le saves stream the written source while newer model edits remain dirty (33.696226ms)
+✔ captured DocumentService→DiskWorkspace utf-16be saves stream the written source while newer model edits remain dirty (30.439945ms)
+✔ a failed streamed disk write preserves DocumentService and DiskWorkspace baselines and owned model state (9.272018ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-document-models.test.js (111.685277ms)
+✔ document operation state captures immutable current and saved roots without live model ownership (4.13104ms)
+✔ validated moved-model state retains a rebased dirty baseline through subsequent edits and undo (1.573893ms)
+✔ operation state mismatches reject before ownership transfers or saved markers change (1.202564ms)
+✔ new plain-text operation state transfers to a factory model while an explicit clean restore updates its saved marker (0.932065ms)
+✔ reload commits the shared model, saved baseline and encoding before document, buffer or view notifications (7.116623ms)
+✔ reload is one undo step, retains an unaffected caret and restores clean state on redo (1.73715ms)
+✔ a metadata rejection restores source, undo, selections, baseline, metadata and stale-save state without notification (1.947056ms)
+✔ document notification failure reports a committed reload and still publishes saved state (1.466371ms)
+✔ model notification failure reports a committed reload and still publishes saved state (4.397081ms)
+✔ an explicitly committed metadata error retains the accepted disk and document roots (0.944314ms)
+✔ a newer edit from a document notification remains dirty and cannot receive a stale saved marker (0.992276ms)
+✔ a newer edit from a model notification remains dirty and cannot receive a stale saved marker (0.738143ms)
+✔ reload guards reject stale ownership, versions, read-only state and invalid encoding before metadata acceptance (0.906787ms)
+✔ asynchronous metadata contributions are rejected and rolled back before any event (0.82838ms)
+✔ same-text reload accepts changed encoding and clears an obsolete saved baseline without adding an undo edit (0.584261ms)
+✔ legacy reload updates all views after metadata and classifies a failed view refresh as committed (0.690381ms)
+✔ reload permits the exact shared character limit and rejects larger incoming or existing sources (26.167192ms)
+✔ a disposed owner cannot reload or accept disk metadata (0.614117ms)
+✔ an unchanged captured source save marks the exact model revision clean without materializing text (31.500234ms)
+✔ edits during pending source I/O retain the written snapshot baseline and never mark the new revision clean (19.015661ms)
+✔ captureSave supports bulk snapshot consumers and reads captured text only on a legacy provider request (23.477395ms)
+✔ failed or rejected writes retain the previous baseline and dirty state (14.918969ms)
+✔ a captured save cannot overwrite a replacement document baseline after asynchronous I/O (12.829497ms)
+✔ saved snapshot validation rejects foreign or mismatched sources before considering lazy text (11.623669ms)
+✔ documents open, change, save and close without requiring a docking host (3.145884ms)
+✔ saving a captured revision never marks a newer edit as clean (1.33962ms)
+✔ multiple document views share edits and retain independent selection/scroll state (0.792996ms)
+✔ workspace replacement validates completely before changing existing records (0.452422ms)
+✔ every legacy initial state key resolves through an explicit slice property descriptor (5.413063ms)
+✔ running project locks its shared source views while other project remains editable (2.837248ms)
+✔ equal worker serials stay partitioned by app and launch identity (2.527992ms)
+✔ strict capture validation rejects missing sequences, wrong identities and invalid measurements atomically (0.862341ms)
+✔ bounded history gaps are explicit and malformed replies block only their current launch (0.847298ms)
+✔ late replies after replacement cannot attach measurements to the replacement capture (0.471321ms)
+✔ pausing and disposal cancel outstanding waits without clearing retained launch history (0.536809ms)
+✔ disposed and removed sessions cannot create new capture work (0.235596ms)
+✔ timeline retains bounded descriptors and partitions heap snapshots by launch (1.382645ms)
+✔ heap snapshots reject late replacement and malformed census data (0.380734ms)
+✔ CPU graph uses actual time, bounded percent and weighted intervals with accessible event detail (12.127028ms)
+✔ execution occupancy measures actual intervals and separate synchronous categories (1.918853ms)
+✔ nested work counts once and a close inside the operation includes its complete final interval (0.341034ms)
+✔ measurement preserves synchronous exceptions and rejects asynchronous waiting (0.520265ms)
+✔ bounded sequence windows report lost history and replacement clears the previous launch (0.442507ms)
+✔ occupancy validates bounds, clock monotonicity and replacement outside measured work (0.478983ms)
+✔ runtime pumping closes the actual final interval and cancels idle sampling after termination (0.701217ms)
+✔ paused runtimes sample genuine idle intervals and freeze automatic animations (0.312932ms)
+✔ retired launch timer callbacks cannot clear or execute replacement timers (0.377449ms)
+✔ request measurements exclude inspection and count UI/debug actions without changing their results (0.401937ms)
+✔ runtime pump failures keep a paused capture and report the original error (0.457791ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-execution-worker.test.js (86.604368ms)
+✔ resource rename publishes source edits, file paths and literal project references in one undoable host commit (12.861015ms)
+✔ multiple independent resource renames share one operation and preserve unedited clean sources (2.975988ms)
+✔ invalid versions, before text, result text, overlapping edits and destination collisions leave all owners unchanged (5.644782ms)
+✔ a model change during render fails the immediate precommit guard without overwriting the newer edit (2.462544ms)
+✔ async host preflight rechecks identities, affected locks, unrelated edits, saves, membership and workspace lifetime (10.887789ms)
+✔ failed host preflight releases every staged model and preserves live source buffers (1.382174ms)
+✔ postcommit callback failure retains all adopted resource models and a complete file-operation undo (2.126096ms)
+✔ large resource source comparisons stay lazy and yield to cancellation before ownership changes (36.139631ms)
+✔ the adapter copies supported plan fields before awaits and rejects native, locked and oversized resource requests (2.204724ms)
+✔ Explorer rename and undo preserve dirty snapshot baselines and leave unrelated models unchanged (15.550831ms)
+✔ Explorer copies are independent unsaved models and sequential file undo retains earlier snapshot identity (8.54062ms)
+✔ Explorer source writes prepare a replacement without mutating current text and undo restores a lazy root (5.093251ms)
+✔ Explorer snapshot history refuses newer edits without reading either complete source (3.485306ms)
+✔ Explorer failed preflight and host commit keep existing owners intact and dispose staged replacement models (4.653388ms)
+✔ Explorer Add Existing Item accepts sources beyond 16 MiB using chunked File reads and records undo without flattening (204.539911ms)
+✔ Explorer Add Existing Item updates project membership while retaining the prepared source descriptor (2.898391ms)
+✔ Explorer rejected or cancelled multi-file import cleans up only its prepared models (15.662285ms)
+✔ Explorer disposed imports cancel between chunks and postcommit callback errors retain adopted ownership and history (8.678558ms)
+✔ Explorer native source payload limits remain explicit before native I/O (13.715804ms)
+✔ Explorer snapshot records preserve metadata and exact history roots while fresh URI models remain independent (3.376753ms)
+✔ Explorer path index preserves descendant and case-collision rules across large indexed batches and removals (6.14028ms)
+✔ native prepared creates encode the captured edited source and BOM instead of stale original bytes (1.294993ms)
+✔ A19 FileWatch forwards the captured record and observation and prompts once until the document or disk changes (21.55749ms)
+✔ A19 old Reload, Ignore, and Compare actions cannot act on a same-URI same-version replacement (10.064499ms)
+✔ A19 a later edit refreshes the notification instead of retaining an unusable version guard forever (8.016178ms)
+✔ A19 changing the Save As target invalidates every action even when the same document version remains open (3.613659ms)
+✔ A19 a BOM-only external change is observable and its accepted metadata survives a later save (9.087926ms)
+✔ A19 a legacy asynchronous reader cannot publish a notification for a replaced document (2.806232ms)
+✔ A19 cancellation after a legacy reader resolves cannot publish an external-change notification (1.698141ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-first-run-schemes.test.js (224.549771ms)
+✔ whole workload gates strictly below one percent, retaining positive and negative observations (27.315963ms)
+✔ individual operation regressions remain diagnostic while the identical aggregate determines acceptance (3.463713ms)
+✔ assessment rejects missing pairs, wrong order, altered counts, nonfinite data and incomplete effects (28.5071ms)
+✔ driver rejects non-HTTP or remote application origins without starting a server (0.688008ms)
+✔ assessment recomputes product p50/p95/p99 and rejects absent or active disabled instrumentation (8.749666ms)
+✔ clock-quantized zero operation spans are preserved but a zero aggregate denominator is rejected (7.987876ms)
+✔ pre-navigation storage states differ only by explicit tracing mode; workload and order are deterministic (0.394144ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-instrumentation-settings.test.js (196.265327ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-metadata-providers.test.js (78.443592ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-multi-session-fixture.test.js (75.358795ms)
+✔ actual MSBuildTools onJob notifications retain exact cancellation ownership when another job is selected (3.54766ms)
+✔ owners with the same remote job id remain independent and known terminal callbacks cannot resurrect a task (0.491952ms)
+✔ phase text stays indeterminate, only host-reported fractions become progress, and stale cursors/phases are ignored (0.340574ms)
+✔ a native success that wins a cancellation race remains an observed success (0.317488ms)
+✔ native cancellation failures and replies for another job are explicit and cannot alter that other task (0.727377ms)
+✔ transport failure settles only its matching observed job and malformed snapshots do not mutate task state (0.554156ms)
+✔ synchronous cancellation from first notification reaches the captured client exactly once (0.328425ms)
+✔ disposal aborts owned requests once, ignores late callbacks and bounds retained terminal identity history (0.449949ms)
+✔ A19 actual native utf-8 reload updates SHA-256 and native baseline before a physical save (21.654416ms)
+✔ A19 actual native utf-16le reload updates SHA-256 and native baseline before a physical save (7.182031ms)
+✔ A19 actual native utf-16be reload updates SHA-256 and native baseline before a physical save (5.61623ms)
+✔ A19 reconnecting the native host invalidates a prior observation without changing the document (3.181207ms)
+✔ A19 native bytes changed after the observation are not marked as the reloaded baseline (2.918631ms)
+✔ A19 rejecting immutable native metadata restores the document and retains both previous native baseline fields (3.212134ms)
+✔ A19 native read cancellation and disposal reach the actual client request signal (2.052745ms)
+✔ A19 MSBuild text and binary read APIs forward the supplied cancellation signal without changing endpoints (0.793256ms)
+✔ actual client, MSBuildTools and lazy native callbacks publish live tasks and preserve completed inspection (208.927828ms)
+✔ poll transport failure retains the captured client and fails only that job after another job becomes selected (203.669943ms)
+✔ the TaskCenter cancellation callback targets its captured client/job and does not replace another native selection (1.813615ms)
+✔ validation/start failures and ordinary native UI errors cannot settle a previously observed unrelated task (1.391598ms)
+✔ a poll response for a different ID closes only the requested task and never publishes the foreign job (203.07977ms)
+✔ native Cancel transport errors report only the captured current owner, regardless of a later client value (0.992918ms)
+✔ a confirmed native success wins a cancellation race and a stale pending poll cannot regress it (202.654533ms)
+✔ disposal coalesces TaskCenter cancellation before disconnect and abandons a pending poll without late UI writes (202.895936ms)
+✔ disposal during job start waits for the actual returned ID, cancels it, and never publishes a post-disposal task (1.125216ms)
+✔ Outline host passes exact URI/project/version and applies one provider edit before navigation (1.787316ms)
+✔ Outline rejects stale version after provider completion (0.602017ms)
+✔ Outline rejects stale project after provider completion (0.188173ms)
+✔ Outline rejects stale workspace after provider completion (0.17904ms)
+✔ Outline rejects stale document after provider completion (0.322326ms)
+✔ Outline cancellation and disposal stop a waiting provider without applying its late result (0.551592ms)
+✔ Outline rejects read-only and mismatched provider edits (0.313192ms)
+✔ Outline leaf drops retain before/after position and refuse cross-tree payloads (0.594567ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-outline-reorder.test.js (137.491434ms)
+✔ prepared document ingress adopts the exact model and source without reading text or rebuilding it (14.562791ms)
+✔ model and immutable roots are hidden even when an incoming caller made them enumerable (1.190526ms)
+✔ retaining prepared records preserves model/map/view identity and replaces old subscriptions without materializing text (8.54732ms)
+✔ duplicate, mismatched and stale prepared records reject atomically and remain caller-owned (5.229857ms)
+✔ a failed factory disposes only models it created while prepared callers and the current workspace remain intact (1.444488ms)
+✔ subscription failure and cancellation release staged subscriptions without disposing prepared input models (1.319399ms)
+✔ saved-state preparation rolls back dirty caller models if another model cannot commit its saved marker (0.969022ms)
+✔ add and legacy appended-record lookup adopt prepared models without a factory, and dispose releases owned roots (4.046142ms)
+✔ view errors after the atomic ownership commit are explicit and do not hand live models back to callers (1.126589ms)
+✔ real chunked File ingress adopts the reader model and decoder metadata without invoking whole-source getters (19.15727ms)
+✔ append imports retain dirty model baselines and read-only state without implicitly saving existing documents (1.997983ms)
+✔ append imports retain a late-save snapshot baseline and its stale-save dirty marker (1.993987ms)
+✔ preserveDirty never permits replacing or removing a dirty model without explicit discard (1.731742ms)
+✔ disposed prepared models reject and failing view cleanup still releases all owned models and roots (1.007509ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-profile-selection.test.js (89.436514ms)
+✔ independent areas, browsers and performance all finish after earlier failures without downgrading them (8.022478ms)
+✔ stage selection runs only the selected scopes and preserves browser deadlines and capture-only results (2.589666ms)
+✔ a scope settles and is checkpointed before the next independent scope starts (0.426844ms)
+✔ setup errors remain fatal before any scope starts (0.527826ms)
+✔ a thrown error carrying exit zero remains a failed outcome and a nonzero aggregate (1.576497ms)
+✔ malformed editor JSON fails before any capture starts (12.379839ms)
+✔ both baseline schemas are checked before any capture starts (5.016185ms)
+✔ known editor browser, OS, architecture, Node and CPU mismatches fail before capture (6.229294ms)
+✔ model-only or another browser backend cannot be used as the editor baseline (2.319888ms)
+✔ known workbench runner mismatches fail before editor captures (4.614569ms)
+✔ Python OS and architecture aliases match corresponding known Node runner facts (3.117992ms)
+✔ missing and outside-checkout baseline files fail before capture (1.418649ms)
+✔ empty inputs retain capture mode and the 22-minute outer browser deadline (1.515876ms)
+✔ compatible baselines are read once before capture and reused for comparison (3.387058ms)
+✔ each explicit platform, engine and stage resolves without running a capture (1.960907ms)
+✔ create events always discard baseline and dispatch-style overrides (0.180031ms)
+✔ manual dispatch preserves defaults and exact supplied baseline paths (0.25866ms)
+✔ unrelated creates, tag creates and unsupported event types cannot qualify (0.533445ms)
+✔ the complete branch grammar rejects malformed selection and unsafe or oversized nonces (0.349317ms)
+✔ event and full ref identity must agree for created and manually selected refs (0.436858ms)
+✔ a mutable name, missing SHA or different checked-out commit cannot pass immutable source validation (0.345681ms)
+✔ allocated runner and manual choice values are validated before output (0.410048ms)
+✔ baseline data cannot inject Actions environment records (0.572704ms)
+✔ oversized or malformed event files fail before writing any Actions environment output (9.887531ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-removed-project-profiles.test.js (98.095482ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-runtime-arguments.test.js (92.655068ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-runtime-environment.test.js (85.213296ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-runtime-launch-options.test.js (75.88628ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-runtime-settings-bridge.test.js (82.83542ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-runtime-worker-launch.test.js (71.488463ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-session-recovery.test.js (91.577799ms)
+✔ session state lint detects direct, computed, compound, destructuring and prefix writes (2.074248ms)
+✔ session state lint excludes reads, equality, strings, comments and unrelated state properties (0.843251ms)
+✔ session state lint accepts only explicitly inventoried owners and includes stable diagnostics (0.33787ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-session-tools.test.js (111.20329ms)
+✔ status updates read model positions and EOL metadata without flattening a 100 MB document (1.732302ms)
+✔ status visual columns distinguish tabs, CJK, zero-width clusters and UTF-16 characters (1.811321ms)
+✔ status uses cancellable exact model columns and ignores stale carets without flattening source (3.363392ms)
+✔ reading one setting preserves workspace null overrides without cloning unrelated layouts (1.394754ms)
+✔ Solution Explorer filtering never reads document content synchronously (1.25347ms)
+✔ definition range reads stay bounded at a caret near the end of a large indexed document (1.03464ms)
+✔ Explorer content searches retain actual worker URI matches and reject stale or cancelled results (0.773557ms)
+✔ automatic recovery and bookmark construction never materialize a 100 MB model-backed file (0.689199ms)
+✔ existing recovery is retained until the user restores or discards it (0.297579ms)
+✔ bookmark edit transformation handles several pre-edit coordinates and wraps across files (6.401665ms)
+✔ Output filters project and session identity from shared channel entries (0.644302ms)
+✔ Find Results changes retained project or session scope without requesting another search (0.243257ms)
+✔ locked result windows remain bounded without silently discarding retained results (1.310987ms)
+✔ regex replacement retains lookbehind, named captures and original string substitutions (1.789889ms)
+✔ keyboard removal applies to default ids before conflict calculation (0.893958ms)
+✔ provider failures terminate queued test state instead of leaving a run in progress (0.648408ms)
+✔ menu palette and command window share contextual enablement and the same handler (2.972072ms)
+✔ when parser handles precedence and rejects malformed executable input and nesting (1.127721ms)
+✔ command contributions rollback conflicts and restore replaced handlers (0.460234ms)
+✔ command parser preserves quoted arguments without evaluating expressions (0.560255ms)
+✔ 10000 hidden output invalidations produce no render or scheduled frame (0.927459ms)
+✔ performance records exact per-session percentiles and enforces relative budgets (0.788069ms)
+✔ lazy activation cancellation never resolves a mount and successful module loads cache once (0.547566ms)
+✔ two concurrent tasks cancel independently and keep truthful cancelling state (0.727928ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-shell-inventory.test.js (194.86145ms)
+✔ recent workspace remembering retains metadata and never enumerates source or disk records (1.785482ms)
+✔ opening the current workspace activates it without reading recovery or requiring permission (0.352462ms)
+✔ recovery preparation preserves file bytes, encoding, BOM and unsaved source metadata (1.718862ms)
+✔ recent opening uses the matching previous recovery and confirms actual workspace identity (0.598042ms)
+✔ samples require a provider-confirmed open instead of treating an unchanged workspace as success (0.627406ms)
+✔ missing recent files request permission explicitly and cancellation preserves the pinned MRU (0.548607ms)
+✔ recovery bounds, corrupt data and cancelled providers fail before recent success is published (0.803512ms)
+✔ search supports captures literal metacharacters exact versions whole words and bounded empty regex matches (3.715934ms)
+✔ replacement preview skips changed documents and preserves unchecked matches as one batch per document (2.130153ms)
+✔ worker cancellation terminates a pathological query without affecting a second results instance (0.766266ms)
+✔ workspace symbol results reject superseded requests and changed document versions (0.372482ms)
+✔ Error List combines source scope severity search and sort over 5000 real diagnostic records (2.163422ms)
+✔ Output model bounds 100000 line inputs and compiler message links preserve location (67.347814ms)
+✔ bookmarks move with source insertions and locked reference results remain unchanged (1.333871ms)
+✔ old settings migrate once and corrupt settings notify then recover defaults (3.438886ms)
+✔ settings transaction rejects invalid data and persistence failure before publishing (1.769739ms)
+✔ line-ending normalization stays opt-in across theme changes and rejects invalid settings (0.791383ms)
+✔ workspace preferences override user scope and exported profiles omit secrets recursively (0.985837ms)
+✔ keyboard conflicts include default bindings and distinguish scopes (0.967769ms)
+✔ keyboard Options shares native chord-prefix conflicts and shifted punctuation notation (0.383038ms)
+✔ configuration manager applies release selection only to enabled project mappings (1.253981ms)
+✔ recent files retain pinning and prune missing sources (0.586514ms)
+✔ notifications survive toast expiry and unread/dismissal are independent (0.592483ms)
+✔ external change prompts once per disk version and recovery contains only document data (0.98803ms)
+✔ dropped file import bounds count and total bytes (0.525482ms)
+✔ theme gate detects hex and numeric functional colors inside declarations, fallbacks, gradients and nested rules (2.700592ms)
+✔ theme gate ignores selectors, comments, strings, URL fragments and identifiers that are not color tokens (0.368065ms)
+✔ only explicit token files may define literal palette values; token files cannot hide painted rules (0.256597ms)
+✔ theme gate fails closed on malformed CSS and validates empty and non-string input boundaries (0.474666ms)
+✔ all Studio styles pass the color gate and extracted paint and token styles have explicit cascade order (95.170837ms)
+✔ the migration preserves every legacy dark/light paint value, geometry declaration and ordered override (30.937736ms)
+✔ Light keeps its authored palette, Blue keeps syntax distinctions, and contrast modes resolve every legacy token (21.998986ms)
+✔ system theme follows OS changes immediately and disposal removes its media listener (0.501516ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-shell-tools.test.js (94.846223ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-startup-menus.test.js (201.281973ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-startup-orchestration.test.js (95.317293ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-startup-project-profile.test.js (226.60448ms)
+✔ session state lint detects direct, computed, compound, destructuring and prefix writes (2.101259ms)
+✔ session state lint excludes reads, equality, strings, comments and unrelated state properties (0.829441ms)
+✔ session state lint accepts only explicitly inventoried owners and includes stable diagnostics (0.347855ms)
+✔ all Studio modules keep direct debug-state writes inside session owners (214.181415ms)
+✔ static named/re-export graph initializes dependencies first and lazy graph stays cold until one microtask (18.416773ms)
+✔ lexical transforms leave literal/comment/regex text unchanged and handle nested template expressions (5.943513ms)
+✔ dynamic cycles are deferred and repeated evaluation failures keep their original error identity (5.183176ms)
+✔ the known Node worker adapter cannot trigger dynamic code loading from a browser bundle (2.999123ms)
+✔ computed/unresolved imports, mutable exports, static cycles and missing or ambiguous names fail at build time (16.072929ms)
+✔ graph containment checks real paths, including symlinks (3.953271ms)
+✔ standalone hashes exact code and lazily embeds actual worker dependencies, including nested workers (15.971325ms)
+✔ recursive worker graphs and worker URLs outside the asset root are rejected before packaging (5.172791ms)
+✔ actual TaskCenter Cancel aborts its whole two-project queue and leaves an independent queue running (8.48774ms)
+✔ a queued second operation for the same project survives cancellation of the first captured queue (2.226347ms)
+✔ a completed task callback cannot cancel the next project or a later build with the same project id (2.991431ms)
+✔ TaskCenter cancellation during its started notification sends no request and skips the rest of the queue (4.360025ms)
+✔ standalone build cancellation preserves the other worker and disposal settles only tracked operations (2.119226ms)
+✔ build task quota cancels only the untrackable queue and reports the refusal (1.099738ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-composition.test.js (201.313235ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-diagnostic-producers.test.js (97.842631ms)
+✔ A19 utf-8 observation uses the granted handle and preserves encoding through reload and the next save (41.19226ms)
+✔ A19 utf-16le observation uses the granted handle and preserves encoding through reload and the next save (31.245299ms)
+✔ A19 utf-16be observation uses the granted handle and preserves encoding through reload and the next save (28.599679ms)
+✔ A19 a Save As target overrides the original workspace handle and receives the accepted baseline (17.279784ms)
+✔ A19 an empty no-BOM UTF-16 observation remains an editable zero-byte source after reload (7.500241ms)
+✔ A19 same-URI workspace replacement and later editor edits both invalidate an old observation (6.31292ms)
+✔ A19 confirmation cannot overwrite a replacement document, a later edit, or a changed target (9.74784ms)
+✔ A19 declined confirmation and read-only models leave both document and disk baselines intact (7.337095ms)
+✔ A19 disk changes occurring after a prompt are rechecked before changing the editor (9.681319ms)
+✔ A19 postcommit listener errors report committed state and preserve the matching save baseline (14.822918ms)
+✔ A19 disposed and cancelled observers do not publish a pending handle read or reload prompt (4.312773ms)
+✔ A19 a replaced target or record during decoding returns no stale observation (2.218416ms)
+✔ A19 cancellation during a decoded chunk prevents observation publication and leaves the document unchanged (3.347638ms)
+✔ A19 watch reads admit exactly 8,000,000 decoded characters and reject larger or invalid encodings (191.453691ms)
+✔ A19 automatic reads reject an oversized byte descriptor without slicing or reading lazy editor text (44.950397ms)
+✔ initial document sync activates the selected primary view and opens other tabs in the background (2.53941ms)
+✔ dirty document sync preserves its active secondary view and a different URI explicitly changes it (1.588155ms)
+✔ background document sync preserves selected application or tool without changing group selection (0.500435ms)
+✔ removing the active document returns to a surviving source and unregisters its secondary views (0.73583ms)
+✔ initial restore keeps the persisted secondary document selection (1.631109ms)
+✔ horizontal host split creates one bottom group beside the original, with no intermediate vertical or empty group (9.625816ms)
+✔ vertical host split and default New Window retain one right-hand shared view (2.060447ms)
+✔ new views anchor to the requested source group instead of the first document group (1.349646ms)
+✔ Vim split filename opens that workspace source and moves its exact panel beside the original once (1.413452ms)
+✔ a split path naming the current source clones its view and does not perform an unnecessary open (1.007699ms)
+✔ invalid or non-workspace split paths fail before any open, group change or new view (0.912516ms)
+✔ a cancelled or failing workspace opener creates no split (4.26386ms)
+✔ invalid split axes and missing original groups cannot allocate secondary views (3.703855ms)
+✔ removing the original group during an asynchronous source open reports the stale target without an extra view (0.902291ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-explorer-decorations.test.js (116.482287ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-explorer-host.test.js (211.026095ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-import-composition.test.js (188.928589ms)
+✔ public shortcut utilities share native event normalization with the Options recorder (2.219827ms)
+✔ invalid keyboard assignments, removal syntax and profile IDs never replace active state (19.495932ms)
+✔ custom commands override defaults exactly once and remain visible to command menus (8.291895ms)
+✔ removing one native chord leaves other chords sharing its prefix available (4.818998ms)
+✔ a removed global exact key does not intercept an editor chord using its prefix (4.274065ms)
+✔ a removal follows command and scope across profile changes without suppressing a different command on the key (6.755929ms)
+✔ dynamic binding disposers remain valid after atomic table swaps and reject duplicate IDs (4.768441ms)
+✔ keyboard conflict data excludes removed defaults and includes cross-scope prefix overlap (3.671406ms)
+✔ popup installation handles global shortcuts once, releases listeners and leaves dialogs alone (2.010862ms)
+✔ attached command availability is explicit without an editor and closing a view detaches its filter (2.268171ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-language-providers.test.js (222.083194ms)
+✔ cold Studio registers every facade without importing tools or activating native integration (4.31666ms)
+✔ first commands and panels instantiate each actual controller once and share native settings (2.422163ms)
+✔ visible restored panels activate only their feature and repeated layout events do not rerender (1.366982ms)
+✔ loading coalesces latest mount and disposal prevents late construction or DOM changes (1.191496ms)
+✔ module failure presents an actionable retry and a successful retry mounts the real controller (1.143775ms)
+✔ capability presence permits only native first activation; canonical client still validates the token (0.416809ms)
+✔ designer automation waits for first activation and preserves synchronous loaded document calls (0.465061ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-model-ownership.test.js (213.017147ms)
+✔ actual focused view wins while dock activation is ahead of Studio editor installation (3.935746ms)
+✔ nested open callbacks add one departure and one actual jump, retaining view identity (1.134031ms)
+✔ ordinary caret movement does not create a jump and a failed open does not add a destination (1.042142ms)
+✔ direct window navigation and toolbar navigation replay the same history without recording activation (1.351828ms)
+✔ dropdown entries replay the shared history and clear invalidates in-progress tokens (1.032938ms)
+✔ five actual Studio preview opens reuse one tab and retain ordered jump history (6.89627ms)
+✔ failed preview destinations do not enter history or block the next valid navigation (1.536577ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-reveal-policy.test.js (114.865291ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-save-ownership.test.js (209.163145ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-studio-workspace-inputs.test.js (193.567566ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a19-watch-windows.test.js (110.844022ms)
+✔ saved tool layout applies across document sets without closing or reopening documents (3.413928ms)
+✔ saved layouts support legacy payloads, stable slots, rename, delete and rejected persistence (1.250946ms)
+✔ reset requires an explicit positive choice (0.319502ms)
+✔ navigation retains group, view and popout identities and rejects malformed locations (0.41775ms)
+✔ navigation returns moved tab to its original existing document group (1.833635ms)
+✔ tool factories create independent instances and restore exact identities (0.824483ms)
+✔ Window command descriptors include layout slots and keyboard-only management (0.489949ms)
+✔ worker requests preserve the protocol and reject errors without leaking pending requests (2.210032ms)
+✔ worker errors reject all requests and only explicit restart admits new work (0.52417ms)
+✔ restart generations suppress late replies and events from the terminated worker (0.39738ms)
+✔ timeout, abort, quota and disposal all clean up their pending requests (11.54774ms)
+✔ constructor request middleware is explicit and preserves input objects (0.627636ms)
+✔ event delivery is ordered under reentrancy and unsubscribe during dispatch (0.269376ms)
+✔ a slow earlier read cannot replace a later workspace, even after the later ticket finishes (3.586068ms)
+✔ an old finally cannot release or cancel the current request (0.461385ms)
+✔ nested readers share the original ticket instead of beginning after their await (0.933158ms)
+✔ external cancellation rejects adoption and retains the original cancellation cause (0.672904ms)
+✔ an already-cancelled request cannot begin reading or leave ownership behind (4.926289ms)
+✔ ownership check cancels after document edit without undoing the current workspace (0.638844ms)
+✔ ownership check cancels after document replacement without undoing the current workspace (0.443989ms)
+✔ ownership check cancels after workspace epoch without undoing the current workspace (0.375126ms)
+✔ ownership check cancels after native backend without undoing the current workspace (0.373593ms)
+✔ ownership check cancels after read-only transition without undoing the current workspace (0.310509ms)
+✔ ownership check cancels after document disposal without undoing the current workspace (0.23236ms)
+✔ begin rejects a locked workspace and a disposed document service (0.270247ms)
+✔ disposal cancels pending I/O, prevents adoption, and is idempotent (0.323027ms)
+✔ finish detaches external cancellation and a finished ticket cannot be reused (0.264369ms)
+✔ independent Studio instances do not cancel each other (0.246932ms)
+✔ a reentrant abort listener cannot restore an older owner over a newer request (0.34469ms)
+✔ invalid arguments do not supersede a valid pending request (0.264999ms)
+✔ initial model places all panels closed with persistent empty document group (1.835037ms)
+✔ open activate close reopen retains unique placement (1.208162ms)
+✔ edge dock left (0.528397ms)
+✔ edge dock right (0.250888ms)
+✔ edge dock top (0.217338ms)
+✔ edge dock bottom (0.208344ms)
+✔ tab reorder is deterministic (0.252391ms)
+✔ float redock cleans empty floating nodes (0.427264ms)
+✔ auto hide pin close and reopen move one panel (0.54357ms)
+✔ documents cannot auto hide (0.547716ms)
+✔ nonclosable panels cannot close (0.181153ms)
+✔ layout JSON restore roundtrips split auto hide and floats (0.567626ms)
+✔ invalid restore is atomic s=>s.root.active='missing' (0.15926ms)
+✔ invalid restore is atomic s=>s.closed.push('output') (0.214433ms)
+✔ invalid restore is atomic s=>s.root.id='' (0.163777ms)
+✔ invalid restore is atomic s=>s.version=999 (0.17262ms)
+✔ invalid restore is atomic s=>s.closed.pop() (0.140391ms)
+✔ invalid restore is atomic s=>s.autoHide.left.push('unknown') (0.112439ms)
+✔ invalid restore is atomic s=>s.floating.push({id:'f',x:0,y:0,width:-1,height:100,root:createGroup('g',[])}) (0.155825ms)
+✔ invalid operation rolls back model (0.228685ms)
+✔ undo redo restore correct placements (0.289327ms)
+✔ split resize validates finite ratio and clamps keyboard movement (0.251449ms)
+✔ closing final document keeps a docking target (1.218317ms)
+✔ history bound and subscriptions can unsubscribe (0.4439ms)
+✔ register and unregister document panels preserve invariants (0.194924ms)
+✔ duplicate tree identifiers are rejected (0.392912ms)
+✔ randomized moves maintain uniqueness and valid round trips (95.038435ms)
+✔ 08 preview mutation batches preflight before replacing workspace buffers (2.764539ms)
+✔ 08 preview rename/copy/delete undo restores data and editor metadata (1.029493ms)
+✔ 08 preview undo refuses subsequent user edits (0.472432ms)
+✔ 08 pending file command cannot cross a workspace switch (0.207232ms)
+✔ 08 planning a project change detects concurrent project source changes (0.29201ms)
+✔ 08 native planning reads unsaved project buffers, not an old disk snapshot (0.19255ms)
+✔ 08 cross-project source copy explicitly includes files with defaults disabled (3.552607ms)
+✔ 08 readonly explorer rejects file mutations before prompting (0.837723ms)
+✔ 08 overlapping explorer dialogs cannot start a second mutation (0.3182ms)
+✔ 08 solution project removal preserves comment and neighboring configuration (0.582188ms)
+✔ 08 solution removal also removes literal dependency on the removed member (0.250919ms)
+✔ 08 package reference authoring escapes metadata and does not invent relative package IDs (0.455187ms)
+✔ 08 path rewrites leave commented-out references and CDATA byte-identical (0.373203ms)
+✔ 08 adding compile membership removes default match before explicit include (0.476539ms)
+✔ 08 Visual Studio modifier-only keys do not eat an active keyboard chord (11.346381ms)
+✔ 08 editor declares Visual Studio default and six distinct profiles without a DOM (0.707116ms)
+✔ 08 native XML write undo restores original encoding and byte hash (27.254152ms)
+✔ 08 native XML syntax validation precedes every batch mutation (1.263956ms)
+✔ 08 native overlapping parent/child operations fail preflight instead of breaking undo (1.007549ms)
+✔ 08 native XML write followed by undo rejects later disk edits (7.507141ms)
+✔ 08 actual loopback explorer APIs enforce auth/origin and preserve binary bytes (51.336099ms)
+ℹ tests 477
+ℹ suites 0
+ℹ pass 441
+ℹ fail 36
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15067.804287
+
+✖ failing tests:
+
+test at tests/a19-application-inspector.test.js:1:1
+✖ tests/a19-application-inspector.test.js (115.419169ms)
+  'test failed'
+
+test at tests/a19-builtin-extensions.test.js:1:1
+✖ tests/a19-builtin-extensions.test.js (78.926104ms)
+  'test failed'
+
+test at tests/a19-builtin-metadata.test.js:1:1
+✖ tests/a19-builtin-metadata.test.js (105.710206ms)
+  'test failed'
+
+test at tests/a19-call-hierarchy-ownership.test.js:1:1
+✖ tests/a19-call-hierarchy-ownership.test.js (285.517835ms)
+  'test failed'
+
+test at tests/a19-document-models.test.js:1:1
+✖ tests/a19-document-models.test.js (111.685277ms)
+  'test failed'
+
+test at tests/a19-execution-worker.test.js:1:1
+✖ tests/a19-execution-worker.test.js (86.604368ms)
+  'test failed'
+
+test at tests/a19-first-run-schemes.test.js:1:1
+✖ tests/a19-first-run-schemes.test.js (224.549771ms)
+  'test failed'
+
+test at tests/a19-instrumentation-settings.test.js:1:1
+✖ tests/a19-instrumentation-settings.test.js (196.265327ms)
+  'test failed'
+
+test at tests/a19-metadata-providers.test.js:1:1
+✖ tests/a19-metadata-providers.test.js (78.443592ms)
+  'test failed'
+
+test at tests/a19-multi-session-fixture.test.js:1:1
+✖ tests/a19-multi-session-fixture.test.js (75.358795ms)
+  'test failed'
+
+test at tests/a19-outline-reorder.test.js:1:1
+✖ tests/a19-outline-reorder.test.js (137.491434ms)
+  'test failed'
+
+test at tests/a19-profile-selection.test.js:1:1
+✖ tests/a19-profile-selection.test.js (89.436514ms)
+  'test failed'
+
+test at tests/a19-removed-project-profiles.test.js:1:1
+✖ tests/a19-removed-project-profiles.test.js (98.095482ms)
+  'test failed'
+
+test at tests/a19-runtime-arguments.test.js:1:1
+✖ tests/a19-runtime-arguments.test.js (92.655068ms)
+  'test failed'
+
+test at tests/a19-runtime-environment.test.js:1:1
+✖ tests/a19-runtime-environment.test.js (85.213296ms)
+  'test failed'
+
+test at tests/a19-runtime-launch-options.test.js:1:1
+✖ tests/a19-runtime-launch-options.test.js (75.88628ms)
+  'test failed'
+
+test at tests/a19-runtime-settings-bridge.test.js:1:1
+✖ tests/a19-runtime-settings-bridge.test.js (82.83542ms)
+  'test failed'
+
+test at tests/a19-runtime-worker-launch.test.js:1:1
+✖ tests/a19-runtime-worker-launch.test.js (71.488463ms)
+  'test failed'
+
+test at tests/a19-session-recovery.test.js:1:1
+✖ tests/a19-session-recovery.test.js (91.577799ms)
+  'test failed'
+
+test at tests/a19-session-tools.test.js:1:1
+✖ tests/a19-session-tools.test.js (111.20329ms)
+  'test failed'
+
+test at tests/a19-shell-inventory.test.js:1:1
+✖ tests/a19-shell-inventory.test.js (194.86145ms)
+  'test failed'
+
+test at tests/a19-shell-tools.test.js:1:1
+✖ tests/a19-shell-tools.test.js (94.846223ms)
+  'test failed'
+
+test at tests/a19-startup-menus.test.js:1:1
+✖ tests/a19-startup-menus.test.js (201.281973ms)
+  'test failed'
+
+test at tests/a19-startup-orchestration.test.js:1:1
+✖ tests/a19-startup-orchestration.test.js (95.317293ms)
+  'test failed'
+
+test at tests/a19-startup-project-profile.test.js:1:1
+✖ tests/a19-startup-project-profile.test.js (226.60448ms)
+  'test failed'
+
+test at tests/a19-studio-composition.test.js:1:1
+✖ tests/a19-studio-composition.test.js (201.313235ms)
+  'test failed'
+
+test at tests/a19-studio-diagnostic-producers.test.js:1:1
+✖ tests/a19-studio-diagnostic-producers.test.js (97.842631ms)
+  'test failed'
+
+test at tests/a19-studio-explorer-decorations.test.js:1:1
+✖ tests/a19-studio-explorer-decorations.test.js (116.482287ms)
+  'test failed'
+
+test at tests/a19-studio-explorer-host.test.js:1:1
+✖ tests/a19-studio-explorer-host.test.js (211.026095ms)
+  'test failed'
+
+test at tests/a19-studio-import-composition.test.js:1:1
+✖ tests/a19-studio-import-composition.test.js (188.928589ms)
+  'test failed'
+
+test at tests/a19-studio-language-providers.test.js:1:1
+✖ tests/a19-studio-language-providers.test.js (222.083194ms)
+  'test failed'
+
+test at tests/a19-studio-model-ownership.test.js:1:1
+✖ tests/a19-studio-model-ownership.test.js (213.017147ms)
+  'test failed'
+
+test at tests/a19-studio-reveal-policy.test.js:1:1
+✖ tests/a19-studio-reveal-policy.test.js (114.865291ms)
+  'test failed'
+
+test at tests/a19-studio-save-ownership.test.js:1:1
+✖ tests/a19-studio-save-ownership.test.js (209.163145ms)
+  'test failed'
+
+test at tests/a19-studio-workspace-inputs.test.js:1:1
+✖ tests/a19-studio-workspace-inputs.test.js (193.567566ms)
+  'test failed'
+
+test at tests/a19-watch-windows.test.js:1:1
+✖ tests/a19-watch-windows.test.js (110.844022ms)
+  'test failed'

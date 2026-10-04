@@ -1,7 +1,7 @@
 {
   "member-init/init-accessor-declaration-errors": ["diagnostics", "warnings"],
   "member-init/init-accessor-in-lambda-inside-constructor": ["diagnostics", "warnings"],
-  "member-init/init-accessors-run-in-initializers-and-constructors": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "member-init/init-accessors-run-in-initializers-and-constructors": ["diagnostics", "warnings", "bytecode", "cil"],
   "member-init/init-language-version": ["diagnostics", "warnings"],
   "member-init/init-only-assignment-outside-initialization": ["diagnostics", "warnings"]
 }

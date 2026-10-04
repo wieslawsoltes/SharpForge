@@ -7,6 +7,7 @@ import {OptionsDialog} from '../apps/studio/workbench/options-dialog.js';
 import {keyboardOptionsPage} from '../apps/studio/workbench/options/keyboard-page.js';
 import {StudioKeyboard} from '../apps/studio/workbench/studio-keyboard.js';
 import {WorkbenchShell} from '../apps/studio/workbench/shell.js';
+import {WorkbenchPerformance, performanceTracingEnabled} from '../apps/studio/workbench/perf.js';
 import {subscribeShellServices} from '../apps/studio/workbench/shell-events.js';
 import {registerShellCommands} from '../apps/studio/workbench/shell-commands.js';
 import {createStudioEditorHost} from '../apps/studio/workbench/studio-editor-host.js';
@@ -31,6 +32,7 @@ function environmentFixture() {
   let active = editor;
   const shell = {
     commands, settings, dialogs, documents, document: dialogs.document, toolDefinitions: [],
+    metrics: new WorkbenchPerformance({enabled: performanceTracingEnabled(settings.snapshot())}),
     services: {sessions: {maxSessions: 4}}, fileWatch: {start() {}}, tests: {providers: new Map(), tests: new Map()},
     context: () => state, onError: error => errors.push(error),
     unifiedSearch: {open: (_dialogs, options) => opened.push({kind: 'search', ...options})},
