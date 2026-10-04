@@ -3,6 +3,8 @@ export { inflateRaw, deflateStored } from './deflate.js';
 export { PdbGuids, SymbolError, guidBytes, guidString } from './contracts.js';
 export { readSequencePoints, writeSequencePoints } from './sequence-points.js';
 export { readPortablePdb } from './pdb-reader.js';
+export { readPortablePdbDelta } from './pdb-delta-reader.js';
+export { PortablePdbGenerations } from './pdb-generations.js';
 export { PortablePdbBuilder } from './pdb-builder.js';
 export { emitPortablePdb } from './pdb-writer.js';
 export { sourceSpan } from './source-span.js';
