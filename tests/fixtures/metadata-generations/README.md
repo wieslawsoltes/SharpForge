@@ -131,14 +131,19 @@ node scripts/limited.js node --test --test-concurrency=1 \
   tests/a03-24-minimal-delta.test.js \
   tests/a03-24-metadata-generations.test.js \
   tests/a03-24-metadata-generation-boundaries.test.js \
-  tests/a03-24-metadata-generations-native.test.js
+  tests/a03-24-metadata-generations-native.test.js \
+  tests/cil-table-widths.test.js \
+  tests/a03-03-pe-reader.test.js \
+  tests/a13-14-metadata-tables.test.js \
+  tests/a13-14-metadata-heaps.test.js \
+  tests/a13-14-metadata-native.test.js \
+  tests/a13-05-pdb-generations.test.js
 ```
 
-The existing A03 manifest's `tests/a03-*.test.js` glob owns these files. Adjacent
-reader/PE/PDB risk checks are `tests/cil-table-widths.test.js`,
-`tests/a03-03-pe-reader.test.js`, the three `tests/a13-14-metadata-*` files and
-`tests/a13-05-pdb-generations.test.js`. Run only the concrete scheduled subset
-needed for the shared-reader change; no broad suite has been run for this work.
+The existing A03 manifest's `tests/a03-*.test.js` glob owns the five focused
+files. The six explicit adjacent files cover the shared table reader, PE envelope,
+metadata inspector and PDB generation consumers. This eleven-file command is the
+planned regression gate; no broad suite has been run for this work.
 
 `browser.mjs` exports the established `run()` report. It loads both retained
 corpora, checks their SHA-256 values, replays native facts and checks owned inputs
@@ -148,18 +153,87 @@ Chromium, Firefox and WebKit need actual observations. Windows/macOS native and
 other host results remain unverified. This JavaScript metadata API does not add a
 source-VM, direct-CIL or Rust/Wasm implementation or claim those engines passed.
 
-## Performance gate remains pending
+## Source-pinned performance protocol
 
-The pre-change comparison source is main
-`31900dce5c1454c1f9c244c9ac14e1798eac3e5f`. Measure ordinary default
-`readMetadata` and `readPE` separately on unchanged common inputs, guarding all
-preexisting fields, rows, heap and ownership facts outside timing. The optional
-row-budget seam adds a default-path branch, so its cost cannot be inferred from
-the new API alone. Report history construction, two appends, entity mapping,
-latest-row lookup and heap access as separate new-feature costs.
+`validation-plan.json` is the complete scheduled plan. It expands the five
+focused and six adjacent test filenames, capture/provenance/retention steps,
+minimal sparse baseline preparation, public aliases, exact commands and estimated
+disk allowances. The plan and tools are prepared; none of their scheduled commands
+has run for this batch. Product source remains at
+`02df6354e3152beac511d29b20272050ae03f486`.
 
-Use one controlled 20-warm/100-measured cohort with chronological samples, true
-median and nearest-rank p95/p99, source/tool/fixture hashes, actual environment and
-explicitly labeled shared-host/heap observations. Preserve absolute costs and
-all regressions. No benchmark has run and no performance exception is approved
-for this batch. Correctness results do not constitute performance acceptance.
+The comparison baseline is exactly main
+`31900dce5c1454c1f9c244c9ac14e1798eac3e5f`. The driver requires a clean minimal
+sparse checkout with its own five public package aliases. It creates no checkout,
+installs nothing and never changes measured source. Both sides' declared CIL
+source dependency closures, package manifests and public entry resolutions are
+hashed before loading product code and checked again after measurement.
+
+After successful native retention and the explicit eleven-file gate, commit the
+actual reference and evidence so the candidate is clean. With the scheduled
+heavy slot and quiet team host, run once from the candidate checkout:
+
+```sh
+SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=2048 \
+  node scripts/limited.js node packages/cil/tools/benchmark-metadata-generations.mjs \
+  --baseline /workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce \
+  --output /workspace/scratch/7e3d2a445c44/project6-metadata-generations-performance.first
+```
+
+The destination must be new and outside both checkouts. Baseline and candidate
+preparation run in separate processes and prove identical inputs and complete
+reader facts before any timed batch. The small input is the existing structural
+metadata fixture. The real input is the retained 11,776-byte Roslyn CFG PE image;
+its embedded metadata is also measured independently. The exact fixture source,
+native record and image SHA-256 values are fixed in the protocol. The new mixed
+generation corpus is pinned to its committed native reference git blob and
+artifact hashes before the first child starts.
+
+| Workload | Operations per batch | Timing scope |
+| --- | ---: | --- |
+| Default `readMetadata`, structural/real | 128 / 64 | One-argument public physical reader |
+| Default `readPE`, structural/real | 128 / 64 | One-argument public PE reader including its metadata decode |
+| Explicit bounded readers, same four inputs | 128 / 64 | Candidate-only `maxRows` equal to the physical row total |
+| Generation construction | 25 | Owned history construction from mixed baseline PE |
+| First and second append, separately | 25 each | One append; preceding history is prepared outside timing |
+| Entity and heap introduction mapping, separately | 1,000 each | Fixed equal mixture of four probes |
+| Latest and historical row, separately | 1,000 each | `Added` raw record at generations 2 and 1 |
+| Heap entry reads | 400 | Equal mixture of Strings, Blob, GUID and Unicode user-string probes |
+
+Each workload has exactly 20 warm batches and 100 measured batches. Default
+controls run in distinct processes with a fixed alternating baseline/candidate
+order. Four separately reported candidate budget controls follow, then one
+candidate-only feature process. The parent and baseline reader processes never
+import the candidate feature module. The reader worker's two dynamic import sites
+load only verified local public package entries and the fixed structural helper;
+the existing static policy binds their exact source hash and count.
+
+Every returned reader value is retained and compared after timing, including
+all data fields, field order, heap bytes and borrowed buffer/PE identity.
+Preparation and final guards also check row/list/type callbacks, referenced heap
+values, owned GUID getter values and every default method-body outcome. Default
+unsupported method-body results remain explicit; inspection-only guard reads
+compare the five retained native CIL byte sequences. Each bounded control proves
+that one row below its actual count rejects before timing. Native replay checks
+the feature corpus before timing; construction/appends receive full history
+guards and every query return is consumed and compared.
+
+The report retains all 2,400 warm/measured batches in chronology, exact child jobs
+and commands, raw stdout/stderr, exit status/signal, input/native/source/tool
+hashes and actual environment. True median and nearest-rank p95/p99 describe the
+100 **batch means in microseconds per operation**, not individual-call latency
+percentiles. Import/startup, fixture preparation, native replay, guards, disposal,
+statistics and I/O are outside timing. There is no cold-start timing claim.
+
+Signed net Node heap deltas are recorded for each batch. These deltas include GC
+effects and do not represent total allocations or all ArrayBuffer/native memory;
+the report also retains process memory and shared-host load observations. It
+forces no GC and makes no peak-memory claim. Preserve the entire first output,
+including failures, partial records and absent-result diagnostics. A source fix
+or justified retry needs a new separately retained cohort.
+
+No benchmark has run and no performance exception is approved. Independently
+recompute statistics from the retained raw samples, preserve absolute costs and
+all regressions, and obtain explicit quantified PR sign-off for an existing
+median regression above 5%. Successful correctness guards never approve a
+performance regression.
