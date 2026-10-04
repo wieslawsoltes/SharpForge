@@ -48,8 +48,9 @@
     ],
     "wallSeconds": 7.244332911002857,
     "timingThresholdBreaches": 4,
-    "explicitTimingReview": "pending",
-    "unchangedWorkloadAndProtocol": true
+    "explicitTimingReview": "accepted correctness exception; observed timing budget remains exceeded",
+    "unchangedWorkloadAndProtocol": true,
+    "timingDisposition": "optimized-timing-disposition.json"
   },
   "originalStandaloneEvidencePreserved": true,
   "originalIntegrationReplayNotRerun": true

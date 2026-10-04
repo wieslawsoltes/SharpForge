@@ -142,7 +142,8 @@ The single shared-host run exceeds the timing budget. Per-process ordinary
 total medians were A1 2.143537 ms, B1 1.997263 ms, B2 3.184295 ms and A2 2.057435 ms.
 The execution phase also varies substantially. This evidence does not establish
 a stable regression estimate or isolate the cause of the change. No automatic
-repeat was performed. Timing-budget disposition awaits explicit review.
+repeat was performed. Timing-budget disposition was pending at this initial
+checkpoint; the later optimized-source exception is recorded below.
 
 `publication-performance.json.gz` retains the complete 413,374-byte raw report,
 including every sample, child stdout/stderr, per-process summaries and exact
@@ -207,7 +208,8 @@ Four median measurements exceed the 5% timing budget: ordinary admission,
 execution and total, and fresh callback invocation. Their absolute increases are
 0.126281 ms, 0.754784 ms, 0.830783 ms and 0.036198 ms respectively. All six p95
 values decreased in this comparison. **The timing budget is still exceeded;
-explicit review/sign-off remains pending.** The original ten threshold breaches
+the coordinating author/reviewer explicitly accepted a correctness exception
+for tested source `6f8da343`.** The original ten threshold breaches
 and their raw evidence remain unchanged. The two source checkpoints are not
 pooled or presented as a measured effect of the fast path.
 
@@ -234,3 +236,23 @@ Git-export inventory. Its uncompressed SHA-256 is
 the prior comparison reference. The exact capture script and launcher records
 are also retained; `optimized-artifacts.json` lists the retained byte hashes.
 Temporary exports were removed when the comparison exited.
+
+## Accepted timing exception
+
+The coordinating author/reviewer accepted the explicit performance exception for
+tested source `6f8da343a3df1105e7789e5a7201dd3ae4983855` after reviewing the full
+comparisons and guards. The accepted costs per 128-loop ordinary workload are
+0.1262805 ms for median admission (+27.56%), 0.7547845 ms for median execution
+(+41.48%) and 0.8307825 ms for median total (+36.27%). The fresh callback median
+cost is 0.0361985 ms (+9.60%).
+
+The justification is to restore independent runtime execution and static EH
+limits, allowing legitimate programs to execute with their requested budget
+while preserving static verifier contracts. This is an accepted budget
+exception, not a passing timing result or a causal attribution on the shared
+host. All four optimized breaches, the original ten breaches, every p95 result,
+zero managed allocation counts, identical PE hashes and bounded proof/state
+controls remain in the evidence. No third run or optimization was requested.
+
+`optimized-timing-disposition.json` records the explicit session decision and its
+scope. The required publication `core` check remains pending.

@@ -207,10 +207,22 @@ node scripts/limited.js python3 \
   --output /workspace/scratch/1692a10afba9/cil-admission-budget-optimized-performance.json
 ```
 
-**Timing-budget disposition: the observed budget remains exceeded; explicit
-review/sign-off is pending.** The correctness need is to admit valid EH programs
-at the requested runtime budget while retaining the direct static verifier
-contract. The measured costs above are retained for that decision.
+**Timing-budget disposition: the observed budget remains exceeded; an explicit
+correctness exception is accepted for tested source `6f8da343`.** The coordinating
+author/reviewer accepted median costs of 0.1262805 ms for ordinary admission,
+0.7547845 ms for execution and 0.8307825 ms for total time per 128-loop workload,
+plus 0.0361985 ms for a fresh callback. The corresponding increases are +27.56%,
++41.48%, +36.27% and +9.60%.
+
+The justification is to restore independent runtime execution and static EH
+limits, admitting legitimate programs at the requested runtime budget while
+retaining the direct static verifier contract. This decision does not turn the
+measurements into a timing-budget pass or attribute the changes to one cause on
+the shared host. All four optimized breaches, the original ten breaches, all
+p95 results, zero managed allocation counts, identical PE hashes and bounded
+proof/state checks remain recorded. No third run or optimization was requested.
+`optimized-timing-disposition.json` records the decision from the coordinated
+work session; it does not claim an external GitHub review.
 
 ## Scope and merge readiness
 
@@ -219,5 +231,6 @@ runtime feature qualification remains open; the six retained downstream
 failures are separate follow-up work. No project leaf is closed by this change.
 
 Publication-tree replay and both bounded performance measurements are complete.
-Timing-budget sign-off and the required `core` check remain pending. Earlier
-replay totals above remain evidence for their original source checkpoints.
+The explicit timing exception is recorded; the required `core` check remains
+pending. Earlier replay totals above remain evidence for their original source
+checkpoints.

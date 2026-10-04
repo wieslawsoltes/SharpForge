@@ -2,7 +2,7 @@
   "baseline": "41ebd76987aa912659310d4015607f46110358ab",
   "candidate": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
   "reportSha256": "3921e4b58e11e2c2f2d629f3d57361e1a75e65a3fd87be32588a5351b699c954",
-  "status": "measurement complete; timing budget exceeded; explicit review pending",
+  "status": "measurement complete; timing budget exceeded; explicit correctness exception accepted",
   "automaticRepeats": 0,
   "comparisonsForThisSource": 1,
   "followUpReason": "One authorized owned-options fast path removes the default-path option copy; no third comparison.",
@@ -415,5 +415,5 @@
     "Two separate shared-host checkpoints do not establish a stable regression estimate or isolate option-copy causality.",
     "Follow-up timings are compared with their own no-fix baseline; results are not pooled across source checkpoints."
   ],
-  "rootReview": "pending"
+  "rootReview": "accepted explicit author/reviewer correctness exception for tested source; see optimized-timing-disposition.json"
 }
