@@ -1,5 +1,15 @@
 /** Existing v1 payloads remain readable; failures never masquerade as persisted data. */
-export const storageKeys=Object.freeze({workspace:'sharpforge.workspace.v1',editor:'sharpforge.editor.settings.v1',layouts:'sharpforge.named-layouts.v1',previous:'sharpforge.previous.v1',debugger:'sharpforge.debugger.settings.v1',docking:'sharpforge.docking.v1',recent:'sharpforge.templates.recent',explorer:'sharpforge.explorer.'});
+export const storageKeys = Object.freeze({
+  workspace: 'sharpforge.workspace.v1',
+  editor: 'sharpforge.editor.settings.v1',
+  layouts: 'sharpforge.named-layouts.v1',
+  previous: 'sharpforge.previous.v1',
+  debugger: 'sharpforge.debugger.settings.v1',
+  docking: 'sharpforge.docking.v1',
+  recent: 'sharpforge.templates.recent',
+  explorer: 'sharpforge.explorer.',
+  watchWindows: 'sharpforge.watch-windows.v1'
+});
 export class StorageFailure extends Error {constructor(operation,key,cause){super(`Could not ${operation} ${key}: ${cause?.message??cause}`,{cause});this.name='StorageFailure';this.code=cause?.name==='QuotaExceededError'?'quota':'unavailable';this.key=key;}}
 export function createStorage({provider=()=>globalThis.localStorage,onError=()=>{}}={}){
   const valid=key=>{if(typeof key!=='string'||!Object.values(storageKeys).includes(key)&&!key.startsWith(storageKeys.explorer))throw new TypeError('Unregistered storage key '+key);};

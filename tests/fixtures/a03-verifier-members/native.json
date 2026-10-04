@@ -1,0 +1,42 @@
+{
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "templateSHA256": "d39ff3d2cb00e7f4591f5ce82f7c778fae3d1a6912a04d43472f56b65f46ffcf",
+  "sourceSHA256": "0d16f487af06fc8632df88c4bf30a2f65f0d4356fd574cce14ef884207f07255",
+  "fixtureSHA256": "aeab5096f16e440469e3d7cd52f752c7e30942f9bb90674e0e8ee54268f7160e",
+  "compilation": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "79c51809ee2c6dd5a639908661da61aa012f336f4330f7419fe512138bced3f1"
+  },
+  "execution": {
+    "stdout": "{\"runtime\":\"10.0.5\",\"members\":[{\"token\":67108865,\"definition\":67108865,\"owner\":33554434,\"name\":\"Number\",\"kind\":\"field\",\"flags\":22},{\"token\":100663297,\"definition\":100663297,\"owner\":33554434,\"name\":\"Pick\",\"kind\":\"method\",\"flags\":150},{\"token\":100663298,\"definition\":100663298,\"owner\":33554434,\"name\":\"Pick\",\"kind\":\"method\",\"flags\":150},{\"token\":100663299,\"definition\":100663299,\"owner\":33554434,\"name\":\"Instance\",\"kind\":\"method\",\"flags\":134},{\"token\":100663300,\"definition\":100663300,\"owner\":33554434,\"name\":\"Hidden\",\"kind\":\"method\",\"flags\":145},{\"token\":100663301,\"definition\":100663301,\"owner\":33554434,\"name\":\"Self\",\"kind\":\"method\",\"flags\":150},{\"token\":167772161,\"definition\":67108865,\"owner\":33554434,\"name\":\"Number\",\"kind\":\"field\",\"flags\":22},{\"token\":167772162,\"definition\":100663297,\"owner\":33554434,\"name\":\"Pick\",\"kind\":\"method\",\"flags\":150},{\"token\":167772163,\"definition\":100663298,\"owner\":33554434,\"name\":\"Pick\",\"kind\":\"method\",\"flags\":150},{\"token\":167772164,\"definition\":100663299,\"owner\":33554434,\"name\":\"Instance\",\"kind\":\"method\",\"flags\":134},{\"token\":167772165,\"definition\":100663300,\"owner\":33554434,\"name\":\"Hidden\",\"kind\":\"method\",\"flags\":145},{\"token\":167772166,\"definition\":100663301,\"owner\":33554434,\"name\":\"Self\",\"kind\":\"method\",\"flags\":150}]}",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  }
+}

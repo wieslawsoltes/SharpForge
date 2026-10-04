@@ -15,6 +15,7 @@ import { SymbolKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { SymbolMetadataWriter } from '../../codegen/metadata/symbol-metadata.js';
 import { CustomAttributeWriter } from '../../codegen/metadata/custom-attributes.js';
+import { referenceIdentitiesOf } from '../../codegen/metadata/reference-identities.js';
 import { MemberTokens } from './member-tokens.js';
 import { MethodEmitter } from './method-emitter.js';
 import { SynthesizedMembers, isEntryPointMethod } from './synthesized-members.js';
@@ -38,7 +39,9 @@ export class AssemblyEmitter {
   /** @returns {{bytes: Uint8Array, entryPoint: number}} the image and the token of its entry point (0 for a library) */
   emit() {
     const options = this.options,
-      builder = new MetadataBuilder(options.name ?? 'Application', { framework: options.framework ?? 'net8' }),
+      // With reference assemblies every AssemblyRef carries the identity of the assembly the type was read from.
+      assemblyReferences = referenceIdentitiesOf(this.analysis),
+      builder = new MetadataBuilder(options.name ?? 'Application', { framework: options.framework ?? 'net8', assemblyReferences }),
       section = new Writer().zero(CLI_HEADER_SIZE),
       synthesized = new SynthesizedMembers(this.analysis),
       writer = new SymbolMetadataWriter(builder, this.analysis, { bodyRva: method => this.bodyAddresses.get(method), synthesized });
@@ -122,6 +125,7 @@ export class AssemblyEmitter {
     if (symbol.isAsync) emitter.unsupported('async methods', symbol.locations?.[0]);
     if (symbol.methodKind === MethodKind.Constructor) return emitter.body(bound, () => emitter.constructorPrologue(symbol));
     if (symbol.methodKind === MethodKind.StaticConstructor) return emitter.body(bound, () => emitter.staticInitializers(type));
+    if (symbol.methodKind === MethodKind.Destructor && bound) return emitter.destructorBody(bound, type);
     if (bound) return emitter.body(bound, isEntryPointMethod(symbol) ? () => emitter.moduleInitializers() : null);
     return emitter.synthesizedBody(symbol) ?? emitter.unsupported(`'${symbol.toDisplayString()}' (no body)`, symbol.locations?.[0]);
   }

@@ -25,7 +25,25 @@ export const ConstantEmission = Base =>
       else if (value.type === 'float') il.emit('ldc.r4', value.value);
       else if (value.type === 'double') il.emit('ldc.r8', value.value);
       else if (value.type === 'string') il.emit('ldstr', this.tokens.string(value.value));
+      else if (value.type === 'decimal') this.decimalConstant(value.value);
       else this.unsupported(`a constant of type '${value.type}'`, syntax);
+    }
+    /**
+     * A `decimal` constant is not a CIL constant: it is built by `new decimal(lo, mid, hi, isNegative, scale)` from
+     * the 96-bit magnitude, the sign and the scale, which keeps trailing zeros (`1.50m`).
+     * @param {{mantissa: bigint, scale: number}} decimal the exact value
+     */
+    decimalConstant(decimal) {
+      const il = this.il,
+        core = this.core,
+        keyword = name => core.byKeyword.get(name),
+        magnitude = decimal.mantissa < 0n ? -decimal.mantissa : decimal.mantissa,
+        word = shift => Number(BigInt.asIntN(32, magnitude >> shift)),
+        parameters = ['int', 'int', 'int', 'bool', 'byte'].map(name => ({ type: keyword(name) })),
+        shape = { isStatic: false, returnType: core.void, parameters };
+      il.emit('ldc.i4', word(0n)).emit('ldc.i4', word(32n)).emit('ldc.i4', word(64n));
+      il.emit('ldc.i4', decimal.mantissa < 0n ? 1 : 0).emit('ldc.i4', decimal.scale);
+      il.emit('newobj', this.tokens.external(keyword('decimal'), '.ctor', shape), { pops: 5, pushes: 1 });
     }
     exprLiteral(node) {
       if (node.literal === 'null' || node.literal === 'default') return this.defaultValue(node.type);

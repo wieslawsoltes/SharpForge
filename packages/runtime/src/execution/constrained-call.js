@@ -6,6 +6,7 @@ import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {cachedTypeName, verifiedMethod} from './token-cache.js';
 import {resolveCallType} from './generic-calls.js';
 import {constrainedObjectPlan, constrainedReferenceObjectPlan, invokeConstrainedObject} from './constrained-object.js';
+import {requireGenericStructArgument} from './generic-constraints.js';
 
 function closedConstraint(vm, caller, token) {
   if (token >>> 24 === 2) return vm.typeSystem.table(token);
@@ -19,7 +20,7 @@ function closedConstraint(vm, caller, token) {
   }
   const table = vm.typeSystem.table(resolved);
   if (table.flags.valueType) {
-    throw new ManagedFault('NotSupportedException', 'Constrained generic value receivers are not implemented');
+    requireGenericStructArgument(vm, caller.method.token, table);
   }
   return table;
 }

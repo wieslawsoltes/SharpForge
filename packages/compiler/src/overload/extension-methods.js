@@ -16,8 +16,12 @@ import { ConversionKind } from '../conversions/classify.js';
 /** Static, non-generic, non-nested classes can declare extension methods. */
 export const canDeclareExtensions = type =>
   type.kind === SymbolKind.NamedType && type.typeKind === TypeKind.Class && type.isStatic && type.arity === 0 && !type.containingType;
-/** The extension methods named `name` declared by a type. */
+/**
+ * The extension methods named `name` declared by a type. A class read from metadata says whether it declares any
+ * (`ExtensionAttribute` on the class), which spares decoding the members of every static class of a namespace.
+ */
 export function extensionMethodsOf(type, name) {
+  if (type.mightContainExtensionMethods === false) return [];
   return canDeclareExtensions(type)
     ? type.getMembers(name).filter(m => m.kind === SymbolKind.Method && m.isExtensionMethod && m.isStatic && m.parameters.length > 0)
     : [];
@@ -42,6 +46,28 @@ export function isValidReceiverConversion(conversions, receiver, thisType, { for
   const c = conversions.classifyStandardImplicit(receiver.type, thisType);
   if (forMethodGroup && c.kind === ConversionKind.ImplicitSpan) return false;
   return c.exists && receiverKinds.has(c.kind);
+}
+const mentionsTypeParameter = type =>
+  type?.typeKind === TypeKind.TypeParameter ||
+  !!type?.elementType && mentionsTypeParameter(type.elementType) ||
+  (type?.typeArguments ?? []).some(argument => mentionsTypeParameter(argument.type));
+/**
+ * Whether an extension method could take `receiver` as its `this` argument, before type inference: a `this`
+ * parameter that mentions the method's type parameters accepts a receiver that has a construction of the same
+ * generic type (`List<int>` for `IEnumerable<T>`), an array or string for a span type, and anything for `T` itself.
+ * Used to tell `x.Name` with no extension method for `x` (CS1061) from a method group.
+ * @param {(type, definition) => object|null} constructionOf the construction of a generic definition among the
+ *   base types and interfaces of a type
+ */
+export function couldTakeReceiver(conversions, receiver, thisType, constructionOf) {
+  if (!mentionsTypeParameter(thisType)) return isValidReceiverConversion(conversions, receiver, thisType);
+  const type = receiver.type;
+  if (!type || thisType.typeKind === TypeKind.TypeParameter) return !!type;
+  if (thisType.elementType) return !!type.elementType;
+  const definition = thisType.originalDefinition,
+    isSpan = ['Span', 'ReadOnlySpan'].includes(definition.name) && definition.containingNamespace?.name === 'System';
+  if (isSpan && (type.elementType || type.specialType === 'System_String')) return true;
+  return !!constructionOf(type, definition);
 }
 /**
  * How the receiver is passed to the candidates of one scope: `ref` when every `this` parameter is `ref` (the

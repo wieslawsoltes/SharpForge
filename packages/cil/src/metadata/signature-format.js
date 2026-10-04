@@ -4,6 +4,9 @@ import { signatureAliases, signatureBudget } from './signature-types.js';
 /** Format an AST using the historical inspection strings; use the AST for binary fidelity. */
 function formatter(metadata, options = {}) {
   const budget = signatureBudget(options);
+  if (options.formatType !== undefined && typeof options.formatType !== 'function') {
+    throw new CilError('Signature type formatter must be a function');
+  }
   function name(token, depth) {
     const full = metadata?.typeName(token, depth);
     if (typeof full !== 'string') throw new CilError('Type name resolver is required');
@@ -11,6 +14,13 @@ function formatter(metadata, options = {}) {
   }
   function format(type, depth = options.initialDepth ?? 0) {
     budget(depth);
+    if (options.formatType) {
+      const display = options.formatType(type, child => format(child, depth + 1));
+      if (display !== undefined) {
+        if (typeof display !== 'string') throw new CilError('Signature type formatter must return a string or undefined');
+        return display;
+      }
+    }
     if (type.kind === 'primitive') return type.name;
     if (type.kind === 'class' || type.kind === 'valuetype') return name(type.token, depth + 1);
     if (type.kind === 'genericParameter') return (type.scope === 'method' ? '!!' : '!') + type.index;

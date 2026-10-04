@@ -17,9 +17,10 @@ import { token, FieldAttributes } from '@sharpforge/cil';
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { needsTypeSpec } from '../generics.js';
 import { TypeTokens, namespaceOf, definitionNameOf } from './type-tokens.js';
+import { assemblyResolverOf } from './reference-identities.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
-import { tupleElementNamesOf } from './tuple-element-names.js';
+import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { staticVirtualImplementations } from './static-interface-implementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
@@ -80,7 +81,7 @@ export class SymbolMetadataWriter {
     this.core = analysis.core;
     this.bodyRvaOf = typeof bodyRva === 'function' ? bodyRva : () => bodyRva;
     this.types = [...sourceTypesInMetadataOrder(analysis.assembly), ...(synthesized?.types ?? [])];
-    this.tokens = new TypeTokens(builder, this.types);
+    this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
     this.plans = new Map(this.types.map(type => [type, planMembers(type, this.core, field => analysis.constantOf(field))]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
     /** Definition tokens by symbol, for callers that add rows of their own (custom attributes, method bodies). */

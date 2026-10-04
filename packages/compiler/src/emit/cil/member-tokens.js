@@ -165,18 +165,32 @@ export class MemberTokens {
       plan = this.writer.plans.get(definition.containingType);
     return plan?.events.find(entry => entry.symbol === definition) ?? null;
   }
-  /** The token of the add or remove accessor of a source event, or null for an event the compilation does not define. */
+  /**
+   * The token of the add or remove accessor of an event: the planned accessor of a source event, the accessor method
+   * of an event read from metadata, or null for an event without accessor symbols (the framework registry's).
+   */
   eventAccessor(event, isAdd) {
     const planned = this.plannedEvent(event);
-    if (!planned || needsTypeSpec(event.containingType)) return null;
-    return (isAdd ? planned.adder : planned.remover).token;
+    if (!planned) {
+      const imported = isAdd ? event.addMethod : event.removeMethod;
+      return imported?.containingType && imported.parameters ? this.method(imported) : null;
+    }
+    const accessor = isAdd ? planned.adder : planned.remover,
+      owner = event.containingType;
+    if (!isInstantiation(owner)) return accessor.token;
+    // An event of a generic type is reached through the instantiation, like any member of it.
+    const signature = accessor.symbol ? methodSymbolSignature(this.types, accessor.symbol) : methodSignature(this.types, accessor.shape);
+    return this.builder.member(this.type(owner), accessor.name, signature);
   }
   /** The token of the delegate field of a field-like source event, or null when the event has none. */
   eventField(event) {
     const definition = event.originalDefinition ?? event,
       plan = this.writer.plans.get(definition.containingType),
-      field = plan?.fields.find(entry => !entry.symbol && entry.name === definition.name);
-    return field && !needsTypeSpec(event.containingType) ? field.token : null;
+      field = plan?.fields.find(entry => !entry.symbol && entry.name === definition.name),
+      owner = event.containingType;
+    if (!field) return null;
+    if (!isInstantiation(owner)) return field.token;
+    return this.builder.member(this.type(owner), field.name, fieldSignature(this.types, field.type));
   }
   /** The operand of `ldstr`. */
   string(text) {

@@ -71,7 +71,19 @@ export const ReferenceEmission = Base =>
     address(node) {
       if (node.kind === 'Ref') return this.address(node.operand);
       if (this.isReferenceCall(node)) return this.referenceCall(node);
+      if ((node.kind === 'PropertyAccess' || node.kind === 'IndexerAccess') && returnsByReference(node.property)) {
+        return this.propertyLocation(node).address();
+      }
       return super.address(node);
+    }
+    /**
+     * A property or indexer that returns by reference (`ref T this[int]` of `Span<T>`) denotes the variable its
+     * getter returns: reading, writing and `ref` go through the managed pointer.
+     */
+    propertyLocation(node) {
+      const accessors = super.propertyLocation(node);
+      if (!returnsByReference(node.property)) return accessors;
+      return new IndirectLocation(this, () => accessors.load(), node.type);
     }
     location(node) {
       if (this.isReferenceCall(node)) return new IndirectLocation(this, () => this.referenceCall(node), node.type);

@@ -52,7 +52,7 @@ export class InlineRenameWidget {
       option.input.checked = false;
       option.wrapper.title = enabled ? '' : 'This option is unavailable for the current source and workspace';
     }
-    this.origin = {uri: editor.uri, offset, selectionEnd: editor.input.selectionEnd, range};
+    this.origin = {uri: editor.uri, model: editor.model, offset, selectionEnd: editor.input.selectionEnd, range};
     this.preview = new RenamePreview(editor);
     this.resumeRequests = this.context.suspendRequests(['rename']);
     this.input.value = range.placeholder ?? editor.value.slice(range.start, range.end);
@@ -63,6 +63,7 @@ export class InlineRenameWidget {
   }
 
   schedule() {
+    if (this.committing) return;
     this.context.guard.cancel('rename');
     this.plan = null;
     this.applyButton.disabled = true;
@@ -70,14 +71,17 @@ export class InlineRenameWidget {
   }
 
   async update() {
-    if (!this.origin) return;
+    if (!this.origin || this.committing) return;
+    if (!this.current()) return this.cancel(false);
+    const origin = this.origin;
     this.preview.restore();
     const name = this.input.value;
     if (!name) { this.status.textContent = 'Enter a symbol name.'; return; }
     this.status.textContent = 'Checking rename…';
     const result = await this.context.request('rename', {offset: this.origin.offset, newName: name,
       includeComments: this.comments.input.checked, includeStrings: this.strings.input.checked, renameFile: this.renameFile.input.checked});
-    if (!result || name !== this.input.value || !this.origin) return;
+    if (!result || name !== this.input.value || this.origin !== origin) return;
+    if (!this.current()) return this.cancel(false);
     this.plan = prepareWorkspaceEdit(this.context.workspace, result.value, {versions: result.versions, label: 'Rename symbol'});
     const current = this.plan.changes.find(change => change.uri === this.origin.uri);
     if (current) this.preview.show(current.edits);
@@ -89,26 +93,59 @@ export class InlineRenameWidget {
   }
 
   async commit() {
-    if (!this.origin || !this.plan) return;
+    if (!this.origin || !this.plan || this.committing) return;
+    if (!this.current()) return this.cancel(false);
     const plan = this.plan;
-    this.preview.restore();
+    const origin = this.origin;
+    const controller = new AbortController();
+    this.commitController = controller;
     this.committing = true;
-    try { await commitWorkspaceEdit(this.context.workspace, plan); }
-    finally { this.committing = false; }
-    this.finish();
-    this.context.editor.focus();
+    this.applyButton.disabled = true;
+    this.input.disabled = true;
+    for (const option of [this.comments, this.strings, this.renameFile]) option.input.disabled = true;
+    this.status.textContent = 'Applying rename…';
+    try {
+      this.preview.release();
+      await commitWorkspaceEdit(this.context.workspace, plan, {signal: controller.signal});
+    }
+    finally {
+      if (this.commitController === controller) {
+        this.commitController = null;
+        this.committing = false;
+      }
+      if (this.origin === origin) {
+        this.finish();
+        if (!this.context.editor.disposed) this.context.editor.focus();
+      }
+    }
   }
 
   cancel(focus = true) {
+    this.commitController?.abort();
+    this.commitController = null;
+    this.committing = false;
     if (this.preview) {
-      try { this.preview.restore(); }
+      try { this.preview.release(); }
       catch (error) { this.context.status(error.message); }
     }
     const origin = this.origin;
     this.finish();
-    if (origin && origin.uri === this.context.editor.uri) this.context.editor.goto(origin.offset, origin.selectionEnd);
+    if (origin && origin.uri === this.context.editor.uri && origin.model === this.context.editor.model) {
+      this.context.editor.goto(origin.offset, origin.selectionEnd);
+    }
     if (focus && origin) this.context.editor.focus();
   }
+
+  current() {
+    if (!this.origin || this.context.editor.disposed) return false;
+    const editor = this.context.editor;
+    if (editor.uri !== this.origin.uri || editor.model !== this.origin.model) return false;
+    if (typeof this.context.workspace.getDocument !== 'function') return true;
+    const document = this.context.workspace.getDocument(this.origin.uri);
+    return !!document && (!document.model || document.model === this.origin.model);
+  }
+
+  changed() { if (this.origin && !this.committing && !this.current()) this.cancel(false); }
 
   finish() {
     this.context.lifetime.cancel('rename-update');
@@ -116,6 +153,7 @@ export class InlineRenameWidget {
     this.origin = null;
     this.preview = null;
     this.plan = null;
+    this.input.disabled = false;
     this.resumeRequests?.();
     this.resumeRequests = null;
     this.popup.close();
