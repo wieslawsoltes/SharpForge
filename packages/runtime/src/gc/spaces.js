@@ -13,6 +13,7 @@ import {DenseHandleBindings} from './handle-bindings.js';
 import {publicPayload, readPublicSlot, synchronizePayload} from './spatial-payload.js';
 
 const storageBinding = Symbol('managed-storage-binding');
+const lookupGetter = Function.prototype.call.bind(Object.prototype.__lookupGetter__);
 const spaceNames = ['small', 'large', 'pinned', 'frozen'];
 const emptyInfo = () => ({
   liveBytes: 0, reservedBytes: 0, freeBytes: 0, fragmentedBytes: 0,
@@ -283,6 +284,13 @@ export class HeapSpaces {
     }
     if (validatePayload && record.data !== binding.view) publicPayload(binding);
     return binding;
+  }
+
+  /** Probe owned slot storage without observing a host payload or materializing a descriptor. */
+  canonicalSlots(record) {
+    const binding = activeBinding(record, this);
+    if (!binding?.arena.values || lookupGetter(record, 'data') !== undefined) return null;
+    return record.data === binding.view ? binding : null;
   }
 
   /** Direct indexed read for runtime services; no Array Proxy or string-index conversion. */
