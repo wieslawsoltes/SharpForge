@@ -1,0 +1,33 @@
+{
+  "baseline": "440c4ade9b3dd5de527faa5d686eec4d697449fc",
+  "parent": "80adafc3d92fc50e3e49f6bc5554b92c1013e897",
+  "preFix": "d1fc86688bd1175d4d008fa723209b33b011bc88",
+  "product": "abcf6f5651dc56954b3a455b1f84bfbec8343e43",
+  "initialQualification": "f64097ea1",
+  "correctedFixtureAndNative": "2f51cbc0c24c307f7bcade794087338f64ea3689",
+  "sourceDiffAfterInitialQualification": "",
+  "initialFailure": "Duplicate NestedClass fixture failed in existing AssemblyInspector earlier than the intended hierarchy guard. Corrected by injecting the duplicate into already-parsed metadata; no product change. Retained failed50/51 and corrected11/11, other40affected unchanged and passing. No native/benchmark rerun.",
+  "sequence": [
+    "install",
+    "parent52tests",
+    "parentcheck",
+    "parentstructure",
+    "oldhead numeric snapshot fails",
+    "two native compilations and one CLR execution pass8",
+    "child50/51 (fixture failure)",
+    "corrected hierarchy11/11",
+    "fixed160measurements",
+    "threebrowsers",
+    "childcheck",
+    "childstructure"
+  ],
+  "terminalHandles": [
+    10773,
+    32688
+  ],
+  "limits": {
+    "parallelRuns": 1,
+    "testConcurrency": 1,
+    "heapMiB": 1024
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "params-collections/better-collection-and-element-type": ["diagnostics", "warnings", "bytecode", "cil"],
+  "params-collections/better-collection-and-element-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "params-collections/cs0121-list-against-array-and-interfaces": ["diagnostics", "warnings"],
   "params-collections/cs0225-cs1729-cs0117-cs9228-parameter-types": ["diagnostics", "warnings"],
   "params-collections/cs1503-element-conversions": ["diagnostics", "warnings"],

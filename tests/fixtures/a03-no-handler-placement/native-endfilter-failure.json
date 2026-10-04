@@ -1,0 +1,160 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "inputSHA256": "322c040b159a342b0aade90abf93eafe30e93e1ea61c66f835adf0073ed93ff5",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "ret",
+      "assemblySHA256": "9ef8142d7b3a18bc77345978fbb6be3f637201491b52522b6d871d2179889f25",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ret.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.99837499999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "throw",
+      "assemblySHA256": "e95856cb5789cf18477f436dd9a11e46885514465dbd896f230f21a47ae49f0c",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/throw.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.05687499999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "branch",
+      "assemblySHA256": "173fec67c9f7d07e878e8021d32da1585103f9461bc41b40f364011e63598955",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/branch.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 178.583125
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "rethrow",
+      "assemblySHA256": "f9106b810351914339ea48421d115ad5831363c1e228dc10d146a8580a45e5fb",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [Rethrow]: [<temporary>/rethrow.dll : Fixture.Program::Main()][offset 0x00000000] Rethrow from outside a catch handler.\n1 Error(s) Verifying <temporary>/rethrow.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 119.27591600000005
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Rethrow"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 0,
+            "code": "IL_EH_FLOW",
+            "message": "Rethrow requires an enclosing catch or filtered handler at 0x0",
+            "diagnostic": "CILCF0001"
+          }
+        ]
+      }
+    },
+    {
+      "name": "endfinally",
+      "assemblySHA256": "9ef93f88ccb71a9bf208bb4a3c5b3ecd9f3b1a83ba2c7cfd8896ae0039b4b80a",
+      "expected": false,
+      "verify": {
+        "stdout": "",
+        "stderr": "Error: Nullable object must have a value.\nSystem.InvalidOperationException: Nullable object must have a value.\n   at System.Nullable`1.get_Value()\n   at Internal.IL.ILImporter.ImportEndFinally()\n   at Internal.IL.ILImporter.ImportBasicBlock(BasicBlock basicBlock)\n   at Internal.IL.ILImporter.ImportBasicBlocks()\n   at Internal.IL.ILImporter.Verify()\n   at ILVerify.Verifier.VerifyMethod(EcmaModule module, MethodIL methodIL, MethodDefinitionHandle methodHandle)\n   at ILVerify.Verifier.VerifyMethods(EcmaModule module, IEnumerable`1 methodHandles)+MoveNext()\n   at ILVerify.Verifier.Verify(PEReader peReader, MethodDefinitionHandle methodHandle)+MoveNext()\n   at ILVerify.Program.VerifyMethods(PEReader peReader, EcmaModule module, String path, Int32& numErrors, Int32& verifiedMethodCounter, Int32& methodCounter)\n   at ILVerify.Program.VerifyAssembly(PEReader peReader, EcmaModule module, String path)\n   at ILVerify.Program.VerifyAssembly(AssemblyNameInfo name, String path)\n   at ILVerify.Program.Run()\n   at ILVerify.ILVerifyRootCommand.<.ctor>b__40_0(ParseResult result)\n",
+        "exitCode": 1,
+        "signal": null,
+        "elapsedMs": 124.05016699999987
+      },
+      "oracle": {
+        "status": "unavailable",
+        "reason": "ILVerify 10.0.5 ImportEndFinally missing HandlerIndex",
+        "accepted": null,
+        "errors": []
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 0,
+            "code": "IL_EH_FLOW",
+            "message": "Endfinally requires an innermost finally or fault handler at 0x0",
+            "diagnostic": "CILCF0004"
+          }
+        ]
+      }
+    },
+    {
+      "name": "endfilter",
+      "assemblySHA256": "d4a947314de613cd99252d3a5a239a8eacf91476e619babb79f03e07e105ce7e",
+      "expected": false,
+      "verify": {
+        "stdout": "",
+        "stderr": "Error: Nullable object must have a value.\nSystem.InvalidOperationException: Nullable object must have a value.\n   at System.Nullable`1.get_Value()\n   at Internal.IL.ILImporter.ImportEndFilter()\n   at Internal.IL.ILImporter.ImportBasicBlock(BasicBlock basicBlock)\n   at Internal.IL.ILImporter.ImportBasicBlocks()\n   at Internal.IL.ILImporter.Verify()\n   at ILVerify.Verifier.VerifyMethod(EcmaModule module, MethodIL methodIL, MethodDefinitionHandle methodHandle)\n   at ILVerify.Verifier.VerifyMethods(EcmaModule module, IEnumerable`1 methodHandles)+MoveNext()\n   at ILVerify.Verifier.Verify(PEReader peReader, MethodDefinitionHandle methodHandle)+MoveNext()\n   at ILVerify.Program.VerifyMethods(PEReader peReader, EcmaModule module, String path, Int32& numErrors, Int32& verifiedMethodCounter, Int32& methodCounter)\n   at ILVerify.Program.VerifyAssembly(PEReader peReader, EcmaModule module, String path)\n   at ILVerify.Program.VerifyAssembly(AssemblyNameInfo name, String path)\n   at ILVerify.Program.Run()\n   at ILVerify.ILVerifyRootCommand.<.ctor>b__40_0(ParseResult result)\n",
+        "exitCode": 1,
+        "signal": null,
+        "elapsedMs": 93.52966700000002
+      }
+    }
+  ]
+}

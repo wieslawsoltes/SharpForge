@@ -1,0 +1,11 @@
+{
+  "suite": "a03-initialization-browser",
+  "passed": true,
+  "engine": "firefox",
+  "cspViolations": [],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "mode": "A03 local initialization source modules",
+  "seconds": 1.04343891699682,
+  "diagnosticErrors": []
+}

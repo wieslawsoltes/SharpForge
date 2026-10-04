@@ -1,5 +1,5 @@
 {
-  "generics/box-and-swap": ["diagnostics", "warnings", "bytecode", "cil"],
+  "generics/box-and-swap": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "generics/cs0305-wrong-arity": ["warnings"],
   "generics/cs0308-non-generic-with-type-args": ["diagnostics", "warnings"],
   "generics/cs0311-constraint-violated": ["diagnostics", "warnings"],
@@ -8,6 +8,6 @@
   "generics/cs0411-cannot-infer": ["diagnostics", "warnings"],
   "generics/cs0452-cs0453-constraints": ["diagnostics", "warnings"],
   "generics/cs1961-variance": ["diagnostics", "warnings"],
-  "generics/generic-class": ["diagnostics", "warnings", "bytecode", "cil"],
-  "generics/generic-method": ["diagnostics", "warnings", "bytecode", "cil"]
+  "generics/generic-class": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "generics/generic-method": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

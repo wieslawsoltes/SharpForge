@@ -1,7 +1,7 @@
 {
-  "member-primary-constructors/capture-and-initialization": ["diagnostics", "warnings", "bytecode", "cil"],
-  "member-primary-constructors/captured-parameter-is-mutable-state": ["diagnostics", "warnings", "bytecode", "cil"],
-  "member-primary-constructors/initializer-order-and-lambdas": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-primary-constructors/capture-and-initialization": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "member-primary-constructors/captured-parameter-is-mutable-state": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "member-primary-constructors/initializer-order-and-lambdas": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-primary-constructors/language-version": ["diagnostics", "warnings"],
   "member-primary-constructors/other-constructors-must-chain": ["diagnostics", "warnings"],
   "member-primary-constructors/parameter-in-static-and-nested-contexts": ["diagnostics", "warnings"],

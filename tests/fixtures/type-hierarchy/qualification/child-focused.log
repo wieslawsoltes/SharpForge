@@ -1,0 +1,92 @@
+✔ local TypeRef aliases agree with retained independent CoreCLR Module.ResolveType observations (7.713917ms)
+✔ explicit Module-scoped TypeRefs share canonical local TypeDef results (6.099292ms)
+✔ local aliases normalize base and interface edges before hierarchy queries (2.353417ms)
+✔ unsupported scopes, missing names and generic definitions remain explicitly unknown (1.049042ms)
+✔ ambiguous local names never choose a definition by row order (0.589417ms)
+✔ cycles and invalid edge kinds introduced through local references are rejected (3.046667ms)
+✔ invalid physical scopes and nonexistent scope rows are rejected (2.85075ms)
+✔ name keys reject invalid indices, empty names and unterminated strings (1.51825ms)
+✔ reference and byte budgets admit exact boundaries and reject excess before copying (0.678ms)
+✔ individual names have a 1 KiB bound before argument expansion (0.601333ms)
+✔ local alias facts survive later metadata and string heap mutation (0.342417ms)
+✔ construction checks cancellation during local name indexing and queries remain cancellable (1.3125ms)
+✔ nested local TypeRefs share canonical definitions through forward and multilevel scopes (7.1835ms)
+✔ wrong enclosing identities and unresolved or generic scopes never bind local names (3.265416ms)
+✔ nested aliases participate in hierarchy, member resolution and access with existing identities (1.347166ms)
+✔ the combined context reuses the validated lexical forest and owns its copied facts (0.63125ms)
+✔ nested aliases expose hierarchy cycles and invalid class/interface kinds before queries (2.193625ms)
+✔ malformed lexical ownership and cyclic TypeRef scopes reject deterministically (2.599292ms)
+✔ reference-chain limits admit the exact boundary and cap long lexical chains (2.953709ms)
+✔ nested reference construction and subsequent queries observe cancellation (0.998625ms)
+✔ top-level and nested TypeRef member owners preserve declaration and inherited-method semantics (1.601708ms)
+✔ retained native ResolveMember comparisons cover local aliases and declaration-only fields (2.041958ms)
+✔ retained CoreCLR nested ResolveType observations agree with known identities and hierarchy (1.782125ms)
+✔ resolved metadata relations agree with retained CoreCLR reflection; external dependencies remain unknown (4.873042ms)
+✔ local definitions have immutable adapter-scoped canonical identities (6.115583ms)
+✔ class and interface assignments include inherited and transitive interfaces (0.94375ms)
+✔ the existing stack merge seam uses the adapter and refuses unavailable relations (0.593625ms)
+✔ unresolved externals cannot bind to a same-named local type or become false certainty (0.433333ms)
+✔ snapshots own hierarchy facts and do not expose mutable metadata arrays (0.618667ms)
+✔ invalid tokens, local cycles and class/interface edge kinds are rejected (1.580375ms)
+✔ metadata and traversal budgets are enforced before unbounded expansion (0.374667ms)
+✔ construction and subsequent queries observe cancellation (0.454084ms)
+✔ diamond interfaces are de-duplicated and query frontier allocation respects the node budget (0.47225ms)
+✔ assembly index bounds 20 loaded assemblies and keeps IDs stable across reloads (115.249083ms)
+✔ assembly index covers type, field, method, property and event definitions with owned scalar records (0.46175ms)
+✔ assembly index retains pointer-table ownership without reading method signatures or bodies (0.397333ms)
+✔ assembly index preflights every aggregate limit and rejects invalid limits before projection (0.701125ms)
+✔ assembly index rejects duplicate MVIDs, corrupt ownership, raw token aliases and oversized names (1.599166ms)
+✔ assembly index paging, unknown IDs, empty input and cancellation have bounded outcomes (1.639792ms)
+✔ assembly index matches retained native method tokens and names without native execution (1.846666ms)
+✔ cross-assembly base, derived and interface-implementer trees match explicit fixture sets (7.98325ms)
+✔ a missing or ambiguous assembly produces stable owned dead-reference nodes (1.681291ms)
+✔ declared assembly name/version/culture/key identity binds exactly, without signature authentication (4.209958ms)
+✔ ambiguous type names and unsupported TypeSpec/ModuleRef/nil scopes remain explicit (0.513875ms)
+✖ resolved inheritance cycles, malformed ownership, coded overflows and wrong target kinds reject (1.637417ms)
+✔ all hierarchy construction budgets accept exact charges and reject one below before name decoding (0.7175ms)
+✔ malformed heap extents, oversized keys and cyclic reference scopes reject before binding (3.729916ms)
+✔ numeric assembly snapshot ignores custom iterator and map before preflight and binding (0.679875ms)
+✔ queries bound nodes/depth, mark repeated DAG nodes, cancel, and return independently owned records (0.679125ms)
+✔ retained CoreCLR hierarchy sets and missing framework reference nodes match the captured image (1.993166ms)
+✔ two Roslyn assemblies match CLR cross-image base, nested target and interface identities (1.116166ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 50
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1425.477084
+
+✖ failing tests:
+
+test at tests/a13-11-type-hierarchy.test.js:76:1
+✖ resolved inheritance cycles, malformed ownership, coded overflows and wrong target kinds reject (1.637417ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /duplicate nested type owner/. Input:
+  
+  'CilError: Duplicate NestedClass type index'
+  
+      at TestContext.<anonymous> (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/tests/a13-11-type-hierarchy.test.js:87:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Duplicate NestedClass type index
+        at MetadataTypeNames.parent (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/packages/cil/src/metadata/type-names.js:20:39)
+        at MetadataTypeNames.read (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/packages/cil/src/metadata/type-names.js:35:39)
+        at Object.typeName (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/packages/cil/src/metadata.js:62:42)
+        at new AssemblyInspector (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/packages/cil/src/inspector.js:17:62)
+        at inspector (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/tests/fixtures/type-hierarchy/input.mjs:21:10)
+        at file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/tests/a13-11-type-hierarchy.test.js:9:87
+        at Array.map (<anonymous>)
+        at loaded (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/tests/a13-11-type-hierarchy.test.js:9:29)
+        at file:///Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy/tests/a13-11-type-hierarchy.test.js:87:23
+        at getActual (node:assert:611:5),
+    expected: /duplicate nested type owner/,
+    operator: 'throws',
+    diff: 'simple'
+  }

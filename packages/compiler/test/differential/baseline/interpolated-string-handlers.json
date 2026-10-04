@@ -1,6 +1,6 @@
 {
-  "interpolated-string-handlers/bool-appends-and-enabled-flag": ["diagnostics", "warnings", "bytecode", "cil"],
-  "interpolated-string-handlers/handler-pattern": ["diagnostics", "warnings", "bytecode", "cil"],
+  "interpolated-string-handlers/bool-appends-and-enabled-flag": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "interpolated-string-handlers/handler-pattern": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "interpolated-string-handlers/handlers-in-9": ["diagnostics", "warnings"],
   "interpolated-string-handlers/pattern-errors": ["diagnostics", "warnings"]
 }

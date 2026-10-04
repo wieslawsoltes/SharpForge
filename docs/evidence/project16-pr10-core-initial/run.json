@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-pr10-initial-core-evidence",
+  "pullRequest": {
+    "number": 4413,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/4413",
+    "head": "31b55c988679cf3bc9bfe97928c866f404bb9698",
+    "headTree": "0e37014a0573976d72d8ef2469531eeaa0a45b2f",
+    "mergePreview": "569a829d62f1b1ad6d7f5e88386ffb5ead6c203c",
+    "base": "ce4f1aa91699f8d3aa160c882ba53901137886bf"
+  },
+  "run": {
+    "id": 37182594704,
+    "jobId": 111378010076,
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182594704/job/111378010076"
+  },
+  "earlierRun": {
+    "id": 37182584251,
+    "conclusion": "cancelled",
+    "countsAsPass": false
+  },
+  "timestamps": {
+    "firstLogRecord": "2026-10-04T06:22:13.1469112Z",
+    "lastLogRecord": "2026-10-04T06:22:28.5426289Z",
+    "scope": "Exact log record bounds; API run/job start and completion timestamps were not supplied and are not inferred."
+  },
+  "environment": {
+    "node": "v22.23.3",
+    "npm": "10.9.9"
+  },
+  "checks": {
+    "contractAndSeamReview": {
+      "command": "node scripts/planning/review-gates.js",
+      "status": "passed"
+    },
+    "licensePayloadPolicy": {
+      "command": "node scripts/conformance/oracle/license-policy.js",
+      "status": "passed"
+    },
+    "npmCheck": {
+      "command": "npm run check",
+      "status": "failed",
+      "exitCode": 1,
+      "invocationLogTimestamp": "2026-10-04T06:22:21.1974869Z",
+      "failureLogTimestamp": "2026-10-04T06:22:26.6211519Z",
+      "manifest": {
+        "areas": 30,
+        "nodeFiles": 917,
+        "browserScripts": 37,
+        "unassigned": 0,
+        "duplicate": 0
+      },
+      "javascriptSyntax": {
+        "modules": 3465,
+        "errors": 0
+      },
+      "moduleLinksInspected": 3461,
+      "errors": [
+        {
+          "path": "scripts/benchmarks/a19-correction-paths.mjs",
+          "operation": "dynamic-import",
+          "line": 61,
+          "count": 1,
+          "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
+          "message": "Unreviewed dynamic-code use or changed file"
+        }
+      ]
+    },
+    "npmTest": {
+      "status": "skipped",
+      "executed": false
+    },
+    "build": {
+      "status": "skipped",
+      "executed": false
+    },
+    "cleanCheckout": {
+      "command": "node scripts/conformance/clean-checkout.js",
+      "status": "passed",
+      "resultLogTimestamp": "2026-10-04T06:22:28.2610605Z"
+    }
+  },
+  "archive": {
+    "localBase": "ccaf924054b60b83e4ccd127eeddda13f30bd849",
+    "originalPath": "/workspace/scratch/6b99131ca908/p16-pr10-core-initial.log",
+    "log": "core.log",
+    "bytes": 245625,
+    "sha256": "9360fcdc01f7f2a5c696766942452b41903df549196a3e0fddfb440915df146a",
+    "byteCopyCompared": true
+  },
+  "provenance": "Exact raw job log supplied by root; run conclusions, PR head/tree and skipped step states supplied by the root job owner. Check outputs and all timestamps above are retained in the log.",
+  "limits": [
+    "The initial core failure remains failed after any later inventory correction.",
+    "No test or build pass is inferred from manifest discovery or JavaScript syntax checks.",
+    "This archive copied and hashed existing evidence only; no tests, builds, rechecks or source changes were performed."
+  ]
+}

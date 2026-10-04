@@ -1,0 +1,62 @@
+{
+  "base": "bf5ed78110a864d9771849ac7845f0139d1986c4",
+  "product": "a1263d5ae42eb95d0c64891f8e39b6c521ea245b",
+  "nativeCases": 10,
+  "focused": {
+    "files": 10,
+    "passed": 158,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "casesPerEngine": 12,
+    "engines": [
+      "Chromium 153.0.8010.12",
+      "Firefox 155.0",
+      "WebKit 26.6"
+    ]
+  },
+  "static": {
+    "syntaxModules": 3574,
+    "importModules": 3570,
+    "errors": 0
+  },
+  "structure": {
+    "existingFindings": 271,
+    "changedSource": {
+      "packages/cil/src/execution-profile.js": {
+        "lines": 103,
+        "bytes": 9803,
+        "maxLine": 466,
+        "before": {
+          "lines": 104,
+          "bytes": 9890,
+          "maxLine": 466
+        }
+      },
+      "packages/cil/src/verify/dataflow.js": {
+        "lines": 81,
+        "bytes": 2895,
+        "maxLine": 117
+      },
+      "packages/cil/src/verify/dataflow-blocks.js": {
+        "lines": 92,
+        "bytes": 3752,
+        "maxLine": 112
+      },
+      "packages/cil/src/verify/stack-heights.js": {
+        "lines": 83,
+        "bytes": 3779,
+        "maxLine": 125,
+        "before": {
+          "lines": 53,
+          "bytes": 2493,
+          "maxLine": 138
+        }
+      }
+    }
+  },
+  "scheduling": "All phases sequential under one machine limiter; concurrency1 and Node heap1024MiB. Node24.21.0 pinned explicitly after rejected initial Node16 setup. Initial expected-red format mismatch and absent explicit native-tool paths retained; no product/test assertion changed. Native and focused cases passed on their first executed qualified run.",
+  "performance": "Fixed baseline then candidate,12 chronological samples per mode with first3 predetermined warmups;72rawsamples total; no repeats or omitted samples. Shared macOS26.6 AppleM3Pro.",
+  "remaining": "Typed opcode transfer/definite initialization/filter execution/full CLR verification plus wider platform/Rust/Wasm qualification remain open under #2401 and SF-A03-T07."
+}

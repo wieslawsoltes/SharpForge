@@ -1,0 +1,11 @@
+{
+  "productUnchanged": true,
+  "initialHead": "6ae9e3c9ae57fbb41de9b851bfcb4c09f994da70",
+  "fixture": "tests/fixtures/a03-nested-type-references/member-input.js",
+  "beforeSHA256": "76027da0b4dc5c5bf367477b71ee469644008f3411fd5809f7a8111b9b99b2b5",
+  "afterSHA256": "a42ca619bcd375c93edec9af00bb7be8f68e8a5c5ee46df3d1b0715f03066ecf",
+  "reason": "CoreCLR rejected appended enclosing Outer after Middle/Child. Use preceding Base as enclosing definition; member tokens and signatures remain unchanged.",
+  "retainedInvalidCapture": "member-native.json",
+  "correctedCapture": "member-native-corrected.json",
+  "resolveTypeCaptureAndAllBaselineSamplesRetained": true
+}

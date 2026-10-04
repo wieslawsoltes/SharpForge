@@ -81,6 +81,6 @@ export function isOnlyAsyncEnumerable(type, core, within = null) {
 }
 
 /** True when a type can be disposed by `await using`: `IAsyncDisposable` or an accessible `DisposeAsync()`. */
-export function isAsyncDisposable(type, core) {
-  return implementsInterface(type, core.iasyncDisposable, core) || !!instanceMethod(type, 'DisposeAsync', core, null);
+export function isAsyncDisposable(type, core, within = null) {
+  return implementsInterface(type, core.iasyncDisposable, core) || !!instanceMethod(type, 'DisposeAsync', core, within);
 }

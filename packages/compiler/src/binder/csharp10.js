@@ -8,6 +8,7 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { lookupMembers } from './inheritance.js';
+import { tupleElement } from './tuples.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -55,8 +56,11 @@ export const CSharp10Binding = Base =>
     }
     /** The field or property `nameNode` names in a value of `type`, or null after reporting why there is none. */
     patternMember(type, nameNode) {
-      const name = nameNode.identifier.valueText,
-        found = lookupMembers(type, name, this.core, { within: this.c.containingType }).members,
+      // `{ X: 0 }` over `(int X, int Y)`: an element name stands for the field of the tuple that holds it.
+      const written = nameNode.identifier.valueText,
+        element = tupleElement(type, written),
+        name = element && !element.symbol ? element.field : written,
+        found = element?.symbol ? [element.symbol] : lookupMembers(type, name, this.core, { within: this.c.containingType }).members,
         member = found.find(m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property);
       if (member) {
         const definition = member.originalDefinition ?? member;

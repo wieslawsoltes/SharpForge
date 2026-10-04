@@ -1,0 +1,13 @@
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerable`1<!!0>::GetEnumerator' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerable`1<System.Func`1<int>>::GetEnumerator' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerable`1<int>::GetEnumerator' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerable`1<string>::GetEnumerator' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerator`1<!!0>::get_Current' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerator`1<System.Func`1<int>>::get_Current' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerator`1<int>::get_Current' is not implemented
+IL_REFERENCE: External member 'System.Collections.Generic.IEnumerator`1<string>::get_Current' is not implemented
+IL_REFERENCE: External member 'System.Collections.IEnumerable::GetEnumerator' is not implemented
+IL_REFERENCE: External member 'System.Collections.IEnumerator::MoveNext' is not implemented
+IL_REFERENCE: External member 'System.Collections.IEnumerator::get_Current' is not implemented
+IL_REFERENCE: External member 'System.Environment::get_CurrentManagedThreadId' is not implemented
+IL_REFERENCE: External member 'System.IDisposable::Dispose' is not implemented

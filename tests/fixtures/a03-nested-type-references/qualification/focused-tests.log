@@ -1,0 +1,126 @@
+✔ local TypeRef aliases agree with retained independent CoreCLR Module.ResolveType observations (6.874125ms)
+✔ explicit Module-scoped TypeRefs share canonical local TypeDef results (4.269042ms)
+✔ local aliases normalize base and interface edges before hierarchy queries (3.225833ms)
+✔ unsupported scopes, missing names and generic definitions remain explicitly unknown (0.855542ms)
+✔ ambiguous local names never choose a definition by row order (0.472083ms)
+✔ cycles and invalid edge kinds introduced through local references are rejected (1.649375ms)
+✔ invalid physical scopes and nonexistent scope rows are rejected (1.938084ms)
+✔ name keys reject invalid indices, empty names and unterminated strings (1.04925ms)
+✔ reference and byte budgets admit exact boundaries and reject excess before copying (0.596041ms)
+✔ individual names have a 1 KiB bound before argument expansion (0.558875ms)
+✔ local alias facts survive later metadata and string heap mutation (0.309791ms)
+✔ construction checks cancellation during local name indexing and queries remain cancellable (0.580625ms)
+✔ all seven access flags distinguish same owner, assembly privilege and family for fields/methods (6.790542ms)
+✔ protected instance receivers use accessor identity, not only the member owner (1.125458ms)
+✔ nested identities are accepted while interface family rules remain explicit unknown (0.89125ms)
+✔ unresolved family or receiver ancestry propagates unknown instead of granting access (0.7045ms)
+✔ only this context canonical member/type identities are accepted, even with matching tokens (1.200833ms)
+✔ visibility/member snapshots own bytes and survive metadata and caller result mutation attempts (1.451333ms)
+✔ existing type/member budgets and cancellation apply to snapshot and cached access queries (1.769208ms)
+✔ pinned ILVerify access decisions match known queries and retain unresolved-root negatives (1.409583ms)
+✔ inherited method MemberRefs bind nearest exact declarations to canonical identities (6.417167ms)
+✔ private declaration resolution remains separate from accessibility and constructors do not inherit (1.090084ms)
+✔ nearest compiler-controlled or ambiguous declarations never fall back to a base declaration (1.115417ms)
+✔ unresolved generic and external ancestry never grants an inherited declaration (1.26825ms)
+✔ base-chain budgets are checked before traversal while direct declarations keep the zero-budget path (1.639584ms)
+✔ inherited lookup uses owned hierarchy and member snapshots after source metadata changes (0.359084ms)
+✔ pinned native inherited ResolveMember observations retain fixture and source provenance (1.510083ms)
+✔ local declaration references resolve overloads, instance methods and fields to canonical identities (12.143875ms)
+✔ missing declarations and unresolved signature/owner metadata never bind by spelling (6.719667ms)
+✔ compiler-controlled references, ambiguous declarations and unsupported conventions are explicit unknowns (0.854666ms)
+✔ definition signatures and raw token ranges are checked without coercion (1.53325ms)
+✔ oversized coded rows cannot turn external owners or signature types into local definitions (0.823541ms)
+✔ snapshot and query budgets precede expansion and cancellation applies after construction (0.576ms)
+✔ owned snapshots survive changes to source metadata and do not leak mutable signature arrays (0.4125ms)
+✔ pointer-table ownership is reused and duplicate physical ownership rejects (0.564291ms)
+✔ twelve native ResolveMember results agree with local declaration resolution (0.952542ms)
+✔ nested callers inherit enclosing privileges without granting reverse or sibling private access (9.665125ms)
+✔ every target nesting boundary restricts public members using its own access flags (2.648709ms)
+✔ protected instance access uses the enclosing accessor that actually grants family privilege (2.341875ms)
+✔ nested snapshots own parent facts and still reject foreign identities and cancellation (3.999458ms)
+✔ malformed raw RIDs, duplicate owners, missing flags and lexical cycles reject before queries (16.939916ms)
+✔ nesting depth stays bounded independently of inheritance (7.489ms)
+✔ a deep uncertain target/caller product stops at the aggregate access budget (10.958541ms)
+✔ generic enclosing definitions remain unknown without forging a nongeneric access proof (1.276708ms)
+✔ pinned ILVerify nested access agrees where local metadata produces known decisions (1.58925ms)
+✔ nested local TypeRefs share canonical definitions through forward and multilevel scopes (4.358417ms)
+✔ wrong enclosing identities and unresolved or generic scopes never bind local names (2.401917ms)
+✔ nested aliases participate in hierarchy, member resolution and access with existing identities (1.068083ms)
+✔ the combined context reuses the validated lexical forest and owns its copied facts (0.546125ms)
+✔ nested aliases expose hierarchy cycles and invalid class/interface kinds before queries (1.572291ms)
+✔ malformed lexical ownership and cyclic TypeRef scopes reject deterministically (2.179208ms)
+✖ reference-chain limits admit the exact boundary and cap long lexical chains (4.451875ms)
+✔ nested reference construction and subsequent queries observe cancellation (0.730958ms)
+✔ top-level and nested TypeRef member owners preserve declaration and inherited-method semantics (1.150042ms)
+✔ retained native ResolveMember comparisons cover local aliases and declaration-only fields (1.130667ms)
+✔ retained CoreCLR nested ResolveType observations agree with known identities and hierarchy (0.893291ms)
+✔ same-assembly top-level public and internal types are accessible from flat and nested callers (9.071708ms)
+✔ type accessibility checks all six nested flags and every enclosing type (2.679667ms)
+✔ nested callers inherit enclosing type privileges without requiring an instance receiver (2.175917ms)
+✔ type-access results use owned visibility and parent facts after source metadata is released (1.91075ms)
+✔ type-access identity and cancellation checks apply to flat and nested queries (4.30525ms)
+✔ generic enclosing types and interface family relations stay explicitly unknown (1.49675ms)
+✔ type-only queries reuse the aggregate lexical and hierarchy work limits (15.019834ms)
+✔ pinned ILVerify type access agrees where local metadata produces known decisions (1.199292ms)
+✔ resolved metadata relations agree with retained CoreCLR reflection; external dependencies remain unknown (2.673333ms)
+✔ local definitions have immutable adapter-scoped canonical identities (5.111959ms)
+✔ class and interface assignments include inherited and transitive interfaces (3.026916ms)
+✔ the existing stack merge seam uses the adapter and refuses unavailable relations (0.612417ms)
+✔ unresolved externals cannot bind to a same-named local type or become false certainty (0.447708ms)
+✔ snapshots own hierarchy facts and do not expose mutable metadata arrays (0.35925ms)
+✔ invalid tokens, local cycles and class/interface edge kinds are rejected (1.350333ms)
+✔ metadata and traversal budgets are enforced before unbounded expansion (0.336333ms)
+✔ construction and subsequent queries observe cancellation (0.433917ms)
+✔ diamond interfaces are de-duplicated and query frontier allocation respects the node budget (0.437209ms)
+✔ coded indices preserve nil, valid tags and the maximum 24-bit row across every layout (0.744167ms)
+✔ physical coded indices reject malformed values and overflow before token composition (0.208625ms)
+✔ an oversized MemberRef TypeRef parent cannot alias a local TypeDef (0.051959ms)
+✔ signature TypeDefOrRef overflow cannot turn an unresolved reference into a local type (0.337ms)
+✔ all 144 verification category pairs follow the stack merge table in both directions (1.20175ms)
+✔ reference relation seam preserves class, interface, boxed and array covariance joins (0.18825ms)
+✔ controlled mutability is preserved and pointer relations never use reference covariance (0.107ms)
+✔ nominal identity, constructor state and metadata-dependent unknowns are explicit (0.109708ms)
+✔ factories and metadata adapters reject malformed values without coercing nominal identities (0.21725ms)
+✔ stack merges enforce equal heights, own their results and bound work before allocation (3.091875ms)
+✔ pre-cancelled and interrupted merges produce the cancellation diagnostic (0.118291ms)
+ℹ tests 85
+ℹ suites 0
+ℹ pass 84
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1807.895
+
+✖ failing tests:
+
+test at tests/a03-07-nested-type-references.test.js:108:1
+✖ reference-chain limits admit the exact boundary and cap long lexical chains (4.451875ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  CilError: Recursive TypeSpec or nesting limit exceeded
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-nested-type-references/tests/a03-07-nested-type-references.test.js:121:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Recursive TypeSpec or nesting limit exceeded
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:30:27)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29)
+        at MetadataTypeNames.read (file:///private/tmp/sharpforge-a03-nested-type-references/packages/cil/src/metadata/type-names.js:36:29),
+    operator: 'throws',
+    diff: 'simple'
+  }

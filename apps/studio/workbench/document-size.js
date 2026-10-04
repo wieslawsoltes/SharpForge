@@ -1,7 +1,11 @@
+import { documentSource } from './document-source.js';
+
+export const AUTOMATIC_DOCUMENT_CHARACTERS = 8_000_000;
+
 /** Determine UTF-16 size without materializing an EditorModel-backed document's lazy text getter. */
 export function documentSize(documents, record) {
   const model = documents.models?.get(record.uri) ?? record.model;
-  const length = model?.buffer?.length ?? model?.length ?? record.length ?? record.size;
+  const length = documentSource(record, model)?.length ?? model?.buffer?.length ?? model?.length ?? record.length ?? record.size;
   if (Number.isSafeInteger(length) && length >= 0) return length;
   const descriptor = Object.getOwnPropertyDescriptor(record, 'text');
   return typeof descriptor?.value === 'string' ? descriptor.value.length : null;
@@ -33,7 +37,9 @@ export function readDocumentRange(documents, record, {start = 0, end, limit = 65
   const model = documents.models?.get(record.uri) ?? record.model;
   const eager = Object.getOwnPropertyDescriptor(record, 'text')?.value;
   let text;
-  if (model?.getText) text = model.getText(start, end);
+  const source = documentSource(record, model);
+  if (source?.getText) text = source.getText(start, end);
+  else if (model?.getText) text = model.getText(start, end);
   else if (typeof eager === 'string') text = eager.slice(start, end);
   else if (length <= limit) text = record.text.slice(start, end);
   else throw new Error('An indexed range reader is required for this large document: ' + record.uri);

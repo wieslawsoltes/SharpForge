@@ -1,0 +1,120 @@
+name: Project 16 completed scope qualification
+on:
+  create:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Completed scope to qualify serially
+        type: choice
+        options: [all, node, browser, performance, standalone]
+        default: all
+      runner:
+        description: Platform for this explicit qualification run
+        type: choice
+        options: [ubuntu-latest, windows-latest, macos-latest]
+        default: ubuntu-latest
+      engine:
+        description: Browser engine
+        type: choice
+        options: [chromium, firefox, webkit]
+        default: chromium
+      editor_baseline:
+        description: Reviewed compatible editor browser baseline path, or empty for capture only
+        type: string
+      workbench_baseline:
+        description: Reviewed compatible workbench trace path, or empty for capture only
+        type: string
+permissions:
+  contents: read
+jobs:
+  qualify:
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'create' && github.event.ref_type == 'branch' &&
+           startsWith(github.event.ref, 'codex/project16/qualify-')) }}
+    concurrency:
+      group: project16-qualification
+      cancel-in-progress: false
+    runs-on: >-
+      ${{ ((github.event_name == 'workflow_dispatch' && inputs.runner == 'windows-latest') ||
+           (github.event_name == 'create' && startsWith(github.event.ref, 'codex/project16/qualify-windows-'))) && 'windows-latest' ||
+          ((github.event_name == 'workflow_dispatch' && inputs.runner == 'macos-latest') ||
+           (github.event_name == 'create' && startsWith(github.event.ref, 'codex/project16/qualify-macos-'))) && 'macos-latest' ||
+          'ubuntu-latest' }}
+    timeout-minutes: 90
+    env:
+      SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+      - name: Resolve the explicit trigger and immutable checkout
+        id: resolve_trigger
+        run: node scripts/project16-trigger.js
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Static consistency and completed application build
+        shell: bash
+        run: |
+          npm run check
+          npm run build
+          node scripts/standalone.js
+      - name: Install pinned browser qualification dependencies
+        if: env.QUALIFICATION_STAGE != 'node'
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - name: Install the selected supported browser
+        if: env.QUALIFICATION_STAGE != 'node'
+        shell: bash
+        run: python -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"
+      - name: Locate the pinned Playwright JavaScript driver
+        if: env.QUALIFICATION_STAGE != 'node'
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+          import playwright
+          driver = Path(playwright.__file__).parent / 'driver' / 'package'
+          if not (driver / 'package.json').is_file():
+              raise RuntimeError('Pinned Playwright driver is missing')
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf8') as output:
+              output.write('SHARPFORGE_PLAYWRIGHT_MODULE=' + str(driver) + '\n')
+      - name: Run the selected completed scopes without parallel heavy jobs
+        shell: bash
+        run: node scripts/project16-qualification.js "$QUALIFICATION_STAGE"
+      - name: Preserve exact-source qualification evidence
+        if: always() && steps.resolve_trigger.outcome == 'success'
+        shell: python
+        run: |
+          import json
+          import os
+          from pathlib import Path
+          output = Path(os.environ['SHARPFORGE_RESULTS_DIR'])
+          output.mkdir(parents=True, exist_ok=True)
+          (output / 'source.json').write_text(json.dumps({
+              'sourceSha': os.environ['QUALIFICATION_SOURCE_SHA'],
+              'sourceTree': os.environ['QUALIFICATION_SOURCE_TREE'],
+              'trigger': os.environ['QUALIFICATION_TRIGGER_EVENT'],
+              'triggerRef': os.environ['QUALIFICATION_TRIGGER_REF'],
+              'triggerNonce': os.environ['QUALIFICATION_TRIGGER_NONCE'] or None,
+              'captureOnly': os.environ['QUALIFICATION_CAPTURE_ONLY'] == 'true',
+              'baselineProfile': os.environ['QUALIFICATION_BASELINE_PROFILE'] or None,
+              'workflowRunId': os.environ['GITHUB_RUN_ID'],
+              'stage': os.environ['QUALIFICATION_STAGE'],
+              'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],
+              'runner': os.environ['RUNNER_OS'],
+              'runnerLabel': os.environ['QUALIFICATION_RUNNER'],
+              'editorBaseline': os.environ['SHARPFORGE_EDITOR_BASELINE'] or None,
+              'workbenchBaseline': os.environ['SHARPFORGE_WORKBENCH_BASELINE'] or None,
+          }, indent=2) + '\n', encoding='utf8')
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && steps.resolve_trigger.outcome == 'success'
+        with:
+          name: project16-${{ env.QUALIFICATION_RUNNER }}-${{ env.SHARPFORGE_BROWSER_ENGINE }}-${{ env.QUALIFICATION_STAGE }}
+          path: artifacts/results/project16/
+          if-no-files-found: error

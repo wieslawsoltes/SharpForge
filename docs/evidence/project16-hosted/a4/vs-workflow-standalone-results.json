@@ -1,0 +1,28 @@
+{
+  "suite": "browser_vs_workflows_standalone_test",
+  "mode": "file",
+  "engine": "chromium",
+  "passed": false,
+  "sourceSha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+  "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+  "checks": [],
+  "navigation": {
+    "mode": "file",
+    "url": "file:///home/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "offline": true,
+    "artifact": "/home/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+    "artifactSha256": "acfc8f12940bb97ec2eaf7c305a023638213f4914fe96bd6ffac74515db05b70",
+    "bytes": 15579080,
+    "policy": {
+      "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-vzbSP05NpEWIN9aUT1gJRtIeZIxjF2YjeinvDUCNBhY='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+      "transport": "meta"
+    }
+  },
+  "httpAttempts": [],
+  "pageErrors": [],
+  "browser": "153.0.8010.12",
+  "failure": {
+    "type": "TimeoutError",
+    "message": "Browser predicate remained false: window.sharpforge && window.sharpforge.getState().metrics !== null"
+  }
+}

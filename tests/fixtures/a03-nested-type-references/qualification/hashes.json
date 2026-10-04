@@ -1,0 +1,54 @@
+{
+  "baseline": {
+    "commit": "b0dff7f7738c78b34c113514cf38790e2f5ed71d",
+    "files": {
+      "packages/cil/src/verify/metadata-types/snapshot.js": "0d9c99fd321f7cd836fbd28d7327e830a67c602351a5c2030e4227878ddd5958",
+      "packages/cil/src/verify/metadata-types/results.js": "1bd036637af1cb8712f6044a2a7938388fb5ed9b2d1237d45bafebf38417403e",
+      "packages/cil/src/verify/metadata-types/local-references.js": "ca6832d78cea29dcd5b0c0de44e444abf457c7e146060ba173cd858eb27035cd",
+      "packages/cil/src/verify/metadata-types/tokens.js": "962436f4c4e650d0af23342edc2bbf16144f630bb19ddfa9382bfe9e9bb36835",
+      "packages/cil/src/verify/metadata-types/hierarchy.js": "238bfa7dd33127e20d5301497c1e55c8e1f4290e00541811409a96f15330ff68",
+      "packages/cil/src/verify/member-system.js": "acaf974a3b0538ae47fd2021d5253be009c7cfb30dedfe7be3161097ab64f1f6",
+      "packages/cil/src/verify/metadata-members/snapshot.js": "ecf215f47b3aa706a418acb93ed06b0eb91f80a55c883b3d93219ebf2de0d7a4",
+      "packages/cil/src/verify/metadata-members/resolve.js": "f91f5e734a417a97bc5f8be497d903a40d0f4b962c7f9f9b28b71ed8a1875ba8",
+      "packages/cil/src/verify/metadata-members/nesting.js": "4cc7efb63097859f7fe24e6653c03ed26b66c2d20568052014b41c33ba2e2d79",
+      "packages/cil/src/verify/type-system.js": "8ffa921c5c9866a27917da84489e645903adee41d148ddd7e00da7682edde2e8",
+      "packages/cil/tools/benchmark-verifier-types.mjs": "bc0920829d406fe6d2def8f08ca6663a843847044f02f4672c40b5c45a1ff443",
+      "packages/cil/tools/benchmark-local-type-references.mjs": "d568b1a062c0732b0ca5b664f8984f3172576a02cc943f5aca9fb3bdc461a58c",
+      "tests/fixtures/a03-local-type-references/input.js": "a29038f9438e518fd53c331548e754b4ada6ceac4c49982642b2e4f4c48711c8",
+      "tests/fixtures/a03-verifier-members/inherited-input.js": "837b23aa5c605b37fa6cf81024a9cf59be3c7c87f07a868201cb56e56474c119",
+      "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+      "tests/fixtures/a03-verifier-types/input.js": "744f29eefc9dd310d5dd415054bd0ae23af927f8a94867886454f5fe9005e243",
+      "tests/a03-07-nested-type-references.test.js": "7fd73c3b5aef6a4f94f01aa4d1ff090b24f007218d87ababf2463922d31d2e64",
+      "tests/fixtures/a03-nested-type-references/input.js": "294ee3c2740734d91d7e1a80f32f60501a159ff387cdbe0b46c2a03e79cf5ab8",
+      "tests/fixtures/a03-nested-type-references/member-input.js": "76027da0b4dc5c5bf367477b71ee469644008f3411fd5809f7a8111b9b99b2b5",
+      "packages/cil/tools/benchmark-nested-type-references.mjs": "01851d7bd10c452112eb7017fac2a6c807315b04ce54fc49476c80b9dbc5e183"
+    }
+  },
+  "candidate": {
+    "commit": "6ae9e3c9ae57fbb41de9b851bfcb4c09f994da70",
+    "files": {
+      "packages/cil/src/verify/metadata-types/snapshot.js": "4ead8e561bd6c1a257492023a524c235c6928cca41a528ab171ee558ccea2ef9",
+      "packages/cil/src/verify/metadata-types/results.js": "1bd036637af1cb8712f6044a2a7938388fb5ed9b2d1237d45bafebf38417403e",
+      "packages/cil/src/verify/metadata-types/local-references.js": "2e354721a31c47a8c1204f4e322353e723f037bfb90600f904e68b18c470d50b",
+      "packages/cil/src/verify/metadata-types/tokens.js": "962436f4c4e650d0af23342edc2bbf16144f630bb19ddfa9382bfe9e9bb36835",
+      "packages/cil/src/verify/metadata-types/hierarchy.js": "238bfa7dd33127e20d5301497c1e55c8e1f4290e00541811409a96f15330ff68",
+      "packages/cil/src/verify/member-system.js": "89423a5797af26e3b02ca92340f66ccd38a42ae376bc45fda1bd791bed24303e",
+      "packages/cil/src/verify/metadata-members/snapshot.js": "e239e7b7a71a0d647563a9a196c75bab9c67ab32c54b78192e137c2ba84c97d2",
+      "packages/cil/src/verify/metadata-members/resolve.js": "fb80d013630962d73750d73719530af85c696ddf36684789d69466d6fc0d7224",
+      "packages/cil/src/verify/metadata-members/nesting.js": "71e2f770fce64d783ef1a63258ebf60a3e8ba682046aae30ba7c20f254366779",
+      "packages/cil/src/verify/type-system.js": "184a50226117c7915b886badc2451d78987b3c70345052be53f473cb5cc50657",
+      "packages/cil/tools/benchmark-verifier-types.mjs": "bc0920829d406fe6d2def8f08ca6663a843847044f02f4672c40b5c45a1ff443",
+      "packages/cil/tools/benchmark-local-type-references.mjs": "d568b1a062c0732b0ca5b664f8984f3172576a02cc943f5aca9fb3bdc461a58c",
+      "tests/fixtures/a03-local-type-references/input.js": "a29038f9438e518fd53c331548e754b4ada6ceac4c49982642b2e4f4c48711c8",
+      "tests/fixtures/a03-verifier-members/inherited-input.js": "837b23aa5c605b37fa6cf81024a9cf59be3c7c87f07a868201cb56e56474c119",
+      "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+      "tests/fixtures/a03-verifier-types/input.js": "744f29eefc9dd310d5dd415054bd0ae23af927f8a94867886454f5fe9005e243",
+      "tests/a03-07-nested-type-references.test.js": "7fd73c3b5aef6a4f94f01aa4d1ff090b24f007218d87ababf2463922d31d2e64",
+      "tests/fixtures/a03-nested-type-references/input.js": "294ee3c2740734d91d7e1a80f32f60501a159ff387cdbe0b46c2a03e79cf5ab8",
+      "tests/fixtures/a03-nested-type-references/member-input.js": "76027da0b4dc5c5bf367477b71ee469644008f3411fd5809f7a8111b9b99b2b5",
+      "packages/cil/tools/benchmark-nested-type-references.mjs": "01851d7bd10c452112eb7017fac2a6c807315b04ce54fc49476c80b9dbc5e183",
+      "packages/cil/src/verify/metadata-types/definition-names.js": "f368c30f8190b45d6160d3dd7e8b5c9ac4685efd9cab4604c7c05b44aa12df80",
+      "packages/cil/src/verify/metadata-nesting.js": "ad91f30acf8e70d5d7fa47b18f4c9896d8d14293975993cfd17907f42a108793"
+    }
+  }
+}

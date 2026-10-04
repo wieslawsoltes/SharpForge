@@ -18,9 +18,10 @@
  * The bound pattern is carried by the conversion (`conversion.handler`), so generic traversals of the bound tree see
  * the interpolated string and its holes once, as the operand.
  *
- * Not bound here: `[InterpolatedStringHandlerArgument]` (a handler parameter that takes the receiver or other
- * arguments of the call) - the analysis says so instead of guessing (`incomplete`); a `+` of interpolated strings
- * converted as one handler.
+ * A handler parameter marked `[InterpolatedStringHandlerArgument]` passes the receiver or other arguments of its
+ * call to the constructor, after the counts (./handler-arguments.js).
+ *
+ * Not bound here: a `+` of interpolated strings converted as one handler.
  */
 import { DiagnosticId } from '../diagnostics/codes.js';
 import { SymbolKind, RefKind } from '../symbols/types.js';
@@ -29,10 +30,9 @@ import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { ConstantValue } from '../constants/constant-value.js';
 import { lookupMembers } from './inheritance.js';
 import { isAccessible } from './accessibility.js';
-import { attributesNamed } from './bound-attributes.js';
 import { interpolatedText } from './csharp6.js';
+import { handlerArgumentsOf } from './handler-arguments.js';
 
-export const handlerArgumentAttribute = 'System.Runtime.CompilerServices.InterpolatedStringHandlerArgumentAttribute';
 const feature = 'ImprovedInterpolatedStrings';
 
 const isBool = type => type?.specialType === 'System_Boolean';
@@ -72,7 +72,7 @@ export const InterpolatedStringHandlerBinding = Base =>
         placeholder = this.node('InterpolatedStringHandlerPlaceholder', syntax, type, {}),
         texts = contents.map(content => (content.kind === 'Interpolation' ? null : interpolatedText(content))),
         literalLength = texts.reduce((sum, text) => sum + (text?.length ?? 0), 0),
-        creation = this.handlerCreation(syntax, type, literalLength, e.parts.length);
+        creation = this.handlerCreation(syntax, type, { literalLength, formattedCount: e.parts.length, expression: e });
       if (!creation) return null;
       const appends = [];
       let hole = 0,
@@ -100,16 +100,17 @@ export const InterpolatedStringHandlerBinding = Base =>
       return args;
     }
     /** The constructor call: `(literalLength, formattedCount, out bool)` when the type has one, else without the flag. */
-    handlerCreation(syntax, type, literalLength, formattedCount) {
+    handlerCreation(syntax, type, { literalLength, formattedCount, expression }) {
       const within = this.c.containingType?.originalDefinition ?? null,
         all = type.getMembers('.ctor').filter(m => m.methodKind === MethodKind.Constructor && !m.isStatic),
         constructors = all.filter(c => isAccessible(c.originalDefinition ?? c, within, { throughType: type.originalDefinition })),
-        counts = () => [this.handlerLiteral(syntax, literalLength), this.handlerLiteral(syntax, formattedCount)];
-      // A handler that takes arguments of the call it is passed to is not bound: nothing is reported about it.
-      if (this.takesHandlerArguments()) {
+        placeholders = this.handlerArgumentPlaceholders(syntax, expression);
+      // What the parameter asks for is not bound (see ./handler-arguments.js): nothing is reported about it.
+      if (!placeholders) {
         this.lenient(syntax);
         return null;
       }
+      const counts = () => [this.handlerLiteral(syntax, literalLength), this.handlerLiteral(syntax, formattedCount), ...placeholders];
       // The flag is passed like a discard: any `out bool` parameter takes it.
       const flag = this.node('Discard', syntax, this.core.bool, { isOutVarOrDiscard: true, isEnabledFlag: true }),
         enabled = Object.assign(flag, { refKind: RefKind.Out, name: null });
@@ -127,15 +128,32 @@ export const InterpolatedStringHandlerBinding = Base =>
       }
       const call = this.finishCall(result, null, args, syntax, {}),
         node = { constructor: result.method, args: call.args, expanded: result.expanded, mapping: call.mapping, callerInfo: call.callerInfo };
-      return { creation: this.node('ObjectCreation', syntax, type, node), enabled: usesFlag ? enabled : null };
+      return { creation: this.node('ObjectCreation', syntax, type, node), enabled: usesFlag ? enabled : null, argumentPlaceholders: placeholders };
     }
-    /** True when a parameter of the enclosing compilation asks for handler arguments (`[InterpolatedStringHandlerArgument]`). */
-    takesHandlerArguments() {
-      const d = this.d;
-      d.usesHandlerArguments ??= d.assembly.types.some(type =>
-        type.getMembers().some(member => (member.parameters ?? []).some(parameter => attributesNamed(parameter, handlerArgumentAttribute).length > 0)),
+    /**
+     * The constructor arguments a `[InterpolatedStringHandlerArgument]` parameter adds for the interpolated string
+     * `expression`: placeholders for the receiver and arguments of the call being finished.
+     * @returns {object[]|null} an empty list when the string is not such an argument, null when it cannot be bound
+     */
+    handlerArgumentPlaceholders(syntax, expression) {
+      const call = this.handlerContext,
+        index = call ? call.args.indexOf(expression) : -1,
+        wanted = index < 0 ? null : handlerArgumentsOf(call, index);
+      if (wanted === false) return null;
+      return (wanted ?? []).map(({ argumentIndex, type }) =>
+        asArgument(this.node('InterpolatedStringHandlerArgumentPlaceholder', syntax, type, { argumentIndex, isCompilerGenerated: true })),
       );
-      return d.usesHandlerArguments;
+    }
+    /** A call with an interpolated string among its arguments is remembered while its arguments are converted. */
+    finishCall(result, receiver, args, syntax, options = {}) {
+      if (!args.some(argument => argument.form === 'interpolatedString')) return super.finishCall(result, receiver, args, syntax, options);
+      const outer = this.handlerContext;
+      this.handlerContext = { method: result.method, mapping: result.mapping, parameterTypes: result.parameterTypes, receiver, args };
+      try {
+        return super.finishCall(result, receiver, args, syntax, options);
+      } finally {
+        this.handlerContext = outer;
+      }
     }
     /** One `handler.Append...(args)` call, or null after reporting why it does not bind. */
     handlerCall(placeholder, type, name, args, at) {

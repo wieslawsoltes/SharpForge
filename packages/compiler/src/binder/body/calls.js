@@ -16,6 +16,8 @@ import { checkConstructedMethod } from '../constraints.js';
 import { isVirtualCall } from '../overrides.js';
 import { isCallOmitted } from '../csharp2-misc.js';
 import { receiverPassing } from '../readonly.js';
+import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
+import { overridesOnReceiver } from '../../overload/override-parameters.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -98,7 +100,8 @@ export const CallBinding = Base =>
     errorNode(error, args, nameNode, offset = 0) {
       if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
         const a = args[error.argument - offset].argumentSyntax;
-        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 || error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
+        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 ||
+          error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
           ? a.nameColon.name
           : error.code === DiagnosticId.CS1620 || error.code === DiagnosticId.CS1615
             ? a.expression
@@ -109,7 +112,9 @@ export const CallBinding = Base =>
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
       const args = this.arguments(syntax.argumentList);
-      return this.invokeBound(target, args, syntax);
+      const result = this.invokeBound(target, args, syntax);
+      if (this.d.invocations && !this.quiet) this.d.recordInvocation(this.c, syntax, target, result);
+      return result;
     }
     /** Invokes an already bound target with bound arguments (binder/dynamic.js takes the late-bound calls from here). */
     invokeBound(target, args, syntax) {
@@ -155,11 +160,7 @@ export const CallBinding = Base =>
     /** The extension methods named like the group, innermost namespace first. */
     extensionScopesOf(group) {
       if (group.extensionScopes) return group.extensionScopes;
-      const chain = this.typeScope.namespaceChain.map(l => ({
-        namespace: l.namespace,
-        usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
-      }));
-      return extensionScopes(chain, group.name);
+      return extensionScopes(this.extensionChain(), group.name);
     }
     call(group, args, syntax) {
       const nameNode = group.nameNode ?? group.syntax,
@@ -167,7 +168,9 @@ export const CallBinding = Base =>
       let result = null;
       if (group.methods.length) {
         // An instance method reached without a receiver from a static context is dropped before resolution only if statics remain.
-        result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
+        const receiverType = group.viaType ? null : (group.receiver?.type ?? this.c.containingType),
+          overrides = overridesOnReceiver(group.methods, receiverType);
+        result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name, overrides });
       }
       if ((!result || !result.succeeded) && group.receiver && !group.viaType && group.kind === 'MethodGroup') {
         const scopes = this.extensionScopesOf(group);
@@ -268,8 +271,10 @@ export const CallBinding = Base =>
           definition.uses = (definition.uses ?? 0) + 1;
         }
         for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args, v.severity);
-        if (receiver?.kind === 'Base' && method.isAbstract) {
-          this.report(syntax, DiagnosticId.CS0205, [method.toDisplayString()]);
+        // `base.M()` reaches the nearest override in the base classes; only when that is abstract there is no body to run.
+        if (receiver?.kind === 'Base' && isAbstractBaseAccess(method, receiver.type)) {
+          // Roslyn reports it at the member access, not at the whole invocation.
+          this.report(syntax.kind === 'InvocationExpression' ? syntax.expression : syntax, DiagnosticId.CS0205, [method.toDisplayString()]);
         }
       }
       if (isExtension) for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args);
@@ -286,12 +291,19 @@ export const CallBinding = Base =>
           } else {
             const w = checkWritable(a, a.refKind === RefKind.Ref ? 'ref' : 'out', this.variableContext);
             if (w) this.report(a.syntax, w.code, w.args);
+            // `Interlocked.Increment(ref count)`: the callee may write the field through the reference (no CS0649).
+            else if (a.refKind === RefKind.Ref) this.markAliased?.(a);
           }
           return { expression: a, parameter: p, refKind: a.refKind };
         }
         // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type
-        // here, and so do a `default` literal (unconverted it would be passed as a null reference) and a method group.
-        const converts = conversion && !a.hasErrors && (a.type || a.materialize || a.literal === 'default' || a.kind === 'MethodGroup');
+        // here, and so do a `default` literal (unconverted it would be passed as a null reference), a method group and
+        // a `null` for a parameter of a nullable value type, which is a value (`default(int?)`) and not a reference.
+        // A tuple literal without a type of its own (`(1, null)`, `(key, x => x)`) converts element by element.
+        // (So is a `null` that reaches the parameter through a user-defined conversion operator.)
+        const nullToNullable = a.literal === 'null' && (!!result.parameterTypes[i]?.isNullableValueType || !!conversion?.isUserDefined),
+          typeless = a.materialize || a.literal === 'default' || a.kind === 'MethodGroup' || a.form === 'tupleLiteral' || nullToNullable,
+          converts = conversion && !a.hasErrors && (a.type || typeless);
         const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
@@ -305,6 +317,7 @@ export const CallBinding = Base =>
         args: converted,
         expanded: result.expanded,
         mapping: result.mapping,
+        defaultsFrom: result.defaultsFrom ?? null,
         isDelegateInvoke,
         isExtension,
         isVirtual:
@@ -323,6 +336,8 @@ export const CallBinding = Base =>
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;
+        // A member called on the field itself may assign it (`counter.Increment()` over a struct field): no CS0649.
+        if (passing.mode === 'address' && receiver.kind === 'FieldAccess') this.markAliased?.(receiver);
         if (passing.warning) this.report(nameNode, passing.warning.code, passing.warning.args);
       }
       if (type.isErrorType?.()) n.hasErrors = true;
@@ -383,9 +398,16 @@ export const CallBinding = Base =>
           return n;
         }
       }
-      let indexers = lookupMembers(type, 'this[]', this.core, { within: this.c.containingType })
-        .members.concat(isSource(type) ? [] : lookupMembers(type, 'Item', this.core, { within: this.c.containingType }).members)
-        .filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+      const indexersOf = owner =>
+        lookupMembers(owner, 'this[]', this.core, { within: this.c.containingType })
+          .members.concat(isSource(owner) ? [] : lookupMembers(owner, 'Item', this.core, { within: this.c.containingType }).members)
+          .filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+      let indexers = indexersOf(type);
+      // An override is not a candidate (C# spec 12.6.4.2): the indexer it overrides is, declared by a base class.
+      if (indexers.some(m => m.isOverride)) {
+        indexers = indexers.filter(m => !m.isOverride);
+        for (let base = type.baseType; base && !indexers.length; base = base.baseType) indexers = indexersOf(base).filter(m => !m.isOverride);
+      }
       // Indexers overload on their parameter lists: every indexer of the declaring type is a candidate (SF-A02-T10.2).
       if (indexers.length === 1 && isSource(type)) {
         const declared = (indexers[0].containingType ?? type).getMembers('this[]').filter(m => m.kind === SymbolKind.Property && m.parameters.length);
@@ -407,7 +429,7 @@ export const CallBinding = Base =>
           byAccessor.set(shape, p);
           return shape;
         });
-      const r = this.d.overloads.resolve(shapes, args, { name: 'this' });
+      const r = this.d.overloads.resolve(shapes, args, { name: 'this', overrides: overridesOnReceiver(shapes, type) });
       if (!r.succeeded) {
         if (!indexers.every(isSource)) return this.lenient(syntax);
         const e = r.error;
@@ -424,10 +446,13 @@ export const CallBinding = Base =>
         receiver: target,
         property,
         args: args.map((a, i) => ({
-          expression: r.conversions[i] && (a.type || a.kind === 'MethodGroup') ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i]) : a,
+          expression: r.conversions[i] && (a.type || a.kind === 'MethodGroup' || (a.literal === 'null' && r.parameterTypes[i]?.isNullableValueType))
+            ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i])
+            : a,
           parameter: property.parameters[r.mapping.parameterOf[i]],
         })),
         mapping: r.mapping,
+        defaultsFrom: r.defaultsFrom ?? null,
         expanded: r.expanded,
       });
     }

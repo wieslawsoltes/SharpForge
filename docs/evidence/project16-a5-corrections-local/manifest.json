@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-a5-correction-local-evidence",
+  "hashAlgorithm": "SHA-256",
+  "rawFileCount": 5,
+  "totalBytesExcludingManifest": 165461,
+  "byteCopiesCompared": true,
+  "files": [
+    {
+      "path": "full-areas/A19.log",
+      "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-corrections-local/A19.log",
+      "bytes": 94387,
+      "sha256": "3f42ad080c7120d3dd209a5bbd32511c4d36e59753533b29044561a46f348cf6",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "full-areas/A20.log",
+      "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-corrections-local/A20.log",
+      "bytes": 64626,
+      "sha256": "a0cab136fbf49d9f61dd552d7b175444862e15fbc768c1f1c93d4eb323825025",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "full-areas/node-summary.json",
+      "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-corrections-local/node-summary.json",
+      "bytes": 3240,
+      "sha256": "c5dfb57e30d378eb106ba3e1ea563cb013df7177ee5a89366eb4b3a2ce5e8fa8",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "affected-retry/affected.log",
+      "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-corrections-retry/affected.log",
+      "bytes": 2498,
+      "sha256": "9cc4516d342c2fdd2e3e2fd38b419abccdda37163650adb7eb701fb491b8e558",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "affected-retry/node-summary.json",
+      "originalPath": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-a5-corrections-retry/node-summary.json",
+      "bytes": 710,
+      "sha256": "36bbb634d7ed021df7ee786583af5f60b348033c00df92f44d3183524840971c",
+      "origin": "unaltered root capture"
+    }
+  ]
+}

@@ -1,0 +1,1030 @@
+﻿2026-10-04T07:02:44.7766365Z Current runner version: '2.337.0'
+2026-10-04T07:02:44.7791485Z ##[group]Runner Image Provisioner
+2026-10-04T07:02:44.7792401Z Hosted Compute Agent
+2026-10-04T07:02:44.7793083Z Version: 20260901.588
+2026-10-04T07:02:44.7793763Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-04T07:02:44.7795077Z Build Date: 2026-09-01T19:56:44Z
+2026-10-04T07:02:44.7795786Z Worker ID: {87e76446-f80e-4384-907b-5b6aadedac9b}
+2026-10-04T07:02:44.7796516Z Azure Region: westcentralus
+2026-10-04T07:02:44.7797203Z ##[endgroup]
+2026-10-04T07:02:44.7798765Z ##[group]Operating System
+2026-10-04T07:02:44.7799472Z Microsoft Windows Server 2025
+2026-10-04T07:02:44.7800100Z 10.0.26100
+2026-10-04T07:02:44.7800621Z Datacenter
+2026-10-04T07:02:44.7801186Z ##[endgroup]
+2026-10-04T07:02:44.7801824Z ##[group]Runner Image
+2026-10-04T07:02:44.7802476Z Image: windows-2025-vs2026
+2026-10-04T07:02:44.7803133Z Version: 20260925.250.1
+2026-10-04T07:02:44.7804685Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260925.250/images/windows/Windows2025-VS2026-Readme.md
+2026-10-04T07:02:44.7806320Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260925.250
+2026-10-04T07:02:44.7807284Z ##[endgroup]
+2026-10-04T07:02:44.7808491Z ##[group]GITHUB_TOKEN Permissions
+2026-10-04T07:02:44.7810478Z Contents: read
+2026-10-04T07:02:44.7811050Z Metadata: read
+2026-10-04T07:02:44.7811583Z ##[endgroup]
+2026-10-04T07:02:44.7813618Z Secret source: Actions
+2026-10-04T07:02:44.7814962Z Cache mode: write
+2026-10-04T07:02:44.7815768Z Prepare workflow directory
+2026-10-04T07:02:44.8249683Z Prepare all required actions
+2026-10-04T07:02:44.8318122Z Getting action download info
+2026-10-04T07:02:45.1029722Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-04T07:02:45.2320050Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-04T07:02:45.3900147Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-04T07:02:45.5887552Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-04T07:02:45.9378164Z Complete job name: qualify
+2026-10-04T07:02:46.1101982Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-04T07:02:46.1104087Z with:
+2026-10-04T07:02:46.1104845Z   ref: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:02:46.1106015Z   repository: wieslawsoltes/SharpForge
+2026-10-04T07:02:46.1116810Z   token: ***
+2026-10-04T07:02:46.1117475Z   ssh-strict: true
+2026-10-04T07:02:46.1118165Z   ssh-user: git
+2026-10-04T07:02:46.1118875Z   persist-credentials: true
+2026-10-04T07:02:46.1119708Z   clean: true
+2026-10-04T07:02:46.1120433Z   sparse-checkout-cone-mode: true
+2026-10-04T07:02:46.1121728Z   fetch-depth: 1
+2026-10-04T07:02:46.1122412Z   fetch-tags: false
+2026-10-04T07:02:46.1123142Z   show-progress: true
+2026-10-04T07:02:46.1123940Z   lfs: false
+2026-10-04T07:02:46.1124599Z   submodules: false
+2026-10-04T07:02:46.1125336Z   set-safe-directory: true
+2026-10-04T07:02:46.1126234Z   allow-unsafe-pr-checkout: false
+2026-10-04T07:02:46.1127482Z env:
+2026-10-04T07:02:46.1128341Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:02:46.1129503Z ##[endgroup]
+2026-10-04T07:02:46.2652574Z Syncing repository: wieslawsoltes/SharpForge
+2026-10-04T07:02:46.2654693Z ##[group]Getting Git version info
+2026-10-04T07:02:46.2655463Z Working directory is 'D:\a\SharpForge\SharpForge'
+2026-10-04T07:02:46.3448523Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-04T07:02:46.7062121Z git version 2.55.0.windows.5
+2026-10-04T07:02:46.7105981Z ##[endgroup]
+2026-10-04T07:02:46.7124163Z Temporarily overriding HOME='D:\a\_temp\7358b93f-1ba1-4b64-b8c2-52528f99501d' before making global git config changes
+2026-10-04T07:02:46.7128318Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T07:02:46.7136197Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\SharpForge\SharpForge
+2026-10-04T07:02:46.7794695Z Deleting the contents of 'D:\a\SharpForge\SharpForge'
+2026-10-04T07:02:46.7800297Z ##[group]Determining repository object format
+2026-10-04T07:02:46.7802128Z ##[endgroup]
+2026-10-04T07:02:46.7803490Z ##[group]Initializing the repository
+2026-10-04T07:02:46.7811325Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\SharpForge\SharpForge
+2026-10-04T07:02:46.8711896Z Initialized empty Git repository in D:/a/SharpForge/SharpForge/.git/
+2026-10-04T07:02:46.8760337Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/wieslawsoltes/SharpForge
+2026-10-04T07:02:46.9420198Z ##[endgroup]
+2026-10-04T07:02:46.9422138Z ##[group]Disabling automatic garbage collection
+2026-10-04T07:02:46.9429414Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-04T07:02:46.9752143Z ##[endgroup]
+2026-10-04T07:02:46.9754024Z ##[group]Setting up auth
+2026-10-04T07:02:46.9755355Z Removing SSH command configuration
+2026-10-04T07:02:46.9762425Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T07:02:47.0069175Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-04T07:02:48.4945877Z Removing HTTP extra header
+2026-10-04T07:02:48.4955885Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T07:02:48.5254295Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-04T07:02:49.0597632Z Removing includeIf entries pointing to credentials config files
+2026-10-04T07:02:49.0608615Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T07:02:49.0923056Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-04T07:02:49.6357133Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-04T07:02:49.6676314Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/SharpForge/SharpForge/.git.path D:\a\_temp\git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:02:49.6988370Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/SharpForge/SharpForge/.git/worktrees/*.path D:\a\_temp\git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:02:49.7363035Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:02:49.7682963Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:02:49.8008120Z ##[endgroup]
+2026-10-04T07:02:49.8008762Z ##[group]Fetching the repository
+2026-10-04T07:02:49.8009988Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:02:53.4613810Z From https://github.com/wieslawsoltes/SharpForge
+2026-10-04T07:02:53.4615374Z  * branch            25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e -> FETCH_HEAD
+2026-10-04T07:02:53.4664964Z [command]"C:\Program Files\Git\bin\git.exe" rev-parse --verify --quiet 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e^{object}
+2026-10-04T07:02:53.4942543Z 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:02:53.4976489Z ##[endgroup]
+2026-10-04T07:02:53.4977127Z ##[group]Determining the checkout info
+2026-10-04T07:02:53.4977796Z ##[endgroup]
+2026-10-04T07:02:53.4985494Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-04T07:02:53.5411677Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-04T07:02:53.5710642Z ##[group]Checking out the ref
+2026-10-04T07:02:53.5719813Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:02:54.6488522Z Updating files:  32% (3681/11478)
+2026-10-04T07:02:54.6747367Z Updating files:  33% (3788/11478)
+2026-10-04T07:02:54.7012610Z Updating files:  34% (3903/11478)
+2026-10-04T07:02:54.7268104Z Updating files:  35% (4018/11478)
+2026-10-04T07:02:54.7501916Z Updating files:  36% (4133/11478)
+2026-10-04T07:02:54.7732983Z Updating files:  37% (4247/11478)
+2026-10-04T07:02:54.7956708Z Updating files:  38% (4362/11478)
+2026-10-04T07:02:54.8174551Z Updating files:  39% (4477/11478)
+2026-10-04T07:02:54.8444822Z Updating files:  40% (4592/11478)
+2026-10-04T07:02:54.8736937Z Updating files:  41% (4706/11478)
+2026-10-04T07:02:54.9061600Z Updating files:  42% (4821/11478)
+2026-10-04T07:02:55.1566434Z Updating files:  43% (4936/11478)
+2026-10-04T07:02:55.4048687Z Updating files:  44% (5051/11478)
+2026-10-04T07:02:55.4410466Z Updating files:  45% (5166/11478)
+2026-10-04T07:02:55.4719182Z Updating files:  46% (5280/11478)
+2026-10-04T07:02:55.4986873Z Updating files:  47% (5395/11478)
+2026-10-04T07:02:55.5247895Z Updating files:  48% (5510/11478)
+2026-10-04T07:02:55.5502487Z Updating files:  49% (5625/11478)
+2026-10-04T07:02:55.5759734Z Updating files:  50% (5739/11478)
+2026-10-04T07:02:55.6031039Z Updating files:  51% (5854/11478)
+2026-10-04T07:02:55.6298479Z Updating files:  52% (5969/11478)
+2026-10-04T07:02:55.6318732Z Updating files:  53% (6084/11478)
+2026-10-04T07:02:55.6567315Z Updating files:  53% (6092/11478)
+2026-10-04T07:02:55.6833778Z Updating files:  54% (6199/11478)
+2026-10-04T07:02:55.7106859Z Updating files:  55% (6313/11478)
+2026-10-04T07:02:55.7372485Z Updating files:  56% (6428/11478)
+2026-10-04T07:02:55.7638573Z Updating files:  57% (6543/11478)
+2026-10-04T07:02:55.7879863Z Updating files:  58% (6658/11478)
+2026-10-04T07:02:55.8080109Z Updating files:  59% (6773/11478)
+2026-10-04T07:02:55.8324907Z Updating files:  60% (6887/11478)
+2026-10-04T07:02:55.8580477Z Updating files:  61% (7002/11478)
+2026-10-04T07:02:55.8896107Z Updating files:  62% (7117/11478)
+2026-10-04T07:02:55.9151203Z Updating files:  63% (7232/11478)
+2026-10-04T07:02:55.9398171Z Updating files:  64% (7346/11478)
+2026-10-04T07:02:55.9654781Z Updating files:  65% (7461/11478)
+2026-10-04T07:02:55.9908193Z Updating files:  66% (7576/11478)
+2026-10-04T07:02:56.0174630Z Updating files:  67% (7691/11478)
+2026-10-04T07:02:56.0411967Z Updating files:  68% (7806/11478)
+2026-10-04T07:02:56.0657491Z Updating files:  69% (7920/11478)
+2026-10-04T07:02:56.0904281Z Updating files:  70% (8035/11478)
+2026-10-04T07:02:56.1155352Z Updating files:  71% (8150/11478)
+2026-10-04T07:02:56.1406751Z Updating files:  72% (8265/11478)
+2026-10-04T07:02:56.1656809Z Updating files:  73% (8379/11478)
+2026-10-04T07:02:56.1913799Z Updating files:  74% (8494/11478)
+2026-10-04T07:02:56.2162352Z Updating files:  75% (8609/11478)
+2026-10-04T07:02:56.2417428Z Updating files:  76% (8724/11478)
+2026-10-04T07:02:56.2658172Z Updating files:  77% (8839/11478)
+2026-10-04T07:02:56.2904192Z Updating files:  78% (8953/11478)
+2026-10-04T07:02:56.3158739Z Updating files:  79% (9068/11478)
+2026-10-04T07:02:56.4803579Z Updating files:  80% (9183/11478)
+2026-10-04T07:02:56.5848764Z Updating files:  81% (9298/11478)
+2026-10-04T07:02:56.6097814Z Updating files:  82% (9412/11478)
+2026-10-04T07:02:56.6326415Z Updating files:  83% (9527/11478)
+2026-10-04T07:02:56.6396464Z Updating files:  83% (9614/11478)
+2026-10-04T07:02:56.6642003Z Updating files:  84% (9642/11478)
+2026-10-04T07:02:56.6884507Z Updating files:  85% (9757/11478)
+2026-10-04T07:02:56.7113700Z Updating files:  86% (9872/11478)
+2026-10-04T07:02:56.7346169Z Updating files:  87% (9986/11478)
+2026-10-04T07:02:56.7578160Z Updating files:  88% (10101/11478)
+2026-10-04T07:02:56.7816654Z Updating files:  89% (10216/11478)
+2026-10-04T07:02:56.8053488Z Updating files:  90% (10331/11478)
+2026-10-04T07:02:56.8290819Z Updating files:  91% (10445/11478)
+2026-10-04T07:02:56.8512567Z Updating files:  92% (10560/11478)
+2026-10-04T07:02:56.8758418Z Updating files:  93% (10675/11478)
+2026-10-04T07:02:56.9026032Z Updating files:  94% (10790/11478)
+2026-10-04T07:02:56.9275776Z Updating files:  95% (10905/11478)
+2026-10-04T07:02:56.9564023Z Updating files:  96% (11019/11478)
+2026-10-04T07:02:56.9858322Z Updating files:  97% (11134/11478)
+2026-10-04T07:02:57.0142990Z Updating files:  98% (11249/11478)
+2026-10-04T07:02:57.0436666Z Updating files:  99% (11364/11478)
+2026-10-04T07:02:57.0437104Z Updating files: 100% (11478/11478)
+2026-10-04T07:02:57.0437482Z Updating files: 100% (11478/11478), done.
+2026-10-04T07:02:57.0768624Z Note: switching to '25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e'.
+2026-10-04T07:02:57.0769568Z 
+2026-10-04T07:02:57.0770301Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-04T07:02:57.0771079Z changes and commit them, and you can discard any commits you make in this
+2026-10-04T07:02:57.0772019Z state without impacting any branches by switching back to a branch.
+2026-10-04T07:02:57.0772745Z 
+2026-10-04T07:02:57.0776982Z If you want to create a new branch to retain commits you create, you may
+2026-10-04T07:02:57.0777917Z do so (now or later) by using -c with the switch command. Example:
+2026-10-04T07:02:57.0778522Z 
+2026-10-04T07:02:57.0778833Z   git switch -c <new-branch-name>
+2026-10-04T07:02:57.0779251Z 
+2026-10-04T07:02:57.0779552Z Or undo this operation with:
+2026-10-04T07:02:57.0779936Z 
+2026-10-04T07:02:57.0780201Z   git switch -
+2026-10-04T07:02:57.0780535Z 
+2026-10-04T07:02:57.0781025Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-04T07:02:57.0781970Z 
+2026-10-04T07:02:57.0782731Z HEAD is now at 25ef23b Merge pull request #4426 from wieslawsoltes/codex/project16/11-reviewed-performance-baselines
+2026-10-04T07:02:57.0964164Z ##[endgroup]
+2026-10-04T07:02:57.1301051Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-04T07:02:57.1583283Z 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:02:57.2034548Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-04T07:02:57.2034985Z with:
+2026-10-04T07:02:57.2035184Z   node-version: 24
+2026-10-04T07:02:57.2035378Z   always-auth: false
+2026-10-04T07:02:57.2035594Z   check-latest: false
+2026-10-04T07:02:57.2037881Z   token: ***
+2026-10-04T07:02:57.2038063Z env:
+2026-10-04T07:02:57.2038290Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:02:57.2038578Z ##[endgroup]
+2026-10-04T07:02:57.3761288Z Found in cache @ C:\hostedtoolcache\windows\node\24.21.0\x64
+2026-10-04T07:02:57.3769198Z (node:2660) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T07:02:57.3770266Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T07:02:57.3773189Z ##[group]Environment details
+2026-10-04T07:03:02.2625080Z node: v24.21.0
+2026-10-04T07:03:02.2625389Z npm: 11.19.0
+2026-10-04T07:03:02.2625664Z yarn: 1.22.22
+2026-10-04T07:03:02.2626199Z ##[endgroup]
+2026-10-04T07:03:02.2926346Z ##[group]Run node scripts/project16-trigger.js
+2026-10-04T07:03:02.2926819Z [36;1mnode scripts/project16-trigger.js[0m
+2026-10-04T07:03:02.3415318Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-04T07:03:02.3415912Z env:
+2026-10-04T07:03:02.3416159Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:02.3416447Z ##[endgroup]
+2026-10-04T07:03:02.8940019Z Resolved create: windows-latest/firefox/browser at 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:03.0452776Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-04T07:03:03.0453226Z with:
+2026-10-04T07:03:03.0453425Z   python-version: 3.12
+2026-10-04T07:03:03.0453643Z   check-latest: false
+2026-10-04T07:03:03.0455878Z   token: ***
+2026-10-04T07:03:03.0456089Z   update-environment: true
+2026-10-04T07:03:03.0456324Z   allow-prereleases: false
+2026-10-04T07:03:03.0456540Z   freethreaded: false
+2026-10-04T07:03:03.0456741Z env:
+2026-10-04T07:03:03.0456966Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:03.0457279Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:03.0457746Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:03.0458241Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:03.0458580Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:03.0459035Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:03.0459717Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:03.0460052Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:03.0460292Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:03.0460548Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:03.0460783Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:03.0461034Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:03.0461258Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:03.0461484Z ##[endgroup]
+2026-10-04T07:03:03.2017111Z ##[group]Installed versions
+2026-10-04T07:03:03.2199691Z Successfully set up CPython (3.12.10)
+2026-10-04T07:03:03.2200404Z ##[endgroup]
+2026-10-04T07:03:03.2487842Z ##[group]Run npm ci --ignore-scripts --no-audit --no-fund
+2026-10-04T07:03:03.2488340Z [36;1mnpm ci --ignore-scripts --no-audit --no-fund[0m
+2026-10-04T07:03:03.2555581Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-04T07:03:03.2555914Z env:
+2026-10-04T07:03:03.2556148Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:03.2556473Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:03.2556937Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:03.2557428Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:03.2557775Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:03.2558213Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:03.2558564Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:03.2558817Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:03.2559104Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:03.2559361Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:03.2559604Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:03.2559854Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:03.2560086Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:03.2560400Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:03.2560848Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:03:03.2561291Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:03.2561690Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:03.2562069Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:03.2562370Z ##[endgroup]
+2026-10-04T07:03:05.5897602Z 
+2026-10-04T07:03:05.5898318Z added 28 packages in 2s
+2026-10-04T07:03:07.1643596Z ##[group]Run npm run check
+2026-10-04T07:03:07.1643932Z [36;1mnpm run check[0m
+2026-10-04T07:03:07.1644874Z [36;1mnpm run build[0m
+2026-10-04T07:03:07.1645087Z [36;1mnode scripts/standalone.js[0m
+2026-10-04T07:03:07.1665058Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-04T07:03:07.1665456Z env:
+2026-10-04T07:03:07.1665692Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:07.1666003Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:07.1666463Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:07.1666927Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:07.1667280Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:07.1667711Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:07.1668062Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:07.1668363Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:07.1668598Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:07.1668844Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:07.1669082Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:07.1669322Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:07.1669541Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:07.1669844Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:07.1670288Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:03:07.1670722Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:07.1671110Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:07.1671484Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:07.1671782Z ##[endgroup]
+2026-10-04T07:03:08.0148524Z 
+2026-10-04T07:03:08.0149366Z > sharpforge@0.14.0 check
+2026-10-04T07:03:08.0149903Z > node scripts/run.js check
+2026-10-04T07:03:08.0150159Z 
+2026-10-04T07:03:08.4068190Z {
+2026-10-04T07:03:08.4068669Z   "areas": 30,
+2026-10-04T07:03:08.4068988Z   "nodeFiles": 924,
+2026-10-04T07:03:08.4069290Z   "browserScripts": 37,
+2026-10-04T07:03:08.4069584Z   "unassigned": 0,
+2026-10-04T07:03:08.4069848Z   "duplicate": 0
+2026-10-04T07:03:08.4070093Z }
+2026-10-04T07:03:10.2767311Z Checked 3482 JavaScript modules; 0 syntax errors.
+2026-10-04T07:03:14.3083235Z {
+2026-10-04T07:03:14.3083513Z   "passed": true,
+2026-10-04T07:03:14.3083754Z   "inspected": 3478,
+2026-10-04T07:03:14.3084214Z   "modules": 3478,
+2026-10-04T07:03:14.3084466Z   "errors": []
+2026-10-04T07:03:14.3084688Z }
+2026-10-04T07:03:14.8261882Z 
+2026-10-04T07:03:14.8262606Z > sharpforge@0.14.0 build
+2026-10-04T07:03:14.8263054Z > node scripts/run.js build
+2026-10-04T07:03:14.8263235Z 
+2026-10-04T07:03:27.1005019Z Built dependency-free browser application in dist/
+2026-10-04T07:03:29.4640597Z Built D:\a\SharpForge\SharpForge\artifacts\SharpForge-standalone.html (16,419,776 bytes; 5 embedded worker graphs)
+2026-10-04T07:03:29.6456916Z ##[group]Run python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+2026-10-04T07:03:29.6457747Z [36;1mpython -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt[0m
+2026-10-04T07:03:29.6526886Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-04T07:03:29.6527677Z env:
+2026-10-04T07:03:29.6527921Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:29.6528237Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:29.6528696Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:29.6529168Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:29.6529519Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:29.6529950Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:29.6530294Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:29.6530591Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:29.6531244Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:29.6531494Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:29.6531736Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:29.6532077Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:29.6532441Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:29.6532755Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:29.6533200Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:03:29.6533648Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:29.6534038Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:29.6534418Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:29.6534720Z ##[endgroup]
+2026-10-04T07:03:43.6850010Z Collecting attrs==26.1.0 (from -r tests/requirements.txt (line 3))
+2026-10-04T07:03:43.9711628Z   Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+2026-10-04T07:03:44.4194541Z Collecting greenlet==3.5.6 (from -r tests/requirements.txt (line 5))
+2026-10-04T07:03:44.4525798Z   Downloading greenlet-3.5.6-cp312-cp312-win_amd64.whl (324 kB)
+2026-10-04T07:03:44.6479787Z Collecting jsonschema==4.26.0 (from -r tests/requirements.txt (line 84))
+2026-10-04T07:03:44.6684962Z   Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+2026-10-04T07:03:44.7799864Z Collecting jsonschema-specifications==2025.9.1 (from -r tests/requirements.txt (line 86))
+2026-10-04T07:03:44.8007792Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+2026-10-04T07:03:44.9483065Z Collecting playwright==1.63.0 (from -r tests/requirements.txt (line 88))
+2026-10-04T07:03:44.9724673Z   Downloading playwright-1.63.0-py3-none-win_amd64.whl (38.6 MB)
+2026-10-04T07:03:46.3565546Z      ---------------------------------------- 38.6/38.6 MB 27.9 MB/s  0:00:01
+2026-10-04T07:03:46.4831320Z Collecting pyee==13.0.1 (from -r tests/requirements.txt (line 97))
+2026-10-04T07:03:46.5034534Z   Downloading pyee-13.0.1-py3-none-any.whl (15 kB)
+2026-10-04T07:03:46.5898760Z Collecting PyYAML==6.0.3 (from -r tests/requirements.txt (line 99))
+2026-10-04T07:03:46.6118058Z   Downloading pyyaml-6.0.3-cp312-cp312-win_amd64.whl (154 kB)
+2026-10-04T07:03:46.6872946Z Collecting referencing==0.37.0 (from -r tests/requirements.txt (line 172))
+2026-10-04T07:03:46.7078586Z   Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+2026-10-04T07:03:47.0582167Z Collecting rpds-py==2026.6.3 (from -r tests/requirements.txt (line 174))
+2026-10-04T07:03:47.0804222Z   Downloading rpds_py-2026.6.3-cp312-cp312-win_amd64.whl (220 kB)
+2026-10-04T07:03:47.1518773Z Collecting typing_extensions==4.16.0 (from -r tests/requirements.txt (line 290))
+2026-10-04T07:03:47.1729967Z   Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-04T07:03:47.4266940Z Installing collected packages: typing_extensions, rpds-py, PyYAML, greenlet, attrs, referencing, pyee, playwright, jsonschema-specifications, jsonschema
+2026-10-04T07:03:49.4348721Z 
+2026-10-04T07:03:49.4371553Z Successfully installed PyYAML-6.0.3 attrs-26.1.0 greenlet-3.5.6 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 playwright-1.63.0 pyee-13.0.1 referencing-0.37.0 rpds-py-2026.6.3 typing_extensions-4.16.0
+2026-10-04T07:03:49.6175487Z ##[group]Run python -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"
+2026-10-04T07:03:49.6176170Z [36;1mpython -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"[0m
+2026-10-04T07:03:49.6189811Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-04T07:03:49.6190196Z env:
+2026-10-04T07:03:49.6190434Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:49.6190753Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:49.6191218Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:49.6192088Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:49.6192643Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:49.6193079Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:49.6193430Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:49.6193734Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:49.6193976Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:49.6194225Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:49.6194466Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:49.6194711Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:49.6194943Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:49.6195255Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:49.6195705Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:03:49.6196152Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:49.6196547Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:49.6196936Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:49.6197242Z ##[endgroup]
+2026-10-04T07:03:50.4676036Z Downloading Firefox 155.0 (playwright firefox v1543)[2m from https://cdn.playwright.dev/dbazure/download/playwright/builds/firefox/1543/firefox-win64.zip[22m
+2026-10-04T07:03:50.8931793Z |                                                                                |   0% of 122 MiB
+2026-10-04T07:03:51.1120440Z |■■■■■■■■                                                                        |  10% of 122 MiB
+2026-10-04T07:03:51.2409218Z |■■■■■■■■■■■■■■■■                                                                |  20% of 122 MiB
+2026-10-04T07:03:51.3297464Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 122 MiB
+2026-10-04T07:03:51.4398824Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 122 MiB
+2026-10-04T07:03:51.5596026Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 122 MiB
+2026-10-04T07:03:51.6583893Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 122 MiB
+2026-10-04T07:03:51.7660372Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 122 MiB
+2026-10-04T07:03:51.8670470Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 122 MiB
+2026-10-04T07:03:51.9567397Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 122 MiB
+2026-10-04T07:03:52.1009166Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 122 MiB
+2026-10-04T07:03:57.5107313Z Firefox 155.0 (playwright firefox v1543) downloaded to C:\Users\runneradmin\AppData\Local\ms-playwright\firefox-1543
+2026-10-04T07:03:57.5115245Z Downloading FFmpeg (playwright ffmpeg v1011)[2m from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-win64.zip[22m
+2026-10-04T07:03:57.9641932Z |                                                                                |   1% of 1.3 MiB
+2026-10-04T07:03:58.0001985Z |■■■■■■■■                                                                        |  10% of 1.3 MiB
+2026-10-04T07:03:58.0162511Z |■■■■■■■■■■■■■■■■                                                                |  20% of 1.3 MiB
+2026-10-04T07:03:58.0214064Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 1.3 MiB
+2026-10-04T07:03:58.0333575Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 1.3 MiB
+2026-10-04T07:03:58.0370759Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 1.3 MiB
+2026-10-04T07:03:58.0398955Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  61% of 1.3 MiB
+2026-10-04T07:03:58.0423081Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 1.3 MiB
+2026-10-04T07:03:58.0508815Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 1.3 MiB
+2026-10-04T07:03:58.0525963Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 1.3 MiB
+2026-10-04T07:03:58.0545234Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 1.3 MiB
+2026-10-04T07:03:58.1452986Z FFmpeg (playwright ffmpeg v1011) downloaded to C:\Users\runneradmin\AppData\Local\ms-playwright\ffmpeg-1011
+2026-10-04T07:03:58.1457350Z Downloading Winldd (playwright winldd v1007)[2m from https://cdn.playwright.dev/dbazure/download/playwright/builds/winldd/1007/winldd-win64.zip[22m
+2026-10-04T07:03:58.6294835Z |■■■■■■■■                                                                        |  12% of 0.1 MiB
+2026-10-04T07:03:58.6333577Z |■■■■■■■■■■■■■■■■                                                                |  25% of 0.1 MiB
+2026-10-04T07:03:58.6453777Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  38% of 0.1 MiB
+2026-10-04T07:03:58.6478745Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 0.1 MiB
+2026-10-04T07:03:58.6498867Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  63% of 0.1 MiB
+2026-10-04T07:03:58.6525686Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  75% of 0.1 MiB
+2026-10-04T07:03:58.6631872Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  88% of 0.1 MiB
+2026-10-04T07:03:58.6650400Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 0.1 MiB
+2026-10-04T07:03:58.7123150Z Winldd (playwright winldd v1007) downloaded to C:\Users\runneradmin\AppData\Local\ms-playwright\winldd-1007
+2026-10-04T07:03:59.1542669Z ##[group]Run import os
+2026-10-04T07:03:59.1542999Z [36;1mimport os[0m
+2026-10-04T07:03:59.1544300Z [36;1mfrom pathlib import Path[0m
+2026-10-04T07:03:59.1544562Z [36;1mimport playwright[0m
+2026-10-04T07:03:59.1544905Z [36;1mdriver = Path(playwright.__file__).parent / 'driver' / 'package'[0m
+2026-10-04T07:03:59.1545324Z [36;1mif not (driver / 'package.json').is_file():[0m
+2026-10-04T07:03:59.1545725Z [36;1m    raise RuntimeError('Pinned Playwright driver is missing')[0m
+2026-10-04T07:03:59.1546177Z [36;1mwith open(os.environ['GITHUB_ENV'], 'a', encoding='utf8') as output:[0m
+2026-10-04T07:03:59.1546646Z [36;1m    output.write('SHARPFORGE_PLAYWRIGHT_MODULE=' + str(driver) + '\n')[0m
+2026-10-04T07:03:59.1550227Z shell: C:\hostedtoolcache\windows\Python\3.12.10\x64\python.EXE {0}
+2026-10-04T07:03:59.1550565Z env:
+2026-10-04T07:03:59.1550798Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:59.1551166Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:59.1551646Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:59.1552122Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:59.1552459Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:59.1552881Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:59.1553251Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:59.1553925Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:59.1554183Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:59.1554428Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:59.1554675Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:59.1554930Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:59.1555164Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:59.1555473Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.1555916Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:03:59.1556352Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.1556744Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.1557131Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.1557446Z ##[endgroup]
+2026-10-04T07:03:59.2120517Z ##[group]Run node scripts/project16-qualification.js "$QUALIFICATION_STAGE"
+2026-10-04T07:03:59.2121132Z [36;1mnode scripts/project16-qualification.js "$QUALIFICATION_STAGE"[0m
+2026-10-04T07:03:59.2135162Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-04T07:03:59.2135678Z env:
+2026-10-04T07:03:59.2135941Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:03:59.2136266Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:03:59.2136725Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:03:59.2137206Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:03:59.2137555Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:03:59.2137989Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:03:59.2138336Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:03:59.2138632Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:03:59.2138875Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:03:59.2139122Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:03:59.2139359Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:03:59.2139607Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:03:59.2139836Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:03:59.2140143Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.2140608Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:03:59.2141039Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.2141423Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.2141806Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:03:59.2142567Z   SHARPFORGE_PLAYWRIGHT_MODULE: C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\site-packages\playwright\driver\package
+2026-10-04T07:03:59.2143076Z ##[endgroup]
+2026-10-04T07:04:25.9491444Z A19 docking browser: nine pointer targets, retained focus/state, floating groups, flyout pin, popout F5 and reattach passed
+2026-10-04T07:04:40.3619184Z [
+2026-10-04T07:04:40.3619507Z   {
+2026-10-04T07:04:40.3620020Z     "scenario": "menu-mnemonics-arrows-focus-restore",
+2026-10-04T07:04:40.3620546Z     "passed": true
+2026-10-04T07:04:40.3620823Z   },
+2026-10-04T07:04:40.3621098Z   {
+2026-10-04T07:04:40.3621453Z     "scenario": "searchable-options-cancel",
+2026-10-04T07:04:40.3621880Z     "passed": true
+2026-10-04T07:04:40.3622376Z   },
+2026-10-04T07:04:40.3622587Z   {
+2026-10-04T07:04:40.3622856Z     "scenario": "theme-text-contrast",
+2026-10-04T07:04:40.3623249Z     "theme": "dark",
+2026-10-04T07:04:40.3623541Z     "ratios": [
+2026-10-04T07:04:40.3623835Z       {
+2026-10-04T07:04:40.3624106Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3624512Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3624905Z         "ratio": 13.128242551287334
+2026-10-04T07:04:40.3625250Z       },
+2026-10-04T07:04:40.3625473Z       {
+2026-10-04T07:04:40.3625760Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3626148Z         "background": "--wb-raised",
+2026-10-04T07:04:40.3626562Z         "ratio": 11.05341484495638
+2026-10-04T07:04:40.3626894Z       },
+2026-10-04T07:04:40.3627144Z       {
+2026-10-04T07:04:40.3627441Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3627822Z         "background": "--wb-selected",
+2026-10-04T07:04:40.3628219Z         "ratio": 7.625848352516812
+2026-10-04T07:04:40.3628520Z       },
+2026-10-04T07:04:40.3628689Z       {
+2026-10-04T07:04:40.3628912Z         "foreground": "--wb-muted",
+2026-10-04T07:04:40.3629189Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3629437Z         "ratio": 7.60217856912121
+2026-10-04T07:04:40.3629673Z       }
+2026-10-04T07:04:40.3629837Z     ],
+2026-10-04T07:04:40.3630015Z     "passed": true
+2026-10-04T07:04:40.3630208Z   },
+2026-10-04T07:04:40.3630379Z   {
+2026-10-04T07:04:40.3633336Z     "scenario": "theme-text-contrast",
+2026-10-04T07:04:40.3633781Z     "theme": "light",
+2026-10-04T07:04:40.3634007Z     "ratios": [
+2026-10-04T07:04:40.3634202Z       {
+2026-10-04T07:04:40.3634410Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3634699Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3634971Z         "ratio": 17.64189221851225
+2026-10-04T07:04:40.3635198Z       },
+2026-10-04T07:04:40.3635368Z       {
+2026-10-04T07:04:40.3635567Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3635819Z         "background": "--wb-raised",
+2026-10-04T07:04:40.3636085Z         "ratio": 15.129008503189796
+2026-10-04T07:04:40.3636301Z       },
+2026-10-04T07:04:40.3636460Z       {
+2026-10-04T07:04:40.3636643Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3636906Z         "background": "--wb-selected",
+2026-10-04T07:04:40.3637168Z         "ratio": 14.367676325434495
+2026-10-04T07:04:40.3637392Z       },
+2026-10-04T07:04:40.3637548Z       {
+2026-10-04T07:04:40.3637738Z         "foreground": "--wb-muted",
+2026-10-04T07:04:40.3637983Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3638226Z         "ratio": 7.847154678273723
+2026-10-04T07:04:40.3638438Z       }
+2026-10-04T07:04:40.3638596Z     ],
+2026-10-04T07:04:40.3638778Z     "passed": true
+2026-10-04T07:04:40.3638970Z   },
+2026-10-04T07:04:40.3639134Z   {
+2026-10-04T07:04:40.3639339Z     "scenario": "theme-text-contrast",
+2026-10-04T07:04:40.3639626Z     "theme": "blue",
+2026-10-04T07:04:40.3639825Z     "ratios": [
+2026-10-04T07:04:40.3640000Z       {
+2026-10-04T07:04:40.3640191Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3640447Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3640699Z         "ratio": 11.892856924816419
+2026-10-04T07:04:40.3641143Z       },
+2026-10-04T07:04:40.3641304Z       {
+2026-10-04T07:04:40.3641493Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3641759Z         "background": "--wb-raised",
+2026-10-04T07:04:40.3642018Z         "ratio": 8.875891841560621
+2026-10-04T07:04:40.3642233Z       },
+2026-10-04T07:04:40.3642395Z       {
+2026-10-04T07:04:40.3642575Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3642821Z         "background": "--wb-selected",
+2026-10-04T07:04:40.3643079Z         "ratio": 6.225007303392024
+2026-10-04T07:04:40.3643293Z       },
+2026-10-04T07:04:40.3643448Z       {
+2026-10-04T07:04:40.3643647Z         "foreground": "--wb-muted",
+2026-10-04T07:04:40.3643899Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3644136Z         "ratio": 8.39700165630076
+2026-10-04T07:04:40.3644344Z       }
+2026-10-04T07:04:40.3644497Z     ],
+2026-10-04T07:04:40.3644661Z     "passed": true
+2026-10-04T07:04:40.3644847Z   },
+2026-10-04T07:04:40.3644995Z   {
+2026-10-04T07:04:40.3645191Z     "scenario": "theme-text-contrast",
+2026-10-04T07:04:40.3645444Z     "theme": "high-contrast",
+2026-10-04T07:04:40.3645659Z     "ratios": [
+2026-10-04T07:04:40.3645831Z       {
+2026-10-04T07:04:40.3646019Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3646267Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3646652Z         "ratio": 21
+2026-10-04T07:04:40.3646873Z       },
+2026-10-04T07:04:40.3647027Z       {
+2026-10-04T07:04:40.3647210Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3647457Z         "background": "--wb-raised",
+2026-10-04T07:04:40.3647693Z         "ratio": 21
+2026-10-04T07:04:40.3647867Z       },
+2026-10-04T07:04:40.3648022Z       {
+2026-10-04T07:04:40.3648203Z         "foreground": "--wb-fg",
+2026-10-04T07:04:40.3648448Z         "background": "--wb-selected",
+2026-10-04T07:04:40.3648706Z         "ratio": 12.853635274157462
+2026-10-04T07:04:40.3648928Z       },
+2026-10-04T07:04:40.3649078Z       {
+2026-10-04T07:04:40.3649259Z         "foreground": "--wb-muted",
+2026-10-04T07:04:40.3649511Z         "background": "--wb-panel",
+2026-10-04T07:04:40.3649726Z         "ratio": 21
+2026-10-04T07:04:40.3649898Z       }
+2026-10-04T07:04:40.3650053Z     ],
+2026-10-04T07:04:40.3650916Z     "passed": true
+2026-10-04T07:04:40.3651107Z   },
+2026-10-04T07:04:40.3651470Z   {
+2026-10-04T07:04:40.3651672Z     "scenario": "tool-window-mounts",
+2026-10-04T07:04:40.3651912Z     "passed": true
+2026-10-04T07:04:40.3652094Z   },
+2026-10-04T07:04:40.3652256Z   {
+2026-10-04T07:04:40.3652492Z     "scenario": "narrow-dialog-focus-forced-colors",
+2026-10-04T07:04:40.3652798Z     "passed": true
+2026-10-04T07:04:40.3652966Z   },
+2026-10-04T07:04:40.3653113Z   {
+2026-10-04T07:04:40.3653331Z     "scenario": "named-controls-and-bounded-grid",
+2026-10-04T07:04:40.3653621Z     "passed": true
+2026-10-04T07:04:40.3653789Z   }
+2026-10-04T07:04:40.3653943Z ]
+2026-10-04T07:04:54.7157190Z {
+2026-10-04T07:04:54.7158453Z   "target": "production-studio-real-workers",
+2026-10-04T07:04:54.7159837Z   "status": "passed",
+2026-10-04T07:04:54.7160133Z   "engine": "firefox",
+2026-10-04T07:04:54.7160344Z   "checks": [
+2026-10-04T07:04:54.7160515Z     {
+2026-10-04T07:04:54.7160875Z       "name": "solution import uses Studio project and compiler services",
+2026-10-04T07:04:54.7161334Z       "passed": true
+2026-10-04T07:04:54.7161623Z     },
+2026-10-04T07:04:54.7161851Z     {
+2026-10-04T07:04:54.7162358Z       "name": "toolbar retains the selected launch profile separately for each project",
+2026-10-04T07:04:54.7162763Z       "passed": true
+2026-10-04T07:04:54.7162955Z     },
+2026-10-04T07:04:54.7163109Z     {
+2026-10-04T07:04:54.7163495Z       "name": "Start toolbar launches two actual WinUI applications with isolated profile output",
+2026-10-04T07:04:54.7163907Z       "passed": true,
+2026-10-04T07:04:54.7164107Z       "resources": [
+2026-10-04T07:04:54.7164290Z         {
+2026-10-04T07:04:54.7164484Z           "worker": "running",
+2026-10-04T07:04:54.7164714Z           "generation": 1,
+2026-10-04T07:04:54.7165247Z           "pendingRequests": 0,
+2026-10-04T07:04:54.7165478Z           "heapBytes": 998,
+2026-10-04T07:04:54.7165694Z           "heapObjects": 13,
+2026-10-04T07:04:54.7165938Z           "engine": "source-vm"
+2026-10-04T07:04:54.7166147Z         },
+2026-10-04T07:04:54.7166312Z         {
+2026-10-04T07:04:54.7166496Z           "worker": "running",
+2026-10-04T07:04:54.7166715Z           "generation": 1,
+2026-10-04T07:04:54.7166945Z           "pendingRequests": 0,
+2026-10-04T07:04:54.7167172Z           "heapBytes": 988,
+2026-10-04T07:04:54.7167391Z           "heapObjects": 13,
+2026-10-04T07:04:54.7167618Z           "engine": "source-vm"
+2026-10-04T07:04:54.7167818Z         }
+2026-10-04T07:04:54.7167973Z       ]
+2026-10-04T07:04:54.7168129Z     },
+2026-10-04T07:04:54.7168283Z     {
+2026-10-04T07:04:54.7168626Z       "name": "Process selector and Stop toolbar affect only the selected application",
+2026-10-04T07:04:54.7169013Z       "passed": true
+2026-10-04T07:04:54.7169534Z     },
+2026-10-04T07:04:54.7169757Z     {
+2026-10-04T07:04:54.7170423Z       "name": "failing background project build preserves active project, application, output and diagnostics",
+2026-10-04T07:04:54.7171565Z       "passed": true
+2026-10-04T07:04:54.7171767Z     },
+2026-10-04T07:04:54.7171920Z     {
+2026-10-04T07:04:54.7172345Z       "name": "Start New Instance retains the selected profile and Stop All releases every application lock",
+2026-10-04T07:04:54.7173456Z       "passed": true
+2026-10-04T07:04:54.7173754Z     }
+2026-10-04T07:04:54.7173997Z   ],
+2026-10-04T07:04:54.7174236Z   "failure": null,
+2026-10-04T07:04:54.7174521Z   "pageErrors": [],
+2026-10-04T07:04:54.7174805Z   "milliseconds": 14101.55
+2026-10-04T07:04:54.7175092Z }
+2026-10-04T07:05:06.1737694Z A19 lazy tools: cold graph excludes all five controllers; first activation succeeds using local built assets
+2026-10-04T07:05:25.4023782Z {
+2026-10-04T07:05:25.4024267Z   "suite": "browser_vs_workflows_test",
+2026-10-04T07:05:25.4024744Z   "mode": "http",
+2026-10-04T07:05:25.4025022Z   "engine": "firefox",
+2026-10-04T07:05:25.4025317Z   "passed": true,
+2026-10-04T07:05:25.4025766Z   "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+2026-10-04T07:05:25.4026780Z   "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+2026-10-04T07:05:25.4027612Z   "checks": [
+2026-10-04T07:05:25.4027902Z     {
+2026-10-04T07:05:25.4028254Z       "scenario": "create-console-project",
+2026-10-04T07:05:25.4028690Z       "passed": true,
+2026-10-04T07:05:25.4029059Z       "emptyNameRejected": true
+2026-10-04T07:05:25.4029382Z     },
+2026-10-04T07:05:25.4029609Z     {
+2026-10-04T07:05:25.4029956Z       "scenario": "edit-and-build-shared-document",
+2026-10-04T07:05:25.4030407Z       "passed": true
+2026-10-04T07:05:25.4030692Z     },
+2026-10-04T07:05:25.4030918Z     {
+2026-10-04T07:05:25.4031273Z       "scenario": "breakpoint-step-continue",
+2026-10-04T07:05:25.4031683Z       "passed": true,
+2026-10-04T07:05:25.4031994Z       "backend": "ECMA-335",
+2026-10-04T07:05:25.4032325Z       "runtimeStatistics": {
+2026-10-04T07:05:25.4032700Z         "artifactFormat": "ECMA-335",
+2026-10-04T07:05:25.4033073Z         "assembly": {
+2026-10-04T07:05:25.4033368Z           "bytes": 4096,
+2026-10-04T07:05:25.4033748Z           "loadMs": 28,
+2026-10-04T07:05:25.4034041Z           "decodeMs": 7,
+2026-10-04T07:05:25.4034370Z           "verificationMs": 21
+2026-10-04T07:05:25.4034678Z         },
+2026-10-04T07:05:25.4034933Z         "instructions": 14,
+2026-10-04T07:05:25.4035258Z         "elapsedMs": 2,
+2026-10-04T07:05:25.4035540Z         "frames": 0,
+2026-10-04T07:05:25.4035812Z         "heap": {
+2026-10-04T07:05:25.4036109Z           "allocatedBytes": 0,
+2026-10-04T07:05:25.4036484Z           "hostStrongHandles": 0,
+2026-10-04T07:05:25.4036869Z           "hostWeakHandles": 0,
+2026-10-04T07:05:25.4037352Z           "rootsScanned": 0,
+2026-10-04T07:05:25.4037747Z           "edgesScanned": 0,
+2026-10-04T07:05:25.4038448Z           "markedObjects": 0,
+2026-10-04T07:05:25.4038830Z           "maxPauseMs": 0,
+2026-10-04T07:05:25.4039206Z           "markMs": 0,
+2026-10-04T07:05:25.4039553Z           "sweepMs": 0,
+2026-10-04T07:05:25.4039954Z           "liveBytes": 0,
+2026-10-04T07:05:25.4040340Z           "liveObjects": 0,
+2026-10-04T07:05:25.4040746Z           "allocations": 0,
+2026-10-04T07:05:25.4041127Z           "collections": 0,
+2026-10-04T07:05:25.4041508Z           "freedObjects": 0,
+2026-10-04T07:05:25.4042254Z           "freedBytes": 0,
+2026-10-04T07:05:25.4042718Z           "lastPauseMs": 0,
+2026-10-04T07:05:25.4043108Z           "totalPauseMs": 0,
+2026-10-04T07:05:25.4043491Z           "peakBytes": 0,
+2026-10-04T07:05:25.4043889Z           "maxBytes": 33554432,
+2026-10-04T07:05:25.4044249Z           "threshold": 65536
+2026-10-04T07:05:25.4044601Z         }
+2026-10-04T07:05:25.4044925Z       }
+2026-10-04T07:05:25.4045213Z     },
+2026-10-04T07:05:25.4045517Z     {
+2026-10-04T07:05:25.4045909Z       "scenario": "designer-edit-undo-redo-save",
+2026-10-04T07:05:25.4046698Z       "passed": true
+2026-10-04T07:05:25.4047028Z     },
+2026-10-04T07:05:25.4047347Z     {
+2026-10-04T07:05:25.4047741Z       "scenario": "export-project-and-design",
+2026-10-04T07:05:25.4048202Z       "passed": true
+2026-10-04T07:05:25.4048840Z     }
+2026-10-04T07:05:25.4050049Z   ],
+2026-10-04T07:05:25.4050437Z   "navigation": {
+2026-10-04T07:05:25.4050745Z     "mode": "http",
+2026-10-04T07:05:25.4051111Z     "url": "http://127.0.0.1:64168/",
+2026-10-04T07:05:25.4051458Z     "offline": false
+2026-10-04T07:05:25.4051719Z   },
+2026-10-04T07:05:25.4051975Z   "httpAttempts": [],
+2026-10-04T07:05:25.4052264Z   "pageErrors": [],
+2026-10-04T07:05:25.4052544Z   "browser": "155.0"
+2026-10-04T07:05:25.4052736Z }
+2026-10-04T07:05:37.8737808Z {
+2026-10-04T07:05:37.8738634Z   "suite": "browser_vs_workflows_standalone_test",
+2026-10-04T07:05:37.8739185Z   "mode": "file",
+2026-10-04T07:05:37.8739568Z   "engine": "firefox",
+2026-10-04T07:05:37.8740051Z   "passed": true,
+2026-10-04T07:05:37.8740561Z   "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+2026-10-04T07:05:37.8741049Z   "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+2026-10-04T07:05:37.8741709Z   "checks": [
+2026-10-04T07:05:37.8741983Z     {
+2026-10-04T07:05:37.8742289Z       "scenario": "create-console-project",
+2026-10-04T07:05:37.8742680Z       "passed": true,
+2026-10-04T07:05:37.8742987Z       "emptyNameRejected": true
+2026-10-04T07:05:37.8743291Z     },
+2026-10-04T07:05:37.8743532Z     {
+2026-10-04T07:05:37.8743846Z       "scenario": "edit-and-build-shared-document",
+2026-10-04T07:05:37.8744273Z       "passed": true
+2026-10-04T07:05:37.8744676Z     },
+2026-10-04T07:05:37.8744907Z     {
+2026-10-04T07:05:37.8745177Z       "scenario": "breakpoint-step-continue",
+2026-10-04T07:05:37.8745461Z       "passed": true,
+2026-10-04T07:05:37.8745718Z       "backend": "ECMA-335",
+2026-10-04T07:05:37.8746029Z       "runtimeStatistics": {
+2026-10-04T07:05:37.8746388Z         "artifactFormat": "ECMA-335",
+2026-10-04T07:05:37.8746707Z         "assembly": {
+2026-10-04T07:05:37.8747006Z           "bytes": 4096,
+2026-10-04T07:05:37.8747281Z           "loadMs": 18,
+2026-10-04T07:05:37.8747601Z           "decodeMs": 6,
+2026-10-04T07:05:37.8747901Z           "verificationMs": 12
+2026-10-04T07:05:37.8748190Z         },
+2026-10-04T07:05:37.8748621Z         "instructions": 14,
+2026-10-04T07:05:37.8748913Z         "elapsedMs": 1,
+2026-10-04T07:05:37.8749173Z         "frames": 0,
+2026-10-04T07:05:37.8749459Z         "heap": {
+2026-10-04T07:05:37.8749731Z           "allocatedBytes": 0,
+2026-10-04T07:05:37.8750051Z           "hostStrongHandles": 0,
+2026-10-04T07:05:37.8750378Z           "hostWeakHandles": 0,
+2026-10-04T07:05:37.8750671Z           "rootsScanned": 0,
+2026-10-04T07:05:37.8750962Z           "edgesScanned": 0,
+2026-10-04T07:05:37.8751272Z           "markedObjects": 0,
+2026-10-04T07:05:37.8751565Z           "maxPauseMs": 0,
+2026-10-04T07:05:37.8752037Z           "markMs": 0,
+2026-10-04T07:05:37.8752324Z           "sweepMs": 0,
+2026-10-04T07:05:37.8752602Z           "liveBytes": 0,
+2026-10-04T07:05:37.8752877Z           "liveObjects": 0,
+2026-10-04T07:05:37.8753209Z           "allocations": 0,
+2026-10-04T07:05:37.8753486Z           "collections": 0,
+2026-10-04T07:05:37.8753772Z           "freedObjects": 0,
+2026-10-04T07:05:37.8754058Z           "freedBytes": 0,
+2026-10-04T07:05:37.8754344Z           "lastPauseMs": 0,
+2026-10-04T07:05:37.8754631Z           "totalPauseMs": 0,
+2026-10-04T07:05:37.8754950Z           "peakBytes": 0,
+2026-10-04T07:05:37.8755250Z           "maxBytes": 33554432,
+2026-10-04T07:05:37.8755552Z           "threshold": 65536
+2026-10-04T07:05:37.8755833Z         }
+2026-10-04T07:05:37.8756042Z       }
+2026-10-04T07:05:37.8756276Z     },
+2026-10-04T07:05:37.8756549Z     {
+2026-10-04T07:05:37.8756889Z       "scenario": "designer-edit-undo-redo-save",
+2026-10-04T07:05:37.8757253Z       "passed": true
+2026-10-04T07:05:37.8757517Z     },
+2026-10-04T07:05:37.8757748Z     {
+2026-10-04T07:05:37.8758045Z       "scenario": "export-project-and-design",
+2026-10-04T07:05:37.8758392Z       "passed": true
+2026-10-04T07:05:37.8758677Z     }
+2026-10-04T07:05:37.8758912Z   ],
+2026-10-04T07:05:37.8759156Z   "navigation": {
+2026-10-04T07:05:37.8759418Z     "mode": "file",
+2026-10-04T07:05:37.8759875Z     "url": "file:///D:/a/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+2026-10-04T07:05:37.8760356Z     "offline": true,
+2026-10-04T07:05:37.8760841Z     "artifact": "D:\\a\\SharpForge\\SharpForge\\artifacts\\SharpForge-standalone.html",
+2026-10-04T07:05:37.8761497Z     "artifactSha256": "da60ffe742f3b723d4b1286fc279c6510067570a7cc54b6550d68e2fcfb855a9",
+2026-10-04T07:05:37.8761972Z     "bytes": 16419776,
+2026-10-04T07:05:37.8762241Z     "policy": {
+2026-10-04T07:05:37.8763444Z       "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-jJQsEbozXtUHEdHTFIjFNgcvlOgyf8B3HxTN7xghfLM='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+2026-10-04T07:05:37.8764684Z       "transport": "meta"
+2026-10-04T07:05:37.8765874Z     }
+2026-10-04T07:05:37.8766149Z   },
+2026-10-04T07:05:37.8766396Z   "httpAttempts": [],
+2026-10-04T07:05:37.8766713Z   "pageErrors": [],
+2026-10-04T07:05:37.8766982Z   "browser": "155.0",
+2026-10-04T07:05:37.8767251Z   "lazyTools": [
+2026-10-04T07:05:37.8767507Z     {
+2026-10-04T07:05:37.8767753Z       "tool": "assembly",
+2026-10-04T07:05:37.8768026Z       "passed": true,
+2026-10-04T07:05:37.8768328Z       "mountedHosts": 1,
+2026-10-04T07:05:37.8768789Z       "reopened": true
+2026-10-04T07:05:37.8769045Z     },
+2026-10-04T07:05:37.8769259Z     {
+2026-10-04T07:05:37.8769487Z       "tool": "disassembly",
+2026-10-04T07:05:37.8769770Z       "passed": true,
+2026-10-04T07:05:37.8770028Z       "mountedHosts": 1,
+2026-10-04T07:05:37.8770323Z       "reopened": true
+2026-10-04T07:05:37.8770589Z     },
+2026-10-04T07:05:37.8770803Z     {
+2026-10-04T07:05:37.8771015Z       "tool": "msbuild",
+2026-10-04T07:05:37.8771312Z       "passed": true,
+2026-10-04T07:05:37.8771578Z       "mountedHosts": 1,
+2026-10-04T07:05:37.8771877Z       "reopened": true
+2026-10-04T07:05:37.8772128Z     },
+2026-10-04T07:05:37.8772384Z     {
+2026-10-04T07:05:37.8772624Z       "tool": "wizard",
+2026-10-04T07:05:37.8772894Z       "passed": true,
+2026-10-04T07:05:37.8773153Z       "reopened": true
+2026-10-04T07:05:37.8773438Z     },
+2026-10-04T07:05:37.8773661Z     {
+2026-10-04T07:05:37.8773904Z       "tool": "designer",
+2026-10-04T07:05:37.8774177Z       "passed": true,
+2026-10-04T07:05:37.8774438Z       "mountedHosts": 1,
+2026-10-04T07:05:37.8774715Z       "reopened": true,
+2026-10-04T07:05:37.8775042Z       "documentRetained": true
+2026-10-04T07:05:37.8775283Z     }
+2026-10-04T07:05:37.8775455Z   ],
+2026-10-04T07:05:37.8775701Z   "lazyMeasurement": {
+2026-10-04T07:05:37.8776333Z     "controllerConstructionCount": "unavailable: no public construction counter",
+2026-10-04T07:05:37.8776966Z     "scriptEvaluationReduction": "not measured by this correctness workflow"
+2026-10-04T07:05:37.8777462Z   }
+2026-10-04T07:05:37.8777698Z }
+2026-10-04T07:05:52.9290304Z {
+2026-10-04T07:05:52.9290727Z   "status": "passed",
+2026-10-04T07:05:52.9291060Z   "engine": "firefox",
+2026-10-04T07:05:52.9291352Z   "passed": 12,
+2026-10-04T07:05:52.9291624Z   "checks": [
+2026-10-04T07:05:52.9292035Z     "completion renders kind/filter/docs and applies selected text",
+2026-10-04T07:05:52.9292518Z     "completion Escape preserves typed text",
+2026-10-04T07:05:52.9293062Z     "snippet fields mirror while typing and Tab advances without losing source",
+2026-10-04T07:05:52.9293704Z     "inline rename previews/cancels exactly and commits across three real models",
+2026-10-04T07:05:52.9294329Z     "code action preview is exact and does not mutate until Apply",
+2026-10-04T07:05:52.9295043Z     "Quick Info combines signature, safe documentation and diagnostic quick fix",
+2026-10-04T07:05:52.9315461Z     "parameter info highlights active argument and cycles overloads",
+2026-10-04T07:05:52.9316459Z     "Peek Definition edits the target model and navigates multiple results",
+2026-10-04T07:05:52.9317290Z     "native Find history combobox preserves source until regex capture replacement is applied",
+2026-10-04T07:05:52.9319060Z     "incremental search restores its original caret on Escape",
+2026-10-04T07:05:52.9319859Z     "inlay hints retain source offsets and CodeLens resolves once with actionable UI",
+2026-10-04T07:05:52.9320938Z     "disposal removes every popup and produces no uncaught browser errors"
+2026-10-04T07:05:52.9321445Z   ],
+2026-10-04T07:05:52.9321695Z   "failure": null
+2026-10-04T07:05:52.9321944Z }
+2026-10-04T07:06:44.4024251Z {
+2026-10-04T07:06:44.4024645Z   "status": "passed",
+2026-10-04T07:06:44.4024999Z   "engine": "firefox",
+2026-10-04T07:06:44.4025899Z   "passed": 3,
+2026-10-04T07:06:44.4026279Z   "checks": [
+2026-10-04T07:06:44.4026984Z     "selected Fix All family previews the complete batch and applies exact source edits",
+2026-10-04T07:06:44.4028455Z     "bound type/comment/string live preview cancels to exact UTF-16/CRLF source and undo state",
+2026-10-04T07:06:44.4029501Z     "parameter hints and provider invalidation preserve real source offsets and caret"
+2026-10-04T07:06:44.4030170Z   ],
+2026-10-04T07:06:44.4030462Z   "failure": null
+2026-10-04T07:06:44.4030760Z }
+2026-10-04T07:07:01.2529954Z {
+2026-10-04T07:07:01.2530336Z   "status": "passed",
+2026-10-04T07:07:01.2530704Z   "engine": "firefox",
+2026-10-04T07:07:01.2531015Z   "passed": 9,
+2026-10-04T07:07:01.2531285Z   "checks": [
+2026-10-04T07:07:01.2531883Z     "native keydown/beforeinput edits the authoritative model and preserves graphemes",
+2026-10-04T07:07:01.2532786Z     "500000 lines render bounded source-faithful rows with a bounded native input",
+2026-10-04T07:07:01.2533575Z     "wrap, whitespace and zoom retain source while sharing layout metrics",
+2026-10-04T07:07:01.2534440Z     "outlining hides logical ranges, navigation reveals them and margins track edits",
+2026-10-04T07:07:01.2535369Z     "split views share undo/text, preserve independent carets and publish each edit once",
+2026-10-04T07:07:01.2536186Z     "synthetic DOM composition stays transient and commits once",
+2026-10-04T07:07:01.2536920Z     "native DOM bidi geometry supplies visual selections and caret movement",
+2026-10-04T07:07:01.2537756Z     "ARIA diagnostics, forced colors, reduced motion and read-only state are wired",
+2026-10-04T07:07:01.2538648Z     "complete disposal removes view/input/widgets with no uncaught browser errors"
+2026-10-04T07:07:01.2539224Z   ],
+2026-10-04T07:07:01.2539474Z   "failure": null,
+2026-10-04T07:07:01.2539799Z   "nativeImeCertified": false,
+2026-10-04T07:07:01.2540467Z   "screenReaderCertified": false
+2026-10-04T07:07:01.2540812Z }
+2026-10-04T07:07:01.3145701Z ##[group]Run import json
+2026-10-04T07:07:01.3146281Z [36;1mimport json[0m
+2026-10-04T07:07:01.3146490Z [36;1mimport os[0m
+2026-10-04T07:07:01.3146712Z [36;1mfrom pathlib import Path[0m
+2026-10-04T07:07:01.3147034Z [36;1moutput = Path(os.environ['SHARPFORGE_RESULTS_DIR'])[0m
+2026-10-04T07:07:01.3147407Z [36;1moutput.mkdir(parents=True, exist_ok=True)[0m
+2026-10-04T07:07:01.3147743Z [36;1m(output / 'source.json').write_text(json.dumps({[0m
+2026-10-04T07:07:01.3148114Z [36;1m    'sourceSha': os.environ['QUALIFICATION_SOURCE_SHA'],[0m
+2026-10-04T07:07:01.3148505Z [36;1m    'sourceTree': os.environ['QUALIFICATION_SOURCE_TREE'],[0m
+2026-10-04T07:07:01.3148913Z [36;1m    'trigger': os.environ['QUALIFICATION_TRIGGER_EVENT'],[0m
+2026-10-04T07:07:01.3149327Z [36;1m    'triggerRef': os.environ['QUALIFICATION_TRIGGER_REF'],[0m
+2026-10-04T07:07:01.3149767Z [36;1m    'triggerNonce': os.environ['QUALIFICATION_TRIGGER_NONCE'] or None,[0m
+2026-10-04T07:07:01.3150273Z [36;1m    'captureOnly': os.environ['QUALIFICATION_CAPTURE_ONLY'] == 'true',[0m
+2026-10-04T07:07:01.3150751Z [36;1m    'baselineProfile': os.environ['QUALIFICATION_BASELINE_PROFILE'] or None,[0m
+2026-10-04T07:07:01.3151182Z [36;1m    'workflowRunId': os.environ['GITHUB_RUN_ID'],[0m
+2026-10-04T07:07:01.3151521Z [36;1m    'stage': os.environ['QUALIFICATION_STAGE'],[0m
+2026-10-04T07:07:01.3151861Z [36;1m    'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],[0m
+2026-10-04T07:07:01.3152192Z [36;1m    'runner': os.environ['RUNNER_OS'],[0m
+2026-10-04T07:07:01.3152519Z [36;1m    'runnerLabel': os.environ['QUALIFICATION_RUNNER'],[0m
+2026-10-04T07:07:01.3152926Z [36;1m    'editorBaseline': os.environ['SHARPFORGE_EDITOR_BASELINE'] or None,[0m
+2026-10-04T07:07:01.3153422Z [36;1m    'workbenchBaseline': os.environ['SHARPFORGE_WORKBENCH_BASELINE'] or None,[0m
+2026-10-04T07:07:01.3153822Z [36;1m}, indent=2) + '\n', encoding='utf8')[0m
+2026-10-04T07:07:01.3157954Z shell: C:\hostedtoolcache\windows\Python\3.12.10\x64\python.EXE {0}
+2026-10-04T07:07:01.3158310Z env:
+2026-10-04T07:07:01.3158552Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:07:01.3158865Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:07:01.3159333Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:07:01.3159807Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:07:01.3160157Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:07:01.3160587Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:07:01.3160934Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:07:01.3161186Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:07:01.3161426Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:07:01.3161670Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:07:01.3161920Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:07:01.3162167Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:07:01.3162409Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:07:01.3162731Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3163383Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:07:01.3163971Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3164369Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3164976Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3165580Z   SHARPFORGE_PLAYWRIGHT_MODULE: C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\site-packages\playwright\driver\package
+2026-10-04T07:07:01.3166110Z ##[endgroup]
+2026-10-04T07:07:01.3803965Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-04T07:07:01.3804464Z with:
+2026-10-04T07:07:01.3804713Z   name: project16-windows-latest-firefox-browser
+2026-10-04T07:07:01.3805044Z   path: artifacts/results/project16/
+2026-10-04T07:07:01.3805302Z   if-no-files-found: error
+2026-10-04T07:07:01.3806270Z   compression-level: 6
+2026-10-04T07:07:01.3806471Z   overwrite: false
+2026-10-04T07:07:01.3806681Z   include-hidden-files: false
+2026-10-04T07:07:01.3806903Z env:
+2026-10-04T07:07:01.3807130Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T07:07:01.3807436Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T07:07:01.3807897Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-windows-firefox-browser-20261004-w1
+2026-10-04T07:07:01.3808372Z   QUALIFICATION_TRIGGER_NONCE: 20261004-w1
+2026-10-04T07:07:01.3808717Z   QUALIFICATION_SOURCE_SHA: 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e
+2026-10-04T07:07:01.3809178Z   QUALIFICATION_SOURCE_TREE: a0922a5f98e4ce38cd377d109a083a1da77df9a1
+2026-10-04T07:07:01.3809527Z   QUALIFICATION_RUNNER: windows-latest
+2026-10-04T07:07:01.3809777Z   QUALIFICATION_STAGE: browser
+2026-10-04T07:07:01.3810010Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T07:07:01.3810343Z   QUALIFICATION_BASELINE_PROFILE: 
+2026-10-04T07:07:01.3810729Z   SHARPFORGE_BROWSER_ENGINE: firefox
+2026-10-04T07:07:01.3811000Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T07:07:01.3811221Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T07:07:01.3811521Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3811954Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-04T07:07:01.3812385Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3812971Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3813353Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-04T07:07:01.3813930Z   SHARPFORGE_PLAYWRIGHT_MODULE: C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\site-packages\playwright\driver\package
+2026-10-04T07:07:01.3814433Z ##[endgroup]
+2026-10-04T07:07:01.5928042Z (node:7264) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T07:07:01.5928859Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T07:07:01.6141360Z With the provided path, there will be 36 files uploaded
+2026-10-04T07:07:01.6146611Z Artifact name is valid!
+2026-10-04T07:07:01.6147893Z Root directory input is valid!
+2026-10-04T07:07:01.9343781Z Beginning upload of artifact content to blob storage
+2026-10-04T07:07:01.9996647Z (node:7264) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-04T07:07:02.2120463Z Uploaded bytes 15322
+2026-10-04T07:07:02.2730141Z Finished uploading artifact content to blob storage!
+2026-10-04T07:07:02.2731132Z SHA256 digest of uploaded artifact zip is b79f4c7f36d8771896d6e35415718ba4f8511335a050c3323587f9a2c8804f2d
+2026-10-04T07:07:02.2733708Z Finalizing artifact upload
+2026-10-04T07:07:02.4957871Z Artifact project16-windows-latest-firefox-browser.zip successfully finalized. Artifact ID 11295819002
+2026-10-04T07:07:02.4959081Z Artifact project16-windows-latest-firefox-browser has been successfully uploaded! Final size is 15322 bytes. Artifact ID is 11295819002
+2026-10-04T07:07:02.4970956Z Artifact download URL: https://github.com/wieslawsoltes/SharpForge/actions/runs/37184606471/artifacts/11295819002
+2026-10-04T07:07:02.5351518Z Post job cleanup.
+2026-10-04T07:07:02.7222156Z Post job cleanup.
+2026-10-04T07:07:02.8804099Z (node:5328) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T07:07:02.8804876Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T07:07:02.9122761Z Post job cleanup.
+2026-10-04T07:07:03.0948518Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-04T07:07:03.1235887Z git version 2.55.0.windows.5
+2026-10-04T07:07:03.1302558Z Temporarily overriding HOME='D:\a\_temp\4133871b-c1e4-4774-8b94-9c775b301860' before making global git config changes
+2026-10-04T07:07:03.1303634Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T07:07:03.1313431Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\SharpForge\SharpForge
+2026-10-04T07:07:03.1606434Z Removing SSH command configuration
+2026-10-04T07:07:03.1617686Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T07:07:03.1921784Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-04T07:07:03.7210381Z Removing HTTP extra header
+2026-10-04T07:07:03.7221338Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T07:07:03.7531841Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-04T07:07:04.2843187Z Removing includeIf entries pointing to credentials config files
+2026-10-04T07:07:04.2855477Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T07:07:04.3127550Z includeif.gitdir:D:/a/SharpForge/SharpForge/.git.path
+2026-10-04T07:07:04.3128538Z includeif.gitdir:D:/a/SharpForge/SharpForge/.git/worktrees/*.path
+2026-10-04T07:07:04.3128990Z includeif.gitdir:/github/workspace/.git.path
+2026-10-04T07:07:04.3129429Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-04T07:07:04.3169075Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/SharpForge/SharpForge/.git.path
+2026-10-04T07:07:04.3427277Z D:\a\_temp\git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:07:04.3470437Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/SharpForge/SharpForge/.git.path D\:\\a\\_temp\\git\-credentials\-6bfe47df\-c581\-42bd\-afa9\-b03b5ed82333\.config
+2026-10-04T07:07:04.3826750Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/SharpForge/SharpForge/.git/worktrees/*.path
+2026-10-04T07:07:04.4092617Z D:\a\_temp\git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:07:04.4134676Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/SharpForge/SharpForge/.git/worktrees/*.path D\:\\a\\_temp\\git\-credentials\-6bfe47df\-c581\-42bd\-afa9\-b03b5ed82333\.config
+2026-10-04T07:07:04.4427827Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-04T07:07:04.4674787Z /github/runner_temp/git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:07:04.4711929Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-6bfe47df\-c581\-42bd\-afa9\-b03b5ed82333\.config
+2026-10-04T07:07:04.5007943Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-04T07:07:04.5259286Z /github/runner_temp/git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config
+2026-10-04T07:07:04.5298297Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-6bfe47df\-c581\-42bd\-afa9\-b03b5ed82333\.config
+2026-10-04T07:07:04.5598689Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-04T07:07:05.0926752Z Removing credentials config 'D:\a\_temp\git-credentials-6bfe47df-c581-42bd-afa9-b03b5ed82333.config'
+2026-10-04T07:07:05.1127971Z Cleaning up orphan processes
+2026-10-04T07:07:05.1457222Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

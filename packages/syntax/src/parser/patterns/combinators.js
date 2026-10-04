@@ -5,13 +5,21 @@ import { Precedence } from '../../lexer/operators.js';
  */
 const patternStarts = new Set(['<', '<=', '>', '>=', '==', '!=', '{', '[', '(']);
 export const combinatorPatternMethods = {
-  /** Parses a pattern. `whenIsKeyword` is true in case labels and switch arms, where `when` introduces a guard. */
-  pattern(whenIsKeyword = this.patternWhen ?? false) {
-    const saved = this.patternWhen;
+  /**
+   * Parses a pattern. `whenIsKeyword` is true in case labels and switch arms, where `when` introduces a guard.
+   * `precedence` is the loosest operator a constant in the pattern may contain: after `is` the constant ends before a
+   * relational operator (`x is A | B` is `(x is A) | B`), in a subpattern, a list element or a case label it runs up
+   * to the conditional operator (`{ Flags: A | B }`), and in a switch expression arm up to `??`.
+   */
+  pattern(whenIsKeyword = this.patternWhen ?? false, precedence = Precedence.Shift) {
+    const saved = this.patternWhen,
+      savedPrecedence = this.patternPrecedence;
     this.patternWhen = whenIsKeyword;
+    this.patternPrecedence = precedence;
     if (!this.enter()) {
       this.leave();
       this.patternWhen = saved;
+      this.patternPrecedence = savedPrecedence;
       return this.n('ConstantPattern', this.missingName());
     }
     let left = this.andPattern();
@@ -21,6 +29,7 @@ export const combinatorPatternMethods = {
     }
     this.leave();
     this.patternWhen = saved;
+    this.patternPrecedence = savedPrecedence;
     return left;
   },
   canStartPattern(token) {
@@ -66,7 +75,7 @@ export const combinatorPatternMethods = {
           next.kind === 'string';
       if (inner.kind === 'ConstantPattern' || (inner.kind === 'TypePattern' && operand)) {
         this.reset(mark);
-        return this.n('ConstantPattern', this.expression(Precedence.Shift));
+        return this.n('ConstantPattern', this.expression(this.patternPrecedence ?? Precedence.Shift));
       }
       this.feature('ParenthesizedPattern', start);
       return this.n('ParenthesizedPattern', open, inner, close);

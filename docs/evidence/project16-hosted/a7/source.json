@@ -1,0 +1,16 @@
+{
+  "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+  "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+  "trigger": "create",
+  "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-performance-compare-a5-20261004-a7",
+  "triggerNonce": "compare-a5-20261004-a7",
+  "captureOnly": false,
+  "baselineProfile": "a5",
+  "workflowRunId": "37186353254",
+  "stage": "performance",
+  "engine": "chromium",
+  "runner": "Linux",
+  "runnerLabel": "ubuntu-latest",
+  "editorBaseline": "docs/evidence/project16-hosted/a5/editor-browser.json",
+  "workbenchBaseline": "docs/evidence/project16-hosted/a5/workbench-large-trace.json"
+}

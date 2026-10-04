@@ -1,0 +1,10 @@
+{
+  "reviewer": "root",
+  "pr": 4475,
+  "existingLocalAliasMedianDeltaMsPer1000": 1.709208,
+  "existingLocalAliasMedianPercent": 15.805877,
+  "existingLocalAliasP95DeltaMsPer1000": 2.931833,
+  "existingLocalAliasP95Percent": 23.324513,
+  "accepted": true,
+  "reason": "Complete bounded nested alias/member-owner support with lazy enclosing-name index, shared lexical forest and canonical existing handles; no second registry. All96 raw samples and both original failures retained; no repeats, attribution, noise, speed or peak-memory claims. New nested unknown-to-known costs are added capability."
+}

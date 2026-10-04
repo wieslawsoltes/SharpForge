@@ -1,0 +1,35 @@
+✔ typed numeric corpus follows ECMA operand, storage and branch tables (19.1475ms)
+✔ type confusion is rejected independently of the existing height-only admission (1.789791ms)
+✔ slot, underflow, maxstack and return diagnostics are explicit (1.038084ms)
+✔ unsupported metadata, bodies and opcodes cannot produce a typed proof (1.037041ms)
+✔ a local signature token cannot name a method StandAloneSig (0.260167ms)
+✔ bounded typed propagation checks cancellation, state-copy work and all dataflow limits (1.492291ms)
+✔ bytecode after a reachable terminator remains unsupported when its policy is missing (0.20525ms)
+✔ unreachable branches still require an instruction-boundary target (0.21875ms)
+✔ primitive storage addresses retain declared element identity and reject double addresses (0.485ms)
+✔ all native observations retain exact bytes and explicit predeclared ILVerify differences (6.857458ms)
+✔ all 144 verification category pairs follow the stack merge table in both directions (1.097375ms)
+✔ reference relation seam preserves class, interface, boxed and array covariance joins (0.190667ms)
+✔ controlled mutability is preserved and pointer relations never use reference covariance (0.109625ms)
+✔ nominal identity, constructor state and metadata-dependent unknowns are explicit (1.491709ms)
+✔ factories and metadata adapters reject malformed values without coercing nominal identities (0.290791ms)
+✔ stack merges enforce equal heights, own their results and bound work before allocation (7.142958ms)
+✔ pre-cancelled and interrupted merges produce the cancellation diagnostic (0.184625ms)
+✔ basic blocks split targets and fallthroughs while preserving decoded records and duplicate switch edges (5.023875ms)
+✔ EH boundaries are block entries and leave clears the outgoing state (0.711959ms)
+✔ typed joins reprocess previously visited successors and terminate stable backedges (0.356292ms)
+✔ queued joins are merged once per edge without duplicating pending block transfers (0.603666ms)
+✔ limits reject before propagation and exact empty-stack budgets succeed (1.421458ms)
+✔ cancellation is checked before graph allocation and after an interrupted transfer (0.429042ms)
+✔ empty bodies and reachable fallthroughs stay explicit invalid edges (0.14875ms)
+✔ height integration preserves successful runtime execution and emits precise stack diagnostic categories (14.4705ms)
+✔ exhausted dataflow budgets cannot issue runtime stack proofs (0.397625ms)
+✔ retained ILVerify observations cover height diagnostics, joins, loops and handler seeds (1.769167ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 603.076875

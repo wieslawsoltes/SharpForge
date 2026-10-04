@@ -13,7 +13,7 @@ for (const [id, command] of Object.entries({wrap: 'view.toggleWrap', whitespace:
   split: 'split.toggle', fold: 'outlining.collapseAll', bookmark: 'bookmark.toggle'})) {
   document.getElementById(id).onclick = () => editor.runCommand(command);
 }
-document.querySelector('#save').onclick = () => { editor.prepareSave(); editor.markSaved(); };
+document.querySelector('#save').onclick = async () => { await editor.prepareSave(); editor.markSaved(); };
 document.querySelector('#large').onclick = async () => {
   const chunk = 'int value = 42; // virtual source line\n'.repeat(5000);
   const file = new Blob(Array.from({length: 100}, () => chunk));

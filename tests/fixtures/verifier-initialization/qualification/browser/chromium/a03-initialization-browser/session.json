@@ -1,0 +1,11 @@
+{
+  "suite": "a03-initialization-browser",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "A03 local initialization source modules",
+  "seconds": 0.41275212499749614,
+  "diagnosticErrors": []
+}
