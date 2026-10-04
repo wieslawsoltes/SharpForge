@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "engine": "chromium",
+  "tier": "software",
+  "forceFallbackAdapter": true,
+  "launchArguments": [
+    "--enable-unsafe-webgpu",
+    "--use-angle=swiftshader",
+    "--use-vulkan=swiftshader",
+    "--disable-vulkan-surface"
+  ],
+  "expectedAdapterPatterns": [
+    "swiftshader",
+    "llvmpipe",
+    "software",
+    "warp"
+  ],
+  "mockResultsCountAsQualification": false
+}
