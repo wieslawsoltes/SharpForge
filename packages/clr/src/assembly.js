@@ -4,7 +4,7 @@ import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
 import { MetadataConstants } from './type-system/metadata-constants.js';
-import { MetadataPropertyAccessors } from './type-system/metadata-property-accessors.js';
+import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
@@ -43,7 +43,8 @@ export class RuntimeModule {
   #methodDefinitions;
   #fieldDefinitions;
   #propertyDefinitions;
-  #propertyAccessors;
+  #eventDefinitions;
+  #accessors;
   #constants;
   #parameterDefinitions;
   #genericParameters;
@@ -177,8 +178,29 @@ export class RuntimeModule {
   /** Frozen {getMethod, setMethod, otherMethods} using canonical methods; no visibility filtering or execution. */
   propertyAccessors(token) {
     this.#assembly.ensureUsable();
-    this.#propertyAccessors ??= new MetadataPropertyAccessors(this);
-    return this.#propertyAccessors.get(token);
+    this.#accessors ??= new MetadataAccessors(this);
+    return this.#accessors.get(token);
+  }
+
+  /** Canonical Event metadata identity; the event type is an unresolved module-relative token. */
+  eventDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#eventDefinitions ??= new MetadataMemberDefinitions(this, 'event');
+    return this.#eventDefinitions.get(token);
+  }
+
+  /** Frozen declared-event list through EventMap and optional #- EventPtr indirection. */
+  eventDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#eventDefinitions ??= new MetadataMemberDefinitions(this, 'event');
+    return this.#eventDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {addMethod, removeMethod, raiseMethod, otherMethods}; no visibility filtering or invocation. */
+  eventAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#accessors ??= new MetadataAccessors(this);
+    return this.#accessors.get(token, 20);
   }
 
   /** Frozen raw Constant value for a Field/Param/Property token, or null; malformed metadata yields SFCLR005/007. */
