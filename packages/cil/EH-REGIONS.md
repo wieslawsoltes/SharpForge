@@ -13,7 +13,7 @@ Each region has `id`, `kind`, half-open byte offsets `start`/`end`, `parent`
 `try`, `catch`, `filter`, `filter-handler`, `finally` and `fault`. Identical try
 intervals share one node; handler precedence remains the original clause order.
 Each clause has `index`, `flags`, `tryRegion`, `handlerRegion` and nullable
-`filterRegion`. IDs index the corresponding result arrays. Input buffers and
+`filterRegion`. IDs index the corresponding result arrays. Roots and children follow lexical order. Input buffers and
 objects are never retained, and all returned arrays and records are frozen.
 
 The implementation follows ECMA-335 I.12.4.2.5 and I.12.4.2.7: own regions cannot
@@ -47,3 +47,40 @@ compiler-fixture coverage and complete verifier/platform qualification stay open
 on #2395.
 
 Reference: [ECMA-335, sixth edition](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).
+
+Scheduled validation on Node 24.21.0 / macOS ARM64 / Apple M3 Pro passed all
+228 tests in the completed lexical scope: 26 tree tests, 6 placement followup
+checks, 6 encoding tests and 190 existing CIL tests. Parent tree product/tests
+are byte-identical to the validated child at `9cf90694`. The three retained
+Roslyn assemblies and native filter/fault fixtures all pass. Static/manifests
+passed (2,519 syntax / 2,515 static modules, zero errors); structure found no
+changed-file issues. Full platform and ILVerify qualification remains staged.
+
+The existing writer benchmark compared `fc2ae0e8` with `9cf90694` (same baseline
+writer/binary bytes as tree base `3f6ad657`), 500 warmups and 21 GC-separated
+samples, 1,000 small or 100 large writes per sample. Median/p95 microseconds:
+
+| Writer case | Before | After |
+|---|---:|---:|
+| 64 bytes, no EH | 0.815250 / 0.930792 | 0.837625 / 0.948708 |
+| 64 bytes, catch | 1.330458 / 1.574292 | 1.255333 / 1.690500 |
+| 64 KiB, no EH | 5.886250 / 7.808340 | 7.921250 / 10.718750 |
+
+The CIL reviewer explicitly accepted the observed large control increase
+(+2.035 microseconds median, +2.910410 p95) and catch p95 increase (+0.116208)
+for shared scalar validation and the opt-in lexical capability. The no-handler
+path/binary writer are unchanged, so causal attribution is uncertain. The host
+was shared; no significance or general speed claim is made. All raw samples are
+retained in `benchmarks/eh-regions-node24.json`.
+
+New tree construction (10 warmups, 15 samples) measured median/p95
+0.483833/0.607000 ms for 1,000 shared-try clauses and 4.198000/6.706459 ms for
+10,000. Median sampled heap deltas were 1,146,496 and 8,842,248 bytes, not total
+allocations, peak memory or retained memory. These are new-operation measurements,
+not an existing-path speedup. Reproduction, always in the serial slot:
+
+```sh
+node scripts/limited.js node --test --test-concurrency=1 tests/a03-06-eh-*.test.js tests/cil.test.js
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-eh-encoding.mjs
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-eh-regions.mjs
+```
