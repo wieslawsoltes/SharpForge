@@ -8,6 +8,7 @@
  */
 import { RefKind, SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { baseImplementationOf } from '../../symbols/base-implementation.js';
 import { PropertyLocation } from './locations.js';
 import { isReference, isVoid, primitiveOf } from './type-facts.js';
 
@@ -126,7 +127,8 @@ export const CallEmission = Base =>
       if (!method?.parameters || !method.containingType) return this.unsupported(`'${method?.name ?? 'a member'}' (no metadata signature)`, syntax);
       const il = this.il,
         effect = { pops: method.parameters.length + (method.isStatic ? 0 : 1), pushes: isVoid(method.returnType) ? 0 : 1 },
-        token = this.tokens.method(method);
+        // `base.M()` is not a virtual call: it names the implementation the base class has (its nearest override).
+        token = this.tokens.method(receiver?.kind === 'Base' ? baseImplementationOf(method, receiver.type) : method);
       if (method.isStatic) {
         // C# 11: a static abstract or virtual interface member is called on the type argument (`constrained. T call`).
         if (isStaticVirtual(method)) il.emit('constrained.', this.tokens.type(constrainedTo ?? this.typeParameterOf(method, syntax)));
