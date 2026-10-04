@@ -25,7 +25,7 @@ export function equalsExpression(row) {
   const first = left === null ? '(string)null' : JSON.stringify(left);
   const second = row.copyRight ? `(${JSON.stringify('x' + right)}).Substring(1)` : JSON.stringify(right);
   const number = row.mode === -2147483648 ? '(-2147483647 - 1)' : String(row.mode);
-  const mode = comparisonNames[row.mode] ? `StringComparison.${comparisonNames[row.mode]}` : `(StringComparison)${number}`;
+  const mode = comparisonNames[row.mode] ? `StringComparison.${comparisonNames[row.mode]}` : `(StringComparison)(${number})`;
   return row.instance ? `(${first}).Equals(${second}, ${mode})` : `string.Equals(${first}, ${second}, ${mode})`;
 }
 

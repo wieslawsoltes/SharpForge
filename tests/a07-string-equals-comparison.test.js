@@ -165,7 +165,7 @@ test('String.Equals comparison: enum metadata and two appended contracts preserv
   for (const [index, name] of comparisonNames.entries()) {
     assert.deepEqual(enumValue('StringComparison.' + name), {type: comparisonType, value: index});
   }
-  assert.equal(enumTypes.indexOf('Microsoft.UI.Xaml.Orientation'), 0);
+  assert.equal(enumTypes.indexOf('Microsoft.UI.Xaml.Controls.Orientation'), 0);
   assert.equal(enumTypes.indexOf('Microsoft.UI.Xaml.Visibility'), 3);
   assert.equal(enumTypes.indexOf('System.Text.Json.JsonValueKind'), 14);
   assert.equal(enumTypes.indexOf(comparisonType), 15);
