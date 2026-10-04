@@ -1,7 +1,38 @@
+function createHitLayer(overlay) {
+  const layer = overlay.ownerDocument.createElement('div');
+  layer.dataset.designGestureCapture = '';
+  layer.setAttribute('aria-hidden', 'true');
+  Object.assign(layer.style, {position: 'absolute', inset: '0', zIndex: '20', pointerEvents: 'none', cursor: 'default'});
+  overlay.append(layer);
+  return layer;
+}
+
+/** Mount one inert capture surface with the view, avoiding DOM insertion and removal at pointer boundaries. */
+export function prepareDesignerPointer(controller) {
+  const overlay = controller.view.overlay;
+  if (!overlay) return null;
+  if (controller.pointerLayer?.parentElement === overlay) return controller.pointerLayer;
+  controller.cancelPointer?.();
+  controller.pointerLayer?.remove();
+  controller.pointerLayer = createHitLayer(overlay);
+  return controller.pointerLayer;
+}
+
+/** Cancel the active pointer before releasing its view-owned capture surface. */
+export function disposeDesignerPointer(controller) {
+  try { controller.cancelPointer?.(); }
+  finally {
+    controller.pointerLayer?.remove();
+    controller.pointerLayer = null;
+  }
+}
+
 /** Capture the original hit target to retain click/double-click ownership while a cheap layer handles hover hit tests. */
-function capturePointer(view, start, cancel) {
+function capturePointer(controller, start, cancel) {
+  const view = controller.view;
   const owner = typeof start.target?.setPointerCapture === 'function' ? start.target : view.stage;
   const supported = ['setPointerCapture', 'hasPointerCapture', 'releasePointerCapture'].every(name => typeof owner[name] === 'function');
+  const retained = controller.pointerLayer?.parentElement === view.overlay;
   let layer = null;
   let disposed = false;
   const lost = event => { if (event.pointerId === start.pointerId) cancel(); };
@@ -9,7 +40,10 @@ function capturePointer(view, start, cancel) {
     if (disposed) return;
     disposed = true;
     owner.removeEventListener?.('lostpointercapture', lost);
-    layer?.remove();
+    if (layer) {
+      if (retained) layer.style.pointerEvents = 'none';
+      else layer.remove();
+    }
     if (supported && owner.hasPointerCapture(start.pointerId)) owner.releasePointerCapture(start.pointerId);
   };
   try {
@@ -20,11 +54,9 @@ function capturePointer(view, start, cancel) {
     if (supported && view.overlay) {
       const document = view.overlay.ownerDocument;
       const cursor = document.defaultView.getComputedStyle?.(owner).cursor ?? 'default';
-      layer = document.createElement('div');
-      layer.dataset.designGestureCapture = '';
-      layer.setAttribute('aria-hidden', 'true');
-      Object.assign(layer.style, {position: 'absolute', inset: '0', zIndex: '20', pointerEvents: 'auto', cursor});
-      view.overlay.append(layer);
+      layer = retained ? controller.pointerLayer : createHitLayer(view.overlay);
+      layer.style.cursor = cursor;
+      layer.style.pointerEvents = 'auto';
     }
   } catch (error) {
     release();
@@ -92,7 +124,7 @@ export function trackDesignerPointer(controller, start, move, done, cancel) {
   document.addEventListener('pointercancel', onCancel);
   document.addEventListener('keydown', onKey, true);
   controller.cancelPointer = abort;
-  try { release = capturePointer(controller.view, start, abort); }
+  try { release = capturePointer(controller, start, abort); }
   catch (error) { abort(); throw error; }
   if (!active) release();
   return abort;

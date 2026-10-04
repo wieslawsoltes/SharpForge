@@ -11,7 +11,7 @@ import {DesignerSurfaceCommands} from './designer-surface-commands.js';
 import {DesignerSurfaceGestures} from './designer-surface-gestures.js';
 import {DesignerMarginDrag} from './designer-surface-margin.js';
 import {activateDesignerEvent, defaultDesignerEvent} from './designer-event-actions.js';
-import {trackDesignerPointer} from './designer-surface-pointer.js';
+import {disposeDesignerPointer, prepareDesignerPointer, trackDesignerPointer} from './designer-surface-pointer.js';
 
 /** Explicit integration seam for visual surface authoring; legacy DesignerTools delegates here. */
 export class DesignerSurfaceController {
@@ -30,6 +30,7 @@ export class DesignerSurfaceController {
     this.commands = new DesignerSurfaceCommands(this);
     this.listeners = [];
     this.cancelPointer = null;
+    this.pointerLayer = null;
     this.installed = false;
     this.disposed = false;
     this.lastDocument = view.document;
@@ -42,6 +43,7 @@ export class DesignerSurfaceController {
     if (this.installed || this.disposed) return;
     this.installed = true;
     const view = this.view;
+    prepareDesignerPointer(this);
     const listen = (element, type, handler, options) => {
       element.addEventListener(type, handler, options);
       this.listeners.push(() => element.removeEventListener(type, handler, options));
@@ -265,7 +267,7 @@ export class DesignerSurfaceController {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
-    this.cancelPointer?.();
+    disposeDesignerPointer(this);
     for (const dispose of this.listeners.splice(0)) dispose();
     for (const owned of [this.gestures, this.margin, this.text, this.drawing, this.guides,
       this.zoom, this.preview, this.adorners, this.geometry]) owned.dispose();

@@ -66,15 +66,18 @@ export async function loadWorkspace(page, records, uri, mode = 'design') {
   await documentHost(page, uri).locator('.design-preview [data-sf-id]').first().waitFor({state: 'visible'});
 }
 
-export async function createGate({captureMode = process.env.SHARPFORGE_DESIGNER_CAPTURE ?? 'diagnostic'} = {}) {
+export async function createGate({captureMode = process.env.SHARPFORGE_DESIGNER_CAPTURE ?? 'diagnostic', resultsSubdirectory = null} = {}) {
   assert(['diagnostic', 'measurement'].includes(captureMode), 'SHARPFORGE_DESIGNER_CAPTURE must be diagnostic or measurement.');
+  assert(resultsSubdirectory === null || typeof resultsSubdirectory === 'string' && /^[a-z0-9][a-z0-9-]{0,63}$/.test(resultsSubdirectory),
+    'Invalid browser results subdirectory.');
   const baseURL = process.env.SHARPFORGE_BROWSER_URL;
   assert(baseURL, 'Set SHARPFORGE_BROWSER_URL to the already built and served Studio; this driver never starts a server.');
   const require = createRequire(import.meta.url);
   const paths = [process.cwd(), process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES].filter(Boolean);
   const {chromium} = require(process.env.PLAYWRIGHT_MODULE ?? require.resolve('playwright', {paths}));
   const root = fileURLToPath(new URL('../', import.meta.url));
-  const results = resolve(process.env.SHARPFORGE_RESULTS_DIR ?? resolve(root, 'artifacts/results'));
+  const resultsRoot = resolve(process.env.SHARPFORGE_RESULTS_DIR ?? resolve(root, 'artifacts/results'));
+  const results = resultsSubdirectory === null ? resultsRoot : resolve(resultsRoot, resultsSubdirectory);
   await mkdir(resolve(results, 'screenshots'), {recursive: true});
   const options = {headless: true};
   if (process.env.CHROMIUM_EXECUTABLE) options.executablePath = process.env.CHROMIUM_EXECUTABLE;

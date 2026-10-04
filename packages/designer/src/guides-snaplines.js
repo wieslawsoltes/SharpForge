@@ -14,19 +14,25 @@ function lowerBound(items, position) {
   return low;
 }
 
-function addTarget(lines, axis, position, kind, target) {
-  const key = `${position}:${kind}`;
-  if (!lines[axis].has(key)) lines[axis].set(key, {axis, position, kind, target});
+function axisTargets(name) {
+  return {name, edge: new Map(), center: new Map(), baseline: new Map(), guide: new Map()};
+}
+
+function addTarget(axis, position, kind, target) {
+  const lines = axis[kind];
+  if (!lines.has(position)) lines.set(position, {axis: axis.name, position, kind, target});
 }
 
 function addRectangle(lines, rectangle) {
-  for (const [axis, [position, size]] of Object.entries(axisNames)) {
-    addTarget(lines, axis, rectangle[position], 'edge', rectangle.id);
-    addTarget(lines, axis, rectangle[position] + rectangle[size] / 2, 'center', rectangle.id);
-    addTarget(lines, axis, rectangle[position] + rectangle[size], 'edge', rectangle.id);
-  }
+  const {Left, Top, Width, Height, id} = rectangle;
+  addTarget(lines.x, Left, 'edge', id);
+  addTarget(lines.x, Left + Width / 2, 'center', id);
+  addTarget(lines.x, Left + Width, 'edge', id);
+  addTarget(lines.y, Top, 'edge', id);
+  addTarget(lines.y, Top + Height / 2, 'center', id);
+  addTarget(lines.y, Top + Height, 'edge', id);
   if (Number.isFinite(rectangle.baseline)) {
-    addTarget(lines, 'y', rectangle.Top + rectangle.baseline, 'baseline', rectangle.id);
+    addTarget(lines.y, Top + rectangle.baseline, 'baseline', id);
   }
 }
 
@@ -52,18 +58,19 @@ export class DesignSnaplines {
     this.snapGrid = snapGrid;
     this.lines = {x: [], y: []};
     this.spacing = {x: [], y: []};
-    const targets = {x: new Map(), y: new Map()};
+    const targets = {x: axisTargets('x'), y: axisTargets('y')};
     const rectangles = siblings.map(item => ({...designRectangle(item.bounds ?? item), id: item.id, baseline: item.baseline}));
     for (const rectangle of rectangles) addRectangle(targets, rectangle);
     if (parent) addRectangle(targets, {...designRectangle(parent.bounds ?? parent), id: parent.id ?? '$parent', baseline: parent.baseline});
     for (const guide of guides) {
       geometryInvariant(['x', 'y'].includes(guide.axis) && Number.isFinite(guide.position),
         'SFD_GUIDE_VALUE', 'Guides require an axis and a finite position.');
-      const key = `${guide.position}:guide`;
-      if (!targets[guide.axis].has(key)) targets[guide.axis].set(key, {...guide, kind: 'guide', target: guide.id ?? '$guide'});
+      const lines = targets[guide.axis].guide;
+      if (!lines.has(guide.position)) lines.set(guide.position, {...guide, kind: 'guide', target: guide.id ?? '$guide'});
     }
     for (const [axis, [position, size]] of Object.entries(axisNames)) {
-      this.lines[axis] = [...targets[axis].values()];
+      const lines = targets[axis];
+      this.lines[axis] = [...lines.guide.values(), ...lines.edge.values(), ...lines.baseline.values(), ...lines.center.values()];
       this.lines[axis].sort((left, right) => left.position - right.position || rank[left.kind] - rank[right.kind]);
       const sorted = [...rectangles];
       sorted.sort((left, right) => left[position] - right[position]);

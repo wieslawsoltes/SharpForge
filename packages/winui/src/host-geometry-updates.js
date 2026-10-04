@@ -1,4 +1,5 @@
 import {measureHostNodes, renderHostScene} from './host-render.js';
+import {HostCanvasTranslations} from './host-canvas-translations.js';
 
 const geometryProperties = new Set(['Left', 'Top', 'Width', 'Height', 'MinWidth', 'MinHeight', 'MaxWidth', 'MaxHeight',
   'Margin', 'HorizontalAlignment', 'VerticalAlignment', 'ZIndex', 'Row', 'Column', 'RowSpan', 'ColumnSpan', 'WrapRowSpan', 'WrapColumnSpan']);
@@ -15,6 +16,7 @@ export class HostGeometryUpdates {
     this.parents = new Map();
     this.dirty = new Set();
     this.measurements = new Set();
+    this.translations = new HostCanvasTranslations(host);
   }
 
   invalidate() {
@@ -27,6 +29,7 @@ export class HostGeometryUpdates {
     this.full = true;
     this.dirty.clear();
     this.measurements.clear();
+    this.translations.clear();
   }
 
   schedule({partial = false} = {}) {
@@ -72,17 +75,21 @@ export class HostGeometryUpdates {
     for (const change of changes) {
       if (!change || typeof change.id !== 'string' || !change.properties || typeof change.properties !== 'object'
         || Array.isArray(change.properties) || candidates.has(change.id) || !this.isolated(change.id)) return false;
-      const properties = {...this.host.nodes.get(change.id).properties};
+      const previous = this.host.nodes.get(change.id).properties;
+      const properties = {...previous};
       for (const [name, value] of Object.entries(change.properties)) {
         if (!geometryProperties.has(name)) return false;
         if (value === undefined) delete properties[name];
         else properties[name] = structuredClone(value);
       }
       if (!absolute(properties)) return false;
-      candidates.set(change.id, properties);
+      const layoutCurrent = !this.dirty.has(change.id) || this.translations.records.has(change.id);
+      const translation = layoutCurrent ? this.translations.prepare(change.id, previous, properties, change.properties) : null;
+      candidates.set(change.id, {properties, translation});
     }
-    for (const [id, properties] of candidates) {
+    for (const [id, {properties, translation}] of candidates) {
       this.host.nodes.get(id).properties = properties;
+      this.translations.commit(id, translation);
       this.dirty.add(id);
       this.measurements.add(id);
     }
@@ -111,12 +118,13 @@ export class HostGeometryUpdates {
     if (this.host.disposed) return;
     const request = this.request;
     if (this.full || !this.dirty.size && !this.measurements.size) {
+      this.translations.clear();
       renderHostScene(this.host);
       this.index();
     } else {
       for (const id of this.dirty) {
         const node = this.host.nodes.get(id);
-        this.host.renderNode(node, this.host.elements.get(id));
+        if (!this.translations.render(id)) this.host.renderNode(node, this.host.elements.get(id));
         this.host.drawNode(node);
       }
       measureHostNodes(this.host, this.measurements);
@@ -132,5 +140,6 @@ export class HostGeometryUpdates {
     this.parents.clear();
     this.dirty.clear();
     this.measurements.clear();
+    this.translations.clear();
   }
 }
