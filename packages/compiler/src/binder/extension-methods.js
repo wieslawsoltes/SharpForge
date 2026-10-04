@@ -82,11 +82,10 @@ export const ExtensionMethodBinding = Base =>
       group.name ??= group.nameNode?.identifier?.valueText ?? null;
       // The nearest scope with a method the receiver fits decides, as for an invocation.
       for (const scope of group.extensionScopes) {
-        const fitting = scope.methods.filter(
-          method =>
-            method.name === group.name &&
-            isValidReceiverConversion(this.conversions, group.receiver, method.parameters[0].type, { forMethodGroup: true }),
-        );
+        const fitting = scope.methods
+          .filter(method => method.name === group.name)
+          .map(method => this.constructedForReceiver(group, method, to))
+          .filter(method => method && isValidReceiverConversion(this.conversions, group.receiver, method.parameters[0].type, { forMethodGroup: true }));
         if (!fitting.length) continue;
         const result = this.extensionDelegate(group, fitting, to);
         group.lastConversionError = result.error ?? null;
@@ -104,6 +103,17 @@ export const ExtensionMethodBinding = Base =>
       return super.groupConversion(group, to);
     }
     /**
+     * A generic extension method as a delegate target: its type arguments are inferred from the receiver and the
+     * delegate's parameter types (`numbers.Show` with `Show<T>(this IEnumerable<T>)`), or written (`items.Show<int>`).
+     * @returns the constructed method, the method itself when it is not generic, or null when inference fails
+     */
+    constructedForReceiver(group, method, to) {
+      if (!method.arity) return method;
+      const args = [{ ...group.receiver, name: null, refKind: null }, ...delegateArguments(delegateInvoke(to))],
+        result = this.d.overloads.resolve([method], args, { typeArguments: group.typeArguments ?? null, name: group.name });
+      return result.succeeded ? result.method : null;
+    }
+    /**
      * Converts the extension methods of one scope to the delegate type `to`. With several candidates the receiver
      * takes part in overload resolution as the first argument, so `Tag(string)` beats `Tag(object)` for a string.
      */
@@ -111,9 +121,10 @@ export const ExtensionMethodBinding = Base =>
       let candidates = methods;
       if (methods.length > 1) {
         const args = [{ ...group.receiver, name: null }, ...delegateArguments(delegateInvoke(to))],
-          best = this.d.overloads.resolve(methods, args, { typeArguments: group.typeArguments ?? null, name: group.name });
+          best = this.d.overloads.resolve(methods, args, { name: group.name });
         if (best.succeeded) candidates = [best.method];
       }
-      return convertMethodGroup({ methods: candidates.map(reducedForm), typeArguments: group.typeArguments, name: group.name }, to, this.d.overloads);
+      // The candidates are constructed already (`constructedForReceiver`): no type arguments are left to apply.
+      return convertMethodGroup({ methods: candidates.map(reducedForm), name: group.name }, to, this.d.overloads);
     }
   };
