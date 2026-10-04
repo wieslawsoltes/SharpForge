@@ -6,6 +6,7 @@ from conformance.browser.launch import launch_browser, results_dir
 RESULTS = results_dir()
 from browser_harness import load_application,wait_condition
 from browser_designer_release_controls import ReleaseDesignerControls
+from browser_designer_source_input import replace_source
 ROOT=Path(__file__).resolve().parents[1];checks=[]
 def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
@@ -41,7 +42,8 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def ds():return ev('sharpforge.designer.get()')
  def text():return ev('sharpforge.getState().files.find(f=>f.uri==="Program.cs").text')
  def node(id):return next(n for n in ds()['document']['nodes'] if n['id']==id)
- def edit(s):ev('sharpforge.openFile("Program.cs")');page.locator('[data-source-uri="Program.cs"] .sf-input').fill(s)
+ def edit(s):
+  replace_source(page,"Program.cs",s)
  def load(s):cmd('stop');ev('sharpforge.designer.disconnect()');ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"SourceSyncWorkshop"})',s);ev('sharpforge.build()');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')));ev('sharpforge.designer.open()')
  ui=ReleaseDesignerControls(page,ds,lambda a:ev("a=>sharpforge.designer.action(a)",a),
   lambda i:ev("id=>sharpforge.designer.select(id)",i),lambda n:ev("n=>sharpforge.openTool(n)",n),ev,None)

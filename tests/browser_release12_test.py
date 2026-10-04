@@ -7,6 +7,7 @@ from conformance.browser.launch import launch_browser, results_dir
 RESULTS = results_dir()
 from browser_harness import load_application,wait_condition
 from browser_designer_release_controls import ReleaseDesignerControls
+from browser_designer_source_input import replace_source
 ROOT=Path(__file__).resolve().parents[1];checks=[]
 def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
@@ -24,7 +25,8 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def tool(name):ev('n=>sharpforge.openTool(n)',name)
  def select(id):ev('id=>sharpforge.designer.select(id)',id)
  def new():ui.new()
- def edit(text):ev('sharpforge.openFile("Program.cs")');page.locator('[data-source-uri="Program.cs"] .sf-input').fill(text);wait('sharpforge.getState().files.find(f=>f.uri==="Program.cs").text===document.querySelector(\'[data-source-uri="Program.cs"] .sf-input\').value')
+ def edit(text):
+  replace_source(page,"Program.cs",text)
  def app_node(name):return next(n for n in ev('sharpforge.getUIScene()')['nodes'] if n['properties'].get('Name')==name)
  def drag(locator,dx,dy):
   box=locator.bounding_box();truth(box,'element has no bounds');x,y=box['x']+box['width']/2,box['y']+box['height']/2;page.mouse.move(x,y);page.mouse.down();page.mouse.move(x+dx,y+dy,steps=8);page.mouse.up();page.wait_for_timeout(120)
