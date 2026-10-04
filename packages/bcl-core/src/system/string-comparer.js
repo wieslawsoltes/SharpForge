@@ -35,6 +35,11 @@ export function registerStringComparerFactoryExtensions(registry) {
   registry.member(comparerType, 'FromComparison', ['System.StringComparison'], comparerType, {isStatic: true});
 }
 
+/** Append only the nullable two-string equality signature after existing A07 members. */
+export function registerStringComparerEqualityExtensions(registry) {
+  registry.member(comparerType, 'Equals', ['string', 'string'], 'bool', {isAbstract: true});
+}
+
 function comparerSingleton(platform, getter) {
   const key = comparerType + '.' + getter.slice(4);
   return platform.singleton(key, () => platform.make(comparerType, {'$comparison': getters[getter]}));
@@ -54,6 +59,14 @@ function fromComparison(platform, value) {
 function invokeStringCompare(platform, args) {
   const compare = resolveStringComparer(platform, args[0]);
   return {handled: true, value: compare(string(platform, args[1], true), string(platform, args[2], true))};
+}
+
+function invokeStringEquals(platform, args) {
+  const compare = resolveStringComparer(platform, args[0]);
+  const first = string(platform, args[1], true);
+  const second = string(platform, args[2], true);
+  const value = first === second || first !== null && second !== null && first.length === second.length && compare(first, second) === 0;
+  return {handled: true, value};
 }
 
 function registerStringComparer(registry) {
@@ -86,6 +99,7 @@ function invokeStringComparer(platform, descriptor, args) {
     }
     return invokeStringCompare(platform, args);
   }
+  if (descriptor.name === 'Equals') return invokeStringEquals(platform, args);
   fail(platform, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
 }
 
