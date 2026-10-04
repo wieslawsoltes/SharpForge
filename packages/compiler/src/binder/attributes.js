@@ -26,6 +26,7 @@ import { BodyBinder } from './body-binder.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
 import { fullNameOf, attributesNamed } from './bound-attributes.js';
 import { importedAttributeUsage, isImportedType } from '../metadata-import/imported-attribute-usage.js';
+import { bindExtensionMemberAttributes } from './extension-attributes.js';
 
 const defaultUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: false, inherited: true });
 const unknownUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: true, inherited: true, isUnknown: true });
@@ -79,6 +80,7 @@ export const AttributeBinding = Base =>
     }
     bindMemberAttributes(member, type) {
       if (member.isImplicitlyDeclared || member.recordMember || member.kind === SymbolKind.NamedType) return;
+      if (bindExtensionMemberAttributes(this, member, type)) return;
       const scope = member.scope ?? type.primaryScope;
       let syntax = member.syntax;
       if (member.kind === SymbolKind.Field && !member.isEnumMember) syntax = member.declarationSyntax;
@@ -92,11 +94,11 @@ export const AttributeBinding = Base =>
       if (!member.isAccessor) for (const parameter of member.parameters) this.bindDeclared(parameter, parameter.syntax, scope, type);
       this.decodeMethodAttributes(member);
     }
-    bindDeclared(symbol, syntax, scope, type) {
+    bindDeclared(symbol, syntax, scope, type, locations = null) {
       if (!syntax?.attributeLists?.length || symbol.boundAttributes) return;
       symbol.boundAttributes = [];
       const site = { symbol, scope, uri: symbol.uri ?? scope.uri ?? this.at(type).uri, containingType: type };
-      this.bindAttributeLists(site, syntax.attributeLists, attributeLocations(symbol));
+      this.bindAttributeLists(site, syntax.attributeLists, locations ?? attributeLocations(symbol));
       const obsolete = attributesNamed(symbol, 'System.ObsoleteAttribute')[0];
       if (obsolete) symbol.obsolete = this.obsoleteDataOf(obsolete);
     }
