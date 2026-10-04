@@ -1,12 +1,13 @@
-import {WorkspaceTransactionJournal, FileOperationHistory, ProviderTransactionAdapter} from '@sharpforge/workspace';
-import {decodeWorkspaceFile, encodeWorkspaceFile} from '@sharpforge/archive';
-import {parseXml} from '@sharpforge/project-system';
-import {mapExplorerPath, xmlWorkspacePath} from './guards.js';
+import {WorkspaceTransactionJournal, FileOperationHistory} from '@sharpforge/workspace';
+import {decodeWorkspaceFile} from '@sharpforge/archive';
+import {nativeExplorerOperation} from '../explorer-existing.js';
+import {studioDiskLimits} from '../workbench/workspace-limits.js';
+import {ExplorerSourceTransactionAdapter} from './source-admission.js';
+import {assertExplorerOperationCurrent, capturePreparedExplorerState, commitPreparedExplorerState,
+  explorerOperationSignal, synchronizeExplorerHistory, validatePreparedExplorerContent} from './prepared-operations.js';
 
-export function captureExplorerState(context) {
-  return {identity: context.identity, name: context.name, records: context.records, folders: context.folders ?? [],
-    active: context.active, tabs: context.tabs ?? [], breakpoints: context.breakpoints ?? {},
-    dirty: context.dirty ?? [], startup: context.startup, entry: context.solutionPath ?? context.entry};
+export function captureExplorerState(context, commands = {host: {}}) {
+  return capturePreparedExplorerState(commands, context);
 }
 
 function normalizeOperations(operations) {
@@ -21,60 +22,44 @@ function normalizeOperations(operations) {
   });
 }
 
-function binaryBase64(bytes) {
-  let text = '';
-  for (let index = 0; index < bytes.length; index += 32768) text += String.fromCharCode(...bytes.subarray(index, index + 32768));
-  return btoa(text);
-}
-
 export function createExplorerHistory(commands) {
   const journal = new WorkspaceTransactionJournal({
-    getState: () => captureExplorerState(commands.context()),
-    commitState: async (value, options = {}) => {
-      if (commands.operationIdentity && commands.context().identity !== commands.operationIdentity) {
-        throw new Error('Workspace changed while committing the file operation');
-      }
-      const mappings = options.restore ? [] : commands.currentMappings ?? [];
-      commands.host.explorer?.prepareMappings?.(mappings);
-      await commands.host.commit({...value, mappings, restore: options.restore,
-        diskCommitted: !!options.transaction?.completedMutations.length,
-        persistedPaths: options.transaction?.completedMutations.filter(operation => operation.kind === 'write').map(operation => operation.path) ?? [],
-        entry: options.restore?.entry ?? mapExplorerPath(value.entry, mappings)});
-    },
-    adapter: new ProviderTransactionAdapter({getWorkspace: () => commands.context().disk,
-      ready: () => commands.host.explorer?.persistence?.ready()}),
-    validateContent: operation => {
-      const text = operation.text ?? operation.record?.text;
-      if (typeof text === 'string' && text.length > 4 * 1024 * 1024) throw new Error('Text item size limit exceeded');
-      if (xmlWorkspacePath(operation.path)) {
-        if (typeof text !== 'string') throw new Error('XML mutation requires validated text: ' + operation.path);
-        parseXml(text);
-      }
-    },
+    getState: () => captureExplorerState(commands.context(), commands),
+    commitState: (value, options) => commitPreparedExplorerState(commands, value, options),
+    adapter: new ExplorerSourceTransactionAdapter({getWorkspace: () => commands.context().disk,
+      ready: () => commands.host.explorer?.persistence?.ready(), maxBytes: studioDiskLimits.maxTotalBytes}),
+    validateContent: validatePreparedExplorerContent,
+    limits: {maxFiles: studioDiskLimits.maxFiles, maxBytes: studioDiskLimits.maxTotalBytes * 2},
     store: commands.host.journalStore ?? {save: receipt => commands.host.explorer?.persistence?.saveReceipt(receipt)}
   });
-  return new FileOperationHistory(journal);
+  // Large prepared source roots are shared; permit one bounded before/after workspace without dropping its undo.
+  return new FileOperationHistory(journal, {maxBytes: studioDiskLimits.maxTotalBytes * 4, maxEntries: 32});
 }
 
 /** Native host owns disk admission and quarantine; keep unsaved buffers intact if a partial host operation fails. */
 async function performNative(commands, operations, mappings) {
   const context = commands.context();
+  const current = commands.currentOperation;
+  const nativeOperations = operations.map(operation => {
+    const prepared = operation.record || operation.bytes ?
+      {...operation, record: operation.record ?? {path: operation.path, bytes: operation.bytes}} : operation;
+    const value = nativeExplorerOperation(prepared);
+    delete value.bytes;
+    return value;
+  });
   await commands.host.saveNative();
+  assertExplorerOperationCurrent(commands, current.identity, current.signal);
   for (const [path, text] of commands.readSet ?? []) {
-    if ((await context.client.read(path)).text !== text) throw new Error('Project changed while preparing the operation; no file operations applied: ' + path);
-  }
-  const nativeOperations = [];
-  for (const operation of operations) {
-    const value = {...operation};
-    if (value.record || value.bytes) {
-      const record = value.record ?? {path: value.path, bytes: value.bytes};
-      value.base64 = binaryBase64(encodeWorkspaceFile(record));
-      delete value.record;
-      delete value.bytes;
+    if ((await context.client.read(path, {signal: current.signal})).text !== text) {
+      throw new Error('Project changed while preparing the operation; no file operations applied: ' + path);
     }
-    if (!['create', 'mkdir'].includes(value.kind)) value.expectedHash = (await context.client.inspectItem(value.path)).hash;
-    nativeOperations.push(value);
   }
+  for (const value of nativeOperations) {
+    assertExplorerOperationCurrent(commands, current.identity, current.signal);
+    if (!['create', 'mkdir'].includes(value.kind)) value.expectedHash = (await context.client.inspectItem(value.path)).hash;
+  }
+  assertExplorerOperationCurrent(commands, current.identity, current.signal);
+  current.validate?.();
   let result;
   try { result = await context.client.mutate(nativeOperations); }
   catch (error) {
@@ -90,29 +75,43 @@ async function performNative(commands, operations, mappings) {
   return result;
 }
 
-export async function performExplorerOperations(commands, operations, mappings = []) {
+export async function performExplorerOperations(commands, operations, mappings = [], options = {}) {
   const context = commands.context();
+  if (!Array.isArray(operations) || operations.length > 20_000) throw new RangeError('Invalid explorer operation count');
+  if (options.validate !== undefined && typeof options.validate !== 'function') throw new TypeError('The Explorer commit guard must be a function');
   if (commands.operationIdentity && context.identity !== commands.operationIdentity) {
     throw new Error('Workspace changed while preparing the file operation');
   }
+  const signal = explorerOperationSignal(commands, options);
+  assertExplorerOperationCurrent(commands, context.identity, signal);
   commands.busy = true;
   commands.currentMappings = mappings;
-  commands.host.render();
+  commands.currentOperation = {identity: context.identity, signal, validate: options.validate, operations};
+  let committed = false;
   try {
+    commands.host.render();
+    options.validate?.();
     for (const [path, text] of commands.readSet ?? []) {
       if (!context.native && context.records.find(file => file.path === path)?.text !== text) {
         throw new Error('Project changed while preparing the operation: ' + path);
       }
     }
     const normalized = normalizeOperations(operations);
+    commands.currentOperation.operations = normalized;
     if (context.native) return await performNative(commands, normalized, mappings);
-    const receipt = await commands.fileHistory.execute(normalized);
-    commands.history = commands.fileHistory.undoStack;
+    const receipt = await commands.fileHistory.execute(normalized, {signal, label: options.label});
+    committed = true;
+    synchronizeExplorerHistory(commands);
     commands.host.explorer?.remapSelection?.(mappings);
     await commands.host.recovery?.checkpoint?.(commands.context());
     return receipt;
+  } catch (error) {
+    if (committed) error.committed = true;
+    throw error;
   } finally {
+    if (!context.native) synchronizeExplorerHistory(commands);
     commands.currentMappings = [];
+    commands.currentOperation = null;
     commands.busy = false;
     commands.host.render();
   }
@@ -120,12 +119,15 @@ export async function performExplorerOperations(commands, operations, mappings =
 
 export async function undoExplorerOperation(commands, redo = false) {
   const context = commands.context();
+  const signal = explorerOperationSignal(commands);
+  assertExplorerOperationCurrent(commands, context.identity, signal);
   commands.busy = true;
+  commands.currentOperation = {identity: context.identity, signal, operations: []};
   commands.host.render();
   try {
     if (!context.native) {
-      const receipt = await (redo ? commands.fileHistory.redo() : commands.fileHistory.undo());
-      commands.history = commands.fileHistory.undoStack;
+      const receipt = await (redo ? commands.fileHistory.redo({signal}) : commands.fileHistory.undo({signal}));
+      synchronizeExplorerHistory(commands);
       commands.host.notice('File operation ' + (redo ? 'redone.' : 'undone.'));
       return receipt;
     }
@@ -138,6 +140,8 @@ export async function undoExplorerOperation(commands, redo = false) {
     await commands.host.refreshNative(record.mappings.map(mapping => ({from: mapping.to, to: mapping.from})));
     commands.host.notice('File operation undone.');
   } finally {
+    if (!context.native) synchronizeExplorerHistory(commands);
+    commands.currentOperation = null;
     commands.busy = false;
     commands.host.render();
   }
