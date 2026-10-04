@@ -113,13 +113,21 @@ try:
         setup("one=12; two=34;")
         page.evaluate("insights.openFind(true)")
         page.get_by_role("checkbox", name="Regular expression", exact=True).check()
-        page.get_by_role("textbox", name="Find in current file").fill("(\\w+)=(\\d+)")
-        page.get_by_role("textbox", name="Replace in current file").fill("$1($2)")
+        # A text input connected to the native search-history datalist has the combobox role.
+        find = page.get_by_role("combobox", name="Find in current file", exact=True)
+        assert find.is_visible()
+        assert find.evaluate("input => input.list?.tagName === 'DATALIST' && input.list.isConnected")
+        expression = r"(\w+)=(\d+)"
+        find.fill(expression)
+        page.get_by_role("textbox", name="Replace in current file", exact=True).fill("$1($2)")
         wait(page, "document.querySelector('.sf-find-replace')?.dataset.searchState === 'complete' && "
                    "editor.decorations.get('find')?.length === 2")
+        assert find.input_value() == expression
+        assert find.evaluate("input => Array.from(input.list.options, option => option.value)") == [expression]
+        assert page.evaluate("editor.value") == "one=12; two=34;", "Search and history must not mutate the source"
         page.get_by_role("button", name="Replace all", exact=True).click()
         wait(page, "editor.value === 'one(12); two(34);'")
-        passed.append("regex replace captures use the shared safe search engine")
+        passed.append("native Find history combobox preserves source until regex capture replacement is applied")
 
         setup("alpha beta alpha")
         page.evaluate("editor.goto(6); insights.incrementalSearch(1)")

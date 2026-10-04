@@ -36,5 +36,7 @@ events remain separate #1403 increments.
 This leaf does not claim native EventPipe transport or CLR sampling cadence.
 The source and reloaded-source tests in `tests/a05-source-heap-events.test.js`
 cover guest execution, initialization, weak collection, restore, disposal, host
-failures and profiling coexistence. They are authored but not executed here;
-serial validation and broader platform/performance qualification remain pending.
+failures and profiling coexistence. All 75 focused source-heap, allocation, GC,
+duration-profiler, and ABI checks passed at `64d24e8b`, using Node 24, one worker,
+and a 512 MB old-space limit. Broader platform/performance qualification remains
+staged.

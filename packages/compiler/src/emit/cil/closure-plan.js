@@ -23,6 +23,7 @@ import { SynthesizedTypes } from './synthesized-types.js';
 import { MethodEmitter } from './method-emitter.js';
 import { UnsupportedInCil } from './unsupported.js';
 import { methodTypeParameterCopies, substitutionOver } from './generic-context.js';
+import { expressionTreeDelegate } from '../../symbols/expression-tree-types.js';
 
 const CLOSURE_METHOD_FLAGS = MethodAttributes.Assembly | MethodAttributes.HideBySig;
 const OWNER_METHOD_FLAGS = MethodAttributes.Private | MethodAttributes.HideBySig;
@@ -64,7 +65,17 @@ export class ClosurePlan extends SynthesizedTypes {
     if (!captures.functions.size) return;
     context.typeParameters ??= [];
     for (const variable of captures.captured) this.cells.set(variable, this.cellClass(context, variable.type));
-    for (const [key, functionCaptures] of captures.functions) this.planFunction(key, functionCaptures, context);
+    // A lambda converted to an expression tree is data, not code: neither it nor the lambdas inside it become methods.
+    const insideTrees = new Set();
+    for (const key of captures.functions.keys()) {
+      if (key.kind !== 'Lambda' || !expressionTreeDelegate(key.boundAs, this.core)) continue;
+      insideTrees.add(key);
+      walk(key.body, node => {
+        if (node.kind === 'Lambda') insideTrees.add(node);
+        return true;
+      });
+    }
+    for (const [key, functionCaptures] of captures.functions) if (!insideTrees.has(key)) this.planFunction(key, functionCaptures, context);
   }
   nextOrdinal(owner) {
     const ordinal = this.ordinals.get(owner) ?? 0;

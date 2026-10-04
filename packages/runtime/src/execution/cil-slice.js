@@ -2,16 +2,18 @@ import {flushFramePool} from './frame-pool.js';
 import {ManagedFault} from '../heap.js';
 import {fatalFaults} from './eh.js';
 import {flushCilMethodEvents} from './cil-method-events.js';
+import {emitCilException} from './cil-exception-events.js';
 
 const slicing = new WeakSet();
 export const cilSliceActive = vm => slicing.has(vm);
 
-function raiseInstructionFault(vm, error) {
+function raiseInstructionFault(vm, error, frame, instruction) {
   const fault = error instanceof ManagedFault ? error : new ManagedFault('InvalidProgramException', error.message ?? String(error));
   fault.frames ??= [...vm.frames].reverse().map(frame => ({
     method: frame.method.owner + '::' + frame.method.name,
     methodToken: frame.method.token, ilOffset: frame.lastOffset
   }));
+  emitCilException(vm, fault, frame, instruction, fatalFaults.has(fault.name));
   if (!fatalFaults.has(fault.name) && vm.onException?.(fault)) {
     vm.pendingFault = fault;
     vm.state = 'paused';
@@ -39,7 +41,8 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
       if ((count & 255) === 0 && performance.now() - started >= timeBudgetMs) break;
       vm.scheduler.beforeInstruction();
       if (vm.state !== 'running' || !vm.frames.length) break;
-      const instruction = vm.top.method.instructions[vm.top.pc];
+      const frame = vm.top;
+      const instruction = frame.method.instructions[frame.pc];
       if (instruction && onInstruction?.(instruction, vm.top)) {
         vm.state = 'paused';
         break;
@@ -54,7 +57,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
         if (executor) executor.step(vm);
         else vm.step();
       } catch (error) {
-        raiseInstructionFault(vm, error);
+        raiseInstructionFault(vm, error, frame, instruction);
       }
       flushFramePool(vm);
       vm.scheduler.afterInstruction();

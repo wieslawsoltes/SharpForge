@@ -183,6 +183,9 @@ export class AnalysisCore {
     if (this.hasUnknownUsings) return false;
     if (type.typeKind === TypeKind.TypeParameter)
       return !type.hasUnknownConstraint && [...type.constraintTypes].every(c => this.closedHierarchy(c));
+    // With a referenced core library every type is read from metadata with all its members: only a type that could
+    // not be resolved leaves the hierarchy open.
+    if (this.references.hasCoreLibrary) return !baseTypeChain(type, this.core).some(t => t.isErrorType?.());
     if (type.typeKind === TypeKind.Delegate || type.elementType) return false;
     for (const t of baseTypeChain(type, this.core)) {
       // The members of a source type and of an anonymous type are all known.
@@ -192,9 +195,12 @@ export class AnalysisCore {
     }
     return type.typeKind !== TypeKind.Interface || (isSourceSymbol(type) && type.allInterfaces.every(i => isSourceSymbol(i)));
   }
-  /** The registry lists a subset of each framework type's members, so a missing member proves nothing. */
+  /**
+   * The registry lists a subset of each framework type's members, so a missing member proves nothing. Reference
+   * assemblies list them all.
+   */
   registryIsComplete() {
-    return false;
+    return this.references.hasCoreLibrary;
   }
   isError(code) {
     return defaultSeverity(code) === 'error';

@@ -1,4 +1,5 @@
 import { studioSourceLength } from './workspace-limits.js';
+import { documentSource } from './document-source.js';
 
 export const studioRecoveryCharacterLimit = 8 * 1024 * 1024;
 
@@ -7,7 +8,7 @@ export function canRecoverStudioWorkspace(documents, extraFiles = []) {
   let characters = 0;
   for (const record of documents.list()) {
     const model = documents.models.get(record.uri);
-    characters += model?.length ?? studioSourceLength(record);
+    characters += documentSource(record, model)?.length ?? model?.length ?? studioSourceLength(record);
     if (characters > studioRecoveryCharacterLimit) return false;
   }
   for (const record of extraFiles) {

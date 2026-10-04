@@ -7,6 +7,8 @@ import { ConstantEmission } from './emit-constants.js';
 import { VariableEmission } from './emit-variables.js';
 import { ArithmeticEmission } from './emit-arithmetic.js';
 import { ConversionEmission } from './emit-conversions.js';
+import { SpanConversionEmission } from './emit-span-conversions.js';
+import { DecimalConversionEmission } from './emit-decimal-conversions.js';
 import { AssignmentEmission } from './emit-assignments.js';
 import { BranchEmission } from './emit-branches.js';
 import { LoopEmission } from './emit-loops.js';
@@ -39,12 +41,16 @@ import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
 import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
+import { AsyncIteratorEmission } from './emit-async-iterators.js';
+import { ExpressionTreeEmission } from './emit-expression-trees.js';
 
 const families = [
   ConstantEmission,
   VariableEmission,
   ArithmeticEmission,
   ConversionEmission,
+  SpanConversionEmission,
+  DecimalConversionEmission,
   AssignmentEmission,
   BranchEmission,
   LoopEmission,
@@ -77,6 +83,8 @@ const families = [
   IteratorEmission,
   AsyncEmission,
   AsyncTryEmission,
+  AsyncIteratorEmission,
+  ExpressionTreeEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}
