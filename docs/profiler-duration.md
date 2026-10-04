@@ -51,7 +51,9 @@ do not become fresh calls. Stop retains readable history and closes pending
 intervals before cleaning live and parked execution state.
 
 Clock exceptions, non-finite values, negative values, regressions and total
-overflow latch a host observer failure. Instrumentation does not throw it into
+overflow latch a host observer failure. Recursive inclusive totals are checked
+separately because one elapsed interval contributes to every active invocation.
+Instrumentation does not throw it into
 managed dispatch: guest execution reaches its current slice boundary first.
 An explicit profile read always reports the latched error. An automatic host
 boundary reports it only when there is no existing guest fault or debugger
@@ -77,3 +79,8 @@ node scripts/limited.js node --test --test-concurrency=1 tests/a05-profiler-dura
 The example accepts `node examples/runtime/instruction-profile.mjs --duration`.
 Record the commit, engine/version, options and environment when collecting real
 timing evidence; run benchmarks alone on an otherwise quiet machine.
+
+Recursive inclusive overflow regression: all six source/reload/CIL cases and
+47 existing profiler cases passed serially with Node 24.21.0 at `52a0d249`.
+Before the fix, all three recursive overflow cases failed while the three
+finite nonrecursive controls passed. The failure stays outside guest dispatch.
