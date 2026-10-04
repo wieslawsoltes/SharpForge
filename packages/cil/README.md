@@ -131,3 +131,5 @@ Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no
 Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.
 
 The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves bounded local hierarchy relations and reports missing metadata as unknown.
+
+The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonical local field/method declaration resolution to type relations.
