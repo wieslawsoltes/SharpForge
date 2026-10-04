@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@sharpforge/bcl-core": "0.14.0",
-    "@sharpforge/bcl-collections": "0.14.0"
+    "@sharpforge/bcl-collections": "0.14.0",
+    "@sharpforge/rendering": "0.14.0"
   }
 }
