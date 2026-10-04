@@ -115,6 +115,8 @@ Console.WriteLine(decimal.Floor(d: -1.25m));   // -2
 
 `tests/a05-source-decimal-integral-rounding.test.js` adds source/reloaded/direct-CIL
 cases for both signs, values near zero, scale, maximum/minimum values, precision
-beyond Number's exact integer range, storage, and rejected signatures. Tests have
-not run; native/platform/performance qualification remains deferred. This family
-does not close #1350 or #1351.
+beyond Number's exact integer range, storage, and rejected signatures. All 47
+focused integral-rounding, Round/Truncate, Parse and Decimal-operation tests
+passed at `3772537a`, using Node 24, one worker and a 512 MB old-space limit.
+Native/platform/performance qualification remains deferred. This family does
+not close #1350 or #1351.
