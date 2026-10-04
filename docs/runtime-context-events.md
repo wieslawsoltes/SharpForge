@@ -42,5 +42,10 @@ with `{runtimeEvents: true, virtualTime: true}`. `vm.run()` parks it and queues
 `RuntimeEventName.Suspend` and `RuntimeEventName.Resume`.
 
 This partial #1403 increment has authored direct-CIL regression cases in
-`tests/a05-context-events.test.js`. Tests and broader platform/performance
-qualification remain in the serial queue; no performance result is claimed.
+`tests/a05-context-events.test.js`. Initial validation passed 21 of 22 focused
+checks. The remaining fixture compared a waiting snapshot with a completed
+context, whose existing retirement cleanup adds a delegate field. After moving
+that assertion to the restore boundary, all eight context-event cases passed at
+`8910aabb`. Product behavior was unchanged. Checks used Node 24, one worker, and
+a 512 MB old-space limit. Broader platform/performance qualification remains
+staged; no performance result is claimed.
