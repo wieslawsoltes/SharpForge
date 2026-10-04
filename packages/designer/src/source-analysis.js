@@ -7,12 +7,14 @@ import {retainSourceDesignMetadata} from './source-design-metadata.js';
 import {inferSourceStyle} from './source-text.js';
 import {designSourceDiagnostics, failSource} from './source-errors.js';
 import {sourceRootBaseEvidence} from './source-preview.js';
+import {readSourceResponsive} from './source-responsive.js';
 
 /** Analyze all files together; reuseAnalysis may share immutable compiler data for another owner in the exact same source context. */
 export function analyzeDesignSources(sources, options = {}) {
   const context = prepareDesignSources(sources, options);
   const reader = new SourceConstructionReader(context, options).read();
   const remap = retainSourceIdentities(reader, options.previous, options.identityHints);
+  const responsiveSource = readSourceResponsive(reader);
   const children = new Set(reader.nodes.flatMap(node => node.children));
   const root = reader.root ?? reader.nodes.find(node => node.type === XAML + 'Window')?.id
     ?? reader.nodes.find(node => !children.has(node.id))?.id;
@@ -42,7 +44,8 @@ export function analyzeDesignSources(sources, options = {}) {
     return Number.isFinite(value) ? Math.max(100, value) : key === 'Width' ? 960 : 640;
   };
   const document = validateDesign(retainSourceDesignMetadata({version: 1, name: previous?.name ?? context.chosen.owner?.name ?? 'CSharpView',
-    width: size('Width'), height: size('Height'), root, nodes, styles: reader.styles, templates: reader.templates,
+    width: responsiveSource?.width ?? size('Width'), height: size('Height'), root, nodes, styles: reader.styles, templates: reader.templates,
+    ...(responsiveSource ? {responsive: responsiveSource.value} : {}),
     ...(options.projectTypes ? {projectTypes: Array.isArray(options.projectTypes) ? options.projectTypes
       : Object.entries(options.projectTypes).map(([type, baseType]) => ({type, baseType}))} : {})}, previous));
   const {method, owner, parsed} = context.chosen;
@@ -52,7 +55,7 @@ export function analyzeDesignSources(sources, options = {}) {
     owner: ownerName(owner), methodName: method.name,
     childId: remap[reader.rootAssignment.childId] ?? reader.rootAssignment.childId};
   const analysis = {text: parsed.source.text, uri: parsed.source.uri, document, bindings: reader.bindings, method, owner,
-    methods: context.methods, templateMethods: reader.templateMethods, resources: reader.resources,
+    methods: context.methods, templateMethods: reader.templateMethods, resources: reader.resources, responsiveSource,
     unmanaged: reader.unmanaged, warnings: reader.warnings, detached, fields: new Set(context.fields.keys()), parsed,
     style: inferSourceStyle(parsed.source.text, method), ownership, identityRemap: remap, sources: context.sources,
     compilerDiagnostics: context.result.diagnostics ?? [], compilationSucceeded: context.result.success,
