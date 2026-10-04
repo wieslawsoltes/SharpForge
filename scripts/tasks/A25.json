@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "git": {
+      "description": "Run the portable Git CLI against an explicitly selected local repository",
+      "steps": [{ "command": "node", "args": ["apps/cli/git.js"] }]
+    },
+    "test:git": {
+      "description": "Run the complete A25 Node scope serially under local resource limits",
+      "steps": [{ "command": "node", "args": ["scripts/limited.js", "node", "--test", "tests/a25-*.test.js"] }]
+    },
+    "test:git:browser": {
+      "description": "Qualify actual Git storage, Studio and collaboration in a browser, one suite at a time",
+      "steps": [
+        { "command": "python", "args": ["tests/a25_storage_browser_test.py"] },
+        { "command": "python", "args": ["tests/a25_studio_browser_test.py"] },
+        { "command": "python", "args": ["tests/a25_collab_browser_test.py"] },
+        { "command": "python", "args": ["tests/a25_clone_browser_test.py"] }
+      ]
+    },
+    "bench:git": {
+      "description": "Measure the actual large Git repository fixture with optional reviewed baseline comparison",
+      "steps": [{ "command": "node", "args": ["--expose-gc", "packages/git/scripts/benchmark.js"] }]
+    }
+  }
+}

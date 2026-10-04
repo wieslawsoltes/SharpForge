@@ -1,4 +1,4 @@
-/** Public exports for the implemented dependency-closed layer. */
+/** Public, browser-safe Git entry point. Node filesystem access is isolated in @sharpforge/git/node. */
 export { IncrementalHash, hashBytes } from './hash.js';
 export { ObjectDatabase } from './odb.js';
 export * from './errors.js';
