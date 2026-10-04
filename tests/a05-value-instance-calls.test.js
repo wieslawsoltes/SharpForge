@@ -66,12 +66,12 @@ test('direct struct calls mutate local, array, field and box interiors while ord
     writer.op('ldloca.s', 4).op('ldflda', context.fields.get('Envelope.Value')).op('call', get).op('call', print);
     writer.op('ret');
   }, {locals: [pointType, pointType, pointType + '[]', 'object', 'valuetype Envelope'], result: 'void'});
-  for (const nativeIntBits of [32, 64]) run(bytes, (result, vm) => {
+  for (const nativeIntBits of [32, 64]) for (const typedNumericStack of [false, true]) run(bytes, (result, vm) => {
     assert.equal(result.state, 'terminated', result.fault?.message);
     assert.equal(result.output, '3\n7\n99\n43\n13\n11\n55\n');
     assert(vm.heap.stats.collections > 0);
     assert.equal(vm.heap.records.some(record => record?.kind === 'object' && record.type === 'Point'), false);
-  }, {nativeIntBits});
+  }, {nativeIntBits, typedNumericStack});
 });
 
 test('direct .ctor initializes an uninitialized local without weakening ordinary receiver reads', () => {

@@ -11,6 +11,8 @@ that AST describes index parameter types, and `returnType` describes the propert
 type. `isStatic` reads its HasThis bit. Variables, arrays and custom modifiers
 remain unresolved metadata. Lazy `constant` reuses the module's raw Constant
 service, with no enum boxing or custom-attribute default evaluation.
+Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) read the property type's
+outer modifier prefix.
 
 Lazy [`indexParameters`](PROPERTY-PARAMETERS.md) projects accessor Param metadata
 into canonical ParameterDesc objects whose owning `member` is this property.

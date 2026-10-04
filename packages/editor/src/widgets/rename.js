@@ -45,6 +45,13 @@ export class InlineRenameWidget {
       range = {start: offset - left.length, end: offset + right.length};
     }
     if (range.start === range.end) return this.context.status('No symbol to rename at the caret.');
+    for (const [name, option] of [['comments', this.comments], ['strings', this.strings], ['file', this.renameFile]]) {
+      const provided = range.capabilities ?? this.context.options.renameCapabilities ?? [];
+      const enabled = provided.includes(name) && (name !== 'file' || this.context.workspace.supportsResourceRename === true);
+      option.input.disabled = !enabled;
+      option.input.checked = false;
+      option.wrapper.title = enabled ? '' : 'This option is unavailable for the current source and workspace';
+    }
     this.origin = {uri: editor.uri, offset, selectionEnd: editor.input.selectionEnd, range};
     this.preview = new RenamePreview(editor);
     this.input.value = range.placeholder ?? editor.value.slice(range.start, range.end);
@@ -74,7 +81,9 @@ export class InlineRenameWidget {
     const current = this.plan.changes.find(change => change.uri === this.origin.uri);
     if (current) this.preview.show(current.edits);
     const count = this.plan.changes.reduce((sum, change) => sum + change.edits.length, 0);
-    this.status.textContent = `${count} occurrences in ${this.plan.changes.length} documents`;
+    const resources = this.plan.resources ?? [];
+    this.status.textContent = `${count} occurrences in ${this.plan.changes.length} documents` +
+      (resources.length ? `; rename ${resources.map(resource => `${resource.oldUri} → ${resource.newUri}`).join(', ')}` : '');
     this.applyButton.disabled = false;
   }
 

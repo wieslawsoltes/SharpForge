@@ -1,0 +1,9 @@
+<Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="Subject" AutomationProperties.Name="Positioned children"
+        Width="240" Height="160" Background="WhiteSmoke">
+  <Border x:Name="OriginSwatch" Canvas.Left="0" Canvas.Top="0"
+          Width="60" Height="40" Background="SteelBlue" />
+  <Button x:Name="OffsetButton" Canvas.Left="120" Canvas.Top="70"
+          Width="100" Height="40" Content="Offset" AutomationProperties.Name="Offset action" />
+</Canvas>

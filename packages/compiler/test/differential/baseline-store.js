@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 /** The comparison axes, in the order they are written. */
-export const BASELINE_AXES = Object.freeze(['diagnostics', 'warnings', 'bytecode', 'cil']);
+export const BASELINE_AXES = Object.freeze(['diagnostics', 'warnings', 'bytecode', 'cil', 'directCil']);
 
 /** Directory of the per-feature baseline files. */
 export const baselineDirectory = join(dirname(fileURLToPath(import.meta.url)), 'baseline');
@@ -33,7 +33,7 @@ function baselineFileNames(directory) {
     .sort(byCodeUnit);
 }
 
-/** The checked-in baseline `{diagnostics,warnings,bytecode,cil}` (sorted arrays of fixture ids), or empty lists. */
+/** The checked-in baseline `{diagnostics,warnings,bytecode,cil,directCil}` (sorted arrays of fixture ids), or empty lists. */
 export function loadBaseline(directory = baselineDirectory) {
   const baseline = Object.fromEntries(BASELINE_AXES.map(axis => [axis, []]));
   for (const name of baselineFileNames(directory)) {

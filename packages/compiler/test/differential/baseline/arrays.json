@@ -1,12 +1,13 @@
 {
-  "arrays/create-index-length": ["diagnostics", "warnings", "bytecode", "cil"],
+  "arrays/create-index-length": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "arrays/cs0022-wrong-index-count": ["diagnostics", "warnings"],
   "arrays/cs0029-array-to-scalar": ["diagnostics", "warnings"],
   "arrays/cs0029-element-type": ["diagnostics", "warnings"],
   "arrays/cs0029-string-index": ["diagnostics", "warnings"],
   "arrays/cs0826-no-best-type": ["diagnostics", "warnings"],
   "arrays/index-from-end-and-range": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arrays/jagged": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arrays/loops-over-arrays": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arrays/rectangular": ["diagnostics", "warnings", "bytecode", "cil"]
+  "arrays/jagged": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arrays/loops-over-arrays": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arrays/rectangular": ["diagnostics", "warnings", "bytecode", "cil"],
+  "arrays/sort-reverse-indexof": ["directCil"]
 }
