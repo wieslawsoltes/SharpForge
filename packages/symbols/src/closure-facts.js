@@ -126,7 +126,7 @@ export function snapshotClosureFacts(metadata, custom, limit) {
     const closureOrdinal = Number(match?.[2]);
     const supported = Number.isSafeInteger(methodOrdinal) && Number.isSafeInteger(closureOrdinal);
     const map = supported ? maps.get(key(parent, methodOrdinal)) : null;
-    const fields = supported ? capturedFields(metadata, type) : null;
+    const fields = map ? capturedFields(metadata, type) : null;
     for (const methodToken of metadata.list(type, 'MethodList')) {
       const methodName = metadataName(metadata, metadata.row(methodToken)[3], 'Closure metadata');
       if (!methodName.includes('>b__')) continue;

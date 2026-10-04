@@ -11,11 +11,12 @@ function lookupFromFacts(snapshot, bound) {
     if (!bound) return unavailableClosure(methodToken, 'unbound-symbols');
     if (!hasMaps) return unavailableClosure(methodToken, 'missing-lambda-map');
     if (!index) {
-      index = new Map();
+      const methods = new Map();
       for (const fact of snapshot.facts) {
-        if (index.has(fact.methodToken)) fail('Ambiguous closure method mapping');
-        index.set(fact.methodToken, fact);
+        if (methods.has(fact.methodToken)) fail('Ambiguous closure method mapping');
+        methods.set(fact.methodToken, fact);
       }
+      index = methods;
       snapshot = null;
     }
     const fact = index.get(methodToken);
