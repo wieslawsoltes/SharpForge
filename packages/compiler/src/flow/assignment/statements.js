@@ -80,14 +80,17 @@ export const AssignmentStatements = Base =>
           let exhaustive = false,
             fallout = null;
           for (const section of s.sections) {
-            const entry = st.clone();
+            let entry = st.clone();
             for (const l of section.labels) {
               if (l.kind === 'default' || l.kind === 'DiscardPattern') exhaustive = true;
               if (l.local) {
                 this.declare(l.local);
                 if (section.labels.length === 1) entry.add(l.local);
               }
-              if (l.when) this.expr(l.when, entry);
+              if (!l.when) continue;
+              // The section runs when the guard is true: what `when x is T t` or `when f(out var v)` assigns is assigned there.
+              const whenTrue = this.cond(l.when, entry).t;
+              if (section.labels.length === 1 && whenTrue) entry = whenTrue;
             }
             const end = this.stmt(section.body, entry);
             if (end) fallout = join(fallout, end);

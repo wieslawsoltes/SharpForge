@@ -24,6 +24,11 @@ function narrowedTypeOf(pattern, inputType) {
       return pattern.testedType ?? pattern.inputType ?? inputType;
     case 'AndPattern':
       return narrowedTypeOf(pattern.right, narrowedTypeOf(pattern.left, inputType));
+    case 'RelationalPattern':
+      // `x is > 0 and var n` over an `int?`: a value that compares is not null, and `n` is an `int`.
+      return inputType?.isNullableValueType ? stripNullable(inputType) : inputType;
+    case 'ConstantPattern':
+      return inputType?.isNullableValueType && pattern.value?.constantValue && !pattern.value.constantValue.isNull ? stripNullable(inputType) : inputType;
     default:
       return inputType;
   }
