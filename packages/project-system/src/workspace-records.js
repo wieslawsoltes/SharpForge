@@ -6,10 +6,12 @@ export function isSourceSnapshot(source) {
     && Number.isSafeInteger(source.length) && source.length >= 0 && typeof source.getText === 'function';
 }
 
+/** Return a contributed immutable source snapshot, or null, without reading the record's text getter. */
 export function recordSource(record) {
   return isSourceSnapshot(record?.source) ? record.source : null;
 }
 
+/** Recognize a source snapshot or a legacy string record; prepared snapshots avoid a compatibility text read. */
 export function isTextRecord(record) {
   return !!record && (recordSource(record) !== null || typeof record.text === 'string');
 }
@@ -20,6 +22,7 @@ export function recordText(record) {
   return source ? source.getText(0, source.length) : record?.text;
 }
 
+/** Clone descriptors at the supplied path without materializing text or transferring/rebasing source-model ownership. */
 export function cloneWorkspaceRecord(record, path) {
   const descriptors = Object.getOwnPropertyDescriptors(record);
   descriptors.path = {value: path, writable: true, configurable: true, enumerable: true};

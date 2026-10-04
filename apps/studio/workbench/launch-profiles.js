@@ -14,12 +14,15 @@ export class LaunchProfiles {
 
   validate(profile) {
     const id = requireIdentifier(profile.id ?? 'default', 'Launch profile id');
+    if (id.length > 512) throw new RangeError('Launch profile ID limit reached');
+    const name = requireIdentifier(profile.name ?? id, 'Launch profile name');
+    if (name.length > 200) throw new RangeError('Launch profile name limit reached');
     const args = validateProgramArguments(profile.arguments);
     const environment = validateLaunchEnvironment(profile.environment);
     const renderer = profile.renderer ?? 'auto';
     if (!['auto', 'webgpu', 'canvas2d', 'dom'].includes(renderer)) throw new TypeError('Unknown application renderer');
     return {
-      id, name: profile.name ?? id, arguments: [...args], environment: { ...environment },
+      id, name, arguments: [...args], environment: { ...environment },
       stopOnEntry: profile.stopOnEntry === true, renderer, runtimeSettings: validateSessionSettings(profile.runtimeSettings)
     };
   }
@@ -54,6 +57,15 @@ export class LaunchProfiles {
     this.events.emit({ type: 'selected', projectId, profileId: id });
   }
 
+  removeProject(projectId, { notify = true } = {}) {
+    const profiles = this.projects.delete(projectId);
+    const selected = this.selected.delete(projectId);
+    if (notify && (profiles || selected)) this.notifyRemoved([projectId]);
+    return profiles || selected;
+  }
+
+  notifyRemoved(projectIds) { this.events.emit({ type: 'profiles-removed', projectIds: [...projectIds] }); }
+
   launchOptions(projectId, id) {
     const profile = this.get(projectId, id);
     return {
@@ -74,5 +86,17 @@ export class LaunchProfiles {
     return { version: 1, projects };
   }
 
-  dispose() { this.projects.clear(); this.events.dispose(); }
+  /** Commit a validated staging model; recovery may notify after all related owners are consistent. */
+  replaceFrom(staged, { notify = true } = {}) {
+    if (!(staged instanceof LaunchProfiles)) throw new TypeError('Expected staged launch profiles');
+    const projects = structuredClone(staged.projects);
+    const selected = new Map(staged.selected);
+    this.projects = projects;
+    this.selected = selected;
+    if (notify) this.notifyRestored();
+  }
+
+  notifyRestored() { this.events.emit({ type: 'profiles-restored' }); }
+
+  dispose() { this.projects.clear(); this.selected.clear(); this.events.dispose(); }
 }

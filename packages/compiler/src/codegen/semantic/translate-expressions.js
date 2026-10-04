@@ -106,6 +106,8 @@ export const ExpressionTranslation = Base =>
         return n.call(this.g.methodOf(node.method, node.syntax), null, [left, right]);
       }
       if (node.family === 'delegate') return this.delegateArithmetic(node, left, right);
+      const delegateEquality = this.delegateEquality(node, left, right);
+      if (delegateEquality) return delegateEquality;
       if (node.operator === '>>>') return this.unsupported('the unsigned right shift operator', node.syntax);
       return n.binary(node.operator, left, right, this.imageType(node.type, node.syntax), !!node.isChecked);
     }

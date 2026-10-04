@@ -171,6 +171,9 @@ export class OverloadResolver {
       if (kept.length) applicable = kept;
     }
     applicable = keepHighestPriority(applicable, c => c.definition);
+    // The framework registry lists some members twice (one contract per runtime implementation): they are one member,
+    // which matters once a third candidate is applicable too (`string.Concat(string, string)` next to the params form).
+    if (applicable.length > 2) applicable = applicable.filter((c, i) => !applicable.slice(0, i).some(o => this.isSameImportedMember(o, c)));
     if (applicable.length === 1) return success(applicable[0]);
     if (applicable.length > 1) {
       const best = applicable.filter(c => applicable.every(o => o === c || this.better(c, o, args)));

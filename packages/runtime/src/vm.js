@@ -1,3 +1,4 @@
+import {formatSourceValue} from './value-formatting.js';
 import {SUSPENDED} from './platform.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
 import { Op, BinaryName, UnaryName } from '@sharpforge/bytecode';
@@ -6,7 +7,7 @@ import {builtin} from './execution/source-builtins.js';
 import {sourceValue} from './execution/source-values.js';
 import {initializeSourceVM} from './execution/initialize-source.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
-import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
+import {binary,convert,unary,defaultValue,sourceEnum,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes} from './execution/source-ops.js';
 import {roots as exceptionRoots,frameState,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
@@ -17,7 +18,7 @@ export class VirtualMachine {
   notifyWrite(write){this.writeRevision++;if(['field','array'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
   value(ref){return sourceValue(this.heap,ref);}
-  format(value){const name=runtimeTypeText(this,value)??enumToString(this,value);if(name!==null)return name;if(value===null)return '';if(value===undefined)return '<unassigned>';if(value===true)return 'True';if(value===false)return 'False';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return r.data;if(r.kind==='exception')return r.type+': '+this.format(r.data[0]);return r.type;}return String(value);}
+  format(value){return formatSourceValue(this,value);}
   display(value){if(value===null)return 'null';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return JSON.stringify(r.data);if(r.kind==='array')return `${r.type} [${r.data.length}]`;return `${r.type} {#${value.h}}`;}return this.format(value);}
   constant(index){const raw=this.image.constants[index];return typeof raw==='string'?literalString(this,raw):raw;}
   binary(operator,a,b,mode=0){return binary(this,operator,a,b,mode);}
