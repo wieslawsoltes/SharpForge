@@ -1,0 +1,12 @@
+{
+  "target": "production-studio-real-workers",
+  "status": "failed",
+  "engine": "chromium",
+  "checks": [],
+  "failure": {
+    "type": "Error",
+    "message": "Page.evaluate: AggregateError: Workbench event listeners failed\n    at WorkbenchEvents.emit (http://127.0.0.1:51371/workbench/state-events.js:46:32)\n    at DocumentService.setProjectMembership (http://127.0.0.1:51371/workbench/documents.js:259:17)\n    at StudioProjects.removeMembership (http://127.0.0.1:51371/workbench/studio-projects.js:103:29)\n    at StudioProjects.sync (http://127.0.0.1:51371/workbench/studio-projects.js:62:79)\n    at Object.renderWorkspace (http://127.0.0.1:51371/studio.js:277:18)\n    at finishWorkspace (http://127.0.0.1:51371/workbench/studio-workspace-loader.js:88:11)\n    at loadStudioWorkspace (http://127.0.0.1:51371/workbench/studio-workspace-loader.js:151:26)\n    at async eval (eval at evaluate (:311:30), <anonymous>:2:24)\n    at async <anonymous>:337:30"
+  },
+  "pageErrors": [],
+  "milliseconds": 3227.73
+}

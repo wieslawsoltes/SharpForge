@@ -13,6 +13,8 @@
     "tests/browser_multi_session_test.py",
     "tests/browser_a19_lazy_tools_test.py",
     "tests/browser_vs_workflows_test.py",
+    "tests/browser_vs_workflows_standalone_test.py",
+    "tests/browser_editor_budgets_test.py",
     "tests/browser_workbench_perf_test.py"
   ],
   "requiredServices": [
