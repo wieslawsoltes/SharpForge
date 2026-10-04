@@ -26,6 +26,25 @@ for (const [name, calculate] of [['add', (left, right) => left + right],
   });
 }
 
+function divide(left, right, remainder) {
+  if (right === 0) return undefined;
+  const quotient = Math.trunc(left / right);
+  const product = quotient * right;
+  if (!Number.isSafeInteger(product)) return undefined;
+  const residual = left - product;
+  // Safe integer products/differences are exact. These bounds and sign prove truncation,
+  // without trusting floating-point division to round on the correct side of an integer.
+  if (!Number.isSafeInteger(residual) || Math.abs(residual) >= Math.abs(right) ||
+      residual !== 0 && (residual < 0) !== (left < 0)) return undefined;
+  return (remainder ? residual : quotient) || 0;
+}
+
+for (const [name, remainder] of [['div', false], ['rem', true]]) {
+  operations.set(name, (left, right) => divide(left, right, remainder));
+  operations.set(name + '.un', (left, right) =>
+    left < 0 || right < 0 ? undefined : divide(left, right, remainder));
+}
+
 /** Convert only exact safe BigInt values; a plain Number never implies Int64 at a public boundary. */
 export function smallLongNumber(value) {
   return typeof value === 'bigint' && value >= minimum && value <= maximum ? Number(value) : undefined;

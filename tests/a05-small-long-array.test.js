@@ -33,7 +33,7 @@ test('safe Int64 operations match exact BigInt and decline rounded or unsigned-n
   assert.equal(smallLongOperation('mul')(maximum, 0), 0);
   assert.equal(smallLongOperation('sub.ovf.un')(0, 1), undefined);
   assert.equal(smallLongOperation('add.ovf.un')(-1, 0), undefined);
-  for (const name of ['div', 'rem', 'shl', 'shr', 'and', 'or', 'xor']) assert.equal(smallLongOperation(name), null);
+  for (const name of ['shl', 'shr', 'and', 'or', 'xor']) assert.equal(smallLongOperation(name), null);
   for (const left of bounds) for (const right of bounds) for (const unsigned of [false, true]) {
     assert.equal(compareSmallLong(left, right, unsigned), int64Compare(BigInt(left), BigInt(right), unsigned));
   }
