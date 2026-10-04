@@ -80,6 +80,8 @@ export class MSBuildClient {
   publishProfiles(request, options) { return this.service('publish', 'profiles', request, options); }
   publishProfile(request, options) { return this.service('publish', 'execute', request, options); }
 
+  packageOperation(operation, request, options) { return this.service('nuget', operation, request, options); }
+
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
