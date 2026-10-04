@@ -52,19 +52,22 @@ export const basicPatternMethods = {
       return this.n('VarPattern', this.takeWord('var'), this.designation());
     if (this.isWord(token, '_') && !['.', '(', '{', '<', '::'].includes(next.kind) && !this.isDesignationAhead(this.i + 1))
       return this.n('DiscardPattern', this.take('UnderscoreToken'));
+    // Only directly after `is` can a `?` be the conditional operator (`x is T ? a : b`); in a case label, a switch
+    // arm or a subpattern `int?[] items` is a type.
     const info = {},
-      end = kind === 'await' || (this.isWord(token, 'nameof') && next.kind === '(') ? -1 : this.scanType(this.i, info, 'afterIs');
+      mode = (this.patternPrecedence ?? Precedence.Shift) === Precedence.Shift ? 'afterIs' : undefined,
+      end = kind === 'await' || (this.isWord(token, 'nameof') && next.kind === '(') ? -1 : this.scanType(this.i, info, mode);
     if (end > this.i) {
       const follower = this.tokens[Math.min(end, this.tokens.length - 1)];
-      if (this.isDesignationAhead(end)) return this.n('DeclarationPattern', this.type('afterIs'), this.designation());
-      if ((follower.kind === '(' && !info.predefined) || follower.kind === '{') return this.recursivePattern(this.type('afterIs'));
+      if (this.isDesignationAhead(end)) return this.n('DeclarationPattern', this.type(mode), this.designation());
+      if ((follower.kind === '(' && !info.predefined) || follower.kind === '{') return this.recursivePattern(this.type(mode));
       // An alias-qualified name alone (`global::A.B`) may be a constant, so it is not taken for a type pattern.
       const typeOnly = info.generic || info.predefined || info.suffix || (info.must && !info.alias);
       if (typeOnly && !(info.predefined && this.kindAt(this.i + 1) === '.' && end === this.i + 1)) {
         this.feature('TypePattern', token);
-        return this.n('TypePattern', this.type('afterIs'));
+        return this.n('TypePattern', this.type(mode));
       }
     }
-    return this.n('ConstantPattern', this.expression(Precedence.Shift));
+    return this.n('ConstantPattern', this.expression(this.patternPrecedence ?? Precedence.Shift));
   }
 };
