@@ -26,8 +26,9 @@ method-level reasons have a null offset. An ineligible method has null `ir`.
 the report's `reasons` property. Invalid options throw before analysis.
 
 Analysis requires the verifier's private proof for the exact canonical body.
-A copied verification report, replaced instruction array or altered operand
-does not provide proof. Closed generic methods can share that canonical body;
+A copied verification report or replaced instruction array does not provide
+proof. In-place operand edits require explicit code-epoch invalidation and
+reverification before analysis. Closed generic methods can share that canonical body;
 their concrete signature and local types drive eligibility. Normal metadata
 editing still requires code-epoch invalidation and verification. Do not retain
 IR across metadata changes, inspector replacement or restoration of other code.
