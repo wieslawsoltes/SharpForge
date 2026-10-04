@@ -695,8 +695,9 @@ Registered families: <code>builder</code>.
 | 524334 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char)</code> | implemented |
 | 524335 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char, int, int)</code> | implemented |
 | 524336 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char)</code> | implemented |
+| 524337 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(string, string, int, int)</code> | implemented |
 
-Pinned reference: 53 implemented and 55 missing exact metadata rows.
+Pinned reference: 54 implemented and 54 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -801,7 +802,7 @@ Pinned reference: 53 implemented and 55 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Replace``0(System.ReadOnlySpan`1&lt;System.Char&gt;,System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Replace``0(System.ReadOnlySpan`1&lt;System.Char&gt;,System.ReadOnlySpan`1&lt;System.Char&gt;,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Replace``0(System.String,System.String):System.Text.StringBuilder instance</code> | implemented | 816 |
-| method | <code>System.Text.StringBuilder::Replace``0(System.String,System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Replace``0(System.String,System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524337 |
 | method | <code>System.Text.StringBuilder::ToString``0():System.String instance</code> | implemented | 812 |
 | method | <code>System.Text.StringBuilder::ToString``0(System.Int32,System.Int32):System.String instance</code> | implemented | 813 |
 | property | <code>System.Text.StringBuilder::Capacity[]:System.Int32 get set instance</code> | implemented | 801, 802 |
