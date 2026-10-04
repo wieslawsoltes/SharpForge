@@ -120,6 +120,25 @@ overload occupies reserved A07 ID `524288`; released IDs remain unchanged.
 Formatting still uses the supported invariant numeric formats and the host's
 1,000,000-unit output budget, rather than claiming the full .NET formatting API.
 
+`Object.ToString` invokes the existing StringBuilder and Uri overrides when the
+receiver is held as `object`. Their parameterless contracts explicitly opt in
+with `objectToStringOverride: true`; names alone never enable virtual dispatch.
+The runtime supplies the optional `bclHost.invokeObjectToString(platform, value)`
+service and resolves exact managed framework types through existing handlers.
+This keeps core independent of runtime/framework imports and preserves released
+contract IDs 812 and 1542. No managed receiver is retained in the dispatch index.
+
+Source object calls and CIL `callvirt` use this path. CIL `call` retains the base
+type-name result for these framework objects; either opcode faults on null.
+The 22-row [.NET 10.0.5 capture](reference/object-string/README.md) records actual
+native instructions, including hidden methods and primitive controls. Existing
+primitive, Convert and Console formatting profiles remain unchanged; primitive
+nonvirtual calls are not newly qualified as native-compatible. Other framework
+overrides and arbitrary managed callbacks require separate explicit support.
+The static benchmark `scripts/benchmarks/a07-framework-object-string.mjs` reports
+the unchanged primitive control and newly virtual framework cases separately;
+copy it to baseline `82ec8ed4` for a serial comparison with setup excluded.
+
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
 first, then compares exact UTF-16 code units without normalization, case folding
