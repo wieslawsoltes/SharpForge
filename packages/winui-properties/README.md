@@ -37,3 +37,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Temporary construction roots
 
 `UIConstructionRoots` keeps only the references issued during an active synchronous factory operation. Nested factories share the outer operation, bounded to one million distinct references and 512 nested operations by default. Both a successful return and a fault release every temporary root. Templates and content presentation forward the optional `withConstruction(action, roots)` host capability through creation, attachment and callback completion. Managed heap integration is introduced by the later VM host batch; standalone model adapters remain synchronous.
+
+## Typed styles and transactional setters
+
+`Style`, `Setter` and `StyleApplication` validate complete setter plans before changing any store. Typed styles seal transitively, preserve higher-precedence local/binding/animation values and track implicit/theme resources without rebuilding unrelated consumers. Definition factories can explicitly select the released `legacyMutable` profile: its weak observer leases revalidate and update all applications transactionally, with at most 1024 consumers per mutation. The actual Style(string) ABI opt-in arrives with resource adapters. BindingBase and PropertyPath definitions are carried unchanged from their independent prerequisite branch; binding execution is separate.
