@@ -27,3 +27,19 @@ test('BCL and WinUI comparisons never alias function-pointer conventions, flags 
     assert.deepEqual(result.rows[index].contractIds,[index]);
   }
 });
+
+test('BCL and WinUI comparisons keep array shape vectors, omitted bounds and nesting distinct',()=>{
+  const parameters=['System.Int32[]','System.Int32[*]','System.Int32[,]','System.Int32[,,]',
+    'System.Int32[rank=1;sizes=();lower=(0)]','System.Int32[rank=1;sizes=();lower=(-1)]',
+    'System.Int32[rank=1;sizes=(0);lower=()]','System.Int32[rank=1;sizes=(3);lower=()]',
+    'System.Int32[rank=2;sizes=(3);lower=()]','System.Int32[rank=2;sizes=(3);lower=(0)]',
+    'System.Int32[rank=2;sizes=(3);lower=(0,0)]','System.Int32[rank=2;sizes=(3,4);lower=(-1,2)]',
+    'System.Int32[*][]','System.Int32[][rank=2;sizes=(3);lower=(1)]'];
+  const input=reference(parameters);
+  for(const compare of [compareMembers,winuiApiDiff])for(const [index,parameter] of parameters.entries()) {
+    const contract={id:index,owner:'Example.Api',name:'Invoke',isStatic:true,result:'void',parameters:[parameter.replace('System.Int32','int')]};
+    const result=compare(input,{registryTypes:new Map(),registryContracts:[contract]});
+    assert.deepEqual(result.rows.map(row=>row.status),parameters.map((_,i)=>i===index?'implemented':'missing'));
+    assert.equal(result.totals.denominator,parameters.length);
+  }
+});
