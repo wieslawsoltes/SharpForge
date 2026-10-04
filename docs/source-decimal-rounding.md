@@ -146,6 +146,8 @@ registered by this increment.
 
 `tests/a05-source-decimal-arithmetic.test.js` compares static methods and operators
 across source, reloaded source and direct CIL, including exact scale, large values,
-named-argument side effects, value storage and fault boundaries. This is authored
-coverage only: no new native execution, platform or performance evidence is
-claimed, and #1350/#1351 remain open.
+named-argument side effects, value storage and fault boundaries. All 38 focused
+arithmetic, integral-rounding, Round/Truncate and Decimal-operation tests passed
+at `352d3ce1`, using Node 24, one worker and a 512 MB old-space limit. No fresh
+native execution, platform or performance evidence is claimed; #1350/#1351
+remain open.
