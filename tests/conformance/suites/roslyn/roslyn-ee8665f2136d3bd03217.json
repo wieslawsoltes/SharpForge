@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ee8665f2136d3bd03217",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct PointF\n{\n    private float x; private float y;\n    public PointF(float x, float y) { this.x = x; this.y = y; }\n\n    public float X { get { return x; } set { x = value; } }\n    public float Y { get { return y; } set { y = value; } }\n    public void M() {}\n}\nclass GraphicsContext\n{\n    private PointF transformOffset;\n    public GraphicsContext()\n    {\n        this.transformOffset.X = 0; this.transformOffset.Y = 0;\n    }\n    public PointF TransformOffset { get { return this.transformOffset; } }\n}",
+  "sourceSHA256": "987c42d28a78e01b0a47eea2e6fda30a09d0ddd1cf00f775757e9746e6561832",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "StructFieldWithAssignedPropertyMembers",
+    "offset": 5594
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e2f6f623af7792b4ad71",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    object f1;\n    void M()\n    {\n        ref object o1 = ref f1;\n        ref object o2 = ref f1;\n        o1 ??= ref o2;\n        ref o1 ??= ref o2;\n    }\n}",
+  "sourceSHA256": "1ddbfd860ca47cc18b2916cd420b44734a2fc0e97635cdb12734ab7d3a81b2ca",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "RefAssignment",
+    "offset": 31564
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1525",
+        "severity": "error"
+      },
+      {
+        "code": "CS1073",
+        "severity": "error"
+      },
+      {
+        "code": "CS0118",
+        "severity": "error"
+      },
+      {
+        "code": "CS1001",
+        "severity": "error"
+      },
+      {
+        "code": "CS1002",
+        "severity": "error"
+      },
+      {
+        "code": "CS1525",
+        "severity": "error"
+      },
+      {
+        "code": "CS8174",
+        "severity": "error"
+      },
+      {
+        "code": "CS1525",
+        "severity": "error"
+      },
+      {
+        "code": "CS1073",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,16): error CS1525: Invalid expression term 'ref'\n                //         o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \"ref o2\").WithArguments(\"ref\").WithLocation(9, 16),\n                // (9,16): error CS1073: Unexpected token 'ref'\n                //         o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_UnexpectedToken, \"ref\").WithArguments(\"ref\").WithLocation(9, 16),\n                // (10,13): error CS0118: 'o1' is a variable but is used like a type\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_BadSKknown, \"o1\").WithArguments(\"o1\", \"variable\", \"type\").WithLocation(10, 13),\n                // (10,16): error CS1001: Identifier expected\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_IdentifierExpected, \"??=\").WithLocation(10, 16),\n                // (10,16): error CS1002: ; expected\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_SemicolonExpected, \"??=\").WithLocation(10, 16),\n                // (10,16): error CS1525: Invalid expression term '??='\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \"??=\").WithArguments(\"??=\").WithLocation(10, 16),\n                // (10,16): error CS8174: A declaration of a by-reference variable must have an initializer\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_ByReferenceVariableMustBeInitialized, \"\").WithLocation(10, 16),\n                // (10,20): error CS1525: Invalid expression term 'ref'\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \"ref o2\").WithArguments(\"ref\").WithLocation(10, 20),\n                // (10,20): error CS1073: Unexpected token 'ref'\n                //         ref o1 ??= ref o2;\n                Diagnostic(ErrorCode.ERR_UnexpectedToken, \"ref\").WithArguments(\"ref\").WithLocation(10, 20)",
+  "unsupported": []
+}

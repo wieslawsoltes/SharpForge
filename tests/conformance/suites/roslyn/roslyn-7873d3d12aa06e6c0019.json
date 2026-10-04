@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7873d3d12aa06e6c0019",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct Test\n{\n    [field: System.Runtime.InteropServices.FieldOffset(0)]\n    public static int P { get; set; }\n}\n",
+  "sourceSHA256": "87705d13fc6c9c354fc6972714c33e716fe2a7dbd9b8a7d33b8ac2ec82e9ef2a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestWellKnownAttributeOnProperty_FieldOffset",
+    "offset": 82268
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0637",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,13): error CS0637: The FieldOffset attribute is not allowed on static or const fields\n                //     [field: System.Runtime.InteropServices.FieldOffset(0)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadField, \"System.Runtime.InteropServices.FieldOffset\").WithLocation(4, 13)\n                ",
+  "unsupported": []
+}

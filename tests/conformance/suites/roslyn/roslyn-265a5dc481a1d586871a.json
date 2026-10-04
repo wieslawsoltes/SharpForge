@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-265a5dc481a1d586871a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security.Permissions;\n \nclass Program\n{\n    [PrincipalPermission((SecurityAction)1)]        // Native compiler allows this security action value for type/method security attributes, but not for assembly.\n    [PrincipalPermission(SecurityAction.Assert)]\n    [PrincipalPermission(SecurityAction.Demand)]\n    [PrincipalPermission(SecurityAction.Deny)]\n    [PrincipalPermission(SecurityAction.InheritanceDemand)]     // CS7052\n    [PrincipalPermission(SecurityAction.LinkDemand)]            // CS7052\n    [PrincipalPermission(SecurityAction.PermitOnly)]\n    static void Main(string[] args)\n    {\n    }\n}",
+  "sourceSHA256": "2f5e9e6dfbb41efdf3549294138ac8892932ddd815f5696b7ed4e5e2ce1cec32",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "PrincipalPermissionAttribute",
+    "offset": 4349
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS7052",
+        "severity": "error"
+      },
+      {
+        "code": "CS7052",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,26): warning CS0618: 'System.Security.Permissions.SecurityAction.Deny' is obsolete: 'Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [PrincipalPermission(SecurityAction.Deny)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.Deny\").WithArguments(\"System.Security.Permissions.SecurityAction.Deny\", \"Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (10,26): error CS7052: SecurityAction value 'SecurityAction.InheritanceDemand' is invalid for PrincipalPermission attribute\n                //     [PrincipalPermission(SecurityAction.InheritanceDemand)]     // CS7052\n                Diagnostic(ErrorCode.ERR_PrincipalPermissionInvalidAction, \"SecurityAction.InheritanceDemand\").WithArguments(\"SecurityAction.InheritanceDemand\"),\n                // (11,26): error CS7052: SecurityAction value 'SecurityAction.LinkDemand' is invalid for PrincipalPermission attribute\n                //     [PrincipalPermission(SecurityAction.LinkDemand)]            // CS7052\n                Diagnostic(ErrorCode.ERR_PrincipalPermissionInvalidAction, \"SecurityAction.LinkDemand\").WithArguments(\"SecurityAction.LinkDemand\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

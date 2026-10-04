@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a04f1d87b3002520cc52",
+  "kind": "spec",
+  "sourceText": "interface I1\n{\n    ref int Get();\n}\n\nref int Use<T>(T p)\n    where T : I1\n{\n    return ref p.Get();\n}",
+  "sourceSHA256": "be06cb9f51b4d21191c84f206be18f53882bc9bcd8738ee33bde5e2b5a5e35c0",
+  "target": "library",
+  "featureId": "csharp-7-2-span-and-ref-like-types",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/span-safety.md",
+    "sha256": "73bc8deb74ee9ac75ab2d74292a7014712fd627abe8dcc3f61ad9cfd6c1cdc30",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+    "license": "NOASSERTION",
+    "offset": 19838
+  }
+}

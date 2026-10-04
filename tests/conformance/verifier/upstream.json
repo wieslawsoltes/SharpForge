@@ -1,0 +1,3500 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/dotnet/runtime",
+  "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "LICENSE.TXT",
+      "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
+      "bytes": 1116
+    },
+    {
+      "path": "src/coreclr/tools/ILVerification/VerifierError.cs",
+      "sha256": "921167b3acb70031b5850586b06ac5b3cac9896ac22985cbda6cdde05b86810b",
+      "bytes": 14489
+    },
+    {
+      "path": "src/coreclr/tools/ILVerify/README.md",
+      "sha256": "a86b2a62175ccee7777f97bfcc96586c4419792d19f602832a5af0c386c7aabd",
+      "bytes": 6682
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/AccessTests.il",
+      "sha256": "7bb1fdd4b0b1e6001b77fe9db6ae76ddfc069c3ea063cef31725175d4a511592",
+      "bytes": 13589
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "sha256": "95e609bbbf902a7be05df0d31e8f7b7965adbe37593dfc4f01f951d851ad6d31",
+      "bytes": 4842
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/AccessTestsFriend.il",
+      "sha256": "c682c841673d8bd00fda9c9674fae8e50e605bb42246b4d4d1674a9f27c9098d",
+      "bytes": 1006
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ArrayTests.il",
+      "sha256": "71d269f96934524c2b66cfcfa769ea055b4ad449181164390643fec2c9404a4f",
+      "bytes": 1911
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/BasicArithmeticTests.il",
+      "sha256": "a6add49c0aec027812aa1890b9a266365aef59336981c00ea605166599a100c8",
+      "bytes": 640
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "bytes": 21285
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/CallTests.il",
+      "sha256": "95711c91a0b2629486969b9445696d59ff8a66b24eac4da17d6ad2d54c118a76",
+      "bytes": 3751
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/CastingTests.il",
+      "sha256": "abb25b667a2189152f7251113c7f1bbf9982879ffd1f1276edabdb8adf0a8034",
+      "bytes": 10189
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ComparisonTests.il",
+      "sha256": "a274cc7709fe998c209afe68549f39ad3d1386ebdc4c57977e24ecf2a318cb96",
+      "bytes": 824
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/DefaultInterfaceMethod.il",
+      "sha256": "c9d4c0b20a0a9720139990d9af8a9348b416119dd16234f4fb434bdee409a1fb",
+      "bytes": 3134
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "sha256": "98ce19f849388498ffe4dfec052d7764a5f4d1183b9ff6a566ce388a393bd4aa",
+      "bytes": 3658
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "bytes": 13816
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/FieldTests.il",
+      "sha256": "b77ffa7cc47a7e58a0e76446b642ec685396ba12c961590ad066fe652497e191",
+      "bytes": 6161
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/FtnTests.il",
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "bytes": 18887
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/FunctionPointerTests.il",
+      "sha256": "253831744b4c1806032407397f2d35e9b205195a928bba70bbeeac408cb9ecb0",
+      "bytes": 2808
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/GenericInterface.il",
+      "sha256": "5f4916a7c8f962de12672ba3d1b88ae7aebb3cecb9f33adc453bd84719c97d31",
+      "bytes": 3632
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/InterfaceDefinition.il",
+      "sha256": "a7e34e1ec0b5a81b599f0befa9cfa522ad75e6a1f2dad13b191c012909456218",
+      "bytes": 672
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/InterfaceImplementation.il",
+      "sha256": "0ac8f039a208de4ca780f06218c706ffd9bc5943a39ac26bedbcded4019b7db9",
+      "bytes": 8557
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "sha256": "dbcc51ad25aabcde6c70906ba2cd17e0de32d3dd672ff5c529b66cf73d04bd15",
+      "bytes": 5020
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/LocalAllocTests.il",
+      "sha256": "7c5fd0cdd31ff28082afac945289439163a6dd4d79e2586f2e2e4c23c0027902",
+      "bytes": 1168
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/NewobjTests.il",
+      "sha256": "087adbd29addd57e60b7b82fb7e73e91d3ee911984230f2d292655ea84da85d2",
+      "bytes": 1090
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "bytes": 4265
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "sha256": "c4e1003e3e62a9ce5749a12babdf9ddd15d35b9355096a5135ebc1b228740d77",
+      "bytes": 4069
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "sha256": "ee78683fbe6cbfef745a4ba09e7982dab7c8dbe9a1b9330e7b873e502b509e82",
+      "bytes": 4660
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "sha256": "41d7b042eb794c89b3dadcb9d4a1f95d16b5a834e6fb1df832fbff32118f39e3",
+      "bytes": 5438
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "sha256": "82d34cb1eebd80c01f507255be82a06454af9e7bfaf5cdda6e18490a0f99c844",
+      "bytes": 4761
+    },
+    {
+      "path": "src/tests/ilverify/ILTests/ValueTypeTests.il",
+      "sha256": "845c1638ca97fa2d481b7676d7a9ecee5af7a21221b479ddb8bce9647efa391d",
+      "bytes": 971
+    }
+  ],
+  "cases": [
+    {
+      "id": "AccessTests:Instantiate.PrivateNestedClassFromNested_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.PrivateNestedClassFromNested_Valid",
+      "line": 112,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Load.PrivateFieldFromNestedClass_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.PrivateFieldFromNestedClass_Valid",
+      "line": 119,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Call.PrivateClassParamIntern_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.PrivateClassParamIntern_Valid",
+      "line": 184,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Call.PrivateReturnTypeIntern_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.PrivateReturnTypeIntern_Valid",
+      "line": 191,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Instantiate.PublicNestedClass_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.PublicNestedClass_Valid",
+      "line": 202,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Instantiate.PrivateNestedClass_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.PrivateNestedClass_Invalid_MethodAccess",
+      "line": 209,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Instantiate.AssemNestedClass_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.AssemNestedClass_Valid",
+      "line": 216,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Instantiate.AssemOrFamNestedClass_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.AssemOrFamNestedClass_Valid",
+      "line": 223,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Instantiate.AssemAndFamNestedClass_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.AssemAndFamNestedClass_Invalid_MethodAccess",
+      "line": 230,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Instantiate.FamilyNestedClass_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.FamilyNestedClass_Invalid_MethodAccess",
+      "line": 237,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Instantiate.GenericWithPrivateNestedClass_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.GenericWithPrivateNestedClass_Invalid_MethodAccess",
+      "line": 244,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Call.PrivateClassParamExtern_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.PrivateClassParamExtern_Invalid_MethodAccess",
+      "line": 251,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Call.PrivateReturnTypeExtern_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.PrivateReturnTypeExtern_Invalid_MethodAccess",
+      "line": 258,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Call.GenericMethodWithPrivateNestedClass_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.GenericMethodWithPrivateNestedClass_Invalid_MethodAccess",
+      "line": 265,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Load.PrivateFieldExtern_Invalid_FieldAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.PrivateFieldExtern_Invalid_FieldAccess",
+      "line": 271,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FieldAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Load.PublicFieldOfPrivateClass_Invalid_FieldAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.PublicFieldOfPrivateClass_Invalid_FieldAccess",
+      "line": 278,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FieldAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Call.DerivedFamAndAssemblyMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.DerivedFamAndAssemblyMethod_Valid",
+      "line": 289,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Instantiate.FamOrAssemblyNestedClassFromDerived_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.FamOrAssemblyNestedClassFromDerived_Valid",
+      "line": 295,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Instantiate.FamNestedClassFromDerived_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Instantiate.FamNestedClassFromDerived_Valid",
+      "line": 302,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Load.FamFieldOfBaseWithBaseInstance_Invalid_FieldAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.FamFieldOfBaseWithBaseInstance_Invalid_FieldAccess",
+      "line": 309,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FieldAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Load.FamFieldOfBaseWithDerivedInstance_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.FamFieldOfBaseWithDerivedInstance_Valid",
+      "line": 317,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Call.FamMethodOfBaseWithBaseInstance_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.FamMethodOfBaseWithBaseInstance_Invalid_MethodAccess",
+      "line": 325,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Call.FamMethodOfBaseWithDerivedInstance_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Call.FamMethodOfBaseWithDerivedInstance_Valid",
+      "line": 332,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Load.AssemFieldOfFriendAssembly_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.AssemFieldOfFriendAssembly_Valid",
+      "line": 339,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:Load.PrivateFieldOfFriendAssembly_Invalid_FieldAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.PrivateFieldOfFriendAssembly_Invalid_FieldAccess",
+      "line": 346,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FieldAccess"
+      ]
+    },
+    {
+      "id": "AccessTests:Load.FamFieldOfSuperOfContaining_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "Load.FamFieldOfSuperOfContaining_Valid",
+      "line": 390,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:BaseMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "BaseMethod_Valid",
+      "line": 408,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTests:BaseMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTests.il",
+      "method": "BaseMethod_Valid",
+      "line": 460,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.PublicClass_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.PublicClass_Valid",
+      "line": 23,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.PrivateClass_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.PrivateClass_Invalid_MethodAccess",
+      "line": 30,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.PublicNested_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.PublicNested_Valid",
+      "line": 37,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.PrivateNested_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.PrivateNested_Invalid_MethodAccess",
+      "line": 44,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.AssemblyNested_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.AssemblyNested_Invalid_MethodAccess",
+      "line": 51,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.FamOrAssemNested_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.FamOrAssemNested_Invalid_MethodAccess",
+      "line": 58,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.FamAndAssemNested_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.FamAndAssemNested_Invalid_MethodAccess",
+      "line": 65,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.FamilyNested_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.FamilyNested_Invalid_MethodAccess",
+      "line": 72,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Call.PrivateMethod_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.PrivateMethod_Invalid_MethodAccess",
+      "line": 79,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Call.FamilyMethod_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.FamilyMethod_Invalid_MethodAccess",
+      "line": 85,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Call.AssemblyMethod_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.AssemblyMethod_Invalid_MethodAccess",
+      "line": 91,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Call.FamOrAssemMethod_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.FamOrAssemMethod_Invalid_MethodAccess",
+      "line": 97,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Call.FamAndAssemMethod_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.FamAndAssemMethod_Invalid_MethodAccess",
+      "line": 103,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Load.AssemFieldOfFriendAssemblyWithSpace_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Load.AssemFieldOfFriendAssemblyWithSpace_Valid",
+      "line": 109,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Call.DerivedFamMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.DerivedFamMethod_Valid",
+      "line": 120,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Call.DerivedFamOrAssemMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.DerivedFamOrAssemMethod_Valid",
+      "line": 126,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Call.DerivedFamAndAssemMethod_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Call.DerivedFamAndAssemMethod_Invalid_MethodAccess",
+      "line": 132,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.FamAndAssemNestedClassFromDerived_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.FamAndAssemNestedClassFromDerived_Invalid_MethodAccess",
+      "line": 142,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.FamOrAssemNestedClassFromDerived_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.FamOrAssemNestedClassFromDerived_Valid",
+      "line": 149,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "AccessTestsExtern:Instantiate.FamNestedClassFromDerived_Valid",
+      "source": "src/tests/ilverify/ILTests/AccessTestsExtern.il",
+      "method": "Instantiate.FamNestedClassFromDerived_Valid",
+      "line": 156,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ArrayTests:StoreElement.Int8IntoBoolArray_Valid",
+      "source": "src/tests/ilverify/ILTests/ArrayTests.il",
+      "method": "StoreElement.Int8IntoBoolArray_Valid",
+      "line": 16,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ArrayTests:StoreElement.Int16IntoCharArray_Valid",
+      "source": "src/tests/ilverify/ILTests/ArrayTests.il",
+      "method": "StoreElement.Int16IntoCharArray_Valid",
+      "line": 29,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ArrayTests:LoadElement.UInt16FromCharArray_Valid",
+      "source": "src/tests/ilverify/ILTests/ArrayTests.il",
+      "method": "LoadElement.UInt16FromCharArray_Valid",
+      "line": 42,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ArrayTests:LoadElement.UInt8FromBoolArray_Valid",
+      "source": "src/tests/ilverify/ILTests/ArrayTests.il",
+      "method": "LoadElement.UInt8FromBoolArray_Valid",
+      "line": 67,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BasicArithmeticTests:SimpleAdd_Valid",
+      "source": "src/tests/ilverify/ILTests/BasicArithmeticTests.il",
+      "method": "SimpleAdd_Valid",
+      "line": 15,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BasicArithmeticTests:SimpleAdd_Invalid_ExpectedNumericType",
+      "source": "src/tests/ilverify/ILTests/BasicArithmeticTests.il",
+      "method": "SimpleAdd_Invalid_ExpectedNumericType",
+      "line": 25,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ExpectedNumericType"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.NullConditional_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.NullConditional_Valid",
+      "line": 57,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.NullConditional_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.NullConditional_Invalid_StackUnexpected",
+      "line": 84,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.UnequalStackMerge_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.UnequalStackMerge_Valid",
+      "line": 111,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.UnequalStackMergeArrays_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.UnequalStackMergeArrays_Valid",
+      "line": 156,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.UnequalStackMergeArrays_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.UnequalStackMergeArrays_Invalid_StackUnexpected",
+      "line": 178,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.InsideTry_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.InsideTry_Valid",
+      "line": 245,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.OutOfTry_Invalid_BranchOutOfTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.OutOfTry_Invalid_BranchOutOfTry",
+      "line": 271,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.IntoTryStart_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoTryStart_Valid",
+      "line": 297,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.IntoTryMiddle_Invalid_BranchIntoTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoTryMiddle_Invalid_BranchIntoTry",
+      "line": 323,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.IntoNestedTryStart_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoNestedTryStart_Valid",
+      "line": 350,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.IntoDoubleNestedTryStart_Invalid_BranchIntoTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoDoubleNestedTryStart_Invalid_BranchIntoTry",
+      "line": 385,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.IntoDoubleNestedTryStartStart_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoDoubleNestedTryStartStart_Valid",
+      "line": 429,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.IntoDoubleNestedTryStartFromOutside_Invalid_BranchIntoTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoDoubleNestedTryStartFromOutside_Invalid_BranchIntoTry",
+      "line": 471,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.IntoTryStartWithPredecessor_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoTryStartWithPredecessor_Valid",
+      "line": 503,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branching.IntoNestedTryMiddle_Invalid_BranchIntoTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoNestedTryMiddle_Invalid_BranchIntoTry",
+      "line": 545,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.FromTryIntoCatch_Invalid_BranchOutOfTry.BranchIntoHandler",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoCatch_Invalid_BranchOutOfTry.BranchIntoHandler",
+      "line": 581,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry",
+        "BranchIntoHandler"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.FromTryIntoFilter_Invalid_BranchOutOfTry.BranchIntoFilter",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoFilter_Invalid_BranchOutOfTry.BranchIntoFilter",
+      "line": 604,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry",
+        "BranchIntoFilter"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.FromTryIntoFinally_Invalid_BranchOutOfTry.BranchIntoHandler",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoFinally_Invalid_BranchOutOfTry.BranchIntoHandler",
+      "line": 624,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry",
+        "BranchIntoHandler"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.OutOfFinally_Invalid_BranchOutOfFinally",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.OutOfFinally_Invalid_BranchOutOfFinally",
+      "line": 646,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfFinally"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.FromTryIntoOtherTryStart_Invalid_BranchOutOfTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoOtherTryStart_Invalid_BranchOutOfTry",
+      "line": 663,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.OutOfTrySameStart_Invalid_BranchOutOfTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.OutOfTrySameStart_Invalid_BranchOutOfTry",
+      "line": 697,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branching.FromTryIntoOtherTryMiddle_Invalid_BranchOutOfTry",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoOtherTryMiddle_Invalid_BranchOutOfTry",
+      "line": 726,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "BranchingTests:Fallthrough.OutOfTryIntoFinally_Invalid_FallthroughException.FallthroughIntoHandler",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Fallthrough.OutOfTryIntoFinally_Invalid_FallthroughException.FallthroughIntoHandler",
+      "line": 760,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FallthroughException",
+        "FallthroughIntoHandler"
+      ]
+    },
+    {
+      "id": "BranchingTests:Fallthrough.OutOfTryIntoCatch_Invalid_FallthroughException.FallthroughIntoHandler",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Fallthrough.OutOfTryIntoCatch_Invalid_FallthroughException.FallthroughIntoHandler",
+      "line": 772,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FallthroughException",
+        "FallthroughIntoHandler"
+      ]
+    },
+    {
+      "id": "BranchingTests:Fallthrough.OutOfCatch_Invalid_FallthroughException",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Fallthrough.OutOfCatch_Invalid_FallthroughException",
+      "line": 787,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FallthroughException"
+      ]
+    },
+    {
+      "id": "BranchingTests:Fallthrough.OutOfTryIntoFilter_Invalid_FallthroughException.FallthroughIntoFilter",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Fallthrough.OutOfTryIntoFilter_Invalid_FallthroughException.FallthroughIntoFilter",
+      "line": 802,
+      "polarity": "reject",
+      "expectedErrors": [
+        "FallthroughException",
+        "FallthroughIntoFilter"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branch.BeforeReadonlyInstruction_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BeforeReadonlyInstruction_Valid",
+      "line": 822,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branch.IntoReadonlyInstruction_Invalid_BadJumpTarget",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.IntoReadonlyInstruction_Invalid_BadJumpTarget",
+      "line": 837,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BadJumpTarget"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branch.IntoVolatileInstruction_Invalid_BadJumpTarget",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.IntoVolatileInstruction_Invalid_BadJumpTarget",
+      "line": 878,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BadJumpTarget"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branch.IntoUnalignedInstruction_Invalid_BadJumpTarget",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.IntoUnalignedInstruction_Invalid_BadJumpTarget",
+      "line": 891,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BadJumpTarget"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branch.IntoUnalignedVolatileInstruction_Invalid_BadJumpTarget",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.IntoUnalignedVolatileInstruction_Invalid_BadJumpTarget",
+      "line": 907,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BadJumpTarget"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branch.IntoTailInstruction_Invalid_BadJumpTarget",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.IntoTailInstruction_Invalid_BadJumpTarget",
+      "line": 924,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BadJumpTarget"
+      ]
+    },
+    {
+      "id": "BranchingTests:Branch.BackwardWithPredecessor_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BackwardWithPredecessor_Valid",
+      "line": 934,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branch.BackwardWithoutPredecessor_Invalid_BackwardBranch",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BackwardWithoutPredecessor_Invalid_BackwardBranch",
+      "line": 952,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BackwardBranch"
+      ]
+    },
+    {
+      "id": "BranchingTests:BrFalseS.Backward_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "BrFalseS.Backward_Valid",
+      "line": 968,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branch.BackwardEmptyStack_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BackwardEmptyStack_Valid",
+      "line": 980,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "BranchingTests:Branch.BackwardWithComplexPredecessor_Valid",
+      "source": "src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BackwardWithComplexPredecessor_Valid",
+      "line": 994,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CallTests:Call.BaseMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.BaseMethod_Valid",
+      "line": 50,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CallTests:Call.BaseMethodModThisLdarga_Invalid_ThisMismatch",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.BaseMethodModThisLdarga_Invalid_ThisMismatch",
+      "line": 57,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThisMismatch"
+      ]
+    },
+    {
+      "id": "CallTests:Call.BaseMethodModThisStarg_Invalid_ThisMismatch",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.BaseMethodModThisStarg_Invalid_ThisMismatch",
+      "line": 66,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThisMismatch"
+      ]
+    },
+    {
+      "id": "CallTests:Call.IntToStringManagedPtr_Valid",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.IntToStringManagedPtr_Valid",
+      "line": 79,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CallTests:Call.IntToStringBoxed_Valid",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.IntToStringBoxed_Valid",
+      "line": 93,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CallTests:Callvirt.IntToStringBoxed_Valid",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Callvirt.IntToStringBoxed_Valid",
+      "line": 106,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CallTests:Call.IntToStringUnboxed_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.IntToStringUnboxed_Invalid_StackUnexpected",
+      "line": 119,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "CallTests:Call.ExternBaseMethod_Invalid_ThisMismatch",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.ExternBaseMethod_Invalid_ThisMismatch",
+      "line": 131,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThisMismatch"
+      ]
+    },
+    {
+      "id": "CallTests:Call.ReadonlyByRefForInArg_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.ReadonlyByRefForInArg_Invalid_StackUnexpected",
+      "line": 138,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToEnumerableOfT_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToEnumerableOfT_Valid",
+      "line": 17,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToEnumerable_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToEnumerable_Valid",
+      "line": 27,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToICollectionOfT_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToICollectionOfT_Valid",
+      "line": 37,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToICollection_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToICollection_Valid",
+      "line": 47,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToIListOfT_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToIListOfT_Valid",
+      "line": 57,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToIList_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToIList_Valid",
+      "line": 67,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToIReadOnlyCollectionOfT_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToIReadOnlyCollectionOfT_Valid",
+      "line": 77,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToIReadOnlyListOfT_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToIReadOnlyListOfT_Valid",
+      "line": 87,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.ArrayOfTToArray_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.ArrayOfTToArray_Valid",
+      "line": 97,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.StorePlainFieldInThisGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.StorePlainFieldInThisGenericType_Valid",
+      "line": 158,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.StorePlainFieldInOtherGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.StorePlainFieldInOtherGenericType_Valid",
+      "line": 166,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.StoreGenericFieldInThisGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.StoreGenericFieldInThisGenericType_Valid",
+      "line": 179,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.StoreGenericFieldInOtherGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.StoreGenericFieldInOtherGenericType_Valid",
+      "line": 187,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.CallPlainFunctionFromThisGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.CallPlainFunctionFromThisGenericType_Valid",
+      "line": 198,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.CallGenericFunctionFromThisGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.CallGenericFunctionFromThisGenericType_Valid",
+      "line": 206,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.CallGenericFunctionFromOtherGenericType_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.CallGenericFunctionFromOtherGenericType_Valid",
+      "line": 214,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.AssignVariantInterfaceToObject_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.AssignVariantInterfaceToObject_Valid",
+      "line": 226,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.AssignThisToSameTypeWithOtherGenericArgs_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.AssignThisToSameTypeWithOtherGenericArgs_Invalid_StackUnexpected",
+      "line": 237,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.AssignGenericToObject_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.AssignGenericToObject_Valid",
+      "line": 248,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.AssignToSameTypeWithOtherGenericArgs_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.AssignToSameTypeWithOtherGenericArgs_Invalid_StackUnexpected",
+      "line": 260,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.AssignPrimitiveToIComparable_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.AssignPrimitiveToIComparable_Valid",
+      "line": 310,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "CastingTests:Casting.CastToInaccessibleType_Invalid_TypeAccess",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.CastToInaccessibleType_Invalid_TypeAccess",
+      "line": 322,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TypeAccess"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.CastClassInt_Invalid_StackObjRef",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.CastClassInt_Invalid_StackObjRef",
+      "line": 330,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackObjRef"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.BoxInaccesibleType_Invalid_TypeAccess",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.BoxInaccesibleType_Invalid_TypeAccess",
+      "line": 338,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TypeAccess"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.BoxByRefInt_Invalid_BoxByRef.ExpectedValClassObjRefVariable",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.BoxByRefInt_Invalid_BoxByRef.ExpectedValClassObjRefVariable",
+      "line": 346,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BoxByRef",
+        "ExpectedValClassObjRefVariable"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.BoxToUnsatisfiedConstraint_Invalid_UnsatisfiedBoxOperand",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.BoxToUnsatisfiedConstraint_Invalid_UnsatisfiedBoxOperand",
+      "line": 354,
+      "polarity": "reject",
+      "expectedErrors": [
+        "UnsatisfiedBoxOperand"
+      ]
+    },
+    {
+      "id": "CastingTests:Casting.BoxEnum_Valid",
+      "source": "src/tests/ilverify/ILTests/CastingTests.il",
+      "method": "Casting.BoxEnum_Valid",
+      "line": 362,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ComparisonTests:Comparison.NullWithObjRef_Valid",
+      "source": "src/tests/ilverify/ILTests/ComparisonTests.il",
+      "method": "Comparison.NullWithObjRef_Valid",
+      "line": 15,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ComparisonTests:Comparison.ObjRefWithNull_Valid",
+      "source": "src/tests/ilverify/ILTests/ComparisonTests.il",
+      "method": "Comparison.ObjRefWithNull_Valid",
+      "line": 27,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "DelegateTests:DelegateAssignmentReturn_Valid",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "DelegateAssignmentReturn_Valid",
+      "line": 24,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "DelegateTests:DelegateAssignmentParameter_Valid",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "DelegateAssignmentParameter_Valid",
+      "line": 32,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "DelegateTests:DelegateAssignmentParameter_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "DelegateAssignmentParameter_Invalid_StackUnexpected",
+      "line": 40,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "DelegateTests:DelegateAssignment_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "DelegateAssignment_Invalid_StackUnexpected",
+      "line": 48,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "DelegateTests:AssignIntFuncToByteFunc_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "AssignIntFuncToByteFunc_Invalid_StackUnexpected",
+      "line": 56,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "DelegateTests:AssignByteFuncToIntFunc_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "AssignByteFuncToIntFunc_Invalid_StackUnexpected",
+      "line": 64,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "DelegateTests:AssignByteActionToIntAction_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "AssignByteActionToIntAction_Invalid_StackUnexpected",
+      "line": 72,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "DelegateTests:AssignByteActionToIntAction_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "AssignByteActionToIntAction_Invalid_StackUnexpected",
+      "line": 80,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "DelegateTests:AssignByteActionToByteEnumAction_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/DelegateTests.il",
+      "method": "AssignByteActionToByteEnumAction_Invalid_StackUnexpected",
+      "line": 88,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:ExceptionRegion.NestedTryFinally_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "ExceptionRegion.NestedTryFinally_Valid",
+      "line": 24,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToSameFilter_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameFilter_Valid",
+      "line": 50,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToOtherFilter_Invalid_LeaveOutOfFilter.LeaveIntoFilter",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToOtherFilter_Invalid_LeaveOutOfFilter.LeaveIntoFilter",
+      "line": 73,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveOutOfFilter",
+        "LeaveIntoFilter"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.OutOfFilter_Invalid_LeaveOutOfFilter",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfFilter_Invalid_LeaveOutOfFilter",
+      "line": 114,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveOutOfFilter"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToSameFault_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameFault_Valid",
+      "line": 136,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToSameFinally_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameFinally_Valid",
+      "line": 153,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToOtherFinally_Invalid_LeaveOutOfFinally.LeaveIntoHandler",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToOtherFinally_Invalid_LeaveOutOfFinally.LeaveIntoHandler",
+      "line": 170,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveOutOfFinally",
+        "LeaveIntoHandler"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToOtherFault_Invalid_LeaveOutOfFault.LeaveIntoFault.LeaveIntoHandler",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToOtherFault_Invalid_LeaveOutOfFault.LeaveIntoFault.LeaveIntoHandler",
+      "line": 197,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveOutOfFault",
+        "LeaveIntoFault",
+        "LeaveIntoHandler"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.OutOfFinally_Invalid_LeaveOutOfFinally",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfFinally_Invalid_LeaveOutOfFinally",
+      "line": 224,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveOutOfFinally"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.OutOfFault_Invalid_LeaveOutOfFault",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfFault_Invalid_LeaveOutOfFault",
+      "line": 239,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveOutOfFault"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToSameTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameTry_Valid",
+      "line": 254,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToEnclosingTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToEnclosingTry_Valid",
+      "line": 271,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToFirstInstrOfDisjointTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToFirstInstrOfDisjointTry_Valid",
+      "line": 294,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToFirstInstrOfNestedDisjointTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToFirstInstrOfNestedDisjointTry_Valid",
+      "line": 318,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.IntoOtherTry_Invalid_LeaveIntoTry",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.IntoOtherTry_Invalid_LeaveIntoTry",
+      "line": 349,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveIntoTry"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToSecondInstrOfNestedDisjointTry_Invalid_LeaveIntoTry",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSecondInstrOfNestedDisjointTry_Invalid_LeaveIntoTry",
+      "line": 374,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveIntoTry"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToFirstInstrOfEnclosedTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToFirstInstrOfEnclosedTry_Valid",
+      "line": 406,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.FromCatchIntoAssociatedTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromCatchIntoAssociatedTry_Valid",
+      "line": 432,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.ToSameCatch_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameCatch_Valid",
+      "line": 447,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.OutOfCatch_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfCatch_Valid",
+      "line": 464,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.CatchToFirstInstrOfDisjointTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.CatchToFirstInstrOfDisjointTry_Valid",
+      "line": 478,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.CatchToFirstInstrOfNestedTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.CatchToFirstInstrOfNestedTry_Valid",
+      "line": 504,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.CatchToSecondInstrOfNestedTry_Invalid_LeaveIntoTry",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.CatchToSecondInstrOfNestedTry_Invalid_LeaveIntoTry",
+      "line": 531,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveIntoTry"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.TryToEnclosingCatch_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.TryToEnclosingCatch_Valid",
+      "line": 559,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.CatchToEnclosingTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.CatchToEnclosingTry_Valid",
+      "line": 584,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.FromOutsideIntoFilter_Invalid_LeaveIntoFilter",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromOutsideIntoFilter_Invalid_LeaveIntoFilter",
+      "line": 614,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveIntoFilter"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.FromOutsideIntoHandler_Invalid_LeaveIntoHandler",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromOutsideIntoHandler_Invalid_LeaveIntoHandler",
+      "line": 637,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveIntoHandler"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.FromOutsideIntoTry_Invalid_LeaveIntoTry",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromOutsideIntoTry_Invalid_LeaveIntoTry",
+      "line": 656,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LeaveIntoTry"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.FromNestedTryToDisjointTry_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromNestedTryToDisjointTry_Valid",
+      "line": 675,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Leave.FromNestedTryToDisjointTryBackward_Valid",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromNestedTryToDisjointTryBackward_Valid",
+      "line": 710,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ExceptionRegionTests:Catch.NonExceptionDerivedType_Invalid_ThrowOrCatchOnlyExceptionType",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Catch.NonExceptionDerivedType_Invalid_ThrowOrCatchOnlyExceptionType",
+      "line": 745,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThrowOrCatchOnlyExceptionType"
+      ]
+    },
+    {
+      "id": "ExceptionRegionTests:Throw.NonExceptionDerivedType_Invalid_ThrowOrCatchOnlyExceptionType",
+      "source": "src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Throw.NonExceptionDerivedType_Invalid_ThrowOrCatchOnlyExceptionType",
+      "line": 759,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThrowOrCatchOnlyExceptionType"
+      ]
+    },
+    {
+      "id": "FieldTests:special.StoreExternalInitField.set_MyProperty_Valid",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.StoreExternalInitField.set_MyProperty_Valid",
+      "line": 33,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FieldTests:Stsfld.UnsatisfiedParentConstraints_Invalid_UnsatisfiedFieldParentInst",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "Stsfld.UnsatisfiedParentConstraints_Invalid_UnsatisfiedFieldParentInst",
+      "line": 42,
+      "polarity": "reject",
+      "expectedErrors": [
+        "UnsatisfiedFieldParentInst"
+      ]
+    },
+    {
+      "id": "FieldTests:Stfld.InitonlyFieldOutsideCtor_Invalid_InitOnly",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "Stfld.InitonlyFieldOutsideCtor_Invalid_InitOnly",
+      "line": 49,
+      "polarity": "reject",
+      "expectedErrors": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "FieldTests:Ldflda.InitonlyFieldOutsideCtor_Valid",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "Ldflda.InitonlyFieldOutsideCtor_Valid",
+      "line": 58,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FieldTests:special.StoreInitonlyField..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.StoreInitonlyField..ctor_Valid",
+      "line": 66,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FieldTests:special.LoadAddrInitonlyField..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.LoadAddrInitonlyField..ctor_Valid",
+      "line": 77,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FieldTests:special.LoadAddrInitonlyField..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.LoadAddrInitonlyField..ctor_Valid",
+      "line": 88,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FieldTests:special.StoreInitonlyFieldOtherType..ctor_Invalid_InitOnly",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.StoreInitonlyFieldOtherType..ctor_Invalid_InitOnly",
+      "line": 99,
+      "polarity": "reject",
+      "expectedErrors": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "FieldTests:special.StoreInitonlyFieldOtherInstance..ctor_Invalid_InitOnly",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.StoreInitonlyFieldOtherInstance..ctor_Invalid_InitOnly",
+      "line": 110,
+      "polarity": "reject",
+      "expectedErrors": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "FieldTests:special.StsfldInitonlyInCtor..ctor_Invalid_InitOnly",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.StsfldInitonlyInCtor..ctor_Invalid_InitOnly",
+      "line": 121,
+      "polarity": "reject",
+      "expectedErrors": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "FieldTests:special.LdsfldInitonlyInCtor..ctor_Invalid_InitOnly",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.LdsfldInitonlyInCtor..ctor_Invalid_InitOnly",
+      "line": 131,
+      "polarity": "reject",
+      "expectedErrors": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "FieldTests:special.LdsfldStslfdInitonlyCctor..cctor_Valid",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.LdsfldStslfdInitonlyCctor..cctor_Valid",
+      "line": 141,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FieldTests:special.LdfldStlfdInitonlyCctor..cctor_Invalid_InitOnly",
+      "source": "src/tests/ilverify/ILTests/FieldTests.il",
+      "method": "special.LdfldStlfdInitonlyCctor..cctor_Invalid_InitOnly",
+      "line": 160,
+      "polarity": "reject",
+      "expectedErrors": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.StaticClassRefConstraint_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.StaticClassRefConstraint_Valid",
+      "line": 190,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdFtn.InstanceClassRefConstraint_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.InstanceClassRefConstraint_Valid",
+      "line": 202,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdFtn.IntForStaticClassRefConstraint_Invalid_UnsatisfiedMethodParentInst",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.IntForStaticClassRefConstraint_Invalid_UnsatisfiedMethodParentInst",
+      "line": 215,
+      "polarity": "reject",
+      "expectedErrors": [
+        "UnsatisfiedMethodParentInst"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.IntForStaticMethodRefConstraint_Invalid_UnsatisfiedMethodInst",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.IntForStaticMethodRefConstraint_Invalid_UnsatisfiedMethodInst",
+      "line": 227,
+      "polarity": "reject",
+      "expectedErrors": [
+        "UnsatisfiedMethodInst"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.InstanceMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.InstanceMethod_Valid",
+      "line": 239,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.VirtInstanceMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.VirtInstanceMethod_Valid",
+      "line": 253,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.ValueTypeInstanceMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.ValueTypeInstanceMethod_Valid",
+      "line": 267,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.InstanceMethodClosed_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.InstanceMethodClosed_Valid",
+      "line": 284,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.InstanceMethodOpen_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.InstanceMethodOpen_Valid",
+      "line": 297,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.InstanceValueTypeMethodOpen_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.InstanceValueTypeMethodOpen_Valid",
+      "line": 308,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.InstanceValueTypeMethodOpenObjRef_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.InstanceValueTypeMethodOpenObjRef_Invalid_DelegateCtor",
+      "line": 321,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.StaticMethod_Invalid_LdvirtftnOnStatic",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.StaticMethod_Invalid_LdvirtftnOnStatic",
+      "line": 332,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LdvirtftnOnStatic"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.ValueTypeNoBox_Invalid_StackObjRef.StackUnexpected.StackUnexpected.DelegateCtorSigO.DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.ValueTypeNoBox_Invalid_StackObjRef.StackUnexpected.StackUnexpected.DelegateCtorSigO.DelegateCtor",
+      "line": 342,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackObjRef",
+        "StackUnexpected",
+        "StackUnexpected",
+        "DelegateCtorSigO",
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.ValueTypeWrongBox_Invalid_StackUnexpected.DelegateCtorSigO.DelegatePattern.DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.ValueTypeWrongBox_Invalid_StackUnexpected.DelegateCtorSigO.DelegatePattern.DelegateCtor",
+      "line": 358,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected",
+        "DelegateCtorSigO",
+        "DelegatePattern",
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.ObjectForTestClassInstance_Invalid_StackUnexpected.DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.ObjectForTestClassInstance_Invalid_StackUnexpected.DelegateCtor",
+      "line": 375,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected",
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:NewObj.IntForRefConstraint_Invalid_UnsatisfiedMethodParentInst",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "NewObj.IntForRefConstraint_Invalid_UnsatisfiedMethodParentInst",
+      "line": 397,
+      "polarity": "reject",
+      "expectedErrors": [
+        "UnsatisfiedMethodParentInst"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.NopInDelegatePattern_Invalid_DelegatePattern",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.NopInDelegatePattern_Invalid_DelegatePattern",
+      "line": 406,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegatePattern"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.NopInDelegatePattern_Invalid_DelegatePattern",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.NopInDelegatePattern_Invalid_DelegatePattern",
+      "line": 419,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegatePattern"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.BranchIntoDelegatePattern_Invalid_DelegatePattern",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.BranchIntoDelegatePattern_Invalid_DelegatePattern",
+      "line": 434,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegatePattern"
+      ]
+    },
+    {
+      "id": "FtnTests:LdvirtFtn.BranchIntoDelegatePattern_Invalid_DelegatePattern",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.BranchIntoDelegatePattern_Invalid_DelegatePattern",
+      "line": 449,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegatePattern"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.DelegateMissingArgument_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.DelegateMissingArgument_Invalid_DelegateCtor",
+      "line": 465,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.DelegateWrongReturnType_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.DelegateWrongReturnType_Invalid_DelegateCtor",
+      "line": 475,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:LdFtn.VirtualMethodNonThisPtr_Invalid_LdftnNonFinalVirtual",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.VirtualMethodNonThisPtr_Invalid_LdftnNonFinalVirtual",
+      "line": 484,
+      "polarity": "reject",
+      "expectedErrors": [
+        "LdftnNonFinalVirtual"
+      ]
+    },
+    {
+      "id": "FtnTests:ObjectFuncFromStringMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "ObjectFuncFromStringMethod_Valid",
+      "line": 494,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FtnTests:StringFuncFromObjectMethod_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "StringFuncFromObjectMethod_Invalid_DelegateCtor",
+      "line": 504,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:ByteFuncFromIntMethod_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "ByteFuncFromIntMethod_Invalid_DelegateCtor",
+      "line": 514,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:IntFuncFromByteMethod_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "IntFuncFromByteMethod_Invalid_DelegateCtor",
+      "line": 524,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:IntFuncFromByteEnumMethod_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "IntFuncFromByteEnumMethod_Invalid_DelegateCtor",
+      "line": 534,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:IntActionFromByteMethod_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "IntActionFromByteMethod_Invalid_DelegateCtor",
+      "line": 544,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FtnTests:ByteActionFromByteEnum_Invalid_DelegateCtor",
+      "source": "src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "ByteActionFromByteEnum_Invalid_DelegateCtor",
+      "line": 554,
+      "polarity": "reject",
+      "expectedErrors": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "FunctionPointerTests:Call.Dispatcher_Valid",
+      "source": "src/tests/ilverify/ILTests/FunctionPointerTests.il",
+      "method": "Call.Dispatcher_Valid",
+      "line": 38,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "FunctionPointerTests:Call.Dispatcher_Invalid_MethodAccess",
+      "source": "src/tests/ilverify/ILTests/FunctionPointerTests.il",
+      "method": "Call.Dispatcher_Invalid_MethodAccess",
+      "line": 46,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "FunctionPointerTests:Call.SendFunctionPointerWithInaccessibleReturnType_Invalid_MethodAccess.MethodAccess",
+      "source": "src/tests/ilverify/ILTests/FunctionPointerTests.il",
+      "method": "Call.SendFunctionPointerWithInaccessibleReturnType_Invalid_MethodAccess.MethodAccess",
+      "line": 59,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodAccess",
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirectRef.FromStringRef_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirectRef.FromStringRef_Valid",
+      "line": 15,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirect.FromInt32Ref_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirect.FromInt32Ref_Valid",
+      "line": 23,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirect.FromInt64Ref_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirect.FromInt64Ref_Invalid_StackUnexpected",
+      "line": 31,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirectRef.FromInt64Ref_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirectRef.FromInt64Ref_Invalid_StackUnexpected",
+      "line": 39,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirectRef.AssignRefStringToString_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirectRef.AssignRefStringToString_Valid",
+      "line": 47,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignToInt_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignToInt_Valid",
+      "line": 57,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignToRefBase_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignToRefBase_Valid",
+      "line": 66,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignToRefString_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignToRefString_Invalid_StackUnexpected",
+      "line": 80,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignNullToRefString_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignNullToRefString_Valid",
+      "line": 94,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignStringToRefString_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignStringToRefString_Valid",
+      "line": 105,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreObject.AssignStringToRefStringAsObject_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreObject.AssignStringToRefStringAsObject_Invalid_StackUnexpected",
+      "line": 117,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignByteToBoolRef_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignByteToBoolRef_Valid",
+      "line": 129,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreObject.ValidTypeToken_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreObject.ValidTypeToken_Valid",
+      "line": 137,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreObject.InvalidTypeToken_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreObject.InvalidTypeToken_Invalid_StackUnexpected",
+      "line": 147,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirect.AssignInt8ToBool_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirect.AssignInt8ToBool_Valid",
+      "line": 157,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirect.AssignUInt8ToBool_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirect.AssignUInt8ToBool_Valid",
+      "line": 171,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirect.AssignInt16ToChar_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirect.AssignInt16ToChar_Valid",
+      "line": 185,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:LoadIndirect.AssignUInt16ToChar_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "LoadIndirect.AssignUInt16ToChar_Valid",
+      "line": 199,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignInt32ToCharRef_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignInt32ToCharRef_Valid",
+      "line": 213,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LoadStoreIndirectTests:StoreIndirect.AssignInt32ToBoolRef_Valid",
+      "source": "src/tests/ilverify/ILTests/LoadStoreIndirectTests.il",
+      "method": "StoreIndirect.AssignInt32ToBoolRef_Valid",
+      "line": 226,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "LocalAllocTests:Load.LocAllocShouldFailWhenStackNotEmpty_Invalid_Unverifiable.LocallocStackNotEmpty",
+      "source": "src/tests/ilverify/ILTests/LocalAllocTests.il",
+      "method": "Load.LocAllocShouldFailWhenStackNotEmpty_Invalid_Unverifiable.LocallocStackNotEmpty",
+      "line": 19,
+      "polarity": "reject",
+      "expectedErrors": [
+        "Unverifiable",
+        "LocallocStackNotEmpty"
+      ]
+    },
+    {
+      "id": "LocalAllocTests:Load.LocAllocShouldFailWhenSizeIsAbsent_Invalid_Unverifiable.StackUnderflow",
+      "source": "src/tests/ilverify/ILTests/LocalAllocTests.il",
+      "method": "Load.LocAllocShouldFailWhenSizeIsAbsent_Invalid_Unverifiable.StackUnderflow",
+      "line": 29,
+      "polarity": "reject",
+      "expectedErrors": [
+        "Unverifiable",
+        "StackUnderflow"
+      ]
+    },
+    {
+      "id": "LocalAllocTests:Load.LocAllocShouldSuccesWhenSizeIsPresent_Invalid_Unverifiable",
+      "source": "src/tests/ilverify/ILTests/LocalAllocTests.il",
+      "method": "Load.LocAllocShouldSuccesWhenSizeIsPresent_Invalid_Unverifiable",
+      "line": 36,
+      "polarity": "reject",
+      "expectedErrors": [
+        "Unverifiable"
+      ]
+    },
+    {
+      "id": "NewobjTests:Newobj.InstanceMethod_Invalid_CtorExpected",
+      "source": "src/tests/ilverify/ILTests/NewobjTests.il",
+      "method": "Newobj.InstanceMethod_Invalid_CtorExpected",
+      "line": 32,
+      "polarity": "reject",
+      "expectedErrors": [
+        "CtorExpected"
+      ]
+    },
+    {
+      "id": "NewobjTests:Newobj.AbstractMethod_Invalid_CtorSig.CtorExpected",
+      "source": "src/tests/ilverify/ILTests/NewobjTests.il",
+      "method": "Newobj.AbstractMethod_Invalid_CtorSig.CtorExpected",
+      "line": 39,
+      "polarity": "reject",
+      "expectedErrors": [
+        "CtorSig",
+        "CtorExpected"
+      ]
+    },
+    {
+      "id": "PrefixTests:Readonly.Ldelema_Valid",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.Ldelema_Valid",
+      "line": 20,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "PrefixTests:Readonly.Ldelem_Invalid_ReadOnly",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.Ldelem_Invalid_ReadOnly",
+      "line": 38,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "id": "PrefixTests:Readonly.ArrayAddress_Valid",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.ArrayAddress_Valid",
+      "line": 55,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "PrefixTests:Readonly.ArrayGet_Invalid_ReadonlyUnexpectedCallee",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.ArrayGet_Invalid_ReadonlyUnexpectedCallee",
+      "line": 69,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReadonlyUnexpectedCallee"
+      ]
+    },
+    {
+      "id": "PrefixTests:Prefix.UnalignedAndVolatile_Valid",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Prefix.UnalignedAndVolatile_Valid",
+      "line": 83,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "PrefixTests:Tail.FromTry_Invalid_TailCallInsideER.TailRet",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.FromTry_Invalid_TailCallInsideER.TailRet",
+      "line": 97,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TailCallInsideER",
+        "TailRet"
+      ]
+    },
+    {
+      "id": "PrefixTests:Tail.FollowedByRet_Valid",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.FollowedByRet_Valid",
+      "line": 115,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "PrefixTests:Tail.NoRet_Invalid_TailRet.MethodFallthrough",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.NoRet_Invalid_TailRet.MethodFallthrough",
+      "line": 122,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TailRet",
+        "MethodFallthrough"
+      ]
+    },
+    {
+      "id": "PrefixTests:Tail.DoubleCall_Invalid_TailRet",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.DoubleCall_Invalid_TailRet",
+      "line": 128,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TailRet"
+      ]
+    },
+    {
+      "id": "PrefixTests:Tail.BranchToRet_Valid",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.BranchToRet_Valid",
+      "line": 136,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "PrefixTests:Tail.ComplexBranchToRet_Valid",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.ComplexBranchToRet_Valid",
+      "line": 148,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "PrefixTests:Tail.BranchToNopRet_Invalid_TailRet",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.BranchToNopRet_Invalid_TailRet",
+      "line": 166,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TailRet"
+      ]
+    },
+    {
+      "id": "PrefixTests:Tail.Ret_Invalid_TailCall",
+      "source": "src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.Ret_Invalid_TailCall",
+      "line": 179,
+      "polarity": "reject",
+      "expectedErrors": [
+        "TailCall"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.Void_Valid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.Void_Valid",
+      "line": 26,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ReturnTests:Return.VoidNonEmptyStack_Invalid_ReturnVoid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.VoidNonEmptyStack_Invalid_ReturnVoid",
+      "line": 33,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnVoid"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.Int32_Valid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.Int32_Valid",
+      "line": 39,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ReturnTests:Return.Int32EmptyStack_Invalid_ReturnMissing",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.Int32EmptyStack_Invalid_ReturnMissing",
+      "line": 45,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnMissing"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.Int32StackLeft_Invalid_ReturnEmpty",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.Int32StackLeft_Invalid_ReturnEmpty",
+      "line": 50,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnEmpty"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.FromTry_Invalid_ReturnFromTry",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.FromTry_Invalid_ReturnFromTry",
+      "line": 57,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnFromTry"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.FromCatch_Invalid_ReturnFromHandler",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.FromCatch_Invalid_ReturnFromHandler",
+      "line": 73,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnFromHandler"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.FromFilter_Invalid_ReturnFromFilter",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.FromFilter_Invalid_ReturnFromFilter",
+      "line": 89,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnFromFilter"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.ObjectForInt32_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.ObjectForInt32_Invalid_StackUnexpected",
+      "line": 111,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.LocalArgByRef_Invalid_ReturnPtrToStack",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.LocalArgByRef_Invalid_ReturnPtrToStack",
+      "line": 117,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnPtrToStack"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.InstanceFieldByRef_Valid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.InstanceFieldByRef_Valid",
+      "line": 123,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ReturnTests:Return.StaticFieldByRef_Valid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.StaticFieldByRef_Valid",
+      "line": 130,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ReturnTests:Return.LocalStructFieldByRef_Invalid_ReturnPtrToStack",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.LocalStructFieldByRef_Invalid_ReturnPtrToStack",
+      "line": 136,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ReturnPtrToStack"
+      ]
+    },
+    {
+      "id": "ReturnTests:Return.FieldStructFieldByRef_Valid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.FieldStructFieldByRef_Valid",
+      "line": 143,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ReturnTests:MissingReturn_Invalid_MethodFallthrough",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "MissingReturn_Invalid_MethodFallthrough",
+      "line": 151,
+      "polarity": "reject",
+      "expectedErrors": [
+        "MethodFallthrough"
+      ]
+    },
+    {
+      "id": "ReturnTests:special.ReturnAfterBaseCtor..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "special.ReturnAfterBaseCtor..ctor_Valid",
+      "line": 156,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ReturnTests:special.ReturnBeforeBaseCtor..ctor_Invalid_ThisUninitReturn",
+      "source": "src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "special.ReturnBeforeBaseCtor..ctor_Invalid_ThisUninitReturn",
+      "line": 164,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThisUninitReturn"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32ByInt32_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32ByInt32_Valid",
+      "line": 15,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftRight.Int32ByInt32_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftRight.Int32ByInt32_Valid",
+      "line": 23,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftRightUn.Int32ByInt32_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftRightUn.Int32ByInt32_Valid",
+      "line": 31,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32ByNativeInt_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32ByNativeInt_Valid",
+      "line": 39,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int64ByInt32_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int64ByInt32_Valid",
+      "line": 47,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int64ByNativeInt_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int64ByNativeInt_Valid",
+      "line": 55,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.NativeIntByInt32_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.NativeIntByInt32_Valid",
+      "line": 63,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.NativeIntByNativeInt_Valid",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.NativeIntByNativeInt_Valid",
+      "line": 71,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32ByInt64_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32ByInt64_Invalid_StackUnexpected",
+      "line": 79,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32ByFloat64_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32ByFloat64_Invalid_StackUnexpected",
+      "line": 87,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32ByInt32Ref_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32ByInt32Ref_Invalid_StackUnexpected",
+      "line": 95,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32ByObject_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32ByObject_Invalid_StackUnexpected",
+      "line": 103,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int64ByInt64_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int64ByInt64_Invalid_StackUnexpected",
+      "line": 111,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int64ByFloat64_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int64ByFloat64_Invalid_StackUnexpected",
+      "line": 119,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int64ByInt32Ref_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int64ByInt32Ref_Invalid_StackUnexpected",
+      "line": 127,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int64ByObject_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int64ByObject_Invalid_StackUnexpected",
+      "line": 135,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.NativeIntByInt64_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.NativeIntByInt64_Invalid_StackUnexpected",
+      "line": 143,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.NativeIntByFloat64_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.NativeIntByFloat64_Invalid_StackUnexpected",
+      "line": 151,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.NativeIntByInt32Ref_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.NativeIntByInt32Ref_Invalid_StackUnexpected",
+      "line": 159,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.NativeIntByObject_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.NativeIntByObject_Invalid_StackUnexpected",
+      "line": 167,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Float64ByInt32_Invalid_ExpectedIntegerType",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Float64ByInt32_Invalid_ExpectedIntegerType",
+      "line": 175,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ExpectedIntegerType"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.Int32RefByInt32_Invalid_ExpectedIntegerType",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.Int32RefByInt32_Invalid_ExpectedIntegerType",
+      "line": 183,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ExpectedIntegerType"
+      ]
+    },
+    {
+      "id": "ShiftTests:ShiftLeft.ObjectByInt32_Invalid_ExpectedIntegerType",
+      "source": "src/tests/ilverify/ILTests/ShiftTests.il",
+      "method": "ShiftLeft.ObjectByInt32_Invalid_ExpectedIntegerType",
+      "line": 191,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ExpectedIntegerType"
+      ]
+    },
+    {
+      "id": "SwitchTests:Switch.Int32Value_Valid",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.Int32Value_Valid",
+      "line": 15,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "SwitchTests:Switch.Int64Value_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.Int64Value_Invalid_StackUnexpected",
+      "line": 32,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "SwitchTests:Switch.InsideTry_Valid",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.InsideTry_Valid",
+      "line": 49,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "SwitchTests:Switch.IntoTryStart_Valid",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.IntoTryStart_Valid",
+      "line": 76,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "SwitchTests:Switch.IntoTryMiddle_Invalid_BranchIntoTry",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.IntoTryMiddle_Invalid_BranchIntoTry",
+      "line": 101,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "SwitchTests:Switch.OutOfTry_Invalid_BranchOutOfTry",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.OutOfTry_Invalid_BranchOutOfTry",
+      "line": 126,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "SwitchTests:Switch.NestedOutOfTry_Invalid_BranchOutOfTry",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.NestedOutOfTry_Invalid_BranchOutOfTry",
+      "line": 151,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "SwitchTests:Switch.NestedIntoTryStart_Valid",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.NestedIntoTryStart_Valid",
+      "line": 186,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "SwitchTests:Switch.NestedIntoTryMiddle_Invalid_BranchIntoTry",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.NestedIntoTryMiddle_Invalid_BranchIntoTry",
+      "line": 222,
+      "polarity": "reject",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "SwitchTests:Switch.ObjectValue_Invalid_StackUnexpected",
+      "source": "src/tests/ilverify/ILTests/SwitchTests.il",
+      "method": "Switch.ObjectValue_Invalid_StackUnexpected",
+      "line": 258,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "ThisStateTests:special.LoadFieldThisInit..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.LoadFieldThisInit..ctor_Valid",
+      "line": 18,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.LoadFieldThisUninit..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.LoadFieldThisUninit..ctor_Valid",
+      "line": 29,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.LoadSFieldThisUninit..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.LoadSFieldThisUninit..ctor_Valid",
+      "line": 40,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.StoreFieldThisInit..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.StoreFieldThisInit..ctor_Valid",
+      "line": 50,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.StoreFieldThisUninit..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.StoreFieldThisUninit..ctor_Valid",
+      "line": 61,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.StoreSFieldThisUninit..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.StoreSFieldThisUninit..ctor_Valid",
+      "line": 72,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.ThrowThisUninit..ctor_Invalid_UninitStack.ThrowOrCatchOnlyExceptionType",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.ThrowThisUninit..ctor_Invalid_UninitStack.ThrowOrCatchOnlyExceptionType",
+      "line": 86,
+      "polarity": "reject",
+      "expectedErrors": [
+        "UninitStack",
+        "ThrowOrCatchOnlyExceptionType"
+      ]
+    },
+    {
+      "id": "ThisStateTests:special.CallCtorOverload..ctor_Valid",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.CallCtorOverload..ctor_Valid",
+      "line": 94,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ThisStateTests:special.StoreLocUninit..ctor_Invalid_StackUninit",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.StoreLocUninit..ctor_Invalid_StackUninit",
+      "line": 106,
+      "polarity": "reject",
+      "expectedErrors": [
+        "StackUninit"
+      ]
+    },
+    {
+      "id": "ThisStateTests:special.StoreThisUninit..ctor_Invalid_ThisUninitStore",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.StoreThisUninit..ctor_Invalid_ThisUninitStore",
+      "line": 120,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThisUninitStore"
+      ]
+    },
+    {
+      "id": "ThisStateTests:special.LoadAddrOfThisUninit..ctor_Invalid_ThisUninitStore",
+      "source": "src/tests/ilverify/ILTests/ThisStateTests.il",
+      "method": "special.LoadAddrOfThisUninit..ctor_Invalid_ThisUninitStore",
+      "line": 130,
+      "polarity": "reject",
+      "expectedErrors": [
+        "ThisUninitStore"
+      ]
+    },
+    {
+      "id": "ValueTypeTests:ValueType.CallMethod_Valid",
+      "source": "src/tests/ilverify/ILTests/ValueTypeTests.il",
+      "method": "ValueType.CallMethod_Valid",
+      "line": 21,
+      "polarity": "accept",
+      "expectedErrors": []
+    },
+    {
+      "id": "ValueTypeTests:ValueType.UnboxLdfld_Valid",
+      "source": "src/tests/ilverify/ILTests/ValueTypeTests.il",
+      "method": "ValueType.UnboxLdfld_Valid",
+      "line": 34,
+      "polarity": "accept",
+      "expectedErrors": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "UnknownOpcode",
+      "description": "Unknown opcode."
+    },
+    {
+      "id": "MethodFallthrough",
+      "description": "Fall through end of the method without returning."
+    },
+    {
+      "id": "FallthroughException",
+      "description": "Fallthrough the end of an exception block."
+    },
+    {
+      "id": "FallthroughIntoHandler",
+      "description": "Fallthrough into an exception handler."
+    },
+    {
+      "id": "FallthroughIntoFilter",
+      "description": "Fallthrough into an exception filter."
+    },
+    {
+      "id": "LeaveIntoTry",
+      "description": "Leave into try block."
+    },
+    {
+      "id": "LeaveIntoHandler",
+      "description": "Leave into exception handler block."
+    },
+    {
+      "id": "LeaveIntoFilter",
+      "description": "Leave into filter block."
+    },
+    {
+      "id": "LeaveOutOfFilter",
+      "description": "Leave out of filter block."
+    },
+    {
+      "id": "LeaveOutOfFinally",
+      "description": "Leave out of finally block."
+    },
+    {
+      "id": "LeaveOutOfFault",
+      "description": "Leave out of fault block."
+    },
+    {
+      "id": "Rethrow",
+      "description": "Rethrow from outside a catch handler."
+    },
+    {
+      "id": "Endfinally",
+      "description": "Endfinally from outside a finally handler."
+    },
+    {
+      "id": "Endfilter",
+      "description": "Endfilter from outside an exception filter block."
+    },
+    {
+      "id": "BranchIntoTry",
+      "description": "Branch into try block."
+    },
+    {
+      "id": "BranchIntoHandler",
+      "description": "Branch into exception handler block."
+    },
+    {
+      "id": "BranchIntoFilter",
+      "description": "Branch into exception filter block."
+    },
+    {
+      "id": "BranchOutOfTry",
+      "description": "Branch out of try block."
+    },
+    {
+      "id": "BranchOutOfHandler",
+      "description": "Branch out of exception handler block."
+    },
+    {
+      "id": "BranchOutOfFilter",
+      "description": "Branch out of exception filter block."
+    },
+    {
+      "id": "BranchOutOfFinally",
+      "description": "Branch out of finally block."
+    },
+    {
+      "id": "ReturnFromTry",
+      "description": "Return out of try block."
+    },
+    {
+      "id": "ReturnFromHandler",
+      "description": "Return out of exception handler block."
+    },
+    {
+      "id": "ReturnFromFilter",
+      "description": "Return out of exception filter block."
+    },
+    {
+      "id": "BadJumpTarget",
+      "description": "Branch / Leave into the middle of an instruction."
+    },
+    {
+      "id": "PathStackUnexpected",
+      "description": "Non-compatible types on stack depending on path."
+    },
+    {
+      "id": "PathStackDepth",
+      "description": "Stack depth differs depending on path."
+    },
+    {
+      "id": "ThisUninitStore",
+      "description": "Store into this when it is uninitialized."
+    },
+    {
+      "id": "ThisUninitReturn",
+      "description": "Return from .ctor when this is uninitialized."
+    },
+    {
+      "id": "LdftnCtor",
+      "description": "ldftn/ldvirtftn not allowed on .ctor."
+    },
+    {
+      "id": "StackUnexpected",
+      "description": "Unexpected type on the stack."
+    },
+    {
+      "id": "StackUnexpectedArrayType",
+      "description": "Unexpected array type on the stack."
+    },
+    {
+      "id": "StackOverflow",
+      "description": "Stack overflow."
+    },
+    {
+      "id": "StackUnderflow",
+      "description": "Stack underflow."
+    },
+    {
+      "id": "UninitStack",
+      "description": "Uninitialized item on stack."
+    },
+    {
+      "id": "ExpectedIntegerType",
+      "description": "Expected I, I4, or I8 on the stack."
+    },
+    {
+      "id": "ExpectedFloatType",
+      "description": "Expected R, R4, or R8 on the stack."
+    },
+    {
+      "id": "ExpectedNumericType",
+      "description": "Expected numeric type on the stack."
+    },
+    {
+      "id": "StackObjRef",
+      "description": "Expected an ObjRef on the stack."
+    },
+    {
+      "id": "StackByRef",
+      "description": "Expected ByRef on the stack."
+    },
+    {
+      "id": "StackMethod",
+      "description": "Expected pointer to function on the stack."
+    },
+    {
+      "id": "UnrecognizedLocalNumber",
+      "description": "Unrecognized local variable number."
+    },
+    {
+      "id": "UnrecognizedArgumentNumber",
+      "description": "Unrecognized argument number."
+    },
+    {
+      "id": "ExpectedTypeToken",
+      "description": "Expected type token."
+    },
+    {
+      "id": "TokenResolve",
+      "description": "Unable to resolve token."
+    },
+    {
+      "id": "ExpectedMethodToken",
+      "description": "Expected memberRef, memberDef or methodSpec token."
+    },
+    {
+      "id": "ExpectedFieldToken",
+      "description": "Expected field token."
+    },
+    {
+      "id": "Unverifiable",
+      "description": "Instruction can not be verified."
+    },
+    {
+      "id": "StringOperand",
+      "description": "Operand does not point to a valid string ref."
+    },
+    {
+      "id": "ReturnPtrToStack",
+      "description": "Return type is ByRef, TypedReference, ArgHandle, or ArgIterator."
+    },
+    {
+      "id": "ReturnVoid",
+      "description": "Stack must be empty on return from a void function."
+    },
+    {
+      "id": "ReturnMissing",
+      "description": "Return value missing on the stack."
+    },
+    {
+      "id": "ReturnEmpty",
+      "description": "Stack must contain only the return value."
+    },
+    {
+      "id": "ExpectedArray",
+      "description": "Expected single-dimension zero-based array."
+    },
+    {
+      "id": "ValueTypeExpected",
+      "description": "Value type expected."
+    },
+    {
+      "id": "TypeAccess",
+      "description": "Type is not visible."
+    },
+    {
+      "id": "MethodAccess",
+      "description": "Method is not visible."
+    },
+    {
+      "id": "FieldAccess",
+      "description": "Field is not visible."
+    },
+    {
+      "id": "ExpectedStaticField",
+      "description": "Expected static field."
+    },
+    {
+      "id": "InitOnly",
+      "description": "Cannot change initonly field outside its .ctor."
+    },
+    {
+      "id": "CallVirtOnValueType",
+      "description": "Callvirt on a value type method."
+    },
+    {
+      "id": "CtorExpected",
+      "description": ".ctor expected."
+    },
+    {
+      "id": "CtorSig",
+      "description": "newobj on static or abstract method."
+    },
+    {
+      "id": "ArrayByRef",
+      "description": "Array of ELEMENT_TYPE_BYREF or ELEMENT_TYPE_TYPEDBYREF."
+    },
+    {
+      "id": "ByrefOfByref",
+      "description": "ByRef of ByRef."
+    },
+    {
+      "id": "CodeSizeZero",
+      "description": "Code size is zero."
+    },
+    {
+      "id": "TailCall",
+      "description": "Missing call/callvirt/calli."
+    },
+    {
+      "id": "TailByRef",
+      "description": "Cannot pass ByRef to a tail call."
+    },
+    {
+      "id": "TailRet",
+      "description": "tail.call may only be followed by ret."
+    },
+    {
+      "id": "TailRetVoid",
+      "description": "Void ret type expected for tail call."
+    },
+    {
+      "id": "TailRetType",
+      "description": "Tail call return type not compatible."
+    },
+    {
+      "id": "TailStackEmpty",
+      "description": "Stack not empty after tail call."
+    },
+    {
+      "id": "MethodEnd",
+      "description": "Method ends in the middle of an instruction."
+    },
+    {
+      "id": "BadBranch",
+      "description": "Branch out of the method."
+    },
+    {
+      "id": "Volatile",
+      "description": "Missing ldsfld, stsfld, ldind, stind, ldfld, stfld, ldobj, stobj, initblk, or cpblk."
+    },
+    {
+      "id": "Unaligned",
+      "description": "Missing ldind, stind, ldfld, stfld, ldobj, stobj, initblk, cpblk."
+    },
+    {
+      "id": "CallAbstract",
+      "description": "Call not allowed on abstract methods."
+    },
+    {
+      "id": "TryNonEmptyStack",
+      "description": "Attempt to enter a try block with nonempty stack."
+    },
+    {
+      "id": "FilterOrCatchUnexpectedStack",
+      "description": "Attempt to enter a filter or catch block with unexpected stack state."
+    },
+    {
+      "id": "FinOrFaultNonEmptyStack",
+      "description": "Attempt to enter a finally or fault block with nonempty stack."
+    },
+    {
+      "id": "DelegateCtor",
+      "description": "Unrecognized arguments for delegate .ctor."
+    },
+    {
+      "id": "DelegatePattern",
+      "description": "Dup, ldvirtftn, newobj delegate::.ctor() pattern expected (in the same basic block)."
+    },
+    {
+      "id": "BoxByRef",
+      "description": "Cannot box byref."
+    },
+    {
+      "id": "EndfilterStack",
+      "description": "Stack not empty when leaving an exception filter."
+    },
+    {
+      "id": "DelegateCtorSigI",
+      "description": "Unrecognized delegate .ctor signature; expected Native Int."
+    },
+    {
+      "id": "DelegateCtorSigO",
+      "description": "Unrecognized delegate .ctor signature; expected Object."
+    },
+    {
+      "id": "CatchByRef",
+      "description": "ByRef not allowed as catch type."
+    },
+    {
+      "id": "ThrowOrCatchOnlyExceptionType",
+      "description": "The type caught or thrown must be derived from System.Exception."
+    },
+    {
+      "id": "LdvirtftnOnStatic",
+      "description": "ldvirtftn on static."
+    },
+    {
+      "id": "CallVirtOnStatic",
+      "description": "callvirt on static."
+    },
+    {
+      "id": "InitLocals",
+      "description": "initlocals must be set for verifiable methods with one or more local variables."
+    },
+    {
+      "id": "CallCtor",
+      "description": "call to .ctor only allowed to initialize this pointer from within a .ctor. Try newobj."
+    },
+    {
+      "id": "ExpectedValClassObjRefVariable",
+      "description": "Value type, ObjRef type or variable type expected."
+    },
+    {
+      "id": "ReadOnly",
+      "description": "Missing ldelema or call following readonly prefix."
+    },
+    {
+      "id": "Constrained",
+      "description": "Missing callvirt following constrained prefix."
+    },
+    {
+      "id": "UnsatisfiedMethodInst",
+      "description": "Method instantiation has unsatisfied method type parameter constraints."
+    },
+    {
+      "id": "UnsatisfiedMethodParentInst",
+      "description": "Method parent instantiation has unsatisfied class type parameter constraints."
+    },
+    {
+      "id": "UnsatisfiedFieldParentInst",
+      "description": "Field parent instantiation has unsatisfied class type parameter constraints."
+    },
+    {
+      "id": "UnsatisfiedBoxOperand",
+      "description": "Type operand of box instruction has unsatisfied class type parameter constraints."
+    },
+    {
+      "id": "ConstrainedCallWithNonByRefThis",
+      "description": "The 'this' argument to a constrained call must have ByRef type."
+    },
+    {
+      "id": "ReadonlyUnexpectedCallee",
+      "description": "The readonly prefix may only be applied to calls to array methods returning ByRefs."
+    },
+    {
+      "id": "ReadOnlyIllegalWrite",
+      "description": "Illegal write to readonly ByRef."
+    },
+    {
+      "id": "TailCallInsideER",
+      "description": "The tail.call (or calli or callvirt) instruction cannot be used to transfer control out of a try, filter, catch, or finally block."
+    },
+    {
+      "id": "BackwardBranch",
+      "description": "Stack height at all points must be determinable in a single forward scan of IL."
+    },
+    {
+      "id": "NewobjAbstractClass",
+      "description": "Cannot construct an instance of abstract class."
+    },
+    {
+      "id": "UnmanagedPointer",
+      "description": "Unmanaged pointers are not a verifiable type."
+    },
+    {
+      "id": "LdftnNonFinalVirtual",
+      "description": "Cannot LDFTN a non-final virtual method for delegate creation if target object is potentially not the same type as the method class."
+    },
+    {
+      "id": "ThisMismatch",
+      "description": "The 'this' parameter to the call must be the calling method's 'this' parameter."
+    },
+    {
+      "id": "InterfaceImplHasDuplicate",
+      "description": "InterfaceImpl has a duplicate"
+    },
+    {
+      "id": "InterfaceMethodNotImplemented",
+      "description": "Class implements interface but not method"
+    },
+    {
+      "id": "LocallocStackNotEmpty",
+      "description": "localloc requires that stack must be empty, except for 'size' argument"
+    }
+  ]
+}

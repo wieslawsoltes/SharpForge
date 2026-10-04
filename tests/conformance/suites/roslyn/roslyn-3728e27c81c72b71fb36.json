@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3728e27c81c72b71fb36",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main(string[] args)\n    {\n        if (1.ToString() == 2.ToString())\n        {\n            (string I1,\n                string I2,\n                string I3,\n                string I4,\n                string I5,\n                string I6,\n                string I7,\n                string I8) ss;\n\n            ss.I1 = \"q\";\n            ss.I2 = \"q\";\n            ss.I3 = \"q\";\n            ss.I4 = \"q\";\n            ss.I5 = \"q\";\n            ss.I6 = \"q\";\n            ss.I7 = \"q\";\n            ss.I8 = \"q\";\n\n            System.Console.WriteLine(ss);\n        }\n        else if (1.ToString() == 3.ToString())\n        {\n            (string I1,\n                string I2,\n                string I3,\n                string I4,\n                string I5,\n                string I6,\n                string I7,\n                string I8) ss;\n\n            ss.I1 = \"q\";\n            ss.I2 = \"q\";\n            ss.I3 = \"q\";\n            ss.I4 = \"q\";\n            ss.I5 = \"q\";\n            ss.I6 = \"q\";\n            ss.I7 = \"q\";\n            // ss.I8 = \"q\";\n\n            System.Console.WriteLine(ss); // should fail1\n        }\n        else\n        {\n            (string I1,\n                string I2,\n                string I3,\n                string I4,\n                string I5,\n                string I6,\n                string I7,\n                string I8) ss;\n\n            ss.I1 = \"q\";\n            ss.I2 = \"q\";\n            ss.I3 = \"q\";\n            ss.I4 = \"q\";\n            ss.I5 = \"q\";\n            ss.I6 = \"q\";\n            // ss.I7 = \"q\";\n            ss.I8 = \"q\";\n\n            System.Console.WriteLine(ss); // should fail2\n        }\n    }\n}\n\n",
+  "sourceSHA256": "48c08a495c93e9b4dec386e08aff52debe03a81ac6497c2be814fc4966e0a968",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "DefiniteAssignment012",
+    "offset": 966242
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source,\n                parseOptions: TestOptions.Regular)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (48,38): error CS0165: Use of unassigned local variable 'ss'\n                //             System.Console.WriteLine(ss); // should fail1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"ss\").WithArguments(\"ss\").WithLocation(48, 38),\n                // (70,38): error CS0165: Use of unassigned local variable 'ss'\n                //             System.Console.WriteLine(ss); // should fail2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"ss\").WithArguments(\"ss\").WithLocation(70, 38)\n            ",
+  "unsupported": []
+}

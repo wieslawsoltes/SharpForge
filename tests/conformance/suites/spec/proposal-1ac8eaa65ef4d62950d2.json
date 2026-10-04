@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1ac8eaa65ef4d62950d2",
+  "kind": "spec",
+  "sourceText": "public static void ShouldBe<T>(this T @this, T expected, [CallerArgumentExpression(\"this\")] string thisExpression = null) {}\n\ncontestant.Points.ShouldBe(1337); // thisExpression: \"contestant.Points\"",
+  "sourceSHA256": "7603cb3aab95aec1df10234136c1ad16dad755df4c7745eb298a75d6f71b6b75",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 5511
+  }
+}

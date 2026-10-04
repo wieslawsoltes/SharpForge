@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-38ca987824deb27c4bf9",
+  "kind": "spec",
+  "sourceText": "public abstract class Shape\n{\n    public abstract void Paint(Graphics g, Rectangle r);\n}\n\npublic class Ellipse : Shape\n{\n    public override void Paint(Graphics g, Rectangle r) => g.DrawEllipse(r);\n}\n\npublic class Box : Shape\n{\n    public override void Paint(Graphics g, Rectangle r) => g.DrawRect(r);\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "4a51cddf46165783466335b1bdfa72a466868b9fef42abf8863624d684c1208c",
+  "originalSource": "public abstract class Shape\n{\n    public abstract void Paint(Graphics g, Rectangle r);\n}\n\npublic class Ellipse : Shape\n{\n    public override void Paint(Graphics g, Rectangle r) => g.DrawEllipse(r);\n}\n\npublic class Box : Shape\n{\n    public override void Paint(Graphics g, Rectangle r) => g.DrawRect(r);\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "AbstractMethods1",
+    "additionalFiles": [
+      "Graphics.cs",
+      "RectangleNoPoint.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "AbstractMethods1",
+    "offsetInUnquotedMarkdown": 144037
+  }
+}

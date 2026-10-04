@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b8e919f012a49de80acd",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class RefersToLibAttribute : C\n{\n    public RefersToLibAttribute() { }\n    public static void Method() { }\n}\n",
+  "sourceSHA256": "d1f56295844d0145f5b6a0cdaf33723e055ef3dc1ca246e6f0911efdeffb3ff8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeWithTypeReferenceToCurrentCompilation_WithStaticUsing",
+    "offset": 11229
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { origLibComp.EmitToImageReference() })",
+  "options": "(reference_cs, references: new[] { origLibComp.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

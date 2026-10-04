@@ -2,7 +2,8 @@
  * Differential fixtures for partial methods (SF-A02-T54): the two parts are one method, a call to a method that has
  * only its defining declaration is removed together with its arguments, callers use the definition's parameter names
  * and default values, and the C# 9 extended form (accessibility, return values, `out`) must be implemented.
- * Declaration rules: CS0751, CS0756, CS0757, CS0759, CS0758, CS0762, CS0763, CS8795-CS8800, CS8817, CS8818.
+ * Declaration rules: CS0751, CS0756, CS0757, CS0759, CS0758, CS0762, CS0763, CS8795-CS8800, CS8817, CS8818;
+ * between the parts CS0761, CS0764, CS8142, CS8663 (CS8826 is a level 6 warning: tests/compiler-binder-partial-methods.test.js).
  */
 import { cs, out, diag, feature } from './kit.js';
 
@@ -173,5 +174,98 @@ export const fixtures = feature('partial-methods', [
       }
     `,
     { langVersion: '8' },
+  ),
+  diag(
+    'cs0761-cs8142-cs0759-parts-that-differ',
+    cs`
+      using System;
+      using System.Collections.Generic;
+      partial class C
+      {
+          partial void A<T>(T x) where T : class;
+          partial void A<T>(T x) where T : struct { }
+          partial void B<T>(T x);
+          partial void B<T>(T x) where T : IDisposable { }
+          partial void B2<T>(T x) where T : IDisposable, new();
+          partial void B2<T>(T x) where T : new(), IDisposable { }
+          partial void B3<T, U>(T x) where T : class where U : struct;
+          partial void B3<U, T>(U x) where U : class where T : struct { }
+          partial void D(int first, string second);
+          partial void D(int one, string two) { }
+          partial void E((int a, int b) t);
+          partial void E((int x, int y) t) { }
+          partial void G(List<string> names, int count = 1);
+          partial void G(List<string> names, int total) { }
+          unsafe partial void H();
+          partial void H() { }
+          partial void I();
+          unsafe partial void I() { }
+          partial void J<T>(T x);
+          partial void J<U>(U x) { }
+          partial void K(ref int x);
+          partial void K(in int x) { }
+          partial void L(int[] xs);
+          partial void L(params int[] xs) { }
+          static void Main() { }
+      }
+    `,
+  ),
+  diag(
+    'cs0764-unsafe-on-one-part-only',
+    cs`
+      partial class C
+      {
+          unsafe partial void H();
+          partial void H() { }
+          partial void I();
+          unsafe partial void I() { }
+          unsafe partial void Both(int* p);
+          unsafe partial void Both(int* p) { }
+          static void Main() { }
+      }
+    `,
+    { allowUnsafe: true },
+  ),
+  diag(
+    'cs0762-cs0765-uses-of-an-unimplemented-part',
+    cs`
+      using System;
+      using System.Linq.Expressions;
+      partial class C
+      {
+          partial void None();
+          partial void Has();
+          partial void Has() { }
+          partial int Value();
+          void Use()
+          {
+              Action a = None;
+              Action b = Has;
+              Expression<Action> e = () => None();
+              var n = nameof(None);
+              None();
+          }
+          static void Main() { }
+      }
+    `,
+  ),
+  diag(
+    'cs8663-readonly-on-one-part-only',
+    cs`
+      #nullable enable
+      using System;
+      partial struct S
+      {
+          partial void A(string s);
+          partial void A(string? s) { }
+          readonly partial void B();
+          partial void B() { }
+          partial void D(string[] xs);
+          partial void D(string?[] xs) { }
+          private partial string? E();
+          private partial string E() { return ""; }
+      }
+      class Program { static void Main() { } }
+    `,
   ),
 ]);

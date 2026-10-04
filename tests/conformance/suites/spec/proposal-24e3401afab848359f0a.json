@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-24e3401afab848359f0a",
+  "kind": "spec",
+  "sourceText": "SpanLikeType M1(ref SpanLikeType x, Span<byte> y)\n{\n    // this is all valid, unconcerned with stack-referring stuff\n    var local = new SpanLikeType(y);\n    x = local;\n    return x;\n}\n\nvoid Test1(ref SpanLikeType param1, Span<byte> param2)\n{\n    Span<byte> stackReferring1 = stackalloc byte[10];\n    var stackReferring2 = new SpanLikeType(stackReferring1);\n\n    // this is allowed\n    stackReferring2 = M1(ref stackReferring2, stackReferring1);\n\n    // this is NOT allowed\n    stackReferring2 = M1(ref param1, stackReferring1);\n\n    // this is NOT allowed\n    param1 = M1(ref stackReferring2, stackReferring1);\n\n    // this is NOT allowed\n    param2 = stackReferring1.Slice(10);\n\n    // this is allowed\n    param1 = new SpanLikeType(param2);\n\n    // this is allowed\n    stackReferring2 = param1;\n}\n\nref SpanLikeType M2(ref SpanLikeType x)\n{\n    return ref x;\n}\n\nref SpanLikeType Test2(ref SpanLikeType param1, Span<byte> param2)\n{\n    Span<byte> stackReferring1 = stackalloc byte[10];\n    var stackReferring2 = new SpanLikeType(stackReferring1);\n\n    ref var stackReferring3 = M2(ref stackReferring2);\n\n    // this is allowed\n    stackReferring3 = M1(ref stackReferring2, stackReferring1);\n\n    // this is allowed\n    M2(ref stackReferring3) = stackReferring2;\n\n    // this is NOT allowed\n    M1(ref param1) = stackReferring2;\n\n    // this is NOT allowed\n    param1 = stackReferring3;\n\n    // this is NOT allowed\n    return ref stackReferring3;\n\n    // this is allowed\n    return ref param1;\n}\n",
+  "sourceSHA256": "504e945f4634d25edd8fee3ecc5c88b7dc735d9fb36b4cb187da963dc063d76c",
+  "target": "library",
+  "featureId": "csharp-7-2-span-and-ref-like-types",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/span-safety.md",
+    "sha256": "73bc8deb74ee9ac75ab2d74292a7014712fd627abe8dcc3f61ad9cfd6c1cdc30",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+    "license": "NOASSERTION",
+    "offset": 3838
+  }
+}

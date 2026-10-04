@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-70ff801f86585eebc549",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface IVarArgs\n{\n    void Invoke(__arglist);\n}\n\nclass MyVarArgs : VarArgs, IVarArgs\n{\n\n}\n\npublic static class P\n{\n    public static void Main()\n    {\n        IVarArgs iv = new MyVarArgs();\n\n        iv.Invoke(__arglist(1, 2, 3, 4));\n    }\n}\n",
+  "sourceSHA256": "a03990f8fc31f1b250f7687a5ce82c8dd578bb26a653efaa75f545b28c241fb9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "VarargBridgeMeta",
+    "offset": 334244
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference.EmitToImageReference() })",
+  "options": "(code, references: new[] { reference.EmitToImageReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0630",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,28): error CS0630: 'VarArgs.Invoke(__arglist)' cannot implement interface member 'IVarArgs.Invoke(__arglist)' in type 'MyVarArgs' because it has an __arglist parameter.\n                // class MyVarArgs : VarArgs, IVarArgs\n                Diagnostic(ErrorCode.ERR_InterfaceImplementedImplicitlyByVariadic, \"IVarArgs\").WithArguments(\"VarArgs.Invoke(__arglist)\", \"IVarArgs.Invoke(__arglist)\", \"MyVarArgs\").WithLocation(7, 28)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

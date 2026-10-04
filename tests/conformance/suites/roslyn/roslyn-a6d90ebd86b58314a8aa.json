@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a6d90ebd86b58314a8aa",
+  "kind": "diagnostics",
+  "sourceText": "class A : System.Attribute\n{\n    public A(object o) { }\n}\nclass B { }\nclass C\n{\n    [return: A(new B())]\n    static object F(\n        [A(new B())] object x,\n        [param: A(new B())] object y)\n    {\n        return null;\n    }\n}",
+  "sourceSHA256": "6273778e574c68276333e5cbc0fc7427602ff96929af633fd2c8b0edb90dea44",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "MethodSignatureAttributes",
+    "offset": 289903
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,16): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"new B()\").WithLocation(8, 16),\n                // (10,12): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"new B()\").WithLocation(10, 12),\n                // (11,19): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"new B()\").WithLocation(11, 19)",
+  "unsupported": []
+}
