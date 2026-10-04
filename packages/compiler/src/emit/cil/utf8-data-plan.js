@@ -13,14 +13,15 @@ const digestName = bytes => Array.from(sha256(bytes), byte => byte.toString(16).
 /** One assembly's body-only literal storage. Reference assembly emission does not instantiate this plan. */
 export class Utf8DataPlan {
   constructor(analysis) {
-    this.literals = lowerUtf8Literals(analysis);
+    const lowered = lowerUtf8Literals(analysis);
+    this.literals = lowered.literals;
     this.types = [];
     this.plans = new Map();
     this.data = [];
     this.constructors = null;
     this.owner = null;
     if (!this.literals.size) return;
-    this.constructors = utf8SpanConstructors(analysis.core, this.literals.values().next().value);
+    this.constructors = utf8SpanConstructors(analysis.core, lowered.locations);
     if (!this.constructors.pointer) return;
     const core = analysis.core;
     this.owner = new NamedTypeSymbol({

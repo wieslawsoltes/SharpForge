@@ -6,10 +6,12 @@ import { UnsupportedInCil } from './unsupported.js';
 
 /** A missing required helper has Roslyn's diagnostic, including the location of the literal that needs it. */
 class MissingUtf8Constructor extends UnsupportedInCil {
-  constructor(context) {
+  constructor(locations) {
+    const context = locations[0];
     super('the required ReadOnlySpan<T>(T[], int, int) constructor', context.syntax, context.uri);
     this.diagnosticCode = DiagnosticId.CS0656;
-    this.diagnosticArguments = ['System.ReadOnlySpan<T>', '.ctor'];
+    this.diagnosticLocations = locations;
+    this.diagnosticArguments = ['System.ReadOnlySpan`1', '.ctor'];
   }
 }
 
@@ -26,11 +28,11 @@ function constructorWithParameters(type, parameters) {
  * Roslyn uses an array, including its terminating NUL, when the target does not provide that optimization helper.
  * Members are taken from the actual constructed span type, preserving the reference's owning assembly/signature.
  */
-export function utf8SpanConstructors(core, context) {
+export function utf8SpanConstructors(core, locations) {
   const span = core.readOnlySpan.construct(core.byte);
   const arrayType = new ArrayTypeSymbol(core.byte);
   const array = constructorWithParameters(span, [arrayType, core.int, core.int]);
-  if (!array) throw new MissingUtf8Constructor(context);
+  if (!array) throw new MissingUtf8Constructor(locations);
   const pointer = constructorWithParameters(span, [new PointerTypeSymbol(core.void), core.int]) ?? null;
   return { span, arrayType, array, pointer };
 }

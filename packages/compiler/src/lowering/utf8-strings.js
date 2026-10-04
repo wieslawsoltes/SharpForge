@@ -22,13 +22,15 @@ function encodedLength(text) {
 }
 
 /**
- * Collect bound UTF-8 literals in source traversal order. The result maps text to {bytes, length, syntax, uri};
+ * Collect bound UTF-8 literals in source traversal order. The result contains deduplicated data and source locations in traversal order;
  * length excludes the appended zero. A seen-node set also covers bodies shared by multiple bound roots.
  * Time is O(bound nodes + unique UTF-16 text + encoded bytes); storage is O(bound nodes + unique encoded bytes).
  */
 export function lowerUtf8Literals(analysis) {
   const literals = new Map();
   const seen = new Set();
+  const locationNodes = new Set();
+  const locations = [];
   const encoder = new TextEncoder();
   const roots = [];
   let totalBytes = 0;
@@ -45,7 +47,13 @@ export function lowerUtf8Literals(analysis) {
       seen.add(node);
       // A local function's body lives on its method symbol, which the ordinary bound walker intentionally skips.
       if (node.kind === 'LocalFunction' && node.method?.body) roots.push({ body: node.method.body, uri });
-      if (node.kind !== 'Utf8Literal' || literals.has(node.text)) return true;
+      if (node.kind !== 'Utf8Literal') return true;
+      const locationNode = node.syntax ?? node;
+      if (!locationNodes.has(locationNode)) {
+        locationNodes.add(locationNode);
+        locations.push({ syntax: node.syntax, uri });
+      }
+      if (literals.has(node.text)) return false;
       const length = encodedLength(node.text);
       totalBytes += length + 1;
       if (totalBytes > MAX_DATA_BYTES) throw new CilError('UTF-8 literal data exceeds the PE output size limit');
@@ -55,5 +63,5 @@ export function lowerUtf8Literals(analysis) {
       return false;
     });
   }
-  return literals;
+  return { literals, locations };
 }
