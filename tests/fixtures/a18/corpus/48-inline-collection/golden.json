@@ -4,7 +4,7 @@
   "compilationSucceeded": false,
   "diagnostics": [
     {
-      "code": "CS0200",
+      "code": "SF2200",
       "legacyCode": null,
       "severity": "error"
     }

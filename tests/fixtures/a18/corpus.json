@@ -1070,7 +1070,7 @@
         "tokenBudget": 2
       },
       "execute": false,
-      "runtimeExclusion": "Compiler CS0123: protected lambda handler has no executable RoutedEventHandler match in the current profile."
+      "runtimeExclusion": "Compiler SF2200: this construction cannot execute on the current runtime profile; the lambda remains protected."
     },
     {
       "id": "39-computed-width",
