@@ -1,0 +1,81 @@
+[
+  {
+    "label": "candidate-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:30:56.204Z",
+    "completed": "2026-10-04T10:30:56.245Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:30:56.245Z",
+    "completed": "2026-10-04T10:30:56.431Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:30:56.431Z",
+    "completed": "2026-10-04T10:30:56.475Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-numeric-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "/tmp/a03-fields-validation/baseline-numeric-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:30:56.525Z",
+    "completed": "2026-10-04T10:30:56.970Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-fields-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "packages/cil/tools/benchmark-field-verifier.mjs",
+      "/tmp/a03-fields-validation/baseline-fields-performance.json",
+      "baseline"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:30:56.970Z",
+    "completed": "2026-10-04T10:30:57.208Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "native",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-fields/capture.mjs",
+      "/tmp/a03-fields-validation/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:30:57.209Z",
+    "completed": "2026-10-04T10:30:57.402Z",
+    "exitCode": 1,
+    "signal": null
+  }
+]

@@ -49,6 +49,7 @@ import { AnonymousTypeEmission } from './emit-anonymous-types.js';
 import { InterpolatedHandlerEmission } from './emit-interpolated-handlers.js';
 import { PointerEmission } from './emit-pointers.js';
 import { FixedEmission } from './emit-fixed.js';
+import { FunctionPointerEmission } from './emit-function-pointers.js';
 
 const families = [
   ConstantEmission,
@@ -97,6 +98,7 @@ const families = [
   InterpolatedHandlerEmission,
   PointerEmission,
   FixedEmission,
+  FunctionPointerEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

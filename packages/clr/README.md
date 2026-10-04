@@ -12,6 +12,8 @@ Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
 tokens and open caller scopes without parsing display names.
 [Prepared CIL core authority](VERIFICATION-CORE-TYPES.md) binds an explicit token
 selection through the loader for synchronous verification category queries.
+[Binary resource inspection](RESOURCES.md) reads bounded `.resources` v2 name
+tables and typed values while preserving serialized user data as opaque bytes.
 
 `AssemblyName.parse(displayName)` parses immutable partial identities, preserving
 unspecified components as `null`. `fullName` formats CLR quoting and escaping.

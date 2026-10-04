@@ -22,3 +22,4 @@ export { PropertyDesc } from './type-system/property-desc.js';
 export { EventDesc } from './type-system/event-desc.js';
 export { prepareVerificationCoreTypes } from './verification/core-types.js';
 export { createAssemblyMethodRelations } from './reflection/usage-relations.js';
+export { ManagedResourceReader, ResourceTypeCode } from './resources/resource-reader.js';

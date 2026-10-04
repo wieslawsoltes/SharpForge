@@ -17,6 +17,7 @@ import { ConversionKind } from '../conversions/classify.js';
 import { spanElementType } from '../conversions/span.js';
 import { baseTypeChain, containsTypeParameter } from '../symbols/substitution.js';
 import { paramsElementType, betterParamsCollection, keepHighestPriority } from './params-collections.js';
+import { betterCollectionConversion } from './collection-betterness.js';
 
 const refOf = arg => (arg.refKind && arg.refKind !== 'none' ? arg.refKind : RefKind.None);
 const display = type => (type ? type.toDisplayString() : '<null>');
@@ -355,6 +356,7 @@ export class OverloadResolver {
   /** 1 when converting the argument to t1 is better than to t2, -1 for the reverse, 0 when neither is better. */
   betterConversion(arg, t1, c1, t2, c2) {
     if (this.conversions.isIdentity(t1, t2)) return 0;
+    if (arg.form === 'collection') return betterCollectionConversion(arg, t1, t2, this);
     // C# 10: for an interpolated string that is not a constant, the conversion to a handler type is the better one.
     const handler1 = c1?.kind === ConversionKind.InterpolatedStringHandler,
       handler2 = c2?.kind === ConversionKind.InterpolatedStringHandler;

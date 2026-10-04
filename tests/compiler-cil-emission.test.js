@@ -117,17 +117,12 @@ test('A02-T30 a typed catch clause names its exception type and try regions nest
   assert.ok(names.some(name => name.startsWith('leave')));
 });
 
-test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong assembly', () => {
-  // Function pointers have no emitter (data pointers have one since the unsafe-code batch).
+test('A02-T30 a function pointer emits its method address as ldftn', () => {
   const pointer = emit('class C { static int M(int x) { return x; } static unsafe void Main() { delegate*<int, int> f = &M; } }', { allowUnsafe: true });
-  assert.equal(pointer.success, false);
-  assert.equal(pointer.assembly, null);
-  assert.deepEqual(
-    errorsOf(pointer).map(entry => entry.code),
-    ['SF2200'],
-  );
-  assert.match(errorsOf(pointer)[0].message, /not executable on this runtime profile: it uses \S/);
-  assert.ok(errorsOf(pointer)[0].start > 0, 'the diagnostic is at the construct');
+  assert.equal(pointer.success, true);
+  assert.deepEqual(errorsOf(pointer), []);
+  const { body } = methodOf(pointer.assembly, 'C', 'Main');
+  assert.ok(body.instructions.some(instruction => instruction.name === 'ldftn'));
 });
 
 test('A02-T30 a program with errors yields its diagnostics and no assembly', () => {

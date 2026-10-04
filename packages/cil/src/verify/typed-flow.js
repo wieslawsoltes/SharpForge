@@ -3,9 +3,9 @@ import { CilError } from '../binary.js';
 import { DataflowWorklist, dataflowCancellation, dataflowLimit, dataflowFailure } from './dataflow.js';
 import { dataflowBlocks } from './dataflow-blocks.js';
 import { executionHandlerOffsets } from './execution-handlers.js';
-import { numericMethodSignature } from './typed-signatures.js';
-import { numericTransfers } from './numeric-tables.js';
-import { transferNumericInstruction } from './ops-numeric.js';
+import { typedMethodSignature, primitiveRelations } from './typed-signatures.js';
+import { ensureTypedMetadata } from './typed-metadata.js';
+import { typedTransfers, transferTypedInstruction } from './typed-transfers.js';
 import { TypedTransferStack } from './typed-stack.js';
 import { createTypedFlowState } from './typed-state.js';
 
@@ -17,7 +17,7 @@ function transferBlock(block, incoming, state, options, flow) {
     dataflowCancellation(options.signal);
     const instruction = state.method.instructions[index];
     state.instruction = instruction;
-    transferNumericInstruction(numericTransfers[instruction.name], instruction, state);
+    transferTypedInstruction(instruction, state);
     if (state.ended) return null;
   }
   return flow.snapshot();
@@ -31,14 +31,15 @@ function preflight(method, state, options) {
     dataflowFailure('Dataflow instruction limit exceeded');
   for (const instruction of method.instructions) {
     dataflowCancellation(options.signal);
-    if (!Object.hasOwn(numericTransfers, instruction.name)) {
+    if (!Object.hasOwn(typedTransfers, instruction.name)) {
       state.instruction = instruction;
       state.fail('UnsupportedOpcode', `Typed policy is unavailable for ${instruction.name}`, true);
     }
+    if (typedTransfers[instruction.name].descriptor.metadata) state.needsMetadata = true;
   }
 }
 
-/** Verify one decoded method using registered typed numeric transfers and bounded block propagation.
+/** Verify one decoded method using registered typed transfers and bounded block propagation.
  * Returns verified/rejected/unknown; unknown never qualifies execution. Broader opcode/EH policies remain pending.
  * The cumulative maxTypedStackSlots budget (default/hard ceiling 1M slots) covers scratch and block-state copies.
  */
@@ -51,8 +52,10 @@ export function verifyCilMethodTypes(input, methodToken, options = {}) {
     if (!Number.isInteger(method.maxStack) || method.maxStack < 0 || method.maxStack > 65535)
       throw new CilError('Invalid maxstack header');
     state = new TypedTransferStack(method, options);
+    state.relations = primitiveRelations;
     preflight(method, state, options);
-    state.signature = numericMethodSignature(inspector, method, options, state.fail);
+    if (state.needsMetadata) ensureTypedMetadata(state, inspector, options);
+    state.signature = typedMethodSignature(inspector, method, options, state);
     const offsets = executionHandlerOffsets(method, options, (current, instruction, code, message, details) => {
       state.instruction = instruction;
       state.fail(details?.diagnostic ?? code, message);
@@ -72,11 +75,12 @@ export function verifyCilMethodTypes(input, methodToken, options = {}) {
     }, options);
     worklist.enqueue(graph.blocks.length ? 0 : -1, flow.entry);
     worklist.run();
-    return { status: 'verified', profile, methodToken, peakStack: state.peak, diagnostics: [] };
+    return { status: 'verified', profile: state.profile ?? profile, methodToken, peakStack: state.peak, diagnostics: [] };
   } catch (error) {
     if (!(error instanceof CilError)) throw error;
-    const unknown = ['CILT0002', 'CILDF0001', 'CILDF0002', 'CILV0003', 'CILV0005'].includes(error.code);
-    return { status: unknown ? 'unknown' : 'rejected', profile, methodToken, peakStack: state?.peak ?? 0,
+    const unknown = ['CILT0002', 'CILDF0001', 'CILDF0002', 'CILV0003', 'CILV0005',
+      'CILVT0002', 'CILVT0003', 'CILVM0002', 'CILVM0003'].includes(error.code);
+    return { status: unknown ? 'unknown' : 'rejected', profile: state?.profile ?? profile, methodToken, peakStack: state?.peak ?? 0,
       diagnostics: [{ code: error.code ?? 'CILT0001', diagnostic: error.diagnostic ?? error.code ?? 'InvalidMetadata',
         offset: error.offset ?? state?.instruction?.offset, message: error.message }] };
   }

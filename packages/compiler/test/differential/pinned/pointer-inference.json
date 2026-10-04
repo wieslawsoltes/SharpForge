@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "pointer-inference/pointees-and-function-pointer-signatures":{"hash":"6778b060469bdc14","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Int32\nInt32\nString\n"},
+  "pointer-inference/raw-pointer-output-has-no-type-bound":{"hash":"2b58aaee0e3c9c0f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0411",518,7,"error"],["CS0411",555,7,"error"]]},
+  "pointer-inference/reference-variance-and-convention-order":{"hash":"25c0949c32314377","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Object\nObject\nInt32\n"},
+  "pointer-inference/invariant-pointees-and-value-slots":{"hash":"1b94790aa92d724f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0411",401,4,"error"],["CS0411",430,6,"error"],["CS0411",459,9,"error"]]},
+  "pointer-inference/signature-shape-mismatch":{"hash":"16bf0b96e7d3a4b8","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0411",452,7,"error"],["CS0411",477,6,"error"],["CS0411",500,7,"error"],["CS0411",528,8,"error"]]}
+}}
