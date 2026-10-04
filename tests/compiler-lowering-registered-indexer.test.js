@@ -7,6 +7,9 @@ import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
 import {analyze} from '../packages/compiler/src/semantic-analysis.js';
 import {walk} from '../packages/compiler/src/bound/semantic-walker.js';
+import {registeredIndexerName} from '../packages/compiler/src/symbols/registry-indexers.js';
+import {registeredIndexerContract, prepareRegisteredIndexer} from '../packages/compiler/src/framework-indexers.js';
+import {FrameworkCompiler} from '../packages/compiler/src/framework.js';
 
 function fixture() {
   const types = new Map();
@@ -27,7 +30,17 @@ function fixture() {
     if (defaultMember) add(owner, 'get_Item', ['int'], 'bool');
   }
   const bridge = new RegistryBridge({types, contracts, builtins: []});
-  return {types, contracts, bridge};
+  const resolver = {
+    types, frameworkType: type => types.get(type),
+    findContracts(type, name, isStatic) {
+      const results = [];
+      for (let owner = type; owner; owner = types.get(owner)?.base) {
+        results.push(...contracts.filter(row => row.owner === owner && row.name === name && row.isStatic === isStatic));
+      }
+      return results;
+    }
+  };
+  return {types, contracts, bridge, resolver};
 }
 
 test('Registered indexers: optional defaultMember selects native accessor names and preserves Item fallback', () => {
@@ -81,6 +94,67 @@ test('Registered indexers: read-only metadata still rejects source assignment', 
   const analysis = analyze([parse(new SourceText(
     "class Program { static void Write(Fixture.ReadOnly value) { value[0] = 'x'; } }", 'ReadOnlyIndexer.cs'))], {bridge});
   assert(analysis.diagnostics.some(row => row.code === 'CS0200'), JSON.stringify(analysis.diagnostics));
+});
+
+test('Registered indexers: the metadata name is typed, inherited and has one Item fallback', () => {
+  const {types, resolver} = fixture();
+  types.set('Fixture.Child', {name: 'Fixture.Child', base: 'Fixture.Named'});
+  assert.equal(registeredIndexerName(types.get('Fixture.Child'), types), 'Chars');
+  assert.equal(registeredIndexerContract('Fixture.Child', 'get', resolver).name, 'get_Chars');
+  assert.equal(registeredIndexerName(undefined, types), 'Item');
+  for (const defaultMember of ['', null, 7, false]) {
+    assert.throws(() => registeredIndexerName({defaultMember}, types),
+      {name: 'TypeError', message: 'Registered defaultMember must be a nonempty string'});
+  }
+  types.set('Fixture.Cycle', {base: 'Fixture.Cycle'});
+  assert.equal(registeredIndexerName(types.get('Fixture.Cycle'), types), 'Item', 'Malformed fixture bases cannot hang lookup');
+});
+
+function legacyFrame(owner) {
+  const compiler = new (FrameworkCompiler(class {}))();
+  const events = [];
+  let slot = 0;
+  Object.assign(compiler, {
+    c: {report: (_node, code) => events.push(['diagnostic', code])},
+    infer: () => owner,
+    expr: node => { events.push(['expression', node.name]); return node.type; },
+    temp: type => { events.push(['temporary', type]); return slot++; },
+    emit: (...args) => events.push(['emit', ...args]),
+    checkAssign: (expected, actual) => assert.equal(actual, expected),
+    emitContract: contract => { events.push(['contract', contract.name]); return contract.result; },
+    clear: value => events.push(['clear', value])
+  });
+  return {compiler, events};
+}
+
+test('Registered indexers: legacy preparation and load/store emit the metadata-selected native contracts', () => {
+  const {resolver} = fixture();
+  for (const [owner, name, valueType] of [
+    ['Fixture.Named', 'Chars', 'char'], ['Fixture.Other', 'Tokens', 'int'], ['Fixture.Legacy', 'Item', 'int']
+  ]) {
+    const {compiler, events} = legacyFrame(owner);
+    const node = {kind: 'Index', target: {name: 'receiver', type: owner}, index: {name: 'key', type: 'int'}};
+    const reference = prepareRegisteredIndexer(compiler, node, resolver);
+    assert.equal(reference.type, valueType);
+    compiler.loadFramework(reference);
+    compiler.storeFramework(reference);
+    assert.deepEqual(events.filter(row => row[0] === 'expression'), [['expression', 'receiver'], ['expression', 'key']]);
+    assert.deepEqual(events.filter(row => row[0] === 'contract'), [['contract', 'get_' + name], ['contract', 'set_' + name]]);
+    assert.equal(events.filter(row => row[0] === 'diagnostic').length, 0);
+  }
+});
+
+test('Registered indexers: legacy preparation preserves read-only and missing-indexer boundaries', () => {
+  const {resolver} = fixture();
+  const {compiler, events} = legacyFrame('Fixture.ReadOnly');
+  const node = {kind: 'Index', target: {name: 'receiver', type: 'Fixture.ReadOnly'}, index: {name: 'key', type: 'int'}};
+  const reference = prepareRegisteredIndexer(compiler, node, resolver);
+  assert.equal(reference.property.get.name, 'get_Chars');
+  assert.equal(reference.property.set, undefined);
+  assert.deepEqual(events.filter(row => row[0] === 'diagnostic'), [['diagnostic', 'CS0200']]);
+  const missing = legacyFrame('Fixture.Missing');
+  assert.equal(prepareRegisteredIndexer(missing.compiler, node, resolver), null);
+  assert.equal(missing.events.length, 0);
 });
 
 const controlSource = `using System; using System.Collections.Generic;
