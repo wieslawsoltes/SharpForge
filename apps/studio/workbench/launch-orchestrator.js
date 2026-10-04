@@ -91,7 +91,8 @@ export class LaunchOrchestrator {
         ...providerOptions,
         ...launchOverrides,
         debug: debugging,
-        breakpoints: this.breakpoints?.forProject(target.projectId) ?? providerOptions.breakpoints ?? {},
+        breakpoints: this.breakpoints?.forProject(target.projectId,
+          (built.projectArtifacts ?? []).map(artifact => artifact.project).filter(Boolean)) ?? providerOptions.breakpoints ?? {},
         stopOnEntry: debugging && (options.stopOnEntry ?? profile.stopOnEntry)
       };
       const capabilities = await this.launchCapabilities(target.projectId, profile, built, launch);

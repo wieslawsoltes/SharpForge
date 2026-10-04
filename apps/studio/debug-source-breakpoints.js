@@ -16,6 +16,7 @@ export function createSourceBreakpointController(host) {
   };
 
   async function sync(uri) {
+    if (host.sync) return host.sync(uri);
     if (!state.debug || !mutableStates.has(state.debug.state)) return null;
     const sessionId = state.debug.sessionId;
     const target = executionUri(uri);
