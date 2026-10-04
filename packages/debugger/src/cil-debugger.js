@@ -1,4 +1,5 @@
-import {contextFrames,threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
+import {threads,parallelStacks,freezeThread,prepareStepOut,stepOutTarget} from './concurrency.js';
+import {cilStackTrace} from './stack-trace.js';
 import {setNextStatement,gotoTargets,hotReload,evaluateFunction,loadPortableSymbols,releaseEvaluationHandles} from './advanced.js';
 import { CilVirtualMachine, isReference, ManagedFault } from '@sharpforge/runtime';
 import { selectMethod, ilLabel, tokenHex } from '@sharpforge/cil';
@@ -276,16 +277,7 @@ export class CilDebugSession {
       this.vm.state='paused';this.stoppedBeforeInstruction=false;}
   }
   runToInstruction(reference){const p=this.location(reference);if(!this.vm.report.methods.includes(p.token))throw new Error('Target is outside the verified call graph');this.temporary={methodToken:p.token,ilOffset:p.offset,...(this.vm.top?.method.token===p.token?{frameId:this.vm.top.id}:{})};this.resume();}
-  stackTrace(threadId){return [...contextFrames(this,threadId)].reverse().map(frame=>{
-    const isCurrent=frame===this.vm.top,before=isCurrent&&(this.vm.state!=='paused'||this.stoppedBeforeInstruction);
-    const instruction=before?frame.method.instructions[frame.pc]:frame.method.instructions.find(i=>i.offset===frame.lastOffset);
-    const offset=instruction?.offset??frame.lastOffset;
-    const points=this.sourceIndex.byMethod.get(frame.method.id)??[];
-    const point=[...points].reverse().find(p=>p.ilOffset<=offset);
-    return {id:frame.id,name:frame.method.owner+'::'+frame.method.name,methodToken:frame.method.token,ilOffset:offset,
-      instructionPointerReference:address(frame.method.token,offset),pc:frame.pc,isCurrent,point:point&&(!this.symbols||this.symbols.location(frame.method.token,offset))?{...point}:null,
-      source:point&&(!this.symbols||this.symbols.location(frame.method.token,offset))?point.uri:null,line:point?.line??0,column:point?.column??0,endLine:point?.endLine,endColumn:point?.endColumn};
-  });}
+  stackTrace(threadId){return cilStackTrace(this,threadId,address);}
   variable(name,type,value,extra={}) {
     return {name,type,value:value===undefined?'<unassigned>':value?.byref?`&${value.kind}[${value.index}]`:this.vm.display(value),raw:value,
       reference:isReference(value)?value:null,...extra};
