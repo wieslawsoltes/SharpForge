@@ -1,6 +1,8 @@
+import {createProfilerClock} from './profiler-clock.js';
+
 // Observations belong to the host VM lifetime, outside its rewindable execution graph.
 const profilers = new WeakMap();
-const options = new Set(['maxMethods', 'maxStacks', 'maxSites', 'maxStackDepth', 'sampleBudget']);
+const options = new Set(['maxMethods', 'maxStacks', 'maxSites', 'maxStackDepth', 'sampleBudget', 'duration', 'clock']);
 
 function limit(value, fallback, name, minimum = 1) {
   value ??= fallback;
@@ -10,11 +12,12 @@ function limit(value, fallback, name, minimum = 1) {
   return value;
 }
 
-function methodRecord(id, name) {
-  return {id, name, calls: 0, instructions: 0, inclusiveInstructions: 0, allocations: 0, allocatedBytes: 0};
+function methodRecord(id, name, timed) {
+  return {id, name, calls: 0, instructions: 0, inclusiveInstructions: 0, allocations: 0, allocatedBytes: 0,
+    ...(timed ? {exclusiveMilliseconds: 0, inclusiveMilliseconds: 0} : {})};
 }
 
-/** Bounded instruction weights, not elapsed time. No sample retains a frame or managed value. */
+/** Bounded instruction weights with optional elapsed sampling. No sample retains a frame or managed value. */
 class ExecutionProfiler {
   constructor(vm, configuration) {
     this.vm = vm;
@@ -23,7 +26,9 @@ class ExecutionProfiler {
     this.maxSites = limit(configuration.maxSites, 16384, 'allocation-site limit');
     this.maxStackDepth = limit(configuration.maxStackDepth, 512, 'stack depth');
     this.sampleBudget = limit(configuration.sampleBudget, 256, 'sample budget');
-    this.methods = [methodRecord(0, '[runtime]'), methodRecord(1, '[profile capacity]')];
+    this.durationClock = createProfilerClock(configuration);
+    this.inSlice = false;
+    this.methods = [methodRecord(0, '[runtime]', this.durationClock), methodRecord(1, '[profile capacity]', this.durationClock)];
     this.methodIds = new WeakMap();
     this.methodBodies = new WeakMap();
     this.executedFrames = new WeakMap();
@@ -36,6 +41,7 @@ class ExecutionProfiler {
     this.allocations = 0;
     this.allocatedBytes = 0;
     this.overflow = {methods: 0, stackInstructions: 0, stackDepthInstructions: 0, allocationBytes: 0, allocationCount: 0};
+    if (this.durationClock) Object.assign(this.overflow, {stackMilliseconds: 0, stackDepthMilliseconds: 0});
   }
 
   method(frame) {
@@ -57,7 +63,7 @@ class ExecutionProfiler {
         id = this.methods.length;
         const name = this.vm.inspector ? (type ?? method.owner) + '::' + method.name +
           (arguments_?.length ? '<' + arguments_.join(',') + '>' : '') : method.qualifiedName ?? method.owner + '::' + method.name;
-        this.methods.push(methodRecord(id, name.slice(0, 4096)));
+        this.methods.push(methodRecord(id, name.slice(0, 4096), this.durationClock));
         if (!bodies) this.methodBodies.set(owner, bodies = new WeakMap());
         if (!contexts) bodies.set(body, contexts = new Map());
         contexts.set(key, id);
@@ -68,7 +74,7 @@ class ExecutionProfiler {
   }
 
   enter(frame) {
-    this.boundary();
+    this.closeSample();
     if (!frame.filterSearch) this.methods[this.method(frame)].calls++;
   }
 
@@ -84,15 +90,15 @@ class ExecutionProfiler {
     const key = stack.join(',');
     let sample = this.stackIds.get(key);
     if (!sample && this.samples.length < this.maxStacks - 1) {
-      sample = {stack, weight: 0};
+      sample = {stack, weight: 0, ...(this.durationClock ? {milliseconds: 0} : {})};
       this.stackIds.set(key, sample);
       this.samples.push(sample);
     }
     const overflow = !sample;
     if (overflow) {
-      sample = this.samples[this.maxStacks - 1] ??= {stack: [1], weight: 0};
+      sample = this.samples[this.maxStacks - 1] ??= {stack: [1], weight: 0, ...(this.durationClock ? {milliseconds: 0} : {})};
     }
-    return {frameId: frame.id, method, stack, sample, overflow, truncated, weight: 0};
+    return {frameId: frame.id, method, stack, sample, overflow, truncated, weight: 0, startedAt: null};
   }
 
   /** One charge immediately before an opcode handler, including handlers that subsequently fault. */
@@ -100,18 +106,20 @@ class ExecutionProfiler {
     if (this.executedFrames.get(frame) !== frame.id) this.executedFrames.set(frame, frame.id);
     const method = this.method(frame);
     if (this.pending?.frameId !== frame.id || this.pending.method !== method) {
-      this.boundary();
+      this.closeSample();
       this.pending = this.sample(frame, method);
     }
+    if (this.durationClock && this.pending.startedAt === null) this.pending.startedAt = this.durationClock.read();
     this.instructions++;
     this.methods[method].instructions++;
     this.pending.weight++;
-    if (this.pending.weight >= this.sampleBudget) this.flushSample();
+    if (this.pending.weight >= this.sampleBudget) this.flushSample(true);
   }
 
-  flushSample() {
+  flushSample(continueTiming = false) {
     const pending = this.pending;
-    if (!pending?.weight) return;
+    if (!pending) return;
+    this.flushDuration(pending, continueTiming);
     for (const method of pending.stack) this.methods[method].inclusiveInstructions += pending.weight;
     pending.sample.weight += pending.weight;
     if (pending.overflow) this.overflow.stackInstructions += pending.weight;
@@ -119,10 +127,52 @@ class ExecutionProfiler {
     pending.weight = 0;
   }
 
-  /** Called at slice/restore/stop boundaries; pending numeric samples never outlive a pooled frame identity. */
-  boundary() {
+  flushDuration(pending, continueTiming) {
+    if (!this.durationClock || pending.startedAt === null) return;
+    const now = this.durationClock.read(), start = pending.startedAt;
+    // A budget flush precedes dispatch: retain an interval for that instruction's remaining work.
+    pending.startedAt = continueTiming ? now : null;
+    if (now === null || !this.durationClock.record(now - start)) return;
+    const milliseconds = now - start;
+    this.methods[pending.method].exclusiveMilliseconds += milliseconds;
+    for (const method of pending.stack) {
+      const record = this.methods[method], total = record.inclusiveMilliseconds + milliseconds;
+      // Recursive activations can overflow inclusive time even when the elapsed total is finite.
+      if (!Number.isFinite(total)) {
+        this.durationClock.fail(new RangeError('Profiler inclusive duration overflow'));
+        return;
+      }
+      record.inclusiveMilliseconds = total;
+    }
+    pending.sample.milliseconds += milliseconds;
+    if (pending.overflow) this.overflow.stackMilliseconds += milliseconds;
+    if (pending.truncated) this.overflow.stackDepthMilliseconds += milliseconds;
+  }
+
+  closeSample() {
     this.flushSample();
     this.pending = null;
+  }
+
+  beginSlice() { this.inSlice = true; }
+  closeSlice() { this.inSlice = false; this.closeSample(); }
+
+  /** Manual step ends at dispatch return, so time spent by its host between steps is excluded. */
+  endInstruction(succeeded) {
+    if (!this.durationClock || this.inSlice) return;
+    this.closeSample();
+    if (succeeded) this.reportClockFailure();
+  }
+
+  reportClockFailure() {
+    // Preserve a real guest fault/debugger exception; explicit read still reports the observer failure.
+    if (!this.vm.fault && !this.vm.pendingFault) this.durationClock?.reportFailure();
+  }
+
+  /** Called at slice/restore/stop boundaries; pending numeric samples never outlive a pooled frame identity. */
+  boundary() {
+    this.closeSlice();
+    this.reportClockFailure();
   }
 
   allocation(bytes, resize = false) {
@@ -151,11 +201,14 @@ class ExecutionProfiler {
   /** Independent counter view. Totals are cumulative host observations and never rewind with VM snapshots. */
   read() {
     this.flushSample();
+    this.durationClock?.reportFailure();
     return {format: 'SharpForge.InstructionProfile/1', clock: 'instructions', instructions: this.instructions,
       allocations: this.allocations, allocatedBytes: this.allocatedBytes, sampleBudget: this.sampleBudget,
       overflow: {...this.overflow}, methods: this.methods.map(method => ({...method})),
-      samples: this.samples.map(sample => ({stack: [...sample.stack], weight: sample.weight})),
-      allocationSites: this.allocationSites.map(site => ({...site}))};
+      samples: this.samples.map(sample => ({...sample, stack: [...sample.stack]})),
+      allocationSites: this.allocationSites.map(site => ({...site})),
+      ...(this.durationClock ? {duration: {enabled: true, clock: 'monotonic', unit: 'milliseconds',
+        totalMilliseconds: this.durationClock.totalMilliseconds, intervals: this.durationClock.intervals}} : {})};
   }
 }
 

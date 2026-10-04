@@ -5,7 +5,10 @@ order. `returnParameter` represents position −1. `module.methodParameters(toke
 returns the same frozen `{parameters, returnParameter}` record. Names and raw
 flags come from Param rows; `isIn`, `isOut` and `isOptional` expose their flag bits.
 Each ParameterDesc retains its `method`, `module` and immutable `signatureType`
-AST. No type references or executable bodies are loaded.
+AST. Its `member` is the method, or the owning property for a
+[property index-parameter projection](PROPERTY-PARAMETERS.md). The `method`
+always remains the defining accessor. No type references or executable bodies
+are loaded.
 
 Param rows are optional. Missing rows receive canonical positional descriptors
 with name `null`, flags 0 and metadata token 0. A zero token is this metadata API's

@@ -1,4 +1,5 @@
 import {popPooledFrame} from './frame-retirement.js';
+import {continuationRootValues} from './frame-roots.js';
 import {ManagedFault} from '../heap.js';
 import {exceptionMatches} from './exception-types.js';
 
@@ -7,12 +8,7 @@ export function frameState() { return {exception: null, caught: [], unwinds: []}
 /** Exception continuations can own the only live reference to a return value or fault. */
 export function* roots(vm) {
   for (const frame of vm.frames) {
-    for (const unwind of frame.unwinds ?? []) {
-      yield unwind.value;
-      if (unwind.error?.reference) yield unwind.error.reference;
-    }
-    if (frame.exception?.reference) yield frame.exception.reference;
-    for (const caught of frame.caught ?? []) if (caught.fault.reference) yield caught.fault.reference;
+    yield* continuationRootValues(frame, true);
   }
   if (vm.fault?.reference) yield vm.fault.reference;
   if (vm.pendingFault?.reference) yield vm.pendingFault.reference;

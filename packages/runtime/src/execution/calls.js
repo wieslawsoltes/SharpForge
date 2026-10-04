@@ -1,6 +1,8 @@
+import {rejectValueInstance} from './value-types.js';
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
-import {invokeDecimal} from './decimal-intrinsics.js';
+import {constructIntrinsicValue} from './value-intrinsics.js';
+import {invokeIntrinsic} from './intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
 import {framePool} from './frame-pool.js';
@@ -17,6 +19,7 @@ import {resolveVirtualTarget} from './inline-cache.js';
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]);
+  if(!method.signature.isStatic)rejectValueInstance(vm,extra.genericIdentity??method.ownerToken);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
   vm.frames.push(cilCallFrame(vm,method,args,extra));
   enterCilMethod(vm, vm.top);
@@ -41,6 +44,7 @@ export function invoke(vm,instruction) {
   const instance=descriptor.genericIdentity??descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
   const trigger=instruction.name==='newobj'||descriptor.name==='.ctor'?'constructor':descriptor.signature.isStatic?'static-method':'instance-method';
+  if(target&&!descriptor.signature.isStatic)rejectValueInstance(vm,genericIdentity??descriptor.ownerToken);
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   const delegate = supportedDelegateCall(vm.inspector, descriptor);
   const intrinsic = intrinsicDefinition(descriptor), contract = intrinsic?.contract;
@@ -55,8 +59,9 @@ export function invoke(vm,instruction) {
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
       return;
     }
-    if(instruction.name==='newobj'&&intrinsic?.implementation==='decimal') {
-      caller.stack.push(invokeDecimal(vm,descriptor,args).value);return;
+    if(instruction.name==='newobj') {
+      const value=constructIntrinsicValue(vm,intrinsic,descriptor,args);
+      if(value.handled){caller.stack.push(value.value);return;}
     }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
@@ -77,7 +82,7 @@ export function invoke(vm,instruction) {
       const owner=descriptor.signature.isStatic?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
       vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
     } else {
-      const value=vm.intrinsic(descriptor,args);
+      const value=invokeIntrinsic(vm,descriptor,args,instruction.name==='callvirt');
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
     }
   });
