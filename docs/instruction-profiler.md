@@ -67,16 +67,17 @@ the allocation-accounting seam still execute; overhead has not been measured.
 
 | Capability | This batch |
 | --- | --- |
-| Source IR, source reloaded from CIL, direct CIL counters | Implemented; focused qualification queued |
+| Source IR, source reloaded from CIL, direct CIL counters | Implemented; focused Node 24.21.0 regressions passed |
 | Browser, native .NET, Rust/Wasm and cross-platform comparison | Not qualified |
 | Monotonic elapsed-duration clock and formatted profile export | Separate follow-ups |
 | Off overhead below 1%, on overhead/latency/allocation evidence | Unmeasured; #1402 remains open |
 
 Runnable example: `node examples/runtime/instruction-profile.mjs`.
-Prepared focused validation, **not run by this change**, uses root's serial queue:
+Serial focused validation passed all 41 profiler/event/frame-pool tests at
+`a4cd3545` with Node 24.21.0. The command was:
 
 ```sh
-node scripts/limited.js node --test tests/a05-instruction-profiler.test.js tests/a05-cil-method-events.test.js tests/a05-cil-method-events-cancellation.test.js tests/a05-frame-pool.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-instruction-profiler.test.js tests/a05-cil-method-events.test.js tests/a05-cil-method-events-cancellation.test.js tests/a05-frame-pool.test.js
 ```
 
 Record the tested commit, Node/browser version and command when collecting
