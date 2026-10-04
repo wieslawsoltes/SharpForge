@@ -37,8 +37,8 @@ export function workspaceStateSize(state) {
     size += (source?.length ?? record.text?.length ?? 0) * 2 + (record.bytes?.length ?? 0);
     if (source) sources.add(source);
   }
-  for (const state of state.documentStates?.values() ?? []) {
-    for (const source of [state.source, state.baseline]) {
+  for (const documentState of state.documentStates?.values() ?? []) {
+    for (const source of [documentState.source, documentState.baseline]) {
       if (source == null || sources.has(source)) continue;
       size += (typeof source === 'string' ? source.length : workspaceRecordSource({source})?.length ?? 0) * 2;
       sources.add(source);
