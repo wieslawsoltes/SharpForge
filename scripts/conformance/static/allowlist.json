@@ -12,8 +12,8 @@
       "path": "apps/studio/workbench/comment-tasks.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "fb08c520dd4f48e5469f5eccc42615df006e4fe864dbf3e0002b23f321ea00e5",
-      "reason": "Task List lazily imports the literal @sharpforge/syntax public entry to lex comment trivia; document text and configured tokens never select a module or become JavaScript."
+      "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+      "reason": "Task List lazily imports the literal @sharpforge/syntax public entry to lex comment trivia; document text and configured tokens never select a module or become JavaScript. This hash binds the final reviewed source bytes after main synchronization."
     },
     {
       "path": "apps/studio/workbench/lazy-tools.js",
@@ -152,8 +152,8 @@
       "path": "packages/editor/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
-      "sha256": "20b3a66c4097d7b1e6362d590e2f8d8f75503f5a5611dab4c0d82bce70586569",
-      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+      "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+      "reason": "The isolated package smoke test imports only literal node:fs and @sharpforge/editor entries in three ordered phases. Modular CSS is read as package data and the six-profile assertion checks the bundled ReSharper-like profile; no source, CSS import text or operator input selects executable JavaScript modules."
     },
     {
       "path": "packages/extensions/smoke.mjs",

@@ -69,3 +69,23 @@ workbench inventory entries covering thirty fixed literal imports.
 This follow-up is source review only. No static gate, runtime test, build or
 browser run was repeated; the root owns the next consolidated gate. The earlier
 review and scoped-check results above keep their original revisions.
+
+## Final synchronized-source inventory correction
+
+The root's completed `npm run check` attempt at `96c7bc79` passed the manifest,
+syntax and module-linking stages and identified only two source files with
+mismatched dynamic-use inventory hashes. Main synchronization retained the
+original reviewed final-newline form of `comment-tasks.js`; its one fixed syntax
+import and function body are unchanged. Its inventory now binds the synchronized
+bytes instead of the earlier extra blank line.
+
+The editor package smoke file now follows the packaged modular CSS imports and
+checks all six bundled keymap profiles, including ReSharper-like. Its three
+JavaScript imports remain the literal `node:fs` and two public editor entry
+loads. CSS import text is used only to read packaged stylesheet data and never
+selects executable JavaScript. The inventory records those reviewed bytes and
+this specific rationale. No source assertion or dynamic-code gate was changed.
+
+The root owns the affected static-gate rerun. No check, test or build was run in
+this inventory-only follow-up; the earlier failed attempt is not reported as a
+passing complete `npm run check`.
