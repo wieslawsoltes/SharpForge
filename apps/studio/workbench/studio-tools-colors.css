@@ -1,0 +1,334 @@
+/* Ordered paint declarations extracted from studio.css; layout remains in its original stylesheet. */
+.outline-button {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--muted);
+}
+.detail-row { color: var(--muted); }
+.detail-row b { color: var(--text); }
+.exception-option select { color: var(--muted); }
+.tip-icon { color: var(--yellow); }
+.debug-tip b { color: var(--text); }
+.debug-tip p { color: var(--faint); }
+.debug-tip kbd { color: var(--muted); }
+.statusbar {
+  background: var(--legacy-statusbar-background);
+  color: var(--legacy-statusbar-foreground);
+}
+.statusbar>button:hover { background: var(--legacy-statusbar-button-hover-background); }
+.statusbar.debugging { background: var(--legacy-statusbar-debugging-background); }
+.statusbar.running { background: var(--legacy-statusbar-running-background); }
+.menu-popup {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 9px 30px var(--shadow-popup);
+}
+.menu-popup button { border-radius: 3px; }
+.menu-popup button span:last-child { color: var(--muted); }
+.menu-popup hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.toast {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  background: var(--raised);
+  border-radius: 4px;
+  color: var(--text);
+  box-shadow: 0 6px 24px var(--shadow-popup);
+}
+.toast.error { border-left-color: var(--red); }
+.modal-backdrop { background: var(--legacy-modal-backdrop-background); }
+.modal {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 20px 80px var(--shadow-dialog);
+}
+.modal-header { border-bottom: 1px solid var(--line); }
+.modal-footer { border-top: 1px solid var(--line); }
+.modal-footer button,.button {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.modal-footer .primary,.button.primary {
+  background: var(--accent-strong);
+  color: var(--legacy-primary-button-foreground);
+  border-color: transparent;
+}
+.form-row>label { color: var(--muted); }
+.form-row small { color: var(--faint); }
+.modal .notice {
+  background: var(--accent-bg);
+  border: 1px solid var(--legacy-modal-notice-border);
+  border-radius: 4px;
+  color: var(--accent);
+}
+.modal .notice.warning {
+  border-color: var(--legacy-modal-notice-warning-border);
+  color: var(--yellow);
+  background: var(--legacy-modal-notice-warning-background);
+}
+.modal p { color: var(--muted); }
+.modal code {
+  color: var(--accent);
+  background: var(--surface2);
+  border-radius: 3px;
+}
+.modal pre {
+  background: var(--editor);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text);
+}
+.sample-item {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--editor);
+}
+.sample-item .sample-glyph {
+  border-radius: 6px;
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+.sample-item small { color: var(--muted); }
+.sample-item>span:last-child { color: var(--faint); }
+.command-list>button { border-radius: 4px; }
+.command-list>button.selected { background: var(--accent-bg); }
+.command-list span { color: var(--muted); }
+.shortcut-table { border-collapse: collapse; }
+.shortcut-table td {
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--muted);
+}
+.module-card {
+  background: var(--editor);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.module-card b { color: var(--accent); }
+.module-card small { color: var(--muted); }
+@keyframes pulse {
+  50% {
+    opacity: .5;
+    box-shadow: 0 0 0 5px var(--legacy-session-pulse-glow);
+  }
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--legacy-webkit-scrollbar-thumb-background);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--legacy-webkit-scrollbar-thumb-hover-background);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner { background: var(--editor); }
+@media(max-width:700px) {
+  .titlebar .command-search {
+    border: 0;
+    background: none;
+  }
+  .debug-pane+.debug-pane {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .app.explorer-open .solution {
+    box-shadow: 8px 0 30px var(--shadow-dialog);
+    border-right: 1px solid var(--line);
+  }
+  .app.tools-open .diagnostic-tools {
+    box-shadow: -8px 0 30px var(--shadow-dialog);
+    border-left: 1px solid var(--line);
+  }
+}
+@media(min-width:701px) and (max-width:980px) {
+  .app.tools-open .diagnostic-tools {
+    box-shadow: -8px 0 30px var(--shadow-dialog);
+    border-left: 1px solid var(--line);
+  }
+}
+.assembly-toolbar { border-bottom: 1px solid var(--border); }
+.assembly-workbench button {
+  color: inherit;
+  background: var(--surface-2,transparent);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.assembly-body aside { border-right: 1px solid var(--border); }
+.assembly-body input {
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.assembly-methods button {
+  border: 0;
+  border-radius: 0;
+}
+.assembly-methods button.selected { background: var(--accent-soft,var(--legacy-assembly-selected-background)); }
+#assembly-code {
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+}
+.assembly-message { border-top: 1px solid var(--border); }
+/* Docking host and compact IDE integration. */
+.sf-dock-host {
+  background: var(--bg);
+  color: var(--text);
+}
+.sf-dock-divider {
+  background: var(--border);
+  outline: none;
+}
+.sf-dock-divider:hover,.sf-dock-divider:focus-visible { background: var(--accent); }
+.sf-dock-group {
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.sf-dock-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.sf-dock-tab {
+  color: var(--muted);
+  border: 0;
+  border-right: 1px solid var(--border);
+  background: transparent;
+}
+.sf-dock-tab.selected {
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: inset 0 2px var(--accent);
+}
+.sf-dock-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+.sf-dock-button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+.sf-dock-button:hover { background: var(--hover); }
+.sf-dock-empty { color: var(--muted); }
+.sf-dock-shelf { background: var(--surface); }
+.sf-dock-auto-popup {
+  box-shadow: 0 8px 36px var(--shadow-floating);
+  background: var(--panel);
+  border: 1px solid var(--accent);
+}
+.sf-dock-floating {
+  border: 1px solid var(--accent);
+  box-shadow: 0 10px 44px var(--shadow-floating);
+  background: var(--panel);
+}
+.sf-dock-float-title { background: var(--accent-bg); }
+.sf-dock-float-grip {
+  border-right: 3px solid var(--accent);
+  border-bottom: 3px solid var(--accent);
+}
+.sf-dock-menu {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px var(--shadow-deep);
+  color: var(--text);
+}
+.sf-dock-group[data-dock-preview]::after {
+  background: var(--legacy-dock-group-data-dock-preview--after-background);
+  border: 2px solid var(--accent);
+  color: var(--text);
+}
+.sf-dock-popout {
+  background: var(--panel);
+  color: var(--text);
+}
+.sf-dock-compass { filter: drop-shadow(0 3px 9px var(--shadow-medium)); }
+.sf-dock-compass span {
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  color: var(--text);
+}
+.sf-dock-compass .active {
+  background: var(--accent);
+  color: var(--bg);
+}
+.workspace-breadcrumb { border-bottom: 1px solid var(--line); }
+.source-document { background: var(--editor); }
+.sf-dock-panel.tool-window {
+  box-shadow: none!important;
+  border: none!important;
+}
+.tool-page h3 { color: var(--muted); }
+.tool-field textarea {
+  background: var(--editor);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+.tool-actions .button,.tool-page>.button {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.tool-source { background: var(--editor); }
+.outline-row,.search-result { border-bottom: 1px solid var(--line-soft); }
+.outline-row .symbol-kind { color: var(--accent); }
+.search-result b { color: var(--accent); }
+.project-diagnostic {
+  border-left: 2px solid var(--yellow);
+  background: var(--bg);
+}
+.project-diagnostic.error { border-left-color: var(--red); }
+.project-tree-group>summary { color: var(--green); }
+.file-folder>summary { color: var(--muted); }
+.disk-binary-row { color: var(--blue); }
+.assembly-toolbar .assembly-open { color: var(--accent); }
+.assembly-empty button {
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+}
+.sf-dock-group.document .sf-dock-tab::before { color: var(--green); }
+.sf-goto {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 18px var(--shadow-soft);
+}
+.sf-goto span { color: var(--red); }
+.sf-bracket-match {
+  outline: 1px solid var(--accent);
+  background: var(--accent-bg);
+}
+.native-engine-badge {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--accent);
+}
+.native-command { background: var(--bg-secondary,var(--legacy-native-command-background)); }
+.native-trust {
+  border: 1px solid var(--legacy-native-trust-border);
+  border-radius: 5px;
+}
+.native-build-output {
+  background: var(--bg-secondary,var(--legacy-native-build-output-background));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.native-diagnostic {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  color: inherit;
+}
+.native-diagnostic.error b { color: var(--legacy-native-diagnostic-error-b-foreground); }
+.native-diagnostic.warning b { color: var(--legacy-native-diagnostic-warning-b-foreground); }
+.native-artifact { border-bottom: 1px solid var(--border); }
+.native-xml-editor {
+  background: var(--editor-bg,var(--legacy-native-xml-editor-background));
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}

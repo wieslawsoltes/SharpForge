@@ -14,6 +14,7 @@
  * binder/query-scope.js) and their bodies are the clause expressions, so conversions, type inference, closures and
  * lowering treat them like lambdas written in source.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { memberPaths, rangeScope, transparentScope } from './query-scope.js';
 import { anonymousTypeOf } from '../symbols/synthesized/anonymous-types.js';
@@ -67,7 +68,7 @@ export const QueryBinding = Base =>
       // The query pattern is looked up on the static type of the source: a dynamic one has none (a later `from` is CS1943).
       const isLaterFrom = clause.kind === 'FromClause' && clause.parent?.kind !== 'QueryExpression';
       if (!source.hasErrors && source.type?.typeKind === 'dynamic' && !isLaterFrom) {
-        binder.report(expressionSyntax, 'CS1979');
+        binder.report(expressionSyntax, DiagnosticId.CS1979);
         return binder.bad(expressionSyntax);
       }
       if (!clause.type || source.hasErrors) return source;
@@ -218,10 +219,10 @@ export const QueryBinding = Base =>
       const keyword = syntax.childTokens?.()[0] ?? syntax,
         bodyErrors = args.flatMap(argument => argument.syntax?.expressionBody?.bodyErrors ?? []);
       for (const error of errors) {
-        if (error.code !== 'CS0411') this.report(error.node, error.code, error.args);
+        if (error.code !== DiagnosticId.CS0411) this.report(error.node, error.code, error.args);
         else if (bodyErrors.length) for (const inner of bodyErrors.splice(0)) this.report(inner.node, inner.code, inner.args);
-        else if (syntax.kind === 'JoinClause') this.report(keyword, 'CS1941', ['join', group.name]);
-        else this.report(keyword, 'CS1942', [clauseNames[syntax.kind] ?? 'select', group.name]);
+        else if (syntax.kind === 'JoinClause') this.report(keyword, DiagnosticId.CS1941, ['join', group.name]);
+        else this.report(keyword, DiagnosticId.CS1942, [clauseNames[syntax.kind] ?? 'select', group.name]);
       }
       return result;
     }
@@ -241,7 +242,7 @@ export const QueryBinding = Base =>
         this.quiet = outer;
       }
       if (group.kind === 'MethodGroup') return this.resolveQueryCall(group, args, syntax);
-      if (errors.length) this.report(receiver.syntax, 'CS1936', [this.display(receiver.type), name]);
+      if (errors.length) this.report(receiver.syntax, DiagnosticId.CS1936, [this.display(receiver.type), name]);
       return this.bad(syntax);
     }
   };

@@ -23,6 +23,32 @@ test('dependency grammar accepts legacy Markdown and multiline requirements, rej
   assert.throws(() => parseDependencies('Depends on: SF-A0-Txx'), /Malformed/);
   assert.throws(() => parseDependencies('Requires contracts: value-abi@1 value-abi@2'), /Conflicting/);
 });
+test('dependency IDs retain malformed suffixes instead of resolving a valid prefix', () => {
+  for (const id of ['SF-A00-T01_2', 'SF-A00-T01/2', 'SF-A00-T01@2', 'SF-A00-T01$2',
+    'SF-A00-T01é', 'SF-A00-T01.2.3', 'SF-A00-T01..', 'SF-']) {
+    for (const body of [`Depends on: ${id}`, `Depends on: SF-A00-T02, ${id}`,
+      `Depends on: SF-A00-T02\n  - ${id}`, `## Dependencies\n\n- [${id}](https://example.com/task)\n`]) {
+      assert.throws(() => parseDependencies(body), { message: `Malformed dependency ID: ${id}` }, body);
+    }
+  }
+});
+test('dependency delimiters preserve Markdown, prose punctuation and child IDs', () => {
+  const body = 'Depends on: `SF-A00-T01`, **SF-A00-T02**; (SF-A00-T03).\n' +
+    '  - [SF-R015-T01](https://example.com/task)\n' +
+    '\n## Dependencies\nWait for SF-A00-T04.2. Then SF-A00-T05: required; SF-A00-T06!\n' +
+    '\n## Ownership\nSF-A00-T99_2';
+  assert.deepEqual(parseDependencies(body).dependencies,
+    ['SF-A00-T01', 'SF-A00-T02', 'SF-A00-T03', 'SF-A00-T04.2', 'SF-A00-T05', 'SF-A00-T06', 'SF-R015-T01']);
+  assert.deepEqual(parseDependencies('Depends on: none'), { dependencies: [], contracts: [] });
+});
+test('dependency link destinations do not contribute work-ID candidates', () => {
+  for (const destination of ['https://example.com/?q=SF-A00-T01&state=open',
+    'https://example.com/SF-A00-T01/details', 'https://example.com/(tasks)/SF-A00-T01/details']) {
+    assert.deepEqual(parseDependencies(`## Dependencies\n[SF-A00-T01](${destination}) and SF-A00-T02.\n`).dependencies,
+      ['SF-A00-T01', 'SF-A00-T02']);
+    assert.throws(() => parseDependencies(`Depends on: [SF-A00-T01_2](${destination})`), /Malformed dependency ID/);
+  }
+});
 test('diamond readiness requires actual merged evidence; cycles and unresolved IDs block', () => {
   const a=task(1,[],'CLOSED'),b=task(2,[a.id],'CLOSED'),c=task(3,[a.id],'CLOSED'),d=task(4,[b.id,c.id]);
   const s=snapshot([a,b,c,d]); assert.equal(readiness(s,d.id).ready,true);

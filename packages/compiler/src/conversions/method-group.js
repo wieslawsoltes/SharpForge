@@ -9,6 +9,7 @@
  * C# 7.3 "improved candidates": static methods are dropped when the group has an instance receiver (and instance
  * methods when it has none) before resolution, and candidates failing their constraints are discarded.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, TypeKind } from '../symbols/types.js';
 import { Conversion, ConversionKind } from './classify.js';
 import { delegateInvoke } from '../overload/type-inference.js';
@@ -26,7 +27,7 @@ export function delegateArguments(invoke) {
 export function convertMethodGroup(group, delegateType, resolver, options = {}) {
   const none = error => ({ conversion: new Conversion(ConversionKind.NoConversion), error });
   const invoke = delegateInvoke(delegateType);
-  if (!invoke) return none({ code: 'CS0428', args: [group.name ?? group.methods[0]?.name ?? '', delegateType.toDisplayString()] });
+  if (!invoke) return none({ code: DiagnosticId.CS0428, args: [group.name ?? group.methods[0]?.name ?? '', delegateType.toDisplayString()] });
   let methods = group.methods;
   if (options.improvedCandidates !== false) {
     // C# 7.3: the receiver kind prunes the group before resolution.
@@ -44,8 +45,8 @@ export function convertMethodGroup(group, delegateType, resolver, options = {}) 
     name = group.name ?? methods[0]?.name ?? '';
   const result = resolver.resolve(methods, args, { typeArguments: group.typeArguments ?? null, name });
   if (!result.succeeded) {
-    if (result.error.code === 'CS0121') return none(result.error);
-    return none({ code: 'CS0123', args: [name, delegateType.toDisplayString()] });
+    if (result.error.code === DiagnosticId.CS0121) return none(result.error);
+    return none({ code: DiagnosticId.CS0123, args: [name, delegateType.toDisplayString()] });
   }
   const method = result.method;
   // Parameters: identity or implicit reference only (no boxing, no numeric), matching ref kinds; params expansion does not apply.
@@ -59,7 +60,7 @@ export function convertMethodGroup(group, delegateType, resolver, options = {}) 
           ? resolver.conversions.isIdentity(invoke.parameters[i].type, p.type)
           : resolver.conversions.hasIdentityOrReference(invoke.parameters[i].type, p.type)),
     );
-  if (!parametersOk) return none({ code: 'CS0123', args: [name, delegateType.toDisplayString()] });
+  if (!parametersOk) return none({ code: DiagnosticId.CS0123, args: [name, delegateType.toDisplayString()] });
   const returnOk = invoke.returnsVoid
     ? method.returnsVoid
     : !method.returnsVoid &&
@@ -71,7 +72,7 @@ export function convertMethodGroup(group, delegateType, resolver, options = {}) 
     return {
       conversion: new Conversion(ConversionKind.NoConversion),
       method,
-      error: { code: 'CS0407', args: [method.returnTypeWithAnnotations.toDisplayString() + ' ' + method.toDisplayString()] },
+      error: { code: DiagnosticId.CS0407, args: [method.returnTypeWithAnnotations.toDisplayString() + ' ' + method.toDisplayString()] },
     };
   return { conversion: new Conversion(ConversionKind.MethodGroup, { method }), method };
 }

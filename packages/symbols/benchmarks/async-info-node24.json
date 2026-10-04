@@ -1,0 +1,43 @@
+{
+  "protocol": {
+    "script": "tests/benchmarks/async-info.mjs",
+    "baseline": "31db856b",
+    "measuredHead": "d4fc3f8c",
+    "command": "node scripts/limited.js node --expose-gc tests/benchmarks/async-info.mjs",
+    "baselineCommand": "node scripts/limited.js node --expose-gc --input-type=module < /path/to/async-info.mjs",
+    "baselineSetup": "Run the identical current script from an isolated baseline checkout with its own npm ci dependencies.",
+    "testConcurrency": 1,
+    "parallelRuns": 1,
+    "environment": "Exclusive team validation slot; other agents could perform code-only work.",
+    "qualification": "Synthetic 1000-state Portable PDB; warmed MoveNext queries and parse plus first query. Allocation/RSS not measured.",
+    "review": "Root coordinating reviewer explicitly accepted +0.374 ms (+21.2%) median and +0.688 ms (+29.4%) p95 setup cost for bounded owned facts and lazy indexes."
+  },
+  "before": {
+    "revision": "31db856b",
+    "node": "v24.21.0",
+    "host": "darwin arm64 Apple M3 Pro",
+    "samples": 15,
+    "stateMachines": 1000,
+    "queriesPerSample": 10000,
+    "medianMsPerQuery": 0.0010835125000000063,
+    "p95MsPerQuery": 0.0017028625000000033,
+    "setupPerSample": 10,
+    "medianMsParseAndFirstQuery": 1.7664375000000008,
+    "p95MsParseAndFirstQuery": 2.337937500000001,
+    "allocationMeasurement": "Not measured; queries now return independent state and step records."
+  },
+  "after": {
+    "revision": "d4fc3f8c",
+    "node": "v24.21.0",
+    "host": "darwin arm64 Apple M3 Pro",
+    "samples": 15,
+    "stateMachines": 1000,
+    "queriesPerSample": 10000,
+    "medianMsPerQuery": 5.954580000000078e-05,
+    "p95MsPerQuery": 8.838329999999815e-05,
+    "setupPerSample": 10,
+    "medianMsParseAndFirstQuery": 2.1404375000000018,
+    "p95MsParseAndFirstQuery": 3.0257833000000005,
+    "allocationMeasurement": "Not measured; queries now return independent state and step records."
+  }
+}
