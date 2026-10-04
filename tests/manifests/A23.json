@@ -11,7 +11,11 @@
     "tests/msbuild-tools.test.js",
     "tests/a23-project-reference-bytecode.test.js",
     "tests/a23-assembly-access.test.js",
-    "tests/a23-assembly-identity-sharing.test.js"
+    "tests/a23-assembly-identity-sharing.test.js",
+    "tests/a23-project-emission.test.js",
+    "tests/a23-upstream-emission-composition.test.js",
+    "tests/a23-member-definitions.test.js",
+    "tests/a23-cil-project-profile.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
