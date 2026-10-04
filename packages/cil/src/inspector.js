@@ -1,10 +1,11 @@
 import { readPE } from './pe.js';
 import { assemblySummary } from './browser/summary.js';
+import { inspectorCallGraph } from './browser/analyzers-call-graph.js';
 import { metadataTokenUri, resolveMetadataUri } from './browser/navigation.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
-import { decodeInstructions } from './opcodes.js';
+import { describedInspectorMethod } from './inspector-method.js';
 import { CilError, Reader, text } from './binary.js';
-export const ilLabel = value=>'IL_'+value.toString(16).padStart(4,'0');
+export { ilLabel } from './inspector-method.js';
 export const tokenHex = value=>'0x'+value.toString(16).padStart(8,'0');
 /** Lazy, read-only managed PE inspection. Reading an assembly never runs its code. */
 export class AssemblyInspector {
@@ -56,20 +57,7 @@ export class AssemblyInspector {
     if(d.kind==='method')return `${d.signature.isStatic?'':'instance '}${d.signature.returnType} ${d.owner}::${d.name}${d.genericArguments?'<'+d.genericArguments.join(', ')+'>':''}(${d.signature.parameters.join(', ')})`;
     return tokenHex(t);
   }
-  getMethod(t){
-    if(this.cache.has(t))return this.cache.get(t);
-    const definition=this.methods.get(t);if(!definition)throw new CilError('MethodDef not found');
-    const md=this.metadata,signature=this.signature(t),parameters=[];
-    for(const parameterToken of md.list(t,'ParamList')){const r=md.row(parameterToken);parameters.push({sequence:r[1],name:md.string(r[2]),flags:r[0]});}
-    const info=this.debug?.methods?.find(m=>m.token===t),points=new Map((this.debug?.sequencePoints??[]).filter(p=>p.methodToken===t).map(p=>[p.ilOffset,p]));
-    let method={...definition,signature,parameters,id:info?.id??null,locals:[],instructions:[],handlers:[],codeSize:0,maxStack:0};
-    if(definition.hasBody){
-      const body=this.pe.methodBody(t),locals=body.localSignature?this.signature(body.localSignature).types:[];
-      const instructions=decodeInstructions(body.code,this.options).map(i=>({...i,label:ilLabel(i.offset),operandText:i.operandKind==='token'?this.describeToken(i.operand):i.operandKind==='switch'?'('+i.operand.map(ilLabel).join(', ')+')':i.operandKind.startsWith('br')?ilLabel(i.operand):i.operand===undefined?'':String(i.operand),point:points.get(i.offset)??null}));
-      method={...method,locals,instructions,handlers:body.handlers,maxStack:body.maxStack,codeSize:body.code.length,localSignature:body.localSignature,initLocals:body.initLocals};
-    }
-    this.cache.set(t,method);return method;
-  }
+  getMethod(t) { return describedInspectorMethod(this,t); }
   /** Stable module/token URI without decoding the referenced member. */
   tokenUri(token) {
     return metadataTokenUri(this.metadata, token);
@@ -81,6 +69,6 @@ export class AssemblyInspector {
   summary(options = {}) {
     return assemblySummary(this, options);
   }
-  callGraph(){const edges=[];for(const m of this.methods.values()){try{for(const i of this.getMethod(m.token).instructions)if(['call','callvirt','newobj','ldftn','ldvirtftn','jmp'].includes(i.name))edges.push({caller:m.token,callee:i.operand,offset:i.offset,kind:i.name});}catch(error){edges.push({caller:m.token,error:error.message});}}return edges;}
+  callGraph() { return inspectorCallGraph(this); }
 }
 export function inspectAssembly(bytes,options={}){return new AssemblyInspector(bytes,options).summary(options);}

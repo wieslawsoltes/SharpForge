@@ -70,15 +70,17 @@ test('assignment work has a lowering-only word budget and no allocation for init
   assert.equal(verify(fixture('StoredLoad'), { signal: AbortSignal.abort() }).status, 'unknown');
 });
 
-test('local assignment does not imply alias, unbound instance-category or byref-return verification', () => {
+test('local assignment does not imply alias initialization, unbound instance categories or byref-return verification', () => {
+  const alias = verify({ name: 'AliasWrite', body: writer => writer.op('ldloca.s', 0).op('ldc.i4.1').op('stind.i4').op('ret') });
+  assert.equal(alias.status, 'rejected');
+  assert.equal(alias.diagnostics[0].diagnostic, 'UninitializedLocal');
   const cases = [
-    { name: 'AliasWrite', body: writer => writer.op('ldloca.s', 0).op('ldc.i4.1').op('stind.i4').op('ret') },
     { name: 'InstanceMethod', static: false, body: writer => writer.op('ret') },
     { name: 'PointerEscape', result: 'int&', body: writer => writer.op('ldloca.s', 0).op('ret') },
   ];
   for (const value of cases) assert.equal(verify(value).status, 'unknown', value.name);
   // Normal instances are supported with explicit core authority by a03-field-transfers.test.js.
-  assert.equal(verify(cases[1]).diagnostics[0].diagnostic, 'MetadataUnavailable');
+  assert.equal(verify(cases.find(value => value.name === 'InstanceMethod')).diagnostics[0].diagnostic, 'MetadataUnavailable');
 });
 
 test('native captures preserve exact fixtures and explicitly permitted definite-assignment differences', () => {

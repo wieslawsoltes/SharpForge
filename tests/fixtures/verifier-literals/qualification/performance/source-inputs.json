@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "revisions": {
+    "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+    "originalCandidate": "eec64a8bdb047bbd4b56a8ce63ad2cf9bbbd44be",
+    "correctedCandidate": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1"
+  },
+  "sources": {
+    "baseline": {
+      "packages/cil/tools/benchmark-numeric-verifier.mjs": {
+        "sha256": "09bffe659bed2270867ddd3ec12816f1999fec0389ba95b013e46b838e582e13",
+        "bytes": 1741
+      },
+      "packages/cil/tools/benchmark-field-verifier.mjs": {
+        "sha256": "b462a34be0094ef6f8c83173cc7c80333a2ce52cab5fd0cbee7fdb14eb3015a7",
+        "bytes": 3197
+      },
+      "packages/cil/tools/benchmark-literal-verifier.mjs": {
+        "present": false
+      },
+      "tests/fixtures/verifier-numeric/input.js": {
+        "sha256": "fa46dfdede333758ddb2bed413388e49e90d64c458ec5252ea883e4b944e386a",
+        "bytes": 6801
+      },
+      "tests/fixtures/verifier-fields/input.js": {
+        "sha256": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+        "bytes": 3343
+      },
+      "tests/fixtures/verifier-fields/cases.js": {
+        "sha256": "b9785cad4f11b0176173548ad24602e34734e466f8f2e5aa78a41fc7ad2a7088",
+        "bytes": 6021
+      },
+      "tests/fixtures/verifier-literals/input.js": {
+        "present": false
+      },
+      "tests/fixtures/verifier-literals/cases.js": {
+        "present": false
+      },
+      "tests/fixtures/a03-type-categories/input.js": {
+        "sha256": "045c5feab86ed3cc2216df53200f38bb42273c0c2cc5850e5d1b840eaa221649",
+        "bytes": 2872
+      },
+      "tests/fixtures/a03-type-categories/native-input.js": {
+        "sha256": "c7d62efe6a12e7c2a7e2998f73a7814fcc0bca8ba312b00e27d563a96db51a42",
+        "bytes": 1255
+      },
+      "tests/fixtures/a03-type-categories/native.json": {
+        "sha256": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a",
+        "bytes": 375282
+      },
+      "tests/managed-fixtures.js": {
+        "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+        "bytes": 3044
+      }
+    },
+    "originalCandidate": {
+      "packages/cil/tools/benchmark-numeric-verifier.mjs": {
+        "sha256": "09bffe659bed2270867ddd3ec12816f1999fec0389ba95b013e46b838e582e13",
+        "bytes": 1741
+      },
+      "packages/cil/tools/benchmark-field-verifier.mjs": {
+        "sha256": "b462a34be0094ef6f8c83173cc7c80333a2ce52cab5fd0cbee7fdb14eb3015a7",
+        "bytes": 3197
+      },
+      "packages/cil/tools/benchmark-literal-verifier.mjs": {
+        "sha256": "3fc41da5688fed65ef28255b4387802145aa603d143412370635f2eb38857a02",
+        "bytes": 2708
+      },
+      "tests/fixtures/verifier-numeric/input.js": {
+        "sha256": "fa46dfdede333758ddb2bed413388e49e90d64c458ec5252ea883e4b944e386a",
+        "bytes": 6801
+      },
+      "tests/fixtures/verifier-fields/input.js": {
+        "sha256": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+        "bytes": 3343
+      },
+      "tests/fixtures/verifier-fields/cases.js": {
+        "sha256": "b9785cad4f11b0176173548ad24602e34734e466f8f2e5aa78a41fc7ad2a7088",
+        "bytes": 6021
+      },
+      "tests/fixtures/verifier-literals/input.js": {
+        "sha256": "e5640f9d92eef31891acff0e51247a5c567227af930520aaa10bdee46187c4bb",
+        "bytes": 1568
+      },
+      "tests/fixtures/verifier-literals/cases.js": {
+        "sha256": "e90f66be1d9f672c8852fac4ea1a98079491047094084acca81276b55020fd64",
+        "bytes": 4665
+      },
+      "tests/fixtures/a03-type-categories/input.js": {
+        "sha256": "045c5feab86ed3cc2216df53200f38bb42273c0c2cc5850e5d1b840eaa221649",
+        "bytes": 2872
+      },
+      "tests/fixtures/a03-type-categories/native-input.js": {
+        "sha256": "c7d62efe6a12e7c2a7e2998f73a7814fcc0bca8ba312b00e27d563a96db51a42",
+        "bytes": 1255
+      },
+      "tests/fixtures/a03-type-categories/native.json": {
+        "sha256": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a",
+        "bytes": 375282
+      },
+      "tests/managed-fixtures.js": {
+        "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+        "bytes": 3044
+      }
+    },
+    "correctedCandidate": {
+      "packages/cil/tools/benchmark-numeric-verifier.mjs": {
+        "sha256": "09bffe659bed2270867ddd3ec12816f1999fec0389ba95b013e46b838e582e13",
+        "bytes": 1741
+      },
+      "packages/cil/tools/benchmark-field-verifier.mjs": {
+        "sha256": "b462a34be0094ef6f8c83173cc7c80333a2ce52cab5fd0cbee7fdb14eb3015a7",
+        "bytes": 3197
+      },
+      "packages/cil/tools/benchmark-literal-verifier.mjs": {
+        "sha256": "3fc41da5688fed65ef28255b4387802145aa603d143412370635f2eb38857a02",
+        "bytes": 2708
+      },
+      "tests/fixtures/verifier-numeric/input.js": {
+        "sha256": "fa46dfdede333758ddb2bed413388e49e90d64c458ec5252ea883e4b944e386a",
+        "bytes": 6801
+      },
+      "tests/fixtures/verifier-fields/input.js": {
+        "sha256": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+        "bytes": 3343
+      },
+      "tests/fixtures/verifier-fields/cases.js": {
+        "sha256": "b9785cad4f11b0176173548ad24602e34734e466f8f2e5aa78a41fc7ad2a7088",
+        "bytes": 6021
+      },
+      "tests/fixtures/verifier-literals/input.js": {
+        "sha256": "e5640f9d92eef31891acff0e51247a5c567227af930520aaa10bdee46187c4bb",
+        "bytes": 1568
+      },
+      "tests/fixtures/verifier-literals/cases.js": {
+        "sha256": "e90f66be1d9f672c8852fac4ea1a98079491047094084acca81276b55020fd64",
+        "bytes": 4665
+      },
+      "tests/fixtures/a03-type-categories/input.js": {
+        "sha256": "045c5feab86ed3cc2216df53200f38bb42273c0c2cc5850e5d1b840eaa221649",
+        "bytes": 2872
+      },
+      "tests/fixtures/a03-type-categories/native-input.js": {
+        "sha256": "c7d62efe6a12e7c2a7e2998f73a7814fcc0bca8ba312b00e27d563a96db51a42",
+        "bytes": 1255
+      },
+      "tests/fixtures/a03-type-categories/native.json": {
+        "sha256": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a",
+        "bytes": 375282
+      },
+      "tests/managed-fixtures.js": {
+        "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+        "bytes": 3044
+      }
+    }
+  },
+  "note": "Exact driver and direct fixture/helper input source bytes at each commit; generated assembly or metadata-row hashes are in each raw benchmark JSON. Native capture contains its own assembly/tool/reference hashes. No binaries are copied."
+}
