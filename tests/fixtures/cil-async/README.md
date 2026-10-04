@@ -26,7 +26,11 @@ confirmed that the remaining wording assertion also fails before this contributi
 See [qualification/post-fix.json](qualification/post-fix.json) for exact commands, times,
 source identity and failed/successful raw logs. The first paired performance run is
 recorded in `qualification/performance-review.json`: its ordinary pooled total median
-was 27.54% slower, with substantial fresh-process variation. No performance pass is claimed.
+was 27.54% slower, with substantial fresh-process variation. A reviewed owner-rejection
+filter then passed the unchanged 16 tests at `35e1914a2811681cd5aaac8ba0a7741fe4f441c5`.
+Its single approved paired repeat showed no ordinary-control regression (pooled total
+median −7.32%); see `qualification/owner-filter-review.json`. Both raw rounds remain
+preserved, without a broad speedup or causal attribution claim.
 
 Run only
 in the allocated serial validation slot:

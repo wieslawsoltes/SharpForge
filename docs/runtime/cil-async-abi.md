@@ -13,6 +13,10 @@ the failure (zero passed, one failed, zero skipped). It is a confirmed pre-exist
 assertion failure and is not counted as passing.
 Commands, timings, source identity and all failed/successful raw logs are recorded in
 `tests/fixtures/cil-async/qualification/post-fix.json`.
+After the reviewed owner-rejection optimization, the unchanged 16 focused tests passed
+again at `35e1914a2811681cd5aaac8ba0a7741fe4f441c5`, with zero skips. That repeat and
+its single paired measurement are recorded in `qualification/owner-filter-review.json`
+under the same fixture directory; the earlier adjacent results retain their original head.
 The frozen baseline is recorded in `tests/fixtures/cil-async/qualification/pre-fix.json`:
 six focused failures, zero skips, and eight genuine Roslyn Debug/Release programs that
 ran on .NET while their CIL VM admission was rejected.
@@ -74,7 +78,8 @@ ValueTask, custom notification awaiters, async void and async iterators remain s
 runtime extensions. Browser and Rust/Wasm execution have not been qualified for this
 contribution; further generic state-machine boundary qualification also remains queued.
 The first paired measurement exceeded the ordinary-control regression budget. No
-performance pass or signoff is claimed; the concrete result is recorded below.
+broad performance or causal speedup claim is made. The reviewed rejection filter and
+single approved repeat showed no regression in that control, as recorded below.
 
 The prepared benchmark uses 80 warmups and 24 samples, reporting median/p95 admission,
 execution and total time plus managed allocations. It includes an ordinary arithmetic
@@ -143,3 +148,24 @@ images were rejected by the baseline and successfully measured on the candidate,
 there is no async baseline execution-time comparison. Full raw reports and hashes are
 in `tests/fixtures/cil-async/qualification/performance-review.json` and its referenced
 artifacts. The paired report is 468,110 bytes; the baseline replay report is 137,037 bytes.
+
+The reviewed optimization rejects owners outside the existing Task/builder/awaiter/Yield
+set before constructing and substituting method signatures. It is a rejection filter;
+known async owners retain their full signature and trusted metadata identity checks.
+One approved ABBA repeat at `35e1914a2811681cd5aaac8ba0a7741fe4f441c5` used the same
+baseline, fixture bytes, 80 warmups and 24 samples per process case:
+
+| Metric | Baseline median / p95 | Candidate median / p95 | Median change |
+|---|---:|---:|---:|
+| Admission | 0.450 / 0.750 ms | 0.385 / 0.601 ms | −14.41% |
+| Execution | 1.705 / 3.267 ms | 1.635 / 2.146 ms | −4.09% |
+| Total | 2.193 / 3.719 ms | 2.032 / 2.627 ms | −7.32% |
+| Managed allocations / bytes | 0 / 0 | 0 / 0 | No change |
+
+The fresh-process total medians were A1 2.307 ms, B1 1.957 ms, B2 2.114 ms and A2
+2.002 ms. This bounded repeat showed no ordinary-control regression. Both rounds'
+raw observations and per-process variation remain retained; neither establishes a
+broad speedup or causal attribution. All four candidate async images ran and matched
+the captured native output; the baseline still rejected them. The 468,272-byte repeat
+report, source hashes and unchanged focused-test log are referenced by
+`tests/fixtures/cil-async/qualification/owner-filter-review.json`.
