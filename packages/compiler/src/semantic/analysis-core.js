@@ -166,7 +166,7 @@ export class AnalysisCore {
   /** Profile-only receiver aliases, consulted after lexical names and using-static members. */
   executionBuiltin(name) {
     if (!this.options.executionBuiltinAliases || this.references.hasCoreLibrary || !Object.hasOwn(builtinOwners, name)) return null;
-    return this.core.bridge.typeFromName(builtinOwners[name]);
+    return this.references.coreLibrary.bridge.typeFromName(builtinOwners[name]);
   }
   /** True when every base class of `type` is declared in source (or is one of the fully modelled roots), so a missing member really is missing. */
   closedHierarchy(type) {
