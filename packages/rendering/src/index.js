@@ -20,6 +20,7 @@ export * from './drawing/bounds.js';
 export * from './brushes/shadows.js';
 export * from './media/working-color.js';
 export * from './backends/canvas2d.js';
+export * from './backends/webgpu.js';
 export * from './resources/resource-table.js';
 export * from './webgpu/device.js';
 export * from './webgpu/pools.js';
