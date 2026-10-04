@@ -41,6 +41,13 @@ existing overlay, and the existing `ResizeObserver` refreshes its cached viewpor
 that observer and ignores a notification already queued by the browser. No new scheduler, worker or text storage engine is
 introduced. Large lexical edits can still rescan to the end, and browser latency budgets require measured qualification.
 
+Native source changes and undo/redo publish their callbacks synchronously. Source snapshots, syntax preparation, diagnostic
+objects, breakpoint values, execution locations, selection and history remain available inside those callbacks. Decoration DOM
+updates requested by the callbacks share one flush at the outer change's return; callers should inspect final overlay/gutter
+DOM after that return. Standalone decoration setters still synchronize their DOM before returning. Nested source changes share
+the outer flush. A throwing callback propagates its error after prepared source/decorations are synchronized; disposal cancels
+the pending DOM work. This batching adds no animation-frame delay and does not change public text or result objects.
+
 ## 0.8 keyboard profiles
 
 `EDITOR_KEYMAPS` lists `visual-studio` (default), `vscode`, `vim`, `emacs` and `sublime`. Pass `keymap` to `CodeEditor` or call `setKeymap(id)`; use `onKeymapState` for a status display. The same source, readonly flag, language-service request callbacks and breakpoint decorations are preserved. Alternative modes require both `@sharpforge/editor/classic.css` and `@sharpforge/editor/editor.css`. The bundled CodeMirror 5.58.3 MIT snapshot is legacy, not latest; its notice/hashes are in `src/vendor/`. Visual Studio and VS Code are shortcut profiles, not those products' editor engines. The other modes implement browser keymaps, not native Vim/Emacs, Vimscript or plugins. Popout hosts are scoped to their actual owner document. See the source distribution's docs/explorer-keymaps.md for supported bindings and limits.
