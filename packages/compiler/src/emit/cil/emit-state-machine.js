@@ -38,7 +38,19 @@ export const StateMachineEmission = Base =>
       this.transientSlots = new Set();
       /** The dispatch being filled: `{first, labels, firstYield, yieldLabels, entry, parent}`. */
       this.dispatchScope = this.newDispatchScope(null, null);
+      this.cacheState();
       return this.dispatchScope.labels;
+    }
+    /**
+     * `MoveNext` keeps the state in a local as well (Roslyn's cached state): the guard of a finally block reads the
+     * local, because once the awaiter has the continuation another thread may resume the machine and write the
+     * field before this call has left its protected regions.
+     */
+    cacheState() {
+      this.stateSlot = this.temp(this.core.int);
+      this.transientSlots.add(this.stateSlot);
+      this.loadState();
+      this.il.emit('stloc', this.stateSlot);
     }
     newDispatchScope(entry, parent) {
       return { first: this.nextState, labels: [], firstYield: this.nextYield, yieldLabels: [], entry, parent };
@@ -104,7 +116,7 @@ export const StateMachineEmission = Base =>
       this.il.emit('ldarg', 0).emit('ldfld', this.machine.fields.state.token);
     }
     storeState(state) {
-      this.il.emit('ldarg', 0).emit('ldc.i4', state).emit('stfld', this.machine.fields.state.token);
+      this.il.emit('ldarg', 0).emit('ldc.i4', state).emit('dup').emit('stloc', this.stateSlot).emit('stfld', this.machine.fields.state.token);
     }
     /** Marks the point a suspended method continues at; it is running again. */
     resumeAt(label) {
@@ -144,8 +156,7 @@ export const StateMachineEmission = Base =>
       const guardedFinally = () => {
         const suspending = il.newLabel(),
           from = il.instructions.length;
-        this.loadState();
-        il.emit('ldc.i4', RUNNING).emit('bne.un', suspending);
+        il.emit('ldloc', this.stateSlot).emit('ldc.i4', RUNNING).emit('bne.un', suspending);
         guard.push(...il.instructions.slice(from));
         emitFinally();
         il.mark(suspending);
