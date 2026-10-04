@@ -18,6 +18,10 @@ These public models and injectable renderer contributions are imported through `
 
 `OverlayManager`, `DeferralGroup`, `dispatchDeferred` and `placeOverlay` own root-relative placement and close lifetimes. Opposite-edge flipping preserves alignment. Modal overlays contain focus and restore it on close; tooltips update aria-describedby without moving focus. A second pending ContentDialog.ShowAsync fails explicitly.
 
+## Button behavior
+
+`RepeatController` accepts a manual clock and disposes outstanding timers. Button/toggle/check/radio, repeat, split/dropdown and hyperlink renderers share enabled/command policy, selected/indeterminate states and root-scoped radio ownership. Native behavior receives the existing managed template/content parts.
+
 ## Qualification
 
 The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
