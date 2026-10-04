@@ -1,6 +1,8 @@
 import {encodeWorkspaceFile} from '@sharpforge/archive';
 import {encodedLength} from './limits.js';
 import {isSourceSnapshot, recordSource} from '../workspace-records.js';
+import {validateSourceEncoding} from './source-validity.js';
+import {checkReadCancellation} from './source-reader.js';
 
 const CHUNK_CHARACTERS = 64 * 1024;
 const yieldTask = () => new Promise(resolve => setTimeout(resolve, 0));
@@ -39,30 +41,37 @@ export function initialRecordSize(record) {
   return record.byteLength;
 }
 
-export async function sourceByteLength(content, record, maximum) {
+export async function sourceByteLength(content, record, maximum, {signal} = {}) {
+  checkReadCancellation(signal);
   const length = contentLength(content);
   if (length > maximum) throw new Error('Invalid save text');
-  if (typeof content === 'string') return encodedLength(record, content);
   const encoding = record.encoding ?? 'utf-8';
   let bytes = record.bom ? encoding === 'utf-8' ? 3 : 2 : 0;
-  if (encoding === 'utf-16le' || encoding === 'utf-16be') return length * 2 + bytes;
-  if (encoding !== 'utf-8') throw new TypeError('Unsupported text encoding');
+  if (!['utf-8', 'utf-16le', 'utf-16be'].includes(encoding)) throw new TypeError('Unsupported text encoding');
+  let offset = 0;
   for (const text of contentChunks(content)) {
+    checkReadCancellation(signal);
+    validateSourceEncoding(text, {path: record.path, offset, bom: record.bom});
     bytes += encodedLength({encoding, bom: false}, text);
     if (bytes > maximum) return bytes;
+    offset += text.length;
     await yieldTask();
   }
+  checkReadCancellation(signal);
   return bytes;
 }
 
-export async function equalSourceContent(left, right) {
+export async function equalSourceContent(left, right, {signal} = {}) {
+  checkReadCancellation(signal);
   const length = contentLength(left);
   if (contentLength(right) !== length) return false;
   for (let start = 0; start < length; start += CHUNK_CHARACTERS) {
+    checkReadCancellation(signal);
     const end = Math.min(length, start + CHUNK_CHARACTERS);
     if (contentPart(left, start, end) !== contentPart(right, start, end)) return false;
     await yieldTask();
   }
+  checkReadCancellation(signal);
   return true;
 }
 
@@ -75,13 +84,16 @@ export async function* encodedWorkspaceSourceChunks(content, {path = 'Program.cs
   if (!['utf-8', 'utf-16le', 'utf-16be'].includes(encoding)) throw new TypeError('Unsupported text encoding');
   let first = true;
   let total = 0;
+  let offset = 0;
   for (const text of contentChunks(content)) {
     if (signal?.aborted) throw new DOMException('Source output cancelled', 'AbortError');
+    validateSourceEncoding(text, {path, offset, bom});
     const bytes = encodeWorkspaceFile({path, text, encoding, bom: first && bom});
     total += bytes.byteLength;
     if (total > maxBytes) throw new RangeError('Source output byte limit exceeded');
     yield bytes;
     first = false;
+    offset += text.length;
     await yieldTask();
   }
   if (signal?.aborted) throw new DOMException('Source output cancelled', 'AbortError');

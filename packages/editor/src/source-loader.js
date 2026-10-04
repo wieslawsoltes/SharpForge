@@ -62,11 +62,15 @@ export function rebaseEditorSource(record, uri) {
   if (!source || typeof source.withMetadata !== 'function' || source !== record.model?.snapshot()) {
     throw new TypeError('Rebasing requires a current prepared source snapshot');
   }
+  const original = record.originalSource === source ? null
+    : typeof record.originalSource?.withMetadata === 'function' ? record.originalSource.withMetadata({uri}) : record.originalSource;
   const model = new EditorModel(source.withMetadata({uri}), {
     uri, version: source.version, encoding: record.encoding, bom: record.bom
   });
   model.markSaved();
-  return preparedRecord(model, record.byteLength);
+  const prepared = preparedRecord(model, record.byteLength);
+  if (record.originalSource !== source) Object.defineProperty(prepared, 'originalSource', {value: original, configurable: true});
+  return prepared;
 }
 
 function sourceEncoding(prefix, requested) {
