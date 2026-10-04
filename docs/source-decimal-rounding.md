@@ -88,6 +88,8 @@ Console.WriteLine(amount); // 1234.5000
 `tests/a05-source-decimal-parse.test.js` covers scale, rounding, extrema, signed
 zero, string/value storage, null/format/overflow faults, precise whitespace/NUL
 boundaries, the length cap and rejected overloads. These expectations derive
-from the pinned contract; no new native capture or execution is claimed. The
-test file and existing Decimal helper/adapter/CIL tests are queued for serial
-validation. All broader platform and performance qualification remains open.
+from the pinned contract; no new native capture or execution is claimed. All
+102 focused Parse, rounding, Decimal operation/adapter/CIL and source numeric
+tests passed at `fc5592bf`, after integrating the merged rounding parent. The
+run used Node 24, one worker and a 512 MB old-space limit. Broad platform and
+performance qualification remains deferred.
