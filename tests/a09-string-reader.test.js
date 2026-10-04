@@ -178,9 +178,10 @@ test('SF-A09-T03.1 public IO registration uses the shared module protocol', () =
   registerIoModules({
     define() {},
     member(owner, name) { members.push(owner + '.' + name); },
-    ctor(owner) { members.push(owner + '..ctor'); }
+    ctor(owner) { members.push(owner + '..ctor'); },
+    prop(owner, name) { members.push(owner + '.get_' + name, owner + '.set_' + name); }
   });
-  assert.equal(members.length, 7);
+  assert.equal(members.filter(name => /^System\.IO\.(TextReader|StringReader)\./.test(name)).length, 7);
   assert.equal(ioModules[0], stringReaderModule);
   assert(Object.isFrozen(ioModules));
   assert.deepEqual(stringReaderModule.invoke({bclHost: {frameworkType: () => null}}, {owner: 'unknown'}, []), {handled: false});
