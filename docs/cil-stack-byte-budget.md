@@ -30,5 +30,7 @@ Budget overflow is the existing fatal `StackOverflowException` category.
 This is a CIL-only increment alongside #1401. Source/reloaded-source stack-byte
 admission, unboxed typed operand storage and wider #82 qualification remain open.
 No throughput, allocation-rate or physical memory improvement is claimed.
-Focused CIL admission, rollback, generic/Decimal width, parked-context, snapshot
-and cleanup regressions are prepared; execution is deferred to serial validation.
+All 95 focused byte-budget, verified-stack, pooled-frame, root-visitor and
+call-buffer tests passed serially with Node 24.21.0 at `3a9f50ba`, with a 512 MB
+heap limit and concurrency 1. Core static/build validation is recorded on the PR.
+Broader platform and performance qualification remains staged.
