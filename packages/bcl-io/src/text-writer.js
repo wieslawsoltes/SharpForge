@@ -17,10 +17,17 @@ function contracts({define, member, ctor, prop}) {
   member(writerType, 'ToString', [], 'string', {objectToStringOverride: true});
 }
 
+function extensionContracts({member}) {
+  member(parentType, 'Write', ['char[]'], 'void');
+  member(parentType, 'Write', ['char[]', 'int', 'int'], 'void');
+}
+
 function invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {
   if (type?.kind !== 'bcl' || type.family !== 'textWriter') return {handled: false};
   return {handled: true, value: invokeStringWriter(platform, descriptor, args)};
 }
 
 /** Synchronous StringWriter and inherited TextWriter primitives, appended after the reader contracts. */
-export const stringWriterModule = Object.freeze({name: 'string-writer', group: 'bcl-io', families: ['textWriter'], contracts, invoke});
+export const stringWriterModule = Object.freeze({
+  name: 'string-writer', group: 'bcl-io', families: ['textWriter'], contracts, extensionContracts, invoke
+});

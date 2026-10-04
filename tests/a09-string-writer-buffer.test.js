@@ -145,6 +145,10 @@ for (const engine of ['source', 'cil']) {
       for (const invalid of [42, platform.heap.array('int', 3), platform.heap.string('abc')]) {
         assert.throws(() => platform.invoke(writerContract('Write', fullParameters), [reference, invalid]), {name: 'ArgumentException'});
       }
+      for (const type of ['char[,]', 'char[*]']) {
+        const invalid = platform.heap.allocate('array', type, [65]);
+        assert.throws(() => platform.invoke(writerContract('Write', fullParameters), [reference, invalid]), {name: 'ArgumentException'});
+      }
       for (const [index, count] of [[0.5, 1], [0, NaN], [0, Infinity], [0, 2147483648]]) {
         assert.throws(() => platform.invoke(writerContract('Write', sliceParameters), [reference, buffer, index, count]),
           {name: 'ArgumentOutOfRangeException'});
@@ -199,7 +203,7 @@ for (const pipeline of ['bound', 'legacy']) {
   for (const engine of ['source', 'cil']) {
     test(`StringWriter buffer ${pipeline} ${engine}: compiled overloads and base references use character arrays`, () => {
       const program = compileToIL('using System;using System.IO;var writer=new StringWriter();TextWriter view=writer;' +
-        "char[] buffer=new char[]{'a','\u0000','\uD800','z'};writer.Write(buffer);view.Write(buffer,1,2);" +
+        "char[] buffer=new char[]{'a','\\u0000','\\uD800','z'};writer.Write(buffer);view.Write(buffer,1,2);" +
         'Console.WriteLine(writer.ToString().Length);Console.WriteLine((int)writer.ToString()[4]);' +
         'Console.WriteLine((int)writer.ToString()[5]);char[] empty=null;writer.Dispose();view.Write(empty);Console.WriteLine("done");',
       {pipeline});

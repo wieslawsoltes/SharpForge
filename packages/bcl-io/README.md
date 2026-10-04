@@ -11,7 +11,7 @@ contracts, invoke}` protocol. Registration requires the standard `define`, `memb
 these contracts after JSON GetInt64 in A09, retaining all released IDs.
 Registration order is part of the ABI: the `bcl-io` base group registers reader
 slots 655361–655367 and writer slots 655368–655380, then the `extensions` group
-appends reader buffer slots 655381–655382. Call `registerIoModules` for this canonical
+appends reader buffer slots 655381–655382 and writer buffer slots 655383–655384. Call `registerIoModules` for this canonical
 order; standalone core registration of a module still includes its own extension hook.
 
 This batch provides abstract TextReader metadata and StringReader construction,
@@ -61,6 +61,31 @@ ordinary CIL `callvirt` selects the override while nonvirtual `call` retains
 No new contract, runtime dispatcher or formatting path is added. Convert and
 Console retain their existing object formatting profiles.
 
+`Write(char[])` and `Write(char[], index, count)` append a copied UTF-16 buffer
+through either StringWriter or TextWriter. A null whole-array argument does
+nothing, including after disposal. The slice overload validates the buffer,
+index, count and slice bounds before checking disposal; valid empty slices still
+fault on a disposed writer. Null receiver checks precede both overloads. Shared
+SZ char-array validation also serves StringReader without changing its behavior.
+
+Bulk conversion takes O(count) time and O(count) temporary host text, using at
+most 4096 code units per spread operation. Each nonempty write calls the existing
+StringBuilder append once: one managed text chunk, plus backing growth when
+needed. It preserves NUL and isolated surrogates, leaves the input untouched and
+does not retain the caller array. The shared 1,000,000-unit text bound is checked
+before conversion, and managed OOM preserves the previous text. Existing builder
+write notifications, rooting and snapshot behavior apply. Throwing host observers
+can interrupt builder field updates; this is not a transactional rollback API.
+
+The seventy-row .NET 10.0.5 buffer capture checks concrete/base calls, null, range,
+disposal and UTF-16 boundaries through real source bytecode and independent CIL.
+Bound and legacy source character-array calls have separate coverage on both VMs.
+Native parameter names document precedence, but ArgumentException.ParamName is
+not added. `scripts/benchmarks/a09-string-writer-buffer.mjs` reports existing
+string/character controls and new buffer paths separately, with setup excluded,
+one warmup, five samples and managed allocation/write counts. Copy the identical
+runner to baseline `b0521bbd`; unavailable buffer paths are explicitly skipped.
+
 The builder remains available and mutable after disposal, while every Write/WriteLine
 throws ObjectDisposedException, including null/empty writes. Flush and NewLine remain
 usable after disposal. WriteLine writes the value and newline separately, preserving
@@ -79,7 +104,7 @@ CIL and platform coverage. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
 Rust native/Wasm execution is not qualified by this batch.
 
-Issue #2723 remains open: span/memory reader APIs, writer buffer overloads and async methods,
+Issue #2723 remains open: span/memory reader APIs, writer WriteLine buffer overloads and async methods,
 Null/Synchronized wrappers, numeric/formatting/culture overloads, Encoding, and Console
 writer replacement remain separate batches. These APIs are not registered; unsupported
 source uses continue to fail compilation. User-defined TextReader/TextWriter subclasses
