@@ -74,9 +74,10 @@ export class CompositionTarget {
     yield this.ImplicitAnimations;
     yield* Object.values(this.baseValues);
     yield* Object.values(this.animatedValues);
-    if (this.Children) yield* this.Children;
-    if (this.Shapes) yield* this.Shapes;
-    if (this.ColorStops) yield* this.ColorStops;
+    // Managed collection mutations refresh the collection wrapper's roots, not its owner's cached item list.
+    if (this.Children) yield this.Children;
+    if (this.Shapes) yield this.Shapes;
+    if (this.ColorStops) yield this.ColorStops;
   }
   snapshot() { return snapshotCompositionObject(this); }
   restore(snapshot) { restoreCompositionObject(this, snapshot); }
