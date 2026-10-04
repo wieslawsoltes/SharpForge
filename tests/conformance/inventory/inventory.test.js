@@ -7,7 +7,8 @@ import { assignGapIds, issueCandidates } from '../../../scripts/conformance/inve
 import { compareMembers } from '../../../scripts/conformance/inventory/bcl-api-diff.js';
 import { encodingProbe } from '../../../scripts/conformance/inventory/ecma335.js';
 import { compilerDiagnosticIds, diagnosticInventory } from '../../../scripts/conformance/inventory/diagnostics.js';
-import { compileProbe } from '../../../scripts/conformance/inventory/csharp.js';
+import { compileProbe, compileFeatureProbes, assertReferenceProbe } from '../../../scripts/conformance/inventory/csharp.js';
+import { referenceProbeArguments, referenceProbeContext } from '../../../scripts/conformance/inventory/reference-language.js';
 import { lspProbe, dapProbe } from '../../../scripts/conformance/inventory/ide.js';
 import { executeProbe } from '../../../scripts/conformance/inventory/runtime-runner.js';
 import { validateDenominator } from '../../../scripts/conformance/inventory/generate.js';
@@ -43,6 +44,30 @@ test('C# compile probe records actual positive, malformed and language-boundary 
   assert.equal(compileProbe(expressionBody,'6').accepted,true);
   assert.equal(compileProbe(expressionBody,'5').accepted,false);
   const crash=compileProbe('','14',()=>{throw new Error('bounded crash')});assert.equal(crash.accepted,false);assert.equal(crash.error,'bounded crash');
+});
+test('feature probes preserve executable context for positive, malformed and boundary compilation',async()=>{
+  const catalog=await readJSON(path.join(probeRoot,'csharp.json'));
+  const feature=catalog.features.find(row=>row.id==='csharp-7-1-async-main');
+  assert.equal(feature.outputKind,'exe');
+  const source=await readFile(path.join(root,feature.probe),'utf8'), calls=[];
+  compileFeatureProbes(source,feature,'7.0',(text,options)=>{
+    calls.push({text,options});return {success:true,diagnostics:[]};
+  });
+  assert.deepEqual(calls.map(call=>call.options),['7.1','7.1','7.0'].map(langVersion=>({langVersion,outputKind:'exe',allowUnsafe:true})));
+  assert.equal(calls[0].text,source);assert.match(calls[1].text,/class __Invalid/);assert.equal(calls[2].text,source);
+  for(const langVersion of ['7.1','7.0']) {
+    const args=referenceProbeArguments(feature,{file:'Probe.cs',directory:os.tmpdir(),references:['Core.dll'],langVersion});
+    assert.ok(args.includes('/target:exe'));assert.ok(args.includes(`/langversion:${langVersion}`));
+  }
+});
+test('native validity cannot be reused after a fixture compilation context changes',()=>{
+  const feature={id:'entry',langVersion:'7.1',outputKind:'exe',nativeFeatures:['flag']};
+  const native={sourceSHA256:'digest',...referenceProbeContext(feature)};
+  assertReferenceProbe(feature,native,'digest');
+  for(const change of [{target:'library'},{langVersion:'7.0'},{features:[]},{sourceSHA256:'old'}]) {
+    assert.throws(()=>assertReferenceProbe(feature,{...native,...change},'digest'),/Stale native probe/);
+  }
+  assert.deepEqual(referenceProbeContext({langVersion:'1.2'}),{langVersion:'1',target:'library',features:[]});
 });
 test('pinned reference hashes and all C# history feature probes are present',async()=>{
   const manifest=await readJSON(path.join(inventoryRoot,'references/manifest.json'));
