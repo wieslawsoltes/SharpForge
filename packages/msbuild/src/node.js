@@ -6,3 +6,5 @@ export * from './cli.js';
 export * from './environment.js';
 export * from './process.js';
 export * from './trust.js';
+export * from './scheduler.js';
+export * from './workloads.js';

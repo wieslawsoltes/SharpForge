@@ -10,7 +10,8 @@
     "tests/msbuild-solution.test.js",
     "tests/msbuild-tools.test.js",
     "tests/a23-native-command-lines.test.js",
-    "tests/a23-native-process.test.js"
+    "tests/a23-native-process.test.js",
+    "tests/a23-native-engine.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
