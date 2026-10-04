@@ -1,3 +1,4 @@
+import { sourceExceptionLayout } from './emit/exception-regions.js';
 import {emitScalarInstruction, emitScalarConversion, scalarMetadataType} from './scalar-emission.js';
 import { prepareEmission } from './emit/emission-context.js';
 import { emissionTypeDescriptors } from './emit/type-descriptors.js';
@@ -55,20 +56,17 @@ function emitHelper(c,d) {
   else if(d.helper==='assert'){w.local('ldarg',0);const at=w.length;w.op('brtrue',0).local('ldarg',1).op('newobj',c.external('Exception','.ctor','void',['string'],false)).op('throw');const done=w.length;w.op('ret');w.patch32(at+1,done-(at+5));}
   return {code:w.finish(),locals:[],maxStack,handlers:[]};
 }
-function handlerLayout(method) {return method.handlers.map(h=>{if(h.kind==='finally')return {...h,handlerEndPc:h.handlerEnd};const after=method.code[h.end*3]===Op.JUMP?method.code[h.end*3+1]:null;if(after===null)throw new CilError('Unsupported exception region layout');const siblings=method.handlers.filter(other=>other.start===h.start&&other.end===h.end&&other.target>h.target).sort((a,b)=>a.target-b.target);return {...h,handlerEndPc:siblings[0]?.target??after};});}
 function emitMethod(c,d) {
-  const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=handlerLayout(m),n=m.code.length/3;
+  const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),layout=sourceExceptionLayout(m),handlers=layout.handlers,n=m.code.length/3;
   const getScratch=(type,index=0)=>{type=type==='null'?'object':type;const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
   const args=m.parameters.length+(m.isStatic?0:1);for(let i=0;i<args;i++)w.local('ldarg',i).local('stloc',i);
   const needs=(from,to)=>from!==to&&((numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)||(to==='object'&&isValue(from)));
   function convert(from,to){if(from===to||from==='null')return;if(numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)emitScalarConversion(w,c,from,to);else if(to==='object'&&isValue(from))w.op('box',c.resolveType(from));}
   function adapt(from,to){if(from.length!==to.length)throw new CilError('Invalid conversion stack shape');if(!from.some((t,i)=>needs(t,to[i])))return;let lowest=from.findIndex((t,i)=>needs(t,to[i]));const slots=new Map();for(let i=from.length-1;i>lowest;i--){const slot=getScratch(from[i],i);slots.set(i,slot);w.local('stloc',slot);}convert(from[lowest],to[lowest]);for(let i=lowest+1;i<from.length;i++){w.local('ldloc',slots.get(i));convert(from[i],to[i]);}}
   function relative(name,target){const at=w.length;w.op(name,0);patches.push({at:at+1,end:at+5,target});}
-  function zones(pc){const result=[];handlers.forEach((h,i)=>{if(pc>=h.start&&pc<=h.end)result.push('t'+i);if(pc>=h.target&&pc<h.handlerEndPc)result.push('h'+i);});return result;}
-  function leaves(pc,target){const targetZones=zones(target);return zones(pc).some(z=>!targetZones.includes(z));}
   const returnSlot=handlers.length&&m.returnType!=='void'?getScratch(m.returnType,999):null;
   for(let pc=0;pc<n;pc++){
-    const handler=handlers.find(h=>h.target===pc);if(handler){prefixes.set(pc,w.length);if(handler.kind!=='finally')w.local('stloc',handler.slot);}
+    const handler=layout.handlerAt(pc);if(handler){prefixes.set(pc,w.length);if(handler.kind!=='finally')w.local('stloc',handler.slot);}
     const begin=w.length;starts[pc]=begin;const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2],input=analysis.states[pc];
     const top=input.at(-1),left=input.at(-2);let terminal=false;
     if(!emitScalarInstruction(w,c,{op,a,b}))switch(op){
@@ -88,13 +86,13 @@ function emitMethod(c,d) {
         else if(operator==='==')w.op('ceq');else if(operator==='!=')w.op('ceq').integer(0).op('ceq');else if(operator==='<')w.op('clt');else if(operator==='>')w.op('cgt');else if(operator==='<=')w.op(left==='double'||top==='double'?'cgt.un':'cgt').integer(0).op('ceq');else if(operator==='>=')w.op(left==='double'||top==='double'?'clt.un':'clt').integer(0).op('ceq');else throw new CilError('Unsupported operator');break;}
       case Op.CONVERT:if(a>=EnumConvertBase){const type=c.resolveType(enumTypes[a-EnumConvertBase]);w.op(b===1?'conv.ovf.i4':'conv.i4').op('box',type).op('unbox.any',type).op('nop');}else w.op(a===0?(b===1?'conv.ovf.i4':'conv.i4'):'conv.r8').op('nop');break;
       case Op.UNARY:{const operator=UnaryName[a];if(b===5&&operator==='-')w.integer(-1).op('mul.ovf').op('nop');else if(operator==='!')w.integer(0).op('ceq');else if(operator==='~')w.op('not');else{if(operator==='-')w.op('neg');w.op(b===1?'conv.i4':'conv.r8');}break;}
-      case Op.JUMP:{const output=analysis.outputs[pc];adapt(output,analysis.states[a]);relative(leaves(pc,a)?'leave':'br',a);terminal=true;break;}
+      case Op.JUMP:{const output=analysis.outputs[pc];adapt(output,analysis.states[a]);relative(layout.leaves(pc,a)?'leave':'br',a);terminal=true;break;}
       case Op.JFALSE:case Op.JTRUE:{// C# expression branches leave only their condition at the stack top.
         const output=analysis.outputs[pc];if(output.some((t,i)=>needs(t,analysis.states[a]?.[i])))throw new CilError('Conditional edge requires an unsupported stack conversion');
-        if(leaves(pc,a)){const skip=w.length;w.op(op===Op.JFALSE?'brtrue':'brfalse',5);relative('leave',a);}else relative(op===Op.JFALSE?'brfalse':'brtrue',a);break;}
+        if(layout.leaves(pc,a)){const skip=w.length;w.op(op===Op.JFALSE?'brtrue':'brfalse',5);relative('leave',a);}else relative(op===Op.JFALSE?'brfalse':'brtrue',a);break;}
       case Op.CALL:{const target=c.image.methods[a],from=input.slice(input.length-b),to=[...(target.isStatic?[]:[target.owner]),...target.parameters.map(p=>p.type)];adapt(from,to);w.op('call',c.methodTokens.get(a));if(target.returnType==='void')w.op('ldnull');break;}
       case Op.BUILTIN:{const descriptor=Builtins[a]?.contract;if(descriptor){const from=input.slice(input.length-b),to=[...(!descriptor.isStatic&&descriptor.kind!=='constructor'?[descriptor.owner]:[]),...descriptor.parameters];adapt(from,to);if(!descriptor.isStatic&&descriptor.kind!=='constructor'&&frameworkType(descriptor.owner)?.kind==='value'){const slots=[];for(let j=to.length-1;j>=0;j--){const slot=getScratch(to[j],2000+j);slots[j]=slot;w.local('stloc',slot);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}const ctor=descriptor.kind==='constructor';w.op(ctor?'newobj':descriptor.isStatic||frameworkType(descriptor.owner)?.kind==='value'?'call':'callvirt',c.external(descriptor.owner,descriptor.name,ctor?'void':descriptor.result,descriptor.parameters,descriptor.isStatic));if(!ctor&&descriptor.result==='void')w.op('ldnull');}else emitBuiltin(c,w,a,b,input.slice(input.length-b),adapt);break;}
-      case Op.RET:{if(m.returnType==='void')w.op('pop');else convert(top,m.returnType);if(zones(pc).length){if(m.returnType!=='void')w.local('stloc',returnSlot);relative('leave','return');}else w.op('ret');terminal=true;break;}
+      case Op.RET:{if(m.returnType==='void')w.op('pop');else convert(top,m.returnType);if(layout.protected(pc)){if(m.returnType!=='void')w.local('stloc',returnSlot);relative('leave','return');}else w.op('ret');terminal=true;break;}
       case Op.NEWOBJ:w.op('ldnull').op('newobj',c.allocTokens.get(a));break;
       case Op.NEWARR:w.op('newarr',c.resolveType(c.image.constants[a]));break;
       case Op.LDELEM:w.op('ldelem',c.resolveType(left.slice(0,-2)));break;
@@ -108,7 +106,7 @@ function emitMethod(c,d) {
   }
   const returnOffset=w.length;if(handlers.length){if(m.returnType!=='void')w.local('ldloc',returnSlot);w.op('ret');}
   for(const patch of patches){const target=patch.target==='return'?returnOffset:starts[patch.target];if(target===undefined)throw new CilError('Missing CIL branch target');w.patch32(patch.at,target-patch.end);}
-  const nativeHandlers=handlers.map(h=>({start:starts[h.start],end:spans[h.end][0]+spans[h.end][1],target:prefixes.get(h.target),handlerEnd:prefixes.get(h.handlerEndPc)??starts[h.handlerEndPc]??returnOffset,catchType:h.kind==='finally'?0:c.resolveType('Exception'),...(h.kind==='finally'?{flags:2}:{})}));
+  const nativeHandlers=handlers.map(h=>({start:starts[h.start],end:prefixes.get(h.tryEndPc)??starts[h.tryEndPc]??returnOffset,target:prefixes.get(h.target),handlerEnd:prefixes.get(h.handlerEndPc)??starts[h.handlerEndPc]??returnOffset,catchType:h.kind==='finally'?0:c.resolveType('Exception'),...(h.kind==='finally'?{flags:2}:{})}));
   return {code:w.finish(),locals,maxStack:analysis.maxStack+Math.max(16,args+4),handlers:nativeHandlers,spans};
 }
 function emitBuiltin(c,w,id,count,types,adapt) {
