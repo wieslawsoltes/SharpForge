@@ -1,4 +1,5 @@
 import {userValueCallType, prepareValueReceiver, constructUserValue} from './value-calls.js';
+import {boxedInterfaceReceiver} from './value-dispatch.js';
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {constructIntrinsicValue} from './value-intrinsics.js';
@@ -81,6 +82,7 @@ export function invoke(vm,instruction) {
     if(dispatch) {
       if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       const owner=descriptor.signature.isStatic||valueType?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
+      if(instruction.name==='callvirt')args[0]=boxedInterfaceReceiver(vm,descriptor,dispatch,args[0]);
       vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
     } else {
       const value=invokeIntrinsic(vm,descriptor,args,instruction.name==='callvirt');
