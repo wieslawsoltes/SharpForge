@@ -6,3 +6,4 @@ export * from './object-model/index.js';
 export * from './templates/index.js';
 export * from './binding/index.js';
 export * from './styles/index.js';
+export * from './xaml/index.js';
