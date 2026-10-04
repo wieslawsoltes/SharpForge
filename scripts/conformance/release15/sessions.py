@@ -5,6 +5,7 @@ workbench, Worker, event receiver, renderer, or replacement application host.
 """
 import json
 import os
+import subprocess
 from urllib.parse import urlparse
 
 from browser_harness import wait_condition
@@ -27,6 +28,18 @@ def failure_details(error):
     if isinstance(error, BrowserOperationError):
         result['browser'] = error.browser
     return result
+
+
+def source_revision(root):
+    try:
+        result = subprocess.run(['git', '-C', str(root), 'rev-parse', '--verify', 'HEAD'],
+                                capture_output=True, text=True, check=True, timeout=5)
+        commit = result.stdout.strip()
+        if len(commit) not in (40, 64) or any(character not in '0123456789abcdef' for character in commit):
+            raise ValueError('Git did not return an exact commit')
+        return {'commit': commit}
+    except (OSError, subprocess.SubprocessError, ValueError) as error:
+        return {'commit': None, 'unavailable': type(error).__name__}
 
 
 def require(value, message):
@@ -433,13 +446,19 @@ class SessionAcceptance:
 
 def sessions(page, root, output):
     suite = SessionAcceptance(page, root, output)
+    browser = page.context.browser
     report = {'target': 'production-studio-real-workers', 'requirement': 'session-isolation',
+              'browser': {'name': browser.browser_type.name, 'version': browser.version},
+              'source': source_revision(root),
               'requiredLiveApplications': 3, 'projects': [DASHBOARD, MONITOR], 'duplicateProject': DASHBOARD,
               'checks': suite.checks, 'status': 'running',
               'unexecutedPhases': [],
               'limits': ['This run qualifies only its recorded browser/host.',
                          'Grant routing is exercised without outbound HTTP; transport enforcement is a separate obligation.',
                          'Late callbacks are real pending worker replies across restart, not delayed provider/network callbacks.']}
+    # The shared RPC child can be terminated before browser teardown writes its
+    # own session metadata. Retain observed provenance before any scenario action.
+    (output / 'sessions-report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
     phases = [('three-live-applications', suite.prepare), ('selected-debugger', suite.debugger),
               ('selected-hot-reload', suite.hot_reload), ('selected-designer', suite.designer),
               ('independent-grant-targets', suite.grants), ('targeted-stop-restart', suite.restart),
