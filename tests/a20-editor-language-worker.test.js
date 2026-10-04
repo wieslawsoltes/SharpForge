@@ -71,9 +71,12 @@ test('inlay hints share one bound implementation with the existing LSP contract'
   const {workspace, language, request, text} = fixture();
   const source = workspace.documents.get('Program.cs').source;
   const hints = language.inlayHints('Program.cs');
-  assert.equal(hints.length, 1);
-  assert.equal(hints[0].label, ': int');
-  assert.equal(source.offsetAt(hints[0].position), text.indexOf('answer') + 6);
+  const typeHints = hints.filter(hint => hint.kind === 1);
+  assert.equal(typeHints.length, 1);
+  assert.equal(typeHints[0].label, ': int');
+  assert.equal(source.offsetAt(typeHints[0].position), text.indexOf('answer') + 6);
+  assert(hints.some(hint => hint.kind === 2 && hint.label === 'x:'));
+  assert(hints.some(hint => hint.kind === 2 && hint.label === 'y:'));
   assert.deepEqual(request('inlayHints'), {version: 7, items: hints});
   const lsp = new LanguageServer({workspace});
   const response = await lsp.handle({jsonrpc: '2.0', id: 1, method: 'textDocument/inlayHint', params: {
@@ -88,19 +91,18 @@ test('rename and refactoring requests return versioned edits without committing 
   const {workspace, language, refactoring, request, text} = fixture();
   const offset = text.lastIndexOf('answer') + 1;
   assert.deepEqual(request('rename', {offset, newName: 'result'}), refactoring.rename('Program.cs', offset, 'result').edits);
-  assert.deepEqual(request('prepareRename', {offset}), {
-    start: text.lastIndexOf('answer'), end: text.lastIndexOf('answer') + 6, placeholder: 'answer', version: 7
-  });
-  assert.deepEqual(request('documentHighlights', {offset}).items.map(({kind, ...reference}) => reference),
-    language.references('Program.cs', offset));
+  assert.deepEqual(request('prepareRename', {offset}), language.prepareRename('Program.cs', offset));
+  assert.deepEqual(request('documentHighlights', {offset}).items,
+    language.references('Program.cs', offset).map(reference => ({...reference, kind: reference.write ? 3 : reference.read ? 2 : 1})));
   const start = text.indexOf('answer');
   assert.deepEqual(request('codeActions', {offset: start}), refactoring.actions('Program.cs', start, start));
   assert.equal(workspace.documents.get('Program.cs').source.text, text);
   assert.equal(workspace.documents.get('Program.cs').source.version, 7);
-  assert.throws(() => request('rename', {offset, newName: 'result', includeStrings: true}), {code: 'SFED1205'});
-  assert.throws(() => request('codeActions', {offset, scope: 'project'}), {code: 'SFED1205'});
+  assert.deepEqual(request('rename', {offset, newName: 'result', includeStrings: true}),
+    refactoring.rename('Program.cs', offset, 'result', {includeStrings: true}).edits);
+  assert.throws(() => request('codeActions', {offset, scope: 'project', equivalenceKey: 'sharpforge.local.explicit-type'}), /ownership/);
   const types = fixture('class C { public static int F(){return 1;} } Console.WriteLine(C.F());');
-  assert.throws(() => types.request('prepareRename', {offset: 6}), {code: 'SFED1204'});
+  assert.equal(types.request('prepareRename', {offset: 6}).placeholder, 'C');
 });
 
 test('format selection/on-type adapt existing indentation edits and preserve unrelated lines', () => {

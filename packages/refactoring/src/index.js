@@ -1,4 +1,9 @@
 import {structuralActions} from './structural.js';
+import {localTypeActions, fixAll} from './fix-all.js';
+import {validateRefactoring} from './validate-plan.js';
+import {outlineReorder} from './outline-reorder.js';
+export {outlineReorder} from './outline-reorder.js';
+export {fixAll} from './fix-all.js';
 import { findTextMatches } from '@sharpforge/text';
 import { keywords } from '@sharpforge/syntax';
 function nodes(root){const result=[],stack=[root];while(stack.length){const n=stack.pop();if(!n||typeof n!=='object')continue;if(n.kind)result.push(n);for(const [key,v]of Object.entries(n))if(!['tokens','source','green'].includes(key)){if(Array.isArray(v))stack.push(...v.filter(x=>x&&typeof x==='object'));else if(v&&typeof v==='object')stack.push(v);}}return result;}
@@ -10,9 +15,25 @@ export class RefactoringEngine {
   constructor(workspace,language){this.workspace=workspace;this.language=language;}
   replaceAll(query,replacement,options={}){if(typeof replacement!=='string'||replacement.length>100000)throw new RangeError('Replacement must be a string of at most 100000 characters');const result=findTextMatches([...this.workspace.documents.values()].map(d=>d.source),query,{...options,maxMatches:10000});if(result.truncated)throw new RangeError('Too many replacements; narrow the search');return {title:`Replace ${result.matches.length} occurrences across source files`,kind:'refactor.rewrite',edits:result.matches.map(m=>({uri:m.uri,start:m.start,end:m.end,version:m.version,newText:replacement}))};}
   version(edits){return edits.map(e=>({...e,version:this.workspace.documents.get(e.uri)?.source.version}));}
-  rename(uri,offset,newName){if(!this.language)throw new Error('A bound language service is required for rename');return {title:`Rename to ${newName}`,kind:'refactor.rename',edits:this.version(this.language.rename(uri,offset,newName))};}
-  actions(uri,start,end=start){const document=this.workspace.documents.get(uri);if(!document)return [];const compilation=this.workspace.compile(),syntax=this.workspace.syntax(uri),actions=[];for(const local of nodes(syntax.root).filter(n=>n.kind==='Local'&&n.start<=start&&n.end>=end&&n.declarations.length===1)){const variable=local.declarations[0],symbol=compilation.symbols.find(s=>s.uri===uri&&s.start===variable.nameSpan.start&&s.kind==='local');if(!symbol||symbol.type==='error'||variable.isConst)continue;const typeToken=syntax.tokens.find(t=>t.start>=local.start&&t.end<=variable.nameSpan.start);if(variable.type==='var'&&typeToken?.kind==='var')actions.push({title:`Use explicit type '${symbol.type}'`,kind:'refactor.rewrite',edits:this.version([{uri,start:typeToken.start,end:typeToken.end,newText:symbol.type}])});else if(variable.initializer?.kind==='Literal'&&variable.initializer.type===symbol.type&&typeToken?.text===symbol.type)actions.push({title:'Use implicit type var',kind:'refactor.rewrite',edits:this.version([{uri,start:typeToken.start,end:typeToken.end,newText:'var'}])});}actions.push(...structuralActions(this.workspace,uri,start,end,compilation,syntax));return actions;}
-  apply(action,options){if(!action||!Array.isArray(action.edits))throw new TypeError('A versioned action is required');return applyWorkspaceEdits(this.workspace,action.edits,options);}
+  rename(uri,offset,newName,options={}){
+    if(!this.language)throw new Error('A bound language service is required for rename');
+    const plan=this.language.renamePlan(uri,offset,newName,options);
+    validateRefactoring(this.workspace,plan.edits,{rename:plan});
+    return {title:`Rename to ${newName}`,kind:'refactor.rename',edits:plan.edits,resources:plan.resources};
+  }
+  fixAll(parameters){return fixAll(this.workspace,parameters);}
+  outlineReorder(parameters){return outlineReorder(this.workspace,parameters);}
+  validateEdits(edits,options={}){validateRefactoring(this.workspace,edits,options);return {valid:true,revision:this.workspace.revision};}
+  actions(uri,start,end=start){
+    if(!this.workspace.documents.has(uri))return [];
+    const compilation=this.workspace.compile(),syntax=this.workspace.syntax(uri);
+    return [...localTypeActions(this.workspace,uri,start,end),...structuralActions(this.workspace,uri,start,end,compilation,syntax)];
+  }
+  apply(action,options){
+    if(!action||!Array.isArray(action.edits))throw new TypeError('A versioned action is required');
+    if(action.resources?.length)throw new Error('Resource rename requires a workspace transaction host');
+    return applyWorkspaceEdits(this.workspace,action.edits,options);
+  }
 }
 export function foldingRanges(workspace,uri){const syntax=workspace.syntax(uri),source=syntax.source,stack=[],ranges=[];for(const t of syntax.tokens){if(t.kind==='{')stack.push(t);else if(t.kind==='}'&&stack.length){const begin=source.positionAt(stack.pop().start),end=source.positionAt(t.start);if(end.line>begin.line)ranges.push({startLine:begin.line,startCharacter:begin.character,endLine:end.line,endCharacter:end.character,kind:'region'});}}return ranges.sort((a,b)=>a.startLine-b.startLine||b.endLine-a.endLine);}
 export function selectionRanges(workspace,uri,offsets){const syntax=workspace.syntax(uri),source=syntax.source,all=nodes(syntax.root).filter(n=>Number.isInteger(n.start)&&Number.isInteger(n.end));return offsets.map(offset=>{const spans=all.filter(n=>n.start<=offset&&n.end>=offset).concat(syntax.tokens.filter(t=>t.start<=offset&&t.end>=offset)).sort((a,b)=>(b.end-b.start)-(a.end-a.start));let parent=null,last='';for(const span of spans){const key=`${span.start}:${span.end}`;if(key===last)continue;if(parent){const outerStart=source.offsetAt(parent.range.start),outerEnd=source.offsetAt(parent.range.end);if(span.start<outerStart||span.end>outerEnd)continue;}parent={range:{start:source.positionAt(span.start),end:source.positionAt(span.end)},...(parent?{parent}:{})};last=key;}return parent??{range:{start:source.positionAt(offset),end:source.positionAt(offset)}};});}
