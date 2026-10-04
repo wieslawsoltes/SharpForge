@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { CilWriter, validateTailPrefixes, tailPrefixDiagnosticCatalog } from '@sharpforge/cil';
 
 const tail = { name: 'tail.' };
@@ -83,4 +85,26 @@ test('lexical validity does not prove argument stack or managed-pointer lifetime
   const localAddress = new CilWriter().op('ldloca.s', 0).group('call', 0x06000001, [tail]).op('ret').finish();
   assert.doesNotThrow(() => validateTailPrefixes(extraValue));
   assert.doesNotThrow(() => validateTailPrefixes(localAddress));
+});
+
+test('pinned ILVerify observations and real CoreCLR execution cover the lexical tail contract', () => {
+  const directory = new URL('./fixtures/a03-prefix-tail/', import.meta.url);
+  const fixture = JSON.parse(readFileSync(new URL('native.json', directory), 'utf8'));
+  const source = readFileSync(new URL('input.js', directory));
+  assert.equal(createHash('sha256').update(source).digest('hex'), fixture.sourceSHA256);
+  assert.equal(fixture.version, '10.0.5');
+  assert.equal(fixture.observations.length, 6);
+  assert.equal(fixture.observations.filter(value => value.oracle.accepted).length, 1);
+  assert.equal(fixture.execution.exitCode, 42);
+  assert.equal(fixture.execution.signal, null);
+  for (const observation of fixture.observations) {
+    const code = new Uint8Array(Buffer.from(observation.code, 'base64'));
+    if (observation.oracle.accepted) {
+      assert.doesNotThrow(() => validateTailPrefixes(code, observation.handlers));
+      assert.deepEqual(observation.oracle.errors, []);
+    } else {
+      assert(observation.oracle.errors.length > 0);
+      assert.throws(() => validateTailPrefixes(code, observation.handlers), error => error.code === observation.diagnostic);
+    }
+  }
 });
