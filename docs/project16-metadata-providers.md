@@ -71,3 +71,7 @@ bad/unavailable references, bounds, worker cancellation and a large document who
 whole-text getter throws. They do not execute those assemblies. The browser's
 300 ms follow-caret threshold remains an actual browser qualification, separate
 from provider correctness.
+
+The first complete provider scope at `364023a3` exposed two core-intrinsic definition failures. The shared builtin metadata seam and intrinsic projection fixed both. An affected run also caught duplicate core/framework signature presentation; canonical signature deduplication fixed it. The final metadata file passed all 12 cases at `3b3f6546`; both shared-builtin seam cases passed in the preceding affected run. Exact commands, failed attempts and corrected results are preserved in `docs/project16-shell-provider-evidence.json`.
+
+Final source review changed the intrinsic projection to iterate the public `BuiltinMap` name index instead of walking holes in the sparse stable-ID dispatch array. It visits actual descriptors and retains compiler lookup semantics. This equivalent enumeration improvement is included in root's integrated gate; it does not alter runtime instructions or contract IDs. The shell lane has not claimed a new whole-suite run for this source-only correction.

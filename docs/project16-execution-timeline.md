@@ -44,4 +44,15 @@ Focused tests cover deterministic interval arithmetic, nested work, partial fina
 
 `tests/bench/a19-execution-occupancy.mjs` compares the same managed pump workload with and without the measurement wrapper, alternating run order. It records machine, actual backend, raw samples, median and p95. It does not claim allocation counts without an allocation profiler or substitute for browser frame-time qualification. Run the focused test scope and benchmark through `node scripts/limited.js` only after the complete implementation is ready.
 
-Source and tests are written; exact executed results and source revision will be recorded in `docs/project16-shell-coverage.json` after the complete provider scope qualification. Browser layout/interaction qualification and native OS CPU measurement are separate from the implemented worker measurement.
+At source `364023a3`, all 23 measurement, capture and actual worker cases passed in the complete nine-file provider scope. Existing runtime-launch and animation regressions also passed. The full scope had 134 passes out of 136 cases; its two unrelated metadata failures were subsequently corrected and qualified in affected runs. Exact logs and overlapping cohorts are recorded in `docs/project16-shell-provider-evidence.json`.
+
+Post-batch review corrected a graph edge case at `379321a3`: a short app's single partial interval now draws a visible segment from its actual start to end. The updated existing graph assertion is included in the root's next integrated gate; this source correction is not described as already executed by the shell lane.
+
+The matched pump benchmark ran at `3b3f6546`, with three warmups and nine alternating samples per backend on Node 24.19.0, Linux x64, an AMD EPYC 9V74 host with nine logical processors visible. Other agents share this machine. Raw samples and environment are in `docs/evidence/project16-shell-providers/execution-benchmark.json`.
+
+| Actual backend | Bare median | Instrumented median | Bare p95 | Instrumented p95 |
+| --- | ---: | ---: | ---: | ---: |
+| Source JavaScript VM | 9.287 ms | 8.652 ms | 14.830 ms | 12.557 ms |
+| Direct JavaScript CIL VM | 102.835 ms | 101.068 ms | 107.781 ms | 109.537 ms |
+
+These samples show no median regression. Direct CIL p95 increased by 1.63%. The observed lower medians do not establish a speedup, and no allocation profiler ran. Browser layout/interaction qualification and native OS CPU measurement are separate from the implemented worker measurement.

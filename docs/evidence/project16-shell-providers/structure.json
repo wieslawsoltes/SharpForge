@@ -1,0 +1,18 @@
+{
+  "sourceRevision": "d46e89938ef49c1fc8c5ae678f429128e61c56f7",
+  "scope": "32 source files changed by shell-owned provider follow-up commits",
+  "sourceFiles": 32,
+  "ownedPaths": 44,
+  "limits": {
+    "lines": 500,
+    "bytes": 40000,
+    "lineLength": 160
+  },
+  "findings": [],
+  "whitespace": "Passed: git diff --check 7a6ad9b8..d46e8993 -- <44 owned follow-up paths>; final docs/evidence diff check also passed.",
+  "runtimeWorker": {
+    "integrationBase": "4a57dc45",
+    "beforeBytes": 13996,
+    "afterBytes": 12626
+  }
+}
