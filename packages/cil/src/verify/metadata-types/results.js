@@ -20,6 +20,7 @@ export const no = known(false);
 
 export function typeSystemBudget(options) {
   if (!options || typeof options !== 'object') rejectTypeSystem('CILVT0002', 'options');
+  const signal = options.signal;
   const limits = {};
   for (const [name, maximum] of Object.entries({ maxTypes: 65535, maxEdges: 65535, maxQueryNodes: 4096, maxDepth: 256 })) {
     const value = options[name] ?? maximum;
@@ -27,6 +28,6 @@ export function typeSystemBudget(options) {
     limits[name] = value;
   }
   return Object.freeze({ ...limits, check() {
-    if (options.signal?.aborted) rejectTypeSystem('CILVT0003');
+    if (signal?.aborted) rejectTypeSystem('CILVT0003');
   } });
 }

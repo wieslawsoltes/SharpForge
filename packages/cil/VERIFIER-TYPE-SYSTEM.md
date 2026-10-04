@@ -34,7 +34,7 @@ substitution, external assembly loading, member resolution and access queries
 remain open on #2400 and subsequent verifier tasks. No runtime engine is enabled
 by this opt-in metadata API; browser/native/Wasm qualification remains staged.
 
-Construction snapshots and cycle-checks O(types + edges) facts. Each hierarchy
+Construction snapshots and cycle-checks O(types + edges + generic parameters) facts. Each hierarchy
 query is O(reachable types + edges), with no persistent pair cache. Defaults and
 hard maxima are 65,535 TypeDefs, 65,535 total type/InterfaceImpl rows, 65,535
 GenericParam rows, 4,096 visited query nodes and depth 256. Options `maxTypes`,
