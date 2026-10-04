@@ -42,3 +42,6 @@ The public package entry exports `createTestCase`, `testCaseId`, `createTestResu
 `TestRunSession`. Providers share stable discovery identity, explicit results and
 cancellable progress while retaining separate execution capabilities. See
 [the test protocol](docs/test-model.md) for fields, bounds, ownership and lifecycle.
+
+[Portable framework discovery](docs/test-discovery.md) describes the xUnit, NUnit
+and MSTest adapter registry, data evaluation controls and explicit boundaries.
