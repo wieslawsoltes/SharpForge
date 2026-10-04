@@ -2,6 +2,7 @@ import {nextGraphemeOffset, previousGraphemeOffset, nextWordOffset, previousWord
 import {indent} from '../commands/advanced.js';
 import {boxSelectionEdits} from '../commands/box-selection.js';
 import {moveSelectedLines} from '../commands/line-moves.js';
+import {transformOffset} from '../selections.js';
 
 /** Prepare primary and secondary edits against one revision, preserving grapheme and line boundaries. */
 export class EditorEditing {
@@ -68,7 +69,9 @@ export class EditorEditing {
     const {editor} = this;
     if (editor.input.readOnly) return;
     const edits = [];
-    for (const selection of editor.getSelections()) {
+    const selections = editor.getSelections();
+    const destinations = [];
+    for (const selection of selections) {
       let start = Math.min(selection.anchor, selection.active);
       let end = Math.max(selection.anchor, selection.active);
       if (start === end) {
@@ -86,8 +89,17 @@ export class EditorEditing {
         }
       }
       if (start !== end) edits.push({start, end, text: ''});
+      destinations.push(start);
     }
-    if (edits.length) editor.applyEdits(edits, {selections: caretsAfter(edits), source: 'delete', undoStop: word});
+    if (edits.length) {
+      const deletes = mergeDeletionRanges(edits);
+      const carets = selections.map((selection, index) => {
+        const active = transformOffset(destinations[index], deletes, 'left');
+        return {...selection, anchor: active, active};
+      });
+      editor.applyEdits(deletes, {selections: carets, primaryIndex: editor.primaryIndex ?? editor.model.primaryIndex,
+        source: 'delete', undoStop: word});
+    }
   }
 
   tab(unindent = false) {
@@ -122,6 +134,16 @@ export class EditorEditing {
 
   moveLines(direction) { return moveSelectedLines(this.editor, direction); }
 
+}
+
+function mergeDeletionRanges(edits) {
+  const merged = [];
+  for (const edit of edits.sort((left, right) => left.start - right.start)) {
+    const previous = merged.at(-1);
+    if (previous && edit.start <= previous.end) previous.end = Math.max(previous.end, edit.end);
+    else merged.push({...edit});
+  }
+  return merged;
 }
 
 export function caretsAfter(edits) {
