@@ -78,7 +78,7 @@ export {scalarConvert,scalarBinary,scalarUnary,encodeScalar,decodeScalar,scalarF
 
 export {numericFormat} from './numeric/numeric-format.js';
 
-export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
+export {int64Binary, int64Compare, int64Unary, smallInt64, smallInt64Binary, smallInt64Compare, smallInt64Unary} from './numeric/int64.js';
 export {checkedInteger, numericFault} from './numeric/checked.js';
 export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {uint32Binary, uint32Compare} from './numeric/uint32.js';

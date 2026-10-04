@@ -5,6 +5,7 @@ import {isReference} from './managed-fault.js';
 export function collectHeap(heap, extraRoots = []) {
   heap.mutationRevision++;
   const start = performance.now();
+  if (heap.observer) heap.observer.gcStart(heap.stats);
   if (heap.marks.length < heap.records.length) {
     heap.marks = new Uint32Array(Math.max(heap.records.length, heap.marks.length * 2, 64));
   }
@@ -25,7 +26,11 @@ export function collectHeap(heap, extraRoots = []) {
     work.push(value.h);
   };
   const add = value => forEachValueReference(value, mark);
-  for (const roots of [heap.rootProvider(), heap.pins, extraRoots]) {
+  const root = value => { metrics.rootsScanned++; add(value); };
+  // Providers may visit roots directly. Existing iterable providers still work,
+  // including standalone ManagedHeap users and diagnostic tooling.
+  const provided = heap.rootProvider(root);
+  for (const roots of [provided ?? [], heap.pins, extraRoots]) {
     for (const value of roots) {
       metrics.rootsScanned++;
       add(value);
@@ -63,7 +68,9 @@ export function collectHeap(heap, extraRoots = []) {
       handle.value = null;
     }
   }
-  return finishCollection(heap, {start, markEnd, objects, bytes, ...metrics});
+  const result = finishCollection(heap, {start, markEnd, objects, bytes, ...metrics});
+  if (heap.observer) heap.observer.gcEnd(result);
+  return result;
 }
 
 function finishCollection(heap, metrics) {

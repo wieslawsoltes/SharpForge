@@ -1,4 +1,4 @@
-import {resolveExecutionField} from '@sharpforge/cil';
+import {cachedField} from './token-cache.js';
 import {ManagedFault,isReference} from '../heap.js';
 import {checkArrayStore} from './casting.js';
 import {frameById} from './frame-lifetimes.js';
@@ -102,10 +102,8 @@ export function fieldAccess(vm,metadataToken,receiver) {
     const record=vm.heap.get(value);table=record.methodTable;
     boxed=record.kind==='box'&&isValueTypeValue(record.data[0]);data=boxed?record.data[0].fields:record.data;
   }
-  const field=resolveExecutionField(vm.inspector,metadataToken,table.typeArguments.map(type=>type.name)),resolved=field.resolvedToken;
-  const index=table.fields.findIndex(item=>item.token===resolved);
-  if(field.isStatic||index<0)throw invalid('Field is not part of this instance');
-  return {field,token:resolved,index,record:{methodTable:table,type:table.name,data},receiver,value,boxed};
+  const {field,token,index}=cachedField(vm,metadataToken,table);
+  return {field,token,index,record:{methodTable:table,type:table.name,data},receiver,value,boxed};
 }
 export function fieldAddress(vm,metadataToken,receiver,field=fieldAccess(vm,metadataToken,receiver)) {
   if(isValueTypeValue(receiver))throw invalid('A struct field address requires an addressable receiver');

@@ -60,6 +60,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     enqueueType(m.ownerToken);
     if(m.flags&0x2000){issue(m,null,'IL_UNMANAGED','Unmanaged P/Invoke is unavailable: '+m.owner+'::'+m.name,{exceptionType:'NotSupportedException',member:m.owner+'::'+m.name});continue;}
     if(!m.hasBody||m.implFlags&3){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
+    if(!Number.isInteger(m.maxStack)||m.maxStack<0||m.maxStack>65535){issue(m,null,'IL_STACK','Invalid method maxstack');continue;}
     // Memory pointers and pinned locals are checked by the managed memory handlers.
     const illegalType=type=>typeof type!=='string';
     if(m.signature.callingConvention&&m.signature.callingConvention!==5||m.signature.parameters.concat(m.locals,m.signature.returnType).some(illegalType)){issue(m,null,'IL_SIGNATURE','Unsupported managed method calling convention');continue;}
@@ -106,6 +107,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     while(queue.length&&issues.length<200){
       const [index,height]=queue.pop(),i=m.instructions[index];if(!i){issue(m,null,'IL_FLOW','Control flow leaves the method');continue;}
       if(heights.has(index)){if(heights.get(index)!==height)issue(m,i,'IL_STACK','Inconsistent evaluation stack height at join');continue;}heights.set(index,height);
+      if(height>m.maxStack){issue(m,i,'IL_STACK','Incoming evaluation stack exceeds maxstack');continue;}
       let pop,push;try{[pop,push]=stackEffect(inspector,m,i);}catch(error){issue(m,i,'IL_STACK',error.message);continue;}
       if(height<pop){issue(m,i,'IL_STACK','Evaluation stack underflow');continue;}const after=height-pop+push;if(after>m.maxStack)issue(m,i,'IL_STACK','Evaluation stack exceeds maxstack');
       if(i.name==='jmp'){if(height!==0)issue(m,i,'IL_STACK','jmp requires an empty stack');continue;}

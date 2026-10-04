@@ -29,7 +29,7 @@ export class CooperativeScheduler {
   capture(){const c={};for(const k of contextFields)if(k in this.vm)c[k]=this.vm[k];return c;}
   ensure(){if(this.enabled)return;this.enabled=true;this.contexts.set(1,{id:1,name:'Main',kind:'main',status:this.vm.state==='terminated'?'completed':'running',frozen:false,parentId:null,task:null,thread:null,wait:null,...this.capture()});}
   save(){if(!this.enabled||this.parked)return;const c=this.contexts.get(this.currentId);if(c)Object.assign(c,this.capture());}
-  load(c){this.parked=false;this.currentId=c.id;for(const k of contextFields)if(k in c)this.vm[k]=c[k];this.vm.state='running';c.status='running';this.steps=0;}
+  load(c){if(this.vm.profiler)this.vm.profiler.resume(c.id);this.parked=false;this.currentId=c.id;for(const k of contextFields)if(k in c)this.vm[k]=c[k];this.vm.state='running';c.status='running';this.steps=0;}
   get current(){return this.contexts.get(this.currentId);}
   *roots(){yield this.unhandledFault?.reference;if(!this.enabled)return;for(const c of this.contexts.values()){
       if(!retainsContextFrames(c))continue;yield c.task;yield c.thread;yield c.delegate;yield c.returnValue;yield c.wait?.task;yield c.resumeFault?.reference;
@@ -70,7 +70,7 @@ export class CooperativeScheduler {
         const value=start();Object.assign(c,this.capture());
         if(c.status==='running')c.status=c.frames.length?'ready':'completed';
         if(!c.frames.length&&value!==SUSPENDED)c.returnValue=value??null;
-        if(dependency&&!terminal.has(dependency.status)) {c.wait={task:waitTask,pushResult:false,voidResult:true,propagateFault};c.status='waiting';dependency.waiters.add(id);}
+        if(dependency&&!terminal.has(dependency.status)) {c.wait={task:waitTask,pushResult:false,voidResult:true,propagateFault};c.status='waiting';dependency.waiters.add(id);if(this.vm.profiler)this.vm.profiler.suspend(id,'dependency');}
         else if(dependency&&dependency.status!=='completed'&&propagateFault)c.resumeFault=this.failure(dependency);
         if(task){task.contextId=id;if(terminal.has(c.status))this.complete(task,c.returnValue,c.fault);}
       } catch(error) {releaseContextFrames(this.vm,{frames:this.vm.frames});this.contexts.delete(id);if(dependency)dependency.waiters.delete(id);throw error;}
@@ -127,7 +127,7 @@ export class CooperativeScheduler {
     if(this.suppressed)throw new ManagedFault('InvalidOperationException','A pending task cannot be awaited during synchronous function evaluation');
     this.ensure();const c=this.current;if(c.task&&key(c.task)===key(ref))throw new ManagedFault('InvalidOperationException','A task cannot await itself');
     let next=t;const visited=new Set();while(next?.contextId&&!visited.has(next.id)){visited.add(next.id);const other=this.contexts.get(next.contextId);if(other?.id===c.id)throw new ManagedFault('InvalidOperationException','Cyclic task wait');next=other?.wait?this.taskRecord(other.wait.task):null;}
-    c.wait={task:ref,pushResult,voidResult};c.status='waiting';t.waiters.add(c.id);
+    c.wait={task:ref,pushResult,voidResult};c.status='waiting';t.waiters.add(c.id);if(this.vm.profiler)this.vm.profiler.suspend(c.id,'task');
     if(forceYield&&terminal.has(t.status)){t.status='waiting';t.deadline=this.now();t.readyTurn=this.turn+1;}
     this.save();return SUSPENDED;
   }

@@ -1,6 +1,7 @@
 import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
 import {CilError,decodeCoded,callStorageType} from '@sharpforge/cil';
+import {cachedTypeName} from './token-cache.js';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
@@ -18,7 +19,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
-    this.methodTables=new MethodTableRegistry({...vm.options,tokenResolver:token=>metadata.typeName(token)});
+    this.methodTables=new MethodTableRegistry({...vm.options,tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const base=type.baseToken?metadata.typeName(type.baseToken):null;

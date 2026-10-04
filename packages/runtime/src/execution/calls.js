@@ -1,4 +1,5 @@
-import {constrainedTarget, objectOverride} from './handlers/constrained.js';
+import {constrainedTarget} from './handlers/constrained.js';
+import {resolveVirtualCall} from './inline-cache.js';
 import {splitVarargs, attachVarargs, varargsCall} from './varargs.js';
 import {memoryCall} from './memory-calls.js';
 import {createException} from './exception-object.js';
@@ -6,11 +7,12 @@ import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
-import {systemType,intrinsicDefinition,resolveExecutionMethod,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
+import {systemType,intrinsicDefinition,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
+import {cachedMethod,verifiedMethod} from './token-cache.js';
 import {ManagedFault,isReference} from '../heap.js';
 import {SUSPENDED} from './suspension.js';
 import {storageDefault} from './storage.js';
-import {createExceptionState} from './eh.js';
+import {framePool} from './frame-pool.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {instantiatedMethod,bindCallArguments,resolveCallType} from './generic-calls.js';
 import {constructDelegate,invokeDelegateOperation} from './delegate-calls.js';
@@ -29,25 +31,27 @@ export function call(vm, token, args, extra = {}) {
     throw fault;
   }
   const method = instantiatedMethod(vm, token, extra.genericIdentity ?? null, extra.methodArguments ?? []);
-  const values = bindCallArguments(vm, method, args);
-  const varargs = attachVarargs(method, values, extra.optionalArguments);
-  const {optionalArguments, ...frameExtra} = extra;
-  const frame = {
-    id: ++vm.frameId,
-    method,
-    args: values,
-    locals: method.locals.map(type => method.initLocals ? storageDefault(vm, type) : undefined),
-    stack: [],
-    pc: 0,
-    lastOffset: 0,
-    offsets: methodOffsets(method),
-    ...createExceptionState(),
-    needsInitialization: method.name !== '.cctor',
-    ...frameExtra,
-    ...(varargs ? {varargs} : {})
-  };
-  if (replacement) replaceFrame(vm, frame);
-  else pushFrame(vm, frame);
+  const pool = framePool(vm), frame = pool.acquire(method, extra.optionalArguments?.length ?? 0);
+  try {
+    bindCallArguments(vm, method, args, frame.args);
+    frame.varargs = attachVarargs(method, frame.args, extra.optionalArguments) ?? undefined;
+    frame.id = ++vm.frameId;
+    frame.method = method;
+    for (let index = 0; index < method.locals.length; index++) {
+      frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
+    }
+    frame.pc = 0;
+    frame.lastOffset = 0;
+    frame.offsets = methodOffsets(method);
+    frame.exception = frame.pending = null;
+    frame.needsInitialization = method.name !== '.cctor';
+    for (const key in extra) if (key !== 'optionalArguments') frame[key] = extra[key];
+    if (replacement) replaceFrame(vm, frame);
+    else pushFrame(vm, frame);
+  } catch (error) {
+    pool.retire(frame);
+    throw error;
+  }
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
@@ -59,9 +63,8 @@ export function prepareCall(vm,frame=vm.top) {
   if(vm.ensureInitialized(method.ownerToken,trigger,frame.genericIdentity??null))return false;
   frame.needsInitialization=false;return true;
 }
-const context=frame=>({ownerToken:frame?.method.ownerToken,genericIdentity:frame?.genericIdentity??null,typeArguments:frame?.method.typeArguments,methodArguments:frame?.methodArguments??[]});
 export function methodPointer(vm,token,receiver=undefined) {
-  let descriptor=resolveExecutionMethod(vm.inspector,token,context(vm.top));
+  let descriptor=cachedMethod(vm,token);
   if(receiver!==undefined) {
     if(receiver===null)throw new ManagedFault('NullReferenceException','Null virtual function receiver');
     if(descriptor.signature.isStatic)throw new ManagedFault('InvalidProgramException','ldvirtftn requires an instance method');
@@ -76,7 +79,7 @@ export function methodPointer(vm,token,receiver=undefined) {
       descriptor.ownerInstance=receiverIdentity(vm,descriptor,receiver);
     }
   }
-  if(descriptor.resolvedToken?!vm.report.methods.includes(descriptor.resolvedToken):!supportedIntrinsic(descriptor)&&!supportedDelegateCall(vm.inspector,descriptor))throw new ManagedFault('InvalidProgramException','Unverified managed function target');
+  if(descriptor.resolvedToken?!verifiedMethod(vm,descriptor.resolvedToken):!supportedIntrinsic(descriptor)&&!supportedDelegateCall(vm.inspector,descriptor))throw new ManagedFault('InvalidProgramException','Unverified managed function target');
   return Object.freeze({methodPointer:true,vmOwner:vm.snapshotOwner,token,descriptor,signature:descriptor.signature,identity:Object.freeze([descriptor.resolvedToken??token,descriptor.ownerInstance,descriptor.methodArguments])});
 }
 
@@ -89,7 +92,7 @@ function receiverIdentity(vm,descriptor,receiver) {
 
 function startManagedCall(vm,descriptor,args,extra={}) {
   const token=descriptor.resolvedToken;
-  if(!vm.report.methods.includes(token))throw new ManagedFault('InvalidProgramException','Unverified managed call target');
+  if(!verifiedMethod(vm,token))throw new ManagedFault('InvalidProgramException','Unverified managed call target');
   const genericIdentity=extra.genericIdentity??receiverIdentity(vm,descriptor,args[0]);
   const owner=vm.typeSystem.table(genericIdentity??descriptor.ownerToken);
   if(!descriptor.signature.isStatic&&owner.flags.valueType&&isReference(args[0])) {
@@ -113,16 +116,16 @@ export function invokeFunctionPointer(vm,pointer,args,extra={}) {
 export function invoke(vm,instruction) {
   const caller=vm.top;
 
-  let descriptor=resolveExecutionMethod(vm.inspector,instruction.operand,context(caller)),target=descriptor.resolvedToken;
+  let descriptor=cachedMethod(vm,instruction.operand,caller),target=descriptor.resolvedToken;
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
   const trigger=instruction.name==='newobj'||descriptor.name==='.ctor'?'constructor':descriptor.signature.isStatic?'static-method':'instance-method';
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   if(caller.stack.length<count)throw new ManagedFault('InvalidProgramException','Call argument stack underflow');
-  const args=caller.stack.splice(caller.stack.length-count,count);
+  const pool=framePool(vm),args=pool.arguments(caller.stack,count);
   const tail=!!caller.tailCall,constrained=caller.constrainedType;caller.tailCall=false;caller.constrainedType=null;
-  vm.heap.withRoots(args,()=>{
+  try { vm.heap.withRoots(args,()=>{
     const delegate=supportedDelegateCall(vm.inspector,descriptor);
     if(delegate) {
       const value=instruction.name==='newobj'?constructDelegate(vm,descriptor.ownerInstance??descriptor.owner,args[0],args[1]):invokeDelegateOperation(vm,descriptor,args);
@@ -148,16 +151,15 @@ export function invoke(vm,instruction) {
       return;
     }
     if(constrained!==undefined&&constrained!==null){descriptor=constrainedTarget(vm,descriptor,args,constrained);target=descriptor.resolvedToken;}
-    if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
-    if(instruction.name==='callvirt'&&!target){const override=objectOverride(vm,descriptor,args[0]);if(override){descriptor=override;target=override.resolvedToken;}}
-    const receiverType=args[0]?.byref?pointerType(vm,args[0]).name:isReference(args[0])?vm.heap.get(args[0]).methodTable.name:null;
-    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.dispatch.resolve(receiverType,target,descriptor.ownerInstance):target??(instruction.name==='callvirt'?vm.typeSystem.dispatch.externalTarget(receiverType,descriptor):null);
+    const virtual=instruction.name==='callvirt'?resolveVirtualCall(vm,caller,instruction,descriptor,args[0]):null;
+    const dispatch=virtual?virtual.target:target;
+    if(virtual)descriptor=virtual.descriptor;
     if(dispatch) {
-      if(!vm.report.methods.includes(dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
-      startManagedCall(vm,{...descriptor,...vm.inspector.methods.get(dispatch),resolvedToken:dispatch},args,{tail});
+      if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
+      startManagedCall(vm,virtual?descriptor:{...descriptor,...vm.inspector.methods.get(dispatch),resolvedToken:dispatch},args,{tail});
     } else {
       const value=vm.intrinsic(descriptor,args);
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
     }
-  });
+  }); } finally { pool.releaseArguments(args); }
 }

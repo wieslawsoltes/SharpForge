@@ -1,19 +1,21 @@
 import {exceptionEventRoots} from './exception-events.js';
 import {genericTypeParts,substituteCallType,callStorageType} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
+import {cachedTypeName} from './token-cache.js';
 import {validatePointer,asReadonly,pointerType} from './managed-pointers.js';
 export {instantiatedMethod} from './generics.js';
 
 export function resolveCallType(vm,typeOrToken,frame=vm.top) {
-  const name=typeof typeOrToken==='number'?vm.inspector.metadata.typeName(typeOrToken):typeOrToken;
+  const name=typeof typeOrToken==='number'?cachedTypeName(vm,typeOrToken):typeOrToken;
   if(typeof name!=='string')return name;
   return substituteCallType(name,frame?.method.typeArguments??genericTypeParts(frame?.genericIdentity??'').arguments,frame?.methodArguments??[]);
 }
 
-export function bindCallArguments(vm,method,args) {
+export function bindCallArguments(vm,method,args,values=[]) {
   const signature=method.signature,count=signature.parameters.length+(signature.isStatic?0:1);
   if(args.length!==count)throw new ManagedFault('InvalidProgramException','Managed call argument count mismatch');
-  return args.map((argument,index)=>{
+  for(let index=0;index<args.length;index++) {
+    let argument=args[index];
     const parameter=index-(signature.isStatic?0:1),type=parameter<0?null:signature.parameters[parameter];
     if(type&&callStorageType(type).endsWith('&')) {
       if(!argument?.byref||argument.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidProgramException','A managed reference argument is required');
@@ -21,10 +23,12 @@ export function bindCallArguments(vm,method,args) {
       validatePointer(vm,argument,{write:!readOnly,allowUninitialized:!!(metadata?.flags&2)});
       const referent=pointerType(vm,argument),expected=vm.typeSystem.table(callStorageType(type).slice(0,-1));
       if(referent!==expected)throw new ManagedFault('InvalidProgramException','Managed reference argument type mismatch');
-      return readOnly?asReadonly(vm,argument):argument;
+      values[index]=readOnly?asReadonly(vm,argument):argument;
+      continue;
     }
-    return type?vm.storage(argument,callStorageType(type)):argument;
-  });
+    values[index]=type?vm.storage(argument,callStorageType(type)):argument;
+  }
+  return values;
 }
 
 export function* callRoots(frame) {

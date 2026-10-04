@@ -1,10 +1,15 @@
+import {createExecutionProfiler} from './execution/profiler.js';
 import {executeSourceVarargs} from './execution/source-varargs.js';
 import {executeSourceReference, sourceReturnReference} from './execution/source-references.js';
 import {isFatalFault,markUnhandled} from './execution/unhandled.js';
+import {stopVM} from './execution/vm-lifecycle.js';
+import {selectSourceFusion} from './execution/source-fusion.js';
 import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
-import {callSource} from './execution/source-calls.js';
+import {callSource,callSourceFromStack} from './execution/source-calls.js';
+import {beginFrameInstruction,flushFramePool} from './execution/frame-pool.js';
+import {installRootProvider} from './execution/frame-roots.js';
 import {createArray,arrayAddress,arrayGet} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
 import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
@@ -21,8 +26,8 @@ import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {sourceValue} from './execution/source-values.js';
-import {literalString,stringRoots,clearStrings} from './execution/strings.js';
-import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
+import {literalString,stringRoots} from './execution/strings.js';
+import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,runtimeTypeText} from './execution/source-ops.js';
 import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow,endSourceFilter} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
@@ -30,9 +35,9 @@ export class VirtualMachine {
     if(image?.outputKind==='library')throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
     const errors=verifyImage(image);if(errors.length)throw new Error('Bytecode verification failed: '+errors.join('; '));
     this.image=image;this.options={maxInstructions:20_000_000,maxOutputCharacters:1_000_000,...options};
-    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
+    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});installRootProvider(this);this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
     this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.call(image.entryPoint,[]);
+    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.profiler=createExecutionProfiler(this,options.profile);this.heap.observer=this.profiler;this.call(image.entryPoint,[]);
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield* this.sync?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames){yield* f.locals;yield* arrayContinuationRoots(f);}yield* exceptionRoots(this);}
   call(methodId,args,types=[]){return callSource(this,methodId,args,types);}
@@ -62,12 +67,14 @@ export class VirtualMachine {
     if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;pending.exceptionDebuggerResume=true;this.handleFault(pending);}
     while(this.state==='running'&&this.frames.length&&count<instructionBudget){
       if((count&255)===0&&performance.now()-started>=timeBudgetMs)break;
-      this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
+      if(this.scheduler.enabled)this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
       if(!continuing&&op===Op.SEQ){frame.point=this.image.sequencePoints[a];this.currentPoint=frame.point;if(onSequence?.(frame.point,frame)){this.sourcePause=true;this.state='paused';break;}}
-      this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;}
+      const fusion=selectSourceFusion(this,frame,method,Math.min(instructionBudget-count,256-(count&255)),onSequence),before=this.instructions;
+      this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;if(this.profiler)this.profiler.instruction(frame);}
+      beginFrameInstruction(this,frame);
       try{
         if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
-        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceVarargs(this,frame,op,a)&&!executeSourceReference(this,frame,op,a,b))switch(op){
+        if(fusion)fusion.execute(this,frame);else if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceVarargs(this,frame,op,a)&&!executeSourceReference(this,frame,op,a,b))switch(op){
           case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;case Op.ENDFILTER:endSourceFilter(this,this.stack.pop());break;
           case Op.CONST:this.stack.push(this.constant(a));break;
           case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(sourceCopy(this,frame.locals[a]));break;
@@ -81,7 +88,7 @@ export class VirtualMachine {
           case Op.CONVERT:this.stack.push(convert(this.stack.pop(),a,b,this));break;
           case Op.UNARY:this.stack.push(unary(UnaryName[a],this.stack.pop(),b,this));break;
           case Op.JUMP:this.transfer(frame,'jump',a);break;case Op.JFALSE:if(!this.stack.pop())this.transfer(frame,'jump',a);break;case Op.JTRUE:if(this.stack.pop())this.transfer(frame,'jump',a);break;
-          case Op.CALL:{const args=this.stack.splice(this.stack.length-b,b);this.call(a,args,sourceInputTypes(this,frame).slice(-b));break;}
+          case Op.CALL:callSourceFromStack(this,a,b);break;
           case Op.BUILTIN:{const args=this.stack.splice(this.stack.length-b,b),value=this.builtin(a,args,sourceInputTypes(this,frame).slice(-b));if(value!==SUSPENDED)this.stack.push(value);break;}
           case Op.RET:{const result=sourceStore(this,this.stack.pop(),method.returnType,sourceInputTypes(this,frame).at(-1));this.transfer(frame,'return',Infinity,sourceReturnReference(this,frame,result));break;}
           case Op.NEWOBJ:this.stack.push(sourceNewObject(this,this.image.types[a].name));break;
@@ -93,16 +100,16 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:if(!executeSourceMemory(this,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}this.handleFault(fault);}
+      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}this.handleFault(fault);}finally{if(fusion)count+=this.instructions-before-1;flushFramePool(this);}
       collectAtInstruction(this);
-      this.scheduler.afterInstruction();
+      if(this.scheduler.enabled)this.scheduler.afterInstruction();
     }
-    this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;
+    this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;if(this.profiler)this.profiler.boundary();return this.state;
   }
   allFrames(){return this.scheduler.allFrames();}
   run(){if(this.state==='paused')this.state='running';while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:100});return {state:this.state,output:this.output.join(''),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.value(this.returnValue),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
-  stop(){clearRuntimeTypes(this);clearStrings(this);this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.pendingFault=null;this.frames=[];this.stack=[];this.currentPoint=null;}
+  stop(){stopVM(this);}
   statistics(){return {artifactFormat:this.image.il?'ECMA-335':'SharpForge IR',assembly:this.image.il?{bytes:this.image.il.assemblyBytes,loadMs:this.image.il.loadMs,decodeMs:this.image.il.decodeMs,verificationMs:this.image.il.verificationMs}:null,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
   snapshot(){return snapshotVM(this,'source');}
   restore(snapshot){return restoreVM(this,snapshot,'source');}
