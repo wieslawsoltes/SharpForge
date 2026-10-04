@@ -230,6 +230,12 @@ test('diagnostic failures return no PDB and library symbols keep an empty entry 
   assert.equal(failed.pdb, null);
   const { pdb } = compile('public class C { public int Value() => 42; }', { outputKind: 'library' });
   assert.equal(pdb.entryPoint, 0);
+  const oversized = `#pragma checksum "mapped.cs" "{${PdbGuids.sha256}}" "${'00'.repeat(4097)}"\nclass P { static void Main() { } }`;
+  const rejected = compileToAssembly(oversized, { portablePdb: true });
+  assert.equal(rejected.success, false);
+  assert.equal(rejected.assembly, null);
+  assert.equal(rejected.pdb, null);
+  assert.ok(rejected.diagnostics.some(diagnostic => diagnostic.code === 'SF3001' && diagnostic.message.includes('4096')));
 });
 
 test('async and iterator links, await labels and hoisted-local ranges refer to emitted methods', () => {
