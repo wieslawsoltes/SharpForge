@@ -190,6 +190,9 @@ test('StringComparer.FromComparison appends 322 without shifting released getter
   assert.equal(contract(comparerType, 'Compare', ['string', 'string']).id, 524293);
   assert.equal(contract(listType, 'Sort', [stringInterface]).id, 589824);
   assert.equal(contract('System.String', 'LastIndexOf', ['string', 'int', 'int', 'System.StringComparison']).id, 524318);
+  assert.equal(contract('System.Text.StringBuilder', 'Append', ['string', 'int', 'int']).id, 524319);
+  assert.equal(contract('System.Text.StringBuilder', 'Append', ['char[]']).id, 524320);
+  assert.equal(contract('System.Text.StringBuilder', 'Append', ['char[]', 'int', 'int']).id, 524321);
 });
 
 test('StringComparer.FromComparison native evidence pins enum faults, culture controls and singleton identities', () => {

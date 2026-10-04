@@ -619,6 +619,38 @@ so builder prerequisite costs are excluded. Culture
 implementations, other search APIs and native/Wasm execution remain open under
 #2621 and are not qualified by this batch.
 
+`StringComparer.FromComparison(StringComparison)` appends A07 contract `524322`
+after the character-array StringBuilder Append overloads. Ordinal (4) and
+OrdinalIgnoreCase (5) return the exact existing getter singleton handles, using
+the same comparison, registered interface, List.Sort and Array.BinarySearch
+paths. Invalid enum values retain `ArgumentException` with parameter
+`comparisonType`; valid culture modes 0–3 explicitly raise `NotSupportedException`.
+No culture getter or collation backend is introduced by this factory.
+
+The [pinned native reference](reference/string-comparer-from-comparison/README.md)
+captures .NET 10.0.5 / SDK 10.0.201 factory/getter identities, invalid enum values,
+nullable/Unicode signs and ordering consumers under invariant and tr-TR cultures.
+All native culture results remain unchanged evidence; those modes are unsupported
+by this factory. In particular, the existing host-normalized default ordering
+profile is not exposed as a native InvariantCulture/CurrentCulture comparer.
+Thread culture, exact collation, comparer equality/hash and other factories
+remain tracked by #2616/#2619/#2621/#2655.
+
+The existing enum validator moves into a dependency leaf and is re-exported from
+its original module, avoiding an import cycle without changing validation order
+or messages for released String APIs. Both getters and the factory share a
+private singleton helper and the same platform snapshot/root storage. Successful
+factory calls allocate no new managed objects after their getter singleton is
+initialized. Existing dispatch result objects and the singleton factory callback
+remain host allocations; this is not a claim of zero host allocation.
+
+Focused tests cover both compiler pipelines/VMs, independent CIL, true comparer
+interface calls, exact identity, collection consumers, managed GC and snapshots.
+`scripts/benchmarks/a07-string-comparer-from-comparison.mjs` provides identical
+before/after getter, comparison and enum-validation controls against parent
+`16a13a16`, plus separate warmed factory measurements with one warmup and five samples. Validation and timing
+are queued serially; native/Wasm execution is outside this batch and #2621 remains open.
+
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null
 first, then compares exact UTF-16 code units without normalization, case folding
