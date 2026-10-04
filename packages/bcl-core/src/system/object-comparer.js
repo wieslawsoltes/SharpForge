@@ -1,7 +1,11 @@
 import {compareObjects} from './object-comparison.js';
-import {resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions} from './string-comparer.js';
+import {
+  resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions, registerStringComparerEqualityExtensions
+} from './string-comparer.js';
 import {registerStringComparisonExtensions} from './string.js';
-import {registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions} from '../text/string-builder-append.js';
+import {
+  registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions, registerStringBuilderIntegerExtensions
+} from '../text/string-builder-append.js';
 import {
   registerStringSearchWindowExtensions, registerStringLastSearchStartExtensions, registerStringLastSearchWindowExtensions
 } from './string-search.js';
@@ -32,6 +36,8 @@ function contracts(registry) {
   registerStringBuilderArrayExtensions(registry);
   registerStringComparerFactoryExtensions(registry);
   registerStringBuilderValueExtensions(registry);
+  registerStringBuilderIntegerExtensions(registry);
+  registerStringComparerEqualityExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
