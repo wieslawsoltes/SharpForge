@@ -95,10 +95,17 @@ export const ObjectEmission = Base =>
         target = base
           .getMembers('.ctor')
           .find(member => member.methodKind === MethodKind.Constructor && !member.isStatic && !member.parameters.length);
-      if (!target) {
+      if (target) {
+        this.il.emit('ldarg', 0).emit('call', this.tokens.method(target), { pops: 1, pushes: 0 });
+        return undefined;
+      }
+      if (base.isSource || base.getMembers('.ctor').length) {
         return this.unsupported(`the implicit call of a base constructor of '${base.toDisplayString()}'`, constructor.locations?.[0]);
       }
-      this.il.emit('ldarg', 0).emit('call', this.tokens.method(target), { pops: 1, pushes: 0 });
+      // A framework class whose constructors the symbol table does not list (`ExpressionVisitor`): the binder accepted
+      // the class as a base, so it has a constructor without parameters.
+      const shape = { isStatic: false, returnType: this.core.void, parameters: [] };
+      this.il.emit('ldarg', 0).emit('call', this.tokens.external(base, '.ctor', shape), { pops: 1, pushes: 0 });
       return undefined;
     }
     /** Stores every instance field, auto-property and event initializer of the type, in declaration order. */
