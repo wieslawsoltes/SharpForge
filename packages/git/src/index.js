@@ -39,3 +39,4 @@ export * from './remote-refs.js';
 export * from './refspec.js';
 export * from './shallow.js';
 export * from './promisor.js';
+export * from './lfs.js';
