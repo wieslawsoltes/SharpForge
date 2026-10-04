@@ -95,7 +95,9 @@ export const CallBinding = Base =>
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
       const args = this.arguments(syntax.argumentList);
-      return this.invokeBound(target, args, syntax);
+      const result = this.invokeBound(target, args, syntax);
+      if (!this.quiet) this.d.recordInvocation?.(this.c, syntax, target, args, result);
+      return result;
     }
     /** Invokes an already bound target with bound arguments (binder/dynamic.js takes the late-bound calls from here). */
     invokeBound(target, args, syntax) {

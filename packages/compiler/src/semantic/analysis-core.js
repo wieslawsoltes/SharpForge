@@ -46,6 +46,7 @@ export class AnalysisCore {
     this.constructions = [];
     this.nullableMaps = new Map();
     this.bound = new Map();
+    this.invocations = new Map();
     this.constantState = new Map();
     this.unexecutable = new Map();
     this.typeBinder = new TypeBinder({
@@ -101,6 +102,12 @@ export class AnalysisCore {
       if (this.references.isUnification(d.code)) this.report(this.files[0]?.source.uri, { start: 0, end: 0 }, d.code, d.args);
       else this.report(uri, node, d.code, d.args);
     }
+  }
+
+  /** Retain method groups separately from executable bound trees, including incomplete invocations. */
+  recordInvocation(context, syntax, target, args, result) {
+    this.invocations.set(syntax, {uri: context.uri, syntax, target, args, result,
+      isStatic: context.isStatic, instanceInitializer: context.isFieldInitializer && !context.isStaticInitializer});
   }
   /** The reason (`{code,args}`) the nearest unresolved base type of an imported type is missing, or null. */
   missingBaseReason(type) {

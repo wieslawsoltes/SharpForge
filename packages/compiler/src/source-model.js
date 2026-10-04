@@ -5,6 +5,7 @@ import {originalSymbol, sourceSymbolRecord, symbolNameToken} from './source-symb
 import {sourceReference} from './source-references.js';
 import {argumentHints} from './source-arguments.js';
 import {metadataReference} from './source-metadata.js';
+import {SourceSignatureIndex} from './source-signatures.js';
 
 /** A revision-local query index over actual lossless-source binding; it never changes or emits program code. */
 export class SourceSemanticModel {
@@ -15,6 +16,7 @@ export class SourceSemanticModel {
       new SemanticAnalysis(compilation.inputFiles, options);
     this.result = compilation.sourceAnalysisComplete ? compilation.sourceAnalysisResult : this.analysis.run();
     this.sources = this.analysis.sources;
+    this.signatureIndex = new SourceSignatureIndex(this.analysis);
     this.symbols = [];
     this.references = [];
     this.hints = [];
@@ -175,4 +177,18 @@ export class SourceSemanticModel {
   }
 
   documentSymbols(uri) { return this.documentSymbolCache.get(uri) ?? []; }
+
+  /** Signature information for the innermost bound invocation; offsets and callStart use UTF-16 units. */
+  signatureHelp(uri, offset, options = {}) {
+    const source = this.sources.get(uri);
+    if (!source) return null;
+    if (!Number.isInteger(offset) || offset < 0 || offset > source.length) throw new RangeError('Invalid signature offset');
+    if (options.callStart !== undefined && (!Number.isInteger(options.callStart) || options.callStart < 0 || options.callStart >= offset)) {
+      throw new RangeError('Invalid signature invocation start');
+    }
+    if (options.activeParameter !== undefined && (!Number.isInteger(options.activeParameter) || options.activeParameter < 0)) {
+      throw new RangeError('Invalid signature parameter index');
+    }
+    return this.signatureIndex.help(uri, offset, options);
+  }
 }
