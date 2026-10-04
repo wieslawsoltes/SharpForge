@@ -11,11 +11,12 @@ Late synchronous callback verification has the same option collision.
 
 ## Change
 
-Add a runtime-owned admission seam that takes an owned copy of the launch options
-and omits only the runtime execution `maxInstructions`. Initial PE inspection
-and verification share that projected configuration. Callback verification uses
-the same projection while retaining its original entry and additional method
-roots.
+Add a runtime-owned admission seam that receives normalized, runtime-owned
+launch options. When an execution `maxInstructions` property is present, it
+omits only that property from an owned copy. When it is absent, it reuses the
+existing owned options object. Initial PE inspection and verification share that
+configuration. Callback verification uses the same projection while retaining
+its original entry and additional method roots.
 
 The VM retains the caller's execution budget. Direct `AssemblyInspector` and
 `verifyCilAssembly` callers retain their existing static `maxInstructions`
@@ -24,7 +25,7 @@ proofs, region limits, cancellation, registered external identities and callback
 profiles remain in effect. Existing inspector identity and other admission
 option values are preserved.
 
-The new internal seam is 16 lines. The legacy CIL VM module shrinks, and there
+The new internal seam is 17 lines. The legacy CIL VM module shrinks, and there
 are no new runtime dependencies or package-entry exports. The runtime README
 documents the distinct instruction limits.
 
@@ -33,12 +34,15 @@ documents the distinct instruction limits.
 This standalone branch is based on qualified main
 `41ebd76987aa912659310d4015607f46110358ab`. It contains four cherry-picks with
 original-commit provenance: failing evidence and controls, the admission seam,
-the boundary hooks, and qualification evidence. A follow-up commit records the
-standalone replay and performance results. It does not require the larger
-canonical compiler/consumer branch.
+the boundary hooks, and qualification evidence. Follow-up commits record the
+standalone replay, both performance comparisons and the owned-options fast path.
+The fast path has its own production commit. This branch does not require the
+larger canonical compiler/consumer branch.
 
-Publication source checkpoint:
-`b0285acf9d21205870c7f45f7d8a2ee65f917f25`.
+Optimized publication source checkpoint:
+`6f8da343a3df1105e7789e5a7201dd3ae4983855`.
+The first standalone measurements below belong to source checkpoint
+`b0285acf9d21205870c7f45f7d8a2ee65f917f25` and remain separately retained.
 
 ## Completed qualification on the original integration source
 
@@ -72,8 +76,8 @@ run. Complete raw logs, source inventories and per-case observations are in
 
 ## Publication-tree qualification
 
-The following four files passed **30/30 with zero failures or skips** on the
-publication source checkpoint, independently of the original integration run:
+The following four files passed **30/30 with zero failures or skips** on both
+standalone source checkpoints, independently of the original integration run:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 \
@@ -83,29 +87,40 @@ node scripts/limited.js node --test --test-concurrency=1 \
   tests/a05-synchronous-callbacks.test.js
 ```
 
-Test duration was 2.353947751 seconds; wall duration was 2.504477308 seconds.
-Before/after checks retained the same clean head, tree, 2,299 tracked inputs and
-1,543-module static/literal import graph. All three DOTNET path variables were
-pinned. The exact command, complete log and source snapshots are retained in
-the evidence directory.
+| Standalone source | Tests | Test duration | Wall duration | Tracked inputs | Import graph |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Initial `b0285acf9` | 30/30 | 2.353947751 s | 2.504477308 s | 2,299 | 1,543 |
+| Optimized `6f8da343` | 30/30 | 2.681576129 s | 2.871636007 s | 2,313 | 1,543 |
 
-Publication log SHA-256:
+Before/after checks retained each clean head, tree, tracked source inventory and
+static/literal import graph. The optimized inventory also includes the earlier
+committed evidence. All three DOTNET path variables were pinned. The exact
+commands, complete logs and source snapshots are retained separately.
+
+Initial publication log SHA-256:
 `dd7c4d083d96ab398306969c2291930e2af3583bd855d67f83b8c069fbb27783`.
+Optimized publication log SHA-256:
+`42225f99722c7bdfd39d12aaab8f260ddf4137e3fcadb69f216edd2c49c3b016`.
 
 ## Performance
 
-The single reviewed comparison used the publication checkpoint against its
-no-fix main parent. It reused the unchanged ordinary constructor workload and
-existing async benchmark export/capture/summary helpers, and added one fresh,
-previously unverified EH callback workload. Both versions used the same default
-20,000,000 execution budget and identical benchmark/PE inputs.
+The reviewed protocol compares each standalone checkpoint with the same no-fix
+main parent. It reuses the unchanged ordinary constructor workload and existing
+async benchmark export/capture/summary helpers, with one fresh, previously
+unverified EH callback workload. Both versions use the same default 20,000,000
+execution budget and identical benchmark/PE inputs.
 
 The fixed schedule was A/B/B/A with 80 warmups and 24 recorded samples per process:
 48 observations per side per workload, eight serial Node processes total.
-All eight processes completed successfully in 6.707739147 seconds wall time.
-Every raw and summarized measurement passed the numeric, finite and nonnegative
-guards. Complete raw samples, per-process output and exact Git-export inventories
-are retained.
+The shared host ran Linux x64 with Node 24.19.0 and reported nine CPUs. Every raw
+and summarized measurement passed the numeric, finite and nonnegative guards.
+Complete raw samples, per-process output and exact Git-export inventories are
+retained for both comparisons.
+
+### Initial standalone comparison
+
+The first comparison measured `b0285acf9` once. All eight processes completed
+successfully in 6.707739147 seconds wall time.
 
 | Workload / phase | Baseline median ms | Candidate median ms | Median change | Baseline p95 ms | Candidate p95 ms | p95 change |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -133,7 +148,69 @@ The complete 413,374-byte performance report has SHA-256
 `7e7a32902de801c6fa743c161d28479b6fd740739755581d507411c7c0014ba3`.
 All ten timing threshold breaches are listed in the retained review JSON.
 
-**Timing-budget disposition: explicit review/sign-off pending.**
+### Optimized standalone comparison
+
+One approved follow-up measured `6f8da343` after removing the avoidable default
+path projection copy. Both call sites already supply normalized, owned options;
+the explicit execution-budget path keeps the original exclusion/copy behavior.
+The helper, drivers, fixture and protocol remained byte-identical. This source
+change justified the follow-up; no third run or further optimization was made.
+
+All eight processes completed successfully in 7.244332911 seconds wall time.
+The workload results, fresh callback verification, authentic stack proofs,
+paused caller state and scope cleanup all passed. Worktree, graph and benchmark
+packet hashes remained unchanged throughout capture.
+
+| Workload / phase | Baseline median ms | Candidate median ms | Median change | Baseline p95 ms | Candidate p95 ms | p95 change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Ordinary admission | 0.458178 | 0.584459 | +27.56% | 0.812573 | 0.769451 | -5.31% |
+| Ordinary execution | 1.819652 | 2.574436 | +41.48% | 3.828204 | 3.320828 | -13.25% |
+| Ordinary total | 2.290733 | 3.121516 | +36.27% | 4.309738 | 4.093433 | -5.02% |
+| Callback fixture admission | 0.272966 | 0.278995 | +2.21% | 0.536748 | 0.433146 | -19.30% |
+| Fresh callback invocation | 0.377235 | 0.413433 | +9.60% | 0.846933 | 0.768880 | -9.22% |
+| Callback fixture total | 0.677285 | 0.684676 | +1.09% | 1.757110 | 1.183749 | -32.63% |
+
+**Four median measurements still exceed the 5% timing budget.** Ordinary
+admission, execution and total increased by 0.126281 ms, 0.754784 ms and
+0.830783 ms; fresh callback invocation increased by 0.036198 ms. All six p95
+values decreased in this comparison. The original ten breaches remain recorded
+without edits, and the two source checkpoints are not pooled. These measurements
+do not establish a stable regression estimate or isolate option-copy causality.
+
+Per-process ordinary total medians were A1 2.475051 ms, B1 3.068558 ms,
+B2 3.121516 ms and A2 2.189754 ms. Fresh callback medians were A1 0.385587 ms,
+B1 0.421905 ms, B2 0.394504 ms and A2 0.373464 ms. Load averages were
+[2.748047, 2.810547, 2.196777] at the start and
+[2.848633, 2.830566, 2.206543] at the end.
+
+Both workloads retained identical PE hashes across versions. Managed heap
+allocations and allocated bytes were again zero; these counters do not measure
+JavaScript option-copy allocations. Exported runtime source bytes were 2,800,260
+for the baseline and 2,800,972 for the optimized candidate. This is a source
+inventory, not a build-output size measurement.
+
+The complete 413,376-byte report has SHA-256
+`3921e4b58e11e2c2f2d629f3d57361e1a75e65a3fd87be32588a5351b699c954`.
+It is retained as `optimized-performance.json.gz`, with all four breaches in
+`optimized-performance-review.json` and full launcher/source records beside it.
+The unchanged reviewed drivers and protocol are retained in `performance-tools/`.
+
+The follow-up ran this command through the source-guarded capture launcher,
+with `DOTNET_ROOT`, `DOTNET` and `SHARPFORGE_ORACLE_DOTNET` pinned in its manifest:
+
+```sh
+node scripts/limited.js python3 \
+  /workspace/scratch/1692a10afba9/cil-admission-budget-performance-proposal/paired.py \
+  --repository /workspace/scratch/1692a10afba9/p5-cil-admission-budget \
+  --baseline 41ebd76987aa912659310d4015607f46110358ab \
+  --candidate 6f8da343a3df1105e7789e5a7201dd3ae4983855 \
+  --output /workspace/scratch/1692a10afba9/cil-admission-budget-optimized-performance.json
+```
+
+**Timing-budget disposition: the observed budget remains exceeded; explicit
+review/sign-off is pending.** The correctness need is to admit valid EH programs
+at the requested runtime budget while retaining the direct static verifier
+contract. The measured costs above are retained for that decision.
 
 ## Scope and merge readiness
 
@@ -141,6 +218,6 @@ This batch fixes runtime admission configuration. The broader canonical CIL and
 runtime feature qualification remains open; the six retained downstream
 failures are separate follow-up work. No project leaf is closed by this change.
 
-Publication-tree replay and the bounded performance measurement are complete.
-Timing-budget sign-off and the required `core` check remain pending. The earlier
-replay totals above remain evidence for their original source checkpoint.
+Publication-tree replay and both bounded performance measurements are complete.
+Timing-budget sign-off and the required `core` check remain pending. Earlier
+replay totals above remain evidence for their original source checkpoints.

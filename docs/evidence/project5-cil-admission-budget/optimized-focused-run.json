@@ -1,0 +1,33 @@
+{
+  "head": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+  "headAfter": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+  "tree": "c786b606228948bee9db864de8cc412e1ebb3fdd",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a05-cil-admission-budget.test.js",
+    "tests/a03-07-eh-admission.test.js",
+    "tests/a05-callback-verification.test.js",
+    "tests/a05-synchronous-callbacks.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "exitCode": 0,
+  "wallSeconds": 2.8716360070029623,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "node": "v24.19.0",
+  "sourceInputCount": 2313,
+  "staticGraphModuleCount": 1543,
+  "sourceAndGraphUnchanged": true,
+  "beforeSnapshotSha256": "539684cbd655f249717ca244cc84226cb6c0f9c9e0dda61e98e363edfa8f927a",
+  "afterSnapshotSha256": "539684cbd655f249717ca244cc84226cb6c0f9c9e0dda61e98e363edfa8f927a",
+  "statusAfter": "",
+  "logBytes": 3246,
+  "logSha256": "42225f99722c7bdfd39d12aaab8f260ddf4137e3fcadb69f216edd2c49c3b016"
+}

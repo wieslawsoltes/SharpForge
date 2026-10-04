@@ -1,0 +1,419 @@
+{
+  "baseline": "41ebd76987aa912659310d4015607f46110358ab",
+  "candidate": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+  "reportSha256": "3921e4b58e11e2c2f2d629f3d57361e1a75e65a3fd87be32588a5351b699c954",
+  "status": "measurement complete; timing budget exceeded; explicit review pending",
+  "automaticRepeats": 0,
+  "comparisonsForThisSource": 1,
+  "followUpReason": "One authorized owned-options fast path removes the default-path option copy; no third comparison.",
+  "processes": 8,
+  "warmupsPerProcess": 80,
+  "samplesPerProcess": 24,
+  "samplesPerSidePerWorkload": 48,
+  "timingBudgetPercent": 5,
+  "breaches": [
+    {
+      "workload": "ordinary-no-async",
+      "metric": "admissionMs",
+      "statistic": "median",
+      "percentChange": 27.56144991685998,
+      "baselineMs": 0.4581779999999753,
+      "candidateMs": 0.5844585000000393
+    },
+    {
+      "workload": "ordinary-no-async",
+      "metric": "executionMs",
+      "statistic": "median",
+      "percentChange": 41.47960708970524,
+      "baselineMs": 1.8196520000000191,
+      "candidateMs": 2.5744364999999902
+    },
+    {
+      "workload": "ordinary-no-async",
+      "metric": "totalMs",
+      "statistic": "median",
+      "percentChange": 36.267103149955005,
+      "baselineMs": 2.290732999999989,
+      "candidateMs": 3.1215155000000436
+    },
+    {
+      "workload": "late-callback-finally",
+      "metric": "callbackMs",
+      "statistic": "median",
+      "percentChange": 9.595755425325848,
+      "baselineMs": 0.37723450000004277,
+      "candidateMs": 0.4134329999999977
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "ordinary-no-async",
+      "metrics": {
+        "admissionMs": {
+          "baseline": {
+            "median": 0.4581779999999753,
+            "p95": 0.8125730000000431
+          },
+          "candidate": {
+            "median": 0.5844585000000393,
+            "p95": 0.7694510000000037
+          },
+          "medianPercentChange": 27.56144991685998,
+          "p95PercentChange": -5.306846277200583
+        },
+        "executionMs": {
+          "baseline": {
+            "median": 1.8196520000000191,
+            "p95": 3.8282039999999142
+          },
+          "candidate": {
+            "median": 2.5744364999999902,
+            "p95": 3.320828000000006
+          },
+          "medianPercentChange": 41.47960708970524,
+          "p95PercentChange": -13.25363016181791
+        },
+        "totalMs": {
+          "baseline": {
+            "median": 2.290732999999989,
+            "p95": 4.3097380000000385
+          },
+          "candidate": {
+            "median": 3.1215155000000436,
+            "p95": 4.0934330000000045
+          },
+          "medianPercentChange": 36.267103149955005,
+          "p95PercentChange": -5.018982592446042
+        },
+        "allocatedBytes": {
+          "baseline": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "candidate": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "medianPercentChange": null,
+          "p95PercentChange": null
+        },
+        "allocations": {
+          "baseline": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "candidate": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "medianPercentChange": null,
+          "p95PercentChange": null
+        }
+      }
+    },
+    {
+      "name": "late-callback-finally",
+      "metrics": {
+        "admissionMs": {
+          "baseline": {
+            "median": 0.2729655000000548,
+            "p95": 0.5367479999999887
+          },
+          "candidate": {
+            "median": 0.2789945000000671,
+            "p95": 0.43314599999996517
+          },
+          "medianPercentChange": 2.2087040303668593,
+          "p95PercentChange": -19.30179525587905
+        },
+        "callbackMs": {
+          "baseline": {
+            "median": 0.37723450000004277,
+            "p95": 0.8469330000000355
+          },
+          "candidate": {
+            "median": 0.4134329999999977,
+            "p95": 0.7688799999999674
+          },
+          "medianPercentChange": 9.595755425325848,
+          "p95PercentChange": -9.215959231729641
+        },
+        "totalMs": {
+          "baseline": {
+            "median": 0.6772849999999835,
+            "p95": 1.7571100000000115
+          },
+          "candidate": {
+            "median": 0.6846760000000245,
+            "p95": 1.1837490000000344
+          },
+          "medianPercentChange": 1.0912688159402828,
+          "p95PercentChange": -32.63091098451283
+        },
+        "allocatedBytes": {
+          "baseline": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "candidate": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "medianPercentChange": null,
+          "p95PercentChange": null
+        },
+        "allocations": {
+          "baseline": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "candidate": {
+            "median": 0.0,
+            "p95": 0
+          },
+          "medianPercentChange": null,
+          "p95PercentChange": null
+        }
+      }
+    }
+  ],
+  "perProcess": [
+    {
+      "revision": "A",
+      "driver": "packages/runtime/bench/cil-async.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.5700375000000122,
+          "p95": 0.8842349999999897
+        },
+        "executionMs": {
+          "median": 1.9903284999999755,
+          "p95": 3.8282039999999142
+        },
+        "totalMs": {
+          "median": 2.4750510000000077,
+          "p95": 4.357651999999916
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "A",
+      "driver": "packages/runtime/bench/cil-admission-callback.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.2741229999999746,
+          "p95": 0.37711400000000594
+        },
+        "callbackMs": {
+          "median": 0.38558700000004364,
+          "p95": 0.5598529999999755
+        },
+        "totalMs": {
+          "median": 0.6715714999999705,
+          "p95": 0.9167170000000624
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "B",
+      "driver": "packages/runtime/bench/cil-async.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.639994999999999,
+          "p95": 0.7726049999999987
+        },
+        "executionMs": {
+          "median": 2.573475500000029,
+          "p95": 3.320828000000006
+        },
+        "totalMs": {
+          "median": 3.068557999999996,
+          "p95": 4.0934330000000045
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "B",
+      "driver": "packages/runtime/bench/cil-admission-callback.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.3044075000000248,
+          "p95": 0.43314599999996517
+        },
+        "callbackMs": {
+          "median": 0.42190500000003794,
+          "p95": 0.8837679999999182
+        },
+        "totalMs": {
+          "median": 0.731664999999964,
+          "p95": 1.370141999999987
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "B",
+      "driver": "packages/runtime/bench/cil-async.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.5488315000000625,
+          "p95": 0.7438220000000229
+        },
+        "executionMs": {
+          "median": 2.5744364999999902,
+          "p95": 3.1465220000000045
+        },
+        "totalMs": {
+          "median": 3.1215155000000436,
+          "p95": 3.8851569999999356
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "B",
+      "driver": "packages/runtime/bench/cil-admission-callback.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.2626309999999421,
+          "p95": 0.413236999999981
+        },
+        "callbackMs": {
+          "median": 0.39450449999998227,
+          "p95": 0.6043480000000727
+        },
+        "totalMs": {
+          "median": 0.6580364999999802,
+          "p95": 1.077764000000002
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "A",
+      "driver": "packages/runtime/bench/cil-async.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.42471400000005133,
+          "p95": 0.5528919999999289
+        },
+        "executionMs": {
+          "median": 1.7214475000000107,
+          "p95": 2.815874000000008
+        },
+        "totalMs": {
+          "median": 2.1897544999999923,
+          "p95": 3.255288999999948
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    },
+    {
+      "revision": "A",
+      "driver": "packages/runtime/bench/cil-admission-callback.mjs",
+      "metrics": {
+        "admissionMs": {
+          "median": 0.2729655000000548,
+          "p95": 0.6965119999999843
+        },
+        "callbackMs": {
+          "median": 0.37346350000001394,
+          "p95": 1.489417000000003
+        },
+        "totalMs": {
+          "median": 0.7003784999999993,
+          "p95": 1.9436239999999998
+        },
+        "allocatedBytes": {
+          "median": 0,
+          "p95": 0
+        },
+        "allocations": {
+          "median": 0,
+          "p95": 0
+        }
+      }
+    }
+  ],
+  "sourceExports": {
+    "A": {
+      "commit": "41ebd76987aa912659310d4015607f46110358ab",
+      "tree": "bce2feabfb398f05f887dadb6dd5175a454ae4fb",
+      "bytes": 2800260
+    },
+    "B": {
+      "commit": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+      "tree": "c786b606228948bee9db864de8cc412e1ebb3fdd",
+      "bytes": 2800972
+    }
+  },
+  "protocolMatchesPrior": true,
+  "workloadHashesMatchPrior": true,
+  "priorComparison": {
+    "candidate": "b0285acf9d21205870c7f45f7d8a2ee65f917f25",
+    "report": "publication-performance.json.gz",
+    "reportSha256": "7e7a32902de801c6fa743c161d28479b6fd740739755581d507411c7c0014ba3",
+    "breaches": 10,
+    "review": "publication-performance-review.json",
+    "preservedWithoutEdits": true
+  },
+  "limits": [
+    "Managed allocation counters do not count JavaScript option-copy allocations.",
+    "Exported source bytes are not a build-output size measurement.",
+    "Two separate shared-host checkpoints do not establish a stable regression estimate or isolate option-copy causality.",
+    "Follow-up timings are compared with their own no-fix baseline; results are not pooled across source checkpoints."
+  ],
+  "rootReview": "pending"
+}

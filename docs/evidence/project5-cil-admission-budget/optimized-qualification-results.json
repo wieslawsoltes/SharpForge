@@ -1,0 +1,56 @@
+{
+  "head": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+  "tree": "c786b606228948bee9db864de8cc412e1ebb3fdd",
+  "counts": {
+    "tests": 30,
+    "suites": 0,
+    "pass": 30,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testDurationMs": 2681.576129,
+  "wallSeconds": 2.8716360070029623,
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a05-cil-admission-budget.test.js",
+    "tests/a03-07-eh-admission.test.js",
+    "tests/a05-callback-verification.test.js",
+    "tests/a05-synchronous-callbacks.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "sourceAndGraphUnchanged": true,
+  "sourceInputCount": 2313,
+  "staticGraphModuleCount": 1543,
+  "sourceSnapshotSha256": "539684cbd655f249717ca244cc84226cb6c0f9c9e0dda61e98e363edfa8f927a",
+  "logSha256": "42225f99722c7bdfd39d12aaab8f260ddf4137e3fcadb69f216edd2c49c3b016",
+  "performance": {
+    "reportSha256": "3921e4b58e11e2c2f2d629f3d57361e1a75e65a3fd87be32588a5351b699c954",
+    "processes": 8,
+    "exitCodes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "wallSeconds": 7.244332911002857,
+    "timingThresholdBreaches": 4,
+    "explicitTimingReview": "pending",
+    "unchangedWorkloadAndProtocol": true
+  },
+  "originalStandaloneEvidencePreserved": true,
+  "originalIntegrationReplayNotRerun": true
+}
