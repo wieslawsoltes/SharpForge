@@ -1,0 +1,89 @@
+{
+  "qualifiedHead": "7c02d3f67650428fea2564d84cc4bd8bbd7797d6",
+  "parent": "8f7de2825158ee7dc2dbe8ee6ab30830da86ca81",
+  "serial": {
+    "node": "v24.21.0",
+    "concurrency": 1,
+    "maxRuns": 1,
+    "heapMiB": 1024,
+    "outerLimiter": true
+  },
+  "tests": {
+    "tests": 55,
+    "passed": 55,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native": {
+    "cases": 56,
+    "predeclaredDifferences": 7,
+    "oracle": "ILVerify 10.0.5",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5"
+  },
+  "browsers": {
+    "chromium": "153.0.8010.12",
+    "firefox": "155.0",
+    "webkit": "26.6",
+    "checksPerEngine": 59
+  },
+  "checks": {
+    "syntax": 3674,
+    "static": 3670,
+    "errors": 0,
+    "nodeManifest": 998,
+    "browserManifest": 37,
+    "manifestGaps": 0,
+    "structure": "272 inherited findings; no new owned source findings"
+  },
+  "rawSamples": 120,
+  "existingControls": {
+    "Add_0_0": {
+      "medianMs": {
+        "before": 2.1835829999999987,
+        "after": 2.335250000000002,
+        "percent": 6.94578589410173,
+        "deltaMicrosecondsPerCall": 0.15166700000000333
+      },
+      "p95Ms": {
+        "before": 2.388542000000001,
+        "after": 2.779584,
+        "percent": 16.371577305318418,
+        "deltaMicrosecondsPerCall": 0.3910419999999988
+      }
+    },
+    "Diamond": {
+      "medianMs": {
+        "before": 2.0601249999999993,
+        "after": 2.1425419999999917,
+        "percent": 4.000582488926274,
+        "deltaMicrosecondsPerCall": 0.08241699999999241
+      },
+      "p95Ms": {
+        "before": 2.5891249999999957,
+        "after": 2.7253749999999854,
+        "percent": 5.262395596967706,
+        "deltaMicrosecondsPerCall": 0.13624999999998977
+      }
+    },
+    "MixedJoin": {
+      "medianMs": {
+        "before": 12.710332999999991,
+        "after": 12.400375000000054,
+        "percent": -2.438630050054058,
+        "deltaMicrosecondsPerCall": -0.3099579999999378
+      },
+      "p95Ms": {
+        "before": 17.879332999999974,
+        "after": 12.628833999999983,
+        "percent": -29.366302423026625,
+        "deltaMicrosecondsPerCall": -5.250498999999991
+      }
+    }
+  },
+  "performanceAcceptance": {
+    "reviewer": "root",
+    "decision": "Accepted",
+    "reason": "The only existing runtime integration change adds the memory contribution to the shared transfer registry; canonical slots and the existing dataflow/relation policy are retained without per-transfer allocations. Accept the fixed-sample existing Add median +0.151667 microseconds (+6.9458%), p95 +0.391042 microseconds (+16.3716%), and Diamond p95 +0.136250 microseconds (+5.2624%) per verification. All measurements retained; no causal, noise, speedup, allocation or peak-memory claim."
+  }
+}

@@ -49,3 +49,5 @@ export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog 
 
 export { AssemblySymbolIndex } from './browser/index.js';
 export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
+
+export { AssemblyUsageAnalysis } from './browser/analyzers.js';
