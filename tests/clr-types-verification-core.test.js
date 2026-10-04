@@ -63,6 +63,11 @@ test('the prepared lookup owns the token selection and bounded result records', 
   const authority = await pending;
   assert.equal(authority.resolveType(fixture.input.tokens.object).value, fixture.bindingOptions.object);
   assert.equal(authority.resolveType(fixture.input.tokens.other).reason, 'unprepared-core-binding');
+  const custom = [fixture.input.tokens.object];
+  custom[Symbol.iterator] = function* () { yield fixture.input.tokens.object; yield fixture.input.tokens.valueType; };
+  const bounded = await prepareVerificationCoreTypes(fixture.module, { ...fixture.bindingOptions, tokens: custom, maxBindings: 1 });
+  assert.equal(bounded.resolveType(fixture.input.tokens.object).value, fixture.bindingOptions.object);
+  assert.equal(bounded.resolveType(fixture.input.tokens.valueType).reason, 'unprepared-core-binding');
   assert.throws(() => { authority.object = null; }, TypeError);
   assert.throws(() => { authority.resolveType(fixture.input.tokens.object).value.flags = 0; }, TypeError);
   fixture.context.unload();

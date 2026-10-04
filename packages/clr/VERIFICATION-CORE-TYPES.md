@@ -17,7 +17,8 @@ core module's image; tokens and flags cannot prove two snapshots' provenance.
 `tokens` is an explicit array of input-module TypeDef/TypeRef tokens. Prepare
 the relevant external base TypeRefs, plus root TypeDefs when inspecting the
 core module itself. The helper validates and owns the complete selection
-before awaiting any resolution. `maxBindings` defaults to 4,096 and can range
+before awaiting any resolution, using the validated array length and numeric
+indices rather than a caller-overridden iterator. `maxBindings` defaults to 4,096 and can range
 from zero to 65,535; duplicate input entries count against that limit but are
 resolved once. The existing loader separately bounds metadata and traversal.
 

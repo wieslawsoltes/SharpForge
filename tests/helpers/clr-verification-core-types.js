@@ -8,7 +8,7 @@ function definition(builder, name, base = 0, flags = 1) {
 }
 
 export function coreBindingImage(name = 'BindingCore') {
-  const builder = new MetadataBuilder(name, { version: [1, 0, 0, 0] });
+  const builder = new MetadataBuilder(name, { assemblyVersion: [1, 0, 0, 0] });
   definition(builder, '<Module>', 0, 0);
   const object = definition(builder, 'Root');
   const valueType = definition(builder, 'ValueRoot', object, 0x81);
@@ -22,7 +22,7 @@ export function coreBindingImage(name = 'BindingCore') {
 }
 
 export function inputBindingImage(name = 'BindingInput', { cyclic = false } = {}) {
-  const builder = new MetadataBuilder(name, { version: [1, 0, 0, 0],
+  const builder = new MetadataBuilder(name, { assemblyVersion: [1, 0, 0, 0],
     assemblyReferences: ['BindingCore', 'OtherCore', 'MissingCore'].map(name => ({ name, version: [1, 0, 0, 0] })) });
   const tokens = {};
   definition(builder, '<Module>', 0, 0);

@@ -35,10 +35,12 @@ function prepareOptions(module, options) {
   }
   if (!Number.isSafeInteger(maxBindings) || maxBindings < 0 || maxBindings > 65535) throw invalid('Invalid core binding limit');
   if (!Array.isArray(tokens)) throw invalid('An explicit core binding token array is required');
-  if (tokens.length > maxBindings) throw loadError(LoadErrorCode.LimitExceeded, 'Core binding limit exceeded');
+  const count = tokens.length;
+  if (count > maxBindings) throw loadError(LoadErrorCode.LimitExceeded, 'Core binding limit exceeded');
   const pending = new Set();
-  for (const token of tokens) {
+  for (let index = 0; index < count; index++) {
     checkCancellation(signal);
+    const token = tokens[index];
     requireToken(module, token);
     pending.add(token);
   }
