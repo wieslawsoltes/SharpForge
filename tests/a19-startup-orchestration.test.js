@@ -128,20 +128,36 @@ test('default build snapshots use current shared document revisions without chan
   workbench.dispose();
 });
 
-test('unsupported launch profile options fail explicitly while managed IL arguments remain supported', async () => {
+test('source and managed IL profiles forward program argv separately from method parameters', async () => {
   const fake = fakeWorkers((message, worker) => message.method === 'build' ? compileResult() : fakeRuntime(message, worker));
   const workbench = createWorkbenchServices({ workerFactory: fake.factory, projects: [projects[2]] });
   workbench.profiles.set('B', { id: 'args', arguments: ['one'] });
-  const unsupported = await workbench.launches.startNewInstance('B', { profile: 'args' });
-  assert.equal(unsupported.failed[0].error.code, 'LAUNCH_CAPABILITY');
-  assert.equal(workbench.sessions.list().length, 0);
-  const supported = await workbench.launches.startNewInstance('B', { profile: 'args', managedIL: true });
-  assert.equal(supported.started.length, 1);
-  assert.deepEqual(workbench.sessions.get(supported.started[0]).lastLaunch.arguments, ['one']);
+  for (const managedIL of [false, true]) {
+    const result = await workbench.launches.startNewInstance('B', { profile: 'args', managedIL });
+    assert.equal(result.started.length, 1);
+    const launch = workbench.sessions.get(result.started[0]).lastLaunch;
+    assert.deepEqual(launch.programArguments, ['one']);
+    assert.equal(launch.arguments, undefined);
+  }
   workbench.profiles.set('B', { id: 'env', environment: { TEST_VALUE: 'one' } });
   const environment = await workbench.launches.startNewInstance('B', { profile: 'env', managedIL: true });
-  assert.equal(environment.failed[0].error.code, 'LAUNCH_CAPABILITY');
-  assert.equal(workbench.sessions.get(supported.started[0]).live, true);
+  assert.equal(environment.started.length, 1);
+  assert.deepEqual(workbench.sessions.get(environment.started[0]).lastLaunch.environment, { TEST_VALUE: 'one' });
+  workbench.dispose();
+});
+
+test('an explicitly restricted external launch target refuses unsupported profile capabilities', async () => {
+  const fake = fakeWorkers((message, worker) => message.method === 'build' ? compileResult() : fakeRuntime(message, worker));
+  const workbench = createWorkbenchServices({
+    workerFactory: fake.factory, projects: [projects[2]], launchCapabilities: () => ({ arguments: false, environment: false })
+  });
+  workbench.profiles.set('B', { id: 'args', arguments: ['one'] });
+  workbench.profiles.set('B', { id: 'env', environment: { TEST_VALUE: 'one' } });
+  for (const profile of ['args', 'env']) {
+    const result = await workbench.launches.startNewInstance('B', { profile, managedIL: true });
+    assert.equal(result.failed[0].error.code, 'LAUNCH_CAPABILITY');
+    assert.equal(workbench.sessions.list().length, 0);
+  }
   workbench.dispose();
 });
 

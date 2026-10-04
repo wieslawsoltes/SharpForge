@@ -1,10 +1,11 @@
 import { WorkbenchEvents, abortError, workbenchError } from './state-events.js';
 import { projectBuildOrder } from './build-queue.js';
+import { runtimeLaunchCapabilities } from '@sharpforge/runtime';
 
 /** Independent startup roots may fail separately; dependencies always build before their roots. */
 export class LaunchOrchestrator {
   constructor({ builds, sessions, startup, profiles, breakpoints, output, queue, onApplication,
-    launchOptions = () => ({}), launchCapabilities = () => ({}) }) {
+    launchOptions = () => ({}), launchCapabilities = () => runtimeLaunchCapabilities }) {
     Object.assign(this, { builds, sessions, startup, profiles, breakpoints, output, queue, onApplication, launchOptions, launchCapabilities });
     this.events = new WorkbenchEvents();
     this.operations = new Map();
@@ -90,7 +91,7 @@ export class LaunchOrchestrator {
         stopOnEntry: debugging && (options.stopOnEntry ?? profile.stopOnEntry)
       };
       const capabilities = await this.launchCapabilities(target.projectId, profile, built, launch);
-      if (launch.arguments?.length && !(capabilities.arguments ?? launch.managedIL)) {
+      if (launch.programArguments?.length && !capabilities.arguments) {
         throw workbenchError('LAUNCH_CAPABILITY', 'This launch target does not support program arguments');
       }
       if (Object.keys(launch.environment ?? {}).length && !capabilities.environment) {
