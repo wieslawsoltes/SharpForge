@@ -33,7 +33,25 @@ The independent C# fixture covers overridden, static, generic, protected,
 explicit-interface, interface and struct events. Authored metadata covers
 raise/Other links, nil event types, EventPtr order and malformed/oversized rows.
 The native fixture does not independently qualify raise/Other links, which C#
-does not emit here. Validation is pending its scheduled serial slot.
+does not emit here. SDK 10.0.201/CoreCLR 10.0.5 captured eight events. The
+41-case Event/Property/Field/Method/Buffer scope passes: the first run caught a
+wrong collectible-context option in the new unload test, then all seven Event
+cases passed after correcting that option. A subsequent cache simplification
+passed all 13 affected Event/Property cases. Node 24.21.0 syntax/static checks
+pass (2,147/2,143 modules); structure reports 284 existing findings, none in CLR.
+All validation ran serially through the limiter.
+
+On a shared Apple M3 Pro/darwin-arm64, final new Event cold indexing/accessor
+linking measured median 35.916 µs / p95 89.208 µs; cached identity/accessor queries
+measured 0.009438 µs / p95 0.035767 µs. Property control parent/initial/final cold
+medians were 54.041/64.083/50.250 µs and p95 146.042/143.167/170.125 µs; cached
+medians were 0.010304/0.012904/0.009421 µs and p95 0.035029/0.037025/0.036742 µs.
+The root reviewer accepted final cold p95 +24.083 µs (+16.5%) and cached p95
++1.713 ns for the shared accessor capability. One validated-table cache shortcut
+was applied. Causality remains uncertain on this shared host; no general speedup
+or significance is claimed. Allocations were not measured. Full initial/final
+measurements, exact source identities and the identical control fixture hash
+are retained in the benchmark JSON.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-event-definitions.mjs tests/fixtures/clr-event-definitions
