@@ -64,7 +64,12 @@ export class EditorModel {
   cachedVisualColumnAtOffset(offset, options) { return this.#columnIndex().getCached(offset, options); }
   get visualColumnStatistics() { return this.#visualColumns?.statistics ?? null; }
   #columnIndex() {
-    if (this.#disposed) throw new Error('EditorModel is disposed');
+    if (this.#disposed) {
+      const error = new Error('EditorModel is disposed');
+      error.name = 'VisualColumnError';
+      error.code = 'VISUAL_COLUMN_DISPOSED';
+      throw error;
+    }
     return this.#visualColumns ??= new VisualColumnIndex(this.buffer, this.#visualColumnOptions);
   }
   setSelections(selections, { primaryIndex = 0, notify = true } = {}) {

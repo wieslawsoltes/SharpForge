@@ -78,6 +78,13 @@ test('default and explicit native segmentation retain Unicode 16.0 host compatib
   }
 });
 
+test('existing editor grapheme fixtures agree with the actual host Intl segmenter', () => {
+  const native = new GraphemeSegmenter({ segmenter: new Intl.Segmenter('und', { granularity: 'grapheme' }) });
+  for (const text of ['a\u0301b', '👩‍👩‍👧‍👦!', '🇵🇱🇯🇵x', '👍🏽👍', '\r\nX', '각각', 'क्\u200dष', 'a\t界😀e\u0301\ud800']) {
+    assert.deepEqual(graphemeSegments(text), [...native.segments(text)], `Host Unicode ${process.versions.unicode}: ${JSON.stringify(text)}`);
+  }
+});
+
 test('chunked columns agree at every UTF-16 position, including split graphemes, pairs, tabs and CRLF', async () => {
   const text = '\u0600a\t界😀e\u0301👩‍👩‍👧‍👦🇵🇱🇯🇵क्\u200dष각\ud800a\udc00\r\n\u0301\u200dZ\nEND';
   for (const chunkSize of [1, 3, 7]) for (const tabSize of [1, 4, 8]) for (const ambiguousWidth of [1, 2]) {
@@ -178,7 +185,7 @@ test('model columns survive undo/redo, invalidate silent rollback, and retain sh
   assert.equal(await model.visualColumnAtOffset(model.length), 7);
   assert.throws(() => model.applyEdits([{ start: 0, end: 0, text: 'x' }]), { code: 'SFEDITOR_READ_ONLY' });
   model.dispose();
-  await assert.rejects(model.visualColumnAtOffset(0), /disposed/);
+  await assert.rejects(model.visualColumnAtOffset(0), { code: 'VISUAL_COLUMN_DISPOSED' });
 });
 
 test('cancel, stale text and disposal reject promptly and release pending work', async () => {

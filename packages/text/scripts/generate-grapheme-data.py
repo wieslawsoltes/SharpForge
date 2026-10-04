@@ -11,6 +11,9 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+if len(sys.argv) != 4:
+    raise SystemExit('Expected GraphemeBreakProperty.txt, DerivedCoreProperties.txt and emoji-data.txt')
+expected = json.loads((ROOT / 'reference/unicode-16.0.0/sources.json').read_text())['sources']
 CLASSES = dict(Other=0, CR=1, LF=2, Control=3, Extend=4, ZWJ=5,
                Regional_Indicator=6, Prepend=7, SpacingMark=8, L=9, V=10, T=11, LV=12, LVT=13)
 SOURCES = ['auxiliary/GraphemeBreakProperty.txt', 'DerivedCoreProperties.txt', 'emoji/emoji-data.txt']
@@ -18,6 +21,8 @@ values = bytearray(0x110000)
 provenance = []
 for position, argument in enumerate(sys.argv[1:]):
     data = pathlib.Path(argument).read_bytes()
+    if hashlib.sha256(data).hexdigest() != expected[position]['sha256']:
+        raise ValueError('Input differs from the pinned Unicode 16.0 source: ' + argument)
     provenance.append(dict(url='https://www.unicode.org/Public/16.0.0/ucd/' + SOURCES[position],
                            sha256=hashlib.sha256(data).hexdigest(), bytes=len(data)))
     for raw in data.decode().splitlines():
