@@ -1,0 +1,45 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+✔ A02-T41 attributes on types carry their constructor, fixed and named arguments (143.195104ms)
+✔ A02-T41 attributes on the assembly, members and parameters; typeof, arrays, boxed and null arguments (26.755018ms)
+✔ A02-T41 parameter attributes: declared, params and indexer parameters repeated on the accessor (26.541604ms)
+✔ A02-T41 constructed generic typeof arguments are emitted as reflection type names (14.198951ms)
+✔ A02-T41 a program without attributes has no CustomAttribute rows; pseudo-attributes are not rows (11.342202ms)
+✔ A02-T41 executable attributes use module, return, backing-field, accessor and type-parameter targets (116.305954ms)
+✔ A02-T41 reference attributes use module, return, backing-field, accessor and type-parameter targets (13.647671ms)
+✔ A02-T41 constructed, nested, open generic, array and pointer typeof arguments serialize as reflection type names (100.818695ms)
+✔ A02-T41 boxed typeof and array arguments carry their actual descriptor (5.493956ms)
+✔ SF-A02-T41 an attribute is bound to its class, constructor, arguments and location (70.136404ms)
+✔ SF-A02-T41 well-known attributes are decoded by the class they bind to, not by the name written (13.137211ms)
+✔ SF-A02-T41 an obsolete use is not reported inside an obsolete declaration, and CS0619 fails the compilation (87.50188ms)
+✔ SF-A02-T41 locations and targets of each declaration kind (9.70163ms)
+✔ SF-A02-T41 an attribute class the registry does not list is a framework gap, never a false error (8.287101ms)
+✔ SF-A02-T41 attribute arguments see constants of the enclosing type and report their own binding errors (9.731845ms)
+✔ A02-T29 optional primitive, enum and null defaults are emitted for both assembly APIs (79.607966ms)
+✔ A02-T80 synthesized delegate Invoke preserves defaults and params attributes (21.069551ms)
+✔ A02-T29 a mandatory parameter is not converted to an optional null default (3.307411ms)
+✔ A02-T29 nullable and default value-type defaults retain their constant metadata (4.581074ms)
+✔ A02-T29 decimal defaults use DecimalConstant rather than an invalid Constant row (34.602303ms)
+✔ A02-T81 non-array params metadata uses ParamCollectionAttribute (8.375011ms)
+✔ A02-T29 emitted defaults survive metadata import and omitted-argument code generation (47.171137ms)
+✔ A02-T29 a separately emitted consumer passes imported defaults on real .NET (235.353469ms)
+✔ A02-T41 marshal oracle is a hash-pinned genuine Roslyn assembly (2.694401ms)
+✔ A02-T41 executable pseudo-attributes write layout, flags and field offsets (288.533829ms)
+✔ A02-T48 executable P/Invoke writes shared ModuleRefs, entry points and exact ImplMap flags (43.807733ms)
+✔ A02-T41 executable marshal descriptors preserve array sizing and managed marshaler strings (45.827292ms)
+✔ A02-T41 executable marshal blobs and their targets match genuine Roslyn byte for byte (39.715932ms)
+✔ A02-T41 reference pseudo-attributes write layout, flags and field offsets (26.142559ms)
+✔ A02-T48 reference P/Invoke writes shared ModuleRefs, entry points and exact ImplMap flags (29.938128ms)
+✔ A02-T41 reference marshal descriptors preserve array sizing and managed marshaler strings (27.444252ms)
+✔ A02-T41 reference marshal blobs and their targets match genuine Roslyn byte for byte (32.523459ms)
+✔ SF-A02-T48 destructor rules: one per class, named like it, without modifiers (65.779595ms)
+✔ SF-A02-T48 extern rules read the bound attributes of the member (59.02074ms)
+✔ SF-A02-T48 an extern method that is never called does not stop the program; a call is not executable (79.54827ms)
+✔ SF-A02-T48 a destructor is compiled and never called (36.558747ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7064.727256

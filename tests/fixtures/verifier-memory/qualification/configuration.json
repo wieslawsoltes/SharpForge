@@ -1,0 +1,7 @@
+{
+  "candidate": "/tmp/sharpforge-project6-a03-indirect-transfers",
+  "parent": "8f7de2825158ee7dc2dbe8ee6ab30830da86ca81",
+  "head": "7c02d3f67650428fea2564d84cc4bd8bbd7797d6",
+  "baseline": "/tmp/sharpforge-project6-a03-indirect-transfers-baseline",
+  "output": "/tmp/a03-memory-validation"
+}

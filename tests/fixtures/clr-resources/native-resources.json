@@ -1,0 +1,355 @@
+{
+  "sdk": "10.0.201",
+  "sources": [
+    {
+      "path": "tests/fixtures/clr-resources/Program.cs",
+      "sha256": "7128ed7393586530d7ef96af7f527d76d5f7b5ed96d1388dc2c4038e627e56b4"
+    },
+    {
+      "path": "tests/fixtures/clr-resources/Sample.resx",
+      "sha256": "2212dfff6e861b74ddcd0bd350a8b633fe9555f49aca4cf303c341603dcfba0f"
+    }
+  ],
+  "runtime": ".NET 10.0.5",
+  "files": [
+    {
+      "name": "native.resources",
+      "sha256": "17535e3cc3f5203070cf9816f03c4b54fb724b1215f8349ed16c9e12e61a719d",
+      "image": "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",
+      "entries": [
+        {
+          "name": "negative-infinity",
+          "typeName": "ResourceTypeCode.Double",
+          "rawData": "AAAAAAAA8P8=",
+          "serialized": false,
+          "value": "-Infinity"
+        },
+        {
+          "name": "single",
+          "typeName": "ResourceTypeCode.Single",
+          "rawData": "zczMPQ==",
+          "serialized": false,
+          "value": 0.10000000149011612
+        },
+        {
+          "name": "decimal-negzero",
+          "typeName": "ResourceTypeCode.Decimal",
+          "rawData": "AAAAAAAAAAAAAAAAAAAcgA==",
+          "serialized": false,
+          "value": {
+            "coefficient": "0",
+            "scale": 28,
+            "negative": true
+          }
+        },
+        {
+          "name": "boolean",
+          "typeName": "ResourceTypeCode.Boolean",
+          "rawData": "AQ==",
+          "serialized": false,
+          "value": true
+        },
+        {
+          "name": "decimal",
+          "typeName": "ResourceTypeCode.Decimal",
+          "rawData": "DDAAAAAAAAAAAAAAAAAEgA==",
+          "serialized": false,
+          "value": {
+            "coefficient": "12300",
+            "scale": 4,
+            "negative": true
+          }
+        },
+        {
+          "name": "local-date",
+          "typeName": "ResourceTypeCode.DateTime",
+          "rawData": "AAAAAAAA3Ig=",
+          "serialized": false,
+          "value": {
+            "binary": "-8584986789675008000",
+            "kindBits": 2
+          }
+        },
+        {
+          "name": "double-negzero",
+          "typeName": "ResourceTypeCode.Double",
+          "rawData": "AAAAAAAAAIA=",
+          "serialized": false,
+          "value": "-0"
+        },
+        {
+          "name": "empty-bytes",
+          "typeName": "ResourceTypeCode.ByteArray",
+          "rawData": "AAAAAA==",
+          "serialized": false,
+          "value": []
+        },
+        {
+          "name": "long-string",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "ggLFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbzFvMW8xbw=",
+          "serialized": false,
+          "value": "żżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżżż"
+        },
+        {
+          "name": "﻿Heading",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "B0JPTSBrZXk=",
+          "serialized": false,
+          "value": "BOM key"
+        },
+        {
+          "name": "single-negzero",
+          "typeName": "ResourceTypeCode.Single",
+          "rawData": "AAAAgA==",
+          "serialized": false,
+          "value": "-0"
+        },
+        {
+          "name": "decimal-max",
+          "typeName": "ResourceTypeCode.Decimal",
+          "rawData": "////////////////AAAAAA==",
+          "serialized": false,
+          "value": {
+            "coefficient": "79228162514264337593543950335",
+            "scale": 0,
+            "negative": false
+          }
+        },
+        {
+          "name": "",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "CWVtcHR5IGtleQ==",
+          "serialized": false,
+          "value": "empty key"
+        },
+        {
+          "name": " a",
+          "typeName": "ResourceTypeCode.Int32",
+          "rawData": "AQAAAA==",
+          "serialized": false,
+          "value": 1
+        },
+        {
+          "name": "!@",
+          "typeName": "ResourceTypeCode.Int32",
+          "rawData": "AgAAAA==",
+          "serialized": false,
+          "value": 2
+        },
+        {
+          "name": "infinity",
+          "typeName": "ResourceTypeCode.Single",
+          "rawData": "AACAfw==",
+          "serialized": false,
+          "value": "Infinity"
+        },
+        {
+          "name": "false",
+          "typeName": "ResourceTypeCode.Boolean",
+          "rawData": "AA==",
+          "serialized": false,
+          "value": false
+        },
+        {
+          "name": "bytes",
+          "typeName": "ResourceTypeCode.ByteArray",
+          "rawData": "BAAAAAB/gP8=",
+          "serialized": false,
+          "value": [
+            0,
+            127,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "ulong",
+          "typeName": "ResourceTypeCode.UInt64",
+          "rawData": "//////////8=",
+          "serialized": false,
+          "value": "18446744073709551615"
+        },
+        {
+          "name": "bom",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "Cu+7v2NvbnRlbnQ=",
+          "serialized": false,
+          "value": "﻿content"
+        },
+        {
+          "name": "int",
+          "typeName": "ResourceTypeCode.Int32",
+          "rawData": "AAAAgA==",
+          "serialized": false,
+          "value": -2147483648
+        },
+        {
+          "name": "nan",
+          "typeName": "ResourceTypeCode.Double",
+          "rawData": "AAAAAAAA+P8=",
+          "serialized": false,
+          "value": "NaN"
+        },
+        {
+          "name": "sbyte",
+          "typeName": "ResourceTypeCode.SByte",
+          "rawData": "gA==",
+          "serialized": false,
+          "value": -128
+        },
+        {
+          "name": "short",
+          "typeName": "ResourceTypeCode.Int16",
+          "rawData": "AIA=",
+          "serialized": false,
+          "value": -32768
+        },
+        {
+          "name": "empty-string",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "AA==",
+          "serialized": false,
+          "value": ""
+        },
+        {
+          "name": "double",
+          "typeName": "ResourceTypeCode.Double",
+          "rawData": "GC1EVPshCUA=",
+          "serialized": false,
+          "value": 3.141592653589793
+        },
+        {
+          "name": "surrogate-char",
+          "typeName": "ResourceTypeCode.Char",
+          "rawData": "ANg=",
+          "serialized": false,
+          "value": {
+            "codeUnit": 55296
+          }
+        },
+        {
+          "name": "opaque",
+          "typeName": "Fixture.Serialized, Fixture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "rawData": "3q2+7w==",
+          "serialized": true,
+          "value": [
+            222,
+            173,
+            190,
+            239
+          ]
+        },
+        {
+          "name": "ushort",
+          "typeName": "ResourceTypeCode.UInt16",
+          "rawData": "//8=",
+          "serialized": false,
+          "value": 65535
+        },
+        {
+          "name": "date",
+          "typeName": "ResourceTypeCode.DateTime",
+          "rawData": "AEAW+V1o3Eg=",
+          "serialized": false,
+          "value": {
+            "binary": "5250186018427387904",
+            "kindBits": 1
+          }
+        },
+        {
+          "name": "long",
+          "typeName": "ResourceTypeCode.Int64",
+          "rawData": "AAAAAAAAAIA=",
+          "serialized": false,
+          "value": "-9223372036854775808"
+        },
+        {
+          "name": "byte",
+          "typeName": "ResourceTypeCode.Byte",
+          "rawData": "/w==",
+          "serialized": false,
+          "value": 255
+        },
+        {
+          "name": "char",
+          "typeName": "ResourceTypeCode.Char",
+          "rawData": "QQE=",
+          "serialized": false,
+          "value": {
+            "codeUnit": 321
+          }
+        },
+        {
+          "name": "null",
+          "typeName": "ResourceTypeCode.Null",
+          "rawData": "",
+          "serialized": false,
+          "value": null
+        },
+        {
+          "name": "text",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "D1phxbzDs8WCxIcA8J+Ygw==",
+          "serialized": false,
+          "value": "Zażółć\u0000😃"
+        },
+        {
+          "name": "uint",
+          "typeName": "ResourceTypeCode.UInt32",
+          "rawData": "/////w==",
+          "serialized": false,
+          "value": 4294967295
+        },
+        {
+          "name": "span",
+          "typeName": "ResourceTypeCode.TimeSpan",
+          "rawData": "AAAAAAAAAIA=",
+          "serialized": false,
+          "value": {
+            "ticks": "-9223372036854775808"
+          }
+        },
+        {
+          "name": "stream",
+          "typeName": "ResourceTypeCode.Stream",
+          "rawData": "AwAAAAkIBw==",
+          "serialized": false,
+          "value": [
+            9,
+            8,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "name": "resgen.resources",
+      "sha256": "068b1cbc76d4698a7b4042c02323018745ab60cc1ce720782b90157f6dcb3a60",
+      "image": "zsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNldAIAAAADAAAAAAAAAFBBRFBBRFDQ3/0LgpeuQWSry1oAAAAAJAAAAA8AAAAHAQAACkUAbQBwAHQAeQAAAAAAEEcAcgBlAGUAdABpAG4AZwACAAAAEk0AdQBsAHQAaQBsAGkAbgBlACMAAAABAAEfWmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQg8J+YgwEWRmlyc3QgbGluZQpTZWNvbmQgbGluZQ==",
+      "entries": [
+        {
+          "name": "Empty",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "AA==",
+          "serialized": false,
+          "value": ""
+        },
+        {
+          "name": "Multiline",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "FkZpcnN0IGxpbmUKU2Vjb25kIGxpbmU=",
+          "serialized": false,
+          "value": "First line\nSecond line"
+        },
+        {
+          "name": "Greeting",
+          "typeName": "ResourceTypeCode.String",
+          "rawData": "H1phxbzDs8WCxIcgZ8SZxZtsxIUgamHFusWEIPCfmIM=",
+          "serialized": false,
+          "value": "Zażółć gęślą jaźń 😃"
+        }
+      ]
+    }
+  ]
+}

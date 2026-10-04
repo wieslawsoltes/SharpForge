@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "scope": "Prior combined delta-writer, revision-map and baseline Portable PDB regression run",
+  "source": "Root-provided pdb-writer-revision-final.tap",
+  "log": "pre-integration-node.tap",
+  "logSha256": "79ef595a15a011bf761c3bb91792b0b89d84c18d2cadc5577d4c7c6038d282ba",
+  "testedCommit": null,
+  "nodeVersion": null,
+  "provenanceLimit": "The original log does not identify its exact checkout commit or Node version.",
+  "tests": {
+    "passed": 48,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "writerNativeReference": {
+    "path": "../reference.json",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "outputSha256": "8aa1d9b16d0dcad279fb9c63b416216f40ef367bdf30cf5ce456627bea64fae5",
+    "nativeSourceSha256": "1e426ad9dfb7a193a62fa038a42d8db71851aee435e871fe9b10b98510b003fd"
+  },
+  "postMergeValidation": "Pending the root agent's coordinated slot",
+  "browser": "Not run",
+  "benchmarks": "Pending",
+  "managedApplyUpdate": false
+}

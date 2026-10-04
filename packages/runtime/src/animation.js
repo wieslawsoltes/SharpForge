@@ -1,6 +1,7 @@
 import {AnimationClock,easing,frameworkType,propertiesFor,XAML,CONTROLS,MEDIA} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
 import {updateBindings} from './styling.js';
+import {invokeTimeSpan} from './execution/time-span-platform.js';
 const A=MEDIA+'Animation.',key=r=>`${r.h}:${r.g}`,bad=m=>{throw new ManagedFault('InvalidOperationException',m);};
 const numeric=(n,name,min=0,max=1e12)=>{if(!Number.isFinite(n)||n<min||n>max)throw new ManagedFault('ArgumentOutOfRangeException',name);return n;};
 const span=(p,ref)=>ref?p.native(p.get(ref,'TotalMilliseconds')):0;
@@ -14,7 +15,7 @@ function definition(p,ref,seen=new Set(),depth=0){if(depth>16||seen.size>=512||s
 export function createManagedAnimationClock(p){return new AnimationClock({key,read:(ref,property)=>p.native(p.get(ref,property)),validate:(ref,property)=>{if(['$Left','$Top'].includes(property)){if(!p.isElement(ref))bad('Attached animation target must be a UIElement');return;}const prop=propertiesFor(p.record(ref).type)[property];if(!prop||prop.type!=='double'||prop.readOnly)bad('DoubleAnimation needs a writable double property: '+property);},write:(ref,property,value)=>{if(property==='Opacity')value=Math.max(0,Math.min(1,value));if(/^(Width|Height|MinWidth|MinHeight|MaxWidth|MaxHeight|FontSize|ItemWidth|ItemHeight)$/.test(property))value=Math.max(0,value);const v=p.managed(value,'double');p.set(ref,property,v);updateBindings(p,ref);p.command({op:'set',id:key(ref),property:property.replace(/^\$/,''),value});},completed:ref=>{if(isReference(ref))p.enqueueEvent(ref,'Completed');}});}
 export function advanceManagedAnimations(p,delta){return p.styleMutation(()=>{try{p.animations.advance(delta);}catch(e){if(e instanceof ManagedFault)throw e;bad(e.message);}return p.animations.running;});}
 export function invokeAnimation(p,d,args){const ok=value=>({handled:true,value}),owner=d.owner;
- if(owner==='System.TimeSpan'){if(d.name==='get_Zero')return ok(p.make(owner,{TotalMilliseconds:p.managed(0,'double')}));if(d.isStatic){const v=p.native(args[0])*(d.name==='FromSeconds'?1000:d.name==='FromMinutes'?60000:1);numeric(v,'TimeSpan',-1e12);return ok(p.make(owner,{TotalMilliseconds:p.managed(v,'double')}));}if(d.name==='get_TotalSeconds')return ok(p.managed(span(p,args[0])/1000,'double'));return {handled:false};}
+ if(owner==='System.TimeSpan')return invokeTimeSpan(p,d,args);
  if(owner===XAML+'Duration'){if(d.isStatic)return ok(p.make(owner,{'$durationKind':d.property==='Automatic'?'auto':'forever'}));if(d.kind==='constructor'){numeric(span(p,args[0]),'Duration');return ok(p.make(owner,{TimeSpan:args[0]}));}if(d.property==='TimeSpan'&&p.get(args[0],'$durationKind'))bad('Automatic/Forever Duration has no finite TimeSpan');return {handled:false};}
  if(owner===A+'RepeatBehavior'){if(d.isStatic)return ok(p.make(owner,{'$forever':true}));if(d.kind==='constructor'){if(d.parameters[0]==='double'){const n=p.native(args[0]);numeric(n,'RepeatBehavior count',0,1e6);return ok(p.make(owner,{Count:p.managed(n,'double')}));}numeric(span(p,args[0]),'RepeatBehavior duration');return ok(p.make(owner,{'$repeatDuration':true,Duration:args[0],Count:p.managed(1,'double')}));}return {handled:false};}
  if(owner==='SharpForge.UI.AnimationClock')return ok((advanceManagedAnimations(p,p.native(args[0])),null));

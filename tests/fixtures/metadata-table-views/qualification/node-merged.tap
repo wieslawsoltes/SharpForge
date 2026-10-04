@@ -1,0 +1,22 @@
+✔ all heap handles retain owned decoded values and precise prefix/payload coordinates (10.116556ms)
+✔ physical heap paging follows byte cursors, includes nil records and distinguishes user-string padding (2.020661ms)
+✔ byte limits preflight before existing decoders; repeated returned heap occurrences consume the page budget (4.344188ms)
+✔ missing heaps, malformed UTF-8/compressed records, nil indexes and invalid options remain distinct (1.780728ms)
+✔ every retained native SRM table row, typed column and heap probe equals the inspector dump (13.575813ms)
+✔ retained native evidence rejects each unsupported legacy table without dropping inspector coverage (2.307734ms)
+✔ all 45 CLI tables have named columns and exact physical scalar/row offsets (10.680785ms)
+✔ heap values, declared reference names, pointer lists and EnC tokens preserve physical identity (1.78849ms)
+✔ paging visits requested rows only and never requests a method body or decorated display (6.897112ms)
+✔ Portable PDB views expose eight schemas and wide external references without invented local rows (68.819707ms)
+✔ raw roots, ArrayBuffers, parsed PEs and subarray images share source-relative file coordinates (2.353831ms)
+✔ minimal delta widths reuse the reader seam while aggregate handles never alias local records (0.666841ms)
+✔ invalid and nil row references stay explicit; reserved tags and overflow never wrap to valid tokens (26.226866ms)
+✔ invalid pages, budgets, cancellation and disposal reject without publishing partial results (2.202339ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1128.613438

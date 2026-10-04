@@ -1,0 +1,54 @@
+name: Bounded offline parser qualification
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Reviewed offline adapter
+        type: choice
+        default: all
+        options: [all, pe-loader, bytecode-image, portable-pdb, zip-archive, protocol, il-document, msbuild-xml, network]
+      seed:
+        description: Reproducible unsigned 32-bit seed
+        type: string
+        default: '1'
+      cases:
+        description: Maximum cases per target, 1 to 4096
+        type: string
+        default: '256'
+permissions:
+  contents: read
+concurrency:
+  group: offline-fuzz-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  node:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Verify bounded harness and reviewed adapters serially
+        run: node scripts/limited.js node --test --test-concurrency=1 tests/conformance/fuzz/*.test.js
+      - name: Execute recorded offline inputs
+        env:
+          FUZZ_TARGET: ${{ inputs.target }}
+          FUZZ_SEED: ${{ inputs.seed }}
+          FUZZ_CASES: ${{ inputs.cases }}
+        run: >-
+          node scripts/limited.js node scripts/conformance/fuzz/run.js
+          --target "$FUZZ_TARGET" --seed "$FUZZ_SEED" --cases "$FUZZ_CASES"
+          --campaign-ms 600000 --output artifacts/fuzz/qualification
+      - name: Retain checkout integrity
+        if: always()
+        run: node scripts/conformance/clean-checkout.js
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: offline-fuzz-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/fuzz/
+          if-no-files-found: error

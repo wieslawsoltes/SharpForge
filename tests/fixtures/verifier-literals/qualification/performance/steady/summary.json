@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "scope": "One predefined follow-up cohort, no retries",
+  "baselineRevision": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+  "candidateRevision": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+  "sampleCount": 120,
+  "warmupSamples": 20,
+  "measuredSamples": 100,
+  "iterationsPerSample": 5000,
+  "totalGuardedInvocations": 4800000,
+  "median": "mean of measured sorted positions 49 and 50 (zero based)",
+  "p95": "measured sorted position 94 (zero based)",
+  "host": "shared workspace; no isolation or quiet-host guarantee",
+  "heapDeltas": "Raw process heapUsed changes per sample; garbage collection is included. These are not allocation counts.",
+  "outerCommand": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "/workspace/scratch/7e3d2a445c44/project6-literal-steady/run-cohort.mjs"
+  ],
+  "outerCwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+  "outerExitCode": 0,
+  "serialOrder": [
+    "01-baseline-Add_0_0",
+    "02-candidate-Add_0_0",
+    "03-candidate-Diamond",
+    "04-baseline-Diamond",
+    "05-baseline-MixedJoin",
+    "06-candidate-MixedJoin",
+    "07-candidate-Authority",
+    "08-baseline-Authority"
+  ],
+  "startedAt": "2026-10-04T13:12:06.594Z",
+  "endedAt": "2026-10-04T13:12:48.662Z",
+  "allOriginalResultGuardsHeld": true,
+  "allFixtureHashesMatch": true,
+  "coreCaptureHashesMatch": true,
+  "temporaryDriverCleanup": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "presentAfterPreviousDeletionAttempts": true,
+      "absentImmediatelyAfterFinalUnlink": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "presentAfterPreviousDeletionAttempts": true,
+      "absentImmediatelyAfterFinalUnlink": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+      "presentAfterPreviousDeletionAttempts": true,
+      "absentImmediatelyAfterFinalUnlink": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+      "presentAfterPreviousDeletionAttempts": true,
+      "absentImmediatelyAfterFinalUnlink": true
+    }
+  ],
+  "cleanupNote": "Batch unlink and later apply_patch deletion succeeded but copies reappeared at subsequent tool boundaries. Final hash-verified unlink succeeded with immediate absence checked; persistence across tool boundaries is not claimed. Only our temporary copies were touched.",
+  "originalDriverSourcesUnchanged": true,
+  "sourceStates": {
+    "baseline": {
+      "commitAfter": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "commitUnchanged": true,
+      "statusAfter": ""
+    },
+    "candidate": {
+      "commitAfter": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+      "commitUnchanged": true,
+      "statusAfter": "?? tests/fixtures/verifier-literals/qualification/browser-launch.log\n?? tests/fixtures/verifier-literals/qualification/browser-permission.log\n"
+    }
+  },
+  "comparisons": [
+    {
+      "case": "Add_0_0",
+      "iterationsPerSample": 5000,
+      "fixtureSHA256": "e85f021ef5244c97b7359a97b35e9242a76ddda1407fa27158da9c29e437bf50",
+      "baselineFile": "01-baseline-Add_0_0.json",
+      "candidateFile": "02-candidate-Add_0_0.json",
+      "baselineMedianMs": 15.808238999999844,
+      "candidateMedianMs": 14.982578499999931,
+      "medianChangePercent": -5.222975816597408,
+      "baselineP95Ms": 25.138560000000098,
+      "candidateP95Ms": 18.583349999999996,
+      "p95ChangePercent": -26.07631463377408
+    },
+    {
+      "case": "Diamond",
+      "iterationsPerSample": 5000,
+      "fixtureSHA256": "96dbe2c0bde4611706d7c4bf655cb4a7c07de20476bed31acd0290057aea0622",
+      "baselineFile": "04-baseline-Diamond.json",
+      "candidateFile": "03-candidate-Diamond.json",
+      "baselineMedianMs": 17.688238499999954,
+      "candidateMedianMs": 18.67506299999991,
+      "medianChangePercent": 5.578986850499312,
+      "baselineP95Ms": 19.889439999999922,
+      "candidateP95Ms": 21.37073200000009,
+      "p95ChangePercent": 7.447630501412683
+    },
+    {
+      "case": "MixedJoin",
+      "iterationsPerSample": 5000,
+      "fixtureSHA256": "0c64d4b64dd90153e51d73d95cfa9671736cdca9198881d5e920aedab8015451",
+      "baselineFile": "05-baseline-MixedJoin.json",
+      "candidateFile": "06-candidate-MixedJoin.json",
+      "baselineMedianMs": 86.46850899999981,
+      "candidateMedianMs": 87.76177549999966,
+      "medianChangePercent": 1.4956502835036245,
+      "baselineP95Ms": 98.35863100000006,
+      "candidateP95Ms": 106.15996600000017,
+      "p95ChangePercent": 7.931520519028079
+    },
+    {
+      "case": "existingAuthorityConstruction",
+      "iterationsPerSample": 5000,
+      "fixtureSHA256": "9d9dbd926ced869cb17fab6b87a0fe955b4c5ea5ad236771a6e6e5d988fcf0a0",
+      "baselineFile": "08-baseline-Authority.json",
+      "candidateFile": "07-candidate-Authority.json",
+      "baselineMedianMs": 36.734901000000036,
+      "candidateMedianMs": 37.21700899999996,
+      "medianChangePercent": 1.3123977113751462,
+      "baselineP95Ms": 39.640264000000116,
+      "candidateP95Ms": 40.10085600000002,
+      "p95ChangePercent": 1.1619296985507122
+    }
+  ],
+  "gatePassed": false,
+  "interpretation": "Recorded observations only. Diamond median is 5.58% higher on this shared host; no performance gate pass or causal speedup claim. Cache correction and longer warmup/sample duration changed together, so this cohort does not isolate either effect. Original twelve-sample reports remain untouched."
+}

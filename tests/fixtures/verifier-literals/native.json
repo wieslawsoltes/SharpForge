@@ -1,0 +1,606 @@
+{
+  "inputSHA256": "e5640f9d92eef31891acff0e51247a5c567227af930520aaa10bdee46187c4bb",
+  "observations": [
+    {
+      "name": "StringReturn",
+      "assemblySHA256": "e349f45b0cc42f8a9c1145f2fa3054544793e641917ce295c47abf57f4ea17ab",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StringReturn.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 94.288589
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ObjectReturn",
+      "assemblySHA256": "eb1f8ef35483c00de44343fa7d9da5bb720240bab9fc3bfa1bfbcdd3d8e3d03f",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ObjectReturn.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 99.49596200000008
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Empty",
+      "assemblySHA256": "ff48f411de532c14b850c64f6f885e5bf7f4bfdfaab82962413277251cd00de6",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.08572800000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Unicode",
+      "assemblySHA256": "85589dea53beab60f0dbf0afb4e171fab0e5f76b6b0177df2de9ab9d1861ed02",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Unicode.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.10039100000006
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Surrogates",
+      "assemblySHA256": "f390e1fb76249cb3812af9779f49b560ceffccc1cad70c2112a9f2e96c4d3e46",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Surrogates.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.03265799999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Controls",
+      "assemblySHA256": "c9dc3b515b734c138f33e369cb47defa5175f48ed603816157bb87307a72f4fa",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Controls.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 111.30427099999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Length63",
+      "assemblySHA256": "3d90b1744fe5639c3418b027410b7a0b2e0a37021ff8f5f479abedeac4f73204",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Length63.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.9785179999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Length64",
+      "assemblySHA256": "59256300c8ad03209ec3103ba27dbc76a0b6f91e884833be865a257c598a8800",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Length64.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.94407999999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Length8191",
+      "assemblySHA256": "0a0acadc71401adb0aad72a7d7fa50ff7b46e16a1e668c6873ffa15c203024f1",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Length8191.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 96.03535500000021
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Length8192",
+      "assemblySHA256": "60d7a19b1ccad221e72223dead30f84da6cf058f17f3f41d4cabb8105cf5aeb7",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Length8192.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 95.10795299999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Duplicate",
+      "assemblySHA256": "a9e334fee432b9a469c65cf2a05d39bdc60e885203f69459e4247e785cb53c71",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Duplicate.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 99.86829899999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StringLocal",
+      "assemblySHA256": "fec7781f39c5cccab23a028b79d7f0a9496f62342fe748701e77e46b263bae34",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StringLocal.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.09778700000015
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ObjectLocal",
+      "assemblySHA256": "dbdc021ed58a14d9867dc1ec794c6367aa30bf4520c7cb81a35f85e51de247e1",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ObjectLocal.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 108.12514400000009
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StringArgument",
+      "assemblySHA256": "bca3425e4a9daadf7886b15f9080ce1d015bb4b2ce8a6f9bec3931e96d0997a5",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StringArgument.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 93.56388399999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NullJoin",
+      "assemblySHA256": "90acb108cf4b48fc1246841efd49495cb096e67ba3d13f73ec206eb49ec84ad1",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NullJoin.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 113.57462400000009
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ObjectJoin",
+      "assemblySHA256": "58aaac5da0a311a605b8a9f8ccdc8fbda477967768ad94c953b677c2bd85839c",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ObjectJoin.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 93.36468000000013
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ReferenceEquality",
+      "assemblySHA256": "fb1664aecb86bbffd2bb7232b8b58316e67e9cacd1a92d9b2873c6c9f842842c",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ReferenceEquality.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 98.15304900000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "ReferenceCondition",
+      "assemblySHA256": "234532e8b816fe8ec95f7b664f542372d608c4cf3808c8ef511a187fc177b9fe",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ReferenceCondition.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 93.93207600000005
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "LiteralLoop",
+      "assemblySHA256": "2496cac8a994d6c6a97eef09ca4dbb1ac2e319addd6af1a56cfd6a1d5d4f2d32",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/LiteralLoop.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 97.46989600000006
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NumericReturn",
+      "assemblySHA256": "2b41684992b55f75a38398d0642f39ba1a98125f7715647649574f3763f3192c",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NumericReturn.dll : Fixture.Program::NumericReturn()][offset 0x00000005][found ref 'string'][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NumericReturn.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 98.00867900000003
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NumericLocal",
+      "assemblySHA256": "985c17d15cb055f53e660a139f654e7fc63ed7ff434fff53debe3356d3fc1043",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NumericLocal.dll : Fixture.Program::NumericLocal()][offset 0x00000005][found ref 'string'][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NumericLocal.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 105.27577999999994
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NumericArgument",
+      "assemblySHA256": "2dbaf191b9d888c6b2c657de13a69b31924a9f65d5c288ec0c91cfb09ecd8d83",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NumericArgument.dll : Fixture.Program::NumericArgument(int32)][offset 0x00000005][found ref 'string'][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NumericArgument.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 99.09590600000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NumericOperation",
+      "assemblySHA256": "a459cf2ce6ea125aacd979903463643f3527763fd1eeaadaec725fac96d1b68a",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ExpectedNumericType]: [<temporary>/NumericOperation.dll : Fixture.Program::NumericOperation()][offset 0x00000006][found ref 'string'] Expected numeric type on the stack.\n1 Error(s) Verifying <temporary>/NumericOperation.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 110.4265389999996
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ExpectedNumericType"
+        ]
+      }
+    },
+    {
+      "name": "NarrowObjectJoin",
+      "assemblySHA256": "fdaa9b804362d9930b835aff131988d9d03dbd4467b61d99f45a7e7d0ec797a0",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NarrowObjectJoin.dll : Fixture.Program::NarrowObjectJoin(object)][offset 0x0000000B][found ref 'object'][expected ref 'string'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NarrowObjectJoin.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 143.69013900000027
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "VoidReturn",
+      "assemblySHA256": "3403334481ed5bcc24e0a72ca2ef9f29f9182df561585da0defc8dc0d2357203",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ReturnVoid]: [<temporary>/VoidReturn.dll : Fixture.Program::VoidReturn()][offset 0x00000005][found ref 'string'] Stack must be empty on return from a void function.\n1 Error(s) Verifying <temporary>/VoidReturn.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 93.46839500000033
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReturnVoid"
+        ]
+      }
+    },
+    {
+      "name": "StaticStringStore",
+      "assemblySHA256": "c476fa01533eecc9dd43593352fcb05cfa959846c0323d57ed6f60e81e0836ff",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StaticStringStore.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.08951900000011
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StaticObjectStore",
+      "assemblySHA256": "609c6d06a50f7bce3410ba23c4b7d389594703f4d93f2689d42335e7891682a7",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/StaticObjectStore.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 101.79770700000017
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "InstanceStringStore",
+      "assemblySHA256": "73084a0ba8462ae96cd982b0ff1a297714e79d458626a306889fdf66b8ca45d8",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/InstanceStringStore.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 93.02981999999975
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "FieldBeforeLiteral",
+      "assemblySHA256": "f77e5aa412652b3bc09da7dac5f296687b8d33cc781ecb00bada4a1f91d130d8",
+      "policyStatus": "verified",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/FieldBeforeLiteral.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 92.94570699999986
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "StaticNumericStore",
+      "assemblySHA256": "1ac7e203aaff8097dac0c078530efa2c4e64e47c42439d06e671c2cb666373fd",
+      "policyStatus": "rejected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/StaticNumericStore.dll : Fixture.Program::StaticNumericStore()][offset 0x00000005][found ref 'string'][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/StaticNumericStore.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 104.5084069999998
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NominalReturnUnknown",
+      "assemblySHA256": "475c16f69052ab8751fc57da6dfc837368fff8397f2e205685ea22d831c4001e",
+      "policyStatus": "unknown",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NominalReturnUnknown.dll : Fixture.Program::NominalReturnUnknown()][offset 0x00000005][found ref 'string'][expected ref '[Literals_NominalReturnUnknown]Fixture.Program'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NominalReturnUnknown.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 102.30284400000028
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    }
+  ],
+  "inputs": {
+    "input.js": "e5640f9d92eef31891acff0e51247a5c567227af930520aaa10bdee46187c4bb",
+    "cases.js": "e90f66be1d9f672c8852fac4ea1a98079491047094084acca81276b55020fd64",
+    "../../managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+    "../verifier-fields/input.js": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8"
+  },
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "environment": {
+    "platform": "linux-x64",
+    "osRelease": "6.18.44",
+    "node": "v24.19.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  }
+}

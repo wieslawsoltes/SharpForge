@@ -3,8 +3,8 @@ import { initializeMetadataBuilder } from './metadata/builder-state.js';
 import { encodeTypeSignature } from './metadata/signature-writer.js';
 import { parseSignatureType } from './metadata/signature-parser.js';
 import { MetadataTypeNames } from './metadata/type-names.js';
+import { readUserString } from './metadata/user-strings.js';
 import {canonicalType} from '@sharpforge/framework';
-
 export { validateMetadata, metadataDiagnosticCatalog } from './metadata/validate.js';
 import { readMetadataTables, writeMetadataTables } from './metadata/table-stream.js';
 import { metadataList } from './metadata/pointer-tables.js';
@@ -58,7 +58,7 @@ export function readMetadata(bytes) {
     row(t){const value=rows[t>>>24]?.[(t&0xffffff)-1];if(!value)throw new CilError(`Invalid metadata token 0x${t.toString(16)}`);return value;},
     string(index){if(stringCache.has(index))return stringCache.get(index);if(index>=strings.length)throw new CilError('Invalid string heap index');let end=index;while(end<strings.length&&strings[end])end++;if(end===strings.length)throw new CilError('Unterminated metadata string');const s=text(strings.subarray(index,end));stringCache.set(index,s);return s;},
     blob(index){if(index>=blobs.length)throw new CilError('Invalid blob heap index');const br=new Reader(blobs,index);return br.take(br.compressed());},
-    userString(t){if(t>>>24!==0x70)throw new CilError('Invalid user-string token');const ur=new Reader(us,t&0xffffff),size=ur.compressed();if(size<1||(size&1)!==1)throw new CilError('Invalid UTF-16 user string');const raw=ur.take(size);let s='';for(let i=0;i<size-1;i+=2)s+=String.fromCharCode(raw[i]|(raw[i+1]<<8));return s;},
+    userString(t){return readUserString(us,t);},
     typeName(t,depth=0){return typeNames.read(this,t,depth);}
   };return result;
 }
