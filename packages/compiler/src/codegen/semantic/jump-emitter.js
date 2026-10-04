@@ -8,9 +8,9 @@
  * A label is any object; identity names it.
  */
 import { Op } from '@sharpforge/bytecode';
-import { IrEmitter } from '../ir-emitter.js';
+import { ProjectReferenceIrEmitter } from './project-reference-emitter.js';
 
-export class JumpIrEmitter extends IrEmitter {
+export class JumpIrEmitter extends ProjectReferenceIrEmitter {
   constructor(compilation, method) {
     super(compilation, method);
     this.labelPositions = new Map();

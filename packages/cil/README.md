@@ -133,3 +133,15 @@ including open generic definitions. A metadata handle does not instantiate
 that type or allocate its storage. TypeSpec handles retain signature arity and
 declaring-context variable checks; open generic locals, allocations and other
 storage operations remain subject to their existing restrictions.
+
+The [project metadata contract](PROJECT-METADATA.md) documents generated assembly
+attributes, resources, source type/member visibility, named properties and canonical
+unlinked external-reference emission. It preserves the existing public emitter and
+loader result shapes.
+
+## Closed project graphs
+
+`loadProjectAssembly` loads an explicitly supplied closure of canonical project PEs.
+It verifies identities, content hashes, definition tokens and access before returning
+an independent linked image plus the retained original modules and source provenance.
+See [PROJECT-ASSEMBLIES.md](./PROJECT-ASSEMBLIES.md) for the public contract and limits.
