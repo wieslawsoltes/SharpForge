@@ -290,6 +290,12 @@ export class OverloadResolver {
     if (a.expanded !== b.expanded) return !a.expanded;
     if (a.expanded && b.expanded && a.definition.parameters.length !== b.definition.parameters.length)
       return a.definition.parameters.length > b.definition.parameters.length;
+    // C# 13: two expanded forms that take no argument into their params collection (`string.Format("text")` over
+    // `params object[]` and `params ReadOnlySpan<object>`) are decided by the better collection type alone.
+    if (a.expanded && b.expanded) {
+      const collection = betterParamsCollection(a.method.parameters.at(-1).type, b.method.parameters.at(-1).type, this.conversions);
+      if (collection !== 0) return collection > 0;
+    }
     if (a.usedDefaults !== b.usedDefaults) return !a.usedDefaults;
     const specific = this.moreSpecific(a, b);
     if (specific !== 0) return specific > 0;

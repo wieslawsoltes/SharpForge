@@ -1,0 +1,143 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "sourceSHA256": "83666bede1669a2ae1eddf62d7d161bb977d5e89304805d321101fe7893fd1ab",
+  "assemblySHA256": "d2b77c1e7a090f9e3832b5f3dd2a0461e85add4e5d6791ef26b4b393ca2d500e",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "MatrixAddress",
+      "code": "AhYW/h4oAQAACkoq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/ArrayAddressPrefixes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.49425000000002
+      }
+    },
+    {
+      "name": "MatrixVirtualAddress",
+      "code": "AhYW/h5vAQAACkoq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/ArrayAddressPrefixes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.06566700000002
+      }
+    },
+    {
+      "name": "VectorAddress",
+      "code": "Ahb+HigCAAAKSio=",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/ArrayAddressPrefixes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 79.94779199999999
+      }
+    },
+    {
+      "name": "ThreeDimensionAddress",
+      "code": "AhYWFv4eKAMAAApKKg==",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/ArrayAddressPrefixes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 81.26237500000002
+      }
+    },
+    {
+      "name": "ReferenceAddress",
+      "code": "AhYW/h4oBAAAClAq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/ArrayAddressPrefixes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.11179200000004
+      }
+    },
+    {
+      "name": "ReadonlyGet",
+      "code": "AhYW/h4oBQAACio=",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReadonlyUnexpectedCallee"
+        ]
+      },
+      "diagnostic": "CILPC0006",
+      "raw": {
+        "stdout": "[IL]: Error [ReadonlyUnexpectedCallee]: [<temporary>/ArrayAddressPrefixes.dll : Fixture.Program::ReadonlyGet(int32[,])][offset 0x00000005] The readonly prefix may only be applied to calls to array methods returning ByRefs.\n1 Error(s) Verifying <temporary>/ArrayAddressPrefixes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 82.01933299999996
+      }
+    },
+    {
+      "name": "ReadonlyStore",
+      "code": "AhYW/h4oAQAAChZUKg==",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReadOnlyIllegalWrite"
+        ]
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "[IL]: Error [ReadOnlyIllegalWrite]: [<temporary>/ArrayAddressPrefixes.dll : Fixture.Program::ReadonlyStore(int32[,])][offset 0x0000000B] Illegal write to readonly ByRef.\n1 Error(s) Verifying <temporary>/ArrayAddressPrefixes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 7\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.55495800000006
+      }
+    }
+  ]
+}

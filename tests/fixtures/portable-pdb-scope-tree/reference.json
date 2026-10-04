@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "dc4ee7888ed2749aca103fffef860abc1818ca847b7cc78e8c86409c10c31310",
+    "assemblySha256": "ab6e6f7b5d9ce33cfc8fdb57c2b795cb1f46962276ced429fcbb3d1339a07807",
+    "pdbSha256": "35450902e65b63b7c5a5a26849ef4a777b1b353ecbff274cc86572568dda174e"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "method": 100663326,
+    "result": 14,
+    "roots": [
+      {
+        "id": 1,
+        "start": 0,
+        "end": 77,
+        "importScope": 2,
+        "locals": [
+          {
+            "id": 1,
+            "index": 0,
+            "name": "root",
+            "attributes": 0,
+            "compilerGenerated": false,
+            "typeName": "int"
+          }
+        ],
+        "constantIds": [],
+        "children": [
+          {
+            "id": 2,
+            "start": 3,
+            "end": 57,
+            "importScope": 2,
+            "locals": [
+              {
+                "id": 2,
+                "index": 1,
+                "name": "nested",
+                "attributes": 0,
+                "compilerGenerated": false,
+                "typeName": "string"
+              },
+              {
+                "id": 3,
+                "index": 2,
+                "name": "items",
+                "attributes": 0,
+                "compilerGenerated": false,
+                "typeName": "System.Collections.Generic.List`1<int>"
+              }
+            ],
+            "constantIds": [],
+            "children": [
+              {
+                "id": 3,
+                "start": 39,
+                "end": 56,
+                "importScope": 2,
+                "locals": [
+                  {
+                    "id": 4,
+                    "index": 3,
+                    "name": "values",
+                    "attributes": 0,
+                    "compilerGenerated": false,
+                    "typeName": "int[]"
+                  }
+                ],
+                "constantIds": [],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "start": 57,
+            "end": 69,
+            "importScope": 2,
+            "locals": [
+              {
+                "id": 5,
+                "index": 4,
+                "name": "sibling",
+                "attributes": 0,
+                "compilerGenerated": false,
+                "typeName": "long"
+              }
+            ],
+            "constantIds": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+}

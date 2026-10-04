@@ -1,14 +1,17 @@
 /** Captures a persistent document identity without flattening model-backed source text. */
 export function editorRevision(editor) {
-  const snapshot = editor.model?.snapshot?.();
+  const snapshot = editor.model?.publishedSnapshot?.() ?? editor.model?.snapshot?.();
   const source = snapshot ?? editor.sourceSnapshot?.();
   const text = source ? undefined : editor.value;
-  return {uri: editor.uri, version: editor.model?.version ?? source?.version ?? 0, model: editor.model,
-    snapshot, get text() { return source?.text ?? text; }};
+  return {uri: editor.uri, version: source?.version ?? editor.model?.version ?? 0, model: editor.model,
+    ownershipEpoch: editor.model?.editOwnershipEpoch,
+    snapshot, visualSnapshot: editor.model?.snapshot?.(), get text() { return source?.text ?? text; }};
 }
 
 export function sameRevision(left, right) {
   return left.uri === right.uri && left.version === right.version && left.model === right.model &&
+    left.ownershipEpoch === right.ownershipEpoch &&
+    left.visualSnapshot === right.visualSnapshot &&
     (left.snapshot && right.snapshot ? left.snapshot === right.snapshot : left.text === right.text);
 }
 
