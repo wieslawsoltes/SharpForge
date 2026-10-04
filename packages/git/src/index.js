@@ -32,6 +32,7 @@ export * from './checkout.js';
 export * from './sign.js';
 export * from './policy.js';
 export * from './path-safety.js';
+export * from './providers/index.js';
 export * from './origins.js';
 export * from './permissions.js';
 export * from './redact.js';
