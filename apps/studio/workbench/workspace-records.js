@@ -5,8 +5,9 @@ function recordView(record, path, source, model, buffer) {
   if (snapshot || source || buffer) {
     const fallback = snapshot ? null : source ?? buffer;
     descriptors.text = { enumerable: true, configurable: true, get: () => snapshot ? snapshot.text : fallback.text };
-    descriptors.length = { enumerable: false, configurable: true, get: () => snapshot?.length ?? fallback.text.length };
+    descriptors.length = { enumerable: false, configurable: true, get: () => snapshot?.length ?? fallback.length ?? fallback.text.length };
     descriptors.model = { value: model, enumerable: false, configurable: true };
+    if (snapshot) descriptors.source = { value: snapshot, enumerable: false, configurable: true };
   }
   return Object.defineProperties({}, descriptors);
 }
