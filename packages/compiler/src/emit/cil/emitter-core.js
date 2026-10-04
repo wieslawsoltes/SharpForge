@@ -39,7 +39,7 @@ export class EmitterCore {
     this.core = program.core;
     this.tokens = program.tokens;
     this.frame = frame;
-    this.il = new IlBuilder();
+    this.il = this.createInstructionStream(frame);
     this.slots = new Map();
     this.argumentIndexes = new Map();
     frame.parameters.forEach((parameter, index) => this.argumentIndexes.set(parameter, index + (frame.isStatic ? 0 : 1)));
@@ -57,6 +57,10 @@ export class EmitterCore {
     this.assignmentTarget = null;
     /** The section labels of the enclosing switch statements, for `goto case`. */
     this.switchSections = new Map();
+  }
+  /** The instruction stream of the body; a family that needs more than the plain stream supplies its own. */
+  createInstructionStream() {
+    return new IlBuilder();
   }
   unsupported(construct, syntax = null) {
     throw new UnsupportedInCil(construct, syntax, this.frame.uri);

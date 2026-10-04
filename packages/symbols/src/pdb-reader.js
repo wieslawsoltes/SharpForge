@@ -7,6 +7,10 @@ import { readLocalConstants } from './constant-rows.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
 import { createAsyncInfoLookup } from './async-info.js';
+import { createImportLookup } from './imports.js';
+import { createScopeTree } from './scope-tree.js';
+import { metadataName } from './metadata-facts.js';
+import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
 export function readPortablePdb(
   input,
   {
@@ -58,29 +62,22 @@ export function readPortablePdb(
   }));
   if (methods.length && methods.length !== (md.externalCounts[6] ?? 0))
     fail('PDB method row count does not match MethodDef count');
-  const variables = (md.rows[51] ?? []).map((r, i) => ({
-    id: i + 1,
-    attributes: r[0],
-    index: r[1],
-    name: md.string(r[2]),
-    hidden: !!(r[0] & 1),
-  }));
+  if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > 100000) fail('Scope tree entry limit exceeded');
+  let localNameCharacters = 0;
+  const variables = (md.rows[51] ?? []).map((r, i) => {
+    const name = metadataName(md, r[2], 'Scope local');
+    if ((localNameCharacters += name.length) > 1024 * 1024) fail('Scope tree name limit exceeded');
+    return { id: i + 1, attributes: r[0], index: r[1], name, hidden: !!(r[0] & 1) };
+  });
   const constants = readLocalConstants(md, { maxConstantBytes, maxConstantEntries, maxConstantModifiers });
+  if ((md.rows[53]?.length ?? 0) > 100000) fail('Import scope count limit exceeded');
+  const importBudget = { entries: 0, bytes: 0 };
   const imports = (md.rows[53] ?? []).map((r, i) => ({
     id: i + 1,
     parent: r[0],
-    definitions: readImports(md.blob(r[1]), md),
+    definitions: readImports(md.blob(r[1]), md, importBudget),
   }));
-  for (const scope of imports) {
-    let cur = scope,
-      seen = new Set();
-    while (cur) {
-      if (seen.has(cur.id)) fail('Import scope cycle');
-      seen.add(cur.id);
-      if (cur.parent > imports.length) fail('Invalid parent import scope');
-      cur = imports[cur.parent - 1];
-    }
-  }
+  const effectiveImports = createImportLookup(imports);
   const scopes = (md.rows[50] ?? []).map((r, i, all) => {
     const next = all[i + 1];
     if (
@@ -111,20 +108,6 @@ export function readPortablePdb(
       constants: constants.slice(r[3] - 1, constantEnd),
     };
   });
-  for (let i = 0; i < scopes.length; i++) {
-    const s = scopes[i],
-      prev = scopes[i - 1];
-    if (
-      prev &&
-      (s.methodToken < prev.methodToken ||
-        (s.methodToken === prev.methodToken && (s.start < prev.start || (s.start === prev.start && s.end > prev.end))))
-    )
-      fail('Unsorted local scopes');
-    for (let j = i - 1; j >= 0 && scopes[j].methodToken === s.methodToken; j--) {
-      const o = scopes[j];
-      if (s.start < o.end && s.end > o.end) fail('Partially overlapping local scopes');
-    }
-  }
   const stateMachines = (md.rows[54] ?? []).map((r) => ({ moveNext: token(6, r[0]), kickoff: token(6, r[1]) }));
   for (let i = 0; i < stateMachines.length; i++) {
     const s = stateMachines[i];
@@ -139,12 +122,17 @@ export function readPortablePdb(
   }
   if (new Set(stateMachines.map((s) => s.kickoff)).size !== stateMachines.length)
     fail('Duplicate state machine kickoff');
+  const annotationBudget = {};
   const custom = (md.rows[55] ?? []).map((r, i) => {
+    const parent = decodeCoded('HasCustomDebugInformation', r[0]),
+      kind = guid(r[1]),
+      bytes = md.blob(r[2]);
+    preflightLocalAnnotation(kind, parent, bytes, md.counts, annotationBudget);
     const c = {
       id: i + 1,
-      parent: decodeCoded('HasCustomDebugInformation', r[0]),
-      kind: guid(r[1]),
-      bytes: new Uint8Array(md.blob(r[2])),
+      parent,
+      kind,
+      bytes: new Uint8Array(bytes),
     };
     Object.assign(c, readCustomDebugInformation(c.kind, c.bytes, { maxBytes, maxSourceBytes }));
     if (c.kind === PdbGuids.embeddedSource) {
@@ -154,6 +142,9 @@ export function readPortablePdb(
     }
     return c;
   });
+  attachLocalAnnotations(custom, variables, constants);
+  bindConstantAnnotations(constants);
+  const scopeTree = createScopeTree(scopes, md.externalCounts[6] ?? 0);
   const methodMap = new Map(methods.map((m) => [m.token, m]));
   const asyncInfo = createAsyncInfoLookup(stateMachines, custom, {
     maxAsyncEntries,
@@ -172,7 +163,9 @@ export function readPortablePdb(
     variables,
     constants,
     scopes,
+    scopeTree,
     imports,
+    effectiveImports,
     stateMachines,
     custom,
     sourceLink: custom.find((c) => c.sourceLink)?.sourceLink ?? null,

@@ -1,0 +1,99 @@
+✖ source emitter nested regions: TryInFinally (46.036334ms)
+✖ source emitter nested regions: FinallyInCatch (2.982417ms)
+✖ source emitter nested regions: ThreeLevels (2.127916ms)
+✔ source emitter nested regions: NestedRethrow (7.789709ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 429.910917
+
+✖ failing tests:
+
+test at tests/a03-06-emitter-regions-source.test.js:8:30
+✖ source emitter nested regions: TryInFinally (46.036334ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "Nested clauses must precede enclosing clauses"
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Nested clauses must precede enclosing clauses
+        at regionFailure (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions/contracts.js:27:17)
+        at validateFamilies (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions/tree.js:32:72)
+        at buildExceptionRegionTree (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions.js:69:3)
+        at file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:31
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
+
+test at tests/a03-06-emitter-regions-source.test.js:8:30
+✖ source emitter nested regions: FinallyInCatch (2.982417ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "Nested clauses must precede enclosing clauses"
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Nested clauses must precede enclosing clauses
+        at regionFailure (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions/contracts.js:27:17)
+        at validateFamilies (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions/tree.js:32:72)
+        at buildExceptionRegionTree (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions.js:69:3)
+        at file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:31
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
+
+test at tests/a03-06-emitter-regions-source.test.js:8:30
+✖ source emitter nested regions: ThreeLevels (2.127916ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "Nested clauses must precede enclosing clauses"
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Nested clauses must precede enclosing clauses
+        at regionFailure (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions/contracts.js:27:17)
+        at validateFamilies (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions/tree.js:32:72)
+        at buildExceptionRegionTree (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/packages/cil/src/eh-regions.js:69:3)
+        at file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:31
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-emitter-regions-baseline/tests/a03-06-emitter-regions-source.test.js:16:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }

@@ -1,3 +1,3 @@
-External member 'System.Delegate::Combine' is not implemented
-External member 'System.Delegate::Remove' is not implemented
-Opcode 'ldvirtftn' is inspection-only
+IL_OPCODE: Opcode 'ldvirtftn' is inspection-only
+IL_REFERENCE: External member 'System.Delegate::Combine' is not implemented
+IL_REFERENCE: External member 'System.Delegate::Remove' is not implemented
