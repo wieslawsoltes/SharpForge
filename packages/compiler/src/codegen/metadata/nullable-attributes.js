@@ -1,10 +1,7 @@
 /** Writes planned nullable transforms after declaration and relation tokens have been allocated. */
 import { encodeCustomAttribute } from '@sharpforge/cil';
-import { ArrayTypeSymbol } from '../../symbols/types.js';
-import { methodSignature } from './member-signatures.js';
-
-const NULLABLE = 'System.Runtime.CompilerServices.NullableAttribute';
-const CONTEXT = 'System.Runtime.CompilerServices.NullableContextAttribute';
+import { compilerAttributeConstructorToken } from './compiler-attribute-definitions.js';
+import { NULLABLE_ATTRIBUTE as NULLABLE, NULLABLE_CONTEXT_ATTRIBUTE as CONTEXT } from './nullable-attribute-contracts.js';
 
 /** Resolves relation rows once; a nested type's copies of enclosing GenericParams keep their distinct tokens. */
 function relationTokens(writer) {
@@ -44,9 +41,9 @@ export function writeNullableAttributes(attributes) {
     const array = flags.length !== 1, key = name + (array ? '[]' : '');
     let constructor = constructors.get(key);
     if (!constructor) {
-      const type = array ? new ArrayTypeSymbol(attributes.core.byte) : attributes.core.byte;
-      const shape = { isStatic: false, returnType: attributes.core.void, parameters: [{ type }] };
-      constructor = attributes.builder.member(attributes.frameworkAttribute(name), '.ctor', methodSignature(attributes.types, shape));
+      const contract = writer.compilerAttributes.get(name);
+      const symbol = contract?.constructors?.get(array ? 'byte[]' : 'byte') ?? contract?.constructor;
+      constructor = compilerAttributeConstructorToken(attributes, contract, symbol);
       constructors.set(key, constructor);
     }
     const descriptor = array ? { kind: 'szarray', element: 'byte' } : 'byte';
