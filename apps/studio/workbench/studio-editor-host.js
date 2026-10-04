@@ -1,3 +1,22 @@
+import { normalizePath } from '@sharpforge/project-system';
+
+/** Split one exact document view, resolving optional Vim filenames through the existing workspace opener. */
+async function splitDocument(context, panel, uri, axis, path) {
+  const { documents, docking } = context;
+  const groupId = docking.layout.locate(panel).group?.id;
+  if (!groupId) throw new Error('No active document group');
+  const target = path === undefined || path === '' ? uri : normalizePath(path);
+  if (target === uri) return docking.tabs.newView(panel, { axis });
+  if (!documents.get(target)) throw new Error('Split target is not a source document in the current workspace: ' + target);
+  if (await context.openPath(target) === false) return false;
+  if (!docking.layout.group(groupId)) throw new Error('The original document group was removed while opening the split source');
+  const next = docking.tabs.panel(target, documents.activeViews.get(target) ?? 'primary');
+  if (!next || !docking.layout.locate(next).group) throw new Error('The requested split source was not opened');
+  docking.tabs.split(next, axis, { groupId });
+  docking.tabs.activate(next);
+  return next;
+}
+
 /** Shared host commands for the editor, Vim ex commands and workbench menus. */
 export function createStudioEditorHost(context) {
   return async (method, params = {}) => {
@@ -16,9 +35,7 @@ export function createStudioEditorHost(context) {
     if (method === 'closeAllDocuments') return docking.tabs.closeVariant(panel, 'all');
     if (method === 'reopenClosedDocument') return docking.tabs.reopenClosed();
     if (method === 'splitVertical' || method === 'splitHorizontal') {
-      const id = await docking.tabs.newView(panel);
-      if (method === 'splitHorizontal') docking.tabs.split(id, 'horizontal');
-      return id;
+      return splitDocument(context, panel, uri, method === 'splitHorizontal' ? 'horizontal' : 'vertical', params.path);
     }
     if (method === 'openDocumentPrompt') {
       const path = await context.pathDialog('Open Workspace File', uri ?? 'Program.cs');
