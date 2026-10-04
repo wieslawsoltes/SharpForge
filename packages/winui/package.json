@@ -15,6 +15,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@sharpforge/framework": "0.14.0"
+    "@sharpforge/framework": "0.14.0",
+    "@sharpforge/winui-properties": "0.14.0",
+    "@sharpforge/winui-controls": "0.14.0",
+    "@sharpforge/rendering": "0.14.0"
   }
 }
