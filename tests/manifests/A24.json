@@ -15,7 +15,8 @@
     "tests/browser_release08_test.py",
     "tests/browser_native_explorer_test.py",
     "tests/browser_release11_test.py",
-    "tests/browser_a24_xaml_designer_test.py"
+    "tests/browser_a24_xaml_designer_test.py",
+    "tests/browser_a24_templates_test.py"
   ],
   "requiredServices": [
     "studio-http",
