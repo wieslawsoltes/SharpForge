@@ -33,6 +33,14 @@ test('A02-T55 source-image execution continues to reject dynamic operations expl
   assert.ok(errors(result).some(entry => entry.code === 'SF2200'));
 });
 
+test('A02-T55 unsigned right shift remains a C# diagnostic for dynamic operands', () => {
+  for (const body of ['dynamic value = 4; object answer = value >>> 1;', 'dynamic value = 4; value >>>= 1;']) {
+    const result = compileToAssembly(sourceOf(body));
+    assert.equal(result.assembly, null);
+    assert.deepEqual(errors(result).map(entry => entry.code), ['CS0019']);
+  }
+});
+
 test('A02-T55 runtime binder types name their defining assemblies and sites are static cached fields', { skip }, () => {
   const { inspector } = emit(sourceOf('dynamic text = "value"; int length = text.Length;'));
   const metadata = inspector.metadata;
@@ -97,6 +105,17 @@ test('A02-T55 restrictions on dynamic arguments remain binder diagnostics', { sk
   const result = compileToAssembly(sourceOf('dynamic target = null; target.Take(x => x);'), { references: pack.references });
   assert.equal(result.assembly, null);
   assert.ok(errors(result).some(entry => entry.code === 'CS1977'));
+});
+
+test('A02-T55 ref-like receivers cannot be passed through dynamic invocation or indexing', { skip }, () => {
+  const result = compileToAssembly(`ref struct StackOnly {
+    public void Take(int value) { }
+    public int this[int index] { get { return index; } }
+  } class Program { static void Main() {
+    StackOnly value = default; dynamic argument = 1; value.Take(argument); object item = value[argument];
+  } }`, { references: pack.references });
+  assert.equal(result.assembly, null);
+  assert.deepEqual(errors(result).map(entry => entry.code), ['CS9230', 'CS9230']);
 });
 
 const dotnet = dotnetHost();

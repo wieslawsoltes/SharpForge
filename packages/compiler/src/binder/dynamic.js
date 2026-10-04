@@ -37,6 +37,9 @@ const isSource = symbol => {
 };
 const hasDynamicArgument = args => args.some(a => !a.hasErrors && isDynamic(a.type));
 const argumentList = args => args.map(a => ({ expression: a, refKind: a.refKind ?? null, name: a.name ?? null }));
+const restrictedTypes = new Set(['System_TypedReference', 'System_ArgIterator', 'System_RuntimeArgumentHandle']);
+const isIllegalDynamicType = type => !!type && (type.specialType === 'System_Void'
+  || type.typeKind === TypeKind.Pointer || type.typeKind === TypeKind.FunctionPointer || isRefLike(type) || restrictedTypes.has(type.specialType));
 
 /** Class mixin: the operations that are bound at run time because an operand, receiver or argument is `dynamic`. */
 export const DynamicBinding = Base =>
@@ -83,8 +86,7 @@ export const DynamicBinding = Base =>
         else if (a.form === 'lambda') fail(node, DiagnosticId.CS1977);
         else if (a.kind === 'MethodGroup') fail(node, DiagnosticId.CS1976);
         else if (a.literal === 'default') fail(node, DiagnosticId.CS8716);
-        else if (a.type && (a.type.specialType === 'System_Void' || a.type.typeKind === TypeKind.Pointer || isRefLike(a.type)))
-          fail(node, DiagnosticId.CS1978, [this.display(a.type)]);
+        else if (isIllegalDynamicType(a.type)) fail(node, DiagnosticId.CS1978, [this.display(a.type)]);
       }
       return isValid;
     }
@@ -151,6 +153,10 @@ export const DynamicBinding = Base =>
       const implicitInstance = group.implicitReceiver && !group.receiver && !group.viaType && !group.outer
         && !this.c.isStatic && group.methods.some(method => !method.isStatic);
       const receiver = implicitInstance ? this.node('This', group.syntax, this.c.containingType, { isImplicit: true }) : group.receiver;
+      if (isIllegalDynamicType(receiver?.type)) {
+        this.report(receiver.syntax, DiagnosticId.CS9230, [this.display(receiver.type)]);
+        return this.bad(syntax);
+      }
       const target = { ...group, receiver, receiverRefKind: this.dynamicReceiverRefKind(receiver),
         invokeSimpleName: group.implicitReceiver && !this.c.isStatic };
       return this.dynamicNode('DynamicInvocation', syntax, { receiver: target, args: argumentList(args) });
@@ -175,6 +181,10 @@ export const DynamicBinding = Base =>
         return super.elementAccessOn(target, args, syntax);
       const { node, isLateBound } = this.lateBound(() => super.elementAccessOn(target, args, syntax));
       if (!isLateBound || !this.checkDynamicArguments(args)) return node;
+      if (isIllegalDynamicType(target.type)) {
+        this.report(target.syntax, DiagnosticId.CS9230, [this.display(target.type)]);
+        return this.bad(syntax);
+      }
       return this.dynamicNode('DynamicElementAccess', syntax, {
         receiver: target, args: argumentList(args), receiverRefKind: this.dynamicReceiverRefKind(target),
       });
@@ -194,6 +204,15 @@ export const DynamicBinding = Base =>
     }
 
     // ---- operators ----
+    binaryOperation(syntax, operator, left, right) {
+      if ((isDynamic(left.type) || isDynamic(right.type))
+        && (operator === '>>>' || isIllegalDynamicType(left.type) || isIllegalDynamicType(right.type))) {
+        this.report(syntax, DiagnosticId.CS0019,
+          [syntax.operatorToken?.text ?? operator, this.operandDisplay(left), this.operandDisplay(right)]);
+        return this.bad(syntax);
+      }
+      return super.binaryOperation(syntax, operator, left, right);
+    }
     delegateOperation(syntax, operator, left, right) {
       if (isDynamic(left.type) || isDynamic(right.type)) return null;
       return super.delegateOperation(syntax, operator, left, right);
