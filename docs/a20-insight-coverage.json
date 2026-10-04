@@ -594,7 +594,7 @@
       "behavior": "Scoped regex/capture and preserve-case replacement, history/count/highlights, exact preview, cancellation and responsive 100 MiB literal search.",
       "qualification": "Node tests pass; authored browser fixtures are not executed in this workspace.",
       "capabilityLimits": [
-        "Built-in edit previews keep the 32,000,000 UTF-16 document limit; 100 MiB Find is supported independently of replacement preview.",
+        "Built-in replacement/preview plans cap edited document text at 32,000,000 UTF-16 units; Find remains independent.",
         "Large regex is a bounded safe-VM worker and may report SEARCH_LIMIT; actual browser worker execution is unverified."
       ],
       "closeIssue": false
