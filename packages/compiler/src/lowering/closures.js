@@ -125,14 +125,16 @@ function closeOverCallees(analysis) {
 /**
  * Analyses the bound body of a method (or of top-level statements).
  * @param {object} body the bound body
+ * @param {{byReferenceInCells?: boolean}} [options] `byReferenceInCells` (the default) also moves every variable that
+ *   is passed by reference into a cell, for a back end without addresses; the CIL emitter takes the address instead
  * @returns {CaptureAnalysis}
  */
-export function analyzeCaptures(body) {
+export function analyzeCaptures(body, { byReferenceInCells = true } = {}) {
   const analysis = new CaptureAnalysis();
   if (!body) return analysis;
   scan(body, null, analysis);
   closeOverCallees(analysis);
   for (const fn of analysis.functions.values()) for (const variable of fn.variables) analysis.captured.add(variable);
-  markVariablesPassedByReference(body, analysis);
+  if (byReferenceInCells) markVariablesPassedByReference(body, analysis);
   return analysis;
 }

@@ -3,6 +3,7 @@ import {normalizeCallType, resolveExecutionMethod, verifiedStackBound} from '@sh
 import {cilHandlers} from '../handlers/index.js';
 import {getDecodePlan} from '../decode-plan.js';
 import {buildWasmIR} from './ir.js';
+import {wasmMetadataFits} from './metadata-budget.js';
 
 const primitives = new Set(['bool', 'char', 'byte', 'sbyte', 'short', 'ushort', 'int', 'uint',
   'long', 'ulong', 'float', 'double', 'string', 'object']);
@@ -29,15 +30,6 @@ function supportedType(vm, type, allowVoid = false) {
   if (['void', 'decimal', 'nint', 'nuint'].includes(name)) return false;
   const table = vm.typeSystem.table(type);
   return !table.containsGenericParameters && !table.flags.external && table.flags.valueType === false;
-}
-
-function metadataFits(method, workLimit) {
-  let entries = method.instructions.length + (method.handlers?.length ?? 0);
-  for (const instruction of method.instructions) {
-    if (instruction.name === 'switch') entries += instruction.operand.length;
-    if (entries > workLimit) return false;
-  }
-  return entries <= workLimit;
 }
 
 function methodReasons(vm, method, reject) {
@@ -78,7 +70,7 @@ export function wasmEligibility(vm, method, options = {}) {
       reject('WASM_NO_BODY', 'The method has no decoded CIL body.');
     } else if (method.instructions.length > bound.instructions) {
       reject('WASM_SIZE', `The method exceeds the ${bound.instructions} instruction analysis limit.`);
-    } else if (!metadataFits(method, bound.slots * 4)) {
+    } else if (!wasmMetadataFits(method, bound.slots * 4)) {
       reject('WASM_ANALYSIS_LIMIT', 'Control-flow metadata exceeds the analysis work limit.');
     } else {
       const proof = verifiedStackBound(vm.inspector, vm.report, method);

@@ -4,8 +4,8 @@
   "control-flow/cs0159-no-such-label": ["diagnostics", "warnings"],
   "control-flow/cs0164-unreferenced-label": ["diagnostics", "warnings"],
   "control-flow/cs0642-empty-statement": ["diagnostics"],
-  "control-flow/goto-label": ["diagnostics", "warnings", "bytecode", "cil"],
-  "control-flow/if-else-chain": ["diagnostics", "warnings", "bytecode", "cil"],
-  "control-flow/main-with-return-code": ["diagnostics", "warnings", "bytecode", "cil"],
-  "control-flow/nested-blocks": ["diagnostics", "warnings", "bytecode", "cil"]
+  "control-flow/goto-label": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "control-flow/if-else-chain": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "control-flow/main-with-return-code": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "control-flow/nested-blocks": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

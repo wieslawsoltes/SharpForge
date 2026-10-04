@@ -12,8 +12,9 @@ local-signature tokens retain the document values. The existing assembler still
 requires every original method body, uses the metadata/resource scaffold, and
 invalidates its existing signatures and custom debug maps as before.
 
-This is the SharpForge IL dialect, not Microsoft ilasm syntax. It does not add new
-metadata or user strings, infer stack sizes, verify prefix/exception transfer
+This is the SharpForge IL dialect, not Microsoft ilasm syntax. Quoted ldstr support
+is documented in IL-DOCUMENT-STRINGS.md. Layout does not add general metadata rows,
+infer stack sizes, verify prefix/exception transfer
 legality, generate Portable PDB mappings, or activate default compiler relaxation.
 The new layout path inherits its 16 MiB / one-million instruction and target limits.
 Unsupported labels and invalid options produce CilError. The assembler remains a

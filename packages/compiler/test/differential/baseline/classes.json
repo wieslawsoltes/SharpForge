@@ -1,16 +1,16 @@
 {
-  "classes/constructor-chaining": ["diagnostics", "warnings", "bytecode", "cil"],
+  "classes/constructor-chaining": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "classes/cs0026-this-in-static": ["diagnostics", "warnings"],
   "classes/cs0120-instance-member-from-static": ["diagnostics", "warnings"],
   "classes/cs0120-instance-method-from-static": ["diagnostics", "warnings"],
   "classes/cs0144-instantiate-abstract": ["diagnostics", "warnings"],
   "classes/cs0176-static-through-instance": ["diagnostics", "warnings"],
   "classes/cs1729-no-matching-constructor": ["diagnostics", "warnings"],
-  "classes/field-initializers-and-defaults": ["diagnostics", "bytecode", "cil"],
-  "classes/fields-ctor-methods": ["diagnostics", "warnings", "bytecode", "cil"],
-  "classes/linked-list": ["diagnostics", "warnings", "bytecode", "cil"],
-  "classes/nested-and-static-class": ["diagnostics", "warnings", "bytecode", "cil"],
-  "classes/object-initializer": ["diagnostics", "warnings", "bytecode", "cil"],
-  "classes/reference-semantics": ["diagnostics", "bytecode", "cil"],
-  "classes/static-members": ["diagnostics", "warnings", "bytecode", "cil"]
+  "classes/field-initializers-and-defaults": ["diagnostics", "bytecode", "cil", "directCil"],
+  "classes/fields-ctor-methods": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "classes/linked-list": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "classes/nested-and-static-class": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "classes/object-initializer": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "classes/reference-semantics": ["diagnostics", "bytecode", "cil", "directCil"],
+  "classes/static-members": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

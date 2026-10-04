@@ -117,25 +117,34 @@ export class SearchService extends WorkbenchEvents {
 }
 
 export class WorkspaceSymbolIndex {
-  constructor({request, documents}) { this.request = request; this.documents = documents; this.generation = 0; this.disposed = false; }
+  constructor({request, documents}) {
+    this.request = request; this.documents = documents; this.generation = 0; this.disposed = false;
+    this.events = new WorkbenchEvents();
+    this.unsubscribe = documents.subscribe?.(event => {
+      if (!['changed', 'added', 'reset', 'membership'].includes(event.type)) return;
+      this.generation++;
+      this.events.emit(event);
+    });
+  }
+  subscribe(listener) { return this.events.subscribe(listener); }
   async query(query, {signal, onBatch = () => {}} = {}) {
     const generation = ++this.generation;
     const result = [];
     for (const document of this.documents.list()) {
       signal?.throwIfAborted();
       const version = document.version;
-      const symbols = await cancellable(this.request('symbols', {uri: document.uri}, {signal}), signal);
+      const symbols = await cancellable(this.request('symbols', {uri: document.uri, version}, {signal}), signal);
       if (this.disposed || generation !== this.generation) throw abortError('Symbol query superseded');
       if (this.documents.get(document.uri)?.version !== version) continue;
       const batch = symbols.filter(symbol => fuzzyMatch(symbol.name, query)).map(symbol => ({...symbol,
-        uri: document.uri, version, projectId: document.projectId}));
+        uri: document.uri, version, projectId: symbol.projectId ?? document.projectId ?? this.documents.projectsFor?.(document.uri)?.[0]}));
       result.push(...batch);
       onBatch(batch);
       if (result.length >= 20000) return result.slice(0, 20000);
     }
     return result;
   }
-  dispose() { this.disposed = true; this.generation++; }
+  dispose() { this.disposed = true; this.generation++; this.unsubscribe?.(); this.events.dispose(); }
 }
 
 export function fuzzyMatch(value, query) {

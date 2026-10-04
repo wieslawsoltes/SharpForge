@@ -2,7 +2,7 @@ import { CilError } from './binary.js';
 import { CilOpcodes, decodeInstructions } from './opcodes.js';
 import { buildExceptionRegionTree } from './eh-regions.js';
 import { validateInstructionPlacement } from './eh-control-flow.js';
-import { ExceptionTransferIndex } from './eh-regions/transfer-index.js';
+import { ExceptionTransferIndex, containsExceptionRegion as contains } from './eh-regions/transfer-index.js';
 import { checkRegionCancellation } from './eh-regions/contracts.js';
 import { decodedInstructionBoundaries } from './eh-regions/boundaries.js';
 
@@ -15,8 +15,6 @@ export const exceptionBranchDiagnosticCatalog = Object.freeze({
   CILCF0013: 'Control falls through the end of the method',
   CILCF0014: 'Transfer targets the interior of an instruction prefix group',
 });
-
-const contains = (region, offset) => !region || region.start <= offset && offset < region.end;
 
 function reject(code, offset) {
   const error = new CilError(exceptionBranchDiagnosticCatalog[code], offset);
@@ -49,7 +47,13 @@ export function validateExceptionBranches(code, handlers, options = {}) {
   const instructions = decodeInstructions(code, options);
   validateInstructionPlacement(instructions, tree, options);
   const index = new ExceptionTransferIndex(tree, options.signal);
-  const boundaries = decodedInstructionBoundaries(code.length, instructions, options.signal);
+  validateBranchInstructions(instructions, tree, options, index);
+  return tree;
+}
+
+/** Internal transfer pass reused by the complete EH control-flow validator, without decoding or indexing again. */
+export function validateBranchInstructions(instructions, tree, options, index) {
+  const boundaries = decodedInstructionBoundaries(tree.codeSize, instructions, options.signal);
   if (index.entryRegion(0, index.regionAt(0))) reject('CILCF0012', 0);
   for (const instruction of instructions) {
     checkRegionCancellation(options.signal);
@@ -61,9 +65,8 @@ export function validateExceptionBranches(code, handlers, options = {}) {
     }
     const flow = CilOpcodes[instruction.name].flowControl;
     if (flow !== 'Branch' && flow !== 'Return' && flow !== 'Throw' && instruction.name !== 'jmp') {
-      fallThrough(index, instruction, code.length);
+      fallThrough(index, instruction, tree.codeSize);
     }
   }
   checkRegionCancellation(options.signal);
-  return tree;
 }

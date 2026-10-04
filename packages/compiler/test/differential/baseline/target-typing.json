@@ -1,11 +1,11 @@
 {
-  "target-typing/conditional-converts-to-the-target-type": ["diagnostics", "warnings", "bytecode", "cil"],
+  "target-typing/conditional-converts-to-the-target-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "target-typing/conditional-in-csharp-8": ["diagnostics", "warnings"],
   "target-typing/conditional-natural-type-wins": ["diagnostics", "warnings"],
   "target-typing/delegate-creation-argument-count": ["diagnostics", "warnings"],
   "target-typing/new-in-csharp-8": ["diagnostics", "warnings"],
-  "target-typing/new-takes-the-target-type": ["diagnostics", "warnings", "bytecode", "cil"],
+  "target-typing/new-takes-the-target-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "target-typing/new-target-type-rules": ["diagnostics", "warnings"],
-  "target-typing/switch-expression-converts-to-the-target-type": ["diagnostics", "warnings", "bytecode", "cil"],
+  "target-typing/switch-expression-converts-to-the-target-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "target-typing/switch-expression-without-a-type": ["diagnostics", "warnings"]
 }

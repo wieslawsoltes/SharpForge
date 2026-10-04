@@ -1,0 +1,32 @@
+{
+  "runtime": "v24.19.0",
+  "unicode": "16.0.0",
+  "hostUnicode": "17.0",
+  "platform": "linux/x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "units": 1048576,
+  "baseline": {
+    "method": "visualColumnAt(full line, offset)",
+    "medianMs": 61.508594000000016,
+    "p95Ms": 68.025205,
+    "samples": 30
+  },
+  "indexed": {
+    "method": "VisualColumnIndex.get(offset), sparse prefix already indexed",
+    "medianMs": 0.12975599999992937,
+    "p95Ms": 0.2652299999999741,
+    "samples": 30,
+    "firstLookupMs": 25.040205999999998
+  },
+  "statistics": {
+    "scannedCodeUnits": 1293301,
+    "chunks": 316,
+    "yields": 15,
+    "cacheHits": 0,
+    "checkpoints": 129,
+    "lines": 1,
+    "pending": 0
+  },
+  "snapshotTextMaterialized": false,
+  "note": "Local shared-host model measurement; no browser/UI frame-latency claim"
+}

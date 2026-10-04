@@ -1,4 +1,5 @@
 import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
+import {nullableMethodDefinition} from './nullable-profile.js';
 import {canonicalType,contracts,types} from '@sharpforge/framework';
 
 const aliases={decimal:'System.Decimal',object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
@@ -100,6 +101,7 @@ export function intrinsicDefinition(descriptor) {
   // This preserves the verifier's previous contract-first selection policy.
   const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
   if(contract)return contract;
+  const nullable=nullableMethodDefinition(descriptor);if(nullable)return nullable;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;
   return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type.replace(/^decimal(?=&|$)/,'System.Decimal')),signature.returnType==='decimal'?'System.Decimal':signature.returnType,signature.isStatic))??null;
 }
