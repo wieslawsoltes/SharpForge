@@ -1,7 +1,8 @@
 import {CilError} from './binary.js';
 import {callSignatureKey} from './call-profile.js';
 import {parseFunctionPointerType} from './function-pointer-signature.js';
-import {functionPointerExecutionSignature, requireStaticCalli} from './function-pointer-execution-signature.js';
+import {functionPointerExecutionSignature, requireManagedCalli} from './function-pointer-execution-signature.js';
+import {InstanceCalliTargets} from './instance-calli-targets.js';
 
 const pointerKey = type => {
   const signature = parseFunctionPointerType(type);
@@ -33,6 +34,8 @@ export class FunctionPointerProfile {
   constructor(inspector) {
     this.inspector = inspector;
     this.signatures = new Map();
+    this.instanceTargets = null;
+    this.instanceKeys = new Set();
   }
 
   signature(token) {
@@ -43,7 +46,7 @@ export class FunctionPointerProfile {
   indirect(instruction) {
     if (instruction.operand >>> 24 !== 17) throw new CilError('calli requires a StandAloneSig token');
     const signature = this.signature(instruction.operand);
-    requireStaticCalli(signature);
+    requireManagedCalli(signature);
     return signature;
   }
 
@@ -84,7 +87,11 @@ export class FunctionPointerProfile {
     const state = {stack: [...input.stack], locals: [...input.locals], args: [...input.args]}, name = instruction.name;
     if (name === 'ldftn') {
       const descriptor = this.method(instruction.operand);
-      state.stack.push(callSignatureKey(descriptor.signature));
+      if (!descriptor.signature.isStatic) this.instanceTargets ??= new InstanceCalliTargets(this.inspector);
+      const callable = descriptor.signature.isStatic || this.instanceTargets.accepts(descriptor.resolvedToken);
+      const key = callable ? callSignatureKey(descriptor.signature) : null;
+      if (key && !descriptor.signature.isStatic) this.instanceKeys.add(key);
+      state.stack.push(key);
       return state;
     }
     if (/^ld(loc|arg)(\.[0-3s])?$/.test(name)) {
@@ -99,7 +106,8 @@ export class FunctionPointerProfile {
       const type = argument ? method.signature.parameters[index - (method.signature.isStatic ? 0 : 1)] : method.locals[index];
       const declared = type && parseFunctionPointerType(type);
       if (declared) this.check(value, declared, instruction, fail);
-      (argument ? state.args : state.locals)[index] = escaped[argument ? 'args' : 'locals'].has(index) ? null : value;
+      const unproven = escaped[argument ? 'args' : 'locals'].has(index) || argument && this.instanceKeys.has(value);
+      (argument ? state.args : state.locals)[index] = unproven ? null : value;
       return state;
     }
     if (name === 'dup') { state.stack.push(state.stack.at(-1) ?? null); return state; }

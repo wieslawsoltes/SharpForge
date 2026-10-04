@@ -28,13 +28,16 @@ export function functionPointerExecutionSignature(inspector, token) {
   const column = table === 6 ? 4 : table === 4 || table === 10 ? 2 : table === 43 ? 1 : 0;
   if (![4, 6, 10, 17, 43].includes(table)) throw new CilError('Token has no executable member signature');
   const signature = decodeSignature(metadata.blob(row[column]));
+  if (table === 17 && signature.kind === 'method' && signature.explicitThis) {
+    throw unsupported(signature, 'ExplicitThis calli signatures are not implemented');
+  }
   validatePointers(signature);
   return formatSignature(signature, metadata);
 }
 
-export function requireStaticCalli(signature) {
+export function requireManagedCalli(signature) {
   if (signature.kind !== 'method') throw new CilError('calli requires a managed StandAloneSig');
-  if (signature.callingConvention || !signature.isStatic || signature.genericArity || signature.sentinel !== undefined) {
-    throw unsupported(signature, 'calli supports only managed static nongeneric signatures');
+  if (signature.callingConvention || signature.genericArity || signature.sentinel !== undefined) {
+    throw unsupported(signature, 'calli supports only default managed nongeneric signatures');
   }
 }
