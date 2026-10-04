@@ -24,7 +24,8 @@ Subscribers still run only at the existing host flush boundary, never inside
 allocation, resizing, or collection. Their failures reach the host after guest
 execution and do not become guest exceptions. Host-initiated allocations on an
 instrumented CIL heap are observed as well, including entry-argument allocation;
-standalone heaps and source VMs do not acquire an event log.
+standalone heaps do not acquire an event log. [Source VMs](runtime-source-heap-events.md)
+can enable the same heap observations.
 
 Snapshots rewind heap counters but retain host event history. Counts can therefore
 repeat after restore; event sequence numbers remain the chronological identity.
@@ -38,6 +39,6 @@ deliver queued notifications, or explicitly call `vm.runtimeEvents.flush()` at
 a host boundary.
 
 This is a partial #1403 increment stacked on the GC-event integration. Exception
-and suspension events, source-VM events, and native/browser/performance
+and suspension events and native/browser/performance
 qualification remain separate. Tests in `tests/a05-allocation-events.test.js`
 are authored and await serial validation; no throughput result is claimed.
