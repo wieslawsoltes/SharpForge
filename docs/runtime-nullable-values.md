@@ -32,8 +32,10 @@ reference-containing aggregate GC remain pending. This does not close #1366.
 Prepared tests execute independently authored guest CIL, including both ABI
 settings, real constructors, user structs, Decimal, arrays and collection,
 managed faults, copy/replay identity and explicit unsupported cases. Native
-fixture output is a deferred reference target, not measured evidence. No tests,
-builds, checks, native commands or benchmarks were executed during preparation.
+fixture output is a deferred reference target, not measured evidence. Serial
+Node 24 validation at `1576af76` passed all 108 focused tests across Nullable,
+struct boxing/storage, Decimal, generic calls, layouts and CIL stack budgets.
+Broad native, browser and performance qualification remains deferred.
 
 Root owns the serial validation queue:
 
