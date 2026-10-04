@@ -10,18 +10,23 @@ import {SourceText} from '@sharpforge/text';
 const options = Object.freeze({outputKind: 'library', pipeline: 'bound'});
 const hash = value => createHash('sha256').update(value).digest('hex');
 const queryPhases = Object.freeze({'signature-first-query': 1, 'signature-repeated-query': 64});
+const caseNames = Object.freeze({instance: 'instance-overloads', generic: 'constructed-generic-receiver',
+  local: 'local-functions', incomplete: 'incomplete-instance-call'});
 
 function argumentsOf(values) {
-  const result = {calls: 96, samples: 15, warmups: 5, output: null};
+  const result = {calls: 96, samples: 15, warmups: 5, case: null, output: null};
   const ranges = {calls: [2, 1024], samples: [9, 101], warmups: [3, 50]};
   for (let index = 0; index < values.length; index += 2) {
     const name = values[index]?.replace(/^--/, '');
     const value = values[index + 1];
     if (name === 'output' && value) result.output = value;
-    else if (ranges[name] && /^\d+$/.test(value ?? '')) {
+    else if (name === 'case') {
+      if (!Object.values(caseNames).includes(value)) throw new RangeError(`Invalid --case; expected ${Object.values(caseNames).join(', ')}`);
+      result.case = value;
+    } else if (ranges[name] && /^\d+$/.test(value ?? '')) {
       result[name] = Number(value);
       if (result[name] < ranges[name][0] || result[name] > ranges[name][1]) throw new RangeError(`Invalid --${name}`);
-    } else throw new Error('Usage: a20-provider-binding.mjs [--calls N] [--samples N] [--warmups N] [--output file]');
+    } else throw new Error('Usage: a20-provider-binding.mjs [--case name] [--calls N] [--samples N] [--warmups N] [--output file]');
   }
   return result;
 }
@@ -34,15 +39,15 @@ function fixtures(count) {
     `total+=receiver.Echo(${index % 17});total+=receiver.Identity<int>(${index % 17});\n`).join('');
   const localCalls = Array.from({length: count}, (_, index) => `total+=Next(${index % 17});\n`).join('');
   const rows = [
-    {name: 'instance-overloads', text: start + instanceCalls + 'return total;}}', invocationSites: count, probe: 'receiver.F('},
-    {name: 'constructed-generic-receiver', text:
+    {name: caseNames.instance, text: start + instanceCalls + 'return total;}}', invocationSites: count, probe: 'receiver.F('},
+    {name: caseNames.generic, text:
       'class Receiver<T>{public T Echo(T value){return value;}public U Identity<U>(U value){return value;}}\n' +
       'class Calls{public int Run(){Receiver<int> receiver=new Receiver<int>();int total=0;\n' + genericCalls + 'return total;}}',
     invocationSites: count * 2, probe: 'receiver.Echo('},
-    {name: 'local-functions', text:
+    {name: caseNames.local, text:
       'class Calls{public static int Run(){int Next(int value){return value+1;}int total=0;\n' + localCalls + 'return total;}}',
     invocationSites: count, probe: 'Next('},
-    {name: 'incomplete-instance-call', text: start + instanceCalls + 'total+=receiver.F(', invocationSites: count + 1,
+    {name: caseNames.incomplete, text: start + instanceCalls + 'total+=receiver.F(', invocationSites: count + 1,
       probe: 'receiver.F(', incomplete: true}
   ];
   return rows.map(row => {
@@ -148,7 +153,7 @@ function main() {
   if (scriptSha256 !== exportInfo.benchmarkSha256) throw new Error('Benchmark source changed after the commit export was prepared');
   const startedAt = new Date().toISOString();
   const initialLoadAverage = loadavg();
-  const corpus = fixtures(settings.calls);
+  const corpus = fixtures(settings.calls).filter(fixture => settings.case === null || fixture.name === settings.case);
   const cases = corpus.map(fixture => ({name: fixture.name, sourceSha256: fixture.sha256,
     utf16Length: fixture.utf16Length, utf8Bytes: fixture.utf8Bytes, syntacticInvocationSites: fixture.invocationSites,
     phases: ['compile', 'source-model-bind'].map(phase => measure(fixture, phase, settings))}));
@@ -158,7 +163,8 @@ function main() {
   }
   const report = {schemaVersion: 2, benchmark: 'SF-A20-T14-bound-invocations', revision: exportInfo.revision,
     benchmarkSha256: scriptSha256, packages: exportInfo.packages, startedAt, completedAt: new Date().toISOString(),
-    settings: {calls: settings.calls, samples: settings.samples, warmups: settings.warmups, compilerOptions: options, queryPhases},
+    settings: {calls: settings.calls, samples: settings.samples, warmups: settings.warmups, case: settings.case,
+      compilerOptions: options, queryPhases},
     environment: {node: process.version, v8: process.versions.v8, platform: process.platform, architecture: process.arch,
       cpu: cpus()[0]?.model, logicalCpus: cpus().length, totalMemoryBytes: totalmem(), execArgv: process.execArgv,
       nodeOptions: process.env.NODE_OPTIONS ?? '', heapSizeLimitBytes: getHeapStatistics().heap_size_limit,
