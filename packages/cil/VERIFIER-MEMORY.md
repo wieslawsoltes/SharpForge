@@ -35,4 +35,4 @@ it does not execute them or claim source-VM, native/Wasm execution support.
 
 Normative references: [ECMA-335, sixth edition](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf),
 I.8.7, III.1.8.1.2.3, III.3.42 and III.3.62. Native observations and any differences
-are retained under `tests/fixtures/verifier-memory`; qualification is pending.
+are retained under `tests/fixtures/verifier-memory`; the serial qualification and its explicit policy differences are documented there.
