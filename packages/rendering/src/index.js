@@ -7,5 +7,8 @@ export * from './media/transforms.js';
 export * from './media/colors.js';
 export * from './media/images.js';
 export * from './brushes/brushes.js';
+export * from './text/glyph-atlas.js';
 export * from './media/working-color.js';
 export * from './resources/resource-table.js';
+export * from './webgpu/device.js';
+export * from './webgpu/pools.js';
