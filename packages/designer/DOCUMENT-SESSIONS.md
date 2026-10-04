@@ -85,6 +85,12 @@ drag, Escape cancellation, orientation-correct arrow keys, Shift for larger step
 editor's Ctrl/Cmd+Z/Y event; ordinary typing undo remains with `CodeEditor`. View Designer / View Code command contributions use the
 same tab and the same compatibility predicate as the Solution Explorer entries.
 
+The legacy `sharpforge.designer` automation facade resolves the active document at each call. `disconnect()` is cleanup: it is safe
+before the first source link, after a previous disconnect, or while an incompatible document is active. With no active designer it
+returns `undefined` without opening a document or changing inactive sessions. With an active designer it cancels that document's
+source link and retains its model. Source reads/writes and authoring commands still require an active compatible document; cleanup
+failures from an active source adapter are propagated.
+
 ## Validation scope
 
 `tests/a18-session-*.test.js` covers session isolation, bounds, cancellation, disposal, recovery, compatibility, layout migration, and
