@@ -30,6 +30,22 @@ Retained brush descriptors preserve owned color stops, interpolation space, mask
 
 Visual collections enforce ownership, parent identity and cycle/depth limits. Typed shapes, clips, dash collections and drop-shadow descriptors preserve snapshots and invalidate owned content. Transforms are in DIPs; the 2D rendering boundary reports unsupported 3D transforms explicitly.
 
+## Typed animation values
+
+`prepareValueAnimation` and `sampleValueAnimation` implement typed interpolation and discrete keyframes. Easing bounds and complete property-path validation fail before mutation. `buildTimelineDefinition` accepts explicit adapters, including endpoint-presence checks for omitted values.
+
+## Composition animation definitions
+
+Keyframe definitions capture values and validated easing plans. Expressions read only supplied parameters and documented typed members through a bounded interpreter. Definitions, groups, implicit collections and batches have explicit owner and snapshot contracts.
+
+## Shared clock
+
+The framework continues to export `AnimationClock` through its existing entry point. It imports typed samplers from this package and is injected into composition; rendering never imports the framework. The trace fixture states its sample tolerance and covers deterministic timeline behavior.
+
+## Compositor playback
+
+`Compositor` builds retained display lists and layer handles, avoiding geometry re-encoding for placement-only changes. Controllers and expressions run on the injected shared clock. Public stop policies remain distinct from internal transient-base restoration. Collection wrappers retain newly added managed children and release removed items through their existing mutation receiver.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.
