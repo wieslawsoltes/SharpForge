@@ -4,3 +4,5 @@ export {getCaseInsensitive} from './evaluation/errors.js';
 export * from './tfm.js';
 export * from './rid.js';
 export * from './context-selection.js';
+export {projectCompilationOptions} from './evaluation/compiler-options.js';
+export * from './launch-settings.js';
