@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "methods": 3,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold fixture parameters and constants",
+      "unit": "microseconds/operation",
+      "median": 43.79200000001049,
+      "p95": 109.29199999999639,
+      "p99": 1079.9590000000023
+    },
+    {
+      "name": "cached parameter constant",
+      "unit": "microseconds/operation",
+      "median": 0.009041700000000218,
+      "p95": 0.025695800000001157,
+      "p99": 0.026900000000000545
+    }
+  ]
+}

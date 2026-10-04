@@ -1,0 +1,9 @@
+{
+  "indexer-name/constant-name": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "indexer-name/cs0102-name-conflicts": ["diagnostics", "warnings"],
+  "indexer-name/cs0415-cs0633-invalid-uses": ["diagnostics", "warnings"],
+  "indexer-name/cs0571-accessor-by-name": ["diagnostics", "warnings"],
+  "indexer-name/cs0668-different-names": ["diagnostics", "warnings"],
+  "indexer-name/override-keeps-base-name": ["diagnostics", "warnings"],
+  "indexer-name/renamed-indexer-runs": ["diagnostics", "warnings", "bytecode", "cil"]
+}

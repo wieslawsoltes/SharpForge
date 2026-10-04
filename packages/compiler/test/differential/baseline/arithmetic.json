@@ -1,11 +1,14 @@
 {
-  "arithmetic/bitwise": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arithmetic/compound-assignment": ["diagnostics", "warnings", "bytecode", "cil"],
+  "arithmetic/bitwise": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arithmetic/checked-overflow": ["directCil"],
+  "arithmetic/compound-assignment": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "arithmetic/cs0020-constant-division-by-zero": ["diagnostics", "warnings"],
-  "arithmetic/cs0220-constant-overflow": ["warnings"],
-  "arithmetic/double-ops": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arithmetic/increment-order": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arithmetic/int-ops": ["diagnostics", "warnings", "bytecode", "cil"],
-  "arithmetic/int-overflow-wraps": ["warnings"],
-  "arithmetic/math-functions": ["diagnostics", "warnings", "bytecode", "cil"]
+  "arithmetic/cs0220-constant-overflow": ["diagnostics", "warnings"],
+  "arithmetic/divide-by-zero": ["directCil"],
+  "arithmetic/double-ops": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arithmetic/increment-order": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arithmetic/int-ops": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arithmetic/int-overflow-wraps": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arithmetic/long-factorial": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "arithmetic/math-functions": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

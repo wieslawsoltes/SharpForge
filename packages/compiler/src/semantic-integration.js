@@ -47,7 +47,8 @@ const pipelineCodes = new Set([
 ]);
 /** What the pipeline's source-level async rewrite reports when it meets `await` or `async` it cannot rewrite. */
 const asyncRewriteCodes = new Set([DiagnosticId.CS4032, DiagnosticId.CS1983]);
-const adapterPseudo = d =>
+/** The syntax adapter's stand-in errors: they mark a construct outside the execution profile and are not C# diagnostics. */
+export const adapterPseudo = d =>
   (d.code === DiagnosticId.CS1014 && /init is not supported/.test(d.message)) || (d.code === DiagnosticId.CS0528 && /Duplicate IDisposable/.test(d.message));
 const constructNames = {
   [DiagnosticId.SF1003]: '64-bit and unsigned integer literals',
@@ -122,17 +123,26 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (!compiled && !gatesVersion && !outside.length && !hasReferences && nothingToGenerate) return null;
   const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null,
     // ... and for the few language rules the pipeline does not check on constructs it compiles.
-    ruleCodes = compiled ? applicableRuleCodes(files) : null,
+    nullableContext = compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext ?? compilation.options.nullable,
+    ruleCodes = compiled ? applicableRuleCodes(files, { nullableContext }) : null,
     rechecked = !!ruleCodes?.size;
   if (compiled && !gatesVersion && !hasReferences && !usings && !rechecked) return null;
   let result;
   try {
     const analysis = new SemanticAnalysis(files, {
       ...compilation.options,
+      // Compilation consumes diagnostics and bound trees, not editor invocation candidates.
+      captureInvocations: false,
+      // Retain the execution profile's builtin receiver shorthands when semantic lowering takes over.
+      // Explicit using policy or metadata references keep ordinary C# name resolution.
+      executionBuiltinAliases: !compiled && !hasReferences && options.implicitUsings === undefined,
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
     result = usings === 'directives' && !rechecked ? analysis.runUsings() : analysis.run();
+    compilation.sourceAnalysis = analysis;
+    compilation.sourceAnalysisResult = result;
+    compilation.sourceAnalysisComplete = !result.usingsOnly && !result.unsupported;
   } catch (error) {
     // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
     // not pass silently either: it is reported as a diagnostic of its own.

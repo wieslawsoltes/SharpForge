@@ -1,0 +1,8 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "static-abstract-operators/generic-math":{"hash":"c144ca0f7113e4e4","kind":"output","langVersion":"14.0","diagnostics":[["CS0660",361,3,"warning"],["CS0661",361,3,"warning"],["CS0660",842,4,"warning"],["CS0661",842,4,"warning"]],"output":"5\nab\n7\nTrue\nFalse\n-4\n-four\n"},
+  "static-abstract-operators/operators-increment-comparison-and-shadowing":{"hash":"ebef3e25bd2d3b41","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4\n30\n"},
+  "static-abstract-operators/operator-errors":{"hash":"bbb089a3e96fd250","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",281,5,"error"],["CS0019",349,5,"error"],["CS0019",396,5,"error"],["CS0019",457,5,"error"],["CS0029",520,5,"error"],["CS8926",601,12,"error"],["CS8926",631,13,"error"]]},
+  "static-abstract-operators/static-abstract-operators-in-10":{"hash":"df7b2c6b8035106e","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS8703",67,1,"error"]]},
+  "static-abstract-operators/operator-implementations":{"hash":"e468e99a595f52b9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0535",135,13,"error"],["CS0535",170,14,"error"],["CS0738",283,17,"error"]]},
+  "static-abstract-operators/operators-of-base-interfaces":{"hash":"06dad447456a9a61","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",759,5,"error"]]}
+}}

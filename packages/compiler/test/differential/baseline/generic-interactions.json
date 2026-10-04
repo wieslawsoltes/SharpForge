@@ -1,5 +1,5 @@
 {
-  "generic-interactions/queries-over-a-generic-query-pattern": ["diagnostics", "warnings", "bytecode", "cil"],
+  "generic-interactions/queries-over-a-generic-query-pattern": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "generic-interactions/tasks-over-user-types-constructions-and-tuples": ["diagnostics", "warnings", "bytecode", "cil"],
   "generic-interactions/tuples-and-iterators-over-constructions": ["diagnostics", "warnings", "bytecode", "cil"]
 }

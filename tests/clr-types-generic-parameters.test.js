@@ -43,7 +43,10 @@ test('CLR type generic parameter identities match independent CoreCLR reflection
     assert.ok(Object.isFrozen(owner.genericParameters));
   }
   assert.equal(module.methodBodyReadCount, 0);
-  assert.throws(() => module.genericParameter(native.methodParameter), /requires method descriptor services/);
+  const methodParameter = module.genericParameter(native.methodParameter);
+  assert.equal(methodParameter.name, 'V');
+  assert.equal(methodParameter.declaringMethod.name, 'Method');
+  assert.equal(methodParameter, methodParameter.declaringMethod.genericParameters[0]);
   const context = arrayContext();
   const typedModule = (await context.loadFromStream(image)).manifestModule;
   const parameter = typedModule.genericParameter(native.definitions[0].parameters[0].token);

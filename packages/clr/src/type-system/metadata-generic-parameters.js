@@ -5,7 +5,7 @@ import { loadError, LoadErrorCode } from '../load-errors.js';
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const empty = Object.freeze([]);
 
-/** Canonical TypeDef-owned GenericParam metadata identities; constraints remain unresolved tokens. */
+/** Canonical TypeDef/MethodDef-owned GenericParam identities; constraints remain unresolved tokens. */
 export class MetadataGenericParameters {
   #module;
   #index;
@@ -63,14 +63,29 @@ export class MetadataGenericParameters {
 
   forType(token) {
     const owner = this.#module.typeDefinition(token);
+    return this.#forOwner(token, owner, owner, null);
+  }
+
+  forMethod(token) {
+    const owner = this.#module.methodDefinition(token);
+    if (this.#owners.has(token)) return this.#owners.get(token);
+    const arity = owner.signature.genericArity;
+    if (arity > 1024) throw loadError(LoadErrorCode.LimitExceeded, 'Generic parameter count exceeds 1024');
+    if ((this.#readIndex().owners.get(token)?.size ?? 0) !== arity) {
+      throw fail('Method generic parameter count does not match its signature arity');
+    }
+    return this.#forOwner(token, owner, owner.declaringType, owner);
+  }
+
+  #forOwner(token, owner, declaringType, declaringMethod) {
     if (this.#owners.has(token)) return this.#owners.get(token);
     const group = this.#readIndex().owners.get(token);
     if (!group) return empty;
     const result = [];
     for (let position = 0; position < group.size; position++) {
       const parameter = group.get(position);
-      const descriptor = createTypeDesc({ name: parameter.name, namespace: owner.namespace, fullName: null,
-        kind: TypeKind.GenericParameter, module: this.#module, token: parameter.token, declaringType: owner,
+      const descriptor = createTypeDesc({ name: parameter.name, namespace: declaringType.namespace, fullName: null,
+        kind: TypeKind.GenericParameter, module: this.#module, token: parameter.token, declaringType, declaringMethod,
         owner, position, genericParameterAttributes: parameter.attributes,
         constraintTokens: Object.freeze([...parameter.constraints]) });
       this.#descriptors.set(parameter.token, descriptor);
@@ -86,8 +101,8 @@ export class MetadataGenericParameters {
     }
     const parameter = this.#readIndex().parameters.get(token);
     if (!parameter) throw loadError(LoadErrorCode.InvalidImage, 'GenericParam row does not exist');
-    if (parameter.ownerToken >>> 24 !== 2) throw fail('Method generic parameter identity requires method descriptor services');
-    this.forType(parameter.ownerToken);
+    if (parameter.ownerToken >>> 24 === 2) this.forType(parameter.ownerToken);
+    else this.forMethod(parameter.ownerToken);
     return this.#descriptors.get(token);
   }
 }

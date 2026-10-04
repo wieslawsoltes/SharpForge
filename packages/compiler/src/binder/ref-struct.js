@@ -8,6 +8,7 @@
  * from C# 13 locals are allowed and only CS4007 when alive across an await) or of an iterator (CS4013 / CS4007).
  * Before C# 13 it cannot implement interfaces (the "ref struct interfaces" feature gate).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, typeOf } from '../symbols/types.js';
 
 export const refStructFeature = Object.freeze({ name: 'ref structs', version: 7.2 });
@@ -31,7 +32,7 @@ export function checkRefStructDeclarations(type, languageVersion = 14) {
   for (const m of type.getMembers()) {
     const t = m.kind === SymbolKind.Field ? m.type : m.kind === SymbolKind.Property && m.isAutoProperty ? m.type : null;
     if (t && isRefLike(t) && (m.isStatic || !type.isRefLikeType) && !(m.isImplicitlyDeclared && !m.isPositional))
-      results.push({ code: 'CS8345', args: [t.toDisplayString()], member: m, onType: true });
+      results.push({ code: DiagnosticId.CS8345, args: [t.toDisplayString()], member: m, onType: true });
   }
   if (type.isRefLikeType && type.interfaces.length && languageVersion < 13)
     results.push({ member: type, feature: refStructInterfacesFeature, onInterfaces: true });
@@ -39,7 +40,7 @@ export function checkRefStructDeclarations(type, languageVersion = 14) {
 }
 /** An array of a ref struct is not allowed (CS0611). */
 export function checkArrayElementType(elementType) {
-  return isRefLike(elementType) ? { code: 'CS0611', args: [elementType.toDisplayString()] } : null;
+  return isRefLike(elementType) ? { code: DiagnosticId.CS0611, args: [elementType.toDisplayString()] } : null;
 }
 /**
  * A ref struct as a parameter or local of an async method, async lambda or iterator.
@@ -48,7 +49,7 @@ export function checkArrayElementType(elementType) {
  */
 export function checkAsyncOrIteratorUse(type, what, method, languageVersion = 14) {
   if (!isRefLike(type) || !(method.isAsync || method.isIterator)) return null;
-  if (what === 'parameter') return { code: method.isAsync ? 'CS4012' : 'CS4013', args: [type.toDisplayString()] };
+  if (what === 'parameter') return { code: method.isAsync ? DiagnosticId.CS4012 : DiagnosticId.CS4013, args: [type.toDisplayString()] };
   // Locals of an iterator were never an error where they are declared; in an async method they are the C# 13 feature
   // "ref and unsafe in async and iterator methods" (Roslyn gates the type of the declaration). What cannot be done at
   // any version is keeping the value across an await or yield: CS4007 (./ref-struct-suspensions.js).
@@ -56,11 +57,11 @@ export function checkAsyncOrIteratorUse(type, what, method, languageVersion = 14
 }
 /** A ref struct local or parameter (or `this` of a ref struct) captured by a lambda or local function (CS8175). */
 export function checkCapture(symbol, type) {
-  return isRefLike(type) ? { code: 'CS8175', args: [symbol.name] } : null;
+  return isRefLike(type) ? { code: DiagnosticId.CS8175, args: [symbol.name] } : null;
 }
 /** A ref struct local alive across an await in an async method (C# 13: CS4007). */
 export function checkAcrossAwait(type) {
-  return isRefLike(type) ? { code: 'CS4007', args: [type.toDisplayString()] } : null;
+  return isRefLike(type) ? { code: DiagnosticId.CS4007, args: [type.toDisplayString()] } : null;
 }
 /** True when a conversion would box a ref struct (conversion classification already refuses; this names the reason for messages). */
 export function wouldBox(from, to) {

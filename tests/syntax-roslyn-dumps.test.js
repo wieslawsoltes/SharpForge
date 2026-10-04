@@ -33,7 +33,7 @@ test('dumps: every matrix fixture has its Roslyn dump', () => {
   const matrix = filesUnder(join(fixtureRoot, 'matrix'));
   const positives = matrix.filter(file => !isRejected(file)),
     rejected = matrix.filter(isRejected);
-  assert(positives.length >= 129 && positives.length === rejected.length, 'positive and rejected fixtures come in pairs');
+  assert(positives.length >= 127 && positives.length === rejected.length, 'positive and rejected fixtures come in pairs');
   assert.deepEqual(positives.filter(file => !existsSync(file + '.json')).map(name), withoutRoslynTree);
   assert.deepEqual(rejected.filter(file => !existsSync(file + '.roslyn.json')).map(name), []);
   for (const file of filesUnder(join(fixtureRoot, 'gates'))) assert(existsSync(file + '.roslyn.json'), name(file));

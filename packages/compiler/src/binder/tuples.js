@@ -5,25 +5,34 @@
  * A tuple type is a construction of `System.ValueTuple<T1..Tn>` that carries its element names. The elements are the
  * fields `Item1..ItemN` of the definition; a named element is another name for the field at its position, so a member
  * access through a name binds to the same field symbol as the access through `ItemN`.
+ *
+ * A tuple of more than seven elements nests (symbols/tuple-elements.js): `(T1..T9)` is `ValueTuple<T1..T7,
+ * ValueTuple<T8, T9>>`. Its first seven elements are the fields `Item1..Item7`, the nested tuple is the field `Rest`,
+ * and each later element is a field of the tuple type itself that stands for its place in `Rest` (`Item9` is
+ * `Rest.Item2`). The names of all elements are kept on the outer type.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Accessibility } from '../symbols/types.js';
 import { FieldSymbol } from '../symbols/members.js';
+import { ArrayTypeSymbol } from '../symbols/types.js';
+import { tupleElements, tupleRestPosition, isWideTuple } from '../symbols/tuple-elements.js';
 
-/** The largest tuple that maps to one ValueTuple construction; longer tuples nest in `Rest` and are not bound yet. */
-export const maxTupleElements = 7;
+export { tupleElements, isWideTuple };
+
+/** The largest tuple that maps to one ValueTuple construction; a longer tuple nests its other elements in `Rest`. */
+export const maxTupleElements = tupleRestPosition;
 
 /** Member names of ValueTuple that an element may not take (Roslyn: IsElementNameForbidden). */
 const forbiddenNames = new Set(['CompareTo', 'Deconstruct', 'Equals', 'GetHashCode', 'Rest', 'ToString']);
 const itemName = /^Item([1-9]\d*)$/;
 
-/** Declares the element fields `Item1..ItemN` on a `System.ValueTuple` definition (once). */
+/** Declares the element fields `Item1..ItemN` (and `Rest` of the eight-argument one) on a `System.ValueTuple` definition (once). */
 function ensureElementFields(definition) {
   if (definition.hasTupleFields) return definition;
   definition.hasTupleFields = true;
   definition.typeParameters.forEach((parameter, index) => {
-    definition.addMember(
-      new FieldSymbol({ name: 'Item' + (index + 1), type: parameter, containingSymbol: definition, declaredAccessibility: Accessibility.Public }),
-    );
+    const name = index === tupleRestPosition ? 'Rest' : 'Item' + (index + 1);
+    definition.addMember(new FieldSymbol({ name, type: parameter, containingSymbol: definition, declaredAccessibility: Accessibility.Public }));
   });
   return definition;
 }
@@ -39,7 +48,14 @@ export function tupleDefinition(bridge, arity) {
  * @param {(string|null)[]} names element names  @param {boolean[]} [inferred] positions whose name was inferred
  */
 export function tupleTypeOf(bridge, elements, names, inferred = null) {
-  const tuple = tupleDefinition(bridge, elements.length).construct(elements);
+  const construct = types =>
+    types.length <= maxTupleElements
+      ? tupleDefinition(bridge, types.length).construct(types)
+      : ensureElementFields(bridge.coreType('System_ValueTuple_TRest')).construct([
+          ...types.slice(0, maxTupleElements),
+          construct(types.slice(maxTupleElements)),
+        ]);
+  const tuple = construct(elements);
   if (!names.some(Boolean)) return tuple;
   const named = tuple.withTupleElementNames(names);
   if (inferred?.some(Boolean)) named.inferredTupleElementNames = Object.freeze([...inferred]);
@@ -47,17 +63,35 @@ export function tupleTypeOf(bridge, elements, names, inferred = null) {
 }
 
 /**
+ * The field of a long tuple that stands for an element held in `Rest` (`Item9` of a nine-element tuple). It belongs
+ * to the tuple type, has the element's type and is the same symbol for every access to that element of that type.
+ */
+function restElementField(type, index) {
+  const fields = (type.restElementFields ??= new Map());
+  let field = fields.get(index);
+  if (!field) {
+    const init = { name: 'Item' + (index + 1), type: tupleElements(type)[index], containingSymbol: type, declaredAccessibility: Accessibility.Public };
+    field = new FieldSymbol({ ...init, isImplicitlyDeclared: true });
+    field.tupleElementIndex = index;
+    fields.set(index, field);
+  }
+  return field;
+}
+
+/**
  * The element a member name of a tuple type denotes: `{field: 'ItemN', index, isInferred}`, or null when the name is
- * not an element (it may still be a method of ValueTuple).
+ * not an element (it may still be a method of ValueTuple, or `Rest`). An element held in `Rest` also has `symbol`,
+ * the field of the tuple type that stands for it: no ValueTuple definition declares a field of that name.
  */
 export function tupleElement(type, name) {
   if (!type?.isTupleType || type.isDefinition) return null;
-  const named = type.tupleElementNames?.indexOf(name) ?? -1;
-  if (named >= 0) return { field: 'Item' + (named + 1), index: named, isInferred: !!type.inferredTupleElementNames?.[named] };
-  const item = itemName.exec(name);
-  if (!item || Number(item[1]) > type.typeArguments.length) return null;
+  const named = type.tupleElementNames?.indexOf(name) ?? -1,
+    item = named < 0 ? itemName.exec(name) : null;
+  if (named < 0 && (!item || Number(item[1]) > tupleElements(type).length)) return null;
   ensureElementFields(type.originalDefinition);
-  return { field: name, index: Number(item[1]) - 1, isInferred: false };
+  const index = named >= 0 ? named : Number(item[1]) - 1,
+    element = { field: 'Item' + (index + 1), index, isInferred: named >= 0 && !!type.inferredTupleElementNames?.[named] };
+  return index < maxTupleElements ? element : { ...element, symbol: restElementField(type, index) };
 }
 
 /**
@@ -68,10 +102,13 @@ export function tupleElementProblem(type, name, display) {
   if (!type?.isTupleType || type.isDefinition) return null;
   if ((type.tupleElementNames ?? []).filter(element => element === name).length > 1) {
     const member = display + '.' + name;
-    return { code: 'CS0229', args: [member, member] };
+    return { code: DiagnosticId.CS0229, args: [member, member] };
   }
   const item = itemName.exec(name);
-  if (item && Number(item[1]) > type.typeArguments.length && Number(item[1]) <= maxTupleElements) return { code: 'CS1061', args: [display, name] };
+  // `Rest` is a field of the eight-argument ValueTuple only.
+  if (name === 'Rest' && type.typeArguments.length <= maxTupleElements) return { code: DiagnosticId.CS1061, args: [display, name] };
+  const beyond = item && Number(item[1]) > tupleElements(type).length;
+  if (beyond && (Number(item[1]) <= maxTupleElements || isWideTuple(type))) return { code: DiagnosticId.CS1061, args: [display, name] };
   return null;
 }
 
@@ -82,10 +119,10 @@ export function tupleElementProblem(type, name, display) {
  * @param binder the body binder (`conversions`, `reportConversionFailure`)
  */
 export function reportTupleLiteralFailure(binder, literal, target) {
-  if (!target?.isTupleType || target.isDefinition || target.typeArguments.length !== literal.elements.length) return false;
+  if (!target?.isTupleType || target.isDefinition || tupleElements(target).length !== literal.elements.length) return false;
   let reported = false;
   literal.elements.forEach((element, index) => {
-    const elementType = target.typeArguments[index].type,
+    const elementType = tupleElements(target)[index].type,
       conversion = binder.conversions.classifyFromExpression(element, elementType);
     if (conversion.exists && conversion.isImplicit) return;
     binder.reportConversionFailure(element, elementType, element.syntax, conversion);
@@ -97,6 +134,7 @@ export function reportTupleLiteralFailure(binder, literal, target) {
 /** The position of a tuple element field (`Item3` is 2), or -1 for any other symbol. */
 export function tupleElementIndex(field) {
   if (!field?.containingType?.isTupleType) return -1;
+  if (field.tupleElementIndex !== undefined) return field.tupleElementIndex;
   const item = itemName.exec(field.name);
   return item ? Number(item[1]) - 1 : -1;
 }
@@ -111,9 +149,9 @@ export function tupleNameProblems(names) {
   names.forEach((name, index) => {
     if (!name) return;
     const item = itemName.exec(name);
-    if (forbiddenNames.has(name)) problems.push({ index, code: 'CS8126', args: [name] });
-    else if (item && Number(item[1]) !== index + 1) problems.push({ index, code: 'CS8125', args: [name, Number(item[1])] });
-    else if (seen.has(name)) problems.push({ index, code: 'CS8127', args: [] });
+    if (forbiddenNames.has(name)) problems.push({ index, code: DiagnosticId.CS8126, args: [name] });
+    else if (item && Number(item[1]) !== index + 1) problems.push({ index, code: DiagnosticId.CS8125, args: [name, Number(item[1])] });
+    else if (seen.has(name)) problems.push({ index, code: DiagnosticId.CS8127, args: [] });
     seen.add(name);
   });
   return problems;
@@ -151,4 +189,29 @@ export function tupleLiteralNames(argumentSyntaxes) {
   };
   const inferred = candidates.map(usable);
   return { names: explicit.map((name, i) => name ?? (inferred[i] ? candidates[i] : null)), inferred };
+}
+
+/**
+ * The element names of every tuple in a type, as `System.Runtime.CompilerServices.TupleElementNamesAttribute` lists
+ * them for a symbol of that type: one entry per element of each tuple in pre-order (a nested `Rest` tuple contributes
+ * a null per element of its own), null for an unnamed element.
+ * @returns {(string|null)[]|null} null when no tuple in the type has a named element (no attribute is emitted)
+ */
+export function tupleElementNamesOf(type) {
+  const names = [];
+  const visit = (t, isRest = false) => {
+    if (t instanceof ArrayTypeSymbol) return visit(t.elementType);
+    if (!t?.typeArguments?.length || t.isDefinition) return undefined;
+    const isTuple = !!t.isTupleType,
+      wide = isWideTuple(t);
+    if (isTuple) {
+      const own = isRest ? null : t.tupleElementNames;
+      for (let index = 0, count = tupleElements(t).length; index < count; index++) names.push(own?.[index] ?? null);
+    }
+    if (t.containingType?.typeArguments?.length) visit(t.containingType);
+    t.typeArguments.forEach((argument, index) => visit(argument.type, wide && index === tupleRestPosition));
+    return undefined;
+  };
+  visit(type?.type ?? type);
+  return names.some(name => name !== null) ? names : null;
 }
