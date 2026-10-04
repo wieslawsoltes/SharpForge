@@ -1,3 +1,34 @@
 /* Visual Studio-inspired compact workspace, authored SharpForge styling. */
-:root{--accent:#007acc;--accent-bg:#094771;--selection:#264f78;--selection-inactive:#3a3d41;--border:#3f3f46;--bg:#1e1e1e;--panel:#252526;--surface:#2d2d30;--hover:#3e3e42;--raised:#2d2d30;--text:#dcdcdc;--muted:#aaa;--line:#3f3f46;--line-soft:#303033;--editor:#1e1e1e}
-html[data-theme=light]{--selection:#c9def5;--selection-inactive:#ddd;--border:#ccc;--panel:#f5f5f5;--surface:#eee;--hover:#dbeaf9;--raised:#fff;--text:#202020;--muted:#626262;--line:#ccc;--line-soft:#ddd;--editor:#fff;--bg:#eee;--accent-bg:#c9def5}
+:root {
+  --accent: var(--studio-accent);
+  --accent-bg: var(--studio-accent-background);
+  --selection: var(--studio-selection);
+  --selection-inactive: var(--studio-selection-inactive);
+  --border: var(--studio-border);
+  --bg: var(--studio-background);
+  --panel: var(--studio-panel);
+  --surface: var(--studio-surface);
+  --hover: var(--studio-hover);
+  --raised: var(--studio-raised);
+  --text: var(--studio-foreground);
+  --muted: var(--studio-muted-foreground);
+  --line: var(--studio-line);
+  --line-soft: var(--studio-line-soft);
+  --editor: var(--studio-editor-background);
+}
+html[data-theme=light] {
+  --selection: var(--studio-selection-light);
+  --selection-inactive: var(--studio-selection-inactive-light);
+  --border: var(--studio-border-light);
+  --panel: var(--studio-panel-light);
+  --surface: var(--studio-surface-light);
+  --hover: var(--studio-hover-light);
+  --raised: var(--studio-raised-light);
+  --text: var(--studio-foreground-light);
+  --muted: var(--studio-muted-foreground-light);
+  --line: var(--studio-line-light);
+  --line-soft: var(--studio-line-soft-light);
+  --editor: var(--studio-editor-background-light);
+  --bg: var(--studio-background-light);
+  --accent-bg: var(--studio-accent-background-light);
+}

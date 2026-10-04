@@ -17,6 +17,9 @@ signature AST. A malformed blob, a non-method signature or a receiver/static fla
 mismatch produces `SFCLR005` only when the signature is requested. The original
 VAR/MVAR slots are preserved. No generic method instantiation is implied.
 
+Canonical [parameter metadata](PARAMETERS.md) adds positional and return
+descriptors, raw Param flags and lazy ECMA Constant values.
+
 `method.genericParameters` and `module.methodGenericParameters(methodToken)` add
 canonical MethodDef-owned GenericParam descriptors. The shared generic metadata
 index supplies names, positions, attributes and raw constraint tokens. A parameter
@@ -51,11 +54,19 @@ assembly, consistent with existing collectible metadata lifetimes.
 
 The first lookup indexes MethodList ownership in O(TypeDef + MethodDef + MethodPtr)
 rows, bounded to 100,000 combined rows. The module owns all caches, and repeated
-identity/signature reads use indexed lookups. Names are bounded to 4,096
-characters; signature decoding uses the existing CIL depth/node limits. Invalid
+identity/signature reads use indexed lookups. Names are bounded to 4,096 UTF-16
+code units, with a generous 16 KiB UTF-8 ceiling checked before string decoding.
+Signature blobs are bounded to 1 MiB before defensive copying; decoding also
+uses the existing CIL depth/node limits. Invalid
 or duplicate ownership, unowned methods and invalid tokens produce `SFCLR005`;
-row/name limits produce `SFCLR007`. This synchronous metadata service introduces
+row/name/blob limits produce `SFCLR007`. This synchronous metadata service introduces
 no cancellable asynchronous operation.
+
+The heap-preflight regression reproduced both premature materializations before
+this correction. All three focused regressions pass after the guard changes,
+including non-ASCII names at the existing UTF-16 limit. Node 24.21.0 syntax/static
+checks pass (2,471/2,467 modules); the structure report has no CLR findings.
+This bounded fix does not change cached identity/signature lookup paths.
 
 The native fixture in `tests/fixtures/clr-method-definitions/Program.cs` records
 CoreCLR reflection attributes, owner tokens, signatures and raw method IL for
