@@ -4,7 +4,7 @@ import {isNullOrWhiteSpace, trimWhiteSpace} from './whitespace.js';
 import {invariantCase} from './casing.js';
 import {compareOrdinalRange} from './string-compare.js';
 import {equalsWithComparison, registerStringEqualityExtensions} from './string-equality.js';
-import {compareWithComparison} from './string-comparison.js';
+import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
 import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
 
 const owner = 'System.String';
@@ -62,6 +62,7 @@ export function registerStringComparisonExtensions(registry) {
   registerStringEqualityExtensions(registry);
   member(owner, 'Compare', ['string', 'string', 'System.StringComparison'], 'int', {isStatic: true});
   registerStringAffixExtensions(registry);
+  member(owner, 'Compare', ['string', 'int', 'string', 'int', 'int', 'System.StringComparison'], 'int', {isStatic: true});
 }
 
 function splitString(platform, receiver, values, scalars) {
@@ -102,7 +103,8 @@ function staticString(platform, descriptor, values, scalars) {
     }
     case 'Equals': return scalars.length === 2 ? scalars[0] === scalars[1]
       : equalsWithComparison(platform, scalars[0], scalars[1], scalars[2]);
-    case 'Compare': return compareWithComparison(platform, scalars[0], scalars[1], scalars[2]);
+    case 'Compare': return scalars.length === 6 ? compareRangeWithComparison(platform, scalars)
+      : compareWithComparison(platform, scalars[0], scalars[1], scalars[2]);
     case 'CompareOrdinal':
       if (scalars.length === 5) return compareOrdinalRange(platform, scalars);
       if (scalars[0] === scalars[1]) return 0;
