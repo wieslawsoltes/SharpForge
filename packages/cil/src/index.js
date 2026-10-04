@@ -30,3 +30,4 @@ export { VerificationKind, verificationType, verificationDiagnosticCatalog } fro
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
 
 export {verifiedStackBound} from './verified-stack.js';
+export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';

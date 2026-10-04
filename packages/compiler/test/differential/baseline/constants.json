@@ -1,11 +1,11 @@
 {
-  "constants/const-fields": ["diagnostics", "warnings", "bytecode", "cil"],
-  "constants/const-in-switch": ["diagnostics", "warnings", "bytecode", "cil"],
+  "constants/const-fields": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "constants/const-in-switch": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "constants/cs0110-circular-constant": ["diagnostics", "warnings"],
   "constants/cs0131-assign-const": ["diagnostics", "warnings"],
   "constants/cs0133-non-constant-initializer": ["diagnostics", "warnings"],
   "constants/cs0145-const-without-value": ["diagnostics", "warnings"],
   "constants/cs0191-assign-readonly": ["diagnostics", "warnings"],
-  "constants/folding": ["diagnostics", "warnings", "bytecode", "cil"],
-  "constants/static-readonly": ["diagnostics", "warnings", "bytecode", "cil"]
+  "constants/folding": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "constants/static-readonly": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

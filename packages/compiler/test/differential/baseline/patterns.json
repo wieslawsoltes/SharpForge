@@ -1,5 +1,5 @@
 {
-  "patterns/constant-relational-logical": ["diagnostics", "warnings", "bytecode", "cil"],
-  "patterns/switch-expression-shared-evaluation": ["diagnostics", "warnings", "bytecode", "cil"],
-  "patterns/switch-statement-patterns-and-when": ["diagnostics", "warnings", "bytecode", "cil"]
+  "patterns/constant-relational-logical": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "patterns/switch-expression-shared-evaluation": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "patterns/switch-statement-patterns-and-when": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

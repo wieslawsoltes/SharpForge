@@ -1,5 +1,5 @@
 {
   "extended-property-patterns/extended-property-patterns-in-csharp-9": ["diagnostics", "warnings"],
   "extended-property-patterns/member-path-errors": ["diagnostics", "warnings"],
-  "extended-property-patterns/member-paths-are-nested-patterns": ["diagnostics", "warnings", "bytecode", "cil"]
+  "extended-property-patterns/member-paths-are-nested-patterns": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

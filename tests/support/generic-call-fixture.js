@@ -65,7 +65,7 @@ export function genericCallFixture(types, {decorate, entry = 'Program.Main'} = {
     const locals = method.locals?.length ? md.add(17, [md.blob(localSignature(method.locals, resolve))]) : 0;
     section.pad(4);
     md.rows[6][(method.token & 0xffffff) - 1][0] = TEXT_RVA + section.length;
-    section.u16(0x3013).u16(method.maxStack ?? 16).u32(code.length).u32(locals).bytes(code);
+    section.u16(method.initLocals === false ? 0x3003 : 0x3013).u16(method.maxStack ?? 16).u32(code.length).u32(locals).bytes(code);
   }
   decorate?.(context);
   section.pad(4);

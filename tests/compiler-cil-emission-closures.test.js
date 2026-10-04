@@ -134,6 +134,14 @@ test('A02-T30 a field-like event gets add and remove accessors over Delegate.Com
   assert.ok(lines('C', 'Main').includes('callvirt Button::add_Clicked'));
 });
 
+test('A02-T30 an anonymous method without a parameter list takes the parameters of its delegate type', () => {
+  const { type, inspector } = emit(`using System;
+    class C { static void Main() { Action<int, string> a = delegate { Console.WriteLine("called"); }; a(1, "x"); } }`),
+    method = type('C').methods.find(candidate => candidate.name.startsWith('<Main>b__'));
+  // A method with another parameter list behind the delegate would be invalid, even where a runtime happens to run it.
+  assert.deepEqual(inspector.getMethod(method.token).signature.parameters, ['int', 'string']);
+});
+
 test('A02-T30 closures the emitter cannot declare yet are refused, not miscompiled', () => {
   assert.match(
     refused('using System; class Box<T> { public Func<T> Make(T value) { return () => value; } } class C { static void Main() { } }')[0],

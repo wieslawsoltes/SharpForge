@@ -1,17 +1,11 @@
-import {verifiedStackBound} from '@sharpforge/cil';
-import {numericStackTypes} from './numeric-stack-types.js';
+import {numericPlanTypes} from './numeric-specialization.js';
 import {typedFloatHandler} from './typed-float-handlers.js';
 
 /** Bounded, optional contribution to the existing decode-plan handler array. */
 export function specializeFloatPlan(vm, method, offsets, handlers) {
-  if (vm.options.typedNumericStack !== true || !verifiedStackBound(vm.inspector, vm.report, method)) return;
-  let states;
-  try {
-    states = numericStackTypes(vm.inspector, method, offsets, 250_000);
-  } catch {
-    // Failure of optional category analysis never changes an admitted program's behavior.
-    return;
-  }
+  if (vm.options.typedNumericStack !== true) return;
+  const states = numericPlanTypes(vm, method, offsets);
+  if (!states) return;
   for (let index = 0; index < handlers.length; index++) {
     handlers[index] = typedFloatHandler(method, method.instructions[index], states[index], handlers[index]) ?? handlers[index];
   }

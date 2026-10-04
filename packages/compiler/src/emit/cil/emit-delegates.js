@@ -56,12 +56,19 @@ export const DelegateEmission = Base =>
       else il.emit('ldftn', this.tokens.method(method));
       return this.newDelegate(node.type);
     }
-    /** `new D(expression)`: the argument is a lambda or method group converted to `D`, or another delegate. */
-    delegateCreation(node) {
-      const argument = node.args?.[0]?.expression ?? node.argument;
-      if (!argument) return this.unsupported('this delegate creation form', node.syntax);
-      if (argument.kind === 'Conversion' || argument.type?.equals(node.type)) return this.expression(argument);
-      return this.unsupported('a delegate created from a delegate of another type', node.syntax);
+    /**
+     * `new D(expression)`: a lambda or method group is converted to `D`; a delegate value becomes the target of a
+     * new delegate over its `Invoke` method.
+     */
+    exprDelegateCreation(node) {
+      const operand = node.operand,
+        invoke = operand?.type?.delegateInvokeMethod;
+      if (!operand) return this.unsupported('this delegate creation form', node.syntax);
+      if (operand.kind === 'Conversion' || operand.kind === 'Lambda') return this.expression(operand);
+      if (!invoke) return this.unsupported('a delegate created from a value that is not a delegate', node.syntax);
+      this.expression(operand);
+      this.il.emit('ldftn', this.tokens.method(invoke));
+      return this.newDelegate(node.type);
     }
     /** `a + b` and `a - b` over delegates: `Delegate.Combine` / `Delegate.Remove`, cast back to the delegate type. */
     delegateOperator(node) {

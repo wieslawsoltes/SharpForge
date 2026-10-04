@@ -58,5 +58,7 @@ Host yielding is necessary for asynchronous preparation to settle. This counter
 leaf does not itself convert frames or claim a performance gain.
 Source VM and Rust backends are outside this direct-CIL policy.
 
-Authored regressions are in `tests/a05-11-wasm-backedge-counters.test.js`.
-Tests, builds and performance runs are pending the root serial validation queue.
+All 70 focused tests passed serially on Node 24 at `1a709ad9`: back-edge
+counters, call-entry tiering, manual bridge, eligibility, method events and
+instruction profiling. Broad native/browser qualification and performance
+measurements remain deferred.

@@ -2,5 +2,5 @@
   "member-bodies/cs8050-cs8051-cs8053-cs0200-auto-property-rules": ["diagnostics", "warnings"],
   "member-bodies/cs8057-block-and-expression-body-on-every-kind-of-member": ["diagnostics", "warnings"],
   "member-bodies/cs8057-cs0201-cs0029-expression-bodies": ["diagnostics", "warnings"],
-  "member-bodies/initializers-run-in-declaration-order-before-the-constructor": ["diagnostics", "warnings", "bytecode", "cil"]
+  "member-bodies/initializers-run-in-declaration-order-before-the-constructor": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
