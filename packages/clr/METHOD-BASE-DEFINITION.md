@@ -21,13 +21,60 @@ signatures remain lazy; no executable body is read.
 
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
-generic base instantiation, constrained generic methods, type generic variables,
+generic base instantiation, type generic variables,
 modifier/function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Constrained generic methods now follow the same implicit class-slot walk. Each
+matched override edge compares method GenericParam constraints separately from
+signature identity, following [ECMA-335 II.9.9](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf)
+and [CoreCLR constraint comparison](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/siginfo.cpp#L4630).
+Reference-type, value-type and default-constructor requirements may be removed
+but cannot be strengthened; a value-type requirement implies a constructor for
+this comparison. Explicit TypeDef/TypeRef constraints compare by canonical type
+identity, including equivalent references across assemblies. Object constraints
+and ValueType constraints under the struct flag are vacuous. Different explicit
+constraints fail instead of silently selecting another slot.
+
+This is constraint compatibility for open method definitions, not generic type
+instantiation or argument satisfaction. Bare open generic definitions, TypeSpec
+constraint expressions, method
+variance, allow-byref-like flags and contradictory special flags report SFCLR012.
+Generic declaring/base types and class MethodImpl remain separate. The existing
+GenericParam reader validates owner, position, arity and token extents. Context
+row limits are checked before expanding generic descriptors; successful per-method
+constraint snapshots use a lazy context-local weak cache. Unconstrained matches
+allocate no constraint service or snapshots. Cancellation precedes cache access
+and publication; a cancelled resolution can be retried. Per-edge comparison is
+linear in explicit constraint count using canonical identity sets, after bounded
+metadata/type loading. No method body is inspected.
+
+SDK 10.0.201/CoreCLR 10.0.5 captured 12 C# method roots and three independently
+persisted IL cases: weakened class/new constraints and constructor implication
+were accepted; the stronger class requirement raised TypeLoadException. All
+32 affected tests pass with zero skips, including mandatory source/image hashes.
+Syntax/static checks pass (3,448/3,444 modules), manifests pass, and structure
+reports 271 existing findings, none in changed files. All local jobs ran serially
+under one limiter with concurrency 1 and a 1 GiB heap cap.
+
+Exact-parent control (`66599db4` → `996b0059`) over 23 methods measured cold median
+154.833 → 154.917 µs (+0.084 µs), p95 310.875 → 350.750 µs (+39.875 µs/+12.827%).
+Cached median was 133.625 → 120.250 ns, p95 185.041 → 169.959 ns. The root
+integration reviewer explicitly accepts the measured cold p95 cost for bounded
+per-edge constraint compatibility. Unconstrained matches allocate no constraint
+service or promise. No repeat or retuning was required.
+
+The new 12-method fixture measured cold median 145.542 µs / p95 317.667 µs and
+cached median 141.833 ns / p95 169.333 ns. [All 600 raw samples, p99, exact heads,
+commands and provenance](benchmarks/constrained-method-overrides-node24.json)
+are retained. Controls import their own CLR implementation; only byte-identical
+CIL/archive dependencies are shared. Runs used shared Apple M3 Pro/darwin-arm64,
+Node 24.21.0. No causal, noise, significance, speed or peak-memory attribution is
+made; allocations and cache footprint are unmeasured.
 
 Generic-instance signature types now match by canonical open definition identity
 and recursively compared argument keys. This supports ordinary overrides whose

@@ -1,8 +1,10 @@
 import { cliSystemName } from '@sharpforge/cil';
+import { OverrideConstraints } from './override-constraints.js';
 import { GenericOverrideDefinitions } from './generic-override-definitions.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
+const constrained = parameter => parameter.genericParameterAttributes || parameter.genericParameterConstraintTokens.length;
 
 /** Context-local, bounded signature keys for implicit class override matching. */
 export class OverrideSignatures {
@@ -12,6 +14,7 @@ export class OverrideSignatures {
   #count = 0;
   #limit;
   #genericDefinitions;
+  #constraints;
   constructor(loader, limit) { this.#loader = loader; this.#limit = limit; }
   #identity(type) {
     if (!this.#identities.has(type)) {
@@ -27,10 +30,10 @@ export class OverrideSignatures {
     if (signature.callingConvention !== 0 || signature.explicitThis || signature.sentinel !== -1) {
       throw fail('Virtual base-definition matching requires a default instance signature');
     }
-    const arity = method.genericParameters.length;
-    if (method.genericParameters.some(parameter => parameter.genericParameterAttributes || parameter.genericParameterConstraintTokens.length)) {
-      throw fail('Constrained generic override matching requires the generic constraint service');
+    if (signature.genericArity && method.module.rowCount(42) + method.module.rowCount(44) > this.#limit) {
+      throw loadError(LoadErrorCode.LimitExceeded, 'Override generic metadata row limit exceeded');
     }
+    const arity = method.genericParameters.length;
     const types = [];
     for (const type of [signature.returnType, ...signature.parameters]) {
       types.push(await this.#type(type, method.module, arity, signal));
@@ -39,6 +42,11 @@ export class OverrideSignatures {
     checkCancellation(signal);
     this.#keys.set(method, key);
     return key;
+  }
+  checkConstraints(implementation, declaration, signal) {
+    if (!implementation.genericParameters.some(constrained) && !declaration.genericParameters.some(constrained)) return null;
+    this.#constraints ??= new OverrideConstraints(this.#loader, this.#limit);
+    return this.#constraints.check(implementation, declaration, signal);
   }
   async #type(node, module, arity, signal) {
     checkCancellation(signal);

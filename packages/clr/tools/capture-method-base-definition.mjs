@@ -27,8 +27,11 @@ try {
   const records = expected.records.map(record => `    ${JSON.stringify(record)}`).join(',\n');
   const imageBytes = readFileSync(image);
   const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+  const constraintCases = expected.constraintCases?.map(record => ({ ...record,
+    imageSHA256: hash(Buffer.from(record.image, 'base64')) }));
   const header = JSON.stringify({ sdk, runtime: expected.runtime,
-    sourceSHA256: hash(readFileSync(source)), imageSHA256: hash(imageBytes) }, null, 2).slice(0, -2);
+    sourceSHA256: hash(readFileSync(source)), imageSHA256: hash(imageBytes),
+    ...(constraintCases ? { constraintCases } : {}) }, null, 2).slice(0, -2);
   writeFileSync(join(output, 'native-method-bases.json'), `${header},\n  "records": [\n${records}\n  ],\n` +
     `  "image": ${JSON.stringify(imageBytes.toString('base64'))}\n}\n`);
   console.log(`Captured ${expected.records.length} native method base-definition records in ${output}`);
