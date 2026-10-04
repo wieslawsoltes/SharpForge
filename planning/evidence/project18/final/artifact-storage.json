@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "all-blobs-uploaded-byte-readback-pending",
+  "status": "all-published-bytes-and-reconstruction-verified",
   "packerManifest": "artifacts.json",
   "packerManifestSha256": "af7ea92fab38d0fc7484da375949752c1485bc0058ca04df6fca472f3b7191d5",
   "meaning": "The packer manifest retains complete original-file identities. This record maps them to the actually uploaded repository files; parts preserve the complete raw archive bytes.",
@@ -204,8 +204,16 @@
   ],
   "blobUploadReceipt": "artifact-publication.json",
   "binaryReadback": {
-    "state": "pending exact-ref fetch after evidence branch creation",
-    "required": "Fetch the exact published ref, verify its commit, stream every blob, verify each part and the reassembled whole byte count, SHA-256 and Git identity."
+    "state": "verified",
+    "commit": "09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+    "tree": "20565d7f4724c5ec040af531f6c9ea01dc610eff",
+    "receipt": "artifact-byte-readback.json",
+    "receiptBytes": 12323,
+    "receiptSha256": "3e0b87cddbb303979931fda5a817e802d59873d22c148d84a3a15f8cf0d50ff0",
+    "binaryBlobCount": 17,
+    "binaryPayloadBytes": 70001708,
+    "reconstructedArchiveVerified": true,
+    "scope": "This exact initial evidence commit was fetched once. Later metadata-only publication preserves the same 17 blob identities; it is not a claim of another fetch or qualification run."
   },
   "ordinaryPrCoreOnly": true
 }

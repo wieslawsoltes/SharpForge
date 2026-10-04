@@ -273,7 +273,6 @@
     "comparisonMethod": "Complete read-only exact source dimensions at7d4 against pinned1db; final0bb differs only in a Python test fixture outside checker inputs. No strict gate rerun."
   },
   "pending": [
-    "Complete released artifact blob publication, exact-ref binary byte readback and the ordinary evidence-draft core check.",
     "Performance budget justification/sign-off and named unqualified platform/framework cells.",
     "Protected Studio/lockfile application remains under the existing ownership/lease workflow."
   ],
@@ -433,5 +432,20 @@
     "rawSession": "qualification/final/raw/designer-release13-0bb2ed36/results/browser_release13_test/session.json",
     "buildEquivalence": "build-equivalence.json"
   },
-  "buildEquivalence": "build-equivalence.json"
+  "buildEquivalence": "build-equivalence.json",
+  "evidenceDelivery": {
+    "binaryReadback": {
+      "state": "verified",
+      "commit": "09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+      "tree": "20565d7f4724c5ec040af531f6c9ea01dc610eff",
+      "receipt": "artifact-byte-readback.json",
+      "receiptBytes": 12323,
+      "receiptSha256": "3e0b87cddbb303979931fda5a817e802d59873d22c148d84a3a15f8cf0d50ff0",
+      "binaryBlobCount": 17,
+      "binaryPayloadBytes": 70001708,
+      "reconstructedArchiveVerified": true,
+      "scope": "This exact initial evidence commit was fetched once. Later metadata-only publication preserves the same 17 blob identities; it is not a claim of another fetch or qualification run."
+    },
+    "ordinaryCore": "Consult the required check on this evidence PR current head. It is a publication gate, not an additional product qualification run."
+  }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "state": "aggregate-published-artifacts-packed-binary-publication-in-progress",
+  "state": "aggregate-and-artifacts-published-fetched-bytes-verified",
   "candidateSnapshot": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
   "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
   "destination": "planning/evidence/project18/final",
@@ -105,7 +105,8 @@
     "source-dimensions.json",
     "source-freeze.json",
     "source.json",
-    "artifact-publication.json"
+    "artifact-publication.json",
+    "artifact-byte-readback.json"
   ],
   "mandatoryInputs": [
     {
@@ -339,12 +340,18 @@
     "compression": true,
     "artifactUpload": true,
     "aggregatePublication": true,
-    "docsEvidencePublication": false
+    "docsEvidencePublication": true,
+    "binaryByteReadback": true
   },
   "frozenManifest": {
     "sha256": "4d94babc794559e4dbf5b9b2b09ace7962d9f52a16bd07f695c0c1bab2dedce2",
     "source": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
     "artifactCount": 1320,
     "bytes": 84836806
+  },
+  "releaseVerification": {
+    "aggregate": "published exact canonical tree and 34 ordered actual parents",
+    "artifacts": "all 17 blobs and reconstructed archive byte-verified at 09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+    "core": "ordinary required check on final evidence PR; no qualification matrix repeated"
   }
 }

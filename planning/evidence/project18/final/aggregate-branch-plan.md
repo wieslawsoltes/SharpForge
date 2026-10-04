@@ -146,6 +146,8 @@ starts until the coordinator releases the heavy-work slot.
 Product/test source, the final parent index, omission resolution and raw evidence
 are sealed. The exact canonical tree `55e5f5c443d15030bc47592e6ba511862812f363`
 is frozen. The aggregate commit/ref and root-verified bundle/archive have been created.
-All 17 stored binary blobs have uploaded with matching Git identities; exact-ref
-binary byte readback and the evidence draft remain separate recorded steps. Prepared and published small feature-maintenance corrections are
+All 17 stored binary blobs and the reconstructed whole archive passed exact-ref
+fetched byte verification at `09f2c383ea5038684dc5d0c515ea6c027bb1d8f5`.
+The final metadata-only evidence forward preserves those blob identities; its
+ordinary required core check is separate from product qualification. Prepared and published small feature-maintenance corrections are
 recorded separately and are not counted as aggregate publication.

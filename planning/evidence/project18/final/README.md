@@ -1,6 +1,6 @@
 # Project18 implementation and qualification review
 
-**The complete canonical code tree is published; source and raw evidence artifacts are verified.** This report
+**The complete canonical code tree is published; source and raw evidence artifacts were verified from GitHub.** This report
 describes source `0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760`, tree
 `7399d972ea939b8a5f05f894bc793f9b713cfd49`, composed with pinned main
 [`1db2e1d540a78403b7aaddcf472311fcde1a81ef`](https://github.com/wieslawsoltes/SharpForge/commit/1db2e1d540a78403b7aaddcf472311fcde1a81ef).
@@ -319,11 +319,15 @@ whole-file identity and explicit part order. The bundle is 3,353,040 bytes and t
 All 5,968 required source objects and all 1,321 archive members passed verification.
 The [artifact manifest](artifacts.json) records original sizes, SHA-256 values and
 Git blob identities. Binary publication and fetched-byte verification are recorded
-in [artifact-storage.json](artifact-storage.json). [Artifact staging](artifact-staging.json)
+in [artifact-storage.json](artifact-storage.json) and [the publication receipt](artifact-publication.json).
+The exact fetched commit was `09f2c383ea5038684dc5d0c515ea6c027bb1d8f5`: all
+17 stored binary blobs and the reconstructed archive matched their released byte
+counts, SHA-256 values and Git identities. This metadata-only forward preserves
+the same 17 blob identities; it does not imply another fetch or qualification run.
+[Exact byte-readback receipt](artifact-byte-readback.json) · [Artifact staging](artifact-staging.json)
 
-After publication, restore the pinned prerequisite first, verify the bundle,
-then fetch its advertised source ref into a separate review branch. For an
-unsplit bundle whose final advertised ref remains `codex/p18-integration`:
+To restore the original source, fetch the pinned prerequisite first, verify the
+bundle, then fetch its verified `codex/p18-integration` ref into a separate review branch:
 
 ```sh
 git init project18-review
@@ -342,7 +346,8 @@ the whole SHA-256 before unpacking it. The source bundle is a single file. The o
 preserved inside the bundle; GitData creation of the surrounding evidence commit
 does not replace them. [Source and artifact contracts](source.json)
 
-The remaining gates are concrete: finish artifact publication and independent
-fetched-byte readback; review measured performance budgets; handle the protected integration
-under its existing ownership; and retain the unqualified framework/platform and
-browser acceptance clauses on their owning work items.
+Artifact publication and independent fetched-byte verification are complete. The
+evidence PR receives its ordinary required core check separately from the preserved
+source qualification. Remaining acceptance gates are concrete: review measured
+performance budgets; handle the protected integration under its existing ownership;
+and retain the unqualified framework/platform and browser clauses on their owning work items.

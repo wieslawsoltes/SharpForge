@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "state": "all-blobs-created-exact-ref-byte-readback-pending",
+  "state": "all-published-binary-bytes-and-reconstructed-archive-verified",
   "repository": "wieslawsoltes/SharpForge",
   "packerManifest": "artifacts.json",
   "packerManifestSha256": "af7ea92fab38d0fc7484da375949752c1485bc0058ca04df6fca472f3b7191d5",
@@ -380,7 +380,8 @@
           }
         }
       ]
-    }
+    },
+    "recordMeaning": "Original creation-phase receipt retained; its pending readback fields are superseded by artifact-byte-readback.json."
   },
   "completedPartReceipt": {
     "input": "/tmp/p18-gitdata-binary-upload/part-upload-receipts.json",
@@ -391,8 +392,126 @@
   },
   "wholeRawFileBlobUploaded": false,
   "binaryReadback": {
-    "state": "pending exact published ref",
-    "method": "Fetch only the published branch into a fresh owned ref; verify commit, original manifest bytes, 17 blob bytes and reconstructed whole archive size, SHA-256 and Git identity."
+    "state": "verified",
+    "commit": "09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+    "tree": "20565d7f4724c5ec040af531f6c9ea01dc610eff",
+    "receipt": "artifact-byte-readback.json",
+    "receiptBytes": 12323,
+    "receiptSha256": "3e0b87cddbb303979931fda5a817e802d59873d22c148d84a3a15f8cf0d50ff0",
+    "binaryBlobCount": 17,
+    "binaryPayloadBytes": 70001708,
+    "reconstructedArchiveVerified": true,
+    "scope": "This exact initial evidence commit was fetched once. Later metadata-only publication preserves the same 17 blob identities; it is not a claim of another fetch or qualification run."
   },
-  "ordinaryPrCoreOnly": true
+  "ordinaryPrCoreOnly": true,
+  "binaryIdentityPreservation": {
+    "sourceCommit": "09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+    "sourceTree": "20565d7f4724c5ec040af531f6c9ea01dc610eff",
+    "unchangedBlobCount": 17,
+    "entries": [
+      {
+        "path": "planning/evidence/project18/final/artifacts/integration.bundle",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "674e737fa0fc6a63e3cc7603a24b4392ab2a73e4"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000001",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3d96101542871671a5e1db1a18cf5a4c0be7ab13"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000002",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bc15cc4922def6a699d0a5df778b26766116adf7"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000003",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d767a1f7abe573ba7ec48dad3151399794d307fd"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000004",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a653352d7468dcaa11f1597e2c9d0357042dabbf"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000005",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf4ecd0c83141364076e2be7ed3f50f56d0e8ee5"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000006",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd713ed2d35bc7917e267e63a8da59fbcc09f2d5"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000007",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8175673a4847cf144bdfddace9712ce903c0b494"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000008",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "121268ac3e789c4059e3ffcc5806459874fd5836"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000009",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a7f1dd70a53b2e3a1ec14a745cc0680e731b7233"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000010",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6a63242cf5d4f06b64ea3fb4f381357595a24b55"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000011",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "847c8fd4541b2ddf64e12f3821bcdb15ed6c4f4f"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000012",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7d2d877fe07fa5c6036bc00f90c206b36bdbdf5a"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000013",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "70397799e407ddf8a61f80387dd496e5a478dbcf"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000014",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7c35b05d48d61df0b56504d0f5d90ed95dddd086"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000015",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f93e6665cc9f964d86f855fd0d075038ca1767ae"
+      },
+      {
+        "path": "planning/evidence/project18/final/artifacts/qualification-raw.tar.gz.parts/part-000016",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2332eec56996b2ec75c9af5ca8331ab4e70b3fa5"
+      }
+    ],
+    "rule": "The final metadata-forward tree must retain these exact path/mode/type/blob identities. The publication transport receipt records the final comparison without creating a self-referential commit hash."
+  }
 }

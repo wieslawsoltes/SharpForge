@@ -88,3 +88,12 @@ Studio entry or change a working checkout.
 The final aggregate/ref and binary-upload readbacks were produced after packing
 and are published directly beside this report. They are intentionally outside
 the archive they describe.
+
+## Published-byte verification
+
+The [exact fetched-byte receipt](../artifact-byte-readback.json) records commit
+`09f2c383ea5038684dc5d0c515ea6c027bb1d8f5`, tree
+`20565d7f4724c5ec040af531f6c9ea01dc610eff`. All 17 stored blobs and the
+reconstructed archive matched the released bytes and both hash identities.
+The later metadata-only evidence forward keeps the same 17 binary blob IDs;
+no second binary fetch or source qualification is implied.
