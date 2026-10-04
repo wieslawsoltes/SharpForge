@@ -5,7 +5,7 @@ import {
 import {registerStringComparisonExtensions} from './string.js';
 import {
   registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions,
-  registerStringBuilderIntegerExtensions, registerStringBuilderSingleExtensions
+  registerStringBuilderIntegerExtensions, registerStringBuilderSingleExtensions, registerStringBuilderDecimalExtensions
 } from '../text/string-builder-append.js';
 import {
   registerStringSearchWindowExtensions, registerStringLastSearchStartExtensions, registerStringLastSearchWindowExtensions
@@ -42,6 +42,7 @@ function contracts(registry) {
   registerStringComparerEqualityExtensions(registry);
   registerStringBuilderSingleExtensions(registry);
   registerStringBuilderEqualityExtensions(registry);
+  registerStringBuilderDecimalExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
