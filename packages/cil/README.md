@@ -1,6 +1,6 @@
 # @sharpforge/cil
 
-Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Only sibling dependency: `@sharpforge/bytecode`.
+Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js
 import { emitAssembly, loadAssembly, formatAssembly } from '@sharpforge/cil';
@@ -20,6 +20,56 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+## Registered external readonly fields
+
+`resolveExecutionField` admits a closed field profile from
+`frameworkType(owner).fields`. Admission requires a genuine field MemberRef with
+an external top-level TypeRef owner, its exact registered owner/name/signature, and an
+approved assembly scope. Field definitions and locally scoped references continue
+to use ordinary local storage, including a local type with the same name.
+Owner namespace and metadata name, and the field's primitive signature AST,
+are checked independently of the inspector's display strings.
+
+The approved identities are `System.Runtime` with public key token
+`b03f5f7f11d50a3a` and `System.Private.CoreLib` with token
+`7cec85d7bea7798e`, both with neutral culture. Each descriptor must include
+`System.Runtime` for source emission and may additionally opt into CoreLib for
+native CIL; registration rejects CoreLib-only profiles. Scope names, tokens,
+and culture are matched exactly;
+assembly versions are preserved but deliberately not compared, allowing facade
+version compatibility. This policy does not admit arbitrary `System`, `mscorlib`,
+unsigned, or similarly named assemblies. These are closed execution profiles,
+not general external assembly loading or field providers.
+
+The returned field retains its original token, owner, and signature, adds
+`isStatic: true`/`isInitOnly: true`, and carries an immutable `externalField`
+descriptor. `executionFieldAccessError(field, opcode)` returns a policy error
+string or `null`; the admission verifier and runtime storage share this helper.
+`ldsfld` loads the declared value. Instance access and writes are rejected.
+`ldsflda` requires the descriptor's `addressable` opt-in, and indirect writes
+remain rejected even when readable addresses are permitted. Existing Decimal
+loads and readable managed addresses retain their prior behavior.
+
+`compileToAssembly` binds these members as actual readonly fields and emits real
+`ldsfld` instructions with field MemberRefs. The separate source-image route,
+`compile`/`compileToIL`, substitutes fixed profile values after field binding;
+its generated CIL contains scalar load instructions. Neither route marks the
+symbol as a C# constant: const initializers and readonly writes retain language
+diagnostics. Direct-CIL storage decodes each JSON scalar once per static slot,
+and the initialized value participates in existing snapshot/restore behavior.
+
+The focused regression files are `tests/a07-readonly-fields.test.js` and
+`tests/a07-readonly-field-cil.test.js`. The baseline-compatible
+`scripts/benchmarks/a07-readonly-field-loads.mjs` harness measures ordinary
+static loads in both revisions and registered loads in the candidate; it reports
+whole-loop timing, including VM execution overhead, rather than isolated opcode
+or allocation cost. Copy the identical harness into `scripts/benchmarks/` in
+each worktree and run each copy from its own worktree; fixed static imports use
+that worktree's public packages. Pass `--mode baseline` or `--mode candidate`
+and `--output /absolute/result.json` through `node scripts/limited.js node
+scripts/benchmarks/a07-readonly-field-loads.mjs`. There is no `--workspace` option;
+the report derives its workspace path from the script's location.
 
 ## Signature codecs
 

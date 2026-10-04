@@ -14,6 +14,7 @@ import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 import {executionStackHeights} from './verify/stack-heights.js';
 import {executionHandlerOffsets} from './verify/execution-handlers.js';
+import {verifyExecutionField} from './verify/execution-fields.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
 const simple = new Set(('calli constrained. volatile. ldtoken ldftn ldvirtftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
@@ -92,7 +93,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
         }catch(error){issue(m,i,'IL_TOKEN',error.message);}
       }
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?resolveExecutionMethod(inspector,i.operand,context):resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments)).ownerToken);}catch{/* Reported by token validation. */}}
-      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments);if(d.decimalConstant&&i.name==='stsfld')issue(m,i,'IL_FIELD','Decimal constants are readonly');if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken&&!d.decimalConstant)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name))verifyExecutionField(inspector,m,i,context,issue);
     }
     const {peak,heights}=executionStackHeights(inspector,m,map,stackContext);
     pointers.verify(m,issue,stackEffect,peak);

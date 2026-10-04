@@ -1,7 +1,6 @@
-import {decimalConstants} from './decimal-intrinsics.js';
-import {decodeCoded,genericTypeParts} from '@sharpforge/cil';
+import {decodeCoded,genericTypeParts,executionFieldAccessError} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
-import {storageDefault} from './storage.js';
+import {initialStaticFieldValue} from './external-field-values.js';
 
 const threadFields = new WeakMap();
 function threadStaticFields(inspector) {
@@ -21,16 +20,18 @@ function threadStaticFields(inspector) {
 /** A physical static slot captures type instantiation and scheduler context identity.
  * Managed addresses retain this key so switching contexts cannot redirect a byref.
  */
-export function staticSlot(vm, token, frame = vm.top) {
+export function staticSlot(vm, token, frame = vm.top, opcode = 'ldsfld') {
   const contextIdentity = frame?.genericIdentity ?? null;
   const field = vm.typeSystem.fieldCache.resolve(token, null, contextIdentity).field;
   if (!field.isStatic) throw new ManagedFault('InvalidProgramException', 'Expected a static field');
+  const error = executionFieldAccessError(field, opcode);
+  if (error) throw new ManagedFault('InvalidProgramException', error);
   const contextType = contextIdentity && genericTypeParts(contextIdentity).definition;
   const instance = field.ownerInstance ?? (contextType === field.owner ? contextIdentity : null);
   const genericIdentity = instance===null?null:vm.typeSystem.table(instance).name;
   const context = threadStaticFields(vm.inspector).has(field.resolvedToken) ? vm.scheduler?.currentId ?? 1 : null;
   const key = genericIdentity !== null || context !== null ? JSON.stringify([field.resolvedToken, genericIdentity, context]) : field.resolvedToken;
-  if (!vm.statics.has(key)) vm.statics.set(key, field.decimalConstant ? decimalConstants[field.decimalConstant] : storageDefault(vm,field.signature.type));
+  if (!vm.statics.has(key)) vm.statics.set(key, initialStaticFieldValue(vm,field));
   return {key, field, typeToken: field.ownerToken, genericIdentity, context};
 }
 
