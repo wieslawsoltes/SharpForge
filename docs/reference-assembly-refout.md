@@ -241,7 +241,7 @@ The [source inspection](evidence/a03-reference-assemblies/integration-51db/sourc
 attribute-dispatch and return-attribute allocations without attributing the measured regression to them. Native
 byte equality does not waive review of ordinary metadata performance.
 
-## Pending allocation follow-up
+## Qualified allocation follow-up
 
 A separate source change after evidence commit `4f80ef2a5bb952199b35cea7cf5ad83d1b87f6eb` moves the existing
 pseudo-attribute name and set lookup ahead of writer construction. Assemblies with only ordinary attributes no longer
@@ -253,13 +253,39 @@ Token maps, member plans and parameter/interface/generic-constraint rows are pre
 This is a narrow change to shared compiler metadata emission outside A03's package ownership. It addresses avoidable
 work identified by source inspection, without attributing the measured 22.2381% regression to those constructions.
 The new public-API regression covers ordinary/pseudo/ordinary ordering and exact delegate return targets in executable,
-ordinary metadata and refout modes. Validation and performance measurements for this follow-up are pending; the prior
-correctness and benchmark evidence continues to identify its own frozen source revision.
+ordinary metadata and refout modes. The follow-up is frozen at `588f2b271521f170f278a0d0f183f069bd71f41d`;
+the prior correctness and benchmark evidence continues to identify its own source revision.
 
-The benchmark driver, dynamic-import allowlist hash and rich source fixture are unchanged. Qualification should repeat
-the focused shared-emitter cohort, the two-case refout metadata/consumer capture and the two affected main native
-fixtures at the new source revision, then measure each output mode once against the retained `51db` observations.
-Historical baselines and captures remain distinct, and no new performance-budget conclusion is established yet.
+The unchanged focused cohort plus the new regression passed **67 tests, zero failures and zero skips**. The full
+public/friend metadata and consumer capture and both pinned main native fixtures passed. The native product DLLs,
+complete SRM observations and metadata-control image remain byte-identical to `51db`. The benchmark driver,
+dynamic-import allowlist hash and rich source fixture are unchanged. Each output mode was then measured exactly once,
+with all 120 chronological samples retained and the first 20 excluded from summary statistics. No historical run was
+repeated. The [allocation evidence](evidence/a03-reference-assemblies/allocation-588f/README.md) retains all six commands,
+raw reports, native observations and source identities separately from previous captures.
+
+| Measurement | 51db metadata | 588f metadata | Change | 51db refout | 588f refout | Change |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Median (ms) | 19.001903 | 16.218080 | -14.6502% | 13.762756 | 13.851561 | +0.6453% |
+| p95 (ms) | 21.198717 | 23.102026 | **+8.9784%** | 18.920035 | 19.782001 | +4.5558% |
+| p99 (ms) | 21.869242 | 27.814426 | **+27.1851%** | 20.102753 | 20.979140 | +4.3595% |
+| First compilation (ms) | 133.244493 | 99.538362 | -25.2965% | 108.198931 | 145.724813 | **+34.6823%** |
+| Compiler import (ms) | 404.946498 | 463.052459 | **+14.3490%** | 328.556521 | 553.077104 | **+68.3355%** |
+| Median heap-used delta (bytes) | 4,014,220 | 4,003,668 | -0.2629% | 3,937,796 | 3,929,908 | -0.2003% |
+| PE image bytes | 4,096 | 4,096 | 0% | 4,096 | 4,096 | 0% |
+
+The lower ordinary-metadata median does not waive its p95 and p99 regressions, which exceed the 5% review threshold.
+The larger import and refout first-compilation values are one-shot observations with the startup caveats above, and
+also require review. No performance-budget pass or causal estimate is claimed. Heap deltas do not measure total
+allocation savings. Both benchmark output hashes are unchanged; no PE size increase occurred. The same shared hosted
+machine and resource limits were used, with an exclusive team slot and unmeasured external workloads.
+
+Compared with saved `7c73`, the final metadata median is +4.3300%, p95 +14.4165% and p99 +21.1209%; refout median is
+-8.6711%, p95 +2.1750% and first compilation +13.9055%. These comparisons include the whole intervening main merge.
+Against `c169`, whole-checkout metadata median is +4.3617% and p95 -2.4080%. Within `588f`, refout versus metadata
+median is -14.5919% and p95 -14.3711%, while first compilation is +46.4007% and import +19.4416%; the modes have
+different contracts. Every exact older/newer delta is retained in the comparison JSON. Favorable older comparisons do
+not replace the adverse immediate-before/after observations or the prior `51db` regression record.
 
 ## Changes outside A03
 
