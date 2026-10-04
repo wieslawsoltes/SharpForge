@@ -18,6 +18,7 @@ test('optional physical metadata reader bounds retain default decoded facts', ()
   }
   assert.equal(bounded.string(bounded.row(0x1a000001)[0]), 'Module0');
   assert.throws(() => readMetadata(bytes, { maxRows: maxRows - 1 }), /Metadata row limit exceeded/);
+  assert.throws(() => readMetadata(bytes, { maxRows: maxRows - 1 }), { code: 'MD_READ_ROW_LIMIT' });
   assert.throws(() => readMetadata(bytes, { maxRows: 0 }), /Metadata row limit exceeded/);
 });
 
@@ -36,9 +37,9 @@ test('physical metadata parsing checks cancellation before and during row decodi
   const bytes = input();
   assert.throws(() => readMetadata(bytes, { signal: AbortSignal.abort() }), { code: 'MD_READ_CANCELED' });
   let checks = 0;
-  const signal = { get aborted() { return ++checks > 8; } };
+  const signal = { get aborted() { return ++checks > 10; } };
   assert.throws(() => readMetadata(bytes, { signal }), { code: 'MD_READ_CANCELED' });
-  assert.ok(checks > 8);
+  assert.ok(checks > 10);
   assert.equal(readMetadata(bytes).row(0x1a00012c).length, 1);
 });
 

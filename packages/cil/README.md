@@ -214,7 +214,8 @@ Parsing remains synchronous. Omitting options preserves the existing physical
 reader and borrowed input/heap views.
 Signals may be null/omitted or objects exposing a boolean `aborted` property,
 including browser and worker signals from another realm. Invalid shapes throw
-`CilError`. `metadataReaderDiagnosticCatalog` documents `MD_READ_CANCELED`.
+`CilError`. `metadataReaderDiagnosticCatalog` documents `MD_READ_CANCELED` and
+`MD_READ_ROW_LIMIT` (the latter applies only when read options were supplied).
 `readPE(bytes, { metadataOptions: { maxRows, signal } })` forwards those same
 bounds to its single metadata decode; other PE options retain their behavior.
 

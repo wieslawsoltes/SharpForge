@@ -2,6 +2,7 @@ import { CilError } from '../binary/error.js';
 
 export const metadataReaderDiagnosticCatalog = Object.freeze({
   MD_READ_CANCELED: 'Physical metadata reading was canceled before returning a reader',
+  MD_READ_ROW_LIMIT: 'An explicitly bounded metadata read exceeds its row allocation limit',
 });
 
 /** Structural signal admission also accepts browser/worker signals from another realm. */

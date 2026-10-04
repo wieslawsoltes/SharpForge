@@ -86,7 +86,11 @@ export function readMetadataTables(streams, bytes, budget) {
     if (!tableDefinitions[table]) throw new CilError(`Unsupported metadata table ${table}`);
     counts[table] = reader.u32();
     total += counts[table];
-    if (total > (budget?.maxRows ?? 1_000_000)) throw new CilError('Metadata row limit exceeded');
+    if (total > (budget?.maxRows ?? 1_000_000)) {
+      const error = new CilError('Metadata row limit exceeded');
+      if (budget) error.code = 'MD_READ_ROW_LIMIT';
+      throw error;
+    }
   }
   const extraData = heapFlags & 0x40 ? reader.u32() : undefined;
   const externalCounts = externalPdbCounts(streams.get('#Pdb'));
