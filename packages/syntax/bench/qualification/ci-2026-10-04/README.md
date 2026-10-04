@@ -109,8 +109,14 @@ node scripts/limited.js node --test --test-concurrency=1 \
   tests/syntax-parse-qualification.test.js tests/syntax-parse-bench.test.js
 ```
 
+The single run passed **8/8 tests, zero failures/skips**, in 5.234 seconds on Node 24.19.0 at frozen source
+`8666b64e104753d3edb066ddd1c1c629ea18d6cc`, tree `680c4d1383d30d8a2b09169e736d30eb43199996`.
+Tracked and untracked status were clean before and after; all captured file hashes and both own-checkout
+package aliases were unchanged. `focused-results.json`, preflight/postflight records and `focused-tests.log`
+retain the exact command, Node binary hash and actual result.
+
 These tests include an existing quick measurement over ten cases; that is test coverage, not a new full
-historical-baseline qualification or a retained performance comparison. The exact head/tree, before/after
-tracked status, package aliases, Node identity, command and raw result will be recorded in the evidence-only
-qualification commit. No full npm install is needed locally: the narrow checkout uses its own syntax/text
-package aliases. Unknown or restored files are preserved rather than removed to obtain a clean result.
+historical-baseline qualification or a retained performance comparison. This evidence-only commit changes no
+workflow, parser, comparator, test or baseline source. Local Node24.19 is not an executed CI Node24.21 result.
+No full npm install was used: the narrow checkout uses its own syntax/text package aliases. Unknown or restored
+files were not removed to obtain a clean result. No full benchmark/A/A rerun or workflow dispatch occurred.
