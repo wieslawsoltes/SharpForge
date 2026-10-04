@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SharpForge Git history acceptance</title>
+<link rel="stylesheet" href="../apps/studio/themes.css">
+<link rel="stylesheet" href="../apps/studio/styles/workbench-theme.css">
+<link rel="stylesheet" href="../packages/git/styles/studio.css">
+<link rel="stylesheet" href="../packages/git/styles/repository.css">
+<link rel="stylesheet" href="./a25-ui-browser.css">
+<script type="importmap">
+{"imports":{"@sharpforge/git":"../packages/git/src/index.js","@sharpforge/archive":"../packages/archive/src/index.js"}}
+</script>
+<main>
+  <h1>Git history acceptance</h1>
+  <p>Production history renderer · actual Git objects · real module worker</p>
+  <output id="status" aria-live="polite">Loading fixture</output>
+  <section id="history" class="git-tool" aria-label="Repository history fixture"></section>
+  <section id="comparison" class="git-tool" aria-label="Selected commit comparison"></section>
+</main>
+<script type="module" src="./a25-ui-browser.js"></script>
+</html>
