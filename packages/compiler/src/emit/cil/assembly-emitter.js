@@ -46,17 +46,17 @@ export class AssemblyEmitter {
     /** Every type the assembly defines, for questions that need the whole program (who derives from a class). */
     this.sourceTypes = writer.types;
     this.closures = synthesized.closures;
+    this.stateMachines = synthesized.stateMachines;
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
-    for (const type of writer.types) {
-      for (const method of writer.plans.get(type).methods) {
-        if (!method.hasBody) continue;
-        const il = this.methodBody(type, method),
-          body = il.assemble();
-        section.pad();
-        this.bodyAddresses.set(method, TEXT_RVA + section.length);
-        section.bytes(writeMethodBody(body.code, this.tokens.locals(il.locals), body.maxStack, body.handlers));
-      }
+    this.records = synthesized.records;
+    // A state machine class gets fields while its `MoveNext` is emitted, which moves the field tokens of the classes
+    // after it: those bodies come first, class by class, and nothing emitted before names a later class's fields.
+    const lateFieldTypes = new Set(synthesized.stateMachines.lateFieldTypes);
+    for (const type of lateFieldTypes) {
+      this.emitBodies(type, writer, section);
+      writer.allocateTokens();
     }
+    for (const type of writer.types) if (!lateFieldTypes.has(type)) this.emitBodies(type, writer, section);
     writer.write();
     new CustomAttributeWriter(writer, this.analysis).write();
     const isLibrary = options.outputKind === 'library',
@@ -68,6 +68,17 @@ export class AssemblyEmitter {
     const peOptions = { outputKind: isLibrary ? 'library' : 'console', deterministic: options.deterministic ?? true },
       bytes = writePE(section.finish(), metadataOffset, metadata.length, entryPoint, peOptions);
     return { bytes, entryPoint };
+  }
+  /** Emits the bodies of one type into the text section and records where each begins. */
+  emitBodies(type, writer, section) {
+    for (const method of writer.plans.get(type).methods) {
+      if (!method.hasBody) continue;
+      const il = this.methodBody(type, method),
+        body = il.assemble();
+      section.pad();
+      this.bodyAddresses.set(method, TEXT_RVA + section.length);
+      section.bytes(writeMethodBody(body.code, this.tokens.locals(il.locals), body.maxStack, body.handlers));
+    }
   }
   /** The instruction stream of one planned method. */
   methodBody(type, planned) {
@@ -86,6 +97,11 @@ export class AssemblyEmitter {
         returnType: symbol.returnType,
         method: symbol,
       });
+    const machine = this.stateMachines.of(symbol);
+    if (machine) {
+      if (isEntryPointMethod(symbol)) emitter.moduleInitializers();
+      return emitter.kickoffBody(machine);
+    }
     if (bound?.binder?.c?.isIterator) emitter.unsupported('iterator methods', symbol.locations?.[0]);
     if (symbol.isAsync) emitter.unsupported('async methods', symbol.locations?.[0]);
     if (symbol.methodKind === MethodKind.Constructor) return emitter.body(bound, () => emitter.constructorPrologue(symbol));
@@ -115,11 +131,15 @@ export class AssemblyEmitter {
   /** The entry point: the top-level statements, else the single static `Main`. */
   entryPointToken(writer, synthesized) {
     if (synthesized.entryPoint) return synthesized.entryPoint.token;
-    const candidates = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method));
+    // A `Main` that returns a task is the entry point only when no other `Main` is; `<Main>` then waits for it.
+    const all = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method)),
+      synchronous = all.filter(([method]) => !synthesized.asyncEntryPoints.has(method)),
+      candidates = synchronous.length ? synchronous : all;
     if (candidates.length !== 1) {
       throw new UnsupportedInCil(candidates.length ? 'several Main methods' : 'a program without an entry point');
     }
-    return candidates[0][1];
+    const [method, token] = candidates[0];
+    return synthesized.asyncEntryPoints.get(method)?.token ?? token;
   }
 }
 

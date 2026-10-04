@@ -1,2 +1,2 @@
 External member 'System.Object::Equals' is not implemented
-Opcode 'constrained.' is inspection-only
+constrained. execution requires a nongeneric class or user-struct TypeDef

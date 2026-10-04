@@ -33,7 +33,8 @@ for (const fixture of fixtures) {
     const { assembly, errors } = emitFixture(fixture);
     assert.deepEqual(errors, []);
     assert.ok(assembly instanceof Uint8Array);
-    assert.deepEqual(inspectImage(assembly), []);
+    // The validator accepts the image, or reports exactly what the `.image` file pins for an image .NET loads.
+    assert.deepEqual(inspectImage(assembly), fixture.imageLimit ? fixture.imageLimit.trimEnd().split('\n') : []);
     const run = runOnDirectCil(assembly),
       observed = run.limit ?? (run.output === fixture.expected ? null : 'output differs\n');
     // Either the runtime prints what .NET prints, or it stops for exactly the reason the `.vm` file records (the
@@ -122,10 +123,6 @@ test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong 
   );
   assert.match(errorsOf(pointer)[0].message, /not executable on this runtime profile: it uses \S/);
   assert.ok(errorsOf(pointer)[0].start > 0, 'the diagnostic is at the construct');
-  const iterator = emit(`using System.Collections.Generic;
-    class C { static IEnumerable<int> Numbers() { yield return 1; } static void Main() { } }`);
-  assert.equal(iterator.assembly, null);
-  assert.match(errorsOf(iterator)[0].message, /iterator methods/);
 });
 
 test('A02-T30 a program with errors yields its diagnostics and no assembly', () => {

@@ -118,6 +118,6 @@ test('A02-T30 constructs the emitter still refuses are SF2200 naming them', () =
     assert.equal(result.assembly, null);
     return result.diagnostics.filter(entry => entry.severity === 'error').map(entry => `${entry.code} ${entry.message}`);
   };
-  assert.match(refused('class C { static void Main() { var t = (1, 2); System.Console.WriteLine(t.Item1); } }')[0], /^SF2200 .*tuple/);
-  assert.match(refused('class C { static void Main() { int[,] grid = new int[2, 2]; } }')[0], /^SF2200 .*multi-dimensional arrays/);
+  const tree = 'class C { static void Main() { System.Linq.Expressions.Expression<System.Func<int>> e = () => 1; } }';
+  assert.match(refused(tree)[0], /^SF2200 .*a lambda that is not converted to a delegate type/);
 });

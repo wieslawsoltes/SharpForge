@@ -161,7 +161,9 @@ export class PropertyLocation {
     this.type = type;
     this.property = access.property;
     this.receiverNode = access.receiver;
-    this.receiver = access.property.isStatic ? null : receiverOperand(emitter, access.receiver);
+    /** The type parameter a static abstract property is read on (`T.Zero`), or null. */
+    this.constrainedTo = access.constrainedTo ?? null;
+    this.receiver = access.property.isStatic || !access.receiver ? null : receiverOperand(emitter, access.receiver);
     this.args = access.args.map((push, index) => new Operand(emitter, push, access.argumentTypes[index]));
   }
   capture() {
@@ -174,13 +176,13 @@ export class PropertyLocation {
   }
   load() {
     this.pushOperands();
-    this.emitter.callAccessor(this.property.getMethod, this.receiverNode);
+    this.emitter.callAccessor(this.property.getMethod, this.receiverNode, this.constrainedTo);
   }
   beginStore() {
     this.pushOperands();
   }
   endStore() {
-    this.emitter.callAccessor(this.property.setMethod, this.receiverNode);
+    this.emitter.callAccessor(this.property.setMethod, this.receiverNode, this.constrainedTo);
   }
   address() {
     this.emitter.unsupported('the address of a property');
