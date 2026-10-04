@@ -1,31 +1,10 @@
 import {ManagedFault} from './fault.js';
+import {readStoredSlot, writeStoredSlot} from './spatial-payload.js';
 
 function arrayIndex(property) {
   if (typeof property !== 'string' || property === '') return -1;
   const index = Number(property);
   return Number.isInteger(index) && index >= 0 && index < 0xffffffff && String(index) === property ? index : -1;
-}
-
-function assertActive(binding) {
-  if (binding.block.released) {
-    throw new ManagedFault('InvalidReferenceException', 'The managed array backing store has been reclaimed');
-  }
-}
-
-function read(binding, index) {
-  assertActive(binding);
-  return binding.codec
-    ? binding.codec.read(binding.arena.view, binding.block.offset + index * binding.codec.size)
-    : binding.arena.read(binding.block, index);
-}
-
-function write(binding, index, value) {
-  assertActive(binding);
-  if (binding.readOnly) throw new ManagedFault('InvalidOperationException', 'Frozen managed data is read-only');
-  if (index >= binding.length) throw new ManagedFault('IndexOutOfRangeException', 'Managed array index exceeds its length');
-  if (binding.codec) binding.codec.write(binding.arena.view, binding.block.offset + index * binding.codec.size, value);
-  else binding.arena.write(binding.block, index, value);
-  return true;
 }
 
 function createHandler(bindings) {
@@ -34,14 +13,14 @@ function createHandler(bindings) {
       const index = arrayIndex(property);
       if (index >= 0) {
         const binding = bindings.get(array);
-        return index < binding.length ? read(binding, index) : undefined;
+        return index < binding.length ? readStoredSlot(binding, index) : undefined;
       }
       return Reflect.get(array, property, receiver);
     },
     set(array, property, value, receiver) {
       const binding = bindings.get(array);
       const index = arrayIndex(property);
-      if (index >= 0) return write(binding, index, value);
+      if (index >= 0) return writeStoredSlot(binding, index, value);
       if (property === 'length') {
         if (value === binding.length) return true;
         throw new ManagedFault('NotSupportedException', 'Managed array length is fixed');
@@ -61,7 +40,7 @@ function createHandler(bindings) {
       const index = arrayIndex(property);
       const binding = bindings.get(array);
       if (index >= 0 && index < binding.length) {
-        return {value: read(binding, index), writable: !binding.readOnly, enumerable: true, configurable: true};
+        return {value: readStoredSlot(binding, index), writable: !binding.readOnly, enumerable: true, configurable: true};
       }
       return Reflect.getOwnPropertyDescriptor(array, property);
     },
@@ -72,7 +51,7 @@ function createHandler(bindings) {
         if (!Object.hasOwn(descriptor, 'value') || descriptor.configurable === false || descriptor.writable === false) {
           throw new ManagedFault('NotSupportedException', 'Managed element descriptors cannot be reconfigured');
         }
-        return write(binding, index, descriptor.value);
+        return writeStoredSlot(binding, index, descriptor.value);
       }
       if (property === 'length' && descriptor.value !== undefined && descriptor.value !== binding.length) {
         throw new ManagedFault('NotSupportedException', 'Managed array length is fixed');
