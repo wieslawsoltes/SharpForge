@@ -410,3 +410,17 @@ disk durability or 200 MB p95 interaction budgets. Root-owned Studio orchestrati
 has its own assembled-workspace qualification; these component results do not
 claim that it ran. The existing default 100,000-edit transaction limit remains
 explicit and rejects excessive normalization atomically.
+
+### Current-target reload follow-up: SF-A19-T41 / #1477 and SF-A20-T44 / #1513
+
+The complete disk observer follow-up at `6d70fa30` passed one serial focused
+invocation: **79/79, zero failures/skips, 2.803 seconds**. Its 36 new cases cover
+current Save As handles, bounded strict decoding, both BOM states, zero-byte
+UTF-16, stale record/version/target guards, cancellation, atomic document/disk
+baseline acceptance and native SHA-256 metadata. The other 43 cases are affected
+existing regressions. Actual Node temporary filesystem save/reload passed for
+all three encodings; browser handles remain explicit doubles. The exact command,
+files and qualification limits are recorded in
+[the observer evidence](../../apps/studio/workbench/studio-disk-observer.md).
+This does not add a browser/oracle claim to the rendered editor rows above or
+replace the separately recorded 163-case save qualification.
