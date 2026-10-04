@@ -16,43 +16,97 @@ Malformed heap marker/truncation tests are structural policy tests, separate
 from the well-formed native transfer corpus; no unobserved native outcome is
 claimed for those malformed inputs.
 
-Qualification is pending the root-owned serial slot. The native replay test is
-strict and needs a real `native.json`; no placeholder observations or skips exist.
-Capture to scratch first, preserve failed attempts, inspect the complete result,
-then retain the successful capture before running replay:
+## Recorded qualification
+
+The coordinating serial run used product revision
+`6aae05c05d935ae0b90de67ec9a1840fa32ac29d`, preserving the original PR #4519
+revision `52d21294048ed81e6bd8f14120a365f4acdca8c4` in its ancestry. Node was
+24.19.0 on Linux x64, kernel 6.18.44. This is a recorded local environment,
+not an immutable runner-image claim.
+
+| Evidence | Recorded outcome |
+|---|---|
+| [Native capture](native.json) and [capture log](qualification/native-capture.log) | 31/31 predeclared native expectations matched; 23 accepted and 8 rejected |
+| [Focused Node log](qualification/focused-node.tap) | 57 passed, 0 failed, 0 cancelled, 0 skipped |
+| [Inspector-method view log](qualification/inspector-method-view.tap) | Separate run: 4 passed, 0 failed, 0 cancelled, 0 skipped |
+| [Chromium launch attempts](qualification/summary.json) | Both failed during startup; zero product checks |
+| Firefox / WebKit | Not run |
+| [Cache-correction Node log](qualification/cache-correction-node.tap) | At `6f775dca`: 38 passed, 0 failed, 0 cancelled, 0 skipped |
+| [Both performance cohorts](qualification/performance/README.md) | Follow-up Diamond median +5.579%; exceeds 5% and requires explicit PR justification/sign-off |
+| Final publication gate | Pending the coordinating assessment; no exception approval claimed |
+
+The native capture records exact pinned tool and reference hashes, assembly/source
+hashes, raw output and exit status. Of its 31 observations, 30 agree with a
+determinate product result: 23 verified and 7 rejected. `NominalReturnUnknown`
+remains the one unsupported product relation while ILVerify rejects it. That
+unknown is not reported as policy agreement. The focused Node run includes strict
+native replay and the malformed #US, Unicode, budget, cancellation and mixed-field
+checks, plus existing numeric, field, indirect-memory and IL-document controls.
+
+[qualification/summary.json](qualification/summary.json) records the exact SHA-256
+and original location of every retained log. Node and capture logs were copied
+byte-for-byte; browser output is preserved as exact UTF-8 text in JSON envelopes
+with the raw byte hashes. The 31-observation `native.json` was retained unchanged.
+The original 57-test and 4-test Node logs have result records but no command
+headers, so their commands below are reproducible replays. The later 38-test
+cache-correction command is known from the coordinating execution record and is
+recorded in the performance evidence. No test, capture or benchmark was rerun
+while preparing this documentation/evidence commit.
+
+## Reproduce native capture and Node replay
+
+The native replay test is strict and requires the actual `native.json`; no
+placeholder observations or skipped-pass fallback exists. For a future capture,
+write to scratch first, retain any failed attempt, inspect the complete result,
+and replace the committed capture only with the actual validated observation:
 
 ```sh
 node scripts/limited.js node tests/fixtures/verifier-literals/capture.mjs /tmp/literal-native.json
 node scripts/limited.js node --test \
+  tests/a03-05-il-document-strings.test.js tests/a03-field-transfers.test.js \
+  tests/a03-indirect-transfers.test.js tests/a03-numeric-transfers.test.js \
   tests/a03-string-transfers.test.js tests/a03-string-metadata.test.js \
-  tests/a03-string-budgets.test.js tests/a03-string-native.test.js
+  tests/a03-string-budgets.test.js tests/a03-string-native.test.js \
+  tests/a03-typed-preparation.test.js
+node scripts/limited.js node --test tests/a03-inspector-method-view.test.js
 ```
 
-Affected controls include `tests/a03-field-transfers.test.js`,
-`tests/a03-numeric-transfers.test.js`, `tests/a03-typed-preparation.test.js`,
-`tests/a03-05-il-document-strings.test.js` and existing inspector-view coverage.
-Chromium/Firefox/WebKit can invoke exported `run()` from `browser.mjs` through
-the existing source-module harness. Source VM, direct-CIL and Rust/native/Wasm
-execution-engine qualification is not claimed by this non-executing API.
+## Browser qualification remains incomplete
 
-The benchmark schedule uses unchanged `benchmark-numeric-verifier.mjs` and
-`benchmark-field-verifier.mjs` in both complete baseline and candidate worktrees
-for the existing controls. New literal cost uses this candidate-only command:
+Chromium failed before importing `browser.mjs` or invoking `run()` in both
+retained attempts. The first failed with a spawn `EACCES`
+([report](qualification/browser-permission.json), [raw output](qualification/browser-permission.log.json)).
+The second launched but aborted with `SIGABRT` after its ProcessSingleton socket
+operation returned `Operation not permitted`
+([report](qualification/browser-launch.json), [raw output](qualification/browser-launch.log.json)).
+These are host startup failures, with zero product checks and no browser pass.
+The reports record Playwright 1.62.0 and the browser-module source hash.
 
-```sh
-node scripts/limited.js node packages/cil/tools/benchmark-literal-verifier.mjs /tmp/literal-performance.json
-```
+The exact [browser driver](qualification/browser-driver.py.txt) is retained as
+evidence. It serves public source modules using an import map and CSP and invokes
+the exported `run()` only after a successful launch. Firefox and WebKit were not
+run after Chromium aborted the harness. All three engines still need successful
+qualification. Source-VM, direct-CIL and Rust/native/Wasm execution-engine
+qualification is not claimed by this non-executing typed API.
 
-All drivers retain twelve chronological samples and heap deltas per workload,
-with the first three designated warmups and median/p95 from the remaining nine.
-The new driver measures short and long literals, repeated-token loads and a
-mixed String-field store. These are added-capability costs; an old `unknown`
-result is never used as a faster baseline. Heap deltas are not allocation counts
-or peak memory. Record runtime/machine, source revisions and shared-host status,
-retain every sample and report any measured >5% existing-control regression.
+## Recorded performance and remaining gate
 
-Baseline regression should run the `StringReturn` fixture against the
-pre-literal commit's own CIL source and require `verified`; its old unknown result
-is the expected failure. Do not overwrite candidate files or substitute its
-package imports into the baseline. No baseline or performance result has been
-recorded by this implementation batch.
+[Performance evidence](qualification/performance/README.md) retains both complete
+cohorts, candidate-only literal costs, exact driver source, fixture/capture hashes,
+raw outputs, chronological samples, commands and source revisions. The original
+12-sample comparison used baseline `8b101c0c` and candidate `eec64a8b`. After the
+concrete cache-probe correction `6f775dca`, the predefined 120-sample cohort used
+the same baseline, 20 warmups and 5,000 invocations per sample. It ran once in its
+specified alternating order. Both cohorts used a shared host; raw heap deltas are
+not allocation counts.
+
+The follow-up median changes are Add -5.223%, Diamond +5.579%, MixedJoin +1.496%
+and existing authority construction +1.312%. **Diamond exceeds the 5% existing
+benchmark budget and requires explicit PR justification and sign-off.** No human
+approval or accepted exception is recorded. The cache correction and measurement
+parameters changed together, so a causal speedup is not claimed. The original
+slower results remain available beside the follow-up; neither was overwritten.
+
+The coordinating agent owns the pending publication assessment. Full object-model
+and constructor/EH work remains open under #2403/#2405/#52; this literal batch
+does not close them.

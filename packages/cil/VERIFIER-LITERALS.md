@@ -52,15 +52,46 @@ heap byte belongs to a valid entry. The shared compressed-integer reader defines
 accepted length encodings; no separate shortest-encoding rule is introduced.
 The inspector's display reader preserves its prior permissive marker decoding,
 while typed preparation validates the marker independently. Calls, constructors,
-boxing/unboxing, casts, arrays, indirect access and exception-handler typing
+boxing/unboxing, casts, arrays, nominal indirect access and exception-handler typing
 continue to require their own policies. This API does not execute methods or
 grant the existing managed runtime's execution admission. Full object-model and
 engine integration remains open under #2403/#2405/#52.
 
 ## Qualification
 
-The focused corpus and strict pinned ILVerify replay are documented in
-[`tests/fixtures/verifier-literals/README.md`](../../tests/fixtures/verifier-literals/README.md).
-Native capture, Node/browser execution and performance numbers are pending the
-coordinating agent's serial validation slot. No oracle agreement or performance
-improvement is claimed before those results exist.
+The coordinating serial run recorded results for product revision
+`6aae05c05d935ae0b90de67ec9a1840fa32ac29d` on Node 24.19.0, Linux x64. The
+[retained evidence summary](../../tests/fixtures/verifier-literals/qualification/summary.json)
+records exact artifact hashes and the following separate results:
+
+| Check | Recorded outcome |
+|---|---|
+| Pinned ILVerify 10.0.5, SDK 10.0.201 / runtime 10.0.5 | All 31 declared native expectations matched: 23 accepted, 8 rejected |
+| Focused Node tests and numeric/field/indirect/document controls | 57 passed, 0 failed, 0 skipped |
+| Separate public/raw inspector-method view tests | 4 passed, 0 failed, 0 skipped |
+| Chromium browser API | Startup failed before any product checks; no browser pass |
+| Firefox / WebKit | Not run |
+| Cache-correction Node run at `6f775dca` | 38 passed, 0 failed, 0 cancelled, 0 skipped |
+| Original and follow-up performance cohorts | Recorded; follow-up Diamond +5.579% exceeds the 5% budget |
+| Final publication gate | Explicit PR justification/sign-off still required; no approval claimed |
+
+Thirty native observations agree with determinate product decisions. The remaining
+`NominalReturnUnknown` case stays unknown in this profile despite the recorded
+native rejection; it is not counted as policy agreement. Malformed #US validation
+is covered by focused structural tests, separately from that well-formed native
+transfer corpus.
+
+Chromium first failed to spawn with `EACCES`; a subsequent launch aborted when its
+ProcessSingleton socket operation was denied by the host. Both raw failures are
+retained and contain zero product checks. No browser qualification is claimed.
+
+The [performance record](../../tests/fixtures/verifier-literals/qualification/performance/README.md)
+retains the original twelve-sample measurements and the predefined follow-up with
+120 samples, 20 warmups and 5,000 invocations per sample. The follow-up compared
+`8b101c0c` with the cache correction `6f775dca`; median changes were Add -5.223%,
+Diamond +5.579%, MixedJoin +1.496% and existing authority construction +1.312%.
+Diamond exceeds the 5% regression budget and requires explicit PR justification
+and sign-off. Neither shared-host noise nor the concrete cache-probe correction
+is asserted to explain the measured difference, and no exception approval or
+performance gate pass is claimed. The [fixture README](../../tests/fixtures/verifier-literals/README.md)
+provides the retained logs, command provenance and remaining work.

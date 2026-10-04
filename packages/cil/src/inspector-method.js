@@ -40,15 +40,20 @@ function decodeMethod(inspector, token, describeOperands = false) {
 
 /** Internal typed-consumer view. Suppresses new display decoding; existing public cache facts can be reused. */
 export function decodedInspectorMethod(inspector, token) {
-  if (inspector.cache.has(token)) return inspector.cache.get(token);
+  const described = inspector.cache.get(token);
+  if (described !== undefined) return described;
   const cache = inspector.decodedMethods ??= new Map();
-  if (!cache.has(token)) cache.set(token, decodeMethod(inspector, token));
-  return cache.get(token);
+  const decoded = cache.get(token);
+  if (decoded !== undefined) return decoded;
+  const method = decodeMethod(inspector, token);
+  cache.set(token, method);
+  return method;
 }
 
 /** Public inspection keeps its original cache identity and complete display shape. IL is decoded only once. */
 export function describedInspectorMethod(inspector, token) {
-  if (inspector.cache.has(token)) return inspector.cache.get(token);
+  const cached = inspector.cache.get(token);
+  if (cached !== undefined) return cached;
   const decoded = inspector.decodedMethods?.get(token);
   const method = decoded ? { ...decoded, instructions: decoded.instructions.map(instruction => {
     const { point, ...details } = instruction;
