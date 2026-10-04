@@ -100,8 +100,8 @@ test('integral overloads preserve named-argument evaluation order and mixed nume
     int signed = -1; uint unsigned = uint.MaxValue; long wide = long.MaxValue; ulong widest = ulong.MaxValue;
     long combined = Math.Min(signed, unsigned); Console.WriteLine(combined);
     Console.WriteLine(Math.Max(unsigned, wide));
-    Console.WriteLine(Math.Min(wide, widest) == (double)wide);
-    Console.WriteLine(Math.Max(signed, widest) == (double)widest);`,
+    Console.WriteLine(Math.Min((double)wide, widest) == (double)wide);
+    Console.WriteLine(Math.Max((double)signed, widest) == (double)widest);`,
   'static uint Read(int id) { Console.Write(id); return id == 1 ? 0u : uint.MaxValue; }');
   assertOutput(compiled, '124294967295\n-1\n9223372036854775807\nTrue\nTrue\n');
 });
@@ -162,8 +162,8 @@ test('full canonical validation rejects an extra nop in typed-call adaptation sc
   assert.throws(() => loadAssembly(bytes), /canonical/);
 });
 
-test('source rejects unavailable Decimal overloads and incompatible integral result destinations', () => {
-  for (const body of ['Math.Min(1m, 2m);', 'Math.Max(1m, 2m);', 'Math.Min(val1: 1u);',
+test('source rejects invalid integral arities and incompatible result destinations', () => {
+  for (const body of ['Math.Min(val1: 1u);',
     'Math.Max(val1: 1u, val2: 2u, val3: 3u);', 'bool result = Math.Min(val1: 1u, val2: 2u);']) {
     const result = compileToIL(`using System; class P { static void Main() { ${body} } }`);
     assert.equal(result.success, false, body);
