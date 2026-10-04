@@ -6,7 +6,8 @@
   "license": "MIT",
   "main": "./src/index.js",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./src/index.js",
+    "./node": "./src/fs/node.js"
   },
   "files": [
     "src",
