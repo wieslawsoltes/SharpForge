@@ -104,6 +104,10 @@ export function parseSignatureType(value, resolveToken, options = {}) {
     if (text.endsWith('&') || text.endsWith('*')) return {
       kind: text.endsWith('&') ? 'byref' : 'pointer', element: parse(text.slice(0, -1), depth + 1),
     };
+    if (text.endsWith('?')) return {
+      kind: 'genericInstance', type: named('System.Nullable`1', 'valuetype'),
+      arguments: [parse(text.slice(0, -1), depth + 1)],
+    };
     if (text.endsWith(']')) {
       const start = opening(text, ']', '[');
       return arrayShape(text.slice(start + 1, -1), parse(text.slice(0, start), depth + 1));

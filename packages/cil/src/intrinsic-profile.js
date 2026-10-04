@@ -1,5 +1,6 @@
 import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {canonicalType,contracts,types} from '@sharpforge/framework';
+import {nullableElementType, nullableValueTypes, nullableSignatureType} from './nullable-profile.js';
 
 const aliases={decimal:'System.Decimal',object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
 export const systemType=name=>aliases[name]??name;
@@ -9,7 +10,8 @@ function signatureKey(owner,name,parameters,result,isStatic) {
 }
 export function intrinsicKey(descriptor) {
   const signature=descriptor.signature;
-  return signatureKey(canonicalType(systemType(descriptor.owner)),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic);
+  return signatureKey(nullableSignatureType(systemType(descriptor.owner)),descriptor.name,
+    signature.parameters.map(nullableSignatureType),nullableSignatureType(signature.returnType),signature.isStatic);
 }
 const definitions=new Map();
 function add(owner,name,parameters,returnType,isStatic,implementation,contract=null) {
@@ -66,6 +68,14 @@ for(const type of ['int','double','bool','string','object'])add('System.Convert'
 for(const type of ['int','double','string'])add('System.Convert','ToDouble',[type],'double',true,'convertDouble');
 for(const type of primitive)add('System.Convert','ToString',[type],'string',true,'convertString');
 for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],['System.Int64','long']])add(owner,'Parse',['string'],result,true,'parse');
+for (const element of nullableValueTypes) {
+  const owner = 'System.Nullable`1<' + element + '>';
+  add(owner, '.ctor', [element], 'void', false, 'nullableCtor');
+  add(owner, 'get_HasValue', [], 'bool', false, 'nullableHasValue');
+  add(owner, 'get_Value', [], element, false, 'nullableValue');
+  add(owner, 'GetValueOrDefault', [], element, false, 'nullableDefault');
+  add(owner, 'GetValueOrDefault', [element], element, false, 'nullableDefault');
+}
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
 
@@ -98,8 +108,18 @@ export function intrinsicDefinition(descriptor) {
   const signature=descriptor.signature;
   // Framework canonical aliases and built-in CLI aliases intentionally differ.
   // This preserves the verifier's previous contract-first selection policy.
-  const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
+  const contract=frameworkDefinitions.get(signatureKey(nullableSignatureType(descriptor.owner),descriptor.name,
+    signature.parameters.map(nullableSignatureType),nullableSignatureType(signature.returnType),signature.isStatic));
   if(contract)return contract;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;
-  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type.replace(/^decimal(?=&|$)/,'System.Decimal')),signature.returnType==='decimal'?'System.Decimal':signature.returnType,signature.isStatic))??null;
+  const nullable = nullableElementType(descriptor.owner);
+  if (nullable) {
+    const closed = {...descriptor, signature: {...signature,
+      parameters: signature.parameters.map(type => type === '!0' ? nullable : type),
+      returnType: signature.returnType === '!0' ? nullable : signature.returnType}};
+    return builtinDefinitions.get(intrinsicKey(closed)) ?? null;
+  }
+  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,
+    signature.parameters.map(type=>type==='Array'?'System.Array':type.replace(/^decimal(?=&|$)/,'System.Decimal')),
+    signature.returnType==='decimal'?'System.Decimal':signature.returnType,signature.isStatic))??null;
 }
