@@ -24,6 +24,9 @@ test('FrameworkElement margins, constraints and alignment share deterministic sl
   assert.deepEqual(arrangeElement(properties, rect(0, 0, 100, 100), measured.unclipped), rect(40, 87, 20, 10));
   assert.throws(() => size(NaN, 1));
   assert.throws(() => size(undefined, 1));
+  assert.throws(() => size(1, undefined));
+  assert.deepEqual(size(), { width: 0, height: 0 });
+  assert.deepEqual(size(1), { width: 1, height: 0 });
   assert.throws(() => rect(0, 0, Infinity, 1));
   assert.throws(() => measureElement({}, size(1, 1), () => size(Infinity, 1)), /finite desired/);
 });

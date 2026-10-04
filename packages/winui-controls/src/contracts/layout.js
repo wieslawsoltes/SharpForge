@@ -3,6 +3,7 @@ import { registerInputContracts } from './layout-input.js';
 import { registerEnvironmentContracts } from './environment.js';
 import { registerScrollingContracts } from './scrolling.js';
 import { registerAnnotatedScrollContracts } from './annotated-scrollbar.js';
+export { registerInputStateContracts } from './input-state.js';
 
 /** A16 contribution. Existing released signatures are preserved; newly declared members use the caller's reservation. */
 export function registerLayoutContracts(registry) {
