@@ -143,7 +143,7 @@ export const ExceptionEmission = Base =>
       if (Array.isArray(node.resources)) {
         for (const declarator of node.resources) {
           this.declare(declarator.local, declarator.value);
-          resources.push({ slot: this.slotOf(declarator.local), type: declarator.local.type });
+          resources.push({ slot: this.resourceSlot(declarator.local), type: declarator.local.type });
         }
       } else if (node.resources) {
         const slot = this.temp(node.resources.type);
@@ -152,6 +152,10 @@ export const ExceptionEmission = Base =>
         resources.push({ slot, type: node.resources.type });
       }
       return this.disposeAround(resources, () => this.statement(node.body), node);
+    }
+    /** The slot a declared using resource is disposed from, once the variable is initialized. */
+    resourceSlot(local) {
+      return this.slotOf(local);
     }
     /**
      * Runs `emitBody` with the resources disposed afterwards, the first resource last.
