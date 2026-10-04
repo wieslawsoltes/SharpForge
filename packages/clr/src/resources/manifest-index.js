@@ -17,9 +17,11 @@ function indexedFile(source, token, readName) {
   const [flags, nameIndex, hashIndex] = source.module.row(token);
   if (flags & ~1) throw invalidManifest('Invalid manifest File flags');
   const name = fileName(readName(nameIndex));
-  const hashValue = source.module.blob(hashIndex, { maxBytes: 64 });
   const hashAlgorithm = source.assembly.manifestModule.row(0x20000001)[0];
-  fileHashAlgorithm(hashAlgorithm, hashValue);
+  // Validate the canonical blob view before copying: digest lengths are metadata rules, not caller byte budgets.
+  const hash = source.pe.metadata.blob(hashIndex);
+  fileHashAlgorithm(hashAlgorithm, hash);
+  const hashValue = new Uint8Array(hash);
   return Object.freeze({ assembly: source.assembly, metadataToken: token, name,
     containsMetadata: !(flags & 1), hashAlgorithm, hashValue });
 }
