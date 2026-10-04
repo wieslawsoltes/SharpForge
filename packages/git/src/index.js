@@ -15,6 +15,7 @@ export * from './worktree.js';
 export * from './ignore.js';
 export * from './attributes.js';
 export * from './eol.js';
+export * from './revparse.js';
 export * from './graph-layout.js';
 export * from './diff/lines.js';
 export * from './diff/patch.js';
