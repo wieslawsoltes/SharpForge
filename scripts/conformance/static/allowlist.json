@@ -296,6 +296,13 @@
       "reason": "Benchmark explicitly loads the runtime from a trusted baseline checkout selected by the operator."
     },
     {
+      "path": "scripts/benchmarks/a19-correction-paths.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
+      "reason": "Trusted operator-selected checkout loads five fixed local modules via tracked package/host paths; no source-data or remote module selectors."
+    },
+    {
       "path": "scripts/build-managed-examples.js",
       "operation": "dynamic-import",
       "count": 3,
