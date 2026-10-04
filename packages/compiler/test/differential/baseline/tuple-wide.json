@@ -1,0 +1,9 @@
+{
+  "tuple-wide/conversion-and-arity-errors": ["diagnostics", "warnings"],
+  "tuple-wide/element-errors": ["diagnostics", "warnings"],
+  "tuple-wide/elements-names-and-rest": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-wide/equality-conversion-deconstruction": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-wide/language-version-7-0": ["diagnostics", "warnings"],
+  "tuple-wide/patterns": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-wide/stores-and-copies": ["diagnostics", "warnings", "bytecode", "cil"]
+}

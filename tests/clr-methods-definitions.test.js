@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AssemblyLoadSession, MethodDesc, LoadErrorCode } from '../packages/clr/src/index.js';
 import { managedFixture } from './managed-fixtures.js';
-import { MetadataMethodDefinitions } from '../packages/clr/src/type-system/metadata-method-definitions.js';
+import { MetadataMemberDefinitions as MetadataMethodDefinitions } from '../packages/clr/src/type-system/metadata-member-definitions.js';
 
 const load = async image => (await new AssemblyLoadSession().createContext().loadFromStream(image)).manifestModule;
 const invalidImage = error => error.code === LoadErrorCode.InvalidImage;

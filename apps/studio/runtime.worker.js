@@ -1,7 +1,7 @@
 import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
 import {applyDesignPatch} from '../../packages/runtime/src/index.js';
 import { loadAssembly, equalBytes } from '../../packages/cil/src/index.js';
-import { DebugSession, CilDebugSession } from '../../packages/debugger/src/index.js';
+import {createRuntimeLaunchCandidate} from './workers/runtime-launch.js';
 let session=null,timer=null,lastSent=0,uiCommands=[],output=[],loadedModule=null,sessionSerial=0,animationTimer=null,animationLast=0,manualAnimations=false;
 function flush(){if(uiCommands.length){self.postMessage({event:'ui',sessionId:sessionSerial,commands:uiCommands});uiCommands=[];}if(output.length){self.postMessage({event:'output',sessionId:sessionSerial,text:output.join('')});output=[];}}
 function state(){scheduleAnimations();flush();if(session)self.postMessage({event:'state',sessionId:sessionSerial,...session.state(),assemblyLoad:session.assemblyLoad??null});}
@@ -31,27 +31,15 @@ function schedule(){
   },Math.min(50,Math.max(0,delay)));
 }
 function launch(params){
-  const debug=params.debug!==false,options={network:params.network??{},compute:params.compute??{},recordHistory:debug&&params.recordHistory!==false,
-    maxHistory:params.maxHistory,maxHistoryBytes:params.maxHistoryBytes,stepOverProperties:params.stepOverProperties===true,
-    breakpointsEnabled:params.breakpointsEnabled!==false,maxInstructions:params.maxInstructions??20_000_000,onOutput:text=>output.push(text),onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}};
   // Fully construct and bind a candidate first. A malformed replacement must not destroy a live session.
-  let candidate;
-  if(params.managedIL){
-    candidate=new CilDebugSession(params.assembly,{...options,methodToken:params.methodToken,arguments:params.arguments,pdb:params.pdb,sources:params.sources});
-    candidate.assemblyLoad={format:'ECMA-335',cacheHit:false,milliseconds:candidate.vm.loadMs,bytes:params.assembly.length};
-    if(debug)candidate.setInstructionBreakpoints(params.instructionBreakpoints??[]);
-  }else{
-    const module=executable(params);candidate=new DebugSession(module.image,options);candidate.assemblyLoad=module.load;
-  }
-  if(debug){for(const [uri,bps]of Object.entries(params.breakpoints??{}))candidate.setBreakpoints(uri,bps);
-    candidate.setFunctionBreakpoints(params.functionBreakpoints??[]);
-    candidate.setExceptionBreakpoints({mode:params.exceptionBreak??'uncaught',rules:params.exceptionRules??[]});}
-  if(params.runToCursor){if(params.managedIL)throw new Error('Use run-to-instruction for managed IL');candidate.runToCursor(params.runToCursor.uri,params.runToCursor.line,params.runToCursor.column);}
-  else candidate.start(debug&&params.stopOnEntry===true);
+  const {candidate,capabilities}=createRuntimeLaunchCandidate(params,{
+    executable,onOutput:text=>output.push(text),
+    onUICommand:command=>{uiCommands.push(command);if(uiCommands.length>=1024)flush();}
+  });
   if(timer!==null){clearTimeout(timer);timer=null;}session?.stop();session=candidate;sessionSerial++;output=[];uiCommands=[];self.postMessage({event:'ui',sessionId:sessionSerial,commands:[{op:'reset',snapshot:{version:1,windows:[],nodes:[]}}]});lastSent=0;animationLast=0;manualAnimations=!!params.manualAnimations;
   self.postMessage({event:'loaded',sessionId:sessionSerial,sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text}))});
   state();schedule();
-  return {started:true,sessionId:sessionSerial,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
+  return {started:true,sessionId:sessionSerial,capabilities,profile:params.managedIL?'SharpForge.ManagedIL/1':'SharpForge.CIL',
     sources:(session.vm.image?.sources??session.vm.inspector?.debug?.sources??[]).map(s=>({uri:s.uri,text:s.text,version:s.version}))};
 }
 const handlers=createWorkerProtocol('runtime');

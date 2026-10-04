@@ -106,6 +106,47 @@ export const fixtures = [
   `,
     ),
     out(
+      'wide-and-unsigned-operands',
+      cs`
+    using System;
+    class Box { public long V = -8; public ulong[] A = { 18446744073709551615, 64 }; }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            long zero = args.Length;
+            Console.WriteLine(zero >>> 1);
+            long n = -8;
+            Console.WriteLine(n >>> 1);
+            Console.WriteLine(n >>> 64);
+            Console.WriteLine(n >>> 65);
+            Console.WriteLine(n >>> -1);
+            n >>>= 60; Console.WriteLine(n);
+            uint u = 4000000000;
+            Console.WriteLine(u >>> 3);
+            Console.WriteLine(u >>> 32);
+            Console.WriteLine(u >>> 33);
+            u >>>= 31; Console.WriteLine(u);
+            ulong w = 18446744073709551615;
+            Console.WriteLine(w >>> 60);
+            Console.WriteLine(w >>> 64);
+            w >>>= 63; Console.WriteLine(w);
+            short s = -2; byte b = 200; sbyte t = -1; ushort h = 65535; char c = 'A';
+            Console.WriteLine(s >>> 1);
+            Console.WriteLine(b >>> 3);
+            Console.WriteLine(t >>> 28);
+            Console.WriteLine(h >>> 15);
+            Console.WriteLine(c >>> 2);
+            var box = new Box();
+            box.V >>>= 62; Console.WriteLine(box.V);
+            box.A[0] >>>= 1; Console.WriteLine(box.A[0]);
+            const long K = -2L >>> 1; Console.WriteLine(K);
+            const uint M = 0x80000000 >>> 31; Console.WriteLine(M);
+        }
+    }
+  `,
+    ),
+    out(
       'user-defined-operator',
       cs`
     using System;

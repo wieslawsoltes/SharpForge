@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
-import {createRegistry} from '@sharpforge/framework';
+import {createRegistry, findContracts} from '@sharpforge/framework';
 
 const example = (name = 'example', family = name) => ({
   name,
@@ -68,11 +68,13 @@ test('BCL registration participates in framework rollback and cancellation', () 
 test('released BCL groups keep module order and independent registries cannot leak', () => {
   const modules = createBclRegistry(bclModules);
   assert.deepEqual(modules.modules.map(module => module.group), [
-    'bcl-prefix', 'bcl-suffix', 'bcl-suffix', 'runtime14', 'runtime14'
+    'bcl-prefix', 'bcl-suffix', 'bcl-suffix', 'runtime14', 'runtime14', 'extensions', 'extensions', 'extensions'
   ]);
   const empty = createBclRegistry([]);
   assert.equal(empty.modules.length, 0);
-  assert.equal(modules.modules.length, 5);
+  assert.equal(modules.modules.length, 8);
+  const property = findContracts('System.StringComparer', 'get_OrdinalIgnoreCase', true)[0];
+  assert.equal(property.id, 524297, 'StringComparer extension appends after the released object comparer contracts');
 });
 
 test('BCL registry rejects async contracts and malformed invocation results', () => {

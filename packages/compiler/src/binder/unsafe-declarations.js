@@ -50,6 +50,12 @@ export function isUnsafeSymbol(member, type) {
 export const unsafeMarker = pointer =>
   pointer.kind === 'FunctionPointerType' ? { start: pointer.delegateKeyword.span.start, end: pointer.asteriskToken.span.end } : pointer;
 
+/** True for a pointer type and for an array (of arrays) of pointers. */
+function isPointerOrArrayOfPointers(type) {
+  for (let current = type; current; current = current.elementType) if (isPointerType(current)) return true;
+  return false;
+}
+
 /** The outermost PointerType or FunctionPointerType node inside a type syntax, or null. */
 export function findPointerSyntax(syntax) {
   if (!syntax) return null;
@@ -142,11 +148,15 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
     if (allowUnsafe && definition && hasUnsafeModifier(definition) !== hasUnsafeModifier(member) && member.locations?.[0])
       add(DiagnosticId.CS0764, [], member.locations[0]);
     const isUnsafe = isUnsafeSymbol(member, type);
-    for (const syntax of signatureTypeSyntaxes(member)) {
+    const types = signatureTypes(member);
+    signatureTypeSyntaxes(member).forEach((syntax, index) => {
+      if (isUnsafe || !syntax) return;
       const pointer = findPointerSyntax(syntax);
-      if (pointer && !isUnsafe) add(DiagnosticId.CS0214, [], unsafeMarker(pointer));
-    }
-    for (const { type: signatureType, node } of signatureTypes(member))
+      if (pointer) add(DiagnosticId.CS0214, [], unsafeMarker(pointer));
+      // A pointer type behind an alias (`using unsafe P = int*;`) needs an unsafe context where the alias is used.
+      else if (isPointerOrArrayOfPointers(types[index]?.type)) add(DiagnosticId.CS0214, [], syntax.elementType ?? syntax);
+    });
+    for (const { type: signatureType, node } of types)
       if (node && pointsAtConstructedType(signatureType)) results.push({ feature: 'UnmanagedConstructedTypes', uri, node });
     if (member.kind === SymbolKind.Field && modifiersOf(member).includes('fixed')) checkFixedBuffer(member, type, isUnsafe, { core, evaluate, add });
   }

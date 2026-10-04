@@ -1,1 +1,32 @@
-.sf-app-tool{display:flex;flex-direction:column;min-height:0}.winui-app-root{position:relative;flex:1;min-height:160px;overflow:auto;padding:16px;background:var(--editor-bg,#1e1e1e)}.winui-app-root.debug-paused:after{content:'Paused';position:absolute;inset:0;background:#0002;pointer-events:all;display:grid;place-items:center;font:600 16px system-ui;color:#fff;text-shadow:0 1px 4px #000}.winui-app-status,.winui-renderer-status{font-size:11px;color:var(--text-muted);padding:5px 10px;border-top:1px solid var(--border)}.winui-app-status:empty{display:none}
+.sf-app-tool {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.winui-app-root {
+  position: relative;
+  flex: 1;
+  min-height: 160px;
+  overflow: auto;
+  padding: 16px;
+  background: var(--editor-bg,var(--winui-app-winui-app-root-background));
+}
+.winui-app-root.debug-paused:after {
+  content: 'Paused';
+  position: absolute;
+  inset: 0;
+  background: var(--shadow-subtle);
+  pointer-events: all;
+  display: grid;
+  place-items: center;
+  font: 600 16px system-ui;
+  color: var(--winui-app-winui-app-root-debug-paused-after-foreground);
+  text-shadow: 0 1px 4px var(--shadow-opaque);
+}
+.winui-app-status,.winui-renderer-status {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 5px 10px;
+  border-top: 1px solid var(--border);
+}
+.winui-app-status:empty { display: none; }

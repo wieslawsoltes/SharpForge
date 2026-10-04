@@ -1,0 +1,3 @@
+{
+  "unused-local-writes/cs0219-constants-behind-conversions": ["diagnostics", "warnings"]
+}

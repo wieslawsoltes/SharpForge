@@ -335,6 +335,10 @@ export class OverloadResolver {
   /** 1 when converting the argument to t1 is better than to t2, -1 for the reverse, 0 when neither is better. */
   betterConversion(arg, t1, c1, t2, c2) {
     if (this.conversions.isIdentity(t1, t2)) return 0;
+    // C# 10: for an interpolated string that is not a constant, the conversion to a handler type is the better one.
+    const handler1 = c1?.kind === ConversionKind.InterpolatedStringHandler,
+      handler2 = c2?.kind === ConversionKind.InterpolatedStringHandler;
+    if (handler1 !== handler2 && !arg.constantValue) return handler1 ? 1 : -1;
     const exact = t => arg.type && !arg.literal && this.conversions.isIdentity(arg.type, t);
     if (exact(t1) && !exact(t2)) return 1;
     if (exact(t2) && !exact(t1)) return -1;
