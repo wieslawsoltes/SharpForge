@@ -197,7 +197,7 @@ The performance follow-up replaces only the shared ordinal-ignore-case search.
 `src/system/string-search-linear.js` independently implements the
 [Crochemore–Perrin Two-Way algorithm](https://doi.org/10.1145/116825.116845), using
 two maximal-suffix passes to select a critical cut and period. It stores a
-constant number of counters plus two small host records for factorization. It
+constant number of counters plus two small host records when factorization is used. It
 does not allocate managed objects, transformed strings, failure arrays or shift
 tables; **constant space does not mean allocation-free host execution**. The
 existing comparison/affix loops and the original pinned fold remain unchanged.
@@ -220,19 +220,29 @@ The reduction to fixed symbols is essential for UTF-16 correctness:
 
 This gives O(n+m) folded-unit accesses for receiver length n and needle length m,
 plus O(1) endpoint work per considered alignment. Each unit access uses bounded
-lookaround and the fixed pinned mapping table. There is no small-needle fallback
-threshold pending measurements. Tests count actual source/needle code-unit reads,
+lookaround and the fixed pinned mapping table. Needles of at most eight UTF-16
+units use the unchanged bounded candidate matcher instead of factorization. That
+fixed O(8n) path remains linear and avoids the two factor records. Initial serial
+measurements found that always factoring short needles regressed the ordinary
+5,000-call sample by 25–41% (about 1.1–1.2 ms to 1.4–1.6 ms), motivating this cutoff.
+Tests count actual source/needle code-unit reads,
 including period preprocessing, for repeated-prefix and rejected periodic-core
 matches while n and m grow together. Exhaustive small inputs, longer differential
 cases and both unchanged native search oracles guard boundary and overlap behavior.
+The exhaustive cases also invoke Two-Way directly, independent of the cutoff;
+eight/nine-unit controls exercise dispatch, both compiler pipelines and direct CIL.
 
 `scripts/benchmarks/a07-string-search-linear.mjs` runs unchanged on baseline
 `40cf1975` and the candidate. It retains the measured ordinary and repeated-prefix
 inputs and adds raw endpoint rejection workloads. Both source/CIL platforms report
 median/p95 and managed allocation counters after one warmup and five samples;
 setup, optional host GC and assertions are excluded. Host allocation counts and
-other globalization profiles are not claimed. Performance measurements belong to
-the serial qualification record; no speedup is asserted before those runs.
+other globalization profiles are not claimed. Initial measurements reduced the
+20-call Unicode repeated-prefix samples from about 80–83 ms to 1.0–1.1 ms and ASCII
+samples from 6–7 ms to 0.15–0.33 ms. The periodic leading-endpoint-miss workload was
+8–11% slower, a disclosed constant-factor tradeoff. These are measurements of the
+initial Two-Way candidate, before the short-needle cutoff; final candidate timings
+and qualification are recorded by the serial validation owner.
 
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch

@@ -5,6 +5,7 @@ import {compileToIL} from '@sharpforge/compiler';
 import {findContracts} from '@sharpforge/framework';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {indexOfWithComparison} from '../packages/bcl-core/src/system/string-search.js';
+import {indexOfOrdinalIgnoreCase} from '../packages/bcl-core/src/system/string-search-linear.js';
 import {equalsOrdinalIgnoreCaseRange} from '../packages/bcl-core/src/system/string-compare.js';
 import {simpleUpperPoint} from '../packages/bcl-core/src/system/casing.js';
 import {upperCaseRanges} from '../packages/bcl-core/src/system/unicode-upper-case.js';
@@ -33,6 +34,8 @@ function assertSearch(source, needle) {
   const expected = previousSearch(source, needle);
   const actual = indexOfWithComparison(undefined, source, needle, 5);
   if (actual !== expected) assert.fail(JSON.stringify({source, needle, actual, expected}));
+  const direct = indexOfOrdinalIgnoreCase(source, needle);
+  if (direct !== expected) assert.fail(JSON.stringify({source, needle, direct, expected}));
 }
 
 test('Linear string search: exhaustive small UTF-16 inputs preserve the released bounded matcher', () => {
@@ -123,6 +126,39 @@ const boundaryCases = [
   ['x\u017Fz', 'S'], ['x\u{16ebb}z', '\u{16ea0}']
 ];
 
+const thresholdCases = [8, 9].flatMap(length => {
+  const lower = 'é'.repeat(length - 2);
+  const upper = 'É'.repeat(length - 2);
+  return [
+    ['a'.repeat(48) + 'b', 'A'.repeat(length - 1) + 'B'],
+    ['é'.repeat(48), 'É'.repeat(length - 1) + 'B'],
+    ['x\uD801\uDC28' + lower + '\uD801\uDC28z', '\uDC28' + upper + '\uD801'],
+    [lower.repeat(4) + '\uDC28' + lower + '\uD801', '\uDC28' + upper + '\uD801'],
+    ['ab'.repeat(32) + 'C', ('AB'.repeat(4) + 'C').slice(-length)]
+  ];
+});
+
+test('Linear string search: eight/nine-unit threshold retains offsets and bounded access', () => {
+  for (const [source, needle] of thresholdCases) {
+    assert(needle.length === 8 || needle.length === 9);
+    assertSearch(source, needle);
+  }
+  for (const size of [8, 9]) {
+    let previous = 0;
+    for (const length of [128, 512, 2048]) {
+      const source = 'é'.repeat(length);
+      const needle = 'É'.repeat(size - 1) + 'B';
+      const {result, accesses} = countedSearch(source, needle);
+      assert.equal(result, -1);
+      assert(accesses <= 64 * (source.length + needle.length) + 64);
+      if (previous) assert(accesses <= 5 * previous + 64);
+      previous = accesses;
+    }
+  }
+});
+
+const executionCases = [...boundaryCases, ...thresholdCases];
+
 test('Linear string search: periodic endpoint rejections preserve earliest offsets', () => {
   for (const [source, needle] of boundaryCases) assertSearch(source, needle);
   for (const needle of words(['\uD801', '\uDC28', '\uDC00'], 2)) {
@@ -165,11 +201,11 @@ function compile(source, pipeline = 'bound') {
 
 for (const [engine, create] of Object.entries(engines)) {
   for (const pipeline of ['bound', 'legacy']) {
-    test(`Linear string search ${pipeline}/${engine}: earliest offsets and Contains agree after endpoint rejection`, () => {
-      const source = boundaryCases.map(([receiver, value]) =>
+    test(`Linear string search ${pipeline}/${engine}: earliest offsets and Contains agree across endpoints and eight/nine units`, () => {
+      const source = executionCases.map(([receiver, value]) =>
         `Console.WriteLine((${JSON.stringify(receiver)}).IndexOf(${JSON.stringify(value)}, StringComparison.OrdinalIgnoreCase));` +
         `Console.WriteLine((${JSON.stringify(receiver)}).Contains(${JSON.stringify(value)}, StringComparison.OrdinalIgnoreCase));`).join('\n');
-      const expected = boundaryCases.map(([receiver, value]) => {
+      const expected = executionCases.map(([receiver, value]) => {
         const index = previousSearch(receiver, value);
         return index + '\n' + (index >= 0 ? 'True' : 'False');
       }).join('\n') + '\n';
@@ -230,7 +266,7 @@ for (const [engine, create] of Object.entries(engines)) {
 
 test('Linear string search: independently assembled CIL preserves the first UTF-16 match', () => {
   const assemblies = [indexOfComparisonAssembly(), containsComparisonAssembly()];
-  for (const [source, needle] of boundaryCases) {
+  for (const [source, needle] of executionCases) {
     const expected = previousSearch(source, needle);
     for (let method = 0; method < assemblies.length; method++) {
       const vm = new CilVirtualMachine(assemblies[method], {arguments: [source, needle, 5]});

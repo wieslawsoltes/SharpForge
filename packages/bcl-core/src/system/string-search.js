@@ -1,5 +1,6 @@
 import {fail} from '../host.js';
 import {indexOfOrdinalIgnoreCase} from './string-search-linear.js';
+import {equalsOrdinalIgnoreCaseRange} from './string-compare.js';
 import {validateStringComparison} from './string-comparison.js';
 
 /** Append after the mode-aware range Compare contract at the ordered A07 tail. */
@@ -20,5 +21,13 @@ export function indexOfWithComparison(platform, receiver, value, mode, member = 
   if (value.length > receiver.length) return -1;
   if (value.length === 0 || receiver === value) return 0;
   if (mode === 4) return receiver.indexOf(value);
+  // Measured short-needle dispatch avoids factorization; the fixed limit preserves an O(8n) bound.
+  if (value.length <= 8) {
+    const last = receiver.length - value.length;
+    for (let start = 0; start <= last; start++) {
+      if (equalsOrdinalIgnoreCaseRange(receiver, start, value)) return start;
+    }
+    return -1;
+  }
   return indexOfOrdinalIgnoreCase(receiver, value);
 }
