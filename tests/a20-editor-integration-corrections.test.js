@@ -20,6 +20,7 @@ function editorFixture(text, uri = 'src/Program.cs') {
     decorationOwners: new Map(),
     inputController: {composition: {cancel() {}}}, keymapAdapter: {setReadOnly() {}},
     getSelections() { return this.model.selections; },
+    commitPrepared(prepared) { return this.model.commitPrepared(prepared); },
     applyEdits(edits, options) { return this.model.applyEdits(edits, options); }
   };
   const readOnly = Object.getOwnPropertyDescriptor(CodeEditor.prototype, 'readOnly').get;
@@ -154,7 +155,7 @@ test('A20 deleting a brace or region marker on one line refreshes the actual fol
   }
 });
 
-test('A20 real workspace configuration applies ancestor sections, per-language overlays and ordinary EOL preservation', () => {
+test('A20 real workspace configuration applies ancestor sections, per-language overlays and ordinary EOL preservation', async () => {
   const {editor, model} = editorFixture('one  \r\ntwo\nthree\r\n');
   let unrelatedReads = 0;
   const records = [
@@ -169,7 +170,7 @@ test('A20 real workspace configuration applies ancestor sections, per-language o
   assert.equal(editor.options.insertSpaces, false);
   assert.equal(editor.options.endOfLine, '\r\n');
   assert.equal(unrelatedReads, 0);
-  editor.presentation.prepareSave();
+  await editor.presentation.prepareSave();
   assert.equal(model.getText(), 'one\r\ntwo\nthree\r\n');
   editor.uri = 'other/Plain.cs';
   configureDocumentEditor(editor, {records: records.filter(record => record.uri !== 'other/.editorconfig')});
@@ -179,7 +180,7 @@ test('A20 real workspace configuration applies ancestor sections, per-language o
   assert.equal(editor.options.trimTrailingWhitespace, false);
   assert.equal(editor.options.insertFinalNewline, false);
   configureDocumentEditor(editor, {records: [{uri: '.editorconfig', text: '[*.cs]\nend_of_line=lf'}]});
-  editor.presentation.prepareSave();
+  await editor.presentation.prepareSave();
   assert.equal(model.getText(), 'one\ntwo\nthree\n');
 });
 
