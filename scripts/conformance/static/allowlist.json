@@ -420,6 +420,13 @@
       "count": 1,
       "sha256": "526141fde2176d335aaa7808bb9c8f302e93579bb4d590d65278ea68019b8bcf",
       "reason": "The deterministic catalog fixture imports its own generated index from a test-owned temporary directory; it uses no user-selected module source."
+    },
+    {
+      "path": "packages/project-system/examples/archive-benchmark.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dcc153e0bcfba418d32f0bb1050824e5d302fa7ab9d6562db4ec3458ed873f99",
+      "reason": "Developer benchmark imports archive source from an explicitly selected trusted Git revision into a temporary module; it is not part of the browser product."
     }
   ]
 }
