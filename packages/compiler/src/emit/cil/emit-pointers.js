@@ -178,6 +178,7 @@ export const PointerEmission = Base =>
       return this.il.emit(node.operator === '++' ? 'add' : 'sub');
     }
     exprConversion(node) {
+      if (isPointer(node.type) && node.operand.literal === 'null') return this.defaultValue(node.type);
       const kind = node.conversion?.kind;
       if (!pointerConversions.has(kind)) return super.exprConversion(node);
       this.expression(node.operand);
