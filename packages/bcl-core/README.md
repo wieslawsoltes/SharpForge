@@ -130,6 +130,9 @@ contract IDs 812 and 1542. No managed receiver is retained in the dispatch index
 
 Source object calls and CIL `callvirt` use this path. CIL `call` retains the base
 type-name result for these framework objects; either opcode faults on null.
+Compiled Object.ToString now emits that instance `callvirt` directly, and profile
+loading keeps it distinct from static Convert.ToString. Existing static Convert
+bodies retain Convert semantics, including when loaded back into the source VM.
 The 22-row [.NET 10.0.5 capture](reference/object-string/README.md) records actual
 native instructions, including hidden methods and primitive controls. Existing
 primitive, Convert and Console formatting profiles remain unchanged; primitive
