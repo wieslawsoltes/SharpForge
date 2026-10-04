@@ -5,6 +5,7 @@
  * (ECMA-335 II.19): clauses are recorded innermost first, in the order II.25.4.6 requires.
  */
 import { SymbolKind, TypeKind, Accessibility } from '../../symbols/types.js';
+import { implementsInterface } from '../../symbols/substitution.js';
 import { isReference } from './type-facts.js';
 
 /** Class mixin: exception handling. */
@@ -42,12 +43,15 @@ export const ExceptionEmission = Base =>
     /**
      * @param {() => void} emitBody the protected statements  @param {object[]} catches bound catch clauses
      * @param {(() => void)|null} emitFinally the finally block, or null
+     * @param [outerStart] the label to place at the first instruction of the protected region
      */
-    tryRegions(emitBody, catches, emitFinally) {
+    tryRegions(emitBody, catches, emitFinally, outerStart = this.il.newLabel()) {
       const il = this.il,
         end = il.newLabel(),
-        outerStart = il.newLabel(),
         afterCatches = emitFinally && catches.length ? il.newLabel() : end;
+      // A label before the statement is outside the region: a jump to it from inside leaves the region (and runs its
+      // finally block), so the region must not begin at the instruction the label names.
+      if (il.isJustPastLabel) il.emit('nop');
       il.mark(outerStart);
       this.protect(() => {
         if (catches.length) this.catchRegions(emitBody, catches, afterCatches);
@@ -99,7 +103,7 @@ export const ExceptionEmission = Base =>
           if (clause.local) this.initializeLocal(clause.local);
           else il.emit('pop');
         }
-        this.statement(clause.block);
+        this.catchBlock(clause);
         if (il.isReachable) il.emit('leave', exit);
         il.addRegion(region);
         handlerStart = handlerEnd;
@@ -107,6 +111,10 @@ export const ExceptionEmission = Base =>
       // The end of the last handler: a boundary only, nothing falls into it.
       il.mark(handlerStart);
       return undefined;
+    }
+    /** The statements of a handler; the exception is already in the clause's variable. */
+    catchBlock(clause) {
+      return this.statement(clause.block);
     }
     /**
      * The filter block of `catch (T e) when (condition)` (ECMA-335 II.19.4): it runs during the first pass of exception
@@ -131,7 +139,6 @@ export const ExceptionEmission = Base =>
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */
     stmtUsing(node) {
-      if (node.isAwait) return this.unsupported('await using', node.syntax);
       const resources = [];
       if (Array.isArray(node.resources)) {
         for (const declarator of node.resources) {
@@ -144,14 +151,23 @@ export const ExceptionEmission = Base =>
         this.il.emit('stloc', slot);
         resources.push({ slot, type: node.resources.type });
       }
-      return this.disposeAround(resources, 0, () => this.statement(node.body), node.syntax);
+      return this.disposeAround(resources, () => this.statement(node.body), node);
+    }
+    /**
+     * Runs `emitBody` with the resources disposed afterwards, the first resource last.
+     * @param {{syntax: object, isAwait?: boolean}} statement the using statement or declaration: `await using` disposes
+     *   asynchronously (emit-async-iterators.js)
+     */
+    disposeAround(resources, emitBody, { syntax, isAwait }) {
+      if (isAwait) return this.unsupported('await using', syntax);
+      return this.disposeFrom(resources, 0, emitBody, syntax);
     }
     /** Nested try-finally regions, one per resource, the first resource outermost. */
-    disposeAround(resources, index, emitBody, syntax) {
+    disposeFrom(resources, index, emitBody, syntax) {
       if (index === resources.length) return emitBody();
       const resource = resources[index];
       return this.tryRegions(
-        () => this.disposeAround(resources, index + 1, emitBody, syntax),
+        () => this.disposeFrom(resources, index + 1, emitBody, syntax),
         [],
         () => this.disposeCall(resource, syntax),
       );
@@ -160,9 +176,12 @@ export const ExceptionEmission = Base =>
       const il = this.il,
         dispose = this.disposeMethodOf(type, syntax);
       if (!isReference(type)) {
-        // A struct resource is disposed in place, through the method it declares.
+        // A struct resource is disposed in place: through the method it declares, or - when it implements
+        // `IDisposable.Dispose` explicitly - through the interface method without boxing (`constrained.`).
         il.emit('ldloca', slot);
-        return this.callMethod(dispose, { receiver: { type } });
+        if (dispose.containingType.typeKind !== TypeKind.Interface) return this.callMethod(dispose, { receiver: { type } });
+        il.emit('constrained.', this.tokens.type(type));
+        return il.emit('callvirt', this.tokens.method(dispose), { pops: 1, pushes: 0 });
       }
       const skip = il.newLabel();
       il.emit('ldloc', slot).emit('brfalse', skip).emit('ldloc', slot);
@@ -178,9 +197,13 @@ export const ExceptionEmission = Base =>
     disposeMethodOf(type, syntax) {
       const isDispose = member =>
         member.kind === SymbolKind.Method && !member.isStatic && !member.parameters.length && member.name === 'Dispose';
-      if (!isReference(type)) return type.getMembers('Dispose').find(isDispose) ?? this.unsupported(`disposing '${type.toDisplayString()}'`, syntax);
-      const disposable = this.core.idisposable,
-        declared = this.implicitImplementation(type, isDispose);
+      const disposable = this.core.idisposable;
+      if (!isReference(type)) {
+        const own = type.getMembers('Dispose').find(isDispose),
+          viaInterface = own ? null : implementsInterface(type, disposable, this.core) && disposable.getMembers('Dispose').find(isDispose);
+        return own ?? (viaInterface || this.unsupported(`disposing '${type.toDisplayString()}'`, syntax));
+      }
+      const declared = this.implicitImplementation(type, isDispose);
       if (declared && !this.isReimplementedBelow(type, disposable)) return declared;
       return disposable.getMembers('Dispose').find(isDispose) ?? this.unsupported(`disposing '${type.toDisplayString()}'`, syntax);
     }

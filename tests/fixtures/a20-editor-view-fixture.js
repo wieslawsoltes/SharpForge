@@ -1,13 +1,21 @@
 import {CodeEditor, EditorModel, EditorLanguageServices} from '../../packages/editor/src/index.js';
 
+let currentEditor;
+let currentModel;
+let currentServices;
 window.setupView = ({text = '', options = {}, providers = {}} = {}) => {
-  window.editor?.dispose();
+  currentEditor?.dispose();
+  currentServices?.dispose();
+  currentModel?.dispose();
   window.published = [];
   const model = new EditorModel(text, {uri: 'view.cs'});
   const services = new EditorLanguageServices({folding: async () => [], ...providers});
-  window.editor = new CodeEditor(document.getElementById('editor'), {model, options, services,
+  currentEditor = new CodeEditor(document.getElementById('editor'), {model, options, services,
     onEdits: change => window.published.push({version: change.version, changes: change.changes})});
-  window.editor.focus();
+  currentModel = model;
+  currentServices = services;
+  window.editor = currentEditor;
+  currentEditor.focus();
   return true;
 };
 window.viewSettled = async () => {

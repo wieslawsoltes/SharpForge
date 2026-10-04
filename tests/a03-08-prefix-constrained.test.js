@@ -27,7 +27,7 @@ test('constrained and readonly accept existing TypeDef, TypeRef and TypeSpec row
   }
 });
 
-test('all catalog targets follow the lexical profile and array Address calls are explicitly unsupported', () => {
+test('all catalog targets follow the lexical profile and non-array calls remain explicitly unsupported', () => {
   const { reader, tokens } = metadata();
   for (const opcode of Object.values(CilOpcodes)) {
     if (opcode.opCodeType === 'Prefix') continue;

@@ -57,6 +57,7 @@ export function createEditorInsights(editor, options = {}) {
     peekForward: () => safe(() => peek.next(1)),
     showCodeLensMenu: () => decorations.showCodeLensMenu(),
     rename: () => safe(() => rename.open()),
+    cancelRename: () => rename.cancel(false),
     insertSnippet: template => template ? snippets.insert(template) : snippets.picker(),
     surroundWith: () => snippets.picker(true),
     openFind: replace => find.open(replace),
@@ -136,6 +137,7 @@ export function createEditorInsights(editor, options = {}) {
     changed(change) {
       if (disposed) return;
       context.guard.cancelAll();
+      rename.changed();
       if (revision !== editor.uri) {
         revision = editor.uri;
         snippets.stop();

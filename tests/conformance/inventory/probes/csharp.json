@@ -1014,6 +1014,7 @@
       "id": "csharp-7-1-async-main",
       "probe": "tests/conformance/inventory/probes/csharp/csharp-7-1-async-main.cs",
       "langVersion": "7.1",
+      "outputKind": "exe",
       "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
     },
     {

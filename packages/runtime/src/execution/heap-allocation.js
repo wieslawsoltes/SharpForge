@@ -1,4 +1,6 @@
-/** Existing managed-byte accounting, with an optional internal observer receiving scalar sizes only. */
+import {emitHeapAllocation} from './heap-events.js';
+
+/** Existing managed-byte accounting; optional instrumentation receives only committed scalar sizes. */
 export function recordAllocation(heap, size) {
   heap.mutationRevision++;
   heap.stats.allocatedBytes += size;
@@ -6,6 +8,7 @@ export function recordAllocation(heap, size) {
   heap.stats.liveObjects++;
   heap.stats.allocations++;
   heap.stats.peakBytes = Math.max(heap.stats.peakBytes, heap.stats.liveBytes);
+  emitHeapAllocation(heap, size);
   heap.allocationObserver?.allocation(size);
 }
 
@@ -21,5 +24,8 @@ export function replaceHeapData(heap, reference, data) {
   record.data = [...data];
   record.size = next;
   heap.mutationRevision++;
-  if (delta > 0) heap.allocationObserver?.allocation(delta, true);
+  if (delta > 0) {
+    emitHeapAllocation(heap, delta, true);
+    heap.allocationObserver?.allocation(delta, true);
+  }
 }

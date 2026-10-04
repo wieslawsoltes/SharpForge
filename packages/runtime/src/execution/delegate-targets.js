@@ -1,3 +1,4 @@
+import {createMethodPointer} from './method-pointers.js';
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
 import {castCacheFor} from './casting.js';
@@ -17,7 +18,7 @@ export function delegateMethodPointer(vm, token) {
   const descriptor = cachedMetadataToken(vm, token);
   const target = descriptor.resolvedToken ?? descriptor.token;
   targetMethod(vm, target);
-  return Object.freeze({methodPointer: true, vmOwner: vm.snapshotOwner, token: target});
+  return createMethodPointer(vm, target);
 }
 
 function compatible(vm, source, target) {

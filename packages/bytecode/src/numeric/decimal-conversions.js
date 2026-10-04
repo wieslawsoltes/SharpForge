@@ -4,14 +4,22 @@ import {decimal, decimalZero, decimalPower, decimalFail, requireDecimal, fitDeci
 export function decimalParse(input, context = {}) {
   if (typeof input !== 'string') decimalFail(context, input === null ? 'ArgumentNullException' : 'FormatException', 'Decimal text is required');
   if (input.length > 4096) decimalFail(context, 'FormatException', 'Decimal text is too long');
-  let text = input.trim();
-  if (context.allowTrailingSign && /[+-]$/.test(text)) text = text.at(-1) + text.slice(0, -1).trimEnd();
+  // CoreLib Number parsing accepts only ASCII numeric whitespace and a final
+  // run of NULs. Remove NULs first: whitespace after a NUL is still invalid.
+  let end = input.length;
+  while (end > 0 && input.charCodeAt(end - 1) === 0) end--;
+  let text = input.slice(0, end).replace(/^[\t-\r ]+|[\t-\r ]+$/g, '');
+  if (context.allowTrailingSign && /[+-]$/.test(text)) {
+    text = text.at(-1) + text.slice(0, -1).replace(/[\t-\r ]+$/, '');
+  }
   if (context.allowThousands) {
     if (/^[+-]?,/.test(text)) decimalFail(context, 'FormatException', 'Invalid Decimal grouping');
     text = text.replace(/^([+-]?)(\d[\d,]*)(?=\.|$|[eE])/, (whole, sign, integer) => sign + integer.replaceAll(',', ''));
   }
   const match = /^([+-]?)(?:(\d+)(?:\.(\d*))?|\.(\d+))(?:[eE]([+-]?\d+))?$/.exec(text);
-  if (!match || context.allowExponent === false && match[5] !== undefined) decimalFail(context, 'FormatException', 'Invalid Decimal text');
+  if (!match || match[0].length !== text.length || context.allowExponent === false && match[5] !== undefined) {
+    decimalFail(context, 'FormatException', 'Invalid Decimal text');
+  }
   const fraction = match[3] ?? match[4] ?? '', digits = (match[2] ?? '0') + fraction, exponent = Number(match[5] ?? 0);
   if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 4096) decimalFail(context, 'OverflowException', 'Decimal exponent is out of range');
   const coefficient = BigInt(digits), scale = fraction.length - exponent;

@@ -55,4 +55,10 @@ External auto-hide toggles may set `data-dock-toggle="panel-id"` to preserve the
 
 Popouts adopt the exact panel element into a real same-origin child and return it on close. Popup blocking is reported as `SFDOCK004`. The opener must remain alive. Native cross-process docking, unrelated browser-tab merging, arbitrary cross-origin transport and persistent OS window geometry are outside the contract.
 
+`host.returnPopout(id, {reopen = true, render = true})` closes the child and returns its retained content.
+The defaults preserve normal close, rendering, and window-focus notification behavior.
+Workspace owners may use `{reopen: false, render: false}` while removing or replacing documents, then render
+after their complete layout transaction. This prevents content resolution against an intermediate old workspace;
+`render: false` does not defer a layout notification caused by `reopen: true`.
+
 Studio's higher-level `DocumentTabs`, navigation, shared views and Window menus are documented in [`docs/a19-docking-workbench.md`](../../docs/a19-docking-workbench.md).
