@@ -25,7 +25,7 @@ function valueProperty(type, core) {
   return property;
 }
 
-function caseConstructor(type, property, caseType, part, syntax, core) {
+function caseConstructor(type, property, caseType, { part, syntax }, core) {
   const parameter = new ParameterSymbol({ name: 'value', type: caseType });
   const constructor = new MethodSymbol({
     name: '.ctor', methodKind: MethodKind.Constructor, returnType: core.void, parameters: [parameter],
@@ -69,14 +69,14 @@ export const UnionSymbolBuilder = Base => class extends Base {
       for (const syntax of part.syntax.caseTypes.types) {
         const caseType = this.bindType(syntax, type.scopeFor(part));
         if (caseType.type.isErrorType()) continue;
-        if (!conversions.classifyStandardImplicit(caseType.type, this.core.object).exists)
+        if (caseType.type.specialType === 'System_Void' || !conversions.classifyStandardImplicit(caseType.type, this.core.object).exists)
           this.unionDeclarationError(part, syntax, 'a union case type must convert to object');
         if (cases.some(other => conversions.isIdentity(other.type, caseType.type))) {
           this.unionDeclarationError(part, syntax, 'union case types must have distinct constructor signatures');
           continue;
         }
         cases.push(caseType);
-        const constructor = caseConstructor(type, property, caseType, part, syntax, this.core);
+        const constructor = caseConstructor(type, property, caseType, { part, syntax }, this.core);
         const conflict = members.find(member => member.kind === SymbolKind.Method && member.methodKind === MethodKind.Constructor &&
           member.parameters.length === 1 && conversions.isIdentity(member.parameters[0].type, caseType.type));
         if (conflict) this.unionDeclarationError(part, conflict.syntax ?? syntax, 'a member conflicts with a generated union constructor');

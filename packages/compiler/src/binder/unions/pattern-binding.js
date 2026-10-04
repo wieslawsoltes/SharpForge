@@ -64,6 +64,10 @@ export const UnionBinding = Base => class extends Base {
   }
   applyConversion(expression, type, conversion, syntax = expression.syntax, isExplicit = false) {
     if (!isUnionConversion(conversion)) return super.applyConversion(expression, type, conversion, syntax, isExplicit);
+    if (conversion.isAmbiguous || !conversion.method) {
+      this.reportConversionFailure(expression, type, syntax, conversion);
+      return this.bad(syntax, { operand: expression });
+    }
     const member = conversion.method;
     const parameter = member.parameters[0];
     const argument = this.applyConversion(expression, parameter.type, conversion.underlying, syntax);
@@ -71,7 +75,7 @@ export const UnionBinding = Base => class extends Base {
     const target = stripNullable(type);
     const result = member.methodKind === MethodKind.Constructor
       ? this.node('ObjectCreation', syntax, target, { constructor: member, args, unionCreation: true })
-      : this.node('Call', syntax, target, { method: member, receiver: null, args, unionCreation: true });
+      : this.node('Call', syntax, target, { method: member, receiver: null, args, constrainedTo: target, unionCreation: true });
     if (!this.quiet) this.d.noteUse?.(member, this.c.uri, syntax);
     return isNullableType(type)
       ? super.applyConversion(result, type, new Conversion(ConversionKind.ImplicitNullable, {

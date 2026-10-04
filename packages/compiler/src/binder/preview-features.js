@@ -32,21 +32,11 @@ import { isImportedClosedClass } from './closed-metadata.js';
 const modifiersOf = syntax => (syntax.modifiers ?? []).map(token => token.text);
 const isZero = value => value === 0 || value === 0n || Number(value?.value ?? NaN) === 0;
 
-/** The preview constructs the binder does not bind: `[catalog feature id, display name, node to report at]` rows of one file. */
-export function unboundPreviewConstructs(root) {
-  const rows = [],
-    stack = [root];
-  while (stack.length) {
-    const node = stack.pop();
-    for (const child of node.childNodes()) stack.push(child);
-  }
-  return rows.sort((a, b) => a[2].span.start - b[2].span.start);
-}
-
 /** The declarations the `unsafe` modifier is allowed on, and therefore `safe` (unsafe-evolution.md, "`safe` keyword"). */
 const allowsUnsafe = new Set([
   'ClassDeclaration',
   'StructDeclaration',
+  'UnionDeclaration',
   'InterfaceDeclaration',
   'RecordDeclaration',
   'RecordStructDeclaration',
@@ -94,8 +84,8 @@ export const PreviewFeatureRules = Base =>
       super.bindAttributes();
       for (const file of this.files) {
         if (!file.syntax || !this.isPreview(file.source.uri)) continue;
-        for (const [id, name, node] of unboundPreviewConstructs(file.syntax)) this.report(file.source.uri, node, DiagnosticId.SF2202, [name, previewStampText(id)]);
-        for (const [text, token] of safeModifierProblems(file.syntax)) this.report(file.source.uri, token, DiagnosticId.SF2203, [text, previewStampText('SafeModifier')]);
+        for (const [text, token] of safeModifierProblems(file.syntax))
+          this.report(file.source.uri, token, DiagnosticId.SF2203, [text, previewStampText('SafeModifier')]);
       }
     }
     closedDeclarationOf(type) {

@@ -87,6 +87,18 @@ class Program
 }`), 'True\nTrue\nTrue\nTrue\n');
 });
 
+test('union metadata imports retain case conversions and pattern matching', () => {
+  const library = compileToAssembly(unionInputs('public union Imported(int, string);'), {
+    ...unionPreviewOptions, name: 'ImportedUnions', outputKind: 'library',
+  });
+  assert.equal(library.success, true, JSON.stringify(library.diagnostics));
+  const consumer = compileToAssembly(`class Program
+    { static void Main() { Imported value = 3; System.Console.WriteLine(value is int number && number == 3); } }`, {
+    ...unionPreviewOptions, references: [{ bytes: library.assembly, display: 'ImportedUnions.dll' }],
+  });
+  assert.equal(consumer.success, true, JSON.stringify(consumer.diagnostics));
+});
+
 test('generic, nullable and nested case types retain their construction signatures', () => {
   assert.equal(run(`
 using System;
@@ -119,6 +131,7 @@ test('union declarations enforce storage, constructor, case-type and generated-m
     'union U(int, string) { private U(bool value) : this() { } }',
     'union U(int, string) { public object Value => null; }',
     'union U(int, int);',
+    'union U(void, int);',
     'ref struct RefLike { } union U(RefLike, string);',
   ];
   for (const source of cases) {
@@ -126,7 +139,9 @@ test('union declarations enforce storage, constructor, case-type and generated-m
     assert.ok(codes(analysis).includes('SF2203'), source + '\n' + JSON.stringify(analysis.diagnostics));
     assert.ok(errors(analysis).filter(diagnostic => diagnostic.code === 'SF2203').every(diagnostic => /unions\.md revision 1/.test(diagnostic.message)));
   }
-  assert.deepEqual(codes(analyze('union U(int, string) { public static int Cache; private U(bool value) : this(1) { } public int Number() => 1; }')), []);
+  assert.deepEqual(codes(analyze(`union U(int, string)
+    { public static int Cache; private U(bool value, int unused) : this(1) { } public int Number() => 1; }`)), []);
+  assert.ok(codes(analyze('class Hidden { } public union U(Hidden, int);')).includes('CS0051'));
 });
 
 test('union declarations remain preview-only and the source VM reports its real struct boundary', () => {

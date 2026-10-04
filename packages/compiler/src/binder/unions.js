@@ -9,12 +9,16 @@ import { MethodKind } from '../symbols/members.js';
 import { unionContract, unionShapeOf, UNION_ATTRIBUTE } from '../symbols/union-shape.js';
 import { attributesNamed } from './bound-attributes.js';
 import { isAccessible } from './accessibility.js';
+import { AttributeTargets } from '../symbols/attribute-types.js';
+import { describeTargets } from './attribute-targets.js';
+import { effectiveAccessibility, isAtLeastAsAccessible } from './inheritance.js';
 export { UnionBinding } from './unions/pattern-binding.js';
 
 const memberRules = Object.freeze({
   creationAccessibility: 'a union creation member must be public',
   creationRefKind: 'a union creation parameter must be by-value or in',
   valueAccessibility: 'the union Value property and its getter must be public',
+  accessAccessibility: 'a union non-boxing access member and its getter must be public',
   provider: 'IUnionMembers must be a public interface implemented by its containing union type',
 });
 
@@ -46,6 +50,12 @@ export const UnionRules = Base => class extends Base {
       if (type.isUnionDeclaration) {
         this.synthesizeUnionAttribute(type);
         for (const [member, rule] of declarationProblems(type)) this.unionRule(type, member, rule);
+        for (const constructor of type.getMembers('.ctor')) {
+          if (!constructor.unionConstructor) continue;
+          const caseType = constructor.parameters[0].type;
+          if (!isAtLeastAsAccessible(caseType, effectiveAccessibility(type)))
+            this.reportAt(constructor, DiagnosticId.CS0051, [constructor.toDisplayString(), caseType.toDisplayString()]);
+        }
       }
       const shape = unionShapeOf(type, this.core);
       if (!shape) continue;
@@ -66,6 +76,11 @@ export const UnionRules = Base => class extends Base {
     }
     const uri = type.declarations[0].uri;
     if (!this.checkAttributeClass(attribute, syntax, uri)) return;
+    const usage = this.attributeUsageOf(attribute);
+    if (!(usage.validOn & AttributeTargets.Struct)) {
+      this.report(uri, syntax, DiagnosticId.CS0592, [UNION_ATTRIBUTE, describeTargets(usage.validOn)]);
+      return;
+    }
     const constructor = attribute.getMembers('.ctor').find(member => member.methodKind === MethodKind.Constructor &&
       !member.parameters.length && isAccessible(member, type, { withinModule: this.assembly.module }));
     if (!constructor) {
@@ -85,11 +100,11 @@ export const UnionRules = Base => class extends Base {
         if (constructor.isImplicitlyDeclared || constructor.initializerSyntax?.kind !== 'ThisConstructorInitializer') continue;
         const seen = new Set();
         let target = constructor;
-        while (target && !target.unionConstructor && !seen.has(target)) {
+        while (target && !target.originalDefinition?.unionConstructor && !seen.has(target)) {
           seen.add(target);
-          target = target.thisTarget;
+          target = target.originalDefinition.thisTarget;
         }
-        if (!target?.unionConstructor)
+        if (!target?.originalDefinition?.unionConstructor)
           this.unionRule(type, constructor, 'a union constructor chain must terminate in a generated case constructor');
       }
     }

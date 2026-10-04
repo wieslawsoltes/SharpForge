@@ -7,7 +7,7 @@ import { Accessibility, RefKind, SymbolKind, TypeKind } from './types.js';
 import { MethodKind } from './members.js';
 import { allInterfacesOf, membersInHierarchy } from './substitution.js';
 import { stripNullable } from '../conversions/nullable.js';
-import { fullNameOf } from '../binder/bound-attributes.js';
+import { attributesNamed, fullNameOf } from '../binder/bound-attributes.js';
 
 export const UNION_ATTRIBUTE = 'System.Runtime.CompilerServices.UnionAttribute';
 export const UNION_INTERFACE = 'System.Runtime.CompilerServices.IUnion';
@@ -20,7 +20,7 @@ export function unionContract(namespace, name) {
 /** True for an attributed class/struct or a compiler-generated union declaration. */
 export function isUnionType(type) {
   const definition = stripNullable(type)?.originalDefinition;
-  if (!definition || ![TypeKind.Struct, TypeKind.Class].includes(definition.typeKind)) return false;
+  if (!definition || definition.typeKind !== TypeKind.Struct && definition.typeKind !== TypeKind.Class) return false;
   if (definition.isUnionDeclaration) return true;
   return (definition.boundAttributes ?? []).some(attribute => fullNameOf(attribute.attributeClass) === UNION_ATTRIBUTE) ||
     (definition.attributes ?? []).some(attribute => !attribute.hasErrors && attribute.attributeClassName === UNION_ATTRIBUTE);
@@ -30,19 +30,33 @@ const isPublic = member => member.declaredAccessibility === Accessibility.Public
 const byValueOrIn = parameter => parameter.refKind === RefKind.None || parameter.refKind === RefKind.In;
 const methodsNamed = (type, name, core) => membersInHierarchy(type, name, core).filter(member => member.kind === SymbolKind.Method);
 
-const isBadOptimizationMember = member => member.obsolete || member.experimental || member.hasUnsupportedMetadata ||
-  member.hasErrors || member.typeWithAnnotations?.customModifiers?.some(modifier => !modifier.isOptional) ||
-  member.parameters?.some(parameter => parameter.typeWithAnnotations.customModifiers.some(modifier => !modifier.isOptional));
+const hasRequiredModifier = modifiers => modifiers?.some(modifier => !modifier.isOptional);
+const hasRequiredSignatureModifier = modifiers => hasRequiredModifier(modifiers?.outer) || hasRequiredModifier(modifiers?.inner);
+const experimentalAttribute = 'System.Diagnostics.CodeAnalysis.ExperimentalAttribute';
+
+function isBadOptimizationMember(member) {
+  const definition = member.originalDefinition ?? member;
+  return definition.obsolete || definition.experimentalId || definition.unsupportedCompilerFeature || definition.hasErrors ||
+    attributesNamed(definition, experimentalAttribute).length ||
+    definition.attributes?.some(attribute => attribute.attributeClassName === experimentalAttribute) ||
+    hasRequiredModifier(member.typeWithAnnotations?.customModifiers) ||
+    hasRequiredSignatureModifier(definition.returnCustomModifiers) ||
+    member.parameters?.some(parameter => hasRequiredModifier(parameter.typeWithAnnotations.customModifiers) ||
+      hasRequiredSignatureModifier((parameter.originalDefinition ?? parameter).customModifiers)) ||
+    member.getMethod && isBadOptimizationMember(member.getMethod);
+}
 
 function accessMembers(shape, core) {
   const matchesHasValue = member => member.kind === SymbolKind.Property && !member.isStatic && !member.parameters.length &&
-    member.type.specialType === 'System_Boolean' && member.getMethod && isPublic(member) && isPublic(member.getMethod);
-  const matchesTryGet = member => member.kind === SymbolKind.Method && !member.isStatic && isPublic(member) &&
-    member.returnType.specialType === 'System_Boolean' && member.parameters.length === 1 &&
+    member.type.specialType === 'System_Boolean' && member.refKind === RefKind.None && member.getMethod;
+  const matchesTryGet = member => member.kind === SymbolKind.Method && !member.isStatic &&
+    !member.arity && member.refKind === RefKind.None && member.returnType.specialType === 'System_Boolean' && member.parameters.length === 1 &&
     member.parameters[0].refKind === RefKind.Out && shape.caseTypes.some(type => type.equals(member.parameters[0].type));
   const members = membersInHierarchy(shape.definingType, 'HasValue', core)
     .concat(methodsNamed(shape.definingType, 'TryGetValue', core))
     .filter(member => !isBadOptimizationMember(member) && (matchesHasValue(member) || matchesTryGet(member)));
+  if (members.some(member => !isPublic(member) || member.getMethod && !isPublic(member.getMethod)))
+    shape.problems.push('accessAccessibility');
   // The mandatory direct, getter-only forms are specified. The precise inherited/hidden/read-write lookup
   // remains an open question in revision 1; do not choose a behavior for those cases.
   shape.hasUnresolvedAccessPattern = members.some(member => !member.containingType.equals(shape.definingType) ||
@@ -77,7 +91,7 @@ export function unionShapeOf(inputType, core) {
   const type = stripNullable(inputType);
   if (!isUnionType(type)) return null;
   if (type.unionShape) return type.unionShape;
-  const providers = type.getTypeMembers('IUnionMembers').filter(member => member.typeKind === TypeKind.Interface);
+  const providers = type.getTypeMembers('IUnionMembers', 0).filter(member => member.typeKind === TypeKind.Interface);
   const provider = providers[0] ?? null;
   const shape = basicMembers(type, provider, core);
   if (provider && (!isPublic(provider) || !allInterfacesOf(type, core).some(iface => iface.equals(provider))))

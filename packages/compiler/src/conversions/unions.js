@@ -13,7 +13,7 @@ class UnionArgumentConversions extends Conversions {
   userDefinedFromExpression() { return Conversions.noConversion; }
 }
 
-const standardOnly = conversion => conversion.exists && conversion.isStandard &&
+const standardOnly = conversion => conversion.exists && conversion.isImplicit && conversion.isStandard &&
   (Array.isArray(conversion.underlying) ? conversion.underlying.every(standardOnly) :
     !conversion.underlying || standardOnly(conversion.underlying));
 
@@ -47,7 +47,7 @@ export class UnionConversions extends Conversions {
   }
   classifyImplicit(from, to) {
     const conversion = super.classifyImplicit(from, to);
-    return conversion.exists ? conversion : this.unionConversion({ type: from }, to);
+    return conversion.exists || !this.options.unionPreview ? conversion : this.unionConversion({ type: from }, to);
   }
   classifyFromExpression(expression, to) {
     const conversion = super.classifyFromExpression(expression, to);

@@ -6,6 +6,7 @@
 import { DiagnosticId } from '../diagnostics/codes.js';
 import { typeTestOutcome } from '../conversions/reference.js';
 import { SpaceBuilder } from './pattern-exhaustiveness.js';
+import { isPartialTypeTest, isSubsumedByTypes, typesCoveredBy } from './pattern-type-tests.js';
 import { universe, withoutNull, nullAtom, objectAtom, stringValues, intersect, subtract, union, isEmpty } from './pattern-spaces.js';
 
 const CASE_KEY = '$unionCase';
@@ -50,12 +51,44 @@ function changesValueSource(pattern) {
   return pattern.kind === 'AndPattern' && (changesValueSource(pattern.left) || changesValueSource(pattern.right));
 }
 
+function coveredPayloadTypes(pattern, objectType) {
+  if (!pattern || pattern.hasErrors) return [];
+  if (pattern.unionAccess && !pattern.unionAccess.isNull) return typesCoveredBy(pattern, objectType);
+  if (pattern.kind === 'OrPattern') return [...coveredPayloadTypes(pattern.left, objectType), ...coveredPayloadTypes(pattern.right, objectType)];
+  return [];
+}
+
+function subsumedPayload(pattern, covered, builder) {
+  if (!pattern || pattern.hasErrors) return false;
+  if (pattern.unionAccess && !pattern.unionAccess.isNull)
+    return isSubsumedByTypes(pattern, builder.core.object, covered, builder.isSubtype);
+  if (pattern.kind === 'AndPattern') return subsumedPayload(pattern.left, covered, builder);
+  if (pattern.kind === 'OrPattern') return subsumedPayload(pattern.left, covered, builder) && subsumedPayload(pattern.right, covered, builder);
+  return false;
+}
+
 class UnionSpaceBuilder {
   constructor(shape, site) {
     this.core = site.core;
     this.domain = domainOf(shape, site.inputType ?? shape.type);
     this.plain = new SpaceBuilder(site.closedHierarchyOf ?? null);
-    this.opaque = false;
+    this.isSubtype = (derived, base) => typeTestOutcome(derived, base, this.core) === 'always';
+  }
+  /** Partial run-time type tests cannot exhaust a broader case type and therefore must not suppress its warning. */
+  isPartialProjection(pattern) {
+    if (!pattern || pattern.hasErrors) return false;
+    if (pattern.kind === 'AndPattern') return this.isPartialProjection(pattern.left);
+    if (pattern.kind === 'OrPattern')
+      return [pattern.left, pattern.right].every(part => this.of(part) !== null || this.isPartialProjection(part));
+    if (!pattern.unionAccess || pattern.unionAccess.isNull) return false;
+    let partial = false;
+    for (const type of this.domain.shape.caseTypes) {
+      const projected = specialized(pattern, type, this.core);
+      if (this.plain.of(projected, type) !== null) continue;
+      if (!isPartialTypeTest(projected, type, this.isSubtype)) return false;
+      partial = true;
+    }
+    return partial;
   }
   projected(pattern) {
     const result = [];
@@ -95,14 +128,20 @@ export function checkUnionSwitchArms(shape, arms, site) {
   let ignoringGuards = [];
   let hasOpaque = false;
   let hasDefault = false;
+  const coveredTypes = [];
   for (const arm of arms) {
     if (arm.isDefault) { hasDefault = true; continue; }
     const space = builder.of(arm.pattern);
+    const subsumed = subsumedPayload(arm.pattern, coveredTypes, builder);
+    if (alwaysMatches(arm)) coveredTypes.push(...coveredPayloadTypes(arm.pattern, builder.core.object));
     if (!space) {
-      hasOpaque = true;
+      if (subsumed || isEmpty(subtract(builder.domain.all, covered, algebra))) diagnostics.push({
+        code: site.isExpression ? DiagnosticId.CS8510 : DiagnosticId.CS8120, node: arm.node, args: [],
+      });
+      if (!builder.isPartialProjection(arm.pattern)) hasOpaque = true;
       continue;
     }
-    if (isEmpty(subtract(space, covered, algebra))) diagnostics.push({
+    if (subsumed || isEmpty(subtract(space, covered, algebra))) diagnostics.push({
       code: site.isExpression ? DiagnosticId.CS8510 : DiagnosticId.CS8120, node: arm.node, args: [],
     });
     ignoringGuards = union(ignoringGuards, space);

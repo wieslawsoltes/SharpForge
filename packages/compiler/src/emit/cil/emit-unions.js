@@ -1,6 +1,7 @@
 /** Real struct construction and cached union access for the pinned C# 15 proposal. */
 import { isReference, needsBox } from './type-facts.js';
 import { unionPatternOutputType } from '../../binder/unions/pattern-binding.js';
+import { TypeKind } from '../../symbols/types.js';
 
 /** CIL registration; all storage uses the ordinary struct, property and nullable emission machinery. */
 export const UnionEmission = Base => class extends Base {
@@ -39,12 +40,20 @@ export const UnionEmission = Base => class extends Base {
       const absent = this.il.newLabel();
       const done = this.il.newLabel();
       const receiverType = this.unionReceiver(input, absent);
-      this.readMember(member, receiverType);
+      this.unionMemberCall(member.getMethod, receiverType);
       this.il.emit('br', done).mark(absent);
       this.defaultValue(member.type);
       this.il.mark(done);
     });
     return { slot, type: member.type };
+  }
+  /** A provider interface on a struct dispatches through constrained callvirt, preserving value storage. */
+  unionMemberCall(method, receiverType) {
+    if (method.containingType.typeKind === TypeKind.Interface && !isReference(receiverType)) {
+      this.il.emit('constrained.', this.tokens.type(receiverType));
+      return this.il.emit('callvirt', this.tokens.method(method), { pops: method.parameters.length + 1, pushes: 1 });
+    }
+    return this.callMethod(method, { receiver: { type: receiverType } });
   }
   /** The TryGetValue result and out value are evaluated once, including across failed earlier switch arms. */
   unionTryGetInput(access, input, fail) {
@@ -57,7 +66,7 @@ export const UnionEmission = Base => class extends Base {
     const store = this.il.newLabel();
     const receiverType = this.unionReceiver(input, absent);
     this.il.emit('ldloca', entry.value);
-    this.callMethod(method, { receiver: { type: receiverType } });
+    this.unionMemberCall(method, receiverType);
     this.il.emit('br', store).mark(absent).emit('ldc.i4', 0).mark(store).emit('stloc', entry.success);
     if (entry.flag !== null) this.il.emit('ldc.i4', 1).emit('stloc', entry.flag);
     this.il.mark(done).emit('ldloc', entry.success).emit('brfalse', fail);
