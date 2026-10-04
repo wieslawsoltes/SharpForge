@@ -15,6 +15,7 @@ import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter, staticVirtualAccess } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
+import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 /** A member that can be invoked: a method or event, or a field or property of a delegate type or `dynamic`. */
@@ -245,6 +246,7 @@ export const NameBinding = Base =>
         }
         case SymbolKind.Property: {
           const n = this.node('PropertyAccess', syntax, first.type, { property: first, receiver: r });
+          if (r?.kind === 'Base' && isAbstractBaseAccess(first, r.type)) this.report(syntax, DiagnosticId.CS0205, [first.toDisplayString()]);
           if (virtualAccess?.constrainedTo) n.constrainedTo = virtualAccess.constrainedTo;
           if (first.type?.isErrorType?.()) n.hasErrors = true;
           return n;
