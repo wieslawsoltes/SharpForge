@@ -2,8 +2,8 @@ import { MetadataBuilder, Writer, metadataSchemas, writePE } from '@sharpforge/c
 import { PortablePdbBuilder } from '@sharpforge/symbols';
 import { metadataFixture } from '../a03-metadata/fixture.js';
 
-/** Every CLI table is physically present, including pointer and legacy manifest rows. */
-export function tablesFixture() {
+/** All 45 CLI tables by default; native probes can select legacy tables that SRM rejects. */
+export function tablesFixture({ legacyTables = [33, 34, 36, 37] } = {}) {
   const fixture = metadataFixture();
   const { builder } = fixture;
   builder.uncompressed = true;
@@ -12,10 +12,8 @@ export function tablesFixture() {
   }
   builder.add(30, [fixture.owner, 0]);
   builder.add(31, [fixture.owner]);
-  builder.add(33, [0x8664]);
-  builder.add(34, [4, 6, 0]);
-  builder.add(36, [0x8664, 1]);
-  builder.add(37, [4, 6, 0, 1]);
+  const legacyRows = { 33: [0x8664], 34: [4, 6, 0], 36: [0x8664, 1], 37: [4, 6, 0, 1] };
+  for (const table of legacyTables) builder.add(table, legacyRows[table]);
   const string = builder.string('SuffixName');
   const blob = builder.blob(new Uint8Array([0, 127, 128, 255]));
   const guid = builder.guid(Uint8Array.from({ length: 16 }, (_, index) => index + 1));

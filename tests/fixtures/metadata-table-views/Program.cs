@@ -12,7 +12,7 @@ using System.Text.Json;
 // The capture driver substitutes inputs, then uses the repository's pinned Roslyn/CoreCLR harness.
 using var inputs = JsonDocument.Parse(Encoding.UTF8.GetString(Convert.FromBase64String("INPUT_JSON_BASE64")));
 var images = new List<object>();
-foreach (var input in inputs.RootElement.EnumerateArray())
+foreach (var input in inputs.RootElement.GetProperty("images").EnumerateArray())
 {
     var bytes = Convert.FromBase64String(input.GetProperty("image").GetString()!);
     var isPE = bytes[0] == 0x4d && bytes[1] == 0x5a;
@@ -57,7 +57,24 @@ foreach (var input in inputs.RootElement.EnumerateArray())
     images.Add(new { label = input.GetProperty("label").GetString(), metadataOffset, tables, heaps,
         namedRows = new RowProjection(reader).Read() });
 }
-Console.WriteLine(JsonSerializer.Serialize(new { images }));
+var unsupportedImages = new List<object>();
+foreach (var input in inputs.RootElement.GetProperty("unsupportedImages").EnumerateArray())
+{
+    var bytes = Convert.FromBase64String(input.GetProperty("image").GetString()!);
+    var label = input.GetProperty("label").GetString();
+    using var provider = MetadataReaderProvider.FromMetadataImage(ImmutableArray.Create(bytes));
+    try
+    {
+        provider.GetMetadataReader(MetadataReaderOptions.None);
+        unsupportedImages.Add(new { label, accepted = true });
+    }
+    catch (BadImageFormatException error)
+    {
+        unsupportedImages.Add(new { label, accepted = false, exception = error.GetType().FullName,
+            message = error.Message, hResult = error.HResult });
+    }
+}
+Console.WriteLine(JsonSerializer.Serialize(new { images, unsupportedImages }));
 
 sealed class RowProjection
 {

@@ -48,3 +48,20 @@ export function compareNativeImage(bytes, native) {
   }
   return { tables: tables.length, rows: rowCount, namedRows: native.namedRows.length, heaps: native.heaps.length };
 }
+
+/** SRM excludes these four table bits even in #-; retain its rejection and our physical coverage separately. */
+export function checkNativeUnsupportedImage(bytes, native, legacyTable) {
+  const legacyTables = [33, 34, 36, 37];
+  equal(legacyTables.includes(legacyTable), true, 'known legacy table');
+  equal(native.accepted, false, 'native legacy-table rejection');
+  equal(native.exception, 'System.BadImageFormatException', 'native legacy exception');
+  equal(native.message.startsWith('Unknown tables: '), true, 'native unsupported-table reason');
+  const view = new MetadataTableInspector(bytes);
+  const tables = view.tables({ includeEmpty: false });
+  const expected = Array.from({ length: 45 }, (_, table) => table)
+    .filter(table => !legacyTables.includes(table) || table === legacyTable);
+  equal(tables.map(table => table.table), expected, 'legacy fixture table inventory');
+  equal(view.rows(legacyTable).rows.length, 1, 'inspectable legacy row');
+  view.dispose();
+  return { table: legacyTable, tables: tables.length, rejectedByNative: true };
+}

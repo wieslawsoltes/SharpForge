@@ -1,6 +1,6 @@
 import { CilError, MetadataTableInspector } from '@sharpforge/cil';
 import { tablesFixture, heapFixture, pdbTablesFixture, deltaTablesFixture } from './fixture.js';
-import { compareNativeImage } from './native-compare.js';
+import { compareNativeImage, checkNativeUnsupportedImage } from './native-compare.js';
 
 const assert = (value, message) => { if (!value) throw new Error(message); };
 const hex = bytes => Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, '0')).join('');
@@ -53,7 +53,15 @@ export async function run() {
       assert(hex(await crypto.subtle.digest('SHA-256', bytes)) === input.sha256, 'Native input SHA-256');
       report.native.push(compareNativeImage(bytes, reference.native.images.find(image => image.label === input.label)));
     }
+    report.unsupportedNative = [];
+    for (const input of reference.unsupportedImages) {
+      const bytes = Uint8Array.from(atob(input.image), character => character.charCodeAt(0));
+      assert(hex(await crypto.subtle.digest('SHA-256', bytes)) === input.sha256, 'Native legacy input SHA-256');
+      report.unsupportedNative.push(checkNativeUnsupportedImage(bytes,
+        reference.native.unsupportedImages.find(image => image.label === input.label), input.table));
+    }
     report.checks.push('Retained native SRM full physical rows, typed named columns and heap probes');
+    report.checks.push('Four SRM legacy-table rejections retained with successful physical inspector access');
     view.dispose();
     rejects(() => view.tables());
     report.passed = true;

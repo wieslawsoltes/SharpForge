@@ -31,11 +31,24 @@ NuGet package, runtime loader or independent JavaScript decoder is introduced.
 `GetHeapMetadataOffset`, heap getters and typed SRM row getters. These APIs are
 documented in Microsoft's [MetadataReaderExtensions reference](https://learn.microsoft.com/dotnet/api/system.reflection.metadata.ecma335.metadatareaderextensions?view=net-10.0).
 
-The gate checks every physical row's complete scalar byte dump and position against
+SRM accepts 41 CLI table kinds and all eight Portable PDB kinds. Its pinned
+[table mask](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/Internal/MetadataFlags.cs#L50-L55)
+excludes `AssemblyProcessor`, `AssemblyOS`, `AssemblyRefProcessor` and
+`AssemblyRefOS` (33, 34, 36, 37). The native
+[header reader](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/MetadataReader.cs#L463-L478)
+rejects these bits before decoding rows, independently of stream kind. Pointer
+and EnC tables require the `#-` stream that these fixtures already use.
+
+The native gate uses the supported 41-table variant in PE and standalone forms.
+It checks every physical row's complete scalar byte dump and position against
 SRM's table extents, then compares independently decoded named columns for every
-typed row accessor exercised by the fixtures. Pointer/layout/legacy processor
-tables have no typed SRM row getter; their physical row bytes, counts and offsets
-are compared, and their column names/types come from the established ECMA registry.
+typed row accessor exercised by the fixtures. Pointer/layout tables have no typed
+SRM row getter; their physical row bytes, counts and offsets are compared, and
+their column names/types come from the established ECMA registry. Four separate
+inputs add one excluded legacy table apiece, retaining SRM's exact
+`BadImageFormatException` observations and checking that the inspector still
+exposes each physical row. Native parity is not claimed for those four tables;
+the full 45-table inspector assertions remain in the focused and browser tests.
 PDB external references are numeric in the native output and explicitly `external`
 in the inspector. All four heaps have native handle/value/offset probes, including
 a string suffix, GUID zero/endian order, blob data and empty/Unicode user strings.
