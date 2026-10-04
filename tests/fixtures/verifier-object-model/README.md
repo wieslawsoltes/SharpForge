@@ -63,11 +63,20 @@ qualified literal baseline, so literal changes are not attributed to this batch.
 
 [QUALIFICATION.md](QUALIFICATION.md) gives the exact fresh-scratch native and
 focused commands, prepared aliases, controlled baseline rationale, sampling bounds
-and one-wrapper serial comparison command. Product source and native expectations
-remain unchanged by this preparation. Neither tooling nor authored harness tests
-have been executed for this preparation.
+and one-wrapper serial comparison command. The retained [evidence summary](qualification/summary.json) records one actual
+52-case native capture at `73f9ab77`: all declared expectations matched, with
+34 native acceptances and 18 rejections. Product outcomes are 26 verified,
+17 rejected and 9 unknown; 42 determinate outcomes agree, one explicit ref-like
+boxing difference remains, and unknowns are not counted as agreement.
 
-All capture, focused/browser execution and performance measurements are pending
-the shared serial validation slot. The authored tests and harness are not evidence
-of a pass. Broader source-VM/direct-CIL/native/Wasm execution admission remains
-outside this typed API batch; #2403 and constructor/exception follow-ups stay open.
+The initial 14-file Node run had 79 passes and one malformed-fixture serialization
+failure. Test-only correction `31b18645` made the invalid coded index encodable
+while preserving its out-of-range target and adding an explicit `CILVM0001`
+assertion. The annotation file plus strict native replay then passed 8/8; no
+unrelated tests or native captures were rerun. Both logs remain retained. Product
+source, native cases and expectations were unchanged. The benchmark guard tests
+passed within the initial run; the benchmark cohort itself has not executed.
+
+Browser and performance qualification remain pending their serial slots. Broader
+source-VM/direct-CIL/native/Wasm execution admission remains outside this typed API
+batch; #2403 and constructor/exception follow-ups stay open.

@@ -120,7 +120,20 @@ fixture therefore declares the stricter authoritative ref-like boxing policy as
 an explicit difference before capture. A separate ref-like return case checks
 native lifetime rejection; unsupported results are never counted as agreement.
 
+The [retained qualification](../../tests/fixtures/verifier-object-model/qualification/summary.json)
+records all 52 predeclared ILVerify expectations matched at `73f9ab77`: 34 native
+acceptances and 18 rejections. Product outcomes are 26 verified, 17 rejected and
+9 unknown. Forty-two determinate outcomes agree with ILVerify; `RefLikeBox` remains
+the explicit stricter-product difference and unknowns are excluded from agreement.
+
+The initial 14-file focused run recorded 79 passes and one test-fixture serialization
+failure. Test-only correction `31b18645` changed an invalid constructor coded index
+to fit its two-byte metadata column while retaining an out-of-range MemberRef and
+explicit `CILVM0001` rejection. The annotation file and strict native replay then
+passed 8/8; unrelated passing tests and native capture were not rerun. Product
+source and native expectations were unchanged. Both raw test logs remain retained.
+
 See the [fixture README](../../tests/fixtures/verifier-object-model/README.md) for
-exact capture, focused test, browser API and performance commands. Native capture,
-execution and performance results are pending the coordinating serial validation
-slot; no pass or performance improvement is claimed here.
+exact commands, source identities and scopes. Browser and performance qualification
+remain pending; no browser pass, performance result or runtime execution admission
+is claimed here.

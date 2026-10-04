@@ -1,9 +1,43 @@
-# Object verifier qualification plan
+# Object verifier qualification protocol and evidence
 
-This is prepared tooling and a fixed protocol, not an execution report. Native
-capture, focused tests, browser checks and performance still require the
-coordinator's explicit serial validation slot. No result is inferred from the
-existence of the fixtures or commands below.
+The authorized serial slot completed one native capture and the focused runs
+recorded below. Browser checks and the 24-child performance cohort have not run
+and still require an explicit serial slot. No performance gate pass is claimed.
+
+## Recorded results
+
+| Evidence | Source revision | Actual result |
+|---|---|---|
+| [Native capture](native.json) | `73f9ab77` | 52 declared expectations matched: 34 accepted, 18 rejected |
+| [Initial focused log](qualification/focused-node.log.json) | `73f9ab77` | 14 files, 80 tests: 79 passed, 1 failed during malformed-fixture serialization |
+| [Correction log](qualification/correction-node.log.json) | `31b18645` | Annotation file plus strict native replay: 8 passed, 0 failed |
+| Browser API | None | Not run |
+| Performance | None | Prepared; not run |
+
+Both Node runs had zero cancellations and skips. The initial failure and exact
+raw output remain retained. It encoded a CustomAttributeType as `0x7fffb`
+(524,283), beyond the two-byte column, so serialization failed before verification.
+The separate test-only correction uses `0xfffb` (65,531), decoding MemberRef
+`0x0a001fff`: it is encodable and explicitly asserted to exceed the fixture
+MemberRef row count. The verifier must reject with `CILVM0001` before invoking
+host classification. No product source or native expectation changed. Only the
+annotation file and strict native replay were rerun; this is not a claim of a new
+80-test full pass at the corrected revision.
+
+The product corpus has 26 verified, 17 rejected and 9 unknown cases. Of 43
+determinate cases, 42 agree with ILVerify. `RefLikeBox` preserves the predeclared
+stricter product rejection despite pinned ILVerify acceptance. The nine unknowns
+remain excluded from agreement; native acceptance or rejection does not promote
+them to product support.
+
+[qualification/summary.json](qualification/summary.json) records exact native,
+source, tool and reference hashes, commands, environment and result scopes. Logs
+are retained as exact UTF-8 text envelopes with raw-byte SHA-256. Invocation JSON
+records exact outer argv and timestamps before/after execution. The native helper
+does not record subprocess argv separately; its exact executed source and process
+environment overrides are retained, without inventing an OS-level argv trace.
+The observed environment was Node 24.19.0, Linux x64/kernel 6.18.44, SDK 10.0.201
+and runtime/ILVerify 10.0.5; it is a local environment, not a pinned runner image.
 
 ## Source and dependency scope
 
@@ -27,8 +61,9 @@ own `packages` directories. No package installation is needed for these commands
 The read-only preparation found SDK 10.0.201, runtime/reference pack 10.0.5 and
 167 reference DLLs at the paths below. All five pinned ILVerify files and the
 Linux x64 ILAsm executable match the repository hashes. No native process was
-run for that inspection. Capture still checks actual SDK/runtime/Roslyn versions,
-the complete reference hash, tool identity and the selected-method count.
+run during that earlier inspection. The later successful capture checked actual
+SDK/runtime/Roslyn versions, the complete reference hash, tool identity and the
+selected-method count.
 
 ## Capture and strict replay
 
@@ -52,11 +87,11 @@ filter `\.Test$` must select exactly one method in each multi-method assembly.
 Zero/multiple matches and process failures cannot become accepted rejection cases.
 Inspect the complete observation before retaining it as `native.json`; retain any
 failed attempt separately. The strict native test intentionally fails when that
-file is absent or stale. At preparation time it is absent.
+file is absent or stale. The actual 52-observation capture is now retained.
 
 The existing CoreLib category capture is present and feeds the object test helper;
-it is not a substitute for the new object-native observations. After retaining
-the actual complete capture, the scheduled focused command is:
+it is not a substitute for the new object-native observations. The initial
+14-file focused invocation used this exact test list:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 \
