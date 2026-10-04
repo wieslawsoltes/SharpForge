@@ -55,7 +55,8 @@ bounded failure reasons and byte counts. `selectedCalls` and
 `selectedInstructions` count dispatcher selections, not guaranteed native
 operations: host instructions and failed operand guards retain their canonical
 handlers. Compilation attempts and cancellations are lifetime counters;
-per-method and selection counters restart on code-generation invalidation.
+per-method and selection counters restart when execution observes the next code
+generation. Invalidated generation totals remain readable until then.
 Method rows also include bounded per-edge counts and explicit site overflow.
 
 Stop, restore, code-owner changes and explicit `invalidateExecutionCode` discard
@@ -116,8 +117,20 @@ entry and OSR selections and does not imply that every operation ran natively.
 When runtime events are enabled, each accepted OSR selection emits the existing
 `TierUp` event with scalar payload `{kind: 'osr', method, frame, fromOffset,
 toOffset, epoch}` and the current instruction count. Subscriber delivery uses
-the existing deferred host flush boundary. Entry-only selections do not gain
-new events in this increment.
+the existing deferred host flush boundary. A ready method selected on a new call
+emits the same event name with `{kind: 'call', method, frame, epoch}`. This records
+selection before the method's first instruction, not compilation completion or a
+guarantee that every instruction will execute natively. The selection event precedes
+that frame's `MethodEnter`; both use the existing caller instruction count. Cold,
+failed and restored frames do not invent call-selection events. Host subscribers
+run only at the existing flush boundary, and their failures remain host errors.
+When runtime events are disabled, the optional call does not construct a payload.
+
+Initial serial validation passed 27 of 28 focused call-tiering, OSR and method-event
+tests at `9dd96a94`. The new restore fixture incorrectly expected immediate counter
+reset; `209ec6e5` verifies unchanged call totals plus discarded compiled state instead.
+All four call-entry event tests then passed. Required PR checks follow this local
+validation. Broad event/platform qualification remains open.
 
 All 63 focused OSR, back-edge, call-tiering, bridge, method-event and profiler
 tests passed serially at `6a798e2e` on Node 24. Required PR checks follow this
