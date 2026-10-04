@@ -9,6 +9,7 @@
  * `out` for a `ref readonly` parameter is CS1615 (overload/resolution.js), a default value on the parameter is the
  * warning CS9200 (binder/members/basic-declarations.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 import { classifyVariable } from './ref-kinds.js';
 
@@ -24,11 +25,11 @@ export const RefReadonlyParameterBinding = Base =>
         const given = argument.refKind ?? RefKind.None;
         if (parameter.refKind === RefKind.RefReadOnlyParameter && given === RefKind.None) {
           const isVariable = classifyVariable(argument, this.variableContext).isVariable;
-          this.report(argument.syntax, isVariable ? 'CS9192' : 'CS9193', [index + 1]);
+          this.report(argument.syntax, isVariable ? DiagnosticId.CS9192 : DiagnosticId.CS9193, [index + 1]);
         } else if (parameter.refKind === RefKind.In && given === RefKind.Ref) {
           const version = this.version.number;
-          if (version >= 12) this.report(argument.syntax, 'CS9191', [index + 1]);
-          else this.report(argument.syntax, 'CS9194', [index + 1, Number.isInteger(version) ? version + '.0' : String(version), '12.0']);
+          if (version >= 12) this.report(argument.syntax, DiagnosticId.CS9191, [index + 1]);
+          else this.report(argument.syntax, DiagnosticId.CS9194, [index + 1, Number.isInteger(version) ? version + '.0' : String(version), '12.0']);
         }
       });
       return call;

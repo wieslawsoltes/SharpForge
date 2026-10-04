@@ -1,4 +1,5 @@
 import {MethodTableRegistry} from './execution/method-table.js';
+import {recordAllocation,replaceHeapData} from './execution/heap-allocation.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
@@ -28,10 +29,10 @@ export class ManagedHeap {
     this.reserve(size,allocationRoots);
     const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
     this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
-    this.mutationRevision++;this.stats.allocatedBytes+=size;this.stats.liveBytes+=size;this.stats.liveObjects++;this.stats.allocations++;this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);
+    recordAllocation(this,size);
     return Object.freeze({h,g});
   }
-  replaceData(reference,data){const record=this.get(reference);if(!Array.isArray(data)||record.kind==='string')throw new TypeError('Array-backed record required');const next=32+data.length*8,delta=next-record.size;if(delta>0)this.reserve(delta,[reference,...data]);this.stats.liveBytes+=delta;this.stats.allocatedBytes+=Math.max(0,delta);this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);record.data=[...data];record.size=next;this.mutationRevision++;}
+  replaceData(reference,data){return replaceHeapData(this,reference,data);}
   string(value,roots=[]){return this.allocate('string','string',String(value),roots);}
   object(type,fields){return this.allocate('object',type,fields);}
   array(type,length){
@@ -50,7 +51,8 @@ export class ManagedHeap {
     this.mutationRevision++;
     const start=performance.now();if(this.marks.length<this.records.length)this.marks=new Uint32Array(Math.max(this.records.length,this.marks.length*2,64));if(++this.markEpoch>=0xffffffff){this.marks.fill(0);this.markEpoch=1;}const marked=this.marks,epoch=this.markEpoch,work=this.markWork;work.length=0;let rootsScanned=0,edgesScanned=0,markedObjects=0;
     const add=value=>{if(isReference(value)&&this.generations[value.h]===value.g&&this.records[value.h]&&marked[value.h]!==epoch){marked[value.h]=epoch;markedObjects++;work.push(value.h);}};
-    for(const value of this.rootProvider()){rootsScanned++;add(value);}for(const value of this.pins){rootsScanned++;add(value);}for(const value of extraRoots){rootsScanned++;add(value);}for(const h of this.handles.values())if(!h.weak){rootsScanned++;add(h.value);}
+    const visit=value=>{rootsScanned++;add(value);},provided=this.rootProvider(visit);
+    if(provided!==undefined)for(const value of provided)visit(value);for(const value of this.pins)visit(value);for(const value of extraRoots)visit(value);for(const h of this.handles.values())if(!h.weak)visit(h.value);
     while(work.length){const record=this.records[work.pop()];if(record.kind!=='string')for(const value of record.data){edgesScanned++;add(value);}}
     const markEnd=performance.now();let objects=0,bytes=0;
     for(let h=0;h<this.records.length;h++){const record=this.records[h];if(record&&marked[h]!==epoch){objects++;bytes+=record.size;this.records[h]=null;this.free.push(h);}}

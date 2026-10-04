@@ -8,12 +8,13 @@
  *
  * Arithmetic on `void*` is CS0242: the element size is unknown.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { isPointerType, isVoidPointer, isFunctionPointerType } from '../conversions/pointer.js';
 
 const comparisons = new Set(['==', '!=', '<', '>', '<=', '>=']);
 const offsetKinds = ['int', 'uint', 'long', 'ulong'];
 const result = (leftType, rightType, resultType) => ({ kind: 'builtin', family: 'pointer', leftType, rightType, resultType, isLifted: false });
-const undefinedOnVoid = { kind: 'error', code: 'CS0242', args: [] };
+const undefinedOnVoid = { kind: 'error', code: DiagnosticId.CS0242, args: [] };
 
 /**
  * @param {(expression: object, kind: string) => object|null} offsetType the type of kind `kind` when the expression

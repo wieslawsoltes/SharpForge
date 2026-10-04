@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SharpForge virtual editor</title>
+<link rel="stylesheet" href="../src/editor.css">
+<link rel="stylesheet" href="./examples.css">
+<h1>Virtual editor and shared document views</h1>
+<nav>
+  <button id="wrap">Toggle wrap</button>
+  <button id="whitespace">Show whitespace</button>
+  <button id="split">Split view</button>
+  <button id="fold">Collapse all regions</button>
+  <button id="bookmark">Bookmark line</button>
+  <button id="save">Mark saved</button>
+  <button id="large">Load 500,000 lines</button>
+</nav>
+<div id="editor"></div>
+<p id="status" role="status"></p>
+<script type="module" src="./virtual-view.js"></script>
+</html>
