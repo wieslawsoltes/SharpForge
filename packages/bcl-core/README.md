@@ -151,13 +151,10 @@ a null value precedes comparison-mode validation. Invalid enum values raise
 before empty, identity or length shortcuts. Native culture results remain intact
 in the [194-row reference](reference/string-contains-comparison/README.md).
 
-Ordinal delegates to the existing UTF-16 string search. Ignore-case search checks
-each candidate UTF-16 start with the shared bounded affix matcher. It does not
-allocate substrings, folded copies or a search table, and can match a needle whose
-start or end splits a surrogate pair. The scan uses constant auxiliary space with
-worst-case O((n − m + 1) × m) time for receiver length n and needle length m.
-Repeated prefixes can therefore be expensive; this batch deliberately keeps the
-small scan rather than introducing an unmeasured search framework.
+Ordinal delegates to the existing UTF-16 string search. Ignore-case search uses
+the private Two-Way implementation described below, with the same pinned fold as
+the bounded affix matcher. It can match a needle whose start or end splits a
+surrogate pair without constructing substrings, folded copies or a search table.
 
 Tests cover both compiler pipelines/source+CIL VMs, independently assembled CIL,
 the unchanged .NET 10.0.5 / SDK 10.0.201 oracle, surrogate boundaries, input
@@ -188,13 +185,54 @@ The [218-row .NET 10.0.5 reference](reference/string-indexof-comparison/README.m
 retains exact native offsets, Contains results, faults and native culture controls.
 Tests cover both pipelines/VMs, independent CIL, int-versus-enum overload binding,
 first/overlapping matches, supplementary prefixes, malformed UTF-16, GC and zero
-managed allocation. The shared ignore-case scan retains O((n - m + 1) * m)
-worst-case time and constant auxiliary space; it creates no substrings or folded
-copies. The bounded `scripts/benchmarks/a07-string-indexof-comparison.mjs` runner
+managed allocation. The shared ignore-case search now uses O(n+m) time and
+constant auxiliary space, retaining the same offsets and faults. The bounded
+`scripts/benchmarks/a07-string-indexof-comparison.mjs` runner
 compares identical workloads against parent `080ec4ed`, with released IndexOf and
 Contains controls, ordinary input and 1024-unit repeated-prefix misses/late hits
 using 64-unit needles. One warmup and five samples per VM report median/p95 and
 managed allocation counters; setup and result checks are excluded.
+
+The performance follow-up replaces only the shared ordinal-ignore-case search.
+`src/system/string-search-linear.js` independently implements the
+[Crochemore–Perrin Two-Way algorithm](https://doi.org/10.1145/116825.116845), using
+two maximal-suffix passes to select a critical cut and period. It stores a
+constant number of counters plus two small host records for factorization. It
+does not allocate managed objects, transformed strings, failure arrays or shift
+tables; **constant space does not mean allocation-free host execution**. The
+existing comparison/affix loops and the original pinned fold remain unchanged.
+
+The reduction to fixed symbols is essential for UTF-16 correctness:
+
+1. The virtual folded-unit view uses the original whole string. Valid surrogate
+   pairs map through the shared ordinal scalar fold, exposing their resulting
+   high and low units at the original offsets. Isolated units remain isolated.
+   The pinned mapping preserves UTF-16 width and surrogate categories.
+2. Only a needle's first low surrogate and last high surrogate can pair outside
+   a candidate window. Those optional units become raw endpoint predicates; the
+   remaining core is searched through the fixed folded-unit view. A successful
+   raw predicate also prevents the adjacent core unit from pairing across that
+   boundary. An empty core contains at most two raw units and uses a simple scan.
+3. Two-Way searches valid full-needle start positions in order, comparing the
+   right core half and then the left. Periodic overlap memory survives a full core
+   match whose raw endpoint fails. Restarting search there would lose the linear
+   bound. The returned core offset subtracts the excluded leading unit.
+
+This gives O(n+m) folded-unit accesses for receiver length n and needle length m,
+plus O(1) endpoint work per considered alignment. Each unit access uses bounded
+lookaround and the fixed pinned mapping table. There is no small-needle fallback
+threshold pending measurements. Tests count actual source/needle code-unit reads,
+including period preprocessing, for repeated-prefix and rejected periodic-core
+matches while n and m grow together. Exhaustive small inputs, longer differential
+cases and both unchanged native search oracles guard boundary and overlap behavior.
+
+`scripts/benchmarks/a07-string-search-linear.mjs` runs unchanged on baseline
+`40cf1975` and the candidate. It retains the measured ordinary and repeated-prefix
+inputs and adds raw endpoint rejection workloads. Both source/CIL platforms report
+median/p95 and managed allocation counters after one warmup and five samples;
+setup, optional host GC and assertions are excluded. Host allocation counts and
+other globalization profiles are not claimed. Performance measurements belong to
+the serial qualification record; no speedup is asserted before those runs.
 
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch

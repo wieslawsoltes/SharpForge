@@ -130,6 +130,24 @@ test('Linear string search: periodic endpoint rejections preserve earliest offse
   }
 });
 
+test('Linear string search: long periodic and nonperiodic cores agree across every surrounding boundary', () => {
+  const cores = ['aAé', '\uD801\uDC28a', '\uDC28a\uD801', 'ababa', '\0éa', '\uD801a\uDC28'];
+  for (const core of cores) {
+    for (const repetitions of [2, 5, 17]) {
+      const body = core.repeat(repetitions);
+      const upper = body.replaceAll('a', 'A').replaceAll('é', 'É').replaceAll('\uD801\uDC28', '\uD801\uDC00');
+      for (const [prefix, suffix] of [['', ''], ['\uDC28', ''], ['', '\uD801'], ['\uDC28', '\uD801']]) {
+        for (const terminal of ['', 'B', '\0']) {
+          const needle = prefix + upper + terminal + suffix;
+          assertSearch(body + body, needle);
+          assertSearch(body + body + prefix + body + terminal + suffix, needle);
+          assertSearch('x' + body + 'y' + prefix + body + terminal + suffix + body, needle);
+        }
+      }
+    }
+  }
+});
+
 const engines = {source: program => new VirtualMachine(program.image), cil: program => new CilVirtualMachine(program.assembly)};
 const parameters = 'string,System.StringComparison';
 const descriptor = method => findContracts('System.String', method, false).find(row => row.parameters.join(',') === parameters);
