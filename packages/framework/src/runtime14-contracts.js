@@ -1,13 +1,12 @@
 import {registerBclModules} from '@sharpforge/bcl-core';
+import {registerUri} from './contributions/uri.js';
 /** Release 14 appends contracts so older serialized builtin identities remain stable. */
 export function registerRuntime14(registry){
   const {define,member,ctor,prop,en,delegate}=registry;
   const task='System.Threading.Tasks.Task',async='SharpForge.Runtime.Async',H='System.Net.Http.',CT='System.Threading.CancellationToken',CTS='System.Threading.CancellationTokenSource';
   function taskType(r){const t=task+'`1<'+r+'>';define(t,{kind:'task',result:r,base:task});for(const [name,type]of [['Id','int'],['IsCompleted','bool'],['IsFaulted','bool'],['IsCanceled','bool'],['Result',r]])prop(t,name,type,null,true);member(t,'Wait',[],'void');member(async,'Await',[t],r,{isStatic:true,kind:'await'});delegate('System.Func`1<'+r+'>',[],r);member(async,'Start',['System.Func`1<'+r+'>'],t,{isStatic:true,kind:'startTask'});return t;}
   const responseTask=taskType(H+'HttpResponseMessage'),arrayTask=taskType('double[]');
-  define('System.Uri',{kind:'network',family:'uri'});ctor('System.Uri',['string']);ctor('System.Uri',['System.Uri','string']);
-  for(const [name,type,read]of [['OriginalString','string',true],['AbsoluteUri','string',true],['AbsolutePath','string',true],['Host','string',true],['Scheme','string',true],['Port','int',true],['IsAbsoluteUri','bool',true]])prop('System.Uri',name,type,null,read);
-  member('System.Uri','ToString',[],'string');for(const name of ['EscapeDataString','UnescapeDataString'])member('System.Uri',name,['string'],'string',{isStatic:true});
+  registerUri(registry);
   for(const [name,family]of [['HttpClient','httpClient'],['HttpRequestMessage','httpRequest'],['HttpResponseMessage','httpResponse'],['HttpMethod','httpMethod'],['HttpContent','httpContent'],['StringContent','httpContent'],['Headers.HttpRequestHeaders','httpHeaders'],['Headers.HttpResponseHeaders','httpHeaders'],['Headers.HttpContentHeaders','httpHeaders']])define(H+name,{kind:'network',family,...(name==='StringContent'?{base:H+'HttpContent'}:{})});
   ctor(H+'HttpClient');ctor(H+'HttpRequestMessage');ctor(H+'HttpRequestMessage',[H+'HttpMethod','string']);ctor(H+'HttpMethod',['string']);ctor(H+'StringContent',['string']);
   prop(H+'HttpClient','BaseAddress','System.Uri');prop(H+'HttpClient','Timeout','System.TimeSpan');prop(H+'HttpClient','DefaultRequestHeaders',H+'Headers.HttpRequestHeaders',null,true);

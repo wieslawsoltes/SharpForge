@@ -19,6 +19,10 @@ on:
         required: false
         type: string
   workflow_call:
+    secrets:
+      PLANNING_PROJECT_READ_TOKEN:
+        description: Read-only Project credential for trusted ownership qualification
+        required: true
     inputs:
       pr_number:
         required: true
@@ -67,6 +71,7 @@ jobs:
       - name: Ownership, DAG, manifests, contracts and combined-tree regression
         env:
           GH_TOKEN: ${{ github.token }}
+          PROJECT_READ_TOKEN: ${{ secrets.PLANNING_PROJECT_READ_TOKEN }}
         run: node planning-tools/scripts/conformance/ci-planning/gates.js --root qualified-pr --context "$RUNNER_TEMP/planning-pr.json"
       - name: Explicit flake measurement
         if: always() && steps.context.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.flake_files != ''
