@@ -126,10 +126,13 @@ test('dynamic binding disposers remain valid after atomic table swaps and reject
   const remove = fixture.keyboard.register({ id: 'temporary', command: 'save', keys: 'Ctrl+Alt+S', scope: 'Global' });
   fixture.keyboard.apply([]);
   fixture.keyboard.profile('emacs');
-  assert.equal(fixture.keyboard.bindingsFor('save').length, 2);
+  const saveKeys = () => fixture.keyboard.bindingsFor('save').map(binding => binding.keys.join(' ')).sort();
+  assert.deepEqual(saveKeys(), ['Ctrl+Alt+S', 'Ctrl+S', 'Ctrl+X Ctrl+S']);
+  send(fixture, 'Ctrl+X Ctrl+S', 'global');
+  assert.deepEqual(fixture.calls, ['save']);
   assert.throws(() => fixture.keyboard.register({ id: 'temporary', command: 'save', keys: 'X' }), /Duplicate/);
   remove(); remove();
-  assert.equal(fixture.keyboard.bindingsFor('save').length, 1);
+  assert.deepEqual(saveKeys(), ['Ctrl+S', 'Ctrl+X Ctrl+S']);
   fixture.dispose();
 });
 

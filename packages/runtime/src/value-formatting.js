@@ -1,4 +1,5 @@
 import {isDecimal, decimalFormat} from './execution/decimal.js';
+import {isValueRecord} from './execution/value-types.js';
 import {formatSourceNumber} from './execution/source-number-format.js';
 import {nativeIntegerBits} from './execution/native-int.js';
 import {isReference} from './heap.js';
@@ -38,6 +39,7 @@ export function formatSourceValue(vm, value, type) {
 /** Preserve CIL boxing, enums and typed integer display before binary64 numeric formatting. */
 export function formatCilValue(vm, value, type) {
   if (isDecimal(value)) return decimalFormat(value);
+  if (isValueRecord(value)) return vm.typeSystem.table(value.valueType).name;
   const name = runtimeTypeText(vm, value) ?? enumToString(vm, value, type);
   if (name !== null) return name;
   if (value === null) return '';

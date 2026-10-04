@@ -75,6 +75,12 @@ export class Workspace {
 
   compile(options = {}) { return compileWorkspace(this, options); }
 
+  /** Semantic queries share the current compilation and its source/options invalidation. */
+  sourceModel(options = {}) {
+    this.compile(options);
+    return this.documents.size ? this.compilation.getSourceModel() : null;
+  }
+
   /** Register physical metadata without loading its contents or admitting a SourceText. */
   registerFile(record) {
     if (!this.documentStore) throw new Error('Workspace has no lazy document store');

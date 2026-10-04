@@ -132,12 +132,12 @@ test('stale, overlapping, missing, readonly and invalid LSP edits fail before an
   assert(target.listDocuments().every(document => document.text === 'value'));
 });
 
-test('LSP document changes and captured versions are accepted but resource operations are explicit errors', () => {
+test('LSP document changes and captured versions require an explicit host for resource operations', () => {
   const target = workspace();
   const range = {start: {line: 0, character: 0}, end: {line: 0, character: 5}};
   const plan = prepareWorkspaceEdit(target, {documentChanges: [{textDocument: {uri: 'a', version: 1}, edits: [{range, newText: 'new'}]}]});
   assert.equal(plan.changes[0].text, 'new');
-  assert.throws(() => prepareWorkspaceEdit(target, {documentChanges: [{kind: 'rename', oldUri: 'a', newUri: 'b'}]}), /Resource file operations/);
+  assert.throws(() => prepareWorkspaceEdit(target, {documentChanges: [{kind: 'rename', oldUri: 'a', newUri: 'b'}]}), /atomic resource rename/);
   const changes = prepareWorkspaceEdit(target, {changes: {a: [{range, newText: 'ok'}]}}, {versions: new Map([['a', 1]])});
   assert.equal(changes.changes[0].text, 'ok');
 });

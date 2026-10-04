@@ -1,36 +1,34 @@
 import {verifyNumericInstruction,verifyScalarConstant} from './numeric/source-profile.js';
 import {enumTypes,frameworkType} from '@sharpforge/framework';
-import {FORMAT_VERSION, Op} from './opcodes.js';
-import {verifyProjectReferences} from './project-references.js';
-import {projectInstructionEffect} from './project-reference-instructions.js';
-export {FORMAT_VERSION, Op, OpName} from './opcodes.js';
-export {serializeImage, deserializeImage} from './serialization.js';
-export {PROJECT_REFERENCE_FORMAT, projectReferenceLimits, projectAssemblyKey, verifyProjectReferences} from './project-references.js';
 export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
-// Numeric conversion IDs occupy the low range; enum targets retain declared identity.
-export const EnumConvertBase = 65536;
-export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>','>>>'].map((n,i)=>[n,i])));
-export const BinaryName = Object.freeze(Object.keys(Binary));
-export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
-export const UnaryName = Object.freeze(Object.keys(Unary));
+import {FORMAT_VERSION,Op,BinaryName,UnaryName} from './opcodes.js';
+import {verifyProjectReferences} from './project-references.js';
+import {projectInstructionEffect} from './project-reference-instructions.js';
+export {PROJECT_REFERENCE_FORMAT,projectReferenceLimits,projectAssemblyKey,verifyProjectReferences} from './project-references.js';
+export {FORMAT_VERSION,EnumConvertBase,Op,OpName,Binary,BinaryName,Unary,UnaryName} from './opcodes.js';
+import {recordSourceStacks,discardSourceStacks} from './source-stack-proof.js';
+export {verifiedSourceStackBound} from './source-stack-proof.js';
 import {Builtins} from './builtins.js';
 export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
+export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';
 export {disassemble} from './disassembly.js';
+export {serializeImage,deserializeImage} from './serialization.js';
 /** Structural and stack-height verification for compiler output and externally loaded images. */
-export function verifyImage(image){
-  const errors=[];
-  if(image?.formatVersion!==FORMAT_VERSION||!Array.isArray(image?.methods)||!Array.isArray(image?.constants)||!Array.isArray(image?.types)||!Array.isArray(image?.sequencePoints)||!Array.isArray(image?.statics))return ['Malformed or incompatible bytecode image'];
-  if (image.externalReferences !== undefined) {
-    const invalid = verifyProjectReferences(image.externalReferences);
-    if (invalid.length) return invalid;
+export function verifyImage(image,{stackBounds=false}={}){
+  const errors=[],bounds=stackBounds?[]:null;
+  if(image?.formatVersion!==FORMAT_VERSION||!Array.isArray(image?.methods)||!Array.isArray(image?.constants)||!Array.isArray(image?.types)||!Array.isArray(image?.sequencePoints)||!Array.isArray(image?.statics)){discardSourceStacks(image);return ['Malformed or incompatible bytecode image'];}
+  const invalid = image.externalReferences === undefined ? null : verifyProjectReferences(image.externalReferences);
+  if (invalid?.length) {
+    discardSourceStacks(image);
+    return invalid;
   }
   const fail=(m,pc,msg)=>{if(errors.length<100)errors.push(`${m?.qualifiedName??'<image>'}:${pc}: ${msg}`);};
   if(!image.constants.every(verifyScalarConstant)||!image.statics.every(s=>verifyScalarConstant(s.value)))fail(null,0,'Invalid scalar constant');
   if(image.outputKind==='library'?image.entryPoint!==null:!Number.isInteger(image.entryPoint)||!image.methods[image.entryPoint])fail(null,0,'Invalid entry point');
   for(const m of image.methods){
     if(!(m.code instanceof Int32Array)||m.code.length%3||m.code.length>3_000_000||!Array.isArray(m.locals)||!Array.isArray(m.handlers)){fail(m,0,'Invalid code or metadata');continue;}
-    const n=m.code.length/3,heights=new Map(),queue=[[0,0]];
+    const n=m.code.length/3,heights=new Map(),queue=[[0,0]];let peak=0;
     for(const h of m.handlers){if(h.start<0||h.end>n||h.start>=h.end||h.target<0||h.target>=n||(h.kind==='finally'?(!Number.isInteger(h.handlerEnd)||h.handlerEnd<=h.target||h.handlerEnd>n):(h.slot<0||h.slot>=m.locals.length)))fail(m,0,'Invalid exception handler');else queue.push([h.target,0]);}
     while(queue.length){const [pc,height]=queue.pop();if(pc<0||pc>=n){fail(m,pc,'Control flow leaves the method');continue;}if(heights.has(pc)){if(heights.get(pc)!==height)fail(m,pc,'Inconsistent stack height at join');continue;}heights.set(pc,height);
       const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2];let need=0,delta=0;
@@ -62,11 +60,15 @@ export function verifyImage(image){
         }
       }
       if(height<need){fail(m,pc,'Stack underflow');continue;}
+      peak=Math.max(peak,height,height+delta);
       if(op===Op.RET||op===Op.THROW||op===Op.RETHROW||op===Op.ENDFINALLY)continue;
       if(op===Op.JUMP||op===Op.JFALSE||op===Op.JTRUE)queue.push([a,height+delta]);
       if(op!==Op.JUMP)queue.push([pc+1,height+delta]);
     }
+    bounds?.push([m,peak]);
   }
+  if(errors.length)discardSourceStacks(image);else if(bounds)recordSourceStacks(image,bounds);
   return errors;
 }
+
 export * from './numeric-exports.js';

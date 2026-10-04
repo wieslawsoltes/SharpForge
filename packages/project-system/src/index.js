@@ -1,3 +1,4 @@
+export {isSourceSnapshot, cloneWorkspaceRecord, recordSource, isTextRecord} from './workspace-records.js';
 export * from './legacy-solution.js';
 import { xmlEscape } from './xml.js';
 export * from './xml.js';

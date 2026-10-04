@@ -1,5 +1,6 @@
 import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
 import {appendCompositeFormat} from '../formatting/composite-format.js';
+import {appendBuilderCharacter} from './string-builder-append.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -15,14 +16,14 @@ export function registerStringBuilder({define, member, ctor, prop}) {
   for (const parameters of [[], ['string']]) member(owner, 'AppendLine', parameters, owner);
   const methods = [
     ['Clear', [], owner],
-    ['ToString', [], 'string'],
+    ['ToString', [], 'string', {objectToStringOverride: true}],
     ['ToString', ['int', 'int'], 'string'],
     ['Insert', ['int', 'string'], owner],
     ['Remove', ['int', 'int'], owner],
     ['Replace', ['string', 'string'], owner],
     ['EnsureCapacity', ['int'], 'int']
   ];
-  for (const [name, parameters, result] of methods) member(owner, name, parameters, result);
+  for (const [name, parameters, result, options] of methods) member(owner, name, parameters, result, options);
   for (let count = 1; count <= 3; count++) {
     member(owner, 'AppendFormat', ['string', ...Array(count).fill('object')], owner);
   }
@@ -185,7 +186,9 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       capacity(platform, scalars[0], platform.get(reference, '$length', 0));
       platform.set(reference, '$capacity', scalars[0]);
       return null;
-    case 'Append': return appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
+    case 'Append': return descriptor.parameters[0] === 'char'
+      ? appendBuilderCharacter(platform, reference, scalars, appendText)
+      : appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
     case 'AppendLine': return appendText(platform, reference, (values.length ? text(platform, values[0]) : '') + '\n');
     case 'AppendFormat': return appendFormat(platform, descriptor, reference, values);
     case 'EnsureCapacity':

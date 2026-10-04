@@ -1,4 +1,4 @@
-export {DiskWorkspace} from './disk-workspace.js';
+export {DiskWorkspace} from './disk/workspace.js';
 export {ProviderDiskWorkspace} from './provider-disk-workspace.js';
 export {readProviderDirectory, readProviderFiles} from './provider-disk-open.js';
 export {isProjectEvaluationInput} from './disk-inputs.js';

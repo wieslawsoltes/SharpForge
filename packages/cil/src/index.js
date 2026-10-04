@@ -22,8 +22,13 @@ export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/ma
 export { linkAssemblyModules } from './pe/module-linker.js';
 export { readAssemblyModules } from './pe/module-reader.js';
 export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
+export { buildExceptionRegionTree, exceptionRegionDiagnosticCatalog } from './eh-regions.js';
+export { validateExceptionInstructionPlacement, exceptionPlacementDiagnosticCatalog } from './eh-control-flow.js';
+export { validateExceptionBranches, exceptionBranchDiagnosticCatalog } from './eh-branches.js';
+export { validateExceptionControlFlow, exceptionLeaveDiagnosticCatalog } from './eh-leave.js';
 export { VerificationKind, verificationType, verificationDiagnosticCatalog } from './verify/types.js';
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
+export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/prefix-tail.js';
 
 export {verifiedStackBound} from './verified-stack.js';
 
@@ -32,3 +37,6 @@ export { AssemblyIdentity, AssemblyIdentityParts, IdentityComparison, compareAss
 export { grantsInternalsAccess } from './assembly-access.js';
 
 export {loadProjectAssembly, projectReferenceDiagnostics} from './project-assembly.js';
+
+export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
+export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
