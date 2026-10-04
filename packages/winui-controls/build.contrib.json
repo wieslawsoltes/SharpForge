@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/winui-controls/src",
+      "target": "packages/winui-controls/src",
+      "order": 1600
+    }
+  ]
+}
