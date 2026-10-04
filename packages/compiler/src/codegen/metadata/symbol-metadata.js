@@ -55,15 +55,18 @@ export function sourceTypesInMetadataOrder(assembly) {
 export class SymbolMetadataWriter {
   /**
    * @param builder a MetadataBuilder  @param analysis a SemanticAnalysis that has run
-   * @param {{bodyRva: number}} options the RVA every method with a body points at
+   * @param {{bodyRva: number | ((method: object) => number), synthesized?: object}} options `bodyRva` is the RVA every
+   *   method with a body points at, or a function of the planned method; `synthesized` (emit/cil/synthesized-members.js)
+   *   adds what code generation declares: `types` appended after the source types and `extend(type, plan)`
    */
-  constructor(builder, analysis, { bodyRva }) {
+  constructor(builder, analysis, { bodyRva, synthesized = null }) {
     this.builder = builder;
     this.core = analysis.core;
-    this.bodyRva = bodyRva;
-    this.types = sourceTypesInMetadataOrder(analysis.assembly);
+    this.bodyRvaOf = typeof bodyRva === 'function' ? bodyRva : () => bodyRva;
+    this.types = [...sourceTypesInMetadataOrder(analysis.assembly), ...(synthesized?.types ?? [])];
     this.tokens = new TypeTokens(builder, this.types);
     this.plans = new Map(this.types.map(type => [type, planMembers(type, this.core, field => analysis.constantOf(field))]));
+    if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
     /** Definition tokens by symbol, for callers that add rows of their own (custom attributes, method bodies). */
     this.fieldTokens = new Map();
     this.methodTokens = new Map();
@@ -109,7 +112,8 @@ export class SymbolMetadataWriter {
     builder.addRow('TypeDef', { Flags: 0, Name: '<Module>', Namespace: '', Extends: 0, FieldList: 1, MethodList: 1 });
     for (const type of this.types) {
       const plan = this.plans.get(type),
-        hasStaticConstructor = plan.methods.some(method => method.name === '.cctor'),
+        // A type initializer that only runs field initializers leaves the type `beforefieldinit`, as Roslyn does.
+        hasStaticConstructor = plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
         Flags: typeFlags(type, { hasStaticConstructor }),
@@ -143,7 +147,7 @@ export class SymbolMetadataWriter {
       for (const method of this.plans.get(type).methods) {
         const signature = method.symbol ? methodSymbolSignature(this.tokens, method.symbol) : methodSignature(this.tokens, method.shape);
         this.builder.addRow('MethodDef', {
-          RVA: method.hasBody ? this.bodyRva : 0,
+          RVA: method.hasBody ? this.bodyRvaOf(method) : 0,
           ImplFlags: method.implFlags,
           Flags: method.flags,
           Name: method.name,

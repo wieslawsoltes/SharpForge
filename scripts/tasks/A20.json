@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "a20:bench:editor": {
+      "description": "Capture real editor model or browser latency after the complete scope is implemented.",
+      "steps": [{ "command": "node", "args": ["scripts/limited.js", "node", "scripts/benchmark-editor.js"] }]
+    },
+    "a20:bench:editor-memory": {
+      "description": "Measure retained memory and enforce independently defined structural budgets.",
+      "steps": [{ "command": "node", "args": ["scripts/limited.js", "node", "--expose-gc", "scripts/benchmark-editor-memory.js"] }]
+    },
+    "a20:check:editor-perf": {
+      "description": "Compare compatible raw browser or model samples with the 20 percent p95 regression gate.",
+      "steps": [{ "command": "node", "args": ["scripts/check-editor-perf.js"] }]
+    },
+    "project16:qualify": {
+      "description": "Run completed Project 16 scopes serially; build the application before browser qualification.",
+      "steps": [{ "command": "node", "args": ["scripts/project16-qualification.js"] }]
+    }
+  },
+  "aliases": {
+    "bench:editor": "a20:bench:editor",
+    "bench:editor-memory": "a20:bench:editor-memory",
+    "check:editor-perf": "a20:check:editor-perf"
+  }
+}

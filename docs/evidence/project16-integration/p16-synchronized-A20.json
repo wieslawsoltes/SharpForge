@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+  "sourceTree": "5f95b2569f1d37e14108ca865cb39de33872320e",
+  "command": [
+    "node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "A20"
+  ],
+  "area": "A20",
+  "startedAt": "2026-10-04T01:50:36.139963+00:00",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T01:51:12.171261+00:00"
+}

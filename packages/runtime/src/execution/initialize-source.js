@@ -9,6 +9,7 @@ import { sourceEntryArguments } from './entry-arguments.js';
 import { initializeExecutionProfiler } from './profiler.js';
 import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
 import { installRootProvider } from './frame-roots.js';
+import { stackByteLimit } from './stack-budget.js';
 
 /** Initialize each source runtime's heap, state and entry frame from independent host options. */
 export function initializeSourceVM(vm, image, options) {
@@ -17,7 +18,7 @@ export function initializeSourceVM(vm, image, options) {
   if (image?.outputKind === 'library') {
     throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
   }
-  const errors = verifyImage(image);
+  const errors = verifyImage(image, {stackBounds: stackByteLimit(options) !== undefined});
   if (errors.length) throw new Error('Bytecode verification failed: ' + errors.join('; '));
   vm.image = image;
   vm.options = { maxInstructions: 20_000_000, maxFrames: 512, maxOutputCharacters: 1_000_000, ...options };

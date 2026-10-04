@@ -1,18 +1,19 @@
+import {reportDesignerError,runDesignerAction} from './designer-diagnostics.js';
 import {DesignerSourceSync} from './designer-source-sync.js';
 import {DesignerChrome} from './designer-chrome.js';
-import {DesignDocument,createDesign,designControls,propertySchema,childSlot,designScene,designFromScene,designPatch,resolvedProperties,generateDesignCode,generateDesignProject,track} from '../../packages/designer/src/index.js';
-import {frameworkType,frameworkAssignable,eventsFor,XAML,CONTROLS,MEDIA} from '../../packages/framework/src/index.js';
-import {WinUIHost} from '../../packages/winui/src/index.js';
-import {TreeModel,TreeView,ContextMenu} from '../../packages/controls/src/index.js';
-import {escapeHtml as E} from '../../packages/editor/src/index.js';
+import {DesignDocument,createDesign,designControls,propertySchema,childSlot,designScene,designFromScene,designPatch,resolvedProperties,generateDesignCode,generateDesignProject,track} from '@sharpforge/designer';
+import {frameworkType,frameworkAssignable,eventsFor,XAML,CONTROLS,MEDIA} from '@sharpforge/framework';
+import {WinUIHost} from '@sharpforge/winui';
+import {TreeModel,TreeView,ContextMenu} from '@sharpforge/controls';
+import {escapeHtml as E} from '@sharpforge/editor';
 export const DESIGN_TOOLS=['designer','designer-toolbox','designer-tree','designer-properties','designer-layout','designer-styles','designer-source'];
 const short=t=>t?.split('.').at(-1)??'';
 const show=v=>v===undefined||v===null?'':typeof v==='object'?v.valueType?.endsWith('Thickness')?['Left','Top','Right','Bottom'].map(k=>v[k]).join(', '):v.valueType?.endsWith('CornerRadius')?['TopLeft','TopRight','BottomRight','BottomLeft'].map(k=>v[k]).join(', '):v.Color?'#'+[v.Color.A,v.Color.R,v.Color.G,v.Color.B].map(n=>n.toString(16).padStart(2,'0')).join(''):JSON.stringify(v):String(v);
 const trackText=t=>t.GridUnitType===0?'Auto':t.GridUnitType===2?(t.Value===1?'':t.Value)+'*':String(t.Value);
 export class DesignerTools {
  constructor(services){Object.assign(this,services);this.document=new DesignDocument();this.zoom=.8;this.mode='pixel';this.snap=8;this.preview=false;this.live=null;this.initialized=false;this.status='Design document · no application code runs until Build & Run';this.styleKey='Accent';this.resourceKind='style';this.templatePart=null;this.search='';this.propertySearch='';this.modelSubscription=this.document.subscribe(e=>this.update(e));this.menu=new ContextMenu({onError:e=>this.error(e)});this.sourceSync=new DesignerSourceSync(this);this.chrome=new DesignerChrome(this);}
- error(e){this.status=e.message??String(e);this.toast(this.status,'error');this.statusElement&&(this.statusElement.textContent=this.status);}
- async safe(action){try{return await action();}catch(e){this.error(e);return null;}}
+ error(e){return reportDesignerError(this,e);}
+ async safe(action){return runDesignerAction(this,action);}
  panel(id){return this.docking.content.get(id);}
  renderTool(id){if(!DESIGN_TOOLS.includes(id))return false;this.ensure();if(id==='designer-source')this.renderSource();else if(id==='designer-properties')this.renderProperties();else if(id==='designer-layout')this.renderLayout();else if(id==='designer-styles')this.renderResources();requestAnimationFrame(()=>this.drawAdorners());return true;}
  replace(value,{live=null,path='View.sfdesign.json'}={}){if(this.sourceSync.session&&!this.sourceSync.loading)this.sourceSync.disconnect();const next=new DesignDocument(value);this.modelSubscription?.();this.document=next;this.modelSubscription=next.subscribe(e=>this.update(e));this.live=live;this.path=path;this.status=live?'Live application attached · edits are staged until Apply to live':'Design document opened';this.update({kind:'load'});}
