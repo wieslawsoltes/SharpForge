@@ -117,6 +117,8 @@ export function encodeTypeSignature(type, tokenOf) {
   }
   if (type instanceof ArrayTypeSymbol) return encodeArraySignature(type, tokenOf);
   if (type instanceof PointerTypeSymbol) return [ElementType.Ptr, ...encodeTypeSignature(type.pointedAtType, tokenOf)];
+  // `dynamic` is `object` in metadata; a `[Dynamic]` attribute on the declaration says which objects are dynamic.
+  if (type.typeKind === TypeKind.Dynamic) return [ElementType.Object];
   if (!(type instanceof NamedTypeSymbol)) throw new TypeError(`Cannot encode '${type.toDisplayString()}' in a signature`);
   // An anonymous type is written as the construction of the generic class that declares it.
   if (type.isAnonymousType) return encodeTypeSignature(type.metadataForm(), tokenOf);

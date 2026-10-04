@@ -1,0 +1,63 @@
+import { cpus, platform, arch } from 'node:os';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+const [baseline, root, revisionsPath] = process.argv.slice(2);
+const beforeSymbols = await import(pathToFileURL(baseline + '/packages/symbols/src/index.js'));
+const afterSymbols = await import(pathToFileURL(root + '/packages/symbols/src/index.js'));
+const beforeCil = await import(pathToFileURL(baseline + '/packages/cil/src/index.js'));
+const afterCil = await import(pathToFileURL(root + '/packages/cil/src/index.js'));
+const directory = root + '/tests/fixtures/portable-pdb-local-constants';
+const assembly = readFileSync(directory + '/LocalConstants.dll');
+const pdb = readFileSync(directory + '/LocalConstants.pdb');
+const revisions = JSON.parse(readFileSync(revisionsPath, 'utf8'));
+const observations = {}, loaders = { before: beforeSymbols.loadSymbols, after: afterSymbols.loadSymbols };
+const readers = { before: beforeCil.readPE(assembly), after: afterCil.readPE(assembly) };
+const tokens = Array.from({ length: readers.after.metadata.counts[6] }, (_, index) => 0x06000001 + index)
+  .filter(token => readers.after.metadata.row(token)[0] !== 0);
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+for (const label of ['before', 'after']) {
+  const symbols = loaders[label](assembly, pdb);
+  const enumeration = symbols.constants.find(constant => constant.name === 'Enumeration');
+  if (!symbols.bound || enumeration?.value !== -1234 || enumeration?.type !== 'short') throw Error('Load control mismatch');
+  observations[label] = { constants: symbols.constants.length, enumValue: enumeration.value, enumType: enumeration.type,
+    bodiesSha256: hash(JSON.stringify(tokens.map(token => readers[label].methodBody(token)))) };
+}
+if (JSON.stringify(observations.before) !== JSON.stringify(observations.after)) throw Error('Control results differ');
+const controls = {
+  load: { iterations: 100, warmups: 30, actions: { before: () => loaders.before(assembly, pdb).bound, after: () => loaders.after(assembly, pdb).bound } },
+  methodBodies: { iterations: 1000, warmups: 1000, actions: Object.fromEntries(Object.entries(readers).map(([label, pe]) => [label, () => {
+    let length = 0;
+    for (const token of tokens) length += pe.methodBody(token).code.length;
+    return length;
+  }])) },
+};
+const chronologicalSamples = [], summaries = {};
+const startedAt = new Date().toISOString(), start = performance.now();
+for (const [control, { iterations, warmups, actions }] of Object.entries(controls)) {
+  for (let warmup = 0; warmup < warmups; warmup++) { actions.before(); actions.after(); }
+  for (let pair = 0; pair < 20; pair++) {
+    for (const label of pair % 2 === 0 ? ['before', 'after'] : ['after', 'before']) {
+      globalThis.gc?.();
+      let observed;
+      const sampleStart = performance.now();
+      for (let iteration = 0; iteration < iterations; iteration++) observed = actions[label]();
+      const elapsedMs = performance.now() - sampleStart;
+      if (!observed) throw Error('Missing benchmark result');
+      chronologicalSamples.push({ control, pair, label, startOffsetMs: sampleStart - start, elapsedMs, perOperationMs: elapsedMs / iterations });
+    }
+  }
+  summaries[control] = {};
+  for (const label of ['before', 'after']) {
+    const values = chronologicalSamples.filter(sample => sample.control === control && sample.label === label).map(sample => sample.perOperationMs).sort((a, b) => a - b);
+    summaries[control][label] = { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+  }
+}
+console.log(JSON.stringify({ revisions, node: process.version, host: `${platform()} ${arch()} ${cpus()[0].model}`,
+  startedAt, protocol: { pairsPerControl: 20, loadWarmups: 30, loadsPerSample: 100, bodyWarmups: 1000, bodyBatchesPerSample: 1000,
+    methodsPerBodyBatch: tokens.length, order: 'AB/BA alternating', gcBeforeEachSample: true,
+    median: 'mean of positions10and11', p95: 'nearest-rank position19',
+    dependencies: 'Baseline symbols and CIL sources archived at exact before revision with own workspace links; unchanged transitive archive/bytecode/framework packages resolve through current workspace.' },
+  fixtures: { assemblyBytes: assembly.length, assemblySha256: hash(assembly), pdbBytes: pdb.length, pdbSha256: hash(pdb), harnessSha256: hash(readFileSync(new URL(import.meta.url))) },
+  observations, summaries, chronologicalSamples,
+}, null, 2));
