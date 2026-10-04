@@ -2,7 +2,8 @@ import { decodeSignature, readMethodHeader } from '@sharpforge/cil';
 import { fail } from './contracts.js';
 
 export function localSlotLimits(options = {}) {
-  const limits = {};
+  const limits = {},
+    signal = options.signal;
   for (const [name, maximum] of Object.entries({ maxLocalSlotMethods: 65536, maxLocalSlots: 100000 })) {
     const value = options[name] ?? maximum;
     if (!Number.isInteger(value) || value < 0 || value > maximum) fail('Invalid local slot limit');
@@ -11,7 +12,7 @@ export function localSlotLimits(options = {}) {
   return {
     ...limits,
     check() {
-      if (options.signal?.aborted) fail('Local slot inspection cancelled');
+      if (signal?.aborted) fail('Local slot inspection cancelled');
     },
   };
 }
