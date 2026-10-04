@@ -13,6 +13,15 @@ All eight debug tables are parsed; unknown CDI retains raw bytes. PE CodeView/em
 
 Implementation is separated into sequence point codecs, metadata reader and builder, PDB writer, PE debug directory, identity binding and source binding modules. The package entry point remains the public contract; consumers do not import these internal modules directly.
 
+`readPortablePdbDelta(bytes, { typeSystemRowCounts })` reads minimal Roslyn/SRM
+PDB deltas, preserving original metadata and projecting method tokens through
+`EncMap`. `PortablePdbGenerations` indexes a baseline plus successive deltas,
+retains old maps, and resolves unchanged methods from earlier generations.
+The caller supplies authoritative aggregate CLI row counts and a baseline /
+previous-PDB identity envelope. See the [generation API and native
+fixture](interop/PdbGenerations/README.md) for handle semantics, limits,
+errors and a runnable example. The baseline reader continues to reject deltas.
+
 `emitPortablePdb(assembly, debug)` accepts `debug.importScopes` in row order;
 `parent` is zero or an earlier one-based scope id. Each scope has `definitions`
 using Portable PDB import kinds 1–9 (`alias`, `namespace`, AssemblyRef row id
@@ -287,6 +296,7 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
 | Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
+| PDB generations | Explicit minimal-delta reader; bounded aggregate history; caller-supplied baseline/previous-generation identity |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
 

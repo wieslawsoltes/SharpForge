@@ -71,7 +71,9 @@ records exact artifact hashes and the following separate results:
 | Separate public/raw inspector-method view tests | 4 passed, 0 failed, 0 skipped |
 | Chromium browser API | Startup failed before any product checks; no browser pass |
 | Firefox / WebKit | Not run |
-| Performance and final publication gate | Pending the coordinating serial slot |
+| Cache-correction Node run at `6f775dca` | 38 passed, 0 failed, 0 cancelled, 0 skipped |
+| Original and follow-up performance cohorts | Recorded; follow-up Diamond +5.579% exceeds the 5% budget |
+| Final publication gate | Explicit PR justification/sign-off still required; no approval claimed |
 
 Thirty native observations agree with determinate product decisions. The remaining
 `NominalReturnUnknown` case stays unknown in this profile despite the recorded
@@ -81,6 +83,15 @@ transfer corpus.
 
 Chromium first failed to spawn with `EACCES`; a subsequent launch aborted when its
 ProcessSingleton socket operation was denied by the host. Both raw failures are
-retained and contain zero product checks. No browser qualification or performance
-improvement is claimed. The [fixture README](../../tests/fixtures/verifier-literals/README.md)
-provides the retained logs, reproducible replay commands and remaining work.
+retained and contain zero product checks. No browser qualification is claimed.
+
+The [performance record](../../tests/fixtures/verifier-literals/qualification/performance/README.md)
+retains the original twelve-sample measurements and the predefined follow-up with
+120 samples, 20 warmups and 5,000 invocations per sample. The follow-up compared
+`8b101c0c` with the cache correction `6f775dca`; median changes were Add -5.223%,
+Diamond +5.579%, MixedJoin +1.496% and existing authority construction +1.312%.
+Diamond exceeds the 5% regression budget and requires explicit PR justification
+and sign-off. Neither shared-host noise nor the concrete cache-probe correction
+is asserted to explain the measured difference, and no exception approval or
+performance gate pass is claimed. The [fixture README](../../tests/fixtures/verifier-literals/README.md)
+provides the retained logs, command provenance and remaining work.

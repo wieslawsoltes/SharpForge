@@ -52,7 +52,8 @@ export class FieldResolutionCache {
       if (!declaring) throw new ManagedFault('InvalidProgramException', 'Field declaring type does not match the receiver');
       const slot = declaring.declaredFields.find(field => field.token === resolved.resolvedToken);
       if (!slot) throw new ManagedFault('InvalidProgramException', 'Field is not part of its declaring type');
-      resolved.signature = {...resolved.signature, type: slot.storageType ?? slot.type.name};
+      // A closed MemberRef already carries its substituted signature; only an open owner needs receiver storage types.
+      if (resolved.ownerInstance === null) resolved.signature = {...resolved.signature, type: slot.storageType ?? slot.type.name};
       resolved.ownerInstance = declaring.typeArguments.length ? declaring.name : null;
       resolved.genericArguments = declaring.typeArguments.map(type => type.name);
       index = this.typeSystem.layout(receiverTable).index.get(resolved.resolvedToken);

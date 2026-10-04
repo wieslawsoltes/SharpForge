@@ -31,7 +31,9 @@ not an immutable runner-image claim.
 | [Inspector-method view log](qualification/inspector-method-view.tap) | Separate run: 4 passed, 0 failed, 0 cancelled, 0 skipped |
 | [Chromium launch attempts](qualification/summary.json) | Both failed during startup; zero product checks |
 | Firefox / WebKit | Not run |
-| Performance measurements and final publication gate | Pending the coordinating serial slot |
+| [Cache-correction Node log](qualification/cache-correction-node.tap) | At `6f775dca`: 38 passed, 0 failed, 0 cancelled, 0 skipped |
+| [Both performance cohorts](qualification/performance/README.md) | Follow-up Diamond median +5.579%; exceeds 5% and requires explicit PR justification/sign-off |
+| Final publication gate | Pending the coordinating assessment; no exception approval claimed |
 
 The native capture records exact pinned tool and reference hashes, assembly/source
 hashes, raw output and exit status. Of its 31 observations, 30 agree with a
@@ -45,10 +47,11 @@ checks, plus existing numeric, field, indirect-memory and IL-document controls.
 and original location of every retained log. Node and capture logs were copied
 byte-for-byte; browser output is preserved as exact UTF-8 text in JSON envelopes
 with the raw byte hashes. The 31-observation `native.json` was retained unchanged.
-The Node logs have result
-records but no command headers, so the commands below are reproducible replays,
-not reconstructed original invocation records. No test or capture was rerun while
-preparing this documentation/evidence commit.
+The original 57-test and 4-test Node logs have result records but no command
+headers, so their commands below are reproducible replays. The later 38-test
+cache-correction command is known from the coordinating execution record and is
+recorded in the performance evidence. No test, capture or benchmark was rerun
+while preparing this documentation/evidence commit.
 
 ## Reproduce native capture and Node replay
 
@@ -86,28 +89,24 @@ run after Chromium aborted the harness. All three engines still need successful
 qualification. Source-VM, direct-CIL and Rust/native/Wasm execution-engine
 qualification is not claimed by this non-executing typed API.
 
-## Performance measurements remain pending
+## Recorded performance and remaining gate
 
-The benchmark schedule uses unchanged `benchmark-numeric-verifier.mjs` and
-`benchmark-field-verifier.mjs` in both complete baseline and candidate worktrees
-for the existing controls. New literal cost uses this candidate-only command:
+[Performance evidence](qualification/performance/README.md) retains both complete
+cohorts, candidate-only literal costs, exact driver source, fixture/capture hashes,
+raw outputs, chronological samples, commands and source revisions. The original
+12-sample comparison used baseline `8b101c0c` and candidate `eec64a8b`. After the
+concrete cache-probe correction `6f775dca`, the predefined 120-sample cohort used
+the same baseline, 20 warmups and 5,000 invocations per sample. It ran once in its
+specified alternating order. Both cohorts used a shared host; raw heap deltas are
+not allocation counts.
 
-```sh
-node scripts/limited.js node packages/cil/tools/benchmark-literal-verifier.mjs /tmp/literal-performance.json
-```
+The follow-up median changes are Add -5.223%, Diamond +5.579%, MixedJoin +1.496%
+and existing authority construction +1.312%. **Diamond exceeds the 5% existing
+benchmark budget and requires explicit PR justification and sign-off.** No human
+approval or accepted exception is recorded. The cache correction and measurement
+parameters changed together, so a causal speedup is not claimed. The original
+slower results remain available beside the follow-up; neither was overwritten.
 
-All drivers retain twelve chronological samples and heap deltas per workload,
-with the first three designated warmups and median/p95 from the remaining nine.
-The new driver measures short and long literals, repeated-token loads and a
-mixed String-field store. These are added-capability costs; an old `unknown`
-result is never used as a faster baseline. Heap deltas are not allocation counts
-or peak memory. Record runtime/machine, source revisions and shared-host status,
-retain every sample and report any measured >5% existing-control regression.
-
-Baseline regression should run the `StringReturn` fixture against the
-pre-literal commit's own CIL source and require `verified`; its old unknown result
-is the expected failure. Do not overwrite candidate files or substitute its
-package imports into the baseline. No baseline or performance result has been
-recorded in the retained literal evidence. The coordinating agent owns the pending
-measurements and final publication gate. Full object-model and constructor/EH
-work remains open under #2403/#2405/#52; this literal batch does not close them.
+The coordinating agent owns the pending publication assessment. Full object-model
+and constructor/EH work remains open under #2403/#2405/#52; this literal batch
+does not close them.

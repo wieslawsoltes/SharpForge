@@ -14,11 +14,17 @@ import { metadataName } from './metadata-facts.js';
 import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
 import { validatePdbReferences, validateLocalSignatureRows } from './pdb-validate.js';
 import { SymbolParseBudget, defaultParseBudgets } from './budgets.js';
+import { projectPdbDelta } from './pdb-delta-format.js';
 
 /** Read standalone debug metadata; malformed CLI binary references surface as SymbolError. */
 export function readPortablePdb(input, options) {
+  return readPortablePdbCore(input, options);
+}
+
+/** Internal shared parser; only the explicit delta entry point supplies aggregate type-system metadata. */
+export function readPortablePdbCore(input, options, delta) {
   try {
-    return parsePortablePdb(input, options);
+    return parsePortablePdb(input, options, delta);
   } catch (error) {
     if (error instanceof CilError) fail(`Invalid Portable PDB: ${error.message}`);
     throw error;
@@ -37,16 +43,21 @@ function parsePortablePdb(
     budgets,
     signal,
   } = {},
+  delta,
 ) {
   const budget = new SymbolParseBudget(budgets, signal);
   if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) fail('Invalid Portable PDB byte limit');
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) fail('Invalid or oversized Portable PDB');
   rejectUnsupportedSymbolFormat(bytes);
-  const md = readMetadata(bytes),
-    pdb = md.streams.get('#Pdb');
+  const rawMetadata = readMetadata(bytes);
+  const pdb = rawMetadata.streams.get('#Pdb');
   if (!pdb || pdb.length < 32) fail('Not a standalone Portable PDB');
-  if (Object.keys(md.rows).some((t) => +t < 48 || +t > 55)) fail('Portable PDB contains non-debug tables');
+  if (!delta && (rawMetadata.minimalDelta || Object.keys(rawMetadata.rows).some((t) => +t < 48 || +t > 55)))
+    fail('Portable PDB contains non-debug tables');
+  if (delta) budget.rows(rawMetadata);
+  const projection = delta ? projectPdbDelta(rawMetadata, delta.typeSystemRowCounts) : null;
+  const md = projection?.metadata ?? rawMetadata;
   budget.rows(md);
   const pr = new Reader(pdb),
     id = new Uint8Array(pr.take(20)),
@@ -77,12 +88,12 @@ function parsePortablePdb(
   });
   if (new Set(documents.map((d) => d.name)).size !== documents.length) fail('Duplicate document names');
   const methods = (md.rows[49] ?? []).map((row, i) => ({
-    token: token(6, i + 1),
+    token: projection ? projection.methodTokens[i] : token(6, i + 1),
     document: row[0],
     ...readSequencePoints(md.blob(row[1]), row[0], { documents: documents.length }),
   }));
   validateLocalSignatureRows(methods, md.externalCounts);
-  if (methods.length && methods.length !== (md.externalCounts[6] ?? 0))
+  if (!delta && methods.length && methods.length !== (md.externalCounts[6] ?? 0))
     fail('PDB method row count does not match MethodDef count');
   if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > defaultParseBudgets.scopes)
     fail('Scope tree entry limit exceeded');
@@ -179,7 +190,8 @@ function parsePortablePdb(
     idHex: hex(id),
     entryPoint,
     bytes: new Uint8Array(bytes),
-    metadata: md,
+    metadata: rawMetadata,
+    ...(delta ? { isDelta: true, typeSystemRowCounts: { ...md.externalCounts } } : {}),
     documents,
     methods,
     variables,

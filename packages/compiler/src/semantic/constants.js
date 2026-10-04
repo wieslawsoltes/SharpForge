@@ -108,6 +108,9 @@ export const ConstantBinding = Base =>
       const r = this.parameterDefault(p, binder);
       if (!r.errors) {
         if (r.constant) p.explicitDefaultValue = r.constant;
+        else if (r.bound?.conversion?.kind === 'ImplicitNullable' && r.bound.operand?.constantValue) {
+          p.explicitDefaultValue = r.bound.operand.constantValue;
+        }
         else if (
           r.bound &&
           !(

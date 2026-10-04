@@ -7,6 +7,7 @@ import {invalidateExecutionCode} from './execution/code-version.js';
 import {restoreFloatFrames} from './execution/typed-float-frame.js';
 import {isTypedFloatArray} from './execution/typed-stack.js';
 import {captureWasmDeopt, restoreWasmDeopt} from './execution/wasm/deopt.js';
+import {requireSnapshotBoundary} from './execution/callback-frames.js';
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -115,6 +116,7 @@ export function assertSnapshotFields(vm, engine) {
 
 /** In-memory snapshots contain no transferable host/native resources. */
 export function snapshotVM(vm, engine) {
+  requireSnapshotBoundary(vm);
   const selected = assertSnapshotFields(vm, engine), memo = new Map();
   const snapshot = {
     schemaVersion: selected.schemaVersion, engine, owner: vm.snapshotOwner,
@@ -129,6 +131,7 @@ export function snapshotVM(vm, engine) {
 }
 
 export function restoreVM(vm, snapshot, engine) {
+  requireSnapshotBoundary(vm);
   const selected = assertSnapshotFields(vm, engine);
   if (snapshot?.owner !== vm.snapshotOwner) throw new TypeError(`Snapshot belongs to another ${engine === 'cil' ? 'CIL' : 'source'} VM`);
   if (snapshot.schemaVersion !== selected.schemaVersion || snapshot.engine !== engine)

@@ -86,6 +86,13 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/cil/tools/benchmark-decompiler-cfg.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "991308fe80164c4fd7efd012a4dded700a8d73c47044d7678936a3b6249bfe53",
+      "reason": "Reviewed developer-only CFG benchmark imports fixed CIL package entry points from operator-selected trusted local baseline/current checkouts. Before import it verifies exact baseline commit, candidate source identity and local workspace aliases; paths never come from CIL, metadata or product input. No generated JavaScript or product dynamic-code surface is added."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,

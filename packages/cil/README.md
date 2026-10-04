@@ -1,6 +1,6 @@
 # @sharpforge/cil
 
-Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Only sibling dependency: `@sharpforge/bytecode`.
+Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js
 import { emitAssembly, loadAssembly, formatAssembly } from '@sharpforge/cil';
@@ -18,6 +18,10 @@ The DLL contains real metadata/signatures, CIL method bodies and exception table
 The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It checks canonical re-emission and rejects arbitrary external/noncanonical DLLs; it is not a general CLR loader or audited sandbox. PE32 emission; PE32/PE32+ header reading; default net8 and alternative mscorlib4 reference identities. No full C# semantics, Portable PDBs, strong names, native/JIT code or full .NET BCL.
 
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
+
+The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
+graphs and the conservative source reconstruction pipeline, including explicit
+IL fallbacks and exception-boundary metadata.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
 
@@ -39,6 +43,55 @@ classification. `readPEDebugDirectory(parsedPE, options)` returns owned raw debu
 entries; the symbols package reuses it for existing semantic PDB decoding.
 See [PE-INSPECTION.md](PE-INSPECTION.md) for exact fields, limits, ownership,
 cancellation, and reference-evidence boundaries.
+## Registered external readonly fields
+
+`resolveExecutionField` admits a closed field profile from
+`frameworkType(owner).fields`. Admission requires a genuine field MemberRef with
+an external top-level TypeRef owner, its exact registered owner/name/signature, and an
+approved assembly scope. Field definitions and locally scoped references continue
+to use ordinary local storage, including a local type with the same name.
+Owner namespace and metadata name, and the field's primitive signature AST,
+are checked independently of the inspector's display strings.
+
+The approved identities are `System.Runtime` with public key token
+`b03f5f7f11d50a3a` and `System.Private.CoreLib` with token
+`7cec85d7bea7798e`, both with neutral culture. Each descriptor must include
+`System.Runtime` for source emission and may additionally opt into CoreLib for
+native CIL; registration rejects CoreLib-only profiles. Scope names, tokens,
+and culture are matched exactly;
+assembly versions are preserved but deliberately not compared, allowing facade
+version compatibility. This policy does not admit arbitrary `System`, `mscorlib`,
+unsigned, or similarly named assemblies. These are closed execution profiles,
+not general external assembly loading or field providers.
+
+The returned field retains its original token, owner, and signature, adds
+`isStatic: true`/`isInitOnly: true`, and carries an immutable `externalField`
+descriptor. `executionFieldAccessError(field, opcode)` returns a policy error
+string or `null`; the admission verifier and runtime storage share this helper.
+`ldsfld` loads the declared value. Instance access and writes are rejected.
+`ldsflda` requires the descriptor's `addressable` opt-in, and indirect writes
+remain rejected even when readable addresses are permitted. Existing Decimal
+loads and readable managed addresses retain their prior behavior.
+
+`compileToAssembly` binds these members as actual readonly fields and emits real
+`ldsfld` instructions with field MemberRefs. The separate source-image route,
+`compile`/`compileToIL`, substitutes fixed profile values after field binding;
+its generated CIL contains scalar load instructions. Neither route marks the
+symbol as a C# constant: const initializers and readonly writes retain language
+diagnostics. Direct-CIL storage decodes each JSON scalar once per static slot,
+and the initialized value participates in existing snapshot/restore behavior.
+
+The focused regression files are `tests/a07-readonly-fields.test.js` and
+`tests/a07-readonly-field-cil.test.js`. The baseline-compatible
+`scripts/benchmarks/a07-readonly-field-loads.mjs` harness measures ordinary
+static loads in both revisions and registered loads in the candidate; it reports
+whole-loop timing, including VM execution overhead, rather than isolated opcode
+or allocation cost. Copy the identical harness into `scripts/benchmarks/` in
+each worktree and run each copy from its own worktree; fixed static imports use
+that worktree's public packages. Pass `--mode baseline` or `--mode candidate`
+and `--output /absolute/result.json` through `node scripts/limited.js node
+scripts/benchmarks/a07-readonly-field-loads.mjs`. There is no `--workspace` option;
+the report derives its workspace path from the script's location.
 
 ## Signature codecs
 
@@ -142,6 +195,9 @@ Hashing reads complete 64-byte blocks directly from the input. Padding uses at m
 with one reusable 256-byte schedule and 32-byte state, so scratch storage is independent of input size.
 
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
+
+Paged named metadata rows, token references, physical file offsets and standard
+heap records are available through [MetadataTableInspector](./METADATA-TABLES.md).
 
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
@@ -410,9 +466,8 @@ Supported relations are `uses` (MethodDef's non-string token operands), `used-by
 (reverse occurrences), `instantiated-by` (`newobj`'s declared type), and
 `assigned-by` (direct `stfld`/`stsfld` writes). `newarr` uses its element type but
 does not construct an element instance. Indirect writes, virtual dispatch targets,
-reflection and dynamic execution are not inferred. `overridden-by` and
-`implemented-by` remain unsupported pending a genuine host-provided canonical
-method-slot contract; issue #2573 remains open for those capabilities.
+reflection and dynamic execution are not inferred. A host can supply the canonical
+declaration snapshot described below to enable `overridden-by` and `implemented-by`.
 
 Construction options independently lower hard maxima: `maxMethods:16384`,
 `maxCodeBytes:4194304` (all body occurrences, including shared RVAs),
@@ -429,3 +484,40 @@ covers CIL body scanning, not resolution of every external reference.
 [Focused fixtures and pending qualification](../../tests/fixtures/usage-relations/README.md)
 cover the initial four relations; broad execution/cross-platform coverage is not
 implied by metadata inspection.
+
+### Canonical declaration relations
+
+The optional `methodRelations` construction option accepts an owned, versioned host
+snapshot. The CIL package consumes established method relationships; CLR loading and
+method-slot resolution stay in the higher layer. `createAssemblyMethodRelations`
+from `@sharpforge/clr` is the canonical provider. Without a snapshot the two declaration
+queries remain unsupported; instruction analysis still needs no CLR dependency.
+
+The snapshot has `format:'sharpforge.method-relations'`, `version:1`, `moduleVersionId`,
+`methodCount`, `typeCount`, `entries` and `diagnostics`. Each entry has `relation`
+(`overridden-by` or `implemented-by`), local MethodDef `sourceToken` and `targetToken`,
+local TypeDef `implementingTypeToken`, and `implementationKind` (`override`, `explicit`,
+`implicit` or `inherited`). The source is the overriding/implementing method; the target
+is the declaration being queried. Each interface implementation occurrence includes
+the type in whose map it appears, including inherited implementations. No IL offset
+or instruction is invented for these entries. Returned records add the same stable
+source/target URIs and known status as instruction records.
+
+`maxDeclarationRelations:100000` and `maxDeclarationDiagnostics:16384` are lowerable
+hard caps, checked before copying provider records. Module MVID, metadata extents,
+record kinds, local tokens and duplicate relationship identities are validated.
+The provider remains responsible for canonical semantics; a supplied snapshot is
+data from the host, not evidence obtained by inferring a runtime dispatch target.
+Only scalar copied records survive construction. `storage.declarationRelations` and
+`storage.declarationDiagnostics` are logical counts added when a provider is present.
+
+Declaration diagnostics contain `relation`, a local type/method `token`, stable `code`
+and bounded `reason`. `complete` is evaluated independently for each declaration
+relation. Their diagnostics do not change the instruction scan's completeness, and
+unsupported native method bodies do not invalidate established metadata relationships.
+
+The [declaration fixture and evidence](../../tests/fixtures/declaration-relations/README.md)
+retain 33 passing focused Node tests and exact comparison with 19 CoreCLR 10.0.5
+relationships, including corrected interface reimplementation precedence. The browser
+harness is prepared but was not launched successfully; browser and wider execution
+coverage remain pending. No benchmark or speedup is claimed for this batch.

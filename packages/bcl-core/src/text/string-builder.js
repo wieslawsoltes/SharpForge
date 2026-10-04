@@ -8,7 +8,9 @@ import {appendBuilderArray} from './string-builder-append-array.js';
 import {appendBuilderValue} from './string-builder-append-builder.js';
 import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
 import {builderEquals} from './string-builder-equality.js';
-import {replaceBuilderCharacters, insertBuilderCharacter, insertBuilderBoolean} from './string-builder-edit.js';
+import {
+  replaceBuilderCharacters, insertBuilderCharacter, insertBuilderBoolean, insertBuilderRepeatedString
+} from './string-builder-edit.js';
 import {removeBuilderRange} from './string-builder-remove.js';
 import {replaceBuilderStringRange} from './string-builder-replace-range.js';
 
@@ -217,6 +219,7 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
     }
     case 'Equals': return builderEquals(platform, reference, values[0]);
     case 'Insert':
+      if (descriptor.parameters.length === 3) return insertBuilderRepeatedString(platform, reference, scalars, insertText);
       if (descriptor.parameters[1] === 'char') return insertBuilderCharacter(platform, reference, scalars, insertText);
       if (descriptor.parameters[1] === 'bool') return insertBuilderBoolean(platform, reference, scalars, insertText);
       return insertText(platform, reference, scalars[0], scalars[1]);
