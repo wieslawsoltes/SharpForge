@@ -1,4 +1,4 @@
-import { createGroup, createSplit } from '../../../packages/docking/src/index.js';
+import { createGroup, createSplit } from '@sharpforge/docking';
 import { toolDefinitions } from '../tools/definitions.js';
 
 export function defaultDockLayout() {
