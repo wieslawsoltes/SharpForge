@@ -68,6 +68,8 @@ export class MSBuildClient {
     return this.request('/services/' + scope + '/' + operation, { method: 'POST', body: request, signal: options.signal });
   }
 
+  binlog(jobId, request = {}, options) { return this.service('binlog', 'query', { ...request, jobId }, options); }
+
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
