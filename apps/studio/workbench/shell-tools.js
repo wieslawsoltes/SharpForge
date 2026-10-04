@@ -76,12 +76,12 @@ export async function mountShellTool(shell, id, host) {
     }, {scope: 'workspace'})});
   const context = () => shell.context();
   const options = {
-    context, documents: shell.documents, request: shell.options.requestCompiler,
+    context, documents: shell.documents, request: shell.options.requestCompiler, applyEdits: shell.options.applyEdits,
     navigate: location => shell.navigate(location), dialogs: shell.dialogs, onError: error => shell.onError(error),
-    designer: shell.options.designer, tasks: shell.tasks, sessions: shell.services.sessions,
+    designer: shell.options.designer, tasks: shell.tasks, sessions: shell.services.sessions, executionCapture: shell.executionCapture,
     readDocument: shell.options.readDocument, newWindow: newId => shell.activateTool(newId),
     openNew: newId => shell.activateTool(newId), symbolIndex: shell.symbols,
-    assemblies: shell.options.assemblies, inspect: shell.options.inspectAssembly,
+    assemblies: shell.options.assemblies, inspect: shell.options.inspectAssembly, metadata: shell.metadata,
     search: shell.search, initial: shell.search.results.get(id), instanceId: id, scopeSelector: scope, replace: base === 'replace-files'
   };
   const models = {

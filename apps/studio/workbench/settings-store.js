@@ -177,15 +177,45 @@ export class SettingsStore extends WorkbenchEvents {
   }
 
   /** Validate and persist once before publishing one atomic change event. */
-  apply(values, {scope = 'user'} = {}) {
+  apply(values, {scope = 'user', clearWorkspaceOverrides = false} = {}) {
     if (!['user', 'workspace'].includes(scope)) throw new TypeError('Unknown settings scope');
+    if (typeof clearWorkspaceOverrides !== 'boolean') throw new TypeError('Invalid workspace override policy');
     const changes = validateSettings(values, {partial: true});
     const user = scope === 'user' ? validateSettings(mergeSettings(this.user, changes)) : this.user;
-    const workspace = scope === 'workspace' ? mergeSettings(this.workspace, changes) : this.workspace;
+    let workspace = scope === 'workspace' ? mergeSettings(this.workspace, changes) : this.workspace;
+    if (scope === 'user' && clearWorkspaceOverrides) {
+      workspace = clone(workspace);
+      for (const [category, values] of Object.entries(changes)) {
+        if (!workspace[category]) continue;
+        for (const key of Object.keys(values)) delete workspace[category][key];
+        if (!Object.keys(workspace[category]).length) delete workspace[category];
+      }
+    }
     this.persist(user, workspace);
     this.user = user;
     this.workspace = workspace;
     this.emit({type: 'changed', scope, settings: this.snapshot(), changes});
+    return this.snapshot();
+  }
+
+  /** Reset selected preferences in user/current-workspace scope; documents and other workspace overrides are untouched. */
+  reset(categories = Object.keys(settingsDefaults)) {
+    if (!Array.isArray(categories) || categories.some(category => !Object.hasOwn(settingsDefaults, category))) {
+      throw new TypeError('Reset requires known settings categories');
+    }
+    if (!categories.length) return this.snapshot();
+    const user = clone(this.user);
+    const workspace = clone(this.workspace);
+    const changes = {};
+    for (const category of new Set(categories)) {
+      user[category] = clone(settingsDefaults[category]);
+      changes[category] = user[category];
+      delete workspace[category];
+    }
+    this.persist(user, workspace);
+    this.user = user;
+    this.workspace = workspace;
+    this.emit({type: 'changed', scope: 'reset', settings: this.snapshot(), changes});
     return this.snapshot();
   }
 

@@ -6,6 +6,7 @@ import {compareOrdinalRange} from './string-compare.js';
 import {equalsWithComparison, registerStringEqualityExtensions} from './string-equality.js';
 import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
 import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
+import {containsWithComparison, indexOfWithComparison, registerStringSearchExtensions} from './string-search.js';
 
 const owner = 'System.String';
 
@@ -63,6 +64,7 @@ export function registerStringComparisonExtensions(registry) {
   member(owner, 'Compare', ['string', 'string', 'System.StringComparison'], 'int', {isStatic: true});
   registerStringAffixExtensions(registry);
   member(owner, 'Compare', ['string', 'int', 'string', 'int', 'int', 'System.StringComparison'], 'int', {isStatic: true});
+  registerStringSearchExtensions(registry);
 }
 
 function splitString(platform, receiver, values, scalars) {
@@ -119,8 +121,8 @@ function staticString(platform, descriptor, values, scalars) {
   }
 }
 
-function instanceString(platform, name, receiver, values, scalars) {
-  switch (name) {
+function instanceString(platform, descriptor, receiver, values, scalars) {
+  switch (descriptor.name) {
     case 'get_Length': return receiver.length;
     case 'ToString': return receiver;
     case 'Equals': return equalsWithComparison(platform, receiver, scalars[0], scalars[1]);
@@ -129,12 +131,16 @@ function instanceString(platform, name, receiver, values, scalars) {
       const length = values.length === 1 ? receiver.length - start : integer(platform, scalars[1], 0, receiver.length - start);
       return receiver.slice(start, start + length);
     }
-    case 'Contains': return receiver.includes(string(platform, values[0]));
+    case 'Contains': return scalars.length === 1 ? receiver.includes(string(platform, values[0]))
+      : containsWithComparison(platform, receiver, scalars[0], scalars[1]);
     case 'StartsWith': return scalars.length === 1 ? receiver.startsWith(string(platform, values[0]))
       : affixWithComparison(platform, receiver, scalars[0], scalars[1], false);
     case 'EndsWith': return scalars.length === 1 ? receiver.endsWith(string(platform, values[0]))
       : affixWithComparison(platform, receiver, scalars[0], scalars[1], true);
     case 'IndexOf':
+      if (descriptor.parameters[1] === 'System.StringComparison') {
+        return indexOfWithComparison(platform, receiver, scalars[0], scalars[1]);
+      }
       return receiver.indexOf(string(platform, values[0]), values.length === 2 ? integer(platform, scalars[1], 0, receiver.length) : 0);
     case 'LastIndexOf': return receiver.lastIndexOf(string(platform, values[0]));
     case 'Trim': return trimWhiteSpace(receiver);
@@ -160,7 +166,7 @@ function instanceString(platform, name, receiver, values, scalars) {
       const start = integer(platform, scalars[0], 0, receiver.length);
       return receiver.slice(0, start) + string(platform, values[1]) + receiver.slice(start);
     }
-    default: fail(platform, 'MissingMethodException', name);
+    default: fail(platform, 'MissingMethodException', descriptor.name);
   }
 }
 
@@ -174,7 +180,7 @@ function invokeStringMember(platform, descriptor, args, contractBounded) {
     if (reference === null) fail(platform, 'NullReferenceException', 'String receiver is null');
     const receiver = string(platform, reference);
     if (descriptor.name === 'Split') return {handled: true, value: splitString(platform, receiver, values, scalars)};
-    output = instanceString(platform, descriptor.name, receiver, values, scalars);
+    output = instanceString(platform, descriptor, receiver, values, scalars);
   }
   const value = platform.managed(typeof output === 'string' && contractBounded ? bounded(platform, output) : output, descriptor.result);
   return {handled: true, value};

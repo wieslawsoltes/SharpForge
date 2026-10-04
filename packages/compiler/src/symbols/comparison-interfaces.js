@@ -57,8 +57,11 @@ function declareInterface(registry, name, typeParameters) {
   return { type, isNew: true };
 }
 
+/** True when the type already declares the instance method `name(parameterType)` - with exactly that one parameter. */
 function hasMethod(type, name, parameterType) {
-  return type.getMembers(name).some(member => member.kind === 'Method' && !member.isStatic && member.parameters[0]?.type.equals(parameterType));
+  return type
+    .getMembers(name)
+    .some(member => member.kind === 'Method' && !member.isStatic && member.parameters.length === 1 && member.parameters[0].type.equals(parameterType));
 }
 
 /**
