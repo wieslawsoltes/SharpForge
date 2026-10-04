@@ -1,7 +1,7 @@
 import {rejectValueInstance} from './value-types.js';
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
-import {invokeDecimal} from './decimal-intrinsics.js';
+import {constructIntrinsicValue} from './value-intrinsics.js';
 import {invokeIntrinsic} from './intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
@@ -59,8 +59,9 @@ export function invoke(vm,instruction) {
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
       return;
     }
-    if(instruction.name==='newobj'&&intrinsic?.implementation==='decimal') {
-      caller.stack.push(invokeDecimal(vm,descriptor,args).value);return;
+    if(instruction.name==='newobj') {
+      const value=constructIntrinsicValue(vm,intrinsic,descriptor,args);
+      if(value.handled){caller.stack.push(value.value);return;}
     }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}

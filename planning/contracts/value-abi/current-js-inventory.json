@@ -17,7 +17,7 @@
     "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
     "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
     "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
-    "packages/runtime/src/execution/storage.js": "083780a6cbb3243541ef833c9508d40b480276606375235df35c24822a257db1",
+    "packages/runtime/src/execution/storage.js": "f38aeb44cd753cb77f8a3e9e15519ae94436dc4bcb7d24ea96e180526c2d8fe3",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
     "packages/bytecode/src/index.js": "3d06bc8813cdd608360f8744c6bd8b7006845af5ac5918ca730b182be04ab058",
@@ -68,10 +68,14 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields}"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{nullableType:MethodTable,hasValue:boolean,value}",
+      "meaning": "immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe"
+    },
     {
       "shape": "{valueType:MethodTable,fields:frozen array}",
       "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
