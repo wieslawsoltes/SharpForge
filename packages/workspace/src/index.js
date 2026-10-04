@@ -5,3 +5,7 @@ export * from './transaction-state.js';
 export * from './transactions.js';
 export * from './file-history.js';
 export {workspaceRecordSource, cloneWorkspaceRecordSnapshot} from './transaction-records.js';
+export * from './watch.js';
+export * from './watch-coalesce.js';
+export * from './coordination/locks.js';
+export * from './recovery/handles.js';
