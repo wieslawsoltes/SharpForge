@@ -1,8 +1,11 @@
 export {Binding, BindingBase, BindingMode, RelativeSource, RelativeSourceMode, UpdateSourceTrigger} from './binding.js';
-export {PropertyPath, parsePropertyPath, BindingPathError} from './property-path.js';
 export {BindingExpression} from './binding-expression.js';
 export {BindingOperations, createTemplateBinding} from './binding-operations.js';
+export {PropertyPath, parsePropertyPath, BindingPathError} from './property-path.js';
 export {BindingDiagnosticCode, bindingDiagnostic} from './diagnostics.js';
 export {readPathStep, writePathStep, observePathStep} from './accessors.js';
-export {convertBindingValue, materializePropertyLiteral} from './type-converters.js';
 export * from './compiled/index.js';
+export {createBindingServices} from './context-services.js';
+export {getBindingOperations, bindingsFor} from './adapter-state.js';
+export {initializeBindingContext} from './context-initializer.js';
+export {convertBindingValue, materializePropertyLiteral} from './type-converters.js';

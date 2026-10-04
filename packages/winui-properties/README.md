@@ -41,3 +41,7 @@ Observable and compiled bindings share the same property/observable foundation. 
 ## Deferred XAML binding
 
 x:Load reserves names without creating controls. FindName and compiled load bindings realize fresh elements, preserve placement and own per-activation cleanup. Factory, attachment and afterBuild share the host construction root scope; later activation does not depend on the original writer still running. Rewind restores identities without replaying factories, user callbacks or converters.
+
+## Binding context services
+
+initializeBindingContext installs setter bindings, XAML bindings, compiled owner groups, phase scheduling and deferred-element ownership on an injected application context. Binding services resolve names and member access through host services and retain subscription ownership for disposal and rewind. No process-global model registry or implicit application startup is introduced.
