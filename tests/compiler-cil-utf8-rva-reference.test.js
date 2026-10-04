@@ -5,6 +5,7 @@ import { basename } from 'node:path';
 import { compileToAssembly, compileToReferenceAssembly, createReferenceSet } from '@sharpforge/compiler';
 import { loadReferencePack } from '@sharpforge/compiler/node';
 import { literalInstructions, referenceWithoutSpanConstructor, utf8DataRows } from './fixtures/utf8-rva/metadata.mjs';
+import { requiredConstructorProbes } from './fixtures/utf8-rva/contracts.mjs';
 
 const pack = loadReferencePack();
 const options = { name: 'Utf8Literals', outputKind: 'library', langVersion: '11' };
@@ -42,7 +43,7 @@ test('A02-T77 a missing optional pointer constructor uses the real array/start/l
 
 test('A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists', settings, () => {
   const references = projectedReferences('array');
-  const probe = 'using System; public class C { public static ReadOnlySpan<byte> Text() => "x"u8; }';
+  const probe = requiredConstructorProbes.single;
   const result = compileToAssembly({ uri: 'Missing.cs', text: probe }, { ...options, references });
   const expected = JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/missing-constructor.json', import.meta.url), 'utf8'));
   assert.equal(result.assembly, null);
@@ -51,4 +52,14 @@ test('A02-T77 a missing required array constructor reports Roslyn CS0656 even wh
   const reference = compileToReferenceAssembly(probe, { ...options, references });
   assert.deepEqual(errors(reference), []);
   assert.deepEqual(utf8DataRows(reference.assembly), []);
+});
+
+test('A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count', settings, () => {
+  const references = projectedReferences('array');
+  const probe = requiredConstructorProbes.repeated;
+  const result = compileToAssembly({ uri: 'Repeated.cs', text: probe }, { ...options, references });
+  const expected = JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/repeated-missing-constructor.json', import.meta.url), 'utf8'));
+  assert.equal(result.assembly, null);
+  assert.deepEqual(errors(result).map(item => [item.code, item.message]), expected);
+  for (const item of errors(result)) assert.equal(probe.slice(item.start, item.start + item.length), '"x"u8');
 });

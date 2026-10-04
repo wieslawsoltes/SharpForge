@@ -9,6 +9,7 @@ import {
   compileNative, compilerOptions, projectedNativeReferences, requireNativeSuccess, resolveToolchain, runNative, runtimeConfig,
 } from './native.mjs';
 import { utf8DataRows } from './metadata.mjs';
+import { requiredConstructorProbes } from './contracts.mjs';
 
 const toolchain = await resolveToolchain();
 const here = dirname(fileURLToPath(import.meta.url));
@@ -45,7 +46,7 @@ try {
   }
   const directory = join(scratch, 'missing');
   mkdirSync(directory);
-  const missing = 'using System; public class C { public static ReadOnlySpan<byte> Text() => "x"u8; }';
+  const missing = requiredConstructorProbes.single;
   const inputMissing = join(directory, 'Missing.cs');
   writeFileSync(inputMissing, missing);
   const projected = projectedNativeReferences(toolchain, directory, 'array');
@@ -60,6 +61,17 @@ try {
     methodToken: projected.projection.methodToken, offset: projected.projection.offset,
     originalFlags: projected.projection.originalFlags, projectedFlags: projected.projection.projectedFlags,
     originalSha256: sha256(projected.originalBytes), projectedSha256: sha256(projected.projection.bytes), referenceOnly: 'succeeded' };
+  const repeated = requiredConstructorProbes.repeated;
+  const repeatedInput = join(directory, 'Repeated.cs');
+  writeFileSync(repeatedInput, repeated);
+  const repeatedResult = await compileNative(toolchain, {
+    source: repeatedInput, output: join(directory, 'Repeated.dll'), references: projected.references,
+  });
+  if (repeatedResult.exitCode === 0 || !repeatedResult.diagnostics.some(([code]) => code === 'CS0656')) {
+    throw new Error('Repeated missing-constructor probe did not fail');
+  }
+  artifacts.set('repeated-missing-constructor.json', JSON.stringify(repeatedResult.diagnostics, null, 2) + '\n');
+  provenance.modes.missingRequired.repeated = { sourceSha256: sha256(repeated), diagnostics: repeatedResult.diagnostics };
   artifacts.set('provenance.json', JSON.stringify(provenance, null, 2) + '\n');
   // A failed probe must not partially replace the previous checked-in oracle capture.
   for (const [name, data] of artifacts) writeFileSync(join(here, name), data);
