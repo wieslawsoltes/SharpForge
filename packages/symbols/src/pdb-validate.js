@@ -12,19 +12,21 @@ function tableColumn(metadata, table, rows, column, target) {
   const sentinel = table === 50 && (column === 2 || column === 3);
   const nullable = table === 49 || table === 53 || (table === 50 && column === 1);
   const count = target >= 48 ? (metadata.counts[target] ?? 0) : (metadata.externalCounts[target] ?? 0);
-  for (const row of rows) checkedRow(row[column], count, nullable, `table ${table} column ${column}`, sentinel);
+  const label = `table ${table} column ${column}`;
+  for (const row of rows) checkedRow(row[column], count, nullable, label, sentinel);
 }
 
 function heapColumn(metadata, table, rows, column, kind) {
   const strings = metadata.streams.get('#Strings');
   const guidCount = (metadata.streams.get('#GUID')?.length ?? 0) / 16;
+  const guidLabel = `table ${table} GUID`;
   for (const row of rows) {
     const value = row[column];
     if (kind === 'blob') {
       // blob() validates the compressed extent and returns only a borrowed view; no payload is decoded or copied here.
       metadata.blob(value);
     } else if (kind === 'guid') {
-      checkedRow(value, guidCount, table !== 55, `table ${table} GUID`);
+      checkedRow(value, guidCount, table !== 55, guidLabel);
     } else if (value && (!strings || value >= strings.length)) {
       fail(`Invalid Portable PDB table ${table} string reference`);
     }
