@@ -30,18 +30,19 @@ test('SF-A02-T05.4 an annotated framework delegate is a view of the shared insta
     plain = { type: {}, nullableAnnotation: NullableAnnotation.NotAnnotated },
     oblivious = { type: {}, nullableAnnotation: NullableAnnotation.Oblivious },
     shared = { typeKind: TypeKind.Delegate, typeArguments: [oblivious], name: 'Func' },
-    list = { typeKind: TypeKind.Class, typeArguments: [oblivious] };
-  assert.equal(withTypeArgumentAnnotations(null, [annotated]), null);
-  assert.equal(withTypeArgumentAnnotations(shared, [oblivious]), shared, 'nothing to remember');
-  assert.equal(withTypeArgumentAnnotations(list, [annotated]), list, 'only delegates get a view');
-  const view = withTypeArgumentAnnotations(shared, [annotated]);
+    list = { typeKind: TypeKind.Class, typeArguments: [oblivious] },
+    kinds = { delegate: TypeKind.Delegate, oblivious: NullableAnnotation.Oblivious },
+    view = withTypeArgumentAnnotations(shared, [annotated], kinds);
+  assert.equal(withTypeArgumentAnnotations(null, [annotated], kinds), null);
+  assert.equal(withTypeArgumentAnnotations(shared, [oblivious], kinds), shared, 'nothing to remember');
+  assert.equal(withTypeArgumentAnnotations(list, [annotated], kinds), list, 'only delegates get a view');
   assert.notEqual(view, shared);
   assert.equal(view.unannotated, shared);
   assert.equal(view.name, 'Func', 'members come from the shared instantiation');
   assert.equal(view.typeArguments[0], annotated);
   assert.equal(shared.typeArguments[0], oblivious, 'the shared object is not changed');
-  assert.equal(withTypeArgumentAnnotations(shared, [annotated]), view, 'one view per annotation pattern');
-  assert.notEqual(withTypeArgumentAnnotations(shared, [plain]), view);
+  assert.equal(withTypeArgumentAnnotations(shared, [annotated], kinds), view, 'one view per annotation pattern');
+  assert.notEqual(withTypeArgumentAnnotations(shared, [plain], kinds), view);
 });
 
 test('SF-A02-T05.4 the signature a lambda body is checked against', () => {

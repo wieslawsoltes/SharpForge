@@ -58,6 +58,7 @@ export class TypeWithAnnotations {
   toString(){return this.toDisplayString();}
 }
 const twa=t=>t instanceof TypeWithAnnotations?t:new TypeWithAnnotations(t);
+const viewKinds=Object.freeze({delegate:TypeKind.Delegate,oblivious:NullableAnnotation.Oblivious});
 const sameList=(a,b,compare)=>a.length===b.length&&a.every((x,i)=>x.equals(b[i],compare));
 
 /** Maps type parameters to type arguments; the basis of constructed types and members. */
@@ -140,7 +141,7 @@ export class NamedTypeSymbol extends TypeSymbol {
     if(typeArguments.length!==definition.arity)throw new RangeError(`'${definition.metadataName}' takes ${definition.arity} type arguments, not ${typeArguments.length}`);
     if(!definition.arity)return this;const args=typeArguments.map(twa);
     // A module whose instantiations carry their own members (the closed framework registry) supplies them here.
-    return withTypeArgumentAnnotations(definition.instanceProvider?.(definition,args),args)??new ConstructedNamedTypeSymbol(definition,args,this.containingType);
+    return withTypeArgumentAnnotations(definition.instanceProvider?.(definition,args),args,viewKinds)??new ConstructedNamedTypeSymbol(definition,args,this.containingType);
   }
   substitute(map){
     if(map.isEmpty||!this.isGenericType)return this;const container=this.containingType,newContainer=container?container.substitute(map):null,args=this.typeArguments.map(a=>a.substitute(map));
