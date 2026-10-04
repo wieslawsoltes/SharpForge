@@ -119,6 +119,6 @@ export function workspaceVersions(workspace) {
   const documents = workspace.listDocuments?.() ?? [...(workspace.documents?.values() ?? [])];
   return new Map(documents.map(document => {
     const uri = document.uri ?? document.source?.uri;
-    return [uri, readWorkspaceDocument(workspace, uri).version];
+    return [uri, document.version ?? document.source?.version ?? document.snapshot?.().version];
   }));
 }
