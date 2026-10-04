@@ -79,6 +79,7 @@ test('released BCL groups keep module order and independent registries cannot le
   assert.deepEqual(appends.map(member => [member.parameters, member.id]), [[['char'], 524309], [['char', 'int'], 524310]]);
   assert.equal(findContracts('System.Text.StringBuilder', 'get_Chars')[0].id, 524312);
   assert.equal(findContracts('System.Text.StringBuilder', 'set_Chars')[0].id, 524313);
+  assert.equal(findContracts('System.Text.StringBuilder', 'CopyTo')[0].id, 524315);
 });
 
 test('BCL registry rejects async contracts and malformed invocation results', () => {

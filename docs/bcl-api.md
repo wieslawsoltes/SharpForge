@@ -676,8 +676,9 @@ Registered families: <code>builder</code>.
 | 524310 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char, int)</code> | implemented |
 | 524312 | <code>char System.Text.StringBuilder::get_Chars(int)</code> | implemented |
 | 524313 | <code>void System.Text.StringBuilder::set_Chars(int, char)</code> | implemented |
+| 524315 | <code>void System.Text.StringBuilder::CopyTo(int, char[], int, int)</code> | implemented |
 
-Pinned reference: 35 implemented and 73 missing exact metadata rows.
+Pinned reference: 36 implemented and 72 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -751,7 +752,7 @@ Pinned reference: 35 implemented and 73 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::AppendLine``0(System.String):System.Text.StringBuilder instance</code> | implemented | 810 |
 | method | <code>System.Text.StringBuilder::AppendLine``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Clear``0():System.Text.StringBuilder instance</code> | implemented | 811 |
-| method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Void instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Void instance</code> | implemented | 524315 |
 | method | <code>System.Text.StringBuilder::CopyTo``0(System.Int32,System.Span`1&lt;System.Char&gt;,System.Int32):System.Void instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::EnsureCapacity``0(System.Int32):System.Int32 instance</code> | implemented | 817 |
 | method | <code>System.Text.StringBuilder::Equals``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Boolean instance</code> | missing | — |

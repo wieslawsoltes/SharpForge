@@ -74,6 +74,21 @@ export const ObjectEmission = Base =>
       this.arguments(call, call.method);
       this.il.emit('call', this.tokens.method(call.method), { pops: call.method.parameters.length + 1, pushes: 0 });
     }
+    /**
+     * `~C() { body }` is `protected override void Finalize() { try { body } finally { base.Finalize(); } }`: the
+     * destructors of the base classes run after this one, whatever the body does.
+     */
+    destructorBody(bound, type) {
+      const shape = { isStatic: false, returnType: this.core.void, parameters: [] },
+        base = type.baseType ?? this.core.object;
+      this.enterBody();
+      this.tryRegions(
+        () => this.bodyStatements(bound),
+        [],
+        () => this.il.emit('ldarg', 0).emit('call', this.tokens.external(base, 'Finalize', shape), { pops: 1, pushes: 0 }),
+      );
+      return this.finish();
+    }
     /** `base()`: the accessible parameterless constructor of the base class. */
     implicitBaseCall(type, constructor) {
       const base = type.baseType ?? this.core.object,
