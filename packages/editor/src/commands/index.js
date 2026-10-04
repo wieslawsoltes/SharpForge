@@ -44,7 +44,7 @@ export function createEditorCommandRegistry(editor, options = {}) {
     BreakLine: () => feature(context, 'insertNewline', [], null),
     InsertTab: () => indent(context), TabLeft: () => indent(context, true),
     LineDelete: () => deleteLines(context), Duplicate: () => duplicate(context),
-    CopyLineUp: () => duplicate(context, -1), CopyLineDown: () => duplicate(context, 1),
+    CopyLineUp: () => duplicate(context, -1, true), CopyLineDown: () => duplicate(context, 1, true),
     LineOpenAbove: () => openLine(context, true), LineOpenBelow: () => openLine(context),
     MakeUppercase: () => changeCase(context, 'upper'), MakeLowercase: () => changeCase(context, 'lower'),
     Capitalize: () => changeCase(context, 'title'),
@@ -134,6 +134,6 @@ export function createEditorCommandRegistry(editor, options = {}) {
       if (!entry.enabled()) return false;
       return entry.handler(args);
     },
-    dispose: () => commands.clear()
+    dispose: () => { context.dispose(); commands.clear(); }
   };
 }

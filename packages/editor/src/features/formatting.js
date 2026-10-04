@@ -33,15 +33,19 @@ export class EditorFormatting {
   }
 
   changed(change) {
-    if (this.applying || String(change?.source ?? '').startsWith('format')) return;
-    if (this.pendingPaste && this.context.options.formatOnPaste !== false) {
+    if (this.applying || String(change?.source ?? '').toLowerCase().startsWith('format')) return;
+    const edits = change?.changes ?? change?.edits ?? [];
+    if (this.pendingPaste || change?.source === 'paste') {
       const paste = this.pendingPaste;
       this.pendingPaste = null;
-      this.schedule({range: {start: paste.start, end: paste.start + paste.text.length}});
+      if (this.context.options.formatOnPaste === false) return;
+      const start = paste?.start ?? Math.min(...edits.map(edit => edit.newStart ?? edit.start));
+      const end = paste ? paste.start + paste.text.length : Math.max(...edits.map(edit => edit.newEnd ?? edit.start + edit.text.length));
+      if (Number.isFinite(start) && Number.isFinite(end)) this.schedule({range: {start, end}});
       return;
     }
     if (this.context.options.formatOnType === false) return;
-    const edit = (change?.changes ?? change?.edits)?.at(-1);
+    const edit = edits.at(-1);
     const text = edit?.text ?? edit?.insertText ?? edit?.newText;
     if (text !== ';' && text !== '}') return;
     const editor = this.context.editor;

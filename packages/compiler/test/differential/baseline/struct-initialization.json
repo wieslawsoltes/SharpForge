@@ -1,0 +1,4 @@
+{
+  "struct-initialization/constructors-and-field-initializers": ["diagnostics"],
+  "struct-initialization/struct-initialization-in-csharp-9": ["diagnostics", "warnings"]
+}

@@ -1,40 +1,37 @@
 name: Reproducible release qualification
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-    paths: ['scripts/conformance/repro/**', 'scripts/conformance/source-manifest.js', 'tests/conformance/repro/**', 'planning/qualification/repro/**', '.github/workflows/repro.yml']
-  push:
-    branches: [main]
-    paths: ['scripts/conformance/repro/**', 'scripts/conformance/source-manifest.js', 'scripts/build*.js', 'scripts/standalone.js', 'packages/**', 'examples/**', 'package*.json', '.github/workflows/repro.yml']
   workflow_dispatch:
     inputs:
       tag:
         description: Existing release tag whose exact source and published assets must reproduce (empty checks HEAD)
         type: string
         required: false
+      external_links:
+        description: Check external documentation links instead of rebuilding
+        type: boolean
+        default: false
+        required: false
   release:
     types: [published]
-  schedule:
-    - cron: '23 7 * * 1'
 permissions:
   contents: read
 concurrency:
   group: repro-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   prepare:
-    if: github.event_name != 'schedule' && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci'))
+    if: ${{ !inputs.external_links && (github.event_name != 'release' || !startsWith(github.event.release.tag_name, 'evidence-archive-')) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:
       commit: ${{ steps.source.outputs.commit }}
       release: ${{ steps.source.outputs.release }}
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
       - name: Download exact source and vendor lock-bound npm cache
@@ -49,7 +46,7 @@ jobs:
           else
             node scripts/conformance/repro/prepare.js
           fi
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: repro-inputs
           path: artifacts/repro-inputs
@@ -58,20 +55,21 @@ jobs:
   build:
     needs: prepare
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2025, macos-26]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: repro-inputs
           path: artifacts/repro-inputs
@@ -90,7 +88,7 @@ jobs:
       - name: Require clean tracked checkout
         if: always()
         run: node scripts/conformance/clean-checkout.js
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: repro-${{ matrix.os }}
@@ -100,41 +98,41 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: repro-*-*
           path: artifacts/repro-runners
       - name: Require identical dist, HTML, tarballs, ZIP and golden compiler outputs
         run: node scripts/conformance/repro/aggregate.js
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: repro-cross-runner
           path: artifacts/results/repro/cross-runner.json
           if-no-files-found: error
   offline:
-    needs: [prepare, build]
+    needs: [prepare, build, cross-runner]
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: repro-inputs
           path: artifacts/repro-inputs
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: repro-ubuntu-24.04
           path: artifacts/repro-linux
@@ -150,25 +148,25 @@ jobs:
       - name: Require clean tracked checkout
         if: always()
         run: node scripts/conformance/clean-checkout.js
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: repro-offline
           path: artifacts/results/repro/offline.json
           if-no-files-found: error
   external-links:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'workflow_dispatch' && inputs.external_links
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
       - run: node scripts/conformance/repro/link-check.js --external
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: repro-external-links
