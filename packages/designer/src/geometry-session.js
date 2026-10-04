@@ -1,9 +1,10 @@
-import {normalizeProperty} from './model.js';
 import {designRectangle, geometryInvariant, localPointerDelta, resizeRectangle} from './geometry-coordinates.js';
 
 /** Gesture previews never touch DesignDocument. Commit performs exactly one optimistic edit. */
 export class DesignGeometrySession {
-  constructor(document, {rectangles, matrices = {}, baselines = {}, start = {x: 0, y: 0}, handle = null, constraints = {}, label} = {}) {
+  constructor(document, {
+    rectangles, matrices = {}, baselines = {}, start = {x: 0, y: 0}, handle = null, constraints = {}, label, canEdit
+  } = {}) {
     geometryInvariant(rectangles && Object.keys(rectangles).length > 0, 'SFD_GESTURE_EMPTY', 'Select a control before editing.');
     this.document = document;
     this.revision = document.revision;
@@ -15,6 +16,8 @@ export class DesignGeometrySession {
     this.start = start;
     this.handle = handle;
     this.label = label ?? (handle ? 'Resize controls' : 'Move controls');
+    if (canEdit !== undefined && typeof canEdit !== 'function') throw new TypeError('Geometry permission must be a function');
+    this.canEdit = canEdit;
     this.active = true;
     this.guides = [];
   }
@@ -55,18 +58,15 @@ export class DesignGeometrySession {
   commit({properties = null} = {}) {
     geometryInvariant(this.active, 'SFD_GESTURE_ENDED', 'The editing gesture has ended.');
     this.active = false;
-    return this.document.change(this.label, candidate => {
-      const nodes = new Map(candidate.nodes.map(node => [node.id, node]));
-      for (const [id, rectangle] of Object.entries(this.next)) {
-        const node = nodes.get(id);
-        geometryInvariant(node, 'SFD_GESTURE_NODE', 'An edited control no longer exists.');
-        for (const [key, value] of Object.entries(rectangle)) {
-          if (properties && !properties(id).includes(key)) continue;
-          if (value === this.original[id][key]) continue;
-          node.properties[key] = normalizeProperty(node.type, key, value);
-        }
-      }
-    }, {expectedRevision: this.revision});
+    this.document.assertWritable();
+    if (this.document.revision !== this.revision) throw new Error('Design changed; refresh before applying this edit');
+    const changes = Object.fromEntries(Object.entries(this.next).map(([id, rectangle]) => {
+      geometryInvariant(this.document.node(id), 'SFD_GESTURE_NODE', 'An edited control no longer exists.');
+      const allowed = properties?.(id);
+      return [id, Object.fromEntries(Object.entries(rectangle).filter(([key, value]) =>
+        (!allowed || allowed.includes(key)) && value !== this.original[id][key]))];
+    }));
+    return this.document.patchProperties(changes, {label: this.label, expectedRevision: this.revision, canEdit: this.canEdit});
   }
 
   cancel() {

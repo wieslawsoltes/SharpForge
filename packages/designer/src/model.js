@@ -2,19 +2,19 @@ import { DesignDocumentCore } from './document-core.js';
 import {designerMetadata, designerPropertySchema, designerChildSlot} from './metadata.js';
 import {validateDesignerAuthoring} from './resource-validation.js';
 import {normalizeProperty, track} from './document-values.js';
+import {designerDocumentContracts} from './document-property-values.js';
+import {cleanDesignData as cleanData} from './document-data.js';
 export {normalizeProperty, track} from './document-values.js';
 import {frameworkManifest,frameworkType,canonicalType,frameworkAssignable,propertiesFor,eventsFor,XAML,CONTROLS,MEDIA} from '@sharpforge/framework';
 import {prepareLiveDesignChanges} from './live-capabilities.js';
 import {readLiveDesignScene} from './live-scene-reader.js';
 const copy=x=>structuredClone(x),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
-const dangerous=new Set(['__proto__','constructor','prototype']);
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 const short=t=>t.slice(t.lastIndexOf('.')+1);
 const bad=m=>{throw new TypeError(m);};
 export const designControls = designerMetadata;
 export const propertySchema = designerPropertySchema;
 export const childSlot = designerChildSlot;
-function cleanData(value,depth=0){if(depth>100)bad('Design nesting limit');if(Array.isArray(value)){if(value.length>5000)bad('Design collection limit');value.forEach(v=>cleanData(v,depth+1));}else if(object(value)){for(const [k,v]of Object.entries(value)){if(dangerous.has(k))bad('Unsafe object key');cleanData(v,depth+1);}}else if(!['string','number','boolean'].includes(typeof value)&&value!==null)bad('Design must contain only JSON data');}
 function templateCheck(part,ids,ownerType,depth=0){if(depth>50||ids.size>500)bad('Template size limit');if(!object(part)||typeof part.id!=='string'||!/^[A-Za-z_][\w.:-]{0,127}$/.test(part.id)||ids.has(part.id))bad('Template part identifiers must be unique');ids.add(part.id);part.type=canonicalType(part.type);if(!designControls.some(t=>t.type===part.type)||part.type===XAML+'Window')bad('Unsupported template part');part.properties??={};for(const [k,v]of Object.entries(part.properties))part.properties[k]=normalizeProperty(part.type,k,v);for(const [k,source]of Object.entries(part.bindings??{})){const a=propertySchema(part.type)[k],b=propertySchema(ownerType)[source];if(!a||a.readOnly||!b||!(a.type===b.type||a.type==='object'))bad('Incompatible template binding');}const slot=childSlot(part.type);if(part.children?.length&&(!slot||!slot.many&&part.children.length>1))bad('Template child cardinality');for(const child of part.children??[])templateCheck(child,ids,ownerType,depth+1);}
 export function validateDesign(input){const d=copy(input);cleanData(d);if(d.version!==1||!Array.isArray(d.nodes)||d.nodes.length>5000||!d.nodes.length)bad('Invalid or oversized design document');if(typeof d.name!=='string'||d.name.length>100)bad('Invalid document name');d.width??=960;d.height??=640;if(![d.width,d.height].every(n=>Number.isFinite(n)&&n>=100&&n<=10000))bad('Artboard dimensions must be 100–10000');d.styles??={};d.templates??={};if(!object(d.styles)||!object(d.templates))bad('Resources must be named objects');for(const key of [...Object.keys(d.styles),...Object.keys(d.templates)])if(!/^[A-Za-z_]\w*$/.test(key))bad('Resource keys must be identifiers');const nodes=new Map(),names=new Set();for(const n of d.nodes){if(typeof n.id!=='string'||!/^[A-Za-z_][\w.:-]{0,127}$/.test(n.id)||nodes.has(n.id))bad('Design node identifiers must be unique');n.type=canonicalType(n.type);if(!designControls.some(t=>t.type===n.type))bad('Unsupported designer control '+n.type);n.properties??={};n.children??=[];n.events??={};if(!object(n.properties)||!object(n.events)||!Array.isArray(n.children))bad('Invalid control data');if(n.type===XAML+'Window'&&n.id!==d.root)bad('Windows must be design roots');if(n.children.length&&propertiesFor(n.type).Content)delete n.properties.Content;for(const [k,v]of Object.entries(n.properties))n.properties[k]=normalizeProperty(n.type,k,v);if(n.baseProperties){if(!object(n.baseProperties))bad('Invalid captured properties');for(const [k,v]of Object.entries(n.baseProperties))n.baseProperties[k]=normalizeProperty(n.type,k,v);}if(n.properties.Name){if(!/^[A-Za-z_]\w*$/.test(n.properties.Name)||names.has(n.properties.Name))bad('Names must be unique C# identifiers');names.add(n.properties.Name);}for(const [event,handler]of Object.entries(n.events))if(!eventsFor(n.type)[event]||!/^([A-Za-z_]\w*\.)*[A-Za-z_]\w*$/.test(handler))bad('Invalid event or handler');if(n.children.length){const slot=childSlot(n.type);if(!slot||!slot.many&&n.children.length>1)bad(short(n.type)+' cannot contain those children');}for(const key of ['rows','columns'])if(n[key]){if(n.type!==CONTROLS+'Grid'||n[key].length>64)bad('Grid track limit');n[key]=n[key].map(track);}nodes.set(n.id,n);}
   if(!nodes.has(d.root))bad('Missing design root');const seen=new Set();function visit(id,depth){if(depth>100||seen.has(id))bad('Visual tree cycle or multiple parents');const n=nodes.get(id);if(!n)bad('Missing child '+id);seen.add(id);for(const child of n.children)visit(child,depth+1);}visit(d.root,0);if(seen.size!==nodes.size)bad('Unparented design nodes');
@@ -30,7 +30,7 @@ export function createDesign(name='Workspace'){return validateDesign({version:1,
 /** Indexed, bounded document transactions shared by all designer sessions. */
 export class DesignDocument extends DesignDocumentCore {
   constructor(value = createDesign(), options = {}) {
-    super(value, { ...options, contracts: { validate: validateDesign, normalize: normalizeProperty, childSlot, track } });
+    super(value, {...options, contracts: designerDocumentContracts(validateDesign)});
   }
 }
 export function designFromScene(scene, options = {}) {
