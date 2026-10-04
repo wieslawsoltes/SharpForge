@@ -8,7 +8,7 @@ claims.
 `Program.cs` independently reports CoreCLR categories for Object, ValueType,
 Enum, String, Int32, DayOfWeek and IDisposable, plus ordinary local classes,
 nested classes, an interface, a struct and an enum. It reports actual metadata
-root tokens and input TypeDef/TypeRef bindings into `typeof(object).Module`.
+root tokens and input TypeRef bindings into `typeof(object).Module`.
 `capture.mjs` uses the repository-pinned Roslyn/CoreCLR toolchain, reads that
 actual CoreLib PE and first constructs its complete `AssemblyInspector`.
 
