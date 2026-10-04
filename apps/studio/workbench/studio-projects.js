@@ -1,4 +1,7 @@
 import { StudioDiagnostics } from './studio-diagnostics.js';
+import { StudioProjectCompiler, studioProjectState } from './studio-project-compiler.js';
+import { nativeCompilationRequest } from '../native-build/workspace-state.js';
+import { projectCompilationFiles } from '../project-build.js';
 
 /** Maps the loaded project system onto isolated compiler services without selecting background work. */
 export class StudioProjects {
@@ -10,6 +13,12 @@ export class StudioProjects {
     this.workspace = null;
     this.epoch = null;
     this.diagnostics = new StudioDiagnostics(services, state);
+    this.compiler = new StudioProjectCompiler(state);
+    this.dependents = new Map();
+    this.invalidating = false;
+    this.unsubscribeBuilds = services.builds.subscribe(event => {
+      if (event.type === 'invalidated') this.invalidateDependents(event.projectId);
+    });
   }
 
   get selectedId() {
@@ -40,12 +49,16 @@ export class StudioProjects {
 
   snapshot(projectId) {
     const state = this.state();
+    const native = nativeCompilationRequest(state);
+    if (native) return { ...native, extensions: { ...state.extensionConfig, additionalFiles: native.additionalFiles },
+      loadingDiagnostics: state.nativeContextDiagnostics ?? [] };
     const project = state.projectSystem?.projects.get(projectId);
     const uris = new Set(this.sourceUris(projectId));
     const compilationOptions = project ? state.projectSystem.compilationOptions(projectId)
       : { outputKind: 'exe', langVersion: state.langVersion };
     return {
-      files: state.files.filter(file => uris.has(file.uri)).map(file => ({ uri: file.uri, text: file.text, version: file.version })),
+      files: project ? projectCompilationFiles(studioProjectState(this.state, projectId))
+        : state.files.filter(file => uris.has(file.uri)).map(file => ({ uri: file.uri, text: file.text, version: file.version })),
       compilationOptions, assemblyName: project?.name ?? state.name, extensions: state.extensionConfig,
       outputKind: project?.outputType?.toLowerCase() === 'library' ? 'library' : 'exe',
       loadingDiagnostics: this.diagnostics.forProject(projectId)
@@ -70,6 +83,12 @@ export class StudioProjects {
       this.epoch = epoch;
     }
     const definitions = this.definitions();
+    this.dependents.clear();
+    for (const project of definitions) for (const dependency of project.dependencies) {
+      const consumers = this.dependents.get(dependency) ?? new Set();
+      consumers.add(project.id);
+      this.dependents.set(dependency, consumers);
+    }
     const valid = new Set(definitions.map(project => project.id));
     const removedProfiles = [];
     for (const old of this.services.builds.list()) if (!valid.has(old.id)) {
@@ -119,9 +138,35 @@ export class StudioProjects {
     return service.request(method, {...request, projectId: service.id}, options);
   }
 
+  compile(request) { return this.compiler.request(request); }
+
+  launchOptions(projectId, profile, built) {
+    return this.compiler.launchOptions(projectId, profile, built,
+      this.services.profiles.projects.get(projectId)?.has(profile.id) === true);
+  }
+
+  invalidateDependents(projectId) {
+    if (this.invalidating) return;
+    this.invalidating = true;
+    try {
+      const visited = new Set([projectId]);
+      const pending = [projectId];
+      for (let index = 0; index < pending.length; index++) {
+        for (const consumer of this.dependents.get(pending[index]) ?? []) {
+          if (visited.has(consumer)) continue;
+          visited.add(consumer);
+          pending.push(consumer);
+          this.services.builds.get(consumer)?.invalidate('dependency');
+        }
+      }
+    } finally { this.invalidating = false; }
+  }
+
   async syncBreakpoints(uri) {
     const values = this.state().breakpoints[uri] ?? [];
-    const results = await Promise.all(this.services.documents.projectsFor(uri).map(id => this.services.breakpoints.set(id, uri, values)));
+    const sourceText = this.services.documents.get(uri)?.text;
+    const results = await Promise.all(this.services.documents.projectsFor(uri)
+      .map(id => this.services.breakpoints.set(id, uri, values, { sourceText })));
     for (const result of results) for (const failure of result.failures) this.onError(failure.error);
     return results;
   }
@@ -133,5 +178,5 @@ export class StudioProjects {
     }
   }
 
-  dispose() { this.diagnostics.dispose(); }
+  dispose() { this.unsubscribeBuilds(); this.diagnostics.dispose(); }
 }

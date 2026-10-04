@@ -43,7 +43,8 @@ export function createWorkbenchServices(options = {}) {
   };
   const builds = new BuildServices({
     workerFactory: options.workerFactory, compilerUrl: options.compilerUrl,
-    snapshot: options.getProjectSnapshot ?? defaultSnapshot, output, diagnostics, onError: options.onError
+    snapshot: options.getProjectSnapshot ?? defaultSnapshot, requestCompiler: options.requestCompiler,
+    output, diagnostics, onError: options.onError
   });
   const sessions = new SessionManager({
     maxSessions: options.maxSessions, workerFactory: options.workerFactory,
