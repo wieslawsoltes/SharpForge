@@ -2,6 +2,8 @@ import {decodeWorkspaceFile, encodeWorkspaceFile} from '@sharpforge/archive';
 import {FileSystemAccessProvider, FileSystemError, hashFileBytes} from '@sharpforge/workspace';
 import {createHandleMapRoot} from './disk-handle-map.js';
 import {DISK_WORKSPACE_LIMITS, checkDiskCancelled} from './disk-scan.js';
+import {saveDiskChanges} from './disk-save.js';
+import {applyDiskOperations} from './disk-operations.js';
 import {DiskTextBaselines, diskRecordBytes} from './disk-baseline.js';
 
 /** Directory-backed records. Lazy entries carry explicit metadata and never stand in for empty source text. */
@@ -23,7 +25,12 @@ export class ProviderDiskWorkspace {
     this.positions = new Map(records.map((record, index) => [this.provider.pathPolicy.identity(record.path), index]));
     this.folderIndex = new Map(folders.map(path => [this.provider.pathPolicy.identity(path), path]));
     this.importReport = options.report ?? null;
+    this.saveLocks = options.saveLocks ?? null;
+    this.resolveSaveLocks = options.resolveSaveLocks ?? null;
+    this.saveListeners = new Set();
+    this.requireSaveLock = options.requireSaveLock ?? typeof globalThis.window !== 'undefined';
     this.loadedBytes = records.reduce((total, record) => total + diskRecordBytes(record), 0);
+    this.queue = Promise.resolve();
   }
 
   record(path) { return this.index.get(this.provider.pathPolicy.identity(path)); }
@@ -174,4 +181,27 @@ export class ProviderDiskWorkspace {
     return this.records;
   }
 
+  enqueue(action) {
+    const next = this.queue.then(action);
+    this.queue = next.catch(() => {});
+    return next;
+  }
+
+  subscribeSaves(listener) {
+    if (typeof listener !== 'function') throw new TypeError('A save listener is required');
+    this.saveListeners.add(listener);
+    return () => this.saveListeners.delete(listener);
+  }
+
+  didSave(record) { for (const listener of this.saveListeners) listener(record); }
+
+  /** Preflight all baselines and permissions before opening any stream. Multi-file I/O is explicitly non-atomic. */
+  save(changes, options = {}) { return this.enqueue(() => saveDiskChanges(this, changes, options)); }
+  mutate(operations, options = {}) { return this.enqueue(() => applyDiskOperations(this, operations, options)); }
+  create(path, value = '', options = {}) {
+    return this.save([{path, ...(typeof value === 'string' ? {text: value} : {bytes: value}), expectedHash: null}], options);
+  }
+  delete(path, options = {}) { return this.mutate([{kind: 'delete', path, recursive: options.recursive}], options); }
+  rename(path, destination, options = {}) { return this.mutate([{kind: 'move', path, destination}], options); }
+  move(path, destination, options = {}) { return this.rename(path, destination, options); }
 }
