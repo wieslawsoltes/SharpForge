@@ -22,7 +22,7 @@ function moduleSnapshot(inspector, index, module, budget) {
   }
   snapshotMetadataNesting(metadata.rows[41] ?? [], visibility,
     { check: () => budget.check(), invalid: invalidHierarchy, limit: hierarchyLimit });
-  const names = localDefinitionNames(metadata, definitions, { ...budget, maxTypeNameBytes: budget.maxNameBytes });
+  const names = localDefinitionNames(metadata, definitions, { ...budget, maxTypeNameBytes: budget.maxNameBytes }, true);
   const definition = metadata.rows[32]?.[0];
   return { metadata, definitions, names, prefix, references: new Map(), referenceDepths: new Map(), resolving: new Set(), assemblies: new Map(),
     identity: definition ? hierarchyAssemblyIdentity(metadata, definition) : null };

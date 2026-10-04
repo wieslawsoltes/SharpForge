@@ -37,7 +37,7 @@ function addName(owners, owner, row, key, token) {
 }
 
 /** Construction-only exact byte names, indexed under canonical enclosing TypeDef tokens. */
-export function localDefinitionNames(metadata, records, budget) {
+export function localDefinitionNames(metadata, records, budget, includeKeyLookup = false) {
   const key = nameKeys(metadata, budget);
   const owners = new Map();
   let lexical = null;
@@ -74,15 +74,7 @@ export function localDefinitionNames(metadata, records, budget) {
       if (parents[rid]) addName(owners, 0x02000000 + parents[rid], metadata.rows[2][rid - 1], key, 0x02000000 + rid);
     }
   }
-  return {
-    key,
-    // Internal cross-heap lookup: callers obtain both keys from another bounded name index.
-    lookupKeys(owner, namespace, name) {
-      if (owner && !lexical) indexNested();
-      if (!name) rejectTypeSystem('CILVT0001', 'empty TypeRef name');
-      const target = owners.get(owner)?.get(namespace)?.get(name);
-      return target === undefined ? 0 : target;
-    },
+  const result = {
     top: row => lookup(0, row),
     nested(owner, row) {
       if (!lexical) indexNested();
@@ -90,4 +82,15 @@ export function localDefinitionNames(metadata, records, budget) {
     },
     get lexical() { return lexical; },
   };
+  // Existing adapters retain their original shape and closures; only cross-image binding needs raw keys.
+  if (includeKeyLookup) {
+    result.key = key;
+    result.lookupKeys = (owner, namespace, name) => {
+      if (owner && !lexical) indexNested();
+      if (!name) rejectTypeSystem('CILVT0001', 'empty TypeRef name');
+      const target = owners.get(owner)?.get(namespace)?.get(name);
+      return target === undefined ? 0 : target;
+    };
+  }
+  return result;
 }
