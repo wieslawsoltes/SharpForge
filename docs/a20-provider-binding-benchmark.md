@@ -3,9 +3,52 @@
 The SF-A20-T14 parameter-info correction retains an analysis-owned record per
 bound invocation and adds a source-model invocation index. This is a binder
 allocation change, so CONTRIBUTING requires measured before/after evidence.
-This document and the three scripts prepare that measurement. **They have not
-been executed for qualification at this source checkpoint. No timing, memory
-improvement, regression percentage or noise claim is recorded here.**
+The first complete measurement found two binding medians above the 5% budget.
+The source correction below removes avoidable retention and defers document
+index construction. **Its follow-up measurement is pending.** The revised
+harness exposes first and repeated signature-query costs separately; moving
+work out of binding must not hide its cost when a user requests parameter info.
+
+## Recorded first measurement and corrective decision
+
+The coordinator ran the original harness on 2026-10-04 with the baseline below
+and candidate `40bbdea7b45ab64b24c9741046b897a35118814e`. Harness SHA-256 was
+`4e50768bee59ea2c779a871c5cca4ccf95daba121a4072558432fe528d451d49`.
+Corpus, public observations, harness and environment matched. Each phase used
+96 calls, five warmups and fifteen samples. The shared Linux x64 host reported
+AMD EPYC 9V74, nine logical CPUs, Node v24.19.0 / V8 13.6.233.17-node.51,
+`--expose-gc`, and `NODE_OPTIONS=--max-old-space-size=2048`.
+
+| Binding family | Median before → initial candidate (ms) | p95 before → initial candidate (ms) | Median change | Retained heap median difference (bytes) |
+| --- | --- | --- | --- | --- |
+| Instance overloads | 14.368 → 15.181 | 16.506 → 19.198 | +5.66% | +74,176 |
+| Constructed generic receiver | 24.888 → 22.802 | 29.091 → 26.199 | −8.38% | +133,352 |
+| Local functions | 9.251 → 10.364 | 10.530 → 11.132 | +12.03% | +52,368 |
+| Incomplete instance call | 13.691 → 12.805 | 17.382 → 17.322 | −6.47% | +71,296 |
+
+All four compile medians were lower in this observation, while compile tails
+were mixed. These are descriptive shared-host measurements, not a speedup,
+noise or statistical-significance claim. Raw `baseline.json`, `candidate.json`,
+`comparison.json` and `run.json` are retained in the session artifact directory
+`p16-provider-bench-40bbdea7`.
+
+The avoidable work was eager construction of every invocation's interval,
+opening-offset Map and sorted document index, even for symbols/references
+queries. The binder also retained raw argument arrays and duplicated URI and
+syntax fields. The correction retains compact records in per-URI maps keyed
+by syntax; selected results, bound method groups and invocation context remain
+available. Unresolved calls remain present as nesting boundaries. The index
+is created only on first signature help, and only the requested document is
+indexed. Binary search replaces the duplicate opening-offset Map.
+
+Capture remains amortized O(1) per invocation with O(N) retained records for N
+invocations in the analysis. A document's first query constructs O(n) intervals
+and sorts them in O(n log n). Later exact-opening queries use O(log n) lookup;
+caret queries use O(log n + d), where d is containing-invocation depth. Indexes
+belong to the captured source model and are never shared across revisions.
+The focused `tests/a20-signature-query-index.test.js` covers document ownership,
+exact lookup, nesting boundaries and revision replacement. Its run and the
+new matched benchmark are pending at this source checkpoint.
 
 ## Revisions and small source exports
 
@@ -47,22 +90,34 @@ constructed-receiver call and a generic-method call for each repetition.
 | Local functions | Repeated calls to a lexically declared local function. |
 | Incomplete instance call | Complete preceding calls followed by an unfinished invocation and missing closing syntax. |
 
-Each family has two independently warmed phases:
+Each family has four independently warmed phases:
 
 - **`compile`:** public `compile(input, {outputKind: 'library', pipeline: 'bound'})`,
   including parsing, execution-profile binding/emission and any semantic
   fallback the real compiler performs. No PE emission is requested.
 - **`source-model-bind`:** construct fresh syntax and a fresh public
   `Compilation` before timing, then measure `Compilation.getSourceModel()`.
-  This includes full lossless-source binding and public query-index creation.
+  This includes full lossless-source binding and eager public query indexes.
   Parsing and `Compilation` construction are excluded from this phase. It
-  measures the combined invocation-retention/index cost, not an isolated
-  private binder micro-operation.
+  measures source-model construction, not an isolated private binder operation.
+- **`signature-first-query`:** construct a fresh bound source model before
+  timing, then make one public `SourceSemanticModel.signatureHelp` call at the
+  selected invocation. This includes deferred index construction for that
+  document and the returned signature information.
+- **`signature-repeated-query`:** construct another fresh bound model and prime
+  one signature query before timing, then measure a batch of 64 repeated
+  queries. Both batch time and time divided by 64 are reported. The retained
+  heap delta includes the last result and model changes; it does not claim
+  that all 64 intermediate results remain live.
 
-Both phases use public compiler entry points. Syntax and text preparation use
+All phases use public compiler entry points. Syntax and text preparation use
 their public package entry points too. The harness neither imports compiler
 internals nor monkey-patches the binder. It creates a new compilation per
-sample, so it does not accidentally time a cached source model.
+sample. All common compile/bind families finish before query measurements, so
+candidate-only query work cannot prime a later common family. The old baseline
+lacks the signature-help API: its query rows explicitly report unavailable.
+The comparator labels the candidate's query rows **candidate-only** and emits
+their actual timing/heap values without an invented baseline or percentage.
 
 Defaults are **five warmups followed by fifteen measured samples** per family
 and phase. The command accepts 9–101 samples and 3–50 warmups. It records raw
@@ -88,6 +143,10 @@ strongly reachable. Public result observation follows the second measurement.
 - `retainedHeapDeltaBytes` measures live JavaScript heap growth for that result.
   It is especially useful for the source model, which retains invocation records
   and indexes. Fresh parsed input was already retained at the bind baseline.
+  Query baselines already retain a bound model; the repeated-query baseline
+  also retains its primed index. Both that model and the final signature result
+  remain strongly reachable at the post-query GC measurement. First-query
+  heap growth therefore exposes the deferred index and returned result.
 - `uncollectedHeapDeltaBytes` is an allocation-pressure proxy. Automatic GC can
   run during the timed operation, so it is **not total allocated bytes or an
   allocation rate**. The harness makes no per-object allocation-count claim.
@@ -124,13 +183,20 @@ a specific attribution question from the final comparison.
 
 The comparator refuses mismatched harness hashes, source corpus, settings,
 Node/V8/heap configuration, machine identity fields or observed compiler/query
-results. It emits signed median/p95 changes, absolute retained-heap differences
+results for shared phases. It emits signed median/p95 changes, absolute retained-heap differences
 and a descriptive flag for median slowdown above 5%. A flag is evidence for
 review under CONTRIBUTING's regression budget; it is not automatic proof of a
 statistically significant regression. If a meaningful slowdown remains, record
 the concrete correctness tradeoff and obtain the required sign-off instead of
 silently declaring the budget met. Preserve both raw JSON files and the
 comparison in the final qualification evidence.
+
+The revised harness hash intentionally differs from the first measurement.
+Re-export and rerun **both** revisions with this identical harness. Do not pair
+an old report with a new one, or claim the revised binding phase alone meets
+the cost of first signature help. Query rows use separate fresh models and
+their medians must not be added to binding medians as if that were a measured
+combined operation.
 
 No browser, native CLR, Visual Studio or performance qualification success is
 implied by the presence of this harness.

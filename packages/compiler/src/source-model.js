@@ -16,7 +16,7 @@ export class SourceSemanticModel {
       new SemanticAnalysis(compilation.inputFiles, options);
     this.result = compilation.sourceAnalysisComplete ? compilation.sourceAnalysisResult : this.analysis.run();
     this.sources = this.analysis.sources;
-    this.signatureIndex = new SourceSignatureIndex(this.analysis);
+    this.signatureIndex = null;
     this.symbols = [];
     this.references = [];
     this.hints = [];
@@ -189,6 +189,7 @@ export class SourceSemanticModel {
     if (options.activeParameter !== undefined && (!Number.isInteger(options.activeParameter) || options.activeParameter < 0)) {
       throw new RangeError('Invalid signature parameter index');
     }
+    this.signatureIndex ??= new SourceSignatureIndex(this.analysis);
     return this.signatureIndex.help(uri, offset, options);
   }
 }

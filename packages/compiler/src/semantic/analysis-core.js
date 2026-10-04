@@ -104,9 +104,11 @@ export class AnalysisCore {
     }
   }
 
-  /** Retain method groups separately from executable bound trees, including incomplete invocations. */
-  recordInvocation(context, syntax, target, args, result) {
-    this.invocations.set(syntax, {uri: context.uri, syntax, target, args, result,
+  /** Retain method groups per document; syntax keys also preserve incomplete-call nesting boundaries. */
+  recordInvocation(context, syntax, target, result) {
+    let invocations = this.invocations.get(context.uri);
+    if (!invocations) this.invocations.set(context.uri, invocations = new Map());
+    invocations.set(syntax, {target, result,
       isStatic: context.isStatic, instanceInitializer: context.isFieldInitializer && !context.isStaticInitializer});
   }
   /** The reason (`{code,args}`) the nearest unresolved base type of an imported type is missing, or null. */

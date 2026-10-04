@@ -31,8 +31,9 @@ same registration seam without introducing a parallel request implementation.
 read-only query. The binder records invocation candidates outside executable
 bound nodes. This retains the actual receiver and access rules for incomplete
 calls without adding syntax-name lookup or modifying emission/flow semantics.
-The query index is built once with the source model. It uses sorted opening
-offsets, containing-invocation links and direct opening-offset lookup; repeated
+The query index is built lazily once per requested document within its source
+model. It uses sorted opening offsets, containing-invocation links and binary
+opening-offset lookup; repeated
 queries do not rescan or rebind the source. Candidate display reuses symbol
 formatting and bound generic substitutions. A supplied `callStart` selects a
 containing invocation, and argument separators come from its syntax list.
@@ -71,8 +72,11 @@ after the linked-file request. The affected-file rerun is **pending** at this
 checkpoint; the other two failing fixtures are owned by the shell lane.
 
 Existing completed-scope evidence remains in `docs/a20-insight-coverage.json`
-and `docs/project16-implementation.json`. Invocation retention adds one
-analysis-owned record per bound invocation. Its before/after measurement is
-prepared in `docs/a20-provider-binding-benchmark.md` and is **not yet executed**;
-no performance improvement or unmeasured overhead figure is claimed. No
-browser, native or external compiler oracle was run for this correction batch.
+and `docs/project16-implementation.json`. Invocation retention adds one compact
+analysis-owned record per bound invocation. The first complete before/after
+measurement and its two binding-budget flags are recorded in
+`docs/a20-provider-binding-benchmark.md`. The subsequent compact-record/lazy
+index correction, four focused lookup cases and revised first/repeated-query
+measurements are prepared but **not yet run** at this source checkpoint. No
+performance improvement from that correction is claimed. No browser, native
+or external compiler oracle was run for this correction batch.
