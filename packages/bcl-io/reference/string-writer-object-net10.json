@@ -1,0 +1,66 @@
+{
+  "runtime": "10.0.5",
+  "sourceSha256": "2f36652c6d32e5de0a75869ae37ba05e7b21cf034b76de882884f69063afbe3b",
+  "rows": [
+    {
+      "name": "empty",
+      "kind": "call",
+      "value": "System.IO.StringWriter",
+      "fault": null
+    },
+    {
+      "name": "empty",
+      "kind": "callvirt",
+      "value": "",
+      "fault": null
+    },
+    {
+      "name": "written",
+      "kind": "call",
+      "value": "System.IO.StringWriter",
+      "fault": null
+    },
+    {
+      "name": "written",
+      "kind": "callvirt",
+      "value": "value",
+      "fault": null
+    },
+    {
+      "name": "disposed",
+      "kind": "call",
+      "value": "System.IO.StringWriter",
+      "fault": null
+    },
+    {
+      "name": "disposed",
+      "kind": "callvirt",
+      "value": "value",
+      "fault": null
+    },
+    {
+      "name": "mutated-after-disposal",
+      "kind": "call",
+      "value": "System.IO.StringWriter",
+      "fault": null
+    },
+    {
+      "name": "mutated-after-disposal",
+      "kind": "callvirt",
+      "value": "value!",
+      "fault": null
+    },
+    {
+      "name": "null",
+      "kind": "call",
+      "value": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "name": "null",
+      "kind": "callvirt",
+      "value": null,
+      "fault": "NullReferenceException"
+    }
+  ]
+}

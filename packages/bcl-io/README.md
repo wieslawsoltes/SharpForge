@@ -51,6 +51,16 @@ notifications and the 1,000,000 UTF-16-unit text bound are shared. Appending cos
 the input length plus the builder's existing amortized chunk growth; ToString
 materializes the current buffer. No second buffer or private core import is used.
 
+StringWriter's existing parameterless ToString contract (ID 655380) explicitly opts
+in to Object.ToString dispatch. An `object` reference therefore returns the current
+builder text, including after disposal or an external builder mutation. Source,
+compiled CIL and profile round trips use the shared framework override service;
+ordinary CIL `callvirt` selects the override while nonvirtual `call` retains
+`System.IO.StringWriter`. Both instructions fault on null. The separate ten-row
+.NET 10.0.5 capture under `reference/string-writer-object` pins these cases.
+No new contract, runtime dispatcher or formatting path is added. Convert and
+Console retain their existing object formatting profiles.
+
 The builder remains available and mutable after disposal, while every Write/WriteLine
 throws ObjectDisposedException, including null/empty writes. Flush and NewLine remain
 usable after disposal. WriteLine writes the value and newline separately, preserving

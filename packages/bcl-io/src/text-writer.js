@@ -14,7 +14,7 @@ function contracts({define, member, ctor, prop}) {
   ctor(writerType);
   ctor(writerType, [builderType]);
   member(writerType, 'GetStringBuilder', [], builderType);
-  member(writerType, 'ToString', [], 'string');
+  member(writerType, 'ToString', [], 'string', {objectToStringOverride: true});
 }
 
 function invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {
