@@ -3,18 +3,21 @@ import { CilOpcodes, decodeInstructions } from '../opcodes.js';
 import { metadataTokenUri } from './navigation.js';
 import { invalidUsage, usageLimit, usageLimits, usageCancelled, usageToken, usageHeaders } from './analyzers-input.js';
 import { usageTargets } from './analyzers-targets.js';
+import { declarationRelations, snapshotDeclarationRelations } from './analyzers-declarations.js';
 
 const queryTables = { uses: [6], 'used-by': [1, 2, 4, 6, 10, 17, 27, 43],
-  'instantiated-by': [1, 2, 27], 'assigned-by': [4, 10] };
+  'instantiated-by': [1, 2, 27], 'assigned-by': [4, 10], 'overridden-by': [6], 'implemented-by': [6] };
 
 /** Owned instruction-use occurrences for one module. No PE, inspector, decoded body or binding cache is retained. */
 export class AssemblyUsageAnalysis {
   #edges = [];
-  #indices = new Map(Object.keys(queryTables).map(key => [key, new Map()]));
+  #indices = new Map(Object.keys(queryTables).filter(key => !declarationRelations.includes(key)).map(key => [key, new Map()]));
   #counts;
   #prefix;
   #storage;
   #diagnostics;
+  #bodyComplete;
+  #declarationComplete = new Map();
 
   constructor(inspector, options = {}) {
     if (!(inspector instanceof AssemblyInspector)) invalidUsage('loaded AssemblyInspector required');
@@ -25,6 +28,7 @@ export class AssemblyUsageAnalysis {
     this.#counts = Array.from({ length: 53 }, (_, table) => inspector.metadata.rows[table]?.length ?? 0);
     this.#prefix = metadataTokenUri(inspector.metadata, 1).slice(0, -10);
     this.#diagnostics = preflight.diagnostics;
+    this.#bodyComplete = preflight.diagnostics.length === 0;
     this.#storage = { methods: preflight.methods, codeBytes: preflight.codeBytes, instructions: 0, usages: 0, indexEntries: 0 };
     const target = usageTargets(inspector, this.#counts, options);
     for (const header of preflight.headers) {
@@ -50,6 +54,27 @@ export class AssemblyUsageAnalysis {
       }
     }
     this.#storage.usages = this.#edges.length;
+    if (options.methodRelations !== undefined) {
+      const snapshot = snapshotDeclarationRelations(options.methodRelations, {
+        counts: this.#counts, prefix: this.#prefix, limits, signal: options.signal,
+      });
+      this.#declarations(snapshot);
+    }
+  }
+
+  #declarations(snapshot) {
+    for (const relation of declarationRelations) {
+      this.#indices.set(relation, new Map());
+      this.#declarationComplete.set(relation, !snapshot.diagnostics.some(diagnostic => diagnostic.relation === relation));
+    }
+    for (const entry of snapshot.entries) {
+      const position = this.#edges.length;
+      this.#edges.push(entry);
+      this.#add(entry.relation, entry.targetToken, position);
+    }
+    this.#diagnostics.push(...snapshot.diagnostics);
+    this.#storage.declarationRelations = snapshot.entries.length;
+    this.#storage.declarationDiagnostics = snapshot.diagnostics.length;
   }
 
   #add(relation, token, position) {
@@ -84,6 +109,6 @@ export class AssemblyUsageAnalysis {
       entries.push({ ...edge, source: this.#uri(edge.sourceToken), target: this.#uri(edge.targetToken) });
     }
     return { entries, total: positions.length, nextOffset: limit && end < positions.length ? end : null,
-      complete: this.#diagnostics.length === 0 };
+      complete: this.#declarationComplete.get(relation) ?? this.#bodyComplete };
   }
 }

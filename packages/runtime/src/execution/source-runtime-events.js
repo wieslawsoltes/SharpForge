@@ -1,3 +1,4 @@
+import {callbackFrames} from './callback-frames.js';
 import {RuntimeEventLog, RuntimeEventName} from './runtime-events.js';
 
 // Source observations share the VM lifetime, never its rewindable guest graph.
@@ -42,6 +43,7 @@ export function leaveSourceMethod(vm, frame, reason = 'return') {
 
 function* liveFrames(vm) {
   yield* vm.frames;
+  yield* callbackFrames(vm.scheduler);
   const current = vm.scheduler.currentId;
   for (const [id, context] of vm.scheduler.contexts) {
     if (id === current && !vm.scheduler.parked || terminal.has(context.status)) continue;
@@ -74,7 +76,7 @@ export function flushSourceRuntimeEvents(vm) {
     }
     closeMethods(vm, observer, 'canceled', true);
   }
-  observer.log.flush();
+  if (!vm.scheduler.callbackScopes?.length) observer.log.flush();
 }
 
 /** Invoke only after successful restore: log history remains, observed spans restart explicitly. */
@@ -90,5 +92,5 @@ export function stopSourceRuntimeEvents(vm) {
   const observer = observers.get(vm);
   if (!observer) return;
   closeMethods(vm, observer, 'stop');
-  observer.log.flush();
+  if (!vm.scheduler.callbackScopes?.length) observer.log.flush();
 }

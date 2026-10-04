@@ -14,6 +14,7 @@ export {CilDispatchTable} from './dispatch-profile.js';
 export {managedDelegateSignature, supportedDelegateCall} from './delegate-profile.js';
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
+export {executionFieldAccessError} from './external-field-profile.js';
 export {normalizeCallType, substituteCallType, instantiateSignature, callSignatureKey,
   resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
 export { sha256 } from './binary/hash.js';
@@ -51,3 +52,4 @@ export { AssemblySymbolIndex } from './browser/index.js';
 export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
 
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
+export { MetadataTableInspector } from './inspector-tables.js';

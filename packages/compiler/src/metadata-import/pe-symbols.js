@@ -5,6 +5,7 @@ import {NamespaceSymbol,NamespaceExtent} from '../symbols/namespaces.js';
 import {AssemblyIdentity} from './assembly-identity.js';
 import {MetadataView,Table,tokenOf,tableOf,ridOf,parseMethodSignature,parseFieldSignature,parseTypeSignature} from './pe-metadata.js';
 import {attachSignatureModifiers} from './signature-modifiers.js';
+import { readImportedExtensionMembers } from './extension-blocks.js';
 import {decodeWellKnownAttributes,decodeAttributeBlob,applyTypeTransforms,unsupportedCompilerFeature,grantsInternalsAccess,RequiredMembersObsoleteMarker} from './attributes.js';
 import { importedParameterDefault } from './parameter-defaults.js';
 /**
@@ -44,6 +45,7 @@ export class PENamedTypeSymbol extends NamedTypeSymbol {
     /** The first CompilerFeatureRequired feature this compiler does not know (the type is then unusable), or null. */
     this.unsupportedCompilerFeature=unsupportedCompilerFeature(extra.data);this.mightContainExtensionMethods=extra.mightContainExtensionMethods;this.nullableContext=extra.nullableContext;this._allTypeParameters=extra.allTypeParameters;
     lazy(this,'attributes',()=>assembly._attributes(this.metadataToken));
+    if (extra.mightContainExtensionMethods) lazy(this, 'extensionMembers', () => readImportedExtensionMembers(this));
   }
   get metadataName(){return this._metadataName;}
   /** The underlying integral type of an enum (the type of its value__ field), or null. */

@@ -26,6 +26,7 @@ import { baseTypeChain, allInterfacesOf, containsTypeParameter } from '../symbol
 import { isNullableType } from '../conversions/nullable.js';
 import { spanInferencePair } from '../conversions/span.js';
 import { collectionInferenceArguments } from './collection-inference.js';
+import { inferPointerBounds, InferenceBoundKind } from './pointer-inference.js';
 
 class Bounds {
   constructor() {
@@ -93,6 +94,8 @@ export class TypeInferrer {
       add(this.bounds.get(v).exact, u);
       return;
     }
+    if ((u.kind === SymbolKind.PointerType || u.kind === SymbolKind.FunctionPointerType) &&
+      inferPointerBounds(this, u, v, InferenceBoundKind.Exact)) return;
     if (u instanceof ArrayTypeSymbol && v instanceof ArrayTypeSymbol && u.rank === v.rank) {
       this.exact(u.elementType, v.elementType);
       return;
@@ -124,6 +127,8 @@ export class TypeInferrer {
       add(this.bounds.get(v).lower, u);
       return;
     }
+    if ((u.kind === SymbolKind.PointerType || u.kind === SymbolKind.FunctionPointerType) &&
+      inferPointerBounds(this, u, v, InferenceBoundKind.Lower)) return;
     if (isNullableType(v) && isNullableType(u)) {
       this.lower(u.nullableUnderlyingType, v.nullableUnderlyingType);
       return;
@@ -184,6 +189,8 @@ export class TypeInferrer {
       add(this.bounds.get(v).upper, u);
       return;
     }
+    if ((u.kind === SymbolKind.PointerType || u.kind === SymbolKind.FunctionPointerType) &&
+      inferPointerBounds(this, u, v, InferenceBoundKind.Upper)) return;
     if (u instanceof ArrayTypeSymbol && v instanceof ArrayTypeSymbol && u.rank === v.rank) {
       if (u.elementType.isReferenceType === true) this.upper(u.elementType, v.elementType);
       else this.exact(u.elementType, v.elementType);
@@ -254,7 +261,10 @@ export class TypeInferrer {
         return;
       }
       if (!arg.type || arg.literal) return;
-      if (arg.refKind && arg.refKind !== RefKind.None && arg.refKind !== 'none' && arg.refKind !== RefKind.In) this.exact(arg.type, t);
+      // Pointer-typed inputs infer exactly; raw pointer output types make no lower-bound inference (C# 12.6.3).
+      const exactInput = arg.type.kind === SymbolKind.PointerType ||
+        (arg.refKind && arg.refKind !== RefKind.None && arg.refKind !== 'none' && arg.refKind !== RefKind.In);
+      if (exactInput) this.exact(arg.type, t);
       else this.lower(arg.type, t);
     });
     // Phase 2

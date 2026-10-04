@@ -8,6 +8,21 @@ export const selfChecks = Object.freeze({
       return { status: 'accepted' };
     },
   },
+  'harness-abort-rejection': {
+    async run(_input, { signal }) {
+      await new Promise(resolve => {
+        const finish = () => {
+          clearTimeout(timer);
+          signal.removeEventListener('abort', finish);
+          resolve();
+        };
+        const timer = setTimeout(finish, 500);
+        signal.addEventListener('abort', finish, { once: true });
+        if (signal.aborted) finish();
+      });
+      return signal.aborted ? { status: 'rejected', code: 'FUZZ_CANCELLED' } : { status: 'accepted' };
+    },
+  },
   'harness-allocation': {
     run() {
       const retained = new Uint8Array(4 * 1024 * 1024);

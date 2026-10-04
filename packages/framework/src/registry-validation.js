@@ -1,4 +1,5 @@
 import {validateRegistryInterfaces} from './registry-assignability.js';
+import {normalizeRegistryFields} from './readonly-fields.js';
 /** CLI primitive spellings are intrinsic; all managed reference types must be declared. */
 export const intrinsicTypes=Object.freeze(['void','object','string','bool','char','byte','sbyte','short','ushort','int','uint','long','ulong','float','double','decimal','nint','nuint','System.Enum','System.ValueType','System.MulticastDelegate']);
 export function validateRegistry({types,contracts,origins=new Map()}){
@@ -15,5 +16,6 @@ export function validateRegistry({types,contracts,origins=new Map()}){
        d.parameters.length!==0||d.result!=='string'))fail('Invalid Object.ToString override');
   }
   validateRegistryInterfaces(types);
+  normalizeRegistryFields(types);
   return true;
 }

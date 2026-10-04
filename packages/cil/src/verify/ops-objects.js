@@ -1,13 +1,15 @@
 import { VerificationKind as Kind } from './types.js';
 import { isVerificationAssignable } from './type-relations.js';
 
+const prepare = (instruction, state) => state.metadata.field(instruction.operand);
+
 export const objectTransfers = Object.freeze({
-  ldfld: Object.freeze({ operation: 'load', metadata: true, isStatic: false }),
-  ldsfld: Object.freeze({ operation: 'load', metadata: true, isStatic: true }),
-  stfld: Object.freeze({ operation: 'store', metadata: true, isStatic: false }),
-  stsfld: Object.freeze({ operation: 'store', metadata: true, isStatic: true }),
-  ldflda: Object.freeze({ operation: 'address', metadata: true, isStatic: false }),
-  ldsflda: Object.freeze({ operation: 'address', metadata: true, isStatic: true }),
+  ldfld: Object.freeze({ operation: 'load', metadata: true, isStatic: false, prepare }),
+  ldsfld: Object.freeze({ operation: 'load', metadata: true, isStatic: true, prepare }),
+  stfld: Object.freeze({ operation: 'store', metadata: true, isStatic: false, prepare }),
+  stsfld: Object.freeze({ operation: 'store', metadata: true, isStatic: true, prepare }),
+  ldflda: Object.freeze({ operation: 'address', metadata: true, isStatic: false, prepare }),
+  ldsflda: Object.freeze({ operation: 'address', metadata: true, isStatic: true, prepare }),
 });
 
 function receiverType(actual, field, operation, state) {

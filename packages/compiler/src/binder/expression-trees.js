@@ -27,6 +27,9 @@ const codeByKind = Object.freeze({
   Throw: DiagnosticId.CS8188,
   Tuple: DiagnosticId.CS8143,
   Base: DiagnosticId.CS0831,
+  InlineArrayAccess: DiagnosticId.CS9170,
+  InlineArraySlice: DiagnosticId.CS9170,
+  InlineArrayConversion: DiagnosticId.CS9170,
 });
 const isAscending = positions => positions.every((position, index) => index === 0 || position >= positions[index - 1]);
 

@@ -18,6 +18,7 @@ export const TARGET_IDS = Object.freeze([
 export const SELF_TEST_IDS = Object.freeze([
   'harness-accepted', 'harness-rejected', 'harness-overrun', 'harness-allocation',
   'harness-failure', 'harness-output', 'harness-disposal',
+  'harness-abort-rejection',
 ]);
 
 export const CONTROL_BYTES = 128 * 1024;

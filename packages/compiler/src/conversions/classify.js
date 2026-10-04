@@ -15,7 +15,8 @@ import { isNullableType, stripNullable, acceptsNullLiteral } from './nullable.js
 import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferenceConversion, hasUnboxingConversion } from './reference.js';
 import { resolveUserDefinedConversion } from './user-defined.js';
 import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
-import { pointerConversionKind } from './pointer.js';
+import { hasInlineArrayConversion } from './inline-array.js';
+import { pointerConversionKind, hasImplicitFunctionPointerConversion } from './pointer.js';
 import { isInterpolatedStringHandlerType } from './interpolated-string-handler.js';
 
 export const ConversionKind = Object.freeze(
@@ -40,10 +41,12 @@ export const ConversionKind = Object.freeze(
       'AnonymousFunction',
       'ImplicitThrow',
       'ImplicitSpan',
+      'InlineArray',
       'ImplicitDynamic',
       'ObjectCreation',
       'CollectionExpression',
       'ImplicitPointerToVoid',
+      'ImplicitFunctionPointer',
       'ExplicitPointerToPointer',
       'ExplicitPointerToInteger',
       'ExplicitIntegerToPointer',
@@ -63,6 +66,7 @@ export const ConversionKind = Object.freeze(
 );
 const implicitKinds = new Set([
   'ImplicitPointerToVoid',
+  'ImplicitFunctionPointer',
   'Identity',
   'ImplicitNumeric',
   'ImplicitEnumeration',
@@ -81,6 +85,7 @@ const implicitKinds = new Set([
   'AnonymousFunction',
   'ImplicitThrow',
   'ImplicitSpan',
+  'InlineArray',
   'ImplicitDynamic',
   'ObjectCreation',
   'CollectionExpression',
@@ -196,6 +201,7 @@ export class Conversions {
     }
     if (from.typeKind === TypeKind.Dynamic) return simple.ImplicitDynamic;
     if (pointerConversionKind(from, to, t => this.kindOf(t)) === K.ImplicitPointerToVoid) return simple.ImplicitPointerToVoid;
+    if (hasImplicitFunctionPointerConversion(from, to, this)) return simple.ImplicitFunctionPointer;
     if (hasImplicitReferenceConversion(from, to, this.core)) return simple.ImplicitReference;
     if (hasBoxingConversion(from, to, this.core)) return simple.Boxing;
     if (isTuple(from) && isTuple(to) && tupleElements(from).length === tupleElements(to).length) {
@@ -326,6 +332,7 @@ export class Conversions {
       case 'throw':
         return simple.ImplicitThrow;
       case 'methodGroup':
+      case 'methodAddress':
       case 'lambda':
       case 'implicitNew':
       case 'collection': {
@@ -352,6 +359,7 @@ export class Conversions {
     }
     const from = expression.type;
     if (!from) return NONE;
+    if (hasInlineArrayConversion(from, to, this)) return simple.InlineArray;
     const constant = expression.constantValue;
     // Roslyn classifies an int constant converted to nint as a constant conversion, not as the numeric one.
     if (constant?.isIntegral && !constant.isEnum && this.kindOf(from) === 'int' && this.kindOf(to) === 'nint' && !this.isIdentity(from, to))
