@@ -970,3 +970,34 @@ zero-range inputs using the same before/after runner, one warmup and five sample
 It reports managed allocations and writes separately from host allocations.
 Run comparisons serially on the same host. Other Insert and Replace surfaces in
 #2638 remain separate work.
+
+`StringBuilder.Replace(string oldValue, string newValue, int startIndex, int count)`
+occupies A07 slot 524337 after character Insert 524336. It rejects a null or empty
+`oldValue` before validating `startIndex` and then `count`. Null replacement means
+deletion. Literal, nonoverlapping UTF-16 matches must lie wholly inside the
+original selected window; replacement text is never searched again, and dollar
+sequences have no special meaning. Valid empty windows, identical old/new strings,
+needles larger than the window, and absent matches require no managed allocations
+or writes. Metadata-only shortcuts avoid reading builder chunks.
+
+The range helper reuses `bufferText` and `setBuffer`, leaving the released
+two-argument string Replace implementation unchanged. It splits only the selected
+window, computes the complete result length including the preserved prefix and
+suffix, and checks `MAX` before joining any replacement output. A changed result
+uses one managed string and the existing storage/field notification path. Host
+auxiliary storage is O(builder length + window length + matches + output length),
+bounded by the text profile; literal search work is delegated to the host string
+implementation, without a universal linear-time claim. Capacity and chunk layout
+retain the existing runtime profile; native growth/shrink capacity evidence remains
+in the unchanged 230-row .NET 10.0.5 oracle under
+[`reference/string-builder-replace-range`](reference/string-builder-replace-range/README.md).
+
+Tests compare native content, fluent identity and exact fault/parameter precedence
+through both real VM platforms, both source pipelines and independent CIL. They
+also cover output limits, allocation failure, GC/observer roots, snapshots and a
+bounded 10,000-step differential trace. The static benchmark
+`scripts/benchmarks/a07-string-builder-replace-range.mjs` reports released controls
+separately from new range costs, including 20-call repeated-prefix misses and
+late hits over 16,385 UTF-16 units. Host allocations are not counted as managed
+allocations. Validation and measurements remain with the serial root queue;
+this overload does not complete every Insert/Replace surface tracked by #2638.
