@@ -68,10 +68,15 @@ export function matchAt(program, text, start, budget, initialCaptures = null, de
     } else if (instruction.op === 'save') { captures[instruction.slot] = offset; pointer++; }
     else if (instruction.op === 'jump') pointer = instruction.target;
     else if (instruction.op === 'split') {
-      if (stack.length >= budget.maxStack) throw new SearchLimitError('backtracking stack', budget.steps);
+      if (stack.length >= budget.maxStack || (stack.length + 1) * captures.byteLength > 32000000) {
+        throw new SearchLimitError('backtracking stack', budget.steps);
+      }
       stack.push({ pointer: instruction.second, offset, captures: captures.slice() });
       pointer = instruction.first;
-    } else if (instruction.op === 'progress') pointer = offset === captures[instruction.slot] ? instruction.exit : instruction.target;
+    } else if (instruction.op === 'progress') {
+      if (offset === captures[instruction.slot]) failed = true;
+      else pointer = instruction.target;
+    }
     else if (instruction.op === 'reset') {
       for (const group of instruction.captures) { captures[group * 2] = -1; captures[group * 2 + 1] = -1; }
       pointer++;
