@@ -2,7 +2,7 @@ import {callSourceFrame} from './execution/call-frames.js';
 import {beginSourceStackInstruction,handleSourceInstructionFault} from './execution/source-stack-admission.js';
 import {rootValues} from './execution/frame-roots.js';
 import {executionProfiler} from './execution/profiler.js';
-import {sourceRuntimeEvents, flushSourceRuntimeEvents} from './execution/source-runtime-events.js';
+import {sourceRuntimeEvents, flushSourceRuntimeEvents, restoreSourceMethodEvents} from './execution/source-runtime-events.js';
 import {flushFramePool} from './execution/frame-pool.js';
 import {stopExecution} from './execution/stop.js';
 import {sourceConstant} from './execution/source-numbers.js';
@@ -74,5 +74,9 @@ export class VirtualMachine {
   stop(){stopExecution(this);}
   statistics(){return {artifactFormat:this.image.il?'ECMA-335':'SharpForge IR',assembly:this.image.il?{bytes:this.image.il.assemblyBytes,loadMs:this.image.il.loadMs,decodeMs:this.image.il.decodeMs,verificationMs:this.image.il.verificationMs}:null,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
   snapshot(){return snapshotVM(this,'source');}
-  restore(snapshot){return restoreVM(this,snapshot,'source');}
+  restore(snapshot) {
+    const result = restoreVM(this, snapshot, 'source');
+    restoreSourceMethodEvents(this);
+    return result;
+  }
 }
