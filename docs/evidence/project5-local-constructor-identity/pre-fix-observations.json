@@ -1,0 +1,44 @@
+{
+  "baselineHead": "43fa19c425700e1c4703190f100239c06dd97a75",
+  "rawLogBytes": 74196,
+  "rawLogSha256": "7b57bbfc9e2bc9528980283cd5d93a35b83074fa3d2e862fde4fc277be116b9b",
+  "rawManifestSha256": "3ac9dacb050fe4716da099f6492698a672e7dcb5ae8506fae49a8f312c7ead80",
+  "selection": "The two existing object-identity failures; complete original replay retained separately",
+  "observations": [
+    {
+      "phase": "execution",
+      "error": null,
+      "sourceSha256": "44d36ad19354b60c7bd8419a3c3c9dde55a3279d56236184106c52d04c515afa",
+      "success": true,
+      "diagnostics": [],
+      "assemblyBytes": 2048,
+      "assemblySha256": "fb8148ddb6c4fb4ab285a02cf5133ab04ccb1bb88a56def97235498bc46086ab",
+      "state": "faulted",
+      "output": "",
+      "fault": {
+        "name": "InvalidProgramException",
+        "message": "Field declaring type does not match the receiver",
+        "stack": "InvalidProgramException: Field declaring type does not match the receiver\n    at FieldResolutionCache.resolve (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/field-resolution-cache.js:52:29)\n    at CilTypeSystem.field (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/type-system.js:67:32)\n    at CilVirtualMachine.field (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:74:43)\n    at executeFieldAccess (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/value-fields.js:13:107)\n    at file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/handlers/object-model.js:18:50\n    at dispatchWasmCall (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)\n    at executeCilStep (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/cil-step.js:38:12)\n    at CilVirtualMachine.step (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:91:17)\n    at runCilSlice (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/cil-slice.js:58:17)\n    at CilVirtualMachine.runSlice (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:92:28)",
+        "issues": null
+      }
+    },
+    {
+      "phase": "execution",
+      "error": null,
+      "sourceSha256": "31ee06f226de461a38c733a1db350ee4d86e314cf59254931be24e832fa917d3",
+      "success": true,
+      "diagnostics": [],
+      "assemblyBytes": 2560,
+      "assemblySha256": "19b0c702aeb5f034f1c0c83bf755930dee6d719dd00e42af37665d57fd7dc347",
+      "state": "faulted",
+      "output": "",
+      "fault": {
+        "name": "InvalidProgramException",
+        "message": "Call receiver has no matching declaring instance",
+        "stack": "InvalidProgramException: Call receiver has no matching declaring instance\n    at findCallOwner (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/generic-calls.js:58:33)\n    at selectedCallOwner (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/generic-calls.js:42:20)\n    at file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/calls.js:105:76\n    at ManagedHeap.withRoots (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/heap.js:16:116)\n    at invoke (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/calls.js:64:11)\n    at CilVirtualMachine.invoke (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:87:30)\n    at file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/handlers/call.js:10:93\n    at dispatchWasmCall (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/wasm/call-tier-state.js:135:12)\n    at executeCilStep (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/cil-step.js:38:12)\n    at CilVirtualMachine.step (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:91:17)",
+        "issues": null
+      }
+    }
+  ],
+  "candidateExecution": "not run"
+}

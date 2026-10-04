@@ -1,0 +1,30 @@
+{
+  "head": "43fa19c425700e1c4703190f100239c06dd97a75",
+  "headAfter": "43fa19c425700e1c4703190f100239c06dd97a75",
+  "exitCode": 1,
+  "wallSeconds": 12.188599348068237,
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/cil-canonical-api.test.js",
+    "tests/cli-canonical-cil.test.js",
+    "tests/compiler-canonical-worker-artifacts.test.js",
+    "tests/studio-canonical-artifact-lifecycle.test.js",
+    "tests/compiler-warnings-are-not-failures.test.js",
+    "tests/compiler-namespaces.test.js",
+    "tests/compiler-canonical-managed-replay.test.js",
+    "tests/compiler-direct-cil-adjacent-replay.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "sourceFileCount": 10964,
+  "changedSourceFiles": [],
+  "statusAfter": "",
+  "logSha256": "7b57bbfc9e2bc9528980283cd5d93a35b83074fa3d2e862fde4fc277be116b9b"
+}
