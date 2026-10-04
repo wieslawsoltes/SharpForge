@@ -29,8 +29,8 @@ export class TypeLoader {
   #maxConstructedTypes;
   #specMarkers = new WeakMap();
   #forwarders;
-  #forwarderOptions;
-  #lookupDefinition = (module, fullName) => this.#index(module).names.get(fullName);
+  #maxForwarderHops;
+  #lookupDefinition;
   constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000,
     maxConstructedTypes = 100000, maxForwarderHops = 128 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
@@ -43,7 +43,7 @@ export class TypeLoader {
     if (!Number.isSafeInteger(maxForwarderHops) || maxForwarderHops < 1 || maxForwarderHops > 1024) {
       throw loadError(LoadErrorCode.InvalidConfiguration, 'Invalid type forwarder hop limit');
     }
-    this.#forwarderOptions = { maxMetadataRows, maxForwarderHops, maxDepth };
+    this.#maxForwarderHops = maxForwarderHops;
     if (!Number.isSafeInteger(maxConstructedTypes) || maxConstructedTypes < 1 || maxConstructedTypes > 1000000) {
       throw new RangeError('Invalid constructed type limit');
     }
@@ -127,7 +127,7 @@ export class TypeLoader {
     checkCancellation(options.signal);
     try {
       if (typeof fullName !== 'string' || !fullName || fullName.length > 4096) throw fail('Invalid metadata type name');
-      const token = this.#lookupDefinition(module, fullName);
+      const token = this.#index(module).names.get(fullName);
       if (token) return await this.#start(module, token, options);
       return await this.#find(module, fullName, this.#operation(options.signal));
     } catch (error) {
@@ -137,9 +137,11 @@ export class TypeLoader {
   }
 
   async #find(module, fullName, operation) {
-    const token = this.#lookupDefinition(module, fullName);
+    const token = this.#index(module).names.get(fullName);
     if (token) return this.#load(module, token, operation);
-    this.#forwarders ??= new TypeForwarders(this.#forwarderOptions);
+    this.#forwarders ??= new TypeForwarders({ maxMetadataRows: this.#maxRows,
+      maxForwarderHops: this.#maxForwarderHops, maxDepth: this.#maxDepth });
+    this.#lookupDefinition ??= (target, name) => this.#index(target).names.get(name);
     const target = await this.#forwarders.resolve(module, fullName, this.#lookupDefinition, operation);
     return this.#load(target.module, target.token, operation);
   }
