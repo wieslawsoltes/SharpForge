@@ -11,7 +11,8 @@
     "src",
     "README.md",
     "THIRD-PARTY-NOTICES.md",
-    "LICENSE"
+    "LICENSE",
+    "docs"
   ],
   "license": "MIT",
   "engines": {

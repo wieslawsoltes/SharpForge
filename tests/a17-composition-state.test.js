@@ -1,0 +1,51 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {CompositionObject, CompositionPropertySet} from '@sharpforge/rendering';
+import {compositionOwner} from './fixtures/rendering/composition-owner.js';
+
+test('composition property sets preserve typed copies, missing/type-mismatch outcomes and property quotas', () => {
+  const owner = compositionOwner();
+  const values = new CompositionPropertySet(owner, {maxProperties: 2});
+  const input = [2, 4, 8];
+  values.InsertVector3('Offset', input);
+  input[0] = 100;
+  assert.deepEqual(values.TryGetVector3('Offset'), {status: 'Succeeded', value: [2, 4, 8]});
+  assert.deepEqual(values.TryGetScalar('Offset'), {status: 'TypeMismatch', value: null});
+  assert.deepEqual(values.TryGetScalar('Missing'), {status: 'NotFound', value: null});
+  values.InsertScalar('Progress', 0);
+  assert.throws(() => values.InsertBoolean('Extra', true), /limit/);
+  assert.throws(() => values.InsertBoolean('Progress', true), /type/);
+  assert.throws(() => values.InsertScalar('Progress', Infinity), /Invalid/);
+  assert.equal(values.get('Progress'), 0);
+  values.remove('Offset');
+  values.InsertBoolean('Ready', true);
+  assert.equal(values.TryGetBoolean('Ready').value, true);
+  values.dispose();
+  values.dispose();
+  assert.equal(owner.objects.size, 0);
+  assert.throws(() => values.InsertScalar('Progress', 1), /disposed/);
+});
+
+test('composition state snapshots restore typed schema and reveal current bases when animation values clear', () => {
+  const owner = compositionOwner();
+  const object = new CompositionObject(owner, 'Fixture');
+  object.Properties.InsertScalar('Progress', 0.2);
+  object.Properties.setAnimated('Progress', 0.5);
+  object.Properties.InsertScalar('Progress', 0.7);
+  assert.equal(object.Properties.get('Progress'), 0.5);
+  const snapshot = object.snapshot();
+  object.Properties.clearAnimated('Progress');
+  assert.equal(object.Properties.get('Progress'), 0.7);
+  object.Properties.remove('Progress');
+  object.Properties.InsertBoolean('Future', true);
+  object.restore(snapshot);
+  assert.equal(object.Properties.get('Progress'), 0.5);
+  assert.deepEqual(object.Properties.TryGetBoolean('Future'), {status: 'NotFound', value: null});
+  object.Properties.clearAnimated('Progress');
+  assert.equal(object.Properties.get('Progress'), 0.7);
+  assert.equal(object.Properties.Compositor, owner);
+  assert.throws(() => object.Properties.InsertScalar('invalid-name', 1), /Invalid property name/);
+  object.dispose();
+  assert.equal(owner.objects.size, 0);
+  assert.throws(() => new CompositionObject({...owner, closed: true}, 'Fixture'), /live Compositor/);
+});
