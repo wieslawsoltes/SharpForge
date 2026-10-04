@@ -2,6 +2,7 @@ import {canonicalType} from '@sharpforge/framework';
 import {childSlot} from './model.js';
 import {sourcePath} from './source-text.js';
 import {designInheritancePreviewProfile, designPreviewCapability} from './source-preview.js';
+import {constructorInvokesSourceConstruction} from './source-constructor-preview.js';
 
 function unavailable(reason) {
   return {previewAvailable: false, readOnly: true, sourceWrites: false, reason};
@@ -15,20 +16,6 @@ function sameSources(left, right) {
     return old?.text === file.text && old.version === file.version
       && !!(old.readOnly || old.readonly) === !!(file.readOnly || file.readonly);
   });
-}
-
-function invokesConstruction(component) {
-  if (!component.context || component.method.modifiers?.includes('static') || component.method.parameters.length) return false;
-  const members = component.context.partials.flatMap(partial => partial.members);
-  if (members.some(member => member.kind === 'Field' && member.initializer)) return false;
-  const constructors = members.filter(member => member.kind === 'Method' && member.name === '.ctor');
-  if (constructors.some(method => method.modifiers?.includes('static'))) return false;
-  const constructor = constructors.find(method => !method.parameters.length);
-  if (constructor?.body?.kind !== 'Block' || constructor.body.statements.length !== 1) return false;
-  const statement = constructor.body.statements[0];
-  const expression = statement.expression;
-  return statement.kind === 'ExpressionStatement' && expression?.kind === 'Call' && !expression.args.length
-    && [component.method.name, 'this.' + component.method.name].includes(sourcePath(expression.target));
 }
 
 /** Qualifies a static factory preview only when every custom child has an independent direct-component proof from identical sources. */
@@ -56,7 +43,8 @@ export function designComposedPreviewCapability(analysis, components) {
   const qualified = new Map();
   for (const component of components) {
     const capability = designPreviewCapability(component);
-    if (!capability.previewAvailable || !sameSources(analysis.sources, component.sources) || !invokesConstruction(component)) continue;
+    if (!capability.previewAvailable || !sameSources(analysis.sources, component.sources)
+      || !constructorInvokesSourceConstruction(component)) continue;
     qualified.set(capability.descriptor.type, capability.descriptor);
   }
   const dependencies = new Map();
@@ -64,7 +52,7 @@ export function designComposedPreviewCapability(analysis, components) {
     const descriptor = qualified.get(child.projectType);
     if (!descriptor || descriptor.baseType !== child.type) {
       return unavailable(`Project component '${child.projectType}' requires a current preview and a parameterless constructor `
-        + 'that only invokes its owned construction method.');
+        + 'that directly owns its body or only invokes its owned construction method.');
     }
     const slot = childSlot(child.type);
     if (child.children.length || slot && Object.hasOwn(child.properties, slot.property)) {

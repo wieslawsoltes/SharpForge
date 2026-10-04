@@ -9,6 +9,17 @@ function componentDiagnostic(candidate, message) {
   return {code: 'SFD1862', severity: 'warning', source: 'Designer', uri: candidate.uri, message};
 }
 
+function analyzeProjectComponent(params, options, candidate, reusable) {
+  const request = {...options, uri: candidate.uri, className: candidate.type, previous: undefined,
+    projectTypes: undefined, reuseAnalysis: reusable};
+  try {
+    return analyzeDesignSources(params.files, {...request, methodName: 'InitializeComponent'});
+  } catch (error) {
+    if (error.code !== 'SFSYNC_SYMBOL') throw error;
+    return analyzeDesignSources(params.files, {...request, methodName: '.ctor'});
+  }
+}
+
 /** Caller metadata cannot turn an unrelated compiled class into a visual control. */
 export function assertDesignerProjectTypes(analysis, document = analysis.document, revision = 0) {
   if (!analysis.compilationSucceeded) return;
@@ -41,9 +52,7 @@ export function analyzeDesignerProjectCatalog(params, seed = null) {
     seen.add(candidate.type);
     if (seen.size > 256) throw new RangeError('Project component preview count exceeds 256.');
     try {
-      const analysis = analyzeDesignSources(params.files, {...options, uri: candidate.uri,
-        className: candidate.type, methodName: 'InitializeComponent', previous: undefined,
-        projectTypes: undefined, reuseAnalysis: reusable});
+      const analysis = analyzeProjectComponent(params, options, candidate, reusable);
       reusable ??= analysis;
       const capability = designPreviewCapability(analysis);
       if (capability.previewAvailable) analyses.set(candidate.type, analysis);

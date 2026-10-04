@@ -90,19 +90,22 @@ function reusableSourceAnalysis(analysis, sources, options) {
 
 function selectSourceConstruction(context, options) {
   const {methods, parsedFiles, model} = context;
+  const methodMatches = candidate => !options.methodName || candidate.method.name === options.methodName
+    && (options.methodName !== '.ctor' || !candidate.method.parameters.length && !candidate.method.modifiers?.includes('static'));
   let preferred = methods.filter(candidate => (!options.uri || candidate.parsed.source.uri === options.uri)
     && (!options.className || ownerName(candidate.owner) === options.className || candidate.owner?.name === options.className)
-    && (!options.methodName || candidate.method.name === options.methodName));
+    && methodMatches(candidate));
   if (options.uri && !preferred.some(candidate => ['Create', 'InitializeComponent', 'Main'].includes(candidate.method.name)
     || options.methodName && candidate.method.name === options.methodName)) {
     const active = parsedFiles.find(parsed => parsed.source.uri === options.uri);
     const activeOwners = new Set((active?.root.members ?? []).filter(member => member.kind === 'Class').map(ownerName));
     preferred = methods.filter(candidate => activeOwners.has(ownerName(candidate.owner))
       && (!options.className || ownerName(candidate.owner) === options.className || candidate.owner?.name === options.className)
-      && (!options.methodName || candidate.method.name === options.methodName));
+      && methodMatches(candidate));
   }
   const chosen = chooseMethod(preferred, options.methodName);
-  if (!chosen) failSource('Select a C# file with a declarative Create, InitializeComponent or Main method', null, 'SFSYNC_SYMBOL');
+  if (!chosen) failSource('Select a C# file with a declarative Create, InitializeComponent, Main or parameterless constructor',
+    null, 'SFSYNC_SYMBOL');
   if (chosen.method.body?.kind !== 'Block') failSource('A block-bodied construction method is required', chosen.method);
   const ownerSymbol = model.getDeclaredSymbol(chosen.owner);
   const methodSymbol = model.getDeclaredSymbol(chosen.method);
@@ -112,11 +115,19 @@ function selectSourceConstruction(context, options) {
   return {...context, chosen, ownerSymbol, methodSymbol, partials, fields};
 }
 
+function directlyConstructsControl(method) {
+  return method.body?.statements?.some(statement => statement.kind === 'Local'
+    ? statement.declarations.some(declaration => isDesignControl(declaration.initializer?.type))
+    : statement.expression?.kind === 'Assignment' && isDesignControl(statement.expression.right?.type));
+}
+
 function chooseMethod(candidates, requested) {
   let selected = requested ? candidates : [];
   if (!requested) {
-    for (const name of ['Create', 'InitializeComponent', 'Main']) {
-      selected = candidates.filter(candidate => candidate.method.name === name);
+    for (const name of ['Create', 'InitializeComponent', 'Main', '.ctor']) {
+      selected = candidates.filter(candidate => candidate.method.name === name
+        && (name !== '.ctor' || !candidate.method.parameters.length && !candidate.method.modifiers?.includes('static')
+          && directlyConstructsControl(candidate.method)));
       if (selected.length) break;
     }
   }

@@ -9,8 +9,9 @@ authoring and generation, including staged features that require another executi
 
 ## Supported C# source editing
 
-`probeDesignSource(text, uri)` recognizes a block-bodied `Create`, `InitializeComponent`, or `Main` that directly constructs supported
-controls. It is a syntax-only compatibility gate; the full reader must still prove the construction and its editable statements.
+`probeDesignSource(text, uri)` recognizes a block-bodied `Create`, `InitializeComponent`, `Main`, or parameterless instance constructor
+that directly constructs supported controls. It is a syntax-only compatibility gate; the full reader must still prove the
+construction and its editable statements. Preferred named methods retain priority over direct constructors.
 Console-only programs, expression-bodied factories, and entry points that only call another view's factory do not qualify through
 that gate. Open the file containing the actual construction.
 
@@ -62,8 +63,12 @@ const files = generateDesignProject(design.value); // .sfdesign.json, .g.cs, Pro
 
 **Inherited components are read-only previews.** A closed construction body with a source-proven direct framework base and instance
 `Content`/`Child` assignment can be wrapped for inspection when the compiler reports only the recognized inheritance-profile errors.
-The synthetic wrapper cannot generate source edits, create event handlers or establish successful compilation. Arbitrary base-class
-execution and nested project-control composition are not supplied by this preview capability.
+The synthetic wrapper cannot generate source edits, create event handlers or establish successful compilation. A directly owned
+constructor must be parameterless and block-bodied, with no constructor chaining, field/property initializers or static constructor.
+A closed static `Create` factory may compose separately qualified components when each parameterless constructor directly owns its
+content or only invokes its owned construction method. Every component must be proven against the same source text and versions;
+host content overrides, dynamic bodies and arbitrary base-class execution remain unavailable. Compiler errors stay visible in both
+the component and containing factory, and their source models remain read-only.
 
 **The SharpForge target covers the registered runtime subset.** Default `generateDesignCode()` and `generateDesignProject()` emit
 supported scalar/layout properties, solid brushes, styles, portable templates, ordered Items and Grid definitions. Rich features
