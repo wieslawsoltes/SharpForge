@@ -35,6 +35,7 @@ export {parseFunctionPointerType} from './function-pointer-signature.js';
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
 export {isByrefStructForwarder} from './generic-struct-forwarder.js';
+export {isSizeOfOnlyMethod} from './generic-sizeof-method.js';
 export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
 export {ConstrainedObjectProfile} from './constrained-object-profile.js';
 export {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
