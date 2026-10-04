@@ -83,6 +83,25 @@ test('local construction identity: a user Button and a real framework Button kee
   });
 });
 
+test('local construction identity: a framework constructor and inherited property still execute without a local target', () => {
+  const {assembly, inspector} = compile(`using System;
+    class Program {
+      static void Main() {
+        var value = new Microsoft.UI.Xaml.Controls.Button();
+        value.Name = "framework constructor";
+        Console.WriteLine(value.Name);
+      }
+    }`);
+  const instruction = inspector.getMethod(inspector.pe.entryPoint).instructions.find(value => value.name === 'newobj');
+  const descriptor = resolveExecutionMethod(inspector, instruction.operand);
+  assert.equal(descriptor.owner, platformButton);
+  assert.equal(descriptor.resolvedToken, null);
+  run(assembly, 'framework constructor\n', vm => {
+    const table = vm.typeSystem.table(platformButton);
+    assert.ok(vm.heap.records.some(record => record?.methodTable === table));
+  });
+});
+
 function constructorFixture(memberReference) {
   return genericCallFixture([
     {name: 'Button', fields: [{name: 'Value', type: 'int'}], methods: [
