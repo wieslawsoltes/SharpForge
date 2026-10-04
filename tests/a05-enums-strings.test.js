@@ -76,8 +76,15 @@ test('strings: weak pools drop collected handles and reject handles reused for a
   heap.rootProvider=()=>pool.roots();const original=pool.literal('weak');
   heap.collect();const unrelated=heap.string('other');
   assert.equal(unrelated.h,original.h);
+  assert.notEqual(unrelated.g,original.g);
+  assert.throws(()=>heap.get(original),{name:'InvalidReferenceException'});
   assert.equal(pool.find('weak'),null);
-  const next=pool.literal('weak');assert.notEqual(next.g,original.g);
+  const next=pool.literal('weak');
+  // Generations are per slot: a new slot may start at the same generation as the stale slot.
+  assert.equal(referenceEquals(next,original),false);
+  assert.equal(referenceEquals(next,unrelated),false);
+  assert.throws(()=>heap.get(original),{name:'InvalidReferenceException'});
+  assert.equal(heap.get(unrelated).data,'other');
   assert.equal(heap.get(next).data,'weak');
 });
 test('strings: weak VM pools remain snapshotable without host WeakRefs',()=>{

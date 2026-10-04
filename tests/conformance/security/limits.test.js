@@ -80,8 +80,11 @@ function fault(result, name) {
 }
 const cases = {
   heap(engine) {
-    const source =
-      'int[] a=new int[1000000];int[] b=new int[1000000];int[] c=new int[1000000];int[] d=new int[1000000];int[] e=new int[1000000];Console.WriteLine(a[0]+b[0]+c[0]+d[0]+e[0]);';
+    // Int32 uses four bytes, not the old eight-byte generic slot estimate.
+    // Eight live arrays occupy 32,000,192 bytes; the ninth exceeds 32 MiB.
+    const names = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+    const source = names.map(name => `int[] ${name}=new int[1000000];`).join('')
+      + `Console.WriteLine(${names.map(name => name + '[0]').join('+')});`;
     const result = execute(source, engine);
     fault(result, 'OutOfMemoryException');
     assert.equal(result.output, '');
@@ -187,12 +190,13 @@ if (process.argv[2] === '--limit-case') {
     }
   test('limits heap: exact allocation boundary, one over, invalid length and rooted survival', () => {
     const heap = new ManagedHeap({ maxBytes: 256, initialThreshold: 256 });
-    const value = heap.array('int', 28),
+    // The 24-byte array header plus 58 four-byte elements is exactly 256 bytes.
+    const value = heap.array('int', 58),
       handle = heap.createHandle(value);
     try {
       assert.equal(heap.stats.liveBytes, 256);
       assert.throws(
-        () => heap.array('int', 29),
+        () => heap.array('int', 59),
         (error) =>
           error instanceof ManagedFault &&
           error.name === 'OutOfMemoryException',
