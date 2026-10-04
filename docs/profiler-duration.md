@@ -79,3 +79,8 @@ node scripts/limited.js node --test --test-concurrency=1 tests/a05-profiler-dura
 The example accepts `node examples/runtime/instruction-profile.mjs --duration`.
 Record the commit, engine/version, options and environment when collecting real
 timing evidence; run benchmarks alone on an otherwise quiet machine.
+
+Recursive inclusive overflow regression: all six source/reload/CIL cases and
+47 existing profiler cases passed serially with Node 24.21.0 at `52a0d249`.
+Before the fix, all three recursive overflow cases failed while the three
+finite nonrecursive controls passed. The failure stays outside guest dispatch.
