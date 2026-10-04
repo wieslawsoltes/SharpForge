@@ -69,3 +69,128 @@ test('header reader rejects raw token, RVA, short header and code extent boundar
   pe.bytes.fill(0xff, at + 4, at + 8);
   assert.throws(() => readMethodHeader(pe, 0x06000001), /RVA|section|extent|range/);
 });
+
+test('bound slots without LocalVariable rows expose null names and declared types without invented scopes', () => {
+  const input = fixture(),
+    symbols = loadSymbols(input.assembly, input.pdb);
+  assert.deepEqual(symbols.scopeTree(0x06000001), []);
+  assert.deepEqual(symbols.locals(0x06000001, 0), []);
+  const result = symbols.localSlots(0x06000001);
+  assert.equal(result.available, true);
+  assert.deepEqual(
+    result.slots.map(({ index, name, typeName, unnamed, declarations }) => ({
+      index,
+      name,
+      typeName,
+      unnamed,
+      declarations,
+    })),
+    [
+      { index: 0, name: null, typeName: 'int', unnamed: true, declarations: [] },
+      { index: 1, name: null, typeName: 'string', unnamed: true, declarations: [] },
+    ],
+  );
+  result.slots[0].type.name = 'Changed';
+  symbols.methods[0].localSignature = 0xffffff;
+  assert.equal(symbols.localSlots(0x06000001).slots[0].type.name, 'int');
+  assert.deepEqual(readPortablePdb(input.pdb).localSlots(0x06000001), {
+    available: false,
+    reason: 'type-metadata-required',
+    slots: [],
+  });
+});
+
+test('recorded declarations and hidden flags are preserved while reused slots never choose an invented name', () => {
+  const input = fixture({
+    scopes: [
+      {
+        start: 0,
+        end: 1,
+        locals: [
+          { slot: 0, name: 'first' },
+          { slot: 1, name: 'generated', hidden: true },
+        ],
+      },
+      { start: 0, end: 1, locals: [{ slot: 0, name: 'second' }] },
+    ],
+  });
+  const symbols = loadSymbols(input.assembly, input.pdb);
+  const [reused, hidden] = symbols.localSlots(0x06000001).slots;
+  assert.equal(reused.name, null);
+  assert.equal(reused.unnamed, false);
+  assert.deepEqual(
+    reused.declarations.map((value) => value.name),
+    ['first', 'second'],
+  );
+  assert.equal(hidden.name, 'generated');
+  assert.equal(hidden.declarations[0].compilerGenerated, true);
+  reused.declarations[0].name = 'Changed';
+  symbols.variables[0].name = 'AlsoChanged';
+  assert.equal(symbols.localSlots(0x06000001).slots[0].declarations[0].name, 'first');
+});
+
+test('an empty tiny-method signature differs from missing method metadata and invalid query tokens', () => {
+  const tiny = fixture({ types: [], tiny: true }),
+    absent = fixture({ types: [], noBody: true });
+  assert.deepEqual(loadSymbols(tiny.assembly, tiny.pdb).localSlots(0x06000001), {
+    available: true,
+    reason: null,
+    slots: [],
+  });
+  const symbols = loadSymbols(absent.assembly, absent.pdb);
+  assert.deepEqual(symbols.localSlots(0x06000001), { available: false, reason: 'no-method-body', slots: [] });
+  for (const token of [0, -1, 0x06000002, 0x106000001, 1n, Symbol('method')]) {
+    assert.throws(() => symbols.localSlots(token), /method token/);
+    assert.throws(() => readPortablePdb(absent.pdb).localSlots(token), /method token/);
+  }
+});
+
+test('slot method/aggregate bounds and cancellation precede slot materialization', () => {
+  const input = fixture();
+  for (const options of [
+    { maxLocalSlotMethods: 0 },
+    { maxLocalSlots: 1 },
+    { maxLocalSlots: NaN },
+    { maxLocalSlots: 100001 },
+  ]) {
+    assert.throws(() => loadSymbols(input.assembly, input.pdb, options), /local slot|Local slot/);
+  }
+  assert.throws(() => loadSymbols(input.assembly, input.pdb, { signal: AbortSignal.abort() }), /cancelled/);
+  const controller = new AbortController();
+  const symbols = loadSymbols(input.assembly, input.pdb, { signal: controller.signal });
+  controller.abort();
+  assert.throws(() => symbols.localSlots(0x06000001), /cancelled/);
+  const wide = fixture({ types: Array.from({ length: 100 }, () => primitive('int')) });
+  assert.throws(() => loadSymbols(wide.assembly, wide.pdb, { maxLocalSlots: 99 }), /aggregate limit/);
+});
+
+test('unnamed-slot inspection validates method-header signature tokens before dereferencing rows', () => {
+  const input = fixture(),
+    pe = readPE(input.assembly),
+    header = readMethodHeader(pe, 0x06000001);
+  new DataView(input.assembly.buffer, input.assembly.byteOffset).setUint32(header.fileOffset + 8, 0x12000001, true);
+  assert.throws(() => loadSymbols(input.assembly, input.pdb), /local signature token/);
+});
+
+import { readFileSync } from 'node:fs';
+test('Release CLR slot types and SRM declarations match without reconstructing eliminated variables', () => {
+  const directory = new URL('./fixtures/portable-pdb-unnamed-slots/', import.meta.url);
+  const reference = JSON.parse(readFileSync(new URL('reference.json', directory), 'utf8'));
+  assert.equal(reference.reference.mode, 'Release');
+  assert.equal(reference.reference.optimized, true);
+  const symbols = loadSymbols(
+    readFileSync(new URL('UnnamedSlots.dll', directory)),
+    readFileSync(new URL('UnnamedSlots.pdb', directory)),
+  );
+  for (const method of reference.native.methods) {
+    const result = symbols.localSlots(method.token);
+    assert.equal(result.available, true);
+    assert.deepEqual(
+      result.slots.map(({ type, ...slot }) => slot),
+      method.slots,
+    );
+    for (const slot of result.slots) if (slot.unnamed) assert.equal(slot.name, null);
+  }
+  assert(reference.native.methods.find((method) => method.name === 'Sum').slots.some((slot) => slot.unnamed));
+  assert.equal(reference.native.methods.find((method) => method.name === 'Gone').slots.length, 0);
+});

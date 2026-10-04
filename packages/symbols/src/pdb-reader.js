@@ -9,6 +9,7 @@ import { readImports } from './import-reader.js';
 import { createAsyncInfoLookup } from './async-info.js';
 import { createImportLookup } from './imports.js';
 import { createScopeTree } from './scope-tree.js';
+import { unavailableLocalSlots } from './unnamed-slots.js';
 import { metadataName } from './metadata-facts.js';
 import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
 export function readPortablePdb(
@@ -164,6 +165,7 @@ export function readPortablePdb(
     constants,
     scopes,
     scopeTree,
+    localSlots: unavailableLocalSlots(md.externalCounts[6] ?? 0),
     imports,
     effectiveImports,
     stateMachines,
