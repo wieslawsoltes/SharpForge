@@ -16,7 +16,7 @@ model and activates its existing lazy tool. A location contains `uri`, `offset`
 (or `start`), and optional `version`/`projectId`. Omitted project identity is
 resolved by `StudioProjects.serviceFor` using that URI. `StudioProjects.request`
 forwards the **selected service's actual ID** to the worker. Hierarchy handlers
-return that project ID and each result's own source version; nested queries
+return that project ID, project configuration revision and each result's own source version; nested queries
 retain them regardless of subsequent startup-project or active-editor changes.
 Root Studio delegates its existing Call Hierarchy command to this public seam.
 

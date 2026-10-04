@@ -38,21 +38,23 @@ function rangeFormatting(workspace, parameters) {
   return formatDocument(workspace, parameters.uri, parameters.options).filter(edit => edit.start >= start && edit.start < end);
 }
 
-function hierarchyItem(workspace, item, projectId) {
+function hierarchyItem(workspace, item, {projectId, revision}) {
   const source = sourceFor(workspace, {uri: item.uri});
-  return {...item, version: source.version, ...(projectId ? {projectId} : {})};
+  return {...item, version: source.version, ...(projectId ? {projectId} : {}),
+    ...(revision === undefined ? {} : {projectRevision: revision})};
 }
 
 function hierarchyCalls(workspace, language, parameters, direction) {
   sourceFor(workspace, parameters);
   const item = parameters.item;
   if (!item || item.uri !== parameters.uri || item.version !== undefined && item.version !== parameters.version ||
-      item.projectId !== undefined && item.projectId !== parameters.projectId) {
+      item.projectId !== undefined && item.projectId !== parameters.projectId ||
+      item.projectRevision !== undefined && item.projectRevision !== parameters.revision) {
     failure('SFED1202', 'Call hierarchy belongs to another source or project');
   }
   return language.calls(item, direction).map(call => ({
-    item: hierarchyItem(workspace, call.item, parameters.projectId),
-    ranges: call.ranges.map(range => hierarchyItem(workspace, range, parameters.projectId))
+    item: hierarchyItem(workspace, call.item, parameters),
+    ranges: call.ranges.map(range => hierarchyItem(workspace, range, parameters))
   }));
 }
 
@@ -79,7 +81,7 @@ export function registerEditorLanguageHandlers(handlers, {workspace, language, r
     callHierarchy(parameters) {
       const source = sourceFor(workspace, parameters);
       return language.callHierarchy(parameters.uri, offsetFor(source, parameters.offset))
-        .map(item => hierarchyItem(workspace, item, parameters.projectId));
+        .map(item => hierarchyItem(workspace, item, parameters));
     },
     incomingCalls(parameters) { return hierarchyCalls(workspace, language, parameters, 'incoming'); },
     outgoingCalls(parameters) { return hierarchyCalls(workspace, language, parameters, 'outgoing'); },
@@ -151,8 +153,8 @@ export function registerEditorLanguageHandlers(handlers, {workspace, language, r
       if (parameters.activeParameter !== undefined && (!Number.isInteger(parameters.activeParameter) || parameters.activeParameter < 0)) {
         failure('SFED1203', 'Invalid signature parameter index');
       }
-      const help = language.signatureHelp(parameters.uri, offset, {callStart: parameters.callStart,
-        activeParameter: parameters.activeParameter});
+      // The editor's lexical count is a hint; bound syntax knows commas in nested generic type arguments.
+      const help = language.signatureHelp(parameters.uri, offset, {callStart: parameters.callStart});
       return help ? {...help, version: source.version} : null;
     },
     diagnostics(parameters) {

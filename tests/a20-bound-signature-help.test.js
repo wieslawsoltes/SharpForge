@@ -94,3 +94,13 @@ test('unresolved receivers and stale worker snapshots never return unrelated met
     {code: 'SFED1203'});
   assert.throws(() => current.workspace.sourceModel().signatureHelp('Calls.cs', -1), RangeError);
 });
+
+test('worker uses syntax argument separators when a lexical hint counts a nested generic comma', t => {
+  const current = fixture(t, 'class Pair<T,U>{} class C { void F(object value,int flags){} ' +
+    'void M(){this.F(new Pair<int,string>(),2);} }');
+  const callStart = current.text.indexOf('this.F(') + 6;
+  const offset = current.text.indexOf(',2)') + 1;
+  const result = current.protocol.dispatch('signatureHelp', {uri: 'Calls.cs', version: 11, callStart, offset, activeParameter: 2});
+  assert.equal(result.activeParameter, 1);
+  assert.equal(result.signatures[0].parameters[result.activeParameter].label, 'int flags');
+});

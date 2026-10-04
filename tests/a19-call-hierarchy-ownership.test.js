@@ -149,6 +149,16 @@ test('worker rejects a call item from a different project or document even at th
     item: {...root.item, uri: 'Alpha/Program.cs'}}), {code: 'SFED1202'});
 });
 
+test('project configuration changes invalidate prepared call items without requiring a source edit', async t => {
+  const {model, state, projects, services} = fixture(t);
+  const [root] = await model.prepare({uri: URI, offset: beta.indexOf('Root')});
+  assert.equal(root.item.projectRevision, services.builds.get(BETA).revision);
+  state.configuration = 'Release';
+  projects.sync();
+  assert.equal(services.documents.get(URI).version, 1);
+  await assert.rejects(model.expand(root.children[0]), {code: 'SFED1202'});
+});
+
 test('public shell entry prepares the real model before opening and invalidating its shared tool', async t => {
   const {model} = fixture(t);
   const events = [];
