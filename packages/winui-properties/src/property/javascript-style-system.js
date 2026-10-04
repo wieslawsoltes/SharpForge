@@ -94,7 +94,7 @@ export function createJavaScriptStyleSystem(options) {
     else if (!context.propertyChanged) context.valueDependencies.changed(change);
     if (isValue(object)) valueChanged(object);
     else emitProperty(object, change.property);
-    if (name === 'Style') applyStyle(object, change.newValue);
+    if (name === 'Style' || name === 'DefaultStyleKey') applyStyle(object, object.$values.Style);
     if (name === 'Template') templateChanged(object, change.newValue);
     if (name === 'Name') bindingContext.services?.nameChanged?.(object, change.oldValue, change.newValue);
   }
@@ -163,16 +163,17 @@ export function createJavaScriptStyleSystem(options) {
     const property = propertyFor(object, name);
     candidate = validate(object, property, candidate);
     const local = object.$locals.has(property.name);
-    object.$locals.add(property.name);
-    if (property.name === 'Style') object.$values['$local:Style'] = true;
     try {
       const action = () => storeFor(object).transaction(() => {
+        context?.sceneJournal?.captureObject(object);
+        object.$locals.add(property.name);
+        if (property.name === 'Style') object.$values['$local:Style'] = true;
         if (!context && property.name === 'Template') templateChanged(object, candidate);
         storeFor(object).setValue(property, candidate);
-        if (context && property.name === 'Style') applyStyle(object, candidate);
+        if (context && ['Style', 'DefaultStyleKey'].includes(property.name)) applyStyle(object, object.$values.Style);
         if (context && property.name === 'Template') templateChanged(object, candidate);
       });
-      if (context?.sceneTransaction && ['Style', 'Template'].includes(property.name)) context.sceneTransaction(action);
+      if (context?.sceneTransaction && ['Style', 'Template', 'DefaultStyleKey'].includes(property.name)) context.sceneTransaction(action);
       else action();
       if (object.$node.type === framework.CONTROLS + 'ControlTemplate') templates.invalidate(object);
       return candidate;
@@ -186,14 +187,17 @@ export function createJavaScriptStyleSystem(options) {
     property = propertyFor(object, property);
     models.assertMutable(object);
     storeFor(object).assertProperty(property, true);
-    object.$locals.delete(property.name);
-    delete object.$values['$local:' + property.name];
-    return storeFor(object).transaction(() => {
+    const action = () => storeFor(object).transaction(() => {
+      context?.sceneJournal?.captureObject(object);
+      object.$locals.delete(property.name);
+      delete object.$values['$local:' + property.name];
       const result = storeFor(object).clearValue(property);
-      if (property.name === 'Style') applyStyle(object, result);
+      if (property.name === 'Style' || property.name === 'DefaultStyleKey') applyStyle(object, object.$values.Style);
       if (property.name === 'Template') templateChanged(object, result);
       return result;
     });
+    return context?.sceneTransaction && ['Style', 'Template', 'DefaultStyleKey'].includes(property.name)
+      ? context.sceneTransaction(action) : action();
   }
 
   function setSource(object, property, source, candidate) {

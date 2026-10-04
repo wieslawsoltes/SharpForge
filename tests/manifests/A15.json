@@ -5,8 +5,13 @@
     "tests/styles-templates.test.js",
     "tests/a15-*.test.js"
   ],
-  "browserScripts": [],
-  "requiredServices": [],
+  "browserScripts": [
+    "tests/browser_a15_properties_test.py"
+  ],
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
   "timeout": 300000,
   "tags": [
     "legacy"

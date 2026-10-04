@@ -70,7 +70,7 @@ export function initializeManagedApplicationServices(context) {
       const themes = application ? ['Light', 'Dark'] : ['Default', 'Light', 'Dark'];
       context.resourceScopeFor(change.owner).setTheme(themes[Number(context.native(change.newValue))] ?? 'Default');
     }
-    if (property.name === 'Style') getResourceServices(context).applyStyle(change.owner);
+    if (property.name === 'Style' || property.name === 'DefaultStyleKey') getResourceServices(context).applyStyle(change.owner);
     if (property.name === 'Template') getResourceServices(context).templateChanged(change.owner);
   };
   context.services.visualStates ??= {apply: (owner, states) => {

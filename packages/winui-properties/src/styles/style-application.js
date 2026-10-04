@@ -12,6 +12,7 @@ export class StyleApplication {
     this.context = {target, store, registry, resources, namescope, storeFor, bind, isBinding, materializeResource, resolveStyle};
     this.layers = new Map();
     this.implicitSubscription = null;
+    this.defaultResource = null;
     this.disposed = false;
   }
 
@@ -104,11 +105,43 @@ export class StyleApplication {
   }
 
   clear(source = ValueSource.StyleSetter) { return this.apply(null, {source}); }
-  setDefaultStyle(style) { return this.apply(style, {source: ValueSource.DefaultStyle}); }
+  setDefaultStyle(style) {
+    const changed = this.apply(style, {source: ValueSource.DefaultStyle});
+    this.defaultResource?.subscription?.();
+    this.defaultResource = null;
+    return changed;
+  }
+
+  /** Resolve the selected default key incrementally; a missing resource uses the registered recipe, if any. */
+  setDefaultStyleResource(key, fallback = null) {
+    if (this.disposed) throw new ResourceFault('SFSTYLE015', 'The style application is disposed.');
+    const previous = this.defaultResource;
+    if (previous && Object.is(previous.key, key) && previous.fallback === fallback) return false;
+    const selection = {key, fallback, subscription: null};
+    const styleFor = value => value === undefined ? fallback : value;
+    this.defaultResource = selection;
+    try {
+      if (key !== null && key !== undefined && this.context.resources) {
+        selection.subscription = this.context.resources.observe(themeResource(key), {
+          allowMissing: true,
+          validate: value => this.prepare(styleFor(value)),
+          changed: value => this.apply(styleFor(value), {source: ValueSource.DefaultStyle})
+        });
+      } else this.apply(fallback, {source: ValueSource.DefaultStyle});
+      previous?.subscription?.();
+    } catch (error) {
+      selection.subscription?.();
+      this.defaultResource = previous;
+      throw error;
+    }
+    return true;
+  }
 
   snapshot() {
     return {version: 1, context: {...this.context}, disposed: this.disposed, implicitSubscription: this.implicitSubscription,
       implicitState: this.implicitSubscription?.snapshot?.(),
+      defaultResource: this.defaultResource && {...this.defaultResource},
+      defaultResourceState: this.defaultResource?.subscription?.snapshot?.(),
       layers: [...this.layers].map(([source, layer]) => ({source, style: layer.style, styleState: layer.style?.snapshot(),
         entries: layer.entries.map(entry => ({...entry})), lifetime: layer.lifetime, lifetimeState: layer.lifetime.snapshot()}))};
   }
@@ -117,11 +150,14 @@ export class StyleApplication {
   restore(snapshot) {
     if (snapshot?.version !== 1) throw new TypeError('Invalid StyleApplication snapshot.');
     if (this.implicitSubscription !== snapshot.implicitSubscription) this.implicitSubscription?.();
+    if (this.defaultResource?.subscription !== snapshot.defaultResource?.subscription) this.defaultResource?.subscription?.();
     for (const layer of this.layers.values()) layer.lifetime.dispose({preserveValues: true, clear: false});
     this.context = snapshot.context;
     this.disposed = snapshot.disposed;
     this.implicitSubscription = snapshot.implicitSubscription;
     if (snapshot.implicitState) this.implicitSubscription?.restore?.(snapshot.implicitState);
+    this.defaultResource = snapshot.defaultResource && {...snapshot.defaultResource};
+    if (snapshot.defaultResourceState) this.defaultResource?.subscription?.restore?.(snapshot.defaultResourceState);
     this.layers.clear();
     for (const entry of snapshot.layers) {
       entry.style?.restore(entry.styleState);
@@ -132,6 +168,11 @@ export class StyleApplication {
 
   *retainedValues() {
     yield this.context?.target;
+    if (this.defaultResource) {
+      yield this.defaultResource.key;
+      if (this.defaultResource.fallback?.retainedValues) yield* this.defaultResource.fallback.retainedValues();
+      else yield this.defaultResource.fallback;
+    }
     for (const layer of this.layers.values()) {
       if (layer.style) yield* layer.style.retainedValues();
       for (const entry of layer.entries) { yield entry.target; yield entry.value; }
@@ -144,6 +185,8 @@ export class StyleApplication {
     this.disposed = true;
     this.implicitSubscription?.();
     this.implicitSubscription = null;
+    this.defaultResource?.subscription?.();
+    this.defaultResource = null;
     const failures = [];
     for (const [source, layer] of this.layers) {
       try { layer.lifetime.dispose({preserveValues}); } catch (error) { failures.push(error); }

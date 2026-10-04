@@ -32,7 +32,9 @@ class ResourceServices {
     const reference = context.read(owner, 'Style');
     const application = this.styleApplication(owner);
     try {
-      if (context.defaultStyleFor) application.setDefaultStyle(context.defaultStyleFor(owner));
+      if (context.defaultStyleResourceKey) {
+        application.setDefaultStyleResource(context.defaultStyleResourceKey(owner), context.defaultStyleFor?.(owner) ?? null);
+      } else if (context.defaultStyleFor) application.setDefaultStyle(context.defaultStyleFor(owner));
       if (reference) application.setStyle(styleModel(context, reference));
       else if (context.native(context.read(owner, '$local:Style'))) application.setStyle(null);
       else application.setStyle(undefined);

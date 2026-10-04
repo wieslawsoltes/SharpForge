@@ -5,6 +5,7 @@ import {themeResource} from '../resources/reference.js';
 import {ValueSource} from '../property/property-store.js';
 import {visualStateGroups} from './visual-state-resource-adapters.js';
 import {ResourceFault} from '../resources/errors.js';
+import {defaultStyleSelection} from './default-style-key.js';
 
 const x = 'Microsoft.UI.Xaml.';
 
@@ -17,7 +18,7 @@ export class DefaultTemplateCatalog {
   }
 
   get(owner) {
-    let type = typeof owner === 'string' ? owner : this.context.typeOf(owner);
+    let type = defaultStyleSelection(this.context, owner).type;
     const seen = new Set();
     while (type) {
       if (seen.has(type) || seen.size >= 256) throw new ResourceFault('SFTPL017', 'Default-template ancestry limit exceeded.');
@@ -146,5 +147,6 @@ export class DefaultTemplateCatalog {
 export function installDefaultTemplateCatalog(context, buildStyle, options) {
   const catalog = context.state(null, 'defaultTemplateCatalog', () => new DefaultTemplateCatalog(context, buildStyle, options));
   context.defaultStyleFor = owner => catalog.get(owner);
+  context.defaultStyleResourceKey = owner => defaultStyleSelection(context, owner).key;
   return catalog;
 }
