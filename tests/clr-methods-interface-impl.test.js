@@ -66,6 +66,15 @@ test('CLR malformed MethodImpl owners, body ownership, duplicate declarations an
   }
 });
 
+test('CLR MethodImpl declaration signatures reject oversized type RIDs before they alias local types', async () => {
+  const module = await load(interfaceImplFixture({ memberRef: true, decorate({ md, reference }) {
+    // TypeRef RID 0x1000002 formerly carried into the table byte and became local TypeDef 2.
+    const malformed = Uint8Array.of(0x20, 1, 1, 0x12, 0xc4, 0, 0, 9);
+    md.rows[10][(reference & 0xffffff) - 1][2] = md.blob(malformed);
+  } }));
+  await assert.rejects(module.methodDefinition(0x06000007).getBaseDefinition(), code(LoadErrorCode.InvalidImage));
+});
+
 test('CLR MethodImpl classification bounds ownership and declaration signature allocation', async () => {
   const module = await load();
   const methods = new MethodBaseDefinitions(module.assembly.loadContext.types, { maxDepth: 128, maxMetadataRows: 14 });

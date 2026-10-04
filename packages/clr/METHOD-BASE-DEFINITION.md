@@ -89,7 +89,9 @@ Invocation, vtable execution, full reflected-member views and source VM/direct
 CIL/Rust native/Wasm execution qualification remain separate. #2475 stays open.
 
 
-Interface-only MethodImpl qualification is pending the serial validation slot.
+Interface-only MethodImpl qualification is pending the serial validation slot and
+the shared coded-index RID bounds correction. An authored malformed MemberRef
+signature covers oversized type RIDs that would otherwise alias a local TypeDef.
 Authored cases cover local/external interface declarations, mixed class mappings,
 malformed ownership/tokens/signatures, limits, cancellation/retry and unloading.
 The independent C# fixture includes explicit local interface and IDisposable
