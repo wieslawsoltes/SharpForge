@@ -1,3 +1,4 @@
+import { registerNativeBinlogServices } from './services-binlog.js';
 import { NativeServiceRegistry } from './service-registry.js';
 import { registerNativeSdkServices } from './services-sdk.js';
 
@@ -8,6 +9,9 @@ export function createNativeServices(engine, options = {}) {
   const registry = new NativeServiceRegistry();
   const context = { engine, workspace: engine.workspace };
   const { discover } = registerNativeSdkServices(registry, context);
+  const { binlog } = registerNativeBinlogServices(registry, context);
   for (const contribution of options.contributions ?? []) contribution(registry, context);
-  return { registry, discover };
+  return { registry, discover, binlog };
 }
+
+export { registerNativeBinlogServices } from './services-binlog.js';
