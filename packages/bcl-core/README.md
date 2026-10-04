@@ -117,6 +117,32 @@ released one-argument controls from new mode-aware costs, with setup excluded,
 one warmup, five samples, median/p95 and managed allocation counters. No speedup
 is claimed; culture affixes and the rest of #2621 remain open.
 
+`String.Compare(string, int, string, int, int, StringComparison)` is appended at
+A07 slot `524304`, after the mode-aware affix overloads. `Ordinal` and
+`OrdinalIgnoreCase` compare independently clipped ranges without allocating
+substrings, folded strings or range objects. Invalid enum values are checked
+first; supported modes then order nulls before range validation. Non-null inputs
+validate length, negative indices and past-end indices before zero-length or
+same-range shortcuts. High surrogates pair only within each range's own end, and
+ranges beginning at a low surrogate do not read before their start. Only the
+comparison sign is specified.
+
+Culture modes 0–3 explicitly raise `NotSupportedException` before null, invalid
+range or identity shortcuts. The [292-row native reference](reference/string-compare-comparison-ranges/README.md)
+retains the actual .NET 10.0.5 / SDK 10.0.201 culture results and faults separately
+from this deliberate profile restriction. Tests cover both pipelines/VMs,
+independent CIL, all captured precedence/boundary cases, GC-rooted inputs and
+unchanged raw results/faults for the released 58-case CompareOrdinal range oracle.
+The original whole-string and affix loops remain unchanged.
+
+Comparison takes O(n) time in inspected UTF-16 units and constant auxiliary space.
+The identical bounded `scripts/benchmarks/a07-string-compare-comparison-ranges.mjs`
+runner on baseline `2a1c6007` and the candidate reports existing range and whole
+comparison controls separately from new overload costs, using one warmup and five
+samples per VM, median/p95 and managed allocation counters. #2621 remains open for
+culture support and remaining APIs; Boolean/culture overloads are outside this
+batch.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
