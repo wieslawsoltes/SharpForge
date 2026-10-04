@@ -95,7 +95,7 @@ test('A02-T30 a delegate type synthesized for a lambda is a TypeDef of the assem
   assert.ok(lines('P', 'Main').includes('callvirt <>f__AnonymousDelegate0::Invoke'));
 });
 
-test('A02-T30 module initializers run from <Module>::.cctor when the entry point type has a type initializer', () => {
+test('A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape', () => {
   const program = entryType => `using System; using System.Runtime.CompilerServices;
     static class Startup { [ModuleInitializer] internal static void First() { Console.WriteLine("first"); }
       [ModuleInitializer] internal static void Second() { Console.WriteLine("second"); } }
@@ -105,10 +105,10 @@ test('A02-T30 module initializers run from <Module>::.cctor when the entry point
   assert.ok(!withInitializer.lines('P', 'Main').some(line => line.startsWith('call Startup::')));
   const initializedField = emit(program('class P { static int value = 3; static void Main() { Console.WriteLine(value); } }'));
   assert.equal(initializedField.lines('<Module>', '.cctor').length, 3);
-  // Without one the entry point calls them first: the same order, and it also runs on the direct-CIL runtime.
+  // The previous no-constructor assertion encoded the defective Main-only startup fallback.
   const plain = emit(program('class P { static void Main() { Console.WriteLine("main"); } }'));
-  assert.equal(plain.inspector.types.find(type => type.name === '<Module>').methods.length, 0);
-  assert.deepEqual(plain.lines('P', 'Main').slice(0, 2), ['call Startup::First', 'call Startup::Second']);
+  assert.deepEqual(plain.lines('<Module>', '.cctor'), ['call Startup::First', 'call Startup::Second', 'ret']);
+  assert.ok(!plain.lines('P', 'Main').some(line => line.startsWith('call Startup::')));
 });
 
 test('A02-T30 a program without module initializers declares nothing on <Module>', () => {

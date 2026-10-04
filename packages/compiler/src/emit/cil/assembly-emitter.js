@@ -57,8 +57,6 @@ export class AssemblyEmitter {
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
     this.records = synthesized.records;
     this.fixedBuffers = synthesized.fixedBuffers.byField;
-    /** True when `<Module>::.cctor` calls the module initializers; otherwise the entry point does (module-initializers.js). */
-    this.moduleRunsInitializers = synthesized.moduleMethods.length > 0;
     // A state machine class gets fields while its `MoveNext` is emitted, which moves the field tokens of the classes
     // after it (`emitBodies` allocates again): those bodies come first, class by class, and nothing emitted before
     // names a later class's fields.
@@ -123,16 +121,13 @@ export class AssemblyEmitter {
         method: symbol,
       });
     const machine = this.stateMachines.of(symbol);
-    if (machine) {
-      if (isEntryPointMethod(symbol)) emitter.moduleInitializers();
-      return emitter.kickoffBody(machine);
-    }
+    if (machine) return emitter.kickoffBody(machine);
     if (bound?.binder?.c?.isIterator) emitter.unsupported('iterator methods', symbol.locations?.[0]);
     if (symbol.isAsync) emitter.unsupported('async methods', symbol.locations?.[0]);
     if (symbol.methodKind === MethodKind.Constructor) return emitter.body(bound, () => emitter.constructorPrologue(symbol));
     if (symbol.methodKind === MethodKind.StaticConstructor) return emitter.body(bound, () => emitter.staticInitializers(type));
     if (symbol.methodKind === MethodKind.Destructor && bound) return emitter.destructorBody(bound, type);
-    if (bound) return emitter.body(bound, isEntryPointMethod(symbol) ? () => emitter.moduleInitializers() : null);
+    if (bound) return emitter.body(bound);
     return emitter.synthesizedBody(symbol) ?? emitter.unsupported(`'${symbol.toDisplayString()}' (no body)`, symbol.locations?.[0]);
   }
   uriOf(symbol) {
