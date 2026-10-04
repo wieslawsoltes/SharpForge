@@ -6,7 +6,9 @@
   ],
   "browserScripts": [
     "tests/a25_storage_browser_test.py",
-    "tests/a25_collab_browser_test.py"
+    "tests/a25_collab_browser_test.py",
+    "tests/a25_clone_events_test.py",
+    "tests/a25_clone_browser_test.py"
   ],
   "requiredServices": [],
   "timeout": 1200000,
