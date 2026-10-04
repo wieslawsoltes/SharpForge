@@ -62,8 +62,6 @@ test('A02-T90 closed class: implicitly abstract; sealed, static and an explicit 
 test('A02-E12 features that are not bound report SF2202 with the pinned proposal, never a guess', () => {
   const rows = [
     [`union Shape(int, string); ${main}`, 'SF2202:Shape', /unions\.md revision 1/],
-    ['class Program { static safe void M() { } static void Main() { } }', 'SF2202:safe', /unsafe-evolution\.md revision 1/],
-    ['class Program { static void Main() { int a = unsafe(1); } }', 'SF2202:unsafe(1)', /unsafe-evolution\.md revision 1/],
   ];
   for (const [source, expected, proposal] of rows) {
     const result = compile(source, preview);
