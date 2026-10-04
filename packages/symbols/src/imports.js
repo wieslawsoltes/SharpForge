@@ -1,4 +1,5 @@
 import { fail } from './contracts.js';
+import { defaultParseBudgets } from './budgets.js';
 
 function parents(scopes) {
   const depths = new Uint16Array(scopes.length + 1);
@@ -26,10 +27,11 @@ function parents(scopes) {
 
 /** Snapshot validated import records; queries return fresh entries in parent-to-child recorded order. */
 export function createImportLookup(imports) {
-  if (imports.length > 100000) fail('Import scope count limit exceeded');
+  if (imports.length > defaultParseBudgets.imports) fail('Import scope count limit exceeded');
   let count = 0;
   for (const scope of imports) {
-    if ((count += scope.definitions.length) > 100000) fail('Import definition count limit exceeded');
+    if ((count += scope.definitions.length) > defaultParseBudgets.imports)
+      fail('Import definition count limit exceeded');
   }
   parents(imports);
   const scopes = imports.map((scope) => ({

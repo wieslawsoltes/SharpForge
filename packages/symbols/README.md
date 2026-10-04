@@ -498,3 +498,32 @@ Malformed CLI binary extents/coded indexes are reported as `SymbolError` by the
 PDB reader, including invalid heap handles and truncated constant signatures.
 This validates declared metadata extents without resolving external assemblies
 or claiming every semantic rule, delta generation or execution backend.
+
+`readPortablePdb(input, { budgets, signal })` and `loadSymbols` accept a
+`budgets` object of nonnegative integer limits. Each limit may be lowered from
+its hard default; unknown keys, fractional values and increases reject with
+`SymbolError`. Zero allows an empty category. Existing `maxBytes` (64 MiB file)
+and `maxSourceBytes` (16 MiB per embedded source) remain independent options.
+
+| Budget | Default/hard maximum | Charged work |
+| --- | ---: | --- |
+| `documents` | 100,000 | Document rows |
+| `methods` | 100,000 | Referenced MethodDef count and MethodDebugInformation rows, independently |
+| `scopes` | 100,000 | LocalScope rows |
+| `imports` | 100,000 | ImportScope rows and aggregate import definitions, independently |
+| `customRecords` | 100,000 | CDI rows, including empty payloads |
+| `cdiBytes` | 64 MiB | Sum of CDI payload bytes across row occurrences |
+| `embeddedSourceBytes` | 64 MiB | Sum of decoded embedded-source sizes across row occurrences |
+
+Counts are checked before symbol projection. All CDI and embedded-source sizes
+are checked before the first CDI copy or inflation, including repeated handles
+and repeated document parents. Compressed records charge their declared decoded
+size, subsequently checked by the existing bounded inflater; stored records
+charge their content length. Cancellation is checked before raw parsing and at
+bounded CDI/import intervals. No caller budget object is retained.
+
+The CIL metadata parser's independent one-million raw-row cap still precedes
+these symbol budgets; this API does not introduce a per-table limit on that
+raw metadata allocation. Existing fixed name, nesting, signature and combined
+scope-entry caps also remain active. Budget values count logical work/bytes,
+not measured process memory.

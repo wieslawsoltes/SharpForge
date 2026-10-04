@@ -1,4 +1,5 @@
 import { fail } from './contracts.js';
+import { defaultParseBudgets } from './budgets.js';
 import { hasLocalAnnotations, copyLocalAnnotations } from './local-annotations.js';
 
 function snapshot(scope) {
@@ -37,10 +38,10 @@ function snapshot(scope) {
 export function createScopeTree(scopes, methodCount) {
   let entries = scopes.length,
     characters = 0;
-  if (entries > 100000) fail('Scope tree entry limit exceeded');
+  if (entries > defaultParseBudgets.scopes) fail('Scope tree entry limit exceeded');
   for (const scope of scopes) {
     entries += scope.variables.length + scope.constants.length;
-    if (entries > 100000) fail('Scope tree entry limit exceeded');
+    if (entries > defaultParseBudgets.scopes) fail('Scope tree entry limit exceeded');
     for (const local of scope.variables) characters += local.name.length;
     if (characters > 1024 * 1024) fail('Scope tree name limit exceeded');
   }
