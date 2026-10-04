@@ -38,12 +38,12 @@ stays open. Standalone `validateExceptionControlFlow` is not newly composed into
 this runtime admission API. Existing unsupported-operation diagnostics remain.
 No broad engine or platform qualification is claimed.
 
-Eight focused tests and fifteen ILVerify cases are prepared. They cover
+Eight focused tests and fifteen ILVerify cases passed. They cover
 empty/nonempty catch, finally, fault, branch, shared families and nested catch
 seeds, delayed fallthrough and matching backwards branches. The existing
 conformance catalog's `try-entry-stack` rule and `TryNonEmptyStack` diagnostic
 are reused; additional authored PE fixtures exercise the actual admission API.
-Corrected serial validation remains pending. The existing-path benchmark is
+Corrected serial validation passed all 167 affected tests and local static checks. The existing-path benchmark is
 `node packages/cil/tools/benchmark-handler-entry.mjs OUTPUT.json`; it covers
-no-handler, catch and finally admission with fixed input hashes. No performance
-or passing-native claim is made before that capture.
+no-handler, catch and finally admission with fixed input hashes. Raw captures, fixed paired measurements and the explicit p95 regression sign-off
+are retained in the [evidence](../../tests/fixtures/a03-handler-entry/README.md).
