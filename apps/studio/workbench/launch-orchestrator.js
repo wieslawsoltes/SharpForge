@@ -16,7 +16,9 @@ export class LaunchOrchestrator {
 
   async start({ debug = true, currentProjectId, entries, signal, activate = true, ...overrides } = {}) {
     if (this.operations.size >= 128) throw workbenchError('LAUNCH_QUEUE_LIMIT', 'Launch operation limit reached');
-    const targets = entries ?? this.startup.resolve({ debug, currentProjectId });
+    const targets = entries ?? this.startup.resolve({
+      debug, currentProjectId, currentProfileId: this.profiles.selected.get(currentProjectId) ?? 'default'
+    });
     if (!Array.isArray(targets) || !targets.length || targets.length > 1024) {
       throw workbenchError('STARTUP_EMPTY', 'Choose between one and 1024 startup projects');
     }
@@ -73,7 +75,7 @@ export class LaunchOrchestrator {
     const profile = this.profiles.get(target.projectId, target.profile);
     const session = this.sessions.create({
       projectId: target.projectId, name: service.project.name ?? target.projectId,
-      renderer: profile.renderer, runtimeSettings: profile.runtimeSettings
+      profileId: profile.id, renderer: profile.renderer, runtimeSettings: profile.runtimeSettings
     }, { activate: false });
     try {
       const providerOptions = await this.launchOptions(target.projectId, profile, built);
@@ -109,7 +111,10 @@ export class LaunchOrchestrator {
 
   startNewInstance(projectId, options = {}) {
     this.startup.validateProject(projectId);
-    return this.start({ ...options, entries: [{ projectId, action: 'start', profile: options.profile ?? 'default', debug: options.debug !== false }] });
+    return this.start({
+      ...options,
+      entries: [{ projectId, action: 'start', profile: options.profile ?? this.profiles.selected.get(projectId) ?? 'default', debug: options.debug !== false }]
+    });
   }
 
   cancel(id) {
