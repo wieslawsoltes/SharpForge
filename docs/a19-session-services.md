@@ -164,11 +164,26 @@ The focused Node files are `a19-worker-client.test.js`,
 shared undo, save races and locks on unopened documents. Their fake Worker
 is explicitly a protocol/lifetime test, not compiler or native parity evidence.
 
-`tests/browser_multi_session_test.py` builds two actual C# WinUI applications with
-separate real compiler and runtime workers, checks their rendered panels and output,
-closes only one, and verifies diagnostic isolation while the other remains alive.
-It requires the HTTP harness. The in-memory Blob loader must instead receive
-rewritten worker URLs from the host; this script does not claim to qualify it.
+`tests/browser_multi_session_test.py` loads `TwoApps.slnx` and two C# projects
+through the running Studio's `loadDiskRecords` API. It uses Studio's existing
+workbench services and application windows. The fixture selects distinct profiles
+through the startup toolbar, starts both projects with the actual Start button,
+checks their rendered docking panels and exact argv/environment output, switches
+the shared debugger through its Process selector, and stops only that application.
+It then checks a failing background build in the other project, starts another
+instance through the registered command, and stops all sessions. These checks also
+cover selected-project preservation, independent document locks and panel disposal.
+The fixture uses the shared supported browser launcher and production HTTP/CSP;
+the in-memory Blob loader is explicitly rejected. Its result JSON records the
+selected engine and failure or completion, including checks completed before a
+failure. Browser execution remains pending until run on an installed supported
+engine; authoring or syntax-checking this fixture is not browser qualification.
+
+`tests/a19-multi-session-fixture.test.js` uses the same C# window source with real
+compiler output and two real runtime worker modules in each JavaScript engine. It
+checks the combined WinUI scene, argv, environment and stop-isolation behavior.
+Its Node message transport adapter does not qualify Studio DOM, toolbar routing,
+docking or browser CSP; those are the separate browser fixture's responsibilities.
 
 `a19-runtime-arguments.test.js`, `a19-runtime-environment.test.js` and
 `a19-runtime-worker-launch.test.js` execute real compiler output in both JavaScript
