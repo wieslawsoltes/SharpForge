@@ -8,6 +8,7 @@
  */
 import {tupleDisplay} from './tuple-elements.js';
 import {withTypeArgumentAnnotations} from './annotated-instantiations.js';
+import {membersNamed} from './member-index.js';
 export const SymbolKind=Object.freeze({Assembly:'Assembly',Namespace:'Namespace',NamedType:'NamedType',ArrayType:'ArrayType',PointerType:'PointerType',FunctionPointerType:'FunctionPointerType',DynamicType:'DynamicType',ErrorType:'ErrorType',TypeParameter:'TypeParameter',Method:'Method',Field:'Field',Property:'Property',Event:'Event',Parameter:'Parameter',Local:'Local',Label:'Label',Alias:'Alias',RangeVariable:'RangeVariable',Discard:'Discard'});
 export const TypeKind=Object.freeze({Class:'class',Struct:'struct',Interface:'interface',Enum:'enum',Delegate:'delegate',Array:'array',Pointer:'pointer',FunctionPointer:'functionPointer',TypeParameter:'typeParameter',Dynamic:'dynamic',Error:'error',Submission:'submission',Module:'module'});
 export const Accessibility=Object.freeze({NotApplicable:'notApplicable',Private:'private',ProtectedAndInternal:'privateProtected',Protected:'protected',Internal:'internal',ProtectedOrInternal:'protectedInternal',Public:'public'});
@@ -131,7 +132,10 @@ export class NamedTypeSymbol extends TypeSymbol {
   get interfaces(){return typeof this._interfaces==='function'?this._interfaces=this._interfaces():this._interfaces;}
   get delegateInvokeMethod(){return this.typeKind===TypeKind.Delegate?this.getMembers('Invoke').find(m=>m.kind===SymbolKind.Method)??null:null;}
   /** Members declared by this type; pass a name to filter. */
-  getMembers(name){const all=typeof this._members==='function'?this._members=this._members():this._members;return name===undefined?all:all.filter(m=>m.name===name);}
+  getMembers(name){
+    const all=typeof this._members==='function'?this._members=this._members():this._members;
+    return name===undefined?all:membersNamed(this,all,name);
+  }
   getTypeMembers(name,arity){return this.getMembers(name).filter(m=>m.kind===SymbolKind.NamedType&&(arity===undefined||m.arity===arity));}
   /** Registers a member on a definition while it is being built. */
   addMember(member){if(typeof this._members==='function')this._members=this._members();this._members.push(member);member.containingSymbol=this;return member;}
@@ -186,7 +190,17 @@ export class ConstructedNamedTypeSymbol extends NamedTypeSymbol {
   get typeMap(){if(this._map)return this._map;const outer=this.containingType;let map=outer instanceof ConstructedNamedTypeSymbol?outer.typeMap:TypeMap.empty;return this._map=map.with(this._definition.typeParameters,this._args);}
   get baseType(){const b=this._definition.baseType;return b?b.substitute(this.typeMap):null;}
   get interfaces(){return this._definition.interfaces.map(i=>i.substitute(this.typeMap));}
-  getMembers(name){this._substituted??=this._definition.getMembers().map(m=>m.asMemberOf?m.asMemberOf(this):m);return name===undefined?this._substituted:this._substituted.filter(m=>m.name===name);}
+  /** Members are substituted on first use, one name at a time: a construction rarely needs more than a few of them. */
+  getMembers(name){
+    if(name===undefined)return this._substituted??=this._definition.getMembers().map(m=>this._memberOf(m));
+    let list=this._byName?.get(name);if(!list){list=this._definition.getMembers(name).map(m=>this._memberOf(m));(this._byName??=new Map()).set(name,list);}
+    return list.slice();
+  }
+  _memberOf(member){
+    if(!member.asMemberOf)return member;
+    let own=this._memberMap?.get(member);if(!own){own=member.asMemberOf(this);(this._memberMap??=new Map()).set(member,own);}
+    return own;
+  }
   addMember(){throw new TypeError('Members are added to the generic definition, not to a constructed type');}
 }
 

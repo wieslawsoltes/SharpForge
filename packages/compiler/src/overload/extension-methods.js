@@ -11,6 +11,7 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
+import { NamespaceExtent } from '../symbols/namespaces.js';
 import { ConversionKind } from '../conversions/classify.js';
 
 /** Static, non-generic, non-nested classes can declare extension methods. */
@@ -26,9 +27,21 @@ export function extensionMethodsOf(type, name) {
     ? type.getMembers(name).filter(m => m.kind === SymbolKind.Method && m.isExtensionMethod && m.isStatic && m.parameters.length > 0)
     : [];
 }
+/**
+ * The classes declared directly in a namespace that can declare extensions. A namespace read from metadata never
+ * changes, and a framework namespace has hundreds of types of which a handful declare extensions: its list is
+ * computed once and kept on the namespace symbol (it lives as long as the reference set does).
+ */
+export function extensionClassesIn(namespace) {
+  const parts = namespace.constituentNamespaces;
+  if (parts.length !== 1 || parts[0] !== namespace) return parts.flatMap(extensionClassesIn);
+  const declares = type => type.mightContainExtensionMethods !== false && canDeclareExtensions(type);
+  if (namespace.extent !== NamespaceExtent.Metadata) return namespace.getTypeMembers().filter(declares);
+  return (namespace.extensionClasses ??= Object.freeze(namespace.getTypeMembers().filter(declares)));
+}
 /** The extension methods named `name` declared directly in a namespace. */
 export function extensionMethodsInNamespace(namespace, name) {
-  return namespace.getTypeMembers().flatMap(t => extensionMethodsOf(t, name));
+  return extensionClassesIn(namespace).flatMap(type => extensionMethodsOf(type, name));
 }
 const receiverKinds = new Set([
   ConversionKind.Identity,
