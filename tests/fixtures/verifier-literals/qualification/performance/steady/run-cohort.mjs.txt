@@ -1,0 +1,73 @@
+import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import { cpus, release, totalmem } from 'node:os';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const directory = dirname(fileURLToPath(import.meta.url));
+const manifest = JSON.parse(readFileSync(join(directory, 'manifest.json'), 'utf8'));
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const chronology = [];
+const cleanup = [];
+const environment = {
+  node: process.version, platform: process.platform, arch: process.arch,
+  osRelease: release(), cpuModel: cpus()[0]?.model, logicalCpus: cpus().length,
+  totalMemoryBytes: totalmem(), nodeOptions: process.env.NODE_OPTIONS ?? '',
+  host: manifest.host, heapDeltaMeaning: manifest.heapDeltas,
+};
+writeFileSync(join(directory, 'environment.json'), JSON.stringify(environment, null, 2) + '\n');
+
+function record() {
+  writeFileSync(join(directory, 'chronology.json'), JSON.stringify({ chronology, cleanup }, null, 2) + '\n');
+}
+
+async function run(job) {
+  const expectedHash = manifest.drivers[job.kind].derivedSHA256;
+  if (hash(readFileSync(job.driver)) !== expectedHash) throw new Error(`Driver changed: ${job.name}`);
+  const entry = { name: job.name, order: job.order, startedAt: new Date().toISOString(),
+    sourceCommit: manifest.worktrees[job.revision].sourceCommit,
+    command: [process.execPath, job.driver, job.output, job.selection], cwd: job.cwd };
+  chronology.push(entry);
+  record();
+  console.log(`START ${job.name} ${entry.startedAt}`);
+  const child = spawn(process.execPath, [job.driver, job.output, job.selection], {
+    cwd: job.cwd, env: process.env, stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const stdout = [];
+  const stderr = [];
+  child.stdout.on('data', bytes => stdout.push(bytes));
+  child.stderr.on('data', bytes => stderr.push(bytes));
+  const outcome = await new Promise(resolve => {
+    let error;
+    child.once('error', failure => { error = failure.message; });
+    child.once('close', (code, signal) => resolve({ code, signal, error }));
+  });
+  writeFileSync(job.stdout, Buffer.concat(stdout));
+  writeFileSync(job.stderr, Buffer.concat(stderr));
+  Object.assign(entry, { endedAt: new Date().toISOString(), ...outcome });
+  record();
+  console.log(`END ${job.name} ${JSON.stringify(outcome)} ${entry.endedAt}`);
+  if (outcome.code !== 0 || outcome.signal || outcome.error) throw new Error(`Benchmark failed: ${job.name}`);
+  console.log(Buffer.concat(stdout).toString('utf8').trim());
+}
+
+try {
+  for (const job of manifest.jobs) await run(job);
+} catch (error) {
+  writeFileSync(join(directory, 'failure.json'), JSON.stringify({ message: error.message, stack: error.stack }, null, 2) + '\n');
+  process.exitCode = 1;
+} finally {
+  for (const driver of Object.values(manifest.drivers)) {
+    for (const path of Object.values(driver.temporaryCopies)) {
+      if (hash(readFileSync(path)) === driver.derivedSHA256) {
+        unlinkSync(path);
+        cleanup.push({ path, removed: true });
+      } else {
+        cleanup.push({ path, removed: false, reason: 'Source changed; left untouched' });
+        process.exitCode = 1;
+      }
+    }
+  }
+  record();
+}

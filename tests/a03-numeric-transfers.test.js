@@ -53,7 +53,7 @@ test('unsupported metadata, bodies and opcodes cannot produce a typed proof', ()
     { static: false, body: writer => writer.op('ret') },
     { result: 'int&', parameters: ['int&'], body: writer => writer.op('ldarg.0').op('ret') },
     { noBody: true, body: writer => writer.op('ret') },
-    { body: (writer, context) => writer.op('ldstr', 0x70000000 + context.md.userString('unsupported')).op('pop').op('ret') },
+    { body: (writer, context) => writer.op('ldtoken', context.type).op('pop').op('ret') },
   ];
   for (const fixture of cases) assert.equal(verify({ name: 'Unsupported', ...fixture }).status, 'unknown');
   const malformed = verifyCilMethodTypes(new Uint8Array(10), token);
@@ -88,7 +88,7 @@ test('bounded typed propagation checks cancellation, state-copy work and all dat
 
 test('bytecode after a reachable terminator remains unsupported when its policy is missing', () => {
   const bytes = managedFixture({ entry: null, methods: [{ name: 'Unreachable', body(writer, context) {
-    writer.op('ret').op('ldstr', 0x70000000 + context.md.userString('hidden')).op('pop').op('ret');
+    writer.op('ret').op('ldtoken', context.type).op('pop').op('ret');
   } }] });
   assert.equal(verifyCilMethodTypes(bytes, token).status, 'unknown');
 });
