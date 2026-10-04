@@ -1,0 +1,17 @@
+<Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <Rectangle Canvas.Left="8" Canvas.Top="8" Width="76" Height="104">
+    <Rectangle.Fill>
+      <LinearGradientBrush StartPoint="0,0" EndPoint="0.4,0.4" SpreadMethod="Reflect">
+        <GradientStop Offset="0" Color="#FF164499" /><GradientStop Offset="0.5" Color="#AA66AA55" />
+        <GradientStop Offset="1" Color="#008833AA" />
+      </LinearGradientBrush>
+    </Rectangle.Fill>
+  </Rectangle>
+  <Ellipse Canvas.Left="96" Canvas.Top="8" Width="80" Height="104" Stroke="#FF284466" StrokeThickness="4">
+    <Ellipse.Fill>
+      <LinearGradientBrush MappingMode="Absolute" StartPoint="0,0" EndPoint="24,24" SpreadMethod="Repeat">
+        <GradientStop Offset="0" Color="#FFB53D35" /><GradientStop Offset="1" Color="#FFEFBC43" />
+      </LinearGradientBrush>
+    </Ellipse.Fill>
+  </Ellipse>
+</Canvas>

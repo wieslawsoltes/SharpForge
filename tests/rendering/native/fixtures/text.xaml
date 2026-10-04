@@ -1,0 +1,11 @@
+<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Spacing="6">
+  <TextBlock Text="Office affine — wrapping at a fixed width" FontFamily="Segoe UI" FontSize="16"
+             Width="184" TextWrapping="Wrap" Foreground="#FF234975" />
+  <TextBlock Text="Single line trimming preserves the logical width" FontFamily="Segoe UI" FontSize="14"
+             Width="184" MaxLines="1" TextTrimming="CharacterEllipsis" Foreground="#FF632D67" />
+  <TextBlock Text="العربية עברית 123" FontFamily="Segoe UI" FontSize="20" FlowDirection="RightToLeft"
+             Width="184" Foreground="#FF275C40" />
+  <TextBlock FontFamily="Segoe UI" FontSize="16" Foreground="#FF202020">
+    <Run Text="Styled " /><Run Text="text" FontWeight="Bold" TextDecorations="Underline" />
+  </TextBlock>
+</StackPanel>
