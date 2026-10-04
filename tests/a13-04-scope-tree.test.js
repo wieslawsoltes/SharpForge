@@ -114,6 +114,7 @@ test('bad slot, nonlocal signature, invalid token and signature limits fail befo
     methodToken: method + index,
   }));
   many.symbols.methods = Array.from({ length: 33 }, (_, index) => ({ localSignature: index + 1 }));
+  many.pe.metadata.counts[17] = 33;
   many.pe.metadata.row = () => [1];
   many.pe.metadata.blob = () => new Uint8Array(4096);
   assert.throws(() => bindLocalTypes(many.lookup, many.pe, many.symbols), /signature byte limit/);
@@ -138,4 +139,12 @@ test('PDB local names are bounded before tree snapshots, including overlapping h
   const name = aggregate.string('x'.repeat(1024));
   for (let index = 0; index < 1025; index++) aggregate.add(51, [0, index, name]);
   assert.throws(() => readPortablePdb(aggregate.finish({ 6: 1 }, 0).bytes), /name limit/);
+});
+
+test('oversized PDB local-signature RIDs cannot alias valid StandAloneSig tokens', () => {
+  const { pe, symbols, lookup } = fixture();
+  for (const signature of [0x01000001, 0x11000001, 2, -1, 1.5]) {
+    symbols.methods[0].localSignature = signature;
+    assert.throws(() => bindLocalTypes(lookup, pe, symbols), /local signature/);
+  }
 });

@@ -14,7 +14,14 @@ function localSignatures(pe, symbols) {
     methods = new Map();
   let total = 0;
   for (const [method, slots] of needed) {
-    const signature = symbols.methods[(method & 0xffffff) - 1]?.localSignature;
+    const signature = symbols.methods[(method & 0xffffff) - 1]?.localSignature ?? 0;
+    if (
+      !Number.isInteger(signature) ||
+      signature < 0 ||
+      signature > 0xffffff ||
+      signature > (pe.metadata.counts[17] ?? 0)
+    )
+      fail('Invalid local signature row id');
     let token = signature ? 0x11000000 | signature : 0;
     if (!token && pe.metadata.row(method)[0]) token = pe.methodBody(method).localSignature;
     methods.set(method, { token, slots });
