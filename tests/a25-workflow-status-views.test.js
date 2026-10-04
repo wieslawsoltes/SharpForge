@@ -1,0 +1,87 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { GitIndex } from '../packages/git/src/index-file.js';
+import { readHeadTree } from '../packages/git/src/worktree-tree.js';
+import { worktreeTree } from '../packages/git/src/status.js';
+import { repository, commitFile } from './a25-workflow-fixtures.js';
+
+const oid = 'a'.repeat(40);
+const secondOid = 'b'.repeat(40);
+
+test('direct index lookups and tree views track replacements, stages, flags and compatibility-map mutations', () => {
+  const index = new GitIndex({ entries: [{ path: 'file.txt', oid, mode: 0o100644 }] });
+  const view = index.treeView;
+  assert.equal(index.get('file.txt').oid, oid);
+  index.set({ ...index.get('file.txt'), oid: secondOid });
+  assert.equal(view.get('file.txt').oid, secondOid);
+  index.get('file.txt').intentToAdd = true;
+  assert.equal(view.has('file.txt'), false);
+  index.get('file.txt').intentToAdd = false;
+  assert.equal(view.has('file.txt'), true);
+  index.set({ path: 'file.txt', stage: 2, oid, mode: 0o100644 });
+  index.remove('file.txt', 0);
+  assert.equal(index.get('file.txt'), null);
+  assert.equal(view.has('file.txt'), false);
+  assert.equal(index.get('file.txt', 2).oid, oid);
+  const restored = { ...index.get('file.txt', 2), stage: 0, oid: secondOid };
+  index.byPath.set('0:file.txt', restored);
+  assert.equal(index.get('file.txt'), restored);
+  assert.equal(view.get('file.txt'), restored);
+  assert.equal(index.clone().get('file.txt').oid, secondOid);
+  index.byPath.delete('0:file.txt');
+  assert.equal(view.has('file.txt'), false);
+  index.byPath.clear();
+  assert.equal(index.entries.length, 0);
+  assert.equal(index.get('file.txt', 2), null);
+});
+
+test('internal status views cannot mutate cached HEAD and public tree results remain isolated', async t => {
+  const repo = await repository();
+  t.after(() => repo.dispose());
+  await commitFile(repo, 'file.txt', 'stable\n');
+  assert.deepEqual(await repo.status(), []);
+  repo.treeCache.clear();
+  const head = await readHeadTree(repo);
+  assert.equal(head.set, undefined);
+  assert.equal(head.delete, undefined);
+  assert.equal(head.clear, undefined);
+  assert.equal(head.has('file.txt'), true);
+  assert.deepEqual([...head.keys()], ['file.txt']);
+  assert.equal([...head.values()][0], head.get('file.txt'));
+  assert.throws(() => { head.get('file.txt').oid = secondOid; }, TypeError);
+  const publicTree = await repo.readTree('HEAD');
+  assert.equal(Object.isFrozen(publicTree.get('file.txt')), false);
+  publicTree.get('file.txt').oid = secondOid;
+  publicTree.clear();
+  const working = await worktreeTree(repo);
+  working.get('file.txt').oid = secondOid;
+  working.clear();
+  assert.deepEqual(await repo.status(), []);
+});
+
+test('status reclassifies mutable skip, gitlink and conflict flags on every request', async t => {
+  const repo = await repository();
+  t.after(() => repo.dispose());
+  await commitFile(repo, 'file.txt', 'stable\n');
+  await repo.worktree.remove('file.txt');
+  const entry = repo.index.get('file.txt');
+  const originalOid = entry.oid;
+  assert.equal((await repo.status())[0].code, '.D');
+  entry.skipWorktree = true;
+  assert.deepEqual(await repo.status(), []);
+  entry.skipWorktree = false;
+  assert.equal((await repo.status())[0].code, '.D');
+  entry.mode = 0o160000;
+  entry.oid = secondOid;
+  const gitlink = (await repo.status())[0];
+  assert.equal(gitlink.code, 'T.');
+  assert.equal(gitlink.submodule, 'S...');
+  entry.mode = 0o100644;
+  entry.oid = originalOid;
+  entry.stage = 2;
+  const conflict = (await repo.status())[0];
+  assert.equal(conflict.kind, 'unmerged');
+  assert.equal(conflict.code, 'AU');
+  entry.stage = 0;
+  assert.equal((await repo.status())[0].code, '.D');
+});

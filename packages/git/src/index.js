@@ -18,6 +18,7 @@ export * from './eol.js';
 export * from './status.js';
 export * from './graph.js';
 export * from './revparse.js';
+export * from './repository.js';
 export * from './history.js';
 export * from './blame.js';
 export * from './graph-layout.js';
