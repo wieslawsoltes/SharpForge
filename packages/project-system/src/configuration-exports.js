@@ -6,3 +6,5 @@ export * from './rid.js';
 export * from './context-selection.js';
 export {projectCompilationOptions} from './evaluation/compiler-options.js';
 export * from './launch-settings.js';
+export { expandExpression } from './evaluation/expander.js';
+export { matchesGlob, WorkspacePathIndex } from './evaluation/path-index.js';
