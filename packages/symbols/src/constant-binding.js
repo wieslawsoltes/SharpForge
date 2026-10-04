@@ -35,21 +35,19 @@ function frameworkAssembly(metadata, scope, state) {
   return matched;
 }
 
-function isDecimal(metadata, token, state) {
+function specialType(metadata, token, state) {
   const table = token >>> 24;
-  if (table !== 1 && table !== 2) return false;
+  if (table !== 1 && table !== 2) return null;
   const row = metadata.row(token);
-  if (table === 1 ? (row[0] & 3) === 3 : (row[0] & 7) > 1) return false;
-  if (
-    metadataName(metadata, row[1], 'Constant type') !== 'Decimal' ||
-    metadataName(metadata, row[2], 'Constant namespace') !== 'System'
-  )
-    return false;
+  if (table === 1 ? (row[0] & 3) === 3 : (row[0] & 7) > 1) return null;
+  const name = metadataName(metadata, row[1], 'Constant type');
+  if (!Object.hasOwn(specialTypes, name) || metadataName(metadata, row[2], 'Constant namespace') !== 'System')
+    return null;
   let scope = table === 1 ? decodeCoded('ResolutionScope', row[0]) : 0x20000001;
   if (scope === 1) scope = 0x20000001;
-  if (scope >>> 24 !== 35 && scope !== 0x20000001) return false;
-  if (scope === 0x20000001 && metadata.rows[32]?.length !== 1) return false;
-  return frameworkAssembly(metadata, scope, state);
+  if (scope >>> 24 !== 35 && scope !== 0x20000001) return null;
+  if (scope === 0x20000001 && metadata.rows[32]?.length !== 1) return null;
+  return frameworkAssembly(metadata, scope, state) ? specialTypes[name] : null;
 }
 
 function decimalValue(payload) {
@@ -65,21 +63,33 @@ function decimalValue(payload) {
   return { value: (negative ? '-' : '') + magnitude, decimal: { coefficient, scale, negative } };
 }
 
+function dateTimeValue(payload) {
+  if (payload.length !== 8) fail('DateTime local constant requires exactly 8 value bytes');
+  const ticks = new Reader(payload).i64();
+  if (ticks < 0n || ticks > 3155378975999999999n) fail('DateTime local constant ticks are outside the supported range');
+  return { value: ticks, dateTime: { ticks, kind: 'unspecified' } };
+}
+
+const specialTypes = Object.freeze({
+  Decimal: Object.freeze({ name: 'Decimal', type: 'decimal', decode: decimalValue }),
+  DateTime: Object.freeze({ name: 'DateTime', type: 'datetime', decode: dateTimeValue }),
+});
+
 /** Bind supported special constants to metadata-declared identities; no assembly resolution or PE bytes escape. */
 export function bindConstantTypes(constants, metadata) {
-  const decimalTypes = new Map();
+  const types = new Map();
   const state = { assemblies: new Map(), keyBytes: 0 };
   for (const constant of constants) {
     if (!constant.typeToken) continue;
-    if (!decimalTypes.has(constant.typeToken))
-      decimalTypes.set(constant.typeToken, isDecimal(metadata, constant.typeToken, state));
-    if (!decimalTypes.get(constant.typeToken)) continue;
+    if (!types.has(constant.typeToken)) types.set(constant.typeToken, specialType(metadata, constant.typeToken, state));
+    const type = types.get(constant.typeToken);
+    if (!type) continue;
     const payload = generalConstantPayload(constant.signature, metadata.counts);
     if (payload.typeToken !== constant.typeToken) fail('Inconsistent local constant type');
-    if (payload.kind !== 17) fail('Decimal local constant requires a value-type signature');
+    if (payload.kind !== 17) fail(`${type.name} local constant requires a value-type signature`);
     Object.assign(constant, {
-      ...decimalValue(payload.bytes),
-      type: 'decimal',
+      ...type.decode(payload.bytes),
+      type: type.type,
       decoded: true,
       reason: null,
       enumType: null,

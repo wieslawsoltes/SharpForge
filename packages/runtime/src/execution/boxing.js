@@ -1,0 +1,42 @@
+import {frameworkType} from '@sharpforge/framework';
+import {ManagedFault, isReference} from '../heap.js';
+import {castReference} from './casting.js';
+import {isDecimal} from './decimal.js';
+import {isNumber} from './numeric-ops.js';
+import {isAggregateType} from './value-types.js';
+
+/** Copy an admitted value into a box whose canonical MethodTable retains its exact type. */
+export function boxValue(vm, value, type) {
+  const table = vm.typeSystem.table(type);
+  if (!table.flags.valueType) return castReference(vm.heap, value, table);
+  // Registered framework values retain their existing immutable heap-backed representation.
+  if (isReference(value) && frameworkType(table.name)?.kind === 'value' && vm.heap.get(value).type === table.name) {
+    return vm.heap.withRoots([value], () => {
+      const record = vm.heap.get(value);
+      const copy = vm.heap.allocate(record.kind, record.type, [...record.data]);
+      return vm.heap.allocate('box', table, [copy], [copy]);
+    });
+  }
+  if (isAggregateType(table)) {
+    // Storage owns layout admission, recursive copies, VM identity and reference rejection.
+    return vm.heap.allocate('box', table, [vm.storage(value, table.name)]);
+  }
+  if (isDecimal(value) && table.name !== 'System.Decimal') {
+    throw new ManagedFault('InvalidProgramException', 'Decimal boxing requires its declared type');
+  }
+  if (!isNumber(value) && !isDecimal(value)) {
+    throw new ManagedFault('NotSupportedException', 'Only admitted scalar, sequential struct and registered WinUI value boxing is implemented');
+  }
+  return vm.heap.allocate('box', table, [vm.storage(value, table.name)]);
+}
+
+/** unbox retains a live owned location; unbox.any copies through the declared storage adapter. */
+export function unboxValue(vm, reference, type, byReference = false) {
+  const table = vm.typeSystem.table(type);
+  if (!byReference && !table.flags.valueType) return castReference(vm.heap, reference, table);
+  const record = vm.heap.get(reference);
+  if (record.kind !== 'box' || record.methodTable !== table) {
+    throw new ManagedFault('InvalidCastException', 'Boxed type mismatch');
+  }
+  return byReference ? vm.address('box', 0, reference) : vm.storage(record.data[0], table.name);
+}
