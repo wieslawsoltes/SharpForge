@@ -30,6 +30,21 @@ artifact-download helpers so the context model and later controller share one
 implementation. Advanced build arguments remain a JSON string array, separate
 from application arguments.
 
+## Launch and publish profiles
+
+`NativeProjectProfiles.refresh()` reads launch settings and publish-profile
+descriptions through the connected transport. Its operation explicitly requests
+`{trust: false, save: false}`: inspection does not attach, save, restore, build, run
+or publish. Cancellation and an obsolete project reject before changing the
+published model. At most 1,024 publish profiles are admitted.
+
+`runRequest()` and `publishRequest()` return request data for a separate explicit
+host action. Launch requests preserve argument boundaries, environment variables,
+application URLs, working directories and active context identity. Unsupported
+launch commands, malformed settings and stale selections report errors before an
+executable request can be produced. Publish properties stay inspection-only until
+the native host evaluates the selected profile under its normal trust boundary.
+
 ## Qualification boundary
 
 The direct model tests use explicit in-memory transport callbacks. They cover
