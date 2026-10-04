@@ -24,8 +24,8 @@ existing native output/evidence, and enforces exact installed toolchain pins.
 The later `099430d0e` correction changes only native assertions and documentation;
 it does not change the product, fixture bytes or observer sources.
 
-Every listed command ran once. The only repeat was the explicitly reviewed
-four-file run after correcting the native expectation. There was one native
+Every listed pre-integration command ran once. The only pre-integration repeat
+was the reviewed four-file run after correcting the native expectation. There was one native
 capture and one benchmark run. The single heavy-work slot was released after
 the benchmark. No broad suite, execution backend integration, browser, or Rust
 qualification is claimed.
@@ -131,3 +131,31 @@ These are absolute API costs, not a before/after speedup, import/startup cost,
 or first-assembly-load measure. There was no prior equivalent implementation.
 Allocation counts and build/output-size changes were not measured; no relative
 latency or size regression conclusion is claimed.
+
+## Integration with current main
+
+Actual merge-tree inspection found two conflicts with main
+`19755847de71941a96ff4888d3b16402c966c401`. Merge commit
+`f95f71c4e5e17704b3097c2b9b8491269bfa68e4` preserves both documentation additions
+and all existing diagnostic IDs, including the additive `SFCLR014`/`SFCLR015`
+File exceptions. The package index exports merged automatically. Of nine
+manifest-owned product paths, eight remain byte-identical and only the public
+index gains main's exports. The complete before/after source record identifies
+78 inherited CLR/CIL product path changes. The native fixture, benchmark JSON
+and original qualification archive remain byte-identical.
+
+The same four-file focused scope ran once at this integrated source on
+2026-10-04 **17:14:48.895915–17:14:50.623771 UTC** through `scripts/limited.js`,
+with **20 passed, 0 failed, 0 skipped**. This new correctness gate covers the
+inherited assembly, PE and metadata dependencies; it preserves the earlier
+19/20 failure and corrected 20/20 qualification as distinct historical records.
+No new native capture or performance measurement was performed.
+
+[Integration evidence](integration-f95/manifest.json) retains the exact TAP,
+stderr, execution receipt and source/conflict record, with hashes and byte counts.
+The TAP SHA-256 is
+`ab81975af8a5884a780f5bdfd70421f6617f7fd1aad52d4849c788956284a7ad`.
+The source/conflict record SHA-256 is
+`d9c1ee7968e12f525867ea1a96821e6ee410050841f3ba22a6bab34daf55e19a`.
+The original absolute cost results describe their measured `099430d0e` source;
+this integration gate does not establish updated performance or browser parity.
