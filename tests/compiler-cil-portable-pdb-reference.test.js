@@ -92,7 +92,7 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
       const directory = join(scratch, embeddedPdb ? 'embedded' : 'sidecar');
       mkdirSync(directory);
       const emitted = compileToAssembly([{ uri: 'Program.cs', text: source }], {
-        name: 'Fixture', references: pack.references, embeddedPdb, langVersion: '14',
+        name: 'Fixture', references: pack.references, portablePdb: true, embeddedPdb, langVersion: '14',
       });
       assert.equal(emitted.success, true, emitted.diagnostics.map(diagnostic => diagnostic.message).join('\n'));
       assert.ok(emitted.pdb instanceof Uint8Array);

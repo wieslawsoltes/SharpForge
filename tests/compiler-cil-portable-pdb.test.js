@@ -7,7 +7,7 @@ import { loadSymbols, readDebugDirectory, PdbGuids } from '@sharpforge/symbols';
 import { IlBuilder } from '../packages/compiler/src/emit/cil/il-builder.js';
 
 function compile(source, options = {}) {
-  const result = compileToAssembly(source, { name: 'DebugSample', ...options });
+  const result = compileToAssembly(source, { name: 'DebugSample', portablePdb: true, ...options });
   assert.equal(result.success, true, result.diagnostics.map(diagnostic => `${diagnostic.code}: ${diagnostic.message}`).join('\n'));
   assert.ok(result.pdb instanceof Uint8Array, 'direct CIL returns a Portable PDB');
   return { result, pe: new AssemblyInspector(result.assembly), pdb: loadSymbols(result.assembly, result.pdb) };
@@ -135,7 +135,7 @@ System.Console.WriteLine(5);
   assert.equal(pdb.custom.filter(record => record.kind === PdbGuids.embeddedSource).length, 1);
 });
 
-test('portable, embedded, source embedding and Source Link options match the image compiler contract', () => {
+test('portable and embedded symbols are opt-in and explicit false suppresses both modes', () => {
   const sourceLink = { documents: { 'Program.cs': 'https://example.invalid/Program.cs' } };
   const { result, pdb } = compile('System.Console.WriteLine(1);', { embeddedPdb: true, embedSources: false, includeDebug: false, sourceLink });
   assert.ok(readDebugDirectory(result.assembly).some(entry => entry.kind === 17));
@@ -146,6 +146,12 @@ test('portable, embedded, source embedding and Source Link options match the ima
   assert.equal(disabled.success, true);
   assert.equal(disabled.pdb, null);
   assert.deepEqual(readDebugDirectory(disabled.assembly), []);
+  const defaults = compileToAssembly('System.Console.WriteLine(1);');
+  assert.equal(defaults.pdb, null);
+  assert.deepEqual(readDebugDirectory(defaults.assembly), []);
+  const embeddedOnly = compileToAssembly('System.Console.WriteLine(1);', { embeddedPdb: true });
+  assert.ok(embeddedOnly.pdb instanceof Uint8Array);
+  assert.equal(loadSymbols(embeddedOnly.assembly).bound, true);
 });
 
 test('diagnostic failures return no PDB and library symbols keep an empty entry point', () => {

@@ -80,12 +80,14 @@ const result = compileToAssembly(source, { name: 'App', references });
 ## Direct CIL debug information
 
 `compileToAssembly` returns `{ success, assembly, pdb, diagnostics, format: 'cil' }`.
-Both binary fields are null on diagnostic failure. Its symbol options match
-`compileToIL`: `portablePdb` defaults to true, `embeddedPdb` to false and
-`embedSources` to true; `sourceLink` accepts a Portable PDB Source Link document
-map. Disabling `portablePdb` returns `pdb: null` and avoids marker/source-map
-allocation. `includeDebug` selects the image compiler's private debug payload;
-it does not disable the direct compiler's standard symbols.
+Both binary fields are null on diagnostic failure. Direct CIL symbols are opt-in:
+set `portablePdb: true` for a sidecar PDB or `embeddedPdb: true` for an embedded
+PDB (also returned separately). An explicit `portablePdb: false` disables both.
+With neither option enabled, `pdb` is null and no marker/source-map allocation
+occurs. `embedSources` defaults to true; `sourceLink` accepts a Portable PDB Source
+Link document map. The image compiler's `compileToIL` continues to enable PDBs by
+default. `includeDebug` selects that compiler's private debug payload and does
+not disable the direct compiler's standard symbols.
 
 Source statements map to final instruction offsets after compact encoding,
 branch relaxation and state-machine rewriting. Zero-code and unreachable

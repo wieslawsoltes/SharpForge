@@ -4,7 +4,8 @@ import { CilMethodDebugInformation } from './debug-method.js';
 
 /** Create the optional direct-CIL symbol producer; false avoids source maps, stream markers, and PDB work. */
 export function createCilDebugInformation(analysis, options = {}) {
-  return options.portablePdb === false ? null : new CilDebugInformation(analysis, options);
+  const enabled = options.portablePdb === true || (options.portablePdb !== false && options.embeddedPdb === true);
+  return enabled ? new CilDebugInformation(analysis, options) : null;
 }
 
 class CilDebugInformation {
