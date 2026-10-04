@@ -20,3 +20,4 @@ export * from './media/index.js';
 export * from './icons/index.js';
 export * from './automation/index.js';
 export * from './contracts/automation.js';
+export * from './policy/default-templates.js';

@@ -194,6 +194,10 @@ Registration preserves released numeric identities and exposes typed geometry, b
 
 `createRenderingCoverage` derives exact type/member identities from the supplied integrated registry and records the actual adapter source. Unknown methods remain review-runtime-dispatch rows. The generator emits deterministic JSON and Markdown with explicit native-input, material and backend policies; generated artifacts are implementation metadata rather than passing qualification results.
 
+## Complete host qualification
+
+The complete host fixtures exercise managed source, reloaded assemblies, direct CIL and JavaScript property-store/animation integration. Native and browser qualification remain separate.
+
 ## Validation
 
-Focused cases are authored. The publication manifest records the exact previously tested selection, subsequent repairs and any unrun new fixtures. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
+The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.
