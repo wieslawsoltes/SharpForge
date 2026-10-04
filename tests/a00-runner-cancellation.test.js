@@ -119,7 +119,9 @@ function manifestFixture(t, shortDelay = 0) {
   }
   return {cwd, run: (...args) => spawnSync(process.execPath,
     [fileURLToPath(runnerUrl), '--root', cwd, ...args],
-    {cwd, encoding: 'utf8', timeout: 10000, env: {...process.env, NODE_TEST_CONTEXT: undefined}})};
+    // The outer test runner already owns the local run slot; these fixture commands execute serially within it.
+    {cwd, encoding: 'utf8', timeout: 10000,
+      env: {...process.env, NODE_TEST_CONTEXT: undefined, CI: '1', SHARPFORGE_MAX_PARALLEL_RUNS: undefined}})};
 }
 
 test('A00 runner keeps a short area deadline when a slower area is also selected', t => {
@@ -173,6 +175,18 @@ test('A00 runner preserves ordinary reporter destinations for a single selected 
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stdout + result.stderr);
   assert.match(readFileSync(join(cwd, 'report.tap'), 'utf8'), /A20 fixture/);
+  assert.equal(existsSync(join(cwd, 'A00-started')), false);
+});
+
+test('A00 runner rejects area placeholders that normalize to a shared reporter file', t => {
+  const {cwd, run} = manifestFixture(t);
+  for (const area of ['A00', 'A20']) mkdirSync(join(cwd, area));
+  writeFileSync(join(cwd, 'report.tap'), 'previous report');
+  const result = run('--', '--test-reporter=tap', '--test-reporter-destination={area}/../report.tap');
+  assert.ifError(result.error);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Reporter destination is shared by A00 and A20/);
+  assert.equal(readFileSync(join(cwd, 'report.tap'), 'utf8'), 'previous report');
   assert.equal(existsSync(join(cwd, 'A00-started')), false);
 });
 
