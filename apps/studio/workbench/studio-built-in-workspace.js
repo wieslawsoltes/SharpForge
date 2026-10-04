@@ -15,6 +15,7 @@ function replaceSources(files, metadata, load, context) {
         Object.assign(context.state, {
           nativeMode: false, extraFiles: [], folders: [], membershipDirty: false,
           projectSystem: null, projectSnapshot: null, startupProject: null, disk: null,
+          recoveryReadOnly: false, recoveryEntry: null, recoveryMetadata: null, readOnly: false,
           workspaceEpoch: (context.state.workspaceEpoch ?? 0) + 1, ...metadata
         });
         context.nativeBuild.attached = false;
