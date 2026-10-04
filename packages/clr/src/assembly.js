@@ -1,5 +1,5 @@
 import { readPE } from '@sharpforge/cil';
-import { assemblyIdentityFromRow } from './identity.js';
+import { readIdentity } from './assembly-identity-reader.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
@@ -8,19 +8,6 @@ import { MetadataAccessors } from './type-system/metadata-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataPropertyParameters } from './type-system/metadata-property-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
-
-function namedIdentityRow(row, reference) {
-  if (!reference) return { MajorVersion: row[1], MinorVersion: row[2], BuildNumber: row[3], RevisionNumber: row[4],
-    Flags: row[5], PublicKey: row[6], Name: row[7], Culture: row[8] };
-  return { MajorVersion: row[0], MinorVersion: row[1], BuildNumber: row[2], RevisionNumber: row[3],
-    Flags: row[4], PublicKeyOrToken: row[5], Name: row[6], Culture: row[7] };
-}
-
-function readIdentity(metadata, row, reference, signal) {
-  return assemblyIdentityFromRow(namedIdentityRow(row, reference), {
-    reference, signal, readString: index => metadata.string(index), readBlob: index => metadata.blob(index),
-  });
-}
 
 function guidText(bytes) {
   const hex = index => bytes[index].toString(16).padStart(2, '0');
