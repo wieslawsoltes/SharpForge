@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "testedCommit": "f3ba8a6840803a3cf3c10d716b9f1b4baa3e15a6",
+  "node": "24.19.0",
+  "platform": "linux",
+  "architecture": "x64",
+  "nativeSdk": "10.0.201",
+  "nativeRuntime": "10.0.5",
+  "command": "node scripts/limited.js node --test --test-concurrency=1 tests/clr-resources-reader.test.js tests/clr-resources-corruption.test.js tests/clr-resources-reference.test.js",
+  "result": {
+    "tests": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "postTestChanges": [
+    "resource-reader.js documentation comment only",
+    "qualification documentation and retained evidence"
+  ],
+  "sourceSha256": {
+    "packages/clr/src/index.js": "9b4f566a8477cfc2f56b9afc02c2f3c9fc72dc0aebc0ab96eba8a27c67e6e141",
+    "packages/clr/src/load-errors.js": "3753a0e3270274bf07feb9c976ffedb12bc485890775d50f013f1041ba6ffc1d",
+    "packages/clr/src/resources/resource-codec.js": "8787fb7e27c4fe9cf33509528136c5db72c813215bb1dbf0e1dc4fa873ee3c7b",
+    "packages/clr/src/resources/resource-index.js": "ee5e9ce8cd831d95beea619752e4c233a544d2d033a373b0530482cbb6bd25bc",
+    "packages/clr/src/resources/resource-reader.js": "c68e2ea23a1fe829d304e28e7152b48ed0f4604dc8223568e8f547639e62f1e1",
+    "packages/clr/src/resources/resource-values.js": "1f95f1767bd548a38cde344d7684e3b6762da515db90c242d8c9e46ebeeea33b",
+    "packages/clr/tools/benchmark-resources.mjs": "0321bdba03d3a01f7cec52bbf93ae206defdae179277061e7875ca8291aad0f9",
+    "packages/clr/tools/capture-resources.mjs": "038a918781b12c4f31dd014a0da07a72a081f69a9e816f20cb73a6ca4e523efc",
+    "tests/clr-resources-corruption.test.js": "27504b3e28b7e119081e60f11a7b2cc1beb4fce845ed298dda47e70e48195d27",
+    "tests/clr-resources-fixtures.js": "95bb3c28dadecd02aba72b76dc458e38411e3139b728cccbf4a2a79dbd7272e3",
+    "tests/clr-resources-reader.test.js": "3d1e5ecd078671625c286c5202c0d96a012a005dab59b0c60603a8ae258a1987",
+    "tests/clr-resources-reference.test.js": "50a15bccf1385a6e1b2f62a8fb81b56f8d361635d35d5355bb6080a480d69e80",
+    "tests/fixtures/clr-resources/Program.cs": "7128ed7393586530d7ef96af7f527d76d5f7b5ed96d1388dc2c4038e627e56b4",
+    "tests/fixtures/clr-resources/Sample.resx": "2212dfff6e861b74ddcd0bd350a8b633fe9555f49aca4cf303c341603dcfba0f"
+  },
+  "costCommand": "node scripts/limited.js node packages/clr/tools/benchmark-resources.mjs",
+  "costEnvironment": "Shared host; this team ran one validation job at a time; allocations not measured.",
+  "staticChecks": {
+    "npm run check": {
+      "exitCode": 0,
+      "syntaxModules": 3720,
+      "moduleImports": 3716,
+      "syntaxErrors": 0,
+      "moduleErrors": 0,
+      "unassignedTests": 0,
+      "duplicateTests": 0
+    },
+    "npm run check:structure": {
+      "exitCode": 0,
+      "legacyWarningsRetained": true
+    },
+    "build": "Required PR core runs the build; no local build result is claimed."
+  }
+}
