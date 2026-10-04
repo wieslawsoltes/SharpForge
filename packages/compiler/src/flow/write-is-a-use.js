@@ -17,7 +17,13 @@ const isNullConstant = value => value.literal === 'null' || value.constantValue?
  * @param value the bound expression stored (null: nothing is known, the write is a use)
  */
 export function isWriteAUse(type, value) {
-  if (!value || value.hasErrors) return true;
+  if (!value) return true;
+  // A value in error is a use - except a constant that only does not fit its target (`(byte)300`, CS0221): Roslyn
+  // reports the conversion and still sees a constant.
+  const isNumeric = /Numeric|Constant/.test(String(value.conversion?.kind ?? '')),
+    isConstantOutOfRange = value.kind === 'Conversion' && isNumeric && !!value.operand?.constantValue && !value.operand.hasErrors;
+  if (value.hasErrors && !isConstantOutOfRange) return true;
+  if (value.hasErrors) return false;
   if (type?.isReferenceType === true && type.specialType !== 'System_String') return !isNullConstant(value);
   if (isPointer(type)) return true;
   if (value.constantValue || value.literal || value.isCompileTimeValue) return false;
