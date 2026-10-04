@@ -175,9 +175,16 @@ test('main and detached document navigation invalidate pending reveals and liste
   document.dispatchEvent(arrow);
   assert.equal(scope.services.reveal.intent, intent + 2);
   document.defaultView.dispatchEvent(new Event('unload'));
+  assert.equal(scope.execution.reveals.documents.has(document), false);
   document.dispatchEvent(new Event('pointerdown'));
+  document.dispatchEvent(arrow);
   assert.equal(scope.services.reveal.intent, intent + 2);
+  remove();
+  scope.execution.reveals.install(document);
   scope.execution.dispose();
+  document.dispatchEvent(new Event('pointerdown'));
+  document.dispatchEvent(arrow);
+  assert.equal(scope.services.reveal.intent, intent + 2);
   assert.throws(() => scope.execution.reveals.install(document), /disposed/);
 });
 
