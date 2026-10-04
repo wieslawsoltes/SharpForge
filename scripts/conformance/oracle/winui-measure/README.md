@@ -29,6 +29,17 @@ The corpus includes 18 loaded control/layout/boundary fixtures and two intention
 XAML load errors. Each complete capture contains three observations per fixture;
 all three native dumps must agree, including the actual negative error types.
 
+The code-only application implements `IXamlMetadataProvider` and forwards type
+and XML namespace lookup to `XamlControlsXamlMetaDataProvider` before loading
+control resources or fixture XAML, following Microsoft's
+[managed host setup](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/host-controls-existing-desktop-apps#set-up-the-host).
+Control resources are installed at the start of `OnLaunched`, after application
+initialization and before creating the window or loading fixture XAML. Reading
+`Application.Resources` in the code-only constructor can fail before launch.
+Startup callback exceptions are written to stderr before failing the process.
+The runner retains native exit codes, signals and output; an unexplained crash
+is not classified as an unavailable desktop.
+
 Captures are separate from the existing expected store, never overwrite an existing
 report, and are marked not baseline-qualified. Native execution, Windows runner
 qualification and expected-baseline adoption are separate from authoring. Existing

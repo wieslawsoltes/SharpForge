@@ -1,0 +1,15 @@
+argument value
+range index 5
+invalid bad state
+system System.Collections.Generic.KeyNotFoundException -
+system System.FormatException inner
+system System.NotSupportedException -
+file a.txt
+app TimeoutException slow
+disposed stream
+cast
+index
+null
+True
+2
+thing

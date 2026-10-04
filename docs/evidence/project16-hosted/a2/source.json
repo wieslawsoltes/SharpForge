@@ -1,0 +1,15 @@
+{
+  "sourceSha": "e990e9342678117090a48516ec736d92104be4b2",
+  "sourceTree": "36c33c1974b2429edc1798637673d548c822124d",
+  "trigger": "create",
+  "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-all-20261004-a2",
+  "triggerNonce": "20261004-a2",
+  "captureOnly": true,
+  "workflowRunId": "37171747249",
+  "stage": "all",
+  "engine": "chromium",
+  "runner": "Linux",
+  "runnerLabel": "ubuntu-latest",
+  "editorBaseline": null,
+  "workbenchBaseline": null
+}

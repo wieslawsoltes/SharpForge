@@ -1,0 +1,31 @@
+✔ first-run visual-studio applies theme, global navigation and actual editor shortcuts (30.55006ms)
+✔ first-run vscode applies theme, global navigation and actual editor shortcuts (16.868778ms)
+✔ first-run resharper applies theme, global navigation and actual editor shortcuts (8.011491ms)
+✔ global ReSharper navigation retains file/member/symbol/recent arguments without an active editor (7.433981ms)
+✔ projected query prefixes use the real workbench search filters and source navigation (1.030284ms)
+✔ cancelled first-run selection has no effect, completed setup is skipped, and reselect preserves documents (11.267373ms)
+✔ profile changes keep custom bindings and one effective copy of each common global shortcut (16.643409ms)
+✔ choosing a user scheme clears only supplied current-workspace overrides and persists across reload (8.795414ms)
+✔ invalid scheme and persistence failure reject the complete first-run transaction before changing shortcuts (7.197514ms)
+✔ Options selects ReSharper after setup and commits only edited keys over a workspace override (10.493124ms)
+✔ Import and Export Settings applies a previewed scheme to both scopes without changing editor data (8.502972ms)
+✔ settings profile rejects invalid imports, exports selected categories and can reopen first-run choices (8.425135ms)
+✔ resetting selected categories restores the default scheme while retaining unrelated settings and undo (8.918309ms)
+✔ reset validates categories and remains atomic on storage failure, including the empty boundary (0.915931ms)
+✔ changing schemes cancels an in-progress native and global chord before the next keystroke (7.981677ms)
+✔ menu palette and command window share contextual enablement and the same handler (2.960294ms)
+✔ when parser handles precedence and rejects malformed executable input and nesting (0.376488ms)
+✔ command contributions rollback conflicts and restore replaced handlers (0.475387ms)
+✔ command parser preserves quoted arguments without evaluating expressions (0.609749ms)
+✔ 10000 hidden output invalidations produce no render or scheduled frame (1.009903ms)
+✔ performance records exact per-session percentiles and enforces relative budgets (0.843803ms)
+✔ lazy activation cancellation never resolves a mount and successful module loads cache once (0.479233ms)
+✔ two concurrent tasks cancel independently and keep truthful cancelling state (0.817733ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 518.454379

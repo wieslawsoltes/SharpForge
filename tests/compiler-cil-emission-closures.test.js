@@ -144,8 +144,8 @@ test('A02-T30 an anonymous method without a parameter list takes the parameters 
 
 test('A02-T30 closures the emitter cannot declare yet are refused, not miscompiled', () => {
   assert.match(
-    refused('using System; class Box<T> { public Func<T> Make(T value) { return () => value; } } class C { static void Main() { } }')[0],
-    /^SF2200 .*lambdas and local functions in generic types or methods/,
+    refused(`using System;
+      class C { static void Main() { Func<T> Later<T>(T value) { return () => value; } Console.WriteLine(Later(1)()); } }`)[0],
+    /^SF2200 .*lambdas and local functions inside a generic local function/,
   );
-  assert.match(refused('class C { static void Main() { T Id<T>(T x) => x; System.Console.WriteLine(Id(1)); } }')[0], /^SF2200 .*generic/);
 });

@@ -1,0 +1,65 @@
+✔ coded indices preserve nil, valid tags and the maximum 24-bit row across every layout (0.737292ms)
+✖ physical coded indices reject malformed values and overflow before token composition (0.295334ms)
+✖ an oversized MemberRef TypeRef parent cannot alias a local TypeDef (0.0605ms)
+✖ signature TypeDefOrRef overflow cannot turn an unresolved reference into a local type (0.222041ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 135.459167
+
+✖ failing tests:
+
+test at tests/a03-coded-index-bounds.test.js:23:1
+✖ physical coded indices reject malformed values and overflow before token composition (0.295334ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (invalid): ResolutionScope
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-coded-index-baseline/tests/a03-coded-index-bounds.test.js:27:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/a03-coded-index-bounds.test.js:35:1
+✖ an oversized MemberRef TypeRef parent cannot alias a local TypeDef (0.0605ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (invalid).
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-coded-index-baseline/tests/a03-coded-index-bounds.test.js:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/a03-coded-index-bounds.test.js:40:1
+✖ signature TypeDefOrRef overflow cannot turn an unresolved reference into a local type (0.222041ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (invalid).
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a03-coded-index-baseline/tests/a03-coded-index-bounds.test.js:42:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -105,7 +105,13 @@ export class RegistryBridge {
       // Instance builtins list the receiver as their first parameter; `string.Concat` and friends are static.
       const params = instance ? b.params.slice(1) : b.params;
       const required = b.min - (instance ? 1 : 0);
-      const parameters=params.map((p,i)=>new ParameterSymbol({name:'arg'+i,type:this.typeFromName(builtinParameterType(b,p))??this.objectType,ordinal:i,...(i>=required?{explicitDefaultValue:{value:null}}:{})}));let symbol;
+      const parameters = params.map((type, index) => new ParameterSymbol({
+        name: b.parameterNames?.[index] ?? 'arg' + index,
+        type: this.typeFromName(builtinParameterType(b, type)) ?? this.objectType,
+        ordinal: index,
+        ...(index >= required ? {explicitDefaultValue: {value: null}} : {})
+      }));
+      let symbol;
       if(short==='new')symbol=new MethodSymbol({...pub,name:'.ctor',methodKind:MethodKind.Constructor,returnType:this.byName.get('void'),parameters});
       else if(property){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
       else symbol=new MethodSymbol({...pub,name:short,returnType:this.typeFromName(result)??this.objectType,parameters,modifiers:instance?0:DeclarationModifiers.Static});

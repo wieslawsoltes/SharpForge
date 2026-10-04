@@ -1,0 +1,10 @@
+{
+  "suite": "workbench-performance",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_workbench_perf_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 26.482021308999947
+}
