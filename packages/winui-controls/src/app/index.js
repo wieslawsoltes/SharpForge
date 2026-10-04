@@ -5,3 +5,4 @@ export { DataPackage, ClipboardService, LauncherService } from './data-transfer.
 export { ResourceLoader } from './resources.js';
 export { ResourceManager, ResourceMap, ResourceContext } from './resource-manager.js';
 export { importResw, languageFallbacks } from './resw.js';
+export { managedDataPackage, createDataPackageView } from './adapters.js';
