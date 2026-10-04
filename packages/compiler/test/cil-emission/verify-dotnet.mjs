@@ -6,13 +6,14 @@
  * For every fixture: Roslyn builds the program and .NET runs it (the reference output, pinned in `<name>.out` with
  * `--update`); SharpForge emits the assembly with `compileToAssembly` and the same .NET runtime runs that. Both
  * outputs must equal the pinned one. `--update` also rewrites `<name>.vm` with what the direct-CIL runtime reports
- * for the emitted assembly (the file is removed when it runs there). Needs a .NET SDK; the unit tests do not.
+ * for the emitted assembly (the file is removed when it runs there) and `<name>.image` with what the metadata validator
+ * reports for it (removed when it reports nothing). Needs a .NET SDK; the unit tests do not.
  */
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, existsSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { homedir } from 'node:os';
-import { loadFixtures, emitFixture, runOnDirectCil, fixtureDirectory } from './harness.js';
+import { loadFixtures, emitFixture, inspectImage, runOnDirectCil, fixtureDirectory } from './harness.js';
 
 const args = process.argv.slice(2);
 const option = name => (args.includes(name) ? args[args.indexOf(name) + 1] : null);
@@ -92,6 +93,12 @@ for (const fixture of fixtures) {
   if (update) {
     if (directCilMatches) rmSync(limitFile, { force: true });
     else writeFileSync(limitFile, directCil.limit ?? 'output differs\n');
+  }
+  if (update) {
+    const problems = inspectImage(assembly),
+      imageFile = join(fixtureDirectory, fixture.name + '.image');
+    if (problems.length) writeFileSync(imageFile, problems.join('\n') + '\n');
+    else rmSync(imageFile, { force: true });
   }
   const onDotnet = actual === expected ? 'equal' : 'DIFFERENT',
     limit = (directCil.limit ?? 'output differs').split('\n')[0],

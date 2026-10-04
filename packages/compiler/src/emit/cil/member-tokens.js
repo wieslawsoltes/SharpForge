@@ -8,12 +8,15 @@
  */
 import { compressUnsigned, methodSpecBlob, needsMethodSpec, needsTypeSpec } from '../../codegen/generics.js';
 import { SymbolKind, NamedTypeSymbol, substituteType } from '../../symbols/types.js';
+import { declaringInterfaceOf, genericFrameworkMethod } from './framework-declarations.js';
+import { methodTypeParameter } from './framework-types.js';
 import { fieldSignature, methodSignature, methodSymbolSignature } from '../../codegen/metadata/member-signatures.js';
 
 const LOCAL_SIGNATURE = 0x07;
 const BY_REFERENCE = 0x10;
 const PINNED = 0x45;
 const USER_STRING = 0x70000000;
+const GENERIC_METHOD_INSTANCE = 0x0a;
 
 /**
  * The declaration a member of a constructed framework type stands for. The framework registry lists closed
@@ -69,7 +72,9 @@ export class MemberTokens {
   method(method) {
     const definition = method.originalDefinition ?? method,
       owner = method.containingType,
-      defined = this.writer.methodTokens.get(definition);
+      defined = this.writer.methodTokens.get(definition),
+      generic = defined ? null : genericFrameworkMethod(this.writer.core, method, methodTypeParameter);
+    if (generic) return this.externalGeneric(owner, generic.name, generic.shape, generic.typeArguments);
     const parent = defined && !isInstantiation(owner) ? defined : this.memberReference(owner, definition);
     if (!needsMethodSpec(method)) return parent;
     const instantiation = methodSpecBlob(method, this.types.tokenOf),
@@ -82,8 +87,9 @@ export class MemberTokens {
     return token;
   }
   memberReference(owner, definition) {
-    const declaration = openDeclarationOf(owner, definition);
-    return this.builder.member(this.type(owner), declaration.metadataName, methodSymbolSignature(this.types, declaration));
+    const declaringType = declaringInterfaceOf(this.writer.core, owner, definition.name),
+      declaration = openDeclarationOf(declaringType, definition);
+    return this.builder.member(this.type(declaringType), declaration.metadataName, methodSymbolSignature(this.types, declaration));
   }
   /** Field or MemberRef token of a field. */
   field(field) {
@@ -101,6 +107,22 @@ export class MemberTokens {
    */
   external(owner, name, shape) {
     return this.builder.member(this.type(owner), name, methodSignature(this.types, shape));
+  }
+  /**
+   * MethodSpec token of a generic framework method named by its signature (`shape.arity` type parameters, written
+   * `methodTypeParameter(n)` in the shape) and instantiated over `typeArguments`.
+   */
+  externalGeneric(owner, name, shape, typeArguments) {
+    const parent = this.external(owner, name, shape),
+      encoded = typeArguments.flatMap(argument => this.types.signature(argument)),
+      instantiation = [GENERIC_METHOD_INSTANCE, ...compressUnsigned(typeArguments.length), ...encoded],
+      key = parent + ':' + instantiation.join(',');
+    let token = this.methodSpecs.get(key);
+    if (!token) {
+      token = this.builder.addRow('MethodSpec', { Method: parent, Instantiation: Uint8Array.from(instantiation) });
+      this.methodSpecs.set(key, token);
+    }
+    return token;
   }
   /** The token of `D::.ctor(object, native int)`, which the runtime implements for every delegate type. */
   delegateConstructor(type) {

@@ -1,0 +1,4 @@
+Generic aggregate values require T03 value storage
+Invalid MethodImpl owner or virtual declaration
+Native, runtime and abstract methods are not executable
+constrained. must immediately precede callvirt

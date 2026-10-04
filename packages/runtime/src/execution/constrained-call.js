@@ -5,19 +5,23 @@ import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {verifiedMethod} from './token-cache.js';
 
-/** Dispatch an admitted interface call on its original owned value address without allocating a box. */
-export function invokeConstrainedInterface(vm, caller, instruction, descriptor) {
-  if (instruction.name !== 'callvirt') return false;
+/** The verified instruction pair defines the constraint without mutable frame state. */
+export function constrainedCallType(vm, caller, instruction, descriptor) {
+  if (instruction.name !== 'callvirt') return null;
   const prefix = caller.method.instructions[caller.pc - 2];
-  if (prefix?.name !== 'constrained.') return false;
+  if (prefix?.name !== 'constrained.') return null;
   const table = vm.typeSystem.table(prefix.operand);
   const declaration = vm.typeSystem.table(descriptor.ownerInstance ?? descriptor.ownerToken ?? descriptor.owner);
-  if (prefix.operand >>> 24 !== 2 || !table.flags.valueType || table.genericArity || table.typeArguments.length ||
-      !vm.typeSystem.types.has(table.definitionToken) || !declaration.flags.interface || descriptor.signature.isStatic) {
-    throw new ManagedFault('NotSupportedException', 'Only nongeneric user-struct constrained interface calls are implemented');
+  if (prefix.operand >>> 24 !== 2 || table.flags.interface || table.genericArity || table.typeArguments.length ||
+      !vm.typeSystem.types.has(table.definitionToken) || !vm.typeSystem.types.has(declaration.definitionToken) ||
+      declaration.genericArity || descriptor.signature.isStatic || descriptor.signature.genericArity ||
+      descriptor.methodArguments?.length || (table.flags.valueType ? !declaration.flags.interface : declaration.flags.valueType)) {
+    throw new ManagedFault('NotSupportedException', 'Only nongeneric internal constrained class/interface calls are implemented');
   }
-  const count = descriptor.signature.parameters.length + 1;
-  const receiver = caller.stack[caller.stack.length - count];
+  return table;
+}
+
+function receiverStorage(vm, receiver, table) {
   if (!receiver?.byref || !Object.isFrozen(receiver)) {
     throw new ManagedFault('InvalidProgramException', 'constrained. requires an owned managed address');
   }
@@ -25,6 +29,38 @@ export function invokeConstrainedInterface(vm, caller, instruction, descriptor) 
   if (vm.typeSystem.table(current.type) !== table) {
     throw new ManagedFault('InvalidProgramException', 'constrained. receiver storage has a different declared type');
   }
+  return current;
+}
+
+/** Read after initialization retries, before pinning call arguments; never overwrite the reference slot. */
+export function constrainedReferenceReceiver(vm, table, receiver) {
+  const {value} = receiverStorage(vm, receiver, table);
+  if (value === undefined) throw new ManagedFault('InvalidProgramException', 'Constrained receiver is uninitialized');
+  if (value === null) return null; // Ordinary callvirt owns its managed null fault.
+  const actual = vm.heap.get(value).methodTable;
+  if (!vm.typeSystem.castCache.isAssignableFrom(table, actual)) {
+    throw new ManagedFault('InvalidProgramException', 'Constrained reference is incompatible with its declared storage');
+  }
+  if (actual.genericArity || actual.typeArguments.length) {
+    throw new ManagedFault('NotSupportedException', 'Generic constrained reference receivers are not implemented');
+  }
+  return value;
+}
+
+/** Reference dispatch reuses ordinary slots; admitting DIM bodies is a separate increment. */
+export function requireConstrainedReferenceTarget(vm, target) {
+  const method = vm.inspector.getMethod(target);
+  const owner = vm.typeSystem.table(method.ownerToken);
+  if (owner.flags.interface || owner.genericArity || method.signature.genericArity) {
+    throw new ManagedFault('NotSupportedException', 'Generic and default-interface constrained calls are not implemented');
+  }
+}
+
+/** Dispatch an admitted interface call on its original owned value address without allocating a box. */
+export function invokeConstrainedInterface(vm, caller, descriptor, table) {
+  const count = descriptor.signature.parameters.length + 1;
+  const receiver = caller.stack[caller.stack.length - count];
+  receiverStorage(vm, receiver, table);
   const declaredTarget = descriptor.resolvedToken ?? descriptor.token;
   const target = vm.typeSystem.dispatch.resolve(table.name, declaredTarget, descriptor.ownerInstance);
   requireValueInterfaceTarget(vm, descriptor, target, table);
