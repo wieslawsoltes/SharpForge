@@ -6,11 +6,13 @@ import { qualify } from '../scripts/project16-qualification.js';
 const browserIds = ['workbench-docking', 'workbench-shell', 'workbench-sessions', 'workbench-lazy',
   'workbench-workflows', 'workbench-workflows-standalone', 'editor-insights', 'editor-providers', 'editor-view']
   .map(id => 'browser:' + id);
-const performanceIds = ['performance', 'performance:editor-budgets', 'performance:studio-large-file', 'performance:instrumentation'];
+const performanceIds = ['performance', 'performance:editor-budgets', 'performance:studio-large-file',
+  'performance:instrumentation', 'performance:lazy-evaluation'];
 const allIds = ['node:A19', 'node:A20', ...browserIds, ...performanceIds];
 function invocationId(args) {
   if (args[0].endsWith('run-tests.js')) return 'node:' + args.at(-1);
   if (args.includes('scripts/bench-workbench-overhead.js')) return 'performance:instrumentation';
+  if (args.includes('scripts/bench-workbench-lazy-evaluation.js')) return 'performance:lazy-evaluation';
   const prefix = ['editor-budgets', 'studio-large-file'].includes(args[1]) ? 'performance:' : 'browser:';
   return prefix + args[1];
 }
@@ -74,6 +76,10 @@ test('stage selection runs only the selected scopes and preserves browser deadli
     if (expected.includes('performance')) {
       const pipeline = report.scopes.find(result => result.id === 'performance');
       assert.equal(pipeline.assessment.regressionVerdict, null);
+      const evaluation = report.scopes.find(result => result.id === 'performance:lazy-evaluation');
+      assert.equal(evaluation.timeoutMs, 1_200_000);
+      assert.deepEqual(evaluation.args, ['scripts/limited.js', 'node', 'scripts/bench-workbench-lazy-evaluation.js',
+        '--browser', 'firefox', '--output', resolve(scope.options.outputDirectory, 'lazy-evaluation.json')]);
     }
   }
 });
@@ -120,4 +126,16 @@ test('a thrown error carrying exit zero remains a failed outcome and a nonzero a
   assert.equal(report.scopes[0].exitCode, 1);
   assert.equal(report.scopes[1].status, 'passed');
   assert.equal(report.exitCode, 1);
+});
+
+test('an unsupported lazy-evaluation engine remains an independent failure after all earlier scopes finish', async () => {
+  const message = 'Lazy evaluation requires Chromium CDP threadTicks; other engines are unsupported';
+  const scope = fixture(new Map([['performance:instrumentation', new Error('Instrumentation capture failed')],
+    ['performance:lazy-evaluation', new Error(message)]]));
+  const report = await qualify({...scope.options, stage: 'performance'});
+  assert.deepEqual(scope.calls, performanceIds);
+  assert.deepEqual(report.counts, {selected: 5, passed: 3, failed: 2});
+  assert.equal(report.scopes.at(-1).error.message, message);
+  assert.equal(report.exitCode, 1);
+  assert.deepEqual(scope.writes.at(-1).report, report);
 });
