@@ -13,7 +13,6 @@ export * from './il-document.js';
 export * from './decompiler.js';
 export {CilDispatchTable} from './dispatch-profile.js';
 export {managedDelegateSignature, supportedDelegateCall} from './delegate-profile.js';
-
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
 export {normalizeCallType, substituteCallType, instantiateSignature, callSignatureKey,
   resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
@@ -30,6 +29,6 @@ export { validateExceptionControlFlow, exceptionLeaveDiagnosticCatalog } from '.
 export { VerificationKind, verificationType, verificationDiagnosticCatalog } from './verify/types.js';
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
 export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/prefix-tail.js';
-
 export {verifiedStackBound, mergeVerifiedStackReports} from './verified-stack.js';
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
+export {verifiedStackBound} from './verified-stack.js';
