@@ -5,6 +5,29 @@ runtime or framework dependency. Hosts supply `bclHost.fault(type, message)`,
 `bclHost.isReference(value)` and `bclHost.frameworkType(name)` on each platform.
 The fault service must throw the host's managed exception.
 
+`createHostStringOrdering({Collator})` creates a synchronous nullable-string
+comparer with immutable host provenance. `Collator` defaults to `Intl.Collator`;
+the optional constructor supplies a test seam, not a managed callback API.
+`defaultStringOrdering(platform)` privately caches one provider per platform.
+Missing English standard collation or unsupported resolved options raise
+`NotSupportedException`; there is no ordinal fallback.
+
+Default List sorting, Array sorting and typed/null-comparer Array.BinarySearch
+share this host-normalized `invariant-host` profile. It explicitly requests English
+standard/root collation, tertiary sensitivity, no numeric ordering, no case-first
+override and significant punctuation. Explicit StringComparer.Ordinal remains
+UTF-16 ordinal. Comparator zero, including culture-equal distinct strings, is
+BinarySearch equality. Sort does not promise an order within equal-key groups.
+
+This profile follows host Intl/ICU data. It does not pin ICU, implement managed
+thread CurrentCulture (#2616), or complete CompareInfo/StringComparer culture
+APIs (#2619/#2621). Browser ICU versions may be unavailable. In particular, Intl
+normalization differs from the pinned native .NET default on five combining-mark
+boundary pairs: the host considers them equal while native .NET distinguishes
+them. The separate native boundary oracle and `scripts/probe-string-ordering.mjs`
+report those differences; issues #829/#2619/#2621 remain open for an exact backend.
+See [the reference](reference/culture-ordering-boundaries/README.md).
+
 Each family module has `name`, `families`, `contracts(registry)` and
 `invoke(platform, descriptor, arguments)` members. Invocation returns
 `{handled: true, value}` or `{handled: false}` synchronously. Module registration
@@ -92,8 +115,8 @@ Unsupported custom comparers on nonempty arrays raise `NotSupportedException`.
 One-dimensional arrays with explicit lower bounds remain unsupported by this
 execution profile; multidimensional arrays raise `RankException`.
 
-A null comparer retains the released ordinal default string profile. Default
-invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
+A null comparer uses the shared host-backed string profile described above.
+Exact native invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
 under `reference/array-comparer` covers this actual non-generic overload and its
 object comparisons/faults. Ordinary tests also consume the prior 97-string
 ordinal search corpus. NaN comparisons and rank rejection are covered through
@@ -101,9 +124,10 @@ both managed platforms without claiming unsupported source syntax support.
 Independent CIL fixtures execute every captured vector operation through the
 non-generic interface, including boxing and opaque-object construction; typed
 catches and the actual InnerException getter cover all three wrapped failures.
-Compiled source covers eleven direct StringComparer operations. Source interface
-conversions, custom implementations, object construction and NaN field access
-are not silently treated as successful execution by the reference harness.
+Compiled source covers eleven direct StringComparer operations. Registered
+implicit interface conversions are supported; custom implementations, object
+construction and NaN field access are not silently treated as successful
+execution by the reference harness.
 
 `scripts/benchmarks/a08-array-search.mjs` measures the released typed/default
 BinarySearch and reports the new explicit ordinal path separately. Copy the same
@@ -119,9 +143,11 @@ The host `fault(type, message, reference = null)` service and public
 managed exception reference. Callers root that reference during fault creation;
 the runtime's ordinary exception frames retain it afterward. Existing calls
 without a reference keep their previous behavior.
-Compiled source supports direct `StringComparer.Ordinal.Compare` calls. Interface
-locals/conversions, interface `is` expressions and custom comparer implementations
-remain guarded by the current source profile; registered interface metadata does
-not imply that those source constructs execute. Independently assembled CIL
-exercises interface Compare, List.Sort, castclass and isinst without bypassing the
-runtime call or cast paths. The source-negative tests retain the existing guards.
+Compiled source supports direct `StringComparer.Ordinal.Compare` calls and
+registry-proven implicit interface conversions, including `IComparer<string>`
+locals, parameters and returns. These conversions keep the same managed reference
+and dispatch through existing contracts. Interface `is` expressions, casts needing
+runtime checks and custom comparer implementations remain guarded. Independently
+assembled CIL exercises interface Compare, List.Sort, castclass and isinst without
+bypassing runtime call or cast paths. Source-negative tests retain the remaining
+guards; this does not enable arbitrary source interface implementations.

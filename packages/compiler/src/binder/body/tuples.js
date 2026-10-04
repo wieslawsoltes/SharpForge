@@ -24,6 +24,22 @@ export const TupleBinding = Base =>
       return this.node('Tuple', syntax, type, { elements, names, form: 'tupleLiteral' });
     }
     /**
+     * CS8383: an element name written in a tuple literal is ignored by `==` and `!=` unless the element on the other
+     * side has the same name (written, inferred, or from the type of a tuple value).
+     */
+    reportIgnoredTupleNames(left, right) {
+      const namesOf = e => (e.kind === 'Tuple' ? e.names : (e.type?.tupleElementNames ?? [])) ?? [],
+        writtenOf = (e, index) => (e.kind === 'Tuple' ? (e.syntax.arguments?.[index] ?? null) : null),
+        leftNames = namesOf(left),
+        rightNames = namesOf(right);
+      for (let index = 0; index < Math.max(leftNames.length, rightNames.length); index++) {
+        if ((leftNames[index] ?? null) === (rightNames[index] ?? null)) continue;
+        // One warning per element: on the right literal when both sides wrote a name, as Roslyn does.
+        const written = [writtenOf(right, index), writtenOf(left, index)].find(argument => argument?.nameColon);
+        if (written) this.report(written, DiagnosticId.CS8383, [written.nameColon.name.identifier.valueText]);
+      }
+    }
+    /**
      * `left == right` between tuples: the operator of each pair of elements is resolved on its own (so an element may
      * be `null`, a literal without a type, or a nested tuple), and the results are combined.
      * Returns null when the operands are not both tuples. The bound node keeps the per-element operators in
@@ -38,6 +54,7 @@ export const TupleBinding = Base =>
         return this.bad(syntax, { left, right });
       }
       this.d.gate(this.c.uri, syntax, 'tupleEquality', { name: 'tuple equality', version: 7.3 });
+      this.reportIgnoredTupleNames(left, right);
       const partsOf = e =>
         e.kind === 'Tuple'
           ? e.elements

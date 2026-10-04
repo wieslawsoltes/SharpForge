@@ -27,7 +27,7 @@
   "language-version/gate-member-not-null-at-8": ["diagnostics", "warnings"],
   "language-version/gate-movable-fixed-buffers-at-7-2": ["diagnostics"],
   "language-version/gate-nameof-at-5": ["diagnostics", "warnings"],
-  "language-version/gate-native-int-at-8": ["diagnostics"],
+  "language-version/gate-native-int-at-8": ["diagnostics", "warnings"],
   "language-version/gate-nested-stackalloc-at-7-3": ["diagnostics", "warnings"],
   "language-version/gate-notnull-constraint-at-7-3": ["diagnostics", "warnings"],
   "language-version/gate-null-pointer-pattern-at-7-3": ["diagnostics", "warnings"],

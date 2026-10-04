@@ -20,7 +20,7 @@ export class ParameterDesc {
   /** Frozen {type, value} from the Constant table, or null. Custom-attribute defaults are not projected. */
   get constant() {
     if (this.#constant !== undefined) return this.#constant;
-    return this.#constant = this.#state.reader.constant(this.metadataToken, this.flags);
+    return this.#constant = this.#state.reader.constant(this.metadataToken);
   }
 }
 
