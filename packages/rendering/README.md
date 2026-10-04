@@ -22,6 +22,10 @@ The renamed licensed fixture families preserve real weight/width axes and distin
 
 `bundledTextFixtures` returns the pinned Latin variable, Arabic, Hebrew, Devanagari and color emoji face descriptors. The explicit emoji corpus retains GSUB closure and CBDT/CBLC data, including ZWJ sequences and skin tones. A local reproduction script records the transformations and modified family names.
 
+## Independent shaping oracle
+
+The checked-in glyph expectations come from raw upstream HarfBuzz calls with pinned engine and font hashes. Explicit multilingual requests retain script, direction and item boundaries. A separate capture script can reproduce these expectations without importing the portable provider, font matcher, line layout or glyph rasterizer.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.

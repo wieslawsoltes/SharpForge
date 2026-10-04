@@ -1,0 +1,634 @@
+{
+  "version": 1,
+  "provenance": {
+    "engine": "harfbuzzjs",
+    "release": "0.8.0",
+    "commit": "ec5b439a1c2737be9c00b9e838abe8d782b83a83",
+    "harfbuzzVersion": "12.3.2",
+    "wasmSha256": "3b802d1782b72fa5eeb0d7a108b561beb788248ecc1134845e20ba84e4642ca9",
+    "capture": "packages/rendering/tools/capture-harfbuzz-oracle.js",
+    "expectedSource": "raw upstream hbjs glyph info and positions",
+    "pixelQualification": "not performed by this capture"
+  },
+  "cases": [
+    {
+      "id": "latin-ligature",
+      "text": "office",
+      "options": {
+        "fontFamily": "SharpForge Sans Fixture",
+        "fontSize": 24,
+        "fontWeight": 400
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 6,
+          "font": "SharpForgeSans-Variable.ttf",
+          "script": "Latn",
+          "direction": "ltr",
+          "fontSha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90",
+          "unitsPerEm": 1000,
+          "variations": {
+            "wght": 400,
+            "wdth": 100
+          },
+          "glyphs": [
+            {
+              "glyphId": 82,
+              "cluster": 0,
+              "x_advance": 605,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 1264,
+              "cluster": 1,
+              "x_advance": 946,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 70,
+              "cluster": 4,
+              "x_advance": 480,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 72,
+              "cluster": 5,
+              "x_advance": 564,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "variable-italic",
+      "text": "AV office",
+      "options": {
+        "fontFamily": "SharpForge Sans Fixture",
+        "fontSize": 24,
+        "fontWeight": 650,
+        "fontStyle": "italic"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 9,
+          "font": "SharpForgeSans-Italic-Variable.ttf",
+          "script": "Latn",
+          "direction": "ltr",
+          "fontSha256": "49e1539bee4fdcbe2f5a7287815eaaa243c5f610f4d1c1852b59f226624006db",
+          "unitsPerEm": 1000,
+          "variations": {
+            "wght": 650,
+            "wdth": 100
+          },
+          "glyphs": [
+            {
+              "glyphId": 36,
+              "cluster": 0,
+              "x_advance": 606,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 57,
+              "cluster": 1,
+              "x_advance": 583,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 3,
+              "cluster": 2,
+              "x_advance": 260,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 82,
+              "cluster": 3,
+              "x_advance": 581,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 1363,
+              "cluster": 4,
+              "x_advance": 980,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 70,
+              "cluster": 7,
+              "x_advance": 478,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 72,
+              "cluster": 8,
+              "x_advance": 546,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arabic-marks",
+      "text": "السَّلَامُ",
+      "options": {
+        "fontFamily": "Noto Sans Arabic",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "language": "ar",
+        "direction": "rtl"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 10,
+          "font": "NotoSansArabic-Variable.ttf",
+          "script": "Arab",
+          "direction": "rtl",
+          "fontSha256": "ee489b994b3e62def9874c918145e32b133b625abaf98cec60502bdb40102c56",
+          "unitsPerEm": 1000,
+          "variations": {
+            "wght": 400,
+            "wdth": 100
+          },
+          "glyphs": [
+            {
+              "glyphId": 232,
+              "cluster": 8,
+              "x_advance": 0,
+              "y_advance": 0,
+              "x_offset": 89,
+              "y_offset": -76
+            },
+            {
+              "glyphId": 764,
+              "cluster": 8,
+              "x_advance": 484,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 288,
+              "cluster": 5,
+              "x_advance": 0,
+              "y_advance": 0,
+              "x_offset": 260,
+              "y_offset": 256
+            },
+            {
+              "glyphId": 700,
+              "cluster": 5,
+              "x_advance": 599,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 1151,
+              "cluster": 2,
+              "x_advance": 0,
+              "y_advance": 0,
+              "x_offset": 257,
+              "y_offset": -126
+            },
+            {
+              "glyphId": 1072,
+              "cluster": 2,
+              "x_advance": 850,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 663,
+              "cluster": 1,
+              "x_advance": 260,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 45,
+              "cluster": 0,
+              "x_advance": 238,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hebrew-marks",
+      "text": "שָׁלוֹם",
+      "options": {
+        "fontFamily": "Noto Sans Hebrew",
+        "fontSize": 24,
+        "language": "he",
+        "direction": "rtl"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 7,
+          "font": "NotoSansHebrew-Regular.ttf",
+          "script": "Hebr",
+          "direction": "rtl",
+          "fontSha256": "a7fa16fffb27bedb060a0866267c29e9859aeb9c21cc33f5b3aaf6eb062eca85",
+          "unitsPerEm": 1000,
+          "variations": {},
+          "glyphs": [
+            {
+              "glyphId": 23,
+              "cluster": 6,
+              "x_advance": 684,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 46,
+              "cluster": 4,
+              "x_advance": 0,
+              "y_advance": 0,
+              "x_offset": 82,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 124,
+              "cluster": 4,
+              "x_advance": 291,
+              "y_advance": 0,
+              "x_offset": -10,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 55,
+              "cluster": 3,
+              "x_advance": 522,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 79,
+              "cluster": 0,
+              "x_advance": 0,
+              "y_advance": 0,
+              "x_offset": 227,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 100,
+              "cluster": 0,
+              "x_advance": 0,
+              "y_advance": 0,
+              "x_offset": 539,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 96,
+              "cluster": 0,
+              "x_advance": 730,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "devanagari-reordering",
+      "text": "क्षि हिन्दी",
+      "options": {
+        "fontFamily": "Noto Sans Devanagari",
+        "fontSize": 24,
+        "language": "hi",
+        "direction": "ltr"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 11,
+          "font": "NotoSansDevanagari-Regular.otf",
+          "script": "Deva",
+          "direction": "ltr",
+          "fontSha256": "4775b7eeee96cb61c42f66d9136d535a0aa728c2009ad0f4cd2bc970149d9ac7",
+          "unitsPerEm": 1000,
+          "variations": {},
+          "glyphs": [
+            {
+              "glyphId": 551,
+              "cluster": 0,
+              "x_advance": 259,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 90,
+              "cluster": 0,
+              "x_advance": 717,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 3,
+              "cluster": 4,
+              "x_advance": 260,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 544,
+              "cluster": 5,
+              "x_advance": 259,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 88,
+              "cluster": 5,
+              "x_advance": 531,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 245,
+              "cluster": 7,
+              "x_advance": 309,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 73,
+              "cluster": 9,
+              "x_advance": 531,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 33,
+              "cluster": 9,
+              "x_advance": 259,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emoji-zwj",
+      "text": "👩‍💻",
+      "options": {
+        "fontFamily": "SharpForge Sans Fixture",
+        "fontSize": 32,
+        "direction": "ltr"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 5,
+          "font": "SharpForgeEmojiFixture.ttf",
+          "script": "Zyyy",
+          "direction": "ltr",
+          "fontSha256": "77595a308482bcf13502d875cbaf9bd7cd812892a4263673ff57af86d409f6dd",
+          "unitsPerEm": 2048,
+          "variations": {},
+          "glyphs": [
+            {
+              "glyphId": 70,
+              "cluster": 0,
+              "x_advance": 2550,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emoji-family",
+      "text": "👨‍👩‍👧‍👦",
+      "options": {
+        "fontFamily": "SharpForge Sans Fixture",
+        "fontSize": 32,
+        "direction": "ltr"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 11,
+          "font": "SharpForgeEmojiFixture.ttf",
+          "script": "Zyyy",
+          "direction": "ltr",
+          "fontSha256": "77595a308482bcf13502d875cbaf9bd7cd812892a4263673ff57af86d409f6dd",
+          "unitsPerEm": 2048,
+          "variations": {},
+          "glyphs": [
+            {
+              "glyphId": 48,
+              "cluster": 0,
+              "x_advance": 2550,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mixed-hebrew",
+      "text": "abc אבג 123",
+      "options": {
+        "fontFamily": "SharpForge Sans Fixture",
+        "fontSize": 24,
+        "direction": "ltr"
+      },
+      "items": [
+        {
+          "start": 0,
+          "end": 4,
+          "font": "SharpForgeSans-Variable.ttf",
+          "script": "Latn",
+          "direction": "ltr",
+          "fontSha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90",
+          "unitsPerEm": 1000,
+          "variations": {
+            "wght": 400,
+            "wdth": 100
+          },
+          "glyphs": [
+            {
+              "glyphId": 68,
+              "cluster": 0,
+              "x_advance": 561,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 69,
+              "cluster": 1,
+              "x_advance": 615,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 70,
+              "cluster": 2,
+              "x_advance": 480,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 3,
+              "cluster": 3,
+              "x_advance": 260,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        },
+        {
+          "start": 4,
+          "end": 7,
+          "font": "NotoSansHebrew-Regular.ttf",
+          "script": "Hebr",
+          "direction": "rtl",
+          "fontSha256": "a7fa16fffb27bedb060a0866267c29e9859aeb9c21cc33f5b3aaf6eb062eca85",
+          "unitsPerEm": 1000,
+          "variations": {},
+          "glyphs": [
+            {
+              "glyphId": 34,
+              "cluster": 6,
+              "x_advance": 374,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 12,
+              "cluster": 5,
+              "x_advance": 572,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 3,
+              "cluster": 4,
+              "x_advance": 632,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "font": "SharpForgeSans-Variable.ttf",
+          "script": "Hebr",
+          "direction": "rtl",
+          "fontSha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90",
+          "unitsPerEm": 1000,
+          "variations": {
+            "wght": 400,
+            "wdth": 100
+          },
+          "glyphs": [
+            {
+              "glyphId": 3,
+              "cluster": 7,
+              "x_advance": 260,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        },
+        {
+          "start": 8,
+          "end": 11,
+          "font": "SharpForgeSans-Variable.ttf",
+          "script": "Hebr",
+          "direction": "ltr",
+          "fontSha256": "d74c27145878d39fd619db868ac59c4414e1b59f83c6a124ca2f88e93ccc5c90",
+          "unitsPerEm": 1000,
+          "variations": {
+            "wght": 400,
+            "wdth": 100
+          },
+          "glyphs": [
+            {
+              "glyphId": 20,
+              "cluster": 8,
+              "x_advance": 572,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 21,
+              "cluster": 9,
+              "x_advance": 572,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            },
+            {
+              "glyphId": 22,
+              "cluster": 10,
+              "x_advance": 572,
+              "y_advance": 0,
+              "x_offset": 0,
+              "y_offset": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

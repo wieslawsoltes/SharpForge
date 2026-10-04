@@ -25,6 +25,59 @@ scopes remain accepted. Constants accept primitive `type`/`value` pairs, optiona
 BigInt for 64-bit integers. Invalid names, ranges, imports and references throw
 `SymbolError`.
 
+`readPortablePdb` reads complete primitive and enum LocalConstant signatures,
+ordered `customModifiers` (`required`, `typeToken`), object/string null and typed
+class null. Existing character values remain numeric UTF-16 units and 64-bit
+integers remain BigInt. Strings preserve BOMs, embedded NUL and unmatched UTF-16
+surrogates. Enums retain the historical coded `enumType` and additionally expose
+the full `enumTypeToken`; this is a handle, not a resolved enum definition.
+Typed null exposes `type: 'class'`, `typeToken` and `value: null`.
+Malformed Boolean values, fixed-width payloads, trailing data and out-of-range
+handles fail explicitly. Type-dependent general constants (including decimal,
+DateTime and value-type defaults) retain owned `raw` bytes and expose
+`decoded: false`, `reason: 'type-metadata-required'`, `typeKind`, `typeToken` and
+`defaultValue` (whether the payload is absent). Their values are not guessed.
+
+Reader options `maxConstantBytes` (16 MiB default, 64 MiB hard cap) and
+`maxConstantEntries` (100,000 default, 1,000,000 hard cap, counting rows plus
+custom modifiers) bound aggregate allocations before copying any constant.
+`maxConstantModifiers` defaults to 64 per
+constant, capped at 1,024. Constant names are capped at 3,072 UTF-8 bytes before
+decoding and 1,024 UTF-16 units afterward. These options also apply through
+`loadSymbols`. Native C# examples and offline reference data are in
+`interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
+
+For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal` or
+`System.DateTime` TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
+framework identity: `System.Runtime` / `b03f5f7f11d50a3a`,
+`System.Private.CoreLib` / `7cec85d7bea7798e`, or `mscorlib` / `b77a5c561934e089`.
+AssemblyRef tokens and full public keys are supported; TypeDef requires its own
+Assembly public key. This checks declared metadata identity without loading
+assemblies or verifying signatures. Custom-assembly lookalikes remain unresolved.
+The binder caps inspected assembly scopes at 1,024, each public key at 16 KiB
+and aggregate key bytes at 1 MiB before hashing. Decimal
+constants expose `type: 'decimal'`, exact decimal text in `value`, and
+`decimal: { coefficient, scale, negative }`; `coefficient` is an unsigned 96-bit
+BigInt. Trailing fractional zeroes and the sign bit of zero are preserved without
+floating-point conversion. Their complete signature, raw bytes and type token
+remain available. Payload length must be 13 bytes and scale must be 0–28.
+Standalone PDBs and explicitly unbound symbols remain unresolved. TypeSpec,
+nested same-name types and other type-dependent payloads remain outside
+this binding increment. The native reference uses SRM `BlobReader.ReadDecimal`;
+constructed boundary cases test the full coefficient, scale and sign encoding.
+
+DateTime constants expose `type: 'datetime'`, exact BigInt ticks in `value`, and
+`dateTime: { ticks, kind: 'unspecified' }`. A tick is 100 nanoseconds from
+0001-01-01 in the Gregorian calendar. The payload must be exactly eight bytes;
+negative ticks and values above 3155378975999999999 fail explicitly. The
+representation preserves all ticks without converting to JavaScript Date or
+inferring UTC/local time. The same declared framework identity checks, owned raw
+signature, modifiers and unbound behavior apply. VB Date literals and SRM
+`BlobReader.ReadDateTime` are captured by
+`scripts/validate-pdb-datetime-constants.mjs`; offline tests read that corpus.
+Calendar formatting, time-zone conversion, DateTimeOffset and general type
+resolution are separate capabilities.
+
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
 supplied hashes are checked against the exact source bytes. Hash inputs are exact source
@@ -81,7 +134,7 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Capability | Writer and reader coverage |
 | --- | --- |
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
-| Locals and imports | Lexical scopes, primitive/raw constants, import kinds 1–9 |
+| Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
