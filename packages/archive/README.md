@@ -47,6 +47,16 @@ nested archive bytes are preserved. `{nestedArchives:'reject'}` also rejects emb
 before returning their contents; it never opens or inflates the nested archive. This signature policy is deliberately
 not a general polyglot detector. Size/ratio budgets remain the protection for every outer payload, regardless of its name.
 
+## File encoding and path identity
+
+`decodeWorkspaceFile(path, bytes)` retains a copy of the original bytes, recognizes UTF-8 and UTF-16 in either byte order, and records the BOM, each line delimiter and final-newline status. BOM-less UTF-16 is inferred only from a bounded zero-byte pattern. Unsupported text remains binary; failed UTF-8 can use an explicitly flagged Windows-1252 fallback (`lossy: true`), disabled with `{legacyFallback: false}`.
+
+`encodeWorkspaceFile(record)` returns identical bytes for untouched text or binary files. Edited text keeps its encoding and per-line delimiters; set `preserveLineEndings: false` to choose the supplied delimiters deliberately. Unsupported characters in Windows-1252 fail with `SFWENC002`, and malformed UTF-16 strings fail with `SFWENC003`. `isWorkspaceTextPath` and `detectLineEndings` expose the same policies to hosts.
+
+`portablePath` rejects absolute paths, traversal, reserved Windows names, controls and ambiguous separators. `PathPolicy` keeps the stored spelling separate from identity: configure `caseSensitive` and `unicodeNormalization` (`NFC`, `NFD`, or `none`) explicitly. It exposes `normalize`, `identity`, `equals`, `contains` and `compare`; `pathIdentity`, `samePath`, `isWithinPath` and `comparePaths` provide functional equivalents. The project-system package re-exports those policies while keeping its existing relative-reference `normalizePath` behavior.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-path-encoding.test.js tests/workspace-io.test.js`. These are Node byte/path tests; operating-system picker behavior is qualified separately.
+
 `openZip` lists even sparse multi-gigabyte archives without reading the payload. `read(path)` deliberately materializes one entry; use `stream` or `chunks` for large entries. `close()` cancels active readers. Writer cancellation aborts its sink; rollback of external destinations belongs to the destination transaction API.
 
 Run `node packages/archive/examples/streaming.mjs` for a complete example. Focused regressions: `tests/a24-06-archives.test.js`, `tests/a24-06-archive-large-metadata.test.js`. Reference fixtures use Node zlib and Python's standard `zipfile`; they do not establish File System Access or native OS qualification.
