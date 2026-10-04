@@ -42,7 +42,8 @@ jobs:
           cache: pip
           cache-dependency-path: tests/requirements.txt
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - run: >-
+          python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
       - name: Verify pinned official Speedscope UI
         # Runtime cases still execute if the external tool is unavailable; its UI rows fail explicitly.
         continue-on-error: true
