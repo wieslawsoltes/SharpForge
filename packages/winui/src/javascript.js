@@ -20,6 +20,7 @@ export function createWinUIApp(root, options = {}) {
     services: {...options.services, objectTree: context.objectTree,
       environment: context.services.environment ?? options.services?.environment},
     onEvent: (id, event, payload) => dispatchFacadeEvent(context, id, event, payload),
+    onEventRequest: (id, event, payload, request) => requestFacadeEvent(context, id, event, payload, request),
     onControlStateChanged: changes => applyControlStateFeedback(context, changes),
     onRoutedEvent: (id, event, payload) => completeFacadeRoute(context, id, event, payload),
     onCollectionInput: (id, property, values) => context.collectionInput(context.reference(id), property, values),
