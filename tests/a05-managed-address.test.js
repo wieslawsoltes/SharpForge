@@ -9,7 +9,7 @@ function createVM(initLocals = true) {
   }]}));
 }
 
-test('Managed address writes report normalized local values without marking the heap changed', () => {
+test('Managed address writes report normalized local values and publish the root slot', () => {
   const vm = createVM();
   try {
     const address = vm.address('local', 0);
@@ -20,7 +20,8 @@ test('Managed address writes report normalized local values without marking the 
     assert.equal(vm.dereference(address, true, 300), 44);
     assert.equal(vm.dereference(address), 44);
     assert.equal(vm.writeRevision, revision + 1);
-    assert.equal(vm.heap.mutationRevision, heapRevision);
+    // A06 root publication invalidates graph diagnostics even when a local stores a scalar.
+    assert.equal(vm.heap.mutationRevision, heapRevision + 1);
     assert.deepEqual(writes, [{kind: 'local', index: 0, frameId: address.frameId, oldValue: 0, value: 44}]);
   } finally { vm.stop(); }
 });

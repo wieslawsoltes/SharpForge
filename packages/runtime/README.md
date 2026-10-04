@@ -1,6 +1,6 @@
 # @sharpforge/runtime
 
-Two standalone interpreters: `VirtualMachine` for the original source-debugging profile and `CilVirtualMachine` for bounded direct managed CIL without #SF. Both share the explicit non-moving mark-and-sweep heap. The direct engine is a constrained allowlisted subset, not a complete CLR loader/type verifier or full BCL.
+Two standalone interpreters: `VirtualMachine` for the source-debugging profile and `CilVirtualMachine` for bounded direct managed CIL without #SF. Both share a precise managed heap with stable handles, optional generational and incremental collection, spatial backing storage, and explicit lifetime services. The direct engine remains a constrained allowlisted subset.
 
 Version 0.9.0 · MIT · ES modules.
 
@@ -10,7 +10,21 @@ This package is part of SharpForge, an executable C# subset toolchain. It is not
 import * as api from '@sharpforge/runtime';
 ```
 
-`ManagedHeap.createHandle(value, { weak: false })`, `getHandle(handle)` and `releaseHandle(handle)` manage explicit host roots. Weak handles do not retain targets. Collection reuses marking scratch storage and reports trace/pause counters. These reference-generation checks are not a generational GC.
+`ManagedHeap.createHandle(value, {weak: false})`, `getHandle(handle)` and `releaseHandle(handle)` manage explicit host roots. Weak handles do not retain targets. Reference identity generations prevent stale-handle reuse; the separate `gcGeneration` field tracks collector generations 0, 1, and 2. See [the heap embedding contract](../../docs/gc-heap.md), [lifetimes](../../docs/gc-lifetime.md), [storage](../../docs/gc-spaces.md), and [diagnostics](../../docs/gc-diagnostics.md).
+
+`DebuggerMemoryScope(heap, {maxReferences, maxTransferBytes})` exposes bounded
+primitive/enum payload windows through counted pins and opaque references. Its
+`open`, `read`, `write`, `release`, `afterRestore`, and `dispose` lifecycle is
+documented in [pinned debugger memory](../../docs/gc-debugger-memory.md); strings and
+frozen payloads are read-only, and managed reference slots are not byte-addressable.
+
+`delegateMethodPointer(cilVM, token)` is the public factory for a verified native
+managed-method pointer. It resolves an actual MethodDef/MemberRef target in that
+VM's verified execution graph and returns an immutable pointer carrying the VM
+owner identity. Invalid metadata or an unverified target throws; native delegate
+construction rejects foreign or forged pointer ownership. The value contains no
+host address. Source-image method indices remain a separate source execution
+contract and are not accepted by this native factory.
 
 Install its declared sibling packages together. npm publication is not part of this release. See the root project README and docs/embedding.md for integration.
 
