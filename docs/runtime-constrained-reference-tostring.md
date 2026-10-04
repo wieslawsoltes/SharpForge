@@ -36,9 +36,10 @@ This partially advances #1357. Source frontend, native/browser qualification and
 performance evidence remain open. Prepared guest-CIL regressions cover dynamic
 and inherited overrides, newslot chains, no-copy/no-box fallback, warm invalid
 receivers, GC callbacks, snapshot/stop/fault lifecycle and verifier reachability.
-No tests, builds or benchmarks were executed during implementation. Root owns
-the serial qualification queue:
+All 155 focused reference/struct/interface and generic-reference/value checks
+passed at `fc934e85` with Node 24.21.0, one worker and a 512 MB old-space
+limit. Broad native/browser/performance qualification remains deferred:
 
 ```sh
-node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-reference-tostring.test.js tests/a05-constrained-object-tostring.test.js tests/a05-constrained-reference-calls.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-interface-calls.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-reference-tostring.test.js tests/a05-constrained-object-tostring.test.js tests/a05-constrained-reference-calls.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-generic-value.test.js tests/a05-constrained-interface-calls.test.js
 ```
