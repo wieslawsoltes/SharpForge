@@ -1,0 +1,76 @@
+{
+  "workIds": [
+    "SF-A23-T28",
+    "SF-A23-T29",
+    "SF-A23-T30",
+    "SF-A23-T11"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "tests": {
+    "tests/a23-studio-native-contexts.test.js": 3,
+    "tests/a23-studio-native-profiles.test.js": 4,
+    "tests/a23-studio-test-explorer.test.js": 4
+  },
+  "extraction": "Original full-controller assertions preserved. Direct metadata/state cases live in their existing published foundations; native-client cases live in #3903 and method-group selection in #3908.",
+  "qualification": {
+    "node22": "Completed native UI scope 106/106 passed",
+    "node26": "Completed native UI scope 106/106 passed",
+    "sourceCaptures": [
+      "planning/evidence/project18/native-studio/node22.log",
+      "planning/evidence/project18/native-studio/node26.log"
+    ]
+  },
+  "composition": "Real dependency join of Test Explorer #3908, native views #3950 and workspace-state #3816. Existing lazy native-settings factory retained. Legacy msbuild-tools.js becomes a one-line compatibility re-export.",
+  "remaining": [
+    "Protected Studio callbacks/tool application",
+    "Native installed xUnit/NUnit/MSTest package qualification",
+    "Native coverage collector and Windows/macOS qualification"
+  ],
+  "pinnedMainForwardSync": {
+    "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "preservedFeatureHead": "f4545ccf74739637f5c34623a0f8e3b595e9f89f",
+    "dependencyHead": "888a8073612d6167d55baf4e50784b437209ad09",
+    "dependencyTree": "5e089122f2a2cebde90a9ede56929d39f819c8f6",
+    "preparedSource": {
+      "rootParent": "1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+      "incomingMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "rootMergeCommit": "pending",
+      "files": [
+        {
+          "path": "apps/studio/msbuild-tools.js",
+          "sha256": "3f686bc41caa1019a7ae665b4b0cdc15587d225c7445a602deadf232e03379d8",
+          "gitBlob": "c9858f42595ecaaff79e00936873fece785c3ebe"
+        },
+        {
+          "path": "apps/studio/native-build/controller.js",
+          "sha256": "3f8b3014682668b0ad3fff2878c03f7072eeffb73c3c6abf9c610dae980db42c",
+          "gitBlob": "a6c2507c5faf1748081223f11981d496d632710d"
+        }
+      ]
+    },
+    "changes": [
+      "Delegate build/run/accept/cancel/dispose lifecycle to the existing upstream native-operation helpers.",
+      "Retain captured client/job ownership and expose onJobFailure(jobId,error,{owner}).",
+      "Close Test Explorer sessions before releasing their shared authenticated client credentials.",
+      "Retain native contexts, profile requests, source buffers, Test Explorer and all existing automation selectors."
+    ],
+    "dependencyConflictUnions": [
+      "Native owner approved preserving client.js as a facade and forwarding read/binary AbortSignals in msbuild-client.js.",
+      "Workspace owner approved preserving its facade/VFS/watch exports and moving only upstream sourceModel into workspace.js.",
+      "The existing compilation helper retains its Compilation instance; compiler/runtime exports and documentation retain both parents."
+    ],
+    "validation": {
+      "localTestsRun": false,
+      "localBuildRun": false,
+      "status": "Pending the coordinator complete pinned-main integration scope.",
+      "upstreamRegressionFiles": [
+        "tests/a19-native-task-integration.test.js",
+        "tests/a19-native-background-tasks.test.js"
+      ]
+    },
+    "unchangedLimits": [
+      "Installed native test-framework/coverage and Windows/macOS qualification remain unavailable.",
+      "Protected Studio entry callbacks are owned by the separate prepared integration patch."
+    ]
+  }
+}
