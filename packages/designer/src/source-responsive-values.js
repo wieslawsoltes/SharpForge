@@ -1,10 +1,28 @@
 import {canonicalType} from '@sharpforge/framework';
 import {normalizeProperty, propertySchema} from './model.js';
 import {sourcePath, sameSourceValue} from './source-text.js';
-import {DesignSyncError, failSource} from './source-errors.js';
+import {readSourceValue} from './source-values.js';
+import {DesignSyncError, checkSourceCancellation, failSource} from './source-errors.js';
 
 function fail(node, message = 'Adaptive helpers contain an unowned or edited statement') {
   failSource(message, node, 'SFSYNC_OWNERSHIP');
+}
+
+/** Helper constants bind in their own method; typed arithmetic/casts come from the compiler's constant-value contract. */
+export function responsiveValueReader(reader) {
+  const state = {
+    context: reader.context,
+    lookup: () => undefined,
+    constantValue(expression) {
+      checkSourceCancellation(reader.options.signal);
+      const value = reader.context.model.getConstantValue(expression);
+      if (!value.hasValue && ['Unary', 'Binary', 'Cast', 'Checked', 'Unchecked'].includes(expression.kind)) {
+        fail(expression, 'Adaptive operators require a compiler-proven closed constant');
+      }
+      return value;
+    }
+  };
+  return expression => readSourceValue(expression, state);
 }
 
 export function readResponsiveValue(readValue, expression) {

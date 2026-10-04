@@ -68,6 +68,9 @@ versioned `responsiveSourceMarker` comment (`// SharpForge adaptive states v1: `
 in execution order. The comment records identities only: ownership also requires the same containing class, one static helper,
 one construction initializer, closed numeric thresholds, exact baseline resets, registered property statements and one final
 return per state. User code is never executed to infer states. Up to 64 states and 20,000 helper statements are accepted.
+Scalar constants use the compiler's bound constant values in the expression's actual method scope, including typed integer division
+and casts. Mutable locals and helper parameters cannot masquerade as constants. The initializer requires a compiler-proven width
+constant and positional value arguments; its callee must bind to the declared helper.
 
 State values, thresholds and initialization width use literal-span edits, preserving numeric spelling and surrounding comments.
 Baseline property changes update the helper's matching reset in the same transaction. Control renames use bound references;

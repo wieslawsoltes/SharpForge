@@ -3,8 +3,9 @@ import {validateResponsiveDesign} from './layout-authoring-responsive.js';
 import {ownerName} from './source-symbols.js';
 import {sourcePath, sameSourceValue} from './source-text.js';
 import {responsiveMethodTrivia} from './source-responsive-trivia.js';
-import {readResponsiveAssignment, readResponsiveCondition, readResponsiveValue, responsiveAssignmentMap,
+import {readResponsiveAssignment, readResponsiveCondition, readResponsiveValue, responsiveValueReader, responsiveAssignmentMap,
   assertResponsiveResets} from './source-responsive-values.js';
+import {responsiveInvocationArguments} from './source-responsive-syntax.js';
 import {checkSourceCancellation, failSource} from './source-errors.js';
 
 const maxStatements = 20_000;
@@ -19,7 +20,7 @@ function constructorReferences(reader) {
   const shortOwner = reader.context.chosen.owner?.name;
   for (const binding of Object.values(reader.bindings)) {
     references.set(binding.name, binding);
-    if (!binding.field) continue;
+    if (!binding.field || binding.statement.kind === 'Local') continue;
     references.set('this.' + binding.name, binding);
     references.set(shortOwner + '.' + binding.name, binding);
     references.set(owner + '.' + binding.name, binding);
@@ -51,7 +52,7 @@ function parameterBindings(reader, method, initializer) {
     if (bindings.has(path)) return bindings.get(path);
     if (path === parameters[0].name) return null;
     const binding = references.get(path);
-    if (!binding?.field || !binding.fieldDeclaration?.modifiers?.includes('static')) return null;
+    if (!binding?.field || binding.statement.kind === 'Local' || !binding.fieldDeclaration?.modifiers?.includes('static')) return null;
     return reader.nodeMap.get(binding.id);
   };
   return {resolve, targets, widthName: parameters[0].name};
@@ -61,12 +62,13 @@ function readStates(reader, candidate, trivia, resolve, widthName) {
   const {method} = candidate;
   const resets = [];
   const states = [];
+  const readValue = responsiveValueReader(reader);
   let statements = 0;
   for (const statement of method.body.statements) {
     checkSourceCancellation(reader.options.signal);
     if (++statements > maxStatements) failSource('Adaptive statement limit exceeded', statement, 'SFSYNC_LIMIT');
     if (statement.kind !== 'If' && !states.length) {
-      resets.push(readResponsiveAssignment(statement, resolve, expression => reader.readValue(expression)));
+      resets.push(readResponsiveAssignment(statement, resolve, readValue));
       continue;
     }
     ownedCheck(statement.kind === 'If' && !statement.otherwise && statement.then.kind === 'Block', statement,
@@ -78,11 +80,11 @@ function readStates(reader, candidate, trivia, resolve, widthName) {
     if (statements > maxStatements || states.length >= 64) failSource('Adaptive statement limit exceeded', statement, 'SFSYNC_LIMIT');
     const assignments = body.slice(0, -1).map(item => {
       checkSourceCancellation(reader.options.signal);
-      return readResponsiveAssignment(item, resolve, expression => reader.readValue(expression));
+      return readResponsiveAssignment(item, resolve, readValue);
     });
     responsiveAssignmentMap(assignments);
     ownedCheck(assignments.every(assignment => assignment.present), statement, 'Adaptive states require concrete property values');
-    const range = readResponsiveCondition(statement.condition, widthName, expression => reader.readValue(expression));
+    const range = readResponsiveCondition(statement.condition, widthName, readValue);
     const overrides = {};
     for (const assignment of assignments) (overrides[assignment.id] ??= {})[assignment.property] = assignment.value;
     states.push({id: trivia.ids[states.length], ...range, overrides, assignments, statement});
@@ -106,6 +108,10 @@ function helperInitializer(reader, candidate) {
     && statement.expression?.kind === 'Call' && names.has(sourcePath(statement.expression.target)));
   ownedCheck(calls.length === 1, method, 'An adaptive helper requires exactly one owned construction initializer');
   const initializer = calls[0];
+  const expected = reader.context.model.getDeclaredSymbol(method);
+  const actual = reader.context.model.getSymbolInfo(initializer.expression).symbol;
+  ownedCheck(expected && (actual === expected || actual?.legacy && actual.legacy === expected.legacy), initializer,
+    'Adaptive initializer must bind to the declared owned helper');
   const index = statements.indexOf(initializer);
   ownedCheck(statements.slice(index + 1).every(statement => statement.kind === 'Return' || statement.kind === 'Empty'
     || statement.expression?.kind === 'Call' && statement.expression.target?.name === 'Activate'), initializer,
@@ -127,11 +133,13 @@ export function readSourceResponsive(reader) {
   ownedCheck(candidates.length === 1, candidates[0].candidate.method, 'One responsive helper is supported per construction owner');
   const {candidate, trivia} = candidates[0];
   const {method, parsed} = candidate;
+  ownedCheck(candidate.owner, method, 'Adaptive helpers require a containing class');
   ownedCheck(reader.context.methods.filter(item => ownerName(item.owner) === owner && item.method.name === method.name).length === 1,
     method, 'Adaptive helper overloads are not designer-owned');
   const initializer = helperInitializer(reader, candidate);
+  const initializerArguments = responsiveInvocationArguments(reader.context.chosen.parsed, initializer.expression);
   const {resolve, targets, widthName} = parameterBindings(reader, method, initializer);
-  const width = readResponsiveValue(expression => reader.readValue(expression), initializer.expression.args[0]);
+  const width = readResponsiveValue(responsiveValueReader(reader), initializer.expression.args[0]);
   ownedCheck(typeof width === 'number' && Number.isFinite(width) && width >= 100 && width <= 10000, initializer,
     'Adaptive initialization width must be a closed 100–10000 pixel value');
   const result = readStates(reader, candidate, trivia, resolve, widthName);
@@ -146,5 +154,5 @@ export function readSourceResponsive(reader) {
     region.owners = [...ids];
   }
   return {...result, ...trivia, owned: true, uri: parsed.source.uri, method, initializer,
-    width, widthExpression: initializer.expression.args[0], targets, widthName};
+    width, widthExpression: initializer.expression.args[0], initializerArguments, targets, widthName};
 }

@@ -5,6 +5,7 @@ import {responsiveSourceFile, responsiveSourceSignature, assertResponsiveReferen
   emitResponsiveSource, responsiveMethodBody, responsiveMethodInsertion} from './source-responsive-emission.js';
 import {sameSourceValue, sourceInsertion, sourceComments} from './source-text.js';
 import {checkSourceCancellation, failSource} from './source-errors.js';
+import {responsiveExpressionSpan} from './source-responsive-syntax.js';
 
 function requireKnownFields(value, allowed, location) {
   if (Object.keys(value).some(key => !allowed.includes(key))) {
@@ -61,7 +62,9 @@ function sameShape(before, after) {
 }
 
 function literalChange(source, edits, expression, before, after, type) {
-  if (!sameSourceValue(before, after)) edits.push({uri: source.uri, ...sourceLiteralEdit(source.text, expression, after, type)});
+  if (sameSourceValue(before, after)) return;
+  const span = responsiveExpressionSpan(source, expression);
+  edits.push({uri: source.uri, ...sourceLiteralEdit(source.text, span, after, type)});
 }
 
 function assignmentEdits(source, edits, before, after) {
@@ -106,7 +109,7 @@ function parameterEdits(base, signature, result) {
   const comments = retainedComments(source.text.slice(span.start, span.end), source.style.newline);
   const text = signature.parameters.map(parameter => `, ${parameter.type} ${parameter.name}`).join('');
   replaceSpan(result, source.uri, span, comments + text);
-  const args = before.initializer.expression.args;
+  const args = before.initializerArguments;
   const argumentsSpan = {start: args[0].end, end: args.at(-1).end};
   const argumentComments = retainedComments(base.text.slice(argumentsSpan.start, argumentsSpan.end), base.style.newline);
   replaceSpan(result, base.uri, argumentsSpan, argumentComments + signature.parameters.map(parameter => ', ' + parameter.argument).join(''));

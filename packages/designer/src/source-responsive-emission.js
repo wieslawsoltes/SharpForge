@@ -7,6 +7,7 @@ import {inferSourceStyle} from './source-text.js';
 import {sourceSpanLookup} from './source-spans.js';
 import {sourceSyntaxCancellationToken} from './source-cancellation.js';
 import {failSource, checkSourceCancellation} from './source-errors.js';
+import {responsiveClassBodyEnd} from './source-responsive-syntax.js';
 
 export function responsiveSourceFile(base, method) {
   const uri = method.uri ?? base.uri;
@@ -47,7 +48,8 @@ export function responsiveSourceSignature(base, document, names, targetIds) {
   for (const id of targetIds) {
     const binding = base.bindings[id];
     if (binding?.inline) failSource('Adaptive source requires named control targets', binding.creation, 'SFSYNC_OWNERSHIP');
-    const field = binding ? binding.field && binding.fieldDeclaration.modifiers?.includes('static') : useFields;
+    const field = binding ? binding.field && binding.statement.kind !== 'Local'
+      && binding.fieldDeclaration.modifiers?.includes('static') : useFields;
     if (field || passed.has(id)) continue;
     targets.push({id, type: nodes.get(id).type, name: allocateName('adaptive' + targets.length, taken)});
     passed.add(id);
@@ -116,6 +118,7 @@ export function responsiveMethodInsertion(base, generated) {
   const signature = generated.text.slice(generated.method.start, generated.method.body.start).trim();
   const {style} = base;
   const separator = style.braceOnNewLine ? style.newline + style.methodIndent : ' ';
-  return {uri: base.uri, start: base.owner.end - 1, end: base.owner.end - 1,
+  const at = responsiveClassBodyEnd(base);
+  return {uri: base.uri, start: at, end: at,
     text: style.newline + style.methodIndent + signature + separator + body + style.newline};
 }
