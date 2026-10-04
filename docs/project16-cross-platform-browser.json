@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "sharpforge-project16-cross-platform-browser-qualification",
-  "scope": "Immutable first Windows/Firefox and macOS/WebKit browser attempts at the same exact source.",
+  "scope": "Immutable W1/M1 browser attempts at 25ef plus separate M2 macOS/Chromium standalone qualification at b8d68d41.",
   "workItems": [
     "SF-A19-T12.2"
   ],
@@ -278,6 +278,99 @@
       "archiveRawBytes": 200889,
       "artifactMemberCount": 38,
       "artifactMemberBytes": 72079
+    },
+    {
+      "id": "m2",
+      "workflowRunId": 37186932517,
+      "jobId": 111390739312,
+      "workflowUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186932517",
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186932517/job/111390739312",
+      "runConclusion": "success",
+      "jobConclusion": "success",
+      "runAttempt": 1,
+      "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+      "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+      "trigger": "create",
+      "triggerRef": "refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2",
+      "stage": "standalone",
+      "engine": "chromium",
+      "runnerLabel": "macos-latest",
+      "captureOnly": true,
+      "baselineProfile": null,
+      "createdAt": "2026-10-04T07:48:54Z",
+      "updatedAt": "2026-10-04T07:49:52Z",
+      "startedAt": "2026-10-04T07:49:41.321Z",
+      "finishedAt": "2026-10-04T07:49:47.330Z",
+      "status": "passed",
+      "exitCode": 0,
+      "counts": {
+        "selected": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "environment": {
+        "host": "macOS",
+        "version": "26.6.2",
+        "osBuild": "25G83",
+        "architecture": "arm64",
+        "image": "macos-26-arm64",
+        "imageVersion": "20260907.0351.1",
+        "node": "v24.20.0",
+        "npm": "11.19.0",
+        "python": "3.12.10",
+        "playwright": "1.63.0",
+        "browser": "153.0.8010.12",
+        "browserBuild": "1243"
+      },
+      "environmentEvidence": "docs/evidence/project16-hosted/m2/job.log",
+      "setupAndBuild": "passed",
+      "scopeCommand": [
+        "node",
+        "scripts/project16-qualification.js",
+        "standalone"
+      ],
+      "commandAndTimingEvidence": "docs/evidence/project16-hosted/m2/qualification-summary.json",
+      "outerSuiteTimeoutMs": 1320000,
+      "serial": true,
+      "scopes": [
+        {
+          "id": "browser:workbench-workflows-standalone",
+          "status": "passed",
+          "exitCode": 0,
+          "evidence": "docs/evidence/project16-hosted/m2/suite-workbench-workflows-standalone.json"
+        }
+      ],
+      "standalone": {
+        "passed": true,
+        "mode": "file",
+        "offline": true,
+        "url": "file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html",
+        "artifactSha256": "f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a",
+        "artifactBytes": 16625302,
+        "policy": {
+          "value": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-8kb8ftwYHmdaE2K0vEJxLVIy3cKvZNLpIMtLQtFzSsY='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'",
+          "transport": "meta"
+        },
+        "completedScenarioCount": 5,
+        "lazyTools": [
+          "assembly",
+          "disassembly",
+          "msbuild",
+          "wizard",
+          "designer"
+        ],
+        "allLazyToolsPassedAndReopened": true,
+        "httpAttempts": [],
+        "pageErrors": [],
+        "cspViolations": [],
+        "evidence": "docs/evidence/project16-hosted/m2/vs-workflow-standalone-results.json"
+      },
+      "archiveManifest": "docs/evidence/project16-hosted/m2/manifest.json",
+      "archiveRawFileCount": 11,
+      "archiveRawBytes": 87831,
+      "artifactMemberCount": 6,
+      "artifactMemberBytes": 5287,
+      "qualificationBoundary": "Distinct source and standalone-only Chromium scope; no WebKit waiver, Safari certification or full browser matrix verdict."
     }
   ],
   "m1Failure": {
@@ -363,19 +456,20 @@
     "counting": "External companion only; no Node, browser or performance totals are added to the W1/M1 attempts."
   },
   "interpretation": [
-    "The selected combinations are Linux/Chromium, Windows/Firefox and macOS/WebKit, not a three-by-three OS/engine matrix.",
+    "The initial three OS/engine pairings at 25ef are distinct from M2 macOS/Chromium standalone at b8d68d41; this is not a three-by-three matrix.",
     "The browser versions are Playwright-managed engines; the macOS run is not real Safari certification.",
     "W1/M1 selected only browser functional scopes. Capture-only with null baselines does not mean performance measurements or a regression verdict.",
     "Positive DOM, keyboard, ARIA, synthetic composition and media-emulation checks do not certify OS clipboard permissions, native IME, screen readers or spoken output.",
     "The runtime/browser results do not certify native CLR, Rust/native, Wasm, GPU or OS application integrations.",
     "Core/build success is separate from browser acceptance. Later source changes or retries do not rewrite these exact-source results.",
-    "Historical hosted failures and source fixes remain in their original ledgers; this record does not close issues or assert complete Visual Studio parity."
+    "Historical hosted failures and source fixes remain in their original ledgers; this record does not close issues or assert complete Visual Studio parity.",
+    "M2 passes only its one standalone scope at a newer source/artifact. W1/M1 source 25ef and the failed M1 WebKit result remain unchanged."
   ],
   "archive": {
-    "rawFileCount": 84,
-    "rawBytes": 337327,
+    "rawFileCount": 95,
+    "rawBytes": 425158,
     "format": "Each attempt preserves its original artifact ZIP, every extracted member, original job log and three supplied API response files.",
-    "integrity": "ZIP/member bytes, read-back copies and all 84 staged Git blobs matched their original bytes/SHA256; archive-scoped Git attributes prevent text normalization.",
+    "integrity": "All original ZIP/member bytes and read-back copies match; staged raw Git blobs are checked against original bytes/SHA256 with text normalization disabled.",
     "additionalValidationExecution": false
   }
 }

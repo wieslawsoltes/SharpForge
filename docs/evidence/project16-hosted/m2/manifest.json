@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-hosted-browser-archive",
+  "attempt": "m2",
+  "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+  "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+  "workflowRunId": 37186932517,
+  "jobId": 111390739312,
+  "workflowUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186932517",
+  "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186932517/job/111390739312",
+  "runConclusion": "success",
+  "jobConclusion": "success",
+  "stage": "standalone",
+  "engine": "chromium",
+  "runnerLabel": "macos-latest",
+  "startedAt": "2026-10-04T07:49:41.321Z",
+  "finishedAt": "2026-10-04T07:49:47.330Z",
+  "counts": {
+    "selected": 1,
+    "passed": 1,
+    "failed": 0
+  },
+  "captureOnly": true,
+  "baselineProfile": null,
+  "archiveIntegrity": {
+    "rawFileCount": 11,
+    "rawBytes": 87831,
+    "artifactMemberCount": 6,
+    "artifactMemberBytes": 5287,
+    "allZipMembersMatchExtractedFiles": true,
+    "allCopiesReadBackIdentical": true,
+    "originalLineEndingsAndEncodingPreserved": true,
+    "gitTextNormalization": false,
+    "verification": "ZIP/member bytes, read-back copies and all11 staged raw Git blobs matched original byte counts and SHA256.",
+    "stagedGitBlobsMatchOriginalSha256": true
+  },
+  "provenance": "Original downloaded artifact, extracted members, job log and supplied connector API responses are preserved byte for byte.",
+  "limits": [
+    "One macOS/Chromium standalone scope at its distinct source; no other browser scopes, Node areas or performance phases were selected.",
+    "The earlier macOS/WebKit M1 failure and W1/M1 source identities remain unchanged; this Chromium result does not waive WebKit or certify Safari.",
+    "API jobs response is retained as supplied by the connector; omitted API fields are not reconstructed.",
+    "No test, build, browser, benchmark or workflow execution was performed to create this archive."
+  ],
+  "files": [
+    {
+      "path": "browser_vs_workflows_standalone_test/console.log",
+      "sourcePath": "p16-hosted-m2/browser_vs_workflows_standalone_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 137,
+      "sha256": "cfb6b6f2d45a2185bfadd755f058aa5c051905a8b5cf59d607f4aa48c93d0dd3"
+    },
+    {
+      "path": "qualification-summary.json",
+      "sourcePath": "p16-hosted-m2/qualification-summary.json",
+      "kind": "artifact-member",
+      "bytes": 932,
+      "sha256": "412922508b010d4a36275d5b6cd2078cb1fb19e28f808c0a4b28151756ee82ed"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/session.json",
+      "sourcePath": "p16-hosted-m2/browser_vs_workflows_standalone_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 263,
+      "sha256": "89aefb41e6cf736b1d20b7db188ba2b7fba416be4d380bff2c9cd3575a55d79f"
+    },
+    {
+      "path": "source.json",
+      "sourcePath": "p16-hosted-m2/source.json",
+      "kind": "artifact-member",
+      "bytes": 512,
+      "sha256": "7466f370b83439011273c987821b36b7a9e4e486fff422e014225fcb51a8a75e"
+    },
+    {
+      "path": "suite-workbench-workflows-standalone.json",
+      "sourcePath": "p16-hosted-m2/suite-workbench-workflows-standalone.json",
+      "kind": "artifact-member",
+      "bytes": 259,
+      "sha256": "c8481a064d538794f55adeef503f2e65f7b8da30f9a627c40943f0593e6c36e8"
+    },
+    {
+      "path": "vs-workflow-standalone-results.json",
+      "sourcePath": "p16-hosted-m2/vs-workflow-standalone-results.json",
+      "kind": "artifact-member",
+      "bytes": 3184,
+      "sha256": "0eb79e92075b2beb22149d27574c46fa3afcfdd2f78a3acbd1d50846847da039"
+    },
+    {
+      "path": "artifact.zip",
+      "sourcePath": "attachments/ccb68141-b838-485a-a3df-6f191d94c9d0/p16-hosted-m2.zip",
+      "kind": "original-artifact-zip",
+      "bytes": 3360,
+      "sha256": "4dac7ada7468eadc27801eb2d145480e021e9830f511771b4261cff1d4660b24"
+    },
+    {
+      "path": "job.log",
+      "sourcePath": "p16-hosted-m2-job.log",
+      "kind": "original-job-log",
+      "bytes": 60415,
+      "sha256": "2e9b4fff63ad6283af978a7647d79a3548ac21a2fc3fce5ff420d5c3103cc107"
+    },
+    {
+      "path": "run.json",
+      "sourcePath": "p16-hosted-m2-run.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 14502,
+      "sha256": "c2ccae3ad0cb8a240a1e0e31c2414d564e16e4971c7b9aa2527b5cb63fe9feea"
+    },
+    {
+      "path": "jobs.json",
+      "sourcePath": "p16-hosted-m2-jobs.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 3359,
+      "sha256": "212c08e23107007b3ca0262ea870bcf4bcdc1c342e72890e0ac5241223552cf1"
+    },
+    {
+      "path": "artifacts.json",
+      "sourcePath": "p16-hosted-m2-artifacts.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 908,
+      "sha256": "58839a8e5d92f64e728c02cc2e9aca53b088344839731e3b23e90467b8bb38fe"
+    }
+  ]
+}
