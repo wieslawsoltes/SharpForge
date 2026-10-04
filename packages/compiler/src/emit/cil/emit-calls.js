@@ -10,6 +10,8 @@ import { RefKind, SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { baseImplementationOf } from '../../symbols/base-implementation.js';
 import { defaultSourceOf } from '../../overload/override-parameters.js';
+import { parameterDefaultConstant } from '../../constants/parameter-default.js';
+import { stripNullable } from '../../conversions/nullable.js';
 import { PropertyLocation } from './locations.js';
 import { isReference, isVoid, primitiveOf } from './type-facts.js';
 
@@ -247,14 +249,14 @@ export const CallEmission = Base =>
         return this.il.emit('ldstr', this.tokens.string(callerInfo));
       }
       if (parameter.defaultSyntax && !parameter.defaultBound) return this.unsupported('this optional parameter default', node.syntax);
-      const value = parameter.explicitDefaultValue ?? parameter.defaultValue;
-      if (value === undefined || value === null || value.isNull || typeof value !== 'object') return this.defaultValue(parameter.type);
+      const value = parameterDefaultConstant(parameter);
+      if (!value || value.isNull) return this.defaultValue(parameter.type);
       this.constantValue(value, node.syntax);
       // A constant kept in another representation than the parameter's (an int default of a long parameter).
-      const constantType = this.core.byKeyword.get(value.type);
-      if (constantType && primitiveOf(parameter.type) && primitiveOf(constantType) !== primitiveOf(parameter.type)) {
-        this.numericConversion(constantType, parameter.type, { syntax: node.syntax });
-      }
+      const constantType = value.enumType ?? this.core.byKeyword.get(value.type);
+      const target = stripNullable(parameter.type);
+      if (constantType) this.implicitStandardConversion(constantType, target, node.syntax);
+      if (parameter.type.isNullableValueType) this.wrapNullable(parameter.type);
       return undefined;
     }
     exprPropertyAccess(node) {
