@@ -4,7 +4,8 @@ import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const empty = Object.freeze([]);
 const kinds = Object.freeze({
-  method: { table: 6, pointer: 5, list: 'MethodList', name: 3, flags: 2, implementationFlags: 1, signature: 4, create: createMethodDesc },
+  method: { table: 6, pointer: 5, list: 'MethodList', name: 3, flags: 2, implementationFlags: 1, signature: 4, create: createMethodDesc,
+    nameOptions: Object.freeze({ maxBytes: 16 * 1024 }) },
   field: { table: 4, pointer: 3, list: 'FieldList', name: 1, flags: 0, signature: 2, create: createFieldDesc,
     nameOptions: Object.freeze({ maxBytes: 4096 }) },
 });
