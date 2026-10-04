@@ -11,7 +11,7 @@ import {loadReferencePack} from '@sharpforge/compiler/node';
 import {dotnetHost, sdkVersion} from '../packages/compiler/test/differential/tools/dotnet-axis.mjs';
 
 const timeout = 30_000;
-const fixtures = ['Completed', 'Suspended', 'Exceptions', 'Retention'];
+const fixtures = ['Completed', 'Suspended', 'Exceptions', 'Retention', 'WaitAndDelay', 'Mutation'];
 
 function contextFor(context) {
   const pack = loadReferencePack(), dotnet = dotnetHost();
@@ -84,6 +84,9 @@ test('direct CIL async snapshot roots and exactly-once continuation', context =>
       vm.restore(snapshot);
       vm.heap.collect();
       assert.equal(finish(vm), expected);
+      const collecting = new CilVirtualMachine(bytes, {virtualTime: true});
+      collecting.heap.allocationObserver = {allocation() { collecting.heap.collect(); }};
+      assert.equal(finish(collecting), expected, 'allocation observers may collect while managed callbacks are registered');
     }
   } finally { native.close(); }
 });

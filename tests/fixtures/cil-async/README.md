@@ -26,3 +26,10 @@ node scripts/limited.js node --test tests/a05-cil-async-native.test.js
 The test reports the actual SDK and reference pack. No result from legacy image-derived
 compileToIL, source-VM async lowering, or native execution is counted as direct CIL VM
 coverage. ValueTask, custom awaiters and async iterators are separate extensions.
+
+`WaitAndDelay.cs` and `Mutation.cs` are additional, currently unexecuted review controls.
+They check Wait/Result aggregate failures versus await exception identity, Delay's -1,
+zero, Int32.MaxValue and invalid-negative boundaries, and replacement of a reference
+field in a suspended Release state machine. The snapshot test additionally requests a
+collection at every managed allocation. These are not included in the recorded eight
+pre-fix native outputs.
