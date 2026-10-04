@@ -185,7 +185,10 @@ export const PatternBinding = Base =>
      */
     constantPatternValue(e, inputType, conversion) {
       const keepsType = e.literal !== 'null' && (conversion.isBoxing || conversion.isReference);
-      return keepsType ? e : this.applyConversion(e, inputType, conversion);
+      if (keepsType) return e;
+      // A nullable input is compared by its value: the constant keeps being a constant of the underlying type.
+      const underlying = e.literal !== 'null' && inputType.isNullableValueType ? stripNullable(inputType) : null;
+      return underlying ? this.convertQuiet(e, underlying) : this.applyConversion(e, inputType, conversion);
     }
     typePattern(syntax, type, inputType) {
       if (type.isErrorType() || !inputType || inputType.isErrorType()) return { kind: 'TypePattern', syntax, testedType: type };

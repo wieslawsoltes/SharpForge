@@ -8,6 +8,7 @@
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { isReference, primitiveOf, needsBox } from './type-facts.js';
 import { describeKind } from './unsupported.js';
+import { frameworkType } from './framework-types.js';
 
 const isString = type => type?.specialType === 'System_String';
 const isTypeParameter = type => type?.typeKind === TypeKind.TypeParameter;
@@ -172,9 +173,32 @@ export const PatternEmission = Base =>
     positionalParts(pattern, narrowed, pushValue, fail) {
       const positional = pattern.positional,
         method = positional?.method;
+      if (positional?.kind === 'ituple') return this.tupleInterfaceParts(positional, narrowed, fail);
       if (!positional || positional.kind !== 'method' || !method) return this.unsupported('this positional pattern', pattern.syntax);
       const parts = this.deconstructedParts(positional, narrowed, pushValue);
       positional.parts.forEach((part, index) => this.patternMatch(part.pattern, parts[index], fail));
+      return undefined;
+    }
+    /**
+     * `(p1, p2)` over an `object`: the value is an `ITuple` of that many elements, and each element (an object) is
+     * matched against its pattern. The type test, the length and the elements are read once per run of the tests.
+     */
+    tupleInterfaceParts(positional, input, fail) {
+      const il = this.il,
+        { object, int } = this.core,
+        tupleInterface = frameworkType(this.core, 'System.Runtime.CompilerServices', 'ITuple', { typeKind: TypeKind.Interface }),
+        member = (name, returnType, parameters) => this.tokens.external(tupleInterface, name, { isStatic: false, returnType, parameters }),
+        tuple = this.narrowedInput(input, tupleInterface, fail),
+        length = this.readOnce(tuple.slot, 'length', int, () => {
+          il.emit('ldloc', tuple.slot).emit('callvirt', member('get_Length', int, []), { pops: 1, pushes: 1 });
+        });
+      il.emit('ldloc', length).emit('ldc.i4', positional.parts.length).emit('bne.un', fail);
+      positional.parts.forEach((part, index) => {
+        const slot = this.readOnce(tuple.slot, 'element:' + index, object, () => {
+          il.emit('ldloc', tuple.slot).emit('ldc.i4', index).emit('callvirt', member('get_Item', object, [{ type: int }]), { pops: 2, pushes: 1 });
+        });
+        this.patternMatch(part.pattern, { slot, type: object }, fail);
+      });
       return undefined;
     }
     /**
