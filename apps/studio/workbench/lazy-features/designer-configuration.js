@@ -7,6 +7,8 @@ export function designerConfiguration(context) {
   return {
     state, docking, request: (...args) => runtime.request(...args), toast, download, diagnostics: context.designerDiagnostics,
     records: () => explorerContext().records, choose: chooseExplorer, sourceFiles: () => state.files, openSource: openFile,
+    applyMarkupSourceEdits: context.applyMarkupSourceEdits,
+    editMarkupSourceText: context.editMarkupSourceText,
     editSourceText(uri, text, version) {
       const file = state.files.find(item => item.uri === uri);
       if (!file || file.version !== version) throw new Error('Source changed');

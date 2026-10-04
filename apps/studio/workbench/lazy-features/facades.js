@@ -49,6 +49,9 @@ export class NativeBuildFacade {
   get sourcePath() { return this.feature.peek()?.sourcePath ?? null; }
   set sourcePath(value) { if (this.feature.peek()) this.feature.peek().sourcePath = value; }
   get onSaved() { return this.feature.peek()?.onSaved; }
+  get contexts() { return this.feature.peek()?.contexts ?? null; }
+  get profiles() { return this.feature.peek()?.profiles ?? null; }
+  get tests() { return this.feature.peek()?.tests ?? null; }
   sourceChanges() { return this.feature.peek()?.sourceChanges() ?? []; }
   snapshot() {
     return this.feature.peek()?.snapshot() ?? { connected: false, attached: false, capabilities: null, workspace: null,
@@ -60,6 +63,8 @@ export class NativeBuildFacade {
   open(...args) { return this.feature.call('open', args); }
   save(...args) { return this.feature.call('save', args); }
   run(...args) { return this.feature.call('run', args); }
+  runProject(...args) { return this.feature.call('runProject', args); }
+  publishProfile(...args) { return this.feature.call('publishProfile', args); }
   cancel() { return this.feature.peek()?.cancel() ?? Promise.resolve(); }
   autoConnect(location = globalThis.location) {
     return hasLocalHostCapability(location) ? this.feature.call('autoConnect') : Promise.resolve(false);
